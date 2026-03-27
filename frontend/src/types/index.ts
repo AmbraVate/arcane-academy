@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 export interface User {
   userId: string; username: string; totalXp: number; rank: string; streakDays: number; token: string
 }
@@ -8,7 +7,7 @@ export interface QuestSummary {
   completed: boolean; locked: boolean
 }
 export interface StoryBeat {
-  type: 'narration' | 'dialogue'; text: string
+  type: 'narration' | 'dialogue' | 'example'; text: string
   av?: string; cls?: string; speaker?: string; sCls?: string
 }
 export interface TestCaseLabel { label: string }

@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { bossApi } from '../api/services'

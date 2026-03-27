@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

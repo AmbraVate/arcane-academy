@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
 import LoginPage from './pages/LoginPage'

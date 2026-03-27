@@ -64,3 +64,38 @@
   font-style: normal;
   font-weight: 600;
 }
+
+.exampleBlock {
+  background: #09070f;
+  border: 1px solid var(--purple-dim);
+  border-left: 3px solid var(--purple);
+  border-radius: 0 8px 8px 0;
+  margin: 4px 0 12px;
+  overflow: hidden;
+}
+
+.exampleLabel {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--purple-light);
+  padding: 7px 14px 5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.exampleCode {
+  padding: 12px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin: 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.exampleCode .kw  { color: #c4b5fd; }
+.exampleCode .str { color: #86efac; }
+.exampleCode .num { color: #fbbf24; }
+.exampleCode .cm  { color: #4a5568; font-style: italic; }
+.exampleCode .type{ color: #67e8f9; }

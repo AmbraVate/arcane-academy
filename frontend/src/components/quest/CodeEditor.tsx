@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import { useRef, useEffect } from 'react'
 import styles from './CodeEditor.module.css'
 

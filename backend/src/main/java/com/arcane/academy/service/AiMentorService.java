@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 package com.arcane.academy.service;
 
 import lombok.extern.slf4j.Slf4j;

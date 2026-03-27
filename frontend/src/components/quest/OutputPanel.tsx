@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import { useEffect, useRef } from 'react'
 import styles from './OutputPanel.module.css'
 

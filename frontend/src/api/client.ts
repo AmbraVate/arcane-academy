@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import axios from 'axios'
 
 // Always use relative URLs in production — nginx proxies /api/* to the backend.

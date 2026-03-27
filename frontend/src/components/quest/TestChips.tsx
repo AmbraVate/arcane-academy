@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import type { TestCaseLabel } from '../../types'
 import styles from './TestChips.module.css'
 

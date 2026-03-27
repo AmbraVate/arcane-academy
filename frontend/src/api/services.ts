@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import api from './client'
 import type { QuestSummary, QuestDetail, SubmitResponse, CodeRunResponse, User, BossData, BossAnswerResponse } from '../types'
 

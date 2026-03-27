@@ -1,4 +1,3 @@
-// Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
 import type { User } from '../types'
 import { authApi } from '../api/services'
