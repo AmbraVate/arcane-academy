@@ -1,0 +1,74 @@
+.page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.glyph {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.sub {
+  font-size: 15px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 28px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.error {
+  background: #2d0808;
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  padding: 9px 13px;
+  font-size: 13px;
+  color: var(--red);
+  text-align: center;
+}
+
+.switch {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--muted);
+}

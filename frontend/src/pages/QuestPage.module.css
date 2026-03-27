@@ -1,0 +1,162 @@
+.layout {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.leftPanel {
+  width: 44%;
+  min-width: 300px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rightPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Header */
+.questHeader {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--purple);
+  margin-bottom: 5px;
+}
+
+.questTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.pills {
+  display: flex;
+  gap: 7px;
+}
+
+/* Story */
+.storyScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+}
+
+/* Problem box */
+.problemBox {
+  flex-shrink: 0;
+  margin: 0 16px 12px;
+  background: var(--surface);
+  border: 1px solid var(--gold-dim, #4a3a0a);
+  border-radius: 9px;
+  padding: 14px;
+}
+
+.problemLabel {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 9px;
+}
+
+.problemText {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.problemText strong { color: var(--gold); }
+.problemText code {
+  color: var(--teal);
+  font-size: 12px;
+  background: #0d0a1a;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* Result banner */
+.resultBanner {
+  flex-shrink: 0;
+  margin: 0 16px 12px;
+  background: #061a0c;
+  border: 1px solid var(--green);
+  border-radius: 9px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resultTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--green);
+}
+
+.resultMsg {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* Editor header */
+.editorHeader {
+  padding: 9px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.filename {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.editorActions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Loading state */
+.loadingState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.loadingGlyph {
+  font-size: 40px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

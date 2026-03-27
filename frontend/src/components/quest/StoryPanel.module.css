@@ -1,0 +1,66 @@
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.narration {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.75;
+  padding-left: 10px;
+  border-left: 2px solid var(--border);
+}
+
+.dialogue {
+  display: flex;
+  gap: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.avatarMentor { border-color: var(--gold); }
+.avatarNpc    { border-color: var(--teal); }
+.avatarEnemy  { border-color: var(--red); }
+
+.bubble {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0 9px 9px 9px;
+  padding: 9px 13px;
+  flex: 1;
+}
+
+.speaker {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.speakerMentor { color: var(--gold); }
+.speakerNpc    { color: var(--teal); }
+.speakerEnemy  { color: var(--red); }
+
+.speech {
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.speech em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 600;
+}

@@ -1,0 +1,32 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.chip {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s;
+}
+
+.neutral {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.pass {
+  background: #08200e;
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.fail {
+  background: #200808;
+  border: 1px solid var(--red);
+  color: var(--red);
+}

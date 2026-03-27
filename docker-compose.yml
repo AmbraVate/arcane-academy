@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16-alpine
+    pull_policy: missing
+    container_name: arcane-db
+    environment:
+      POSTGRES_DB: arcane_academy
+      POSTGRES_USER: arcane
+      POSTGRES_PASSWORD: arcane_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U arcane -d arcane_academy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: arcane-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/arcane_academy
+      SPRING_DATASOURCE_USERNAME: arcane
+      SPRING_DATASOURCE_PASSWORD: arcane_secret
+      JWT_SECRET: ${JWT_SECRET:-change_this_in_production_min_32_chars!!}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ALLOWED_ORIGINS: http://localhost,http://localhost:80,http://localhost:5173
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: arcane-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pg_data:
