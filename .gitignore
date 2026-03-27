@@ -1,6 +1,7 @@
 # Environment
 .env
 *.env.local
+out/*
 
 # Java/Maven
 backend/target/
@@ -17,6 +18,7 @@ frontend/.vite/
 .idea/
 .vscode/
 *.iml
+
 
 # OS
 .DS_Store
