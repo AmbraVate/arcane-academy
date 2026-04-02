@@ -8,6 +8,7 @@ import CodeEditor from '../components/quest/CodeEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
 import AiMentorPanel from '../components/quest/AiMentorPanel'
+import LevelUpModal from '../components/layout/LevelUpModal'
 import styles from './QuestPage.module.css'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
@@ -15,7 +16,7 @@ type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system
 export default function QuestPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { updateXp } = useAuth()
+  const { user, updateXp } = useAuth()
 
   const [quest, setQuest] = useState<QuestDetail | null>(null)
   const [loading, setLoading] = useState(true)
@@ -26,8 +27,10 @@ export default function QuestPage() {
   const [solved, setSolved] = useState(false)
   const [mentorFeedback, setMentorFeedback] = useState<string | null>(null)
   const [mentorLoading, setMentorLoading] = useState(false)
+  const [mentorErrorType, setMentorErrorType] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const [winStoryVisible, setWinStoryVisible] = useState(false)
+  const [levelUpInfo, setLevelUpInfo] = useState<{level: number; rank: string} | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
@@ -81,6 +84,37 @@ export default function QuestPage() {
 
     try {
       const result: SubmitResponse = await codeApi.submit(quest.id, code)
+
+      // Compile error
+      if (result.errorType === 'COMPILE_ERROR') {
+        setOutput([
+          { text: '✗ Spell failed to compile — your code has a syntax error.', type: 'error' },
+        ])
+        setTestResults(new Map())
+        setMentorErrorType('COMPILE_ERROR')
+        if (result.mentorFeedback) {
+          setMentorLoading(true)
+          setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 300)
+        }
+        return
+      }
+
+      // Runtime error
+      if (result.errorType === 'RUNTIME_ERROR') {
+        setOutput([
+          { text: '✗ Spell compiled but crashed at runtime.', type: 'error' },
+          { text: result.testResults?.[0]?.actualOutput || '', type: 'error' },
+        ])
+        setTestResults(new Map())
+        setMentorErrorType('RUNTIME_ERROR')
+        if (result.mentorFeedback) {
+          setMentorLoading(true)
+          setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 300)
+        }
+        return
+      }
+
+      // Test results
       const newResults = new Map<string, boolean>()
       const lines: OutputLine[] = []
 
@@ -99,18 +133,22 @@ export default function QuestPage() {
         setSolved(true)
         setWinStoryVisible(true)
         if (result.xpEarned > 0) {
+          const prevLevel = Math.floor((user?.totalXp ?? 0) / 200) + 1
           updateXp(result.xpEarned)
+          const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
+          const newLevel = Math.floor(newTotalXp / 200) + 1
           showToast(`✦ +${result.xpEarned} XP — Quest Complete!`)
+          if (newLevel > prevLevel) {
+            const ranks = ['Novice','Apprentice','Adept','Mage','Archmage']
+            const newRank = ranks[Math.min(newLevel - 1, ranks.length - 1)]
+            setTimeout(() => setLevelUpInfo({ level: newLevel, rank: newRank }), 1200)
+          }
         }
       } else {
         lines.push({ text: '✗ Some test cases failed.', type: 'error' })
         if (result.mentorFeedback) {
           setMentorLoading(true)
-          // Small delay so the loading state is visible
-          setTimeout(() => {
-            setMentorFeedback(result.mentorFeedback)
-            setMentorLoading(false)
-          }, 400)
+          setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 400)
         }
       }
 
@@ -204,10 +242,17 @@ export default function QuestPage() {
 
         <OutputPanel lines={output} />
 
-        <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} />
+        <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
       </div>
 
       {toast && <div className="toast">{toast}</div>}
+      {levelUpInfo && (
+        <LevelUpModal
+          newLevel={levelUpInfo.level}
+          newRank={levelUpInfo.rank}
+          onClose={() => setLevelUpInfo(null)}
+        />
+      )}
     </div>
   )
 }

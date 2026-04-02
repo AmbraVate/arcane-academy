@@ -26,16 +26,25 @@ public class JavaCodeRunner {
      * sandboxed thread with a strict timeout.
      */
     public CodeRunResponse run(String studentCode, String testInput) {
+        log.debug("[CodeRunner] Starting run | codeLength={} hasTestInput={}",
+                studentCode != null ? studentCode.length() : 0, testInput != null && !testInput.isBlank());
         Path tempDir = null;
         try {
             tempDir = Files.createTempDirectory("arcane_run_");
+            log.debug("[CodeRunner] Temp dir created: {}", tempDir);
+
             String wrappedCode = wrapCode(studentCode, testInput);
+            boolean hasClass = studentCode != null && studentCode.matches("(?s).*\\bclass\\s+\\w+\\s*\\{.*");
+            log.debug("[CodeRunner] Code wrapping | hasClassDeclaration={} wrappedLength={}",
+                    hasClass, wrappedCode.length());
+
             Path sourceFile = tempDir.resolve("StudentSolution.java");
             Files.writeString(sourceFile, wrappedCode);
 
             // Compile
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
             if (compiler == null) {
+                log.error("[CodeRunner] JavaCompiler not available — JDK required, not JRE");
                 return CodeRunResponse.error("Java compiler not available on this server.");
             }
 
@@ -55,15 +64,19 @@ public class JavaCodeRunner {
                                   .append(": ").append(d.getMessage(null)).append("\n");
                         }
                     }
-                    return CodeRunResponse.compilationError(errors.toString().trim());
+                    String errorMsg = errors.toString().trim();
+                    log.info("[CodeRunner] COMPILE FAILED | errors='{}'", errorMsg);
+                    return CodeRunResponse.compilationError(errorMsg);
                 }
+                log.debug("[CodeRunner] Compilation succeeded");
             }
 
             // Execute in a sandboxed thread with timeout
+            log.debug("[CodeRunner] Executing compiled class with {}s timeout", TIMEOUT_SECONDS);
             return executeWithTimeout(tempDir);
 
         } catch (IOException e) {
-            log.error("IO error during code run", e);
+            log.error("[CodeRunner] IO error during code run", e);
             return CodeRunResponse.error("Internal error preparing code execution.");
         } finally {
             if (tempDir != null) cleanupDir(tempDir);
@@ -117,19 +130,26 @@ public class JavaCodeRunner {
             }
             if (clazz == null) return CodeRunResponse.error("No class with a main method found.");
 
+            log.debug("[CodeRunner] Invoking main on class: {}", clazz.getName());
             Method main = clazz.getMethod("main", String[].class);
             main.invoke(null, (Object) new String[]{});
 
             String output = baos.toString();
-            if (output.length() > MAX_OUTPUT_CHARS) {
+            boolean truncated = output.length() > MAX_OUTPUT_CHARS;
+            if (truncated) {
                 output = output.substring(0, MAX_OUTPUT_CHARS) + "\n... (output truncated)";
             }
+            log.debug("[CodeRunner] Execution SUCCESS | outputLength={} truncated={}",
+                    output.trim().length(), truncated);
             return CodeRunResponse.success(output.trim());
 
         } catch (java.lang.reflect.InvocationTargetException e) {
             Throwable cause = e.getCause();
-            return CodeRunResponse.runtimeError(cause != null ? cause.toString() : e.toString());
+            String errMsg = cause != null ? cause.toString() : e.toString();
+            log.info("[CodeRunner] RUNTIME ERROR | {}", errMsg);
+            return CodeRunResponse.runtimeError(errMsg);
         } catch (Exception e) {
+            log.error("[CodeRunner] Unexpected execution error", e);
             return CodeRunResponse.error("Execution error: " + e.getMessage());
         } finally {
             System.setOut(originalOut);

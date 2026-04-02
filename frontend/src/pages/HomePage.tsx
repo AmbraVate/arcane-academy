@@ -6,11 +6,13 @@ import type { QuestSummary, BossData } from '../types'
 import styles from './HomePage.module.css'
 
 const CHAPTER_META = [
-  { number: 1, title: 'Chapter I — The First Rune',      subtitle: 'Variables, types & arithmetic',    icon: '🔮' },
-  { number: 2, title: 'Chapter II — The Control Tome',   subtitle: 'Conditions, loops & logic',        icon: '📜' },
-  { number: 3, title: 'Chapter III — Arcane Structures', subtitle: 'Arrays, lists & methods',          icon: '🗝' },
-  { number: 4, title: 'Chapter IV — The Grand Grimoire', subtitle: 'Classes, objects & OOP',           icon: '📖' },
-  { number: 5, title: 'Chapter V — The Master\'s Path', subtitle: 'Exceptions, generics & patterns',  icon: '⚡' },
+  { number: 1, title: 'Chapter I — The First Rune',        subtitle: 'Variables & arithmetic',          icon: '🔮' },
+  { number: 2, title: 'Chapter II — The Control Tome',     subtitle: 'Conditions, loops & logic',        icon: '📜' },
+  { number: 3, title: 'Chapter III — Arcane Structures',   subtitle: 'Arrays, lists & methods',          icon: '🗝' },
+  { number: 4, title: 'Chapter IV — The Grand Grimoire',   subtitle: 'Classes, objects & OOP',           icon: '📖' },
+  { number: 5, title: "Chapter V — The Master's Path",     subtitle: 'Exceptions, generics & patterns',  icon: '⚡' },
+  { number: 6, title: 'Chapter VI — The Capstone Project', subtitle: 'Build a real Java application',    icon: '🏗️' },
+  { number: 7, title: 'Chapter VII — Interview Gauntlet',  subtitle: 'FizzBuzz to HashMap — get hired',  icon: '💼' },
 ]
 
 export default function HomePage() {

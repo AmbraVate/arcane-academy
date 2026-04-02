@@ -1,5 +1,4 @@
 package com.arcane.academy.dto;
-
 import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

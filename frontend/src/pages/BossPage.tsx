@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { bossApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { BossData, BossQuestion, BossAnswerResponse } from '../types'
+import LevelUpModal from '../components/layout/LevelUpModal'
 import styles from './BossPage.module.css'
 
 type QuestionState = 'unanswered' | 'correct' | 'wrong'
@@ -13,12 +14,22 @@ interface AnsweredQuestion {
   givenAnswer: string
 }
 
+function shuffle<T>(arr: T[]): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
+}
+
 export default function BossPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { updateXp } = useAuth()
+  const { updateXp, user } = useAuth()
 
   const [boss, setBoss] = useState<BossData | null>(null)
+  const [shuffledQuestions, setShuffledQuestions] = useState<BossData['questions']>([])
+  const [showStudyMode, setShowStudyMode] = useState(false)
   const [loading, setLoading] = useState(true)
   const [currentQ, setCurrentQ] = useState(0)
   const [answered, setAnswered] = useState<Map<string, AnsweredQuestion>>(new Map())
@@ -27,12 +38,16 @@ export default function BossPage() {
   // 'fighting' | 'won' | 'lost'
   const [battleState, setBattleState] = useState<'fighting' | 'won' | 'lost'>('fighting')
   const [toast, setToast] = useState<string | null>(null)
+  const [levelUpInfo, setLevelUpInfo] = useState<{level: number; rank: string} | null>(null)
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
     if (!id) return
     bossApi.getById(id)
-      .then(setBoss)
+      .then(b => {
+        setBoss(b)
+        setShuffledQuestions(shuffle([...b.questions]))
+      })
       .catch(() => navigate('/'))
       .finally(() => setLoading(false))
   }, [id, navigate])
@@ -78,8 +93,16 @@ export default function BossPage() {
       try {
         const progress = await bossApi.defeat(boss.id)
         if (progress.xpEarned > 0) {
+          const prevLevel = Math.floor((user?.totalXp ?? 0) / 200) + 1
           updateXp(progress.xpEarned, progress.rank)
+          const newTotalXp = (user?.totalXp ?? 0) + progress.xpEarned
+          const newLevel = Math.floor(newTotalXp / 200) + 1
           showToast(`✦ +${progress.xpEarned} XP — Boss Defeated!`)
+          if (newLevel > prevLevel) {
+            const ranks = ['Novice','Apprentice','Adept','Mage','Archmage']
+            const newRank = ranks[Math.min(newLevel - 1, ranks.length - 1)]
+            setTimeout(() => setLevelUpInfo({ level: newLevel, rank: newRank }), 1200)
+          }
         }
       } catch {
         // Already defeated previously — still show win screen
@@ -93,6 +116,8 @@ export default function BossPage() {
     setAnswered(new Map())
     setBattleState('fighting')
     setFillValue('')
+    setShowStudyMode(false)
+    if (boss) setShuffledQuestions(shuffle([...boss.questions]))
   }
 
   // Navigate home AND force a page reload so progress is re-fetched from server
@@ -110,11 +135,12 @@ export default function BossPage() {
   )
   if (!boss) return null
 
-  const totalQ = boss.questions.length
+  const activeQuestions = shuffledQuestions.length > 0 ? shuffledQuestions : (boss?.questions ?? [])
+  const totalQ = activeQuestions.length
   const correctCount = Array.from(answered.values()).filter(a => a.state === 'correct').length
   // HP drains as correct answers accumulate
   const hpPct = battleState === 'won' ? 0 : Math.max(0, Math.round(100 - (correctCount / totalQ) * 100))
-  const question = boss.questions[currentQ]
+  const question = activeQuestions[currentQ]
   const currentAnswer = answered.get(question?.id ?? '')
 
   return (
@@ -164,7 +190,7 @@ export default function BossPage() {
           <div className={`${styles.resultBox} ${styles.fail}`}>
             <div className={styles.resultTitle}>💀 Defeated!</div>
             <div className={styles.resultMsg}>
-              The {boss.name} overpowers you. Study the explanation and try again.
+              The {boss.name} overpowers you. Review the concepts below, then try again.
               {currentAnswer?.response && (
                 <div className={styles.explanation}>
                   Correct answer: <strong>{currentAnswer.response.correctAnswer}</strong><br />
@@ -172,9 +198,23 @@ export default function BossPage() {
                 </div>
               )}
             </div>
-            <button className="btn btn-primary" onClick={handleRetry}>
-              Try Again →
-            </button>
+            <div style={{display:'flex',gap:10,flexWrap:'wrap',marginTop:4}}>
+              <button className="btn btn-ghost" onClick={() => setShowStudyMode(s => !s)}>
+                {showStudyMode ? 'Hide study guide' : '📖 Review concepts'}
+              </button>
+              <button className="btn btn-primary" onClick={handleRetry}>
+                Try Again →
+              </button>
+            </div>
+            {showStudyMode && boss && (
+              <div className={styles.studyMode}>
+                {activeQuestions.map((q, i) => (
+                  <div key={q.id} className={styles.studyItem}>
+                    <div className={styles.studyQ}>Q{i+1}: {q.question}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -220,6 +260,13 @@ export default function BossPage() {
       </div>
 
       {toast && <div className="toast">{toast}</div>}
+      {levelUpInfo && (
+        <LevelUpModal
+          newLevel={levelUpInfo.level}
+          newRank={levelUpInfo.rank}
+          onClose={() => setLevelUpInfo(null)}
+        />
+      )}
     </div>
   )
 }

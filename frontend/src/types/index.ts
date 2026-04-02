@@ -18,7 +18,7 @@ export interface QuestDetail {
   completed: boolean
 }
 export interface TestResult { label: string; passed: boolean; actualOutput: string; expectedOutput: string }
-export interface SubmitResponse { allPassed: boolean; testResults: TestResult[]; xpEarned: number; mentorFeedback: string | null }
+export interface SubmitResponse { allPassed: boolean; testResults: TestResult[]; xpEarned: number; mentorFeedback: string | null; errorType?: string | null }
 export interface CodeRunResponse { output: string | null; error: string | null; status: 'SUCCESS'|'COMPILE_ERROR'|'RUNTIME_ERROR'|'TIMEOUT'|'ERROR' }
 export type BossQuestionType = 'multiple_choice' | 'be_the_compiler' | 'fill_blank'
 export interface BossQuestion { id: string; type: BossQuestionType; question: string; code?: string; options?: string[] }

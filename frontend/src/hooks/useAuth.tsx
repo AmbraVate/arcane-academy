@@ -8,6 +8,7 @@ interface AuthContextValue {
   register: (username: string, email: string, password: string) => Promise<void>
   logout: () => void
   updateXp: (xpEarned: number, newRank?: string) => void
+  updateStreak: (streakDays: number) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -46,6 +47,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
   }, [])
 
+  const updateStreak = useCallback((streakDays: number) => {
+    setUser(prev => {
+      if (!prev) return prev
+      const updated = { ...prev, streakDays }
+      localStorage.setItem("arcane_user", JSON.stringify(updated))
+      return updated
+    })
+  }, [])
+
   const updateXp = useCallback((xpEarned: number, newRank?: string) => {
     setUser(prev => {
       if (!prev) return prev
@@ -56,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, updateXp }}>
+    <AuthContext.Provider value={{ user, login, register, logout, updateXp, updateStreak }}>
       {children}
     </AuthContext.Provider>
   )
