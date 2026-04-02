@@ -113,17 +113,19 @@ export default function TopicSelectPage() {
 
   useEffect(() => {
     questApi.getAll().then((quests: QuestSummary[]) => {
-      const map: Record<string, TopicProgress> = {}
+      // The quest `topic` field is a sub-topic label ("If / Else", "Arrays", etc.),
+      // not the parent course ID. All current quests belong to Java, so we
+      // bucket them all under 'java'. When new courses are added this will need
+      // a proper course-level field from the backend.
+      const java: TopicProgress = { completed: 0, total: 0, xpEarned: 0 }
       quests.forEach(q => {
-        const key = q.topic.toLowerCase()
-        if (!map[key]) map[key] = { completed: 0, total: 0, xpEarned: 0 }
-        map[key].total++
+        java.total++
         if (q.completed) {
-          map[key].completed++
-          map[key].xpEarned += q.xpReward
+          java.completed++
+          java.xpEarned += q.xpReward
         }
       })
-      setProgressMap(map)
+      setProgressMap({ java })
     }).catch(() => {/* silently ignore — progress is non-critical */})
   }, [])
 
