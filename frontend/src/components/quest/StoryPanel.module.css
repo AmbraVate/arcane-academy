@@ -4,6 +4,8 @@
   gap: 12px;
 }
 
+/* ── Narration ───────────────────────────────────────────────────────────────── */
+
 .narration {
   font-size: 13px;
   font-style: italic;
@@ -12,6 +14,16 @@
   padding-left: 10px;
   border-left: 2px solid var(--border);
 }
+
+.narrationFull {
+  font-size: 15px;
+  line-height: 1.85;
+  padding-left: 20px;
+  border-left: 3px solid var(--purple);
+  margin-bottom: 16px;
+}
+
+/* ── Dialogue ────────────────────────────────────────────────────────────────── */
 
 .dialogue {
   display: flex;
@@ -31,6 +43,12 @@
   background: var(--surface);
 }
 
+.avatarFull {
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
+}
+
 .avatarMentor { border-color: var(--gold); }
 .avatarNpc    { border-color: var(--teal); }
 .avatarEnemy  { border-color: var(--red); }
@@ -43,11 +61,20 @@
   flex: 1;
 }
 
+.bubbleFull {
+  padding: 14px 20px;
+  border-radius: 0 14px 14px 14px;
+}
+
 .speaker {
   font-family: 'Cinzel', serif;
   font-size: 10px;
   color: var(--muted);
   margin-bottom: 4px;
+}
+
+.speakerFull {
+  font-size: 11px;
 }
 
 .speakerMentor { color: var(--gold); }
@@ -59,11 +86,18 @@
   line-height: 1.75;
 }
 
+.speechFull {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
 .speech em {
   color: var(--teal);
   font-style: normal;
   font-weight: 600;
 }
+
+/* ── Worked example ──────────────────────────────────────────────────────────── */
 
 .exampleBlock {
   background: #09070f;
@@ -72,6 +106,10 @@
   border-radius: 0 8px 8px 0;
   margin: 4px 0 12px;
   overflow: hidden;
+}
+
+.exampleBlockFull {
+  border-left-width: 4px;
 }
 
 .exampleLabel {
@@ -83,6 +121,10 @@
   border-bottom: 1px solid var(--border);
 }
 
+.exampleLabelFull {
+  font-size: 12px;
+}
+
 .exampleCode {
   padding: 12px 14px;
   font-family: 'Courier New', monospace;
@@ -92,6 +134,11 @@
   margin: 0;
   white-space: pre;
   overflow-x: auto;
+}
+
+.exampleCodeFull {
+  font-size: 13px;
+  line-height: 1.8;
 }
 
 .exampleCode .kw  { color: #c4b5fd; }

@@ -1,32 +1,43 @@
 import type { StoryBeat } from '../../types'
 import styles from './StoryPanel.module.css'
 
-export default function StoryPanel({ beats }: { beats: StoryBeat[] }) {
+export default function StoryPanel({ beats, fullPage = false }: { beats: StoryBeat[]; fullPage?: boolean }) {
   return (
     <div className={styles.story}>
       {beats.map((beat, i) => {
-        if (beat.type === 'narration') return <Narration key={i} text={beat.text} />
-        if (beat.type === 'example')  return <Example key={i} beat={beat} />
-        return <Dialogue key={i} beat={beat} />
+        if (beat.type === 'narration') return <Narration key={i} text={beat.text} fullPage={fullPage} />
+        if (beat.type === 'example')  return <Example key={i} beat={beat} fullPage={fullPage} />
+        return <Dialogue key={i} beat={beat} fullPage={fullPage} />
       })}
     </div>
   )
 }
 
-function Narration({ text }: { text: string }) {
-  return <div className={styles.narration} dangerouslySetInnerHTML={{ __html: text }} />
+function Narration({ text, fullPage }: { text: string; fullPage: boolean }) {
+  return (
+    <div
+      className={`${styles.narration} ${fullPage ? styles.narrationFull : ''}`}
+      dangerouslySetInnerHTML={{ __html: text }}
+    />
+  )
 }
 
-function Example({ beat }: { beat: StoryBeat }) {
+function Example({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
   return (
-    <div className={styles.exampleBlock}>
-      {beat.speaker && <div className={styles.exampleLabel}>✦ {beat.speaker}</div>}
-      <pre className={styles.exampleCode}><code dangerouslySetInnerHTML={{ __html: beat.text }} /></pre>
+    <div className={`${styles.exampleBlock} ${fullPage ? styles.exampleBlockFull : ''}`}>
+      {beat.speaker && (
+        <div className={`${styles.exampleLabel} ${fullPage ? styles.exampleLabelFull : ''}`}>
+          ✦ {beat.speaker}
+        </div>
+      )}
+      <pre className={`${styles.exampleCode} ${fullPage ? styles.exampleCodeFull : ''}`}>
+        <code dangerouslySetInnerHTML={{ __html: beat.text }} />
+      </pre>
     </div>
   )
 }
 
-function Dialogue({ beat }: { beat: StoryBeat }) {
+function Dialogue({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
   const speakerClass =
     beat.sCls === 's-mentor' ? styles.speakerMentor :
     beat.sCls === 's-enemy'  ? styles.speakerEnemy  :
@@ -39,10 +50,17 @@ function Dialogue({ beat }: { beat: StoryBeat }) {
 
   return (
     <div className={styles.dialogue}>
-      <div className={`${styles.avatar} ${avatarClass}`}>{beat.av}</div>
-      <div className={styles.bubble}>
-        <div className={`${styles.speaker} ${speakerClass}`}>{beat.speaker}</div>
-        <div className={styles.speech} dangerouslySetInnerHTML={{ __html: beat.text ?? '' }} />
+      <div className={`${styles.avatar} ${avatarClass} ${fullPage ? styles.avatarFull : ''}`}>
+        {beat.av}
+      </div>
+      <div className={`${styles.bubble} ${fullPage ? styles.bubbleFull : ''}`}>
+        <div className={`${styles.speaker} ${speakerClass} ${fullPage ? styles.speakerFull : ''}`}>
+          {beat.speaker}
+        </div>
+        <div
+          className={`${styles.speech} ${fullPage ? styles.speechFull : ''}`}
+          dangerouslySetInnerHTML={{ __html: beat.text ?? '' }}
+        />
       </div>
     </div>
   )

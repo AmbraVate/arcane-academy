@@ -12,6 +12,7 @@ import LevelUpModal from '../components/layout/LevelUpModal'
 import styles from './QuestPage.module.css'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
+type QuestStage = 'story' | 'coding' | 'complete'
 
 export default function QuestPage() {
   const { id } = useParams<{ id: string }>()
@@ -24,14 +25,17 @@ export default function QuestPage() {
   const [output, setOutput] = useState<OutputLine[]>([{ text: '// Cast your spell to run the code.', type: 'system' }])
   const [testResults, setTestResults] = useState<Map<string, boolean>>(new Map())
   const [running, setRunning] = useState(false)
-  const [solved, setSolved] = useState(false)
   const [mentorFeedback, setMentorFeedback] = useState<string | null>(null)
   const [mentorLoading, setMentorLoading] = useState(false)
   const [mentorErrorType, setMentorErrorType] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
-  const [winStoryVisible, setWinStoryVisible] = useState(false)
-  const [levelUpInfo, setLevelUpInfo] = useState<{level: number; rank: string} | null>(null)
+  const [levelUpInfo, setLevelUpInfo] = useState<{ level: number; rank: string } | null>(null)
+  const [questStage, setQuestStage] = useState<QuestStage>('story')
+  const [questPanelVisible, setQuestPanelVisible] = useState(false)
+  const [activeTab, setActiveTab] = useState<'quest' | 'code'>('quest')
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
+  const storyEndRef = useRef<HTMLDivElement>(null)
+  const questPanelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!id) return
@@ -39,11 +43,23 @@ export default function QuestPage() {
       .then(q => {
         setQuest(q)
         setCode(q.starterCode)
-        if (q.completed) setSolved(true)
+        if (q.completed) setQuestStage('coding')
       })
       .catch(() => navigate('/'))
       .finally(() => setLoading(false))
   }, [id, navigate])
+
+  useEffect(() => {
+    if (!storyEndRef.current || questStage !== 'story') return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setQuestPanelVisible(true)
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(storyEndRef.current)
+    return () => observer.disconnect()
+  }, [quest, questStage])
 
   const showToast = useCallback((msg: string) => {
     setToast(msg)
@@ -76,7 +92,7 @@ export default function QuestPage() {
   }
 
   async function handleSubmit() {
-    if (!quest || running || solved) return
+    if (!quest || running || questStage === 'complete' || quest.completed) return
     setRunning(true)
     setMentorFeedback(null)
     setOutput([{ text: '// Running all test cases...', type: 'system' }])
@@ -85,11 +101,8 @@ export default function QuestPage() {
     try {
       const result: SubmitResponse = await codeApi.submit(quest.id, code)
 
-      // Compile error
       if (result.errorType === 'COMPILE_ERROR') {
-        setOutput([
-          { text: '✗ Spell failed to compile — your code has a syntax error.', type: 'error' },
-        ])
+        setOutput([{ text: '✗ Spell failed to compile — your code has a syntax error.', type: 'error' }])
         setTestResults(new Map())
         setMentorErrorType('COMPILE_ERROR')
         if (result.mentorFeedback) {
@@ -99,7 +112,6 @@ export default function QuestPage() {
         return
       }
 
-      // Runtime error
       if (result.errorType === 'RUNTIME_ERROR') {
         setOutput([
           { text: '✗ Spell compiled but crashed at runtime.', type: 'error' },
@@ -114,7 +126,6 @@ export default function QuestPage() {
         return
       }
 
-      // Test results
       const newResults = new Map<string, boolean>()
       const lines: OutputLine[] = []
 
@@ -130,8 +141,7 @@ export default function QuestPage() {
 
       if (result.allPassed) {
         lines.push({ text: '✓ All test cases passed!', type: 'success' })
-        setSolved(true)
-        setWinStoryVisible(true)
+        setQuestStage('complete')
         if (result.xpEarned > 0) {
           const prevLevel = Math.floor((user?.totalXp ?? 0) / 200) + 1
           updateXp(result.xpEarned)
@@ -139,7 +149,7 @@ export default function QuestPage() {
           const newLevel = Math.floor(newTotalXp / 200) + 1
           showToast(`✦ +${result.xpEarned} XP — Quest Complete!`)
           if (newLevel > prevLevel) {
-            const ranks = ['Novice','Apprentice','Adept','Mage','Archmage']
+            const ranks = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage']
             const newRank = ranks[Math.min(newLevel - 1, ranks.length - 1)]
             setTimeout(() => setLevelUpInfo({ level: newLevel, rank: newRank }), 1200)
           }
@@ -160,9 +170,14 @@ export default function QuestPage() {
     }
   }
 
-  function handleNextQuest() {
-    navigate('/', { replace: true })
+  function handleBackToAcademy() {
+    navigate('/')
     setTimeout(() => window.location.reload(), 50)
+  }
+
+  function handleSkipToQuest() {
+    setQuestPanelVisible(true)
+    questPanelRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   if (loading) {
@@ -176,10 +191,101 @@ export default function QuestPage() {
 
   if (!quest) return null
 
+  const isWon = questStage === 'complete' || quest.completed
+  const isSolved = isWon
+
+  // ── Stage 1: Story View ──────────────────────────────────────────────────────
+  if (questStage === 'story') {
+    return (
+      <div className={styles.storyView}>
+        <div className={styles.storyViewHeader}>
+          <div>
+            <div className={styles.eyebrow}>{quest.eyebrow}</div>
+            <div className={styles.questTitle}>{quest.title}</div>
+          </div>
+          <button className="btn btn-ghost" onClick={handleBackToAcademy} style={{ fontSize: 12 }}>
+            ← Back
+          </button>
+        </div>
+
+        <div className={styles.storyContent}>
+          <StoryPanel beats={quest.story} fullPage />
+          <div ref={storyEndRef} style={{ height: 1 }} aria-hidden="true" />
+
+          <div
+            ref={questPanelRef}
+            className={`${styles.questPanel} ${questPanelVisible ? styles.questPanelVisible : ''}`}
+          >
+            <div className={styles.problemLabel}>✦ Your Quest</div>
+            <div
+              className={styles.problemText}
+              dangerouslySetInnerHTML={{ __html: quest.problemHtml }}
+            />
+            <TestChips labels={quest.testCaseLabels} results={testResults} />
+            <HintToggle hint={quest.hint} />
+          </div>
+
+          <button className={styles.skipToQuest} onClick={handleSkipToQuest}>
+            Skip to Quest ↓
+          </button>
+        </div>
+
+        <div className={`${styles.actionBar} ${questPanelVisible ? styles.actionBarVisible : ''}`}>
+          <button className="btn btn-ghost" onClick={handleBackToAcademy}>
+            ← Back to Academy
+          </button>
+          <button className="btn btn-primary" onClick={() => setQuestStage('coding')}>
+            {quest.completed ? 'Review Quest →' : '⚡ Accept Quest →'}
+          </button>
+        </div>
+
+        {toast && <div className="toast">{toast}</div>}
+      </div>
+    )
+  }
+
+  // ── Stage 2 / 3: Coding View ─────────────────────────────────────────────────
+  const editorButtons = (
+    <>
+      <button
+        className="btn btn-ghost"
+        onClick={handleRun}
+        disabled={running}
+        style={{ fontSize: 12, padding: '5px 14px' }}
+      >
+        ▶ Run
+      </button>
+      <button
+        className="btn btn-primary"
+        onClick={handleSubmit}
+        disabled={running || isSolved}
+        style={{ fontSize: 12, padding: '5px 14px' }}
+      >
+        {isSolved ? '✓ Solved' : running ? 'Running...' : '⚡ Submit'}
+      </button>
+    </>
+  )
+
   return (
-    <div className={styles.layout}>
-      {/* LEFT: Story + Problem */}
-      <div className={styles.leftPanel}>
+    <div className={styles.codingView}>
+      {/* Mobile tab bar */}
+      <div className={styles.mobileTabBar}>
+        <button
+          className={`${styles.tab} ${activeTab === 'quest' ? styles.tabActive : ''}`}
+          onClick={() => setActiveTab('quest')}
+        >
+          Quest
+        </button>
+        <button
+          className={`${styles.tab} ${activeTab === 'code' ? styles.tabActive : ''}`}
+          onClick={() => setActiveTab('code')}
+        >
+          Code
+        </button>
+      </div>
+
+      {/* LEFT: Quest brief */}
+      <div className={`${styles.leftPanel} ${activeTab === 'code' ? styles.mobileHidden : ''}`}>
         <div className={styles.questHeader}>
           <div className={styles.eyebrow}>{quest.eyebrow}</div>
           <div className={styles.questTitle}>{quest.title}</div>
@@ -189,60 +295,52 @@ export default function QuestPage() {
           </div>
         </div>
 
-        <div className={styles.storyScroll}>
-          <StoryPanel beats={quest.story} />
+        <div className={styles.leftScroll}>
+          {isWon ? (
+            <div className={styles.winPanel}>
+              <div className={styles.resultTitle}>✦ Quest Complete!</div>
+              <div className={styles.resultMsg}>{quest.winStory}</div>
+              <button className="btn btn-success" onClick={handleBackToAcademy}>
+                Return to Academy →
+              </button>
+            </div>
+          ) : (
+            <div className={styles.problemBox}>
+              <div className={styles.problemLabel}>✦ Your Quest</div>
+              <div
+                className={styles.problemText}
+                dangerouslySetInnerHTML={{ __html: quest.problemHtml }}
+              />
+              <TestChips labels={quest.testCaseLabels} results={testResults} />
+              <HintToggle hint={quest.hint} />
+            </div>
+          )}
         </div>
 
-        <div className={styles.problemBox}>
-          <div className={styles.problemLabel}>✦ Your Quest</div>
-          <div
-            className={styles.problemText}
-            dangerouslySetInnerHTML={{ __html: quest.problemHtml }}
-          />
-          <TestChips labels={quest.testCaseLabels} results={testResults} />
-          <HintToggle hint={quest.hint} />
+        <div className={styles.leftFooter}>
+          <button className="btn btn-ghost" onClick={handleBackToAcademy} style={{ fontSize: 12 }}>
+            ← Back to Academy
+          </button>
         </div>
-
-        {winStoryVisible && (
-          <div className={styles.resultBanner}>
-            <div className={styles.resultTitle}>Quest Complete!</div>
-            <div className={styles.resultMsg}>{quest.winStory}</div>
-            <button className="btn btn-success" onClick={handleNextQuest}>
-              Return to Academy →
-            </button>
-          </div>
-        )}
       </div>
 
       {/* RIGHT: Editor + Output + AI */}
-      <div className={styles.rightPanel}>
+      <div className={`${styles.rightPanel} ${activeTab === 'quest' ? styles.mobileHidden : ''}`}>
         <div className={styles.editorHeader}>
           <span className={styles.filename}>☽ {quest.filename}</span>
-          <div className={styles.editorActions}>
-            <button
-              className="btn btn-ghost"
-              onClick={handleRun}
-              disabled={running}
-              style={{ fontSize: 12, padding: '5px 14px' }}
-            >
-              ▶ Run
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={handleSubmit}
-              disabled={running || solved}
-              style={{ fontSize: 12, padding: '5px 14px' }}
-            >
-              {solved ? '✓ Solved' : running ? 'Running...' : '⚡ Submit'}
-            </button>
+          <div className={`${styles.editorActions} ${styles.desktopOnly}`}>
+            {editorButtons}
           </div>
         </div>
 
         <CodeEditor value={code} onChange={setCode} />
-
         <OutputPanel lines={output} />
-
         <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+      </div>
+
+      {/* Mobile sticky footer */}
+      <div className={styles.mobileStickyFooter}>
+        {editorButtons}
       </div>
 
       {toast && <div className="toast">{toast}</div>}
