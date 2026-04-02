@@ -10,6 +10,16 @@
   50% { opacity: 0.4; }
 }
 
+@keyframes runningPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes actionBarIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Stage 1: Story View ────────────────────────────────────────────────────── */
 
 .storyView {
@@ -91,7 +101,7 @@
   color: var(--purple-light);
 }
 
-/* Action bar — sticky footer revealed with quest panel */
+/* Action bar — rendered only when quest panel is visible */
 .actionBar {
   flex-shrink: 0;
   display: flex;
@@ -100,14 +110,30 @@
   padding: 14px 24px;
   border-top: 1px solid var(--border);
   background: var(--bg);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
+  animation: actionBarIn 0.35s ease;
 }
 
-.actionBarVisible {
-  opacity: 1;
-  pointer-events: auto;
+/* Accept Quest — primary CTA, elevated prominence */
+.acceptBtn {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+  font-size: 13px;
+  padding: 10px 26px;
+  border-radius: 6px;
+  border: 1px solid var(--gold);
+  background: var(--gold-dim, #4a3a0a);
+  color: var(--gold);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.acceptBtn:hover {
+  background: #6b5012;
+  box-shadow: 0 0 16px rgba(201, 162, 39, 0.3);
+}
+
+.acceptBtn:active {
+  transform: scale(0.97);
 }
 
 /* ── Stage 2/3: Coding View ──────────────────────────────────────────────────── */
@@ -261,6 +287,25 @@
   gap: 8px;
 }
 
+/* Solved state — success green, not disabled-grey */
+.btnSolved {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--green);
+  background: #061a0c;
+  color: var(--green);
+  cursor: default;
+  opacity: 1;
+}
+
+/* Running state pulse on the Run button */
+.btnRunning {
+  animation: runningPulse 1s ease-in-out infinite;
+}
+
 /* ── Mobile tab bar & sticky footer ─────────────────────────────────────────── */
 
 .mobileTabBar {
@@ -402,11 +447,17 @@
   }
 
   .storyContent {
-    padding: 20px 16px 80px;
+    padding: 20px 16px 40px;
   }
 
   .actionBar {
     padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .acceptBtn {
+    flex: 1;
+    text-align: center;
   }
 
   .skipToQuest {

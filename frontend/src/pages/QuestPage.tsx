@@ -203,9 +203,6 @@ export default function QuestPage() {
             <div className={styles.eyebrow}>{quest.eyebrow}</div>
             <div className={styles.questTitle}>{quest.title}</div>
           </div>
-          <button className="btn btn-ghost" onClick={handleBackToAcademy} style={{ fontSize: 12 }}>
-            ← Back
-          </button>
         </div>
 
         <div className={styles.storyContent}>
@@ -225,19 +222,23 @@ export default function QuestPage() {
             <HintToggle hint={quest.hint} />
           </div>
 
-          <button className={styles.skipToQuest} onClick={handleSkipToQuest}>
-            Skip to Quest ↓
-          </button>
+          {!questPanelVisible && (
+            <button className={styles.skipToQuest} onClick={handleSkipToQuest}>
+              Skip to Quest ↓
+            </button>
+          )}
         </div>
 
-        <div className={`${styles.actionBar} ${questPanelVisible ? styles.actionBarVisible : ''}`}>
-          <button className="btn btn-ghost" onClick={handleBackToAcademy}>
-            ← Back to Academy
-          </button>
-          <button className="btn btn-primary" onClick={() => setQuestStage('coding')}>
-            {quest.completed ? 'Review Quest →' : '⚡ Accept Quest →'}
-          </button>
-        </div>
+        {questPanelVisible && (
+          <div className={styles.actionBar}>
+            <button className="btn btn-ghost" onClick={handleBackToAcademy}>
+              ← Back to Academy
+            </button>
+            <button className={styles.acceptBtn} onClick={() => setQuestStage('coding')}>
+              {quest.completed ? 'Review Quest →' : '⚡ Accept Quest →'}
+            </button>
+          </div>
+        )}
 
         {toast && <div className="toast">{toast}</div>}
       </div>
@@ -248,20 +249,21 @@ export default function QuestPage() {
   const editorButtons = (
     <>
       <button
-        className="btn btn-ghost"
+        className={`btn btn-ghost ${running ? styles.btnRunning : ''}`}
         onClick={handleRun}
         disabled={running}
         style={{ fontSize: 12, padding: '5px 14px' }}
       >
-        ▶ Run
+        {running ? '⟳ Running…' : '▶ Run'}
       </button>
       <button
-        className="btn btn-primary"
+        className={isSolved ? styles.btnSolved : 'btn btn-primary'}
         onClick={handleSubmit}
         disabled={running || isSolved}
         style={{ fontSize: 12, padding: '5px 14px' }}
+        aria-label={isSolved ? 'Quest solved' : 'Submit your solution'}
       >
-        {isSolved ? '✓ Solved' : running ? 'Running...' : '⚡ Submit'}
+        {isSolved ? '✓ Solved' : running ? '⟳ Running…' : '⚡ Submit'}
       </button>
     </>
   )
