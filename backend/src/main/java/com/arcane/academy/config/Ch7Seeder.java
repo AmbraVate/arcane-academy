@@ -1,26 +1,24 @@
 package com.arcane.academy.config;
 
-import com.arcane.academy.model.Boss;
-import com.arcane.academy.model.Quest;
-import com.arcane.academy.repository.BossRepository;
 import com.arcane.academy.repository.QuestRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-/**
- * Chapter VII — The Interview Gauntlet
- * Classic junior Java interview problems under timed conditions.
- */
+// ══════════════════════════════════════════════════════════════════════════════
+// CHAPTER VII — THE INTERVIEW GAUNTLET
+// Classic junior Java interview problems under timed conditions.
+// ══════════════════════════════════════════════════════════════════════════════
 @Component
-@RequiredArgsConstructor
-public class Ch7Seeder {
-    private final QuestRepository repo;
-    private final BossRepository bossRepo;
+public class Ch7Seeder extends AbstractChapterSeeder {
 
-    void seed() {
+    public Ch7Seeder(QuestRepository questRepository) {
+        super(questRepository);
+    }
 
-        save("ch7-q1","FizzBuzz","Chapter VII · Quest 1","Classic Interview Problem",7,1,200,"FizzBuzz.java",
-          s(
+    @Override
+    public void seed() {
+
+        q("ch7-q1","FizzBuzz","Chapter VII · Quest 1","Classic Interview Problem",7,1,200,"FizzBuzz.java",
+          story(
             n("The Interview Gauntlet — the final proving ground. Beyond this chamber lies the working world. Hundreds of thousands of developers have passed through rooms like this one, given exactly this problem, on exactly this kind of morning. The examiner across the table doesn't need you to explain it. They just need to see you solve it."),
             d("🧑‍💼","npc","The Examiner","s-npc","FizzBuzz. Print numbers 1 to 30. Multiples of 3: Fizz. Multiples of 5: Buzz. Multiples of both: FizzBuzz. Anything else: the number. You have five minutes."),
             d("🧙","mentor","Master Velan","s-mentor","The key is the order of checks. Test for divisibility by both 3 and 5 first — otherwise your code will print Fizz for 15 instead of FizzBuzz. Use the modulo operator <em>%</em> — it gives you the remainder after division. If <em>n % 3 == 0</em>, n divides evenly by 3."),
@@ -34,8 +32,8 @@ public class Ch7Seeder {
           "The examiner watches the output scroll by. 15: FizzBuzz. 30: FizzBuzz. Every number correct. \"Clean. Correct. First try. Good.\" A tick goes on the pad.",
           tests(test("15=FizzBuzz","null","FizzBuzz"),test("9=Fizz","null","Fizz"),test("10=Buzz","null","Buzz"),test("7=7","null","7")));
 
-        save("ch7-q2","Palindrome Check","Chapter VII · Quest 2","String Manipulation",7,2,200,"Palindrome.java",
-          s(
+        q("ch7-q2","Palindrome Check","Chapter VII · Quest 2","String Manipulation",7,2,200,"Palindrome.java",
+          story(
             n("The examiner flips to the next page. A new problem."),
             d("🧑‍💼","npc","The Examiner","s-npc","Write a method that checks if a word is a palindrome. A palindrome reads the same forwards and backwards. 'racecar' is one. 'hello' is not. Return a boolean. Don't use any built-in reverse method."),
             d("🧙","mentor","Master Velan","s-mentor","The approach: compare the first character with the last, the second with the second-to-last, and so on, until you reach the middle. If any pair doesn't match, it's not a palindrome. If all pairs match, it is."),
@@ -49,8 +47,8 @@ public class Ch7Seeder {
           "Three results. True. False. True. The examiner circles something on the pad. \"Correct algorithm. Good choice of approach.\"",
           tests(test("racecar=true","null","true"),test("hello=false","null","false"),test("madam=true","null","true")));
 
-        save("ch7-q3","Fibonacci Sequence","Chapter VII · Quest 3","Loops & Sequences",7,3,200,"Fibonacci.java",
-          s(
+        q("ch7-q3","Fibonacci Sequence","Chapter VII · Quest 3","Loops & Sequences",7,3,200,"Fibonacci.java",
+          story(
             n("The examiner's third question. The room is quiet. You are in the zone."),
             d("🧑‍💼","npc","The Examiner","s-npc","Print the first 10 numbers of the Fibonacci sequence. Each number is the sum of the two before it. Starts: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34."),
             d("🧙","mentor","Master Velan","s-mentor","The pattern: track two values — the previous and the current. Each iteration: print current, then compute next as previous + current, then shift: previous becomes current, current becomes next."),
@@ -63,8 +61,8 @@ public class Ch7Seeder {
           "Ten numbers appear in sequence, each correctly the sum of the two before it. \"Iterative. Efficient. Correct.\"",
           tests(test("Starts 0","null","0"),test("Has 8","null","8"),test("Ends 34","null","34")));
 
-        save("ch7-q4","Reverse an Array","Chapter VII · Quest 4","Array Manipulation",7,4,200,"ReverseArray.java",
-          s(
+        q("ch7-q4","Reverse an Array","Chapter VII · Quest 4","Array Manipulation",7,4,200,"ReverseArray.java",
+          story(
             n("Question four."),
             d("🧑‍💼","npc","The Examiner","s-npc","Reverse an integer array in-place. No creating a second array. The original array should be reversed when you're done."),
             d("🧙","mentor","Master Velan","s-mentor","In-place reversal uses the two-pointer technique again. Swap the first and last elements, then the second and second-to-last, closing in until the pointers meet. You need a temporary variable to hold one value during the swap."),
@@ -77,8 +75,8 @@ public class Ch7Seeder {
           "\"5 4 3 2 1.\" The examiner marks it. \"In-place. No extra memory. Clean swap. Exactly right.\"",
           tests(test("Reversed","null","5 4 3 2 1")));
 
-        save("ch7-q5","Count Word Frequency","Chapter VII · Quest 5","Real-World Problem",7,5,250,"WordFrequency.java",
-          s(
+        q("ch7-q5","Count Word Frequency","Chapter VII · Quest 5","Real-World Problem",7,5,250,"WordFrequency.java",
+          story(
             n("The final question. The hardest one. The examiner leans forward."),
             d("🧑‍💼","npc","The Examiner","s-npc","Given an array of words, count how many times each unique word appears. Print each word and its count. This is a real problem you will solve your first week on the job."),
             d("🧙","mentor","Master Velan","s-mentor","We use a <em>HashMap</em> — a data structure that maps keys to values. Each word is a key; its count is the value. For each word in the array, check if it's already in the map. If yes, increment the count. If no, add it with count 1."),
@@ -91,37 +89,5 @@ public class Ch7Seeder {
           "import java.util.HashMap;\n\npublic class WordFrequency {\n    public static void main(String[] args) {\n        String[] words = {\"apple\",\"banana\",\"apple\",\"cherry\",\"banana\",\"apple\"};\n\n        // Build frequency map\n\n\n        // Print each word and its count\n\n    }\n}\n",
           "Three entries appear. Apple: 3. Banana: 2. Cherry: 1. The examiner sets down the pen. \"HashMap. Correct approach. Linear time. You know your data structures.\" A long pause. \"We'll be in touch.\"",
           tests(test("apple: 3","null","apple: 3"),test("banana: 2","null","banana: 2"),test("cherry: 1","null","cherry: 1")));
-
-        // Chapter VII boss
-        bossRepo.save(Boss.builder()
-            .id("ch7-boss").name("The Senior Engineer").glyph("💼").chapterNumber(7).xpReward(500)
-            .intro("The Senior Engineer leans back in her chair. 'I don't care about perfect answers. I care about how you think. Let's find out.'")
-            .questionsJson("[{\"id\":\"c7q1\",\"type\":\"multiple_choice\",\"question\":\"What does the % operator return?\",\"options\":[\"The quotient of division\",\"The remainder after division\",\"The square root\",\"The absolute value\"],\"correct\":\"The remainder after division\",\"explanation\":\"% is the modulo operator. 10 % 3 = 1 because 10 / 3 = 3 remainder 1. It's used constantly for divisibility checks.\"},{\"id\":\"c7q2\",\"type\":\"be_the_compiler\",\"question\":\"What does isPalindrome(\\\"a\\\") return?\\n\\nstatic boolean isPalindrome(String s) {\\n    int l=0, r=s.length()-1;\\n    while(l < r) {\\n        if(s.charAt(l) != s.charAt(r)) return false;\\n        l++; r--;\\n    }\\n    return true;\\n}\",\"options\":[\"true\",\"false\",\"Error\",\"null\"],\"correct\":\"true\",\"explanation\":\"For a single character, l=0 and r=0. The condition l < r is immediately false so the loop never runs. return true is reached directly.\"},{\"id\":\"c7q3\",\"type\":\"fill_blank\",\"question\":\"Fill the blank to check if a HashMap contains a key:\",\"code\":\"if (map.____________(word)) { ... }\",\"correct\":\"containsKey\",\"explanation\":\"containsKey(key) returns true if the map has an entry with that key. It's the standard way to check before getting or updating a value.\"},{\"id\":\"c7q4\",\"type\":\"multiple_choice\",\"question\":\"Why is an in-place array reversal better than creating a second array?\",\"options\":[\"It's faster to execute\",\"It uses O(1) extra memory instead of O(n)\",\"It's easier to code\",\"Java requires it\"],\"correct\":\"It uses O(1) extra memory instead of O(n)\",\"explanation\":\"In-place algorithms use a constant amount of extra space regardless of input size. Creating a second array needs space proportional to the input — O(n). Interviewers value memory efficiency.\"},{\"id\":\"c7q5\",\"type\":\"multiple_choice\",\"question\":\"What is the average time complexity of HashMap.get() and HashMap.put()?\",\"options\":[\"O(n)\",\"O(log n)\",\"O(1)\",\"O(n²)\"],\"correct\":\"O(1)\",\"explanation\":\"Hash maps use a hash function to map keys directly to memory positions, so get and put are constant time on average — the same speed whether the map has 10 or 10 million entries.\"}]")
-            .build());
-    }
-
-    private void save(String id, String title, String eyebrow, String topic,
-                      int ch, int ord, int xp, String file,
-                      String story, String problem, String hint, String starter,
-                      String win, String tests) {
-        repo.save(Quest.builder().id(id).title(title).eyebrow(eyebrow).topic(topic)
-            .chapterNumber(ch).orderInChapter(ord).xpReward(xp).filename(file)
-            .storyJson(story).problemHtml(problem).hint(hint)
-            .starterCode(starter).winStory(win).testCasesJson(tests).build());
-    }
-    private String s(String... b) { return "[" + String.join(",", b) + "]"; }
-    private String n(String t) { return "{\"type\":\"narration\",\"text\":\"" + esc(t) + "\"}"; }
-    private String d(String av, String cls, String sp, String sc, String t) {
-        return "{\"type\":\"dialogue\",\"av\":\""+av+"\",\"cls\":\""+cls+"\",\"speaker\":\""+sp+"\",\"sCls\":\""+sc+"\",\"text\":\""+esc(t)+"\"}";
-    }
-    private String e(String label, String code) {
-        return "{\"type\":\"example\",\"speaker\":\""+esc(label)+"\",\"text\":\""+esc(code)+"\"}";
-    }
-    private String tests(String... ts) { return "[" + String.join(",", ts) + "]"; }
-    private String test(String label, String input, String expected) {
-        return "{\"label\":\""+label+"\",\"input\":"+("null".equals(input)?"null":"\""+esc(input)+"\"")+",\"expected\":\""+esc(expected)+"\"}";
-    }
-    private String esc(String s) {
-        return s.replace("\\","\\\\").replace("\"","\\\"").replace("\n","\\n").replace("\t","\\t");
     }
 }

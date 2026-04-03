@@ -1,19 +1,23 @@
 package com.arcane.academy.config;
 
-import com.arcane.academy.model.Quest;
 import com.arcane.academy.repository.QuestRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CHAPTER III — ARCANE STRUCTURES
+// ══════════════════════════════════════════════════════════════════════════════
 @Component
-@RequiredArgsConstructor
-public class Ch3Seeder {
-    private final QuestRepository repo;
+public class Ch3Seeder extends AbstractChapterSeeder {
 
-    void seed() {
+    public Ch3Seeder(QuestRepository questRepository) {
+        super(questRepository);
+    }
 
-        save("ch3-q1","The Crystal Shelf","Chapter III · Quest 1","Arrays",3,1,130,"CrystalShelf.java",
-          s(
+    @Override
+    public void seed() {
+
+        q("ch3-q1","The Crystal Shelf","Chapter III · Quest 1","Arrays",3,1,130,"CrystalShelf.java",
+          story(
             n("The Armoury of Echoes. Hundreds of crystal vials in numbered slots on a long shelf. Pip the apprentice is frantic — he's been tracking five ingredients using five separate variables and keeps confusing them."),
             d("🧒","npc","Pip","s-npc","I have potionA, potionB, potionC, potionD, potionE... I mix them up constantly. There has to be a better way to group things that belong together."),
             d("🧙","mentor","Master Velan","s-mentor","There is. An <em>array</em> stores multiple values of the same type under a single name, in numbered slots. Instead of five separate variables, you have one array with five positions."),
@@ -31,8 +35,8 @@ public class Ch3Seeder {
           "All five ingredients appear in perfect order on Pip's manifest. He stares at the code. \"One name. Five slots. Starting at zero. Why didn't anyone tell me sooner?\"",
           tests(test("Moonpetal","null","Moonpetal"),test("Dragonscale","null","Dragonscale"),test("Emberroot","null","Emberroot"),test("Total","null","Total: 5")));
 
-        save("ch3-q2","The Tome of Totals","Chapter III · Quest 2","Array Operations",3,2,130,"ArrayOps.java",
-          s(
+        q("ch3-q2","The Tome of Totals","Chapter III · Quest 2","Array Operations",3,2,130,"ArrayOps.java",
+          story(
             n("The Calculation Hall. A scroll shows seven potion strengths measured this morning. The Head Alchemist needs the total and the average before the batch can be approved for distribution."),
             d("⚗️","npc","Alchemist Voryn","s-npc","Seven readings. I need the sum and the average. The average must be precise to one decimal place — we can't have rounding errors in potion dosage."),
             d("🧙","mentor","Master Velan","s-mentor","The sum pattern is one of the most common in programming. Declare a variable outside the loop set to zero, then add each element to it inside the loop. After the loop, it holds the total."),
@@ -49,8 +53,8 @@ public class Ch3Seeder {
           "Voryn reads the two values and checks his own calculations. \"86 total. 12.3 average. Consistent batch. Approved for distribution.\"",
           tests(test("Sum=86","null","86"),test("Avg=12.3","null","12.3")));
 
-        save("ch3-q3","The Scroll of Lists","Chapter III · Quest 3","ArrayList",3,3,130,"ScrollOfLists.java",
-          s(
+        q("ch3-q3","The Scroll of Lists","Chapter III · Quest 3","ArrayList",3,3,130,"ScrollOfLists.java",
+          story(
             n("The Library Annexe. Librarian Fen has a problem arrays can't solve: she doesn't know how many graduates there will be this year. Arrays require a fixed size at creation. What she needs is something that grows."),
             d("📚","npc","Librarian Fen","s-npc","I can't declare an array of graduates before I know how many there are. Last year we had 8, the year before 14, this year could be anything. I need a list that expands."),
             d("🧙","mentor","Master Velan","s-mentor","That is exactly what <em>ArrayList</em> is. It's part of Java's collections framework — a resizable list that grows automatically as you add items. You import it at the top of your file, then declare it with the type it holds in angle brackets."),
@@ -66,8 +70,8 @@ public class Ch3Seeder {
           "Three names appear on the graduation scroll in the library register. Fen stamps each one. \"Register complete. Expandable, ordered, and clear. This is how records should be kept.\"",
           tests(test("Size=3","null","3"),test("Aldric listed","null","Aldric"),test("Finn listed","null","Finn")));
 
-        save("ch3-q4","The Spell Codex","Chapter III · Quest 4","Methods",3,4,140,"SpellCodex.java",
-          s(
+        q("ch3-q4","The Spell Codex","Chapter III · Quest 4","Methods",3,4,140,"SpellCodex.java",
+          story(
             n("The Grand Codex Hall. Every spell ever mastered by an Academy graduate is recorded here — but not written out in full each time it's used. It's defined once, given a name, and invoked by that name whenever needed. This is the principle of reusability."),
             d("🧝","npc","Enchantress Lyra","s-npc","Before I came here, I wrote the same greeting code every time I needed to greet someone. Twelve lines repeated forty times. A single change meant finding and fixing forty copies. Never again."),
             d("🧙","mentor","Master Velan","s-mentor","A <em>method</em> is a named block of code. You define it once, outside main. Then you <em>call</em> it by name from anywhere in the program — as many times as you need. Change the method once and every call benefits."),
@@ -84,8 +88,8 @@ public class Ch3Seeder {
           "Both entries appear in the Codex in flowing script. Lyra reads them. \"Clean parameters, correct return type. You've grasped the essence of reusability.\"",
           tests(test("Greeting","null","Welcome, Kael! Level 7."),test("Sum=20","null","20")));
 
-        save("ch3-q5","The Recursion Obelisk","Chapter III · Quest 5","Recursion",3,5,160,"RecursionObelisk.java",
-          s(
+        q("ch3-q5","The Recursion Obelisk","Chapter III · Quest 5","Recursion",3,5,160,"RecursionObelisk.java",
+          story(
             n("The Obelisk of Endless Reflection stands at the Academy's eastern edge. It is said to show its own reflection, which shows another reflection, which shows another — but always stopping at exactly the right moment. This is recursion made stone."),
             d("🧙","mentor","Master Velan","s-mentor","A <em>recursive</em> method is one that calls itself. At first this seems paradoxical — how can something define itself? The answer is the <em>base case</em>: a condition that makes the method stop calling itself and return a direct answer."),
             e("Recursion — Classic Factorial",
@@ -101,30 +105,5 @@ public class Ch3Seeder {
           "public class RecursionObelisk {\n\n    static int factorial(int n) {\n        // If n is 1 or less, return 1 (base case)\n\n        // Otherwise return n times factorial(n - 1)\n\n    }\n\n    public static void main(String[] args) {\n        System.out.println(factorial(5));\n        System.out.println(factorial(1));\n    }\n}\n",
           "The Obelisk reflects five times, each layer multiplying the one before. Then it collapses back to one. \"120,\" it intones. \"The infinite made finite by a single condition.\"",
           tests(test("factorial(5)=120","null","120"),test("factorial(1)=1","null","1")));
-    }
-
-    private void save(String id, String title, String eyebrow, String topic,
-                      int ch, int ord, int xp, String file,
-                      String story, String problem, String hint, String starter,
-                      String win, String tests) {
-        repo.save(Quest.builder().id(id).title(title).eyebrow(eyebrow).topic(topic)
-            .chapterNumber(ch).orderInChapter(ord).xpReward(xp).filename(file)
-            .storyJson(story).problemHtml(problem).hint(hint)
-            .starterCode(starter).winStory(win).testCasesJson(tests).build());
-    }
-    private String s(String... b) { return "[" + String.join(",", b) + "]"; }
-    private String n(String t) { return "{\"type\":\"narration\",\"text\":\"" + esc(t) + "\"}"; }
-    private String d(String av, String cls, String sp, String sc, String t) {
-        return "{\"type\":\"dialogue\",\"av\":\""+av+"\",\"cls\":\""+cls+"\",\"speaker\":\""+sp+"\",\"sCls\":\""+sc+"\",\"text\":\""+esc(t)+"\"}";
-    }
-    private String e(String label, String code) {
-        return "{\"type\":\"example\",\"speaker\":\""+esc(label)+"\",\"text\":\""+esc(code)+"\"}";
-    }
-    private String tests(String... ts) { return "[" + String.join(",", ts) + "]"; }
-    private String test(String label, String input, String expected) {
-        return "{\"label\":\""+label+"\",\"input\":"+("null".equals(input)?"null":"\""+esc(input)+"\"")+",\"expected\":\""+esc(expected)+"\"}";
-    }
-    private String esc(String s) {
-        return s.replace("\\","\\\\").replace("\"","\\\"").replace("\n","\\n").replace("\t","\\t");
     }
 }

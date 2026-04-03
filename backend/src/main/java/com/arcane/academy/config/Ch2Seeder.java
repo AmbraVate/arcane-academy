@@ -1,19 +1,23 @@
 package com.arcane.academy.config;
 
-import com.arcane.academy.model.Quest;
 import com.arcane.academy.repository.QuestRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+// ══════════════════════════════════════════════════════════════════════════════
+// CHAPTER II — THE CONTROL TOME
+// ══════════════════════════════════════════════════════════════════════════════
 @Component
-@RequiredArgsConstructor
-public class Ch2Seeder {
-    private final QuestRepository repo;
+public class Ch2Seeder extends AbstractChapterSeeder {
 
-    void seed() {
+    public Ch2Seeder(QuestRepository questRepository) {
+        super(questRepository);
+    }
 
-        save("ch2-q1","The Oracle's Fork","Chapter II · Quest 1","If / Else",2,1,120,"OraclesFork.java",
-          s(
+    @Override
+    public void seed() {
+
+        q("ch2-q1","The Oracle's Fork","Chapter II · Quest 1","If / Else",2,1,120,"OraclesFork.java",
+          story(
             n("The Bridge of Aethon spans a bottomless chasm shrouded in mist. You've heard about it from older students — a legendary checkpoint that separates those who can think logically from those who cannot. The Bridge Keeper materialises from the fog, a tall cloaked figure whose face you cannot see."),
             d("🧟","enemy","The Bridge Keeper","s-enemy","I judge every traveller by their gold. Three rules. Three outcomes. You will write the logic or you will not cross."),
             d("🧙","mentor","Master Velan","s-mentor","This is where we meet the <em>if statement</em> — Java's most fundamental decision tool. An if statement asks a question. If the answer is true, it runs the code inside its curly braces. If false, it skips it."),
@@ -31,8 +35,8 @@ public class Ch2Seeder {
           "The bridge lowers with a grinding rumble. The Keeper steps aside without a word. \"Logical. Correct. All three travellers judged properly. Pass.\"",
           tests(test("coins=35","int coins = 35;","Pay the toll."),test("coins=75","int coins = 75;","You may pass freely."),test("coins=3","int coins = 3;","Turn back.")));
 
-        save("ch2-q2","The Sorting Sigil","Chapter II · Quest 2","Switch Statements",2,2,120,"SortingSigil.java",
-          s(
+        q("ch2-q2","The Sorting Sigil","Chapter II · Quest 2","Switch Statements",2,2,120,"SortingSigil.java",
+          story(
             n("The Sorting Chamber. Every new student is assessed for elemental affinity and routed to the corresponding house. This happens dozens of times a day, and the sorting mechanism must be fast and readable. Headmistress Aldara has been using a chain of if-else statements, but it's getting unwieldy."),
             d("🎓","npc","Headmistress Aldara","s-npc","Four affinities, four houses. The if-else chain works, but it's twelve lines for four options and grows every time we add a new affinity. There must be a cleaner spell."),
             d("🧙","mentor","Master Velan","s-mentor","There is. A <em>switch statement</em> compares one variable against multiple specific values. It's much cleaner than chaining else-if when you're checking the same variable each time."),
@@ -48,8 +52,8 @@ public class Ch2Seeder {
           "The Sorting Sigil pulses five times — once for each test affinity. Aldara watches each result appear and nods. \"Clean. Readable. Exactly right.\"",
           tests(test("Fire","String affinity = \"Fire\";","Emberhall"),test("Water","String affinity = \"Water\";","Tidespire"),test("Earth","String affinity = \"Earth\";","Stoneward"),test("Air","String affinity = \"Air\";","Skyveil"),test("Shadow","String affinity = \"Shadow\";","General Intake")));
 
-        save("ch2-q3","The Clock Tower","Chapter II · Quest 3","While Loops",2,3,120,"ClockTower.java",
-          s(
+        q("ch2-q3","The Clock Tower","Chapter II · Quest 3","While Loops",2,3,120,"ClockTower.java",
+          story(
             n("The Academy's Clock Tower rises seven storeys into the sky. Every hour, it strikes a bell — but the enchantment that drives it was written by a careless apprentice three centuries ago and nobody has dared touch it since. Clockmaster Fen needs it rewritten, cleanly, from scratch."),
             d("🕰️","npc","Clockmaster Fen","s-npc","The mechanism is simple. Start at one. Strike. Check if we've reached five. If not, add one and strike again. Keep going until we've struck exactly five times. Then stop."),
             d("🧙","mentor","Master Velan","s-mentor","What Fen describes is a <em>while loop</em>. It repeats a block of code for as long as a condition remains true. The moment the condition becomes false, the loop stops and execution continues after it."),
@@ -67,8 +71,8 @@ public class Ch2Seeder {
           "The tower strikes five times, each bell tone clear and steady. Then silence. Fen marks his ledger. \"Perfectly cadenced. Not a tick wasted.\"",
           tests(test("Prints 1","null","1"),test("Prints 5","null","5"),test("Clock resting","null","Clock resting.")));
 
-        save("ch2-q4","The Tower of Echoes","Chapter II · Quest 4","For Loops",2,4,120,"ForLoop.java",
-          s(
+        q("ch2-q4","The Tower of Echoes","Chapter II · Quest 4","For Loops",2,4,120,"ForLoop.java",
+          story(
             n("The Tower of Echoes — five floors, each sealed by an ancient curse that demands a chant spoken a specific number of times. The while loop works for any repetition, but when you know the exact count ahead of time, Java offers a more precise instrument."),
             d("🚪","enemy","The Sealed Door","s-enemy","FIVE ECHOES. EXACTLY FIVE. THE CURSE COUNTS EVERY SYLLABLE."),
             d("🧙","mentor","Master Velan","s-mentor","A <em>for loop</em> is purpose-built for counted repetition. It packs three things into one line: where to start, when to stop, and how to step. This makes the intent crystal clear to anyone reading your code."),
@@ -86,8 +90,8 @@ public class Ch2Seeder {
           "Five echoes ring through the tower. Each floor seal cracks open in sequence. A deep boom as the final door swings free. \"Five perfect echoes,\" the stone walls whisper.",
           tests(test("Echo 1","null","Echo 1"),test("Echo 3","null","Echo 3"),test("Echo 5","null","Echo 5"),test("Tower unlocked","null","Tower unlocked.")));
 
-        save("ch2-q5","The Nested Labyrinth","Chapter II · Quest 5","Nested Loops",2,5,140,"NestedLoops.java",
-          s(
+        q("ch2-q5","The Nested Labyrinth","Chapter II · Quest 5","Nested Loops",2,5,140,"NestedLoops.java",
+          story(
             n("The deepest section of the Academy — the Nested Labyrinth. A grid of nine sealed rooms arranged in three rows and three columns. To clear the curse, you must visit every room in order: row by row, column by column. One loop alone cannot do this."),
             d("🧙","mentor","Master Velan","s-mentor","When you need to iterate over a two-dimensional structure — rows and columns, a grid, a table — you need a <em>nested loop</em>: a loop inside another loop. The outer loop handles one dimension, the inner loop handles the other."),
             e("Nested Loops — Grid Pattern",
@@ -103,31 +107,5 @@ public class Ch2Seeder {
           "// Use nested for loops\n// Outer loop for rows 1-3, inner loop for columns 1-3\n\n",
           "All nine seals break in rapid sequence, light flooding every room simultaneously. The Labyrinth Keeper bows: \"No room unvisited. Precise and methodical.\"",
           tests(test("Room 1-1","null","Room 1-1"),test("Room 2-3","null","Room 2-3"),test("Room 3-3","null","Room 3-3")));
-    }
-
-    private void save(String id, String title, String eyebrow, String topic,
-                      int ch, int ord, int xp, String file,
-                      String story, String problem, String hint, String starter,
-                      String win, String tests) {
-        repo.save(Quest.builder().id(id).title(title).eyebrow(eyebrow).topic(topic)
-            .chapterNumber(ch).orderInChapter(ord).xpReward(xp).filename(file)
-            .storyJson(story).problemHtml(problem).hint(hint)
-            .starterCode(starter).winStory(win).testCasesJson(tests).build());
-    }
-
-    private String s(String... b) { return "[" + String.join(",", b) + "]"; }
-    private String n(String t) { return "{\"type\":\"narration\",\"text\":\"" + esc(t) + "\"}"; }
-    private String d(String av, String cls, String sp, String sc, String t) {
-        return "{\"type\":\"dialogue\",\"av\":\""+av+"\",\"cls\":\""+cls+"\",\"speaker\":\""+sp+"\",\"sCls\":\""+sc+"\",\"text\":\""+esc(t)+"\"}";
-    }
-    private String e(String label, String code) {
-        return "{\"type\":\"example\",\"speaker\":\""+esc(label)+"\",\"text\":\""+esc(code)+"\"}";
-    }
-    private String tests(String... ts) { return "[" + String.join(",", ts) + "]"; }
-    private String test(String label, String input, String expected) {
-        return "{\"label\":\""+label+"\",\"input\":"+("null".equals(input)?"null":"\""+esc(input)+"\"")+",\"expected\":\""+esc(expected)+"\"}";
-    }
-    private String esc(String s) {
-        return s.replace("\\","\\\\").replace("\"","\\\"").replace("\n","\\n").replace("\t","\\t");
     }
 }

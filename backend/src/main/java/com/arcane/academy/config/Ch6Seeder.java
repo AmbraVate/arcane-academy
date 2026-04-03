@@ -1,27 +1,25 @@
 package com.arcane.academy.config;
 
-import com.arcane.academy.model.Boss;
-import com.arcane.academy.model.Quest;
-import com.arcane.academy.repository.BossRepository;
 import com.arcane.academy.repository.QuestRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-/**
- * Chapter VI — The Capstone Forge
- * Students build a complete Task Manager application step by step,
- * ending with a project they can show to employers.
- */
+// ══════════════════════════════════════════════════════════════════════════════
+// CHAPTER VI — THE CAPSTONE FORGE
+// Students build a complete Task Manager application step by step,
+// ending with a project they can show to employers.
+// ══════════════════════════════════════════════════════════════════════════════
 @Component
-@RequiredArgsConstructor
-public class Ch6Seeder {
-    private final QuestRepository repo;
-    private final BossRepository bossRepo;
+public class Ch6Seeder extends AbstractChapterSeeder {
 
-    void seed() {
+    public Ch6Seeder(QuestRepository questRepository) {
+        super(questRepository);
+    }
 
-        save("ch6-q1","The Blueprint","Chapter VI · Quest 1","Project Planning",6,1,200,"TaskManager.java",
-          s(
+    @Override
+    public void seed() {
+
+        q("ch6-q1","The Blueprint","Chapter VI · Quest 1","Project Planning",6,1,200,"TaskManager.java",
+          story(
             n("The Archmage's tower. At the very top, overlooking the entire Academy, sits the Chamber of Final Works. Every wizard who has ever graduated left something here: not a quiz answer, not a practice exercise, but a real creation. Something that exists. Something they built. Now it is your turn."),
             d("⚡","npc","The Archmage","s-npc","Exercises teach you the moves. Projects show you can play the game. Every spell you have learned — variables, loops, methods, classes — comes together here. You will build a Task Manager: a program that stores, lists, and manages tasks."),
             d("🧙","mentor","Master Velan","s-mentor","We start at the beginning: a Task class. In real software development, you always model your data first. What does a task have? A title. A description. A completion status. A unique ID."),
@@ -37,8 +35,8 @@ public class Ch6Seeder {
           "Two tasks materialise in the Chamber of Final Works, their IDs assigned automatically. The Archmage nods. \"The model is correct. Now we build on it.\"",
           tests(test("Task 1","null","1. [OPEN] Learn Java"),test("Task 2","null","2. [OPEN] Build a project")));
 
-        save("ch6-q2","The Task Registry","Chapter VI · Quest 2","ArrayList & Methods",6,2,200,"TaskManager.java",
-          s(
+        q("ch6-q2","The Task Registry","Chapter VI · Quest 2","ArrayList & Methods",6,2,200,"TaskManager.java",
+          story(
             n("The first stone is laid. Now the Task Manager needs to store tasks and provide operations on them. A real application doesn't just create objects — it organises them into collections and provides ways to add, list, and update them."),
             d("🧙","mentor","Master Velan","s-mentor","We build a <em>TaskManager</em> class that wraps an ArrayList of Tasks. Each operation becomes a method: addTask, listTasks, completeTask. This is how professional software is structured — behaviour grouped with the data it operates on."),
             e("TaskManager Class Shell",
@@ -53,8 +51,8 @@ public class Ch6Seeder {
           "The registry holds three tasks. When task 2 is completed, it lights green in the display. The Archmage: \"A working registry. This is the core of every task management system ever written.\"",
           tests(test("DONE task 2","null","2. [DONE] Build a project"),test("OPEN task 1","null","1. [OPEN] Learn Java"),test("OPEN task 3","null","3. [OPEN] Get a job")));
 
-        save("ch6-q3","The Exception Ward","Chapter VI · Quest 3","Exception Handling in Projects",6,3,200,"TaskManager.java",
-          s(
+        q("ch6-q3","The Exception Ward","Chapter VI · Quest 3","Exception Handling in Projects",6,3,200,"TaskManager.java",
+          story(
             n("The Task Manager works — but only when used correctly. What happens when someone tries to complete a task that doesn't exist? What if someone passes a negative ID? Real software must handle these situations gracefully instead of crashing."),
             d("🧙","mentor","Master Velan","s-mentor","We introduce exception handling. Rather than crashing with an ugly error, your completeTask method should detect the problem and respond helpfully. If the ID doesn't exist, print a clear message instead of silently doing nothing."),
             e("Defensive completeTask",
@@ -69,8 +67,8 @@ public class Ch6Seeder {
           "The Archmage tests edge cases methodically. Each invalid input is caught and explained. No crash. \"This is the mark of a professional: handling failure as carefully as success.\"",
           tests(test("Not found msg","null","Task 99 not found"),test("Error msg","null","Error: ID must be positive"),test("Task 1 done","null","1. [DONE] Learn Java")));
 
-        save("ch6-q4","The Final Forge","Chapter VI · Quest 4","Complete Project",6,4,300,"FinalTaskManager.java",
-          s(
+        q("ch6-q4","The Final Forge","Chapter VI · Quest 4","Complete Project",6,4,300,"FinalTaskManager.java",
+          story(
             n("The Chamber of Final Works. The Archmage stands before a blank wall — the place where your creation will be inscribed permanently alongside those of every wizard who came before you. This is the final quest of the course. Put everything together."),
             d("⚡","npc","The Archmage","s-npc","A complete Task Manager. All features, all validation, properly encapsulated. This is what you will show to employers. Not exercises. This."),
             d("🧙","mentor","Master Velan","s-mentor","Everything you have learned comes together here: classes, encapsulation, ArrayList, for loops, method design, defensive programming. The full Task class with private fields and getters. The full TaskManager with all three operations working correctly."),
@@ -84,37 +82,5 @@ public class Ch6Seeder {
           "import java.util.ArrayList;\n\n// Build your complete Task class here\n\n\n// Build your complete TaskManager class here\n\n\npublic class FinalTaskManager {\n    public static void main(String[] args) {\n        // Create TaskManager\n        // Add 4 tasks\n        // Complete tasks 2 and 4\n        // List all tasks\n    }\n}\n",
           "Your code compiles. The output is correct. The wall lights up with your name and the date. The Archmage places a hand on your shoulder. \"You are no longer a student. You have built something real. Put this on GitHub tonight.\"",
           tests(test("Task 1 OPEN","null","1. [OPEN] Write unit tests"),test("Task 2 DONE","null","2. [DONE] Read the docs"),test("Task 3 OPEN","null","3. [OPEN] Review pull requests"),test("Task 4 DONE","null","4. [DONE] Fix the bug")));
-
-        // Chapter VI boss — Project Defence
-        bossRepo.save(com.arcane.academy.model.Boss.builder()
-            .id("ch6-boss").name("The Project Examiner").glyph("📋").chapterNumber(6).xpReward(400)
-            .intro("The Project Examiner reviews your Task Manager with a critical eye. \"I've seen a thousand half-finished projects. Let's see if yours holds up to real questions.\"")
-            .questionsJson("[{\"id\":\"c6q1\",\"type\":\"multiple_choice\",\"question\":\"Why should Task fields be private rather than public?\",\"options\":[\"Private fields run faster\",\"To prevent invalid values being set directly from outside the class\",\"Java requires it\",\"Private fields use less memory\"],\"correct\":\"To prevent invalid values being set directly from outside the class\",\"explanation\":\"Encapsulation protects data integrity. If id were public, anything could change it to -1. With private + a getter, only valid access is possible.\"},{\"id\":\"c6q2\",\"type\":\"be_the_compiler\",\"question\":\"What does the ternary operator produce here?\\n\\nboolean done = true;\\nString status = done ? \\\"[DONE]\\\" : \\\"[OPEN]\\\";\\nSystem.out.println(status);\",\"options\":[\"[OPEN]\",\"[DONE]\",\"true\",\"Error\"],\"correct\":\"[DONE]\",\"explanation\":\"The ternary operator evaluates the condition before ?. If true it returns the first value, if false the second. done is true so [DONE] is returned.\"},{\"id\":\"c6q3\",\"type\":\"fill_blank\",\"question\":\"Fill the blank to check if a list is empty before processing:\",\"code\":\"if (tasks.______() == 0) {\\n    System.out.println(\\\"No tasks\\\");\\n}\",\"correct\":\"size\",\"explanation\":\"ArrayList uses .size() to return its element count, unlike arrays which use .length.\"},{\"id\":\"c6q4\",\"type\":\"multiple_choice\",\"question\":\"What is a 'static' field like nextId used for in the Task class?\",\"options\":[\"It makes the field faster\",\"It belongs to the class itself and is shared across all instances\",\"It prevents the field from being changed\",\"It makes the field accessible from other classes\"],\"correct\":\"It belongs to the class itself and is shared across all instances\",\"explanation\":\"A static field exists once per class, not once per object. All Task objects share nextId, so each new task automatically gets a unique ID.\"},{\"id\":\"c6q5\",\"type\":\"be_the_compiler\",\"question\":\"If you add 3 tasks then call completeTask(99), what happens with this defensive implementation?\\n\\nvoid completeTask(int id) {\\n    boolean found = false;\\n    for(int i=0; i < tasks.size(); i++) {\\n        if(tasks.get(i).getId() == id) {\\n            tasks.get(i).complete();\\n            found = true;\\n        }\\n    }\\n    if(!found) System.out.println(\\\"Task \\\" + id + \\\" not found\\\");\\n}\",\"options\":[\"Crash with exception\",\"Print 'Task 99 not found'\",\"Do nothing silently\",\"Complete all tasks\"],\"correct\":\"Print 'Task 99 not found'\",\"explanation\":\"found stays false because no task has ID 99. After the loop, !found is true so the error message prints. This is defensive programming.\"}]")
-            .build());
-    }
-
-    private void save(String id, String title, String eyebrow, String topic,
-                      int ch, int ord, int xp, String file,
-                      String story, String problem, String hint, String starter,
-                      String win, String tests) {
-        repo.save(Quest.builder().id(id).title(title).eyebrow(eyebrow).topic(topic)
-            .chapterNumber(ch).orderInChapter(ord).xpReward(xp).filename(file)
-            .storyJson(story).problemHtml(problem).hint(hint)
-            .starterCode(starter).winStory(win).testCasesJson(tests).build());
-    }
-    private String s(String... b) { return "[" + String.join(",", b) + "]"; }
-    private String n(String t) { return "{\"type\":\"narration\",\"text\":\"" + esc(t) + "\"}"; }
-    private String d(String av, String cls, String sp, String sc, String t) {
-        return "{\"type\":\"dialogue\",\"av\":\""+av+"\",\"cls\":\""+cls+"\",\"speaker\":\""+sp+"\",\"sCls\":\""+sc+"\",\"text\":\""+esc(t)+"\"}";
-    }
-    private String e(String label, String code) {
-        return "{\"type\":\"example\",\"speaker\":\""+esc(label)+"\",\"text\":\""+esc(code)+"\"}";
-    }
-    private String tests(String... ts) { return "[" + String.join(",", ts) + "]"; }
-    private String test(String label, String input, String expected) {
-        return "{\"label\":\""+label+"\",\"input\":"+("null".equals(input)?"null":"\""+esc(input)+"\"")+",\"expected\":\""+esc(expected)+"\"}";
-    }
-    private String esc(String s) {
-        return s.replace("\\","\\\\").replace("\"","\\\"").replace("\n","\\n").replace("\t","\\t");
     }
 }
