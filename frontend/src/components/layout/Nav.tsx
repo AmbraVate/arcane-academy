@@ -8,8 +8,15 @@ export default function Nav() {
 
   if (!user) return null
 
-  const xpPct = Math.min(100, (user.totalXp / 4000) * 100)
-  const level = Math.floor(user.totalXp / 200) + 1
+  const RANK_FLOORS = [0, 400, 1000, 2000, 4000]
+  const rankIdx = RANK_FLOORS.reduce((acc, floor, i) => user.totalXp >= floor ? i : acc, 0)
+  const isMaxRank = rankIdx === RANK_FLOORS.length - 1
+  const floor = RANK_FLOORS[rankIdx]
+  const ceiling = isMaxRank ? null : RANK_FLOORS[rankIdx + 1]
+  const xpInRank = user.totalXp - floor
+  const xpForRank = ceiling !== null ? ceiling - floor : xpInRank || 1
+  const xpPct = ceiling !== null ? Math.min(100, (xpInRank / xpForRank) * 100) : 100
+  const level = rankIdx + 1
   const streak = user.streakDays ?? 0
 
   // Streak is "hot" if >= 3 days, at-risk if 1 day (might break today)
@@ -41,7 +48,7 @@ export default function Nav() {
           <div className={styles.xpBar}>
             <div className={styles.xpFill} style={{ width: `${xpPct}%` }} />
           </div>
-          <span className={styles.xpNum}>{user.totalXp} xp</span>
+          <span className={styles.xpNum}>{isMaxRank ? `${user.totalXp} xp` : `${xpInRank} / ${xpForRank} xp`}</span>
         </div>
 
         <div className={styles.rank}>⚗ {user.rank}</div>

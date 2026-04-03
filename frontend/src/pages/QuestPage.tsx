@@ -143,15 +143,14 @@ export default function QuestPage() {
         lines.push({ text: '✓ All test cases passed!', type: 'success' })
         setQuestStage('complete')
         if (result.xpEarned > 0) {
-          const prevLevel = Math.floor((user?.totalXp ?? 0) / 200) + 1
-          updateXp(result.xpEarned)
+          const prevRank = calculateRank(user?.totalXp ?? 0)
           const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
-          const newLevel = Math.floor(newTotalXp / 200) + 1
+          const newRank = calculateRank(newTotalXp)
+          updateXp(result.xpEarned, newRank)
           showToast(`✦ +${result.xpEarned} XP — Quest Complete!`)
-          if (newLevel > prevLevel) {
-            const ranks = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage']
-            const newRank = ranks[Math.min(newLevel - 1, ranks.length - 1)]
-            setTimeout(() => setLevelUpInfo({ level: newLevel, rank: newRank }), 1200)
+          if (newRank !== prevRank) {
+            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage']
+            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
           }
         }
       } else {
@@ -355,6 +354,14 @@ export default function QuestPage() {
       )}
     </div>
   )
+}
+
+function calculateRank(xp: number): string {
+  if (xp >= 4000) return 'Archmage'
+  if (xp >= 2000) return 'Mage'
+  if (xp >= 1000) return 'Adept'
+  if (xp >= 400)  return 'Apprentice'
+  return 'Novice'
 }
 
 function HintToggle({ hint }: { hint: string }) {

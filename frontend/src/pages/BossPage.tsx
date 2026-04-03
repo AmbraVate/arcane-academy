@@ -75,9 +75,9 @@ export default function BossPage() {
 
   async function handleNext() {
     if (!boss) return
-    const q = boss.questions[currentQ]
+    const q = activeQuestions[currentQ]
     const result = answered.get(q.id)
-    const isLast = currentQ >= boss.questions.length - 1
+    const isLast = currentQ >= activeQuestions.length - 1
 
     if (result?.state === 'wrong') {
       // Wrong answer — show defeat screen
@@ -93,15 +93,12 @@ export default function BossPage() {
       try {
         const progress = await bossApi.defeat(boss.id)
         if (progress.xpEarned > 0) {
-          const prevLevel = Math.floor((user?.totalXp ?? 0) / 200) + 1
+          const prevRank = calculateRank(user?.totalXp ?? 0)
           updateXp(progress.xpEarned, progress.rank)
-          const newTotalXp = (user?.totalXp ?? 0) + progress.xpEarned
-          const newLevel = Math.floor(newTotalXp / 200) + 1
           showToast(`✦ +${progress.xpEarned} XP — Boss Defeated!`)
-          if (newLevel > prevLevel) {
-            const ranks = ['Novice','Apprentice','Adept','Mage','Archmage']
-            const newRank = ranks[Math.min(newLevel - 1, ranks.length - 1)]
-            setTimeout(() => setLevelUpInfo({ level: newLevel, rank: newRank }), 1200)
+          if (progress.rank !== prevRank) {
+            const rankNames = ['Novice','Apprentice','Adept','Mage','Archmage']
+            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(progress.rank) + 1, rank: progress.rank }), 1200)
           }
         }
       } catch {
@@ -269,6 +266,14 @@ export default function BossPage() {
       )}
     </div>
   )
+}
+
+function calculateRank(xp: number): string {
+  if (xp >= 4000) return 'Archmage'
+  if (xp >= 2000) return 'Mage'
+  if (xp >= 1000) return 'Adept'
+  if (xp >= 400)  return 'Apprentice'
+  return 'Novice'
 }
 
 // ── Sub-components for each question type ──────────────────────────
