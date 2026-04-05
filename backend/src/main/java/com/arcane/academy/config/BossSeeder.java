@@ -275,6 +275,50 @@ public class BossSeeder {
               "\"explanation\":\"A hash map uses a hash function to locate keys in constant time on average. Whether the map holds 10 or 10 million entries, a single get() or put() takes the same amount of time.\"}" +
             "]");
 
+        // ── Chapter VIII ──────────────────────────────────────────────────────
+        saveBoss("ch8-boss", "The Code Reviewer", "🕵️", 8, 500,
+            "The Code Reviewer looks up from a wall of test output. Red lines everywhere. \"Unit tests don't lie. Let's see if you understand what they're telling you.\"",
+            "[" +
+            "{\"id\":\"c8q1\",\"type\":\"multiple_choice\"," +
+              "\"question\":\"What is the purpose of a unit test?\"," +
+              "\"options\":[" +
+                "\"To test the entire application end-to-end\"," +
+                "\"To verify one specific method or behaviour in isolation\"," +
+                "\"To replace writing documentation\"," +
+                "\"To make the build process slower\"]," +
+              "\"correct\":\"To verify one specific method or behaviour in isolation\"," +
+              "\"explanation\":\"A unit test isolates a single method or class and verifies its behaviour independently of the rest of the system.\"}," +
+
+            "{\"id\":\"c8q2\",\"type\":\"be_the_compiler\"," +
+              "\"question\":\"What does this test output?\"," +
+              "\"code\":\"static void check(String label, Object expected, Object actual) {\\n    if (expected.equals(actual)) {\\n        System.out.println(\\\"PASS: \\\" + label);\\n    } else {\\n        System.out.println(\\\"FAIL: \\\" + label);\\n    }\\n}\\ncheck(\\\"add\\\", 5, 2 + 3);\"," +
+              "\"options\":[\"PASS: add\",\"FAIL: add\",\"5\",\"Error\"]," +
+              "\"correct\":\"PASS: add\"," +
+              "\"explanation\":\"2 + 3 equals 5, which equals the expected value 5, so the test prints PASS: add.\"}," +
+
+            "{\"id\":\"c8q3\",\"type\":\"fill_blank\"," +
+              "\"question\":\"Fill the blank to complete the JUnit assertion that checks two values are equal:\"," +
+              "\"code\":\"______(5, Calculator.add(2, 3));\"," +
+              "\"correct\":\"assertEquals\"," +
+              "\"explanation\":\"assertEquals(expected, actual) is JUnit's most common assertion. It fails the test if the two values are not equal.\"}," +
+
+            "{\"id\":\"c8q4\",\"type\":\"multiple_choice\"," +
+              "\"question\":\"Why must unit tests be independent of each other?\"," +
+              "\"options\":[" +
+                "\"So they run faster\"," +
+                "\"So they can be run in any order without affecting each other's results\"," +
+                "\"Because JUnit requires it\"," +
+                "\"To reduce code duplication\"]," +
+              "\"correct\":\"So they can be run in any order without affecting each other's results\"," +
+              "\"explanation\":\"Independent tests can be run in any order and in isolation. If tests share state, a failure in one can cause others to fail for unrelated reasons, making bugs much harder to diagnose.\"}," +
+
+            "{\"id\":\"c8q5\",\"type\":\"fill_blank\"," +
+              "\"question\":\"Fill the blank so this test correctly verifies that a method throws an exception:\"," +
+              "\"code\":\"try {\\n    account.withdraw(9999);\\n    System.out.println(\\\"FAIL\\\");\\n} ______ (Exception e) {\\n    System.out.println(\\\"PASS\\\");\\n}\"," +
+              "\"correct\":\"catch\"," +
+              "\"explanation\":\"The catch block runs when an exception is thrown. If withdraw(9999) throws as expected, execution jumps to catch and prints PASS. If no exception is thrown, the code prints FAIL.\"}" +
+            "]");
+
         log.info("Seeded {} bosses.", bossRepository.count());
     }
 

@@ -89,5 +89,22 @@ public class Ch7Seeder extends AbstractChapterSeeder {
           "import java.util.HashMap;\n\npublic class WordFrequency {\n    public static void main(String[] args) {\n        String[] words = {\"apple\",\"banana\",\"apple\",\"cherry\",\"banana\",\"apple\"};\n\n        // Build frequency map\n\n\n        // Print each word and its count\n\n    }\n}\n",
           "Three entries appear. Apple: 3. Banana: 2. Cherry: 1. The examiner sets down the pen. \"HashMap. Correct approach. Linear time. You know your data structures.\" A long pause. \"We'll be in touch.\"",
           tests(test("apple: 3","null","apple: 3"),test("banana: 2","null","banana: 2"),test("cherry: 1","null","cherry: 1")));
+
+        q("ch7-q6","The Complexity Oracle","Chapter VII · Quest 6","Algorithm Complexity",7,6,250,"ComplexityOracle.java",
+          story(
+            n("The final question. The examiner sets down the pen for a moment."),
+            d("🧑‍💼","npc","The Examiner","s-npc","Before you go — Big O. I need to know you understand why algorithms have costs. This isn't about memorising formulas. It's about being able to look at code and reason about how it scales."),
+            d("🧙","mentor","Master Velan","s-mentor","<em>Big O notation</em> describes how an algorithm's runtime grows as the input size (n) grows. Ignore constants and small terms — only the dominant term matters. The most common complexities you'll encounter every day are O(1), O(n), O(n²), and O(log n)."),
+            e("The Four You Must Know",
+              "<span class='cm'>// O(1) — constant time. Same speed regardless of n.</span>\n<span class='type'>int</span> first = arr[<span class='num'>0</span>]; <span class='cm'>// always one operation</span>\nmap.get(key);          <span class='cm'>// HashMap lookup</span>\n\n<span class='cm'>// O(n) — linear. One pass through n elements.</span>\n<span class='kw'>for</span> (<span class='type'>int</span> i=<span class='num'>0</span>; i&lt;n; i++) { ... }\n\n<span class='cm'>// O(n²) — quadratic. Nested loops over n.</span>\n<span class='kw'>for</span> (<span class='type'>int</span> i=<span class='num'>0</span>; i&lt;n; i++)\n    <span class='kw'>for</span> (<span class='type'>int</span> j=<span class='num'>0</span>; j&lt;n; j++) { ... }\n\n<span class='cm'>// O(log n) — logarithmic. Halves problem each step.</span>\n<span class='cm'>// e.g. binary search on a sorted array</span>"),
+            d("🧑‍💼","npc","The Examiner","s-npc","The point is: if you have 10,000 elements, an O(n²) algorithm does 100 million operations. An O(n) algorithm does 10,000. An O(1) algorithm does 1. Choosing the right data structure and algorithm is how senior developers write code that scales."),
+            e("Why it matters — concrete numbers",
+              "<span class='cm'>// n = 1,000 elements:</span>\n<span class='cm'>// O(1):    1 operation</span>\n<span class='cm'>// O(n):    1,000 operations</span>\n<span class='cm'>// O(n²): 1,000,000 operations</span>\n\n<span class='cm'>// n = 1,000,000 elements:</span>\n<span class='cm'>// O(1):    1 operation</span>\n<span class='cm'>// O(n):    1,000,000 operations</span>\n<span class='cm'>// O(n²): 1,000,000,000,000 operations — unusable</span>")
+          ),
+          "Print the complexity of four operations (one per line):<br>1. <strong>O(1)</strong> — accessing an array element by index<br>2. <strong>O(n)</strong> — iterating every element once<br>3. <strong>O(n^2)</strong> — two nested loops over n elements<br>4. <strong>O(log n)</strong> — binary search on a sorted array<br><br>Just print those four strings exactly.",
+          "This is a conceptual exercise — just print the four Big O strings. The goal is to memorise the classifications and associate them with the patterns.",
+          "// Print the Big O complexity of each operation type\n// Just print the four complexity strings\n\n",
+          "The examiner closes the notepad. \"You know your complexities. That's what separates developers who can reason about performance from those who can't.\" He stands. \"We'll call you.\"",
+          tests(test("O(1)","null","O(1)"),test("O(n)","null","O(n)"),test("O(n^2)","null","O(n^2)"),test("O(log n)","null","O(log n)")));
     }
 }

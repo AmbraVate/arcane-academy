@@ -107,5 +107,35 @@ public class Ch2Seeder extends AbstractChapterSeeder {
           "// Use nested for loops\n// Outer loop for rows 1-3, inner loop for columns 1-3\n\n",
           "All nine seals break in rapid sequence, light flooding every room simultaneously. The Labyrinth Keeper bows: \"No room unvisited. Precise and methodical.\"",
           tests(test("Room 1-1","null","Room 1-1"),test("Room 2-3","null","Room 2-3"),test("Room 3-3","null","Room 3-3")));
+
+        q("ch2-q6","The Sentinel Loop","Chapter II · Quest 6","Do-While Loop",2,6,140,"SentinelLoop.java",
+          story(
+            n("The Sentinel Gate. It swings open before you can even read the inscription. Some loops must execute at least once — the check comes after the action. This is the do-while loop."),
+            d("🧙","mentor","Master Velan","s-mentor","A <em>while</em> loop checks its condition before running. If the condition is false at the start, the loop body never executes. A <em>do-while</em> loop runs the body first, then checks — guaranteeing at least one execution."),
+            e("Worked Example — do-while",
+              "<span class='kw'>int</span> count = <span class='num'>1</span>;\n<span class='kw'>do</span> {\n    <span class='kw'>System</span>.out.println(<span class='str'>\"Count: \"</span> + count);\n    count++;\n} <span class='kw'>while</span> (count <= <span class='num'>3</span>);\n<span class='cm'>// Count: 1</span>\n<span class='cm'>// Count: 2</span>\n<span class='cm'>// Count: 3</span>"),
+            d("🚪","npc","Gate Keeper Thorm","s-npc","Notice the semicolon after the while condition. Easy to forget. The loop body is always in curly braces before the while. Think of it as: do { action } while (condition);"),
+            e("Do-while vs while — key difference",
+              "<span class='cm'>// This while loop never runs at all:</span>\n<span class='type'>int</span> x = <span class='num'>10</span>;\n<span class='kw'>while</span> (x < <span class='num'>5</span>) { System.out.println(x); }\n\n<span class='cm'>// This do-while runs once:</span>\n<span class='kw'>do</span> { System.out.println(x); } <span class='kw'>while</span> (x < <span class='num'>5</span>);\n<span class='cm'>// Output: 10</span>")
+          ),
+          "Use a <code>do-while</code> loop to print the numbers <strong>1 through 5</strong>, one per line.",
+          "Start with int i = 1; do { print i; i++; } while (i <= 5); — don't forget the semicolon after the while condition.",
+          "// Use a do-while loop to print 1 through 5\n\n",
+          "The gate swings open. Thorm nods. \"You understand the difference. That will matter.\"",
+          tests(test("Prints 1","null","1"),test("Prints 3","null","3"),test("Prints 5","null","5")));
+
+        q("ch2-q7","The Shepherd's Pass","Chapter II · Quest 7","Enhanced For Loop",2,7,140,"ShepherdsPass.java",
+          story(
+            n("The Shepherd's Pass. A flock moves through the gate one by one. You don't count them by index — you just work with each one in turn. Java's enhanced for loop does exactly this."),
+            d("🧙","mentor","Master Velan","s-mentor","The <em>enhanced for loop</em> — also called the <em>for-each loop</em> — iterates over every element in an array or collection without needing an index. Syntax: <em>for (Type item : collection)</em>. Read it as: for each item in collection."),
+            e("Worked Example — Enhanced For",
+              "<span class='type'>String</span>[] spells = {<span class='str'>\"Fireball\"</span>, <span class='str'>\"Freeze\"</span>, <span class='str'>\"Heal\"</span>};\n\n<span class='cm'>// Index-based (old way)</span>\n<span class='kw'>for</span> (<span class='type'>int</span> i = <span class='num'>0</span>; i < spells.length; i++) {\n    System.out.println(spells[i]);\n}\n\n<span class='cm'>// Enhanced for (cleaner)</span>\n<span class='kw'>for</span> (<span class='type'>String</span> spell : spells) {\n    System.out.println(spell);\n}"),
+            d("🧝","npc","Enchantress Lyra","s-npc","Use the enhanced for when you only need the value, not the index. If you need to modify elements or track position, use the indexed for loop. For reading and processing, the enhanced for is cleaner and harder to get wrong — no off-by-one errors.")
+          ),
+          "Given <code>int[] scores = {85, 92, 78, 95, 88};</code>, use an enhanced for loop to print each score and calculate the total. Print each score on its own line, then print: <strong>Total: 438</strong>",
+          "for (int score : scores) { System.out.println(score); total += score; } then print total.",
+          "int[] scores = {85, 92, 78, 95, 88};\nint total = 0;\n\n// Use enhanced for loop to print each score and add to total\n\n// Print the total\n",
+          "Each sheep counted. \"Total: 438. The flock is complete.\"",
+          tests(test("First score","null","85"),test("Last score","null","88"),test("Total","null","Total: 438")));
     }
 }

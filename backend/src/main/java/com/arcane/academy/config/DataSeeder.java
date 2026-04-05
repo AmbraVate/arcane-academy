@@ -23,6 +23,7 @@ public class DataSeeder {
     private final Ch5Seeder ch5Seeder;
     private final Ch6Seeder ch6Seeder;
     private final Ch7Seeder ch7Seeder;
+    private final Ch8Seeder ch8Seeder;
     private final BossSeeder bossSeeder;
 
     @Bean
@@ -37,6 +38,7 @@ public class DataSeeder {
                 ch5Seeder.seed();
                 ch6Seeder.seed();
                 ch7Seeder.seed();
+                ch8Seeder.seed();
                 log.info("Seeded {} quests.", questRepository.count());
             }
 

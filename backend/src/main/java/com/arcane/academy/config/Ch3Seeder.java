@@ -105,5 +105,35 @@ public class Ch3Seeder extends AbstractChapterSeeder {
           "public class RecursionObelisk {\n\n    static int factorial(int n) {\n        // If n is 1 or less, return 1 (base case)\n\n        // Otherwise return n times factorial(n - 1)\n\n    }\n\n    public static void main(String[] args) {\n        System.out.println(factorial(5));\n        System.out.println(factorial(1));\n    }\n}\n",
           "The Obelisk reflects five times, each layer multiplying the one before. Then it collapses back to one. \"120,\" it intones. \"The infinite made finite by a single condition.\"",
           tests(test("factorial(5)=120","null","120"),test("factorial(1)=1","null","1")));
+
+        q("ch3-q6","The Vault of Uniqueness","Chapter III · Quest 6","HashSet",3,6,170,"UniquenessVault.java",
+          story(
+            n("The Vault of Uniqueness. Every artefact here is one-of-a-kind. Duplicates are rejected at the door. This is exactly how a HashSet behaves."),
+            d("🧙","mentor","Master Velan","s-mentor","A <em>HashSet</em> stores elements with no duplicates and no guaranteed order. Unlike ArrayList, adding an element that's already present simply does nothing — it doesn't throw an error. Use <em>contains()</em> for O(1) membership checks, far faster than searching an ArrayList."),
+            e("Worked Example — HashSet",
+              "<span class='kw'>import</span> java.util.HashSet;\n\n<span class='type'>HashSet</span>&lt;<span class='type'>String</span>&gt; vault = <span class='kw'>new</span> <span class='type'>HashSet</span>&lt;&gt;();\nvault.add(<span class='str'>\"Sword\"</span>);\nvault.add(<span class='str'>\"Shield\"</span>);\nvault.add(<span class='str'>\"Sword\"</span>); <span class='cm'>// duplicate — silently ignored</span>\n\n<span class='kw'>System</span>.out.println(vault.size());              <span class='cm'>// 2</span>\n<span class='kw'>System</span>.out.println(vault.contains(<span class='str'>\"Shield\"</span>)); <span class='cm'>// true</span>"),
+            d("🏦","npc","Vault Keeper Oris","s-npc","Add five words to the vault. Some are duplicates. The vault only keeps unique ones. Then check membership and print the size."),
+            e("When to use HashSet vs ArrayList",
+              "<span class='cm'>// Use ArrayList when:</span>\n<span class='cm'>//   - order matters</span>\n<span class='cm'>//   - duplicates are allowed</span>\n<span class='cm'>//   - you need index access</span>\n\n<span class='cm'>// Use HashSet when:</span>\n<span class='cm'>//   - you need uniqueness guaranteed</span>\n<span class='cm'>//   - you need fast contains() checks</span>\n<span class='cm'>//   - order does not matter</span>")
+          ),
+          "Create a <code>HashSet&lt;String&gt;</code>. Add: <strong>\"fire\"</strong>, <strong>\"ice\"</strong>, <strong>\"fire\"</strong>, <strong>\"wind\"</strong>, <strong>\"ice\"</strong>.<br><br>Then print:<br>1. <strong>Size: 3</strong> (duplicates removed)<br>2. <strong>true</strong> (contains \"wind\")<br>3. <strong>false</strong> (contains \"earth\")",
+          "Import java.util.HashSet. After adding all 5 items (with duplicates), size() will return 3. Use contains() for the boolean checks.",
+          "import java.util.HashSet;\n\npublic class UniquenessVault {\n    public static void main(String[] args) {\n        HashSet<String> vault = new HashSet<>();\n        // Add: fire, ice, fire, wind, ice\n\n        // Print: Size: [n]\n        // Print: contains(\"wind\")\n        // Print: contains(\"earth\")\n    }\n}\n",
+          "Oris stamps the register. \"Three unique artefacts. Two duplicates rejected. Correct.\"",
+          tests(test("Size=3","null","Size: 3"),test("Contains wind","null","true"),test("No earth","null","false")));
+
+        q("ch3-q7","The Arcane Sorters","Chapter III · Quest 7","Collections Utility",3,7,180,"ArcaneSorters.java",
+          story(
+            n("The Hall of Order. Chaos reigns here — items scattered without logic. The Arcane Sorters bring order to any collection in a single call."),
+            d("🧙","mentor","Master Velan","s-mentor","The <em>Collections</em> class (capital C) is a utility class of static methods for working with collections. You don't create a Collections object — you just call its methods directly. The most useful: <em>sort()</em>, <em>reverse()</em>, <em>min()</em>, and <em>max()</em>."),
+            e("Worked Example — Collections utility",
+              "<span class='kw'>import</span> java.util.ArrayList;\n<span class='kw'>import</span> java.util.Collections;\n\n<span class='type'>ArrayList</span>&lt;<span class='type'>Integer</span>&gt; nums = <span class='kw'>new</span> <span class='type'>ArrayList</span>&lt;&gt;();\nnums.add(<span class='num'>3</span>); nums.add(<span class='num'>1</span>); nums.add(<span class='num'>4</span>); nums.add(<span class='num'>2</span>);\n\nCollections.sort(nums);\n<span class='kw'>System</span>.out.println(nums); <span class='cm'>// [1, 2, 3, 4]</span>\n\nCollections.reverse(nums);\n<span class='kw'>System</span>.out.println(nums); <span class='cm'>// [4, 3, 2, 1]</span>\n\n<span class='kw'>System</span>.out.println(Collections.min(nums)); <span class='cm'>// 1</span>\n<span class='kw'>System</span>.out.println(Collections.max(nums)); <span class='cm'>// 4</span>"),
+            d("🔢","npc","Sorter Golem","s-npc","NOTE: Collections.sort() and reverse() modify the list in-place. They do not return a new list. min() and max() return a value without changing the list.")
+          ),
+          "Given <code>ArrayList&lt;Integer&gt; scores</code> with values <strong>42, 17, 89, 5, 63</strong>:<br>1. Sort ascending → print: <strong>[5, 17, 42, 63, 89]</strong><br>2. Then reverse → print: <strong>[89, 63, 42, 17, 5]</strong><br>3. Print min: <strong>5</strong><br>4. Print max: <strong>89</strong>",
+          "Import Collections. Sort modifies in-place — no assignment needed. min()/max() require the list before reversal if you want the correct result, but since they just scan the list, order doesn't matter.",
+          "import java.util.ArrayList;\nimport java.util.Collections;\n\npublic class ArcaneSorters {\n    public static void main(String[] args) {\n        ArrayList<Integer> scores = new ArrayList<>();\n        scores.add(42); scores.add(17); scores.add(89);\n        scores.add(5);  scores.add(63);\n\n        // 1. Sort and print\n\n        // 2. Reverse and print\n\n        // 3. Print min\n\n        // 4. Print max\n    }\n}\n",
+          "\"Order from chaos,\" the Sorter Golem confirms. \"Collections mastered.\"",
+          tests(test("Sorted","null","[5, 17, 42, 63, 89]"),test("Reversed","null","[89, 63, 42, 17, 5]"),test("Min","null","5"),test("Max","null","89")));
     }
 }

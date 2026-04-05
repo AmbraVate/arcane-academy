@@ -115,5 +115,23 @@ public class Ch1Seeder extends AbstractChapterSeeder {
           "// Declare four variables for Dain Ashford\n\n// Print five lines in the exact format\n\n",
           "Cress files the card. \"Correct format. All fields populated. Chapter One: complete.\" She hands you a copper badge.",
           tests(test("Name line","null","Name: Dain Ashford"),test("Level line","null","Level: 3"),test("Mana line","null","Mana: 85.0%"),test("Active line","null","Active: true"),test("Summary","null","Dain Ashford is a level 3 wizard.")));
+
+        q("ch1-q8","The String Forge","Chapter I · Quest 8","String Methods",1,8,130,"StringForge.java",
+          story(
+            n("The Forge of Words. Enchantress Lyra stands at an anvil, hammering glowing text into shape. Strings, she explains, aren't just passive containers — they come loaded with tools."),
+            d("🧝","npc","Enchantress Lyra","s-npc","You've used length() and toUpperCase(). But the real power comes from <em>StringBuilder</em> — for building strings piece by piece — and the many methods Strings carry for searching and reshaping text."),
+            d("🧙","mentor","Master Velan","s-mentor","A String is <em>immutable</em> — once created it cannot change. Every time you do <em>str + something</em> inside a loop, Java creates a brand new String object. In a loop of 1000 iterations, that's 1000 objects. Use <em>StringBuilder</em> instead: append to it, then call toString() at the end."),
+            e("Worked Example — StringBuilder",
+              "<span class='type'>StringBuilder</span> sb = <span class='kw'>new</span> <span class='type'>StringBuilder</span>();\nsb.append(<span class='str'>\"Hello\"</span>);\nsb.append(<span class='str'>\", \"</span>);\nsb.append(<span class='str'>\"world\"</span>);\n<span class='kw'>System</span>.out.println(sb.toString()); <span class='cm'>// Hello, world</span>"),
+            d("🧝","npc","Enchantress Lyra","s-npc","String also has useful methods: <em>contains()</em> checks if a substring is present. <em>replace()</em> swaps every occurrence of one substring for another. <em>trim()</em> strips leading and trailing spaces. <em>split()</em> cuts the string into an array by a delimiter."),
+            e("Worked Example — String Methods",
+              "<span class='type'>String</span> spell = <span class='str'>\"  arcane fire  \"</span>;\n<span class='kw'>System</span>.out.println(spell.trim());               <span class='cm'>// arcane fire</span>\n<span class='kw'>System</span>.out.println(spell.trim().contains(<span class='str'>\"fire\"</span>)); <span class='cm'>// true</span>\n<span class='kw'>System</span>.out.println(spell.trim().replace(<span class='str'>\"fire\"</span>, <span class='str'>\"ice\"</span>)); <span class='cm'>// arcane ice</span>\n\n<span class='type'>String</span>[] parts = <span class='str'>\"a,b,c\"</span>.split(<span class='str'>\",\"</span>);\n<span class='kw'>System</span>.out.println(parts[<span class='num'>0</span>]); <span class='cm'>// a</span>"),
+            d("🧙","mentor","Master Velan","s-mentor","<em>String.format()</em> is like a template — use <em>%s</em> for a String placeholder and <em>%d</em> for an integer. It's cleaner than long concatenation chains when mixing text and numbers.")
+          ),
+          "Complete four tasks:<br>1. Use <code>StringBuilder</code> to build and print: <strong>Spell: Fireball</strong><br>2. Use <code>String.format</code> to print: <strong>Wizard: Aldric, Level: 7</strong><br>3. Check if <code>\"ancient magic\"</code> contains <code>\"magic\"</code> → print: <strong>true</strong><br>4. Replace <code>\"ancient\"</code> with <code>\"dark\"</code> → print: <strong>dark magic</strong>",
+          "StringBuilder: append(\"Spell: \") then append(\"Fireball\"). Format: String.format(\"Wizard: %s, Level: %d\", \"Aldric\", 7). Contains/replace are called directly on the String.",
+          "// 1. StringBuilder\n\n// 2. String.format\n\n// 3. contains()\n\n// 4. replace()\n\n",
+          "Lyra sets the hammer down. \"Four tools mastered. Strings will never slow you down again.\"",
+          tests(test("StringBuilder","null","Spell: Fireball"),test("Format","null","Wizard: Aldric, Level: 7"),test("Contains","null","true"),test("Replace","null","dark magic")));
     }
 }
