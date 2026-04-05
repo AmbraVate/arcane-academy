@@ -185,9 +185,17 @@ public class JavaCodeRunner {
         // No class — wrap in boilerplate.
         String injectedVars = (testInput != null && !testInput.isBlank()) ? testInput + "\n" : "";
         String cleanCode = studentCode;
-        // Remove conflicting variable declarations when injecting a test override
-        if (injectedVars.contains("coins")) {
-            cleanCode = studentCode.replaceAll("(?m)^\\s*(int|double|String|boolean)\\s+coins[^;]*;", "");
+        // Remove conflicting variable declarations for any variable that is re-declared by the test input
+        if (!injectedVars.isBlank()) {
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("(?:int|double|String|boolean|char|long|float)\\s+(\\w+)\\s*=")
+                    .matcher(injectedVars);
+            while (m.find()) {
+                String varName = java.util.regex.Pattern.quote(m.group(1));
+                cleanCode = cleanCode.replaceAll(
+                        "(?m)^[ \\t]*(?:int|double|String|boolean|char|long|float)\\s+" + varName + "[^;]*;[ \\t]*(?:\r?\n)?",
+                        "");
+            }
         }
         return """
             public class StudentSolution {

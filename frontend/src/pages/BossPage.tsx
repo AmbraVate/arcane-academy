@@ -268,6 +268,89 @@ export default function BossPage() {
   )
 }
 
+// ── Java syntax highlighter ────────────────────────────────────────────────
+const JAVA_KEYWORDS = new Set([
+  'abstract','assert','boolean','break','byte','case','catch','char','class',
+  'const','continue','default','do','double','else','enum','extends','final',
+  'finally','float','for','if','implements','import','instanceof','int',
+  'interface','long','native','new','null','package','private','protected',
+  'public','return','short','static','super','switch','synchronized','this',
+  'throw','throws','transient','true','false','try','void','volatile','while',
+])
+
+function escHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function highlightJava(code: string): string {
+  let out = ''
+  let i = 0
+  while (i < code.length) {
+    const ch = code[i]
+    // Line comment
+    if (ch === '/' && code[i + 1] === '/') {
+      const nl = code.indexOf('\n', i)
+      const end = nl === -1 ? code.length : nl
+      out += `<span class="jhc">${escHtml(code.slice(i, end))}</span>`
+      i = end; continue
+    }
+    // Block comment
+    if (ch === '/' && code[i + 1] === '*') {
+      const end = code.indexOf('*/', i + 2)
+      const stop = end === -1 ? code.length : end + 2
+      out += `<span class="jhc">${escHtml(code.slice(i, stop))}</span>`
+      i = stop; continue
+    }
+    // String literal
+    if (ch === '"') {
+      let j = i + 1
+      while (j < code.length && code[j] !== '"') { if (code[j] === '\\') j++; j++ }
+      j = Math.min(j + 1, code.length)
+      out += `<span class="jhs">${escHtml(code.slice(i, j))}</span>`
+      i = j; continue
+    }
+    // Char literal
+    if (ch === "'") {
+      let j = i + 1
+      while (j < code.length && code[j] !== "'") { if (code[j] === '\\') j++; j++ }
+      j = Math.min(j + 1, code.length)
+      out += `<span class="jhs">${escHtml(code.slice(i, j))}</span>`
+      i = j; continue
+    }
+    // Annotation
+    if (ch === '@') {
+      let j = i + 1
+      while (j < code.length && /[A-Za-z]/.test(code[j])) j++
+      out += `<span class="jha">${escHtml(code.slice(i, j))}</span>`
+      i = j; continue
+    }
+    // Number
+    if (ch >= '0' && ch <= '9') {
+      let j = i
+      while (j < code.length && /[0-9._xXaAbBcCdDeEfFlL]/.test(code[j])) j++
+      out += `<span class="jhn">${escHtml(code.slice(i, j))}</span>`
+      i = j; continue
+    }
+    // Identifier / keyword / class name
+    if (/[A-Za-z_$]/.test(ch)) {
+      let j = i
+      while (j < code.length && /[A-Za-z0-9_$]/.test(code[j])) j++
+      const word = code.slice(i, j)
+      if (JAVA_KEYWORDS.has(word)) {
+        out += `<span class="jhk">${escHtml(word)}</span>`
+      } else if (/^[A-Z]/.test(word)) {
+        out += `<span class="jhcl">${escHtml(word)}</span>`
+      } else {
+        out += escHtml(word)
+      }
+      i = j; continue
+    }
+    out += escHtml(ch)
+    i++
+  }
+  return out
+}
+
 function calculateRank(xp: number): string {
   if (xp >= 4000) return 'Archmage'
   if (xp >= 2000) return 'Mage'
@@ -301,7 +384,7 @@ function QuestionDisplay({ question, answered, checking, fillValue, onFillChange
       <div className={styles.questionText}>{question.question}</div>
 
       {question.code && (
-        <pre className={styles.codeBlock}><code>{question.code}</code></pre>
+        <pre className={styles.codeBlock}><code dangerouslySetInnerHTML={{ __html: highlightJava(question.code) }} /></pre>
       )}
 
       {(question.type === 'multiple_choice' || question.type === 'be_the_compiler') && question.options && (

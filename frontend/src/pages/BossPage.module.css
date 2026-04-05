@@ -131,11 +131,19 @@
   font-family: 'Courier New', monospace;
   font-size: 13px;
   line-height: 1.65;
-  color: #e2e8f0;
+  color: #d4d4d4;
   margin-bottom: 18px;
   overflow-x: auto;
   white-space: pre;
 }
+
+/* Java syntax highlighting (injected via dangerouslySetInnerHTML) */
+:global(.jhk)  { color: #569cd6; }  /* keyword */
+:global(.jhs)  { color: #ce9178; }  /* string / char */
+:global(.jhn)  { color: #b5cea8; }  /* number */
+:global(.jhc)  { color: #6a9955; }  /* comment */
+:global(.jhcl) { color: #4ec9b0; }  /* class name */
+:global(.jha)  { color: #dcdcaa; }  /* annotation */
 
 /* Options */
 .options {
