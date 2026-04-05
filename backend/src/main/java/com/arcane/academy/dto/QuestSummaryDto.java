@@ -12,4 +12,5 @@ public class QuestSummaryDto {
     private int xpReward;
     private boolean completed;
     private boolean locked;
+    private boolean sideQuest;
 }

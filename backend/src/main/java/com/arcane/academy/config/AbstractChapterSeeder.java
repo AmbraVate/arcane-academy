@@ -27,6 +27,20 @@ public abstract class AbstractChapterSeeder {
             .build());
     }
 
+    /** Side quest — same as q() but marks the quest as a side quest (bonus enrichment content). */
+    protected void sq(String id, String title, String eyebrow, String topic,
+                      int chapter, int order, int xp, String file,
+                      String story, String problem, String hint, String starter,
+                      String win, String tests) {
+        questRepository.save(Quest.builder()
+            .id(id).title(title).eyebrow(eyebrow).topic(topic)
+            .chapterNumber(chapter).orderInChapter(order).xpReward(xp).filename(file)
+            .storyJson(story).problemHtml(problem).hint(hint)
+            .starterCode(starter).winStory(win).testCasesJson(tests)
+            .sideQuest(true)
+            .build());
+    }
+
     protected String story(String... beats) { return "[" + String.join(",", beats) + "]"; }
 
     protected String n(String t) {

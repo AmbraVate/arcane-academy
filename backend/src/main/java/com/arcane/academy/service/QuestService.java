@@ -44,23 +44,32 @@ public class QuestService {
                     .id(q.getId()).title(q.getTitle()).eyebrow(q.getEyebrow())
                     .topic(q.getTopic()).chapterNumber(q.getChapterNumber())
                     .orderInChapter(q.getOrderInChapter()).xpReward(q.getXpReward())
-                    .completed(completed).locked(locked)
+                    .completed(completed).locked(locked).sideQuest(q.isSideQuest())
                     .build();
         }).collect(Collectors.toList());
     }
 
     /**
      * A quest is locked if:
-     * 1. Any quest before it in the same chapter is not completed, OR
-     * 2. The previous chapter's boss is not completed (for chapter > 1)
+     * - Regular quests: requires all previous quests in chapter complete, and prev boss for chapter > 1
+     * - Side quests: unlocked whenever the chapter itself is accessible (same condition as chapter's first quest)
      */
     private boolean isQuestLocked(Quest quest, List<Quest> allQuests,
                                    List<Boss> allBosses, Set<String> completedIds) {
         int chapter = quest.getChapterNumber();
         int order = quest.getOrderInChapter();
 
-        // Chapter 1, Quest 1 is always unlocked
-        if (chapter == 1 && order == 1) return false;
+        // Chapter 1 is always accessible
+        if (chapter == 1) {
+            if (quest.isSideQuest()) return false;
+            if (order == 1) return false;
+        }
+
+        // Side quests: unlock when the chapter is accessible (previous chapter boss beaten)
+        if (quest.isSideQuest()) {
+            String prevBossId = "ch" + (chapter - 1) + "-boss";
+            return !completedIds.contains(prevBossId);
+        }
 
         // First quest of a chapter (order == 1, chapter > 1): requires previous chapter boss complete
         if (order == 1 && chapter > 1) {
@@ -68,7 +77,7 @@ public class QuestService {
             return !completedIds.contains(prevBossId);
         }
 
-        // Any other quest: requires all previous quests in same chapter to be complete
+        // Any other quest: requires previous quest in same chapter to be complete
         boolean prevDone = allQuests.stream()
                 .filter(q -> q.getChapterNumber() == chapter && q.getOrderInChapter() == order - 1)
                 .allMatch(q -> completedIds.contains(q.getId()));

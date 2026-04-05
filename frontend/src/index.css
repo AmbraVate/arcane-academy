@@ -63,6 +63,7 @@ button {
 .chip-teal   { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal); }
 .chip-red    { background: #2d0808; color: var(--red); border: 1px solid #7f1d1d; }
 .chip-gray   { background: var(--border); color: var(--muted); }
+.chip-gold   { background: var(--gold-dim); color: var(--gold); border: 1px solid #7a5c10; }
 
 /* Buttons */
 .btn {

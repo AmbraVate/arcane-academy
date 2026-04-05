@@ -82,5 +82,23 @@ public class Ch6Seeder extends AbstractChapterSeeder {
           "import java.util.ArrayList;\n\n// Build your complete Task class here\n\n\n// Build your complete TaskManager class here\n\n\npublic class FinalTaskManager {\n    public static void main(String[] args) {\n        // Create TaskManager\n        // Add 4 tasks\n        // Complete tasks 2 and 4\n        // List all tasks\n    }\n}\n",
           "Your code compiles. The output is correct. The wall lights up with your name and the date. The Archmage places a hand on your shoulder. \"You are no longer a student. You have built something real. Put this on GitHub tonight.\"",
           tests(test("Task 1 OPEN","null","1. [OPEN] Write unit tests"),test("Task 2 DONE","null","2. [DONE] Read the docs"),test("Task 3 OPEN","null","3. [OPEN] Review pull requests"),test("Task 4 DONE","null","4. [DONE] Fix the bug")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch6-sq1","The SOLID Scrolls","Chapter VI · Side Quest","Design Principles",6,90,90,"SolidScrolls.java",
+          story(
+            n("The Academy's Hall of Principles. Five scrolls hang on the wall, each describing a law of good software design. Together they spell <em>SOLID</em>."),
+            d("🧙","mentor","Master Velan","s-mentor","<em>S — Single Responsibility.</em> Every class or method should do exactly one thing. A class that handles both data storage and display becomes painful to change — touching one breaks the other."),
+            d("🧙","mentor","Master Velan","s-mentor","<em>O — Open/Closed.</em> Classes should be open for extension but closed for modification. Add new behaviour by adding code (a subclass, a new method), not by changing existing tested code."),
+            d("🦉","npc","Sage Orrin","s-npc","<em>L — Liskov Substitution.</em> If B extends A, you should be able to use B wherever A is expected without things breaking. If a subclass overrides a method in a way that violates the parent's contract, you've broken Liskov."),
+            d("🦉","npc","Sage Orrin","s-npc","<em>I — Interface Segregation.</em> Prefer small, focused interfaces over one fat interface. A class should not be forced to implement methods it does not use. Split large interfaces into smaller ones."),
+            d("🧙","mentor","Master Velan","s-mentor","<em>D — Dependency Inversion.</em> High-level modules should not depend on low-level modules — both should depend on abstractions (interfaces). This is why we inject interfaces rather than concrete classes, making code easy to test and swap."),
+            e("Single Responsibility Example","// BAD: one class does too much\\nclass WizardManager {\\n    void saveToDatabase() { ... }\\n    void displayWizard()  { ... }\\n    void sendEmail()      { ... }\\n}\\n\\n// GOOD: separate responsibilities\\nclass WizardRepository { void save() { ... } }\\nclass WizardView       { void display() { ... } }\\nclass WizardNotifier   { void notify() { ... } }")
+          ),
+          "Write a <code>classify(int score)</code> static method that follows single responsibility — it does one thing: return a String grade. Return <strong>\"Archmage\"</strong> for 90+, <strong>\"Mage\"</strong> for 70+, <strong>\"Apprentice\"</strong> for 50+, and <strong>\"Novice\"</strong> otherwise. Call it four times to verify.",
+          "static String classify(int score) { if (score >= 90) return \"Archmage\"; ... } — this method has exactly ONE responsibility.",
+          "public class SolidScrolls {\n    static String classify(int score) {\n        // Implement: return grade string based on score\n        \n    }\n    public static void main(String[] args) {\n        System.out.println(classify(95));\n        System.out.println(classify(78));\n        System.out.println(classify(60));\n        System.out.println(classify(30));\n    }\n}\n",
+          "\"Archmage. Mage. Apprentice. Novice.\" The scrolls glow. \"Single responsibility. Four tests. One method that does exactly one thing.\"",
+          tests(test("95 = Archmage","null","Archmage"),test("78 = Mage","null","Mage"),test("60 = Apprentice","null","Apprentice"),test("30 = Novice","null","Novice")));
     }
 }

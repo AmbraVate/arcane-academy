@@ -112,5 +112,22 @@ public class Ch5Seeder extends AbstractChapterSeeder {
           "// Define MagicConstants class with three static final constants\n\npublic class ImmutableSeal {\n    public static void main(String[] args) {\n        // Print MagicConstants.MAX_MANA\n        // Print MagicConstants.ACADEMY_NAME\n        // Print MagicConstants.GRAVITY\n        // Print Math.abs(-42)\n        // Print (int)Math.pow(2, 10)\n    }\n}\n",
           "\"Sealed. Immutable. Shared,\" the chamber confirms. \"Constants protect your code from accidental mutation.\"",
           tests(test("MAX_MANA","null","500"),test("ACADEMY_NAME","null","Arcane Academy"),test("abs(-42)","null","42"),test("2^10","null","1024")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch5-sq1","The Null Grimoire","Chapter V · Side Quest","Null Safety",5,90,80,"NullGrimoire.java",
+          story(
+            n("The Academy's restricted section. A tome bound in silence — <em>The Null Grimoire</em>. On its cover: <em>\"Null — the billion-dollar mistake.\"</em>"),
+            d("🧙","mentor","Master Velan","s-mentor","<em>null</em> means 'no object here'. Any reference type variable — String, ArrayList, your own class — can hold null. And if you call a method on null, you get a <em>NullPointerException</em>: the most common crash in Java."),
+            e("NullPointerException Example","String spell = null;\\nspell.length(); // CRASH: NullPointerException\\n               // Cannot call a method on nothing"),
+            d("🦉","npc","Sage Orrin","s-npc","Always check for null before calling methods on a variable that might be null. The standard pattern is an <em>if-null guard</em> or the <em>ternary</em> operator. Modern Java also offers <em>Optional&lt;T&gt;</em> to make nullable values explicit in the type signature."),
+            e("Null-Safe Patterns","// Ternary guard\\nString name = null;\\nSystem.out.println(name != null ? name : \\\"Unknown\\\");\\n\\n// Null-safe default\\nString value = null;\\nString safe = (value != null) ? value : \\\"default\\\";\\n\\n// Avoid NullPointerException on empty strings\\nboolean hasContent = name != null && !name.isEmpty();"),
+            d("🧙","mentor","Master Velan","s-mentor","A good rule: never return null from a method if you can avoid it. Return an empty String, an empty List, or an Optional instead. This forces callers to handle the empty case rather than crashing at runtime.")
+          ),
+          "Practice null-safe patterns:<br>1. <code>String scroll = null</code> — print <strong>No scroll</strong> using a ternary<br>2. Set <code>scroll = \"Ancient Tome\"</code> — print it with the same ternary (now prints the value)<br>3. <code>String title = \"\"</code> — print <strong>Untitled</strong> if empty using <code>title.isEmpty()</code>",
+          "Ternary: scroll != null ? scroll : \"No scroll\". For title: !title.isEmpty() ? title : \"Untitled\"",
+          "String scroll = null;\n// 1. Print using null-safe ternary\n\nscroll = \"Ancient Tome\";\n// 2. Print using same ternary (now has value)\n\nString title = \"\";\n// 3. Print title or \"Untitled\" if empty\n\n",
+          "The Grimoire seals. \"No crash. No null pointer. Every reference checked.\" Sage Orrin closes the restricted section.",
+          tests(test("null case","null","No scroll"),test("value case","null","Ancient Tome"),test("empty case","null","Untitled")));
     }
 }

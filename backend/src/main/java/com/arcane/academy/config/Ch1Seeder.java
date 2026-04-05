@@ -135,5 +135,36 @@ public class Ch1Seeder extends AbstractChapterSeeder {
           "// 1. StringBuilder\n\n// 2. String.format\n\n// 3. contains()\n\n// 4. replace()\n\n",
           "Lyra sets the hammer down. \"Four tools mastered. Strings will never slow you down again.\"",
           tests(test("StringBuilder","null","Spell: Fireball"),test("Format","null","Wizard: Aldric, Level: 7"),test("Contains","null","true"),test("Replace","null","dark magic")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch1-sq1","The JVM Codex","Chapter I · Side Quest","How Java Works",1,90,60,"JvmCodex.java",
+          story(
+            n("Deep in the Academy's archive you find a scroll labelled <em>The Compilation Chronicle</em>. It describes the invisible journey every Java program takes before a single line runs."),
+            d("🧙","mentor","Master Velan","s-mentor","Every Java program begins as text in a <em>.java</em> file — source code you can read. But computers cannot execute text directly. It must first be <em>compiled</em>."),
+            d("🧝","npc","Enchantress Lyra","s-npc","The Java compiler — <em>javac</em> — reads your source and translates it into <em>bytecode</em>: a compact, platform-neutral format stored in a <em>.class</em> file. It is not machine code yet; it is halfway there."),
+            d("🧙","mentor","Master Velan","s-mentor","The <em>JVM — Java Virtual Machine</em> — takes that bytecode and translates it into the native instructions your specific computer understands. Every OS ships its own JVM. This is what makes Java <em>Write Once, Run Anywhere</em>."),
+            e("The Java Pipeline","Source code  (.java)\\n      ↓  javac compiler\\nBytecode     (.class)\\n      ↓  JVM (for your OS)\\nMachine execution"),
+            d("🧝","npc","Enchantress Lyra","s-npc","The JVM also enforces the type system at runtime. An <em>int</em> can only hold whole numbers between −2,147,483,648 and 2,147,483,647. Go beyond that and it overflows, wrapping like a clock. Java exposes these limits through constants like <em>Integer.MAX_VALUE</em>.")
+          ),
+          "Explore the JVM's numeric limits. Print:<br>1. <code>Integer.MAX_VALUE</code> → <strong>2147483647</strong><br>2. <code>Integer.MIN_VALUE</code> → <strong>-2147483648</strong><br>3. <code>Long.MAX_VALUE</code> → <strong>9223372036854775807</strong>",
+          "Three println statements: System.out.println(Integer.MAX_VALUE); etc.",
+          "// Explore the JVM's numeric limits\n\n",
+          "The numbers blaze on the scroll. Lyra nods. \"The JVM enforces every boundary on every machine in every country. That is the covenant of the virtual machine.\"",
+          tests(test("int max","null","2147483647"),test("int min","null","-2147483648"),test("long max","null","9223372036854775807")));
+
+        sq("ch1-sq2","The Rune Taxonomy","Chapter I · Side Quest","Primitive vs Reference Types",1,91,60,"RuneTaxonomy.java",
+          story(
+            n("The Academy's Bestiary of Types. Two columns glow on the wall: <em>Primitives</em> on the left, <em>Reference Types</em> on the right."),
+            d("🧝","npc","Enchantress Lyra","s-npc","Java has exactly eight primitive types. They are not objects — just raw values stored directly on the <em>stack</em>. They cannot be null and they have no methods."),
+            e("The Eight Primitives","byte    – whole numbers  −128  to  127\\nshort   – whole numbers  −32,768  to  32,767\\nint     – whole numbers  ±2.1 billion   ← most common\\nlong    – whole numbers  ±9.2 quintillion\\nfloat   – decimal  ~7 significant digits\\ndouble  – decimal  ~15 significant digits  ← most common\\nchar    – single Unicode character, e.g. 'A'\\nboolean – true or false"),
+            d("🧙","mentor","Master Velan","s-mentor","Everything else — String, ArrayList, your own classes, arrays — is a <em>reference type</em>. These live on the <em>heap</em>. A reference-type variable holds an <em>address</em> pointing to the object — which is why they can be <em>null</em> (no object at that address yet)."),
+            d("🧝","npc","Enchantress Lyra","s-npc","Reference types carry <em>methods</em> you invoke with a dot. String is the prime example. That is also why it starts with a capital letter — it is a class, not a primitive. <em>int</em> and <em>double</em> are lowercase because they are primitives.")
+          ),
+          "Demonstrate both worlds with <code>int power = 9000</code>, <code>boolean transformed = power &gt; 8000</code>, <code>char initial = 'A'</code> — print each on its own line. Then <code>String school = \"Arcane Academy\"</code> — print its <code>length()</code> and the result of <code>school.indexOf(\"Academy\")</code>.",
+          "Primitives: println(power), println(transformed), println(initial). String: println(school.length()) → 14, println(school.indexOf(\"Academy\")) → 7",
+          "// Primitives: stored by value, no methods\n\n// Reference type (String): stored by reference, has methods\n\n",
+          "Both columns light up. \"Fourteen characters. Index seven. Primitives and objects, each in their proper realm.\" Lyra seals the Bestiary.",
+          tests(test("power","null","9000"),test("transformed","null","true"),test("initial","null","A"),test("length","null","14"),test("indexOf","null","7")));
     }
 }

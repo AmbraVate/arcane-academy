@@ -4,7 +4,7 @@ export interface User {
 export interface QuestSummary {
   id: string; title: string; eyebrow: string; topic: string
   chapterNumber: number; orderInChapter: number; xpReward: number
-  completed: boolean; locked: boolean
+  completed: boolean; locked: boolean; sideQuest: boolean
 }
 export interface StoryBeat {
   type: 'narration' | 'dialogue' | 'example'; text: string

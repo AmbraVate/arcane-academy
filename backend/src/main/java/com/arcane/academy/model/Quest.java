@@ -35,6 +35,9 @@ public class Quest {
     @Column(columnDefinition = "TEXT")
     private String winStory;
 
+    @Builder.Default
+    private boolean sideQuest = false;
+
     // JSON arrays stored as text
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")

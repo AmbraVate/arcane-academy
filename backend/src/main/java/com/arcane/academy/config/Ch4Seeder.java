@@ -113,5 +113,22 @@ public class Ch4Seeder extends AbstractChapterSeeder {
           "// Define Rank enum here\n\npublic class ArcaneRegistry {\n    public static void main(String[] args) {\n        // 1. Print Rank.MAGE\n\n        // 2. Print its ordinal\n\n        // 3. Loop and print all Rank values\n\n    }\n}\n",
           "The Registry seals. \"Five ranks. Fixed. Compiler-enforced. No more typos.\"",
           tests(test("MAGE","null","MAGE"),test("Ordinal=3","null","3"),test("All 5 ranks","null","ARCHMAGE")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch4-sq1","The Math Vault","Chapter IV · Side Quest","Static Utility Methods",4,90,80,"MathVault.java",
+          story(
+            n("A sealed vault in the Academy's basement. On the door, a plaque: <em>Static Methods — belong to the class, not the object.</em>"),
+            d("🧙","mentor","Master Velan","s-mentor","You know instance methods: you call them on an object — <em>myString.length()</em>. But some methods belong to the <em>class itself</em> rather than any instance. These are <em>static methods</em>. You call them on the class name, not a variable."),
+            e("Static vs Instance","// Instance method: needs an object\\nString name = \\\"Aldric\\\";\\nname.toUpperCase();  // called on 'name'\\n\\n// Static method: called on the class\\nMath.abs(-42);     // no Math object needed\\nInteger.parseInt(\\\"7\\\"); // no Integer object needed"),
+            d("🧝","npc","Enchantress Lyra","s-npc","The <em>Math</em> class is a treasure trove of static utility methods. You never create a <em>new Math()</em> — you just call Math.whatever() directly."),
+            e("Common Math Methods","Math.abs(-99)      → 99   (absolute value)\\nMath.max(10, 25)   → 25   (larger of two)\\nMath.min(10, 25)   → 10   (smaller of two)\\nMath.sqrt(144)     → 12.0 (square root)\\nMath.pow(2, 8)     → 256.0 (power)\\nMath.round(3.7)    → 4    (round to int)"),
+            d("🧙","mentor","Master Velan","s-mentor","The <em>Integer</em> class also has static utilities: <em>Integer.MAX_VALUE</em>, <em>Integer.parseInt(\"42\")</em> to parse a String into an int, and <em>Integer.toBinaryString(13)</em> for binary representation.")
+          ),
+          "Use static methods only — no objects needed:<br>1. <code>Math.abs(-99)</code> → <strong>99</strong><br>2. <code>Math.max(42, 73)</code> → <strong>73</strong><br>3. <code>(int) Math.sqrt(625)</code> → <strong>25</strong><br>4. <code>Integer.toBinaryString(13)</code> → <strong>1101</strong>",
+          "All are static — no new Math() needed. Cast sqrt result: (int)Math.sqrt(625). 13 in binary is 1101 (8+4+0+1).",
+          "// All four calls use static methods on the class itself\n\n",
+          "The vault door glows. \"99. 73. 25. 1101.\" Master Velan nods. \"Static methods: powerful tools requiring no object, no ceremony.\"",
+          tests(test("abs","null","99"),test("max","null","73"),test("sqrt","null","25"),test("binary","null","1101")));
     }
 }

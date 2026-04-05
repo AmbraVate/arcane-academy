@@ -137,5 +137,22 @@ public class Ch2Seeder extends AbstractChapterSeeder {
           "int[] scores = {85, 92, 78, 95, 88};\nint total = 0;\n\n// Use enhanced for loop to print each score and add to total\n\n// Print the total\n",
           "Each sheep counted. \"Total: 438. The flock is complete.\"",
           tests(test("First score","null","85"),test("Last score","null","88"),test("Total","null","Total: 438")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch2-sq1","The Logic Gates","Chapter II · Side Quest","Boolean Algebra",2,90,70,"LogicGates.java",
+          story(
+            n("The Chamber of Logical Mechanisms. Brass gates line the walls, each demonstrating a fundamental law of boolean logic. A sign reads: <em>Master these and no condition will ever surprise you.</em>"),
+            d("🦉","npc","Sage Orrin","s-npc","Three fundamental operators: <em>&amp;&amp;</em> (AND — both must be true), <em>||</em> (OR — at least one must be true), <em>!</em> (NOT — inverts). All logic is built from these three."),
+            e("Truth Table","a = true,  b = false:\\na && b  →  false  (AND requires both)\\na || b  →  true   (OR needs one)\\n!a      →  false  (NOT inverts)\\n!b      →  true"),
+            d("🦉","npc","Sage Orrin","s-npc","<em>De Morgan's Theorem</em>: NOT (A AND B) equals (NOT A) OR (NOT B). And: NOT (A OR B) equals (NOT A) AND (NOT B). This lets you distribute a NOT across a compound condition and simplify complex logic."),
+            e("De Morgan's Laws","// These pairs are always equivalent:\\n!(a && b)  ==  (!a || !b)\\n!(a || b)  ==  (!a && !b)"),
+            d("🧙","mentor","Master Velan","s-mentor","Bonus: <em>short-circuit evaluation</em>. With <em>&amp;&amp;</em>, if the left side is false, Java never evaluates the right. This is why <em>list != null &amp;&amp; list.size() > 0</em> is safe — if list is null the size check never executes.")
+          ),
+          "With <code>boolean a = true, b = false</code>, print four labeled lines:<br>1. <code>\"AND: \" + (a && b)</code><br>2. <code>\"OR: \" + (a || b)</code><br>3. <code>\"De Morgan 1: \" + (!(a && b) == (!a || !b))</code><br>4. <code>\"De Morgan 2: \" + (!(a || b) == (!a && !b))</code>",
+          "De Morgan 1: !(true&&false)=true, (!true||!false)=true — both true, so equal=true. De Morgan 2: !(true||false)=false, (!true&&!false)=false — both false, so equal=true.",
+          "boolean a = true, b = false;\n\n// 1. AND\n// 2. OR\n// 3. De Morgan's first law\n// 4. De Morgan's second law\n",
+          "The four gates click open. Sage Orrin marks a tick. \"De Morgan's laws hold. As they always will.\"",
+          tests(test("AND","null","AND: false"),test("OR","null","OR: true"),test("De Morgan 1","null","De Morgan 1: true"),test("De Morgan 2","null","De Morgan 2: true")));
     }
 }

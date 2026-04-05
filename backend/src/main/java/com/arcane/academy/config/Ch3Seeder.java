@@ -135,5 +135,21 @@ public class Ch3Seeder extends AbstractChapterSeeder {
           "import java.util.ArrayList;\nimport java.util.Collections;\n\npublic class ArcaneSorters {\n    public static void main(String[] args) {\n        ArrayList<Integer> scores = new ArrayList<>();\n        scores.add(42); scores.add(17); scores.add(89);\n        scores.add(5);  scores.add(63);\n\n        // 1. Sort and print\n\n        // 2. Reverse and print\n\n        // 3. Print min\n\n        // 4. Print max\n    }\n}\n",
           "\"Order from chaos,\" the Sorter Golem confirms. \"Collections mastered.\"",
           tests(test("Sorted","null","[5, 17, 42, 63, 89]"),test("Reversed","null","[89, 63, 42, 17, 5]"),test("Min","null","5"),test("Max","null","89")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch3-sq1","The Memory Map","Chapter III · Side Quest","Pass by Value",3,90,70,"MemoryMap.java",
+          story(
+            n("The Academy's Map Room. Two sections of the floor glow differently: the <em>Stack</em> — bright, fast, for local variables — and the <em>Heap</em> — vast, slower, for objects."),
+            d("🦉","npc","Sage Orrin","s-npc","Java is <em>always pass-by-value</em> — no exceptions. When you assign a primitive to another variable, a complete copy of the value is made. Changes to the copy never affect the original."),
+            e("Primitive Copy","int original = 42;\\nint copy = original;  // a fresh copy of 42\\ncopy = 100;           // only changes 'copy'\\nSystem.out.println(original); // still 42\\nSystem.out.println(copy);     // 100"),
+            d("🧙","mentor","Master Velan","s-mentor","With reference types like String or ArrayList, it is still pass-by-value — but the <em>value being copied is the reference</em> (the memory address of the object). Two variables can point at the same object on the heap. Changing the object through one variable changes what the other sees."),
+            d("🦉","npc","Sage Orrin","s-npc","This is why we use <em>.equals()</em> to compare String content — <em>==</em> only checks whether two variables point to the <em>exact same object</em>, not whether the content is the same. <code>new String(\"hello\")</code> creates a fresh object even if the content is identical.")
+          ),
+          "Demonstrate pass by value:<br>1. <code>int original = 42; int copy = original; copy = 100;</code> — print <strong>original: 42</strong> then <strong>copy: 100</strong><br>2. <code>String a = \"Arcane\"; String b = new String(\"Arcane\");</code> — print <code>a.equals(b)</code> then <code>a == b</code>",
+          "After copy = 100, original stays 42 — it was copied by value. a.equals(b) is true (same text content), a == b is false (different object instances).",
+          "// Primitive: changes are independent\nint original = 42;\nint copy = original;\n// Set copy to 100, then print both\n\n// Reference: == checks identity, .equals() checks content\nString a = \"Arcane\";\nString b = new String(\"Arcane\");\n// Print a.equals(b) and a == b\n\n",
+          "The Map Room crystallises. Sage Orrin taps the floor. \"Original: 42. Copy: 100. Equals: true. Reference ==: false. You now understand memory.\"",
+          tests(test("original","null","original: 42"),test("copy","null","copy: 100"),test("equals","null","true"),test("reference ==","null","false")));
     }
 }

@@ -13,6 +13,7 @@ const CHAPTER_META = [
   { number: 5, title: "Chapter V — The Master's Path",     subtitle: 'Exceptions, generics & patterns',  icon: '⚡' },
   { number: 6, title: 'Chapter VI — The Capstone Project', subtitle: 'Build a real Java application',    icon: '🏗️' },
   { number: 7, title: 'Chapter VII — Interview Gauntlet',  subtitle: 'FizzBuzz to HashMap — get hired',  icon: '💼' },
+  { number: 8, title: 'Chapter VIII — Testing Sanctum',    subtitle: 'JUnit, edge cases & test suites',  icon: '🧪' },
 ]
 
 export default function HomePage() {
@@ -51,12 +52,13 @@ export default function HomePage() {
 
   function getChapterStatus(chapterNum: number): 'done' | 'active' | 'locked' {
     const chapterQuests = quests.filter(q => q.chapterNumber === chapterNum)
+    const mainQuests = chapterQuests.filter(q => !q.sideQuest)
     const boss = bosses.find(b => b.chapterNumber === chapterNum)
-    if (chapterQuests.length === 0) return 'locked'
-    const allQuestsDone = chapterQuests.every(q => q.completed)
+    if (mainQuests.length === 0) return 'locked'
+    const allMainDone = mainQuests.every(q => q.completed)
     const bossDone = boss?.completed ?? false
-    if (allQuestsDone && bossDone) return 'done'
-    const allLocked = chapterQuests.every(q => q.locked)
+    if (allMainDone && bossDone) return 'done'
+    const allLocked = mainQuests.every(q => q.locked)
     if (allLocked) return 'locked'
     return 'active'
   }
@@ -92,9 +94,11 @@ export default function HomePage() {
           <div className={styles.loading}>Consulting the Grimoire...</div>
         ) : (
           CHAPTER_META.map(meta => {
-            const chapterQuests = quests
+            const allChapterQuests = quests
               .filter(q => q.chapterNumber === meta.number)
               .sort((a, b) => a.orderInChapter - b.orderInChapter)
+            const mainQuests = allChapterQuests.filter(q => !q.sideQuest)
+            const sideQuests = allChapterQuests.filter(q => q.sideQuest)
             const boss = bosses.find(b => b.chapterNumber === meta.number)
             const status = getChapterStatus(meta.number)
             const isOpen = openChapters.has(meta.number)
@@ -117,7 +121,8 @@ export default function HomePage() {
 
                 {isOpen && (
                   <div className={styles.lessons}>
-                    {chapterQuests.map(q => (
+                    {/* Main quests */}
+                    {mainQuests.map(q => (
                       <div
                         key={q.id}
                         className={`${styles.lessonRow} ${q.locked ? styles.lockedRow : ''}`}
@@ -138,6 +143,34 @@ export default function HomePage() {
                         </div>
                       </div>
                     ))}
+
+                    {/* Side quests */}
+                    {sideQuests.length > 0 && (
+                      <>
+                        <div className={styles.sideQuestDivider}>Side Quests</div>
+                        {sideQuests.map(q => (
+                          <div
+                            key={q.id}
+                            className={`${styles.lessonRow} ${styles.sideQuestRow} ${q.locked ? styles.lockedRow : ''}`}
+                            onClick={() => !q.locked && navigate(`/quest/${q.id}`)}
+                            title={q.locked ? 'Complete previous chapter boss to unlock' : ''}
+                          >
+                            <div className={`${styles.dot}
+                              ${q.completed ? styles.dotDone : q.locked ? styles.dotLocked : styles.dotSideQuest}`}
+                            />
+                            <div className={styles.lessonInfo}>
+                              <div className={styles.lessonName}>{q.title}</div>
+                              <div className={styles.lessonTopic}>{q.topic}</div>
+                            </div>
+                            <div className={styles.lessonRight}>
+                              {q.locked && <span className={styles.lockIcon}>🔒</span>}
+                              {q.completed && <span className={styles.doneIcon}>✓</span>}
+                              {!q.locked && !q.completed && <span className="chip chip-gold" style={{ fontSize: 10 }}>+{q.xpReward} xp</span>}
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    )}
 
                     {/* Boss row */}
                     {boss && (
@@ -161,7 +194,7 @@ export default function HomePage() {
                       </div>
                     )}
 
-                    {chapterQuests.length === 0 && !boss && (
+                    {allChapterQuests.length === 0 && !boss && (
                       <div className={styles.comingSoon}>Content coming soon...</div>
                     )}
                   </div>

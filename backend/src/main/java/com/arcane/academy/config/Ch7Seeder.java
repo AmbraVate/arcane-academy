@@ -106,5 +106,21 @@ public class Ch7Seeder extends AbstractChapterSeeder {
           "// Print the Big O complexity of each operation type\n// Just print the four complexity strings\n\n",
           "The examiner closes the notepad. \"You know your complexities. That's what separates developers who can reason about performance from those who can't.\" He stands. \"We'll call you.\"",
           tests(test("O(1)","null","O(1)"),test("O(n)","null","O(n)"),test("O(n^2)","null","O(n^2)"),test("O(log n)","null","O(log n)")));
+
+        // ── Side quests ───────────────────────────────────────────────────────
+
+        sq("ch7-sq1","The Space Oracle","Chapter VII · Side Quest","Space Complexity",7,90,80,"SpaceOracle.java",
+          story(
+            n("Back in the Interview Gauntlet. The examiner flips to a new page. \"Time complexity is half the story. What about <em>space complexity</em>?\""),
+            d("🧑‍💼","npc","The Examiner","s-npc","<em>Space complexity</em> measures how much extra memory an algorithm uses as input size grows. Like time complexity, we use Big O notation — but now we are counting bytes, not operations."),
+            e("Space Complexity Examples","O(1) — constant space: same memory regardless of input size.\\n      Swapping two variables with one temp variable.\\n\\nO(n) — linear space: memory grows with input.\\n      Copying an array, building a new list.\\n\\nO(n²) — quadratic space: a 2D grid/matrix sized n×n."),
+            d("🧑‍💼","npc","The Examiner","s-npc","Every interview answer about an algorithm should mention <em>both</em> time and space complexity. Sometimes there is a trade-off: a faster algorithm needs more memory, or a memory-efficient one is slower. Recognising that trade-off shows senior-level thinking."),
+            d("🧙","mentor","Master Velan","s-mentor","In Java, remember that creating a new array or ArrayList is O(n) space — you are allocating n new slots. Sorting with Java's built-in sort uses O(log n) extra space for the recursive call stack. Knowing what the standard library does under the hood makes you stand out.")
+          ),
+          "Demonstrate space complexity concepts:<br>1. Reverse a string <em>in-place</em> (O(1) extra space): use <code>new StringBuilder(word).reverse().toString()</code> on <code>\"arcane\"</code> — print reversed, then original (unchanged)<br>2. Build a doubled array (O(n) space) from <code>int[] scores = {90, 70, 80}</code> — multiply each by 2 and print as <strong>180,140,160</strong>",
+          "StringBuilder reverse is O(1) extra space (reuses chars). New int[scores.length] is O(n) space. Print: reversed string, original string, then comma-joined doubled values.",
+          "String word = \"arcane\";\n// 1. Reverse using StringBuilder (O(1) space)\n\n// Original is unchanged — print it too\n\nint[] scores = {90, 70, 80};\n// 2. Create doubled array (O(n) space), print as 180,140,160\n\n",
+          "\"Reversed in-place. Doubled with extra memory. Both correct, different costs.\" The examiner notes: <em>understands space trade-offs</em>.",
+          tests(test("reversed","null","enacra"),test("original","null","arcane"),test("doubled","null","180,140,160")));
     }
 }
