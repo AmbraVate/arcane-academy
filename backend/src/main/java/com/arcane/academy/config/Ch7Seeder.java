@@ -113,7 +113,7 @@ public class Ch7Seeder extends AbstractChapterSeeder {
           story(
             n("Back in the Interview Gauntlet. The examiner flips to a new page. \"Time complexity is half the story. What about <em>space complexity</em>?\""),
             d("🧑‍💼","npc","The Examiner","s-npc","<em>Space complexity</em> measures how much extra memory an algorithm uses as input size grows. Like time complexity, we use Big O notation — but now we are counting bytes, not operations."),
-            e("Space Complexity Examples","O(1) — constant space: same memory regardless of input size.\\n      Swapping two variables with one temp variable.\\n\\nO(n) — linear space: memory grows with input.\\n      Copying an array, building a new list.\\n\\nO(n²) — quadratic space: a 2D grid/matrix sized n×n."),
+            e("Space Complexity Examples","O(1) — constant space: same memory regardless of input size.\n      Swapping two variables with one temp variable.\n\nO(n) — linear space: memory grows with input.\n      Copying an array, building a new list.\n\nO(n²) — quadratic space: a 2D grid/matrix sized n×n."),
             d("🧑‍💼","npc","The Examiner","s-npc","Every interview answer about an algorithm should mention <em>both</em> time and space complexity. Sometimes there is a trade-off: a faster algorithm needs more memory, or a memory-efficient one is slower. Recognising that trade-off shows senior-level thinking."),
             d("🧙","mentor","Master Velan","s-mentor","In Java, remember that creating a new array or ArrayList is O(n) space — you are allocating n new slots. Sorting with Java's built-in sort uses O(log n) extra space for the recursive call stack. Knowing what the standard library does under the hood makes you stand out.")
           ),

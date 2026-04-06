@@ -142,7 +142,7 @@ public class Ch3Seeder extends AbstractChapterSeeder {
           story(
             n("The Academy's Map Room. Two sections of the floor glow differently: the <em>Stack</em> — bright, fast, for local variables — and the <em>Heap</em> — vast, slower, for objects."),
             d("🦉","npc","Sage Orrin","s-npc","Java is <em>always pass-by-value</em> — no exceptions. When you assign a primitive to another variable, a complete copy of the value is made. Changes to the copy never affect the original."),
-            e("Primitive Copy","int original = 42;\\nint copy = original;  // a fresh copy of 42\\ncopy = 100;           // only changes 'copy'\\nSystem.out.println(original); // still 42\\nSystem.out.println(copy);     // 100"),
+            e("Primitive Copy","int original = 42;\nint copy = original;  // a fresh copy of 42\ncopy = 100;           // only changes 'copy'\nSystem.out.println(original); // still 42\nSystem.out.println(copy);     // 100"),
             d("🧙","mentor","Master Velan","s-mentor","With reference types like String or ArrayList, it is still pass-by-value — but the <em>value being copied is the reference</em> (the memory address of the object). Two variables can point at the same object on the heap. Changing the object through one variable changes what the other sees."),
             d("🦉","npc","Sage Orrin","s-npc","This is why we use <em>.equals()</em> to compare String content — <em>==</em> only checks whether two variables point to the <em>exact same object</em>, not whether the content is the same. <code>new String(\"hello\")</code> creates a fresh object even if the content is identical.")
           ),

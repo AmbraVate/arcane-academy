@@ -144,9 +144,9 @@ public class Ch2Seeder extends AbstractChapterSeeder {
           story(
             n("The Chamber of Logical Mechanisms. Brass gates line the walls, each demonstrating a fundamental law of boolean logic. A sign reads: <em>Master these and no condition will ever surprise you.</em>"),
             d("🦉","npc","Sage Orrin","s-npc","Three fundamental operators: <em>&amp;&amp;</em> (AND — both must be true), <em>||</em> (OR — at least one must be true), <em>!</em> (NOT — inverts). All logic is built from these three."),
-            e("Truth Table","a = true,  b = false:\\na && b  →  false  (AND requires both)\\na || b  →  true   (OR needs one)\\n!a      →  false  (NOT inverts)\\n!b      →  true"),
+            e("Truth Table","a = true,  b = false:\na && b  →  false  (AND requires both)\na || b  →  true   (OR needs one)\n!a      →  false  (NOT inverts)\n!b      →  true"),
             d("🦉","npc","Sage Orrin","s-npc","<em>De Morgan's Theorem</em>: NOT (A AND B) equals (NOT A) OR (NOT B). And: NOT (A OR B) equals (NOT A) AND (NOT B). This lets you distribute a NOT across a compound condition and simplify complex logic."),
-            e("De Morgan's Laws","// These pairs are always equivalent:\\n!(a && b)  ==  (!a || !b)\\n!(a || b)  ==  (!a && !b)"),
+            e("De Morgan's Laws","// These pairs are always equivalent:\n!(a && b)  ==  (!a || !b)\n!(a || b)  ==  (!a && !b)"),
             d("🧙","mentor","Master Velan","s-mentor","Bonus: <em>short-circuit evaluation</em>. With <em>&amp;&amp;</em>, if the left side is false, Java never evaluates the right. This is why <em>list != null &amp;&amp; list.size() > 0</em> is safe — if list is null the size check never executes.")
           ),
           "With <code>boolean a = true, b = false</code>, print four labeled lines:<br>1. <code>\"AND: \" + (a && b)</code><br>2. <code>\"OR: \" + (a || b)</code><br>3. <code>\"De Morgan 1: \" + (!(a && b) == (!a || !b))</code><br>4. <code>\"De Morgan 2: \" + (!(a || b) == (!a && !b))</code>",
