@@ -33,6 +33,8 @@ export default function QuestPage() {
   const [questStage, setQuestStage] = useState<QuestStage>('story')
   const [questPanelVisible, setQuestPanelVisible] = useState(false)
   const [activeTab, setActiveTab] = useState<'quest' | 'code'>('quest')
+  const [isPracticing, setIsPracticing] = useState(false)
+  const [showLesson, setShowLesson] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
   const storyEndRef = useRef<HTMLDivElement>(null)
   const questPanelRef = useRef<HTMLDivElement>(null)
@@ -91,8 +93,16 @@ export default function QuestPage() {
     }
   }
 
+  function startPractice() {
+    setIsPracticing(true)
+    setCode(quest!.starterCode)
+    setOutput([{ text: '// Practice mode — XP already awarded for this quest.', type: 'system' }])
+    setTestResults(new Map())
+    setMentorFeedback(null)
+  }
+
   async function handleSubmit() {
-    if (!quest || running || questStage === 'complete' || quest.completed) return
+    if (!quest || running) return
     setRunning(true)
     setMentorFeedback(null)
     setOutput([{ text: '// Running all test cases...', type: 'system' }])
@@ -142,6 +152,7 @@ export default function QuestPage() {
       if (result.allPassed) {
         lines.push({ text: '✓ All test cases passed!', type: 'success' })
         setQuestStage('complete')
+        setIsPracticing(false)
         if (result.xpEarned > 0) {
           const prevRank = calculateRank(user?.totalXp ?? 0)
           const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
@@ -152,6 +163,8 @@ export default function QuestPage() {
             const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage']
             setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
           }
+        } else {
+          showToast('✓ Solution verified — no XP awarded twice')
         }
       } else {
         lines.push({ text: '✗ Some test cases failed.', type: 'error' })
@@ -190,7 +203,7 @@ export default function QuestPage() {
 
   if (!quest) return null
 
-  const isWon = questStage === 'complete' || quest.completed
+  const isWon = (questStage === 'complete' || quest.completed) && !isPracticing
   const isSolved = isWon
 
   // ── Stage 1: Story View ──────────────────────────────────────────────────────
@@ -262,7 +275,7 @@ export default function QuestPage() {
         style={{ fontSize: 12, padding: '5px 14px' }}
         aria-label={isSolved ? 'Quest solved' : 'Submit your solution'}
       >
-        {isSolved ? '✓ Solved' : running ? '⟳ Running…' : '⚡ Submit'}
+        {isSolved ? '✓ Solved' : running ? '⟳ Running…' : isPracticing ? '⚡ Re-submit' : '⚡ Submit'}
       </button>
     </>
   )
@@ -294,16 +307,33 @@ export default function QuestPage() {
             <span className="chip chip-purple">{quest.topic}</span>
             <span className="chip chip-green">+{quest.xpReward} XP</span>
           </div>
+          <button
+            className={`btn btn-ghost ${styles.lessonToggle}`}
+            onClick={() => setShowLesson(l => !l)}
+          >
+            📖 {showLesson ? 'Hide lesson' : 'View lesson'}
+          </button>
         </div>
 
         <div className={styles.leftScroll}>
+          {showLesson && (
+            <div className={styles.lessonPanel}>
+              <StoryPanel beats={quest.story} />
+            </div>
+          )}
+
           {isWon ? (
             <div className={styles.winPanel}>
               <div className={styles.resultTitle}>✦ Quest Complete!</div>
               <div className={styles.resultMsg}>{quest.winStory}</div>
-              <button className="btn btn-success" onClick={handleBackToAcademy}>
-                Return to Academy →
-              </button>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <button className="btn btn-success" onClick={handleBackToAcademy}>
+                  Return to Academy →
+                </button>
+                <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={startPractice}>
+                  🔄 Practice Again
+                </button>
+              </div>
             </div>
           ) : (
             <div className={styles.problemBox}>

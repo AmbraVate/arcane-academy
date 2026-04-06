@@ -25,6 +25,7 @@ public class DataSeeder {
     private final Ch7Seeder ch7Seeder;
     private final Ch8Seeder ch8Seeder;
     private final BossSeeder bossSeeder;
+    private final TestUserSeeder testUserSeeder;
 
     @Bean
     public ApplicationRunner seedData() {
@@ -45,6 +46,8 @@ public class DataSeeder {
             if (bossRepository.count() == 0) {
                 bossSeeder.seed();
             }
+
+            testUserSeeder.seed();
         };
     }
 }
