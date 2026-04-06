@@ -48,7 +48,7 @@ public class Ch2Seeder extends AbstractChapterSeeder {
           ),
           "Write a <strong>switch statement</strong> on the variable <code>String affinity</code> that prints:<br><br>• <strong>\"Emberhall\"</strong> for <em>\"Fire\"</em><br>• <strong>\"Tidespire\"</strong> for <em>\"Water\"</em><br>• <strong>\"Stoneward\"</strong> for <em>\"Earth\"</em><br>• <strong>\"Skyveil\"</strong> for <em>\"Air\"</em><br>• <strong>\"General Intake\"</strong> for anything else<br><br>Don't forget <code>break;</code> after each case.",
           "Structure: <code>switch(affinity) { case \"Fire\": System.out.println(\"Emberhall\"); break; ... default: System.out.println(\"General Intake\"); }</code>",
-          "// 'affinity' is a String provided by each test (e.g. \"Fire\", \"Water\", ...)\n\nswitch (affinity) {\n    case \"Fire\":\n        // print the house name\n        break;\n    // add the remaining cases and a default\n}\n",
+          "String affinity = \"Fire\";\n\nswitch (affinity) {\n    case \"Fire\":\n        // print the house name\n        break;\n    // add the remaining cases and a default\n}\n",
           "The Sorting Sigil pulses five times — once for each test affinity. Aldara watches each result appear and nods. \"Clean. Readable. Exactly right.\"",
           tests(test("Fire","String affinity = \"Fire\";","Emberhall"),test("Water","String affinity = \"Water\";","Tidespire"),test("Earth","String affinity = \"Earth\";","Stoneward"),test("Air","String affinity = \"Air\";","Skyveil"),test("Shadow","String affinity = \"Shadow\";","General Intake")));
 

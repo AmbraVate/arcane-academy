@@ -1,7 +1,11 @@
 # Arcane Academy — CLAUDE.md
 
-Gamified Java learning platform. Students progress through chapters of programming quests, earn XP, and fight chapter bosses. Fantasy/wizard aesthetic throughout.
+Gamified learning platform of various Topics. Students progress through chapters of programming quests, earn XP, and fight chapter bosses. Fantasy/wizard aesthetic throughout.
 
+# Initial
+
+Java is the first Topic being created taking someone who has not programmed or touched code, through to being job ready for their first Apprenticeship/Junior Role.
+This will also be the track used as a Proof of Concept.
 ## Tech Stack
 
 - **Backend**: Java 21, Spring Boot 3, Spring Security (JWT), Spring Data JPA, PostgreSQL
@@ -125,13 +129,15 @@ tests(
 
 ## XP & Ranking
 
-| Rank | XP threshold |
-|---|---|
-| Novice | 0 |
-| Apprentice | 400 |
-| Adept | 1 000 |
-| Mage | 2 000 |
-| Archmage | 4 000 |
+| Rank       | XP threshold |
+|------------|--------------|
+| Novice     | 0            |
+| Apprentice | 800          |
+| Adept      | 2 000        |
+| Mage       | 4 000        |
+| Archmage   | 6 500        |
+| Magus      | 8 000        |
+| Lord Magus | 11 000       |
 
 XP is awarded exactly once per quest/boss — enforced by a unique constraint on `(user_id, item_id, item_type)` in `user_progress`.
 
@@ -171,7 +177,3 @@ Chip classes: `chip chip-purple`, `chip chip-green`, `chip chip-teal`, `chip chi
 
 Button classes: `btn btn-primary`, `btn btn-ghost`, `btn btn-success`
 
-## Active Branch
-
-`claude/wonderful-neumann` → target `master`
-PR: https://github.com/AmbraVate/arcane-academy/pull/new/claude/wonderful-neumann
