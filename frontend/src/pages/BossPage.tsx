@@ -80,8 +80,9 @@ export default function BossPage() {
     const isLast = currentQ >= activeQuestions.length - 1
 
     if (result?.state === 'wrong') {
-      // Wrong answer — show defeat screen
+      // Wrong answer — show defeat screen with breakdown open
       setBattleState('lost')
+      setShowStudyMode(true)
       return
     }
 
@@ -187,29 +188,47 @@ export default function BossPage() {
           <div className={`${styles.resultBox} ${styles.fail}`}>
             <div className={styles.resultTitle}>💀 Defeated!</div>
             <div className={styles.resultMsg}>
-              The {boss.name} overpowers you. Review the concepts below, then try again.
-              {currentAnswer?.response && (
-                <div className={styles.explanation}>
-                  Correct answer: <strong>{currentAnswer.response.correctAnswer}</strong><br />
-                  {currentAnswer.response.explanation}
-                </div>
-              )}
+              The {boss.name} overpowers you. Review what went wrong below, then try again.
             </div>
-            <div style={{display:'flex',gap:10,flexWrap:'wrap',marginTop:4}}>
+            <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
               <button className="btn btn-ghost" onClick={() => setShowStudyMode(s => !s)}>
-                {showStudyMode ? 'Hide study guide' : '📖 Review concepts'}
+                {showStudyMode ? '▲ Hide breakdown' : '📖 Review concepts'}
               </button>
               <button className="btn btn-primary" onClick={handleRetry}>
                 Try Again →
               </button>
             </div>
-            {showStudyMode && boss && (
+            {showStudyMode && (
               <div className={styles.studyMode}>
-                {activeQuestions.map((q, i) => (
-                  <div key={q.id} className={styles.studyItem}>
-                    <div className={styles.studyQ}>Q{i+1}: {q.question}</div>
-                  </div>
-                ))}
+                {activeQuestions.slice(0, currentQ + 1).map((q, i) => {
+                  const a = answered.get(q.id)
+                  if (!a) return null
+                  const isWrong = a.state === 'wrong'
+                  return (
+                    <div key={q.id} className={`${styles.studyItem} ${isWrong ? styles.studyItemWrong : ''}`}>
+                      <div className={styles.studyQHeader}>
+                        <span className={isWrong ? styles.studyIconWrong : styles.studyIconCorrect}>
+                          {isWrong ? '✗' : '✓'}
+                        </span>
+                        <span className={styles.studyQ}>{q.question}</span>
+                      </div>
+                      {isWrong && (
+                        <div className={styles.studyExplain}>
+                          {q.code && (
+                            <pre className={styles.studyCode}><code dangerouslySetInnerHTML={{ __html: highlightJava(q.code) }} /></pre>
+                          )}
+                          <div className={styles.studyAnswerRow}>
+                            <span className={styles.studyWrongAnswer}>Your answer: {a.givenAnswer}</span>
+                            <span className={styles.studyCorrectAnswer}>Correct: {a.response?.correctAnswer}</span>
+                          </div>
+                          {a.response?.explanation && (
+                            <div className={styles.studyExplanation}>{a.response.explanation}</div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>
