@@ -66,7 +66,7 @@ public class Ch3Seeder extends AbstractChapterSeeder {
           ),
           "Using <code>ArrayList&lt;String&gt;</code>:<br><br>1. Create an empty list named <strong>graduates</strong><br>2. Add: <strong>\"Aldric\"</strong>, <strong>\"Zara\"</strong>, <strong>\"Finn\"</strong><br>3. Print the size: <strong>3</strong><br>4. Print each name using a for loop and <code>.get(i)</code>",
           "Declare: <code>ArrayList&lt;String&gt; graduates = new ArrayList&lt;&gt;();</code> then add three names. Loop: <code>for (int i = 0; i &lt; graduates.size(); i++) { System.out.println(graduates.get(i)); }</code>",
-          "import java.util.ArrayList;\n\n// Create ArrayList, add three names, print size then each name\n\n",
+          "import java.util.ArrayList;\n\npublic class ScrollOfLists {\n    public static void main(String[] args) {\n        // Create an ArrayList<String> named graduates\n\n        // Add: Aldric, Zara, Finn\n\n        // Print the size\n\n        // Print each name using a for loop and .get(i)\n\n    }\n}\n",
           "Three names appear on the graduation scroll in the library register. Fen stamps each one. \"Register complete. Expandable, ordered, and clear. This is how records should be kept.\"",
           tests(test("Size=3","null","3"),test("Aldric listed","null","Aldric"),test("Finn listed","null","Finn")));
 
