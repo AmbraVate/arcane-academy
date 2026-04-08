@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextValue | null>(null)
 
 function loadUser(): User | null {
   try {
-    const raw = localStorage.getItem('pollymath_user')
+    const raw = localStorage.getItem('polymath_user')
     return raw ? JSON.parse(raw) : null
   } catch {
     return null
@@ -27,8 +27,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(loadUser)
 
   const persist = useCallback((u: User) => {
-    localStorage.setItem('pollymath_token', u.token)
-    localStorage.setItem('pollymath_user', JSON.stringify(u))
+    localStorage.setItem('polymath_token', u.token)
+    localStorage.setItem('polymath_user', JSON.stringify(u))
     setUser(u)
   }, [])
 
@@ -47,8 +47,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [persist])
 
   const logout = useCallback(() => {
-    localStorage.removeItem('pollymath_token')
-    localStorage.removeItem('pollymath_user')
+    localStorage.removeItem('polymath_token')
+    localStorage.removeItem('polymath_user')
     setUser(null)
   }, [])
 
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(prev => {
       if (!prev) return prev
       const updated = { ...prev, streakDays }
-      localStorage.setItem("pollymath_user", JSON.stringify(updated))
+      localStorage.setItem("polymath_user", JSON.stringify(updated))
       return updated
     })
   }, [])
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(prev => {
       if (!prev) return prev
       const updated = { ...prev, totalXp: prev.totalXp + xpEarned, rank: newRank ?? prev.rank }
-      localStorage.setItem('pollymath_user', JSON.stringify(updated))
+      localStorage.setItem('polymath_user', JSON.stringify(updated))
       return updated
     })
   }, [])

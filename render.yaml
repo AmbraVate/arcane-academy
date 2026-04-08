@@ -4,7 +4,7 @@
 services:
   # Backend API (Java 21 + Spring Boot)
   - type: web
-    name: pollymath-academy-api
+    name: polymath-academy-api
     runtime: docker
     dockerfilePath: backend/Dockerfile
     dockerContext: backend
@@ -13,22 +13,22 @@ services:
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
-          name: pollymath-db
+          name: polymath-db
           property: connectionString
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
-          name: pollymath-db
+          name: polymath-db
           property: user
       - key: SPRING_DATASOURCE_PASSWORD
         fromDatabase:
-          name: pollymath-db
+          name: polymath-db
           property: password
       - key: JWT_SECRET
         generateValue: true
       - key: ALLOWED_ORIGINS
-        value: https://pollymath-academy.onrender.com
+        value: https://polymath-academy.onrender.com
       - key: OAUTH2_FRONTEND_REDIRECT
-        value: https://pollymath-academy.onrender.com/oauth2/callback
+        value: https://polymath-academy.onrender.com/oauth2/callback
       - key: GOOGLE_CLIENT_ID
         sync: false  # Set manually in dashboard
       - key: GOOGLE_CLIENT_SECRET
@@ -36,7 +36,7 @@ services:
 
   # Frontend (Static Site)
   - type: web
-    name: pollymath-academy
+    name: polymath-academy
     runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
@@ -54,22 +54,22 @@ services:
     routes:
       - type: rewrite
         source: /api/*
-        destination: https://pollymath-academy-api.onrender.com/api/*
+        destination: https://polymath-academy-api.onrender.com/api/*
       - type: rewrite
         source: /oauth2/*
-        destination: https://pollymath-academy-api.onrender.com/oauth2/*
+        destination: https://polymath-academy-api.onrender.com/oauth2/*
       - type: rewrite
         source: /login/oauth2/*
-        destination: https://pollymath-academy-api.onrender.com/login/oauth2/*
+        destination: https://polymath-academy-api.onrender.com/login/oauth2/*
       - type: rewrite
         source: /actuator/*
-        destination: https://pollymath-academy-api.onrender.com/actuator/*
+        destination: https://polymath-academy-api.onrender.com/actuator/*
       - type: rewrite
         source: /*
         destination: /index.html
 
 databases:
-  - name: pollymath-db
+  - name: polymath-db
     plan: free
-    databaseName: pollymath_academy
-    user: pollymath
+    databaseName: polymath_academy
+    user: polymath

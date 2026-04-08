@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pollymath_academy}
-    username: ${SPRING_DATASOURCE_USERNAME:pollymath}
-    password: ${SPRING_DATASOURCE_PASSWORD:pollymath_secret}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/polymath_academy}
+    username: ${SPRING_DATASOURCE_USERNAME:polymath}
+    password: ${SPRING_DATASOURCE_PASSWORD:polymath_secret}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -54,12 +54,12 @@ logging:
   level:
     root: INFO
     com.arcane.academy: DEBUG
-    com.arcane.academy.runner.JavaCodeRunner: DEBUG
-    com.arcane.academy.service.QuestService: DEBUG
-    com.arcane.academy.service.BossService: DEBUG
-    com.arcane.academy.service.AuthService: DEBUG
-    com.arcane.academy.service.StreakService: DEBUG
-    com.arcane.academy.service.AiMentorService: DEBUG
+    com.arcane.academy.runner.com.ambravate.polymath.academy.runner.JavaCodeRunner: DEBUG
+    com.arcane.academy.service.com.ambravate.polymath.academy.service.QuestService: DEBUG
+    com.arcane.academy.service.com.ambravate.polymath.academy.service.BossService: DEBUG
+    com.arcane.academy.service.com.ambravate.polymath.academy.service.AuthService: DEBUG
+    com.arcane.academy.service.com.ambravate.polymath.academy.service.StreakService: DEBUG
+    com.arcane.academy.service.com.ambravate.polymath.academy.service.AiMentorService: DEBUG
     org.springframework.security: INFO
     org.springframework.web: INFO
     org.hibernate.SQL: WARN
@@ -67,9 +67,9 @@ logging:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
   file:
-    name: logs/pollymath-academy.log
+    name: logs/polymath-academy.log
   logback:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 7
-      file-name-pattern: logs/pollymath-academy.%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: logs/polymath-academy.%d{yyyy-MM-dd}.%i.log
