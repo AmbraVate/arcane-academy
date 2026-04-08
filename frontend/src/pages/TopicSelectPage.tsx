@@ -109,7 +109,7 @@ export default function TopicSelectPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [progressMap, setProgressMap] = useState<Record<string, TopicProgress>>({})
-  const activeTopic = localStorage.getItem('arcane_topic') ?? ''
+  const activeTopic = localStorage.getItem('pollymath_topic') ?? ''
 
   useEffect(() => {
     questApi.getAll().then((quests: QuestSummary[]) => {
@@ -131,7 +131,7 @@ export default function TopicSelectPage() {
 
   function handleSelect(topic: Topic) {
     if (!topic.available) return
-    localStorage.setItem('arcane_topic', topic.id)
+    localStorage.setItem('pollymath_topic', topic.id)
     navigate('/')
   }
 

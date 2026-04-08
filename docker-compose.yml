@@ -2,17 +2,17 @@ services:
   db:
     image: postgres:16-alpine
     pull_policy: missing
-    container_name: arcane-db
+    container_name: pollymath-db
     environment:
-      POSTGRES_DB: arcane_academy
-      POSTGRES_USER: arcane
-      POSTGRES_PASSWORD: arcane_secret
+      POSTGRES_DB: pollymath_academy
+      POSTGRES_USER: pollymath
+      POSTGRES_PASSWORD: pollymath_secret
     ports:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U arcane -d arcane_academy"]
+      test: ["CMD-SHELL", "pg_isready -U pollymath -d pollymath_academy"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -21,11 +21,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: arcane-backend
+    container_name: pollymath-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/arcane_academy
-      SPRING_DATASOURCE_USERNAME: arcane
-      SPRING_DATASOURCE_PASSWORD: arcane_secret
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/pollymath_academy
+      SPRING_DATASOURCE_USERNAME: pollymath
+      SPRING_DATASOURCE_PASSWORD: pollymath_secret
       JWT_SECRET: ${JWT_SECRET:-change_this_in_production_min_32_chars!!}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
       ALLOWED_ORIGINS: http://localhost,http://localhost:80,http://localhost:5173
@@ -40,7 +40,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: arcane-frontend
+    container_name: pollymath-frontend
     ports:
       - "80:80"
     depends_on:

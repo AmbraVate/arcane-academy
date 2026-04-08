@@ -1,4 +1,4 @@
-# Arcane Academy — CLAUDE.md
+# Pollymath Academy — CLAUDE.md
 
 Gamified learning platform of various Topics. Students progress through chapters of programming quests, earn XP, and fight chapter bosses. Fantasy/wizard aesthetic throughout.
 
@@ -158,10 +158,10 @@ Created by `TestUserSeeder` on every startup (skipped if already present). **Pas
 
 | Email | Username | Stage |
 |---|---|---|
-| `novice@arcane.test` | `test_novice` | Fresh start, 0 XP |
-| `apprentice@arcane.test` | `test_apprentice` | Chapter I complete |
-| `adept@arcane.test` | `test_adept` | Chapters I–II complete |
-| `mage@arcane.test` | `test_mage` | Chapters I–IV complete |
+| `novice@pollymath.test` | `test_novice` | Fresh start, 0 XP |
+| `apprentice@pollymath.test` | `test_apprentice` | Chapter I complete |
+| `adept@pollymath.test` | `test_adept` | Chapters I–II complete |
+| `mage@pollymath.test` | `test_mage` | Chapters I–IV complete |
 
 ## Badges / Accolades
 
@@ -228,9 +228,9 @@ Button classes: `btn btn-primary`, `btn btn-ghost`, `btn btn-success`
 ### Render Deployment (recommended free hosting)
 
 `render.yaml` blueprint defines all services:
-- **arcane-academy-api**: Docker web service (backend)
-- **arcane-academy**: Static site (frontend with API rewrites)
-- **arcane-db**: Free PostgreSQL database
+- **pollymath-academy-api**: Docker web service (backend)
+- **pollymath-academy**: Static site (frontend with API rewrites)
+- **pollymath-db**: Free PostgreSQL database
 
 Deploy: Dashboard > New > Blueprint Instance > connect GitHub repo. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` manually in the dashboard.
 
@@ -248,7 +248,7 @@ JWT_SECRET=$(openssl rand -base64 48) docker compose up --build
 | `SPRING_DATASOURCE_USERNAME` | DB username |
 | `SPRING_DATASOURCE_PASSWORD` | DB password |
 | `JWT_SECRET` | Min 32 chars, cryptographically random |
-| `ALLOWED_ORIGINS` | Frontend URL (e.g., `https://arcane-academy.onrender.com`) |
+| `ALLOWED_ORIGINS` | Frontend URL (e.g., `https://pollymath-academy.onrender.com`) |
 | `GOOGLE_CLIENT_ID` | Google OAuth client ID (optional) |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret (optional) |
 | `OAUTH2_FRONTEND_REDIRECT` | OAuth callback URL (e.g., `https://your-domain.com/oauth2/callback`) |

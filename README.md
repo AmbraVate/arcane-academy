@@ -1,4 +1,4 @@
-# Arcane Academy
+# Pollymath Academy
 
 A gamified Java learning platform with a wizardry RPG theme. Built with React + Spring Boot + PostgreSQL, fully containerised with Docker.
 
@@ -16,7 +16,7 @@ A gamified Java learning platform with a wizardry RPG theme. Built with React + 
 ## Project Structure
 
 ```
-arcane-academy/
+pollymath-academy/
 ├── docker-compose.yml
 ├── .env.example
 ├── frontend/
@@ -76,9 +76,9 @@ Requirements: Java 21, Maven 3.9+, PostgreSQL running locally
 cd backend
 
 # Set environment variables (or create application-local.yml)
-export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/arcane_academy
-export SPRING_DATASOURCE_USERNAME=arcane
-export SPRING_DATASOURCE_PASSWORD=arcane_secret
+export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/pollymath_academy
+export SPRING_DATASOURCE_USERNAME=pollymath
+export SPRING_DATASOURCE_PASSWORD=pollymath_secret
 export JWT_SECRET=dev_secret_at_least_32_characters!!
 export ANTHROPIC_API_KEY=your_key_here
 

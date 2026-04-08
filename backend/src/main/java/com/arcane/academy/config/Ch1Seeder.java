@@ -18,17 +18,17 @@ public class Ch1Seeder extends AbstractChapterSeeder {
 
         q("ch1-q1","The Wall of First Words","Chapter I · Quest 1","Hello World",1,1,80,"HelloWorld.java",
           story(
-            n("You push open the great oak doors of Arcane Academy. The entrance hall is vast and dimly lit by floating orbs of blue light. At the far end stands an enormous stone wall — the <em>Wall of First Words</em> — covered floor to ceiling in glowing text."),
+            n("You push open the great oak doors of Pollymath Academy. The entrance hall is vast and dimly lit by floating orbs of blue light. At the far end stands an enormous stone wall — the <em>Wall of First Words</em> — covered floor to ceiling in glowing text."),
             d("🧙","mentor","Master Velan","s-mentor","Ah, a new apprentice. Every wizard who ever graduated began with the same thing: making the world say something back. A Java program is just instructions for the computer, read top to bottom. Your first instruction makes it speak."),
             d("🧝","npc","Enchantress Lyra","s-npc","To display text, you write <em>System.out.println()</em> and put your message in double quotes inside the brackets. System is Java's connection to your screen. println means print a line. The semicolon at the end is like a full stop — miss it and nothing runs."),
             e("Worked Example","<span class='cm'>// This prints a message to the screen</span>\n<span class='kw'>System</span>.out.println(<span class='str'>\"Hello, world!\"</span>);\n<span class='cm'>// Output: Hello, world!</span>"),
             n("The starter code already has the outer shell — public class and main method. Every Java program needs that structure. Your spell goes inside the curly braces of main.")
           ),
-          "Add <strong>one line</strong> inside the <code>main</code> method that prints exactly:<br><strong>Welcome to Arcane Academy!</strong>",
-          "Type inside the curly braces: <code>System.out.println(\"Welcome to Arcane Academy!\");</code>",
+          "Add <strong>one line</strong> inside the <code>main</code> method that prints exactly:<br><strong>Welcome to Pollymath Academy!</strong>",
+          "Type inside the curly braces: <code>System.out.println(\"Welcome to Pollymath Academy!\");</code>",
           "public class HelloWorld {\n    public static void main(String[] args) {\n        // Write your spell below\n        \n    }\n}\n",
           "Golden letters blaze across the Wall of First Words. Master Velan places a hand on your shoulder. \"The Academy hears you. You are a programmer now.\"",
-          tests(test("Output","null","Welcome to Arcane Academy!")));
+          tests(test("Output","null","Welcome to Pollymath Academy!")));
 
         q("ch1-q2","The Hall of Bindings","Chapter I · Quest 2","Variables",1,2,100,"Bindings.java",
           story(
@@ -161,10 +161,10 @@ public class Ch1Seeder extends AbstractChapterSeeder {
             d("🧙","mentor","Master Velan","s-mentor","Everything else — String, ArrayList, your own classes, arrays — is a <em>reference type</em>. These live on the <em>heap</em>. A reference-type variable holds an <em>address</em> pointing to the object — which is why they can be <em>null</em> (no object at that address yet)."),
             d("🧝","npc","Enchantress Lyra","s-npc","Reference types carry <em>methods</em> you invoke with a dot. String is the prime example. That is also why it starts with a capital letter — it is a class, not a primitive. <em>int</em> and <em>double</em> are lowercase because they are primitives.")
           ),
-          "Demonstrate both worlds with <code>int power = 9000</code>, <code>boolean transformed = power &gt; 8000</code>, <code>char initial = 'A'</code> — print each on its own line. Then <code>String school = \"Arcane Academy\"</code> — print its <code>length()</code> and the result of <code>school.indexOf(\"Academy\")</code>.",
-          "Primitives: println(power), println(transformed), println(initial). String: println(school.length()) → 14, println(school.indexOf(\"Academy\")) → 7",
+          "Demonstrate both worlds with <code>int power = 9000</code>, <code>boolean transformed = power &gt; 8000</code>, <code>char initial = 'A'</code> — print each on its own line. Then <code>String school = \"Pollymath Academy\"</code> — print its <code>length()</code> and the result of <code>school.indexOf(\"Academy\")</code>.",
+          "Primitives: println(power), println(transformed), println(initial). String: println(school.length()) → 17, println(school.indexOf(\"Academy\")) → 10",
           "// Primitives: stored by value, no methods\n\n// Reference type (String): stored by reference, has methods\n\n",
-          "Both columns light up. \"Fourteen characters. Index seven. Primitives and objects, each in their proper realm.\" Lyra seals the Bestiary.",
-          tests(test("power","null","9000"),test("transformed","null","true"),test("initial","null","A"),test("length","null","14"),test("indexOf","null","7")));
+          "Both columns light up. \"Seventeen characters. Index ten. Primitives and objects, each in their proper realm.\" Lyra seals the Bestiary.",
+          tests(test("power","null","9000"),test("transformed","null","true"),test("initial","null","A"),test("length","null","17"),test("indexOf","null","10")));
     }
 }

@@ -28,13 +28,13 @@ export default function Nav() {
     : styles.streakWarm
 
   function handleLogout() {
-    localStorage.removeItem('arcane_topic')
+    localStorage.removeItem('pollymath_topic')
     logout()
   }
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.brand} onClick={() => navigate('/')}>✦ Arcane Academy</div>
+      <div className={styles.brand} onClick={() => navigate('/')}>✦ Pollymath Academy</div>
       <div className={styles.right}>
         {/* Streak indicator */}
         <div className={`${styles.streak} ${streakClass}`} title={`${streak}-day streak`}>

@@ -16,7 +16,7 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 }
 
 function TopicGuard({ children }: { children: React.ReactNode }) {
-  const topic = localStorage.getItem('arcane_topic')
+  const topic = localStorage.getItem('pollymath_topic')
   return topic ? <>{children}</> : <Navigate to="/topics" replace />
 }
 

@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/arcane_academy}
-    username: ${SPRING_DATASOURCE_USERNAME:arcane}
-    password: ${SPRING_DATASOURCE_PASSWORD:arcane_secret}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pollymath_academy}
+    username: ${SPRING_DATASOURCE_USERNAME:pollymath}
+    password: ${SPRING_DATASOURCE_PASSWORD:pollymath_secret}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -67,9 +67,9 @@ logging:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
   file:
-    name: logs/arcane-academy.log
+    name: logs/pollymath-academy.log
   logback:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 7
-      file-name-pattern: logs/arcane-academy.%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: logs/pollymath-academy.%d{yyyy-MM-dd}.%i.log

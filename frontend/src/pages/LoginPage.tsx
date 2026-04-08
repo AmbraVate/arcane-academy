@@ -31,7 +31,7 @@ export default function LoginPage() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.glyph}>🧙</div>
-        <h1 className={styles.title}>Arcane Academy</h1>
+        <h1 className={styles.title}>Pollymath Academy</h1>
         <p className={styles.sub}>Enter your credentials to continue your journey</p>
 
         <form onSubmit={handleSubmit} className={styles.form}>

@@ -11,9 +11,9 @@
   </parent>
 
   <groupId>com.arcane</groupId>
-  <artifactId>arcane-academy</artifactId>
+  <artifactId>pollymath-academy</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>arcane-academy</name>
+  <name>pollymath-academy</name>
 
   <properties>
     <java.version>21</java.version>

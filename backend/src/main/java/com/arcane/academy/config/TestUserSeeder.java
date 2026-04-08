@@ -20,10 +20,10 @@ import java.util.List;
 // Creates test accounts at various stages for QA / development testing.
 //
 // Accounts (all password: Test1234!)
-//   novice@arcane.test       — fresh start, 0 XP
-//   apprentice@arcane.test   — Chapter I complete
-//   adept@arcane.test        — Chapters I–II complete
-//   mage@arcane.test         — Chapters I–IV complete
+//   novice@pollymath.test       — fresh start, 0 XP
+//   apprentice@pollymath.test   — Chapter I complete
+//   adept@pollymath.test        — Chapters I–II complete
+//   mage@pollymath.test         — Chapters I–IV complete
 // ══════════════════════════════════════════════════════════════════════════════
 @Component
 @RequiredArgsConstructor
@@ -39,10 +39,10 @@ public class TestUserSeeder {
     private static final String TEST_PASSWORD = "Test1234!";
 
     public void seed() {
-        createUser("novice@arcane.test",      "test_novice",      List.of(),          List.of());
-        createUser("apprentice@arcane.test",  "test_apprentice",  List.of(1),         List.of(1));
-        createUser("adept@arcane.test",       "test_adept",       List.of(1, 2),      List.of(1, 2));
-        createUser("mage@arcane.test",        "test_mage",        List.of(1, 2, 3, 4), List.of(1, 2, 3, 4));
+        createUser("novice@pollymath.test",      "test_novice",      List.of(),          List.of());
+        createUser("apprentice@pollymath.test",  "test_apprentice",  List.of(1),         List.of(1));
+        createUser("adept@pollymath.test",       "test_adept",       List.of(1, 2),      List.of(1, 2));
+        createUser("mage@pollymath.test",        "test_mage",        List.of(1, 2, 3, 4), List.of(1, 2, 3, 4));
     }
 
     private void createUser(String email, String username,

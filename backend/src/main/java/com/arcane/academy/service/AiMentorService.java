@@ -222,7 +222,7 @@ public class AiMentorService {
             return "Master Velan leans over to look. " +
                    "\"The output does not quite match what is expected. " +
                    "Check the exact text inside your println — every character must match, including capital letters and punctuation. " +
-                   "The text 'Welcome to Arcane Academy!' must appear exactly as written, including the exclamation mark.\"";
+                   "The text 'Welcome to Pollymath Academy!' must appear exactly as written, including the exclamation mark.\"";
         }
 
         // ── Variables ────────────────────────────────────────────────────────

@@ -107,11 +107,11 @@ public class Ch5Seeder extends AbstractChapterSeeder {
             e("Worked Example — static methods (Math class)",
               "<span class='kw'>System</span>.out.println(<span class='type'>Math</span>.abs(-<span class='num'>7</span>));         <span class='cm'>// 7</span>\n<span class='kw'>System</span>.out.println(<span class='type'>Math</span>.max(<span class='num'>10</span>, <span class='num'>25</span>));    <span class='cm'>// 25</span>\n<span class='kw'>System</span>.out.println(<span class='type'>Math</span>.sqrt(<span class='num'>16.0</span>));    <span class='cm'>// 4.0</span>\n<span class='kw'>System</span>.out.println((<span class='type'>int</span>)<span class='type'>Math</span>.pow(<span class='num'>2</span>,<span class='num'>8</span>));  <span class='cm'>// 256</span>")
           ),
-          "Define class <strong>MagicConstants</strong> with three <code>static final</code> constants:<br>• <code>MAX_MANA = 500</code><br>• <code>ACADEMY_NAME = \"Arcane Academy\"</code><br>• <code>GRAVITY = 9.81</code><br><br>In main print all three, then:<br>• <code>Math.abs(-42)</code> → <strong>42</strong><br>• <code>(int)Math.pow(2, 10)</code> → <strong>1024</strong>",
+          "Define class <strong>MagicConstants</strong> with three <code>static final</code> constants:<br>• <code>MAX_MANA = 500</code><br>• <code>ACADEMY_NAME = \"Pollymath Academy\"</code><br>• <code>GRAVITY = 9.81</code><br><br>In main print all three, then:<br>• <code>Math.abs(-42)</code> → <strong>42</strong><br>• <code>(int)Math.pow(2, 10)</code> → <strong>1024</strong>",
           "static final int MAX_MANA = 500; etc. Access as MagicConstants.MAX_MANA. Math methods need no import — java.lang.Math is always available.",
           "// Define MagicConstants class with three static final constants\n\npublic class ImmutableSeal {\n    public static void main(String[] args) {\n        // Print MagicConstants.MAX_MANA\n        // Print MagicConstants.ACADEMY_NAME\n        // Print MagicConstants.GRAVITY\n        // Print Math.abs(-42)\n        // Print (int)Math.pow(2, 10)\n    }\n}\n",
           "\"Sealed. Immutable. Shared,\" the chamber confirms. \"Constants protect your code from accidental mutation.\"",
-          tests(test("MAX_MANA","null","500"),test("ACADEMY_NAME","null","Arcane Academy"),test("abs(-42)","null","42"),test("2^10","null","1024")));
+          tests(test("MAX_MANA","null","500"),test("ACADEMY_NAME","null","Pollymath Academy"),test("abs(-42)","null","42"),test("2^10","null","1024")));
 
         // ── Side quests ───────────────────────────────────────────────────────
 
