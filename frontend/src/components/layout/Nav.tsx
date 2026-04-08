@@ -53,6 +53,10 @@ export default function Nav() {
 
         <div className={styles.rank}>⚗ {user.rank}</div>
         <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
+          onClick={() => navigate('/profile')}>
+          Profile
+        </button>
+        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
           onClick={() => navigate('/topics')}>
           Topics
         </button>

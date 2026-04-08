@@ -19,8 +19,14 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String passwordHash;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private AuthProvider authProvider = AuthProvider.LOCAL;
+
+    private String providerId;
 
     @Builder.Default
     private int totalXp = 0;
@@ -35,4 +41,8 @@ public class User {
     private Instant createdAt = Instant.now();
 
     private Instant lastLoginAt;
+
+    public enum AuthProvider {
+        LOCAL, GOOGLE
+    }
 }

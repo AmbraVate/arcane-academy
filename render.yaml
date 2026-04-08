@@ -1,0 +1,75 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy with: Dashboard > New > Blueprint Instance > connect this repo
+
+services:
+  # Backend API (Java 21 + Spring Boot)
+  - type: web
+    name: arcane-academy-api
+    runtime: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: arcane-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: arcane-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: arcane-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://arcane-academy.onrender.com
+      - key: OAUTH2_FRONTEND_REDIRECT
+        value: https://arcane-academy.onrender.com/oauth2/callback
+      - key: GOOGLE_CLIENT_ID
+        sync: false  # Set manually in dashboard
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false  # Set manually in dashboard
+
+  # Frontend (Static Site)
+  - type: web
+    name: arcane-academy
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    plan: free
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://arcane-academy-api.onrender.com/api/*
+      - type: rewrite
+        source: /oauth2/*
+        destination: https://arcane-academy-api.onrender.com/oauth2/*
+      - type: rewrite
+        source: /login/oauth2/*
+        destination: https://arcane-academy-api.onrender.com/login/oauth2/*
+      - type: rewrite
+        source: /actuator/*
+        destination: https://arcane-academy-api.onrender.com/actuator/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  - name: arcane-db
+    plan: free
+    databaseName: arcane_academy
+    user: arcane

@@ -2,8 +2,9 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { bossApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
-import type { BossData, BossQuestion, BossAnswerResponse } from '../types'
+import type { BossData, BossQuestion, BossAnswerResponse, Badge } from '../types'
 import LevelUpModal from '../components/layout/LevelUpModal'
+import BadgeToast from '../components/layout/BadgeToast'
 import styles from './BossPage.module.css'
 
 type QuestionState = 'unanswered' | 'correct' | 'wrong'
@@ -39,6 +40,7 @@ export default function BossPage() {
   const [battleState, setBattleState] = useState<'fighting' | 'won' | 'lost'>('fighting')
   const [toast, setToast] = useState<string | null>(null)
   const [levelUpInfo, setLevelUpInfo] = useState<{level: number; rank: string} | null>(null)
+  const [newBadges, setNewBadges] = useState<Badge[]>([])
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
@@ -100,6 +102,9 @@ export default function BossPage() {
           if (progress.rank !== prevRank) {
             const rankNames = ['Novice','Apprentice','Adept','Mage','Archmage']
             setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(progress.rank) + 1, rank: progress.rank }), 1200)
+          }
+          if (progress.newBadges && progress.newBadges.length > 0) {
+            setNewBadges(progress.newBadges)
           }
         }
       } catch {
@@ -282,6 +287,9 @@ export default function BossPage() {
           newRank={levelUpInfo.rank}
           onClose={() => setLevelUpInfo(null)}
         />
+      )}
+      {newBadges.length > 0 && (
+        <BadgeToast badges={newBadges} onDone={() => setNewBadges([])} />
       )}
     </div>
   )

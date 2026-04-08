@@ -10,6 +10,7 @@ public class SubmitResponse {
     private int xpEarned;
     private String mentorFeedback;
     private String errorType; // null | COMPILE_ERROR | RUNTIME_ERROR | TEST_FAILURE
+    private List<BadgeDto> newBadges;
 
     @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
     public static class TestResult {

@@ -1,5 +1,6 @@
 package com.arcane.academy.dto;
 import lombok.*;
+import java.util.List;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ProgressResponse {
@@ -7,4 +8,5 @@ public class ProgressResponse {
     private int totalXp;
     private String rank;
     private int streakDays;
+    private List<BadgeDto> newBadges;
 }

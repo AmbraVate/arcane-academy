@@ -2,13 +2,14 @@ import { useEffect, useState, useRef, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { questApi, codeApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
-import type { QuestDetail, SubmitResponse, CodeRunResponse } from '../types'
+import type { QuestDetail, SubmitResponse, CodeRunResponse, Badge } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
 import CodeEditor from '../components/quest/CodeEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
 import AiMentorPanel from '../components/quest/AiMentorPanel'
 import LevelUpModal from '../components/layout/LevelUpModal'
+import BadgeToast from '../components/layout/BadgeToast'
 import styles from './QuestPage.module.css'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
@@ -35,6 +36,7 @@ export default function QuestPage() {
   const [activeTab, setActiveTab] = useState<'quest' | 'code'>('quest')
   const [isPracticing, setIsPracticing] = useState(false)
   const [showLesson, setShowLesson] = useState(false)
+  const [newBadges, setNewBadges] = useState<Badge[]>([])
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
   const storyEndRef = useRef<HTMLDivElement>(null)
   const questPanelRef = useRef<HTMLDivElement>(null)
@@ -162,6 +164,9 @@ export default function QuestPage() {
           if (newRank !== prevRank) {
             const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage']
             setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
+          }
+          if (result.newBadges && result.newBadges.length > 0) {
+            setNewBadges(result.newBadges)
           }
         } else {
           showToast('✓ Solution verified — no XP awarded twice')
@@ -381,6 +386,9 @@ export default function QuestPage() {
           newRank={levelUpInfo.rank}
           onClose={() => setLevelUpInfo(null)}
         />
+      )}
+      {newBadges.length > 0 && (
+        <BadgeToast badges={newBadges} onDone={() => setNewBadges([])} />
       )}
     </div>
   )

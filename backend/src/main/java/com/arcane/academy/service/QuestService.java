@@ -27,6 +27,7 @@ public class QuestService {
     private final JavaCodeRunner codeRunner;
     private final AiMentorService aiMentorService;
     private final StreakService streakService;
+    private final BadgeService badgeService;
     private final ObjectMapper objectMapper;
 
     public List<QuestSummaryDto> getAllWithProgress(String userId) {
@@ -181,12 +182,14 @@ public class QuestService {
 
         int xpEarned = 0;
         String mentorFeedback = null;
+        List<com.arcane.academy.dto.BadgeDto> newBadges = List.of();
 
         if (allPassed) {
             log.info("[QuestService] ALL TESTS PASSED | questId={} userId={} xpReward={}",
                     questId, userId, quest.getXpReward());
             xpEarned = quest.getXpReward();
             awardXp(userId, questId, xpEarned, UserProgress.ItemType.QUEST);
+            newBadges = badgeService.evaluateAndAward(userId);
         } else {
             log.info("[QuestService] TESTS FAILED | questId={} userId={} failedTests='{}'",
                     questId, userId, String.join(", ", failedLabels));
@@ -195,7 +198,8 @@ public class QuestService {
         }
 
         return SubmitResponse.builder().allPassed(allPassed).testResults(results)
-                .xpEarned(xpEarned).mentorFeedback(mentorFeedback).errorType("TEST_FAILURE").build();
+                .xpEarned(xpEarned).mentorFeedback(mentorFeedback).errorType("TEST_FAILURE")
+                .newBadges(newBadges).build();
     }
 
     @Transactional

@@ -6,6 +6,7 @@ interface AuthContextValue {
   user: User | null
   login: (email: string, password: string) => Promise<void>
   register: (username: string, email: string, password: string) => Promise<void>
+  loginWithToken: (user: User) => void
   logout: () => void
   updateXp: (xpEarned: number, newRank?: string) => void
   updateStreak: (streakDays: number) => void
@@ -41,6 +42,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     persist(u)
   }, [persist])
 
+  const loginWithToken = useCallback((u: User) => {
+    persist(u)
+  }, [persist])
+
   const logout = useCallback(() => {
     localStorage.removeItem('arcane_token')
     localStorage.removeItem('arcane_user')
@@ -66,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, updateXp, updateStreak }}>
+    <AuthContext.Provider value={{ user, login, register, loginWithToken, logout, updateXp, updateStreak }}>
       {children}
     </AuthContext.Provider>
   )

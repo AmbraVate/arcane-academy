@@ -22,6 +22,7 @@ public class BossService {
     private final QuestRepository questRepository;
     private final UserProgressRepository progressRepository;
     private final UserRepository userRepository;
+    private final BadgeService badgeService;
     private final ObjectMapper objectMapper;
 
     public List<BossDto> getAllWithProgress(String userId) {
@@ -95,8 +96,10 @@ public class BossService {
                 userRepository.save(user);
             });
         }
+        var newBadges = badgeService.evaluateAndAward(userId);
         User user = userRepository.findById(userId).orElseThrow();
-        return ProgressResponse.builder().xpEarned(xpEarned).totalXp(user.getTotalXp()).rank(user.getRank()).build();
+        return ProgressResponse.builder().xpEarned(xpEarned).totalXp(user.getTotalXp())
+                .rank(user.getRank()).newBadges(newBadges).build();
     }
 
     private String calculateRank(int xp) {

@@ -1,5 +1,5 @@
 import api from './client'
-import type { QuestSummary, QuestDetail, SubmitResponse, CodeRunResponse, User, BossData, BossAnswerResponse } from '../types'
+import type { QuestSummary, QuestDetail, SubmitResponse, CodeRunResponse, User, BossData, BossAnswerResponse, Badge } from '../types'
 
 export const authApi = {
   register: async (username: string, email: string, password: string): Promise<User> => {
@@ -36,7 +36,7 @@ export const bossApi = {
     const { data } = await api.post(`/api/bosses/${bossId}/answer`, { questionId, answer })
     return data
   },
-  defeat: async (bossId: string): Promise<{ xpEarned: number; totalXp: number; rank: string }> => {
+  defeat: async (bossId: string): Promise<{ xpEarned: number; totalXp: number; rank: string; newBadges?: Badge[] }> => {
     const { data } = await api.post(`/api/bosses/${bossId}/defeat`)
     return data
   },
@@ -49,6 +49,17 @@ export const codeApi = {
   },
   submit: async (questId: string, code: string): Promise<SubmitResponse> => {
     const { data } = await api.post(`/api/code/submit/${questId}`, { code })
+    return data
+  },
+}
+
+export const badgeApi = {
+  getAll: async (): Promise<Badge[]> => {
+    const { data } = await api.get('/api/badges')
+    return data
+  },
+  getEarned: async (): Promise<Badge[]> => {
+    const { data } = await api.get('/api/badges/earned')
     return data
   },
 }

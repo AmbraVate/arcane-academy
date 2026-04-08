@@ -12,6 +12,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:not-configured}
+            client-secret: ${GOOGLE_CLIENT_SECRET:not-configured}
+            scope: openid, email, profile
 
 server:
   port: 8080
@@ -19,6 +27,10 @@ server:
 jwt:
   secret: ${JWT_SECRET:dev_secret_change_in_production_min32}
   expiration-ms: 86400000  # 24 hours
+
+app:
+  oauth2:
+    redirect-uri: ${OAUTH2_FRONTEND_REDIRECT:http://localhost:5173/oauth2/callback}
 
 # Anthropic config kept for reference but AiMentorService no longer makes API calls
 anthropic:
@@ -28,6 +40,15 @@ anthropic:
 
 cors:
   allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
 
 logging:
   level:
