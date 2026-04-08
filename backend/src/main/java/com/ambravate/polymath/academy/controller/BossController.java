@@ -4,7 +4,6 @@ import com.ambravate.polymath.academy.dto.BossAnswerRequest;
 import com.ambravate.polymath.academy.dto.BossAnswerResponse;
 import com.ambravate.polymath.academy.dto.BossDto;
 import com.ambravate.polymath.academy.dto.ProgressResponse;
-import com.arcane.academy.dto.*;
 import com.ambravate.polymath.academy.service.BossService;
 import com.ambravate.polymath.academy.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;

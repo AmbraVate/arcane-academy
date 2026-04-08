@@ -10,7 +10,7 @@
     <version>3.3.0</version>
   </parent>
 
-  <groupId>com.arcane</groupId>
+  <groupId>com.ambravate</groupId>
   <artifactId>polymath-academy</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>polymath-academy</name>

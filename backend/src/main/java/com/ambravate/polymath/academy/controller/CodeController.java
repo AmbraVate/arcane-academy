@@ -4,7 +4,7 @@ import com.ambravate.polymath.academy.dto.CodeRunRequest;
 import com.ambravate.polymath.academy.dto.CodeRunResponse;
 import com.ambravate.polymath.academy.dto.CodeSubmitRequest;
 import com.ambravate.polymath.academy.dto.SubmitResponse;
-import com.arcane.academy.dto.*;
+
 import com.ambravate.polymath.academy.runner.JavaCodeRunner;
 import com.ambravate.polymath.academy.service.QuestService;
 import com.ambravate.polymath.academy.security.UserPrincipal;

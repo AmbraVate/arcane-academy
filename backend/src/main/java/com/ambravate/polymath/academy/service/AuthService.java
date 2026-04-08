@@ -3,7 +3,6 @@ package com.ambravate.polymath.academy.service;
 import com.ambravate.polymath.academy.dto.AuthResponse;
 import com.ambravate.polymath.academy.dto.LoginRequest;
 import com.ambravate.polymath.academy.dto.RegisterRequest;
-import com.arcane.academy.dto.*;
 import com.ambravate.polymath.academy.model.User;
 import com.ambravate.polymath.academy.repository.UserRepository;
 import com.ambravate.polymath.academy.security.JwtService;

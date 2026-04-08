@@ -3,7 +3,7 @@ package com.ambravate.polymath.academy.controller;
 import com.ambravate.polymath.academy.dto.ProgressResponse;
 import com.ambravate.polymath.academy.dto.QuestDetailDto;
 import com.ambravate.polymath.academy.dto.QuestSummaryDto;
-import com.arcane.academy.dto.*;
+
 import com.ambravate.polymath.academy.service.QuestService;
 import com.ambravate.polymath.academy.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;

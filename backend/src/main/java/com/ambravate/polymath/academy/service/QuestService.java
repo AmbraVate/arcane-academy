@@ -14,9 +14,6 @@ import com.ambravate.polymath.academy.repository.BossRepository;
 import com.ambravate.polymath.academy.repository.QuestRepository;
 import com.ambravate.polymath.academy.repository.UserProgressRepository;
 import com.ambravate.polymath.academy.repository.UserRepository;
-import com.arcane.academy.dto.*;
-import com.arcane.academy.model.*;
-import com.arcane.academy.repository.*;
 import com.ambravate.polymath.academy.runner.JavaCodeRunner;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -146,7 +143,7 @@ public class QuestService {
         }
 
         CodeRunResponse probe = codeRunner.run(code,
-                (String) testCases.get(0).getOrDefault("input", null));
+                (String) testCases.getFirst().getOrDefault("input", null));
         log.debug("[QuestService] Probe run status={} error='{}'",
                 probe.getStatus(), probe.getError());
 
@@ -201,7 +198,7 @@ public class QuestService {
             log.info("[QuestService] ALL TESTS PASSED | questId={} userId={} xpReward={}",
                     questId, userId, quest.getXpReward());
             xpEarned = quest.getXpReward();
-            awardXp(userId, questId, xpEarned, UserProgress.ItemType.QUEST);
+            awardXp(userId, questId, xpEarned);
             newBadges = badgeService.evaluateAndAward(userId);
         } else {
             log.info("[QuestService] TESTS FAILED | questId={} userId={} failedTests='{}'",
@@ -219,20 +216,24 @@ public class QuestService {
     public ProgressResponse markComplete(String questId, String userId) {
         Quest quest = questRepository.findById(questId)
                 .orElseThrow(() -> new NoSuchElementException("Quest not found: " + questId));
-        int xp = awardXp(userId, questId, quest.getXpReward(), UserProgress.ItemType.QUEST);
+        int xp = awardXp(userId, questId, quest.getXpReward());
         User user = userRepository.findById(userId).orElseThrow();
         return ProgressResponse.builder().xpEarned(xp).totalXp(user.getTotalXp())
                 .rank(user.getRank()).streakDays(user.getStreakDays()).build();
     }
 
-    private int awardXp(String userId, String itemId, int xp, UserProgress.ItemType type) {
-        if (progressRepository.existsByUserIdAndItemIdAndItemType(userId, itemId, type)) {
+    private int awardXp(String userId, String itemId, int xp) {
+        if (progressRepository.existsByUserIdAndItemIdAndItemType(userId, itemId,
+            UserProgress.ItemType.QUEST
+        )) {
             log.debug("[QuestService] XP already awarded for userId={} itemId={} — skipping", userId, itemId);
             return 0;
         }
-        log.info("[QuestService] Awarding {} XP | userId={} itemId={} type={}", xp, userId, itemId, type);
+        log.info("[QuestService] Awarding {} XP | userId={} itemId={} type={}", xp, userId, itemId,
+            UserProgress.ItemType.QUEST
+        );
         progressRepository.save(UserProgress.builder().userId(userId).itemId(itemId)
-                .itemType(type).completed(true).xpEarned(xp).build());
+                .itemType(UserProgress.ItemType.QUEST).completed(true).xpEarned(xp).build());
         int newStreak = streakService.updateStreak(userId);
         log.debug("[QuestService] Streak updated to {} for userId={}", newStreak, userId);
         userRepository.findById(userId).ifPresent(user -> {
@@ -266,7 +267,6 @@ public class QuestService {
         try { return objectMapper.readValue(json, Object.class); } catch (Exception e) { return List.of(); }
     }
 
-    @SuppressWarnings("unchecked")
     private List<Map<String, Object>> parseTestCases(String json) {
         if (json == null) return List.of();
         try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }

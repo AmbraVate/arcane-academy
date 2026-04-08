@@ -148,3 +148,9 @@ The app is cloud-ready. Example for AWS:
 
 For GCP: Cloud Run (frontend + backend) + Cloud SQL.
 For Azure: Container Apps + Azure Database for PostgreSQL.
+
+## Add production
+
+The following needs to be added to the Dockerfile:
+
+`"-Dspring.profiles.active=prod"`

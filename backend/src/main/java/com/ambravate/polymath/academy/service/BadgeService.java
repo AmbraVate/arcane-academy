@@ -11,8 +11,6 @@ import com.ambravate.polymath.academy.repository.QuestRepository;
 import com.ambravate.polymath.academy.repository.UserBadgeRepository;
 import com.ambravate.polymath.academy.repository.UserProgressRepository;
 import com.ambravate.polymath.academy.repository.UserRepository;
-import com.arcane.academy.model.*;
-import com.arcane.academy.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

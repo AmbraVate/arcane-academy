@@ -12,9 +12,6 @@ import com.ambravate.polymath.academy.repository.BossRepository;
 import com.ambravate.polymath.academy.repository.QuestRepository;
 import com.ambravate.polymath.academy.repository.UserProgressRepository;
 import com.ambravate.polymath.academy.repository.UserRepository;
-import com.arcane.academy.dto.*;
-import com.arcane.academy.model.*;
-import com.arcane.academy.repository.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -127,7 +124,6 @@ public class BossService {
                 .filter(UserProgress::isCompleted).map(UserProgress::getItemId).collect(Collectors.toSet());
     }
 
-    @SuppressWarnings("unchecked")
     private List<Object> parseQuestions(String json) {
         if (json == null) return List.of();
         try {

@@ -2,7 +2,6 @@ package com.ambravate.polymath.academy.controller;
 
 import com.ambravate.polymath.academy.dto.MentorFeedbackRequest;
 import com.ambravate.polymath.academy.dto.MentorFeedbackResponse;
-import com.arcane.academy.dto.*;
 import com.ambravate.polymath.academy.service.AiMentorService;
 import com.ambravate.polymath.academy.security.UserPrincipal;
 import jakarta.validation.Valid;
