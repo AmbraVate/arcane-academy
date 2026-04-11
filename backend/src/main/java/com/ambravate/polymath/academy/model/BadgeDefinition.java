@@ -5,17 +5,36 @@ import lombok.Getter;
 @Getter
 public enum BadgeDefinition {
 
-    // Quest milestones
-    FIRST_SPELL("First Spell Cast", "Complete your first quest", "\u2728", Category.QUEST),
-    CHAPTER_I_COMPLETE("Rune Initiate", "Complete all Chapter I quests", "\uD83D\uDD2E", Category.QUEST),
-    CHAPTER_II_COMPLETE("Tome Scholar", "Complete all Chapter II quests", "\uD83D\uDCDC", Category.QUEST),
-    CHAPTER_III_COMPLETE("Structure Weaver", "Complete all Chapter III quests", "\uD83D\uDDDD", Category.QUEST),
-    CHAPTER_IV_COMPLETE("Grimoire Keeper", "Complete all Chapter IV quests", "\uD83D\uDCD6", Category.QUEST),
-    QUEST_MASTER("Quest Master", "Complete 25 quests", "\uD83C\uDFC5", Category.QUEST),
+    // Learning milestones
+    FIRST_CONCEPT("First Spell Cast", "Complete your first sub-chunk", "\u2728", Category.LEARNING),
+    CHUNK_A_MASTERED("Rune of Variables", "Master Chunk A: Variables & Data Types", "\uD83D\uDD2E", Category.LEARNING),
+    CHUNK_B_MASTERED("Rune of Control", "Master Chunk B: Operators & Control Flow", "\uD83D\uDCDC", Category.LEARNING),
+    CHUNK_C_MASTERED("Rune of Loops", "Master Chunk C: Loops", "\uD83D\uDD04", Category.LEARNING),
+    CHUNK_D_MASTERED("Rune of Methods", "Master Chunk D: Methods", "\uD83D\uDDDD", Category.LEARNING),
+    CHUNK_E_MASTERED("Rune of Collections", "Master Chunk E: Arrays & Collections", "\uD83D\uDCDA", Category.LEARNING),
+    CHUNK_F_MASTERED("Rune of Objects", "Master Chunk F: Classes & Objects", "\uD83D\uDCD6", Category.LEARNING),
+    CHUNK_G_MASTERED("Rune of Encapsulation", "Master Chunk G: Encapsulation", "\uD83D\uDD12", Category.LEARNING),
+    CHUNK_H_MASTERED("Rune of Inheritance", "Master Chunk H: Inheritance", "\uD83C\uDF33", Category.LEARNING),
+    CHUNK_I_MASTERED("Rune of Polymorphism", "Master Chunk I: Polymorphism & Abstraction", "\uD83C\uDF00", Category.LEARNING),
+    CHUNK_J_MASTERED("Rune of Exceptions", "Master Chunk J: Exception Handling", "\u26A0", Category.LEARNING),
+    CHUNK_K_MASTERED("Rune of APIs", "Master Chunk K: Common APIs & Utils", "\uD83D\uDEE0", Category.LEARNING),
+    ALL_CHUNKS_COMPLETE("Grand Archmage", "Complete all chunks A\u2013K", "\uD83D\uDC51", Category.LEARNING),
 
-    // Boss milestones
-    FIRST_BOSS("Dragon Slayer", "Defeat your first boss", "\uD83D\uDC09", Category.BOSS),
-    ALL_BOSSES("Conqueror of Shadows", "Defeat all bosses", "\uD83D\uDC51", Category.BOSS),
+    // Review & mastery
+    PERFECT_REVIEW("Flawless Recall", "Score 100% on a review session", "\uD83C\uDFAF", Category.MASTERY),
+    MEMORY_MASTER("Eternal Memory", "All chunks at green memory health", "\uD83E\uDDE0", Category.MASTERY),
+    DIAGNOSTIC_ACE("Prodigy", "Score >80% on entry diagnostic", "\uD83E\uDDD0", Category.MASTERY),
+
+    // Feynman
+    FEYNMAN_FIRST("First Teaching", "Complete your first Feynman explanation", "\uD83C\uDF93", Category.FEYNMAN),
+    FEYNMAN_MASTER("Master Teacher", "Score >80% on 10 Feynman explanations", "\uD83D\uDCDD", Category.FEYNMAN),
+
+    // Path advancement
+    PATH_PRACTITIONER("Practitioner Ascension", "Advance to Practitioner path", "\u2B50", Category.PATH),
+    PATH_EXPERT("Expert Ascension", "Advance to Expert path", "\uD83C\uDF1F", Category.PATH),
+
+    // Rabbit holes
+    RABBIT_HOLE_FIRST("Curious Mind", "Complete your first deep-dive module", "\uD83D\uDC07", Category.EXPLORATION),
 
     // XP thresholds
     XP_100("Spark of Magic", "Earn 100 XP", "\u26A1", Category.XP),
@@ -42,6 +61,6 @@ public enum BadgeDefinition {
     }
 
     public enum Category {
-        QUEST, BOSS, XP, STREAK
+        LEARNING, MASTERY, FEYNMAN, PATH, EXPLORATION, XP, STREAK
     }
 }

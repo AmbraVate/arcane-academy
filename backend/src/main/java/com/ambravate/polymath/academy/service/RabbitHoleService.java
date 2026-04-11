@@ -1,0 +1,81 @@
+package com.ambravate.polymath.academy.service;
+
+import com.ambravate.polymath.academy.dto.CodeRunResponse;
+import com.ambravate.polymath.academy.model.RabbitHoleModule;
+import com.ambravate.polymath.academy.repository.RabbitHoleModuleRepository;
+import com.ambravate.polymath.academy.runner.JavaCodeRunner;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class RabbitHoleService {
+
+    private final RabbitHoleModuleRepository moduleRepository;
+    private final JavaCodeRunner codeRunner;
+    private final AiMentorService aiMentorService;
+    private final ObjectMapper objectMapper;
+
+    public List<RabbitHoleModule> getModulesForChunk(String chunkId) {
+        return moduleRepository.findByChunkIdOrderBySortOrderAsc(chunkId);
+    }
+
+    public RabbitHoleModule getModule(String moduleId) {
+        return moduleRepository.findById(moduleId)
+                .orElseThrow(() -> new NoSuchElementException("Module not found: " + moduleId));
+    }
+
+    public EncodingService.PracticeResult submitCode(String userId, String moduleId, String code) {
+        RabbitHoleModule module = getModule(moduleId);
+
+        List<Map<String, Object>> testCases = parseTestCases(module.getTestCasesJson());
+        if (testCases.isEmpty()) {
+            return new EncodingService.PracticeResult(true, List.of(), 25, null, null, List.of());
+        }
+
+        // Probe first test
+        CodeRunResponse probe = codeRunner.run(code,
+                (String) testCases.getFirst().getOrDefault("input", null));
+
+        if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
+            String feedback = aiMentorService.explainCompileError(module.getTitle(), "Java", code, probe.getError());
+            return new EncodingService.PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
+        }
+
+        if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
+                || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
+            String feedback = aiMentorService.explainRuntimeError(module.getTitle(), "Java", code,
+                    probe.getError() != null ? probe.getError() : "Timeout");
+            return new EncodingService.PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
+        }
+
+        List<EncodingService.TestResult> results = new ArrayList<>();
+        boolean allPassed = true;
+
+        for (Map<String, Object> tc : testCases) {
+            String label = (String) tc.get("label");
+            String input = (String) tc.getOrDefault("input", null);
+            String expected = (String) tc.get("expected");
+            CodeRunResponse run = codeRunner.run(code, input);
+            String actual = run.getOutput() != null ? run.getOutput().trim() : "";
+            boolean passed = actual.contains(expected.trim());
+            results.add(new EncodingService.TestResult(label, passed, actual, expected));
+            if (!passed) allPassed = false;
+        }
+
+        int xpEarned = allPassed ? 25 : 0;
+        return new EncodingService.PracticeResult(allPassed, results, xpEarned, null,
+                allPassed ? null : "TEST_FAILURE", List.of());
+    }
+
+    private List<Map<String, Object>> parseTestCases(String json) {
+        if (json == null) return List.of();
+        try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
+    }
+}

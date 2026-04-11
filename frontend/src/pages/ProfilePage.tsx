@@ -16,10 +16,11 @@ export default function ProfilePage() {
   if (!user) return null
 
   const earned = badges.filter(b => b.earned)
-  const categories = ['QUEST', 'BOSS', 'XP', 'STREAK']
+  const categories = ['LEARNING', 'MASTERY', 'FEYNMAN', 'PATH', 'EXPLORATION', 'XP', 'STREAK']
   const categoryLabels: Record<string, string> = {
-    QUEST: 'Quest Milestones', BOSS: 'Boss Milestones',
-    XP: 'XP Thresholds', STREAK: 'Streak Milestones'
+    LEARNING: 'Learning Milestones', MASTERY: 'Mastery',
+    FEYNMAN: 'Feynman Technique', PATH: 'Learning Path',
+    EXPLORATION: 'Exploration', XP: 'XP Thresholds', STREAK: 'Streak Milestones'
   }
 
   return (

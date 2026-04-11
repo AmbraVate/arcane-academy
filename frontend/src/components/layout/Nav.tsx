@@ -8,7 +8,7 @@ export default function Nav() {
 
   if (!user) return null
 
-  const RANK_FLOORS = [0, 400, 1000, 2000, 4000]
+  const RANK_FLOORS = [0, 800, 2000, 4000, 6500, 8000, 11000]
   const rankIdx = RANK_FLOORS.reduce((acc, floor, i) => user.totalXp >= floor ? i : acc, 0)
   const isMaxRank = rankIdx === RANK_FLOORS.length - 1
   const floor = RANK_FLOORS[rankIdx]
@@ -19,18 +19,12 @@ export default function Nav() {
   const level = rankIdx + 1
   const streak = user.streakDays ?? 0
 
-  // Streak is "hot" if >= 3 days, at-risk if 1 day (might break today)
   const streakHot = streak >= 3
   const streakClass = streak === 0
     ? styles.streakZero
     : streakHot
     ? styles.streakHot
     : styles.streakWarm
-
-  function handleLogout() {
-    localStorage.removeItem('polymath_topic')
-    logout()
-  }
 
   return (
     <nav className={styles.nav}>
@@ -53,14 +47,14 @@ export default function Nav() {
 
         <div className={styles.rank}>⚗ {user.rank}</div>
         <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
+          onClick={() => navigate('/review')}>
+          Review
+        </button>
+        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
           onClick={() => navigate('/profile')}>
           Profile
         </button>
-        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
-          onClick={() => navigate('/topics')}>
-          Topics
-        </button>
-        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }} onClick={handleLogout}>
+        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }} onClick={logout}>
           Logout
         </button>
       </div>

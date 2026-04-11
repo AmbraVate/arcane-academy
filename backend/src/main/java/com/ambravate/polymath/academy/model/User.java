@@ -42,6 +42,10 @@ public class User {
 
     private Instant lastLoginAt;
 
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private LearnerPath learnerPath = LearnerPath.FOUNDATION;
+
     public enum AuthProvider {
         LOCAL, GOOGLE
     }

@@ -1,0 +1,103 @@
+.page { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.loadingState { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: var(--muted); }
+.loadingGlyph { font-size: 48px; margin-bottom: 12px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+/* Header */
+.header { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--card); }
+.headerInfo { flex: 1; }
+.subTitle { font-size: 16px; font-weight: 700; color: var(--text); }
+.phaseChips { display: flex; gap: 6px; margin-top: 4px; }
+.phaseChip { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--surface); color: var(--muted); }
+.phaseActive { background: var(--purple); color: #fff; }
+.phaseDone { background: var(--teal-dim); color: var(--teal); }
+
+/* Phase content (non-coding phases) */
+.phaseContent { max-width: 700px; margin: 0 auto; padding: 28px 16px 60px; overflow-y: auto; flex: 1; }
+
+/* Hook */
+.hookContent { font-size: 16px; line-height: 1.8; color: var(--text); margin-bottom: 24px; }
+.hookContent p { margin: 0 0 14px; }
+
+/* Explanation */
+.explanation { font-size: 14px; line-height: 1.7; color: var(--text); margin: 20px 0 24px; }
+.explanation pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.explanation code { font-size: 13px; }
+.explanation ul, .explanation ol { padding-left: 20px; }
+
+/* Coding view (guided practice) */
+.codingView { display: flex; flex: 1; overflow: hidden; }
+.leftPanel { width: 40%; display: flex; flex-direction: column; border-right: 1px solid var(--border); overflow-y: auto; padding: 16px; }
+.rightPanel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.practiceLabel { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+.practiceHtml { font-size: 13px; line-height: 1.7; color: var(--text); margin-bottom: 12px; }
+.practiceHtml p { margin: 0 0 10px; }
+.practiceHtml code { background: var(--surface); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+.solvedPanel { margin-top: 16px; padding: 14px; background: rgba(0,200,83,.08); border: 1px solid var(--teal); border-radius: 8px; }
+.solvedTitle { font-size: 16px; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
+
+.editorHeader { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--card); }
+.filename { font-size: 12px; color: var(--muted); }
+.editorActions { display: flex; gap: 8px; }
+
+.btnRunning { opacity: .7; }
+.btnSolved { background: var(--teal); color: var(--bg); border: none; border-radius: 6px; cursor: default; font-size: 12px; padding: 5px 14px; }
+
+/* Retrieval check */
+.retrievalTitle { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+.retrievalDesc { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+
+.questionCard { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+.qNum { font-size: 11px; font-weight: 700; color: var(--purple); margin-bottom: 6px; }
+.qHtml { font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 10px; }
+.qHtml code { background: var(--surface); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.qCode { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-size: 13px; overflow-x: auto; margin-bottom: 10px; }
+
+.qOptions { display: flex; flex-direction: column; gap: 6px; }
+.qOption { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text); transition: border-color .15s; }
+.qOption:hover { border-color: var(--purple); }
+.qSelected { border-color: var(--purple); background: rgba(139,92,246,.08); }
+.qOption input { accent-color: var(--purple); }
+
+.qInput { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-size: 13px; color: var(--text); font-family: monospace; resize: vertical; }
+.qInput:focus { outline: none; border-color: var(--purple); }
+
+/* Results */
+.resultPanel { margin-top: 8px; }
+.resultScore { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.resultStatus { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
+.passed { color: var(--green); }
+.failed { color: var(--red); }
+
+.qResult { padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
+.qCorrect { background: rgba(0,200,83,.08); color: var(--green); }
+.qWrong { background: rgba(255,60,60,.08); color: var(--text); }
+.qExplanation { margin-top: 6px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+.recommendation { color: var(--muted); font-size: 13px; font-style: italic; margin-top: 10px; }
+
+/* Complete */
+.completePanel { text-align: center; }
+.completeGlyph { font-size: 48px; color: var(--gold); margin-bottom: 12px; }
+.completeTitle { font-size: 24px; font-weight: 700; color: var(--gold); margin: 0 0 8px; }
+.completeMsg { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.completeActions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+
+/* Feynman */
+.feynmanSection { text-align: left; margin-top: 24px; padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+.feynmanTitle { font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 6px; }
+.feynmanPrompt { font-size: 13px; color: var(--muted); margin-bottom: 12px; font-style: italic; }
+.feynmanInput { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-size: 14px; color: var(--text); font-family: inherit; resize: vertical; margin-bottom: 10px; }
+.feynmanInput:focus { outline: none; border-color: var(--purple); }
+
+.feynmanResult { text-align: left; margin-top: 16px; padding: 18px; background: var(--card); border: 1px solid var(--teal); border-radius: 10px; }
+.feynmanScore { font-size: 18px; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+.feynmanBreakdown { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.feynmanFeedback { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .codingView { flex-direction: column; }
+  .leftPanel { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 40vh; }
+  .rightPanel { flex: 1; }
+  .phaseChips { flex-wrap: wrap; }
+}
