@@ -1,4 +1,4 @@
-.page { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.page { display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
 .loading { display: flex; align-items: center; justify-content: center; height: 60vh; color: var(--muted); }
 
 .header { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--card); }

@@ -1,4 +1,4 @@
-.page { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.page { display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
 .loadingState { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: var(--muted); }
 .loadingGlyph { font-size: 48px; margin-bottom: 12px; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }

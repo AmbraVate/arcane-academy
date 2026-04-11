@@ -23,6 +23,7 @@ export default function App() {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       {user && <Nav />}
+      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
       <Routes>
         <Route path="/login"    element={user ? <Navigate to="/" replace /> : <LoginPage />} />
         <Route path="/register" element={user ? <Navigate to="/" replace /> : <RegisterPage />} />
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
+      </div>
     </div>
   )
 }
