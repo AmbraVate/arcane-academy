@@ -99,10 +99,70 @@
 }
 
 /* Explanation */
-.explanation { font-size: 14px; line-height: 1.7; color: var(--text); margin: 20px 0 24px; }
-.explanation pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px; overflow-x: auto; }
-.explanation code { font-size: 13px; }
-.explanation ul, .explanation ol { padding-left: 20px; }
+.explanation { font-size: 15px; line-height: 1.8; color: var(--text); margin: 24px 0; }
+.explanation p { margin: 0 0 16px; }
+.explanation p:last-child { margin-bottom: 0; }
+.explanation strong { color: var(--gold); font-weight: 600; }
+.explanation em { color: var(--purple-light); font-style: italic; }
+
+/* Terminal-style code blocks */
+.explanation pre {
+  position: relative;
+  background: #09070f;
+  border: 1px solid rgba(139,92,246,.2);
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  margin: 20px 0 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+}
+.explanation pre::before {
+  content: '● ● ●';
+  display: block;
+  padding: 9px 16px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(139,92,246,.5);
+  background: rgba(139,92,246,.06);
+  border-bottom: 1px solid rgba(139,92,246,.12);
+}
+.explanation pre code {
+  display: block;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: #e2e8f0;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+  background: none;
+  border: none;
+}
+/* inline code */
+.explanation code {
+  background: rgba(139,92,246,.12);
+  border: 1px solid rgba(139,92,246,.2);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 12.5px;
+  color: var(--purple-light);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* headings inside explanation */
+.explanation h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 28px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,193,7,.15);
+}
+.explanation h4 { font-size: 14px; font-weight: 700; color: var(--purple-light); margin: 20px 0 8px; }
+
+/* lists */
+.explanation ul, .explanation ol { padding-left: 22px; margin: 0 0 16px; }
+.explanation li { margin-bottom: 8px; line-height: 1.65; }
+.explanation li::marker { color: var(--purple-light); }
 
 /* Coding view (guided practice) */
 .codingView { display: flex; flex: 1; overflow: hidden; }
