@@ -39,7 +39,7 @@ public class ChunkBSeeder extends AbstractChunkSeeder {
                     e("Comparison example", "int score = 85;\nboolean passed = score >= 60;\nSystem.out.println(passed); // true")
                 ),
                 "<p>Declare two int variables <code>a</code> and <code>b</code>. Print whether <code>a</code> is greater than <code>b</code>, then whether they are equal.</p>",
-                "int a = 10;\nint b = 7;\nSystem.out.println(a > b);\nSystem.out.println(a == b);",
+                "int a = 10;\nint b = 7;\n// TODO: print whether a is greater than b\n// TODO: print whether a equals b\n",
                 tests(test("Greater than", "null", "true"), test("Equals", "null", "false")),
                 "Explain the six comparison operators in Java. What type of value do they produce?");
 
@@ -71,7 +71,7 @@ public class ChunkBSeeder extends AbstractChunkSeeder {
                     e("If/else example", "int age = 20;\nif (age >= 18) {\n    System.out.println(\"Adult\");\n} else {\n    System.out.println(\"Minor\");\n}")
                 ),
                 "<p>Check a variable <code>score</code>. Print \"A\" if >= 90, \"B\" if >= 80, \"C\" if >= 70, else \"F\".</p>",
-                "int score = 85;\nif (score >= 90) {\n    System.out.println(\"A\");\n} else if (score >= 80) {\n    System.out.println(\"B\");\n} else if (score >= 70) {\n    System.out.println(\"C\");\n} else {\n    System.out.println(\"F\");\n}",
+                "int score = 85;\nif (score >= 90) {\n    // TODO: print \"A\"\n} else if (score >= 80) {\n    // TODO: print \"B\"\n} else if (score >= 70) {\n    // TODO: print \"C\"\n} else {\n    // TODO: print \"F\"\n}",
                 tests(test("Grade B", "null", "B")),
                 "Explain if/else to a friend who has never coded. Use a real-world analogy.");
 
@@ -107,7 +107,7 @@ public class ChunkBSeeder extends AbstractChunkSeeder {
                       "AND requires both truths. OR needs only one. NOT inverts. These are the building blocks of all decisions.")
                 ),
                 "<p>Check if a user can log in: <code>username</code> equals \"admin\" AND <code>password</code> equals \"secret\".</p>",
-                "String username = \"admin\";\nString password = \"secret\";\nif (username.equals(\"admin\") && password.equals(\"secret\")) {\n    System.out.println(\"Login successful\");\n} else {\n    System.out.println(\"Access denied\");\n}",
+                "String username = \"admin\";\nString password = \"secret\";\nif (/* TODO: check username AND password */) {\n    // TODO: print \"Login successful\"\n} else {\n    // TODO: print \"Access denied\"\n}",
                 tests(test("Login", "null", "Login successful")),
                 "Explain &&, ||, and ! operators with a real-world example for each.");
 
@@ -138,7 +138,7 @@ public class ChunkBSeeder extends AbstractChunkSeeder {
                       "A switch is like a sorting hat — it examines one value and sends execution down the matching path.")
                 ),
                 "<p>Write a switch for <code>day</code> (1-7) that prints the day name. Use \"Weekend\" for 6 and 7.</p>",
-                "int day = 5;\nswitch (day) {\n    case 1: System.out.println(\"Monday\"); break;\n    case 2: System.out.println(\"Tuesday\"); break;\n    case 3: System.out.println(\"Wednesday\"); break;\n    case 4: System.out.println(\"Thursday\"); break;\n    case 5: System.out.println(\"Friday\"); break;\n    case 6:\n    case 7: System.out.println(\"Weekend\"); break;\n    default: System.out.println(\"Invalid\");\n}",
+                "int day = 5;\nswitch (day) {\n    case 1: // TODO: print \"Monday\" then break\n    case 2: // TODO: print \"Tuesday\" then break\n    case 3: // TODO: print \"Wednesday\" then break\n    case 4: // TODO: print \"Thursday\" then break\n    case 5: // TODO: print \"Friday\" then break\n    case 6:\n    case 7: // TODO: print \"Weekend\" then break\n    default: // TODO: print \"Invalid\"\n}",
                 tests(test("Friday", "null", "Friday")),
                 "Explain switch statements. When use one instead of if/else?");
 
@@ -166,7 +166,7 @@ public class ChunkBSeeder extends AbstractChunkSeeder {
                       "Use it when a full if/else feels like overkill. But never sacrifice clarity for brevity.")
                 ),
                 "<p>Use a ternary to find the larger of two numbers and print the result.</p>",
-                "int a = 15;\nint b = 22;\nint max = (a > b) ? a : b;\nSystem.out.println(\"Max: \" + max);",
+                "int a = 15;\nint b = 22;\n// TODO: use a ternary operator to find the larger value and store it in max\nint max = 0;\nSystem.out.println(\"Max: \" + max);",
                 tests(test("Max", "null", "Max: 22")),
                 "Explain the ternary operator. When should you use it vs if/else?");
 
