@@ -105,7 +105,7 @@ export default function DashboardPage() {
             onClick={() => navigate(`/chunk/${ch.chunkId}`)}
           >
             <div className={styles.chunkGlyph}>{ch.glyph}</div>
-            <div className={styles.chunkTitle}>{ch.chunkTitle}</div>
+            <div className={styles.chunkTitle}>{ch.title}</div>
             <div className={styles.chunkProgress}>
               {ch.completedSubChunks}/{ch.totalSubChunks} concepts
             </div>
