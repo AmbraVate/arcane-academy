@@ -2,8 +2,9 @@ import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { encodingApi, codeApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
-import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, QuestionDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
+import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
+import QuestionCard from '../components/quest/QuestionCard'
 import CodeEditor from '../components/quest/CodeEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
@@ -311,7 +312,7 @@ export default function EncodingPage() {
               {encoding.retrievalQuestions?.map((q, i) => (
                 <QuestionCard key={q.id} question={q} index={i} answer={answers[q.id] ?? ''} onChange={v => setAnswers(prev => ({ ...prev, [q.id]: v }))} />
               ))}
-              <button className="btn btn-primary" onClick={handleSubmitRetrieval} disabled={submittingRetrieval} style={{ marginTop: 16 }}>
+              <button className="btn btn-primary" onClick={handleSubmitRetrieval} disabled={submittingRetrieval} style={{ marginTop: 4 }}>
                 {submittingRetrieval ? 'Submitting...' : '⚡ Submit Answers'}
               </button>
             </>
@@ -323,17 +324,14 @@ export default function EncodingPage() {
               <div className={`${styles.resultStatus} ${retrievalResult.passed ? styles.passed : styles.failed}`}>
                 {retrievalResult.passed ? '✓ Passed!' : '✗ Needs more practice'}
               </div>
-              {retrievalResult.results.map((r, i) => (
-                <div key={i} className={`${styles.qResult} ${r.correct ? styles.qCorrect : styles.qWrong}`}>
-                  <div>{r.correct ? '✓' : '✗'} Question {i + 1}</div>
-                  {!r.correct && (
-                    <div className={styles.qExplanation}>
-                      <div>Your answer: {r.userAnswer}</div>
-                      <div>Correct: {r.correctAnswer}</div>
-                      <div dangerouslySetInnerHTML={{ __html: r.explanationHtml }} />
-                    </div>
-                  )}
-                </div>
+              {encoding.retrievalQuestions?.map((q, i) => (
+                <QuestionCard
+                  key={q.id} question={q} index={i}
+                  answer={retrievalResult.results[i]?.userAnswer ?? ''}
+                  onChange={() => {}}
+                  result={retrievalResult.results[i]}
+                  disabled
+                />
               ))}
               <p className={styles.recommendation}>{retrievalResult.recommendation}</p>
               <button className="btn btn-primary" onClick={handleAdvance} style={{ marginTop: 12 }}>
@@ -402,46 +400,6 @@ export default function EncodingPage() {
   )
 }
 
-// ── Question Card ────────────────────────────────────────────────────────────
-function QuestionCard({ question, index, answer, onChange }: {
-  question: QuestionDto; index: number; answer: string; onChange: (v: string) => void
-}) {
-  return (
-    <div className={styles.questionCard}>
-      <div className={styles.qNum}>Q{index + 1}</div>
-      <div className={styles.qHtml} dangerouslySetInnerHTML={{ __html: question.questionHtml }} />
-      {question.codeSnippet && (
-        <pre className={styles.qCode}><code>{question.codeSnippet}</code></pre>
-      )}
-
-      {question.type === 'MULTIPLE_CHOICE' && question.options && (
-        <div className={styles.qOptions}>
-          {question.options.map(opt => (
-            <label key={opt} className={`${styles.qOption} ${answer === opt ? styles.qSelected : ''}`}>
-              <input type="radio" name={question.id} checked={answer === opt} onChange={() => onChange(opt)} />
-              {opt}
-            </label>
-          ))}
-        </div>
-      )}
-
-      {question.type === 'TRUE_FALSE' && (
-        <div className={styles.qOptions}>
-          {['True', 'False'].map(opt => (
-            <label key={opt} className={`${styles.qOption} ${answer === opt ? styles.qSelected : ''}`}>
-              <input type="radio" name={question.id} checked={answer === opt} onChange={() => onChange(opt)} />
-              {opt}
-            </label>
-          ))}
-        </div>
-      )}
-
-      {(question.type === 'FILL_BLANK' || question.type === 'WHATS_THE_OUTPUT' || question.type === 'DEBUGGING' || question.type === 'CODE_COMPLETION') && (
-        <textarea className={styles.qInput} placeholder="Your answer..." value={answer} onChange={e => onChange(e.target.value)} rows={3} />
-      )}
-    </div>
-  )
-}
 
 function phaseOrder(p: string): number {
   return ['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'RETRIEVAL_CHECK', 'COMPLETE'].indexOf(p)

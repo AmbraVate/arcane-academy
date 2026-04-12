@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
 import { reviewApi } from '../api/services'
-import type { ReviewSessionDto, ReviewResultDto, QuestionDto, AnswerEntry, Badge } from '../types'
+import type { ReviewSessionDto, ReviewResultDto, AnswerEntry, Badge } from '../types'
+import QuestionCard from '../components/quest/QuestionCard'
 import BadgeToast from '../components/layout/BadgeToast'
 import styles from './ReviewPage.module.css'
 
 export default function ReviewPage() {
   const navigate = useNavigate()
-  const { user, updateXp } = useAuth()
   const [session, setSession] = useState<ReviewSessionDto | null>(null)
   const [loading, setLoading] = useState(true)
   const [currentQ, setCurrentQ] = useState(0)
@@ -55,31 +54,31 @@ export default function ReviewPage() {
   }
 
   if (result) {
+    const scoreColor = result.score >= 0.8 ? 'var(--green)' : result.score >= 0.5 ? 'var(--orange)' : 'var(--red)'
     return (
       <div className={styles.page}>
-        <div className={styles.resultPanel}>
+        <div className={styles.resultHeader}>
+          <div className={styles.resultGlyph}>📖</div>
           <h2 className={styles.resultTitle}>Review Complete</h2>
-          <div className={styles.resultScore}>
-            {Math.round(result.score * 100)}% — {result.correct}/{result.total} correct
+          <div className={styles.resultScore} style={{ color: scoreColor }}>
+            {Math.round(result.score * 100)}%
           </div>
-          <div className={styles.resultList}>
-            {result.results.map((r, i) => (
-              <div key={i} className={`${styles.qResult} ${r.correct ? styles.correct : styles.wrong}`}>
-                <span>{r.correct ? '✓' : '✗'} Q{i + 1}</span>
-                {!r.correct && (
-                  <div className={styles.qDetail}>
-                    <div>Your answer: {r.userAnswer}</div>
-                    <div>Correct: {r.correctAnswer}</div>
-                    <div className={styles.qExpl} dangerouslySetInnerHTML={{ __html: r.explanationHtml }} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <button className="btn btn-primary" onClick={() => navigate('/')} style={{ marginTop: 16 }}>
-            Back to Dashboard
-          </button>
+          <div className={styles.resultSub}>{result.correct} / {result.total} correct</div>
         </div>
+        <div className={styles.resultCards}>
+          {session.questions.map((q, i) => (
+            <QuestionCard
+              key={q.id} question={q} index={i}
+              answer={result.results[i]?.userAnswer ?? ''}
+              onChange={() => {}}
+              result={result.results[i]}
+              disabled
+            />
+          ))}
+        </div>
+        <button className="btn btn-primary" onClick={() => navigate('/')} style={{ marginTop: 8 }}>
+          Back to Dashboard
+        </button>
         {newBadges.length > 0 && <BadgeToast badges={newBadges} onDone={() => setNewBadges([])} />}
       </div>
     )
@@ -94,12 +93,23 @@ export default function ReviewPage() {
       <div className={styles.header}>
         <button className="btn btn-ghost" onClick={() => navigate('/')} style={{ fontSize: 12 }}>← Back</button>
         <div className={styles.headerTitle}>Daily Review</div>
+        <div className={styles.progressPips}>
+          {session.questions.map((q, i) => (
+            <button
+              key={q.id}
+              className={`${styles.pip} ${i === currentQ ? styles.pipActive : ''} ${answers[q.id] ? styles.pipDone : ''}`}
+              onClick={() => setCurrentQ(i)}
+              title={`Question ${i + 1}`}
+            />
+          ))}
+        </div>
         <div className={styles.progress}>{currentQ + 1} / {totalQ}</div>
       </div>
 
       <div className={styles.questionArea}>
-        <ReviewQuestionCard
+        <QuestionCard
           question={question}
+          index={currentQ}
           answer={answers[question.id] ?? ''}
           onChange={v => setAnswers(prev => ({ ...prev, [question.id]: v }))}
         />
@@ -119,35 +129,6 @@ export default function ReviewPage() {
           )}
         </div>
       </div>
-    </div>
-  )
-}
-
-function ReviewQuestionCard({ question, answer, onChange }: {
-  question: QuestionDto; answer: string; onChange: (v: string) => void
-}) {
-  return (
-    <div className={styles.questionCard}>
-      <div className={styles.qTier}>{question.tier}</div>
-      <div className={styles.qHtml} dangerouslySetInnerHTML={{ __html: question.questionHtml }} />
-      {question.codeSnippet && (
-        <pre className={styles.qCode}><code>{question.codeSnippet}</code></pre>
-      )}
-
-      {(question.type === 'MULTIPLE_CHOICE' || question.type === 'TRUE_FALSE') && question.options && (
-        <div className={styles.qOptions}>
-          {question.options.map(opt => (
-            <label key={opt} className={`${styles.qOption} ${answer === opt ? styles.qSelected : ''}`}>
-              <input type="radio" name={question.id} checked={answer === opt} onChange={() => onChange(opt)} />
-              {opt}
-            </label>
-          ))}
-        </div>
-      )}
-
-      {!['MULTIPLE_CHOICE', 'TRUE_FALSE'].includes(question.type) && (
-        <textarea className={styles.qInput} placeholder="Your answer..." value={answer} onChange={e => onChange(e.target.value)} rows={3} />
-      )}
     </div>
   )
 }
