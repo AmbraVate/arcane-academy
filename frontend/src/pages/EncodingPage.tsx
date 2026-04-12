@@ -249,9 +249,15 @@ export default function EncodingPage() {
 
       {/* HOOK phase */}
       {phase === 'HOOK' && (
-        <div className={styles.phaseContent}>
-          <div className={styles.hookContent} dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }} />
-          <button className="btn btn-primary" onClick={handleAdvance}>Continue →</button>
+        <div className={styles.hookStage}>
+          <div className={styles.hookCard}>
+            <div className={styles.hookQuoteMark}>❝</div>
+            <div className={styles.hookText} dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }} />
+          </div>
+          <div className={styles.hookSubtitle}>{encoding.title}</div>
+          <button className="btn btn-primary" style={{ marginTop: 32 }} onClick={handleAdvance}>
+            Begin →
+          </button>
         </div>
       )}
 
