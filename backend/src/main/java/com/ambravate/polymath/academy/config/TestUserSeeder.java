@@ -26,7 +26,7 @@ public class TestUserSeeder {
         createUser("novice@polymath.test",     "test_novice",     List.of(), 0);
         createUser("apprentice@polymath.test", "test_apprentice", List.of("A"), 200);
         createUser("adept@polymath.test",      "test_adept",      List.of("A", "B"), 500);
-        createUser("mage@polymath.test",       "test_mage",       List.of("A", "B", "C", "D"), 2000);
+        createUser("mage@polymath.test",       "test_mage",       List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"), 5000);
     }
 
     private void createUser(String email, String username,
