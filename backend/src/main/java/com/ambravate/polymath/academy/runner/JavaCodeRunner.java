@@ -170,13 +170,15 @@ public class JavaCodeRunner {
 
         if (hasClassDeclaration) {
             // Rename the first public class to StudentSolution so classloader finds it.
-            // Also handle the case where there is no public class (just "class Foo").
-            String renamed = studentCode
-                    .replaceFirst("public\\s+class\\s+\\w+", "public class StudentSolution")
-                    .replaceFirst("(?<!public\\s{0,20})class\\s+(\\w+)\\s*\\{",
-                                  "public class StudentSolution {");
-            // If there are multiple classes defined (e.g. helper + main class),
-            // only the outermost one needs to be StudentSolution.
+            String renamed = studentCode.replaceFirst(
+                    "public\\s+class\\s+\\w+", "public class StudentSolution");
+            // Only if there was no public class, rename the first class declaration instead.
+            // (Do NOT chain — doing both would rename an auxiliary class to StudentSolution too,
+            //  producing duplicate-class compile errors in multi-class files like Polymorphism.)
+            if (renamed.equals(studentCode)) {
+                renamed = studentCode.replaceFirst(
+                        "\\bclass\\s+\\w+\\s*\\{", "public class StudentSolution {");
+            }
             return renamed;
         }
 
