@@ -67,6 +67,12 @@ public class DiagnosticController {
                 .build());
     }
 
+    @PostMapping("/skip")
+    public ResponseEntity<Void> skipDiagnostic(@AuthenticationPrincipal UserPrincipal user) {
+        diagnosticService.skipDiagnostic(user.getId());
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/results")
     public ResponseEntity<DiagnosticResultDto> getResults(
             @AuthenticationPrincipal UserPrincipal user) {

@@ -13,10 +13,16 @@ export default function DashboardPage() {
 
   useEffect(() => {
     dashboardApi.get()
-      .then(setDashboard)
+      .then(d => {
+        if (!d.diagnosticCompleted) {
+          navigate('/onboarding', { replace: true })
+          return
+        }
+        setDashboard(d)
+      })
       .catch(console.error)
       .finally(() => setLoading(false))
-  }, [])
+  }, [navigate])
 
   if (loading) {
     return (

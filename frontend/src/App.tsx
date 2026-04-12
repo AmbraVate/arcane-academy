@@ -8,6 +8,7 @@ import ChunkMapPage from './pages/ChunkMapPage'
 import EncodingPage from './pages/EncodingPage'
 import ReviewPage from './pages/ReviewPage'
 import DiagnosticPage from './pages/DiagnosticPage'
+import OnboardingPage from './pages/OnboardingPage'
 import RabbitHolePage from './pages/RabbitHolePage'
 import CuriosityQueuePage from './pages/CuriosityQueuePage'
 import ProfilePage from './pages/ProfilePage'
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/login"    element={user ? <Navigate to="/" replace /> : <LoginPage />} />
         <Route path="/register" element={user ? <Navigate to="/" replace /> : <RegisterPage />} />
         <Route path="/oauth2/callback" element={<OAuthCallbackPage />} />
+        <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/"         element={<PrivateRoute><DashboardPage /></PrivateRoute>} />

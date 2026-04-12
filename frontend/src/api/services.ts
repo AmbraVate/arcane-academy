@@ -85,6 +85,9 @@ export const diagnosticApi = {
     const { data } = await api.post('/api/diagnostic/submit', { answers })
     return data
   },
+  skip: async (): Promise<void> => {
+    await api.post('/api/diagnostic/skip')
+  },
   getResults: async (): Promise<DiagnosticResultDto> => {
     const { data } = await api.get('/api/diagnostic/results')
     return data

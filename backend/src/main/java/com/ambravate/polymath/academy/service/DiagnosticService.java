@@ -139,6 +139,20 @@ public class DiagnosticService {
         return new DiagnosticResult(recommended, chunkRecommendations, graded.score());
     }
 
+    /**
+     * Skip the diagnostic — user has no prior Java experience.
+     * Sets diagnosticCompleted = true and path = FOUNDATION so they start fresh from Chunk A.
+     */
+    @Transactional
+    public void skipDiagnostic(String userId) {
+        UserLearnerProfile profile = profileRepository.findByUserId(userId)
+                .orElse(UserLearnerProfile.builder().userId(userId).build());
+        profile.setDiagnosticCompleted(true);
+        profile.setCurrentPath(LearnerPath.FOUNDATION);
+        profileRepository.save(profile);
+        log.info("[Diagnostic] Skipped for user={} — starting fresh from FOUNDATION", userId);
+    }
+
     public record DiagnosticSession(String sessionId, List<Question> questions) {}
     public record DiagnosticResult(LearnerPath recommendedPath,
                                     Map<String, String> chunkRecommendations, double overallScore) {}
