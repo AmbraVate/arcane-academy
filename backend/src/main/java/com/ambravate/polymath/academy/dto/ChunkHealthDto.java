@@ -25,4 +25,5 @@ public class ChunkHealthDto {
   private String healthColor;
   private int totalSubChunks;
   private int completedSubChunks;
+  private String tier;
 }

@@ -9,5 +9,6 @@ public record ChunkHealth(
     double memoryStrength,
     String healthColor,
     int totalSubChunks,
-    int completedSubChunks
+    int completedSubChunks,
+    String tier
 ) { }
