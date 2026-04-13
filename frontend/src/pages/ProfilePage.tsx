@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { badgeApi } from '../api/services'
-import type { Badge } from '../types'
+import type { Badge } from '@/types'
 import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {

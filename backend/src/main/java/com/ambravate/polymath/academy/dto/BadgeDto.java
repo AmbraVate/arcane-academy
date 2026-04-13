@@ -3,7 +3,14 @@ package com.ambravate.polymath.academy.dto;
 import lombok.*;
 import java.time.Instant;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(
+    setterPrefix = "with",
+    builderMethodName = "aBadgeDto"
+)
 public class BadgeDto {
     private String id;
     private String displayName;

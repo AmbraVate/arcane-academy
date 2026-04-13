@@ -1,7 +1,14 @@
 package com.ambravate.polymath.academy.dto;
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder (
+    setterPrefix = "with",
+    builderMethodName = "anAuthResponse"
+)
 public class AuthResponse {
     private String token;
     private String userId;

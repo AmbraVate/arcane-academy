@@ -7,7 +7,14 @@ import java.time.Instant;
 @Entity
 @Table(name = "user_learner_profiles",
     uniqueConstraints = @UniqueConstraint(columnNames = {"user_id"}))
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(
+    setterPrefix = "with",
+    builderMethodName = "aUserLearnerProfile"
+)
 public class UserLearnerProfile {
 
     @Id

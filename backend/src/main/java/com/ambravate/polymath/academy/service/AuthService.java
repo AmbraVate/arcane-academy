@@ -35,10 +35,10 @@ public class AuthService {
             throw new IllegalArgumentException("Username already taken.");
         }
 
-        User user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .passwordHash(passwordEncoder.encode(request.getPassword()))
+        User user = User.aUser()
+                .withUsername(request.getUsername())
+                .withEmail(request.getEmail())
+                .withPasswordHash(passwordEncoder.encode(request.getPassword()))
                 .build();
 
         userRepository.save(user);
@@ -74,8 +74,12 @@ public class AuthService {
         return buildResponse(user, token);
     }
 
-    public User processOAuth2Login(String email, String name, String providerId,
-                                    User.AuthProvider provider) {
+    public User processOAuth2Login(
+        String email,
+        String name,
+        String providerId,
+        User.AuthProvider provider
+    ) {
         // Try to find by provider + providerId first
         var existing = userRepository.findByAuthProviderAndProviderId(provider, providerId);
         if (existing.isPresent()) {
@@ -101,11 +105,11 @@ public class AuthService {
 
         // Create new user
         String username = generateUniqueUsername(name);
-        User user = User.builder()
-                .username(username)
-                .email(email)
-                .authProvider(provider)
-                .providerId(providerId)
+        User user = User.aUser()
+                .withUsername(username)
+                .withEmail(email)
+                .withAuthProvider(provider)
+                .withProviderId(providerId)
                 .build();
         userRepository.save(user);
         log.info("[Auth] OAuth2 new user created | userId={} username={} provider={}", user.getId(), username, provider);
@@ -126,13 +130,13 @@ public class AuthService {
     }
 
     private AuthResponse buildResponse(User user, String token) {
-        return AuthResponse.builder()
-                .token(token)
-                .userId(user.getId())
-                .username(user.getUsername())
-                .totalXp(user.getTotalXp())
-                .rank(user.getRank())
-                .streakDays(user.getStreakDays())
+        return AuthResponse.anAuthResponse()
+                .withToken(token)
+                .withUserId(user.getId())
+                .withUsername(user.getUsername())
+                .withTotalXp(user.getTotalXp())
+                .withRank(user.getRank())
+                .withStreakDays(user.getStreakDays())
                 .build();
     }
 }
