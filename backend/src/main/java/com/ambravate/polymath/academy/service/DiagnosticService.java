@@ -124,7 +124,7 @@ public class DiagnosticService {
 
         // Save profile
         UserLearnerProfile profile = profileRepository.findByUserId(userId)
-                .orElse(UserLearnerProfile.builder().userId(userId).build());
+                .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
         profile.setDiagnosticCompleted(true);
         profile.setCurrentPath(recommended);
         try {
@@ -146,14 +146,11 @@ public class DiagnosticService {
     @Transactional
     public void skipDiagnostic(String userId) {
         UserLearnerProfile profile = profileRepository.findByUserId(userId)
-                .orElse(UserLearnerProfile.builder().userId(userId).build());
+                .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
         profile.setDiagnosticCompleted(true);
         profile.setCurrentPath(LearnerPath.FOUNDATION);
         profileRepository.save(profile);
         log.info("[Diagnostic] Skipped for user={} — starting fresh from FOUNDATION", userId);
     }
 
-    public record DiagnosticSession(String sessionId, List<Question> questions) {}
-    public record DiagnosticResult(LearnerPath recommendedPath,
-                                    Map<String, String> chunkRecommendations, double overallScore) {}
 }

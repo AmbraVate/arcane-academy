@@ -1,6 +1,8 @@
 package com.ambravate.polymath.academy.controller;
 
 import com.ambravate.polymath.academy.dto.*;
+import com.ambravate.polymath.academy.model.DiagnosticResult;
+import com.ambravate.polymath.academy.model.DiagnosticSession;
 import com.ambravate.polymath.academy.model.Question;
 import com.ambravate.polymath.academy.model.UserLearnerProfile;
 import com.ambravate.polymath.academy.repository.UserLearnerProfileRepository;
@@ -29,7 +31,7 @@ public class DiagnosticController {
     @PostMapping("/start")
     public ResponseEntity<ReviewSessionDto> startDiagnostic(
             @AuthenticationPrincipal UserPrincipal user) {
-        DiagnosticService.DiagnosticSession session = diagnosticService.startEntryDiagnostic(user.getId());
+        DiagnosticSession session = diagnosticService.startEntryDiagnostic(user.getId());
 
         List<QuestionDto> questionDtos = session.questions().stream().map(q -> {
             List<String> options = null;
@@ -58,7 +60,7 @@ public class DiagnosticController {
                 .map(a -> new RetrievalService.AnswerPair(a.getQuestionId(), a.getAnswer()))
                 .collect(Collectors.toList());
 
-        DiagnosticService.DiagnosticResult result = diagnosticService.submitDiagnostic(user.getId(), answers);
+        DiagnosticResult result = diagnosticService.submitDiagnostic(user.getId(), answers);
 
         return ResponseEntity.ok(DiagnosticResultDto.builder()
                 .recommendedPath(result.recommendedPath().name())
