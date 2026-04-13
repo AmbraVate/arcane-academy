@@ -36,3 +36,12 @@
 .memGREEN { background: var(--green); }
 .memYELLOW { background: var(--orange); }
 .memRED { background: var(--red); }
+
+@media (max-width: 600px) {
+  .page { padding: 16px 12px 48px; }
+  .glyph { font-size: 36px; }
+  .title { font-size: 20px; }
+  .scCard { padding: 12px; gap: 10px; }
+  .scTitle { font-size: 13px; }
+  .memBar { width: 48px; }
+}

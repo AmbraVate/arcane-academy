@@ -33,3 +33,19 @@
 .resultScore { font-size: 48px; font-weight: 800; margin-bottom: 4px; }
 .resultSub { font-size: 14px; color: var(--muted); }
 .resultCards { margin-bottom: 8px; }
+
+@media (max-width: 600px) {
+  .page { padding: 16px 12px 48px; }
+  .header { gap: 8px; }
+  .headerTitle { font-size: 16px; }
+  .progressPips { gap: 4px; }
+  .pip { width: 9px; height: 9px; }
+  .navButtons { gap: 8px; }
+  .resultHeader { padding: 20px 16px; }
+  .resultScore { font-size: 40px; }
+}
+
+@media (max-width: 480px) {
+  .header { flex-direction: column; align-items: flex-start; }
+  .progressPips { flex-wrap: wrap; max-height: 48px; overflow: hidden; }
+}

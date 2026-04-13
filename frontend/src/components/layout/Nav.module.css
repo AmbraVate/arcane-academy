@@ -45,3 +45,32 @@
   50% { transform: scale(1.2); }
 }
 .streakNum { font-family: 'Cinzel', serif; font-size: 12px; color: var(--orange); font-weight: 600; }
+
+/* Nav buttons */
+.navBtn { padding: 4px 12px; font-size: 12px; }
+.navBtnFull { display: inline; }
+.navBtnIcon { display: none; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav { padding: 0 12px; }
+  .right { gap: 8px; }
+  .xpBar { width: 56px; }
+  .xpNum { display: none; }
+  .rank { display: none; }
+}
+
+@media (max-width: 600px) {
+  .brand { font-size: 13px; letter-spacing: 1px; }
+  .lv { display: none; }
+  .xpBar { display: none; }
+}
+
+@media (max-width: 480px) {
+  .xpWrap { display: none; }
+  .streakNum { display: none; }
+  .streak { padding: 3px 6px; }
+  .navBtnFull { display: none; }
+  .navBtnIcon { display: inline; }
+  .navBtn { padding: 5px 8px; font-size: 16px; border: none; background: none; }
+}

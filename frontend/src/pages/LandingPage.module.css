@@ -1,0 +1,348 @@
+/* ── Layout ────────────────────────────────────────────── */
+.page {
+  min-height: 100%;
+  overflow-y: auto;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(13, 11, 26, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+.headerRight { display: flex; gap: 10px; align-items: center; }
+
+/* ── Hero ───────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 48px 80px;
+  text-align: center;
+}
+.heroGlow {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+.heroInner {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  animation: fadeUp 0.7s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  background: rgba(45,212,191,0.08);
+  border: 1px solid rgba(45,212,191,0.25);
+  border-radius: 20px;
+  padding: 5px 16px;
+  margin-bottom: 28px;
+}
+.heroTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.heroAccent {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--purple-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.heroSub {
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto 36px;
+}
+.heroCta { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 56px; }
+.ctaBtn {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  padding: 14px 40px;
+  border-radius: 8px;
+  letter-spacing: 0.04em;
+}
+.ctaNote { font-size: 13px; color: var(--muted); }
+
+/* Stats strip */
+.statsStrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 32px;
+}
+.stat { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 28px; }
+.statNum {
+  font-family: 'Cinzel', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.statLbl { font-size: 12px; color: var(--muted); text-align: center; max-width: 120px; line-height: 1.4; }
+.statDivider { width: 1px; height: 48px; background: var(--border); }
+
+/* ── Sections ───────────────────────────────────────────── */
+.section { padding: 80px 48px; }
+.section:nth-child(even) { background: var(--surface); }
+.sectionInner { max-width: 960px; margin: 0 auto; }
+.sectionLabel {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.sectionTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(24px, 3vw, 36px);
+  color: var(--gold);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.sectionSub {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 620px;
+  margin-bottom: 48px;
+}
+
+/* ── Polymath quote ─────────────────────────────────────── */
+.polymathCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--purple);
+  border-radius: 12px;
+  padding: 40px 48px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.polymathQuote {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: var(--gold);
+  margin-bottom: 28px;
+  font-style: italic;
+}
+.polymathBody p {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.polymathBody p:last-child { margin-bottom: 0; }
+.highlight { color: var(--purple-light); font-style: normal; }
+
+/* ── Pillars grid ───────────────────────────────────────── */
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.pillarCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.pillarCard:hover { border-color: var(--purple); transform: translateY(-3px); }
+.pillarIcon { font-size: 32px; margin-bottom: 12px; }
+.pillarName {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.pillarDesc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* ── Track path ─────────────────────────────────────────── */
+.trackPath {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+.trackStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 0 0 auto;
+}
+.trackNode {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--purple-dim);
+  border: 2px solid var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.trackLetter {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: var(--purple-light);
+  font-weight: 700;
+}
+.trackLabel {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  max-width: 72px;
+  line-height: 1.3;
+}
+.trackConnector {
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--purple-dim));
+  align-self: center;
+  margin-bottom: 28px;
+  flex-shrink: 0;
+}
+.trackNote {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ── How it works ───────────────────────────────────────── */
+.howGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.howCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+}
+.howNum {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.howTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.howDesc { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+/* ── Final CTA ──────────────────────────────────────────── */
+.finalCta {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 48px;
+  text-align: center;
+  background: var(--surface);
+}
+.finalCtaGlow {
+  position: absolute;
+  bottom: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.finalCtaInner {
+  position: relative;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.finalCtaGlyph { font-size: 56px; margin-bottom: 20px; }
+.finalCtaTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 40px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.finalCtaSub {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px;
+  border-top: 1px solid var(--border);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--gold);
+}
+.footerMuted { font-family: 'Crimson Pro', serif; color: var(--muted); font-size: 13px; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .header { padding: 14px 20px; }
+  .hero { padding: 72px 20px 56px; }
+  .section { padding: 56px 20px; }
+  .pillarsGrid { grid-template-columns: repeat(2, 1fr); }
+  .howGrid { grid-template-columns: 1fr; }
+  .statsStrip { flex-direction: column; gap: 16px; padding: 20px; }
+  .statDivider { width: 80%; height: 1px; }
+  .finalCta { padding: 72px 20px; }
+  .footer { flex-direction: column; gap: 8px; padding: 20px; text-align: center; }
+  .polymathCard { padding: 28px 24px; }
+  .trackConnector { width: 20px; }
+}
+@media (max-width: 480px) {
+  .pillarsGrid { grid-template-columns: 1fr; }
+  .trackPath { gap: 4px; }
+}

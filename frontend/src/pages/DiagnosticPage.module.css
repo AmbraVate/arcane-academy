@@ -31,3 +31,13 @@
 }
 .recItem:hover { border-color: var(--purple); }
 .recChunk { font-size: 13px; color: var(--text); font-weight: 500; }
+
+@media (max-width: 600px) {
+  .page { padding: 16px 12px 48px; }
+  .intro { height: auto; padding: 40px 0; }
+  .intro h1 { font-size: 24px; }
+  .introGlyph { font-size: 48px; }
+  .resultPanel { padding: 28px 16px; }
+  .resultTitle { font-size: 20px; }
+  .recList { max-width: 100%; }
+}

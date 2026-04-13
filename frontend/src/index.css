@@ -28,6 +28,12 @@ html, body, #root {
   overflow: hidden;
 }
 
+/* Smooth touch scrolling for all scrollable areas */
+* { -webkit-overflow-scrolling: touch; }
+
+/* Prevent horizontal overflow globally */
+body { overflow-x: hidden; }
+
 a { color: inherit; text-decoration: none; }
 
 button {

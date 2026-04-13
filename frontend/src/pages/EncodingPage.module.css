@@ -220,3 +220,27 @@
   .rightPanel { flex: 1; }
   .phaseChips { flex-wrap: wrap; }
 }
+
+@media (max-width: 480px) {
+  .header { padding: 8px 10px; gap: 8px; }
+  .subTitle { font-size: 13px; }
+  .phaseChips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; scrollbar-width: none; }
+  .phaseChips::-webkit-scrollbar { display: none; }
+
+  .hookStage { padding: 20px 12px; }
+  .hookCard { padding: 28px 18px; border-radius: 12px; }
+  .hookQuoteMark { font-size: 52px; }
+  .hookText { font-size: 17px; line-height: 1.7; }
+  .hookSubtitle { font-size: 10px; }
+
+  .phaseContent { padding: 16px 12px 48px; }
+  .explanation { font-size: 14px; }
+  .explanation pre code { font-size: 12px; }
+
+  .completeActions { flex-direction: column; align-items: center; }
+  .completeTitle { font-size: 20px; }
+  .feynmanBreakdown { gap: 8px; }
+
+  .leftPanel { max-height: 35vh; padding: 10px; }
+  .practiceLabel { font-size: 13px; }
+}

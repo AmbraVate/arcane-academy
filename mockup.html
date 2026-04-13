@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1440" />
+<title>Polymath Academy — UI Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg:#0d0b1a; --surface:#13102a; --card:#1a1535;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
+  --gold:#fbbf24; --gold-dim:rgba(251,191,36,.15);
+  --purple:#8b5cf6; --purple-dim:rgba(139,92,246,.15); --purple-light:#a78bfa;
+  --teal:#2dd4bf; --teal-dim:rgba(45,212,191,.15);
+  --text:#e2e8f0; --muted:#64748b;
+  --red:#f87171; --green:#4ade80; --orange:#fb923c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1e1e2e;font-family:'Inter',sans-serif;color:var(--text);padding:40px}
+.label{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#888;letter-spacing:.1em;text-transform:uppercase;margin:40px 0 12px;padding-left:4px}
+.label:first-child{margin-top:0}
+.frame{width:1440px;height:900px;background:var(--bg);border-radius:8px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.cinzel{font-family:'Cinzel',serif}
+
+/* ── NAV ─────────────────────────────── */
+.nav{height:52px;background:rgba(13,11,26,.95);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0}
+.nav-brand{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);display:flex;align-items:center;gap:6px}
+.nav-brand-dot{color:var(--gold);font-size:10px}
+.nav-spacer{flex:1}
+.nav-stat{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text)}
+.nav-xp{font-size:13px;color:var(--muted)}
+.nav-bar{width:120px;height:6px;background:var(--surface);border-radius:3px;overflow:hidden}
+.nav-bar-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--teal));border-radius:3px}
+.rank-chip{background:var(--purple);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:'Cinzel',serif}
+.nav-btn{background:transparent;border:1px solid var(--border2);color:var(--text);font-size:12px;padding:5px 14px;border-radius:6px;cursor:pointer}
+
+/* ── SCROLL CONTENT ──────────────────── */
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden}
+
+/* ── LOGIN ───────────────────────────── */
+.login-wrap{height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,rgba(139,92,246,.08) 0%,transparent 70%),var(--bg)}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:40px 44px;width:440px;text-align:center}
+.login-emoji{font-size:48px;margin-bottom:14px}
+.login-title{font-family:'Cinzel',serif;font-size:22px;color:var(--gold);margin-bottom:6px}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:26px;font-style:italic}
+.field{margin-bottom:14px;text-align:left}
+.field label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.field input{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:11px 14px;color:var(--text);font-size:14px;outline:none}
+.btn-primary{width:100%;background:var(--purple);color:#fff;border:none;border-radius:8px;padding:13px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.05em;cursor:pointer;margin-top:4px}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn-google{width:100%;background:transparent;border:1px solid var(--border2);border-radius:8px;padding:11px;color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.register-link{margin-top:18px;font-size:12px;color:var(--muted)}
+.register-link a{color:var(--purple-light)}
+
+/* ── ONBOARDING ──────────────────────── */
+.onboard-wrap{height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,rgba(139,92,246,.07) 0%,transparent 70%),var(--bg)}
+.onboard-inner{max-width:640px;text-align:center}
+.onboard-emoji{font-size:56px;margin-bottom:16px}
+.onboard-title{font-family:'Cinzel',serif;font-size:28px;color:var(--gold);margin-bottom:10px}
+.onboard-sub{font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.onboard-q{font-size:20px;font-weight:700;color:var(--text);margin-bottom:24px}
+.choices{display:flex;gap:16px}
+.choice{flex:1;padding:28px 20px;border-radius:16px;background:var(--card);cursor:pointer;text-align:center}
+.choice-new{border:1px solid rgba(45,212,191,.35)}
+.choice-exp{border:1px solid rgba(139,92,246,.35)}
+.choice-emoji{font-size:36px;margin-bottom:10px}
+.choice-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.choice-title-new{color:var(--teal)}
+.choice-title-exp{color:var(--purple-light)}
+.choice-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* ── DASHBOARD ───────────────────────── */
+.dash-page{max-width:900px;margin:0 auto;padding:28px 20px 60px}
+.hero{text-align:center;margin-bottom:28px}
+.hero-emoji{font-size:48px;margin-bottom:8px}
+.hero-title{font-family:'Cinzel',serif;font-size:26px;color:var(--gold);margin-bottom:4px}
+.hero-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.prog-wrap{max-width:400px;margin:0 auto}
+.prog-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.prog-track{height:8px;background:var(--surface);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--teal));border-radius:4px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 10px;text-align:center}
+.stat-val{font-size:20px;font-weight:700;color:var(--text)}
+.stat-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;margin-top:3px}
+.section-title{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);margin-bottom:14px}
+.chunk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+.chunk-card{background:var(--card);border:1px solid rgba(139,92,246,.2);border-radius:10px;padding:16px;cursor:pointer}
+.chunk-card-locked{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;opacity:.4;filter:grayscale(.7)}
+.chunk-glyph{font-size:26px;margin-bottom:6px}
+.chunk-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.chunk-prog{font-size:11px;color:var(--muted);margin-bottom:8px}
+.str-bar{height:5px;background:var(--surface);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.str-fill{height:100%;border-radius:3px}
+.str-fill-green{background:var(--green)}
+.str-fill-purple{background:var(--purple)}
+.str-lbl{font-size:10px;color:var(--muted)}
+
+/* ── ENCODING HEADER ─────────────────── */
+.enc-header{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-shrink:0;background:var(--bg)}
+.enc-back{font-size:12px;color:var(--muted);cursor:pointer}
+.enc-title{font-size:15px;font-weight:700;color:var(--text)}
+.enc-phases{display:flex;gap:6px;margin-left:8px}
+.phase-pip{font-size:11px;padding:4px 10px;border-radius:20px;color:var(--muted);background:var(--surface)}
+.phase-pip-active{background:var(--purple);color:#fff;font-weight:600}
+.phase-pip-done{color:var(--teal)}
+
+/* ── HOOK PHASE ──────────────────────── */
+.hook-stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;background:var(--bg)}
+.hook-card{position:relative;max-width:640px;width:100%;padding:48px 56px;background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.18) 0%,transparent 65%),var(--card);border:1px solid rgba(139,92,246,.3);border-radius:20px;box-shadow:0 0 80px rgba(139,92,246,.14),0 16px 48px rgba(0,0,0,.45);overflow:hidden}
+.hook-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple) 25%,var(--teal) 75%,transparent)}
+.hook-quote{font-family:Georgia,serif;font-size:80px;line-height:.75;color:var(--gold);opacity:.4;margin-bottom:16px;user-select:none}
+.hook-text{font-size:23px;line-height:1.8;color:var(--text);font-style:italic}
+.hook-text strong{color:var(--gold);font-style:normal;font-weight:700}
+.hook-subtitle{margin-top:22px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.65}
+.btn-begin{margin-top:32px;background:var(--purple);color:#fff;border:none;border-radius:8px;padding:13px 32px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.05em;cursor:pointer}
+
+/* ── LEARN PHASE ─────────────────────── */
+.learn-content{max-width:700px;margin:0 auto;padding:28px 20px 60px}
+.narration{font-size:16px;font-style:italic;line-height:1.9;padding:14px 20px;border-left:3px solid var(--purple);background:rgba(139,92,246,.05);border-radius:0 8px 8px 0;margin-bottom:20px;color:var(--text)}
+.dialogue{display:flex;gap:12px;margin-bottom:16px}
+.avatar{width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.bubble{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:0 14px 14px 14px;padding:16px 22px;flex:1}
+.bubble-name{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);margin-bottom:6px}
+.bubble-text{font-size:14px;line-height:1.75;color:var(--text)}
+.bubble-text code{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:1px 6px;font-size:12px;color:var(--purple-light)}
+.example-block{background:#09070f;border:1px solid rgba(139,92,246,.2);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;margin:12px 0 20px;overflow:hidden}
+.example-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--purple-light);padding:8px 16px;border-bottom:1px solid rgba(139,92,246,.12);background:rgba(139,92,246,.05)}
+.example-code{padding:14px 18px;font-family:'Courier New',monospace;font-size:13px;line-height:1.7;color:#e2e8f0}
+.explanation{font-size:15px;line-height:1.8;color:var(--text);margin-top:20px}
+.expl-pre{background:#09070f;border:1px solid rgba(139,92,246,.2);border-radius:10px;overflow:hidden;margin:16px 0;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.expl-dots{padding:9px 16px;font-size:11px;letter-spacing:4px;color:rgba(139,92,246,.5);background:rgba(139,92,246,.06);border-bottom:1px solid rgba(139,92,246,.12)}
+.expl-code{padding:16px 20px;font-family:'Courier New',monospace;font-size:13px;line-height:1.75;color:#e2e8f0}
+.btn-continue{margin-top:28px;background:var(--purple);color:#fff;border:none;border-radius:8px;padding:13px 28px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.05em;cursor:pointer}
+
+/* ── PRACTICE PHASE ──────────────────── */
+.coding-view{flex:1;display:flex;overflow:hidden}
+.left-panel{width:340px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:20px}
+.practice-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.12em;color:var(--purple-light);margin-bottom:12px}
+.practice-html{font-size:14px;line-height:1.7;color:var(--text);margin-bottom:16px}
+.test-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.test-chip{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+.test-chip-pass{border-color:var(--green);color:var(--green);background:rgba(74,222,128,.08)}
+.right-panel{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.editor-header{height:38px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:8px}
+.editor-dot{width:10px;height:10px;border-radius:50%}
+.editor-dot-r{background:#f87171}
+.editor-dot-y{background:#fbbf24}
+.editor-dot-g{background:#4ade80}
+.editor-fname{font-size:12px;color:var(--muted);margin-left:4px}
+.editor-body{flex:1;background:#09070f;padding:16px 20px;font-family:'Courier New',monospace;font-size:13px;line-height:1.75;color:#e2e8f0;overflow-y:auto}
+.editor-footer{height:46px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px}
+.btn-run{background:transparent;border:1px solid var(--teal);color:var(--teal);border-radius:6px;padding:7px 18px;font-size:12px;cursor:pointer}
+.btn-submit{background:var(--purple);border:none;color:#fff;border-radius:6px;padding:7px 18px;font-size:12px;cursor:pointer}
+
+/* ── QUESTION CARD ───────────────────── */
+.q-page{flex:1;overflow-y:auto;padding:28px 24px}
+.q-progress{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.q-pips{display:flex;gap:6px}
+.q-pip{width:10px;height:10px;border-radius:50%;background:var(--surface);border:1px solid var(--border)}
+.q-pip-active{background:var(--purple);border-color:var(--purple)}
+.q-pip-done{background:var(--teal);border-color:var(--teal)}
+.q-pip-wrong{background:var(--red);border-color:var(--red)}
+.q-count{font-size:12px;color:var(--muted)}
+.q-card{background:var(--card);border:1px solid rgba(139,92,246,.2);border-radius:14px;overflow:hidden;margin-bottom:16px}
+.q-card-top{background:linear-gradient(135deg,rgba(139,92,246,.1),transparent);padding:20px 24px 16px}
+.q-badges{display:flex;gap:8px;margin-bottom:14px}
+.tier-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase}
+.tier-recall{background:rgba(45,212,191,.15);color:var(--teal);border:1px solid rgba(45,212,191,.3)}
+.tier-app{background:rgba(139,92,246,.15);color:var(--purple-light);border:1px solid rgba(139,92,246,.3)}
+.tier-disc{background:rgba(251,191,36,.12);color:var(--gold);border:1px solid rgba(251,191,36,.25)}
+.type-badge{font-size:10px;padding:3px 9px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted);letter-spacing:.04em}
+.q-text{font-size:16px;font-weight:600;line-height:1.6;color:var(--text)}
+.q-code{margin:14px 0;background:#09070f;border-radius:8px;overflow:hidden}
+.q-code-dots{padding:7px 12px;font-size:10px;letter-spacing:4px;color:rgba(139,92,246,.4);background:rgba(139,92,246,.05);border-bottom:1px solid rgba(139,92,246,.1)}
+.q-code-body{padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.7;color:#e2e8f0}
+.q-options{padding:0 24px 20px}
+.q-opt{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer}
+.q-opt-selected{border-color:var(--purple);background:rgba(139,92,246,.08)}
+.q-opt-correct{border-color:var(--green);background:rgba(74,222,128,.08)}
+.q-opt-wrong{border-color:var(--red);background:rgba(248,113,113,.08)}
+.q-letter{width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0}
+.q-letter-sel{background:var(--purple);border-color:var(--purple);color:#fff}
+.q-letter-correct{background:var(--green);border-color:var(--green);color:#000}
+.q-letter-wrong{background:var(--red);border-color:var(--red);color:#fff}
+.q-opt-text{font-size:14px;color:var(--text);line-height:1.4}
+.q-expl{margin:0 24px 20px;padding:14px 16px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);border-radius:10px}
+.q-expl-correct{background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.2)}
+.q-expl-icon{font-size:18px;margin-bottom:6px}
+.q-expl-text{font-size:13px;color:var(--text);line-height:1.5}
+
+/* ── REVIEW ──────────────────────────── */
+.review-header{padding:20px 24px 0;max-width:760px;margin:0 auto}
+.review-title{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);margin-bottom:4px}
+.review-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.review-pips{display:flex;gap:6px;margin-bottom:24px}
+
+/* ── DIAGNOSTIC ──────────────────────── */
+.diag-intro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;background:radial-gradient(ellipse at 50% 30%,rgba(139,92,246,.08),transparent 60%),var(--bg)}
+.diag-emoji{font-size:56px;margin-bottom:20px}
+.diag-title{font-family:'Cinzel',serif;font-size:26px;color:var(--gold);margin-bottom:10px}
+.diag-sub{font-size:14px;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:8px}
+.diag-meta{display:flex;gap:16px;justify-content:center;margin:20px 0 32px}
+.diag-chip{font-size:12px;padding:5px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+
+/* ── PROFILE ─────────────────────────── */
+.profile-page{max-width:860px;margin:0 auto;padding:28px 20px 60px}
+.profile-hero{display:flex;align-items:center;gap:20px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:28px}
+.avatar-big{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.profile-name{font-family:'Cinzel',serif;font-size:22px;color:var(--gold)}
+.profile-meta{font-size:13px;color:var(--muted);margin-top:4px}
+.profile-stats{display:flex;gap:20px;margin-top:10px}
+.profile-stat{font-size:14px;color:var(--text)}.profile-stat span{color:var(--muted);font-size:12px;margin-left:4px}
+.badge-section{margin-bottom:24px}
+.badge-cat{font-family:'Cinzel',serif;font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.badge-grid{display:flex;gap:10px;flex-wrap:wrap}
+.badge{width:100px;padding:14px 10px;background:var(--card);border:1px solid var(--border);border-radius:10px;text-align:center}
+.badge-earned{border-color:rgba(251,191,36,.35);box-shadow:0 0 16px rgba(251,191,36,.1)}
+.badge-emoji{font-size:24px;margin-bottom:6px}
+.badge-name{font-size:10px;color:var(--muted);line-height:1.3}
+.badge-name-earned{color:var(--gold)}
+
+/* ── CHUNK MAP ───────────────────────── */
+.chunk-map-page{max-width:740px;margin:0 auto;padding:28px 20px 60px}
+.chunk-map-header{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:24px}
+.chunk-map-glyph{font-size:36px;margin-bottom:8px}
+.chunk-map-title{font-family:'Cinzel',serif;font-size:22px;color:var(--gold);margin-bottom:4px}
+.chunk-map-desc{font-size:13px;color:var(--muted)}
+.sc-row{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:10px;cursor:pointer}
+.sc-icon{width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sc-icon-done{border-color:var(--teal);background:rgba(45,212,191,.1)}
+.sc-info{flex:1}
+.sc-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.sc-meta{font-size:12px;color:var(--muted)}
+.sc-bar{width:80px;height:5px;background:var(--surface);border-radius:3px;overflow:hidden}
+.sc-fill{height:100%;background:var(--teal);border-radius:3px}
+.sc-xp{font-size:11px;color:var(--muted)}
+
+/* code keyword colours */
+.kw{color:#c4b5fd}.str{color:#86efac}.num{color:#fbbf24}.cm{color:#4a5568;font-style:italic}.ty{color:#67e8f9}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ 1. LOGIN ═══════════════ -->
+<div class="label">01 · Login</div>
+<div class="frame">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-emoji">🧙</div>
+      <div class="login-title cinzel">Polymath Academy</div>
+      <div class="login-sub">Enter your credentials to continue your journey</div>
+      <div class="field"><label>Email</label><input value="wizard@academy.com" /></div>
+      <div class="field"><label>Password</label><input type="password" value="••••••••" /></div>
+      <button class="btn-primary">✦ Enter the Academy</button>
+      <div class="divider">or</div>
+      <button class="btn-google">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+      <div class="register-link">New apprentice? <a href="#">Register here</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 2. ONBOARDING ═══════════════ -->
+<div class="label">02 · Onboarding — Java Experience Gate</div>
+<div class="frame">
+  <div class="onboard-wrap">
+    <div class="onboard-inner">
+      <div class="onboard-emoji">🧙</div>
+      <h1 class="onboard-title">Welcome to Polymath Academy</h1>
+      <p class="onboard-sub">Before we chart your path through the Java Grimoire,<br>tell us where you stand.</p>
+      <p class="onboard-q">Have you programmed in Java before?</p>
+      <div class="choices">
+        <div class="choice choice-new">
+          <div class="choice-emoji">🌱</div>
+          <div class="choice-title choice-title-new">No, I'm completely new</div>
+          <div class="choice-desc">Start from the very beginning. We'll guide you step by step from zero to job-ready.</div>
+        </div>
+        <div class="choice choice-exp">
+          <div class="choice-emoji">⚡</div>
+          <div class="choice-title choice-title-exp">Yes, I have some experience</div>
+          <div class="choice-desc">Take a short diagnostic — we'll skip what you already know and focus on the gaps.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 3. DASHBOARD ═══════════════ -->
+<div class="label">03 · Dashboard — Knowledge Map</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="nav-stat">🔥 3</span>
+    <span class="nav-xp">Lv2</span>
+    <div class="nav-bar"><div class="nav-bar-fill" style="width:52%"></div></div>
+    <span class="nav-xp">415 / 800 XP</span>
+    <span class="rank-chip">✦ Apprentice</span>
+    <button class="nav-btn">Review</button>
+    <button class="nav-btn">Profile</button>
+    <button class="nav-btn">Logout</button>
+  </div>
+  <div class="scroll">
+    <div class="dash-page">
+      <div class="hero">
+        <div class="hero-emoji">🧙</div>
+        <h1 class="hero-title">The Java Grimoire</h1>
+        <p class="hero-sub">Your path from apprentice to Archmage</p>
+        <div class="prog-wrap">
+          <div class="prog-labels"><span>Overall mastery</span><span>18%</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:18%"></div></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-val">415</div><div class="stat-lbl">Total XP</div></div>
+        <div class="stat-card"><div class="stat-val">Apprentice</div><div class="stat-lbl">Rank</div></div>
+        <div class="stat-card"><div class="stat-val">🔥 3</div><div class="stat-lbl">Day Streak</div></div>
+        <div class="stat-card"><div class="stat-val">Foundation</div><div class="stat-lbl">Path</div></div>
+      </div>
+      <div class="section-title">Knowledge Map</div>
+      <div class="chunk-grid">
+        <!-- Unlocked/In-Progress -->
+        <div class="chunk-card" style="border-color:rgba(139,92,246,.35)">
+          <div class="chunk-glyph">📜</div>
+          <div class="chunk-title">Variables &amp; Data Types</div>
+          <div class="chunk-prog">4/4 concepts</div>
+          <div class="str-bar"><div class="str-fill str-fill-green" style="width:82%"></div></div>
+          <div class="str-lbl">82% memory</div>
+        </div>
+        <div class="chunk-card" style="border-color:rgba(139,92,246,.25)">
+          <div class="chunk-glyph">📜</div>
+          <div class="chunk-title">Operators &amp; Control Flow</div>
+          <div class="chunk-prog">2/5 concepts</div>
+          <div class="str-bar"><div class="str-fill str-fill-purple" style="width:40%"></div></div>
+          <div class="str-lbl">40% memory</div>
+        </div>
+        <!-- Locked -->
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Loops</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Methods</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Arrays &amp; Collections</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Classes &amp; Objects</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Encapsulation</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Inheritance</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Polymorphism</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Exception Handling</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+        <div class="chunk-card-locked">
+          <div class="chunk-glyph">🔒</div>
+          <div class="chunk-title">Common APIs &amp; Utils</div>
+          <div class="chunk-prog">Locked</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 4. CHUNK MAP ═══════════════ -->
+<div class="label">04 · Chunk Map — Sub-Chunk List</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+    <button class="nav-btn">Review</button><button class="nav-btn">Profile</button><button class="nav-btn">Logout</button>
+  </div>
+  <div class="scroll">
+    <div class="chunk-map-page">
+      <div class="chunk-map-header">
+        <div class="chunk-map-glyph">📜</div>
+        <div class="chunk-map-title">Variables &amp; Data Types</div>
+        <div class="chunk-map-desc">Foundation of all Java programs — storing and using data</div>
+      </div>
+      <div class="sc-row" style="border-color:rgba(45,212,191,.3)">
+        <div class="sc-icon sc-icon-done">✓</div>
+        <div class="sc-info"><div class="sc-title">What is a Variable?</div><div class="sc-meta">Complete · 88% memory</div></div>
+        <div class="sc-bar"><div class="sc-fill" style="width:88%"></div></div>
+        <div class="sc-xp">50 XP</div>
+      </div>
+      <div class="sc-row" style="border-color:rgba(45,212,191,.3)">
+        <div class="sc-icon sc-icon-done">✓</div>
+        <div class="sc-info"><div class="sc-title">Primitive Types</div><div class="sc-meta">Complete · 74% memory</div></div>
+        <div class="sc-bar"><div class="sc-fill" style="width:74%"></div></div>
+        <div class="sc-xp">50 XP</div>
+      </div>
+      <div class="sc-row" style="border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.04)">
+        <div class="sc-icon" style="border-color:var(--purple);background:rgba(139,92,246,.1)">▶</div>
+        <div class="sc-info"><div class="sc-title">String Basics</div><div class="sc-meta">In Progress — Hook phase</div></div>
+        <div class="sc-bar"><div class="sc-fill" style="width:0%"></div></div>
+        <div class="sc-xp">50 XP</div>
+      </div>
+      <div class="sc-row" style="opacity:.5">
+        <div class="sc-icon">🔒</div>
+        <div class="sc-info"><div class="sc-title">Type Casting</div><div class="sc-meta">Not started</div></div>
+        <div class="sc-bar"></div>
+        <div class="sc-xp">60 XP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 5. ENCODING — HOOK ═══════════════ -->
+<div class="label">05 · Encoding — Hook Phase</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+  </div>
+  <div class="enc-header">
+    <span class="enc-back">← Back</span>
+    <span class="enc-title">String Basics</span>
+    <div class="enc-phases">
+      <span class="phase-pip phase-pip-active">Hook</span>
+      <span class="phase-pip">Learn</span>
+      <span class="phase-pip">Practice</span>
+      <span class="phase-pip">Check</span>
+      <span class="phase-pip">Done</span>
+    </div>
+  </div>
+  <div class="hook-stage">
+    <div class="hook-card">
+      <div class="hook-card" style="padding:0;background:none;border:none;box-shadow:none;overflow:visible">
+        <div class="hook-quote">❝</div>
+        <div class="hook-text">You can store a number. You can store <strong>true</strong> or <strong>false</strong>. But how do you store a <em>word</em>?</div>
+      </div>
+    </div>
+    <div class="hook-subtitle">String Basics</div>
+    <button class="btn-begin">Begin →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ 6. ENCODING — LEARN ═══════════════ -->
+<div class="label">06 · Encoding — Learn Phase</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+  </div>
+  <div class="enc-header">
+    <span class="enc-back">← Back</span>
+    <span class="enc-title">String Basics</span>
+    <div class="enc-phases">
+      <span class="phase-pip phase-pip-done">Hook</span>
+      <span class="phase-pip phase-pip-active">Learn</span>
+      <span class="phase-pip">Practice</span>
+      <span class="phase-pip">Check</span>
+      <span class="phase-pip">Done</span>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="learn-content">
+      <div class="narration">"Strings," Eldrin said, lifting a glowing scroll from the shelf, "are how your code speaks. Every message, every name, every sentence — stored as a <em>String</em>."</div>
+      <div class="dialogue">
+        <div class="avatar">🧙</div>
+        <div class="bubble">
+          <div class="bubble-name">Archmage Eldrin</div>
+          <div class="bubble-text">A <code>String</code> is a sequence of characters wrapped in double quotes. Think of it as a labelled jar containing text rather than numbers. You declare one just like any other variable.</div>
+        </div>
+      </div>
+      <div class="example-block">
+        <div class="example-label">✦ String declaration</div>
+        <div class="example-code"><span class="ty">String</span> name = <span class="str">"Eldrin"</span>;<br><span class="ty">String</span> greeting = <span class="str">"Welcome to the Academy!"</span>;<br><span class="kw">System</span>.out.println(greeting);</div>
+      </div>
+      <div class="explanation">
+        <p><strong>Strings</strong> in Java are objects, not primitives. They are declared with a capital <code>String</code> and hold any sequence of characters.</p>
+        <div class="expl-pre">
+          <div class="expl-dots">● ● ●</div>
+          <div class="expl-code"><span class="ty">String</span> s = <span class="str">"Hello, World!"</span>;<br><span class="kw">System</span>.out.println(s.length());  <span class="cm">// 13</span><br><span class="kw">System</span>.out.println(s.toUpperCase()); <span class="cm">// HELLO, WORLD!</span></div>
+        </div>
+        <p>Use <code>+</code> to concatenate (join) strings: <code>"Hello" + " " + "World"</code> → <code>"Hello World"</code>.</p>
+      </div>
+      <button class="btn-continue">I understand — continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 7. ENCODING — PRACTICE ═══════════════ -->
+<div class="label">07 · Encoding — Guided Practice Phase</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+  </div>
+  <div class="enc-header">
+    <span class="enc-back">← Back</span>
+    <span class="enc-title">String Basics</span>
+    <div class="enc-phases">
+      <span class="phase-pip phase-pip-done">Hook</span>
+      <span class="phase-pip phase-pip-done">Learn</span>
+      <span class="phase-pip phase-pip-active">Practice</span>
+      <span class="phase-pip">Check</span>
+      <span class="phase-pip">Done</span>
+    </div>
+  </div>
+  <div class="coding-view">
+    <div class="left-panel">
+      <div class="practice-label">✦ Guided Practice</div>
+      <div class="practice-html">Declare a <code style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:1px 5px;font-size:12px;color:#a78bfa">String</code> variable called <code style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:1px 5px;font-size:12px;color:#a78bfa">greeting</code> and set it to <code style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:1px 5px;font-size:12px;color:#a78bfa">"Hello, Academy!"</code>. Print it using <code style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:1px 5px;font-size:12px;color:#a78bfa">System.out.println()</code>.</div>
+      <div class="test-chips">
+        <div class="test-chip test-chip-pass">✓ Prints greeting</div>
+        <div class="test-chip">○ Correct value</div>
+      </div>
+    </div>
+    <div class="right-panel">
+      <div class="editor-header">
+        <div class="editor-dot editor-dot-r"></div>
+        <div class="editor-dot editor-dot-y"></div>
+        <div class="editor-dot editor-dot-g"></div>
+        <span class="editor-fname">StringBasics.java</span>
+      </div>
+      <div class="editor-body"><span class="cm">// Declare your String below</span><br><br><span class="ty">String</span> greeting = <span class="str">"Hello, Academy!"</span>;<br><span class="cm">// Print it</span><br><span class="kw">System</span>.out.println(greeting);</div>
+      <div class="editor-footer">
+        <button class="btn-run">▶ Run</button>
+        <button class="btn-submit">Submit →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 8. ENCODING — RETRIEVAL CHECK (Question) ═══════════════ -->
+<div class="label">08 · Encoding — Retrieval Check (Multiple Choice)</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+  </div>
+  <div class="enc-header">
+    <span class="enc-back">← Back</span>
+    <span class="enc-title">String Basics</span>
+    <div class="enc-phases">
+      <span class="phase-pip phase-pip-done">Hook</span>
+      <span class="phase-pip phase-pip-done">Learn</span>
+      <span class="phase-pip phase-pip-done">Practice</span>
+      <span class="phase-pip phase-pip-active">Check</span>
+      <span class="phase-pip">Done</span>
+    </div>
+  </div>
+  <div class="q-page">
+    <div style="max-width:720px;margin:0 auto">
+      <div class="q-card">
+        <div class="q-card-top">
+          <div class="q-badges">
+            <span class="tier-badge tier-recall">Recall</span>
+            <span class="type-badge">Multiple Choice</span>
+          </div>
+          <div class="q-text">Which of the following correctly declares a String in Java?</div>
+        </div>
+        <div class="q-options">
+          <div class="q-opt"><div class="q-letter">A</div><div class="q-opt-text"><code style="font-family:monospace;font-size:13px">string name = "Alice";</code></div></div>
+          <div class="q-opt q-opt-correct"><div class="q-letter q-letter-correct">B</div><div class="q-opt-text"><code style="font-family:monospace;font-size:13px">String name = "Alice";</code></div></div>
+          <div class="q-opt q-opt-wrong"><div class="q-letter q-letter-wrong">C</div><div class="q-opt-text"><code style="font-family:monospace;font-size:13px">String name = Alice;</code></div></div>
+          <div class="q-opt"><div class="q-letter">D</div><div class="q-opt-text"><code style="font-family:monospace;font-size:13px">str name = "Alice";</code></div></div>
+        </div>
+        <div class="q-expl q-expl-correct">
+          <div class="q-expl-icon">✓</div>
+          <div class="q-expl-text"><code style="font-family:monospace;font-size:12px;color:#a78bfa">String</code> must be capitalised in Java — it's a class, not a primitive type. The value must also be wrapped in double quotes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 9. REVIEW SESSION ═══════════════ -->
+<div class="label">09 · Daily Review Session</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+    <button class="nav-btn">Review</button><button class="nav-btn">Profile</button><button class="nav-btn">Logout</button>
+  </div>
+  <div class="scroll">
+    <div style="max-width:760px;margin:0 auto;padding:28px 20px 60px">
+      <div class="review-title">Daily Review</div>
+      <div class="review-sub">Strengthen your memory — 8 questions from your learning history</div>
+      <div class="review-pips">
+        <div class="q-pip q-pip-done"></div>
+        <div class="q-pip q-pip-done"></div>
+        <div class="q-pip q-pip-wrong"></div>
+        <div class="q-pip q-pip-active"></div>
+        <div class="q-pip"></div><div class="q-pip"></div><div class="q-pip"></div><div class="q-pip"></div>
+      </div>
+      <div class="q-card">
+        <div class="q-card-top">
+          <div class="q-badges">
+            <span class="tier-badge tier-app">Application</span>
+            <span class="type-badge">What's the Output?</span>
+          </div>
+          <div class="q-text">What does this code print?</div>
+          <div class="q-code">
+            <div class="q-code-dots">● ● ●</div>
+            <div class="q-code-body"><span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">System</span>.out.println(i * i);<br>}</div>
+          </div>
+        </div>
+        <div class="q-options">
+          <div class="q-opt"><div class="q-letter">A</div><div class="q-opt-text">1  2  3</div></div>
+          <div class="q-opt q-opt-selected"><div class="q-letter q-letter-sel">B</div><div class="q-opt-text">1  4  9</div></div>
+          <div class="q-opt"><div class="q-letter">C</div><div class="q-opt-text">2  4  6</div></div>
+          <div class="q-opt"><div class="q-letter">D</div><div class="q-opt-text">0  1  4</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ 10. DIAGNOSTIC ═══════════════ -->
+<div class="label">10 · Entry Diagnostic — Intro Screen</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Novice</span>
+    <button class="nav-btn">Logout</button>
+  </div>
+  <div class="diag-intro">
+    <div class="diag-emoji">🔮</div>
+    <h2 class="diag-title">Entry Diagnostic</h2>
+    <p class="diag-sub">Let's find out what you already know. Answer honestly — this determines your starting point and skips content you've already mastered.</p>
+    <div class="diag-meta">
+      <span class="diag-chip">📝 22 questions</span>
+      <span class="diag-chip">⏱ ~10 minutes</span>
+      <span class="diag-chip">🎯 Adaptive start point</span>
+    </div>
+    <button class="btn-begin" style="font-size:14px;padding:14px 40px">Begin Diagnostic →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ 11. PROFILE ═══════════════ -->
+<div class="label">11 · Profile &amp; Badges</div>
+<div class="frame">
+  <div class="nav">
+    <span class="nav-brand"><span class="nav-brand-dot">✦</span><span class="cinzel">Polymath Academy</span></span>
+    <div class="nav-spacer"></div>
+    <span class="rank-chip">✦ Apprentice</span>
+    <button class="nav-btn">Review</button><button class="nav-btn">Profile</button><button class="nav-btn">Logout</button>
+  </div>
+  <div class="scroll">
+    <div class="profile-page">
+      <div class="profile-hero">
+        <div class="avatar-big">🧙</div>
+        <div>
+          <div class="profile-name">test_apprentice</div>
+          <div class="profile-meta">apprentice@polymath.test · Member since Jan 2025</div>
+          <div class="profile-stats">
+            <div class="profile-stat">415 XP <span>total</span></div>
+            <div class="profile-stat">Apprentice <span>rank</span></div>
+            <div class="profile-stat">🔥 3 <span>day streak</span></div>
+            <div class="profile-stat">Foundation <span>path</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="badge-section">
+        <div class="badge-cat">Quest Badges</div>
+        <div class="badge-grid">
+          <div class="badge badge-earned"><div class="badge-emoji">✨</div><div class="badge-name badge-name-earned">First Spell Cast</div></div>
+          <div class="badge badge-earned"><div class="badge-emoji">📜</div><div class="badge-name badge-name-earned">Rune Initiate</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">📚</div><div class="badge-name">Tome Scholar</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">🕸</div><div class="badge-name">Structure Weaver</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">📖</div><div class="badge-name">Grimoire Keeper</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">⭐</div><div class="badge-name">Quest Master</div></div>
+        </div>
+      </div>
+      <div class="badge-section">
+        <div class="badge-cat">XP Milestones</div>
+        <div class="badge-grid">
+          <div class="badge badge-earned"><div class="badge-emoji">⚡</div><div class="badge-name badge-name-earned">Spark of Magic</div></div>
+          <div class="badge badge-earned"><div class="badge-emoji">🔥</div><div class="badge-name badge-name-earned">Rising Flame</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">🌟</div><div class="badge-name">Arcane Adept</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">👑</div><div class="badge-name">Master of Arts</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">🏆</div><div class="badge-name">Legendary Wizard</div></div>
+        </div>
+      </div>
+      <div class="badge-section">
+        <div class="badge-cat">Streak Badges</div>
+        <div class="badge-grid">
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">📅</div><div class="badge-name">Consistent Apprentice</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">🗓</div><div class="badge-name">Week of Dedication</div></div>
+          <div class="badge"><div class="badge-emoji" style="opacity:.3">💪</div><div class="badge-name">Unyielding Will</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

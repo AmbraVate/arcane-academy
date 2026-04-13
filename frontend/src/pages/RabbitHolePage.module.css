@@ -23,3 +23,10 @@
   .content { flex-direction: column; }
   .left { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 40vh; }
 }
+
+@media (max-width: 480px) {
+  .header { padding: 8px 12px; }
+  .title { font-size: 14px; }
+  .left { max-height: 35vh; padding: 10px; }
+  .editorHeader { padding: 6px 10px; }
+}

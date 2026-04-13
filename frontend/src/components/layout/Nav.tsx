@@ -46,16 +46,17 @@ export default function Nav() {
         </div>
 
         <div className={styles.rank}>⚗ {user.rank}</div>
-        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
-          onClick={() => navigate('/review')}>
-          Review
+        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/review')}>
+          <span className={styles.navBtnFull}>Review</span>
+          <span className={styles.navBtnIcon}>📖</span>
         </button>
-        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }}
-          onClick={() => navigate('/profile')}>
-          Profile
+        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/profile')}>
+          <span className={styles.navBtnFull}>Profile</span>
+          <span className={styles.navBtnIcon}>👤</span>
         </button>
-        <button className="btn btn-ghost" style={{ padding: '4px 12px', fontSize: 12 }} onClick={logout}>
-          Logout
+        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={logout}>
+          <span className={styles.navBtnFull}>Logout</span>
+          <span className={styles.navBtnIcon}>⏏</span>
         </button>
       </div>
     </nav>

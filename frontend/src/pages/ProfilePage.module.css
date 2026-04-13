@@ -113,4 +113,14 @@
   .header { flex-direction: column; text-align: center; }
   .stats { justify-content: center; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .page { padding: 20px 12px; }
+}
+
+@media (max-width: 480px) {
+  .username { font-size: 20px; }
+  .avatar { font-size: 44px; width: 64px; height: 64px; }
+  .stats { gap: 16px; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .badgeCard { padding: 16px 12px; }
+  .badgeGlyph { font-size: 28px; }
 }

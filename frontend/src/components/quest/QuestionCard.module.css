@@ -299,3 +299,18 @@
   border-radius: 3px;
   font-size: 12px;
 }
+
+@media (max-width: 600px) {
+  .card { padding: 16px 14px 18px; }
+  .qText { font-size: 15px; }
+  .codePre { font-size: 12px; padding: 12px 14px; }
+  .option { padding: 10px 12px; gap: 10px; }
+  .optText { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .cardHead { flex-wrap: wrap; gap: 6px; }
+  .typeBadge { margin-left: 0; }
+  .option:hover:not(:has(input:disabled)) { transform: none; }
+  .explRow { flex-wrap: wrap; }
+}
