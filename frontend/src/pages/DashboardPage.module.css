@@ -28,9 +28,52 @@
 .actionTitle { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
 .actionDesc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-/* Chunk grid */
+/* Tier sections */
 .sectionTitle { font-size: 18px; font-weight: 700; color: var(--gold); margin-bottom: 14px; }
-.chunkGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+
+.tierSection {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: var(--card);
+}
+
+.tierFOUNDATION { border-color: rgba(45,212,191,.25); }
+.tierFOUNDATION .tierLabel { color: var(--teal); }
+
+.tierPRACTITIONER { border-color: rgba(139,92,246,.25); }
+.tierPRACTITIONER .tierLabel { color: var(--purple-light); }
+
+.tierEXPERT { border-color: rgba(201,162,39,.25); }
+.tierEXPERT .tierLabel { color: var(--gold); }
+
+.tierHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.tierGlyph { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.tierLabel {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  margin-bottom: 3px;
+}
+.tierDesc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.tierProgress {
+  margin-left: auto;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--muted);
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+/* Chunk grid */
+.chunkGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .chunkCard { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color .2s, transform .15s; }
 .chunkCard:hover { transform: translateY(-2px); border-color: var(--purple); }
 .chunkCardLocked { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: not-allowed; opacity: .45; filter: grayscale(.6); }

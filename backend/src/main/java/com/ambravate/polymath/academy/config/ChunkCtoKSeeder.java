@@ -30,7 +30,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkC() {
-        chunk("C", "Loops", "\uD83D\uDD04", 3, "B");
+        chunk("C", "Loops", "\uD83D\uDD04", 3, LearnerPath.FOUNDATION, "B");
 
         subChunk("C1", "C", "For Loops", 1, 50, "ForLoops.java",
                 "<p>How would you print every number from 1 to 100 without writing 100 lines of code?</p>",
@@ -87,7 +87,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkD() {
-        chunk("D", "Methods", "\uD83D\uDDDD", 4, "B");
+        chunk("D", "Methods", "\uD83D\uDDDD", 4, LearnerPath.FOUNDATION, "B");
 
         subChunk("D1", "D", "Defining Methods", 1, 50, "Methods.java",
                 "<p>If you write the same code in 5 places, what happens when you need to change it?</p>",
@@ -139,7 +139,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkE() {
-        chunk("E", "Arrays & Collections", "\uD83D\uDCDA", 5, "C", "D");
+        chunk("E", "Arrays & Collections", "\uD83D\uDCDA", 5, LearnerPath.PRACTITIONER, "C", "D");
 
         subChunk("E1", "E", "Arrays", 1, 50, "Arrays.java",
                 "<p>How do you store 100 student grades without creating 100 separate variables?</p>",
@@ -191,7 +191,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkF() {
-        chunk("F", "Classes & Objects", "\uD83D\uDCD6", 6, "E");
+        chunk("F", "Classes & Objects", "\uD83D\uDCD6", 6, LearnerPath.PRACTITIONER, "E");
 
         subChunk("F1", "F", "Classes and Objects", 1, 60, "ClassesIntro.java",
                 "<p>You create a BankAccount but forget to set the balance. How do you guarantee every account starts valid?</p>",
@@ -243,7 +243,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkG() {
-        chunk("G", "Encapsulation", "\uD83D\uDD12", 7, "F");
+        chunk("G", "Encapsulation", "\uD83D\uDD12", 7, LearnerPath.PRACTITIONER, "F");
 
         subChunk("G1", "G", "Access Modifiers", 1, 60, "AccessModifiers.java",
                 "<p>What stops someone from setting a bank account balance to negative?</p>",
@@ -279,7 +279,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkH() {
-        chunk("H", "Inheritance", "\uD83C\uDF33", 8, "F");
+        chunk("H", "Inheritance", "\uD83C\uDF33", 8, LearnerPath.PRACTITIONER, "F");
 
         subChunk("H1", "H", "Extending Classes", 1, 60, "Inheritance.java",
                 "<p>Dogs, cats, and birds are all animals. They share common traits but also have unique ones. How do you model this?</p>",
@@ -315,7 +315,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkI() {
-        chunk("I", "Polymorphism & Abstraction", "\uD83C\uDF00", 9, "G", "H");
+        chunk("I", "Polymorphism & Abstraction", "\uD83C\uDF00", 9, LearnerPath.EXPERT, "G", "H");
 
         subChunk("I1", "I", "Polymorphism", 1, 70, "Polymorphism.java",
                 "<p>If a method accepts an Animal, can you pass it a Dog?</p>",
@@ -351,7 +351,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkJ() {
-        chunk("J", "Exception Handling", "\u26A0", 10, "B");
+        chunk("J", "Exception Handling", "\u26A0", 10, LearnerPath.EXPERT, "B");
 
         subChunk("J1", "J", "Try/Catch Blocks", 1, 50, "TryCatch.java",
                 "<p>What happens when your program divides by zero? Does it crash?</p>",
@@ -387,7 +387,7 @@ public class ChunkCtoKSeeder extends AbstractChunkSeeder {
     }
 
     private void seedChunkK() {
-        chunk("K", "Common APIs & Utils", "\uD83D\uDEE0", 11, "B");
+        chunk("K", "Common APIs & Utils", "\uD83D\uDEE0", 11, LearnerPath.EXPERT, "B");
 
         subChunk("K1", "K", "String Methods", 1, 50, "StringMethods.java",
                 "<p>You have a user's email in all caps. How do you clean it up?</p>",

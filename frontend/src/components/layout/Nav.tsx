@@ -28,7 +28,7 @@ export default function Nav() {
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.brand} onClick={() => navigate('/')}>✦ Polymath Academy</div>
+      <div className={styles.brand} onClick={() => navigate('/')}>✦ Arcane Academy</div>
       <div className={styles.right}>
         {/* Streak indicator */}
         <div className={`${styles.streak} ${streakClass}`} title={`${streak}-day streak`}>
@@ -46,6 +46,10 @@ export default function Nav() {
         </div>
 
         <div className={styles.rank}>⚗ {user.rank}</div>
+        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/topics')}>
+          <span className={styles.navBtnFull}>Topics</span>
+          <span className={styles.navBtnIcon}>📚</span>
+        </button>
         <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/review')}>
           <span className={styles.navBtnFull}>Review</span>
           <span className={styles.navBtnIcon}>📖</span>

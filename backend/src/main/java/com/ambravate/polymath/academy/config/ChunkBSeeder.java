@@ -14,7 +14,7 @@ public class ChunkBSeeder extends AbstractChunkSeeder {
 
     @Override
     public void seed() {
-        chunk("B", "Operators & Control Flow", "\uD83D\uDCDC", 2, "A");
+        chunk("B", "Operators & Control Flow", "\uD83D\uDCDC", 2, LearnerPath.FOUNDATION, "A");
 
         seedB1();
         seedB2();

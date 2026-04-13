@@ -147,7 +147,7 @@
 }
 
 /* ── Polymath quote ─────────────────────────────────────── */
-.polymathCard {
+.arcaneCard {
   background: var(--card);
   border: 1px solid var(--border);
   border-left: 4px solid var(--purple);
@@ -156,20 +156,20 @@
   max-width: 780px;
   margin: 0 auto;
 }
-.polymathQuote {
+.arcaneQuote {
   font-family: 'Cinzel', serif;
   font-size: 22px;
   color: var(--gold);
   margin-bottom: 28px;
   font-style: italic;
 }
-.polymathBody p {
+.arcaneBody p {
   font-size: 17px;
   color: var(--muted);
   line-height: 1.8;
   margin-bottom: 16px;
 }
-.polymathBody p:last-child { margin-bottom: 0; }
+.arcaneBody p:last-child { margin-bottom: 0; }
 .highlight { color: var(--purple-light); font-style: normal; }
 
 /* ── Pillars grid ───────────────────────────────────────── */
@@ -339,7 +339,7 @@
   .statDivider { width: 80%; height: 1px; }
   .finalCta { padding: 72px 20px; }
   .footer { flex-direction: column; gap: 8px; padding: 20px; text-align: center; }
-  .polymathCard { padding: 28px 24px; }
+  .arcaneCard { padding: 28px 24px; }
   .trackConnector { width: 20px; }
 }
 @media (max-width: 480px) {

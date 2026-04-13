@@ -126,12 +126,20 @@ public class DashboardService {
         status = prereqs.isEmpty() || completedChunks.containsAll(prereqs) ? "UNLOCKED" : "LOCKED";
       }
 
-      result.add(new ChunkHealth(
-          chunk.getId(), chunk.getTitle(), chunk.getGlyph(),
-          status, avgStrength, healthColor,
-          subs.size(), count
-      ));
-    }
+            result.add(
+                new ChunkHealth(
+                    chunk.getId(),
+                    chunk.getTitle(),
+                    chunk.getGlyph(),
+                    status,
+                    avgStrength,
+                    healthColor,
+                    subs.size(),
+                    count,
+                    chunk.getTier() != null ? chunk.getTier().name() : "FOUNDATION"
+                )
+            );
+        }
 
     return result;
   }

@@ -60,7 +60,7 @@ export default function LandingPage() {
     <div className={styles.page}>
       {/* ── Nav bar ─────────────────────────────────────────── */}
       <header className={styles.header}>
-        <div className={styles.brand}>✦ Polymath Academy</div>
+        <div className={styles.brand}>✦ Arcane Academy</div>
         <div className={styles.headerRight}>
           {user ? (
             <button className="btn btn-primary" onClick={() => navigate('/')}>
@@ -89,8 +89,8 @@ export default function LandingPage() {
             <span className={styles.heroAccent}>the great polymaths did.</span>
           </h1>
           <p className={styles.heroSub}>
-            Polymath Academy combines six research-proven techniques into a single adaptive
-            learning system. Build deep, lasting mastery — not surface familiarity.
+            Arcane Academy combines six research-proven techniques into a single adaptive
+            learning system — forging polymaths, one skill at a time.
           </p>
           <div className={styles.heroCta}>
             <button className={`btn btn-primary ${styles.ctaBtn}`} onClick={() => navigate(ctaDest)}>
@@ -124,11 +124,11 @@ export default function LandingPage() {
       {/* ── What is a Polymath ───────────────────────────────── */}
       <section className={styles.section}>
         <div className={styles.sectionInner}>
-          <div className={styles.polymathCard}>
-            <div className={styles.polymathQuote}>
+          <div className={styles.arcaneCard}>
+            <div className={styles.arcaneQuote}>
               "A person of wide knowledge or learning."
             </div>
-            <div className={styles.polymathBody}>
+            <div className={styles.arcaneBody}>
               <p>
                 Da Vinci mastered painting, anatomy, and engineering. Leibniz invented calculus and
                 philosophy simultaneously. Lovelace wove mathematics and poetry into the world's
@@ -139,7 +139,7 @@ export default function LandingPage() {
                 to encode knowledge deeply — the same methods science has since confirmed as optimal.
               </p>
               <p>
-                <strong className={styles.highlight}>Polymath Academy brings those methods to you.</strong>
+                <strong className={styles.highlight}>Arcane Academy brings those methods to you.</strong>
               </p>
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function LandingPage() {
 
       {/* ── Footer ──────────────────────────────────────────── */}
       <footer className={styles.footer}>
-        <span>✦ Polymath Academy</span>
+        <span>✦ Arcane Academy</span>
         <span className={styles.footerMuted}>Built on science. Wrapped in story.</span>
       </footer>
     </div>

@@ -2,8 +2,61 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { dashboardApi } from '../api/services'
-import type { DashboardDto } from '../types'
+import type { DashboardDto, ChunkHealthDto } from '../types'
 import styles from './DashboardPage.module.css'
+
+const TIERS = [
+  {
+    key: 'FOUNDATION',
+    label: 'Foundational',
+    glyph: '🌱',
+    desc: 'Core building blocks — variables, control flow, loops, and methods.',
+    color: 'teal',
+  },
+  {
+    key: 'PRACTITIONER',
+    label: 'Practitioner',
+    glyph: '⚗️',
+    desc: 'Applied mastery — arrays, collections, classes, encapsulation, and inheritance.',
+    color: 'purple',
+  },
+  {
+    key: 'EXPERT',
+    label: 'Expert',
+    glyph: '🔮',
+    desc: 'Advanced craft — polymorphism, exception handling, and core APIs.',
+    color: 'gold',
+  },
+]
+
+function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void }) {
+  const locked = ch.status === 'LOCKED'
+  return (
+    <div
+      className={`${styles.chunkCard} ${locked ? styles.chunkCardLocked : styles[`health${ch.healthColor}`]}`}
+      onClick={onClick}
+    >
+      <div className={styles.chunkGlyph}>{locked ? '🔒' : ch.glyph}</div>
+      <div className={styles.chunkTitle}>{ch.title}</div>
+      <div className={styles.chunkProgress}>
+        {locked ? 'Locked' : `${ch.completedSubChunks}/${ch.totalSubChunks} concepts`}
+      </div>
+      {!locked && (
+        <>
+          <div className={styles.strengthBar}>
+            <div
+              className={styles.strengthFill}
+              style={{ width: `${Math.round(ch.memoryStrength * 100)}%` }}
+            />
+          </div>
+          <div className={styles.strengthLabel}>
+            {Math.round(ch.memoryStrength * 100)}% memory
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
 
 export default function DashboardPage() {
   const { user } = useAuth()
@@ -36,6 +89,9 @@ export default function DashboardPage() {
   if (!dashboard || !user) return null
 
   const progressPct = Math.round(dashboard.overallProgress * 100)
+
+  const chunksByTier = (tier: string) =>
+    dashboard.chunkHealth.filter(ch => (ch.tier ?? 'FOUNDATION') === tier)
 
   return (
     <div className={styles.page}>
@@ -95,39 +151,36 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* Chunk health grid */}
+      {/* Three-tier knowledge map */}
       <div className={styles.sectionTitle}>Knowledge Map</div>
-      <div className={styles.chunkGrid}>
-        {dashboard.chunkHealth.map(ch => {
-          const locked = ch.status === 'LOCKED'
-          return (
-            <div
-              key={ch.chunkId}
-              className={`${styles.chunkCard} ${locked ? styles.chunkCardLocked : styles[`health${ch.healthColor}`]}`}
-              onClick={() => !locked && navigate(`/chunk/${ch.chunkId}`)}
-            >
-              <div className={styles.chunkGlyph}>{locked ? '🔒' : ch.glyph}</div>
-              <div className={styles.chunkTitle}>{ch.title}</div>
-              <div className={styles.chunkProgress}>
-                {locked ? 'Locked' : `${ch.completedSubChunks}/${ch.totalSubChunks} concepts`}
+
+      {TIERS.map(tier => {
+        const chunks = chunksByTier(tier.key)
+        if (chunks.length === 0) return null
+        return (
+          <div key={tier.key} className={`${styles.tierSection} ${styles[`tier${tier.key}`]}`}>
+            <div className={styles.tierHeader}>
+              <span className={styles.tierGlyph}>{tier.glyph}</span>
+              <div>
+                <div className={styles.tierLabel}>{tier.label}</div>
+                <div className={styles.tierDesc}>{tier.desc}</div>
               </div>
-              {!locked && (
-                <>
-                  <div className={styles.strengthBar}>
-                    <div
-                      className={styles.strengthFill}
-                      style={{ width: `${Math.round(ch.memoryStrength * 100)}%` }}
-                    />
-                  </div>
-                  <div className={styles.strengthLabel}>
-                    {Math.round(ch.memoryStrength * 100)}% memory
-                  </div>
-                </>
-              )}
+              <div className={styles.tierProgress}>
+                {chunks.filter(c => c.status === 'COMPLETE').length}/{chunks.length}
+              </div>
             </div>
-          )
-        })}
-      </div>
+            <div className={styles.chunkGrid}>
+              {chunks.map(ch => (
+                <ChunkCard
+                  key={ch.chunkId}
+                  ch={ch}
+                  onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.chunkId}`)}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

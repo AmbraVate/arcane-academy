@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
 import LandingPage from './pages/LandingPage'
+import TopicsPage from './pages/TopicsPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import OAuthCallbackPage from './pages/OAuthCallbackPage'
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
+        <Route path="/topics" element={<PrivateRoute><TopicsPage /></PrivateRoute>} />
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
       </div>

@@ -25,7 +25,7 @@ export default function OnboardingPage() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.glyph}>🧙</div>
-        <h1 className={styles.title}>Welcome to Polymath Academy</h1>
+        <h1 className={styles.title}>Welcome to Arcane Academy</h1>
         <p className={styles.subtitle}>
           Before we chart your path through the Java Grimoire, tell us where you stand.
         </p>

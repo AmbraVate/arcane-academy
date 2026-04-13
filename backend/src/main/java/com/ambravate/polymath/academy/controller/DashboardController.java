@@ -39,6 +39,7 @@ public class DashboardController {
                 .withHealthColor(chunkHealth.healthColor())
                 .withTotalSubChunks(chunkHealth.totalSubChunks())
                 .withCompletedSubChunks(chunkHealth.completedSubChunks())
+                .withTier(chunkHealth.tier())
                 .build()
         ).collect(Collectors.toList());
 

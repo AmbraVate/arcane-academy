@@ -25,10 +25,14 @@ public abstract class AbstractChunkSeeder {
     // ── Chunk helpers ─────────────────────────────────────────────────────
 
     protected Chunk chunk(String id, String title, String glyph, int order, String... prereqs) {
+        return chunk(id, title, glyph, order, LearnerPath.FOUNDATION, prereqs);
+    }
+
+    protected Chunk chunk(String id, String title, String glyph, int order, LearnerPath tier, String... prereqs) {
         String prereqJson = prereqs.length == 0 ? "[]" :
                 "[" + String.join(",", java.util.Arrays.stream(prereqs).map(p -> "\"" + p + "\"").toArray(String[]::new)) + "]";
         Chunk c = Chunk.builder().id(id).title(title).glyph(glyph)
-                .sortOrder(order).prerequisiteIds(prereqJson).build();
+                .sortOrder(order).prerequisiteIds(prereqJson).tier(tier).build();
         return chunkRepository.save(c);
     }
 

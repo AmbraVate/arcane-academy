@@ -102,6 +102,7 @@ export interface ChunkHealthDto {
   chunkId: string; title: string; glyph: string
   status: string; memoryStrength: number; healthColor: string
   totalSubChunks: number; completedSubChunks: number
+  tier: string
 }
 
 export interface DashboardDto {

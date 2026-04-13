@@ -16,7 +16,7 @@ public class ChunkASeeder extends AbstractChunkSeeder {
     public void seed() {
 
         // ── Chunk A: Variables & Data Types (no prerequisites) ──────────────
-        chunk("chunk-a", "Variables & Data Types", "\uD83D\uDCDC", 1);
+        chunk("chunk-a", "Variables & Data Types", "\uD83D\uDCDC", 1, LearnerPath.FOUNDATION);
 
         // =====================================================================
         // A1 — What is a Variable?

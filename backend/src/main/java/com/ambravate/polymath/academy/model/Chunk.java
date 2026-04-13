@@ -20,4 +20,10 @@ public class Chunk {
 
     @Column(columnDefinition = "TEXT")
     private String prerequisiteIds;
+
+    /** FOUNDATION | PRACTITIONER | EXPERT */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private LearnerPath tier = LearnerPath.FOUNDATION;
 }
