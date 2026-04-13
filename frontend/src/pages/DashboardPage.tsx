@@ -98,28 +98,35 @@ export default function DashboardPage() {
       {/* Chunk health grid */}
       <div className={styles.sectionTitle}>Knowledge Map</div>
       <div className={styles.chunkGrid}>
-        {dashboard.chunkHealth.map(ch => (
-          <div
-            key={ch.chunkId}
-            className={`${styles.chunkCard} ${styles[`health${ch.healthColor}`]}`}
-            onClick={() => navigate(`/chunk/${ch.chunkId}`)}
-          >
-            <div className={styles.chunkGlyph}>{ch.glyph}</div>
-            <div className={styles.chunkTitle}>{ch.title}</div>
-            <div className={styles.chunkProgress}>
-              {ch.completedSubChunks}/{ch.totalSubChunks} concepts
+        {dashboard.chunkHealth.map(ch => {
+          const locked = ch.status === 'LOCKED'
+          return (
+            <div
+              key={ch.chunkId}
+              className={`${styles.chunkCard} ${locked ? styles.chunkCardLocked : styles[`health${ch.healthColor}`]}`}
+              onClick={() => !locked && navigate(`/chunk/${ch.chunkId}`)}
+            >
+              <div className={styles.chunkGlyph}>{locked ? '🔒' : ch.glyph}</div>
+              <div className={styles.chunkTitle}>{ch.title}</div>
+              <div className={styles.chunkProgress}>
+                {locked ? 'Locked' : `${ch.completedSubChunks}/${ch.totalSubChunks} concepts`}
+              </div>
+              {!locked && (
+                <>
+                  <div className={styles.strengthBar}>
+                    <div
+                      className={styles.strengthFill}
+                      style={{ width: `${Math.round(ch.memoryStrength * 100)}%` }}
+                    />
+                  </div>
+                  <div className={styles.strengthLabel}>
+                    {Math.round(ch.memoryStrength * 100)}% memory
+                  </div>
+                </>
+              )}
             </div>
-            <div className={styles.strengthBar}>
-              <div
-                className={styles.strengthFill}
-                style={{ width: `${Math.round(ch.memoryStrength * 100)}%` }}
-              />
-            </div>
-            <div className={styles.strengthLabel}>
-              {Math.round(ch.memoryStrength * 100)}% memory
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

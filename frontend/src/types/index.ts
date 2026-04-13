@@ -100,7 +100,7 @@ export interface FeynmanResultDto {
 // ── Dashboard ────────────────────────────────────────────────────────────────
 export interface ChunkHealthDto {
   chunkId: string; title: string; glyph: string
-  memoryStrength: number; healthColor: string
+  status: string; memoryStrength: number; healthColor: string
   totalSubChunks: number; completedSubChunks: number
 }
 
