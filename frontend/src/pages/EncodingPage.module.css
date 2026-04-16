@@ -46,7 +46,7 @@
   overflow: hidden;
 }
 
-/* purple → teal accent line across the top */
+/* top accent line: purple → teal */
 .hookCard::before {
   content: '';
   position: absolute;
@@ -55,23 +55,32 @@
   background: linear-gradient(90deg, transparent 0%, var(--purple) 25%, var(--teal) 75%, transparent 100%);
 }
 
-/* subtle corner-to-corner shimmer */
+/* bottom accent line: teal → purple (mirror) */
 .hookCard::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(139,92,246,.07) 0%, transparent 50%, rgba(0,200,180,.05) 100%);
-  pointer-events: none;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--teal) 25%, var(--purple) 75%, transparent 100%);
 }
 
-.hookQuoteMark {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 80px;
-  line-height: .75;
-  color: var(--gold);
-  opacity: .4;
+.hookCardTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: .75;
   margin-bottom: 16px;
-  user-select: none;
+  position: relative;
+  z-index: 1;
+}
+
+.hookDivider {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple), transparent);
+  margin: 0 auto 28px;
   position: relative;
   z-index: 1;
 }
@@ -88,15 +97,6 @@
 .hookText p:last-child { margin-bottom: 0; }
 .hookText strong { color: var(--gold); font-style: normal; font-weight: 700; }
 .hookText em { color: var(--purple-light); }
-
-.hookSubtitle {
-  margin-top: 22px;
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  opacity: .65;
-}
 
 /* Explanation */
 .explanation { font-size: 15px; line-height: 1.8; color: var(--text); margin: 24px 0; }
@@ -229,9 +229,8 @@
 
   .hookStage { padding: 20px 12px; }
   .hookCard { padding: 28px 18px; border-radius: 12px; }
-  .hookQuoteMark { font-size: 52px; }
+  .hookCardTitle { font-size: 10px; }
   .hookText { font-size: 17px; line-height: 1.7; }
-  .hookSubtitle { font-size: 10px; }
 
   .phaseContent { padding: 16px 12px 48px; }
   .explanation { font-size: 14px; }
