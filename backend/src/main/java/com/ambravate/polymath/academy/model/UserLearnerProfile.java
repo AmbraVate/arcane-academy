@@ -31,6 +31,9 @@ public class UserLearnerProfile {
     @Builder.Default
     private boolean diagnosticCompleted = false;
 
+    @Builder.Default
+    private double diagnosticScore = 0.0;
+
     @Column(columnDefinition = "TEXT")
     private String diagnosticResultsJson;
 

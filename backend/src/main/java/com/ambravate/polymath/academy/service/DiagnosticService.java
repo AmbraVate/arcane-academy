@@ -126,6 +126,7 @@ public class DiagnosticService {
         UserLearnerProfile profile = profileRepository.findByUserId(userId)
                 .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
         profile.setDiagnosticCompleted(true);
+        profile.setDiagnosticScore(graded.score());
         profile.setCurrentPath(recommended);
         try {
             profile.setDiagnosticResultsJson(objectMapper.writeValueAsString(chunkRecommendations));
