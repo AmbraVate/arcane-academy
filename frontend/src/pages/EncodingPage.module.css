@@ -4,16 +4,17 @@
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
 
 /* Header */
-.header { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--card); }
-.headerInfo { flex: 1; }
-.subTitle { font-size: 16px; font-weight: 700; color: var(--text); }
-.phaseChips { display: flex; gap: 6px; margin-top: 4px; }
-.phaseChip { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--surface); color: var(--muted); }
+.header { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--card); flex-shrink: 0; }
+.headerInfo { flex: 1; min-width: 0; }
+.subTitle { font-size: 16px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phaseChips { display: flex; gap: 6px; margin-top: 4px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+.phaseChips::-webkit-scrollbar { display: none; }
+.phaseChip { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--surface); color: var(--muted); white-space: nowrap; flex-shrink: 0; }
 .phaseActive { background: var(--purple); color: #fff; }
 .phaseDone { background: var(--teal-dim); color: var(--teal); }
 
 /* Phase content (non-coding phases) */
-.phaseContent { max-width: 700px; margin: 0 auto; padding: 28px 16px 60px; overflow-y: auto; flex: 1; }
+.phaseContent { max-width: 700px; margin: 0 auto; padding: 28px 20px 60px; overflow-y: auto; flex: 1; width: 100%; box-sizing: border-box; }
 
 /* Hook */
 @keyframes hookFadeIn {
@@ -46,7 +47,6 @@
   overflow: hidden;
 }
 
-/* top accent line: purple → teal */
 .hookCard::before {
   content: '';
   position: absolute;
@@ -55,7 +55,6 @@
   background: linear-gradient(90deg, transparent 0%, var(--purple) 25%, var(--teal) 75%, transparent 100%);
 }
 
-/* bottom accent line: teal → purple (mirror) */
 .hookCard::after {
   content: '';
   position: absolute;
@@ -105,7 +104,6 @@
 .explanation strong { color: var(--gold); font-weight: 600; }
 .explanation em { color: var(--purple-light); font-style: italic; }
 
-/* Terminal-style code blocks */
 .explanation pre {
   position: relative;
   background: #09070f;
@@ -137,7 +135,6 @@
   background: none;
   border: none;
 }
-/* inline code */
 .explanation code {
   background: rgba(139,92,246,.12);
   border: 1px solid rgba(139,92,246,.2);
@@ -147,8 +144,6 @@
   color: var(--purple-light);
   font-family: 'Courier New', Courier, monospace;
 }
-
-/* headings inside explanation */
 .explanation h3 {
   font-size: 17px;
   font-weight: 700;
@@ -158,27 +153,101 @@
   border-bottom: 1px solid rgba(255,193,7,.15);
 }
 .explanation h4 { font-size: 14px; font-weight: 700; color: var(--purple-light); margin: 20px 0 8px; }
-
-/* lists */
 .explanation ul, .explanation ol { padding-left: 22px; margin: 0 0 16px; }
 .explanation li { margin-bottom: 8px; line-height: 1.65; }
 .explanation li::marker { color: var(--purple-light); }
 
-/* Coding view (guided practice) */
-.codingView { display: flex; flex: 1; overflow: hidden; }
-.leftPanel { width: 40%; display: flex; flex-direction: column; border-right: 1px solid var(--border); overflow-y: auto; padding: 16px; }
-.rightPanel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.practiceLabel { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
-.practiceHtml { font-size: 13px; line-height: 1.7; color: var(--text); margin-bottom: 12px; }
+/* Practice brief */
+.practiceLabel { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.practiceHtml { font-size: 14px; line-height: 1.75; color: var(--text); }
 .practiceHtml p { margin: 0 0 10px; }
-.practiceHtml code { background: var(--surface); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.practiceHtml p:last-child { margin-bottom: 0; }
+.practiceHtml code { background: var(--surface); padding: 1px 5px; border-radius: 3px; font-size: 12px; color: var(--purple-light); border: 1px solid var(--border); }
+.practiceHtml pre { background: #09070f; border: 1px solid rgba(139,92,246,.2); border-radius: 8px; padding: 14px 16px; overflow-x: auto; margin: 10px 0 14px; }
+.practiceHtml pre code { background: none; border: none; padding: 0; font-size: 13px; line-height: 1.7; color: #e2e8f0; font-family: 'Courier New', Courier, monospace; }
+.practiceHtml strong { color: var(--gold); font-weight: 600; }
 
-.solvedPanel { margin-top: 16px; padding: 14px; background: rgba(0,200,83,.08); border: 1px solid var(--teal); border-radius: 8px; }
-.solvedTitle { font-size: 16px; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
+.briefChips { margin-top: 20px; }
 
-.editorHeader { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--card); }
-.filename { font-size: 12px; color: var(--muted); }
-.editorActions { display: flex; gap: 8px; }
+/* Coding view (split layout — desktop) */
+.codingView { display: flex; flex: 1; overflow: hidden; min-height: 0; }
+
+.leftPanel {
+  width: 38%;
+  min-width: 260px;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.rightPanel { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+.solvedPanel { padding: 14px; background: rgba(0,200,83,.08); border: 1px solid var(--teal); border-radius: 8px; }
+.solvedTitle { font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
+
+/* Editor header */
+.editorHeader { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--card); flex-shrink: 0; gap: 8px; }
+.editorHeaderLeft { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.filename { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.editorActions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* Task toggle — mobile only */
+.taskToggle {
+  display: none;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: var(--purple-dim);
+  color: var(--purple-light);
+  border: 1px solid rgba(139,92,246,.3);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Task overlay — mobile */
+.taskOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 100;
+  align-items: flex-end;
+}
+.taskOverlayPanel {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+  padding: 20px 16px 32px;
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 100%;
+}
+.taskOverlayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+/* Solved banner (shown in right panel on mobile) */
+.solvedBanner {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0,200,83,.1);
+  border-top: 1px solid var(--teal);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal);
+  flex-shrink: 0;
+}
 
 .btnRunning { opacity: .7; }
 .btnSolved { background: var(--teal); color: var(--bg); border: none; border-radius: 6px; cursor: default; font-size: 12px; padding: 5px 14px; }
@@ -206,26 +275,30 @@
 .feynmanSection { text-align: left; margin-top: 24px; padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
 .feynmanTitle { font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 6px; }
 .feynmanPrompt { font-size: 13px; color: var(--muted); margin-bottom: 12px; font-style: italic; }
-.feynmanInput { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-size: 14px; color: var(--text); font-family: inherit; resize: vertical; margin-bottom: 10px; }
+.feynmanInput { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-size: 14px; color: var(--text); font-family: inherit; resize: vertical; margin-bottom: 10px; box-sizing: border-box; }
 .feynmanInput:focus { outline: none; border-color: var(--purple); }
-
 .feynmanResult { text-align: left; margin-top: 16px; padding: 18px; background: var(--card); border: 1px solid var(--teal); border-radius: 10px; }
 .feynmanScore { font-size: 18px; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
 .feynmanBreakdown { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
 .feynmanFeedback { font-size: 13px; color: var(--text); line-height: 1.5; }
 
+/* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .codingView { flex-direction: column; }
-  .leftPanel { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 40vh; }
-  .rightPanel { flex: 1; }
-  .phaseChips { flex-wrap: wrap; }
+  /* Hide desktop task panel — use overlay instead */
+  .leftPanel { display: none; }
+
+  /* Show mobile controls */
+  .taskToggle { display: inline-flex; align-items: center; }
+  .taskOverlay { display: flex; }
+  .solvedBanner { display: flex; }
+
+  /* Brief stage still full-width, tighten padding */
+  .phaseContent { padding: 20px 16px 48px; }
 }
 
 @media (max-width: 480px) {
   .header { padding: 8px 10px; gap: 8px; }
   .subTitle { font-size: 13px; }
-  .phaseChips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; scrollbar-width: none; }
-  .phaseChips::-webkit-scrollbar { display: none; }
 
   .hookStage { padding: 20px 12px; }
   .hookCard { padding: 28px 18px; border-radius: 12px; }
@@ -240,6 +313,6 @@
   .completeTitle { font-size: 20px; }
   .feynmanBreakdown { gap: 8px; }
 
-  .leftPanel { max-height: 35vh; padding: 10px; }
-  .practiceLabel { font-size: 13px; }
+  .editorHeader { padding: 6px 10px; }
+  .taskOverlayPanel { padding: 16px 12px 28px; }
 }

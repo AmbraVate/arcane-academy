@@ -24,6 +24,8 @@ export default function EncodingPage() {
   const [loading, setLoading] = useState(true)
 
   // Guided practice state
+  const [practiceView, setPracticeView] = useState<'brief' | 'code'>('brief')
+  const [showTaskOverlay, setShowTaskOverlay] = useState(false)
   const [code, setCode] = useState('')
   const [output, setOutput] = useState<OutputLine[]>([{ text: '// Cast your spell to run the code.', type: 'system' }])
   const [testResults, setTestResults] = useState<Map<string, boolean>>(new Map())
@@ -76,6 +78,8 @@ export default function EncodingPage() {
     setFeynmanResult(null)
     setFeynmanText('')
     setPracticeSolved(false)
+    setPracticeView('brief')
+    setShowTaskOverlay(false)
     setOutput([{ text: '// Cast your spell to run the code.', type: 'system' }])
     setTestResults(new Map())
     setMentorFeedback(null)
@@ -139,6 +143,7 @@ export default function EncodingPage() {
       if (result.allPassed) {
         lines.push({ text: '✓ All test cases passed!', type: 'success' })
         setPracticeSolved(true)
+        setShowTaskOverlay(false)
         if (result.xpEarned > 0) {
           const prevRank = calculateRank(user?.totalXp ?? 0)
           const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
@@ -272,14 +277,44 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* GUIDED_PRACTICE phase */}
-      {phase === 'GUIDED_PRACTICE' && (
+      {/* GUIDED_PRACTICE — brief stage */}
+      {phase === 'GUIDED_PRACTICE' && practiceView === 'brief' && (
+        <div className={styles.phaseContent}>
+          <div className={styles.practiceLabel}>✦ Guided Practice</div>
+          <div className={styles.practiceHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+          {encoding.testCaseLabels && (
+            <div className={styles.briefChips}>
+              <TestChips labels={encoding.testCaseLabels} results={testResults} />
+            </div>
+          )}
+          <button className="btn btn-primary" style={{ marginTop: 24 }} onClick={() => setPracticeView('code')}>
+            Start Coding →
+          </button>
+        </div>
+      )}
+
+      {/* GUIDED_PRACTICE — coding stage */}
+      {phase === 'GUIDED_PRACTICE' && practiceView === 'code' && (
         <div className={styles.codingView}>
+          {/* Task overlay for mobile */}
+          {showTaskOverlay && (
+            <div className={styles.taskOverlay} onClick={() => setShowTaskOverlay(false)}>
+              <div className={styles.taskOverlayPanel} onClick={e => e.stopPropagation()}>
+                <div className={styles.taskOverlayHeader}>
+                  <span className={styles.practiceLabel}>✦ Task</span>
+                  <button className="btn btn-ghost" onClick={() => setShowTaskOverlay(false)} style={{ fontSize: 12 }}>✕</button>
+                </div>
+                <div className={styles.practiceHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+                {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
+              </div>
+            </div>
+          )}
+
+          {/* Left panel — desktop only */}
           <div className={styles.leftPanel}>
-            <div className={styles.practiceLabel}>✦ Guided Practice</div>
+            <div className={styles.practiceLabel}>✦ Task</div>
             <div className={styles.practiceHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
-
             {practiceSolved && (
               <div className={styles.solvedPanel}>
                 <div className={styles.solvedTitle}>✦ Practice Complete!</div>
@@ -290,7 +325,13 @@ export default function EncodingPage() {
 
           <div className={styles.rightPanel}>
             <div className={styles.editorHeader}>
-              <span className={styles.filename}>☽ {encoding.filename}</span>
+              <div className={styles.editorHeaderLeft}>
+                <span className={styles.filename}>☽ {encoding.filename}</span>
+                {/* Mobile-only task toggle */}
+                <button className={styles.taskToggle} onClick={() => setShowTaskOverlay(true)}>
+                  📋 Task
+                </button>
+              </div>
               <div className={styles.editorActions}>
                 <button className={`btn btn-ghost ${running ? styles.btnRunning : ''}`} onClick={handleRun} disabled={running} style={{ fontSize: 12, padding: '5px 14px' }}>
                   {running ? '⟳ Running…' : '▶ Run'}
@@ -302,6 +343,14 @@ export default function EncodingPage() {
             </div>
             <CodeEditor value={code} onChange={setCode} />
             <OutputPanel lines={output} />
+            {practiceSolved && (
+              <div className={styles.solvedBanner}>
+                <span>✦ Practice Complete!</span>
+                <button className="btn btn-primary" onClick={handleAdvance} style={{ fontSize: 12, padding: '5px 16px' }}>
+                  Continue →
+                </button>
+              </div>
+            )}
             <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
           </div>
         </div>
@@ -356,7 +405,6 @@ export default function EncodingPage() {
             <h2 className={styles.completeTitle}>Concept Mastered!</h2>
             <p className={styles.completeMsg}>You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
 
-            {/* Optional Feynman */}
             {encoding.feynmanPrompt && !feynmanResult && (
               <div className={styles.feynmanSection}>
                 <div className={styles.feynmanTitle}>🧪 Feynman Challenge (Optional)</div>
