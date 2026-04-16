@@ -69,7 +69,7 @@ public class RetrievalService {
 
             results.add(new QuestionResult(
                     question.getId(), question.getSubChunkId(), isCorrect,
-                    question.getCorrectAnswer(), question.getExplanationHtml()
+                    pair.answer().trim(), question.getCorrectAnswer(), question.getExplanationHtml()
             ));
         }
 
@@ -102,6 +102,6 @@ public class RetrievalService {
 
     public record AnswerPair(String questionId, String answer) {}
     public record QuestionResult(String questionId, String subChunkId, boolean correct,
-                                 String correctAnswer, String explanationHtml) {}
+                                 String userAnswer, String correctAnswer, String explanationHtml) {}
     public record GradeResult(double score, int correct, int total, List<QuestionResult> results) {}
 }
