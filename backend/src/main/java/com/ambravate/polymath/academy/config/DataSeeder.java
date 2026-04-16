@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class DataSeeder {
 
     // ── Expected totals ────────────────────────────────────────────────────
-    private static final int EXPECTED_CHUNK_COUNT = 38; // 14 Foundation + 14 Practitioner + 10 Expert
+    private static final int EXPECTED_CHUNK_COUNT = 39; // 14 Foundation + 14 Practitioner + 10 Expert (Java) + 1 Tailwind
 
     // ── Repositories (for clean reseed) ───────────────────────────────────
     private final ChunkRepository chunkRepository;
@@ -37,6 +37,9 @@ public class DataSeeder {
     // ── Expert seeders ─────────────────────────────────────────────────────
     private final ExpertSeeder1 expertSeeder1; // XA-XE
     private final ExpertSeeder2 expertSeeder2; // XF-XJ
+
+    // ── Tailwind seeders ───────────────────────────────────────────────────
+    private final TailwindSeeder tailwindSeeder; // TW-A: Utility-First Fundamentals
 
     // ── Test users ─────────────────────────────────────────────────────────
     private final TestUserSeeder testUserSeeder;
@@ -71,6 +74,9 @@ public class DataSeeder {
                 // ── Seed Expert ────────────────────────────────────────────
                 expertSeeder1.seed();    // XA-XE
                 expertSeeder2.seed();    // XF-XJ
+
+                // ── Seed Tailwind ──────────────────────────────────────────
+                tailwindSeeder.seed();   // TW-A: Utility-First Fundamentals
 
                 log.info("Seeded {} chunks.", chunkRepository.count());
             } else {

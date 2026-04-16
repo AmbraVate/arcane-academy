@@ -26,4 +26,9 @@ public class Chunk {
     @Column(nullable = false)
     @Builder.Default
     private LearnerPath tier = LearnerPath.FOUNDATION;
+
+    /** Topic this chunk belongs to — e.g. "java", "tailwind" */
+    @Column(nullable = false)
+    @Builder.Default
+    private String topicId = "java";
 }

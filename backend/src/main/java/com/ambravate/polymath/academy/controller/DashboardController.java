@@ -23,9 +23,10 @@ public class DashboardController {
 
   @GetMapping
   public ResponseEntity<DashboardDto> getDashboard(
+      @RequestParam(defaultValue = "java") String topicId,
       @AuthenticationPrincipal UserPrincipal user
   ) {
-    DashboardData data = dashboardService.getDashboard(user.getId());
+    DashboardData data = dashboardService.getDashboard(user.getId(), topicId);
 
     List<ChunkHealthDto> healthDtos = data.chunkHealth()
         .stream()

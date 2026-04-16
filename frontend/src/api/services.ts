@@ -77,16 +77,16 @@ export const reviewApi = {
 
 // ── Diagnostic ───────────────────────────────────────────────────────────────
 export const diagnosticApi = {
-  start: async (): Promise<ReviewSessionDto> => {
-    const { data } = await api.post('/api/diagnostic/start')
+  start: async (topicId = 'java'): Promise<ReviewSessionDto> => {
+    const { data } = await api.post(`/api/diagnostic/start?topicId=${topicId}`)
     return data
   },
-  submit: async (answers: AnswerEntry[]): Promise<DiagnosticResultDto> => {
-    const { data } = await api.post('/api/diagnostic/submit', { answers })
+  submit: async (answers: AnswerEntry[], topicId = 'java'): Promise<DiagnosticResultDto> => {
+    const { data } = await api.post(`/api/diagnostic/submit?topicId=${topicId}`, { answers })
     return data
   },
-  skip: async (): Promise<void> => {
-    await api.post('/api/diagnostic/skip')
+  skip: async (topicId = 'java'): Promise<void> => {
+    await api.post(`/api/diagnostic/skip?topicId=${topicId}`)
   },
   getResults: async (): Promise<DiagnosticResultDto> => {
     const { data } = await api.get('/api/diagnostic/results')
@@ -96,8 +96,8 @@ export const diagnosticApi = {
 
 // ── Dashboard ────────────────────────────────────────────────────────────────
 export const dashboardApi = {
-  get: async (): Promise<DashboardDto> => {
-    const { data } = await api.get('/api/dashboard')
+  get: async (topicId = 'java'): Promise<DashboardDto> => {
+    const { data } = await api.get(`/api/dashboard?topicId=${topicId}`)
     return data
   },
   getReviewsDue: async (): Promise<number> => {
