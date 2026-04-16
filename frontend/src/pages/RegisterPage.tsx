@@ -18,7 +18,7 @@ export default function RegisterPage() {
     setLoading(true)
     try {
       await register(username, email, password)
-      navigate('/')
+      navigate('/topics')
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })
         ?.response?.data?.message ?? 'Registration failed.'
