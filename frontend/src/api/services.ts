@@ -136,6 +136,14 @@ export const curiosityApi = {
   },
 }
 
+// ── Tailwind Practice ─────────────────────────────────────────────────────────
+export const tailwindApi = {
+  submit: async (subChunkId: string, html: string): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/tailwind/${subChunkId}/submit`, { html })
+    return data
+  },
+}
+
 // ── Code (kept) ──────────────────────────────────────────────────────────────
 export const codeApi = {
   run: async (code: string, testInput?: string): Promise<CodeRunResponse> => {

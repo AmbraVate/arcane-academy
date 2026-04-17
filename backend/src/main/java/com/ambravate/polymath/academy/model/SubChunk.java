@@ -44,4 +44,9 @@ public class SubChunk {
 
     @Builder.Default
     private int xpReward = 50;
+
+    /** Which editor + pipeline the GUIDED_PRACTICE phase uses. */
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private SubChunkPracticeType practiceType = SubChunkPracticeType.JAVA;
 }

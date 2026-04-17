@@ -43,6 +43,8 @@ export interface SubChunkEncoding {
   testCaseLabels: TestCaseLabel[] | null; filename: string | null
   retrievalQuestions: QuestionDto[] | null
   feynmanPrompt: string | null; xpReward: number
+  /** "JAVA" | "TAILWIND" | "NONE" */
+  practiceType: string
 }
 
 export interface PracticeResult {

@@ -125,6 +125,7 @@ public class EncodingController {
                 .subChunkId(sc.getId()).chunkId(sc.getChunkId()).title(sc.getTitle())
                 .phase(p.getCurrentPhase().name()).status(p.getStatus().name())
                 .xpReward(sc.getXpReward()).filename(sc.getFilename())
+                .practiceType(sc.getPracticeType() != null ? sc.getPracticeType().name() : "JAVA")
                 .build();
 
         // Populate phase-specific content

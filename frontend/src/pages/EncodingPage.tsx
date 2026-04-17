@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi } from '../api/services'
+import { encodingApi, codeApi, tailwindApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
 import QuestionCard from '../components/quest/QuestionCard'
 import CodeEditor from '../components/quest/CodeEditor'
+import TailwindEditor from '../components/quest/TailwindEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
 import AiMentorPanel from '../components/quest/AiMentorPanel'
@@ -173,6 +174,57 @@ export default function EncodingPage() {
     }
   }
 
+  // ── Tailwind Practice ────────────────────────────────────────────────────
+  async function handleSubmitTailwind() {
+    if (!subChunkId || running) return
+    setRunning(true)
+    setMentorFeedback(null)
+    setOutput([{ text: '// Checking your Tailwind classes…', type: 'system' }])
+    setTestResults(new Map())
+
+    try {
+      const result: PracticeResult = await tailwindApi.submit(subChunkId, code)
+
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({
+          text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`,
+          type: t.passed ? 'success' : 'error',
+        })
+      })
+      setTestResults(newResults)
+
+      if (result.allPassed) {
+        lines.push({ text: '✓ All checks passed!', type: 'success' })
+        setPracticeSolved(true)
+        setShowTaskOverlay(false)
+        if (result.xpEarned > 0) {
+          const prevRank = calculateRank(user?.totalXp ?? 0)
+          const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
+          const newRank = calculateRank(newTotalXp)
+          updateXp(result.xpEarned, newRank)
+          showToast(`✦ +${result.xpEarned} XP`)
+          if (newRank !== prevRank) {
+            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
+            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
+          }
+          if (result.newBadges && result.newBadges.length > 0) {
+            setNewBadges(result.newBadges)
+          }
+        }
+      } else {
+        lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' })
+      }
+      setOutput(lines)
+    } catch {
+      setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }])
+    } finally {
+      setRunning(false)
+    }
+  }
+
   // ── Retrieval Check ──────────────────────────────────────────────────────
   async function handleSubmitRetrieval() {
     if (!subChunkId) return
@@ -333,25 +385,51 @@ export default function EncodingPage() {
                 </button>
               </div>
               <div className={styles.editorActions}>
-                <button className={`btn btn-ghost ${running ? styles.btnRunning : ''}`} onClick={handleRun} disabled={running} style={{ fontSize: 12, padding: '5px 14px' }}>
-                  {running ? '⟳ Running…' : '▶ Run'}
-                </button>
-                <button className={practiceSolved ? styles.btnSolved : 'btn btn-primary'} onClick={handleSubmitPractice} disabled={running || practiceSolved} style={{ fontSize: 12, padding: '5px 14px' }}>
+                {/* Run button only for Java — Tailwind preview is always live */}
+                {encoding.practiceType !== 'TAILWIND' && (
+                  <button className={`btn btn-ghost ${running ? styles.btnRunning : ''}`} onClick={handleRun} disabled={running} style={{ fontSize: 12, padding: '5px 14px' }}>
+                    {running ? '⟳ Running…' : '▶ Run'}
+                  </button>
+                )}
+                <button
+                  className={practiceSolved ? styles.btnSolved : 'btn btn-primary'}
+                  onClick={encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind : handleSubmitPractice}
+                  disabled={running || practiceSolved}
+                  style={{ fontSize: 12, padding: '5px 14px' }}
+                >
                   {practiceSolved ? '✓ Solved' : '⚡ Submit'}
                 </button>
               </div>
             </div>
-            <CodeEditor value={code} onChange={setCode} />
-            <OutputPanel lines={output} />
-            {practiceSolved && (
-              <div className={styles.solvedBanner}>
-                <span>✦ Practice Complete!</span>
-                <button className="btn btn-primary" onClick={handleAdvance} style={{ fontSize: 12, padding: '5px 16px' }}>
-                  Continue →
-                </button>
-              </div>
+
+            {encoding.practiceType === 'TAILWIND' ? (
+              <>
+                <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className={styles.solvedBanner}>
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary" onClick={handleAdvance} style={{ fontSize: 12, padding: '5px 16px' }}>
+                      Continue →
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <CodeEditor value={code} onChange={setCode} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className={styles.solvedBanner}>
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary" onClick={handleAdvance} style={{ fontSize: 12, padding: '5px 16px' }}>
+                      Continue →
+                    </button>
+                  </div>
+                )}
+                <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+              </>
             )}
-            <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
           </div>
         </div>
       )}

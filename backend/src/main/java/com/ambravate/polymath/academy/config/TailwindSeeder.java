@@ -7,8 +7,12 @@ import org.springframework.stereotype.Component;
 /**
  * Tailwind CSS — Chunk TW-A: Utility-First Fundamentals
  *
- * The guided practice exercises use Java's System.out.println() to inscribe Tailwind
- * class names, testing conceptual knowledge through the existing code runner.
+ * Guided practice exercises use a real HTML editor with live iframe preview.
+ * Submissions are validated server-side with Jsoup: each test spec checks that
+ * a CSS selector matches an element which carries the required Tailwind class.
+ *
+ * Test spec format (stored in guided_practice_tests_json):
+ *   [{"label":"…","selector":".card","requiredClass":"bg-white"}, …]
  */
 @Component
 public class TailwindSeeder extends AbstractChunkSeeder {
@@ -40,11 +44,20 @@ public class TailwindSeeder extends AbstractChunkSeeder {
         seedTwA3();
     }
 
+    // ── Tailwind test spec helper ─────────────────────────────────────────────
+    // Builds a JSON object that TailwindPracticeService understands:
+    // {"label":"…","selector":"…","requiredClass":"…"}
+    private String twTest(String label, String selector, String requiredClass) {
+        return "{\"label\":\"" + esc(label)
+                + "\",\"selector\":\"" + esc(selector)
+                + "\",\"requiredClass\":\"" + esc(requiredClass) + "\"}";
+    }
+
     // ── TW-A1: The Utility-First Philosophy ──────────────────────────────────
 
     private void seedTwA1() {
         subChunk(
-            "tw-a1", "tw-a", "The Utility-First Philosophy", 1, 50, "TailwindPhilosophy.java",
+            "tw-a1", "tw-a", "The Utility-First Philosophy", 1, 50, "index.html",
 
             // Hook
             "<p>Imagine building a website by writing a custom CSS class for every element — "
@@ -56,7 +69,7 @@ public class TailwindSeeder extends AbstractChunkSeeder {
 
             // Explanation
             "<h3>What is Utility-First CSS?</h3>"
-            + "<p>Traditional CSS asks you to write styles like this:</p>"
+            + "<p>Traditional CSS asks you to write styles in a separate file:</p>"
             + "<pre><code>/* styles.css */\n"
             + ".card {\n"
             + "  background-color: white;\n"
@@ -64,8 +77,6 @@ public class TailwindSeeder extends AbstractChunkSeeder {
             + "  border-radius: 8px;\n"
             + "  box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n"
             + "}</code></pre>"
-            + "<pre><code>&lt;!-- HTML --&gt;\n"
-            + "&lt;div class=\"card\"&gt;Content&lt;/div&gt;</code></pre>"
             + "<p>With Tailwind, you apply those same styles using pre-built utilities directly in HTML:</p>"
             + "<pre><code>&lt;div class=\"bg-white p-4 rounded-lg shadow\"&gt;Content&lt;/div&gt;</code></pre>"
             + "<p>Each class does exactly one thing: <code>bg-white</code> sets the background, "
@@ -74,7 +85,7 @@ public class TailwindSeeder extends AbstractChunkSeeder {
             + "<ul>"
             + "<li><strong>No naming paralysis</strong> — Tailwind's classes are descriptive by design</li>"
             + "<li><strong>Consistent design system</strong> — every colour, spacing, and size comes from a curated scale</li>"
-            + "<li><strong>No context switching</strong> — you stay in your HTML/JSX, not jumping to a separate CSS file</li>"
+            + "<li><strong>No context switching</strong> — you stay in your HTML, not jumping to a separate CSS file</li>"
             + "<li><strong>Predictable output</strong> — a class always does the same thing, everywhere</li>"
             + "</ul>"
             + "<h3>The Core Naming Pattern</h3>"
@@ -101,31 +112,39 @@ public class TailwindSeeder extends AbstractChunkSeeder {
                   "&lt;div class=\"bg-white p-4 rounded-lg shadow\"&gt;\n  Your content here\n&lt;/div&gt;"),
                 d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
                   "The Academy calls this the <strong>utility-first philosophy</strong>. "
-                  + "Each glyph is precise, reusable, and consistent. Now tell me — "
-                  + "what class would make text appear in white?")
+                  + "Each glyph is precise, reusable, and consistent. "
+                  + "Now — inscribe a card using the utilities you've learned.")
             ),
 
-            // Guided practice instructions
-            "<p>The Academy's Inscription Room records class names to test your knowledge. "
-            + "Use <code>System.out.println()</code> to inscribe the correct Tailwind class for each task:</p>"
-            + "<ol>"
-            + "<li>Print the class that sets a <strong>white background</strong>: <code>bg-white</code></li>"
-            + "<li>Print the class that adds <strong>padding on all sides</strong> of size 4: <code>p-4</code></li>"
-            + "<li>Print the class that adds a <strong>drop shadow</strong>: <code>shadow</code></li>"
-            + "</ol>",
+            // Guided practice HTML (task brief shown to student)
+            "<p>Style this card using Tailwind utility classes. Add the following classes to the <code>div</code> with class <code>card</code>:</p>"
+            + "<ul>"
+            + "<li><code>bg-white</code> — white background</li>"
+            + "<li><code>p-6</code> — padding on all sides</li>"
+            + "<li><code>rounded-xl</code> — rounded corners</li>"
+            + "<li><code>shadow-md</code> — medium drop shadow</li>"
+            + "</ul>"
+            + "<p><strong>Tip:</strong> Add all four classes to the same element's <code>class</code> attribute, separated by spaces.</p>",
 
-            // Starter code
-            "// Inscribe each Tailwind class on a new line\nSystem.out.println(\"\");\nSystem.out.println(\"\");\nSystem.out.println(\"\");\n",
+            // Starter HTML (displayed in the editor)
+            "<div class=\"card\">\n"
+            + "  <h2>Arcane Academy</h2>\n"
+            + "  <p>Your utility-first journey begins here.</p>\n"
+            + "</div>",
 
-            // Tests
+            // Tailwind test specs (Jsoup class-check format)
             tests(
-                test("White background class", "null", "bg-white"),
-                test("Padding-4 class", "null", "p-4"),
-                test("Shadow class", "null", "shadow")
+                twTest("Card has white background", ".card", "bg-white"),
+                twTest("Card has padding", ".card", "p-6"),
+                twTest("Card has rounded corners", ".card", "rounded-xl"),
+                twTest("Card has shadow", ".card", "shadow-md")
             ),
 
             // Feynman
-            "Explain the utility-first philosophy of Tailwind CSS. Why is it different from traditional CSS, and what problem does it solve?"
+            "Explain the utility-first philosophy of Tailwind CSS. Why is it different from traditional CSS, and what problem does it solve?",
+
+            // Practice type: real HTML editor with Jsoup validation
+            SubChunkPracticeType.TAILWIND
         );
 
         // TW-A1 Questions
@@ -163,7 +182,7 @@ public class TailwindSeeder extends AbstractChunkSeeder {
 
     private void seedTwA2() {
         subChunk(
-            "tw-a2", "tw-a", "Text & Colour Utilities", 2, 50, "TextColour.java",
+            "tw-a2", "tw-a", "Text & Colour Utilities", 2, 50, "index.html",
 
             // Hook
             "<p>Typography is the voice of your interface. Size, weight, and colour communicate "
@@ -209,35 +228,41 @@ public class TailwindSeeder extends AbstractChunkSeeder {
                   + "In Tailwind, size follows a scale: <code>text-sm</code>, <code>text-base</code>, "
                   + "<code>text-lg</code>, <code>text-xl</code>... Each step larger, each name precise."),
                 e("Heading incantation",
-                  "&lt;h1 class=\"text-3xl font-bold text-gray-900\"&gt;\n  The Arcane Academy\n&lt;/h1&gt;"),
+                  "&lt;h1 class=\"text-4xl font-bold text-gray-900\"&gt;\n  The Arcane Academy\n&lt;/h1&gt;"),
                 d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
                   "Colour follows the pattern <code>text-{colour}-{shade}</code>. "
                   + "A shade of 500 is balanced — not too light, not too dark. "
                   + "900 is near black. 100 is barely a whisper of colour."),
                 n("She gestures to a parchment displaying a perfectly styled heading — large, bold, deep grey. "
-                  + "Your task is to replicate it.")
+                  + "Your task: recreate it using Tailwind classes.")
             ),
 
-            // Guided practice
-            "<p>Inscribe the Tailwind classes that produce the following text styles:</p>"
-            + "<ol>"
-            + "<li>Print the class for <strong>large text</strong> (18px): <code>text-lg</code></li>"
-            + "<li>Print the class for <strong>bold font weight</strong>: <code>font-bold</code></li>"
-            + "<li>Print the class for <strong>medium grey text</strong> (shade 500): <code>text-gray-500</code></li>"
-            + "</ol>",
+            // Guided practice HTML (task brief)
+            "<p>Style the heading and subtitle using Tailwind text utilities:</p>"
+            + "<ul>"
+            + "<li>The element with class <code>heading</code> should have: <code>text-4xl</code>, <code>font-bold</code>, <code>text-gray-900</code></li>"
+            + "<li>The element with class <code>subtitle</code> should have: <code>text-gray-500</code></li>"
+            + "</ul>"
+            + "<p><strong>Tip:</strong> Add multiple classes to the same element by separating them with spaces.</p>",
 
-            // Starter code
-            "// Inscribe each class name on a new line\nSystem.out.println(\"\");\nSystem.out.println(\"\");\nSystem.out.println(\"\");\n",
+            // Starter HTML
+            "<div class=\"p-8\">\n"
+            + "  <h1 class=\"heading\">Arcane Academy</h1>\n"
+            + "  <p class=\"subtitle\">Master the utility-first art</p>\n"
+            + "</div>",
 
-            // Tests
+            // Tailwind test specs
             tests(
-                test("Large text class", "null", "text-lg"),
-                test("Bold font class", "null", "font-bold"),
-                test("Medium grey text class", "null", "text-gray-500")
+                twTest("Heading is large", ".heading", "text-4xl"),
+                twTest("Heading is bold", ".heading", "font-bold"),
+                twTest("Heading is dark grey", ".heading", "text-gray-900"),
+                twTest("Subtitle is muted grey", ".subtitle", "text-gray-500")
             ),
 
             // Feynman
-            "Explain how Tailwind's text sizing and colour system works. How do the class names make the design scale predictable?"
+            "Explain how Tailwind's text sizing and colour system works. How do the class names make the design scale predictable?",
+
+            SubChunkPracticeType.TAILWIND
         );
 
         // TW-A2 Questions
@@ -263,7 +288,7 @@ public class TailwindSeeder extends AbstractChunkSeeder {
             + "<code>text-gray-900</code> is nearly black.</p>");
 
         codeQuestion("tw-a2", QuestionTier.APPLICATION, QuestionType.WHATS_THE_OUTPUT,
-            "<p>What text colour does this element have?</p>",
+            "<p>What text colour does this element produce?</p>",
             "&lt;p class=\"text-blue-600 font-semibold text-sm\"&gt;Hello&lt;/p&gt;",
             "Medium blue",
             "<p><code>text-blue-600</code> applies a medium-to-dark blue from Tailwind's blue scale. "
@@ -274,7 +299,7 @@ public class TailwindSeeder extends AbstractChunkSeeder {
 
     private void seedTwA3() {
         subChunk(
-            "tw-a3", "tw-a", "Spacing with Margin & Padding", 3, 50, "Spacing.java",
+            "tw-a3", "tw-a", "Spacing with Margin & Padding", 3, 50, "index.html",
 
             // Hook
             "<p>Space is design. The gap between elements isn't empty — it's breathing room that guides "
@@ -323,36 +348,49 @@ public class TailwindSeeder extends AbstractChunkSeeder {
                   "Every rune on this scroll needs breathing room. Too tight and the magic bleeds together. "
                   + "Too loose and the reader loses the thread. Tailwind's spacing scale keeps everything in harmony."),
                 d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
-                  "Padding pushes space <em>inside</em> — <code>p-4</code> on all sides, "
-                  + "<code>px-6</code> only on left and right. "
+                  "Padding pushes space <em>inside</em> — <code>p-6</code> on all sides. "
                   + "Margin pushes space <em>outside</em> — <code>mt-8</code> adds space above, "
                   + "<code>mx-auto</code> centres the element horizontally."),
                 e("Centred scroll with spacing",
-                  "&lt;div class=\"mx-auto max-w-2xl p-8 mt-12\"&gt;\n  The ancient tome rests here\n&lt;/div&gt;"),
+                  "&lt;div class=\"wrapper py-8\"&gt;\n"
+                  + "  &lt;div class=\"card mx-auto max-w-md p-6 mt-8\"&gt;\n"
+                  + "    The ancient tome rests here\n"
+                  + "  &lt;/div&gt;\n"
+                  + "&lt;/div&gt;"),
                 n("You study the arrangement. Each number represents a step on the scale — 4 means 16px, "
                   + "8 means 32px. The pattern clicks into place.")
             ),
 
-            // Guided practice
-            "<p>Inscribe the Tailwind spacing classes for each scenario:</p>"
-            + "<ol>"
-            + "<li>Print the class for <strong>padding of 4 on all sides</strong>: <code>p-4</code></li>"
-            + "<li>Print the class for <strong>horizontal margin auto</strong> (centres element): <code>mx-auto</code></li>"
-            + "<li>Print the class for <strong>top margin of 8</strong>: <code>mt-8</code></li>"
-            + "</ol>",
+            // Guided practice HTML (task brief)
+            "<p>Apply spacing utilities to create a well-spaced, centred layout:</p>"
+            + "<ul>"
+            + "<li>The <code>.wrapper</code> div should have vertical padding: <code>py-8</code></li>"
+            + "<li>The <code>.card</code> div should be horizontally centred: <code>mx-auto</code></li>"
+            + "<li>The <code>.card</code> div should have a max width: <code>max-w-md</code></li>"
+            + "<li>The <code>.card</code> div should have padding on all sides: <code>p-6</code></li>"
+            + "</ul>"
+            + "<p><strong>Tip:</strong> You can add all classes to an element at once, separated by spaces.</p>",
 
-            // Starter code
-            "// Inscribe each class name on a new line\nSystem.out.println(\"\");\nSystem.out.println(\"\");\nSystem.out.println(\"\");\n",
+            // Starter HTML
+            "<div class=\"wrapper\">\n"
+            + "  <div class=\"card\">\n"
+            + "    <h2>The Ancient Tome</h2>\n"
+            + "    <p>Wisdom lives here, centred and breathing.</p>\n"
+            + "  </div>\n"
+            + "</div>",
 
-            // Tests
+            // Tailwind test specs
             tests(
-                test("Padding all sides class", "null", "p-4"),
-                test("Horizontal auto margin class", "null", "mx-auto"),
-                test("Top margin 8 class", "null", "mt-8")
+                twTest("Wrapper has vertical padding", ".wrapper", "py-8"),
+                twTest("Card is horizontally centred", ".card", "mx-auto"),
+                twTest("Card has max width", ".card", "max-w-md"),
+                twTest("Card has padding", ".card", "p-6")
             ),
 
             // Feynman
-            "Explain the difference between padding and margin in Tailwind. How does the spacing scale (numbers like 4, 8) relate to actual pixel values?"
+            "Explain the difference between padding and margin in Tailwind. How does the spacing scale (numbers like 4, 8) relate to actual pixel values?",
+
+            SubChunkPracticeType.TAILWIND
         );
 
         // TW-A3 Questions

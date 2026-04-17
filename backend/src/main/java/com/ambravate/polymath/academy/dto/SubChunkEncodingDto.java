@@ -22,4 +22,6 @@ public class SubChunkEncodingDto {
     private List<QuestionDto> retrievalQuestions;
     private String feynmanPrompt;
     private int xpReward;
+    /** "JAVA" | "TAILWIND" | "NONE" */
+    private String practiceType;
 }
