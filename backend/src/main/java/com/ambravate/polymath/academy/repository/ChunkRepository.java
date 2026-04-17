@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChunkRepository extends JpaRepository<Chunk, String> {
     List<Chunk> findAllByOrderBySortOrderAsc();
+    List<Chunk> findByTopicIdOrderBySortOrderAsc(String topicId);
 }

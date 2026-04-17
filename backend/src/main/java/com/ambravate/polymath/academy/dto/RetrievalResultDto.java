@@ -18,6 +18,7 @@ public class RetrievalResultDto {
     public static class QuestionResultDto {
         private String questionId;
         private boolean correct;
+        private String userAnswer;
         private String correctAnswer;
         private String explanationHtml;
     }

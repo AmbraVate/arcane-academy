@@ -4,18 +4,19 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.Instant;
 
+/**
+ * Tracks a user's diagnostic completion and progress metadata for a non-Java topic
+ * (e.g. "tailwind", "html"). Java uses {@link UserLearnerProfile} for historical reasons.
+ */
 @Entity
-@Table(name = "user_learner_profiles",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id"}))
+@Table(name = "user_topic_profiles",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "topic_id"}))
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(
-    setterPrefix = "with",
-    builderMethodName = "aUserLearnerProfile"
-)
-public class UserLearnerProfile {
+@Builder(setterPrefix = "with", builderMethodName = "aUserTopicProfile")
+public class UserTopicProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,9 +25,8 @@ public class UserLearnerProfile {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private LearnerPath currentPath = LearnerPath.FOUNDATION;
+    @Column(name = "topic_id", nullable = false)
+    private String topicId;
 
     @Builder.Default
     private boolean diagnosticCompleted = false;
@@ -37,8 +37,5 @@ public class UserLearnerProfile {
     @Column(columnDefinition = "TEXT")
     private String diagnosticResultsJson;
 
-    @Builder.Default
-    private int dailyGoalMinutes = 40;
-
-    private Instant lastSessionAt;
+    private Instant startedAt;
 }

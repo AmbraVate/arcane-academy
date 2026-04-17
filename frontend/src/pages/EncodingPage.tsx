@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi } from '../api/services'
+import { encodingApi, codeApi, tailwindApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
 import QuestionCard from '../components/quest/QuestionCard'
 import CodeEditor from '../components/quest/CodeEditor'
+import TailwindEditor from '../components/quest/TailwindEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
 import AiMentorPanel from '../components/quest/AiMentorPanel'
@@ -24,6 +25,8 @@ export default function EncodingPage() {
   const [loading, setLoading] = useState(true)
 
   // Guided practice state
+  const [practiceView, setPracticeView] = useState<'brief' | 'code'>('brief')
+  const [showTaskOverlay, setShowTaskOverlay] = useState(false)
   const [code, setCode] = useState('')
   const [output, setOutput] = useState<OutputLine[]>([{ text: '// Cast your spell to run the code.', type: 'system' }])
   const [testResults, setTestResults] = useState<Map<string, boolean>>(new Map())
@@ -76,6 +79,8 @@ export default function EncodingPage() {
     setFeynmanResult(null)
     setFeynmanText('')
     setPracticeSolved(false)
+    setPracticeView('brief')
+    setShowTaskOverlay(false)
     setOutput([{ text: '// Cast your spell to run the code.', type: 'system' }])
     setTestResults(new Map())
     setMentorFeedback(null)
@@ -139,6 +144,7 @@ export default function EncodingPage() {
       if (result.allPassed) {
         lines.push({ text: '✓ All test cases passed!', type: 'success' })
         setPracticeSolved(true)
+        setShowTaskOverlay(false)
         if (result.xpEarned > 0) {
           const prevRank = calculateRank(user?.totalXp ?? 0)
           const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
@@ -163,6 +169,57 @@ export default function EncodingPage() {
       setOutput(lines)
     } catch {
       setOutput([{ text: 'Error submitting code.', type: 'error' }])
+    } finally {
+      setRunning(false)
+    }
+  }
+
+  // ── Tailwind Practice ────────────────────────────────────────────────────
+  async function handleSubmitTailwind() {
+    if (!subChunkId || running) return
+    setRunning(true)
+    setMentorFeedback(null)
+    setOutput([{ text: '// Checking your Tailwind classes…', type: 'system' }])
+    setTestResults(new Map())
+
+    try {
+      const result: PracticeResult = await tailwindApi.submit(subChunkId, code)
+
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({
+          text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`,
+          type: t.passed ? 'success' : 'error',
+        })
+      })
+      setTestResults(newResults)
+
+      if (result.allPassed) {
+        lines.push({ text: '✓ All checks passed!', type: 'success' })
+        setPracticeSolved(true)
+        setShowTaskOverlay(false)
+        if (result.xpEarned > 0) {
+          const prevRank = calculateRank(user?.totalXp ?? 0)
+          const newTotalXp = (user?.totalXp ?? 0) + result.xpEarned
+          const newRank = calculateRank(newTotalXp)
+          updateXp(result.xpEarned, newRank)
+          showToast(`✦ +${result.xpEarned} XP`)
+          if (newRank !== prevRank) {
+            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
+            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
+          }
+          if (result.newBadges && result.newBadges.length > 0) {
+            setNewBadges(result.newBadges)
+          }
+        }
+      } else {
+        lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' })
+      }
+      setOutput(lines)
+    } catch {
+      setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }])
     } finally {
       setRunning(false)
     }
@@ -251,10 +308,10 @@ export default function EncodingPage() {
       {phase === 'HOOK' && (
         <div className={styles.hookStage}>
           <div className={styles.hookCard}>
-            <div className={styles.hookQuoteMark}>❝</div>
+            <div className={styles.hookCardTitle}>{encoding.title}</div>
+            <div className={styles.hookDivider} />
             <div className={styles.hookText} dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }} />
           </div>
-          <div className={styles.hookSubtitle}>{encoding.title}</div>
           <button className="btn btn-primary" style={{ marginTop: 32 }} onClick={handleAdvance}>
             Begin →
           </button>
@@ -272,14 +329,44 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* GUIDED_PRACTICE phase */}
-      {phase === 'GUIDED_PRACTICE' && (
+      {/* GUIDED_PRACTICE — brief stage */}
+      {phase === 'GUIDED_PRACTICE' && practiceView === 'brief' && (
+        <div className={styles.phaseContent}>
+          <div className={styles.practiceLabel}>✦ Guided Practice</div>
+          <div className={styles.practiceHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+          {encoding.testCaseLabels && (
+            <div className={styles.briefChips}>
+              <TestChips labels={encoding.testCaseLabels} results={testResults} />
+            </div>
+          )}
+          <button className="btn btn-primary" style={{ marginTop: 24 }} onClick={() => setPracticeView('code')}>
+            Start Coding →
+          </button>
+        </div>
+      )}
+
+      {/* GUIDED_PRACTICE — coding stage */}
+      {phase === 'GUIDED_PRACTICE' && practiceView === 'code' && (
         <div className={styles.codingView}>
+          {/* Task overlay for mobile */}
+          {showTaskOverlay && (
+            <div className={styles.taskOverlay} onClick={() => setShowTaskOverlay(false)}>
+              <div className={styles.taskOverlayPanel} onClick={e => e.stopPropagation()}>
+                <div className={styles.taskOverlayHeader}>
+                  <span className={styles.practiceLabel}>✦ Task</span>
+                  <button className="btn btn-ghost" onClick={() => setShowTaskOverlay(false)} style={{ fontSize: 12 }}>✕</button>
+                </div>
+                <div className={styles.practiceHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+                {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
+              </div>
+            </div>
+          )}
+
+          {/* Left panel — desktop only */}
           <div className={styles.leftPanel}>
-            <div className={styles.practiceLabel}>✦ Guided Practice</div>
+            <div className={styles.practiceLabel}>✦ Task</div>
             <div className={styles.practiceHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
-
             {practiceSolved && (
               <div className={styles.solvedPanel}>
                 <div className={styles.solvedTitle}>✦ Practice Complete!</div>
@@ -290,19 +377,59 @@ export default function EncodingPage() {
 
           <div className={styles.rightPanel}>
             <div className={styles.editorHeader}>
-              <span className={styles.filename}>☽ {encoding.filename}</span>
-              <div className={styles.editorActions}>
-                <button className={`btn btn-ghost ${running ? styles.btnRunning : ''}`} onClick={handleRun} disabled={running} style={{ fontSize: 12, padding: '5px 14px' }}>
-                  {running ? '⟳ Running…' : '▶ Run'}
+              <div className={styles.editorHeaderLeft}>
+                <span className={styles.filename}>☽ {encoding.filename}</span>
+                {/* Mobile-only task toggle */}
+                <button className={styles.taskToggle} onClick={() => setShowTaskOverlay(true)}>
+                  📋 Task
                 </button>
-                <button className={practiceSolved ? styles.btnSolved : 'btn btn-primary'} onClick={handleSubmitPractice} disabled={running || practiceSolved} style={{ fontSize: 12, padding: '5px 14px' }}>
+              </div>
+              <div className={styles.editorActions}>
+                {/* Run button only for Java — Tailwind preview is always live */}
+                {encoding.practiceType !== 'TAILWIND' && (
+                  <button className={`btn btn-ghost ${running ? styles.btnRunning : ''}`} onClick={handleRun} disabled={running} style={{ fontSize: 12, padding: '5px 14px' }}>
+                    {running ? '⟳ Running…' : '▶ Run'}
+                  </button>
+                )}
+                <button
+                  className={practiceSolved ? styles.btnSolved : 'btn btn-primary'}
+                  onClick={encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind : handleSubmitPractice}
+                  disabled={running || practiceSolved}
+                  style={{ fontSize: 12, padding: '5px 14px' }}
+                >
                   {practiceSolved ? '✓ Solved' : '⚡ Submit'}
                 </button>
               </div>
             </div>
-            <CodeEditor value={code} onChange={setCode} />
-            <OutputPanel lines={output} />
-            <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+
+            {encoding.practiceType === 'TAILWIND' ? (
+              <>
+                <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className={styles.solvedBanner}>
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary" onClick={handleAdvance} style={{ fontSize: 12, padding: '5px 16px' }}>
+                      Continue →
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <CodeEditor value={code} onChange={setCode} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className={styles.solvedBanner}>
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary" onClick={handleAdvance} style={{ fontSize: 12, padding: '5px 16px' }}>
+                      Continue →
+                    </button>
+                  </div>
+                )}
+                <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+              </>
+            )}
           </div>
         </div>
       )}
@@ -356,7 +483,6 @@ export default function EncodingPage() {
             <h2 className={styles.completeTitle}>Concept Mastered!</h2>
             <p className={styles.completeMsg}>You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
 
-            {/* Optional Feynman */}
             {encoding.feynmanPrompt && !feynmanResult && (
               <div className={styles.feynmanSection}>
                 <div className={styles.feynmanTitle}>🧪 Feynman Challenge (Optional)</div>
@@ -391,7 +517,7 @@ export default function EncodingPage() {
               <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>
                 Return to Chunk →
               </button>
-              <button className="btn btn-ghost" onClick={() => navigate('/')}>
+              <button className="btn btn-ghost" onClick={() => navigate(encoding.topicId && encoding.topicId !== 'java' ? `/topic/${encoding.topicId}` : '/')}>
                 Dashboard
               </button>
             </div>

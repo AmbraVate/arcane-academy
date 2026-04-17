@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { dashboardApi } from '../api/services'
 import styles from './TopicsPage.module.css'
 
 interface Topic {
@@ -22,6 +24,15 @@ const TOPICS: Topic[] = [
     color: 'teal',
   },
   {
+    id: 'tailwind',
+    name: 'Tailwind CSS',
+    glyph: '🎨',
+    tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',
+    status: 'active',
+    chunks: 1,
+    color: 'teal',
+  },
+  {
     id: 'html',
     name: 'HTML',
     glyph: '📄',
@@ -33,7 +44,7 @@ const TOPICS: Topic[] = [
   {
     id: 'css',
     name: 'CSS',
-    glyph: '🎨',
+    glyph: '🖌️',
     tagline: 'Craft beautiful, responsive interfaces from the ground up.',
     status: 'coming_soon',
     chunks: 10,
@@ -86,11 +97,54 @@ const TOPICS: Topic[] = [
   },
 ]
 
+function ProgressRing({ pct, active }: { pct: number; active: boolean }) {
+  const r = 22
+  const circ = 2 * Math.PI * r
+  const dash = (pct / 100) * circ
+
+  return (
+    <svg className={styles.ring} width="56" height="56" viewBox="0 0 56 56">
+      <circle cx="28" cy="28" r={r} className={styles.ringTrack} />
+      <circle
+        cx="28" cy="28" r={r}
+        className={styles.ringFill}
+        strokeDasharray={`${dash} ${circ}`}
+        strokeDashoffset="0"
+        transform="rotate(-90 28 28)"
+        style={{ opacity: active ? 1 : 0.3 }}
+      />
+      <text x="28" y="28" className={styles.ringLabel} dominantBaseline="central" textAnchor="middle">
+        {Math.round(pct)}%
+      </text>
+    </svg>
+  )
+}
+
 export default function TopicsPage() {
   const navigate = useNavigate()
+  const [javaProgress, setJavaProgress] = useState(0)
+
+  const [tailwindProgress, setTailwindProgress] = useState(0)
+
+  useEffect(() => {
+    dashboardApi.get('java')
+      .then(d => setJavaProgress(Math.round(d.overallProgress * 100)))
+      .catch(() => {})
+    dashboardApi.get('tailwind')
+      .then(d => setTailwindProgress(Math.round(d.overallProgress * 100)))
+      .catch(() => {})
+  }, [])
+
+  function progressFor(topic: Topic) {
+    if (topic.id === 'java') return javaProgress
+    if (topic.id === 'tailwind') return tailwindProgress
+    return 0
+  }
 
   function handleTopicClick(topic: Topic) {
-    if (topic.status === 'active') navigate('/')
+    if (topic.status !== 'active') return
+    if (topic.id === 'java') navigate('/')
+    else navigate(`/topic/${topic.id}`)
   }
 
   return (
@@ -111,11 +165,14 @@ export default function TopicsPage() {
           >
             <div className={styles.cardTop}>
               <span className={styles.topicGlyph}>{topic.glyph}</span>
-              {topic.status === 'active' ? (
-                <span className={`${styles.badge} ${styles.badgeActive}`}>Active</span>
-              ) : (
-                <span className={`${styles.badge} ${styles.badgeSoon}`}>Coming Soon</span>
-              )}
+              <div className={styles.cardTopRight}>
+                <ProgressRing pct={progressFor(topic)} active={topic.status === 'active'} />
+                {topic.status === 'active' ? (
+                  <span className={`${styles.badge} ${styles.badgeActive}`}>Active</span>
+                ) : (
+                  <span className={`${styles.badge} ${styles.badgeSoon}`}>Coming Soon</span>
+                )}
+              </div>
             </div>
 
             <div className={styles.topicName}>{topic.name}</div>

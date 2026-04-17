@@ -146,7 +146,7 @@ public class BadgeService {
       // Mastery
       case PERFECT_REVIEW -> hasPerfectReview;
       case MEMORY_MASTER -> false; // Checked separately via dashboard
-      case DIAGNOSTIC_ACE -> profile != null && profile.isDiagnosticCompleted(); // Simplified
+      case DIAGNOSTIC_ACE -> profile != null && profile.isDiagnosticCompleted() && profile.getDiagnosticScore() >= 0.8;
 
       // Feynman
       case FEYNMAN_FIRST -> feynmanCompleted >= 1;

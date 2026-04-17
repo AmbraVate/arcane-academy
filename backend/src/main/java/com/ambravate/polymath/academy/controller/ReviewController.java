@@ -54,7 +54,8 @@ public class ReviewController {
                 .score(result.score()).correct(result.correct()).total(result.total())
                 .results(result.results().stream().map(r -> RetrievalResultDto.QuestionResultDto.builder()
                         .questionId(r.questionId()).correct(r.correct())
-                        .correctAnswer(r.correctAnswer()).explanationHtml(r.explanationHtml())
+                        .userAnswer(r.userAnswer()).correctAnswer(r.correctAnswer())
+                        .explanationHtml(r.explanationHtml())
                         .build()).collect(Collectors.toList()))
                 .newBadges(result.newBadges())
                 .build());

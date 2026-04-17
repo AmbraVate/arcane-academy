@@ -22,16 +22,4 @@ public class DashboardDto {
     private int dailyGoalMinutes;
     private double overallProgress;
     private List<ChunkHealthDto> chunkHealth;
-
-    @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-    public static class ChunkHealthDto {
-        private String chunkId;
-        private String title;
-        private String glyph;
-        private String status;
-        private double memoryStrength;
-        private String healthColor;
-        private int totalSubChunks;
-        private int completedSubChunks;
-    }
 }

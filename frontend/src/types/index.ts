@@ -35,7 +35,7 @@ export interface ChunkDetail {
 export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
 
 export interface SubChunkEncoding {
-  subChunkId: string; chunkId: string; title: string
+  subChunkId: string; chunkId: string; topicId: string; title: string
   phase: EncodingPhase; status: string
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null
@@ -43,6 +43,8 @@ export interface SubChunkEncoding {
   testCaseLabels: TestCaseLabel[] | null; filename: string | null
   retrievalQuestions: QuestionDto[] | null
   feynmanPrompt: string | null; xpReward: number
+  /** "JAVA" | "TAILWIND" | "NONE" */
+  practiceType: string
 }
 
 export interface PracticeResult {
@@ -115,8 +117,8 @@ export interface DashboardDto {
 // ── Rabbit Holes ─────────────────────────────────────────────────────────────
 export interface RabbitHoleModule {
   id: string; chunkId: string; title: string
-  contentHtml: string; storyJson: string
-  starterCode: string; testCasesJson: string; filename: string; sortOrder: number
+  contentHtml: string; storyBeats: StoryBeat[]
+  starterCode: string; testCaseLabels: { label: string }[]; filename: string; sortOrder: number
 }
 
 // ── Curiosity Queue ──────────────────────────────────────────────────────────

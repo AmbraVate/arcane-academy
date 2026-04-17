@@ -14,6 +14,9 @@ import OnboardingPage from './pages/OnboardingPage'
 import RabbitHolePage from './pages/RabbitHolePage'
 import CuriosityQueuePage from './pages/CuriosityQueuePage'
 import ProfilePage from './pages/ProfilePage'
+import TopicPage from './pages/TopicPage'
+import TopicOnboardingPage from './pages/TopicOnboardingPage'
+import TopicDiagnosticPage from './pages/TopicDiagnosticPage'
 import Nav from './components/layout/Nav'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -41,6 +44,9 @@ export default function App() {
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
         <Route path="/topics" element={<PrivateRoute><TopicsPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId" element={<PrivateRoute><TopicPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId/onboarding" element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId/diagnostic" element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
       </div>

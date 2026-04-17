@@ -2,6 +2,7 @@ package com.ambravate.polymath.academy.controller;
 
 import com.ambravate.polymath.academy.dto.*;
 import com.ambravate.polymath.academy.model.*;
+import com.ambravate.polymath.academy.repository.ChunkRepository;
 import com.ambravate.polymath.academy.security.UserPrincipal;
 import com.ambravate.polymath.academy.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +22,7 @@ public class EncodingController {
     private final EncodingService encodingService;
     private final RetrievalService retrievalService;
     private final FeynmanService feynmanService;
+    private final ChunkRepository chunkRepository;
     private final ObjectMapper objectMapper;
 
     @PostMapping("/{subChunkId}/start")
@@ -87,7 +89,8 @@ public class EncodingController {
                 .score(result.score()).correct(result.correct()).total(result.total())
                 .results(result.results().stream().map(r -> RetrievalResultDto.QuestionResultDto.builder()
                         .questionId(r.questionId()).correct(r.correct())
-                        .correctAnswer(r.correctAnswer()).explanationHtml(r.explanationHtml())
+                        .userAnswer(r.userAnswer()).correctAnswer(r.correctAnswer())
+                        .explanationHtml(r.explanationHtml())
                         .build()).collect(Collectors.toList()))
                 .passed(result.passed()).xpEarned(result.xpEarned())
                 .newBadges(result.newBadges()).recommendation(result.recommendation())
@@ -120,10 +123,15 @@ public class EncodingController {
         SubChunk sc = session.subChunk();
         UserChunkProgress p = session.progress();
 
+        String topicId = chunkRepository.findById(sc.getChunkId())
+                .map(Chunk::getTopicId)
+                .orElse("java");
+
         SubChunkEncodingDto dto = SubChunkEncodingDto.builder()
-                .subChunkId(sc.getId()).chunkId(sc.getChunkId()).title(sc.getTitle())
+                .subChunkId(sc.getId()).chunkId(sc.getChunkId()).topicId(topicId).title(sc.getTitle())
                 .phase(p.getCurrentPhase().name()).status(p.getStatus().name())
                 .xpReward(sc.getXpReward()).filename(sc.getFilename())
+                .practiceType(sc.getPracticeType() != null ? sc.getPracticeType().name() : "JAVA")
                 .build();
 
         // Populate phase-specific content

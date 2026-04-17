@@ -42,12 +42,21 @@ public abstract class AbstractChunkSeeder {
                                  String filename, String hook, String explanation,
                                  String story, String gpHtml, String gpStarter, String gpTests,
                                  String feynmanPrompt) {
+        return subChunk(id, chunkId, title, order, xp, filename, hook, explanation,
+                story, gpHtml, gpStarter, gpTests, feynmanPrompt, SubChunkPracticeType.JAVA);
+    }
+
+    protected SubChunk subChunk(String id, String chunkId, String title, int order, int xp,
+                                 String filename, String hook, String explanation,
+                                 String story, String gpHtml, String gpStarter, String gpTests,
+                                 String feynmanPrompt, SubChunkPracticeType practiceType) {
         SubChunk sc = SubChunk.builder()
                 .id(id).chunkId(chunkId).title(title).sortOrder(order).xpReward(xp)
                 .filename(filename).hookHtml(hook).explanationHtml(explanation)
                 .storyJson(story).guidedPracticeHtml(gpHtml)
                 .guidedPracticeStarterCode(gpStarter).guidedPracticeTestsJson(gpTests)
                 .feynmanPrompt(feynmanPrompt)
+                .practiceType(practiceType)
                 .build();
         return subChunkRepository.save(sc);
     }

@@ -93,8 +93,7 @@ export default function RabbitHolePage() {
   if (loading) return <div className={styles.loading}><p>Loading module...</p></div>
   if (!mod) return null
 
-  let storyBeats: StoryBeat[] = []
-  try { storyBeats = JSON.parse(mod.storyJson) } catch { /* empty */ }
+  const storyBeats: StoryBeat[] = mod.storyBeats ?? []
 
   return (
     <div className={styles.page}>

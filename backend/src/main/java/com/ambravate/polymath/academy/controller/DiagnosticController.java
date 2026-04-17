@@ -30,8 +30,9 @@ public class DiagnosticController {
 
     @PostMapping("/start")
     public ResponseEntity<ReviewSessionDto> startDiagnostic(
+            @RequestParam(defaultValue = "java") String topicId,
             @AuthenticationPrincipal UserPrincipal user) {
-        DiagnosticSession session = diagnosticService.startEntryDiagnostic(user.getId());
+        DiagnosticSession session = diagnosticService.startEntryDiagnostic(user.getId(), topicId);
 
         List<QuestionDto> questionDtos = session.questions().stream().map(q -> {
             List<String> options = null;
@@ -54,13 +55,14 @@ public class DiagnosticController {
 
     @PostMapping("/submit")
     public ResponseEntity<DiagnosticResultDto> submitDiagnostic(
+            @RequestParam(defaultValue = "java") String topicId,
             @RequestBody AnswerRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         List<RetrievalService.AnswerPair> answers = request.getAnswers().stream()
                 .map(a -> new RetrievalService.AnswerPair(a.getQuestionId(), a.getAnswer()))
                 .collect(Collectors.toList());
 
-        DiagnosticResult result = diagnosticService.submitDiagnostic(user.getId(), answers);
+        DiagnosticResult result = diagnosticService.submitDiagnostic(user.getId(), answers, topicId);
 
         return ResponseEntity.ok(DiagnosticResultDto.builder()
                 .recommendedPath(result.recommendedPath().name())
@@ -70,8 +72,10 @@ public class DiagnosticController {
     }
 
     @PostMapping("/skip")
-    public ResponseEntity<Void> skipDiagnostic(@AuthenticationPrincipal UserPrincipal user) {
-        diagnosticService.skipDiagnostic(user.getId());
+    public ResponseEntity<Void> skipDiagnostic(
+            @RequestParam(defaultValue = "java") String topicId,
+            @AuthenticationPrincipal UserPrincipal user) {
+        diagnosticService.skipDiagnostic(user.getId(), topicId);
         return ResponseEntity.ok().build();
     }
 

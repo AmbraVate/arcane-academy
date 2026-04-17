@@ -1,0 +1,181 @@
+/* TailwindEditor — side-by-side HTML textarea + live iframe preview */
+
+.editor {
+  display: flex;
+  gap: 0;
+  height: 420px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+/* ── Each pane (textarea / iframe) ─────────────────────────────────────── */
+.pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pane + .pane {
+  border-left: 1px solid var(--border);
+}
+
+.paneLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+}
+
+.paneDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Textarea ───────────────────────────────────────────────────────────── */
+.textarea {
+  flex: 1;
+  width: 100%;
+  padding: 14px;
+  font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--surface);
+  border: none;
+  outline: none;
+  resize: none;
+  tab-size: 2;
+}
+
+.textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Preview title + viewport switcher ─────────────────────────────────── */
+.previewTitle {
+  margin-right: auto;
+}
+
+.viewportSwitch {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+
+.viewportBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.viewportBtn:hover {
+  color: var(--text);
+}
+
+.viewportBtnActive,
+.viewportBtnActive:hover {
+  background: var(--purple);
+  color: #fff;
+}
+
+.viewportIcon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.viewportLabel {
+  /* Hide label on very narrow headers, icon alone is enough */
+}
+
+.viewportSize {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  min-width: 52px;
+  text-align: right;
+}
+
+/* ── Preview stage — holds the (possibly constrained) iframe frame ─────── */
+.previewStage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12px;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    repeating-conic-gradient(var(--surface) 0 25%, transparent 0 50%) 0 0 / 16px 16px;
+  overflow: auto;
+  min-height: 0;
+}
+
+.previewFrame {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background: #f9fafb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.previewFrameDevice {
+  align-self: stretch;
+  max-width: 100%;
+  min-height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  background: #f9fafb;
+}
+
+/* ── Iframe ─────────────────────────────────────────────────────────────── */
+.iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #f9fafb;
+}
+
+/* ── Responsive — stack vertically on small screens ─────────────────────── */
+@media (max-width: 640px) {
+  .editor {
+    flex-direction: column;
+    height: 600px;
+  }
+
+  .pane + .pane {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}

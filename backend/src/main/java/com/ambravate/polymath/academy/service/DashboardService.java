@@ -19,57 +19,80 @@ public class DashboardService {
   private final UserChunkProgressRepository progressRepository;
   private final UserRepository userRepository;
   private final UserLearnerProfileRepository profileRepository;
+  private final UserTopicProfileRepository topicProfileRepository;
   private final SpacingService spacingService;
   private final StreakService streakService;
 
+  /** Java-topic dashboard (backwards-compatible). */
   public DashboardData getDashboard(String userId) {
-    User user = userRepository.findById(userId).orElseThrow();
-    UserLearnerProfile profile = profileRepository.findByUserId(userId)
-        .orElse(
-            UserLearnerProfile.aUserLearnerProfile()
-                .withUserId(userId)
-                .build()
-        );
+    return getDashboard(userId, "java");
+  }
 
-    List<ChunkHealth> chunkHealth = getMemoryHealth(userId);
+  public DashboardData getDashboard(String userId, String topicId) {
+    User user = userRepository.findById(userId).orElseThrow();
+
+    boolean diagnosticCompleted;
+    LearnerPath currentPath;
+    int dailyGoalMinutes;
+
+    if ("java".equals(topicId)) {
+      UserLearnerProfile profile = profileRepository.findByUserId(userId)
+          .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
+      diagnosticCompleted = profile.isDiagnosticCompleted();
+      currentPath = profile.getCurrentPath();
+      dailyGoalMinutes = profile.getDailyGoalMinutes();
+    } else {
+      // Per-topic diagnostic state; path defaults to FOUNDATION (tier is chunk-level)
+      diagnosticCompleted = topicProfileRepository.findByUserIdAndTopicId(userId, topicId)
+          .map(UserTopicProfile::isDiagnosticCompleted)
+          .orElse(false);
+      currentPath = LearnerPath.FOUNDATION;
+      dailyGoalMinutes = 40;
+    }
+
+    List<ChunkHealth> chunkHealth = getMemoryHealth(userId, topicId);
     int reviewsDue = spacingService.getDueReviews(userId).size();
     boolean streakAtRisk = streakService.isStreakAtRisk(userId);
 
-    // Calculate overall progress
+    // Overall progress scoped to this topic's sub-chunks
+    List<Chunk> topicChunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
+    List<String> topicChunkIds = topicChunks.stream().map(Chunk::getId).toList();
+    List<SubChunk> topicSubChunks = topicChunkIds.isEmpty()
+        ? List.of()
+        : subChunkRepository.findByChunkIdIn(topicChunkIds);
+    long totalSubChunks = topicSubChunks.size();
+
     List<UserChunkProgress> allProgress = progressRepository.findByUserId(userId);
-    long totalSubChunks = subChunkRepository.count();
+    Set<String> topicSubChunkIds = topicSubChunks.stream().map(SubChunk::getId).collect(Collectors.toSet());
     long completedSubChunks = allProgress.stream()
-        .filter(progress -> progress.getStatus() == SubChunkStatus.COMPLETE
-            || progress.getStatus() == SubChunkStatus.SKIPPED)
+        .filter(p -> topicSubChunkIds.contains(p.getSubChunkId()))
+        .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE || p.getStatus() == SubChunkStatus.SKIPPED)
         .count();
-    double overallProgress =
-        totalSubChunks > 0 ? (double) completedSubChunks / totalSubChunks : 0.0;
+    double overallProgress = totalSubChunks > 0 ? (double) completedSubChunks / totalSubChunks : 0.0;
 
     return new DashboardData(
         user.getTotalXp(),
         user.getRank(),
         user.getStreakDays(),
         streakAtRisk,
-        profile.getCurrentPath(),
-        profile.isDiagnosticCompleted(),
+        currentPath,
+        diagnosticCompleted,
         reviewsDue,
-        profile.getDailyGoalMinutes(),
+        dailyGoalMinutes,
         overallProgress,
         chunkHealth
     );
   }
 
   /**
-   * Memory health per chunk: average decayed strength of all sub-chunks. GREEN > 0.7, YELLOW
-   * 0.4-0.7, RED < 0.4
+   * Memory health per chunk for the given topic. GREEN > 0.7, YELLOW 0.4-0.7, RED < 0.4.
    */
-  public List<ChunkHealth> getMemoryHealth(String userId) {
-    List<Chunk> chunks = chunkRepository.findAllByOrderBySortOrderAsc();
+  public List<ChunkHealth> getMemoryHealth(String userId, String topicId) {
+    List<Chunk> chunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
     List<UserChunkProgress> allProgress = progressRepository.findByUserId(userId);
     Map<String, UserChunkProgress> progressMap = allProgress.stream()
         .collect(Collectors.toMap(UserChunkProgress::getSubChunkId, p -> p, (a, b) -> a));
 
-    // Build chunk status info
     Set<String> completedChunks = new HashSet<>();
     Map<String, List<SubChunk>> chunkSubs = new HashMap<>();
     for (Chunk c : chunks) {
@@ -98,19 +121,9 @@ public class DashboardService {
           count++;
         }
       }
+      if (count > 0) avgStrength /= count;
 
-      if (count > 0) {
-        avgStrength /= count;
-      }
-
-      String healthColor;
-      if (avgStrength > 0.7) {
-        healthColor = "GREEN";
-      } else if (avgStrength >= 0.4) {
-        healthColor = "YELLOW";
-      } else {
-        healthColor = "RED";
-      }
+      String healthColor = avgStrength > 0.7 ? "GREEN" : avgStrength >= 0.4 ? "YELLOW" : "RED";
 
       String status;
       if (completedChunks.contains(chunk.getId())) {
@@ -121,42 +134,27 @@ public class DashboardService {
       })) {
         status = "IN_PROGRESS";
       } else {
-        // Check if unlocked
         List<String> prereqs = parsePrereqs(chunk.getPrerequisiteIds());
         status = prereqs.isEmpty() || completedChunks.containsAll(prereqs) ? "UNLOCKED" : "LOCKED";
       }
 
-            result.add(
-                new ChunkHealth(
-                    chunk.getId(),
-                    chunk.getTitle(),
-                    chunk.getGlyph(),
-                    status,
-                    avgStrength,
-                    healthColor,
-                    subs.size(),
-                    count,
-                    chunk.getTier() != null ? chunk.getTier().name() : "FOUNDATION"
-                )
-            );
-        }
-
+      result.add(new ChunkHealth(
+          chunk.getId(), chunk.getTitle(), chunk.getGlyph(),
+          status, avgStrength, healthColor,
+          subs.size(), count,
+          chunk.getTier() != null ? chunk.getTier().name() : "FOUNDATION"
+      ));
+    }
     return result;
   }
 
   private List<String> parsePrereqs(String json) {
-    if (json == null || json.isBlank()) {
-      return List.of();
-    }
+    if (json == null || json.isBlank()) return List.of();
     try {
       return new com.fasterxml.jackson.databind.ObjectMapper().readValue(
-          json,
-          new com.fasterxml.jackson.core.type.TypeReference<>() {
-          }
-      );
+          json, new com.fasterxml.jackson.core.type.TypeReference<>() {});
     } catch (Exception e) {
       return List.of();
     }
   }
-
 }
