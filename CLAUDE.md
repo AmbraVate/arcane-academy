@@ -1,6 +1,6 @@
-# Polymath Academy — CLAUDE.md
+# Arcane Academy — CLAUDE.md
 
-Polymath Academy is a gamified, multi-disciplinary learning platform built for **polymaths** — learners who pursue mastery across several fields in parallel. The platform combines **accelerated learning algorithms** (spaced repetition, interleaving, retrieval practice, active recall) with RPG progression (XP, ranks, bosses, badges) in a fantasy/wizard aesthetic.
+Arcane Academy is a gamified, multi-disciplinary learning platform built for **polymaths** — learners who pursue mastery across several fields in parallel. The platform combines **accelerated learning algorithms** (spaced repetition, interleaving, retrieval practice, active recall) with RPG progression (XP, ranks, bosses, badges) in a fantasy/wizard aesthetic.
 
 The pedagogical thesis: polymaths don't suffer from breadth — they suffer from forgetting. Reviews, not new content, are the core loop.
 
@@ -16,8 +16,112 @@ A self-directed adult who wants to build durable, job-ready competence across mu
 1. **Forward loop (Topics)** — per-topic quest chapters that teach new material. Topics are **fully isolated**: content, progression, XP ledgers, bosses, and badges never cross topic boundaries.
 2. **Review loop (Cross-topic)** — Daily / Weekly / Monthly reviews scheduled by the accelerated-learning engine. Reviews are the **only** place where items from multiple topics appear together. A review session interleaves items the algorithm has identified as due.
 
-### First Topic (Proof of Concept)
-**Java** — from zero programming experience to job-ready for a Junior / Apprenticeship role. Tailwind CSS is the second topic in progress.
+### Learning Paths (Topics)
+
+Every topic is structured into **three tiers**. A learner enters a tier based on the diagnostic (see §1.1); they can skip ahead, start at Foundation, or re-enter Practitioner/Expert if returning. Each tier has its own chapters, boss(es), and Grand Boss certifying progression to the next tier.
+
+| Tier | Purpose | Outcome |
+|---|---|---|
+| **Foundation** | Mental model, vocabulary, first wins | Can read the topic's output and produce simple, correct artefacts unaided |
+| **Practitioner** | Composition, patterns, real-world tasks | Can solve realistic task-sized problems idiomatically |
+| **Expert** | Architecture, optimisation, edge cases, synthesis | Job-ready; can reason about trade-offs and teach the topic |
+
+---
+
+## 1.1 Onboarding Flow
+
+The onboarding sequence is explicit and ordered. Skipping steps is not allowed for first-time users.
+
+1. **Auth** — Register or sign in (local or Google).
+2. **Topic selection** — `/onboarding/topics`: learner picks one or more topics to start. Polymath-first: picking ≥2 is encouraged and awards the "Dual Path" badge immediately.
+3. **Diagnostic (per chosen topic)** — `/onboarding/diagnostic/{topicSlug}`: a short adaptive quiz (8–15 questions) that places the learner into **Foundation / Practitioner / Expert**. Diagnostics are **per topic**, run back-to-back if multiple topics were selected.
+4. **Placement summary** — shows tier placement per topic, suggested first quest, and initial review cadence.
+5. **Home dashboard** — first session begins.
+
+### Diagnostic Mechanics
+- Adaptive: wrong answer → easier follow-up; right answer → harder follow-up
+- Scored per tier; learner is placed in the highest tier where they passed the floor threshold
+- Results seed the `ReviewScheduler` — confidently-answered items are scheduled at longer initial intervals, shaky items at shorter ones
+- Learner may opt to **start at Foundation** regardless of placement (for thoroughness)
+- Diagnostic can be **retaken** after 30 days, or manually reset from the profile page
+
+### Data Model
+- `Diagnostic` — per-topic question bank
+- `DiagnosticAttempt` — user run, stores placement and per-question grades
+- `TopicEnrollment` — `(user, topic, tier, startedAt, placementSource)` — created on diagnostic completion
+
+---
+
+## 1.2 Syllabus — Java
+
+**Goal:** zero programming experience → job-ready for a Junior / Apprenticeship role.
+
+### Foundation (Ch1–Ch4)
+Mental model of "code is instructions a machine follows."
+
+- **Ch1 — Runes of Syntax**: variables, primitive types, arithmetic, `System.out.println`
+- **Ch2 — Tomes of Control**: booleans, `if/else`, comparison, string basics
+- **Ch3 — Loops & Arrays**: `for`, `while`, array indexing, off-by-one pitfalls
+- **Ch4 — Methods & Scope**: method definition, parameters, return, local vs instance scope
+- **Foundation Grand Boss** — "The Gatekeeper": mixed-syntax challenge gating Practitioner
+
+### Practitioner (Ch5–Ch9)
+Composing programs that solve realistic small tasks.
+
+- **Ch5 — Objects & Classes**: fields, constructors, `this`, encapsulation
+- **Ch6 — Collections**: `List`, `Map`, `Set`, iteration, common algorithms
+- **Ch7 — Inheritance & Interfaces**: polymorphism, abstract classes, `instanceof`
+- **Ch8 — Exceptions & I/O**: checked vs unchecked, `try/catch/finally`, reading files
+- **Ch9 — Generics & Streams**: type parameters, `Stream` pipelines, `Optional`
+- **Practitioner Grand Boss** — "The Architect's Trial": multi-class refactor
+
+### Expert (Ch10–Ch14)
+Production-grade thinking.
+
+- **Ch10 — Concurrency**: threads, `ExecutorService`, immutability, race-condition diagnosis
+- **Ch11 — Testing & TDD**: JUnit 5, AAA, mocking, coverage intuition
+- **Ch12 — Spring Boot Essentials**: DI, REST controllers, JPA basics
+- **Ch13 — Databases & SQL for Java devs**: JDBC, transactions, N+1, indexing basics
+- **Ch14 — Interview Forge**: data-structure fluency, system-design warm-ups, code-review drills
+- **Expert Grand Boss** — "The Apprenticeship Gauntlet": timed, multi-stage interview simulation
+
+---
+
+## 1.3 Syllabus — Tailwind CSS
+
+**Goal:** zero CSS/Tailwind to shipping polished, responsive, accessible, production-grade UIs.
+
+### Foundation — "Utility Apprentice" (TW-A1 … TW-A5)
+Internalise the utility-first model and read a Tailwind class string fluently.
+
+- **TW-A1 — The Utility Mindset**: why utilities over bespoke CSS; the box model via `p-*`, `m-*`, `w-*`, `h-*`
+- **TW-A2 — Colour & Typography**: palette scales, `text-*`, `font-*`, `leading-*`, `tracking-*`
+- **TW-A3 — Flex Basics**: `flex`, `items-*`, `justify-*`, `gap-*` — build a nav bar
+- **TW-A4 — Borders, Radius, Shadows**: `border`, `rounded-*`, `shadow-*`, ring utilities
+- **TW-A5 — State Variants**: `hover:`, `focus:`, `disabled:`, `group`/`peer` intro
+- **Foundation Grand Boss** — "The Component Trial": rebuild a reference card component from a screenshot
+
+### Practitioner — "Layout Weaver" (TW-B1 … TW-B6)
+Build real, responsive pages idiomatically.
+
+- **TW-B1 — Grid Mastery**: `grid-cols-*`, `col-span-*`, responsive grids, dense packing
+- **TW-B2 — Responsive Design**: `sm:` / `md:` / `lg:` / `xl:` breakpoints, mobile-first discipline
+- **TW-B3 — Dark Mode**: `dark:` variant strategies (class vs media), token-driven theming
+- **TW-B4 — Forms**: inputs, validation states, the `@tailwindcss/forms` plugin
+- **TW-B5 — Transitions & Animation**: `transition`, `duration-*`, `ease-*`, `animate-*`, `motion-reduce:`
+- **TW-B6 — Component Extraction**: `@apply` (and when not to), component classes vs utility repetition
+- **Practitioner Grand Boss** — "The Landing Page Forge": build a responsive marketing page from a brief
+
+### Expert — "Design-System Archmage" (TW-C1 … TW-C6)
+Ship production UI at team scale.
+
+- **TW-C1 — Tailwind Config Deep-Dive**: `theme.extend`, semantic tokens, plugin authoring
+- **TW-C2 — Accessibility**: focus rings, contrast, `sr-only`, `aria-*` patterns, keyboard nav
+- **TW-C3 — Performance**: JIT content globs, purging, critical CSS, preventing utility bloat
+- **TW-C4 — Design Systems**: tokenising colour/spacing/type, dark+light theming, multi-brand
+- **TW-C5 — Framework Integration**: React + Tailwind patterns, CVA / `clsx` / `tailwind-merge`, Headless UI / Radix pairing
+- **TW-C6 — Production Hardening**: RTL, print styles, email-safe subsets, CI visual regression
+- **Expert Grand Boss** — "The Design-System Summit": deliver a mini design system (tokens + 6 components + docs page) against a spec
 
 ---
 
@@ -259,11 +363,12 @@ tests(
 XP is awarded once per quest/boss — unique `(user_id, item_id, item_type)` constraint in `user_progress`. Review grading awards small, diminishing XP separately, tracked on `review_sessions`.
 
 ### Locking Rules
-- Ch1 main quests unlock sequentially
-- Ch1 side quests always unlocked
-- Ch2+ first quest requires Ch(N-1) boss defeat
-- Ch2+ side quests require the previous chapter's boss
-- Side quests don't count toward chapter completion
+- Entry tier is set by the onboarding diagnostic (§1.1); chapters inside the entry tier unlock sequentially from that tier's first chapter
+- If placed above Foundation, lower-tier content is **unlocked but optional** (available for review / completionist play)
+- Within a tier: each main quest requires the previous; first quest of a chapter requires the previous chapter's boss
+- **Grand Boss** at the end of each tier (Foundation / Practitioner / Expert) gates progression to the next tier
+- Side quests in the current tier are always unlocked; they do not count toward chapter completion
+- Tier skipping without the diagnostic is disallowed — Grand Bosses cannot be challenged out of order
 
 ---
 

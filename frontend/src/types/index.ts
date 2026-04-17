@@ -35,7 +35,7 @@ export interface ChunkDetail {
 export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
 
 export interface SubChunkEncoding {
-  subChunkId: string; chunkId: string; title: string
+  subChunkId: string; chunkId: string; topicId: string; title: string
   phase: EncodingPhase; status: string
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null

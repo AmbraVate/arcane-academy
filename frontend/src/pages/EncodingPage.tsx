@@ -517,7 +517,7 @@ export default function EncodingPage() {
               <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>
                 Return to Chunk →
               </button>
-              <button className="btn btn-ghost" onClick={() => navigate('/')}>
+              <button className="btn btn-ghost" onClick={() => navigate(encoding.topicId && encoding.topicId !== 'java' ? `/topic/${encoding.topicId}` : '/')}>
                 Dashboard
               </button>
             </div>

@@ -7,6 +7,7 @@ import java.util.List;
 public class SubChunkEncodingDto {
     private String subChunkId;
     private String chunkId;
+    private String topicId;
     private String title;
     private String phase;
     private String status;

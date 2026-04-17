@@ -19,6 +19,7 @@ public class DashboardService {
   private final UserChunkProgressRepository progressRepository;
   private final UserRepository userRepository;
   private final UserLearnerProfileRepository profileRepository;
+  private final UserTopicProfileRepository topicProfileRepository;
   private final SpacingService spacingService;
   private final StreakService streakService;
 
@@ -41,8 +42,10 @@ public class DashboardService {
       currentPath = profile.getCurrentPath();
       dailyGoalMinutes = profile.getDailyGoalMinutes();
     } else {
-      // Non-Java topics: no diagnostic gate, FOUNDATION path
-      diagnosticCompleted = true;
+      // Per-topic diagnostic state; path defaults to FOUNDATION (tier is chunk-level)
+      diagnosticCompleted = topicProfileRepository.findByUserIdAndTopicId(userId, topicId)
+          .map(UserTopicProfile::isDiagnosticCompleted)
+          .orElse(false);
       currentPath = LearnerPath.FOUNDATION;
       dailyGoalMinutes = 40;
     }

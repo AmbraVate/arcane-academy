@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class DataSeeder {
 
     // ── Expected totals ────────────────────────────────────────────────────
-    private static final int EXPECTED_CHUNK_COUNT = 39; // 14 Foundation + 14 Practitioner + 10 Expert (Java) + 1 Tailwind
+    private static final int EXPECTED_CHUNK_COUNT = 41; // Java: 14 Foundation + 14 Practitioner + 10 Expert. Tailwind: 1 Foundation + 1 Practitioner + 1 Expert.
 
     // ── Repositories (for clean reseed) ───────────────────────────────────
     private final ChunkRepository chunkRepository;
@@ -39,7 +39,9 @@ public class DataSeeder {
     private final ExpertSeeder2 expertSeeder2; // XF-XJ
 
     // ── Tailwind seeders ───────────────────────────────────────────────────
-    private final TailwindSeeder tailwindSeeder; // TW-A: Utility-First Fundamentals
+    private final TailwindSeeder tailwindSeeder;                       // TW-A: Foundation
+    private final TailwindPractitionerSeeder tailwindPractitionerSeeder; // TW-B: Practitioner
+    private final TailwindExpertSeeder tailwindExpertSeeder;             // TW-C: Expert
 
     // ── Test users ─────────────────────────────────────────────────────────
     private final TestUserSeeder testUserSeeder;
@@ -76,7 +78,9 @@ public class DataSeeder {
                 expertSeeder2.seed();    // XF-XJ
 
                 // ── Seed Tailwind ──────────────────────────────────────────
-                tailwindSeeder.seed();   // TW-A: Utility-First Fundamentals
+                tailwindSeeder.seed();              // TW-A: Utility-First Fundamentals (Foundation)
+                tailwindPractitionerSeeder.seed();  // TW-B: Layout Weaver (Practitioner)
+                tailwindExpertSeeder.seed();        // TW-C: Design-System Archmage (Expert)
 
                 log.info("Seeded {} chunks.", chunkRepository.count());
             } else {

@@ -42,6 +42,8 @@ public class TailwindSeeder extends AbstractChunkSeeder {
         seedTwA1();
         seedTwA2();
         seedTwA3();
+        seedTwA4();
+        seedTwA5();
     }
 
     // ── Tailwind test spec helper ─────────────────────────────────────────────
@@ -289,7 +291,7 @@ public class TailwindSeeder extends AbstractChunkSeeder {
 
         codeQuestion("tw-a2", QuestionTier.APPLICATION, QuestionType.WHATS_THE_OUTPUT,
             "<p>What text colour does this element produce?</p>",
-            "&lt;p class=\"text-blue-600 font-semibold text-sm\"&gt;Hello&lt;/p&gt;",
+            "<p class=\"text-blue-600 font-semibold text-sm\">Hello</p>",
             "Medium blue",
             "<p><code>text-blue-600</code> applies a medium-to-dark blue from Tailwind's blue scale. "
             + "Shade 600 is deeper than the midpoint 500.</p>");
@@ -419,5 +421,200 @@ public class TailwindSeeder extends AbstractChunkSeeder {
             new String[]{"32px", "8px", "16px", "64px"},
             "32px",
             "<p>Each Tailwind spacing unit is 4px. So <code>p-8</code> = 8 × 4px = 32px (2rem).</p>");
+    }
+
+    // ── TW-A4: Borders, Radius, Shadows & Rings ──────────────────────────────
+
+    private void seedTwA4() {
+        subChunk(
+            "tw-a4", "tw-a", "Borders, Radius & Shadows", 4, 50, "index.html",
+
+            // Hook
+            "<p>Edges, corners and shadow — the three tools that turn a flat rectangle into an <em>object</em>. "
+            + "A visible border says \"I am a discrete thing.\" A rounded corner says \"I am friendly.\" "
+            + "A shadow says \"I float above the page.\"</p>"
+            + "<p>Tailwind gives you a consistent vocabulary for all three.</p>",
+
+            // Explanation
+            "<h3>Borders</h3>"
+            + "<pre><code>border          → 1px solid border\n"
+            + "border-2        → 2px\n"
+            + "border-t        → top edge only\n"
+            + "border-gray-300 → colour the border\n"
+            + "border-dashed   → dashed style</code></pre>"
+            + "<h3>Rounded Corners</h3>"
+            + "<pre><code>rounded-none → 0px\n"
+            + "rounded-sm   → 2px\n"
+            + "rounded      → 4px\n"
+            + "rounded-md   → 6px\n"
+            + "rounded-lg   → 8px\n"
+            + "rounded-xl   → 12px\n"
+            + "rounded-2xl  → 16px\n"
+            + "rounded-full → fully round (pills, avatars)</code></pre>"
+            + "<h3>Shadows</h3>"
+            + "<pre><code>shadow-sm  → subtle\n"
+            + "shadow     → default\n"
+            + "shadow-md  → medium\n"
+            + "shadow-lg  → pronounced\n"
+            + "shadow-xl  → dramatic\n"
+            + "shadow-2xl → heaviest\n"
+            + "shadow-none → remove shadow</code></pre>"
+            + "<h3>Rings</h3>"
+            + "<p>Rings are outlines that don't shift layout — perfect for focus states:</p>"
+            + "<pre><code>ring-2 ring-blue-500   → 2px blue ring around element</code></pre>",
+
+            // Story
+            story(
+                n("Lyra hands you a piece of unadorned parchment. <em>\"Before it is a card,\"</em> she says, "
+                  + "<em>\"it must know where it begins and ends.\"</em>"),
+                d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
+                  "Three enchantments give an element its physicality: the <strong>border</strong> — its edge, "
+                  + "the <strong>radius</strong> — its softness, and the <strong>shadow</strong> — its weight in the world."),
+                e("A complete object",
+                  "&lt;div class=\"border border-gray-200 rounded-xl shadow-md\"&gt;\n  I am a card.\n&lt;/div&gt;"),
+                d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
+                  "And when a user focuses something with their keyboard, use a <code>ring</code>, not a border — "
+                  + "rings don't shift the layout.")
+            ),
+
+            // Guided practice brief
+            "<p>Give the card element: <code>border</code>, <code>border-gray-200</code>, "
+            + "<code>rounded-xl</code>, and <code>shadow-md</code>.</p>",
+
+            // Starter
+            "<div class=\"card bg-white p-6\">\n"
+            + "  <h3>Avatar</h3>\n"
+            + "  <p>Apply a border, rounded corners, and a shadow.</p>\n"
+            + "</div>",
+
+            // Tests
+            tests(
+                twTest("Card has a border", ".card", "border"),
+                twTest("Border is light grey", ".card", "border-gray-200"),
+                twTest("Corners are extra-large rounded", ".card", "rounded-xl"),
+                twTest("Card has a medium shadow", ".card", "shadow-md")
+            ),
+
+            "Why use <code>ring</code> instead of <code>border</code> for focus states? What about the box model makes this matter?",
+
+            SubChunkPracticeType.TAILWIND
+        );
+
+        mcQuestion("tw-a4", QuestionTier.RECALL,
+            "<p>Which class produces a fully circular element (e.g. an avatar)?</p>",
+            new String[]{"rounded-full", "rounded-circle", "rounded-xl", "border-full"},
+            "rounded-full",
+            "<p><code>rounded-full</code> applies a very large border-radius, giving a perfect circle for square elements.</p>");
+
+        mcQuestion("tw-a4", QuestionTier.RECALL,
+            "<p>Which class removes a shadow?</p>",
+            new String[]{"shadow-none", "no-shadow", "shadow-0", "shadow-off"},
+            "shadow-none",
+            "<p><code>shadow-none</code> sets <code>box-shadow: none</code>, overriding any inherited shadow.</p>");
+
+        tfQuestion("tw-a4", QuestionTier.APPLICATION,
+            "<p>A <code>ring-2</code> outline shifts surrounding elements the way a <code>border-2</code> does.</p>",
+            "False",
+            "<p>Rings render outside the element using box-shadow, so they don't change the layout box the way borders do.</p>");
+    }
+
+    // ── TW-A5: State Variants (hover, focus, active, disabled) ───────────────
+
+    private void seedTwA5() {
+        subChunk(
+            "tw-a5", "tw-a", "State Variants", 5, 60, "index.html",
+
+            // Hook
+            "<p>A button that doesn't react to the cursor feels dead. A link that doesn't show focus is unusable "
+            + "with a keyboard. <strong>State variants</strong> let a single utility apply only when the element "
+            + "is in a certain state — without writing a line of CSS.</p>",
+
+            // Explanation
+            "<h3>Syntax</h3>"
+            + "<p>Prefix any utility with a state variant and a colon:</p>"
+            + "<pre><code>hover:bg-blue-700   → background on hover\n"
+            + "focus:ring-2       → ring appears on focus\n"
+            + "active:scale-95    → slight shrink while clicked\n"
+            + "disabled:opacity-50 → greyed out when disabled</code></pre>"
+            + "<h3>Common Variants</h3>"
+            + "<ul>"
+            + "<li><code>hover:</code> — pointer hovers the element</li>"
+            + "<li><code>focus:</code> — element has keyboard focus</li>"
+            + "<li><code>focus-visible:</code> — focus from keyboard (not mouse click)</li>"
+            + "<li><code>active:</code> — element being pressed</li>"
+            + "<li><code>disabled:</code> — element is disabled</li>"
+            + "<li><code>group-hover:</code> — a parent with class <code>group</code> is hovered</li>"
+            + "<li><code>peer-checked:</code> — a sibling with class <code>peer</code> is checked</li>"
+            + "</ul>"
+            + "<h3>Stacking Variants</h3>"
+            + "<p>Chain multiple variants together:</p>"
+            + "<pre><code>dark:hover:bg-slate-800   → dark mode AND hover\n"
+            + "md:focus:ring-4          → medium screens AND focus</code></pre>"
+            + "<h3>Transition — Make It Smooth</h3>"
+            + "<p>State changes are jarring without a transition:</p>"
+            + "<pre><code>transition-colors duration-150</code></pre>",
+
+            // Story
+            story(
+                n("Lyra conjures a floating button on a scroll. You reach out to touch it — the button darkens, "
+                  + "then brightens again as your finger retreats."),
+                d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
+                  "A lifeless button is half-built. Tailwind gives you <em>state variants</em> — "
+                  + "<code>hover:</code>, <code>focus:</code>, <code>active:</code> — prefixes that make a class "
+                  + "apply only in that state."),
+                e("A button with feedback",
+                  "&lt;button class=\"bg-blue-600 hover:bg-blue-700 focus:ring-2 transition\"&gt;\n  Cast Spell\n&lt;/button&gt;"),
+                d("\uD83E\uDDD9\u200D\u2640\uFE0F", "mentor", "Lyra the Scribe", "mentor",
+                  "Never forget <code>focus:</code>. A button that only looks good on hover betrays every keyboard user.")
+            ),
+
+            // Practice brief
+            "<p>Give the <code>.btn</code> element realistic interaction feedback. Add all of:</p>"
+            + "<ul>"
+            + "<li><code>bg-blue-600</code> — default background</li>"
+            + "<li><code>hover:bg-blue-700</code> — darker on hover</li>"
+            + "<li><code>focus:ring-2</code> — ring when keyboard-focused</li>"
+            + "<li><code>transition</code> — smooth the change</li>"
+            + "</ul>",
+
+            // Starter
+            "<button class=\"btn text-white px-4 py-2 rounded\">\n"
+            + "  Cast Spell\n"
+            + "</button>",
+
+            // Tests
+            tests(
+                twTest("Button has base background", ".btn", "bg-blue-600"),
+                twTest("Button darkens on hover", ".btn", "hover:bg-blue-700"),
+                twTest("Button shows focus ring", ".btn", "focus:ring-2"),
+                twTest("Button has a transition", ".btn", "transition")
+            ),
+
+            "Why is it important to provide <code>focus:</code> styles in addition to <code>hover:</code>? Think about users who don't use a mouse.",
+
+            SubChunkPracticeType.TAILWIND
+        );
+
+        mcQuestion("tw-a5", QuestionTier.RECALL,
+            "<p>Which variant applies styles only when the user hovers over the element?</p>",
+            new String[]{"hover:", "mouseover:", "over:", "pointer:"},
+            "hover:",
+            "<p>Tailwind uses the <code>hover:</code> prefix for pointer-hover styles.</p>");
+
+        mcQuestion("tw-a5", QuestionTier.RECALL,
+            "<p>What does <code>disabled:opacity-50</code> do?</p>",
+            new String[]{"Makes the element half-transparent when disabled", "Disables the element's opacity", "Sets opacity only in dark mode", "Removes the element from the DOM"},
+            "Makes the element half-transparent when disabled",
+            "<p>The <code>disabled:</code> variant applies <code>opacity: 0.5</code> only when the element is disabled — a common pattern for form controls.</p>");
+
+        tfQuestion("tw-a5", QuestionTier.APPLICATION,
+            "<p>Variants can be stacked — e.g. <code>md:hover:bg-blue-700</code> applies on hover at medium screens or larger.</p>",
+            "True",
+            "<p>Tailwind allows variant stacking. They read left-to-right: responsive first, then state.</p>");
+
+        scenarioQuestion("tw-a5",
+            "<p>A button has <code>bg-blue-600 hover:bg-blue-700</code> but no <code>transition</code>. What's the UX problem?</p>",
+            "The colour change is instant and jarring; adding transition-colors smooths it.",
+            "<p>Without a transition, the hover change flips instantly. Adding <code>transition-colors</code> (or just <code>transition</code>) and optionally <code>duration-150</code> makes the change feel polished.</p>");
     }
 }

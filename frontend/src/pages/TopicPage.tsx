@@ -66,10 +66,16 @@ export default function TopicPage() {
   useEffect(() => {
     if (!topicId) return
     dashboardApi.get(topicId)
-      .then(setDashboard)
+      .then(d => {
+        if (!d.diagnosticCompleted) {
+          navigate(`/topic/${topicId}/diagnostic`, { replace: true })
+          return
+        }
+        setDashboard(d)
+      })
       .catch(console.error)
       .finally(() => setLoading(false))
-  }, [topicId])
+  }, [topicId, navigate])
 
   if (loading) {
     return (
@@ -106,20 +112,15 @@ export default function TopicPage() {
       </div>
 
       {/* Action row */}
-      <div className={styles.actionRow}>
-        <div className={styles.actionCard} onClick={() => navigate(`/topic/${topicId}/diagnostic`)}>
-          <div className={styles.actionIcon}>🔮</div>
-          <div className={styles.actionTitle}>Entry Diagnostic</div>
-          <div className={styles.actionDesc}>Find out what you already know — skip ahead or start fresh</div>
-        </div>
-        {dashboard.reviewsDue > 0 && (
+      {dashboard.reviewsDue > 0 && (
+        <div className={styles.actionRow}>
           <div className={styles.actionCard} onClick={() => navigate('/review')}>
             <div className={styles.actionIcon}>📖</div>
             <div className={styles.actionTitle}>{dashboard.reviewsDue} Reviews Due</div>
             <div className={styles.actionDesc}>Strengthen fading memories before they slip away</div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Chunk grid */}
       <div className={styles.sectionTitle}>Knowledge Chunks</div>
