@@ -2,6 +2,7 @@ package com.ambravate.polymath.academy.config;
 
 import com.ambravate.polymath.academy.model.*;
 import com.ambravate.polymath.academy.repository.*;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Component;
  *
  * Prereq: TW-A Foundation.
  */
+@Deprecated
+@Profile("never")
 @Component
 public class TailwindPractitionerSeeder extends AbstractChunkSeeder {
 

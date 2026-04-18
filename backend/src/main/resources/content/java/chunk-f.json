@@ -274,7 +274,7 @@
         },
         {
           "id": "F3Q4",
-          "type": "DISCRIMINATION",
+          "type": "SCENARIO",
           "tier": "DISCRIMINATION",
           "minPath": "PRACTITIONER",
           "prompt": "When should you prefer sc.next() over sc.nextLine()?",

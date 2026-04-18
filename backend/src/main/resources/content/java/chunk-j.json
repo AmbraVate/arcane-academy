@@ -1,0 +1,146 @@
+{
+  "id": "J",
+  "topicId": "java",
+  "title": "OOP: Encapsulation",
+  "glyph": "🔒",
+  "sortOrder": 10,
+  "learnerPath": "FOUNDATION",
+  "prerequisites": ["I"],
+  "subChunks": [
+    {
+      "id": "J1",
+      "title": "Access Modifiers",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "AccessModifiers.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin leads you to the Academy vault. A sign reads: <em>Private — Headmaster access only</em>."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Access modifiers are the locks on your rooms. <code>private</code> means only you may enter. <code>public</code> opens the door to the world. Without locks, any passing apprentice could tamper with your most sensitive artefacts."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "The locked vault",
+          "code": "class BankAccount {\n    private double balance;\n    public void deposit(double amount) {\n        if (amount > 0) balance += amount;\n    }\n    public double getBalance() { return balance; }\n}"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Notice: <code>balance</code> is private. Outsiders cannot set it to -1000. They can only interact through the controlled <code>deposit()</code> method — which validates the amount first."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a class <code>BankAccount</code> with a <code>private double balance</code>. Add a <code>deposit(double amount)</code> method (only deposits positive amounts), a <code>withdraw(double amount)</code> method (only if balance is sufficient), and a <code>getBalance()</code> method. Demonstrate with a deposit of 100, withdrawal of 30, and print the final balance.</p>",
+        "hint": "Check amount > 0 in deposit, and balance >= amount in withdraw before modifying the balance.",
+        "starterCode": "public class AccessModifiers {\n    static class BankAccount {\n        private double balance;\n        // Add deposit, withdraw, getBalance methods\n\n    }\n    public static void main(String[] args) {\n        BankAccount account = new BankAccount();\n        account.deposit(100);\n        account.withdraw(30);\n        System.out.println(account.getBalance());\n    }\n}",
+        "tests": [
+          {"label": "Final balance", "input": "null", "expected": "70.0"}
+        ]
+      },
+      "feynmanPrompt": "Explain the four access modifiers in Java. Why is 'private' the recommended choice for class fields?",
+      "questions": [
+        {
+          "id": "J1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which access modifier makes a field visible only within the class it is declared in?",
+          "options": ["private", "protected", "public", "default"],
+          "answer": "private",
+          "explanation": "<code>private</code> restricts access to the declaring class only — the strictest access level."
+        },
+        {
+          "id": "J1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Making a field <code>public</code> is generally considered good practice in Java classes.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Public fields violate encapsulation — any external code can change them directly, bypassing validation. Fields should be <code>private</code> with access controlled through methods."
+        }
+      ]
+    },
+    {
+      "id": "J2",
+      "title": "Getters, Setters & Static Members",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "GettersSetters.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin shows you two controls on the Academy's power regulator: a dial to read the current level (getter), and a lever to set it (setter) — but the lever has stops preventing dangerously low or high values."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A setter without validation is just a public field in disguise. The <em>point</em> of a setter is to enforce rules. Always ask: what invariants must hold on this data?"
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Validated setter",
+          "code": "class Player {\n    private int health = 100;\n    public int getHealth() { return health; }\n    public void setHealth(int h) {\n        this.health = Math.max(0, Math.min(100, h));\n    }\n}"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Static members are the shared runes of the academy — every wizard reads from the same tome. Use them for counters, constants (<code>static final</code>), and utility methods that don't need any object state."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a <code>Wizard</code> class with: a private <code>static int count</code>, a private <code>String name</code>, a constructor that increments <code>count</code>, and a static <code>getCount()</code> method. Create three Wizards and print the count.</p>",
+        "hint": "Increment count++ in the constructor. Access getCount() via Wizard.getCount() (class method, not instance).",
+        "starterCode": "public class GettersSetters {\n    static class Wizard {\n        private static int count = 0;\n        private String name;\n        // Constructor (increments count)\n\n        // Static getCount()\n\n    }\n    public static void main(String[] args) {\n        new Wizard(\"Merlin\");\n        new Wizard(\"Gandalf\");\n        new Wizard(\"Dumbledore\");\n        System.out.println(Wizard.getCount());\n    }\n}",
+        "tests": [
+          {"label": "Wizard count", "input": "null", "expected": "3"}
+        ]
+      },
+      "feynmanPrompt": "What is the difference between an instance variable and a static variable in Java? Give an example of when you'd use each.",
+      "questions": [
+        {
+          "id": "J2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "A static method in Java can access which of the following directly?",
+          "options": [
+            "Only static fields and other static methods",
+            "Instance fields of any object",
+            "Both instance and static fields",
+            "Only final fields"
+          ],
+          "answer": "Only static fields and other static methods",
+          "explanation": "Static methods belong to the class, not to any instance. They cannot access instance fields or methods without a reference to an object."
+        },
+        {
+          "id": "J2Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>class Counter {\n    static int n = 0;\n    Counter() { n++; }\n}\nnew Counter(); new Counter(); new Counter();\nSystem.out.println(Counter.n);</pre>",
+          "options": ["3", "1", "0", "Compile error"],
+          "answer": "3",
+          "explanation": "The static field <code>n</code> is shared by all instances. Each constructor increments it, so after 3 objects, <code>n</code> equals 3."
+        },
+        {
+          "id": "J2Q3",
+          "type": "TRUE_FALSE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "You can override a static method in a subclass in Java.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Static methods belong to the class, not to instances, so they cannot be overridden — only <em>hidden</em>. Polymorphism does not apply to static methods."
+        }
+      ]
+    }
+  ]
+}

@@ -58,7 +58,7 @@ export default function TopicDiagnosticPage() {
         <button className="btn btn-primary" onClick={handleStart} disabled={loading}>
           {loading ? 'Preparing...' : 'Begin Diagnostic →'}
         </button>
-        <button className="btn btn-ghost" onClick={() => navigate(`/topic/${topicId}`)} style={{ marginTop: 10, fontSize: 12 }}>
+        <button className="btn btn-ghost" onClick={async () => { await diagnosticApi.skip(topicId!); navigate(`/topic/${topicId}`) }} style={{ marginTop: 10, fontSize: 12 }}>
           Skip — start from the beginning
         </button>
       </div>

@@ -1,0 +1,237 @@
+{
+  "id": "XA",
+  "topicId": "java",
+  "title": "Domain-Driven Design",
+  "glyph": "🏰",
+  "sortOrder": 29,
+  "learnerPath": "EXPERT",
+  "prerequisites": ["PN"],
+  "subChunks": [
+    {
+      "id": "XA1",
+      "title": "Entities, Value Objects & Aggregates",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "DddConcepts.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "You have reached the highest vault of the Academy — Expert tier. Here, spells don't just run; they model entire worlds."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Before you write a single class, ask: what IS this thing in the real world? Is it defined by its identity, or by its values? That question determines everything."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Value Object equality",
+          "code": "Money a = new Money(new BigDecimal(\"10.00\"), Currency.getInstance(\"USD\"));\nMoney b = new Money(new BigDecimal(\"10.00\"), Currency.getInstance(\"USD\"));\nSystem.out.println(a.equals(b)); // true — same attributes"
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create an immutable <code>Address</code> value object with fields <code>street</code>, <code>city</code>, <code>postcode</code>. Override <code>equals</code> and <code>hashCode</code>. Print whether two identical addresses are equal.</p>",
+        "hint": "Override equals() to compare all three fields. Use Objects.equals() or compare each field individually.",
+        "starterCode": "public class Address {\n    private final String street;\n    private final String city;\n    private final String postcode;\n\n    public Address(String street, String city, String postcode) {\n        this.street = street;\n        this.city = city;\n        this.postcode = postcode;\n    }\n\n    // TODO: override equals comparing all three fields\n    // TODO: override hashCode\n\n    public static void main(String[] args) {\n        Address a1 = new Address(\"10 Main St\", \"London\", \"SW1A 1AA\");\n        Address a2 = new Address(\"10 Main St\", \"London\", \"SW1A 1AA\");\n        System.out.println(a1.equals(a2));\n    }\n}",
+        "tests": [
+          {"label": "Value equality", "input": "null", "expected": "true"}
+        ]
+      },
+      "feynmanPrompt": "Explain the difference between an Entity and a Value Object. Why does immutability matter for Value Objects?",
+      "questions": [
+        {
+          "id": "XA1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What distinguishes an Entity from a Value Object in DDD?",
+          "options": ["Entities have unique identity; Value Objects are defined by attributes", "Entities are immutable; Value Objects are mutable", "Entities are simpler; Value Objects are complex", "Value Objects have IDs; Entities do not"],
+          "answer": "Entities have unique identity; Value Objects are defined by attributes",
+          "explanation": "Entity equality is based on ID. Value Object equality is based on all its attribute values."
+        },
+        {
+          "id": "XA1Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "An Aggregate Root enforces which key responsibility?",
+          "options": ["Maintains all business invariants for the aggregate", "Stores the aggregate in the database", "Handles all HTTP requests", "Provides getters for all fields"],
+          "answer": "Maintains all business invariants for the aggregate",
+          "explanation": "The Aggregate Root is the single entry point — all mutations go through it so invariants are always checked."
+        },
+        {
+          "id": "XA1Q3",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Value Objects should be immutable — once created, their state never changes.",
+          "options": ["True", "False"],
+          "answer": "True",
+          "explanation": "Immutability makes Value Objects safe to share and easy to reason about."
+        }
+      ]
+    },
+    {
+      "id": "XA2",
+      "title": "Bounded Contexts & Ubiquitous Language",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "BoundedContexts.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "The Council of Archmages governs different domains — Finance, Combat, Alchemy. Each has its own lexicon. 'Reagent' means gold coin in Finance but a potion ingredient in Alchemy."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Never let one context's model pollute another. Use an Anti-Corruption Layer like a diplomatic translator — it speaks both languages so your core models don't have to."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Sketch two classes: <code>SalesOrder</code> (has <code>customerId</code>, <code>totalAmount</code>) and <code>ShippingOrder</code> (has <code>orderId</code>, <code>deliveryAddress</code>). Write a <code>translate</code> method that creates a <code>ShippingOrder</code> from a <code>SalesOrder</code>.</p>",
+        "hint": "translate() takes a SalesOrder and an address String, returns new ShippingOrder(so.orderId, address).",
+        "starterCode": "public class BoundedContextDemo {\n    static class SalesOrder {\n        String customerId;\n        double totalAmount;\n        String orderId;\n        SalesOrder(String orderId, String customerId, double totalAmount) {\n            this.orderId = orderId; this.customerId = customerId; this.totalAmount = totalAmount;\n        }\n    }\n    static class ShippingOrder {\n        String orderId;\n        String deliveryAddress;\n        ShippingOrder(String orderId, String deliveryAddress) {\n            this.orderId = orderId; this.deliveryAddress = deliveryAddress;\n        }\n    }\n    public static void main(String[] args) {\n        SalesOrder so = new SalesOrder(\"O-001\", \"C-42\", 99.99);\n        ShippingOrder ship = translate(so, \"10 Main St\");\n        System.out.println(ship.orderId + \" -> \" + ship.deliveryAddress);\n    }\n    static ShippingOrder translate(SalesOrder so, String address) {\n        return null; // TODO\n    }\n}",
+        "tests": [
+          {"label": "Translate", "input": "null", "expected": "O-001 -> 10 Main St"}
+        ]
+      },
+      "feynmanPrompt": "Explain Bounded Contexts and Ubiquitous Language. Why can the same word have different meanings in different contexts?",
+      "questions": [
+        {
+          "id": "XA2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the purpose of an Anti-Corruption Layer?",
+          "options": ["Translates between two domain models without polluting either", "Prevents SQL injection", "Encrypts messages between services", "Validates user input"],
+          "answer": "Translates between two domain models without polluting either",
+          "explanation": "An ACL acts as a translator at context boundaries, keeping each model clean."
+        },
+        {
+          "id": "XA2Q2",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Two microservices both have a `Product` class but with different fields. How should they communicate?",
+          "options": [
+            "Use a published language (shared event/DTO format) or Anti-Corruption Layer in each service to translate between their internal models",
+            "Share the Product class via a common library",
+            "Merge both services into one",
+            "Use the same database table"
+          ],
+          "answer": "Use a published language (shared event/DTO format) or Anti-Corruption Layer in each service to translate between their internal models",
+          "explanation": "Each service should own its model; integration happens at boundaries via translation, not shared classes."
+        }
+      ]
+    },
+    {
+      "id": "XA3",
+      "title": "Domain Services & Application Services",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "DomainServices.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A domain service holds wisdom about the domain — it knows the rules. An application service is the logistics officer — it fetches resources and delegates work. Keep them apart."
+        },
+        {
+          "type": "NARRATION",
+          "text": "Confusing the two is a common mistake. An application service that contains business logic is a sign the logic belongs in the domain."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a <code>PricingService</code> domain service that calculates the total price of an order: base price × quantity, minus 10% discount if quantity ≥ 10.</p>",
+        "hint": "calculateTotal returns unitPrice * quantity * (quantity >= 10 ? 0.9 : 1.0).",
+        "starterCode": "public class PricingService {\n    // TODO: calculateTotal(double unitPrice, int quantity)\n    // Apply 10% discount when quantity >= 10\n\n    public static void main(String[] args) {\n        PricingService svc = new PricingService();\n        System.out.println(svc.calculateTotal(20.0, 5));   // 100.0\n        System.out.println(svc.calculateTotal(20.0, 10));  // 180.0\n    }\n    double calculateTotal(double unitPrice, int quantity) {\n        return 0; // TODO\n    }\n}",
+        "tests": [
+          {"label": "No discount", "input": "null", "expected": "100.0"},
+          {"label": "With discount", "input": "null", "expected": "180.0"}
+        ]
+      },
+      "feynmanPrompt": "What is the difference between a Domain Service and an Application Service? Give an example of each.",
+      "questions": [
+        {
+          "id": "XA3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Where should a Domain Service live in the architecture?",
+          "options": ["In the domain layer, containing pure business logic", "In the infrastructure layer, accessing the database", "In the presentation layer, handling HTTP requests", "In the application layer, alongside controllers"],
+          "answer": "In the domain layer, containing pure business logic",
+          "explanation": "Domain Services contain domain logic and must not depend on infrastructure."
+        },
+        {
+          "id": "XA3Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Application Services should contain core business rules and calculations.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Application Services orchestrate — they should be thin. Business rules belong in Entities or Domain Services."
+        }
+      ]
+    },
+    {
+      "id": "XA4",
+      "title": "Repositories & Hexagonal Architecture",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "HexagonalArch.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The hexagon keeps your domain pure. Think of it as a spell that works regardless of which grimoire it was cast from. Swap PostgreSQL for MongoDB — the domain never knows."
+        },
+        {
+          "type": "NARRATION",
+          "text": "The key rule: all dependencies point inward toward the domain. Frameworks depend on you, not the other way round."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Define an interface <code>ProductRepository</code> with <code>save(String name, double price)</code> and <code>findByName(String name)</code>. Implement it with an in-memory <code>HashMap</code>. Save two products and retrieve one by name.</p>",
+        "hint": "InMemoryProductRepository uses Map<String, Double>. save puts the price, findByName gets it.",
+        "starterCode": "import java.util.HashMap;\nimport java.util.Map;\n\npublic class HexDemo {\n    interface ProductRepository {\n        void save(String name, double price);\n        double findByName(String name);\n    }\n\n    static class InMemoryProductRepository implements ProductRepository {\n        private Map<String, Double> store = new HashMap<>();\n        // TODO: implement save and findByName\n        public void save(String name, double price) {}\n        public double findByName(String name) { return 0; }\n    }\n\n    public static void main(String[] args) {\n        ProductRepository repo = new InMemoryProductRepository();\n        repo.save(\"Wand\", 29.99);\n        repo.save(\"Spellbook\", 49.99);\n        System.out.println(repo.findByName(\"Spellbook\"));\n    }\n}",
+        "tests": [
+          {"label": "Find product", "input": "null", "expected": "49.99"}
+        ]
+      },
+      "feynmanPrompt": "Explain Hexagonal Architecture. Why are Ports and Adapters defined in separate layers?",
+      "questions": [
+        {
+          "id": "XA4Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "In Hexagonal Architecture, where do dependencies point?",
+          "options": ["Inward — toward the domain", "Outward — toward infrastructure", "In both directions equally", "Only between adapters"],
+          "answer": "Inward — toward the domain",
+          "explanation": "All dependencies point inward. Adapters depend on port interfaces; the domain depends on nothing external."
+        },
+        {
+          "id": "XA4Q2",
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "This breaks the Hexagonal Architecture rule. Why?\n<pre>// Domain entity\nimport org.springframework.data.jpa.repository.JpaRepository;\npublic class Order {\n    private JpaRepository&lt;Order, Long&gt; repo; // injected\n    public void save() { repo.save(this); }\n}</pre>",
+          "options": [
+            "The domain entity imports a Spring JPA interface — the domain depends on infrastructure. The repository port should be an interface defined in the domain layer.",
+            "JpaRepository cannot be injected this way",
+            "The save method needs @Transactional",
+            "The entity needs @Entity annotation"
+          ],
+          "answer": "The domain entity imports a Spring JPA interface — the domain depends on infrastructure. The repository port should be an interface defined in the domain layer.",
+          "explanation": "Domain objects must never import framework or infrastructure classes. The dependency inversion principle keeps the domain clean."
+        }
+      ]
+    }
+  ]
+}

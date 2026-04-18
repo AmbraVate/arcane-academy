@@ -1,0 +1,153 @@
+{
+  "id": "K",
+  "topicId": "java",
+  "title": "OOP: Inheritance",
+  "glyph": "🌳",
+  "sortOrder": 11,
+  "learnerPath": "FOUNDATION",
+  "prerequisites": ["J"],
+  "subChunks": [
+    {
+      "id": "K1",
+      "title": "Extending Classes",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "Inheritance.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin unrolls the Academy's great lineage scroll. At the top: <em>Wizard</em>. Below it, branching like a tree: FireWizard, IceWizard, StormWizard, each inheriting the foundation."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Inheritance models an IS-A relationship. A FireWizard <em>is a</em> Wizard. It inherits everything — name, level, the ability to greet — and adds its own specialisation on top."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "FireWizard in action",
+          "code": "class Wizard {\n    protected String name;\n    Wizard(String n) { name = n; }\n    void greet() { System.out.println(\"I am \" + name); }\n}\nclass FireWizard extends Wizard {\n    FireWizard(String n) { super(n); }\n    void castFireball() { System.out.println(name + \" casts Fireball!\"); }\n}\nFireWizard fw = new FireWizard(\"Ignis\");\nfw.greet();       // I am Ignis  (inherited)\nfw.castFireball(); // Ignis casts Fireball!"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Notice <code>super(n)</code> — the first thing any child constructor does is call its parent's constructor. The parent must be fully built before the child can add its own enchantments."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a class <code>Animal</code> with a <code>protected String name</code> and a method <code>speak()</code> that prints <code>\"...\"</code>. Create <code>Dog extends Animal</code> with its own <code>speak()</code> that prints <code>\"[name] says: Woof!\"</code>. Create <code>Cat extends Animal</code> printing <code>\"[name] says: Meow!\"</code>. Construct one of each and call <code>speak()</code>.</p>",
+        "hint": "Use super(name) in Dog and Cat constructors. Override speak() in each subclass.",
+        "starterCode": "public class Inheritance {\n    static class Animal {\n        protected String name;\n        Animal(String name) { this.name = name; }\n        void speak() { System.out.println(\"...\"); }\n    }\n    // Define Dog and Cat extending Animal\n\n    public static void main(String[] args) {\n        Animal dog = new Dog(\"Rex\");\n        Animal cat = new Cat(\"Whiskers\");\n        dog.speak();\n        cat.speak();\n    }\n}",
+        "tests": [
+          {"label": "Dog speaks", "input": "null", "expected": "Rex says: Woof!"},
+          {"label": "Cat speaks", "input": "null", "expected": "Whiskers says: Meow!"}
+        ]
+      },
+      "feynmanPrompt": "Explain inheritance in Java. What is the IS-A relationship, and what does the super() call do in a child constructor?",
+      "questions": [
+        {
+          "id": "K1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which keyword is used in Java to inherit from a parent class?",
+          "options": ["extends", "implements", "inherits", "super"],
+          "answer": "extends",
+          "explanation": "<code>extends</code> establishes an inheritance relationship. <code>implements</code> is used for interfaces, not class inheritance."
+        },
+        {
+          "id": "K1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "A child class in Java can extend multiple parent classes simultaneously.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Java supports only <strong>single inheritance</strong> for classes. A class can extend only one parent. Multiple interface implementation is allowed instead."
+        }
+      ]
+    },
+    {
+      "id": "K2",
+      "title": "Overriding, Abstract & final",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "Overriding.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin draws the Shape archetype on the board — no specific form, just a promise that every shape will know its own area."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "An abstract class is an <em>incomplete</em> blueprint — a template that mandates certain behaviours without specifying how. You cannot conjure a raw Shape, but you can conjure a Circle or Rectangle that fulfils the Shape contract."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Shape hierarchy",
+          "code": "abstract class Shape {\n    abstract double area();\n    void print() {\n        System.out.printf(\"Area: %.2f%n\", area());\n    }\n}\nclass Circle extends Shape {\n    double r;\n    Circle(double r) { this.r = r; }\n    @Override double area() { return Math.PI * r * r; }\n}\nnew Circle(5).print(); // Area: 78.54"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "And <code>final</code> — the seal of completion. A <code>final</code> class may not be extended; its design is closed. Use it when you must guarantee a class's behaviour can never be altered by subclasses."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create abstract class <code>Shape</code> with abstract method <code>area()</code>. Implement <code>Rectangle</code> (width × height) and <code>Triangle</code> (0.5 × base × height). Create one of each and call <code>area()</code>.</p>",
+        "hint": "Rectangle needs width and height fields; Triangle needs base and height. Both should override area().",
+        "starterCode": "public class Overriding {\n    abstract static class Shape {\n        abstract double area();\n    }\n    // Implement Rectangle and Triangle\n\n    public static void main(String[] args) {\n        Shape r = new Rectangle(4, 5);\n        Shape t = new Triangle(6, 3);\n        System.out.println(r.area()); // 20.0\n        System.out.println(t.area()); // 9.0\n    }\n}",
+        "tests": [
+          {"label": "Rectangle area", "input": "null", "expected": "20.0"},
+          {"label": "Triangle area", "input": "null", "expected": "9.0"}
+        ]
+      },
+      "feynmanPrompt": "What is an abstract class in Java? How does it differ from a concrete class and from an interface?",
+      "questions": [
+        {
+          "id": "K2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does the <code>@Override</code> annotation do?",
+          "options": [
+            "Asks the compiler to verify you are correctly overriding a parent method",
+            "Forces the method to replace all parent code",
+            "Makes the method run faster",
+            "Hides the parent method permanently"
+          ],
+          "answer": "Asks the compiler to verify you are correctly overriding a parent method",
+          "explanation": "<code>@Override</code> is optional but recommended — it tells the compiler to check that a matching method exists in the parent. If not, it gives a compile error, preventing silent bugs from typos."
+        },
+        {
+          "id": "K2Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>class A { void hello() { System.out.println(\"A\"); } }\nclass B extends A {\n    @Override void hello() {\n        super.hello();\n        System.out.println(\"B\");\n    }\n}\nnew B().hello();</pre>",
+          "options": ["A\nB", "B\nA", "A", "B"],
+          "answer": "A\nB",
+          "explanation": "<code>super.hello()</code> calls the parent version first (prints \"A\"), then the child version continues (prints \"B\")."
+        },
+        {
+          "id": "K2Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Which of the following statements about <code>abstract</code> classes is correct?",
+          "options": [
+            "An abstract class can have both abstract and concrete methods",
+            "An abstract class must have only abstract methods",
+            "You can create instances of an abstract class directly",
+            "An abstract class cannot have constructors"
+          ],
+          "answer": "An abstract class can have both abstract and concrete methods",
+          "explanation": "Abstract classes can mix abstract methods (no body, must be overridden) with concrete methods (have a body, can be inherited or overridden). They cannot be instantiated directly but can have constructors for subclasses to call via <code>super()</code>."
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
+import { cn } from '@/lib/utils'
 import type { TestCaseLabel } from '../../types'
-import styles from './TestChips.module.css'
 
 interface Props {
   labels: TestCaseLabel[]
@@ -10,16 +10,20 @@ export default function TestChips({ labels, results }: Props) {
   if (!labels?.length) return null
 
   return (
-    <div className={styles.row}>
+    <div className="flex flex-wrap gap-1.5 mb-2.5">
       {labels.map(({ label }) => {
         const result = results.get(label)
-        const cls = result === undefined
-          ? styles.neutral
-          : result ? styles.pass : styles.fail
-
         return (
-          <span key={label} className={`${styles.chip} ${cls}`}>
-            {result === true && '✓ '}
+          <span
+            key={label}
+            className={cn(
+              'text-[11px] px-2.5 py-[3px] rounded-[10px] font-mono transition-all duration-300',
+              result === undefined && 'bg-card border border-border text-muted',
+              result === true      && 'bg-[#08200e] border border-green text-green',
+              result === false     && 'bg-[#200808] border border-red text-red',
+            )}
+          >
+            {result === true  && '✓ '}
             {result === false && '✗ '}
             {label}
           </span>

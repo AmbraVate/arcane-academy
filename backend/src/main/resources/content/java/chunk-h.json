@@ -1,0 +1,233 @@
+{
+  "id": "H",
+  "topicId": "java",
+  "title": "Collections: List & Map",
+  "glyph": "🎒",
+  "sortOrder": 8,
+  "learnerPath": "FOUNDATION",
+  "prerequisites": ["G"],
+  "subChunks": [
+    {
+      "id": "H1",
+      "title": "ArrayList",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "ArrayListEx.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin reaches into his robe and pulls out what appears to be a small leather pouch — then keeps pulling, drawing out scroll after scroll far beyond what should fit."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "An ArrayList is an enchanted bag. You can keep adding scrolls without ever running out of space — it expands as needed. Unlike the fixed shelf, this container is <em>dynamic</em>."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "The enchanted bag",
+          "code": "import java.util.ArrayList;\nArrayList<String> bag = new ArrayList<>();\nbag.add(\"Fireball\");\nbag.add(\"Ice Lance\");\nbag.add(\"Thunder\");\nSystem.out.println(bag.size());   // 3\nSystem.out.println(bag.get(0));   // Fireball\nbag.remove(1);                    // removes Ice Lance\nSystem.out.println(bag);          // [Fireball, Thunder]"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Notice the angle brackets — <code>ArrayList&lt;String&gt;</code>. That is the <em>type parameter</em>. It locks the bag to hold only Strings. Try adding a number, and the compiler refuses."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create an <code>ArrayList&lt;String&gt;</code> containing four wizard names: <code>\"Merlin\"</code>, <code>\"Gandalf\"</code>, <code>\"Dumbledore\"</code>, <code>\"Saruman\"</code>. Remove <code>\"Saruman\"</code>, then print each remaining name on its own line.</p>",
+        "hint": "Use contains() or remove by index. Remember remove(int) removes by index while remove(Object) removes by value.",
+        "starterCode": "import java.util.ArrayList;\n\npublic class ArrayListEx {\n    public static void main(String[] args) {\n        ArrayList<String> wizards = new ArrayList<>();\n        // Add the four names\n\n        // Remove Saruman\n\n        // Print each name\n\n    }\n}",
+        "tests": [
+          {"label": "Remaining wizards", "input": "null", "expected": "Merlin\nGandalf\nDumbledore"}
+        ]
+      },
+      "feynmanPrompt": "Explain ArrayList in Java. How does it differ from a plain array, and what are the three most commonly used methods?",
+      "questions": [
+        {
+          "id": "H1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which method returns the number of elements in an <code>ArrayList</code>?",
+          "options": ["size()", "length", "count()", "length()"],
+          "answer": "size()",
+          "explanation": "For <code>ArrayList</code> (and all Java collections) use <code>size()</code>. Arrays use <code>.length</code> (a field, not a method)."
+        },
+        {
+          "id": "H1Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>import java.util.ArrayList;\nArrayList&lt;Integer&gt; nums = new ArrayList&lt;&gt;();\nnums.add(10); nums.add(20); nums.add(30);\nnums.remove(1);\nSystem.out.println(nums);</pre>",
+          "options": ["[10, 30]", "[10, 20]", "[20, 30]", "[10, 20, 30]"],
+          "answer": "[10, 30]",
+          "explanation": "<code>remove(1)</code> removes the element at index 1 (value 20), leaving [10, 30]."
+        },
+        {
+          "id": "H1Q3",
+          "type": "TRUE_FALSE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "<code>ArrayList&lt;int&gt;</code> is a valid declaration in Java.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Generics require <em>reference types</em>, not primitives. Use <code>ArrayList&lt;Integer&gt;</code> (the wrapper class). Java auto-boxes <code>int</code> ↔ <code>Integer</code> automatically."
+        }
+      ]
+    },
+    {
+      "id": "H2",
+      "title": "HashMap",
+      "sortOrder": 2,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "HashMapEx.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin gestures to a magical registry on the wall — a vast tome where every wizard's name is instantly linked to their power level."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A HashMap is the Academy registry. You look up any entry by <em>name</em> — the key — and instantly receive the <em>value</em> it maps to. No searching, no counting positions. Direct access."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "The registry",
+          "code": "import java.util.HashMap;\nHashMap<String, Integer> registry = new HashMap<>();\nregistry.put(\"Eldrin\", 9999);\nregistry.put(\"Apprentice\", 10);\nSystem.out.println(registry.get(\"Eldrin\"));    // 9999\nSystem.out.println(registry.get(\"Unknown\"));   // null"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Always check for null or use <code>getOrDefault</code> when looking up keys that may not exist. A null result where you expected a number will give you a NullPointerException — the most common mistake with maps."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a <code>HashMap&lt;String, Integer&gt;</code> mapping three spell names to their power levels: <code>\"Fireball\" → 75</code>, <code>\"Ice Lance\" → 60</code>, <code>\"Thunder\" → 90</code>. Print the power of <code>\"Ice Lance\"</code>, then print whether <code>\"Shadow Bolt\"</code> is in the map.</p>",
+        "hint": "Use containsKey(\"Shadow Bolt\") to check for membership.",
+        "starterCode": "import java.util.HashMap;\n\npublic class HashMapEx {\n    public static void main(String[] args) {\n        HashMap<String, Integer> powers = new HashMap<>();\n        // Add the three spells\n\n        // Print Ice Lance power\n\n        // Print whether Shadow Bolt exists\n\n    }\n}",
+        "tests": [
+          {"label": "Ice Lance power", "input": "null", "expected": "60"},
+          {"label": "Shadow Bolt absent", "input": "null", "expected": "false"}
+        ]
+      },
+      "feynmanPrompt": "Explain HashMap — what is a key, what is a value, and how does retrieval work? Why is HashMap faster than searching a list?",
+      "questions": [
+        {
+          "id": "H2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does <code>map.get(\"missingKey\")</code> return if the key doesn't exist?",
+          "options": ["null", "0", "Throws an exception", "An empty string"],
+          "answer": "null",
+          "explanation": "<code>HashMap.get()</code> returns <code>null</code> for missing keys. Use <code>getOrDefault(key, fallback)</code> to avoid dealing with null."
+        },
+        {
+          "id": "H2Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>import java.util.HashMap;\nHashMap&lt;String, Integer&gt; m = new HashMap&lt;&gt;();\nm.put(\"a\", 1);\nm.put(\"b\", 2);\nm.put(\"a\", 99);\nSystem.out.println(m.get(\"a\") + \" \" + m.size());</pre>",
+          "options": ["99 2", "1 2", "99 3", "1 3"],
+          "answer": "99 2",
+          "explanation": "Putting the same key twice overwrites the value. So <code>\"a\"</code> maps to 99. The map has 2 unique keys, so size is 2."
+        },
+        {
+          "id": "H2Q3",
+          "type": "TRUE_FALSE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A <code>HashMap</code> guarantees that entries are iterated in the order they were inserted.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "<code>HashMap</code> does <strong>not</strong> guarantee insertion order. Use <code>LinkedHashMap</code> for insertion-ordered iteration."
+        }
+      ]
+    },
+    {
+      "id": "H3",
+      "title": "Iterating Collections & Choosing the Right One",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "Collections.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin spreads four containers on the workbench: a fixed stone shelf, an enchanted bag, a magical registry, and a glowing orb that only holds unique crystals."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The wisest choice of container is made before you start filling it. Ask yourself: do I need order? Do I need fast lookups by name? Do I need unique elements only? Each answer points to a different container."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Iterating both",
+          "code": "// List iteration\nfor (String spell : spellList) {\n    System.out.println(spell);\n}\n\n// Map iteration\nfor (Map.Entry<String, Integer> e : powerMap.entrySet()) {\n    System.out.println(e.getKey() + \" -> \" + e.getValue());\n}"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Using a HashMap where an ArrayList would do is like carrying a full registry to check three names. Know your tools and use the right one."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create an <code>ArrayList&lt;Integer&gt;</code> of five numbers: <code>3, 1, 4, 1, 5</code>. Then create a <code>HashMap&lt;String, Integer&gt;</code> with two entries: <code>\"min\" → 1</code>, <code>\"max\" → 5</code>. Print the list size, then print the map's <code>max</code> entry.</p>",
+        "hint": "Use list.size() and map.get(\"max\") for the two print statements.",
+        "starterCode": "import java.util.ArrayList;\nimport java.util.HashMap;\n\npublic class Collections {\n    public static void main(String[] args) {\n        ArrayList<Integer> nums = new ArrayList<>();\n        // Add five numbers\n\n        HashMap<String, Integer> stats = new HashMap<>();\n        // Add min and max entries\n\n        // Print list size\n        // Print the max value\n\n    }\n}",
+        "tests": [
+          {"label": "List size", "input": "null", "expected": "5"},
+          {"label": "Max value", "input": "null", "expected": "5"}
+        ]
+      },
+      "feynmanPrompt": "Describe three different Java collection types and explain a real-world scenario where you would choose each one.",
+      "questions": [
+        {
+          "id": "H3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "You need to track whether each student has submitted their assignment. Which collection is most appropriate?",
+          "options": ["HashMap<String, Boolean>", "ArrayList<String>", "int[]", "String[]"],
+          "answer": "HashMap<String, Boolean>",
+          "explanation": "A <code>HashMap&lt;String, Boolean&gt;</code> lets you look up any student's status by name in O(1). An ArrayList would require O(n) searching."
+        },
+        {
+          "id": "H3Q2",
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "This code intends to print each entry in the map. What is wrong?\n<pre>HashMap&lt;String,Integer&gt; m = new HashMap&lt;&gt;();\nm.put(\"a\",1);\nfor (String key : m) {\n    System.out.println(key);\n}</pre>",
+          "options": [
+            "Replace 'm' with 'm.keySet()' in the for-each (or use m.entrySet())",
+            "The HashMap type is wrong",
+            "m.put() syntax is incorrect",
+            "Nothing is wrong"
+          ],
+          "answer": "Replace 'm' with 'm.keySet()' in the for-each (or use m.entrySet())",
+          "explanation": "You cannot iterate a <code>HashMap</code> directly. You must iterate <code>m.keySet()</code>, <code>m.values()</code>, or <code>m.entrySet()</code>."
+        },
+        {
+          "id": "H3Q3",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Your application stores a leaderboard with thousands of player scores. You need to: (1) quickly find any player's score by username, and (2) display the top 10 players sorted by score. Which approach best handles both needs?",
+          "options": [
+            "Store scores in a HashMap<String,Integer> for fast lookups; separately maintain a sorted List for the leaderboard display",
+            "Store scores in a sorted ArrayList only",
+            "Use an array of player objects sorted by score",
+            "Use two ArrayLists — one for names, one for scores"
+          ],
+          "answer": "Store scores in a HashMap<String,Integer> for fast lookups; separately maintain a sorted List for the leaderboard display",
+          "explanation": "A <code>HashMap</code> handles O(1) lookup by username. For sorted display, maintain a sorted list or sort on demand. Using a single sorted list for both would give O(n) lookups."
+        }
+      ]
+    }
+  ]
+}

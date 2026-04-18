@@ -1,6 +1,8 @@
 package com.ambravate.polymath.academy.config;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,8 @@ public class ChunkContentDto {
     public String glyph;
     /** Sort position within the topic. */
     public int sortOrder;
-    /** FOUNDATION | PRACTITIONER | EXPERT */
+    /** FOUNDATION | PRACTITIONER | EXPERT — also accepted as "learnerPath" */
+    @JsonAlias("learnerPath")
     public String tier;
     /** E.g. "tailwind" or "java" */
     public String topicId;
@@ -42,7 +45,8 @@ public class ChunkContentDto {
         public String title;
         public int sortOrder;
         public int xpReward;
-        /** File shown in the editor header. E.g. "index.html" */
+        /** File shown in the editor header. E.g. "index.html" — also accepted as "practiceFileName" */
+        @JsonAlias("practiceFileName")
         public String filename;
         /** JAVA | TAILWIND | NONE */
         public String practiceType;
@@ -77,6 +81,27 @@ public class ChunkContentDto {
         public String feynmanPrompt;
 
         public List<QuestionDto> questions;
+
+        /**
+         * Accepts the nested "guidedPractice" object used in legacy JSON files:
+         * { "problemHtml": "...", "hint": "...", "starterCode": "...", "tests": [...] }
+         * Maps into the flat guidedPractice* fields if they haven't been set directly.
+         */
+        @JsonSetter("guidedPractice")
+        public void setGuidedPracticeFromNested(GuidedPracticeDto gp) {
+            if (gp == null) return;
+            if (guidedPracticeHtml == null)         guidedPracticeHtml = gp.problemHtml;
+            if (guidedPracticeStarterCode == null)  guidedPracticeStarterCode = gp.starterCode;
+            if (guidedPracticeTests == null)        guidedPracticeTests = gp.tests;
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class GuidedPracticeDto {
+            public String problemHtml;
+            public String hint;
+            public String starterCode;
+            public List<Map<String, Object>> tests;
+        }
     }
 
     // ── Question ──────────────────────────────────────────────────────────
@@ -91,15 +116,18 @@ public class ChunkContentDto {
         public String type;
         /** RECALL | APPLICATION | DISCRIMINATION */
         public String tier;
-        /** Question body. HTML string. */
+        /** Question body. HTML string — also accepted as "prompt". */
+        @JsonAlias("prompt")
         public String questionHtml;
         /** Optional code block shown alongside the question. */
         public String codeSnippet;
         /** Answer choices. For TRUE_FALSE this can be omitted — loader fills ["True","False"]. */
         public List<String> options;
-        /** Required. The correct answer text. */
+        /** Required. The correct answer text — also accepted as "answer". */
+        @JsonAlias("answer")
         public String correctAnswer;
-        /** Shown after the learner answers. HTML string. */
+        /** Shown after the learner answers. HTML string — also accepted as "explanation". */
+        @JsonAlias("explanation")
         public String explanationHtml;
         /** IDs of other sub-chunks that relate to this question (SCENARIO only). */
         public List<String> crossChunkIds;

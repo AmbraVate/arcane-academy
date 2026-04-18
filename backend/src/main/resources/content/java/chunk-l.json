@@ -1,0 +1,215 @@
+{
+  "id": "L",
+  "topicId": "java",
+  "title": "OOP: Interfaces & Polymorphism",
+  "glyph": "✨",
+  "sortOrder": 12,
+  "learnerPath": "FOUNDATION",
+  "prerequisites": ["K"],
+  "subChunks": [
+    {
+      "id": "L1",
+      "title": "Interfaces",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "Interfaces.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin taps two completely different creatures — a Wizard and a Stone Golem — and says they both signed the same Healable contract."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "An interface is a <em>contract</em>. I do not care what you are — Wizard, Dragon, Golem — as long as you promise to implement these methods. Unlike a class, you can sign as many contracts as you wish."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Multiple interfaces",
+          "code": "interface Flyable { void fly(); }\ninterface Healable { void heal(int hp); }\n\nclass Dragon implements Flyable, Healable {\n    public void fly() { System.out.println(\"Dragon soars!\"); }\n    public void heal(int hp) { System.out.println(\"Dragon healed \" + hp); }\n}"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A class may implement many interfaces — that is Java's answer to the limitation of single inheritance. Interfaces are contracts; a class can hold many contracts simultaneously."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Define an interface <code>Describable</code> with one method: <code>String describe()</code>. Implement it in two classes: <code>Weapon</code> (returns <code>\"Sword: 40 dmg\"</code>) and <code>Armour</code> (returns <code>\"Shield: 30 def\"</code>). Store both in a <code>Describable[]</code> array and print each description.</p>",
+        "hint": "Use a for-each loop over the Describable array and call d.describe() on each element.",
+        "starterCode": "public class Interfaces {\n    interface Describable {\n        String describe();\n    }\n    // Implement Weapon and Armour\n\n    public static void main(String[] args) {\n        Describable[] items = { new Weapon(), new Armour() };\n        for (Describable d : items) {\n            System.out.println(d.describe());\n        }\n    }\n}",
+        "tests": [
+          {"label": "Weapon", "input": "null", "expected": "Sword: 40 dmg"},
+          {"label": "Armour", "input": "null", "expected": "Shield: 30 def"}
+        ]
+      },
+      "feynmanPrompt": "What is a Java interface? How does it differ from an abstract class, and why would you prefer an interface?",
+      "questions": [
+        {
+          "id": "L1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "How many interfaces can a Java class implement?",
+          "options": ["Any number", "Only one", "Maximum two", "Only as many as it has methods"],
+          "answer": "Any number",
+          "explanation": "A class can implement any number of interfaces, separated by commas: <code>class Foo implements A, B, C { ... }</code>."
+        },
+        {
+          "id": "L1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "You can create an instance of a Java interface directly using <code>new</code>.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Interfaces cannot be instantiated. You create instances of <em>classes that implement</em> the interface. (Anonymous classes and lambda expressions can provide inline implementations.)"
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "Polymorphism",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "Polymorphism.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin lines up a Wizard, a Dragon, and a Golem — all very different — and issues a single command."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Polymorphism is the power to give one command and have every creature respond in its own unique way. I say <code>speak()</code>; the Dragon roars, the Golem rumbles, the Wizard recites verse. One command — many forms."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "One command, many responses",
+          "code": "interface Being { void speak(); }\nclass Wizard implements Being {\n    public void speak() { System.out.println(\"Greetings!\"); }\n}\nclass Dragon implements Being {\n    public void speak() { System.out.println(\"ROOAAR!\"); }\n}\nBeing[] beings = { new Wizard(), new Dragon() };\nfor (Being b : beings) b.speak();"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "This is the magic of coding against an abstraction. Tomorrow you add a Golem — you need not change a single line of the loop. The new type simply fulfils the same contract."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create an interface <code>Attacker</code> with method <code>void attack()</code>. Implement it in <code>Swordsman</code> (prints <code>\"Swings sword!\"</code>), <code>Archer</code> (prints <code>\"Shoots arrow!\"</code>), and <code>Mage</code> (prints <code>\"Casts spell!\"</code>). Store all three in a <code>List&lt;Attacker&gt;</code> and call <code>attack()</code> on each.</p>",
+        "hint": "Declare the list as List<Attacker> party = new ArrayList<>() and add each instance to it.",
+        "starterCode": "import java.util.List;\nimport java.util.ArrayList;\n\npublic class Polymorphism {\n    interface Attacker {\n        void attack();\n    }\n    // Implement Swordsman, Archer, Mage\n\n    public static void main(String[] args) {\n        List<Attacker> party = new ArrayList<>();\n        party.add(new Swordsman());\n        party.add(new Archer());\n        party.add(new Mage());\n        for (Attacker a : party) a.attack();\n    }\n}",
+        "tests": [
+          {"label": "Swordsman attacks", "input": "null", "expected": "Swings sword!"},
+          {"label": "Archer attacks", "input": "null", "expected": "Shoots arrow!"},
+          {"label": "Mage attacks", "input": "null", "expected": "Casts spell!"}
+        ]
+      },
+      "feynmanPrompt": "Explain polymorphism in Java. Why is it powerful to write code against an interface rather than a concrete class?",
+      "questions": [
+        {
+          "id": "L2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What determines which version of an overridden method runs when called through a parent-type reference?",
+          "options": [
+            "The actual type of the object at runtime",
+            "The declared type of the reference variable",
+            "The most recently defined method",
+            "The first class in the inheritance chain"
+          ],
+          "answer": "The actual type of the object at runtime",
+          "explanation": "This is <em>dynamic dispatch</em> — Java determines at runtime which method to call based on the object's actual type, not the declared type of the reference."
+        },
+        {
+          "id": "L2Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>class Base { void print() { System.out.println(\"Base\"); } }\nclass Child extends Base {\n    @Override void print() { System.out.println(\"Child\"); }\n}\nBase obj = new Child();\nobj.print();</pre>",
+          "options": ["Child", "Base", "Base\nChild", "Compile error"],
+          "answer": "Child",
+          "explanation": "The reference type is <code>Base</code>, but the actual object is a <code>Child</code>. At runtime, Java calls <code>Child</code>'s overridden <code>print()</code>."
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "Default Methods & Composition vs Inheritance",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "DefaultMethods.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin demonstrates an Eagle that flies — and lands for free without any extra work, courtesy of the Flyable contract's default method."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Default methods let you evolve an interface without breaking every class that implements it. Add a new default method and existing implementors get it automatically — they can override if they want, or accept the default."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Default method",
+          "code": "interface Greetable {\n    String getName();\n    default void greet() {\n        System.out.println(\"Hello, I am \" + getName());\n    }\n}\nclass Wizard implements Greetable {\n    private String name;\n    Wizard(String n) { name = n; }\n    public String getName() { return name; }\n}\nnew Wizard(\"Eldrin\").greet(); // Hello, I am Eldrin"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "And composition — the wisest design pattern of all. A DragonRider is not a Dragon and not a Rider; it <em>has</em> a Dragon and <em>has</em> a Rider. Components can be swapped, tested, and reused independently."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Define interface <code>Printable</code> with abstract <code>String content()</code> and a <code>default void print()</code> that prints <code>\"[content()]\"</code> (with square brackets). Implement it in <code>Report</code> and <code>Invoice</code> classes with different content. Call <code>print()</code> on both.</p>",
+        "hint": "The default print() method should call this.content() and wrap it in square brackets.",
+        "starterCode": "public class DefaultMethods {\n    interface Printable {\n        String content();\n        default void print() {\n            System.out.println(\"[\" + content() + \"]\");\n        }\n    }\n    // Implement Report and Invoice\n\n    public static void main(String[] args) {\n        new Report().print();\n        new Invoice().print();\n    }\n}",
+        "tests": [
+          {"label": "Report printed", "input": "null", "expected": "[Monthly Report]"},
+          {"label": "Invoice printed", "input": "null", "expected": "[Invoice #42]"}
+        ]
+      },
+      "feynmanPrompt": "What are default methods in Java interfaces, and why were they introduced? When would you prefer composition over inheritance?",
+      "questions": [
+        {
+          "id": "L3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which keyword is used to define a method with a body inside a Java interface?",
+          "options": ["default", "concrete", "implemented", "body"],
+          "answer": "default",
+          "explanation": "The <code>default</code> keyword (introduced in Java 8) allows interface methods to have a default implementation that implementing classes can use or override."
+        },
+        {
+          "id": "L3Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>interface Greeter {\n    String name();\n    default void greet() { System.out.println(\"Hi \" + name()); }\n}\nclass Bot implements Greeter {\n    public String name() { return \"R2D2\"; }\n}\nnew Bot().greet();</pre>",
+          "options": ["Hi R2D2", "Hi null", "R2D2", "Compile error"],
+          "answer": "Hi R2D2",
+          "explanation": "<code>Bot</code> inherits the <code>greet()</code> default method. When called, it invokes <code>name()</code> which <code>Bot</code> implements as \"R2D2\"."
+        },
+        {
+          "id": "L3Q3",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "You are building a game with a <code>Character</code> class. You need characters to be able to fly, swim, and cast spells — but not all characters do all three. What design approach is most flexible?",
+          "options": [
+            "Define Flyable, Swimmable, and Castable as interfaces; each character class implements the relevant ones",
+            "Create a single abstract Character class with all three methods abstract",
+            "Use one deep inheritance hierarchy: SwimmingFlyingCastingCharacter extends FlyingCastingCharacter",
+            "Add boolean flags (canFly, canSwim, canCast) to the base class"
+          ],
+          "answer": "Define Flyable, Swimmable, and Castable as interfaces; each character class implements the relevant ones",
+          "explanation": "Interfaces model capabilities cleanly — a character implements only the interfaces matching its abilities. Using inheritance for this would require complex hierarchies or code duplication."
+        }
+      ]
+    }
+  ]
+}

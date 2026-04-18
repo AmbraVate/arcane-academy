@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { dashboardApi } from '../api/services'
 import type { DashboardDto, ChunkHealthDto } from '../types'
-import styles from './DashboardPage.module.css'
+import { cn } from '@/lib/utils'
 
 const TIERS = [
   {
@@ -11,47 +11,62 @@ const TIERS = [
     label: 'Foundational',
     glyph: '🌱',
     desc: 'Core building blocks — variables, control flow, loops, and methods.',
-    color: 'teal',
+    labelColor: 'text-teal',
+    borderColor: 'border-[rgba(45,212,191,0.25)]',
   },
   {
     key: 'PRACTITIONER',
     label: 'Practitioner',
     glyph: '⚗️',
     desc: 'Applied mastery — arrays, collections, classes, encapsulation, and inheritance.',
-    color: 'purple',
+    labelColor: 'text-purple-light',
+    borderColor: 'border-[rgba(139,92,246,0.25)]',
   },
   {
     key: 'EXPERT',
     label: 'Expert',
     glyph: '🔮',
     desc: 'Advanced craft — polymorphism, exception handling, and core APIs.',
-    color: 'gold',
+    labelColor: 'text-gold',
+    borderColor: 'border-[rgba(201,162,39,0.25)]',
   },
 ]
 
+const HEALTH_COLORS: Record<string, { border: string; fill: string }> = {
+  GREEN:  { border: 'border-[rgba(0,200,83,0.2)]',    fill: 'bg-green' },
+  YELLOW: { border: 'border-[rgba(255,165,0,0.2)]',   fill: 'bg-orange' },
+  RED:    { border: 'border-[rgba(255,60,60,0.2)]',   fill: 'bg-red' },
+  GRAY:   { border: 'border-border',                   fill: 'bg-muted' },
+}
+
 function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void }) {
   const locked = ch.status === 'LOCKED'
+  const health = HEALTH_COLORS[ch.healthColor ?? 'GRAY'] ?? HEALTH_COLORS.GRAY
+
   return (
     <div
-      className={`${styles.chunkCard} ${locked ? styles.chunkCardLocked : styles[`health${ch.healthColor}`]}`}
+      className={cn(
+        'bg-card border rounded-[10px] p-4 transition-[border-color,transform] duration-200',
+        locked
+          ? 'border-border cursor-not-allowed opacity-45 grayscale-[0.6]'
+          : cn('cursor-pointer hover:-translate-y-0.5 hover:border-purple', health.border)
+      )}
       onClick={onClick}
     >
-      <div className={styles.chunkGlyph}>{locked ? '🔒' : ch.glyph}</div>
-      <div className={styles.chunkTitle}>{ch.title}</div>
-      <div className={styles.chunkProgress}>
+      <div className="text-[28px] mb-1.5">{locked ? '🔒' : ch.glyph}</div>
+      <div className="text-[13px] font-semibold text-text mb-1.5">{ch.title}</div>
+      <div className="text-[11px] text-muted mb-2">
         {locked ? 'Locked' : `${ch.completedSubChunks}/${ch.totalSubChunks} concepts`}
       </div>
       {!locked && (
         <>
-          <div className={styles.strengthBar}>
+          <div className="h-[5px] bg-surface rounded-full overflow-hidden mb-1">
             <div
-              className={styles.strengthFill}
+              className={cn('h-full rounded-full transition-[width] duration-400', health.fill)}
               style={{ width: `${Math.round(ch.memoryStrength * 100)}%` }}
             />
           </div>
-          <div className={styles.strengthLabel}>
-            {Math.round(ch.memoryStrength * 100)}% memory
-          </div>
+          <div className="text-[10px] text-muted">{Math.round(ch.memoryStrength * 100)}% memory</div>
         </>
       )}
     </div>
@@ -79,8 +94,8 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className={styles.loading}>
-        <div className={styles.loadingGlyph}>🧙</div>
+      <div className="flex flex-col items-center justify-center h-[60vh] text-muted">
+        <div className="text-[48px] mb-3 animate-pulse">🧙</div>
         <p>Consulting the Grimoire...</p>
       </div>
     )
@@ -89,87 +104,90 @@ export default function DashboardPage() {
   if (!dashboard || !user) return null
 
   const progressPct = Math.round(dashboard.overallProgress * 100)
-
   const chunksByTier = (tier: string) =>
     dashboard.chunkHealth.filter(ch => (ch.tier ?? 'FOUNDATION') === tier)
 
   return (
-    <div className={styles.page}>
+    <div className="max-w-[900px] mx-auto px-4 py-6 pb-[60px] max-[480px]:px-3 max-[480px]:py-4 max-[480px]:pb-12">
       {/* Hero */}
-      <div className={styles.hero}>
-        <div className={styles.glyph}>🧙</div>
-        <h1 className={styles.heroTitle}>The Java Grimoire</h1>
-        <p className={styles.heroSub}>Your path from apprentice to Archmage</p>
-        <div className={styles.progressWrap}>
-          <div className={styles.progressLabel}>
+      <div className="text-center mb-7">
+        <div className="text-[56px] mb-2 max-[480px]:text-[44px]">🧙</div>
+        <h1 className="text-[28px] font-bold text-gold m-0 mb-1 max-[480px]:text-[22px]">The Java Grimoire</h1>
+        <p className="text-muted text-[14px] m-0 mb-4 max-[480px]:text-[13px]">Your path from apprentice to Archmage</p>
+        <div className="max-w-[400px] mx-auto">
+          <div className="flex justify-between text-[12px] text-muted mb-1">
             <span>Overall mastery</span>
             <span>{progressPct}%</span>
           </div>
-          <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${progressPct}%` }} />
+          <div className="h-2 bg-surface rounded-full overflow-hidden">
+            <div className="h-full bg-purple rounded-full transition-[width] duration-400"
+              style={{ width: `${progressPct}%` }} />
           </div>
         </div>
       </div>
 
       {/* Stats row */}
-      <div className={styles.statsRow}>
-        <div className={styles.statCard}>
-          <div className={styles.statVal}>{dashboard.totalXp}</div>
-          <div className={styles.statLbl}>total xp</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statVal}>{dashboard.rank}</div>
-          <div className={styles.statLbl}>rank</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={`${styles.statVal} ${dashboard.streakAtRisk ? styles.streakAtRisk : ''}`}>
-            🔥 {dashboard.streakDays}
+      <div className="grid grid-cols-4 gap-3 mb-6 max-[600px]:grid-cols-2">
+        {[
+          { val: dashboard.totalXp,       lbl: 'total xp',  extra: '' },
+          { val: dashboard.rank,           lbl: 'rank',      extra: '' },
+          { val: `🔥 ${dashboard.streakDays}`, lbl: 'day streak', extra: dashboard.streakAtRisk ? 'text-orange' : '' },
+          { val: dashboard.currentPath,    lbl: 'path',      extra: '' },
+        ].map(({ val, lbl, extra }) => (
+          <div key={lbl} className="bg-card border border-border rounded-[8px] px-2.5 py-3.5 text-center">
+            <div className={cn('text-[20px] font-bold text-text max-[480px]:text-[17px]', extra)}>{val}</div>
+            <div className="text-[11px] text-muted uppercase mt-0.5">{lbl}</div>
           </div>
-          <div className={styles.statLbl}>day streak</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statVal}>{dashboard.currentPath}</div>
-          <div className={styles.statLbl}>path</div>
-        </div>
+        ))}
       </div>
 
       {/* Action cards */}
-      <div className={styles.actionRow}>
+      <div className="flex gap-3 mb-7 flex-wrap max-[600px]:flex-col">
         {!dashboard.diagnosticCompleted && (
-          <div className={styles.actionCard} onClick={() => navigate('/diagnostic')}>
-            <div className={styles.actionIcon}>🔮</div>
-            <div className={styles.actionTitle}>Take Entry Diagnostic</div>
-            <div className={styles.actionDesc}>Find your starting point — skip what you already know</div>
+          <div
+            className="flex-1 min-w-[200px] bg-card border border-border rounded-[10px] p-[18px] cursor-pointer
+              transition-[border-color] duration-200 hover:border-purple max-[600px]:min-w-0"
+            onClick={() => navigate('/diagnostic')}
+          >
+            <div className="text-[28px] mb-1.5">🔮</div>
+            <div className="text-[15px] font-semibold text-text mb-1">Take Entry Diagnostic</div>
+            <div className="text-[12px] text-muted leading-[1.5]">Find your starting point — skip what you already know</div>
           </div>
         )}
         {dashboard.reviewsDue > 0 && (
-          <div className={styles.actionCard} onClick={() => navigate('/review')}>
-            <div className={styles.actionIcon}>📖</div>
-            <div className={styles.actionTitle}>{dashboard.reviewsDue} Reviews Due</div>
-            <div className={styles.actionDesc}>Strengthen fading memories before they slip away</div>
+          <div
+            className="flex-1 min-w-[200px] bg-card border border-border rounded-[10px] p-[18px] cursor-pointer
+              transition-[border-color] duration-200 hover:border-purple max-[600px]:min-w-0"
+            onClick={() => navigate('/review')}
+          >
+            <div className="text-[28px] mb-1.5">📖</div>
+            <div className="text-[15px] font-semibold text-text mb-1">{dashboard.reviewsDue} Reviews Due</div>
+            <div className="text-[12px] text-muted leading-[1.5]">Strengthen fading memories before they slip away</div>
           </div>
         )}
       </div>
 
-      {/* Three-tier knowledge map */}
-      <div className={styles.sectionTitle}>Knowledge Map</div>
+      {/* Knowledge map */}
+      <div className="text-[18px] font-bold text-gold mb-3.5">Knowledge Map</div>
 
       {TIERS.map(tier => {
         const chunks = chunksByTier(tier.key)
         if (chunks.length === 0) return null
         return (
-          <div key={tier.key} className={`${styles.tierSection} ${styles[`tier${tier.key}`]}`}>
-            <div className={styles.tierHeader}>
-              <span className={styles.tierGlyph}>{tier.glyph}</span>
+          <div key={tier.key} className={cn('border rounded-[14px] p-5 mb-5 bg-card', tier.borderColor)}>
+            <div className="flex items-start gap-3.5 mb-4">
+              <span className="text-[28px] flex-shrink-0 mt-0.5">{tier.glyph}</span>
               <div>
-                <div className={styles.tierLabel}>{tier.label}</div>
-                <div className={styles.tierDesc}>{tier.desc}</div>
+                <div className={cn('font-cinzel text-[14px] font-bold tracking-[0.04em] mb-0.5', tier.labelColor)}>
+                  {tier.label}
+                </div>
+                <div className="text-[12px] text-muted leading-[1.5]">{tier.desc}</div>
               </div>
-              <div className={styles.tierProgress}>
+              <div className="ml-auto font-cinzel text-[13px] text-muted flex-shrink-0 pt-1">
                 {chunks.filter(c => c.status === 'COMPLETE').length}/{chunks.length}
               </div>
             </div>
-            <div className={styles.chunkGrid}>
+            <div className="grid gap-2.5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))' }}>
               {chunks.map(ch => (
                 <ChunkCard
                   key={ch.chunkId}

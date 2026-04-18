@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 public class DataSeeder {
 
     // ── Expected totals ────────────────────────────────────────────────────
-    private static final int EXPECTED_CHUNK_COUNT = 41; // Java: 14 Foundation + 14 Practitioner + 10 Expert. Tailwind: 1 Foundation + 1 Practitioner + 1 Expert.
+    // Java: 14 Foundation (A-N) + 14 Practitioner (PA-PN) + 10 Expert (XA-XJ)
+    // Tailwind: tw-a (Foundation) + tw-b (Practitioner) + tw-c (Expert)
+    private static final int EXPECTED_CHUNK_COUNT = 41;
 
     // ── Repositories (for clean reseed) ───────────────────────────────────
     private final ChunkRepository chunkRepository;
@@ -23,27 +25,7 @@ public class DataSeeder {
     private final UserChunkProgressRepository userChunkProgressRepository;
     private final CuriosityQueueItemRepository curiosityQueueItemRepository;
 
-    // ── Foundation seeders ─────────────────────────────────────────────────
-    private final ChunkASeeder chunkASeeder;         // A: Variables & Primitives
-    private final ChunkBSeeder chunkBSeeder;         // B: Operators & Control Flow
-    private final ChunkCtoFSeeder chunkCtoFSeeder;   // C: Loops, D: Methods, E: Strings, F: Console I/O
-    private final ChunkGtoLSeeder chunkGtoLSeeder;   // G: Arrays, H: Collections, I-L: OOP
-    private final ChunkMtoNSeeder chunkMtoNSeeder;   // M: Exceptions, N: Core APIs
-
-    // ── Practitioner seeders ───────────────────────────────────────────────
-    private final PractitionerSeeder1 practitionerSeeder1; // PA-PG
-    private final PractitionerSeeder2 practitionerSeeder2; // PH-PN
-
-    // ── Expert seeders ─────────────────────────────────────────────────────
-    private final ExpertSeeder1 expertSeeder1; // XA-XE
-    private final ExpertSeeder2 expertSeeder2; // XF-XJ
-
-    // ── Tailwind seeders ───────────────────────────────────────────────────
-    // TW-A is loaded from resources/content/tailwind/tw-a.json via JsonContentSeeder.
-    private final TailwindPractitionerSeeder tailwindPractitionerSeeder; // TW-B: Practitioner
-    private final TailwindExpertSeeder tailwindExpertSeeder;             // TW-C: Expert
-
-    // ── JSON content seeder (resource-file based) ──────────────────────────
+    // ── JSON content seeder — loads all content from resources/content/**/*.json
     private final JsonContentSeeder jsonContentSeeder;
 
     // ── Test users ─────────────────────────────────────────────────────────
@@ -65,25 +47,8 @@ public class DataSeeder {
                 subChunkRepository.deleteAll();
                 chunkRepository.deleteAll();
 
-                // ── Seed Foundation ────────────────────────────────────────
-                chunkASeeder.seed();     // A
-                chunkBSeeder.seed();     // B
-                chunkCtoFSeeder.seed();  // C, D, E, F
-                chunkGtoLSeeder.seed();  // G, H, I, J, K, L
-                chunkMtoNSeeder.seed();  // M, N
-
-                // ── Seed Practitioner ──────────────────────────────────────
-                practitionerSeeder1.seed(); // PA-PG
-                practitionerSeeder2.seed(); // PH-PN
-
-                // ── Seed Expert ────────────────────────────────────────────
-                expertSeeder1.seed();    // XA-XE
-                expertSeeder2.seed();    // XF-XJ
-
-                // ── Seed Tailwind ──────────────────────────────────────────
-                jsonContentSeeder.seed();           // TW-A: loaded from resources/content/tailwind/tw-a.json
-                tailwindPractitionerSeeder.seed();  // TW-B: Practitioner
-                tailwindExpertSeeder.seed();        // TW-C: Expert
+                // Seed all content from JSON resource files
+                jsonContentSeeder.seed();
 
                 log.info("Seeded {} chunks.", chunkRepository.count());
             } else {

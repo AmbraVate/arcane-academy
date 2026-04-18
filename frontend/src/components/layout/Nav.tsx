@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
-import styles from './Nav.module.css'
+import { cn } from '@/lib/utils'
 
 export default function Nav() {
   const { user, logout } = useAuth()
@@ -18,49 +18,76 @@ export default function Nav() {
   const xpPct = ceiling !== null ? Math.min(100, (xpInRank / xpForRank) * 100) : 100
   const level = rankIdx + 1
   const streak = user.streakDays ?? 0
-
   const streakHot = streak >= 3
-  const streakClass = streak === 0
-    ? styles.streakZero
-    : streakHot
-    ? styles.streakHot
-    : styles.streakWarm
 
   return (
-    <nav className={styles.nav}>
-      <div className={styles.brand} onClick={() => navigate('/')}>✦ Arcane Academy</div>
-      <div className={styles.right}>
+    <nav className="bg-surface border-b border-border px-5 flex items-center justify-between h-[50px] flex-shrink-0 z-10">
+      <div
+        className="font-cinzel text-[15px] text-gold tracking-[2px] cursor-pointer select-none"
+        onClick={() => navigate('/')}
+      >
+        ✦ Arcane Academy
+      </div>
+
+      <div className="flex items-center gap-3.5">
         {/* Streak indicator */}
-        <div className={`${styles.streak} ${streakClass}`} title={`${streak}-day streak`}>
-          <span className={`${styles.flame} ${streakHot ? styles.flamePulse : ''}`}>🔥</span>
-          <span className={styles.streakNum}>{streak}</span>
+        <div
+          className={cn(
+            'flex items-center gap-1 px-2.5 py-[3px] rounded-md border cursor-default',
+            streak === 0
+              ? 'opacity-40 border-border'
+              : streakHot
+              ? 'border-[#fb923c] bg-[#fb923c22]'
+              : 'border-[#fb923c44] bg-[#fb923c11]'
+          )}
+          title={`${streak}-day streak`}
+        >
+          <span className={cn('text-[14px] leading-none', streakHot && 'animate-flame-pulse')}>🔥</span>
+          <span className="font-cinzel text-[12px] text-orange font-semibold max-[480px]:hidden">{streak}</span>
         </div>
 
         {/* XP bar */}
-        <div className={styles.xpWrap}>
-          <span className={styles.lv}>Lv.{level}</span>
-          <div className={styles.xpBar}>
-            <div className={styles.xpFill} style={{ width: `${xpPct}%` }} />
+        <div className="flex items-center gap-2 max-[480px]:hidden">
+          <span className="font-cinzel text-[11px] text-muted max-[600px]:hidden">Lv.{level}</span>
+          <div className="w-[90px] h-[5px] bg-border rounded-full overflow-hidden max-[600px]:hidden max-[768px]:w-14">
+            <div
+              className="h-full rounded-full transition-[width] duration-600"
+              style={{
+                width: `${xpPct}%`,
+                background: 'linear-gradient(90deg, var(--purple), var(--teal))',
+              }}
+            />
           </div>
-          <span className={styles.xpNum}>{isMaxRank ? `${user.totalXp} xp` : `${xpInRank} / ${xpForRank} xp`}</span>
+          <span className="font-cinzel text-[11px] text-muted max-[768px]:hidden">
+            {isMaxRank ? `${user.totalXp} xp` : `${xpInRank} / ${xpForRank} xp`}
+          </span>
         </div>
 
-        <div className={styles.rank}>⚗ {user.rank}</div>
-        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/topics')}>
-          <span className={styles.navBtnFull}>Topics</span>
-          <span className={styles.navBtnIcon}>📚</span>
-        </button>
-        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/review')}>
-          <span className={styles.navBtnFull}>Review</span>
-          <span className={styles.navBtnIcon}>📖</span>
-        </button>
-        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={() => navigate('/profile')}>
-          <span className={styles.navBtnFull}>Profile</span>
-          <span className={styles.navBtnIcon}>👤</span>
-        </button>
-        <button className={`btn btn-ghost ${styles.navBtn}`} onClick={logout}>
-          <span className={styles.navBtnFull}>Logout</span>
-          <span className={styles.navBtnIcon}>⏏</span>
+        <div className="bg-purple-dim border border-purple rounded px-[11px] py-[3px] text-[11px] text-purple-light font-cinzel max-[768px]:hidden">
+          ⚗ {user.rank}
+        </div>
+
+        {/* Nav buttons */}
+        {[
+          { label: 'Topics',  icon: '📚', path: '/topics' },
+          { label: 'Review',  icon: '📖', path: '/review' },
+          { label: 'Profile', icon: '👤', path: '/profile' },
+        ].map(({ label, icon, path }) => (
+          <button
+            key={path}
+            className="btn btn-ghost px-3 py-1 text-[12px] max-[480px]:px-2 max-[480px]:py-[5px] max-[480px]:text-[16px] max-[480px]:border-none max-[480px]:bg-transparent"
+            onClick={() => navigate(path)}
+          >
+            <span className="max-[480px]:hidden">{label}</span>
+            <span className="hidden max-[480px]:inline">{icon}</span>
+          </button>
+        ))}
+        <button
+          className="btn btn-ghost px-3 py-1 text-[12px] max-[480px]:px-2 max-[480px]:py-[5px] max-[480px]:text-[16px] max-[480px]:border-none max-[480px]:bg-transparent"
+          onClick={logout}
+        >
+          <span className="max-[480px]:hidden">Logout</span>
+          <span className="hidden max-[480px]:inline">⏏</span>
         </button>
       </div>
     </nav>

@@ -1,0 +1,173 @@
+{
+  "id": "XJ",
+  "topicId": "java",
+  "title": "Advanced Testing & Quality",
+  "glyph": "🧪",
+  "sortOrder": 38,
+  "learnerPath": "EXPERT",
+  "prerequisites": ["XD", "XE"],
+  "subChunks": [
+    {
+      "id": "XJ1",
+      "title": "Test Pyramid & Integration Testing",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "TestPyramid.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "The Test Pyramid is your testing strategy made visible. Invert it — many slow E2E tests and few unit tests — and your build takes 30 minutes. A good pyramid means a 2-minute build."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A test that catches bugs in 10 milliseconds is worth ten tests that catch the same bug in 10 seconds. Optimise your pyramid by pushing logic down into unit-testable classes."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Write a unit test structure: a <code>Calculator</code> class with <code>add(int a, int b)</code>. Then a test class with an <code>add_returnsSum()</code> test. Simulate it by running the assertion inline.</p>",
+        "hint": "assertEquals throws AssertionError on mismatch and prints PASS on success. Call it twice from main.",
+        "starterCode": "public class TestPyramidDemo {\n    static class Calculator {\n        int add(int a, int b) { return a + b; }\n    }\n    static void assertEquals(int expected, int actual) {\n        if (expected != actual)\n            throw new AssertionError(\"Expected \" + expected + \" but got \" + actual);\n        System.out.println(\"PASS: add(3,4) = \" + actual);\n    }\n    public static void main(String[] args) {\n        Calculator calc = new Calculator();\n        assertEquals(7, calc.add(3, 4));\n        assertEquals(0, calc.add(-5, 5));\n    }\n}",
+        "tests": [
+          {"label": "Tests pass", "input": "null", "expected": "PASS: add(3,4) = 7\nPASS: add(3,4) = 0"}
+        ]
+      },
+      "feynmanPrompt": "Explain the Test Pyramid. Why should E2E tests be the minority of your test suite?",
+      "questions": [
+        {
+          "id": "XJ1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does @WebMvcTest do differently from @SpringBootTest?",
+          "options": ["Loads only the web layer (controllers, filters); service and repo layers must be mocked", "Runs the full application context including the database", "Tests only service classes", "Skips all tests in the class"],
+          "answer": "Loads only the web layer (controllers, filters); service and repo layers must be mocked",
+          "explanation": "@WebMvcTest is a slice test — faster and focused. @SpringBootTest loads the full application context."
+        }
+      ]
+    },
+    {
+      "id": "XJ2",
+      "title": "Contract Testing & Consumer-Driven Contracts",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "ContractTesting.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Integration tests can miss API contract breaks. Service A tests against a mock. Service B changes its response shape. Both pass their tests, but they break together in production. Contract tests catch this at build time."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate contract verification: a <code>Contract</code> specifies an expected JSON field <code>\"userId\"</code>. Verify that a given response map contains that field. Print <code>PASS</code> or <code>FAIL: missing userId</code>.</p>",
+        "hint": "verifyContract checks response.containsKey(requiredField). Print \"PASS\" if found, else \"FAIL: missing \" + requiredField.",
+        "starterCode": "import java.util.HashMap;\nimport java.util.Map;\n\npublic class ContractDemo {\n    static void verifyContract(Map<String, Object> response, String requiredField) {\n        if (response.containsKey(requiredField)) {\n            System.out.println(\"PASS\");\n        } else {\n            System.out.println(\"FAIL: missing \" + requiredField);\n        }\n    }\n    public static void main(String[] args) {\n        Map<String, Object> validResponse = new HashMap<>();\n        validResponse.put(\"userId\", 42);\n        validResponse.put(\"name\", \"Merlin\");\n\n        Map<String, Object> invalidResponse = new HashMap<>();\n        invalidResponse.put(\"id\", 42); // wrong field name\n\n        verifyContract(validResponse, \"userId\");\n        verifyContract(invalidResponse, \"userId\");\n    }\n}",
+        "tests": [
+          {"label": "Contract", "input": "null", "expected": "PASS\nFAIL: missing userId"}
+        ]
+      },
+      "feynmanPrompt": "Explain consumer-driven contract testing. Why is it better than shared integration tests for microservices?",
+      "questions": [
+        {
+          "id": "XJ2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Who generates the contract (pact file) in Consumer-Driven Contract Testing?",
+          "options": ["The consumer — they define the minimum interface they need from the provider", "The provider — they publish their API spec", "A shared test team", "An automated tool inspecting production traffic"],
+          "answer": "The consumer — they define the minimum interface they need from the provider",
+          "explanation": "Consumer-driven means the consumer owns the contract. They only specify what they need — the provider must satisfy at minimum that subset."
+        }
+      ]
+    },
+    {
+      "id": "XJ3",
+      "title": "Performance Testing & Observability",
+      "sortOrder": 3,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "PerformanceTesting.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Metrics, logs, and traces are the three eyes of production visibility. Metrics tell you something is wrong. Logs tell you what happened. Traces show you exactly where in the distributed system the problem occurred."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate throughput measurement: given a list of response times (ms), calculate and print average response time and requests per second (assuming 1000ms window).</p>",
+        "hint": "Sum all times, divide by count for avg. RPS = 1000.0 / avg. Use printf with %.0f and %.1f formats.",
+        "starterCode": "public class PerformanceDemo {\n    public static void main(String[] args) {\n        int[] responseTimes = {120, 95, 140, 110, 200, 85, 130};\n        int total = 0;\n        for (int t : responseTimes) total += t;\n        double avg = (double) total / responseTimes.length;\n        double rps = 1000.0 / avg;\n        System.out.printf(\"Avg response: %.0fms%n\", avg);\n        System.out.printf(\"Approx RPS: %.1f%n\", rps);\n    }\n}",
+        "tests": [
+          {"label": "Performance metrics", "input": "null", "expected": "Avg response: 126ms\nApprox RPS: 7.9"}
+        ]
+      },
+      "feynmanPrompt": "Explain the three pillars of observability. What is the difference between a metric and a trace?",
+      "questions": [
+        {
+          "id": "XJ3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What type of performance test is best suited to detecting memory leaks?",
+          "options": ["Soak test — run normal load for an extended period (hours to days)", "Spike test — sudden traffic burst", "Stress test — find the breaking point", "Load test — expected peak load"],
+          "answer": "Soak test — run normal load for an extended period (hours to days)",
+          "explanation": "Memory leaks only appear over time. A soak test runs long enough to observe gradual memory growth that would cause production outages."
+        }
+      ]
+    },
+    {
+      "id": "XJ4",
+      "title": "Code Quality & Static Analysis",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "CodeQuality.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Code quality is not about following rules for their own sake. It is about making the codebase legible and safe for the next wizard who works in it — which is often you, three months from now."
+        },
+        {
+          "type": "NARRATION",
+          "text": "You have reached the final sub-chunk of the Expert tier. You now hold the foundations of a professional Java engineer: from variables to microservices, from algorithms to distributed systems. The journey continues — but the fundamentals are yours."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Compute a simple quality score: given counts of <code>bugs</code>, <code>codeSmells</code>, and <code>coverage</code> (%), print <code>\"Quality: GOOD\"</code> if bugs == 0 and coverage >= 80, <code>\"Quality: WARNING\"</code> if bugs == 0 and coverage >= 60, else <code>\"Quality: POOR\"</code>.</p>",
+        "hint": "Check bugs == 0 && coverage >= 80 first, then bugs == 0 && coverage >= 60, else return POOR.",
+        "starterCode": "public class QualityDemo {\n    static String qualityScore(int bugs, int codeSmells, int coverage) {\n        if (bugs == 0 && coverage >= 80) return \"Quality: GOOD\";\n        if (bugs == 0 && coverage >= 60) return \"Quality: WARNING\";\n        return \"Quality: POOR\";\n    }\n    public static void main(String[] args) {\n        System.out.println(qualityScore(0, 5, 85));\n        System.out.println(qualityScore(0, 12, 65));\n        System.out.println(qualityScore(3, 20, 40));\n    }\n}",
+        "tests": [
+          {"label": "Quality scores", "input": "null", "expected": "Quality: GOOD\nQuality: WARNING\nQuality: POOR"}
+        ]
+      },
+      "feynmanPrompt": "What is technical debt? How should a team manage it sustainably over time?",
+      "questions": [
+        {
+          "id": "XJ4Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does OWASP Dependency Check do?",
+          "options": ["Scans project dependencies for known security vulnerabilities (CVEs)", "Checks code style compliance", "Measures test coverage", "Validates API contracts"],
+          "answer": "Scans project dependencies for known security vulnerabilities (CVEs)",
+          "explanation": "OWASP Dependency Check compares your dependency versions against the NVD (National Vulnerability Database) to flag known CVEs."
+        },
+        {
+          "id": "XJ4Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Technical debt should always be addressed immediately when discovered.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Technical debt requires judgement. Paying it down is important, but it must be prioritised against feature work. Teams track and plan debt reduction deliberately."
+        }
+      ]
+    }
+  ]
+}

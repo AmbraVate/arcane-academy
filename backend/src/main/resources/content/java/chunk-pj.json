@@ -1,0 +1,167 @@
+{
+  "id": "PJ",
+  "topicId": "java",
+  "title": "Testing with JUnit & Mockito",
+  "glyph": "✅",
+  "sortOrder": 24,
+  "learnerPath": "PRACTITIONER",
+  "prerequisites": ["L"],
+  "subChunks": [
+    {
+      "id": "PJ1",
+      "title": "JUnit 5: Writing & Organising Tests",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "JAVA",
+      "practiceFileName": "JUnit5Basics.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin ceremonially adds a new spell to the Academy Grimoire. But first, he runs the verification ritual — every test case must pass or the spell is rejected."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A test is a spell contract. It declares: given this input, I expect this output. Run the tests; if they pass, the contract holds. Change the code; run the tests again. Any broken contract is found immediately, not three months later in production."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Test pattern",
+          "code": "// Production class\nclass Calculator {\n    int add(int a, int b) { return a + b; }\n    int divide(int a, int b) { return a / b; } // throws if b==0\n}\n\n// Test class (requires JUnit 5 on classpath)\n// @Test void testAdd() { assertEquals(5, new Calculator().add(2,3)); }"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Good test names read like specifications: <em>adding two positive numbers returns their sum</em>. <code>@DisplayName</code> lets you write natural language test names. The test suite becomes living documentation of your code's behaviour."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a <code>StringUtils</code> class with method <code>isPalindrome(String s)</code> that returns true if the string reads the same forwards and backwards. Demonstrate the logic with assertions (manual, not JUnit).</p>",
+        "hint": "Use new StringBuilder(s).reverse().toString() and compare with equals().",
+        "starterCode": "public class JUnit5Basics {\n    static class StringUtils {\n        static boolean isPalindrome(String s) {\n            String reversed = new StringBuilder(s).reverse().toString();\n            return s.equals(reversed);\n        }\n    }\n    public static void main(String[] args) {\n        // Demonstrate — in real code these would be JUnit @Test methods\n        System.out.println(StringUtils.isPalindrome(\"racecar\")); // true\n        System.out.println(StringUtils.isPalindrome(\"hello\"));   // false\n        System.out.println(StringUtils.isPalindrome(\"level\"));   // true\n    }\n}",
+        "tests": [
+          {"label": "Palindrome true", "input": "null", "expected": "true"},
+          {"label": "Palindrome false", "input": "null", "expected": "false"},
+          {"label": "Palindrome level", "input": "null", "expected": "true"}
+        ]
+      },
+      "feynmanPrompt": "Explain the role of @BeforeEach in JUnit 5. Why is it important to create a fresh instance before each test?",
+      "questions": [
+        {
+          "id": "PJ1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does <code>assertThrows(Exception.class, () -> ...)</code> verify?",
+          "options": ["That the lambda throws the specified exception type", "That the lambda does not throw any exception", "That the lambda runs in under 1 second", "That the exception message equals \"Exception\""],
+          "answer": "That the lambda throws the specified exception type",
+          "explanation": "<code>assertThrows</code> passes if and only if the lambda throws the specified exception type. It fails if no exception is thrown or a different exception type is thrown."
+        }
+      ]
+    },
+    {
+      "id": "PJ2",
+      "title": "Mockito & TDD",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "practiceType": "JAVA",
+      "practiceFileName": "MockitoAndTDD.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin needs to test the Academy's enrollment service — but the actual database is across the country. He conjures a mock registry that behaves exactly as instructed."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A mock is a puppet — it responds exactly as you script it, without having any actual behaviour of its own. You test how your code <em>interacts</em> with the mock, not how the real dependency works. Your unit tests become fast, isolated, and reliable."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Mock pattern",
+          "code": "// Manual mock-like pattern (without Mockito library)\ninterface SpellRepo { Spell find(String name); }\nclass MockSpellRepo implements SpellRepo {\n    public Spell find(String name) {\n        return new Spell(name, 80); // always returns a spell\n    }\n}\n// Inject mock into service under test\nSpellService svc = new SpellService(new MockSpellRepo());"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "TDD inverts the usual sequence. You write the <em>test</em> first — describing what the code should do. The test fails immediately (red). Then you write the code to make it pass (green). Then you clean up (refactor). The tests guard against regressions forever."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a manual TDD cycle: write an interface <code>SpellRepo</code> with <code>findSpell(String name)</code>, a mock implementation, a <code>SpellService</code> that uses it, and demonstrate it returns the correct spell name.</p>",
+        "hint": "MockSpellRepo checks if name equals \"Fireball\" and returns different strings accordingly.",
+        "starterCode": "public class MockitoAndTDD {\n    interface SpellRepo {\n        String findSpell(String name);\n    }\n    static class MockSpellRepo implements SpellRepo {\n        public String findSpell(String name) {\n            return name.equals(\"Fireball\") ? \"Fireball (80 dmg)\" : \"Unknown spell\";\n        }\n    }\n    static class SpellService {\n        private SpellRepo repo;\n        SpellService(SpellRepo repo) { this.repo = repo; }\n        String getSpellInfo(String name) { return repo.findSpell(name); }\n    }\n    public static void main(String[] args) {\n        SpellService svc = new SpellService(new MockSpellRepo());\n        System.out.println(svc.getSpellInfo(\"Fireball\"));\n        System.out.println(svc.getSpellInfo(\"IceBolt\"));\n    }\n}",
+        "tests": [
+          {"label": "Known spell", "input": "null", "expected": "Fireball (80 dmg)"},
+          {"label": "Unknown spell", "input": "null", "expected": "Unknown spell"}
+        ]
+      },
+      "feynmanPrompt": "What is Mockito used for in testing? Explain the red-green-refactor TDD cycle.",
+      "questions": [
+        {
+          "id": "PJ2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "In TDD, what is the correct order of the cycle?",
+          "options": ["Write failing test → make it pass → refactor", "Write code → write test → refactor", "Refactor → write test → run", "Write test → refactor → make it pass"],
+          "answer": "Write failing test → make it pass → refactor",
+          "explanation": "Red (failing test) → Green (minimal code to pass) → Refactor (clean up). The failing test first ensures you have a real requirement and that your test actually tests something."
+        }
+      ]
+    },
+    {
+      "id": "PJ3",
+      "title": "BDD & Integration Testing",
+      "sortOrder": 3,
+      "xpReward": 80,
+      "practiceType": "JAVA",
+      "practiceFileName": "BDDTesting.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin presents the test pyramid etched on the academy wall — a wide base of unit tests, a narrower middle of integration tests, a tiny tip of end-to-end tests."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "BDD bridges the gap between the business and the developer. When a test reads like 'Given an enrolled apprentice, When they complete a chapter, Then their XP increases by 100' — even the Academy Headmaster can verify the system behaves correctly."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "BDD structure",
+          "code": "// Given\nWizard w = new Wizard(100); // 100 mana\n// When\nboolean cast = w.castSpell(40); // costs 40 mana\n// Then\nSystem.out.println(cast);          // true\nSystem.out.println(w.getMana());   // 60"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The test pyramid is economics. Unit tests are cheap — fast to write, fast to run, easy to debug. Integration tests are expensive. End-to-end tests are very expensive. Maximise unit tests; use integration tests for critical paths; use E2E tests sparingly."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a <code>Wizard</code> class with mana management. Using Given-When-Then style (comments), test: casting a spell that costs 40 mana from 100 (succeeds, mana = 60) and casting when mana is insufficient (fails, mana unchanged).</p>",
+        "hint": "castSpell(cost) returns false and leaves mana unchanged when cost > mana.",
+        "starterCode": "public class BDDTesting {\n    static class Wizard {\n        private int mana;\n        Wizard(int mana) { this.mana = mana; }\n        int getMana() { return mana; }\n        boolean castSpell(int cost) {\n            if (cost > mana) return false;\n            mana -= cost;\n            return true;\n        }\n    }\n    public static void main(String[] args) {\n        // Given: wizard with 100 mana, When: cast 40-cost spell, Then: success + 60 mana\n        Wizard w1 = new Wizard(100);\n        boolean r1 = w1.castSpell(40);\n        System.out.println(r1);         // true\n        System.out.println(w1.getMana()); // 60\n\n        // Given: wizard with 20 mana, When: cast 40-cost spell, Then: fail + mana unchanged\n        Wizard w2 = new Wizard(20);\n        boolean r2 = w2.castSpell(40);\n        System.out.println(r2);         // false\n        System.out.println(w2.getMana()); // 20\n    }\n}",
+        "tests": [
+          {"label": "Cast success", "input": "null", "expected": "true"},
+          {"label": "Mana after success", "input": "null", "expected": "60"},
+          {"label": "Cast failure", "input": "null", "expected": "false"},
+          {"label": "Mana after failure", "input": "null", "expected": "20"}
+        ]
+      },
+      "feynmanPrompt": "Explain the test pyramid. How do unit, integration, and end-to-end tests differ, and why should unit tests outnumber the others?",
+      "questions": [
+        {
+          "id": "PJ3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the 'Given-When-Then' structure in BDD tests?",
+          "options": ["Setup preconditions / trigger action / verify outcome", "Input / Process / Output", "Create / Read / Update / Delete", "Before / During / After"],
+          "answer": "Setup preconditions / trigger action / verify outcome",
+          "explanation": "Given = arrange the test preconditions; When = act (trigger the behaviour under test); Then = assert (verify the outcome). This structure produces readable, requirement-like tests."
+        }
+      ]
+    }
+  ]
+}

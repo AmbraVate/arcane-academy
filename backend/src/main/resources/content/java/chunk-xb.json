@@ -1,0 +1,232 @@
+{
+  "id": "XB",
+  "topicId": "java",
+  "title": "Spring Framework Core",
+  "glyph": "🌱",
+  "sortOrder": 30,
+  "learnerPath": "EXPERT",
+  "prerequisites": ["PN"],
+  "subChunks": [
+    {
+      "id": "XB1",
+      "title": "IoC Container & Dependency Injection",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "SpringDI.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "You have entered the realm of Spring — the most powerful framework in the Java kingdom."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Before Spring, wizards conjured every dependency themselves — a nightmare of tangled creation code. The IoC container conjures them for you, in the right order, every time."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Field injection vs constructor injection",
+          "code": "// Bad — field injection hides dependencies\n@Service\npublic class OrderService {\n    @Autowired private OrderRepository repo; // hidden\n}\n\n// Good — constructor injection\n@Service\npublic class OrderService {\n    private final OrderRepository repo; // explicit, final\n    public OrderService(OrderRepository repo) { this.repo = repo; }\n}"
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a <code>GreetingService</code> that depends on a <code>MessageProvider</code> interface. Implement <code>MessageProvider</code> with a class that returns <code>\"Hello, Wizard!\"</code>. Use constructor injection. Print the greeting.</p>",
+        "hint": "GreetingService takes MessageProvider via constructor. greet() calls provider.getMessage() and prints it.",
+        "starterCode": "public class SpringDIDemo {\n    interface MessageProvider {\n        String getMessage();\n    }\n\n    static class WizardMessageProvider implements MessageProvider {\n        public String getMessage() {\n            return \"Hello, Wizard!\";\n        }\n    }\n\n    static class GreetingService {\n        private final MessageProvider provider;\n        // TODO: constructor injection\n        public GreetingService(MessageProvider provider) {\n            this.provider = provider;\n        }\n        public void greet() {\n            // TODO: print provider.getMessage()\n        }\n    }\n\n    public static void main(String[] args) {\n        GreetingService svc = new GreetingService(new WizardMessageProvider());\n        svc.greet();\n    }\n}",
+        "tests": [
+          {"label": "Greeting", "input": "null", "expected": "Hello, Wizard!"}
+        ]
+      },
+      "feynmanPrompt": "Explain the IoC principle. Why is constructor injection preferred over field injection?",
+      "questions": [
+        {
+          "id": "XB1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Why is constructor injection preferred over field injection in Spring?",
+          "options": ["Dependencies are explicit, the object is always fully initialised, and it is easy to test", "Constructor injection is faster at runtime", "Field injection requires more annotations", "Spring only supports constructor injection"],
+          "answer": "Dependencies are explicit, the object is always fully initialised, and it is easy to test",
+          "explanation": "Constructor injection makes dependencies visible and allows the class to be used outside Spring (e.g., in unit tests)."
+        },
+        {
+          "id": "XB1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "@Autowired on a field is generally recommended for production Spring code.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Field injection hides dependencies and makes testing harder. Constructor injection is preferred."
+        },
+        {
+          "id": "XB1Q3",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "You want to swap the database implementation in tests without changing your service. What pattern enables this?",
+          "options": [
+            "Depend on the interface, use constructor injection. In tests, pass a mock or in-memory implementation. Spring injects the real JPA impl in production.",
+            "Use @Autowired on the field and change the implementation class",
+            "Use System.setProperty to switch implementations",
+            "Create a subclass of the service for testing"
+          ],
+          "answer": "Depend on the interface, use constructor injection. In tests, pass a mock or in-memory implementation. Spring injects the real JPA impl in production.",
+          "explanation": "This is the power of DI + programming to interfaces — easy substitution without changing the service."
+        }
+      ]
+    },
+    {
+      "id": "XB2",
+      "title": "Spring Beans & Configuration",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "SpringBeans.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Use @Service/@Repository/@Component for your own classes. Use @Bean in @Configuration for objects you can't annotate — like ObjectMapper or HikariDataSource."
+        },
+        {
+          "type": "NARRATION",
+          "text": "Component scan is Spring Boot's magic — it automatically detects all @Component-annotated classes in your package and registers them as beans."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Write a <code>@Configuration</code> class with a <code>@Bean</code> method that returns a <code>StringBuilder</code> initialised with <code>\"Arcane: \"</code>. Then show (in a main method) how you would use it.</p>",
+        "hint": "AppConfig.arcaneBuilder() returns new StringBuilder(\"Arcane: \"). Then append \"Academy\" and print.",
+        "starterCode": "public class BeanDemo {\n    // Simulating @Configuration without Spring — show the concept\n    static class AppConfig {\n        // TODO: method that returns a StringBuilder pre-filled with \"Arcane: \"\n        static StringBuilder arcaneBuilder() {\n            return null; // TODO\n        }\n    }\n\n    public static void main(String[] args) {\n        StringBuilder sb = AppConfig.arcaneBuilder();\n        sb.append(\"Academy\");\n        System.out.println(sb.toString());\n    }\n}",
+        "tests": [
+          {"label": "Builder", "input": "null", "expected": "Arcane: Academy"}
+        ]
+      },
+      "feynmanPrompt": "When would you use @Bean in a @Configuration class instead of @Component? Give two examples.",
+      "questions": [
+        {
+          "id": "XB2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the default bean scope in Spring?",
+          "options": ["Singleton — one instance per container", "Prototype — new instance each time", "Request — one per HTTP request", "Session — one per user session"],
+          "answer": "Singleton — one instance per container",
+          "explanation": "Spring beans are singleton by default. Use @Scope(\"prototype\") for a new instance on each injection."
+        },
+        {
+          "id": "XB2Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "You need to configure a third-party HttpClient with custom timeout settings. Which approach is correct?",
+          "options": ["@Bean method in @Configuration returning the configured HttpClient", "@Component on the HttpClient class", "@Autowired the HttpClient directly", "Create it in each service that needs it"],
+          "answer": "@Bean method in @Configuration returning the configured HttpClient",
+          "explanation": "You can't add @Component to a class you don't own. Use @Bean in @Configuration to configure and expose third-party instances."
+        }
+      ]
+    },
+    {
+      "id": "XB3",
+      "title": "Aspect-Oriented Programming",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "SpringAop.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "AOP is like enchanting a doorway — every spell that passes through it gets logged, timed, or checked, without any spell knowing the enchantment exists. @Transactional works this way."
+        },
+        {
+          "type": "NARRATION",
+          "text": "Spring's @Transactional annotation is AOP in action — Spring wraps your method in a transaction proxy without you writing a single try/commit/rollback."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate AOP manually: create a <code>ServiceProxy</code> that wraps a <code>Calculator</code> and logs before and after calling <code>add(int a, int b)</code>. Print the log and result.</p>",
+        "hint": "LoggingCalculator.add() prints \"Before: add\", delegates to real calculator, prints \"After: add\", returns result.",
+        "starterCode": "public class AopDemo {\n    interface Calculator {\n        int add(int a, int b);\n    }\n    static class RealCalculator implements Calculator {\n        public int add(int a, int b) { return a + b; }\n    }\n    static class LoggingCalculator implements Calculator {\n        private final Calculator delegate;\n        LoggingCalculator(Calculator delegate) { this.delegate = delegate; }\n        public int add(int a, int b) {\n            // TODO: print \"Before: add\"\n            int result = delegate.add(a, b);\n            // TODO: print \"After: add\"\n            return result;\n        }\n    }\n    public static void main(String[] args) {\n        Calculator calc = new LoggingCalculator(new RealCalculator());\n        System.out.println(calc.add(3, 4));\n    }\n}",
+        "tests": [
+          {"label": "AOP proxy", "input": "null", "expected": "Before: add\nAfter: add\n7"}
+        ]
+      },
+      "feynmanPrompt": "Explain AOP. Name three real-world uses of AOP in Spring applications.",
+      "questions": [
+        {
+          "id": "XB3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which Spring annotation is implemented using AOP under the hood?",
+          "options": ["@Transactional", "@Component", "@Autowired", "@Value"],
+          "answer": "@Transactional",
+          "explanation": "Spring's @Transactional wraps methods in a transaction via an AOP proxy — begin, proceed, commit/rollback."
+        },
+        {
+          "id": "XB3Q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "@Around advice can prevent the target method from executing at all.",
+          "options": ["True", "False"],
+          "answer": "True",
+          "explanation": "@Around receives a ProceedingJoinPoint — calling proceed() runs the method. You can choose not to call it."
+        }
+      ]
+    },
+    {
+      "id": "XB4",
+      "title": "Spring Events & Environment Abstraction",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "SpringEvents.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Events are the whisper network of the Academy. OrderService announces an order was placed — it doesn't care who listens. Email, Inventory, Analytics — each handler subscribes independently."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "@Value usage",
+          "code": "@Value(\"${app.max-retries:3}\")\nprivate int maxRetries; // reads from application.yml, defaults to 3"
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate Spring events without the framework: create an <code>EventBus</code> with <code>publish(String event)</code> and <code>subscribe(Consumer&lt;String&gt; handler)</code>. Publish <code>\"OrderPlaced\"</code> and print it from two subscribers.</p>",
+        "hint": "handlers is a List<Consumer<String>>. subscribe() adds to the list. publish() calls each handler.",
+        "starterCode": "import java.util.ArrayList;\nimport java.util.List;\nimport java.util.function.Consumer;\n\npublic class EventBusDemo {\n    static class EventBus {\n        private List<Consumer<String>> handlers = new ArrayList<>();\n        // TODO: subscribe(Consumer<String> handler)\n        // TODO: publish(String event) — calls all handlers\n        void subscribe(Consumer<String> handler) {}\n        void publish(String event) {}\n    }\n\n    public static void main(String[] args) {\n        EventBus bus = new EventBus();\n        bus.subscribe(e -> System.out.println(\"Email: \" + e));\n        bus.subscribe(e -> System.out.println(\"Inventory: \" + e));\n        bus.publish(\"OrderPlaced\");\n    }\n}",
+        "tests": [
+          {"label": "Two subscribers", "input": "null", "expected": "Email: OrderPlaced\nInventory: OrderPlaced"}
+        ]
+      },
+      "feynmanPrompt": "Explain Spring Application Events. What decoupling benefit do they provide over direct method calls?",
+      "questions": [
+        {
+          "id": "XB4Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What annotation marks a method as a Spring event listener?",
+          "options": ["@EventListener", "@Subscribe", "@Listen", "@Handle"],
+          "answer": "@EventListener",
+          "explanation": "@EventListener on a method in a Spring bean registers it to receive matching application events."
+        },
+        {
+          "id": "XB4Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "@Value can inject values from application.yml into Spring beans.",
+          "options": ["True", "False"],
+          "answer": "True",
+          "explanation": "@Value(\"${property.name}\") reads properties from the Spring Environment (application.yml, env vars, etc.)."
+        }
+      ]
+    }
+  ]
+}

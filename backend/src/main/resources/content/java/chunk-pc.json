@@ -1,0 +1,188 @@
+{
+  "id": "PC",
+  "topicId": "java",
+  "title": "Streams API",
+  "glyph": "🌊",
+  "sortOrder": 17,
+  "learnerPath": "PRACTITIONER",
+  "prerequisites": ["PB"],
+  "subChunks": [
+    {
+      "id": "PC1",
+      "title": "Stream Pipelines & Intermediate Operations",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "JAVA",
+      "practiceFileName": "StreamPipeline.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin constructs an elaborate enchanted pipeline: a sieve of magical filters and transformation chambers through which raw ore flows, emerging as refined artefacts at the other end."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A stream pipeline is a declaration of <em>what</em> you want, not <em>how</em> to get it. You tell Java: filter this, transform that, collect the results. Java figures out the most efficient path through the pipeline."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Pipeline example",
+          "code": "import java.util.*;\nimport java.util.stream.*;\n\nList<String> words = Arrays.asList(\"arcane\",\"fire\",\"ice\",\"thunder\",\"earth\");\nList<String> result = words.stream()\n    .filter(w -> w.length() > 3)\n    .map(String::toUpperCase)\n    .sorted()\n    .collect(Collectors.toList());\nSystem.out.println(result);"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "One critical rule: streams are <em>lazy</em>. The filter and map operations do nothing until a terminal operation demands the result. And streams are single-use — once consumed, you must create a new one."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Given <code>Arrays.asList(1,2,3,4,5,6,7,8,9,10)</code>, use a stream to: filter to even numbers only, multiply each by 3, collect to a list, and print it.</p>",
+        "hint": "Chain .filter(n -> n % 2 == 0).map(n -> n * 3) before collect(Collectors.toList()).",
+        "starterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class StreamPipeline {\n    public static void main(String[] args) {\n        List<Integer> nums = Arrays.asList(1,2,3,4,5,6,7,8,9,10);\n        List<Integer> result = nums.stream()\n            // filter evens, multiply by 3, collect\n            .collect(Collectors.toList());\n        System.out.println(result);\n    }\n}",
+        "tests": [
+          {"label": "Even × 3", "input": "null", "expected": "[6, 12, 18, 24, 30]"}
+        ]
+      },
+      "feynmanPrompt": "What are the three parts of a Java stream pipeline? Explain the difference between intermediate and terminal operations.",
+      "questions": [
+        {
+          "id": "PC1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which of the following is a terminal operation on a Java Stream?",
+          "options": ["collect()", "filter()", "map()", "sorted()"],
+          "answer": "collect()",
+          "explanation": "<code>collect()</code> is a terminal operation — it triggers the pipeline and materialises the result. <code>filter()</code>, <code>map()</code>, and <code>sorted()</code> are intermediate (lazy) operations."
+        },
+        {
+          "id": "PC1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "A Java Stream can be consumed (iterated) multiple times.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Streams are single-use. Once a terminal operation has been called, the stream is consumed and cannot be reused. Call <code>.stream()</code> again to create a new one."
+        }
+      ]
+    },
+    {
+      "id": "PC2",
+      "title": "Terminal Operations & Collectors",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "practiceType": "JAVA",
+      "practiceFileName": "TerminalOps.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin's pipeline now reaches its output vessel — the terminal operation. The refined ore pours out and is collected, counted, or joined into a final form."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Collectors are the moulds into which your stream pours itself. <code>toList()</code> is a bag. <code>joining()</code> is a scroll that binds strings together. <code>groupingBy()</code> is a sorting hat — it places each element into the right category."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Collectors in action",
+          "code": "import java.util.stream.*;\nimport java.util.*;\n\nList<String> spells = Arrays.asList(\"Fire\",\"Ice\",\"Fog\",\"Flash\",\"Force\");\n\n// Join\nString joined = spells.stream().collect(Collectors.joining(\", \"));\nSystem.out.println(joined); // Fire, Ice, Fog, Flash, Force\n\n// Group by first letter\nMap<Character,List<String>> groups = spells.stream()\n    .collect(Collectors.groupingBy(s -> s.charAt(0)));\nSystem.out.println(groups.get('F')); // [Fire, Fog, Flash, Force]"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The <code>reduce()</code> operation is the most powerful terminal: it folds all elements into a single result using an accumulator function. It is the foundation that <code>sum()</code> and <code>count()</code> are built on."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Given a list of words <code>[\"fire\", \"ice\", \"storm\", \"fog\", \"thunder\"]</code>: (1) count how many have length &gt; 3 and print it, (2) join all with <code>\" | \"</code> and print.</p>",
+        "hint": "Use .filter(w -> w.length() > 3).count() for the first part. Use Collectors.joining(\" | \") for the second.",
+        "starterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class TerminalOps {\n    public static void main(String[] args) {\n        List<String> words = Arrays.asList(\"fire\",\"ice\",\"storm\",\"fog\",\"thunder\");\n        // Count words with length > 3\n\n        // Join with \" | \"\n\n    }\n}",
+        "tests": [
+          {"label": "Count > 3 chars", "input": "null", "expected": "3"},
+          {"label": "Joined", "input": "null", "expected": "fire | ice | storm | fog | thunder"}
+        ]
+      },
+      "feynmanPrompt": "Describe three Collectors available in Java's Collectors class. What does groupingBy() produce?",
+      "questions": [
+        {
+          "id": "PC2Q1",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>import java.util.*; import java.util.stream.*;\nList&lt;Integer&gt; nums = Arrays.asList(2, 4, 6, 8);\nint sum = nums.stream().reduce(0, Integer::sum);\nSystem.out.println(sum);</pre>",
+          "options": ["20", "10", "0", "Compile error"],
+          "answer": "20",
+          "explanation": "<code>reduce(0, Integer::sum)</code> starts with identity 0 and adds each element: 0+2+4+6+8 = 20."
+        },
+        {
+          "id": "PC2Q2",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "You want to group a list of orders by their status (PENDING, SHIPPED, DELIVERED) and count how many are in each group. Which collector achieves this?",
+          "options": [
+            "Collectors.groupingBy(Order::getStatus, Collectors.counting())",
+            "Collectors.partitioningBy(Order::getStatus)",
+            "Collectors.toMap(Order::getStatus, Order::count)",
+            "Collectors.joining(Order::getStatus)"
+          ],
+          "answer": "Collectors.groupingBy(Order::getStatus, Collectors.counting())",
+          "explanation": "<code>groupingBy</code> with a downstream <code>counting()</code> collector groups elements and counts each group — exactly what is needed."
+        }
+      ]
+    },
+    {
+      "id": "PC3",
+      "title": "Optional & Primitive Streams",
+      "sortOrder": 3,
+      "xpReward": 70,
+      "practiceType": "JAVA",
+      "practiceFileName": "StreamOptional.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin searches the archive for a scroll matching 'Dragon Lore'. He may find it — or may not. He holds up an Optional crystal: 'If something's inside, it glows.'"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "<code>Optional</code> is a container that either holds a value or is empty. It forces you to acknowledge the possibility of absence — no more silent null surprises. Call <code>orElse()</code> for a fallback; call <code>ifPresent()</code> to act only when something is there."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Optional in practice",
+          "code": "import java.util.*;\nList<String> tomes = Arrays.asList(\"Fire Magic\", \"Ice Arts\");\nOptional<String> tome = tomes.stream()\n    .filter(t -> t.contains(\"Dragon\"))\n    .findFirst();\nSystem.out.println(tome.orElse(\"No dragon tome found\"));"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Primitive streams — IntStream, LongStream, DoubleStream — exist because boxing integers to Integer just to sum them is wasteful. When doing arithmetic on streams, always use primitive stream variants for performance."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Given <code>Arrays.asList(\"apple\", \"banana\", \"cherry\", \"date\")</code>, find the first fruit with more than 5 letters. Print it if found, else print <code>\"None\"</code>. Then use <code>IntStream.rangeClosed(1,5)</code> to print the sum of 1-5.</p>",
+        "hint": "Use .filter(s -> s.length() > 5).findFirst().orElse(\"None\"). For the sum, IntStream.rangeClosed(1,5).sum().",
+        "starterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class StreamOptional {\n    public static void main(String[] args) {\n        List<String> fruits = Arrays.asList(\"apple\",\"banana\",\"cherry\",\"date\");\n        // Find first with length > 5, print or \"None\"\n\n        // Sum 1 to 5 using IntStream.rangeClosed\n\n    }\n}",
+        "tests": [
+          {"label": "First long fruit", "input": "null", "expected": "banana"},
+          {"label": "Sum 1-5", "input": "null", "expected": "15"}
+        ]
+      },
+      "feynmanPrompt": "What is Optional in Java? Give two examples of methods on Optional and explain how it prevents NullPointerException.",
+      "questions": [
+        {
+          "id": "PC3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does <code>Optional.orElse(\"default\")</code> return?",
+          "options": ["The value if present, otherwise \"default\"", "Always \"default\"", "null if empty", "Throws an exception if empty"],
+          "answer": "The value if present, otherwise \"default\"",
+          "explanation": "<code>orElse(fallback)</code> returns the contained value if present, or the fallback value if the Optional is empty."
+        }
+      ]
+    }
+  ]
+}

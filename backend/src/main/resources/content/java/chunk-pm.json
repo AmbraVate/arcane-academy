@@ -1,0 +1,114 @@
+{
+  "id": "PM",
+  "topicId": "java",
+  "title": "Design Patterns: Behavioural",
+  "glyph": "🎭",
+  "sortOrder": 27,
+  "learnerPath": "PRACTITIONER",
+  "prerequisites": ["PL"],
+  "subChunks": [
+    {
+      "id": "PM1",
+      "title": "Strategy & Observer",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "JAVA",
+      "practiceFileName": "BehaviouralPatterns1.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin's combat system used to hardcode the attack algorithm. To change tactics in battle required stopping, rewriting, and redeploying. Strategy patterns changed everything."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Strategy encapsulates an algorithm and makes it interchangeable. The context class holds a reference to the strategy interface — not a concrete implementation. Swap strategies freely at runtime, test each in isolation, add new ones without touching the context."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Observer example",
+          "code": "interface Observer { void update(String evt); }\nList<Observer> obs = new ArrayList<>();\nobs.add(e -> System.out.println(\"Logger: \" + e));\nobs.add(e -> System.out.println(\"Alerter: \" + e));\n// Emit event — all observers notified\nobs.forEach(o -> o.update(\"BREACH\"));"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Observer is the publish-subscribe model — a source emits events; all registered listeners receive them. The source knows nothing about its listeners; listeners know nothing about each other. This loose coupling is the core of event-driven architectures."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement Strategy: create a <code>Greeter</code> interface with <code>greet(String name)</code>. Implement <code>FormalGreeter</code> (prints <code>\"Good day, [name]\"</code>) and <code>CasualGreeter</code> (prints <code>\"Hey, [name]!\"</code>). Switch strategies and call both.</p>",
+        "hint": "Use lambda expressions to implement both strategies inline.",
+        "starterCode": "public class BehaviouralPatterns1 {\n    interface Greeter { void greet(String name); }\n    public static void main(String[] args) {\n        Greeter formal = name -> System.out.println(\"Good day, \" + name);\n        Greeter casual = name -> System.out.println(\"Hey, \" + name + \"!\");\n\n        formal.greet(\"Eldrin\");\n        casual.greet(\"Eldrin\");\n    }\n}",
+        "tests": [
+          {"label": "Formal greeting", "input": "null", "expected": "Good day, Eldrin"},
+          {"label": "Casual greeting", "input": "null", "expected": "Hey, Eldrin!"}
+        ]
+      },
+      "feynmanPrompt": "Explain the Strategy pattern. How does it relate to the Open/Closed principle?",
+      "questions": [
+        {
+          "id": "PM1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "In the Observer pattern, what is the relationship between the subject and its observers?",
+          "options": ["Subject has a list of observers and notifies all when state changes", "Observers control the subject's behaviour", "Subject extends all observer classes", "There is only one observer per subject"],
+          "answer": "Subject has a list of observers and notifies all when state changes",
+          "explanation": "The subject (event source) maintains a list of observers and broadcasts state changes to all of them. This creates one-to-many loose coupling — the subject doesn't know the observers' concrete types."
+        }
+      ]
+    },
+    {
+      "id": "PM2",
+      "title": "Command & Template Method",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "practiceType": "JAVA",
+      "practiceFileName": "BehaviouralPatterns2.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin creates a command crystal for every Academy action — each one can be cast, stored, and most importantly, reversed."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The Command pattern turns actions into first-class objects. An object that can be stored, passed around, queued, logged, and undone. Every action in an undo-able editor, every transaction in a payment system — these are Commands."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Template method",
+          "code": "abstract class Ritual {\n    final void perform() { // template\n        prepare(); execute(); cleanup();\n    }\n    abstract void prepare();\n    abstract void execute();\n    void cleanup() { System.out.println(\"Cleanup complete\"); } // default\n}"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Template Method defines the skeleton of an algorithm and lets subclasses fill in specific steps. The skeleton is <code>final</code> — cannot be overridden. The variable steps are abstract. This is the Hollywood Principle: don't call us, we'll call you."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a <code>DataProcessor</code> abstract class with a <code>final process()</code> template method that calls <code>loadData()</code>, <code>transform()</code>, and <code>save()</code>. Implement <code>JSONProcessor</code> with concrete versions of each.</p>",
+        "hint": "The save() hook method has a default implementation. Only loadData() and transform() need to be overridden.",
+        "starterCode": "public class BehaviouralPatterns2 {\n    abstract static class DataProcessor {\n        final void process() { loadData(); transform(); save(); }\n        abstract void loadData();\n        abstract void transform();\n        void save() { System.out.println(\"Saved\"); } // default hook\n    }\n    static class JSONProcessor extends DataProcessor {\n        void loadData()   { System.out.println(\"Loading JSON\"); }\n        void transform()  { System.out.println(\"Transforming JSON\"); }\n    }\n    public static void main(String[] args) {\n        new JSONProcessor().process();\n    }\n}",
+        "tests": [
+          {"label": "Load step", "input": "null", "expected": "Loading JSON"},
+          {"label": "Transform step", "input": "null", "expected": "Transforming JSON"},
+          {"label": "Save step", "input": "null", "expected": "Saved"}
+        ]
+      },
+      "feynmanPrompt": "What is the Command pattern used for? How does undo/redo functionality relate to this pattern?",
+      "questions": [
+        {
+          "id": "PM2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "In the Template Method pattern, why is the template method typically declared <code>final</code>?",
+          "options": ["To prevent subclasses from changing the algorithm structure", "To make it run faster", "To prevent it from being called", "To allow it to call abstract methods"],
+          "answer": "To prevent subclasses from changing the algorithm structure",
+          "explanation": "The template method defines the invariant algorithm skeleton. Making it <code>final</code> ensures subclasses can only override the variable steps, not the overall structure."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "id": "XD",
+  "topicId": "java",
+  "title": "REST APIs with Spring MVC",
+  "glyph": "🌐",
+  "sortOrder": 32,
+  "learnerPath": "EXPERT",
+  "prerequisites": ["XC"],
+  "subChunks": [
+    {
+      "id": "XD1",
+      "title": "RESTful API Design Principles",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "RestDesign.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "REST is the language of the internet. Your API is a contract — break it carelessly and every client that relies on it breaks too. Design it thoughtfully before you write a line of code."
+        },
+        {
+          "type": "NARRATION",
+          "text": "A common mistake: using verbs in URLs. /api/createOrder is wrong. The verb is in the HTTP method. POST /api/orders is right."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Given these poorly designed endpoints, rewrite them following REST conventions. Print corrected lines.</p>",
+        "hint": "GET /api/users/3, DELETE /api/users/5, POST /api/products — use nouns + HTTP methods.",
+        "starterCode": "public class RestDesignDemo {\n    public static void main(String[] args) {\n        // Bad: /api/getUser, /api/deleteUser/5, /api/createProduct\n        // TODO: print the correct REST URLs for each operation\n        // Get user with id 3, Delete user with id 5, Create product\n        System.out.println(\"GET /api/users/3\");\n        System.out.println(\"DELETE /api/users/5\");\n        System.out.println(\"POST /api/products\");\n    }\n}",
+        "tests": [
+          {"label": "REST URLs", "input": "null", "expected": "GET /api/users/3\nDELETE /api/users/5\nPOST /api/products"}
+        ]
+      },
+      "feynmanPrompt": "Explain the key REST constraints. What HTTP status code would you return when a resource is not found?",
+      "questions": [
+        {
+          "id": "XD1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which HTTP method should be used to partially update a resource?",
+          "options": ["PATCH", "PUT", "POST", "UPDATE"],
+          "answer": "PATCH",
+          "explanation": "PATCH applies a partial update. PUT replaces the entire resource."
+        },
+        {
+          "id": "XD1Q2",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A client sends a POST to create a user and the user already exists. What HTTP status code should the API return?",
+          "options": ["409 Conflict — indicates the request conflicts with the current state of the resource", "400 Bad Request", "200 OK", "422 Unprocessable Entity"],
+          "answer": "409 Conflict — indicates the request conflicts with the current state of the resource",
+          "explanation": "409 signals a duplicate/conflict. 400 is for malformed requests. 422 is for semantically invalid input."
+        }
+      ]
+    },
+    {
+      "id": "XD2",
+      "title": "@RestController & Request Mappings",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "SpringController.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "@RestController is the gateway spell. Every request enters here, gets unpacked from JSON, routed to the right method, and the result is packed back into JSON for the client."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Write a simple controller simulation: a class with a <code>getUser(long id)</code> method that returns <code>\"User: \" + id</code>, and a <code>createUser(String name)</code> method returning <code>\"Created: \" + name</code>. Call both from main.</p>",
+        "hint": "getUser returns \"User: \" + id. createUser returns \"Created: \" + name.",
+        "starterCode": "public class ControllerDemo {\n    static class UserController {\n        // TODO: getUser(long id) returns \"User: \" + id\n        // TODO: createUser(String name) returns \"Created: \" + name\n        String getUser(long id) { return null; }\n        String createUser(String name) { return null; }\n    }\n    public static void main(String[] args) {\n        UserController ctrl = new UserController();\n        System.out.println(ctrl.getUser(42));\n        System.out.println(ctrl.createUser(\"Merlin\"));\n    }\n}",
+        "tests": [
+          {"label": "Controller methods", "input": "null", "expected": "User: 42\nCreated: Merlin"}
+        ]
+      },
+      "feynmanPrompt": "What is the difference between @Controller and @RestController? What does @ResponseBody do?",
+      "questions": [
+        {
+          "id": "XD2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "How do you extract a value from the URL path in Spring MVC?",
+          "options": ["@PathVariable — e.g. @GetMapping(\"/{id}\") with @PathVariable Long id", "@RequestParam — e.g. ?id=5", "@RequestBody — from the request body", "@Header — from HTTP headers"],
+          "answer": "@PathVariable — e.g. @GetMapping(\"/{id}\") with @PathVariable Long id",
+          "explanation": "@PathVariable binds URI template variables. @RequestParam binds query string parameters."
+        }
+      ]
+    },
+    {
+      "id": "XD3",
+      "title": "Validation, DTOs & Global Error Handling",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "RestValidation.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Never trust client input. The @Valid annotation is your first ward against chaos — it rejects malformed requests before they reach your business logic. Your GlobalExceptionHandler is the fallback ward."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a <code>validate(String username, String email)</code> method: return <code>\"OK\"</code> if username is non-empty and email contains <code>\"@\"</code>; otherwise return <code>\"INVALID\"</code>.</p>",
+        "hint": "Check !username.isBlank() && email.contains(\"@\").",
+        "starterCode": "public class ValidationDemo {\n    static String validate(String username, String email) {\n        // TODO: return \"OK\" if username non-blank AND email contains \"@\"\n        // otherwise return \"INVALID\"\n        return null;\n    }\n    public static void main(String[] args) {\n        System.out.println(validate(\"eldrin\", \"eldrin@academy.com\"));\n        System.out.println(validate(\"\", \"notanemail\"));\n    }\n}",
+        "tests": [
+          {"label": "Valid", "input": "null", "expected": "OK\nINVALID"}
+        ]
+      },
+      "feynmanPrompt": "Why use DTOs instead of passing domain entities directly to/from API endpoints?",
+      "questions": [
+        {
+          "id": "XD3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What annotation triggers Bean Validation on a @RequestBody parameter?",
+          "options": ["@Valid (or @Validated)", "@NotNull", "@Validated only", "@Constraints"],
+          "answer": "@Valid (or @Validated)",
+          "explanation": "@Valid triggers JSR-380 constraint validation on the annotated parameter. Spring returns 400 if constraints fail."
+        }
+      ]
+    },
+    {
+      "id": "XD4",
+      "title": "API Security & Documentation",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "ApiSecurity.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A public API without authentication is an unlocked treasury. JWT tokens are like signet rings — they prove who you are without requiring a stateful session on the server."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate JWT structure: a token has format <code>header.payload.signature</code>. Write <code>extractPayload(String token)</code> that splits on <code>\".\"</code> and returns the middle part.</p>",
+        "hint": "token.split(\"\\\\.\")[1] returns the payload (index 1).",
+        "starterCode": "public class JwtDemo {\n    static String extractPayload(String token) {\n        // TODO: split by \".\" and return the second part (index 1)\n        return null;\n    }\n    public static void main(String[] args) {\n        String token = \"eyJhbGc.eyJ1c2VyIjoiZWxkcmluIn0.signature\";\n        System.out.println(extractPayload(token));\n    }\n}",
+        "tests": [
+          {"label": "Payload", "input": "null", "expected": "eyJ1c2VyIjoiZWxkcmluIn0"}
+        ]
+      },
+      "feynmanPrompt": "Explain JWT authentication flow. Why do REST APIs use stateless token auth rather than server-side sessions?",
+      "questions": [
+        {
+          "id": "XD4Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Why is CSRF protection typically disabled for REST APIs using JWT?",
+          "options": ["JWT is sent in the Authorization header, not a cookie, so CSRF attacks don't apply", "JWT is more secure than CSRF tokens", "REST APIs don't have forms to submit", "CSRF protection slows down API calls"],
+          "answer": "JWT is sent in the Authorization header, not a cookie, so CSRF attacks don't apply",
+          "explanation": "CSRF exploits browser cookie auto-attachment. JWTs in Authorization headers are not auto-sent by browsers, so CSRF is not a threat."
+        }
+      ]
+    }
+  ]
+}

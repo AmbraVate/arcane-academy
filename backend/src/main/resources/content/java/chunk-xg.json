@@ -1,0 +1,159 @@
+{
+  "id": "XG",
+  "topicId": "java",
+  "title": "Microservices Architecture",
+  "glyph": "🔧",
+  "sortOrder": 35,
+  "learnerPath": "EXPERT",
+  "prerequisites": ["XD", "XE"],
+  "subChunks": [
+    {
+      "id": "XG1",
+      "title": "Microservices vs Monolith",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "MicroservicesIntro.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "The Academy once had a single Grand Spellbook. When it grew too large, they split it — the Combat Library, the Alchemy Vault, the History Archives. Each could grow and be updated independently."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Don't reach for microservices on day one. A well-structured monolith is often faster to build and easier to operate. Microservices trade development simplicity for operational flexibility — make that trade consciously."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Print a comparison: for each of 3 attributes, print whether a Monolith or Microservices is simpler. Use format: <code>\"[attribute]: Monolith|Microservices\"</code>.</p>",
+        "hint": "Deployment and debugging are simpler with a Monolith. Granular scaling is simpler with Microservices.",
+        "starterCode": "public class ArchitectureComparison {\n    public static void main(String[] args) {\n        // deployment: Monolith simpler\n        System.out.println(\"Deployment: Monolith\");\n        // scaling specific parts: Microservices simpler\n        System.out.println(\"Granular scaling: Microservices\");\n        // debugging across network: Monolith simpler\n        System.out.println(\"Debugging: Monolith\");\n    }\n}",
+        "tests": [
+          {"label": "Comparison", "input": "null", "expected": "Deployment: Monolith\nGranular scaling: Microservices\nDebugging: Monolith"}
+        ]
+      },
+      "feynmanPrompt": "When would you choose a monolith over microservices? What is the main operational cost of microservices?",
+      "questions": [
+        {
+          "id": "XG1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the primary benefit of the Circuit Breaker pattern in microservices?",
+          "options": ["Prevents cascading failures when a downstream service is unavailable", "Encrypts inter-service communication", "Routes traffic to the nearest service", "Scales services automatically"],
+          "answer": "Prevents cascading failures when a downstream service is unavailable",
+          "explanation": "Circuit Breaker (e.g., Resilience4j) stops calls to a failing service and returns a fallback, preventing system-wide failure."
+        }
+      ]
+    },
+    {
+      "id": "XG2",
+      "title": "Inter-Service Communication",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "ServiceCommunication.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Synchronous calls are a wizard shouting across the hall for an answer. Async messaging is leaving a scroll in the mailbox — the recipient reads it when ready. Choose based on whether you need an immediate answer."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate async messaging: create a simple <code>MessageQueue</code> with <code>publish(String message)</code> and <code>consume()</code>. Publish three messages and consume them in order.</p>",
+        "hint": "Use a LinkedList as the backing queue. publish() adds to the queue, consume() polls and prints.",
+        "starterCode": "import java.util.LinkedList;\nimport java.util.Queue;\n\npublic class MessageQueueDemo {\n    static class MessageQueue {\n        Queue<String> queue = new LinkedList<>();\n        // TODO: publish(String message) — add to queue\n        // TODO: consume() — poll from queue and print\n        void publish(String message) {}\n        void consume() {}\n    }\n    public static void main(String[] args) {\n        MessageQueue mq = new MessageQueue();\n        mq.publish(\"OrderPlaced\");\n        mq.publish(\"PaymentProcessed\");\n        mq.publish(\"OrderShipped\");\n        mq.consume();\n        mq.consume();\n        mq.consume();\n    }\n}",
+        "tests": [
+          {"label": "Queue", "input": "null", "expected": "OrderPlaced\nPaymentProcessed\nOrderShipped"}
+        ]
+      },
+      "feynmanPrompt": "Compare synchronous and asynchronous inter-service communication. When would you choose each?",
+      "questions": [
+        {
+          "id": "XG2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which communication pattern provides the best resilience when a downstream service is temporarily unavailable?",
+          "options": ["Asynchronous messaging (message queue)", "Synchronous REST calls", "Direct database access", "Shared memory"],
+          "answer": "Asynchronous messaging (message queue)",
+          "explanation": "Message queues decouple producer from consumer. If the consumer is down, messages wait in the queue — no data loss."
+        }
+      ]
+    },
+    {
+      "id": "XG3",
+      "title": "Service Discovery & API Gateway",
+      "sortOrder": 3,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "ServiceDiscovery.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The API Gateway is the Academy's front gate — all visitors enter here. It checks credentials, routes to the right tower, and shields the inner workings from the outside world."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate routing: given a map of service routes, write <code>route(String path)</code> that returns the service name for a given path prefix. Return <code>\"unknown\"</code> if no match.</p>",
+        "hint": "Iterate the routes map entries. If path.startsWith(entry.getKey()), return entry.getValue(). Return \"unknown\" if none match.",
+        "starterCode": "import java.util.LinkedHashMap;\nimport java.util.Map;\n\npublic class GatewayDemo {\n    static Map<String, String> routes = new LinkedHashMap<>();\n    static {\n        routes.put(\"/api/orders\", \"order-service\");\n        routes.put(\"/api/users\", \"user-service\");\n        routes.put(\"/api/products\", \"product-service\");\n    }\n    static String route(String path) {\n        // TODO: return service whose key is a prefix of path, else \"unknown\"\n        for (Map.Entry<String, String> e : routes.entrySet()) {\n            if (path.startsWith(e.getKey())) return e.getValue();\n        }\n        return \"unknown\";\n    }\n    public static void main(String[] args) {\n        System.out.println(route(\"/api/orders/5\"));\n        System.out.println(route(\"/api/users\"));\n        System.out.println(route(\"/api/unknown\"));\n    }\n}",
+        "tests": [
+          {"label": "Routing", "input": "null", "expected": "order-service\nuser-service\nunknown"}
+        ]
+      },
+      "feynmanPrompt": "What is an API Gateway? List three responsibilities it can handle for all services.",
+      "questions": [
+        {
+          "id": "XG3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does 'lb://' in Spring Cloud Gateway route configuration indicate?",
+          "options": ["Load-balanced — Spring Cloud will resolve the service via Service Discovery", "Local binding — the service is on localhost", "Library — a built-in Spring service", "Lightweight — a reduced-feature service"],
+          "answer": "Load-balanced — Spring Cloud will resolve the service via Service Discovery",
+          "explanation": "lb://SERVICE-NAME tells the gateway to look up the service in Eureka and load-balance requests across instances."
+        }
+      ]
+    },
+    {
+      "id": "XG4",
+      "title": "Distributed Tracing & Saga Pattern",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "DistributedPatterns.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "In a distributed system, a single purchase involves five services. If step three fails, you must undo steps one and two — compensating transactions are the rollback mechanism of microservices."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Simulate a choreography saga step: given a list of saga steps (strings), process each in order. If a step contains <code>\"FAIL\"</code>, print <code>\"Compensating: \" + step</code> for all completed steps in reverse order.</p>",
+        "hint": "Track completed steps in a List. On FAIL, iterate completed in reverse and print \"Compensating: \" + each.",
+        "starterCode": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class SagaDemo {\n    public static void main(String[] args) {\n        String[] steps = {\"CreateOrder\", \"ProcessPayment\", \"FAIL:ReserveInventory\"};\n        List<String> completed = new ArrayList<>();\n        for (String step : steps) {\n            if (step.startsWith(\"FAIL\")) {\n                System.out.println(\"Failed at: \" + step);\n                for (int i = completed.size() - 1; i >= 0; i--) {\n                    System.out.println(\"Compensating: \" + completed.get(i));\n                }\n                break;\n            } else {\n                System.out.println(\"Completed: \" + step);\n                completed.add(step);\n            }\n        }\n    }\n}",
+        "tests": [
+          {"label": "Saga", "input": "null", "expected": "Completed: CreateOrder\nCompleted: ProcessPayment\nFailed at: FAIL:ReserveInventory\nCompensating: ProcessPayment\nCompensating: CreateOrder"}
+        ]
+      },
+      "feynmanPrompt": "Explain the Saga pattern. Why can't distributed microservices use traditional database transactions (2PC)?",
+      "questions": [
+        {
+          "id": "XG4Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What is a compensating transaction in the Saga pattern?",
+          "options": ["An action that undoes a previously completed step when a later step fails", "A transaction that runs concurrently to speed up processing", "A read-only query that checks saga state", "A retry mechanism for failed transactions"],
+          "answer": "An action that undoes a previously completed step when a later step fails",
+          "explanation": "Compensating transactions are the distributed equivalent of rollback — they reverse the effects of already-committed steps."
+        }
+      ]
+    }
+  ]
+}

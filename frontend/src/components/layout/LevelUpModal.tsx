@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from './LevelUpModal.module.css'
+import { cn } from '@/lib/utils'
 
 interface Props {
   newLevel: number
@@ -20,7 +20,6 @@ export default function LevelUpModal({ newLevel, newRank, onClose }: Props) {
   const info = RANK_LORE[newRank] ?? RANK_LORE.Novice
 
   useEffect(() => {
-    // Delay slightly so CSS transition fires
     const t = setTimeout(() => setVisible(true), 50)
     return () => clearTimeout(t)
   }, [])
@@ -31,14 +30,35 @@ export default function LevelUpModal({ newLevel, newRank, onClose }: Props) {
   }
 
   return (
-    <div className={`${styles.overlay} ${visible ? styles.overlayVisible : ''}`} onClick={handleClose}>
-      <div className={`${styles.modal} ${visible ? styles.modalVisible : ''}`} onClick={e => e.stopPropagation()}>
-        <div className={styles.glyph}>{info.icon}</div>
-        <div className={styles.levelBadge}>Level {newLevel}</div>
-        <div className={styles.rankName}>{info.title}</div>
-        <div className={styles.lore}>{info.lore}</div>
-        <div className={styles.xpLine}>Keep casting spells to rise further</div>
-        <button className={styles.btn} onClick={handleClose}>
+    <div
+      className={cn(
+        'fixed inset-0 bg-black/75 flex items-center justify-center z-[500] transition-opacity duration-300',
+        visible ? 'opacity-100' : 'opacity-0'
+      )}
+      onClick={handleClose}
+    >
+      <div
+        className={cn(
+          'bg-card border border-gold-dim rounded-[14px] p-9 px-8 max-w-[380px] w-[90%] text-center',
+          'transition-[transform,opacity] duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]',
+          visible ? 'scale-100 translate-y-0 opacity-100' : 'scale-[0.85] translate-y-5 opacity-0'
+        )}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="text-[56px] mb-3 animate-level-pop">{info.icon}</div>
+        <div className="font-cinzel text-[12px] tracking-[3px] text-gold mb-1.5 uppercase">
+          Level {newLevel}
+        </div>
+        <div className="font-cinzel text-[28px] text-gold mb-4">{info.title}</div>
+        <div className="text-[15px] leading-[1.7] text-text italic mb-3">{info.lore}</div>
+        <div className="text-[12px] text-muted mb-6 font-cinzel tracking-[1px]">
+          Keep casting spells to rise further
+        </div>
+        <button
+          className="bg-gold-dim border border-gold text-gold px-6 py-2.5 rounded-[7px] cursor-pointer
+            font-cinzel text-[13px] tracking-[1px] transition-[background] duration-200 hover:bg-[#6a4c0e]"
+          onClick={handleClose}
+        >
           Continue your journey →
         </button>
       </div>

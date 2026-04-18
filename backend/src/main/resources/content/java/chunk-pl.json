@@ -1,0 +1,113 @@
+{
+  "id": "PL",
+  "topicId": "java",
+  "title": "Design Patterns: Structural",
+  "glyph": "🔧",
+  "sortOrder": 26,
+  "learnerPath": "PRACTITIONER",
+  "prerequisites": ["PK"],
+  "subChunks": [
+    {
+      "id": "PL1",
+      "title": "Adapter & Decorator",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "JAVA",
+      "practiceFileName": "StructuralPatterns1.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin adapts an ancient dusty spell book to work with the modern Academy's casting interface — without rewriting the book."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The Adapter pattern is the universal translator. When the interface of an existing class doesn't match what you need, you wrap it in an Adapter that speaks both languages. The old code is untouched; the new code sees only the interface it expects."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Decorator chain",
+          "code": "Coffee c = new SugarDecorator(new MilkDecorator(new SimpleCoffee()));\nSystem.out.println(c.description()); // Coffee, Milk, Sugar\nSystem.out.println(c.cost());        // 1.8"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Decorator adds behaviour without subclassing. Stack as many decorators as you need — each wraps the previous. Java I/O streams are a classic example: <code>new BufferedReader(new FileReader(file))</code> — each layer adds capability."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement an Adapter: <code>OldPrinter</code> has <code>printOld(String)</code>. New code expects <code>Printer</code> interface with <code>print(String)</code>. Create <code>PrinterAdapter</code> and verify it works.</p>",
+        "hint": "PrinterAdapter holds an OldPrinter instance and delegates print() to printOld().",
+        "starterCode": "public class StructuralPatterns1 {\n    interface Printer { void print(String msg); }\n    static class OldPrinter { void printOld(String msg) { System.out.println(\"[OLD] \" + msg); } }\n    static class PrinterAdapter implements Printer {\n        private OldPrinter old;\n        PrinterAdapter(OldPrinter o) { this.old = o; }\n        public void print(String msg) { old.printOld(msg); }\n    }\n    public static void main(String[] args) {\n        Printer p = new PrinterAdapter(new OldPrinter());\n        p.print(\"Hello Adapter\");\n    }\n}",
+        "tests": [
+          {"label": "Adapter delegates", "input": "null", "expected": "[OLD] Hello Adapter"}
+        ]
+      },
+      "feynmanPrompt": "Explain the Adapter pattern. Give a real-world example of when you would use it.",
+      "questions": [
+        {
+          "id": "PL1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What problem does the Decorator pattern solve that inheritance cannot?",
+          "options": ["Adding behaviour dynamically at runtime without subclassing", "Making classes immutable", "Hiding the implementation from the caller", "Controlling object creation"],
+          "answer": "Adding behaviour dynamically at runtime without subclassing",
+          "explanation": "Decorator wraps objects at runtime — you can combine multiple decorators in any order. Inheritance is static (compile-time), and deep inheritance hierarchies become rigid and brittle."
+        }
+      ]
+    },
+    {
+      "id": "PL2",
+      "title": "Facade & Proxy",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "practiceType": "JAVA",
+      "practiceFileName": "StructuralPatterns2.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin creates a single 'Start Academy Day' lever. Behind it: locking the vault, raising the bridge, lighting the torches, summoning the staff — seven subsystems. Clients pull one lever."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The Facade is a simple door into a complex room. Clients interact only with the facade; the complexity of the subsystem is hidden. The subsystem classes still exist and can be used directly when needed — the facade just provides a convenient entry point."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Proxy for caching",
+          "code": "interface Service { String get(String k); }\nclass SlowService implements Service {\n    public String get(String k) { return \"result:\" + k; }\n}\nclass CacheProxy implements Service {\n    private Service real; private Map<String,String> cache = new java.util.HashMap<>();\n    CacheProxy(Service s) { real = s; }\n    public String get(String k) { return cache.computeIfAbsent(k, real::get); }\n}"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Proxy is a gatekeeper. It stands in front of a real object, intercepting calls to add behaviour: caching, logging, access control, lazy loading. Spring AOP creates proxies automatically for <code>@Transactional</code> and <code>@Cacheable</code> methods."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement a <code>SpellcastingFacade</code> with a <code>castSpell()</code> method that calls <code>ManaSystem.check()</code>, <code>ArcaneChannel.open()</code>, and prints <code>\"Spell cast!\"</code>.</p>",
+        "hint": "The facade creates instances of ManaSystem and ArcaneChannel internally and delegates to them.",
+        "starterCode": "public class StructuralPatterns2 {\n    static class ManaSystem { void check() { System.out.println(\"Mana OK\"); } }\n    static class ArcaneChannel { void open() { System.out.println(\"Channel open\"); } }\n    static class SpellcastingFacade {\n        private ManaSystem mana = new ManaSystem();\n        private ArcaneChannel channel = new ArcaneChannel();\n        void castSpell() {\n            mana.check();\n            channel.open();\n            System.out.println(\"Spell cast!\");\n        }\n    }\n    public static void main(String[] args) {\n        new SpellcastingFacade().castSpell();\n    }\n}",
+        "tests": [
+          {"label": "Mana checked", "input": "null", "expected": "Mana OK"},
+          {"label": "Channel opened", "input": "null", "expected": "Channel open"},
+          {"label": "Spell cast", "input": "null", "expected": "Spell cast!"}
+        ]
+      },
+      "feynmanPrompt": "What is the difference between Facade and Adapter patterns? When would you use a Proxy pattern?",
+      "questions": [
+        {
+          "id": "PL2Q1",
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Spring's @Transactional annotation works by wrapping your bean in a ________?",
+          "options": ["Proxy", "Adapter", "Decorator", "Facade"],
+          "answer": "Proxy",
+          "explanation": "Spring creates a proxy around <code>@Transactional</code> beans. The proxy intercepts method calls, starts/commits/rolls back transactions, then delegates to the real bean. This is the Proxy pattern in action."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "id": "I",
+  "topicId": "java",
+  "title": "OOP: Classes & Objects",
+  "glyph": "🏛️",
+  "sortOrder": 9,
+  "learnerPath": "FOUNDATION",
+  "prerequisites": ["D"],
+  "subChunks": [
+    {
+      "id": "I1",
+      "title": "Classes & Objects",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "ClassBasics.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin unrolls an enormous parchment labelled <em>Wizard Blueprint</em>. It shows fields for name, level, and school — but the parchment itself is not a wizard."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The class is the <strong>blueprint</strong>. The object is what you build from it. You build me — Archmage Eldrin — from the Wizard blueprint. You could build a hundred wizards from the same blueprint; each one is distinct."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Blueprint and instances",
+          "code": "class Wizard {\n    String name;\n    int level;\n    void greet() {\n        System.out.println(\"I am \" + name);\n    }\n}\n\nWizard eldrin = new Wizard();\neldrin.name = \"Eldrin\";\neldrin.level = 9999;\neldrin.greet(); // I am Eldrin"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "The <code>new</code> keyword is the incantation that brings the blueprint to life. It allocates memory and returns a reference to the newly created object."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a class <code>Spell</code> with fields <code>String name</code> and <code>int power</code>, and a method <code>describe()</code> that prints <code>\"[name] deals [power] damage\"</code>. Create two Spell objects and call <code>describe()</code> on each.</p>",
+        "hint": "Define the Spell class inside ClassBasics, create two instances with different name/power values.",
+        "starterCode": "public class ClassBasics {\n    // Define the Spell class here\n\n    public static void main(String[] args) {\n        // Create two Spell objects and call describe()\n\n    }\n}",
+        "tests": [
+          {"label": "Fireball", "input": "null", "expected": "Fireball deals 80 damage"},
+          {"label": "Ice Lance", "input": "null", "expected": "Ice Lance deals 55 damage"}
+        ]
+      },
+      "feynmanPrompt": "Explain the relationship between a class and an object in Java using an analogy from everyday life.",
+      "questions": [
+        {
+          "id": "I1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What keyword is used to create a new object from a class in Java?",
+          "options": ["new", "create", "make", "instantiate"],
+          "answer": "new",
+          "explanation": "The <code>new</code> keyword allocates memory for the object and calls its constructor."
+        },
+        {
+          "id": "I1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Changing a field on one object affects all other objects created from the same class.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Each object has its <strong>own independent copy</strong> of its instance fields. Changing one object's field has no effect on others (unless the field is <code>static</code>)."
+        },
+        {
+          "id": "I1Q3",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>class Dog {\n    String name;\n    void bark() { System.out.println(name + \" says Woof!\"); }\n}\nDog d = new Dog();\nd.name = \"Rex\";\nd.bark();</pre>",
+          "options": ["Rex says Woof!", "null says Woof!", "Dog says Woof!", "Compile error"],
+          "answer": "Rex says Woof!",
+          "explanation": "The <code>name</code> field is set to \"Rex\" before <code>bark()</code> is called, so it prints \"Rex says Woof!\""
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "title": "Constructors & the this Keyword",
+      "sortOrder": 2,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "Constructors.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin taps the Wizard blueprint. Below the fields, a section reads <em>Initialisation Ritual</em>."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Every well-made object is initialised at the moment of creation. The constructor is that ritual. You provide the ingredients — name and level — and the object emerges fully formed, ready to use."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Constructor in action",
+          "code": "class Spell {\n    String name;\n    int power;\n    Spell(String name, int power) {\n        this.name = name;\n        this.power = power;\n    }\n    void describe() {\n        System.out.println(name + \": \" + power + \" dmg\");\n    }\n}\nSpell s = new Spell(\"Fireball\", 80);\ns.describe(); // Fireball: 80 dmg"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Notice <code>this.name = name</code>. The <code>this</code> on the left refers to the field; the plain <code>name</code> on the right is the parameter. Without <code>this</code>, the field would never be set."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a class <code>Potion</code> with fields <code>String type</code> and <code>int strength</code>, and a constructor that takes both. Add a method <code>use()</code> that prints <code>\"Used [type] potion (+[strength] HP)\"</code>. Create and use two potions.</p>",
+        "hint": "Remember to use 'this.type = type' in the constructor to distinguish the field from the parameter.",
+        "starterCode": "public class Constructors {\n    // Define Potion class with constructor\n\n    public static void main(String[] args) {\n        // Create a Health potion with strength 50\n        // Create a Mana potion with strength 30\n        // Call use() on each\n\n    }\n}",
+        "tests": [
+          {"label": "Health potion", "input": "null", "expected": "Used Health potion (+50 HP)"},
+          {"label": "Mana potion", "input": "null", "expected": "Used Mana potion (+30 HP)"}
+        ]
+      },
+      "feynmanPrompt": "What is a constructor in Java? Why do we use 'this' inside constructors, and what happens if you forget it?",
+      "questions": [
+        {
+          "id": "I2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does the <code>this</code> keyword refer to inside a method or constructor?",
+          "options": ["The current object", "The parent class", "The class itself", "The calling method"],
+          "answer": "The current object",
+          "explanation": "<code>this</code> is a reference to the object on which the method or constructor was invoked."
+        },
+        {
+          "id": "I2Q2",
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "This constructor does not correctly set the field. What is the bug?\n<pre>class Cat {\n    String name;\n    Cat(String name) {\n        name = name; // bug!\n    }\n}</pre>",
+          "options": [
+            "Change to: this.name = name;",
+            "Change to: Cat.name = name;",
+            "The constructor has no return type",
+            "String fields cannot be set in constructors"
+          ],
+          "answer": "Change to: this.name = name;",
+          "explanation": "Without <code>this</code>, both sides refer to the local parameter. The field <code>name</code> is never assigned. Use <code>this.name = name</code> to distinguish field from parameter."
+        },
+        {
+          "id": "I2Q3",
+          "type": "TRUE_FALSE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "If you define a parameterised constructor in a Java class, Java still provides the no-argument constructor automatically.",
+          "options": ["True", "False"],
+          "answer": "False",
+          "explanation": "Once you define any constructor, Java stops providing the default no-arg constructor. If you need both, define both explicitly."
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "title": "toString() and equals()",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "practiceFileName": "ToStringEquals.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Eldrin prints two wizard scrolls. Both show <code>Wizard@4e50df2e</code> — completely useless information."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Java's default <code>toString()</code> shows a memory address — the vault room and shelf number, not the wizard's identity. Override it to tell Java how your object should introduce itself."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Meaningful toString",
+          "code": "class Wizard {\n    String name; int level;\n    Wizard(String n, int l) { name=n; level=l; }\n    @Override\n    public String toString() {\n        return name + \" (Lv.\" + level + \")\";\n    }\n}\nSystem.out.println(new Wizard(\"Eldrin\", 99)); // Eldrin (Lv.99)"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "And <code>equals()</code> — by default it checks if two variables point to the <em>same object in memory</em>. Override it to check if two objects represent the same <em>value</em>."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Create a <code>Point</code> class with <code>int x</code> and <code>int y</code>. Override <code>toString()</code> to return <code>\"(x, y)\"</code>. Override <code>equals()</code> to return true when both coordinates match. Print two points and check if they are equal.</p>",
+        "hint": "In equals(), cast the Object parameter to Point and compare both x and y fields.",
+        "starterCode": "public class ToStringEquals {\n    static class Point {\n        int x, y;\n        Point(int x, int y) { this.x = x; this.y = y; }\n        // Override toString()\n\n        // Override equals()\n\n    }\n    public static void main(String[] args) {\n        Point p1 = new Point(3, 4);\n        Point p2 = new Point(3, 4);\n        Point p3 = new Point(1, 2);\n        System.out.println(p1);           // (3, 4)\n        System.out.println(p1.equals(p2)); // true\n        System.out.println(p1.equals(p3)); // false\n    }\n}",
+        "tests": [
+          {"label": "toString", "input": "null", "expected": "(3, 4)"},
+          {"label": "equals true", "input": "null", "expected": "true"},
+          {"label": "equals false", "input": "null", "expected": "false"}
+        ]
+      },
+      "feynmanPrompt": "Why should you override both equals() and hashCode() together in Java? What can go wrong if you only override one?",
+      "questions": [
+        {
+          "id": "I3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "When is <code>toString()</code> called automatically in Java?",
+          "options": [
+            "When the object is printed or concatenated with a String",
+            "When the object is created",
+            "When equals() is called",
+            "When the object is compared with =="
+          ],
+          "answer": "When the object is printed or concatenated with a String",
+          "explanation": "<code>toString()</code> is called by <code>System.out.println(obj)</code> and string concatenation like <code>\"Value: \" + obj</code>."
+        },
+        {
+          "id": "I3Q2",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print? (No toString override)\n<pre>class Box {}\nBox b = new Box();\nSystem.out.println(b == b);\nBox c = new Box();\nSystem.out.println(b == c);</pre>",
+          "options": ["true\nfalse", "false\nfalse", "true\ntrue", "false\ntrue"],
+          "answer": "true\nfalse",
+          "explanation": "<code>b == b</code> compares a reference to itself — always true. <code>b == c</code> compares two different objects — different memory addresses, so false."
+        }
+      ]
+    }
+  ]
+}
