@@ -1,0 +1,293 @@
+{
+  "id": "F",
+  "topicId": "java",
+  "title": "Console I/O",
+  "glyph": "💬",
+  "sortOrder": 6,
+  "learnerPath": "FOUNDATION",
+  "prerequisites": ["D"],
+  "subChunks": [
+    {
+      "id": "F1",
+      "title": "Output: System.out",
+      "sortOrder": 1,
+      "xpReward": 40,
+      "practiceType": "JAVA",
+      "practiceFileName": "SystemOut.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Every wizard must be able to communicate their findings. In Java, your primary tool for speaking to the world is <code>System.out</code>."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Mentor",
+          "text": "You already know <code>println</code>. But there's a whole family of output methods — and a powerful formatting tool called <code>printf</code>."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Output methods",
+          "code": "System.out.println(\"Hello!\");   // prints + newline\nSystem.out.print(\"Hello \");     // prints, no newline\nSystem.out.print(\"World\\n\");    // manual newline\nSystem.out.printf(\"Name: %s, Level: %d%n\", \"Eldrin\", 99);"
+        },
+        {
+          "type": "NARRATION",
+          "text": "<code>printf</code> uses format specifiers: <code>%s</code> for strings, <code>%d</code> for integers, <code>%f</code> for floats, <code>%.2f</code> for 2 decimal places, <code>%n</code> for a platform-safe newline."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Formatting numbers",
+          "code": "double power = 9.5;\nSystem.out.printf(\"Power: %.2f%n\", power);  // Power: 9.50"
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Print the following output using <code>println</code> and <code>printf</code>:</p><pre>Name: Eldrin\nLevel: 99\nPower: 9.50</pre>",
+        "hint": "Use println for the name and level lines, then printf with %.2f for the power line.",
+        "starterCode": "public class SystemOut {\n    public static void main(String[] args) {\n        String name = \"Eldrin\";\n        int level = 99;\n        double power = 9.5;\n        // Print all three lines\n    }\n}",
+        "tests": [
+          {"label": "println and printf", "input": "null", "expected": "Name: Eldrin\nLevel: 99\nPower: 9.50"}
+        ]
+      },
+      "feynmanPrompt": "Explain the difference between print, println, and printf in your own words.",
+      "questions": [
+        {
+          "id": "F1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which format specifier is used for integers in printf?",
+          "options": ["%s", "%d", "%f", "%i"],
+          "answer": "%d",
+          "explanation": "%d is the format specifier for integers (decimal). %s is for strings, %f is for floating-point numbers."
+        },
+        {
+          "id": "F1Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "System.out.println automatically adds a newline at the end.",
+          "options": ["True", "False"],
+          "answer": "True",
+          "explanation": "println stands for 'print line' — it always appends a newline character after the output."
+        },
+        {
+          "id": "F1Q3",
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What does this print?\n<pre>System.out.printf(\"Score: %.1f%n\", 8.567);</pre>",
+          "options": ["Score: 8.567", "Score: 8.6", "Score: 8.5", "Score: 9.0"],
+          "answer": "Score: 8.6",
+          "explanation": "%.1f rounds to 1 decimal place. 8.567 rounds up to 8.6."
+        },
+        {
+          "id": "F1Q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the difference between %n and \\n in printf?",
+          "options": [
+            "%n is platform-independent newline; \\n is always Unix-style",
+            "They are identical",
+            "%n only works on Windows",
+            "\\n adds two newlines"
+          ],
+          "answer": "%n is platform-independent newline; \\n is always Unix-style",
+          "explanation": "%n outputs the system-appropriate newline (\\r\\n on Windows, \\n on Unix), making your output portable across platforms."
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "title": "Input: Scanner Basics",
+      "sortOrder": 2,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "ScannerBasics.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Output is only half the conversation. To read from the user, you need Java's <code>Scanner</code> class."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Mentor",
+          "text": "Scanner wraps an input source — usually <code>System.in</code> — and gives you methods to read different types of data."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Scanner setup",
+          "code": "import java.util.Scanner;\n\npublic class ScannerBasics {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String name = sc.nextLine();   // reads a whole line\n        int age = sc.nextInt();        // reads an integer\n        sc.close();                    // always close when done\n    }\n}"
+        },
+        {
+          "type": "NARRATION",
+          "text": "Key Scanner methods: <code>nextLine()</code> reads a full line, <code>nextInt()</code> reads an integer, <code>nextDouble()</code> reads a decimal. Always close the scanner when finished."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Read a name and an age from input, then print: <code>Hello, [name]! You are [age] years old.</code></p>",
+        "hint": "Use nextLine() for the name and nextInt() for the age.",
+        "starterCode": "import java.util.Scanner;\n\npublic class ScannerBasics {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Read name and age, then print the greeting\n        sc.close();\n    }\n}",
+        "tests": [
+          {"label": "Read name and age", "input": "Merlin\n42", "expected": "Hello, Merlin! You are 42 years old."}
+        ]
+      },
+      "feynmanPrompt": "Why do we need to import Scanner, but not System.out?",
+      "questions": [
+        {
+          "id": "F2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Which Scanner method reads a complete line of text?",
+          "options": ["next()", "nextLine()", "nextString()", "readLine()"],
+          "answer": "nextLine()",
+          "explanation": "nextLine() reads the entire line including spaces. next() only reads up to the first whitespace."
+        },
+        {
+          "id": "F2Q2",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "You must import java.util.Scanner before using it.",
+          "options": ["True", "False"],
+          "answer": "True",
+          "explanation": "Scanner is in the java.util package and must be imported. Only java.lang classes (like String, System) are available without import."
+        },
+        {
+          "id": "F2Q3",
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What is wrong with this code?\n<pre>Scanner sc = new Scanner(System.in);\nint x = sc.nextInt();</pre>",
+          "options": [
+            "Missing import java.util.Scanner",
+            "nextInt() doesn't exist",
+            "System.in should be System.out",
+            "Nothing is wrong"
+          ],
+          "answer": "Missing import java.util.Scanner",
+          "explanation": "Scanner must be imported from java.util. Without the import statement, the compiler won't find the Scanner class."
+        },
+        {
+          "id": "F2Q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "Why should you call sc.close() when finished with a Scanner?",
+          "options": [
+            "To release the underlying stream resource",
+            "To reset the scanner for reuse",
+            "It's optional — just good style",
+            "To flush buffered output"
+          ],
+          "answer": "To release the underlying stream resource",
+          "explanation": "Closing the Scanner releases the underlying input stream (System.in). Not closing it can cause resource leaks, especially when reading from files."
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "title": "Reading Different Types & Validation",
+      "sortOrder": 3,
+      "xpReward": 50,
+      "practiceType": "JAVA",
+      "practiceFileName": "ScannerTypes.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "Scanner can read many types, but mixing <code>nextInt()</code> and <code>nextLine()</code> has a notorious pitfall every Java apprentice must learn."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Mentor",
+          "text": "When you call nextInt(), it reads the number but leaves the newline character in the buffer. The next nextLine() then picks up that leftover newline instead of waiting for real input."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "The nextLine pitfall and fix",
+          "code": "Scanner sc = new Scanner(System.in);\nint age = sc.nextInt();\nsc.nextLine();             // consume the leftover newline\nString name = sc.nextLine();  // now reads the actual name\nsc.close();"
+        },
+        {
+          "type": "NARRATION",
+          "text": "You can also validate input before reading with <code>hasNextInt()</code>, <code>hasNextDouble()</code> etc. These return true if the next token can be parsed as that type."
+        },
+        {
+          "type": "EXAMPLE",
+          "label": "Safe integer reading",
+          "code": "Scanner sc = new Scanner(System.in);\nif (sc.hasNextInt()) {\n    int n = sc.nextInt();\n    System.out.println(\"Got: \" + n);\n} else {\n    System.out.println(\"Not an integer!\");\n}\nsc.close();"
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Read two integers and print their sum.</p>",
+        "hint": "Use nextInt() twice, then add and print.",
+        "starterCode": "import java.util.Scanner;\n\npublic class ScannerTypes {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        // Read two integers and print their sum\n        sc.close();\n    }\n}",
+        "tests": [
+          {"label": "Sum of two integers", "input": "15\n27", "expected": "42"}
+        ]
+      },
+      "feynmanPrompt": "Describe the nextLine-after-nextInt bug as if explaining to a friend who's never seen it before.",
+      "questions": [
+        {
+          "id": "F3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does hasNextInt() do?",
+          "options": [
+            "Returns true if the next token is a valid integer",
+            "Reads the next integer without consuming it",
+            "Checks if there is any more input",
+            "Validates that the entire input is an integer"
+          ],
+          "answer": "Returns true if the next token is a valid integer",
+          "explanation": "hasNextInt() peeks at the next token and returns true if it can be parsed as an int, without actually consuming the input."
+        },
+        {
+          "id": "F3Q2",
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "Why does the second nextLine() return an empty string?\n<pre>int age = sc.nextInt();\nString name = sc.nextLine();</pre>",
+          "options": [
+            "nextInt() leaves the newline in the buffer; nextLine() reads it",
+            "nextLine() can only be called once",
+            "age and name share the same buffer",
+            "nextInt() automatically calls nextLine()"
+          ],
+          "answer": "nextInt() leaves the newline in the buffer; nextLine() reads it",
+          "explanation": "nextInt() reads the integer but stops at the newline. The following nextLine() immediately reads up to that leftover newline, returning empty string."
+        },
+        {
+          "id": "F3Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the fix for the nextLine-after-nextInt problem?",
+          "options": [
+            "Call sc.nextLine() once after nextInt() to consume the newline",
+            "Use next() instead of nextLine()",
+            "Create a new Scanner object",
+            "Call sc.reset() after nextInt()"
+          ],
+          "answer": "Call sc.nextLine() once after nextInt() to consume the newline",
+          "explanation": "Adding an extra sc.nextLine() call after nextInt() (or any type-specific read) consumes the leftover newline, so the next nextLine() call waits for real input."
+        },
+        {
+          "id": "F3Q4",
+          "type": "DISCRIMINATION",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "When should you prefer sc.next() over sc.nextLine()?",
+          "options": [
+            "When you want a single word (no spaces) and don't need the rest of the line",
+            "When you need the entire line including spaces",
+            "When reading numbers",
+            "next() is always safer than nextLine()"
+          ],
+          "answer": "When you want a single word (no spaces) and don't need the rest of the line",
+          "explanation": "next() reads up to the next whitespace — perfect for single tokens. nextLine() reads the entire line including spaces. Neither is 'safer'; they serve different purposes."
+        }
+      ]
+    }
+  ]
+}

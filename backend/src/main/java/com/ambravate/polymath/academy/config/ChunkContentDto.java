@@ -1,0 +1,125 @@
+package com.ambravate.polymath.academy.config;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * DTOs for deserialising chunk content from JSON resource files
+ * (src/main/resources/content/{topicId}/{chunkId}.json).
+ *
+ * Fields are public so Jackson can populate them without annotations.
+ * All fields are optional / nullable unless noted.
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ChunkContentDto {
+
+    /** Required. E.g. "tw-a" */
+    public String id;
+    /** Required. Display title. */
+    public String title;
+    /** Emoji glyph shown next to the title. */
+    public String glyph;
+    /** Sort position within the topic. */
+    public int sortOrder;
+    /** FOUNDATION | PRACTITIONER | EXPERT */
+    public String tier;
+    /** E.g. "tailwind" or "java" */
+    public String topicId;
+    /** IDs of chunks that must be completed first. */
+    public List<String> prerequisites;
+
+    public List<SubChunkDto> subChunks;
+    public List<RabbitHoleDto> rabbitHoles;
+
+    // ── Sub-chunk ─────────────────────────────────────────────────────────
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class SubChunkDto {
+        /** Required. E.g. "tw-a1" */
+        public String id;
+        public String title;
+        public int sortOrder;
+        public int xpReward;
+        /** File shown in the editor header. E.g. "index.html" */
+        public String filename;
+        /** JAVA | TAILWIND | NONE */
+        public String practiceType;
+
+        /** Short teaser shown before the lesson begins. HTML string. */
+        public String hookHtml;
+        /**
+         * Main lesson body. HTML string.
+         * Rendered after the story beats in the EXPLANATION phase.
+         */
+        public String explanationHtml;
+        /**
+         * Story beats rendered before explanationHtml.
+         * Each object must have a "type" key: "narration" | "dialogue" | "example".
+         * Dialogue objects also carry: av, cls, speaker, sCls, text.
+         * Example objects carry: speaker (label), text (code).
+         */
+        public List<Map<String, Object>> storyBeats;
+
+        /** Task description for the GUIDED_PRACTICE phase. HTML string. */
+        public String guidedPracticeHtml;
+        /** Starter code placed in the editor. */
+        public String guidedPracticeStarterCode;
+        /**
+         * Test specifications.
+         * Java tests:     { "label": "...", "input": "...", "expected": "..." }
+         * Tailwind tests: { "label": "...", "selector": "...", "requiredClass": "..." }
+         */
+        public List<Map<String, Object>> guidedPracticeTests;
+
+        /** Optional Feynman-technique prompt shown on the COMPLETE phase. */
+        public String feynmanPrompt;
+
+        public List<QuestionDto> questions;
+    }
+
+    // ── Question ──────────────────────────────────────────────────────────
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class QuestionDto {
+        /**
+         * Required. One of:
+         * MULTIPLE_CHOICE | TRUE_FALSE | FILL_BLANK |
+         * CODE_COMPLETION | WHATS_THE_OUTPUT | DEBUGGING | SCENARIO | COMPARE_CONTRAST
+         */
+        public String type;
+        /** RECALL | APPLICATION | DISCRIMINATION */
+        public String tier;
+        /** Question body. HTML string. */
+        public String questionHtml;
+        /** Optional code block shown alongside the question. */
+        public String codeSnippet;
+        /** Answer choices. For TRUE_FALSE this can be omitted — loader fills ["True","False"]. */
+        public List<String> options;
+        /** Required. The correct answer text. */
+        public String correctAnswer;
+        /** Shown after the learner answers. HTML string. */
+        public String explanationHtml;
+        /** IDs of other sub-chunks that relate to this question (SCENARIO only). */
+        public List<String> crossChunkIds;
+    }
+
+    // ── Rabbit hole ───────────────────────────────────────────────────────
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class RabbitHoleDto {
+        /** Required. Globally unique. E.g. "tw-a-rh1" */
+        public String id;
+        public String title;
+        public int sortOrder;
+        public String filename;
+        /** Deep-dive content. HTML string. */
+        public String contentHtml;
+        /** Same shape as SubChunkDto.storyBeats. */
+        public List<Map<String, Object>> storyBeats;
+        public String starterCode;
+        /** Same shape as SubChunkDto.guidedPracticeTests. */
+        public List<Map<String, Object>> tests;
+    }
+}

@@ -39,9 +39,12 @@ public class DataSeeder {
     private final ExpertSeeder2 expertSeeder2; // XF-XJ
 
     // ── Tailwind seeders ───────────────────────────────────────────────────
-    private final TailwindSeeder tailwindSeeder;                       // TW-A: Foundation
+    // TW-A is loaded from resources/content/tailwind/tw-a.json via JsonContentSeeder.
     private final TailwindPractitionerSeeder tailwindPractitionerSeeder; // TW-B: Practitioner
     private final TailwindExpertSeeder tailwindExpertSeeder;             // TW-C: Expert
+
+    // ── JSON content seeder (resource-file based) ──────────────────────────
+    private final JsonContentSeeder jsonContentSeeder;
 
     // ── Test users ─────────────────────────────────────────────────────────
     private final TestUserSeeder testUserSeeder;
@@ -78,9 +81,9 @@ public class DataSeeder {
                 expertSeeder2.seed();    // XF-XJ
 
                 // ── Seed Tailwind ──────────────────────────────────────────
-                tailwindSeeder.seed();              // TW-A: Utility-First Fundamentals (Foundation)
-                tailwindPractitionerSeeder.seed();  // TW-B: Layout Weaver (Practitioner)
-                tailwindExpertSeeder.seed();        // TW-C: Design-System Archmage (Expert)
+                jsonContentSeeder.seed();           // TW-A: loaded from resources/content/tailwind/tw-a.json
+                tailwindPractitionerSeeder.seed();  // TW-B: Practitioner
+                tailwindExpertSeeder.seed();        // TW-C: Expert
 
                 log.info("Seeded {} chunks.", chunkRepository.count());
             } else {

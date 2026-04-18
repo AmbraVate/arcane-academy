@@ -1,0 +1,233 @@
+{
+  "id": "chunk-a",
+  "title": "Variables & Data Types",
+  "glyph": "\uD83D\uDCDC",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "java",
+  "prerequisites": [],
+  "subChunks": [
+    {
+      "id": "a1",
+      "title": "What is a Variable?",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "filename": "VariableBasics.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>How does your phone remember your name, your high score, or your favourite colour? It stores each piece of information in a tiny labelled box. In Java, that box is called a <strong>variable</strong>.</p>",
+      "explanationHtml": "<h3>Variables: Labelled Boxes for Data</h3><p>A variable is a named container that holds a value. You <em>declare</em> a variable by telling Java two things: what <strong>type</strong> of data it will hold, and what <strong>name</strong> to give it.</p><pre><code>int age = 25;\nString name = \"Eldrin\";\ndouble height = 1.82;</code></pre><p>Here <code>int</code> means whole number, <code>String</code> means text, and <code>double</code> means a decimal number. The <code>=</code> sign assigns a value to the variable.</p><p>You can change a variable's value later:</p><pre><code>age = 26; // birthday!</code></pre><p>Variable names should be descriptive. Use <strong>camelCase</strong> in Java: <code>playerScore</code>, <code>firstName</code>, <code>totalCost</code>.</p><p>Think of a variable like a labelled jar on a shelf. The label is the name, the jar's shape is the type, and whatever is inside is the current value.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "You step into the Arcane Library for the first time. Dust motes drift through beams of golden light. An old wizard looks up from an enormous tome."},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Welcome, young apprentice! Before you can cast even the simplest spell, you must learn to store magical energy. We call these storage vessels <strong>runes</strong> — the rest of the world calls them <em>variables</em>."},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "A rune has three parts: a <strong>type</strong> that determines what kind of energy it can hold, a <strong>name</strong> so you can recall it, and a <strong>value</strong> — the energy itself."},
+        {"type": "example", "speaker": "Your first rune", "text": "int manaPoints = 100;\nString wizardName = \"Apprentice\";\ndouble spellPower = 7.5;"},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Excellent! You have inscribed three runes. <code>int</code> holds whole numbers, <code>String</code> holds text, and <code>double</code> holds decimal numbers. Now try it yourself!"}
+      ],
+      "guidedPracticeHtml": "<p>Declare a <code>String</code> variable called <code>name</code> and set it to <code>\"Merlin\"</code>. Then declare an <code>int</code> variable called <code>age</code> and set it to <code>30</code>. Print them on separate lines using <code>System.out.println()</code>.</p>",
+      "guidedPracticeStarterCode": "// Declare your variables below\n\n\n// Print them\n",
+      "guidedPracticeTests": [
+        {"label": "Prints name", "input": "null", "expected": "Merlin"},
+        {"label": "Prints age", "input": "null", "expected": "30"}
+      ],
+      "feynmanPrompt": "Explain what a variable is in Java as if you were describing it to a friend who has never programmed.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which keyword declares a whole-number variable in Java?</p>",
+          "options": ["int", "String", "double", "number"],
+          "correctAnswer": "int",
+          "explanationHtml": "<p><code>int</code> is the Java type for whole numbers (integers). <code>String</code> is for text, <code>double</code> is for decimals, and <code>number</code> is not a Java keyword.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Java, you must specify the type of a variable when you declare it.</p>",
+          "correctAnswer": "True",
+          "explanationHtml": "<p>Java is a <em>statically typed</em> language. You must always declare the type (e.g., <code>int</code>, <code>String</code>) before the variable name.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int x = 10;\nx = 25;\nSystem.out.println(x);",
+          "correctAnswer": "25",
+          "explanationHtml": "<p>The variable <code>x</code> is first set to 10, then reassigned to 25. The final value is 25, which is what gets printed.</p>"
+        },
+        {
+          "type": "FILL_BLANK",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Fill in the blank to declare a text variable:<br><code>______ greeting = \"Hello\";</code></p>",
+          "correctAnswer": "String",
+          "explanationHtml": "<p><code>String</code> is the type used for text values in Java.</p>"
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "Data Types",
+      "sortOrder": 2,
+      "xpReward": 50,
+      "filename": "DataTypes.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>What if you tried to store your age as a word instead of a number? Java is very particular about the <em>kind</em> of data you put in each variable.</p>",
+      "explanationHtml": "<h3>Java's Core Data Types</h3><p>Every variable in Java must have a type. Here are the most common ones:</p><ul><li><code>int</code> — whole numbers: <code>42</code>, <code>-7</code>, <code>0</code></li><li><code>double</code> — decimal numbers: <code>3.14</code>, <code>-0.5</code></li><li><code>boolean</code> — true or false: <code>true</code>, <code>false</code></li><li><code>char</code> — a single character: <code>'A'</code>, <code>'z'</code>, <code>'7'</code></li><li><code>String</code> — text (sequence of characters): <code>\"Hello\"</code></li></ul><p>Notice that <code>char</code> uses single quotes <code>'A'</code> while <code>String</code> uses double quotes <code>\"Hello\"</code>. This is an important distinction!</p><pre><code>boolean isWizard = true;\nchar grade = 'A';\nint score = 95;\ndouble gpa = 3.8;\nString school = \"Arcane Academy\";</code></pre><p>Choosing the right type matters. You cannot do maths with a <code>String</code>, and you cannot store a sentence in a <code>char</code>.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "Archmage Eldrin pulls five differently shaped jars from the shelf, each glowing a different colour."},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Each jar can only hold a specific kind of magical essence. Put fire essence in a water jar and — <em>boom</em>! The same rule applies to Java types. You must match the data to its correct type."},
+        {"type": "example", "speaker": "Five types of essence", "text": "int potions = 3;\ndouble strength = 9.5;\nboolean enchanted = true;\nchar rank = 'S';\nString spellName = \"Fireball\";"},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Notice: <code>char</code> uses single quotes for one character, while <code>String</code> uses double quotes for text. Mix them up, and the spell fizzles!"}
+      ],
+      "guidedPracticeHtml": "<p>Declare one variable of each type and print them all, each on its own line:</p><ul><li><code>int lives = 3;</code></li><li><code>double temperature = 36.6;</code></li><li><code>boolean isRaining = false;</code></li><li><code>char initial = 'J';</code></li><li><code>String city = \"London\";</code></li></ul>",
+      "guidedPracticeStarterCode": "// Declare all five variables\n\n\n// Print each one\n",
+      "guidedPracticeTests": [
+        {"label": "Prints lives", "input": "null", "expected": "3"},
+        {"label": "Prints temperature", "input": "null", "expected": "36.6"},
+        {"label": "Prints isRaining", "input": "null", "expected": "false"},
+        {"label": "Prints initial", "input": "null", "expected": "J"},
+        {"label": "Prints city", "input": "null", "expected": "London"}
+      ],
+      "feynmanPrompt": "Explain the difference between int, double, boolean, char, and String to someone who has never coded.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which data type stores a single character?</p>",
+          "options": ["String", "char", "boolean", "int"],
+          "correctAnswer": "char",
+          "explanationHtml": "<p><code>char</code> holds exactly one character, wrapped in single quotes like <code>'A'</code>. <code>String</code> holds a sequence of characters in double quotes.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which declaration is correct for storing the value <code>true</code>?</p>",
+          "options": ["boolean flag = true;", "String flag = true;", "int flag = true;", "boolean flag = \"true\";"],
+          "correctAnswer": "boolean flag = true;",
+          "explanationHtml": "<p><code>boolean</code> stores <code>true</code> or <code>false</code> without quotes. Wrapping it in quotes would make it a <code>String</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>This code has an error. What needs to change?</p>",
+          "codeSnippet": "char greeting = \"Hi\";",
+          "correctAnswer": "Change char to String (or change the value to a single character like 'H')",
+          "explanationHtml": "<p><code>char</code> can only hold a single character in single quotes. <code>\"Hi\"</code> is two characters in double quotes, which makes it a <code>String</code>.</p>"
+        }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "Variable Operations",
+      "sortOrder": 3,
+      "xpReward": 50,
+      "filename": "VariableOps.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A shopkeeper needs to calculate change for a customer. How do you get Java to do the maths for you?</p>",
+      "explanationHtml": "<h3>Arithmetic and String Operations</h3><p>Java supports the standard arithmetic operators:</p><pre><code>int a = 10;\nint b = 3;\nSystem.out.println(a + b);  // 13\nSystem.out.println(a - b);  // 7\nSystem.out.println(a * b);  // 30\nSystem.out.println(a / b);  // 3 (integer division!)\nSystem.out.println(a % b);  // 1 (remainder)</code></pre><p><strong>Important:</strong> dividing two <code>int</code> values gives an <code>int</code> result — the decimal part is dropped, not rounded. <code>10 / 3</code> gives <code>3</code>, not <code>3.33</code>.</p><p>The <code>+</code> operator also works with <code>String</code> to join text together — this is called <strong>concatenation</strong>:</p><pre><code>String first = \"Harry\";\nString last = \"Potter\";\nString full = first + \" \" + last;\nSystem.out.println(full); // Harry Potter</code></pre><p>If you add a number to a <code>String</code>, Java converts the number to text automatically:</p><pre><code>System.out.println(\"Score: \" + 95); // Score: 95</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Archmage Eldrin sets two bags of gold coins on the table."},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Magic is not just about storing energy — it is about <em>combining</em> it. Add two runes together, subtract, multiply... your spells become far more powerful."},
+        {"type": "example", "speaker": "Combining runes", "text": "int bag1 = 50;\nint bag2 = 30;\nint total = bag1 + bag2;\nSystem.out.println(\"Gold: \" + total);"},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Notice how the <code>+</code> sign can add numbers <em>or</em> join text. Context is everything, young apprentice!"},
+        {"type": "example", "speaker": "String joining", "text": "String title = \"Archmage\";\nString name = \"Eldrin\";\nSystem.out.println(title + \" \" + name);"}
+      ],
+      "guidedPracticeHtml": "<p>A customer buys 3 potions at 15 gold each and 2 scrolls at 8 gold each. Calculate and print the total cost.</p><p>Expected output: <code>61</code></p>",
+      "guidedPracticeStarterCode": "int potionPrice = 15;\nint potionQty = 3;\nint scrollPrice = 8;\nint scrollQty = 2;\n\n// Calculate total and print it\n",
+      "guidedPracticeTests": [
+        {"label": "Total cost", "input": "null", "expected": "61"}
+      ],
+      "feynmanPrompt": "Explain how arithmetic operators and string concatenation work in Java, including the difference between + for numbers and + for strings.",
+      "questions": [
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int a = 10;\nint b = 3;\nSystem.out.println(a / b);",
+          "correctAnswer": "3",
+          "explanationHtml": "<p>Integer division in Java truncates the decimal part. <code>10 / 3</code> is <code>3</code>, not <code>3.33</code>.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "String word = \"Java\";\nint num = 21;\nSystem.out.println(word + num);",
+          "correctAnswer": "Java21",
+          "explanationHtml": "<p>When you use <code>+</code> with a <code>String</code> and a number, Java converts the number to text and concatenates them.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is the result of <code>17 % 5</code>?</p>",
+          "options": ["2", "3", "3.4", "5"],
+          "correctAnswer": "2",
+          "explanationHtml": "<p>The <code>%</code> (modulo) operator returns the remainder of division. <code>17 / 5 = 3</code> remainder <code>2</code>.</p>"
+        },
+        {
+          "type": "FILL_BLANK",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Fill in the blank so the code prints <code>Hello World</code>:<br><code>System.out.println(\"Hello\" ______ \" World\");</code></p>",
+          "correctAnswer": "+",
+          "explanationHtml": "<p>The <code>+</code> operator concatenates (joins) strings in Java.</p>"
+        }
+      ]
+    },
+    {
+      "id": "a4",
+      "title": "Type Casting & Conversion",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "filename": "TypeCasting.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>What happens when you divide 7 by 2 in Java? You might expect 3.5, but Java has other plans. Understanding type casting lets you control what happens.</p>",
+      "explanationHtml": "<h3>Implicit and Explicit Casting</h3><p><strong>Implicit casting</strong> (widening) happens automatically when Java converts a smaller type to a larger one with no data loss:</p><pre><code>int whole = 7;\ndouble decimal = whole; // 7.0 — automatic\nSystem.out.println(decimal);</code></pre><p><strong>Explicit casting</strong> (narrowing) is needed when converting a larger type to a smaller one, because data could be lost:</p><pre><code>double pi = 3.14;\nint rounded = (int) pi; // 3 — decimal part is chopped\nSystem.out.println(rounded);</code></pre><p>The <code>(int)</code> before the value is called a <strong>cast operator</strong>. It tells Java: \"I know data might be lost — do it anyway.\"</p><p>A common trap: <code>7 / 2</code> gives <code>3</code> because both operands are <code>int</code>. To get <code>3.5</code>, cast one operand first:</p><pre><code>int a = 7;\nint b = 2;\ndouble result = (double) a / b; // 3.5\nSystem.out.println(result);</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Archmage Eldrin holds up two vials — one large, one small."},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Pouring essence from a small vial into a large one is safe — nothing spills. This is <strong>implicit casting</strong>. But pouring from a large vial into a small one? You will lose some essence. That is <strong>explicit casting</strong>."},
+        {"type": "example", "speaker": "Widening (safe)", "text": "int gold = 100;\ndouble preciseGold = gold;\nSystem.out.println(preciseGold); // 100.0"},
+        {"type": "example", "speaker": "Narrowing (needs cast)", "text": "double temperature = 36.7;\nint rounded = (int) temperature;\nSystem.out.println(rounded); // 36"},
+        {"type": "dialogue", "av": "\uD83E\uDDD9", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "And here is the classic trap. Watch what happens when two integers divide:"},
+        {"type": "example", "speaker": "Integer division fix", "text": "int a = 7;\nint b = 2;\nSystem.out.println(a / b);           // 3\nSystem.out.println((double) a / b);  // 3.5"}
+      ],
+      "guidedPracticeHtml": "<p>Given <code>int a = 7</code> and <code>int b = 2</code>, print the result of dividing <code>a</code> by <code>b</code> as a <code>double</code> (should print <code>3.5</code>). Then cast <code>9.99</code> to an <code>int</code> and print the result.</p>",
+      "guidedPracticeStarterCode": "int a = 7;\nint b = 2;\n\n// Print a / b as a double\n\n\n// Cast 9.99 to int and print\n",
+      "guidedPracticeTests": [
+        {"label": "Division result", "input": "null", "expected": "3.5"},
+        {"label": "Cast result", "input": "null", "expected": "9"}
+      ],
+      "feynmanPrompt": "Explain implicit and explicit type casting in Java as if you were teaching a classmate, including why integer division can be surprising.",
+      "questions": [
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "double x = 9.8;\nint y = (int) x;\nSystem.out.println(y);",
+          "correctAnswer": "9",
+          "explanationHtml": "<p>Casting a <code>double</code> to <code>int</code> truncates (chops off) the decimal part. <code>9.8</code> becomes <code>9</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Java automatically converts an <code>int</code> to a <code>double</code> without a cast.</p>",
+          "correctAnswer": "True",
+          "explanationHtml": "<p>This is called <em>implicit casting</em> or widening. Going from <code>int</code> to <code>double</code> is safe because no data is lost, so Java does it automatically.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int a = 5;\nint b = 2;\nSystem.out.println((double) a / b);",
+          "correctAnswer": "2.5",
+          "explanationHtml": "<p>Casting <code>a</code> to <code>double</code> before dividing forces Java to do floating-point division. <code>5.0 / 2</code> gives <code>2.5</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Which of the following requires an explicit cast?</p>",
+          "options": ["int to double", "double to int", "int to long", "char to int"],
+          "correctAnswer": "double to int",
+          "explanationHtml": "<p>Converting from <code>double</code> to <code>int</code> is narrowing — you lose the decimal part. Java requires you to write <code>(int)</code> to confirm you accept the data loss. The other conversions are all widening and happen automatically.</p>"
+        }
+      ]
+    }
+  ]
+}

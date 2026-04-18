@@ -92,7 +92,8 @@ public class ChunkController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(ChunkDetailDto.builder()
-                .id(cws.chunk().getId()).title(cws.chunk().getTitle())
+                .id(cws.chunk().getId()).topicId(cws.chunk().getTopicId())
+                .title(cws.chunk().getTitle())
                 .glyph(cws.chunk().getGlyph()).status(cws.status())
                 .subChunks(subDtos).build());
     }

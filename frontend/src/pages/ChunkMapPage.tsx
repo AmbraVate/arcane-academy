@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { chunkApi } from '../api/services'
-import type { ChunkDetail } from '../types'
+import { chunkApi, rabbitHoleApi } from '../api/services'
+import type { ChunkDetail, RabbitHoleModule } from '../types'
 import styles from './ChunkMapPage.module.css'
 
 export default function ChunkMapPage() {
   const { chunkId } = useParams<{ chunkId: string }>()
   const navigate = useNavigate()
   const [chunk, setChunk] = useState<ChunkDetail | null>(null)
+  const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleModule[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -16,6 +17,9 @@ export default function ChunkMapPage() {
       .then(setChunk)
       .catch(() => navigate('/'))
       .finally(() => setLoading(false))
+    rabbitHoleApi.getForChunk(chunkId)
+      .then(setRabbitHoles)
+      .catch(() => {})
   }, [chunkId, navigate])
 
   if (loading) {
@@ -32,8 +36,8 @@ export default function ChunkMapPage() {
 
   return (
     <div className={styles.page}>
-      <button className="btn btn-ghost" onClick={() => navigate('/')} style={{ marginBottom: 16, fontSize: 12 }}>
-        ← Back to Dashboard
+      <button className="btn btn-ghost" onClick={() => navigate(`/topics/${chunk.topicId}`)} style={{ marginBottom: 16, fontSize: 12 }}>
+        ← Back to Topic
       </button>
 
       <div className={styles.header}>
@@ -93,6 +97,25 @@ export default function ChunkMapPage() {
           )
         })}
       </div>
+
+      {rabbitHoles.length > 0 && (
+        <div className={styles.rhSection}>
+          <div className={styles.rhHeading}>🐇 Rabbit Holes</div>
+          <p className={styles.rhDesc}>Optional deep-dives — explore when curious.</p>
+          <div className={styles.rhList}>
+            {rabbitHoles.map(rh => (
+              <div
+                key={rh.id}
+                className={styles.rhCard}
+                onClick={() => navigate(`/rabbit-hole/${rh.id}`)}
+              >
+                <span className={styles.rhTitle}>{rh.title}</span>
+                <span className={styles.rhArrow}>→</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

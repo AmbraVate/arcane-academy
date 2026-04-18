@@ -12,6 +12,9 @@
 .phaseChip { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--surface); color: var(--muted); white-space: nowrap; flex-shrink: 0; }
 .phaseActive { background: var(--purple); color: #fff; }
 .phaseDone { background: var(--teal-dim); color: var(--teal); }
+.pinBtn { font-size: 11px; padding: 4px 10px; flex-shrink: 0; opacity: 0.7; }
+.pinBtn:hover { opacity: 1; }
+.pinBtnSaved { color: var(--gold); opacity: 1; }
 
 /* Phase content (non-coding phases) */
 .phaseContent { max-width: 700px; margin: 0 auto; padding: 28px 20px 60px; overflow-y: auto; flex: 1; width: 100%; box-sizing: border-box; }

@@ -1,0 +1,303 @@
+{
+  "id": "tw-c",
+  "title": "Expert Tailwind",
+  "glyph": "\uD83C\uDFDB\uFE0F",
+  "sortOrder": 3,
+  "tier": "EXPERT",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-b"],
+  "subChunks": [
+    {
+      "id": "tw-c1",
+      "title": "Design Tokens",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+      "hookHtml": "<p>Out of the box, Tailwind's palette is named by colour \u2014 <code>blue-500</code>, <code>purple-700</code>. In a real product you need names by <em>intent</em>: <code>brand</code>, <code>surface</code>, <code>danger</code>. That shift is what separates a hobby project from a system that can survive a rebrand.</p>",
+      "explanationHtml": "<p>The Archmage's library is colder than the rest of the tower. Scrolls line the shelves in perfect alphabetical order. Solomon doesn't look up when you enter \u2014 he is marking a token page with a silver nib.</p><div class=\"dialogue\"><p><strong>Archmage Solomon:</strong> \u201CAt scale, <code>blue-500</code> is a lie. It claims the colour is blue when what you <em>mean</em> is: this is the brand. Name by meaning. Then when the brand changes \u2014 and it will \u2014 your code does not.\u201D</p></div><p>He slides a parchment across the table. It is a <code>tailwind.config.js</code>.</p><pre><code>// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n        brand:   { DEFAULT: '#6D28D9', light: '#A78BFA', dark: '#4C1D95' },\n        surface: 'var(--surface)',\n        text:    'var(--text)',\n        danger:  '#DC2626',\n      },\n      fontFamily: { display: ['Cinzel', 'serif'] },\n      spacing:    { '18': '4.5rem' },\n    },\n  },\n};</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201COnce this is in place, <code>bg-brand</code>, <code>text-brand-light</code>, <code>bg-surface</code>, and <code>font-display</code> all become first-class utilities.\u201D</p></div><p>He taps the parchment and lists the three token <em>layers</em> every serious system uses.</p><ol><li><strong>Primitive tokens</strong> \u2014 raw values. <code>purple-700</code>, <code>4rem</code>, <code>14px</code>.</li><li><strong>Semantic tokens</strong> \u2014 intent. <code>brand</code>, <code>surface</code>, <code>danger</code>, <code>text-muted</code>.</li><li><strong>Component tokens</strong> \u2014 per-component overrides. Use sparingly.</li></ol><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CThe rule is simple. A <code>&lt;Button&gt;</code> component should never reach for a primitive. It should ask for <code>brand</code>, or <code>danger</code>, and trust the tokens to resolve to something sensible.\u201D</p></div>",
+      "storyBeats": [
+        {"type": "narration", "text": "You've been summoned to the Archmage's library. Towering shelves hold the Academy's <em>design constitution</em> \u2014 tokens that every spell in the kingdom must honour."},
+        {"type": "dialogue", "av": "\uD83E\uDDD9\u200D\u2642\uFE0F", "cls": "archmage", "speaker": "Archmage Solomon", "sCls": "mentor", "text": "Name by meaning, not by appearance. When the palette changes, code that speaks in meaning survives. Code that speaks in <code>bg-blue-500</code> must be rewritten."},
+        {"type": "example", "speaker": "Semantic config", "text": "colors: { brand: { DEFAULT: '#6D28D9', light: '#A78BFA' } }"}
+      ],
+      "guidedPracticeHtml": "<p>Assume the config extends colours so that <code>bg-brand</code> and <code>text-brand-light</code> are valid. Apply to the <code>.card</code>: <code>bg-brand</code>, <code>text-brand-light</code>, <code>p-6</code>, <code>rounded-xl</code>.</p>",
+      "guidedPracticeStarterCode": "<div class=\"card\">\n  <h3>The Arcane Order</h3>\n  <p>Colours named by intent.</p>\n</div>",
+      "guidedPracticeTests": [
+        {"label": "Uses brand background", "selector": ".card", "requiredClass": "bg-brand"},
+        {"label": "Uses brand-light text", "selector": ".card", "requiredClass": "text-brand-light"},
+        {"label": "Has padding", "selector": ".card", "requiredClass": "p-6"},
+        {"label": "Rounded", "selector": ".card", "requiredClass": "rounded-xl"}
+      ],
+      "feynmanPrompt": "Why is <code>bg-brand</code> better than <code>bg-purple-700</code> at scale? What breaks if you spread colour-named classes across a 400-file codebase and then rebrand?",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Where do you define project-specific colours in Tailwind?</p>",
+          "options": ["tailwind.config.js under theme.extend.colors", "In index.css :root", "In a separate colors.js", "Inside each component"],
+          "correctAnswer": "tailwind.config.js under theme.extend.colors",
+          "explanationHtml": "<p><code>theme.extend.colors</code> is the canonical place \u2014 it generates all matching utilities automatically.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which token layer should a reusable <code>&lt;Button&gt;</code> component reference directly?</p>",
+          "options": ["Semantic tokens", "Primitive colour values", "Hex codes", "Inline styles"],
+          "correctAnswer": "Semantic tokens",
+          "explanationHtml": "<p>Semantic tokens (brand, surface, danger) decouple components from raw palette values so rebrands and new themes stay cheap.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A team spreads <code>bg-purple-700</code> across 400 files. Marketing changes the brand colour. What's the fix, and what would have prevented it?</p>",
+          "correctAnswer": "They must find-and-replace 400 files. A semantic token like bg-brand in theme.extend would have made it a one-line change.",
+          "explanationHtml": "<p>Colour-named classes tie code to a palette. Semantic tokens tie code to intent \u2014 which is what actually persists across rebrands.</p>"
+        }
+      ]
+    },
+    {
+      "id": "tw-c2",
+      "title": "Building a Design System",
+      "sortOrder": 2,
+      "xpReward": 100,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+      "hookHtml": "<p>Tokens are the vocabulary. A <strong>design system</strong> is the grammar \u2014 the components, variants, and patterns that make a thousand pages feel like one product.</p>",
+      "explanationHtml": "<p>The library doors open again. A second figure has joined Solomon at the workbench: a thin woman in a leather apron, sleeves rolled, chalk on her fingers. Solomon inclines his head.</p><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CThis is <strong>Master Loras</strong>. She builds the components every team in the Academy uses.\u201D</p></div><div class=\"dialogue\"><p><strong>Master Loras:</strong> \u201CA design system is not a folder of components. It is the <em>set of decisions a team has already made</em> so that no one has to re-decide them on Tuesday at 4pm. Let me show you the three tools you'll reach for in every real React codebase.\u201D</p></div><p><strong>1. <code>clsx</code> \u2014 conditional class strings.</strong></p><pre><code>import clsx from 'clsx';\n\n&lt;button className={clsx(\n  'px-4 py-2 rounded font-medium',\n  isActive &amp;&amp; 'bg-brand text-white',\n  disabled &amp;&amp; 'opacity-50 cursor-not-allowed',\n)}&gt;</code></pre><p><strong>2. <code>tailwind-merge</code> \u2014 conflict resolution when classes collide.</strong></p><pre><code>import { twMerge } from 'tailwind-merge';\n\n// Component defines px-4, but a caller passes px-8:\nconst className = twMerge('px-4 py-2', props.className);\n// twMerge('px-4 px-8')  \u2192  'px-8'    \u2713 last wins, intelligently</code></pre><p><strong>3. <code>class-variance-authority</code> (CVA) \u2014 typed variants declared once.</strong></p><pre><code>import { cva, type VariantProps } from 'class-variance-authority';\n\nconst button = cva(\n  'inline-flex items-center justify-center rounded font-medium transition',\n  {\n    variants: {\n      intent: {\n        primary: 'bg-brand text-white hover:bg-brand-dark',\n        danger:  'bg-danger text-white hover:brightness-110',\n        ghost:   'bg-transparent text-text hover:bg-surface',\n      },\n      size: {\n        sm: 'px-3 py-1 text-sm',\n        md: 'px-4 py-2',\n        lg: 'px-6 py-3 text-lg',\n      },\n    },\n    defaultVariants: { intent: 'primary', size: 'md' },\n  }\n);\n\n&lt;button className={button({ intent: 'danger', size: 'lg' })}&gt;Delete&lt;/button&gt;</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CCompose them. <code>cva</code> declares the variants, <code>clsx</code> layers in runtime conditions, <code>twMerge</code> resolves conflicts when callers override. This triad is the professional authoring layer for Tailwind in React.\u201D</p></div>",
+      "storyBeats": [
+        {"type": "dialogue", "av": "\uD83E\uDDD9\u200D\u2642\uFE0F", "cls": "archmage", "speaker": "Archmage Solomon", "sCls": "mentor", "text": "A design system is a compact between authors and users. Tokens are the treaty. Components are the enforcement."},
+        {"type": "dialogue", "av": "\uD83D\uDC69\u200D\uD83D\uDD2C", "cls": "loras", "speaker": "Master Loras", "sCls": "mentor", "text": "Three tools: <code>clsx</code> for conditionals, <code>twMerge</code> for overrides, <code>cva</code> for variants. Learn the triad, stop re-deciding the same questions every sprint."},
+        {"type": "example", "speaker": "A typed button with CVA", "text": "const button = cva('rounded font-medium', { variants: { intent: { primary: 'bg-brand text-white' } } });"}
+      ],
+      "guidedPracticeHtml": "<p>Style a button that matches CVA's <code>primary + md</code> output. On <code>.btn</code> apply: <code>bg-brand</code>, <code>text-white</code>, <code>rounded</code>, <code>font-medium</code>, <code>px-4</code>, <code>py-2</code>, <code>transition</code>.</p>",
+      "guidedPracticeStarterCode": "<button class=\"btn\">Submit</button>",
+      "guidedPracticeTests": [
+        {"label": "Brand background", "selector": ".btn", "requiredClass": "bg-brand"},
+        {"label": "White text", "selector": ".btn", "requiredClass": "text-white"},
+        {"label": "Rounded", "selector": ".btn", "requiredClass": "rounded"},
+        {"label": "Medium weight", "selector": ".btn", "requiredClass": "font-medium"},
+        {"label": "Horizontal padding", "selector": ".btn", "requiredClass": "px-4"},
+        {"label": "Vertical padding", "selector": ".btn", "requiredClass": "py-2"},
+        {"label": "Transitions smoothly", "selector": ".btn", "requiredClass": "transition"}
+      ],
+      "feynmanPrompt": "Why does a team that accepts <code>className</code> props need <code>tailwind-merge</code>? Walk through what breaks without it when a caller passes <code>px-8</code> to a component whose internal class string contains <code>px-4</code>.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What problem does <code>tailwind-merge</code> solve?</p>",
+          "options": ["Conflicts when class strings contain duplicate utilities from the same group", "Minifying CSS output", "Generating dynamic class names at runtime", "Typechecking Tailwind classes"],
+          "correctAnswer": "Conflicts when class strings contain duplicate utilities from the same group",
+          "explanationHtml": "<p><code>twMerge</code> understands Tailwind's utility groups and keeps the last winning class for each group.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which library gives you typed variants for a component (e.g. <code>intent: 'primary' | 'danger'</code>) in one declaration?</p>",
+          "options": ["class-variance-authority (CVA)", "clsx", "tailwind-merge", "classnames"],
+          "correctAnswer": "class-variance-authority (CVA)",
+          "explanationHtml": "<p>CVA declares the entire variant lattice once and types itself through <code>VariantProps</code>.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A team hand-rolls a <code>&lt;Dialog&gt;</code> component with focus-trap, escape-to-close, and ARIA roles. Six months later an accessibility audit fails on all of them. What should they have done instead?</p>",
+          "correctAnswer": "Use Headless UI or Radix UI for the unstyled, accessible primitives, and style them with Tailwind \u2014 do not reinvent dialog/menu/combobox accessibility.",
+          "explanationHtml": "<p>Accessible dialog, menu, and combobox primitives are hard and well-solved. Style Headless UI or Radix with Tailwind instead of re-implementing focus management and ARIA wiring from scratch.</p>"
+        }
+      ]
+    },
+    {
+      "id": "tw-c3",
+      "title": "Accessibility in Depth",
+      "sortOrder": 3,
+      "xpReward": 90,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+      "hookHtml": "<p>Tailwind will happily let you ship an inaccessible interface. It's the author's job to choose classes that serve <em>every</em> reader \u2014 keyboard, screen-reader, low-vision, and reduced-motion users alike.</p>",
+      "explanationHtml": "<p>Solomon leads you down a spiral stair to a smaller room lit by a single lamp. A blindfolded scribe sits at the desk, tracing a page with her fingertips.</p><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CA spell that works for only some readers is a spell half-cast. Every utility you add is a <em>choice</em> about whose experience matters. Start with four habits and you will cover ninety percent of accessibility harm.\u201D</p></div><p><strong>Habit one: prefer <code>focus-visible:</code> over <code>focus:</code>.</strong></p><pre><code>// too loud \u2014 shows a ring on every mouse click\n&lt;button class=\"focus:ring-2 focus:ring-blue-500\"&gt;\n\n// just right \u2014 shows for keyboard users only\n&lt;button class=\"focus-visible:ring-2 focus-visible:ring-blue-500\"&gt;</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201C<code>focus:</code> fires on every click. Mouse users see a ring they didn't ask for; designers hide it; keyboard users lose it too. <code>focus-visible:</code> only appears when the browser believes the focus came from the keyboard. Use it always.\u201D</p></div><p><strong>Habit two: contrast.</strong></p><p>WCAG AA requires <strong>4.5:1</strong> for body text and <strong>3:1</strong> for large text. Tailwind's 50\u2013300 shades rarely clear this on white.</p><p><strong>Habit three: screen-reader-only text for icon-only controls.</strong></p><pre><code>&lt;button aria-label=\"Close dialog\"&gt;\n  &lt;svg aria-hidden=\"true\" /&gt;\n  &lt;span class=\"sr-only\"&gt;Close dialog&lt;/span&gt;\n&lt;/button&gt;</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201C<code>sr-only</code> removes the text from the screen without removing it from the accessibility tree.\u201D</p></div><p><strong>Habit four: respect <code>prefers-reduced-motion</code>.</strong></p><pre><code>&lt;div class=\"motion-safe:animate-bounce motion-reduce:animate-none\"&gt;\n&lt;div class=\"transition motion-reduce:transition-none\"&gt;</code></pre><p><strong>ARIA variants.</strong> Tailwind ships <code>aria-*</code> variants so you can style from state without JavaScript class-toggling.</p><pre><code>&lt;button aria-expanded=\"false\"\n  class=\"bg-surface aria-expanded:bg-brand aria-expanded:text-white\"&gt;\n  Menu\n&lt;/button&gt;</code></pre>",
+      "storyBeats": [
+        {"type": "dialogue", "av": "\uD83E\uDDD9\u200D\u2642\uFE0F", "cls": "archmage", "speaker": "Archmage Solomon", "sCls": "mentor", "text": "A spell half-cast reaches half the readers. <code>focus-visible:</code>, contrast discipline, <code>sr-only</code>, and <code>motion-reduce:</code> \u2014 these are the spell, not its decoration."},
+        {"type": "example", "speaker": "Icon-only button that screen readers can still use", "text": "&lt;button&gt;&lt;svg aria-hidden=\"true\" /&gt;&lt;span class=\"sr-only\"&gt;Close&lt;/span&gt;&lt;/button&gt;"}
+      ],
+      "guidedPracticeHtml": "<p>Make the icon-only button accessible. On the <code>.close-label</code> span apply <code>sr-only</code>. On the <code>.btn-close</code> button apply <code>focus-visible:ring-2</code> and <code>focus-visible:ring-blue-500</code>.</p>",
+      "guidedPracticeStarterCode": "<button class=\"btn-close p-2 rounded\">\n  <svg width=\"16\" height=\"16\"></svg>\n  <span class=\"close-label\">Close dialog</span>\n</button>",
+      "guidedPracticeTests": [
+        {"label": "Close label is screen-reader only", "selector": ".close-label", "requiredClass": "sr-only"},
+        {"label": "Button shows focus ring for keyboard", "selector": ".btn-close", "requiredClass": "focus-visible:ring-2"},
+        {"label": "Ring colour is blue", "selector": ".btn-close", "requiredClass": "focus-visible:ring-blue-500"}
+      ],
+      "feynmanPrompt": "Explain why <code>focus-visible:</code> is a better default than <code>focus:</code> for interactive elements. What UX problem does <code>focus:</code> cause that <code>focus-visible:</code> solves?",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does the <code>sr-only</code> utility do?</p>",
+          "options": ["Visually hides content but keeps it in the accessibility tree", "Removes content from the DOM", "Hides content from screen readers", "Makes content visible only in print"],
+          "correctAnswer": "Visually hides content but keeps it in the accessibility tree",
+          "explanationHtml": "<p><code>sr-only</code> uses CSS that is invisible on screen while still announced by screen readers.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which is the accessible minimum contrast ratio (WCAG AA) for body text?</p>",
+          "options": ["4.5:1", "3:1", "7:1", "2:1"],
+          "correctAnswer": "4.5:1",
+          "explanationHtml": "<p>WCAG AA requires 4.5:1 for normal-size body text; 3:1 for large text or UI chrome.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p><code>motion-reduce:</code> applies when the user has set <code>prefers-reduced-motion</code>.</p>",
+          "correctAnswer": "True",
+          "explanationHtml": "<p><code>motion-reduce:</code> maps to the <code>prefers-reduced-motion: reduce</code> media query.</p>"
+        }
+      ]
+    },
+    {
+      "id": "tw-c4",
+      "title": "Performance & Bundle Size",
+      "sortOrder": 4,
+      "xpReward": 85,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+      "hookHtml": "<p>Tailwind ships no CSS for classes you don't use \u2014 but only if your <code>content</code> globs are right. A misconfigured project can leak megabytes of unused CSS, or worse, silently drop styles that worked in dev.</p>",
+      "explanationHtml": "<p>Solomon climbs a ladder to the topmost shelf and pulls down a thin, well-thumbed volume titled simply <em>The Scanner</em>.</p><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CTailwind's great virtue is that it emits nothing you do not use. Its great trap is that it decides what you use by <em>reading your source files as text</em>. If the scanner can't see a class string, that class does not exist.\u201D</p></div><p><strong>The content contract.</strong></p><pre><code>// tailwind.config.js\ncontent: [\n  './index.html',\n  './src/**/*.{ts,tsx,jsx,vue,svelte}',\n],</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CForget a path and the styles from those files vanish from production. Too broad and the scanner walks node_modules and slows your builds. Be specific. Be complete.\u201D</p></div><p><strong>The dynamic-class trap.</strong></p><pre><code>// BAD \u2014 bg-${color}-500 never appears in source as a full string\nconst cls = `bg-${color}-500`;\n\n// GOOD \u2014 full class strings exist for the scanner to find\nconst palette = {\n  red:   'bg-red-500',\n  blue:  'bg-blue-500',\n  green: 'bg-green-500',\n};\nconst cls = palette[color];</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CThe symptom is always the same \u2014 works in dev, vanishes in production. Always write full class strings somewhere the scanner can read them.\u201D</p></div><p><strong>Safelist \u2014 for the truly dynamic.</strong></p><pre><code>// tailwind.config.js\nsafelist: [\n  'bg-brand', 'text-white',\n  { pattern: /bg-(red|blue|green)-(400|500|600)/ },\n],</code></pre><p><strong>Purge and JIT.</strong> Modern Tailwind (v3+) runs JIT by default. The production build contains only the utilities you reference \u2014 typically 10\u201320\u00a0KB gzipped for a real app.</p>",
+      "storyBeats": [
+        {"type": "dialogue", "av": "\uD83E\uDDD9\u200D\u2642\uFE0F", "cls": "archmage", "speaker": "Archmage Solomon", "sCls": "mentor", "text": "The scanner reads your source as text. If it cannot see the full class name, the class does not exist. Every production bug in a Tailwind app eventually reduces to a variant of this one truth."},
+        {"type": "example", "speaker": "Safe dynamic class pattern", "text": "const palette = { red: 'bg-red-500', blue: 'bg-blue-500' }; const cls = palette[userChoice];"}
+      ],
+      "guidedPracticeHtml": "<p>Build a production-safe banner that uses only full, static class strings the JIT scanner can see. On the <code>.banner</code> apply: <code>bg-brand</code>, <code>text-white</code>, <code>p-4</code>, <code>rounded-md</code>, <code>shadow-sm</code>.</p>",
+      "guidedPracticeStarterCode": "<div class=\"banner\">\n  Welcome back, wizard.\n</div>",
+      "guidedPracticeTests": [
+        {"label": "Brand background", "selector": ".banner", "requiredClass": "bg-brand"},
+        {"label": "White text", "selector": ".banner", "requiredClass": "text-white"},
+        {"label": "Padding", "selector": ".banner", "requiredClass": "p-4"},
+        {"label": "Rounded", "selector": ".banner", "requiredClass": "rounded-md"},
+        {"label": "Subtle shadow", "selector": ".banner", "requiredClass": "shadow-sm"}
+      ],
+      "feynmanPrompt": "Explain why <code>bg-${color}-500</code> breaks Tailwind's JIT. How would you fix it without resorting to <code>safelist</code>?",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Where does Tailwind learn which classes to emit?</p>",
+          "options": ["The content glob list in tailwind.config.js", "Automatically, by scanning every file on disk", "The package.json dependencies", "A runtime plugin"],
+          "correctAnswer": "The content glob list in tailwind.config.js",
+          "explanationHtml": "<p>The <code>content</code> array tells the JIT scanner which files to read for class names.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Styles work in development but the production build is missing background colours generated via <code>bg-${color}-500</code>. What's the cause and cleanest fix?</p>",
+          "correctAnswer": "The JIT scanner can't see interpolated class fragments. Replace with a static map like { red: 'bg-red-500', blue: 'bg-blue-500' } so full class strings appear in source.",
+          "explanationHtml": "<p>The scanner uses plain string matching. Interpolation hides the full class name. Mapping to full strings is cleaner than <code>safelist</code> for known values.</p>"
+        }
+      ]
+    },
+    {
+      "id": "tw-c5",
+      "title": "Large Application Architecture",
+      "sortOrder": 5,
+      "xpReward": 95,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+      "hookHtml": "<p>Utilities scale beautifully when you have a small app and three contributors. They rot quietly when you have fifty contributors, two hundred components, and no shared conventions. This chapter is the set of rules that keeps a Tailwind codebase readable after its first year.</p>",
+      "explanationHtml": "<p>You return to the workbench. Master Loras has pinned a single sheet of parchment to the beam above it: <em>The Archmage's Rules for Tailwind at Scale</em>. Solomon reads them aloud, one by one.</p><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CThese aren't style preferences. Each one is the residue of a real project that rotted when the rule was broken. Ignore them at your team's cost.\u201D</p></div><p><strong>Rule 1 \u2014 Components before <code>@apply</code>.</strong></p><pre><code>// AVOID \u2014 class abstraction in CSS\n.btn-primary { @apply bg-brand text-white px-4 py-2 rounded; }\n\n// PREFER \u2014 component abstraction in your framework\n&lt;Button intent=\"primary\"&gt;Save&lt;/Button&gt;</code></pre><p><strong>Rule 2 \u2014 Arbitrary values are a last resort.</strong></p><pre><code>// AVOID\n&lt;div class=\"mt-[17px] text-[#5A3D8C] w-[742px]\"&gt;\n\n// PREFER \u2014 extend theme, then use the utility\n// tailwind.config.js: spacing: { '4.25': '17px' }, colors: { accent: '#5A3D8C' }\n&lt;div class=\"mt-4.25 text-accent\"&gt;</code></pre><p><strong>Rule 3 \u2014 Order utilities consistently.</strong></p><p>Adopt <code>prettier-plugin-tailwindcss</code>. It orders classes automatically by category. Reviewers stop arguing about class order; diffs become readable.</p><p><strong>Rule 4 \u2014 One source of truth for each design decision.</strong></p><ul><li>Colours live in <code>tailwind.config.js</code> \u2014 never in inline styles.</li><li>Spacing scale lives in the config \u2014 never as arbitrary values in markup.</li><li>Typography ramp lives in the config \u2014 never duplicated as custom classes.</li></ul><p><strong>Rule 5 \u2014 Co-locate component CSS.</strong></p><p>Tailwind classes live in the same file as the component that uses them.</p><p><strong>Rule 6 \u2014 Enforce accessibility at the component boundary.</strong></p><p>If <code>&lt;IconButton&gt;</code> exists, make <code>aria-label</code> a <em>required</em> prop.</p><p><strong>Rule 7 \u2014 Document tokens, not components first.</strong></p><p>Your design system's docs page should open with tokens: colour swatches, type scale, spacing ramp.</p><div class=\"dialogue\"><p><strong>Loras:</strong> \u201CWrite <code>cn</code> on day one: <code>twMerge(clsx(xs))</code>. Use it everywhere. Your override story is now free.\u201D</p></div>",
+      "storyBeats": [
+        {"type": "dialogue", "av": "\uD83E\uDDD9\u200D\u2642\uFE0F", "cls": "archmage", "speaker": "Archmage Solomon", "sCls": "mentor", "text": "Seven rules. Each is the residue of a real codebase that rotted. Components before <code>@apply</code>. Arbitrary values sparingly. Consistent order. One source of truth. Co-locate. Enforce a11y at the boundary. Document tokens first."},
+        {"type": "dialogue", "av": "\uD83D\uDC69\u200D\uD83D\uDD2C", "cls": "loras", "speaker": "Master Loras", "sCls": "mentor", "text": "Write <code>cn</code> on day one: <code>twMerge(clsx(xs))</code>. Use it everywhere. Your override story is now free."}
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>.btn-primary</code> the <em>component</em> way \u2014 full utility classes on the element, no <code>@apply</code> and no arbitrary values. Apply: <code>bg-brand</code>, <code>text-white</code>, <code>font-medium</code>, <code>px-4</code>, <code>py-2</code>, <code>rounded</code>, <code>hover:bg-brand-dark</code>, <code>focus-visible:ring-2</code>.</p>",
+      "guidedPracticeStarterCode": "<button class=\"btn-primary\">Save changes</button>",
+      "guidedPracticeTests": [
+        {"label": "Brand background", "selector": ".btn-primary", "requiredClass": "bg-brand"},
+        {"label": "White text", "selector": ".btn-primary", "requiredClass": "text-white"},
+        {"label": "Medium weight", "selector": ".btn-primary", "requiredClass": "font-medium"},
+        {"label": "Horizontal padding", "selector": ".btn-primary", "requiredClass": "px-4"},
+        {"label": "Vertical padding", "selector": ".btn-primary", "requiredClass": "py-2"},
+        {"label": "Rounded", "selector": ".btn-primary", "requiredClass": "rounded"},
+        {"label": "Darker on hover", "selector": ".btn-primary", "requiredClass": "hover:bg-brand-dark"},
+        {"label": "Keyboard focus ring", "selector": ".btn-primary", "requiredClass": "focus-visible:ring-2"}
+      ],
+      "feynmanPrompt": "A teammate proposes defining every button in the app with <code>@apply bg-brand text-white px-4 py-2 rounded</code>. Make the case against it. What do you lose, and what should you do instead?",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>When is <code>@apply</code> a reasonable choice?</p>",
+          "options": ["For unavoidable global targets (prose, form resets, third-party widgets you can't wrap)", "As the default way to define component styles", "To avoid long class strings in JSX", "To keep CSS files feeling traditional"],
+          "correctAnswer": "For unavoidable global targets (prose, form resets, third-party widgets you can't wrap)",
+          "explanationHtml": "<p>For component abstraction, prefer actual components with CVA variants. Reserve <code>@apply</code> for places where a component wrapper isn't possible.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which tool automatically orders Tailwind classes in source files so reviewers stop arguing about diffs?</p>",
+          "options": ["prettier-plugin-tailwindcss", "eslint-plugin-tailwind", "stylelint", "postcss-sorting"],
+          "correctAnswer": "prettier-plugin-tailwindcss",
+          "explanationHtml": "<p>The official Prettier plugin reorders classes by category and keeps teams consistent without manual effort.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A codebase is full of <code>mt-[17px]</code>, <code>w-[742px]</code>, <code>text-[#5A3D8C]</code>. What does this indicate, and what should the team do?</p>",
+          "correctAnswer": "It's a sign the theme isn't keeping up with real design decisions. Extend the config (spacing, colors, typography) so those values become named tokens, and reserve arbitrary values for genuine one-offs.",
+          "explanationHtml": "<p>Arbitrary values are an escape hatch. When they accumulate, the design system is being bypassed. Extending the theme re-centralises those decisions.</p>"
+        }
+      ]
+    },
+    {
+      "id": "tw-c6",
+      "title": "Real-World Patterns",
+      "sortOrder": 6,
+      "xpReward": 100,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+      "hookHtml": "<p>The final test of an archmage is not knowing utilities \u2014 it's assembling them into the handful of UI patterns every product ships: navigation, modals, dashboards, forms, tables. These are the shapes customers actually touch.</p>",
+      "explanationHtml": "<p>Solomon leads you out of the library and onto a balcony overlooking the Academy courtyard. From here you can see the <em>Pattern Gardens</em> \u2014 a collection of small living examples.</p><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CFive patterns will carry you through most products you ship. Learn them well and you can reason about any new screen as a composition of these shapes.\u201D</p></div><p><strong>1. Responsive navigation bar.</strong></p><pre><code>&lt;nav class=\"flex items-center justify-between px-6 py-4 bg-surface shadow-sm\"&gt;\n  &lt;a href=\"/\" class=\"font-display text-xl text-brand\"&gt;Arcana&lt;/a&gt;\n  &lt;ul class=\"hidden md:flex items-center gap-6 text-sm\"&gt;\n    &lt;li&gt;&lt;a href=\"/topics\" class=\"hover:text-brand\"&gt;Topics&lt;/a&gt;&lt;/li&gt;\n  &lt;/ul&gt;\n  &lt;button class=\"md:hidden p-2 rounded\" aria-label=\"Open menu\"&gt;\u2630&lt;/button&gt;\n&lt;/nav&gt;</code></pre><p><strong>2. Sidebar + content shell.</strong></p><pre><code>&lt;div class=\"min-h-screen grid grid-cols-1 md:grid-cols-[240px_1fr]\"&gt;\n  &lt;aside class=\"hidden md:block bg-surface border-r p-4\"&gt;&lt;/aside&gt;\n  &lt;main class=\"p-6\"&gt;&lt;/main&gt;\n&lt;/div&gt;</code></pre><p><strong>3. Modal / dialog.</strong></p><pre><code>&lt;div class=\"fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50\"&gt;\n  &lt;div role=\"dialog\" aria-modal=\"true\"\n       class=\"w-full max-w-md bg-surface rounded-xl shadow-xl p-6\"&gt;\n    &lt;h2 class=\"text-lg font-semibold\"&gt;Confirm&lt;/h2&gt;\n    &lt;div class=\"mt-6 flex justify-end gap-2\"&gt;\n      &lt;button class=\"px-4 py-2 rounded bg-danger text-white\"&gt;Delete&lt;/button&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;</code></pre><p><strong>4. Card grid / dashboard stats.</strong></p><pre><code>&lt;section class=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4\"&gt;\n  &lt;div class=\"bg-surface rounded-xl p-6 shadow-sm\"&gt;\n    &lt;p class=\"text-sm text-muted\"&gt;Total XP&lt;/p&gt;\n    &lt;p class=\"mt-2 text-3xl font-semibold\"&gt;12,480&lt;/p&gt;\n  &lt;/div&gt;\n&lt;/section&gt;</code></pre><p><strong>5. Responsive data table.</strong></p><pre><code>&lt;table class=\"hidden md:table w-full text-sm\"&gt;&lt;/table&gt;\n&lt;ul class=\"md:hidden space-y-3\"&gt;&lt;/ul&gt;</code></pre><div class=\"dialogue\"><p><strong>Solomon:</strong> \u201CEvery product you ship is a recombination of these five shapes. You are no longer an apprentice.\u201D</p></div>",
+      "storyBeats": [
+        {"type": "dialogue", "av": "\uD83E\uDDD9\u200D\u2642\uFE0F", "cls": "archmage", "speaker": "Archmage Solomon", "sCls": "mentor", "text": "Five patterns: responsive nav, sidebar shell, modal, card grid, responsive table. Every product is a recombination of these shapes. Learn them and you can read any screen."},
+        {"type": "example", "speaker": "Responsive stat grid", "text": "&lt;section class=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4\"&gt;...&lt;/section&gt;"}
+      ],
+      "guidedPracticeHtml": "<p>Build a stat card that fits inside a dashboard grid. On <code>.stat</code> apply: <code>bg-surface</code>, <code>rounded-xl</code>, <code>p-6</code>, <code>shadow-sm</code>, <code>flex</code>, <code>flex-col</code>, <code>gap-2</code>.</p>",
+      "guidedPracticeStarterCode": "<article class=\"stat\">\n  <p class=\"text-sm text-muted\">Total XP</p>\n  <p class=\"text-3xl font-semibold\">12,480</p>\n</article>",
+      "guidedPracticeTests": [
+        {"label": "Surface background", "selector": ".stat", "requiredClass": "bg-surface"},
+        {"label": "Large radius", "selector": ".stat", "requiredClass": "rounded-xl"},
+        {"label": "Padding", "selector": ".stat", "requiredClass": "p-6"},
+        {"label": "Subtle shadow", "selector": ".stat", "requiredClass": "shadow-sm"},
+        {"label": "Flex layout", "selector": ".stat", "requiredClass": "flex"},
+        {"label": "Stacks vertically", "selector": ".stat", "requiredClass": "flex-col"},
+        {"label": "Internal spacing", "selector": ".stat", "requiredClass": "gap-2"}
+      ],
+      "feynmanPrompt": "Pick one pattern \u2014 nav, sidebar, modal, card grid, or responsive table. Explain the responsive decision it hinges on (which utility switches behaviour at which breakpoint, and why).",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which pair of classes is idiomatic for a hamburger menu that appears only on small screens?</p>",
+          "options": ["md:hidden on the button, hidden md:flex on the desktop menu", "sm:block on the button, lg:hidden on the menu", "flex md:none on both", "mobile: and desktop: variants"],
+          "correctAnswer": "md:hidden on the button, hidden md:flex on the desktop menu",
+          "explanationHtml": "<p>Mobile-first: start hidden on the desktop menu, reveal with <code>md:flex</code>; start visible on the hamburger, hide with <code>md:hidden</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which utility class creates the darkened, full-screen overlay behind a modal dialog?</p>",
+          "options": ["fixed inset-0 bg-black/50", "absolute top-0 bg-black", "fixed bg-surface opacity-50", "sticky inset-0 bg-black"],
+          "correctAnswer": "fixed inset-0 bg-black/50",
+          "explanationHtml": "<p><code>fixed inset-0</code> pins to all four edges of the viewport; <code>bg-black/50</code> is a 50%-opacity black overlay.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A responsive dashboard ships with a <code>&lt;table&gt;</code> of user stats. On mobile it scrolls horizontally and users complain. What's the idiomatic Tailwind fix?</p>",
+          "correctAnswer": "Render a <table class='hidden md:table'> for tablet and up, and a <ul class='md:hidden'> card list for mobile, backed by the same dataset.",
+          "explanationHtml": "<p>Tables rarely collapse well. The two-view pattern \u2014 table on wide screens, cards on narrow \u2014 gives mobile users a native-feeling list without losing the desktop table.</p>"
+        }
+      ]
+    }
+  ]
+}

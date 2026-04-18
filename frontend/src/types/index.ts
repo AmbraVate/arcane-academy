@@ -27,7 +27,7 @@ export interface SubChunkSummary {
 }
 
 export interface ChunkDetail {
-  id: string; title: string; glyph: string; status: string
+  id: string; topicId: string; title: string; glyph: string; status: string
   subChunks: SubChunkSummary[]
 }
 

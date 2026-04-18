@@ -1,0 +1,463 @@
+{
+  "id": "tw-a",
+  "title": "Tailwind Basics",
+  "glyph": "🎨",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "tailwind",
+  "prerequisites": [],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "tw-a1",
+      "title": "What Tailwind Is",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>Tailwind is a <strong>utility-first</strong> CSS framework. Instead of inventing class names (<code>.card</code>, <code>.primary-button</code>) and writing CSS in a separate file, you compose small, single-purpose classes — <code>p-4</code>, <code>bg-gray-100</code>, <code>rounded-lg</code>, <code>shadow</code> — directly in your HTML.</p>",
+
+      "explanationHtml": "<p>Lyra the Scribe unfurls a long scroll. <em>\"Before you inscribe anything, see why we compose glyphs at all. Here is the old way.\"</em></p>\n<p>She taps a dusty grimoire. <em>\"Traditional CSS asks you to name every incantation in a separate book:\"</em></p>\n<pre><code>/* styles.css */\n.card {\n  background-color: white;\n  padding: 16px;\n  border-radius: 8px;\n  box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n}</code></pre>\n<p><em>\"Hours lost inventing names. <code>.special-card</code>. <code>.blue-thing-we-made-on-a-Thursday</code>. And two scribes pick the same name for different spells — chaos.\"</em></p>\n<p>She sets down a slim handbook. <em>\"The Tailwind way. Compose glyphs directly on the element:\"</em></p>\n<pre><code>&lt;div class=\"bg-white p-4 rounded-lg shadow\"&gt;Content&lt;/div&gt;</code></pre>\n<p><em>\"Four glyphs, four decisions. <code>bg-white</code> — background. <code>p-4</code> — padding. <code>rounded-lg</code> — corners. <code>shadow</code> — drop shadow. No names to invent. No second book to hunt for.\"</em></p>\n<p>She counts the virtues on her fingers:</p>\n<ul>\n<li><strong>No naming paralysis</strong> — the glyphs are already named.</li>\n<li><strong>A curated palette</strong> — every colour and spacing value comes from one system.</li>\n<li><strong>Stay at the parchment</strong> — you never leave your HTML.</li>\n<li><strong>Predictable magic</strong> — a glyph does the same thing everywhere.</li>\n</ul>\n<p><em>\"One last pattern. Every glyph follows the same shape — <code>property-value</code>. Learn the pattern and you can guess new glyphs before you've seen them.\"</em></p>\n<pre><code>bg-blue-500    → background-color: blue (shade 500)\ntext-white     → color: white\np-4            → padding: 1rem (16px)\nrounded-md     → border-radius: 6px\nfont-bold      → font-weight: 700</code></pre>\n<p><em>\"Property. Value. That is the whole Academy in three words. Now — the card below needs four glyphs. Inscribe them.\"</em></p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You arrive at the Academy's <em>Scriptorium</em>, a vast hall where enchanters inscribe visual spells. Lyra the Scribe looks up from her work."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Ah — a new apprentice. Tell me, when you cast a spell, do you invent a new name for every rune combination? No. We use <strong>glyphs</strong>: small, focused symbols that each do one thing."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Tailwind works the same way. Utility classes are glyphs. Compose them on the element itself."
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Style this card with Tailwind utilities. Add to the <code>.card</code> element:</p>\n<ul>\n<li><code>bg-white</code> — white background</li>\n<li><code>p-6</code> — padding all sides</li>\n<li><code>rounded-xl</code> — rounded corners</li>\n<li><code>shadow-md</code> — medium drop shadow</li>\n</ul>",
+
+      "guidedPracticeStarterCode": "<div class=\"card\">\n  <h2>Arcane Academy</h2>\n  <p>Your utility-first journey begins here.</p>\n</div>",
+
+      "guidedPracticeTests": [
+        { "label": "White background",  "selector": ".card", "requiredClass": "bg-white"    },
+        { "label": "Padding",           "selector": ".card", "requiredClass": "p-6"         },
+        { "label": "Rounded corners",   "selector": ".card", "requiredClass": "rounded-xl"  },
+        { "label": "Drop shadow",       "selector": ".card", "requiredClass": "shadow-md"   }
+      ],
+
+      "feynmanPrompt": "Explain utility-first CSS in your own words. Why is composing small classes better than inventing component class names for most cases?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which term describes Tailwind's approach to styling?</p>",
+          "options": ["Utility-first", "Semantic CSS", "Inline styles", "CSS-in-JS"],
+          "correctAnswer": "Utility-first",
+          "explanationHtml": "<p>Tailwind composes many small, single-purpose classes directly in HTML — the <em>utility-first</em> approach.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which Tailwind class adds a white background?</p>",
+          "options": ["bg-white", "background-white", "color-white", "white-bg"],
+          "correctAnswer": "bg-white",
+          "explanationHtml": "<p>Background colour utilities follow <code>bg-{color}</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Tailwind you write a custom class name for every component.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Utility-first means composing pre-built classes directly in HTML. Custom class names are rare.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which set applies rounded corners, a white background, and padding?</p>",
+          "options": [
+            "rounded bg-white p-4",
+            ".rounded .bg-white .p-4",
+            "border-radius background padding",
+            "style=\"border-radius: 4px\""
+          ],
+          "correctAnswer": "rounded bg-white p-4",
+          "explanationHtml": "<p>Tailwind classes are space-separated in <code>class</code>. No leading dots, no raw CSS.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "tw-a2",
+      "title": "Installation & Setup",
+      "sortOrder": 2,
+      "xpReward": 50,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>Tailwind emits CSS only for classes you actually use — but it can only do that if the build tool is configured correctly. Understanding the setup stops \"the styles aren't applying!\" before it ever starts.</p>",
+
+      "explanationHtml": "<p>Lyra leads you through a side door into the Academy's <em>Foundry</em>. An older mage in workshop apron greets you. <em>\"Maester Cordell,\"</em> Lyra says. <em>\"He handles setup. Spells don't reach the page without him.\"</em></p>\n<p>Cordell opens a toolbox. <em>\"Tailwind has three common install paths. Learn all three — you'll meet each in the wild.\"</em></p>\n<h3>1. Tailwind CLI</h3>\n<p>The simplest — no build pipeline beyond Tailwind itself:</p>\n<pre><code>npm install -D tailwindcss\nnpx tailwindcss init\nnpx tailwindcss -i ./src/input.css -o ./dist/output.css --watch</code></pre>\n<h3>2. PostCSS</h3>\n<p>Tailwind as a PostCSS plugin, alongside autoprefixer. Standard for hand-rolled build setups:</p>\n<pre><code>npm install -D tailwindcss postcss autoprefixer\n// postcss.config.js\nmodule.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };</code></pre>\n<h3>3. Framework-Specific (Vite / Next.js / Angular / Vue)</h3>\n<p>Most real projects live here. For Vite + React:</p>\n<pre><code>npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p</code></pre>\n<p>Generates <code>tailwind.config.js</code> and <code>postcss.config.js</code>. Import Tailwind's layers in your main CSS file:</p>\n<pre><code>/* src/index.css */\n@tailwind base;\n@tailwind components;\n@tailwind utilities;</code></pre>\n<h3>The content Array</h3>\n<p>Cordell taps the config file. <em>\"This is the one line every apprentice forgets. Tailwind scans these files for class names. If a path is missing here, those classes silently produce nothing.\"</em></p>\n<pre><code>// tailwind.config.js\ncontent: [\n  './index.html',\n  './src/**/*.{ts,tsx,jsx,vue}',\n],</code></pre>\n<p><em>\"Missing styles in production? Check this array first. It is the answer nine times out of ten.\"</em></p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Lyra pushes open a heavy door. The smell of hot metal greets you — the <em>Foundry</em>, where raw incantations are forged into things the page can actually run."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "Every spell in the Academy passes through here. If your glyphs don't appear on the page, the fault is almost never the glyphs. It's the setup — the <em>content</em> array, a missing import, a wrong path."
+        },
+        {
+          "type": "example",
+          "speaker": "Tailwind imports in your main CSS",
+          "text": "@tailwind base;\n@tailwind components;\n@tailwind utilities;"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "Remember — the <code>content</code> array tells the scanner where to look. Miss a path, miss the styles."
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Assume the project is set up correctly — Tailwind is installed, imports are in place, and the <code>content</code> array covers this file. Style the <code>.panel</code> with: <code>bg-slate-50</code>, <code>p-4</code>, <code>rounded-md</code>, <code>border</code>, <code>border-slate-200</code>.</p>",
+
+      "guidedPracticeStarterCode": "<div class=\"panel\">\n  <h3>Setup Complete</h3>\n  <p>Tailwind is watching your files.</p>\n</div>",
+
+      "guidedPracticeTests": [
+        { "label": "Background applied", "selector": ".panel", "requiredClass": "bg-slate-50"     },
+        { "label": "Padding applied",    "selector": ".panel", "requiredClass": "p-4"             },
+        { "label": "Rounded",            "selector": ".panel", "requiredClass": "rounded-md"      },
+        { "label": "Border",             "selector": ".panel", "requiredClass": "border"          },
+        { "label": "Border colour",      "selector": ".panel", "requiredClass": "border-slate-200"}
+      ],
+
+      "feynmanPrompt": "You've deployed a site and three specific classes aren't applying in production, though they work locally. Name the single most likely cause and the exact file you'd check.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which three directives belong in your main CSS file when using Tailwind?</p>",
+          "options": [
+            "@tailwind base; @tailwind components; @tailwind utilities;",
+            "@import tailwind;",
+            "@use tailwind/core;",
+            "require('tailwind');"
+          ],
+          "correctAnswer": "@tailwind base; @tailwind components; @tailwind utilities;",
+          "explanationHtml": "<p>These three layer directives load Tailwind's resets, component layer, and utility classes.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is the <code>content</code> array in <code>tailwind.config.js</code> for?</p>",
+          "options": [
+            "Tells Tailwind which files to scan for class names",
+            "Lists fonts to load",
+            "Sets the default theme values",
+            "Registers PostCSS plugins"
+          ],
+          "correctAnswer": "Tells Tailwind which files to scan for class names",
+          "explanationHtml": "<p>Tailwind only emits CSS for classes it sees — the scanner uses <code>content</code> to know where to look.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>If a class works in development but is missing in production, the <code>content</code> globs are the first place to check.</p>",
+          "correctAnswer": "True",
+          "explanationHtml": "<p>Missing production styles almost always trace back to a file that the <code>content</code> globs don't cover.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A new team-mate says \"none of my Tailwind classes are working.\" Their file is under <code>./app/components/</code> but the config's content array only lists <code>./src/**/*</code>. What's the fix?</p>",
+          "correctAnswer": "Add './app/**/*.{ts,tsx}' (or similar) to the content array so Tailwind scans the new directory.",
+          "explanationHtml": "<p>The JIT scanner only emits CSS for files it scans. Extend the <code>content</code> array to cover the new directory.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "tw-a3",
+      "title": "Spacing Utilities",
+      "sortOrder": 3,
+      "xpReward": 50,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>Space guides the eye. Padding sits <em>inside</em> an element; margin sits <em>outside</em>. Tailwind gives both a consistent numeric scale so every gap on your page feels intentional.</p>",
+
+      "explanationHtml": "<p>Lyra rolls out a long scroll and weights it with two brass rings. <em>\"Space comes in two kinds — inside a thing, and between things. Scribes call them <strong>padding</strong> and <strong>margin</strong>.\"</em></p>\n<p>She presses a palm flat to the parchment. <em>\"Padding pushes space <em>inside</em> an element. Use <code>p-</code> glyphs.\"</em></p>\n<pre><code>p-4      → padding: 1rem (all sides)\npx-4     → left + right\npy-4     → top + bottom\npt-4, pb-4, pl-4, pr-4 → one side each</code></pre>\n<p>She draws a second card and wedges a gap between them. <em>\"Margin is the space <em>outside</em> — between your element and its neighbours. Same shape, <code>m-</code> prefix.\"</em></p>\n<pre><code>m-4      → margin: 1rem (all sides)\nmx-4, my-4, mt-4, mb-4, ml-4, mr-4\nmx-auto  → horizontally centre the element</code></pre>\n<p><em>\"<code>mx-auto</code> is the scribe's secret for centring — give a max width, then auto-margins on either side.\"</em></p>\n<h3>The Scale</h3>\n<p><em>\"Never invent a number. The scale is fixed: each step is 4 pixels, and the whole Academy obeys it.\"</em></p>\n<pre><code>0  → 0px\n1  → 4px\n2  → 8px\n4  → 16px\n8  → 32px\n16 → 64px</code></pre>\n<h3>Gap (between children)</h3>\n<p>For flex and grid containers, <code>space-y-4</code> or <code>gap-4</code> sets even spacing between children without per-item margins.</p>\n<pre><code>&lt;div class=\"flex flex-col space-y-4\"&gt;...&lt;/div&gt;\n&lt;div class=\"grid grid-cols-3 gap-4\"&gt;...&lt;/div&gt;</code></pre>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Lyra rolls out a long scroll and carefully weights its corners. Runes must breathe, she explains, or the spell will suffocate."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Padding pushes space inward. Margin pushes space outward. When every scribe picks from the same scale, every page in the library feels like it belongs to the same library. That is the trick of a design system."
+        },
+        {
+          "type": "example",
+          "speaker": "Centred card with breathing room",
+          "text": "<div class=\"mx-auto max-w-lg p-6 mt-8\">\n  A card with air.\n</div>"
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Arrange a centred, breathing card. Apply:</p>\n<ul>\n<li><code>.wrapper</code> → <code>py-8</code></li>\n<li><code>.card</code> → <code>mx-auto</code>, <code>max-w-md</code>, <code>p-6</code></li>\n</ul>",
+
+      "guidedPracticeStarterCode": "<div class=\"wrapper\">\n  <div class=\"card bg-white rounded-lg\">\n    <h2>The Ancient Tome</h2>\n    <p>Wisdom, centred and breathing.</p>\n  </div>\n</div>",
+
+      "guidedPracticeTests": [
+        { "label": "Wrapper vertical padding",    "selector": ".wrapper", "requiredClass": "py-8"    },
+        { "label": "Card horizontally centred",   "selector": ".card",    "requiredClass": "mx-auto" },
+        { "label": "Card max width",              "selector": ".card",    "requiredClass": "max-w-md"},
+        { "label": "Card padding",                "selector": ".card",    "requiredClass": "p-6"     }
+      ],
+
+      "feynmanPrompt": "Explain the difference between padding and margin in your own words. How does the numeric scale (4, 8, 16) relate to actual pixels?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class adds padding on all four sides?</p>",
+          "options": ["p-4", "pad-4", "padding-4", "space-4"],
+          "correctAnswer": "p-4",
+          "explanationHtml": "<p><code>p-4</code> sets <code>padding: 1rem</code> on every side.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class applies margin only on the left?</p>",
+          "options": ["ml-4", "margin-left-4", "m-left-4", "lm-4"],
+          "correctAnswer": "ml-4",
+          "explanationHtml": "<p>Directional margins: l=left, r=right, t=top, b=bottom, x=horizontal, y=vertical.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p><code>mx-auto</code> centres an element horizontally (given a defined width).</p>",
+          "correctAnswer": "True",
+          "explanationHtml": "<p><code>mx-auto</code> sets auto margins on left and right, centring block elements with a known width.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>How many pixels does <code>p-8</code> produce?</p>",
+          "options": ["32px", "8px", "16px", "64px"],
+          "correctAnswer": "32px",
+          "explanationHtml": "<p>Each unit is 4px. <code>p-8</code> = 8 × 4px = 32px.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "tw-a4",
+      "title": "Typography & Colours",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>Typography and colour are the voice of your interface. Size, weight, and shade communicate hierarchy before a single word is read. Tailwind gives you a tight scale for all three.</p>",
+
+      "explanationHtml": "<p>A second scribe enters, sleeves ink-stained. <em>\"Sable handles colour and scale here,\"</em> Lyra says. <em>\"Listen well.\"</em></p>\n<p>Sable lays out a ruler marked with named steps. <em>\"First rule: text size is a ladder, and every rung has a name.\"</em></p>\n<pre><code>text-xs    → 12px\ntext-sm    → 14px\ntext-base  → 16px  (default)\ntext-lg    → 18px\ntext-xl    → 20px\ntext-2xl   → 24px\ntext-4xl   → 36px</code></pre>\n<p><em>\"Never reach for an arbitrary number. Climb the ladder.\"</em></p>\n<h3>Weight</h3>\n<pre><code>font-light    → 300\nfont-normal   → 400\nfont-medium   → 500\nfont-semibold → 600\nfont-bold     → 700</code></pre>\n<h3>Colour</h3>\n<p>Sable opens a row of ink pots from palest to darkest. <em>\"Every hue has shades from 50 to 900. Fifty is barely a whisper; nine hundred is nearly black.\"</em></p>\n<pre><code>text-gray-500    → medium grey\ntext-blue-600    → medium-dark blue\ntext-red-500     → medium red\ntext-green-700   → dark green\ntext-white / text-black</code></pre>\n<p>Background colours follow the same pattern with <code>bg-</code>:</p>\n<pre><code>bg-blue-500    → background blue-500\nbg-gray-100    → light grey surface</code></pre>\n<h3>Putting It Together</h3>\n<pre><code>&lt;h1 class=\"text-4xl font-bold text-gray-900\"&gt;Welcome&lt;/h1&gt;\n&lt;p class=\"text-base text-gray-600\"&gt;Subtitle here&lt;/p&gt;</code></pre>\n<p><em>\"Large, bold, dark — the eye goes there first. Smaller, softer — second. That is hierarchy, for free.\"</em></p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Lyra leads you through a silk curtain into the <em>Calligraphy Chamber</em>. Shelves of ink pots line the walls."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Size, weight, and colour tell the reader what matters. I'll leave you with Sable — they know this chamber best."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "Two ladders and one palette. That's all typography is."
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Style the heading and subtitle:</p>\n<ul>\n<li><code>.heading</code> → <code>text-4xl</code>, <code>font-bold</code>, <code>text-gray-900</code></li>\n<li><code>.subtitle</code> → <code>text-base</code>, <code>text-gray-500</code></li>\n</ul>",
+
+      "guidedPracticeStarterCode": "<div class=\"p-8\">\n  <h1 class=\"heading\">Arcane Academy</h1>\n  <p class=\"subtitle\">Master the utility-first art</p>\n</div>",
+
+      "guidedPracticeTests": [
+        { "label": "Heading large",      "selector": ".heading",  "requiredClass": "text-4xl"     },
+        { "label": "Heading bold",       "selector": ".heading",  "requiredClass": "font-bold"    },
+        { "label": "Heading dark grey",  "selector": ".heading",  "requiredClass": "text-gray-900"},
+        { "label": "Subtitle base size", "selector": ".subtitle", "requiredClass": "text-base"    },
+        { "label": "Subtitle muted grey","selector": ".subtitle", "requiredClass": "text-gray-500"}
+      ],
+
+      "feynmanPrompt": "Explain how Tailwind's size ladder and colour scale make a design system possible. What goes wrong when developers pick arbitrary sizes and colours?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class makes text bold?</p>",
+          "options": ["font-bold", "text-bold", "bold", "weight-bold"],
+          "correctAnswer": "font-bold",
+          "explanationHtml": "<p>Weight uses <code>font-{weight}</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class is 18px text?</p>",
+          "options": ["text-lg", "font-large", "size-lg", "text-large"],
+          "correctAnswer": "text-lg",
+          "explanationHtml": "<p>Tailwind's size scale: xs, sm, base, lg, xl, 2xl, etc.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which shade is darkest in Tailwind's palette?</p>",
+          "options": ["900", "500", "100", "800"],
+          "correctAnswer": "900",
+          "explanationHtml": "<p>Shades run 50 (lightest) to 900 (darkest).</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What colour does this element use for its text?</p>",
+          "codeSnippet": "<p class=\"text-blue-600 font-semibold text-sm\">Hello</p>",
+          "correctAnswer": "Medium blue",
+          "explanationHtml": "<p><code>text-blue-600</code> is medium-dark blue. Shade 600 is deeper than the midpoint 500.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "tw-a5",
+      "title": "Borders, Radius & Basic Layout",
+      "sortOrder": 5,
+      "xpReward": 60,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>Borders, corners, shadows, and a handful of layout glyphs — that's all you need to turn raw content into recognisable UI. Flexbox and grid mastery come later; in the basics you just need the words to say <em>\"this is a row,\"</em> <em>\"fill the screen,\"</em> <em>\"centre the children.\"</em></p>",
+
+      "explanationHtml": "<p>From the back of the workshop, Master Ember approaches — leather apron, chisel at their belt. They set three tools on the bench. <em>\"Edge. Corner. Shadow. That is what gives a shape physicality.\"</em></p>\n<h3>Borders</h3>\n<pre><code>border          → 1px solid\nborder-2        → 2px\nborder-t        → top edge only\nborder-gray-300 → colour the border\nborder-dashed   → dashed style</code></pre>\n<h3>Rounded Corners</h3>\n<pre><code>rounded-none / rounded-sm / rounded / rounded-md / rounded-lg /\nrounded-xl / rounded-2xl / rounded-full  (fully circular)</code></pre>\n<h3>Shadows</h3>\n<pre><code>shadow-sm / shadow / shadow-md / shadow-lg / shadow-xl /\nshadow-2xl / shadow-none</code></pre>\n<p><em>\"Match the shadow to how far above the page the element should feel. A light card wants <code>shadow-sm</code>. A modal that has leapt forward wants <code>shadow-2xl</code>.\"</em></p>\n<h3>Basic Layout — A First Taste</h3>\n<p>Ember nods toward Lyra, who steps back in. <em>\"You'll go deep on layout in the next chapter. For now, four glyphs you'll use every day:\"</em></p>\n<pre><code>flex              → display: flex  (arrange children in a row)\nitems-center      → vertically centre flex children\njustify-center    → horizontally centre flex children\nw-full / h-screen → full width / full viewport height</code></pre>\n<pre><code>&lt;div class=\"flex items-center justify-center h-screen\"&gt;\n  &lt;div class=\"border rounded-xl shadow-md p-6\"&gt;I'm a card.&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n<p><em>\"A card, centred on the page, with a real edge and a real weight. That is the whole vocabulary of 'looks like software.'\"</em></p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "An older mage emerges from the back of the Scriptorium, leather apron dusted with stone. Tools hang from their belt."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "A shape needs three enchantments to feel real: a <strong>border</strong>, a <strong>corner</strong>, and a <strong>shadow</strong>."
+        },
+        {
+          "type": "example",
+          "speaker": "A real object, centred on the page",
+          "text": "<div class=\"flex items-center justify-center h-screen\">\n  <div class=\"border rounded-xl shadow-md p-6\">Card</div>\n</div>"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Four layout glyphs for now — <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>h-screen</code>. You'll meet the rest in the next chapter."
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Build a centred, bordered card:</p>\n<ul>\n<li><code>.stage</code> → <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>h-screen</code></li>\n<li><code>.card</code> → <code>border</code>, <code>border-gray-200</code>, <code>rounded-xl</code>, <code>shadow-md</code>, <code>p-6</code></li>\n</ul>",
+
+      "guidedPracticeStarterCode": "<div class=\"stage\">\n  <div class=\"card bg-white\">\n    <h3>Avatar</h3>\n    <p>Bordered, rounded, shadowed, centred.</p>\n  </div>\n</div>",
+
+      "guidedPracticeTests": [
+        { "label": "Stage uses flex",              "selector": ".stage", "requiredClass": "flex"          },
+        { "label": "Stage centres vertically",     "selector": ".stage", "requiredClass": "items-center"  },
+        { "label": "Stage centres horizontally",   "selector": ".stage", "requiredClass": "justify-center"},
+        { "label": "Stage fills viewport",         "selector": ".stage", "requiredClass": "h-screen"      },
+        { "label": "Card has border",              "selector": ".card",  "requiredClass": "border"        },
+        { "label": "Card border colour",           "selector": ".card",  "requiredClass": "border-gray-200"},
+        { "label": "Card rounded",                 "selector": ".card",  "requiredClass": "rounded-xl"    },
+        { "label": "Card shadow",                  "selector": ".card",  "requiredClass": "shadow-md"     },
+        { "label": "Card padding",                 "selector": ".card",  "requiredClass": "p-6"           }
+      ],
+
+      "feynmanPrompt": "Explain what each of these glyph families does in one sentence: <code>border-*</code>, <code>rounded-*</code>, <code>shadow-*</code>, <code>flex</code>. Why are these the minimum vocabulary for 'looks like a real interface'?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class produces a fully circular element?</p>",
+          "options": ["rounded-full", "rounded-circle", "rounded-xl", "border-full"],
+          "correctAnswer": "rounded-full",
+          "explanationHtml": "<p><code>rounded-full</code> gives a perfect circle on square elements.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class removes a drop shadow?</p>",
+          "options": ["shadow-none", "no-shadow", "shadow-0", "shadow-off"],
+          "correctAnswer": "shadow-none",
+          "explanationHtml": "<p><code>shadow-none</code> sets <code>box-shadow: none</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which set centres a child both vertically and horizontally in a full-viewport container?</p>",
+          "options": [
+            "flex items-center justify-center h-screen",
+            "grid place-content-start h-full",
+            "block text-center mt-auto",
+            "inline-flex"
+          ],
+          "correctAnswer": "flex items-center justify-center h-screen",
+          "explanationHtml": "<p>Flex with <code>items-center</code> (cross-axis) and <code>justify-center</code> (main-axis), plus <code>h-screen</code> for viewport height.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p><code>w-full</code> makes an element fill its parent's width.</p>",
+          "correctAnswer": "True",
+          "explanationHtml": "<p><code>w-full</code> is <code>width: 100%</code>.</p>"
+        }
+      ]
+    }
+
+  ]
+}

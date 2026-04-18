@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi, tailwindApi } from '../api/services'
+import { encodingApi, codeApi, tailwindApi, curiosityApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
@@ -46,6 +46,10 @@ export default function EncodingPage() {
   const [feynmanResult, setFeynmanResult] = useState<FeynmanResultDto | null>(null)
   const [submittingFeynman, setSubmittingFeynman] = useState(false)
 
+  // Curiosity Queue state
+  const [isSaved, setIsSaved] = useState(false)
+  const [savingPin, setSavingPin] = useState(false)
+
   // UI state
   const [toast, setToast] = useState<string | null>(null)
   const [levelUpInfo, setLevelUpInfo] = useState<{ level: number; rank: string } | null>(null)
@@ -61,6 +65,9 @@ export default function EncodingPage() {
       })
       .catch(() => navigate('/'))
       .finally(() => setLoading(false))
+    curiosityApi.getAll()
+      .then(items => setIsSaved(items.some(i => i.subChunkId === subChunkId)))
+      .catch(() => {})
   }, [subChunkId, navigate])
 
   const showToast = useCallback((msg: string) => {
@@ -68,6 +75,26 @@ export default function EncodingPage() {
     clearTimeout(toastTimer.current)
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
+
+  async function handleTogglePin() {
+    if (!subChunkId || savingPin) return
+    setSavingPin(true)
+    try {
+      if (isSaved) {
+        await curiosityApi.remove(subChunkId)
+        setIsSaved(false)
+        showToast('Removed from Curiosity Queue')
+      } else {
+        await curiosityApi.save(subChunkId)
+        setIsSaved(true)
+        showToast('📌 Saved to Curiosity Queue')
+      }
+    } catch {
+      showToast('Could not update queue')
+    } finally {
+      setSavingPin(false)
+    }
+  }
 
   async function handleAdvance() {
     if (!subChunkId) return
@@ -302,6 +329,14 @@ export default function EncodingPage() {
             ))}
           </div>
         </div>
+        <button
+          className={`btn btn-ghost ${styles.pinBtn} ${isSaved ? styles.pinBtnSaved : ''}`}
+          onClick={handleTogglePin}
+          disabled={savingPin}
+          title={isSaved ? 'Remove from Curiosity Queue' : 'Save for later'}
+        >
+          {isSaved ? '📌' : '🔖'} {isSaved ? 'Saved' : 'Save'}
+        </button>
       </div>
 
       {/* HOOK phase */}
