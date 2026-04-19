@@ -487,7 +487,7 @@ export default function EncodingPage() {
 
             <div className="flex gap-2.5 justify-center mt-5 max-[480px]:flex-col max-[480px]:items-center">
               <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>Return to Chunk →</button>
-              <button className="btn btn-ghost" onClick={() => navigate(encoding.topicId && encoding.topicId !== 'java' ? `/topic/${encoding.topicId}` : '/')}>
+              <button className="btn btn-ghost" onClick={() => navigate(`/topic/${encoding.topicId ?? 'java'}`)}>
                 Dashboard
               </button>
             </div>

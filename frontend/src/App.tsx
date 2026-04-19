@@ -37,7 +37,8 @@ export default function App() {
         <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-        <Route path="/"         element={user ? <DashboardPage /> : <LandingPage />} />
+        <Route path="/"         element={user ? <Navigate to="/topics" replace /> : <LandingPage />} />
+        <Route path="/topic/java" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />
         <Route path="/learn/:subChunkId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />

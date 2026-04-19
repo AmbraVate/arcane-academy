@@ -131,10 +131,12 @@ public class DiagnosticService {
         try { resultsJson = objectMapper.writeValueAsString(chunkRecommendations); }
         catch (Exception e) { log.warn("Failed to serialize diagnostic results", e); }
 
+        Instant now = Instant.now();
         if ("java".equals(topicId)) {
             UserLearnerProfile profile = profileRepository.findByUserId(userId)
                     .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
             profile.setDiagnosticCompleted(true);
+            profile.setDiagnosticCompletedAt(now);
             profile.setDiagnosticScore(graded.score());
             profile.setCurrentPath(recommended);
             profile.setDiagnosticResultsJson(resultsJson);
@@ -143,6 +145,7 @@ public class DiagnosticService {
             UserTopicProfile profile = topicProfileRepository.findByUserIdAndTopicId(userId, topicId)
                     .orElse(UserTopicProfile.aUserTopicProfile().withUserId(userId).withTopicId(topicId).build());
             profile.setDiagnosticCompleted(true);
+            profile.setDiagnosticCompletedAt(now);
             profile.setDiagnosticScore(graded.score());
             profile.setDiagnosticResultsJson(resultsJson);
             topicProfileRepository.save(profile);
@@ -162,16 +165,19 @@ public class DiagnosticService {
 
     @Transactional
     public void skipDiagnostic(String userId, String topicId) {
+        Instant now = Instant.now();
         if ("java".equals(topicId)) {
             UserLearnerProfile profile = profileRepository.findByUserId(userId)
                     .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
             profile.setDiagnosticCompleted(true);
+            profile.setDiagnosticCompletedAt(now);
             profile.setCurrentPath(LearnerPath.FOUNDATION);
             profileRepository.save(profile);
         } else {
             UserTopicProfile profile = topicProfileRepository.findByUserIdAndTopicId(userId, topicId)
                     .orElse(UserTopicProfile.aUserTopicProfile().withUserId(userId).withTopicId(topicId).build());
             profile.setDiagnosticCompleted(true);
+            profile.setDiagnosticCompletedAt(now);
             topicProfileRepository.save(profile);
         }
         log.info("[Diagnostic] Skipped for user={} topic={}", userId, topicId);

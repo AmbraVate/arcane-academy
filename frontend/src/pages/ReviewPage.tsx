@@ -19,7 +19,7 @@ export default function ReviewPage() {
   useEffect(() => {
     reviewApi.getDaily()
       .then(setSession)
-      .catch(() => navigate('/'))
+      .catch(() => navigate('/topics'))
       .finally(() => setLoading(false))
   }, [navigate])
 
@@ -46,7 +46,7 @@ export default function ReviewPage() {
         <div className="text-[48px] text-gold mb-3">✦</div>
         <h2 className="text-text m-0 mb-2">No Reviews Due</h2>
         <p className="text-muted m-0 mb-5">All your memories are fresh! Check back later.</p>
-        <button className="btn btn-primary" onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button className="btn btn-primary" onClick={() => navigate('/topics')}>Back to Dashboard</button>
       </div>
     )
   }
@@ -70,7 +70,7 @@ export default function ReviewPage() {
               onChange={() => {}} result={result.results[i]} disabled />
           ))}
         </div>
-        <button className="btn btn-primary mt-2" onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button className="btn btn-primary mt-2" onClick={() => navigate('/topics')}>Back to Dashboard</button>
         {newBadges.length > 0 && <BadgeToast badges={newBadges} onDone={() => setNewBadges([])} />}
       </div>
     )
@@ -84,7 +84,7 @@ export default function ReviewPage() {
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-5 flex-wrap max-[480px]:flex-col max-[480px]:items-start max-[600px]:gap-2">
-        <button className="btn btn-ghost text-[12px]" onClick={() => navigate('/')}>← Back</button>
+        <button className="btn btn-ghost text-[12px]" onClick={() => navigate('/topics')}>← Back</button>
         <div className="text-[18px] font-bold text-gold max-[600px]:text-[16px]">Daily Review</div>
         <div className="flex gap-[5px] flex-1 flex-wrap max-[480px]:max-h-12 max-[480px]:overflow-hidden max-[600px]:gap-1">
           {session.questions.map((q, i) => (

@@ -5,6 +5,7 @@ import type { ReviewSessionDto, DiagnosticResultDto, AnswerEntry } from '../type
 import QuestionCard from '../components/quest/QuestionCard'
 
 const TOPIC_META: Record<string, { name: string; glyph: string }> = {
+  java:     { name: 'Java',         glyph: '☕' },
   tailwind: { name: 'Tailwind CSS', glyph: '🎨' },
 }
 

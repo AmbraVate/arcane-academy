@@ -1,6 +1,7 @@
 package com.ambravate.polymath.academy.dto;
 
 import lombok.*;
+import java.time.Instant;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,7 @@ public class DashboardDto {
     private boolean streakAtRisk;
     private String currentPath;
     private boolean diagnosticCompleted;
+    private Instant diagnosticCompletedAt;
     private int reviewsDue;
     private int dailyGoalMinutes;
     private double overallProgress;

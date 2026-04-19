@@ -1,6 +1,7 @@
 // Copyright (c) 2026 AmbraVate. All rights reserved. See LICENSE for terms.
 package com.ambravate.polymath.academy.model;
 
+import java.time.Instant;
 import java.util.List;
 
 public record DashboardData(
@@ -10,6 +11,7 @@ public record DashboardData(
     boolean streakAtRisk,
     LearnerPath currentPath,
     boolean diagnosticCompleted,
+    Instant diagnosticCompletedAt,
     int reviewsDue,
     int dailyGoalMinutes,
     double overallProgress,

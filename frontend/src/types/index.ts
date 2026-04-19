@@ -109,7 +109,7 @@ export interface ChunkHealthDto {
 
 export interface DashboardDto {
   totalXp: number; rank: string; streakDays: number; streakAtRisk: boolean
-  currentPath: string; diagnosticCompleted: boolean
+  currentPath: string; diagnosticCompleted: boolean; diagnosticCompletedAt: string | null
   reviewsDue: number; dailyGoalMinutes: number
   overallProgress: number; chunkHealth: ChunkHealthDto[]
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ public class DashboardService {
     User user = userRepository.findById(userId).orElseThrow();
 
     boolean diagnosticCompleted;
+    Instant diagnosticCompletedAt;
     LearnerPath currentPath;
     int dailyGoalMinutes;
 
@@ -39,13 +41,14 @@ public class DashboardService {
       UserLearnerProfile profile = profileRepository.findByUserId(userId)
           .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
       diagnosticCompleted = profile.isDiagnosticCompleted();
+      diagnosticCompletedAt = profile.getDiagnosticCompletedAt();
       currentPath = profile.getCurrentPath();
       dailyGoalMinutes = profile.getDailyGoalMinutes();
     } else {
       // Per-topic diagnostic state; path defaults to FOUNDATION (tier is chunk-level)
-      diagnosticCompleted = topicProfileRepository.findByUserIdAndTopicId(userId, topicId)
-          .map(UserTopicProfile::isDiagnosticCompleted)
-          .orElse(false);
+      var topicProfile = topicProfileRepository.findByUserIdAndTopicId(userId, topicId);
+      diagnosticCompleted = topicProfile.map(UserTopicProfile::isDiagnosticCompleted).orElse(false);
+      diagnosticCompletedAt = topicProfile.map(UserTopicProfile::getDiagnosticCompletedAt).orElse(null);
       currentPath = LearnerPath.FOUNDATION;
       dailyGoalMinutes = 40;
     }
@@ -77,6 +80,7 @@ public class DashboardService {
         streakAtRisk,
         currentPath,
         diagnosticCompleted,
+        diagnosticCompletedAt,
         reviewsDue,
         dailyGoalMinutes,
         overallProgress,

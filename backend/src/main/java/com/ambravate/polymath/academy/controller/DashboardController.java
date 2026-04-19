@@ -52,6 +52,7 @@ public class DashboardController {
             .withStreakAtRisk(data.streakAtRisk())
             .withCurrentPath(data.currentPath().name())
             .withDiagnosticCompleted(data.diagnosticCompleted())
+            .withDiagnosticCompletedAt(data.diagnosticCompletedAt())
             .withReviewsDue(data.reviewsDue())
             .withDailyGoalMinutes(data.dailyGoalMinutes())
             .withOverallProgress(data.overallProgress())

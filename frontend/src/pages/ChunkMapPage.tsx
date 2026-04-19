@@ -20,7 +20,7 @@ export default function ChunkMapPage() {
     if (!chunkId) return
     chunkApi.getDetail(chunkId)
       .then(setChunk)
-      .catch(() => navigate('/'))
+      .catch(() => navigate('/topics'))
       .finally(() => setLoading(false))
     rabbitHoleApi.getForChunk(chunkId).then(setRabbitHoles).catch(() => {})
   }, [chunkId, navigate])
@@ -39,7 +39,7 @@ export default function ChunkMapPage() {
 
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
-      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/topics/${chunk.topicId}`)}>
+      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/topic/${chunk.topicId}`)}>
         ← Back to Topic
       </button>
 

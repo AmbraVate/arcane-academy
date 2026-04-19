@@ -73,13 +73,7 @@ export default function TopicPage() {
   useEffect(() => {
     if (!topicId) return
     dashboardApi.get(topicId)
-      .then(d => {
-        if (!d.diagnosticCompleted) {
-          navigate(`/topic/${topicId}/diagnostic`, { replace: true })
-          return
-        }
-        setDashboard(d)
-      })
+      .then(d => { setDashboard(d) })
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [topicId, navigate])

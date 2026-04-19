@@ -1,6 +1,6 @@
 {
   "id": "tw-a",
-  "title": "Tailwind Basics",
+  "title": "Tailwind Foundation",
   "glyph": "🎨",
   "sortOrder": 1,
   "tier": "FOUNDATION",
@@ -12,20 +12,20 @@
 
     {
       "id": "tw-a1",
-      "title": "What Tailwind Is",
+      "title": "The Utility Mindset",
       "sortOrder": 1,
       "xpReward": 50,
       "filename": "index.html",
       "practiceType": "TAILWIND",
 
-      "hookHtml": "<p>Tailwind is a <strong>utility-first</strong> CSS framework. Instead of inventing class names (<code>.card</code>, <code>.primary-button</code>) and writing CSS in a separate file, you compose small, single-purpose classes — <code>p-4</code>, <code>bg-gray-100</code>, <code>rounded-lg</code>, <code>shadow</code> — directly in your HTML.</p>",
+      "hookHtml": "<p>Every senior front-end developer has a moment when they stop writing custom CSS for each new element and realise that <strong>utility-first CSS</strong> is faster, more consistent, and far easier to maintain. That moment starts here.</p>",
 
-      "explanationHtml": "<p>Lyra the Scribe unfurls a long scroll. <em>\"Before you inscribe anything, see why we compose glyphs at all. Here is the old way.\"</em></p>\n<p>She taps a dusty grimoire. <em>\"Traditional CSS asks you to name every incantation in a separate book:\"</em></p>\n<pre><code>/* styles.css */\n.card {\n  background-color: white;\n  padding: 16px;\n  border-radius: 8px;\n  box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n}</code></pre>\n<p><em>\"Hours lost inventing names. <code>.special-card</code>. <code>.blue-thing-we-made-on-a-Thursday</code>. And two scribes pick the same name for different spells — chaos.\"</em></p>\n<p>She sets down a slim handbook. <em>\"The Tailwind way. Compose glyphs directly on the element:\"</em></p>\n<pre><code>&lt;div class=\"bg-white p-4 rounded-lg shadow\"&gt;Content&lt;/div&gt;</code></pre>\n<p><em>\"Four glyphs, four decisions. <code>bg-white</code> — background. <code>p-4</code> — padding. <code>rounded-lg</code> — corners. <code>shadow</code> — drop shadow. No names to invent. No second book to hunt for.\"</em></p>\n<p>She counts the virtues on her fingers:</p>\n<ul>\n<li><strong>No naming paralysis</strong> — the glyphs are already named.</li>\n<li><strong>A curated palette</strong> — every colour and spacing value comes from one system.</li>\n<li><strong>Stay at the parchment</strong> — you never leave your HTML.</li>\n<li><strong>Predictable magic</strong> — a glyph does the same thing everywhere.</li>\n</ul>\n<p><em>\"One last pattern. Every glyph follows the same shape — <code>property-value</code>. Learn the pattern and you can guess new glyphs before you've seen them.\"</em></p>\n<pre><code>bg-blue-500    → background-color: blue (shade 500)\ntext-white     → color: white\np-4            → padding: 1rem (16px)\nrounded-md     → border-radius: 6px\nfont-bold      → font-weight: 700</code></pre>\n<p><em>\"Property. Value. That is the whole Academy in three words. Now — the card below needs four glyphs. Inscribe them.\"</em></p>",
+      "explanationHtml": "<h3>Why utility-first wins</h3>\n<p>Traditional CSS workflows ask you to do two jobs at once: design the element <em>and</em> invent a name for it. The name ends up in two files — the HTML and the stylesheet — and they must stay in sync forever. Rename one, the other breaks silently.</p>\n<pre><code>/* styles.css — the old way */\n.profile-card-header-meta-subtitle {\n  font-size: 0.875rem;\n  color: #6b7280;\n  margin-top: 4px;\n}\n</code></pre>\n<p>Utility-first removes the naming step entirely. You compose small, single-purpose classes directly on the element:</p>\n<pre><code>&lt;p class=\"text-sm text-gray-500 mt-1\"&gt;Senior Engineer&lt;/p&gt;\n</code></pre>\n<p>Same result. No extra file. No name to maintain.</p>\n\n<h3>How does this compare to other approaches?</h3>\n<ul>\n  <li><strong>Plain CSS / CSS Modules</strong> — maximum flexibility, but you write every value yourself, there's no shared constraint, and design inconsistencies creep in over time.</li>\n  <li><strong>CSS-in-JS (styled-components, Emotion)</strong> — co-location is nice, but runtime cost, bundle bloat, and SSR complexity add up fast in production.</li>\n  <li><strong>Semantic CSS (BEM)</strong> — disciplined naming helps, but you still maintain two files and the abstraction breaks when the design changes.</li>\n  <li><strong>Tailwind</strong> — every token (colour, spacing, type size) is shared across the whole project. Changing the design system means changing one config file, not hundreds of classes.</li>\n</ul>\n\n<h3>The property-value naming pattern</h3>\n<p>Every Tailwind class follows the same pattern: <code>property-value</code>. Once you know the pattern, you can guess new classes before you look them up.</p>\n<pre><code>bg-blue-500      /* background-color: rgb(59 130 246)   */\ntext-white       /* color: rgb(255 255 255)              */\np-4              /* padding: 1rem (16px)                 */\npx-6             /* padding-left + right: 1.5rem (24px)  */\nrounded-lg       /* border-radius: 0.5rem               */\nfont-semibold    /* font-weight: 600                    */\nshadow-md        /* box-shadow: medium preset           */\n</code></pre>\n\n<h3>Using Tailwind in React</h3>\n<p>React uses <code>className</code>, not <code>class</code>. This is the only HTML difference you need to remember.</p>\n<pre><code>// HTML\n&lt;div class=\"bg-white p-6 rounded-xl shadow-md\"&gt;\n\n// JSX (React)\n&lt;div className=\"bg-white p-6 rounded-xl shadow-md\"&gt;\n</code></pre>\n<p>In real React projects you'll also use the <code>clsx</code> or <code>cn</code> utility to conditionally combine classes:</p>\n<pre><code>import clsx from 'clsx';\n\nfunction Button({ primary, children }) {\n  return (\n    &lt;button\n      className={clsx(\n        'px-4 py-2 rounded-md font-medium',\n        primary ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'\n      )}\n    &gt;\n      {children}\n    &lt;/button&gt;\n  );\n}\n</code></pre>\n\n<h3>Building a stat card</h3>\n<p>A stat card is a classic UI component: a container with a label and a big number. Here is what we are building:</p>\n<pre><code>&lt;div class=\"stat-card\"&gt;\n  &lt;p class=\"stat-label\"&gt;Total Students&lt;/p&gt;\n  &lt;p class=\"stat-value\"&gt;12,847&lt;/p&gt;\n&lt;/div&gt;\n</code></pre>\n<p>The card needs: a white or light background, padding on all sides, rounded corners, and a subtle shadow. The label needs small muted text. The value needs large bold text. Apply those utilities now.</p>",
 
       "storyBeats": [
         {
           "type": "narration",
-          "text": "You arrive at the Academy's <em>Scriptorium</em>, a vast hall where enchanters inscribe visual spells. Lyra the Scribe looks up from her work."
+          "text": "You step into the Academy's <em>Scriptorium</em> — a vast hall lined with glowing runes. Enchanters inscribe visual spells onto parchment, each working at a lectern. Lyra the Scribe glances up from a stack of scrolls."
         },
         {
           "type": "dialogue",
@@ -33,7 +33,7 @@
           "cls": "mentor",
           "speaker": "Lyra the Scribe",
           "sCls": "mentor",
-          "text": "Ah — a new apprentice. Tell me, when you cast a spell, do you invent a new name for every rune combination? No. We use <strong>glyphs</strong>: small, focused symbols that each do one thing."
+          "text": "Ah — a new apprentice. Let me guess: you have been writing bespoke names for every scroll you produce? <code>.card-header-title-special</code>, <code>.button-blue-thing-v2</code>?"
         },
         {
           "type": "dialogue",
@@ -41,79 +41,122 @@
           "cls": "mentor",
           "speaker": "Lyra the Scribe",
           "sCls": "mentor",
-          "text": "Tailwind works the same way. Utility classes are glyphs. Compose them on the element itself."
+          "text": "The Academy uses <strong>glyphs</strong>: small, single-purpose symbols that each do one thing. You compose them directly on the element. No naming. No second scroll to maintain. Watch."
+        },
+        {
+          "type": "example",
+          "speaker": "Old way vs. utility-first",
+          "text": "/* Old way: two files to maintain */\n.profile-card { background: white; padding: 24px; border-radius: 12px; }\n\n<!-- Utility-first: everything in one place -->\n<div class=\"bg-white p-6 rounded-xl\">..."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Every glyph follows the same pattern: <strong>property-value</strong>. Learn the pattern and you can guess new glyphs before you have even seen them. <code>bg-blue-500</code>. <code>text-sm</code>. <code>rounded-lg</code>. Now — style the card below."
         }
       ],
 
-      "guidedPracticeHtml": "<p>Style this card with Tailwind utilities. Add to the <code>.card</code> element:</p>\n<ul>\n<li><code>bg-white</code> — white background</li>\n<li><code>p-6</code> — padding all sides</li>\n<li><code>rounded-xl</code> — rounded corners</li>\n<li><code>shadow-md</code> — medium drop shadow</li>\n</ul>",
+      "guidedPracticeHtml": "<p>Style this stat card component. Apply the following utilities:</p>\n<ul>\n  <li><strong>.stat-card</strong>: <code>bg-white</code>, <code>p-6</code>, <code>rounded-xl</code>, <code>shadow-md</code>, <code>border</code>, <code>border-gray-100</code></li>\n  <li><strong>.stat-label</strong>: <code>text-sm</code>, <code>text-gray-500</code>, <code>font-medium</code></li>\n  <li><strong>.stat-value</strong>: <code>text-3xl</code>, <code>font-bold</code>, <code>text-gray-900</code>, <code>mt-1</code></li>\n</ul>",
 
-      "guidedPracticeStarterCode": "<div class=\"card\">\n  <h2>Arcane Academy</h2>\n  <p>Your utility-first journey begins here.</p>\n</div>",
+      "guidedPracticeStarterCode": "<div class=\"stat-card\">\n  <p class=\"stat-label\">Total Students</p>\n  <p class=\"stat-value\">12,847</p>\n</div>",
 
       "guidedPracticeTests": [
-        { "label": "White background",  "selector": ".card", "requiredClass": "bg-white"    },
-        { "label": "Padding",           "selector": ".card", "requiredClass": "p-6"         },
-        { "label": "Rounded corners",   "selector": ".card", "requiredClass": "rounded-xl"  },
-        { "label": "Drop shadow",       "selector": ".card", "requiredClass": "shadow-md"   }
+        { "label": "Card: white background",     "selector": ".stat-card",  "requiredClass": "bg-white"       },
+        { "label": "Card: padding",              "selector": ".stat-card",  "requiredClass": "p-6"            },
+        { "label": "Card: rounded corners",      "selector": ".stat-card",  "requiredClass": "rounded-xl"     },
+        { "label": "Card: shadow",               "selector": ".stat-card",  "requiredClass": "shadow-md"      },
+        { "label": "Card: border",               "selector": ".stat-card",  "requiredClass": "border"         },
+        { "label": "Label: small text",          "selector": ".stat-label", "requiredClass": "text-sm"        },
+        { "label": "Label: muted colour",        "selector": ".stat-label", "requiredClass": "text-gray-500"  },
+        { "label": "Value: large text",          "selector": ".stat-value", "requiredClass": "text-3xl"       },
+        { "label": "Value: bold",                "selector": ".stat-value", "requiredClass": "font-bold"      },
+        { "label": "Value: top margin",          "selector": ".stat-value", "requiredClass": "mt-1"           }
       ],
 
-      "feynmanPrompt": "Explain utility-first CSS in your own words. Why is composing small classes better than inventing component class names for most cases?",
+      "feynmanPrompt": "Explain utility-first CSS to a developer who has only ever used BEM and CSS Modules. Cover: why you do not need to invent class names, how the design system stays consistent, and one scenario where you would still write custom CSS despite using Tailwind.",
 
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which term describes Tailwind's approach to styling?</p>",
-          "options": ["Utility-first", "Semantic CSS", "Inline styles", "CSS-in-JS"],
-          "correctAnswer": "Utility-first",
-          "explanationHtml": "<p>Tailwind composes many small, single-purpose classes directly in HTML — the <em>utility-first</em> approach.</p>"
+          "questionHtml": "<p>Which Tailwind class sets a medium box shadow?</p>",
+          "options": ["shadow-md", "box-shadow-md", "drop-shadow-medium", "shadow: medium"],
+          "correctAnswer": "shadow-md",
+          "explanationHtml": "<p>Shadow utilities follow <code>shadow-{size}</code>: <code>shadow-sm</code>, <code>shadow</code> (default), <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>, <code>shadow-2xl</code>, <code>shadow-inner</code>, <code>shadow-none</code>.</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which Tailwind class adds a white background?</p>",
-          "options": ["bg-white", "background-white", "color-white", "white-bg"],
-          "correctAnswer": "bg-white",
-          "explanationHtml": "<p>Background colour utilities follow <code>bg-{color}</code>.</p>"
-        },
-        {
-          "type": "TRUE_FALSE",
-          "tier": "RECALL",
-          "questionHtml": "<p>In Tailwind you write a custom class name for every component.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Utility-first means composing pre-built classes directly in HTML. Custom class names are rare.</p>"
+          "questionHtml": "<p>In JSX (React), how do you apply Tailwind classes to an element?</p>",
+          "options": [
+            "className=\"bg-white p-4\"",
+            "class=\"bg-white p-4\"",
+            "style={tailwind('bg-white p-4')}",
+            "tw=\"bg-white p-4\""
+          ],
+          "correctAnswer": "className=\"bg-white p-4\"",
+          "explanationHtml": "<p>React requires <code>className</code> instead of <code>class</code> because <code>class</code> is a reserved word in JavaScript. Every other aspect of Tailwind usage is identical to plain HTML.</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Which set applies rounded corners, a white background, and padding?</p>",
+          "questionHtml": "<p>You want a card with: white background, 24 px of padding, large rounded corners, and a subtle shadow. Which class string is correct?</p>",
           "options": [
-            "rounded bg-white p-4",
-            ".rounded .bg-white .p-4",
-            "border-radius background padding",
-            "style=\"border-radius: 4px\""
+            "bg-white p-6 rounded-xl shadow-md",
+            ".bg-white .p-6 .rounded-xl .shadow-md",
+            "background-white padding-6 corners-xl shadow-medium",
+            "style=\"background:white; padding:24px; border-radius:12px;\""
           ],
-          "correctAnswer": "rounded bg-white p-4",
-          "explanationHtml": "<p>Tailwind classes are space-separated in <code>class</code>. No leading dots, no raw CSS.</p>"
+          "correctAnswer": "bg-white p-6 rounded-xl shadow-md",
+          "explanationHtml": "<p>Tailwind classes are plain strings separated by spaces in the <code>class</code> or <code>className</code> attribute. No leading dots (those are CSS selectors, not class values), no raw CSS property names.</p>"
+        },
+        {
+          "type": "APPLICATION",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A developer writes <code>className={`bg-${color}-500`}</code> where <code>color</code> is a string from an API response. What problem will they encounter?</p>",
+          "options": [
+            "The class will never apply because Tailwind cannot detect dynamically interpolated class names at build time",
+            "It works fine — Tailwind handles template literals automatically",
+            "It works in development but is slightly slower in production",
+            "The class applies but the colour shade will default to 500"
+          ],
+          "correctAnswer": "The class will never apply because Tailwind cannot detect dynamically interpolated class names at build time",
+          "explanationHtml": "<p>Tailwind scans source files for complete class name strings. <code>bg-blue-500</code> is found; <code>bg-${color}-500</code> is not — no part of it is a valid complete class. The fix is a lookup map: <code>const colourMap = { blue: 'bg-blue-500', red: 'bg-red-500' }</code>, then use <code>colourMap[color]</code>. This is one of the most common Tailwind gotchas in real projects.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Your team is debating CSS strategies for a new React project. One engineer argues for CSS Modules (one <code>.module.css</code> file per component). Another prefers Tailwind. The design uses a consistent 8-point spacing scale and a fixed palette of 12 brand colours.</p>\n<p>Which argument <em>most accurately</em> represents an advantage of Tailwind in this specific context?</p>",
+          "options": [
+            "Tailwind enforces the spacing scale and colour palette automatically through its token system, making design drift structurally impossible without config changes",
+            "Tailwind is faster to type than CSS Modules",
+            "CSS Modules cannot implement the same design system",
+            "Tailwind generates smaller CSS files in all cases"
+          ],
+          "correctAnswer": "Tailwind enforces the spacing scale and colour palette automatically through its token system, making design drift structurally impossible without config changes",
+          "explanationHtml": "<p>When a design uses a fixed palette and spacing scale, Tailwind's config is a direct representation of that system. Every developer on the team can only use values that exist in the config — there is nowhere to sneak in an arbitrary <code>color: #e74c3c</code> or <code>margin: 13px</code>. CSS Modules give each developer a blank canvas, which means design drift requires discipline rather than tooling. Neither approach produces smaller CSS in all cases (JIT is very efficient, but a module that is never loaded costs nothing too). This is the key architectural advantage Tailwind provides.</p>"
         }
       ]
     },
 
     {
       "id": "tw-a2",
-      "title": "Installation & Setup",
+      "title": "Setup for Vite + React",
       "sortOrder": 2,
       "xpReward": 50,
       "filename": "index.html",
       "practiceType": "TAILWIND",
 
-      "hookHtml": "<p>Tailwind emits CSS only for classes you actually use — but it can only do that if the build tool is configured correctly. Understanding the setup stops \"the styles aren't applying!\" before it ever starts.</p>",
+      "hookHtml": "<p>Ninety percent of new React projects today use Vite. Understanding the exact setup sequence — and the one gotcha that causes styles to disappear in production — is a genuine job-readiness skill.</p>",
 
-      "explanationHtml": "<p>Lyra leads you through a side door into the Academy's <em>Foundry</em>. An older mage in workshop apron greets you. <em>\"Maester Cordell,\"</em> Lyra says. <em>\"He handles setup. Spells don't reach the page without him.\"</em></p>\n<p>Cordell opens a toolbox. <em>\"Tailwind has three common install paths. Learn all three — you'll meet each in the wild.\"</em></p>\n<h3>1. Tailwind CLI</h3>\n<p>The simplest — no build pipeline beyond Tailwind itself:</p>\n<pre><code>npm install -D tailwindcss\nnpx tailwindcss init\nnpx tailwindcss -i ./src/input.css -o ./dist/output.css --watch</code></pre>\n<h3>2. PostCSS</h3>\n<p>Tailwind as a PostCSS plugin, alongside autoprefixer. Standard for hand-rolled build setups:</p>\n<pre><code>npm install -D tailwindcss postcss autoprefixer\n// postcss.config.js\nmodule.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };</code></pre>\n<h3>3. Framework-Specific (Vite / Next.js / Angular / Vue)</h3>\n<p>Most real projects live here. For Vite + React:</p>\n<pre><code>npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p</code></pre>\n<p>Generates <code>tailwind.config.js</code> and <code>postcss.config.js</code>. Import Tailwind's layers in your main CSS file:</p>\n<pre><code>/* src/index.css */\n@tailwind base;\n@tailwind components;\n@tailwind utilities;</code></pre>\n<h3>The content Array</h3>\n<p>Cordell taps the config file. <em>\"This is the one line every apprentice forgets. Tailwind scans these files for class names. If a path is missing here, those classes silently produce nothing.\"</em></p>\n<pre><code>// tailwind.config.js\ncontent: [\n  './index.html',\n  './src/**/*.{ts,tsx,jsx,vue}',\n],</code></pre>\n<p><em>\"Missing styles in production? Check this array first. It is the answer nine times out of ten.\"</em></p>",
+      "explanationHtml": "<h3>Installing Tailwind in a Vite + React project</h3>\n<p>This is the exact sequence you will run for every new project. Memorise it:</p>\n<pre><code># 1. Create the project (if you haven't already)\nnpm create vite@latest my-app -- --template react-ts\ncd my-app\n\n# 2. Install Tailwind and its PostCSS peer dependencies\nnpm install -D tailwindcss postcss autoprefixer\n\n# 3. Generate config files\nnpx tailwindcss init -p\n# -p generates postcss.config.js at the same time\n</code></pre>\n\n<h3>What those files look like</h3>\n<p><code>tailwind.config.js</code> — the most important file in your Tailwind setup:</p>\n<pre><code>/** @type {import('tailwindcss').Config} */\nexport default {\n  content: [\n    './index.html',\n    './src/**/*.{js,ts,jsx,tsx}',\n  ],\n  theme: {\n    extend: {},\n  },\n  plugins: [],\n};\n</code></pre>\n<p><code>postcss.config.js</code> — rarely touched after creation:</p>\n<pre><code>export default {\n  plugins: {\n    tailwindcss: {},\n    autoprefixer: {},\n  },\n};\n</code></pre>\n\n<h3>The three @tailwind directives</h3>\n<p>Add these to <code>src/index.css</code> (replace any existing content):</p>\n<pre><code>@tailwind base;\n@tailwind components;\n@tailwind utilities;\n</code></pre>\n<p>Then import that file in <code>src/main.tsx</code>:</p>\n<pre><code>import './index.css';\n</code></pre>\n\n<h3>The #1 production gotcha: the content array</h3>\n<p>Tailwind uses <strong>Just-In-Time (JIT) compilation</strong> — it scans your source files at build time and emits only the CSS for classes it actually finds. If a file is not covered by the <code>content</code> glob, its classes produce no output.</p>\n<p>The standard glob for Vite + React is:</p>\n<pre><code>'./src/**/*.{js,ts,jsx,tsx}'\n</code></pre>\n<p>Common mistakes that cause styles to vanish in production:</p>\n<ul>\n  <li>Forgetting <code>./index.html</code> (classes in the root HTML file are never scanned)</li>\n  <li>Using <code>*.js</code> only (misses <code>.tsx</code> and <code>.ts</code> files)</li>\n  <li>Adding a new <code>components/</code> subfolder outside the glob path</li>\n  <li>Deploying without running the build (dev server uses a different pipeline)</li>\n</ul>\n\n<h3>The dynamic class interpolation trap</h3>\n<p>Because Tailwind scans for <em>complete</em> class strings, dynamic interpolation always breaks:</p>\n<pre><code>// BROKEN — Tailwind never sees 'bg-blue-500' or 'bg-red-500' as complete strings\nconst cls = `bg-${colour}-500`;\n\n// CORRECT — complete strings are present in source code\nconst colourMap = {\n  blue: 'bg-blue-500',\n  red:  'bg-red-500',\n  green: 'bg-green-500',\n};\nconst cls = colourMap[colour];\n</code></pre>\n<p>This is the second most common Tailwind bug in production code. When you see it in a code review, flag it immediately.</p>\n\n<h3>Verifying the setup works</h3>\n<p>Run <code>npm run dev</code> and add <code>className=\"bg-blue-500 text-white p-4\"</code> to any element. If you see a blue box with white text, the setup is correct.</p>",
 
       "storyBeats": [
         {
           "type": "narration",
-          "text": "Lyra pushes open a heavy door. The smell of hot metal greets you — the <em>Foundry</em>, where raw incantations are forged into things the page can actually run."
+          "text": "Lyra leads you through a heavy door into a workshop that smells of hot metal and fresh parchment. A broad-shouldered mage in a leather apron looks up from a workbench covered in tools."
         },
         {
           "type": "dialogue",
@@ -121,12 +164,20 @@
           "cls": "maester",
           "speaker": "Maester Cordell",
           "sCls": "mentor",
-          "text": "Every spell in the Academy passes through here. If your glyphs don't appear on the page, the fault is almost never the glyphs. It's the setup — the <em>content</em> array, a missing import, a wrong path."
+          "text": "Ah — new apprentice. Cordell. I handle the Foundry: the forges that turn your glyphs into spells the page can actually run. Without me, your beautiful Tailwind classes produce exactly nothing."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Cordell, show them the setup sequence. The one they will run for every new project."
         },
         {
           "type": "example",
-          "speaker": "Tailwind imports in your main CSS",
-          "text": "@tailwind base;\n@tailwind components;\n@tailwind utilities;"
+          "speaker": "The three installation commands",
+          "text": "npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p"
         },
         {
           "type": "dialogue",
@@ -134,249 +185,126 @@
           "cls": "maester",
           "speaker": "Maester Cordell",
           "sCls": "mentor",
-          "text": "Remember — the <code>content</code> array tells the scanner where to look. Miss a path, miss the styles."
+          "text": "Now listen carefully — this is the part every apprentice skips and then spends hours debugging. The <strong>content array</strong> in <code>tailwind.config.js</code> tells the scanner which files to read. Miss a file path here and your glyphs silently produce no CSS in production."
+        },
+        {
+          "type": "example",
+          "speaker": "tailwind.config.js — the critical content array",
+          "text": "content: [\n  './index.html',\n  './src/**/*.{js,ts,jsx,tsx}',\n],"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "Production styles missing? That array is your first stop. Nine times in ten, a path is wrong or a file extension is missing."
         }
       ],
 
-      "guidedPracticeHtml": "<p>Assume the project is set up correctly — Tailwind is installed, imports are in place, and the <code>content</code> array covers this file. Style the <code>.panel</code> with: <code>bg-slate-50</code>, <code>p-4</code>, <code>rounded-md</code>, <code>border</code>, <code>border-slate-200</code>.</p>",
+      "guidedPracticeHtml": "<p>The setup is already correct in this sandbox. Practice applying classes to a &quot;setup confirmation&quot; panel — the point is to reinforce that class application is all that remains once the toolchain is configured.</p>\n<p>Style the elements:</p>\n<ul>\n  <li><strong>.setup-panel</strong>: <code>bg-slate-50</code>, <code>border</code>, <code>border-slate-200</code>, <code>rounded-lg</code>, <code>p-6</code></li>\n  <li><strong>.setup-title</strong>: <code>text-lg</code>, <code>font-semibold</code>, <code>text-slate-900</code></li>\n  <li><strong>.setup-status</strong>: <code>text-sm</code>, <code>text-green-600</code>, <code>font-medium</code>, <code>mt-2</code></li>\n</ul>",
 
-      "guidedPracticeStarterCode": "<div class=\"panel\">\n  <h3>Setup Complete</h3>\n  <p>Tailwind is watching your files.</p>\n</div>",
+      "guidedPracticeStarterCode": "<div class=\"setup-panel\">\n  <h3 class=\"setup-title\">Tailwind Configured</h3>\n  <p class=\"setup-status\">All systems operational</p>\n</div>",
 
       "guidedPracticeTests": [
-        { "label": "Background applied", "selector": ".panel", "requiredClass": "bg-slate-50"     },
-        { "label": "Padding applied",    "selector": ".panel", "requiredClass": "p-4"             },
-        { "label": "Rounded",            "selector": ".panel", "requiredClass": "rounded-md"      },
-        { "label": "Border",             "selector": ".panel", "requiredClass": "border"          },
-        { "label": "Border colour",      "selector": ".panel", "requiredClass": "border-slate-200"}
+        { "label": "Panel: light background",    "selector": ".setup-panel",  "requiredClass": "bg-slate-50"      },
+        { "label": "Panel: border",              "selector": ".setup-panel",  "requiredClass": "border"           },
+        { "label": "Panel: border colour",       "selector": ".setup-panel",  "requiredClass": "border-slate-200" },
+        { "label": "Panel: rounded",             "selector": ".setup-panel",  "requiredClass": "rounded-lg"       },
+        { "label": "Panel: padding",             "selector": ".setup-panel",  "requiredClass": "p-6"              },
+        { "label": "Title: font size",           "selector": ".setup-title",  "requiredClass": "text-lg"          },
+        { "label": "Title: semibold",            "selector": ".setup-title",  "requiredClass": "font-semibold"    },
+        { "label": "Status: green text",         "selector": ".setup-status", "requiredClass": "text-green-600"   },
+        { "label": "Status: top margin",         "selector": ".setup-status", "requiredClass": "mt-2"             }
       ],
 
-      "feynmanPrompt": "You've deployed a site and three specific classes aren't applying in production, though they work locally. Name the single most likely cause and the exact file you'd check.",
+      "feynmanPrompt": "Walk through the complete setup sequence for Tailwind in a brand-new Vite + React TypeScript project, from the first npm command to the point where you can verify styles are working. Include the exact content array you would use and explain what happens if it is misconfigured.",
 
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which three directives belong in your main CSS file when using Tailwind?</p>",
+          "questionHtml": "<p>Which three directives must appear in your main CSS file to activate Tailwind?</p>",
           "options": [
             "@tailwind base; @tailwind components; @tailwind utilities;",
-            "@import tailwind;",
-            "@use tailwind/core;",
-            "require('tailwind');"
+            "@import tailwind; @import tailwind-base; @import tailwind-utils;",
+            "import 'tailwindcss'; import 'tailwindcss/base'; import 'tailwindcss/utilities';",
+            "@use tailwind/base; @use tailwind/components; @use tailwind/utilities;"
           ],
           "correctAnswer": "@tailwind base; @tailwind components; @tailwind utilities;",
-          "explanationHtml": "<p>These three layer directives load Tailwind's resets, component layer, and utility classes.</p>"
+          "explanationHtml": "<p>The three <code>@tailwind</code> directives are required. They inject Tailwind's reset styles (<code>base</code>), any component layer classes (<code>components</code>), and all utility classes (<code>utilities</code>) into your compiled CSS output.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does the <code>content</code> array in <code>tailwind.config.js</code> control?</p>",
+          "options": [
+            "Which source files Tailwind scans to determine which utility classes to include in the compiled CSS",
+            "Which HTML elements Tailwind styles by default",
+            "The order in which Tailwind processes CSS layers",
+            "Which Tailwind plugins are loaded"
+          ],
+          "correctAnswer": "Which source files Tailwind scans to determine which utility classes to include in the compiled CSS",
+          "explanationHtml": "<p>Tailwind's JIT compiler scans every file matched by the <code>content</code> globs and emits CSS only for complete class strings it finds. Files outside these globs are not scanned, so any classes used only in those files will not appear in the output CSS — causing styles to silently disappear.</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is the <code>content</code> array in <code>tailwind.config.js</code> for?</p>",
+          "questionHtml": "<p>You add a <code>components/</code> folder to your project and create <code>Button.tsx</code> inside it. Your current content array is <code>['./index.html', './src/**/*.{ts,tsx}']</code>. Will the Tailwind classes in <code>Button.tsx</code> compile correctly?</p>",
           "options": [
-            "Tells Tailwind which files to scan for class names",
-            "Lists fonts to load",
-            "Sets the default theme values",
-            "Registers PostCSS plugins"
+            "Yes, because Button.tsx is inside src/ which is covered by the glob",
+            "No, because components/ is a subfolder not explicitly listed",
+            "Only in development mode, not production",
+            "Only if the classes are also used somewhere else in the project"
           ],
-          "correctAnswer": "Tells Tailwind which files to scan for class names",
-          "explanationHtml": "<p>Tailwind only emits CSS for classes it sees — the scanner uses <code>content</code> to know where to look.</p>"
+          "correctAnswer": "Yes, because Button.tsx is inside src/ which is covered by the glob",
+          "explanationHtml": "<p>The glob <code>./src/**/*.{ts,tsx}</code> matches all <code>.ts</code> and <code>.tsx</code> files anywhere inside <code>src/</code>, including every subfolder at any depth. <code>src/components/Button.tsx</code> is covered. A problem would arise only if <code>Button.tsx</code> were placed <em>outside</em> the <code>src/</code> directory.</p>"
         },
         {
-          "type": "TRUE_FALSE",
+          "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>If a class works in development but is missing in production, the <code>content</code> globs are the first place to check.</p>",
-          "correctAnswer": "True",
-          "explanationHtml": "<p>Missing production styles almost always trace back to a file that the <code>content</code> globs don't cover.</p>"
+          "questionHtml": "<p>A developer writes this in a React component: <code>const cls = `text-${size}-600`</code> where <code>size</code> comes from a prop. The class never applies in production. Why?</p>",
+          "options": [
+            "Tailwind scans for complete class strings at build time; the interpolated template literal is never a complete string in source code",
+            "Template literals are not valid in className attributes",
+            "The text- prefix requires a fixed value, not a variable",
+            "It works in development but the production build minifies away dynamic classes"
+          ],
+          "correctAnswer": "Tailwind scans for complete class strings at build time; the interpolated template literal is never a complete string in source code",
+          "explanationHtml": "<p>Tailwind's JIT scanner performs static analysis — it looks for literal strings like <code>text-sm-600</code> or <code>text-lg-600</code> in your source files. A template literal like <code>`text-${size}-600`</code> is never a complete, recognisable class name during the scan, so no CSS is emitted. The fix is a lookup object mapping each valid <code>size</code> value to its full class string.</p>"
         },
         {
           "type": "SCENARIO",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A new team-mate says \"none of my Tailwind classes are working.\" Their file is under <code>./app/components/</code> but the config's content array only lists <code>./src/**/*</code>. What's the fix?</p>",
-          "correctAnswer": "Add './app/**/*.{ts,tsx}' (or similar) to the content array so Tailwind scans the new directory.",
-          "explanationHtml": "<p>The JIT scanner only emits CSS for files it scans. Extend the <code>content</code> array to cover the new directory.</p>"
+          "questionHtml": "<p>A junior developer deploys a React app to production and reports: &quot;All styles work perfectly on localhost but about a third of the Tailwind classes are missing on the live site.&quot; The dev server is Vite. The deployment platform runs <code>npm run build</code> then serves the <code>dist/</code> folder.</p>\n<p>Which investigation step will most quickly identify the root cause?</p>",
+          "options": [
+            "Check the content array in tailwind.config.js — some file paths likely match the dev server's file watcher but miss the JIT scanner's glob",
+            "Rebuild with NODE_ENV=development to preserve unoptimised CSS",
+            "Check for CORS errors in the network tab blocking the CSS file",
+            "Downgrade to Tailwind v2 which does not use JIT compilation"
+          ],
+          "correctAnswer": "Check the content array in tailwind.config.js — some file paths likely match the dev server's file watcher but miss the JIT scanner's glob",
+          "explanationHtml": "<p>The dev server uses a real-time watcher that processes every file on the fly regardless of the content array (styles appear as you type). The production build uses the JIT scanner, which <em>only</em> processes files matching the content globs. Classes in files outside the globs appear in dev but are absent in the production bundle. The fix is to widen the content array to cover all relevant file paths and extensions. This is the most common cause of the exact symptom described.</p>"
         }
       ]
     },
 
     {
       "id": "tw-a3",
-      "title": "Spacing Utilities",
+      "title": "The Spacing System",
       "sortOrder": 3,
       "xpReward": 50,
       "filename": "index.html",
       "practiceType": "TAILWIND",
 
-      "hookHtml": "<p>Space guides the eye. Padding sits <em>inside</em> an element; margin sits <em>outside</em>. Tailwind gives both a consistent numeric scale so every gap on your page feels intentional.</p>",
+      "hookHtml": "<p>Tailwind's spacing scale is the single most-used part of the framework. Master it and you can build any layout without writing a single pixel value — every gap, margin, and padding comes from the same shared system.</p>",
 
-      "explanationHtml": "<p>Lyra rolls out a long scroll and weights it with two brass rings. <em>\"Space comes in two kinds — inside a thing, and between things. Scribes call them <strong>padding</strong> and <strong>margin</strong>.\"</em></p>\n<p>She presses a palm flat to the parchment. <em>\"Padding pushes space <em>inside</em> an element. Use <code>p-</code> glyphs.\"</em></p>\n<pre><code>p-4      → padding: 1rem (all sides)\npx-4     → left + right\npy-4     → top + bottom\npt-4, pb-4, pl-4, pr-4 → one side each</code></pre>\n<p>She draws a second card and wedges a gap between them. <em>\"Margin is the space <em>outside</em> — between your element and its neighbours. Same shape, <code>m-</code> prefix.\"</em></p>\n<pre><code>m-4      → margin: 1rem (all sides)\nmx-4, my-4, mt-4, mb-4, ml-4, mr-4\nmx-auto  → horizontally centre the element</code></pre>\n<p><em>\"<code>mx-auto</code> is the scribe's secret for centring — give a max width, then auto-margins on either side.\"</em></p>\n<h3>The Scale</h3>\n<p><em>\"Never invent a number. The scale is fixed: each step is 4 pixels, and the whole Academy obeys it.\"</em></p>\n<pre><code>0  → 0px\n1  → 4px\n2  → 8px\n4  → 16px\n8  → 32px\n16 → 64px</code></pre>\n<h3>Gap (between children)</h3>\n<p>For flex and grid containers, <code>space-y-4</code> or <code>gap-4</code> sets even spacing between children without per-item margins.</p>\n<pre><code>&lt;div class=\"flex flex-col space-y-4\"&gt;...&lt;/div&gt;\n&lt;div class=\"grid grid-cols-3 gap-4\"&gt;...&lt;/div&gt;</code></pre>",
-
-      "storyBeats": [
-        {
-          "type": "narration",
-          "text": "Lyra rolls out a long scroll and carefully weights its corners. Runes must breathe, she explains, or the spell will suffocate."
-        },
-        {
-          "type": "dialogue",
-          "av": "🧙‍♀️",
-          "cls": "mentor",
-          "speaker": "Lyra the Scribe",
-          "sCls": "mentor",
-          "text": "Padding pushes space inward. Margin pushes space outward. When every scribe picks from the same scale, every page in the library feels like it belongs to the same library. That is the trick of a design system."
-        },
-        {
-          "type": "example",
-          "speaker": "Centred card with breathing room",
-          "text": "<div class=\"mx-auto max-w-lg p-6 mt-8\">\n  A card with air.\n</div>"
-        }
-      ],
-
-      "guidedPracticeHtml": "<p>Arrange a centred, breathing card. Apply:</p>\n<ul>\n<li><code>.wrapper</code> → <code>py-8</code></li>\n<li><code>.card</code> → <code>mx-auto</code>, <code>max-w-md</code>, <code>p-6</code></li>\n</ul>",
-
-      "guidedPracticeStarterCode": "<div class=\"wrapper\">\n  <div class=\"card bg-white rounded-lg\">\n    <h2>The Ancient Tome</h2>\n    <p>Wisdom, centred and breathing.</p>\n  </div>\n</div>",
-
-      "guidedPracticeTests": [
-        { "label": "Wrapper vertical padding",    "selector": ".wrapper", "requiredClass": "py-8"    },
-        { "label": "Card horizontally centred",   "selector": ".card",    "requiredClass": "mx-auto" },
-        { "label": "Card max width",              "selector": ".card",    "requiredClass": "max-w-md"},
-        { "label": "Card padding",                "selector": ".card",    "requiredClass": "p-6"     }
-      ],
-
-      "feynmanPrompt": "Explain the difference between padding and margin in your own words. How does the numeric scale (4, 8, 16) relate to actual pixels?",
-
-      "questions": [
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "RECALL",
-          "questionHtml": "<p>Which class adds padding on all four sides?</p>",
-          "options": ["p-4", "pad-4", "padding-4", "space-4"],
-          "correctAnswer": "p-4",
-          "explanationHtml": "<p><code>p-4</code> sets <code>padding: 1rem</code> on every side.</p>"
-        },
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "RECALL",
-          "questionHtml": "<p>Which class applies margin only on the left?</p>",
-          "options": ["ml-4", "margin-left-4", "m-left-4", "lm-4"],
-          "correctAnswer": "ml-4",
-          "explanationHtml": "<p>Directional margins: l=left, r=right, t=top, b=bottom, x=horizontal, y=vertical.</p>"
-        },
-        {
-          "type": "TRUE_FALSE",
-          "tier": "RECALL",
-          "questionHtml": "<p><code>mx-auto</code> centres an element horizontally (given a defined width).</p>",
-          "correctAnswer": "True",
-          "explanationHtml": "<p><code>mx-auto</code> sets auto margins on left and right, centring block elements with a known width.</p>"
-        },
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "APPLICATION",
-          "questionHtml": "<p>How many pixels does <code>p-8</code> produce?</p>",
-          "options": ["32px", "8px", "16px", "64px"],
-          "correctAnswer": "32px",
-          "explanationHtml": "<p>Each unit is 4px. <code>p-8</code> = 8 × 4px = 32px.</p>"
-        }
-      ]
-    },
-
-    {
-      "id": "tw-a4",
-      "title": "Typography & Colours",
-      "sortOrder": 4,
-      "xpReward": 50,
-      "filename": "index.html",
-      "practiceType": "TAILWIND",
-
-      "hookHtml": "<p>Typography and colour are the voice of your interface. Size, weight, and shade communicate hierarchy before a single word is read. Tailwind gives you a tight scale for all three.</p>",
-
-      "explanationHtml": "<p>A second scribe enters, sleeves ink-stained. <em>\"Sable handles colour and scale here,\"</em> Lyra says. <em>\"Listen well.\"</em></p>\n<p>Sable lays out a ruler marked with named steps. <em>\"First rule: text size is a ladder, and every rung has a name.\"</em></p>\n<pre><code>text-xs    → 12px\ntext-sm    → 14px\ntext-base  → 16px  (default)\ntext-lg    → 18px\ntext-xl    → 20px\ntext-2xl   → 24px\ntext-4xl   → 36px</code></pre>\n<p><em>\"Never reach for an arbitrary number. Climb the ladder.\"</em></p>\n<h3>Weight</h3>\n<pre><code>font-light    → 300\nfont-normal   → 400\nfont-medium   → 500\nfont-semibold → 600\nfont-bold     → 700</code></pre>\n<h3>Colour</h3>\n<p>Sable opens a row of ink pots from palest to darkest. <em>\"Every hue has shades from 50 to 900. Fifty is barely a whisper; nine hundred is nearly black.\"</em></p>\n<pre><code>text-gray-500    → medium grey\ntext-blue-600    → medium-dark blue\ntext-red-500     → medium red\ntext-green-700   → dark green\ntext-white / text-black</code></pre>\n<p>Background colours follow the same pattern with <code>bg-</code>:</p>\n<pre><code>bg-blue-500    → background blue-500\nbg-gray-100    → light grey surface</code></pre>\n<h3>Putting It Together</h3>\n<pre><code>&lt;h1 class=\"text-4xl font-bold text-gray-900\"&gt;Welcome&lt;/h1&gt;\n&lt;p class=\"text-base text-gray-600\"&gt;Subtitle here&lt;/p&gt;</code></pre>\n<p><em>\"Large, bold, dark — the eye goes there first. Smaller, softer — second. That is hierarchy, for free.\"</em></p>",
+      "explanationHtml": "<h3>The 4px base unit</h3>\n<p>Every spacing value in Tailwind is a multiple of <strong>4px</strong> (0.25rem). The number in the class name is the multiplier:</p>\n<pre><code>p-0   →  0px\np-1   →  4px   (0.25rem)\np-2   →  8px   (0.5rem)\np-3   →  12px  (0.75rem)\np-4   →  16px  (1rem)     ← the most common default\np-5   →  20px  (1.25rem)\np-6   →  24px  (1.5rem)\np-8   →  32px  (2rem)\np-10  →  40px  (2.5rem)\np-12  →  48px  (3rem)\np-16  →  64px  (4rem)\np-20  →  80px  (5rem)\np-24  →  96px  (6rem)\n</code></pre>\n\n<h3>Padding variants</h3>\n<pre><code>p-4      /* all four sides */\npx-4     /* left + right (horizontal) */\npy-4     /* top + bottom (vertical)   */\npt-4     /* top only    */\npr-4     /* right only  */\npb-4     /* bottom only */\npl-4     /* left only   */\n</code></pre>\n\n<h3>Margin variants</h3>\n<pre><code>m-4      /* all four sides */\nmx-4     /* left + right   */\nmy-4     /* top + bottom   */\nmt-4     /* top only       */\nmr-4     /* right only     */\nmb-4     /* bottom only    */\nml-4     /* left only      */\nmx-auto  /* auto left+right — centres a block element horizontally */\n</code></pre>\n\n<h3>Centering with mx-auto</h3>\n<p><code>mx-auto</code> is the Tailwind equivalent of <code>margin: 0 auto</code>. Pair it with a <code>max-w-*</code> class to create a centred content column:</p>\n<pre><code>&lt;div class=\"max-w-3xl mx-auto px-6\"&gt;\n  &lt;!-- page content --&gt;\n&lt;/div&gt;\n</code></pre>\n\n<h3>Width constraints: max-w-*</h3>\n<pre><code>max-w-xs    →  320px\nmax-w-sm    →  384px\nmax-w-md    →  448px\nmax-w-lg    →  512px\nmax-w-xl    →  576px\nmax-w-2xl   →  672px\nmax-w-3xl   →  768px\nmax-w-4xl   →  896px\nmax-w-5xl   →  1024px\nmax-w-6xl   →  1152px\nmax-w-7xl   →  1280px  ← common page width\nmax-w-prose →  65ch    ← optimal reading width\nmax-w-full  →  100%\nmax-w-screen → 100vw\n</code></pre>\n\n<h3>Gap for flex and grid children</h3>\n<p><code>gap-*</code> sets the gutter between flex or grid children. Prefer <code>gap-*</code> over margins on individual children — it is symmetric and easier to change:</p>\n<pre><code>&lt;div class=\"flex gap-4\"&gt;\n  &lt;div&gt;Item 1&lt;/div&gt;\n  &lt;div&gt;Item 2&lt;/div&gt;\n  &lt;div&gt;Item 3&lt;/div&gt;\n&lt;/div&gt;\n\ngap-x-4   /* horizontal gap only */\ngap-y-4   /* vertical gap only   */\n</code></pre>\n\n<h3>Space between siblings: space-x-* and space-y-*</h3>\n<p>Adds margin between adjacent siblings without affecting the first or last child:</p>\n<pre><code>&lt;ul class=\"space-y-3\"&gt;\n  &lt;li&gt;First item&lt;/li&gt;\n  &lt;li&gt;Second item&lt;/li&gt;  &lt;!-- margin-top: 0.75rem --&gt;\n  &lt;li&gt;Third item&lt;/li&gt;   &lt;!-- margin-top: 0.75rem --&gt;\n&lt;/ul&gt;\n</code></pre>\n\n<h3>Building a profile card</h3>\n<p>A profile card demonstrates the full spacing toolkit: a constrained-width container centred on the page, a card with internal padding, section spacing, and element gaps.</p>",
 
       "storyBeats": [
         {
           "type": "narration",
-          "text": "Lyra leads you through a silk curtain into the <em>Calligraphy Chamber</em>. Shelves of ink pots line the walls."
-        },
-        {
-          "type": "dialogue",
-          "av": "🧙‍♀️",
-          "cls": "mentor",
-          "speaker": "Lyra the Scribe",
-          "sCls": "mentor",
-          "text": "Size, weight, and colour tell the reader what matters. I'll leave you with Sable — they know this chamber best."
-        },
-        {
-          "type": "dialogue",
-          "av": "🧑‍🎨",
-          "cls": "illuminator",
-          "speaker": "Sable the Illuminator",
-          "sCls": "mentor",
-          "text": "Two ladders and one palette. That's all typography is."
-        }
-      ],
-
-      "guidedPracticeHtml": "<p>Style the heading and subtitle:</p>\n<ul>\n<li><code>.heading</code> → <code>text-4xl</code>, <code>font-bold</code>, <code>text-gray-900</code></li>\n<li><code>.subtitle</code> → <code>text-base</code>, <code>text-gray-500</code></li>\n</ul>",
-
-      "guidedPracticeStarterCode": "<div class=\"p-8\">\n  <h1 class=\"heading\">Arcane Academy</h1>\n  <p class=\"subtitle\">Master the utility-first art</p>\n</div>",
-
-      "guidedPracticeTests": [
-        { "label": "Heading large",      "selector": ".heading",  "requiredClass": "text-4xl"     },
-        { "label": "Heading bold",       "selector": ".heading",  "requiredClass": "font-bold"    },
-        { "label": "Heading dark grey",  "selector": ".heading",  "requiredClass": "text-gray-900"},
-        { "label": "Subtitle base size", "selector": ".subtitle", "requiredClass": "text-base"    },
-        { "label": "Subtitle muted grey","selector": ".subtitle", "requiredClass": "text-gray-500"}
-      ],
-
-      "feynmanPrompt": "Explain how Tailwind's size ladder and colour scale make a design system possible. What goes wrong when developers pick arbitrary sizes and colours?",
-
-      "questions": [
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "RECALL",
-          "questionHtml": "<p>Which class makes text bold?</p>",
-          "options": ["font-bold", "text-bold", "bold", "weight-bold"],
-          "correctAnswer": "font-bold",
-          "explanationHtml": "<p>Weight uses <code>font-{weight}</code>.</p>"
-        },
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "RECALL",
-          "questionHtml": "<p>Which class is 18px text?</p>",
-          "options": ["text-lg", "font-large", "size-lg", "text-large"],
-          "correctAnswer": "text-lg",
-          "explanationHtml": "<p>Tailwind's size scale: xs, sm, base, lg, xl, 2xl, etc.</p>"
-        },
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "RECALL",
-          "questionHtml": "<p>Which shade is darkest in Tailwind's palette?</p>",
-          "options": ["900", "500", "100", "800"],
-          "correctAnswer": "900",
-          "explanationHtml": "<p>Shades run 50 (lightest) to 900 (darkest).</p>"
-        },
-        {
-          "type": "WHATS_THE_OUTPUT",
-          "tier": "APPLICATION",
-          "questionHtml": "<p>What colour does this element use for its text?</p>",
-          "codeSnippet": "<p class=\"text-blue-600 font-semibold text-sm\">Hello</p>",
-          "correctAnswer": "Medium blue",
-          "explanationHtml": "<p><code>text-blue-600</code> is medium-dark blue. Shade 600 is deeper than the midpoint 500.</p>"
-        }
-      ]
-    },
-
-    {
-      "id": "tw-a5",
-      "title": "Borders, Radius & Basic Layout",
-      "sortOrder": 5,
-      "xpReward": 60,
-      "filename": "index.html",
-      "practiceType": "TAILWIND",
-
-      "hookHtml": "<p>Borders, corners, shadows, and a handful of layout glyphs — that's all you need to turn raw content into recognisable UI. Flexbox and grid mastery come later; in the basics you just need the words to say <em>\"this is a row,\"</em> <em>\"fill the screen,\"</em> <em>\"centre the children.\"</em></p>",
-
-      "explanationHtml": "<p>From the back of the workshop, Master Ember approaches — leather apron, chisel at their belt. They set three tools on the bench. <em>\"Edge. Corner. Shadow. That is what gives a shape physicality.\"</em></p>\n<h3>Borders</h3>\n<pre><code>border          → 1px solid\nborder-2        → 2px\nborder-t        → top edge only\nborder-gray-300 → colour the border\nborder-dashed   → dashed style</code></pre>\n<h3>Rounded Corners</h3>\n<pre><code>rounded-none / rounded-sm / rounded / rounded-md / rounded-lg /\nrounded-xl / rounded-2xl / rounded-full  (fully circular)</code></pre>\n<h3>Shadows</h3>\n<pre><code>shadow-sm / shadow / shadow-md / shadow-lg / shadow-xl /\nshadow-2xl / shadow-none</code></pre>\n<p><em>\"Match the shadow to how far above the page the element should feel. A light card wants <code>shadow-sm</code>. A modal that has leapt forward wants <code>shadow-2xl</code>.\"</em></p>\n<h3>Basic Layout — A First Taste</h3>\n<p>Ember nods toward Lyra, who steps back in. <em>\"You'll go deep on layout in the next chapter. For now, four glyphs you'll use every day:\"</em></p>\n<pre><code>flex              → display: flex  (arrange children in a row)\nitems-center      → vertically centre flex children\njustify-center    → horizontally centre flex children\nw-full / h-screen → full width / full viewport height</code></pre>\n<pre><code>&lt;div class=\"flex items-center justify-center h-screen\"&gt;\n  &lt;div class=\"border rounded-xl shadow-md p-6\"&gt;I'm a card.&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n<p><em>\"A card, centred on the page, with a real edge and a real weight. That is the whole vocabulary of 'looks like software.'\"</em></p>",
-
-      "storyBeats": [
-        {
-          "type": "narration",
-          "text": "An older mage emerges from the back of the Scriptorium, leather apron dusted with stone. Tools hang from their belt."
+          "text": "Master Ember, the Academy's layout carver, spreads a large sheet of graph paper across a stone table. Each square is exactly four pixels wide."
         },
         {
           "type": "dialogue",
@@ -384,12 +312,265 @@
           "cls": "carver",
           "speaker": "Master Ember",
           "sCls": "mentor",
-          "text": "A shape needs three enchantments to feel real: a <strong>border</strong>, a <strong>corner</strong>, and a <strong>shadow</strong>."
+          "text": "Every space in the Academy is measured in the same unit: four pixels. You do not guess distances. You choose from the scale — and because every element uses the same scale, the whole page breathes in rhythm."
         },
         {
           "type": "example",
-          "speaker": "A real object, centred on the page",
-          "text": "<div class=\"flex items-center justify-center h-screen\">\n  <div class=\"border rounded-xl shadow-md p-6\">Card</div>\n</div>"
+          "speaker": "The 4px scale — number × 4 = pixels",
+          "text": "p-1  →  4px    p-4  → 16px    p-8  → 32px\np-2  →  8px    p-6  → 24px    p-12 → 48px\np-3  → 12px    p-5  → 20px    p-16 → 64px"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "Two patterns you will use on every page: <code>max-w-7xl mx-auto px-6</code> — a centred content container with side padding. And <code>gap-4</code> on a flex or grid parent — gutters between every child, symmetrically, in one place."
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Build a profile card layout. The spacing must come entirely from Tailwind utilities — no custom CSS.</p>\n<ul>\n  <li><strong>.container</strong>: <code>max-w-lg</code>, <code>mx-auto</code>, <code>px-6</code>, <code>py-8</code></li>\n  <li><strong>.card</strong>: <code>bg-white</code>, <code>rounded-2xl</code>, <code>shadow-lg</code>, <code>p-8</code></li>\n  <li><strong>.card-header</strong>: <code>mb-6</code></li>\n  <li><strong>.card-name</strong>: <code>text-2xl</code>, <code>font-bold</code>, <code>text-gray-900</code></li>\n  <li><strong>.card-role</strong>: <code>text-sm</code>, <code>text-gray-500</code>, <code>mt-1</code></li>\n  <li><strong>.card-stats</strong>: <code>flex</code>, <code>gap-6</code>, <code>mt-4</code></li>\n</ul>",
+
+      "guidedPracticeStarterCode": "<div class=\"container\">\n  <div class=\"card\">\n    <div class=\"card-header\">\n      <h2 class=\"card-name\">Aria Sunforge</h2>\n      <p class=\"card-role\">Senior Enchanter</p>\n    </div>\n    <div class=\"card-stats\">\n      <div>\n        <p class=\"text-2xl font-bold text-gray-900\">142</p>\n        <p class=\"text-xs text-gray-500\">Quests</p>\n      </div>\n      <div>\n        <p class=\"text-2xl font-bold text-gray-900\">98%</p>\n        <p class=\"text-xs text-gray-500\">Retention</p>\n      </div>\n      <div>\n        <p class=\"text-2xl font-bold text-gray-900\">31</p>\n        <p class=\"text-xs text-gray-500\">Day Streak</p>\n      </div>\n    </div>\n  </div>\n</div>",
+
+      "guidedPracticeTests": [
+        { "label": "Container: max-width",        "selector": ".container",   "requiredClass": "max-w-lg"    },
+        { "label": "Container: centred",          "selector": ".container",   "requiredClass": "mx-auto"     },
+        { "label": "Container: horizontal padding","selector": ".container",  "requiredClass": "px-6"        },
+        { "label": "Card: padding",               "selector": ".card",        "requiredClass": "p-8"         },
+        { "label": "Card: rounded",               "selector": ".card",        "requiredClass": "rounded-2xl" },
+        { "label": "Card: shadow",                "selector": ".card",        "requiredClass": "shadow-lg"   },
+        { "label": "Header: bottom margin",       "selector": ".card-header", "requiredClass": "mb-6"        },
+        { "label": "Stats: flex layout",          "selector": ".card-stats",  "requiredClass": "flex"        },
+        { "label": "Stats: gap between items",    "selector": ".card-stats",  "requiredClass": "gap-6"       }
+      ],
+
+      "feynmanPrompt": "Explain Tailwind's spacing scale to a designer who is used to working with Figma's 8-point grid. How do the Tailwind spacing numbers map to their existing workflow? At what points do they differ, and what is the practical impact?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What pixel value does <code>p-6</code> represent?</p>",
+          "options": ["24px", "6px", "16px", "32px"],
+          "correctAnswer": "24px",
+          "explanationHtml": "<p>Tailwind's spacing scale uses a 4px base unit. <code>p-6</code> = 6 × 4px = 24px (1.5rem). The most important values to memorise are: <code>p-2</code>=8px, <code>p-4</code>=16px, <code>p-6</code>=24px, <code>p-8</code>=32px.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which class centres a block element horizontally within its parent?</p>",
+          "options": ["mx-auto", "text-center", "items-center", "m-auto justify-center"],
+          "correctAnswer": "mx-auto",
+          "explanationHtml": "<p><code>mx-auto</code> applies <code>margin-left: auto</code> and <code>margin-right: auto</code>, which centres a block element horizontally. It requires the element to have a defined width (such as <code>max-w-*</code>). <code>text-center</code> aligns inline text, not the element itself.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You want a page content column that is at most 1280px wide, centred on the page, with 24px of horizontal padding on each side. Which class combination achieves this?</p>",
+          "options": [
+            "max-w-7xl mx-auto px-6",
+            "width-1280 center px-24",
+            "max-width-7xl margin-auto padding-6",
+            "container mx-6 max-w-full"
+          ],
+          "correctAnswer": "max-w-7xl mx-auto px-6",
+          "explanationHtml": "<p><code>max-w-7xl</code> caps the width at 1280px, <code>mx-auto</code> centres it, and <code>px-6</code> adds 24px of horizontal padding (6 × 4px). This is the most common page-level container pattern in Tailwind projects.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A flex container has three child elements. You want 16px of space between each child. Which approach is preferred in Tailwind?</p>",
+          "options": [
+            "gap-4 on the flex container",
+            "mr-4 on every child except the last",
+            "ml-4 on every child except the first",
+            "space-x-4 on each child individually"
+          ],
+          "correctAnswer": "gap-4 on the flex container",
+          "explanationHtml": "<p><code>gap-4</code> on the flex parent is the correct approach. It is symmetric (applies between all children without affecting outer edges), and changing the gap requires editing only one class in one place. Applying margins to individual children is fragile — removing a child breaks the spacing logic.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is <code>max-w-prose</code> optimised for, and what is its approximate value?</p>",
+          "options": [
+            "Reading comfort — approximately 65 characters wide (65ch)",
+            "Full-width layouts — 100% of the viewport",
+            "Card components — 448px (max-w-md equivalent)",
+            "Mobile screens — 320px"
+          ],
+          "correctAnswer": "Reading comfort — approximately 65 characters wide (65ch)",
+          "explanationHtml": "<p><code>max-w-prose</code> sets <code>max-width: 65ch</code>, which is approximately 65 characters per line — the range typographers consider optimal for reading comfort. Use it for article body text, blog posts, and documentation pages. It scales with the font size, which is why it uses <code>ch</code> units rather than pixels.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "tw-a4",
+      "title": "Colour and Typography",
+      "sortOrder": 4,
+      "xpReward": 50,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>A developer who can reach for the right shade of gray instantly, set a typographic hierarchy in under a minute, and understand why <code>text-blue-600/75</code> means 75% opacity — that developer ships UI significantly faster than one who guesses hex codes.</p>",
+
+      "explanationHtml": "<h3>The colour palette</h3>\n<p>Tailwind ships 22 colour families. Every team project customises this, but the defaults are excellent starting points:</p>\n<pre><code>slate  gray  zinc  neutral  stone   ← grays\nred  orange  amber  yellow          ← warm\nlime  green  emerald  teal  cyan    ← cool greens\nsky  blue  indigo  violet  purple   ← blues/purples\nfuchsia  pink  rose                 ← pinks\n</code></pre>\n<p>Each family has <strong>11 shades</strong>: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950.</p>\n<ul>\n  <li><strong>50</strong> — near white, barely tinted. Good for page backgrounds.</li>\n  <li><strong>100–200</strong> — light tints. Good for subtle card backgrounds, chips.</li>\n  <li><strong>400–600</strong> — vivid mid-range. Good for buttons, links, icons.</li>\n  <li><strong>700–800</strong> — dark shades. Good for text on light backgrounds.</li>\n  <li><strong>900–950</strong> — near black. Good for headings, dark mode backgrounds.</li>\n</ul>\n\n<h3>Using colour utilities</h3>\n<pre><code>bg-blue-500       /* background-color */\ntext-blue-700     /* color             */\nborder-blue-300   /* border-color      */\nring-blue-500     /* outline ring      */\n\n/* Opacity modifier (Tailwind v3+) */\ntext-blue-600/75  /* color at 75% opacity */\nbg-black/50       /* black background at 50% opacity */\n</code></pre>\n\n<h3>Typography: font size</h3>\n<p>Tailwind's type scale is based on <code>rem</code> units:</p>\n<pre><code>text-xs    →  12px  (0.75rem)\ntext-sm    →  14px  (0.875rem)\ntext-base  →  16px  (1rem)       ← browser default\ntext-lg    →  18px  (1.125rem)\ntext-xl    →  20px  (1.25rem)\ntext-2xl   →  24px  (1.5rem)\ntext-3xl   →  30px  (1.875rem)\ntext-4xl   →  36px  (2.25rem)\ntext-5xl   →  48px  (3rem)\ntext-6xl   →  60px  (3.75rem)\ntext-7xl   →  72px  (4.5rem)\ntext-8xl   →  96px  (6rem)\ntext-9xl   →  128px (8rem)\n</code></pre>\n\n<h3>Typography: font weight</h3>\n<pre><code>font-thin       →  100\nfont-extralight →  200\nfont-light      →  300\nfont-normal     →  400\nfont-medium     →  500\nfont-semibold   →  600\nfont-bold       →  700\nfont-extrabold  →  800\nfont-black      →  900\n</code></pre>\n\n<h3>Typography: line-height (leading)</h3>\n<pre><code>leading-none     →  1       (tight headings)\nleading-tight    →  1.25\nleading-snug     →  1.375\nleading-normal   →  1.5     (body text default)\nleading-relaxed  →  1.625   (comfortable reading)\nleading-loose    →  2\n</code></pre>\n\n<h3>Typography: letter-spacing (tracking)</h3>\n<pre><code>tracking-tighter  →  -0.05em\ntracking-tight    →  -0.025em\ntracking-normal   →  0em\ntracking-wide     →  0.025em\ntracking-wider    →  0.05em\ntracking-widest   →  0.1em   (all-caps labels)\n</code></pre>\n\n<h3>Text alignment</h3>\n<pre><code>text-left    text-center    text-right    text-justify\n</code></pre>\n\n<h3>A complete typographic hierarchy in React</h3>\n<pre><code>function BlogPost({ tag, title, author, date, intro }) {\n  return (\n    &lt;article className=\"max-w-prose mx-auto py-12 px-6\"&gt;\n      &lt;span className=\"bg-violet-100 text-violet-700 text-xs font-semibold\n                       px-3 py-1 rounded-full tracking-wide uppercase\"&gt;\n        {tag}\n      &lt;/span&gt;\n\n      &lt;h1 className=\"text-4xl font-bold leading-tight text-gray-900 mt-4\"&gt;\n        {title}\n      &lt;/h1&gt;\n\n      &lt;p className=\"text-sm text-gray-400 mt-2\"&gt;\n        By {author} &amp;mdash; {date}\n      &lt;/p&gt;\n\n      &lt;p className=\"text-lg leading-relaxed text-gray-700 mt-6\"&gt;\n        {intro}\n      &lt;/p&gt;\n    &lt;/article&gt;\n  );\n}\n</code></pre>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Sable the Illuminator stands before a wall covered in swatches — hundreds of precisely labelled squares arranged in rows by colour family, lightest at the top, darkest at the bottom."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "Colour is not decoration. It is information. The shade tells the reader what to feel: <strong>50</strong> whispers. <strong>500</strong> speaks clearly. <strong>900</strong> commands attention. Learn the scale and you will never guess a hex code again."
+        },
+        {
+          "type": "example",
+          "speaker": "The shade scale — 50 is near-white, 950 is near-black",
+          "text": "bg-blue-50   ← barely blue, good for backgrounds\nbg-blue-500  ← vivid blue, buttons and links\nbg-blue-900  ← deep blue, dark headings\n\n/* Opacity modifier — Tailwind v3+ */\ntext-blue-600/75  ← blue text at 75% opacity"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "Typography follows the same discipline. A heading is not just big — it is <code>text-4xl font-bold leading-tight</code>. Body text is not just normal — it is <code>text-base leading-relaxed text-gray-700</code>. Every decision is explicit and shared."
+        }
+      ],
+
+      "guidedPracticeHtml": "<p>Style a blog post header. Each element has a specific typographic role:</p>\n<ul>\n  <li><strong>.article-tag</strong>: <code>bg-violet-100</code>, <code>text-violet-700</code>, <code>text-xs</code>, <code>font-semibold</code>, <code>rounded-full</code>, <code>px-3</code>, <code>py-1</code>, <code>tracking-wide</code></li>\n  <li><strong>.article-title</strong>: <code>text-4xl</code>, <code>font-bold</code>, <code>leading-tight</code>, <code>text-gray-900</code>, <code>mt-4</code></li>\n  <li><strong>.article-meta</strong>: <code>text-sm</code>, <code>text-gray-400</code>, <code>mt-2</code></li>\n  <li><strong>.article-intro</strong>: <code>text-lg</code>, <code>leading-relaxed</code>, <code>text-gray-700</code>, <code>mt-6</code></li>\n</ul>",
+
+      "guidedPracticeStarterCode": "<article class=\"max-w-prose mx-auto py-8 px-6\">\n  <span class=\"article-tag\">Engineering</span>\n  <h1 class=\"article-title\">Building Resilient Systems at Scale</h1>\n  <p class=\"article-meta\">By Aria Sunforge &mdash; March 2025</p>\n  <p class=\"article-intro\">The hardest part of distributed systems is not the technology — it is agreeing on what failure means before you start building.</p>\n</article>",
+
+      "guidedPracticeTests": [
+        { "label": "Tag: violet background",      "selector": ".article-tag",   "requiredClass": "bg-violet-100"  },
+        { "label": "Tag: violet text",            "selector": ".article-tag",   "requiredClass": "text-violet-700"},
+        { "label": "Tag: small text size",        "selector": ".article-tag",   "requiredClass": "text-xs"        },
+        { "label": "Tag: pill shape",             "selector": ".article-tag",   "requiredClass": "rounded-full"   },
+        { "label": "Title: large text",           "selector": ".article-title", "requiredClass": "text-4xl"       },
+        { "label": "Title: bold",                 "selector": ".article-title", "requiredClass": "font-bold"      },
+        { "label": "Title: tight line-height",    "selector": ".article-title", "requiredClass": "leading-tight"  },
+        { "label": "Title: dark color",           "selector": ".article-title", "requiredClass": "text-gray-900"  },
+        { "label": "Meta: small and muted",       "selector": ".article-meta",  "requiredClass": "text-gray-400"  },
+        { "label": "Intro: relaxed line-height",  "selector": ".article-intro", "requiredClass": "leading-relaxed"}
+      ],
+
+      "feynmanPrompt": "You are building a design system for a SaaS product. Explain how you would use Tailwind's colour palette to create a consistent, accessible colour system — covering primary actions, semantic states (success, warning, error), and neutral text hierarchy. Which shade numbers would you reach for and why?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Tailwind's colour scale, what kind of colour is shade <strong>50</strong>?</p>",
+          "options": [
+            "A very light, near-white tint of the colour",
+            "The most vivid, saturated version of the colour",
+            "A near-black dark shade of the colour",
+            "The neutral gray version of the colour"
+          ],
+          "correctAnswer": "A very light, near-white tint of the colour",
+          "explanationHtml": "<p>The shade scale runs from <strong>50</strong> (near-white, barely tinted) up to <strong>950</strong> (near-black). Shade 50 is almost always a page or card background tone. Shades 400–600 are the vivid mid-range used for buttons and interactive elements. Shades 700–900 are used for text on light backgrounds.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>leading-relaxed</code> control in Tailwind?</p>",
+          "options": [
+            "Line-height (the vertical spacing between lines of text)",
+            "Letter-spacing (the horizontal gap between characters)",
+            "Word-spacing",
+            "Paragraph margin"
+          ],
+          "correctAnswer": "Line-height (the vertical spacing between lines of text)",
+          "explanationHtml": "<p>The <code>leading-*</code> utilities control <code>line-height</code>. <code>leading-relaxed</code> sets <code>line-height: 1.625</code>, which gives body text comfortable breathing room. For comparison: <code>leading-tight</code> (1.25) is used for headings; <code>leading-normal</code> (1.5) is the default.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You want an article heading that is 36px, black (#111), bold, with tight line spacing. Which class combination is correct?</p>",
+          "options": [
+            "text-4xl font-bold leading-tight text-gray-900",
+            "font-size-4xl weight-bold leading-1 color-black",
+            "text-4xl text-bold leading-tight text-black-900",
+            "size-4xl bold tight-leading dark-text"
+          ],
+          "correctAnswer": "text-4xl font-bold leading-tight text-gray-900",
+          "explanationHtml": "<p><code>text-4xl</code> (36px), <code>font-bold</code> (700 weight), <code>leading-tight</code> (1.25 line-height), <code>text-gray-900</code> (very dark gray — more refined than pure black for headings). This is a real typographic pattern you will use repeatedly in production work.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does <code>text-emerald-600/50</code> do?</p>",
+          "options": [
+            "Sets the text colour to emerald-600 at 50% opacity",
+            "Sets both the text colour (emerald-600) and background opacity (50%)",
+            "Sets the text colour to a 50/50 mix of emerald-600 and white",
+            "Applies emerald-600 to every other character"
+          ],
+          "correctAnswer": "Sets the text colour to emerald-600 at 50% opacity",
+          "explanationHtml": "<p>The slash modifier (<code>/N</code>) appended to any colour utility sets the opacity of that specific property. <code>text-emerald-600/50</code> is equivalent to setting <code>color: rgb(5 150 105 / 0.5)</code>. This works with <code>bg-*</code>, <code>border-*</code>, and <code>ring-*</code> utilities too. It was introduced in Tailwind v3 and replaces the older <code>text-opacity-*</code> approach.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A designer hands you a Figma spec with five text colours: <code>#111827</code> (headings), <code>#374151</code> (body), <code>#6B7280</code> (captions), <code>#9CA3AF</code> (placeholders), and <code>#D1D5DB</code> (disabled). Without checking the Tailwind source, which palette family and which shade numbers best match this spec?</p>",
+          "options": [
+            "gray-900, gray-700, gray-500, gray-400, gray-300 — these are the Tailwind gray scale values",
+            "slate-900, slate-700, slate-500, slate-400, slate-300 — slate is always darker than gray",
+            "zinc-950, zinc-800, zinc-600, zinc-400, zinc-200 — zinc skews cooler",
+            "neutral-900, neutral-700, neutral-500, neutral-300, neutral-100"
+          ],
+          "correctAnswer": "gray-900, gray-700, gray-500, gray-400, gray-300 — these are the Tailwind gray scale values",
+          "explanationHtml": "<p>Those hex values are the <em>exact</em> default Tailwind gray palette: <code>gray-900</code>=#111827, <code>gray-700</code>=#374151, <code>gray-500</code>=#6B7280, <code>gray-400</code>=#9CA3AF, <code>gray-300</code>=#D1D5DB. This is not coincidence — Tailwind's designers tuned the gray scale for exactly this kind of multi-level text hierarchy. Recognising this mapping is a real productivity skill: when a designer gives you grays from a Figma file using Tailwind's defaults, you can translate directly to class names without colour picking.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "tw-a5",
+      "title": "Flexbox Layout",
+      "sortOrder": 5,
+      "xpReward": 50,
+      "filename": "index.html",
+      "practiceType": "TAILWIND",
+
+      "hookHtml": "<p>Flexbox is one of the two layout primitives that power nearly every UI on the web (the other is Grid, which comes in B-tier). If you can build a nav bar, a card with side-by-side content, and a centered hero — you can build most of what a junior front-end role demands.</p>",
+
+      "explanationHtml": "<h3>Activating flex</h3>\n<pre><code>flex         /* display: flex         */\ninline-flex  /* display: inline-flex  */\n</code></pre>\n\n<h3>Flex direction</h3>\n<pre><code>flex-row          /* default — children go left to right */\nflex-col          /* children stack top to bottom        */\nflex-row-reverse  /* right to left                       */\nflex-col-reverse  /* bottom to top                       */\n</code></pre>\n\n<h3>Align items (cross axis)</h3>\n<pre><code>items-start     /* align-items: flex-start  */\nitems-center    /* align-items: center      */\nitems-end       /* align-items: flex-end    */\nitems-stretch   /* align-items: stretch (default) */\nitems-baseline  /* align-items: baseline    */\n</code></pre>\n\n<h3>Justify content (main axis)</h3>\n<pre><code>justify-start    /* flex-start  */\njustify-center   /* center      */\njustify-end      /* flex-end    */\njustify-between  /* space-between — first item left, last right, equal gaps between */\njustify-around   /* space-around  */\njustify-evenly   /* space-evenly  */\n</code></pre>\n\n<h3>Flex wrap</h3>\n<pre><code>flex-wrap         /* children wrap to next line when needed */\nflex-nowrap       /* children never wrap (default)          */\nflex-wrap-reverse /* wrap, but new lines appear above        */\n</code></pre>\n\n<h3>Flex children: how they grow and shrink</h3>\n<pre><code>flex-1     /* flex: 1 1 0   — grows AND shrinks to fill available space */\nflex-auto  /* flex: 1 1 auto — grows and shrinks based on content size  */\nflex-none  /* flex: none    — fixed size, never grows or shrinks        */\ngrow       /* flex-grow: 1  — grows but does not change shrink          */\nshrink-0   /* flex-shrink: 0 — prevents shrinking                      */\n</code></pre>\n\n<h3>Individual alignment override</h3>\n<pre><code>self-auto    self-start    self-center    self-end    self-stretch\n</code></pre>\n\n<h3>Order</h3>\n<pre><code>order-first  order-last  order-none  order-1  order-2  /* ...up to order-12 */\n</code></pre>\n\n<h3>Pattern 1: Navigation bar</h3>\n<p>The classic nav bar uses <code>justify-between</code> to push the logo left and the CTA right, with <code>items-center</code> for vertical alignment:</p>\n<pre><code>&lt;nav className=\"flex justify-between items-center px-6 py-4 bg-white border-b border-gray-100\"&gt;\n  &lt;a className=\"font-bold text-xl text-gray-900\"&gt;Arcane Academy&lt;/a&gt;\n\n  &lt;div className=\"flex gap-6\"&gt;\n    &lt;a className=\"text-sm text-gray-600 hover:text-gray-900\"&gt;Topics&lt;/a&gt;\n    &lt;a className=\"text-sm text-gray-600 hover:text-gray-900\"&gt;Reviews&lt;/a&gt;\n    &lt;a className=\"text-sm text-gray-600 hover:text-gray-900\"&gt;Profile&lt;/a&gt;\n  &lt;/div&gt;\n\n  &lt;button className=\"bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-md\"&gt;\n    Start Learning\n  &lt;/button&gt;\n&lt;/nav&gt;\n</code></pre>\n\n<h3>Pattern 2: Horizontal card (image + content)</h3>\n<pre><code>&lt;div className=\"flex gap-4 items-start bg-white rounded-xl p-6 shadow-sm\"&gt;\n  &lt;img\n    src=\"/avatar.jpg\"\n    className=\"w-16 h-16 rounded-full flex-none object-cover\"\n  /&gt;\n  &lt;div className=\"flex-1 min-w-0\"&gt;\n    &lt;h3 className=\"font-semibold text-gray-900 truncate\"&gt;Aria Sunforge&lt;/h3&gt;\n    &lt;p className=\"text-sm text-gray-500 mt-1 leading-relaxed\"&gt;\n      Senior Enchanter — 142 quests completed\n    &lt;/p&gt;\n  &lt;/div&gt;\n&lt;/div&gt;\n</code></pre>\n<p>Key insight: <code>flex-none</code> on the image prevents it from shrinking; <code>flex-1 min-w-0</code> on the content makes it fill the remaining space while allowing text truncation to work correctly.</p>\n\n<h3>Gap vs margins on children</h3>\n<p>Always prefer <code>gap-*</code> on the flex parent over margins on individual children. Gaps are symmetric (no excess margin after the last item), and changing the spacing requires editing one class in one place.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Ember leads you to a workshop table covered in wooden blocks of different sizes. He begins arranging them in a row."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "Every layout is a conversation between a container and its children. The container decides the direction, the alignment, and the distribution. The children decide whether they grow, shrink, or hold firm."
+        },
+        {
+          "type": "example",
+          "speaker": "The three flex decisions you make on every container",
+          "text": "flex              /* activate flex */\nflex-row          /* direction: horizontal (default) */\nitems-center      /* cross-axis: vertically centred */\njustify-between   /* main-axis: push to edges */"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "The nav bar is the most-built component in all of front-end work. Logo on the left. Links in the middle. Button on the right. That is <code>justify-between</code> on the container plus a <code>flex gap-6</code> group for the links. You will build this a hundred times in your career — learn it cold."
         },
         {
           "type": "dialogue",
@@ -397,64 +578,92 @@
           "cls": "mentor",
           "speaker": "Lyra the Scribe",
           "sCls": "mentor",
-          "text": "Four layout glyphs for now — <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>h-screen</code>. You'll meet the rest in the next chapter."
+          "text": "One more thing: when a child should fill all available space, give it <code>flex-1</code>. When it must stay its natural size no matter what — an avatar, an icon, a logo — give it <code>flex-none</code>. These two classes resolve most flex sizing confusions."
         }
       ],
 
-      "guidedPracticeHtml": "<p>Build a centred, bordered card:</p>\n<ul>\n<li><code>.stage</code> → <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>h-screen</code></li>\n<li><code>.card</code> → <code>border</code>, <code>border-gray-200</code>, <code>rounded-xl</code>, <code>shadow-md</code>, <code>p-6</code></li>\n</ul>",
+      "guidedPracticeHtml": "<p>Build a complete navigation bar. Apply the following utilities precisely:</p>\n<ul>\n  <li><strong>.nav</strong>: <code>flex</code>, <code>justify-between</code>, <code>items-center</code>, <code>px-6</code>, <code>py-4</code>, <code>bg-white</code>, <code>border-b</code>, <code>border-gray-100</code></li>\n  <li><strong>.nav-brand</strong>: <code>font-bold</code>, <code>text-xl</code>, <code>text-gray-900</code></li>\n  <li><strong>.nav-links</strong>: <code>flex</code>, <code>gap-6</code></li>\n  <li><strong>.nav-cta</strong>: <code>bg-blue-600</code>, <code>text-white</code>, <code>text-sm</code>, <code>font-medium</code>, <code>px-4</code>, <code>py-2</code>, <code>rounded-md</code></li>\n</ul>",
 
-      "guidedPracticeStarterCode": "<div class=\"stage\">\n  <div class=\"card bg-white\">\n    <h3>Avatar</h3>\n    <p>Bordered, rounded, shadowed, centred.</p>\n  </div>\n</div>",
+      "guidedPracticeStarterCode": "<nav class=\"nav\">\n  <a class=\"nav-brand\">Arcane Academy</a>\n  <div class=\"nav-links\">\n    <a>Topics</a>\n    <a>Reviews</a>\n    <a>Profile</a>\n  </div>\n  <button class=\"nav-cta\">Start Learning</button>\n</nav>",
 
       "guidedPracticeTests": [
-        { "label": "Stage uses flex",              "selector": ".stage", "requiredClass": "flex"          },
-        { "label": "Stage centres vertically",     "selector": ".stage", "requiredClass": "items-center"  },
-        { "label": "Stage centres horizontally",   "selector": ".stage", "requiredClass": "justify-center"},
-        { "label": "Stage fills viewport",         "selector": ".stage", "requiredClass": "h-screen"      },
-        { "label": "Card has border",              "selector": ".card",  "requiredClass": "border"        },
-        { "label": "Card border colour",           "selector": ".card",  "requiredClass": "border-gray-200"},
-        { "label": "Card rounded",                 "selector": ".card",  "requiredClass": "rounded-xl"    },
-        { "label": "Card shadow",                  "selector": ".card",  "requiredClass": "shadow-md"     },
-        { "label": "Card padding",                 "selector": ".card",  "requiredClass": "p-6"           }
+        { "label": "Nav: flex layout",           "selector": ".nav",       "requiredClass": "flex"           },
+        { "label": "Nav: space-between",         "selector": ".nav",       "requiredClass": "justify-between"},
+        { "label": "Nav: vertical alignment",    "selector": ".nav",       "requiredClass": "items-center"   },
+        { "label": "Nav: horizontal padding",    "selector": ".nav",       "requiredClass": "px-6"           },
+        { "label": "Nav: vertical padding",      "selector": ".nav",       "requiredClass": "py-4"           },
+        { "label": "Nav: white background",      "selector": ".nav",       "requiredClass": "bg-white"       },
+        { "label": "Nav: bottom border",         "selector": ".nav",       "requiredClass": "border-b"       },
+        { "label": "Brand: bold and large",      "selector": ".nav-brand", "requiredClass": "font-bold"      },
+        { "label": "Links: flex with gap",       "selector": ".nav-links", "requiredClass": "flex"           },
+        { "label": "Links: gap between items",   "selector": ".nav-links", "requiredClass": "gap-6"          },
+        { "label": "CTA: blue background",       "selector": ".nav-cta",   "requiredClass": "bg-blue-600"    },
+        { "label": "CTA: white text",            "selector": ".nav-cta",   "requiredClass": "text-white"     },
+        { "label": "CTA: rounded",               "selector": ".nav-cta",   "requiredClass": "rounded-md"     }
       ],
 
-      "feynmanPrompt": "Explain what each of these glyph families does in one sentence: <code>border-*</code>, <code>rounded-*</code>, <code>shadow-*</code>, <code>flex</code>. Why are these the minimum vocabulary for 'looks like a real interface'?",
+      "feynmanPrompt": "Describe a scenario where you would give a flex child <code>flex-1</code> versus <code>flex-none</code>. Then explain what happens visually if you use <code>flex-1</code> on an image that should stay its natural size — and how you would debug it.",
 
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which class produces a fully circular element?</p>",
-          "options": ["rounded-full", "rounded-circle", "rounded-xl", "border-full"],
-          "correctAnswer": "rounded-full",
-          "explanationHtml": "<p><code>rounded-full</code> gives a perfect circle on square elements.</p>"
+          "questionHtml": "<p>Which class distributes flex children so the first is left-aligned, the last is right-aligned, and remaining children are equally spaced in between?</p>",
+          "options": ["justify-between", "justify-evenly", "justify-around", "items-between"],
+          "correctAnswer": "justify-between",
+          "explanationHtml": "<p><code>justify-between</code> applies <code>justify-content: space-between</code> — the first child is flush left, the last is flush right, and the space is divided equally between children. This is the correct class for nav bars, toolbars, and any layout where you want to &quot;push items to the edges.&quot;</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which class removes a drop shadow?</p>",
-          "options": ["shadow-none", "no-shadow", "shadow-0", "shadow-off"],
-          "correctAnswer": "shadow-none",
-          "explanationHtml": "<p><code>shadow-none</code> sets <code>box-shadow: none</code>.</p>"
+          "questionHtml": "<p>What does <code>flex-col</code> do?</p>",
+          "options": [
+            "Sets flex-direction to column, so children stack vertically",
+            "Creates a column grid layout",
+            "Collapses the flex container to a single column on mobile",
+            "Limits the container to one child per row"
+          ],
+          "correctAnswer": "Sets flex-direction to column, so children stack vertically",
+          "explanationHtml": "<p><code>flex-col</code> applies <code>flex-direction: column</code>. Combined with <code>flex</code>, children stack from top to bottom. The cross axis becomes horizontal, so <code>items-center</code> centres children horizontally and <code>justify-center</code> centres them vertically.</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Which set centres a child both vertically and horizontally in a full-viewport container?</p>",
+          "questionHtml": "<p>You have a horizontal card: an avatar image (fixed 64px square) on the left, and a text block on the right that should fill the remaining space. Which utility combination on the two children achieves this?</p>",
           "options": [
-            "flex items-center justify-center h-screen",
-            "grid place-content-start h-full",
-            "block text-center mt-auto",
-            "inline-flex"
+            "flex-none on the image, flex-1 on the text block",
+            "w-16 on the image, w-full on the text block",
+            "flex-shrink on the image, flex-grow on the text block",
+            "fixed on the image, grow on the text block"
           ],
-          "correctAnswer": "flex items-center justify-center h-screen",
-          "explanationHtml": "<p>Flex with <code>items-center</code> (cross-axis) and <code>justify-center</code> (main-axis), plus <code>h-screen</code> for viewport height.</p>"
+          "correctAnswer": "flex-none on the image, flex-1 on the text block",
+          "explanationHtml": "<p><code>flex-none</code> (flex: none) prevents the image from growing or shrinking — it stays exactly its natural or specified size. <code>flex-1</code> (flex: 1 1 0) makes the text block grow to fill all available space. This is the standard pattern for media-object layouts (icon/avatar + content).</p>"
         },
         {
-          "type": "TRUE_FALSE",
+          "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p><code>w-full</code> makes an element fill its parent's width.</p>",
-          "correctAnswer": "True",
-          "explanationHtml": "<p><code>w-full</code> is <code>width: 100%</code>.</p>"
+          "questionHtml": "<p>Which is the preferred way to add 16px of space between each item in a flex row?</p>",
+          "options": [
+            "gap-4 on the flex container",
+            "mr-4 on every child except the last using :not(:last-child)",
+            "ml-4 on every child except the first",
+            "space-x-4 applied to each flex child individually"
+          ],
+          "correctAnswer": "gap-4 on the flex container",
+          "explanationHtml": "<p><code>gap-4</code> on the container is idiomatic Tailwind. It is: (1) symmetric — no excess space after the last item, (2) easy to change — one value in one place, and (3) works correctly when items wrap. Applying margins to individual children is fragile: adding or removing a child can break the spacing, and the first/last exceptions add complexity.</p>"
+        },
+        {
+          "type": "SCENARIO",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer is building a card list. Each card has a title, a description, and a &quot;View Details&quot; button. They want the button to always appear at the bottom of the card regardless of how long the title or description is. All cards have equal height in a grid row.</p>\n<p>Which flex approach achieves this?</p>",
+          "options": [
+            "Make each card flex-col, then add mt-auto to the button — mt-auto in a flex column pushes the button to the bottom",
+            "Make each card position-relative and the button position-absolute bottom-0",
+            "Add min-h-full to the button so it stretches to the card's height",
+            "Add justify-end to the card and place the button last in the DOM"
+          ],
+          "correctAnswer": "Make each card flex-col, then add mt-auto to the button — mt-auto in a flex column pushes the button to the bottom",
+          "explanationHtml": "<p>This is one of the most useful flex tricks in practice. A flex column with <code>flex-col</code> on the card, combined with <code>mt-auto</code> on the button, consumes all available space above the button with an automatic top margin. The title and description stack normally at the top; the button is always at the bottom. This works correctly regardless of content length and does not require absolute positioning, which would break the normal document flow.</p>"
         }
       ]
     }

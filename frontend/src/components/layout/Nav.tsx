@@ -24,7 +24,7 @@ export default function Nav() {
     <nav className="bg-surface border-b border-border px-5 flex items-center justify-between h-[50px] flex-shrink-0 z-10">
       <div
         className="font-cinzel text-[15px] text-gold tracking-[2px] cursor-pointer select-none"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/topics')}
       >
         ✦ Arcane Academy
       </div>

@@ -8,7 +8,7 @@ export default function OnboardingPage() {
 
   async function handleNew() {
     setLoading(true)
-    try { await diagnosticApi.skip(); navigate('/', { replace: true }) }
+    try { await diagnosticApi.skip(); navigate('/topic/java', { replace: true }) }
     catch { setLoading(false) }
   }
 

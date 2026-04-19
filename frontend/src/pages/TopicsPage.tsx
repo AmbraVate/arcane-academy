@@ -14,6 +14,12 @@ interface Topic {
   accentStroke: string
 }
 
+interface TopicData {
+  progress: number
+  diagnosticCompleted: boolean
+  diagnosticCompletedAt: string | null
+}
+
 const TOPICS: Topic[] = [
   { id: 'java',       name: 'Java',           glyph: '☕', tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',          status: 'active',      chunks: 11, accentStroke: 'var(--teal)' },
   { id: 'tailwind',   name: 'Tailwind CSS',   glyph: '🎨', tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',  status: 'active',      chunks: 1,  accentStroke: 'var(--teal)' },
@@ -25,6 +31,15 @@ const TOPICS: Topic[] = [
   { id: 'typescript', name: 'TypeScript',     glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',       status: 'coming_soon', chunks: 10, accentStroke: 'var(--gold)' },
   { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend.',                  status: 'coming_soon', chunks: 12, accentStroke: 'var(--teal)' },
 ]
+
+const ACTIVE_TOPICS = TOPICS.filter(t => t.status === 'active').map(t => t.id)
+
+/** Returns true if the diagnostic was completed more than 30 days ago. */
+function diagnosticExpired(completedAt: string | null): boolean {
+  if (!completedAt) return false
+  const msPerDay = 1000 * 60 * 60 * 24
+  return (Date.now() - new Date(completedAt).getTime()) / msPerDay >= 30
+}
 
 function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; stroke: string }) {
   const r = 22
@@ -50,24 +65,88 @@ function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; s
 
 export default function TopicsPage() {
   const navigate = useNavigate()
-  const [javaProgress, setJavaProgress] = useState(0)
-  const [tailwindProgress, setTailwindProgress] = useState(0)
+  const [topicData, setTopicData] = useState<Record<string, TopicData>>({})
 
   useEffect(() => {
-    dashboardApi.get('java').then(d => setJavaProgress(Math.round(d.overallProgress * 100))).catch(() => {})
-    dashboardApi.get('tailwind').then(d => setTailwindProgress(Math.round(d.overallProgress * 100))).catch(() => {})
+    ACTIVE_TOPICS.forEach(id => {
+      dashboardApi.get(id)
+        .then(d => setTopicData(prev => ({
+          ...prev,
+          [id]: {
+            progress: Math.round(d.overallProgress * 100),
+            diagnosticCompleted: d.diagnosticCompleted,
+            diagnosticCompletedAt: d.diagnosticCompletedAt ?? null,
+          }
+        })))
+        .catch(() => {})
+    })
   }, [])
-
-  function progressFor(topic: Topic) {
-    if (topic.id === 'java') return javaProgress
-    if (topic.id === 'tailwind') return tailwindProgress
-    return 0
-  }
 
   function handleTopicClick(topic: Topic) {
     if (topic.status !== 'active') return
-    if (topic.id === 'java') navigate('/')
-    else navigate(`/topic/${topic.id}`)
+    navigate(`/topic/${topic.id}`)
+  }
+
+  function handleDiagnosticClick(e: React.MouseEvent, topicId: string) {
+    e.stopPropagation()
+    navigate(`/topic/${topicId}/diagnostic`)
+  }
+
+  function renderDiagnosticRow(topic: Topic) {
+    const data = topicData[topic.id]
+    if (!data) return null // still loading — render nothing so layout doesn't jump
+
+    const { diagnosticCompleted, diagnosticCompletedAt } = data
+    const expired = diagnosticExpired(diagnosticCompletedAt)
+
+    if (!diagnosticCompleted) {
+      return (
+        <button
+          className="w-full mt-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-[7px]
+            bg-[rgba(139,92,246,0.08)] border border-[rgba(139,92,246,0.25)] text-purple-light
+            text-[11px] font-semibold font-cinzel tracking-wide
+            transition-[background,border-color] duration-150
+            hover:bg-[rgba(139,92,246,0.15)] hover:border-purple"
+          onClick={e => handleDiagnosticClick(e, topic.id)}
+        >
+          🔮 Take Diagnostic
+        </button>
+      )
+    }
+
+    if (expired) {
+      return (
+        <button
+          className="w-full mt-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-[7px]
+            bg-[rgba(201,162,39,0.08)] border border-[rgba(201,162,39,0.25)] text-gold
+            text-[11px] font-semibold font-cinzel tracking-wide
+            transition-[background,border-color] duration-150
+            hover:bg-[rgba(201,162,39,0.15)] hover:border-gold"
+          onClick={e => handleDiagnosticClick(e, topic.id)}
+        >
+          🔁 Retake Diagnostic
+        </button>
+      )
+    }
+
+    // Completed, not yet expired — show static badge with completion date
+    const completedDate = diagnosticCompletedAt
+      ? new Date(diagnosticCompletedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+      : null
+    const daysLeft = diagnosticCompletedAt
+      ? Math.ceil(30 - (Date.now() - new Date(diagnosticCompletedAt).getTime()) / (1000 * 60 * 60 * 24))
+      : null
+
+    return (
+      <div className="mt-1 flex items-center gap-1.5 px-3 py-1.5 rounded-[7px]
+        bg-[rgba(0,200,83,0.06)] border border-[rgba(0,200,83,0.2)] text-teal text-[11px] font-cinzel">
+        <span className="font-bold">✓</span>
+        <span>Diagnostic done{completedDate ? ` · ${completedDate}` : ''}</span>
+        {daysLeft !== null && (
+          <span className="ml-auto text-muted text-[10px]">retake in {daysLeft}d</span>
+        )}
+      </div>
+    )
   }
 
   return (
@@ -82,6 +161,7 @@ export default function TopicsPage() {
       <div className="grid gap-4 mb-12 max-[600px]:gap-2.5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
         {TOPICS.map(topic => {
           const active = topic.status === 'active'
+          const progress = topicData[topic.id]?.progress ?? 0
           return (
             <div
               key={topic.id}
@@ -100,13 +180,15 @@ export default function TopicsPage() {
               <div className="flex items-start justify-between mb-1">
                 <span className="text-[36px] leading-none max-[600px]:text-[28px]">{topic.glyph}</span>
                 <div className="flex flex-col items-end gap-1.5">
-                  <ProgressRing pct={progressFor(topic)} active={active} stroke={topic.accentStroke} />
+                  <ProgressRing pct={progress} active={active} stroke={topic.accentStroke} />
                   <Badge variant={active ? 'active' : 'soon'}>{active ? 'Active' : 'Coming Soon'}</Badge>
                 </div>
               </div>
 
               <div className="font-cinzel text-[20px] font-bold text-text max-[600px]:text-[16px]">{topic.name}</div>
               <div className="text-[13px] text-muted leading-[1.6] flex-1">{topic.tagline}</div>
+
+              {active && renderDiagnosticRow(topic)}
 
               <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto">
                 <span className="text-[11px] text-muted font-cinzel">{topic.chunks} knowledge chunks</span>

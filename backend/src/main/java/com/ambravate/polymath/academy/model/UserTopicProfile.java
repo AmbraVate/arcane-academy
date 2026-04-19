@@ -31,6 +31,8 @@ public class UserTopicProfile {
     @Builder.Default
     private boolean diagnosticCompleted = false;
 
+    private Instant diagnosticCompletedAt;
+
     @Builder.Default
     private double diagnosticScore = 0.0;
 
