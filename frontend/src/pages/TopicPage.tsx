@@ -3,51 +3,58 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { dashboardApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { DashboardDto, ChunkHealthDto } from '../types'
-import styles from './TopicPage.module.css'
+import { cn } from '@/lib/utils'
+import { Badge } from '@/components/ui/badge'
 
-const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string; color: string }> = {
+const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string }> = {
   tailwind: {
     name: 'Tailwind CSS',
     glyph: '🎨',
     tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',
-    color: 'teal',
   },
+}
+
+const MEM_COLORS: Record<string, string> = {
+  GREEN: 'bg-teal', YELLOW: 'bg-orange', RED: 'bg-red',
 }
 
 function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void }) {
   const locked = ch.status === 'LOCKED'
-  const done = ch.status === 'COMPLETE'
-  const pct = Math.round(ch.memoryStrength * 100)
+  const done   = ch.status === 'COMPLETE'
+  const pct    = Math.round(ch.memoryStrength * 100)
+
   return (
     <div
-      className={`${styles.chunkCard} ${locked ? styles.locked : done ? styles.done : styles.active}`}
+      className={cn(
+        'bg-card border rounded-[12px] p-[18px] px-4 flex flex-col gap-2 cursor-pointer transition-[border-color,transform] duration-200',
+        locked ? 'opacity-50 cursor-default saturate-[0.4] border-border' :
+        done   ? 'border-[rgba(45,212,191,0.25)] hover:border-teal hover:-translate-y-0.5' :
+                 'border-border hover:border-teal hover:-translate-y-0.5',
+      )}
       onClick={onClick}
     >
-      <div className={styles.chunkTop}>
-        <span className={styles.chunkGlyph}>{locked ? '🔒' : ch.glyph}</span>
-        <span className={`chip ${done ? 'chip-teal' : ch.status === 'IN_PROGRESS' ? 'chip-purple' : locked ? 'chip-gray' : 'chip-green'}`} style={{ fontSize: 10 }}>
+      <div className="flex items-center justify-between">
+        <span className="text-[28px] leading-none">{locked ? '🔒' : ch.glyph}</span>
+        <Badge variant={done ? 'active' : ch.status === 'IN_PROGRESS' ? 'application' : locked ? 'gray' : 'green' as 'active' | 'application' | 'gray'}>
           {done ? 'Complete' : ch.status === 'IN_PROGRESS' ? 'In Progress' : locked ? 'Locked' : 'Start'}
-        </span>
+        </Badge>
       </div>
-      <div className={styles.chunkTitle}>{ch.title}</div>
-      <div className={styles.chunkMeta}>{ch.totalSubChunks} concepts</div>
+      <div className="text-[15px] font-bold text-text leading-[1.35]">{ch.title}</div>
+      <div className="text-[11px] text-muted">{ch.totalSubChunks} concepts</div>
       {!locked && (
-        <div className={styles.progressRow}>
-          <div className={styles.progressBar}>
-            <div
-              className={styles.progressFill}
-              style={{ width: `${Math.round((ch.completedSubChunks / ch.totalSubChunks) * 100)}%` }}
-            />
+        <div className="flex items-center gap-2 mt-1">
+          <div className="flex-1 h-1 bg-border rounded-full overflow-hidden">
+            <div className="h-full bg-teal rounded-full" style={{ width: `${Math.round((ch.completedSubChunks / ch.totalSubChunks) * 100)}%` }} />
           </div>
-          <span className={styles.progressLabel}>{ch.completedSubChunks}/{ch.totalSubChunks}</span>
+          <span className="text-[10px] text-muted flex-shrink-0">{ch.completedSubChunks}/{ch.totalSubChunks}</span>
         </div>
       )}
       {done && (
-        <div className={styles.memRow}>
-          <div className={styles.memBar}>
-            <div className={`${styles.memFill} ${styles[`mem${ch.healthColor}`]}`} style={{ width: `${pct}%` }} />
+        <div className="flex items-center gap-2 mt-0.5">
+          <div className="flex-1 h-[3px] bg-border rounded-full overflow-hidden">
+            <div className={cn('h-full rounded-full', MEM_COLORS[ch.healthColor ?? 'GREEN'] ?? 'bg-teal')} style={{ width: `${pct}%` }} />
           </div>
-          <span className={styles.memLabel}>{pct}% memory</span>
+          <span className="text-[10px] text-muted flex-shrink-0">{pct}% memory</span>
         </div>
       )}
     </div>
@@ -61,7 +68,7 @@ export default function TopicPage() {
   const [dashboard, setDashboard] = useState<DashboardDto | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', tagline: '', color: 'purple' }
+  const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', tagline: '' }
 
   useEffect(() => {
     if (!topicId) return
@@ -79,8 +86,8 @@ export default function TopicPage() {
 
   if (loading) {
     return (
-      <div className={styles.loading}>
-        <div className={styles.loadingGlyph}>{meta.glyph}</div>
+      <div className="flex flex-col items-center justify-center h-[60vh] text-muted">
+        <div className="text-[48px] mb-3">{meta.glyph}</div>
         <p>Loading {meta.name}...</p>
       </div>
     )
@@ -91,40 +98,45 @@ export default function TopicPage() {
   const progressPct = Math.round(dashboard.overallProgress * 100)
 
   return (
-    <div className={styles.page}>
+    <div className="max-w-[900px] mx-auto px-5 py-6 pb-[72px] max-[600px]:px-3 max-[600px]:py-4">
       {/* Hero */}
-      <div className={styles.hero}>
-        <button className="btn btn-ghost" onClick={() => navigate('/topics')} style={{ fontSize: 12, alignSelf: 'flex-start' }}>
+      <div
+        className="flex flex-col items-center text-center px-5 py-8 pb-7 rounded-[16px] mb-6 border border-[rgba(45,212,191,0.2)] relative"
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(45,212,191,.12) 0%, transparent 60%), var(--card)' }}
+      >
+        <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/topics')}>
           ← All Topics
         </button>
-        <div className={styles.heroGlyph}>{meta.glyph}</div>
-        <h1 className={styles.heroTitle}>{meta.name}</h1>
-        <p className={styles.heroTagline}>{meta.tagline}</p>
-        <div className={styles.progressWrap}>
-          <div className={styles.progressMeta}>
-            <span>Overall mastery</span>
-            <span>{progressPct}%</span>
+        <div className="text-[52px] mb-2.5 max-[600px]:text-[40px]">{meta.glyph}</div>
+        <h1 className="font-cinzel text-[28px] font-bold text-teal m-0 mb-2 max-[600px]:text-[22px]">{meta.name}</h1>
+        <p className="text-[14px] text-muted leading-[1.7] max-w-[480px] m-0 mb-5">{meta.tagline}</p>
+        <div className="w-full max-w-[400px]">
+          <div className="flex justify-between text-[12px] text-muted mb-1.5">
+            <span>Overall mastery</span><span>{progressPct}%</span>
           </div>
-          <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${progressPct}%` }} />
+          <div className="h-[6px] bg-border rounded-full overflow-hidden">
+            <div className="h-full bg-teal rounded-full transition-[width] duration-400" style={{ width: `${progressPct}%` }} />
           </div>
         </div>
       </div>
 
-      {/* Action row */}
+      {/* Reviews due */}
       {dashboard.reviewsDue > 0 && (
-        <div className={styles.actionRow}>
-          <div className={styles.actionCard} onClick={() => navigate('/review')}>
-            <div className={styles.actionIcon}>📖</div>
-            <div className={styles.actionTitle}>{dashboard.reviewsDue} Reviews Due</div>
-            <div className={styles.actionDesc}>Strengthen fading memories before they slip away</div>
+        <div className="flex gap-3 mb-7 flex-wrap max-[600px]:flex-col">
+          <div
+            className="flex-1 min-w-[200px] bg-card border border-border rounded-[12px] p-4 px-[18px] flex flex-col gap-1 cursor-pointer transition-[border-color,transform] duration-200 hover:border-teal hover:-translate-y-0.5 max-[600px]:min-w-0"
+            onClick={() => navigate('/review')}
+          >
+            <div className="text-[24px]">📖</div>
+            <div className="text-[15px] font-bold text-text">{dashboard.reviewsDue} Reviews Due</div>
+            <div className="text-[12px] text-muted leading-[1.5]">Strengthen fading memories before they slip away</div>
           </div>
         </div>
       )}
 
       {/* Chunk grid */}
-      <div className={styles.sectionTitle}>Knowledge Chunks</div>
-      <div className={styles.chunkGrid}>
+      <div className="font-cinzel text-[14px] font-bold text-gold tracking-[0.08em] uppercase mb-3.5">Knowledge Chunks</div>
+      <div className="grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
         {dashboard.chunkHealth.map(ch => (
           <ChunkCard
             key={ch.chunkId}

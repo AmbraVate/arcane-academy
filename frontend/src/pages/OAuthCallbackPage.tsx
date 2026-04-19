@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import styles from './AuthPage.module.css'
 
 export default function OAuthCallbackPage() {
   const [params] = useSearchParams()
@@ -25,11 +24,11 @@ export default function OAuthCallbackPage() {
   }, [params, loginWithToken, navigate])
 
   return (
-    <div className={styles.page}>
-      <div className={styles.card}>
-        <div className={styles.glyph}>{'\u2728'}</div>
-        <h1 className={styles.title}>Authenticating...</h1>
-        <p className={styles.sub}>Opening the academy gates</p>
+    <div className="flex items-center justify-center min-h-screen bg-bg">
+      <div className="bg-card border border-border rounded-[14px] px-10 py-10 text-center max-w-[380px] w-full mx-4">
+        <div className="text-[48px] mb-4">✨</div>
+        <h1 className="text-[22px] font-bold text-gold m-0 mb-2">Authenticating...</h1>
+        <p className="text-muted text-[14px] m-0">Opening the academy gates</p>
       </div>
     </div>
   )

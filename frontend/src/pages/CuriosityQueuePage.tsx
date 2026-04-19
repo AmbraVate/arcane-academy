@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { curiosityApi } from '../api/services'
 import type { CuriosityQueueItem } from '../types'
-import styles from './CuriosityQueuePage.module.css'
 
 export default function CuriosityQueuePage() {
   const navigate = useNavigate()
@@ -10,10 +9,7 @@ export default function CuriosityQueuePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    curiosityApi.getAll()
-      .then(setItems)
-      .catch(console.error)
-      .finally(() => setLoading(false))
+    curiosityApi.getAll().then(setItems).catch(console.error).finally(() => setLoading(false))
   }, [])
 
   async function handleRemove(subChunkId: string) {
@@ -21,35 +17,29 @@ export default function CuriosityQueuePage() {
     setItems(prev => prev.filter(i => i.subChunkId !== subChunkId))
   }
 
-  if (loading) return <div className={styles.loading}><p>Loading queue...</p></div>
+  if (loading) return <div className="flex items-center justify-center h-[60vh] text-muted"><p>Loading queue...</p></div>
 
   return (
-    <div className={styles.page}>
-      <button className="btn btn-ghost" onClick={() => navigate('/')} style={{ marginBottom: 16, fontSize: 12 }}>
-        ← Back to Dashboard
-      </button>
-      <h1 className={styles.title}>📌 Curiosity Queue</h1>
-      <p className={styles.desc}>Concepts you've saved for later exploration.</p>
+    <div className="max-w-[600px] mx-auto px-4 py-6 pb-[60px] max-[480px]:px-3 max-[480px]:py-4">
+      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate('/')}>← Back to Dashboard</button>
+      <h1 className="text-[22px] font-bold text-gold m-0 mb-1.5">📌 Curiosity Queue</h1>
+      <p className="text-muted text-[13px] m-0 mb-5">Concepts you've saved for later exploration.</p>
 
       {items.length === 0 ? (
-        <div className={styles.empty}>
+        <div className="text-center py-10 text-muted">
           <p>Your queue is empty. Save concepts while learning to revisit them later!</p>
         </div>
       ) : (
-        <div className={styles.list}>
+        <div className="flex flex-col gap-2">
           {items.map(item => (
-            <div key={item.id} className={styles.item}>
-              <div className={styles.itemInfo} onClick={() => navigate(`/learn/${item.subChunkId}`)}>
-                <div className={styles.itemId}>{item.subChunkId}</div>
-                <div className={styles.itemDate}>Saved {new Date(item.savedAt).toLocaleDateString()}</div>
+            <div key={item.id} className="flex items-center justify-between bg-card border border-border rounded-[8px] px-4 py-3 max-[480px]:flex-wrap max-[480px]:gap-2">
+              <div className="cursor-pointer flex-1" onClick={() => navigate(`/learn/${item.subChunkId}`)}>
+                <div className="text-[14px] font-semibold text-text">{item.subChunkId}</div>
+                <div className="text-[11px] text-muted mt-0.5">Saved {new Date(item.savedAt).toLocaleDateString()}</div>
               </div>
-              <div className={styles.itemActions}>
-                <button className="btn btn-ghost" style={{ fontSize: 11 }} onClick={() => navigate(`/learn/${item.subChunkId}`)}>
-                  Learn →
-                </button>
-                <button className="btn btn-ghost" style={{ fontSize: 11, color: 'var(--red)' }} onClick={() => handleRemove(item.subChunkId)}>
-                  Remove
-                </button>
+              <div className="flex gap-1.5 flex-shrink-0">
+                <button className="btn btn-ghost text-[11px]" onClick={() => navigate(`/learn/${item.subChunkId}`)}>Learn →</button>
+                <button className="btn btn-ghost text-[11px] text-red" onClick={() => handleRemove(item.subChunkId)}>Remove</button>
               </div>
             </div>
           ))}
