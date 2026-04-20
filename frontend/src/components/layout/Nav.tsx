@@ -1,10 +1,18 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import { dashboardApi } from '../../api/services'
 import { cn } from '@/lib/utils'
 
 export default function Nav() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [reviewsDue, setReviewsDue] = useState(0)
+
+  useEffect(() => {
+    if (!user) return
+    dashboardApi.getReviewsDue().then(setReviewsDue).catch(() => {})
+  }, [user])
 
   if (!user) return null
 

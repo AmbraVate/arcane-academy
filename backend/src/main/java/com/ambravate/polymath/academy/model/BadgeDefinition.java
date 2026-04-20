@@ -19,6 +19,8 @@ public enum BadgeDefinition {
     CHUNK_J_MASTERED("Rune of Exceptions", "Master Chunk J: Exception Handling", "\u26A0", Category.LEARNING),
     CHUNK_K_MASTERED("Rune of APIs", "Master Chunk K: Common APIs & Utils", "\uD83D\uDEE0", Category.LEARNING),
     ALL_CHUNKS_COMPLETE("Grand Archmage", "Complete all chunks A\u2013K", "\uD83D\uDC51", Category.LEARNING),
+    JAVA_CAPSTONE_COMPLETE("Grand Champion", "Conquer the Grand Tournament \u2014 Java capstone project", "\uD83C\uDFC6", Category.LEARNING),
+    TAILWIND_CAPSTONE_COMPLETE("Agency Archmage", "Deliver The Agency Commission \u2014 Tailwind capstone project", "\uD83C\uDF10", Category.LEARNING),
 
     // Review & mastery
     PERFECT_REVIEW("Flawless Recall", "Score 100% on a review session", "\uD83C\uDFAF", Category.MASTERY),

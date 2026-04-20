@@ -94,7 +94,7 @@ public class JsonContentSeeder {
     // ── SubChunk ──────────────────────────────────────────────────────────────
 
     private void seedSubChunk(String chunkId, ChunkContentDto.SubChunkDto sc) throws Exception {
-        String storyJson  = toJson(sc.storyBeats);
+        String storyJson  = toJson(normaliseBeats(sc.storyBeats));
         String testsJson  = toJson(sc.guidedPracticeTests);
 
         SubChunkPracticeType practiceType = sc.practiceType != null
@@ -171,7 +171,7 @@ public class JsonContentSeeder {
                 .title(rh.title)
                 .sortOrder(rh.sortOrder)
                 .contentHtml(rh.contentHtml)
-                .storyJson(toJson(rh.storyBeats))
+                .storyJson(toJson(normaliseBeats(rh.storyBeats)))
                 .starterCode(rh.starterCode)
                 .testCasesJson(toJson(rh.tests))
                 .filename(rh.filename)
@@ -182,5 +182,45 @@ public class JsonContentSeeder {
 
     private String toJson(List<?> list) throws Exception {
         return (list == null || list.isEmpty()) ? null : objectMapper.writeValueAsString(list);
+    }
+
+    /**
+     * Normalises story beat maps from the legacy Java-chunk format to the
+     * canonical format consumed by the frontend's {@code StoryPanel} component.
+     *
+     * <p>Legacy Java chunks use:
+     * <ul>
+     *   <li>{@code "type": "NARRATION" | "DIALOGUE" | "EXAMPLE"} (uppercase)</li>
+     *   <li>{@code "label"} instead of {@code "speaker"} for example blocks</li>
+     *   <li>{@code "code"}  instead of {@code "text"}    for example content</li>
+     * </ul>
+     *
+     * <p>Tailwind / new chunks already use lowercase types and the correct keys, so
+     * this method is idempotent when called on already-normalised beats.
+     */
+    @SuppressWarnings("unchecked")
+    private List<Map<String, Object>> normaliseBeats(List<Map<String, Object>> beats) {
+        if (beats == null) return null;
+        return beats.stream().map(raw -> {
+            java.util.LinkedHashMap<String, Object> beat = new java.util.LinkedHashMap<>(raw);
+
+            // 1. Lower-case the type
+            Object type = beat.get("type");
+            if (type instanceof String s) {
+                beat.put("type", s.toLowerCase());
+            }
+
+            // 2. Map "label" → "speaker" (used by EXAMPLE beats)
+            if (!beat.containsKey("speaker") && beat.containsKey("label")) {
+                beat.put("speaker", beat.remove("label"));
+            }
+
+            // 3. Map "code" → "text" (used by EXAMPLE beats)
+            if (!beat.containsKey("text") && beat.containsKey("code")) {
+                beat.put("text", beat.remove("code"));
+            }
+
+            return (Map<String, Object>) beat;
+        }).toList();
     }
 }

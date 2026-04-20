@@ -44,6 +44,7 @@ public class RabbitHoleController {
         result.put("id", m.getId());
         result.put("title", m.getTitle());
         result.put("chunkId", m.getChunkId());
+        result.put("sortOrder", m.getSortOrder());
         result.put("contentHtml", m.getContentHtml());
         result.put("storyBeats", parseJson(m.getStoryJson()));
         result.put("starterCode", m.getStarterCode());

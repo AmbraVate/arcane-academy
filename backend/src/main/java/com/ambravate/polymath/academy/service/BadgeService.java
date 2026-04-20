@@ -142,6 +142,8 @@ public class BadgeService {
       case CHUNK_J_MASTERED -> completedChunks.contains("J");
       case CHUNK_K_MASTERED -> completedChunks.contains("K");
       case ALL_CHUNKS_COMPLETE -> completedChunks.size() >= 11;
+      case JAVA_CAPSTONE_COMPLETE -> completedChunks.contains("CAP");
+      case TAILWIND_CAPSTONE_COMPLETE -> completedChunks.contains("tw-d");
 
       // Mastery
       case PERFECT_REVIEW -> hasPerfectReview;

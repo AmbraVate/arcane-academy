@@ -24,6 +24,8 @@ public class CuriosityQueueController {
         List<CuriosityQueueItem> items = queueService.getQueue(user.getId());
         List<Map<String, Object>> result = items.stream().map(i -> {
             Map<String, Object> map = new LinkedHashMap<>();
+            map.put("id", i.getId());
+            map.put("userId", i.getUserId());
             map.put("subChunkId", i.getSubChunkId());
             map.put("savedAt", i.getSavedAt().toString());
             return map;

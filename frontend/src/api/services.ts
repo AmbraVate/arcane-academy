@@ -102,7 +102,7 @@ export const dashboardApi = {
   },
   getReviewsDue: async (): Promise<number> => {
     const { data } = await api.get('/api/dashboard/reviews-due')
-    return data
+    return typeof data === 'number' ? data : (data?.count ?? 0)
   },
 }
 

@@ -54,7 +54,13 @@ export default function EncodingPage() {
   useEffect(() => {
     if (!subChunkId) return
     encodingApi.start(subChunkId)
-      .then(enc => { setEncoding(enc); if (enc.starterCode) setCode(enc.starterCode) })
+      .then(async enc => {
+        // If the sub-chunk has no hook content, skip straight to EXPLANATION
+        if (enc.phase === 'HOOK' && !enc.hookHtml?.trim()) {
+          enc = await encodingApi.advance(subChunkId)
+        }
+        setEncoding(enc); if (enc.starterCode) setCode(enc.starterCode)
+      })
       .catch(() => navigate('/'))
       .finally(() => setLoading(false))
     curiosityApi.getAll()

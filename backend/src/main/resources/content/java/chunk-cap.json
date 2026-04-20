@@ -1,0 +1,357 @@
+{
+  "id": "CAP",
+  "topicId": "java",
+  "title": "The Grand Tournament — Java Capstone",
+  "glyph": "🏆",
+  "sortOrder": 39,
+  "learnerPath": "EXPERT",
+  "prerequisites": ["XJ"],
+  "subChunks": [
+    {
+      "id": "CAP1",
+      "title": "The Wizard Roster",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "JAVA",
+      "practiceFileName": "WizardRoster.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Tournament Herald Oryn",
+          "text": "HEAR YE, HEAR YE! The Grand Tournament of the Arcane Academy is hereby declared open! Eight wizards. One champion. Glory eternal — or a very long walk home!"
+        },
+        {
+          "type": "NARRATION",
+          "text": "The great tournament hall fell silent as Grand Archmage Solomon rose from his obsidian throne. His gaze swept the room with the warmth of a winter glacier."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Grand Archmage Solomon",
+          "text": "Before a single match is fought, we require a proper roster. A tournament without organised records is merely a brawl. You will build the roster system. And you will build it correctly."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "This is your first trial. A Wizard record, a roster class, streams for champion selection, filtering, and averages. Everything you have learned since Chapter 1 — it begins here."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Build a <code>WizardRoster</code> system with a nested <code>Wizard</code> record and three stream-powered methods:</p><ul><li><code>getChampion()</code> — the wizard with the highest power (stream + max)</li><li><code>getBySpecialty(String specialty)</code> — filtered list of matching wizards</li><li><code>getAveragePower()</code> — average power of all wizards</li></ul>",
+        "hint": "For getChampion: use .stream().max(Comparator.comparingInt(Wizard::power)).orElseThrow(). For getBySpecialty: use .stream().filter(...).toList(). For getAveragePower: use .stream().mapToInt(Wizard::power).average().orElse(0).",
+        "starterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class WizardRoster {\n    record Wizard(String name, String specialty, int power) {}\n\n    private final List<Wizard> roster = new ArrayList<>();\n\n    public void add(Wizard w) { roster.add(w); }\n\n    public Wizard getChampion() {\n        // TODO: return the wizard with the highest power using streams\n        return null;\n    }\n\n    public List<Wizard> getBySpecialty(String specialty) {\n        // TODO: return wizards matching the given specialty\n        return List.of();\n    }\n\n    public double getAveragePower() {\n        // TODO: return the average power of all wizards\n        return 0.0;\n    }\n\n    public static void main(String[] args) {\n        WizardRoster rr = new WizardRoster();\n        rr.add(new Wizard(\"Eldrin\",  \"Fire\",   92));\n        rr.add(new Wizard(\"Lyra\",    \"Water\",  88));\n        rr.add(new Wizard(\"Vareth\",  \"Fire\",   76));\n        rr.add(new Wizard(\"Sable\",   \"Shadow\", 95));\n        rr.add(new Wizard(\"Maester\", \"Water\",  83));\n\n        System.out.println(rr.getChampion().name());\n        System.out.println(rr.getBySpecialty(\"Fire\").size());\n        System.out.printf(\"%.1f%n\", rr.getAveragePower());\n    }\n}",
+        "tests": [
+          {"label": "Champion name", "input": "null", "expected": "Sable\n2\n86.8"}
+        ]
+      },
+      "feynmanPrompt": "Explain why Java records are ideal for domain objects like Wizard. What do they provide automatically that a plain class does not?",
+      "questions": [
+        {
+          "id": "CAP1Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does Stream.max(Comparator) return?",
+          "options": ["An Optional containing the maximum element, or empty if the stream is empty", "The maximum element directly, throwing if the stream is empty", "A new stream containing only the maximum element", "The index of the maximum element"],
+          "answer": "An Optional containing the maximum element, or empty if the stream is empty",
+          "explanation": "Stream.max() returns Optional<T> because an empty stream has no maximum. Always call .orElseThrow() or .orElse() to extract the value safely."
+        },
+        {
+          "id": "CAP1Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Which stream method converts a Stream<Integer> to an IntStream for primitive operations like average()?",
+          "options": ["mapToInt()", "map()", "flatMap()", "collect()"],
+          "answer": "mapToInt()",
+          "explanation": "mapToInt() converts a Stream<T> to an IntStream, unlocking primitive aggregation methods like sum(), average(), min(), and max() without boxing overhead."
+        },
+        {
+          "id": "CAP1Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "A Java record Wizard(String name, int power) automatically generates which of the following?",
+          "options": ["Constructor, getters (name(), power()), equals(), hashCode(), and toString()", "Constructor and getters only", "Only equals() and hashCode()", "Everything a class provides, plus it allows inheritance"],
+          "answer": "Constructor, getters (name(), power()), equals(), hashCode(), and toString()",
+          "explanation": "Records generate a canonical constructor, accessor methods named after each component, and correct equals/hashCode/toString implementations — all in one line."
+        }
+      ]
+    },
+    {
+      "id": "CAP2",
+      "title": "The Match Engine",
+      "sortOrder": 2,
+      "xpReward": 175,
+      "practiceType": "JAVA",
+      "practiceFileName": "MatchEngine.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Tournament Herald Oryn",
+          "text": "Every great tournament needs rules! How is a winner determined? Raw power? Elemental mastery? The crowd demands DRAMA!"
+        },
+        {
+          "type": "NARRATION",
+          "text": "Grand Archmage Solomon silenced the herald with a single raised finger."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Grand Archmage Solomon",
+          "text": "The match engine must support swappable strategies. Power alone is one measure. Elemental affinity is another. Both must be expressible without rewriting the engine. You have heard of functional interfaces. Now you will build with them."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "A @FunctionalInterface with a single abstract method — implement it as a lambda. The Strategy Pattern made concise. Two strategies: raw power, and a Fire elemental bonus. The engine calls whichever strategy it is given."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Build a match engine with swappable strategies via a functional interface:</p><ul><li><code>@FunctionalInterface MatchStrategy</code> with <code>Wizard resolve(Wizard a, Wizard b)</code></li><li><code>POWER_WINS</code>: higher power wins; ties go to <code>a</code></li><li><code>SPECIALTY_BONUS</code>: Fire wizards get +10 effective power before comparison</li></ul>",
+        "hint": "POWER_WINS: (a, b) -> a.power() >= b.power() ? a : b. SPECIALTY_BONUS: compute effective power for each (add 10 if specialty is Fire), then compare.",
+        "starterCode": "import java.util.function.*;\n\npublic class MatchEngine {\n    record Wizard(String name, String specialty, int power) {}\n\n    @FunctionalInterface\n    interface MatchStrategy {\n        Wizard resolve(Wizard a, Wizard b);\n    }\n\n    // TODO: POWER_WINS — higher power wins, ties to a\n    static MatchStrategy POWER_WINS = null;\n\n    // TODO: SPECIALTY_BONUS — Fire wizards get +10 effective power\n    static MatchStrategy SPECIALTY_BONUS = null;\n\n    public static void main(String[] args) {\n        Wizard eldrin = new Wizard(\"Eldrin\", \"Fire\",  85);\n        Wizard lyra   = new Wizard(\"Lyra\",  \"Water\", 90);\n        Wizard sable  = new Wizard(\"Sable\", \"Shadow\", 80);\n\n        System.out.println(POWER_WINS.resolve(eldrin, lyra).name());\n        System.out.println(SPECIALTY_BONUS.resolve(eldrin, lyra).name());\n        System.out.println(POWER_WINS.resolve(sable, eldrin).name());\n    }\n}",
+        "tests": [
+          {"label": "All match results", "input": "null", "expected": "Lyra\nEldrin\nEldrin"}
+        ]
+      },
+      "feynmanPrompt": "Explain the Strategy Pattern. Why is a @FunctionalInterface a clean way to implement it in Java? When would you use an anonymous class instead of a lambda?",
+      "questions": [
+        {
+          "id": "CAP2Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the requirement for an interface to be annotated with @FunctionalInterface?",
+          "options": ["It must have exactly one abstract method (SAM — Single Abstract Method)", "It must extend java.util.function.Function", "It must have no default methods", "It must be public and in its own file"],
+          "answer": "It must have exactly one abstract method (SAM — Single Abstract Method)",
+          "explanation": "@FunctionalInterface requires exactly one abstract method so a lambda expression can implement it. The annotation is optional but documents intent and causes a compile error if violated."
+        },
+        {
+          "id": "CAP2Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Which built-in functional interface best describes a function that takes two arguments of the same type and returns one of the same type?",
+          "options": ["BinaryOperator<T>", "BiFunction<T,T,T>", "BiConsumer<T,T>", "UnaryOperator<T>"],
+          "answer": "BinaryOperator<T>",
+          "explanation": "BinaryOperator<T> extends BiFunction<T,T,T> — it takes two T arguments and returns a T. It is ideal for combining two values of the same type."
+        },
+        {
+          "id": "CAP2Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "The Strategy Pattern and the @FunctionalInterface approach both allow swapping algorithms at runtime. What does the functional interface approach add over a traditional abstract class hierarchy?",
+          "options": ["Lambdas can be passed inline without creating a named class, reducing boilerplate for simple implementations", "Functional interfaces are faster at runtime than abstract classes", "Functional interfaces support multiple strategies per object", "Abstract classes cannot be used as strategies"],
+          "answer": "Lambdas can be passed inline without creating a named class, reducing boilerplate for simple implementations",
+          "explanation": "Both patterns decouple the algorithm from the context. Functional interfaces let you write the strategy as a one-liner lambda instead of a full named class — ideal when the implementation is short-lived or trivially simple."
+        }
+      ]
+    },
+    {
+      "id": "CAP3",
+      "title": "The Bracket",
+      "sortOrder": 3,
+      "xpReward": 200,
+      "practiceType": "JAVA",
+      "practiceFileName": "TournamentBracket.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Tournament Herald Oryn",
+          "text": "Eight competitors! Four matches! Two survivors! One champion! The bracket is set — may the most powerful wizard prevail!"
+        },
+        {
+          "type": "NARRATION",
+          "text": "Grand Archmage Solomon studied the bracket board with narrowed eyes. He had seen too many tournaments won by luck of the draw rather than proper implementation."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Grand Archmage Solomon",
+          "text": "Eight competitors. Four matches. Two survivors. One champion. The bracket does not care for sentiment. If the count is odd, the final wizard receives a bye — they advance without a match. Implement it correctly or all eight go home."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "This is iterative elimination. Keep looping while more than one wizard remains. Pair adjacent entries: index 0 vs 1, 2 vs 3, and so on. If the count is odd, the last wizard advances automatically. Your strategy is injected — don't hardcode the comparison."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Implement <code>runTournament(List&lt;Wizard&gt; participants, MatchStrategy strategy)</code>:</p><ol><li>While more than 1 wizard remains, pair adjacent entries (0 vs 1, 2 vs 3, …)</li><li>The winner of each pair advances; if the count is odd, the last wizard gets a bye (advances automatically)</li><li>Return the final surviving wizard</li></ol>",
+        "hint": "Use a while loop on remaining.size() > 1. Inside, loop with i+=2 and add each match winner to nextRound. After the inner loop, if remaining.size() is odd, add the last element directly to nextRound. Set remaining = nextRound.",
+        "starterCode": "import java.util.*;\n\npublic class TournamentBracket {\n    record Wizard(String name, String specialty, int power) {}\n\n    @FunctionalInterface\n    interface MatchStrategy { Wizard resolve(Wizard a, Wizard b); }\n\n    static Wizard runTournament(List<Wizard> participants, MatchStrategy strategy) {\n        List<Wizard> remaining = new ArrayList<>(participants);\n        while (remaining.size() > 1) {\n            List<Wizard> nextRound = new ArrayList<>();\n            // TODO: pair up adjacent wizards, run each match, add winner to nextRound\n            // TODO: if odd-length, last wizard gets a bye (add directly to nextRound)\n            remaining = nextRound;\n        }\n        return remaining.get(0);\n    }\n\n    public static void main(String[] args) {\n        MatchStrategy powerWins = (a, b) -> a.power() >= b.power() ? a : b;\n\n        List<Wizard> four = List.of(\n            new Wizard(\"Alpha\", \"Fire\",  80),\n            new Wizard(\"Beta\",  \"Water\", 90),\n            new Wizard(\"Gamma\", \"Earth\", 70),\n            new Wizard(\"Delta\", \"Air\",   85)\n        );\n        System.out.println(runTournament(four, powerWins).name());\n\n        List<Wizard> three = List.of(\n            new Wizard(\"Alpha\", \"Fire\",  80),\n            new Wizard(\"Beta\",  \"Water\", 90),\n            new Wizard(\"Gamma\", \"Earth\", 70)\n        );\n        System.out.println(runTournament(three, powerWins).name());\n    }\n}",
+        "tests": [
+          {"label": "4-wizard and 3-wizard champions", "input": "null", "expected": "Beta\nBeta"}
+        ]
+      },
+      "feynmanPrompt": "Describe the single-elimination tournament algorithm in plain English. Why must the strategy be passed in rather than hardcoded inside runTournament?",
+      "questions": [
+        {
+          "id": "CAP3Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Why does the method use new ArrayList<>(participants) instead of directly assigning participants to remaining?",
+          "options": ["To avoid modifying the original list — the method should not mutate its input", "Because List.of() returns a null list", "To improve iteration performance", "Because ArrayList is always faster than List"],
+          "answer": "To avoid modifying the original list — the method should not mutate its input",
+          "explanation": "List.of() returns an immutable list. Even if it were mutable, copying the input is good practice — runTournament should be free of side effects on the caller's data."
+        },
+        {
+          "id": "CAP3Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does this code print?\n\nList<String> names = new ArrayList<>(List.of(\"A\", \"B\", \"C\"));\nnames.removeIf(n -> n.equals(\"B\"));\nSystem.out.println(names.size());",
+          "options": ["2", "3", "1", "Throws UnsupportedOperationException"],
+          "answer": "2",
+          "explanation": "removeIf removes all elements matching the predicate. \"B\" is removed, leaving [\"A\", \"C\"] with size 2. The ArrayList wrapper makes the list mutable, so no exception is thrown."
+        },
+        {
+          "id": "CAP3Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "In a single-elimination bracket with 8 participants, how many total matches are played to determine the champion?",
+          "options": ["7", "8", "4", "15"],
+          "answer": "7",
+          "explanation": "Single elimination always requires n-1 matches for n participants — every match eliminates exactly one wizard, and you need to eliminate 7 of the 8 to find the champion."
+        }
+      ]
+    },
+    {
+      "id": "CAP4",
+      "title": "Tournament Statistics",
+      "sortOrder": 4,
+      "xpReward": 200,
+      "practiceType": "JAVA",
+      "practiceFileName": "TournamentStats.java",
+      "storyBeats": [
+        {
+          "type": "DIALOGUE",
+          "speaker": "Tournament Herald Oryn",
+          "text": "The crowd demands a REPORT! How many Fire wizards? How powerful were the Water mages on average? The people need NUMBERS!"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Grand Archmage Solomon",
+          "text": "The crowd demands a report. I demand accuracy. They cannot get one without the other. Build the statistics engine. And when the input is insufficient — throw an appropriate exception. Do not fail silently."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "Two aggregations: count by specialty using groupingBy and counting(), and average power by specialty using groupingBy and averagingInt(). Guard the average method — fewer than two wizards is not a meaningful dataset. Throw your custom exception."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Build a statistics engine with a custom exception and two stream aggregations:</p><ul><li><code>TournamentException</code> extending <code>RuntimeException</code></li><li><code>countBySpecialty(List&lt;Wizard&gt;)</code> — group by specialty, count each group (<code>Collectors.groupingBy</code> + <code>Collectors.counting()</code>)</li><li><code>avgPowerBySpecialty(List&lt;Wizard&gt;)</code> — group by specialty, average power per group; throw <code>TournamentException(\"Need at least 2 wizards\")</code> if fewer than 2 wizards are given</li></ul>",
+        "hint": "countBySpecialty: Collectors.groupingBy(Wizard::specialty, Collectors.counting()). avgPowerBySpecialty: Collectors.groupingBy(Wizard::specialty, Collectors.averagingInt(Wizard::power)).",
+        "starterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class TournamentStats {\n    record Wizard(String name, String specialty, int power) {}\n\n    static class TournamentException extends RuntimeException {\n        TournamentException(String msg) { super(msg); }\n    }\n\n    static Map<String, Long> countBySpecialty(List<Wizard> wizards) {\n        // TODO: group wizards by specialty and count each group\n        return Map.of();\n    }\n\n    static Map<String, Double> avgPowerBySpecialty(List<Wizard> wizards) {\n        if (wizards.size() < 2) throw new TournamentException(\"Need at least 2 wizards\");\n        // TODO: group by specialty, compute average power per group\n        return Map.of();\n    }\n\n    public static void main(String[] args) {\n        List<Wizard> wizards = List.of(\n            new Wizard(\"A\", \"Fire\",  80),\n            new Wizard(\"B\", \"Fire\", 100),\n            new Wizard(\"C\", \"Water\", 90)\n        );\n\n        Map<String, Long> counts = countBySpecialty(wizards);\n        System.out.println(counts.get(\"Fire\"));\n        System.out.println(counts.get(\"Water\"));\n\n        Map<String, Double> avgs = avgPowerBySpecialty(wizards);\n        System.out.printf(\"%.1f%n\", avgs.get(\"Fire\"));\n        System.out.printf(\"%.1f%n\", avgs.get(\"Water\"));\n\n        try {\n            avgPowerBySpecialty(List.of(new Wizard(\"Solo\", \"Fire\", 99)));\n        } catch (TournamentException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+        "tests": [
+          {"label": "All statistics output", "input": "null", "expected": "2\n1\n90.0\n90.0\nNeed at least 2 wizards"}
+        ]
+      },
+      "feynmanPrompt": "Explain Collectors.groupingBy with a downstream collector. How does it differ from a simple groupingBy that just groups elements into lists?",
+      "questions": [
+        {
+          "id": "CAP4Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does Collectors.groupingBy(classifier, Collectors.counting()) return?",
+          "options": ["Map<K, Long> where each key maps to the count of elements with that key", "Map<K, List<T>> where each key maps to a list of elements", "Map<K, Integer> where each key maps to the count", "A grouped stream, not a Map"],
+          "answer": "Map<K, Long> where each key maps to the count of elements with that key",
+          "explanation": "Collectors.counting() is a Long-producing downstream collector. The result type is Map<K, Long>, not Map<K, Integer>."
+        },
+        {
+          "id": "CAP4Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the correct way to compute the average int value of a field using streams?",
+          "options": ["Collectors.averagingInt(Wizard::power) as a downstream collector, or .mapToInt(Wizard::power).average()", ".average(Wizard::power) directly on a Stream<Wizard>", ".sum() divided by .count() — there is no direct average()", "Collectors.summingInt() divided by list.size()"],
+          "answer": "Collectors.averagingInt(Wizard::power) as a downstream collector, or .mapToInt(Wizard::power).average()",
+          "explanation": "Stream<T> has no direct average() — you must either mapToInt() first (returns OptionalDouble), or use Collectors.averagingInt() as a downstream collector inside groupingBy."
+        },
+        {
+          "id": "CAP4Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "When should you extend RuntimeException instead of Exception for a custom exception?",
+          "options": ["When the exception represents a programming error or invalid state the caller is not expected to recover from at every call site — it is unchecked", "When you want the compiler to force every caller to handle or declare it", "When the exception might occur during I/O operations", "RuntimeException and Exception behave identically — the choice is only stylistic"],
+          "answer": "When the exception represents a programming error or invalid state the caller is not expected to recover from at every call site — it is unchecked",
+          "explanation": "RuntimeException (unchecked) does not require a throws declaration or try/catch. Use it for conditions like invalid arguments or violated preconditions. Use checked Exception when callers should be forced to handle the failure explicitly."
+        }
+      ]
+    },
+    {
+      "id": "CAP5",
+      "title": "The Grand Chronicle",
+      "sortOrder": 5,
+      "xpReward": 300,
+      "practiceType": "JAVA",
+      "practiceFileName": "GrandTournament.java",
+      "storyBeats": [
+        {
+          "type": "NARRATION",
+          "text": "The final trial. The hall was utterly silent. Every archmage, every apprentice, every herald had gathered. This was what they had all been waiting for."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Grand Archmage Solomon",
+          "text": "You have built the domain. You have built the engine. You have built the bracket. You have built the statistics. Now you will build the complete tournament system — domain, engine, bracket, statistics, and formatted report. All disciplines. One class. No mercy."
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Tournament Herald Oryn",
+          "text": "THE GRAND TOURNAMENT BEGINS! Eight wizards enter — only one leaves as champion! May the most powerful implementation prevail!"
+        },
+        {
+          "type": "DIALOGUE",
+          "speaker": "Archmage Eldrin",
+          "text": "You have every tool you need. runBracket from CAP3. countBySpecialty from CAP4. And now: generateReport — a formatted summary string. Combine them all. This is what a Java engineer looks like."
+        }
+      ],
+      "guidedPractice": {
+        "problemHtml": "<p>Integrate everything into one <code>GrandTournament</code> class. Implement all three methods:</p><ul><li><code>runBracket(List&lt;Wizard&gt; participants, MatchStrategy strategy)</code> — single-elimination tournament (see CAP3)</li><li><code>countBySpecialty(List&lt;Wizard&gt; wizards)</code> — specialty counts (see CAP4)</li><li><code>generateReport(Wizard champion, Map&lt;String, Long&gt; counts, double avgPower)</code> — returns a formatted multi-line report string</li></ul><p>The report format (specialties sorted alphabetically):</p><pre>=== Grand Tournament ===\nChampion: &lt;name&gt;\n&lt;Specialty1&gt;: &lt;count&gt; | &lt;Specialty2&gt;: &lt;count&gt; | ...\nAverage power: &lt;avg with 1 decimal&gt;</pre>",
+        "hint": "For generateReport: build the specialty line by sorting counts.entrySet() by key and joining with \" | \". Use String.format(\"%.1f\", avgPower) for the average. Combine all four lines with \\n.",
+        "starterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class GrandTournament {\n    record Wizard(String name, String specialty, int power) {}\n\n    @FunctionalInterface\n    interface MatchStrategy { Wizard resolve(Wizard a, Wizard b); }\n\n    static Wizard runBracket(List<Wizard> participants, MatchStrategy strategy) {\n        // TODO: implement single-elimination bracket (see CAP3)\n        return null;\n    }\n\n    static Map<String, Long> countBySpecialty(List<Wizard> wizards) {\n        // TODO: group by specialty, count each group (see CAP4)\n        return Map.of();\n    }\n\n    static String generateReport(Wizard champion, Map<String, Long> counts, double avgPower) {\n        // TODO: build the formatted report string\n        // Line 1: === Grand Tournament ===\n        // Line 2: Champion: <name>\n        // Line 3: specialties sorted alphabetically, joined by \" | \"  e.g. Earth: 1 | Fire: 3\n        // Line 4: Average power: <avg with 1 decimal>\n        return \"\";\n    }\n\n    public static void main(String[] args) {\n        List<Wizard> roster = List.of(\n            new Wizard(\"Eldrin\",  \"Fire\",   92),\n            new Wizard(\"Lyra\",    \"Water\",  88),\n            new Wizard(\"Vareth\",  \"Fire\",   76),\n            new Wizard(\"Sable\",   \"Shadow\", 95),\n            new Wizard(\"Maester\", \"Water\",  83),\n            new Wizard(\"Kira\",    \"Earth\",  89),\n            new Wizard(\"Brennan\", \"Fire\",   91),\n            new Wizard(\"Isolde\",  \"Water\",  87)\n        );\n\n        MatchStrategy powerWins = (a, b) -> a.power() >= b.power() ? a : b;\n\n        Wizard champion = runBracket(roster, powerWins);\n        Map<String, Long> counts = countBySpecialty(roster);\n        double avgPower = roster.stream().mapToInt(Wizard::power).average().orElse(0);\n\n        System.out.println(generateReport(champion, counts, avgPower));\n    }\n}",
+        "tests": [
+          {"label": "Complete tournament report", "input": "null", "expected": "=== Grand Tournament ===\nChampion: Sable\nEarth: 1 | Fire: 3 | Shadow: 1 | Water: 3\nAverage power: 87.6"}
+        ]
+      },
+      "feynmanPrompt": "You have just built a complete domain model, a strategy-pattern engine, an elimination algorithm, a statistics aggregator, and a report formatter — all from scratch. Explain to a junior developer how each piece connects. Where are the dependencies? Which parts are most reusable?",
+      "questions": [
+        {
+          "id": "CAP5Q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "In the generateReport method, why are the specialty entries sorted before joining?",
+          "options": ["Maps do not guarantee insertion order — sorting by key produces a deterministic, stable output regardless of how the map was built", "Sorted output is always faster to generate", "Collectors.groupingBy() returns entries in reverse alphabetical order by default", "The sorted() call is required by String.join()"],
+          "answer": "Maps do not guarantee insertion order — sorting by key produces a deterministic, stable output regardless of how the map was built",
+          "explanation": "HashMap iteration order is undefined. Without sorting, the specialty line would be non-deterministic across JVM runs. Sorting by key guarantees a consistent, testable output."
+        },
+        {
+          "id": "CAP5Q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Which collectors pipeline correctly produces a sorted, joined String like \"Earth: 1 | Fire: 3\" from Map<String, Long> counts?",
+          "options": ["counts.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(e -> e.getKey() + \": \" + e.getValue()).collect(Collectors.joining(\" | \"))", "counts.values().stream().sorted().collect(Collectors.joining(\" | \"))", "Collectors.joining(\" | \", counts.keySet())", "counts.entrySet().stream().map(e -> e.toString()).collect(Collectors.joining(\" | \"))"],
+          "answer": "counts.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(e -> e.getKey() + \": \" + e.getValue()).collect(Collectors.joining(\" | \"))",
+          "explanation": "You must stream the entry set, sort by key, format each entry, then join. Streaming values alone loses the keys; toString() on Map.Entry produces implementation-specific output."
+        },
+        {
+          "id": "CAP5Q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "This capstone combined records, streams, functional interfaces, generics, and collections. Which Java feature most enabled all these pieces to work together without explicit casts?",
+          "options": ["Generics — type parameters allow List<Wizard>, Map<String, Long>, and Optional<Wizard> to be type-safe without casting", "Autoboxing — automatic int/Integer conversion", "Reflection — runtime type inspection", "var — local type inference"],
+          "answer": "Generics — type parameters allow List<Wizard>, Map<String, Long>, and Optional<Wizard> to be type-safe without casting",
+          "explanation": "Generics let the compiler enforce correct types across all APIs. Without generics, every collection method would return Object and every use would require a cast — both verbose and unsafe."
+        }
+      ]
+    }
+  ]
+}
