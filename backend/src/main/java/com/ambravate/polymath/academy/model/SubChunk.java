@@ -40,6 +40,9 @@ public class SubChunk {
     private String filename;
 
     @Column(columnDefinition = "TEXT")
+    private String soloPracticeHtml;
+
+    @Column(columnDefinition = "TEXT")
     private String feynmanPrompt;
 
     @Builder.Default

@@ -115,6 +115,7 @@ public class JsonContentSeeder {
                 .guidedPracticeHtml(sc.guidedPracticeHtml)
                 .guidedPracticeStarterCode(sc.guidedPracticeStarterCode)
                 .guidedPracticeTestsJson(testsJson)
+                .soloPracticeHtml(sc.soloPracticeHtml)
                 .feynmanPrompt(sc.feynmanPrompt)
                 .practiceType(practiceType)
                 .build());

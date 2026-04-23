@@ -71,7 +71,14 @@ public class EncodingService {
         EncodingPhase next = switch (progress.getCurrentPhase()) {
             case HOOK -> EncodingPhase.EXPLANATION;
             case EXPLANATION -> EncodingPhase.GUIDED_PRACTICE;
-            case GUIDED_PRACTICE -> EncodingPhase.RETRIEVAL_CHECK;
+            case GUIDED_PRACTICE -> {
+                // Only enter SOLO_PRACTICE if content is defined for this sub-chunk
+                String solo = subChunk.getSoloPracticeHtml();
+                yield (solo != null && !solo.isBlank())
+                        ? EncodingPhase.SOLO_PRACTICE
+                        : EncodingPhase.RETRIEVAL_CHECK;
+            }
+            case SOLO_PRACTICE -> EncodingPhase.RETRIEVAL_CHECK;
             case RETRIEVAL_CHECK -> EncodingPhase.COMPLETE;
             case COMPLETE -> EncodingPhase.COMPLETE;
         };
@@ -149,6 +156,62 @@ public class EncodingService {
 
         return new PracticeResult(allPassed, results, xpEarned, mentorFeedback,
                 allPassed ? null : "TEST_FAILURE", newBadges);
+    }
+
+    /**
+     * Submit solo practice code — same tests as guided practice, but no XP award
+     * (XP was already earned during GUIDED_PRACTICE).
+     */
+    @Transactional
+    public PracticeResult submitSoloPractice(String userId, String subChunkId, String code) {
+        SubChunk subChunk = subChunkRepository.findById(subChunkId)
+                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+
+        List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
+        if (testCases.isEmpty()) {
+            return new PracticeResult(true, List.of(), 0, null, null, List.of());
+        }
+
+        CodeRunResponse probe = codeRunner.run(code,
+                (String) testCases.getFirst().getOrDefault("input", null));
+
+        if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
+            String feedback = aiMentorService.explainCompileError(
+                    subChunk.getTitle(), "Java", code, probe.getError());
+            return new PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
+        }
+        if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
+                || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
+            String feedback = aiMentorService.explainRuntimeError(
+                    subChunk.getTitle(), "Java", code,
+                    probe.getError() != null ? probe.getError() : "Timeout — possible infinite loop");
+            return new PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
+        }
+
+        List<TestResult> results = new ArrayList<>();
+        boolean allPassed = true;
+        List<String> failedLabels = new ArrayList<>();
+
+        for (Map<String, Object> tc : testCases) {
+            String label = (String) tc.get("label");
+            String input = (String) tc.getOrDefault("input", null);
+            String expected = (String) tc.get("expected");
+            CodeRunResponse run = codeRunner.run(code, input);
+            String actual = run.getOutput() != null ? run.getOutput().trim() : "";
+            boolean passed = actual.contains(expected.trim());
+            results.add(new TestResult(label, passed, actual, expected));
+            if (!passed) { allPassed = false; failedLabels.add(label); }
+        }
+
+        String mentorFeedback = null;
+        if (!allPassed) {
+            mentorFeedback = aiMentorService.getFeedback(subChunk.getTitle(), "Java",
+                    "", code, String.join(", ", failedLabels));
+        }
+
+        // No XP — already earned during GUIDED_PRACTICE
+        return new PracticeResult(allPassed, results, 0, mentorFeedback,
+                allPassed ? null : "TEST_FAILURE", List.of());
     }
 
     /**

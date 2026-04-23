@@ -73,6 +73,29 @@ public class EncodingController {
                 .build());
     }
 
+    @PostMapping("/{subChunkId}/solo-practice/submit")
+    public ResponseEntity<SubmitResponse> submitSoloPractice(
+            @PathVariable String subChunkId,
+            @RequestBody CodeSubmitRequest request,
+            @AuthenticationPrincipal UserPrincipal user) {
+        EncodingService.PracticeResult result = encodingService.submitSoloPractice(
+                user.getId(), subChunkId, request.getCode());
+
+        return ResponseEntity.ok(SubmitResponse.builder()
+                .allPassed(result.allPassed())
+                .testResults(result.testResults().stream().map(tr ->
+                        SubmitResponse.TestResult.builder()
+                                .label(tr.label()).passed(tr.passed())
+                                .actualOutput(tr.actualOutput()).expectedOutput(tr.expectedOutput())
+                                .build()
+                ).collect(Collectors.toList()))
+                .xpEarned(result.xpEarned())
+                .mentorFeedback(result.mentorFeedback())
+                .errorType(result.errorType())
+                .newBadges(result.newBadges())
+                .build());
+    }
+
     @PostMapping("/{subChunkId}/retrieval-check/submit")
     public ResponseEntity<RetrievalResultDto> submitRetrievalCheck(
             @PathVariable String subChunkId,
@@ -144,6 +167,12 @@ public class EncodingController {
             case GUIDED_PRACTICE -> {
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setStarterCode(sc.getGuidedPracticeStarterCode());
+                dto.setTestCaseLabels(extractTestLabels(sc.getGuidedPracticeTestsJson()));
+            }
+            case SOLO_PRACTICE -> {
+                dto.setSoloPracticeHtml(sc.getSoloPracticeHtml());
+                // Guided practice HTML doubles as the "peek" hint — no starter code
+                dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setTestCaseLabels(extractTestLabels(sc.getGuidedPracticeTestsJson()));
             }
             case RETRIEVAL_CHECK -> dto.setFeynmanPrompt(sc.getFeynmanPrompt());

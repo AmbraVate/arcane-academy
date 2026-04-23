@@ -77,6 +77,13 @@ public class ChunkContentDto {
          */
         public List<Map<String, Object>> guidedPracticeTests;
 
+        /**
+         * Task description for the SOLO_PRACTICE phase (scratch rebuild, no starter code).
+         * If null or blank, the SOLO_PRACTICE phase is skipped automatically.
+         * HTML string.
+         */
+        public String soloPracticeHtml;
+
         /** Optional Feynman-technique prompt shown on the COMPLETE phase. */
         public String feynmanPrompt;
 

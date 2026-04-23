@@ -25,7 +25,7 @@
       "storyBeats": [
         {
           "type": "narration",
-          "text": "You step into the Academy's <em>Scriptorium</em> — a vast hall lined with glowing runes. Enchanters inscribe visual spells onto parchment, each working at a lectern. Lyra the Scribe glances up from a stack of scrolls."
+          "text": "You step into the Academy's <em>Scriptorium</em> — a vast hall lined with glowing runes. Enchanters inscribe visual spells onto parchment, each working at a lectern. Scrolls are everywhere: some filled with long incantations, others covered in tiny, precise symbols. Lyra the Scribe glances up from a stack of them."
         },
         {
           "type": "dialogue",
@@ -33,7 +33,7 @@
           "cls": "mentor",
           "speaker": "Lyra the Scribe",
           "sCls": "mentor",
-          "text": "Ah — a new apprentice. Let me guess: you have been writing bespoke names for every scroll you produce? <code>.card-header-title-special</code>, <code>.button-blue-thing-v2</code>?"
+          "text": "Ah — a new apprentice. Let me guess: you have been writing bespoke names for every scroll you produce? <code>.card-header-title-special</code>, <code>.button-blue-thing-v2</code>? And now you have two scrolls per element — one for the name, one for the spell — and they must stay in sync forever?"
         },
         {
           "type": "dialogue",
@@ -41,12 +41,16 @@
           "cls": "mentor",
           "speaker": "Lyra the Scribe",
           "sCls": "mentor",
-          "text": "The Academy uses <strong>glyphs</strong>: small, single-purpose symbols that each do one thing. You compose them directly on the element. No naming. No second scroll to maintain. Watch."
+          "text": "The Academy abandoned that tradition years ago. We use <strong>glyphs</strong> instead: small, single-purpose symbols, each doing exactly one thing. You compose them directly on the element. No inventing names. No second scroll. No synchronisation."
         },
         {
           "type": "example",
-          "speaker": "Old way vs. utility-first",
-          "text": "/* Old way: two files to maintain */\n.profile-card { background: white; padding: 24px; border-radius: 12px; }\n\n<!-- Utility-first: everything in one place -->\n<div class=\"bg-white p-6 rounded-xl\">..."
+          "speaker": "Old way vs. utility-first — side by side",
+          "text": "/* ── OLD WAY: two files that must stay in sync ── */\n\n/* styles.css */\n.profile-card {\n  background: white;\n  padding: 24px;\n  border-radius: 12px;\n}\n\n&lt;!-- index.html — must reference the class name exactly --&gt;\n&lt;div class=\"profile-card\"&gt;...&lt;/div&gt;\n\n\n/* ── UTILITY-FIRST: everything lives in one place ── */\n\n&lt;!-- No CSS file needed for this element --&gt;\n&lt;div class=\"bg-white p-6 rounded-xl\"&gt;...&lt;/div&gt;"
+        },
+        {
+          "type": "narration",
+          "text": "You study the two blocks side by side. The old way names a concept — <code>profile-card</code> — and then defines it elsewhere. The new way <em>is</em> the definition. There is nothing to name, nothing to look up. The HTML and the style are the same sentence."
         },
         {
           "type": "dialogue",
@@ -54,7 +58,15 @@
           "cls": "mentor",
           "speaker": "Lyra the Scribe",
           "sCls": "mentor",
-          "text": "Every glyph follows the same pattern: <strong>property-value</strong>. Learn the pattern and you can guess new glyphs before you have even seen them. <code>bg-blue-500</code>. <code>text-sm</code>. <code>rounded-lg</code>. Now — style the card below."
+          "text": "You see it. Good. The moment you stop inventing names, you stop maintaining two files. Rename the element? There is nothing to rename — the glyphs <em>are</em> the element. Delete the element? The styles vanish with it. No orphaned CSS, no dead code."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Every glyph follows the same pattern: <strong>property-value</strong>. Learn the pattern once and you can read — or write — any glyph you encounter. <code>bg-blue-500</code>: background, blue, shade 500. <code>text-sm</code>: text size, small. <code>rounded-lg</code>: border-radius, large. No guessing. No documentation hunting. Now — apply that instinct to the stat card below."
         }
       ],
 
@@ -74,6 +86,8 @@
         { "label": "Value: bold",                "selector": ".stat-value", "requiredClass": "font-bold"      },
         { "label": "Value: top margin",          "selector": ".stat-value", "requiredClass": "mt-1"           }
       ],
+
+      "soloPracticeHtml": "<p>Style this stat card from scratch — no hints about which classes to use. Apply what you know about Tailwind utilities to produce a clean, professional card:</p>\n<ul>\n  <li>The <strong>.stat-card</strong> container needs a white background, comfortable padding on all sides, large rounded corners, a subtle shadow, and a thin border.</li>\n  <li>The <strong>.stat-label</strong> should be small text in a muted colour, medium-weight.</li>\n  <li>The <strong>.stat-value</strong> should be a very large, bold number in near-black, with a small top margin to separate it from the label.</li>\n</ul>\n<p>Don't look at the guided practice unless you truly need to.</p>",
 
       "feynmanPrompt": "Explain utility-first CSS to a developer who has only ever used BEM and CSS Modules. Cover: why you do not need to invent class names, how the design system stays consistent, and one scenario where you would still write custom CSS despite using Tailwind.",
 
@@ -218,6 +232,8 @@
         { "label": "Status: top margin",         "selector": ".setup-status", "requiredClass": "mt-2"             }
       ],
 
+      "soloPracticeHtml": "<p>Style this configuration panel from scratch — remember the class names without looking them up.</p>\n<ul>\n  <li>The <strong>.setup-panel</strong> needs a light slate background, a visible border, matching border colour, rounded corners, and comfortable all-around padding.</li>\n  <li>The <strong>.setup-title</strong> should be large text, semi-bold, in a dark slate colour.</li>\n  <li>The <strong>.setup-status</strong> should be small, green, medium-weight text with a top margin to separate it from the title.</li>\n</ul>\n<p>Use the <code>bg-slate-*</code>, <code>border-slate-*</code>, <code>text-slate-*</code>, and <code>text-green-*</code> palettes you learned.</p>",
+
       "feynmanPrompt": "Walk through the complete setup sequence for Tailwind in a brand-new Vite + React TypeScript project, from the first npm command to the point where you can verify styles are working. Include the exact content array you would use and explain what happens if it is misconfigured.",
 
       "questions": [
@@ -345,6 +361,8 @@
         { "label": "Stats: gap between items",    "selector": ".card-stats",  "requiredClass": "gap-6"       }
       ],
 
+      "soloPracticeHtml": "<p>Rebuild this profile card layout from memory — you know the spacing system, now prove it.</p>\n<ul>\n  <li>The <strong>.container</strong> should be constrained in width (large, but not full page), centred horizontally, with horizontal and vertical padding.</li>\n  <li>The <strong>.card</strong> needs generous inner padding, very rounded corners, and a prominent shadow.</li>\n  <li>The <strong>.card-header</strong> needs a bottom margin to visually separate it from the stats.</li>\n  <li>The <strong>.card-stats</strong> should use flex layout with even gaps between stat items, and a top margin to space it from the header.</li>\n</ul>\n<p>Remember: spacing number × 4 = pixels.</p>",
+
       "feynmanPrompt": "Explain Tailwind's spacing scale to a designer who is used to working with Figma's 8-point grid. How do the Tailwind spacing numbers map to their existing workflow? At what points do they differ, and what is the practical impact?",
 
       "questions": [
@@ -462,6 +480,8 @@
         { "label": "Meta: small and muted",       "selector": ".article-meta",  "requiredClass": "text-gray-400"  },
         { "label": "Intro: relaxed line-height",  "selector": ".article-intro", "requiredClass": "leading-relaxed"}
       ],
+
+      "soloPracticeHtml": "<p>Style this blog article header from scratch — recall the colour palette and typography utilities you learned.</p>\n<ul>\n  <li>The <strong>.article-tag</strong> is a pill-shaped badge. It needs a light violet background, violet text, small font size, semi-bold weight, full-pill rounding, horizontal and vertical padding, and wide letter-spacing.</li>\n  <li>The <strong>.article-title</strong> is the headline. Make it large (4xl), bold, with tight line-height, near-black, with a top margin.</li>\n  <li>The <strong>.article-meta</strong> is byline text — keep it small and muted.</li>\n  <li>The <strong>.article-intro</strong> is the opening paragraph — a larger size than body, relaxed line-height, medium-gray, with a larger top margin.</li>\n</ul>",
 
       "feynmanPrompt": "You are building a design system for a SaaS product. Explain how you would use Tailwind's colour palette to create a consistent, accessible colour system — covering primary actions, semantic states (success, warning, error), and neutral text hierarchy. Which shade numbers would you reach for and why?",
 
@@ -601,6 +621,8 @@
         { "label": "CTA: white text",            "selector": ".nav-cta",   "requiredClass": "text-white"     },
         { "label": "CTA: rounded",               "selector": ".nav-cta",   "requiredClass": "rounded-md"     }
       ],
+
+      "soloPracticeHtml": "<p>Rebuild this navigation bar from scratch — no starter classes. Apply your flex knowledge to the layout:</p>\n<ul>\n  <li>The <strong>.nav</strong> is the bar itself: flex row, items spaced between, vertically centred, horizontal and vertical padding, white background, with a subtle bottom border.</li>\n  <li>The <strong>.nav-brand</strong> is the site name: bold and large.</li>\n  <li>The <strong>.nav-links</strong> wraps the middle links: flex layout with even gaps between items.</li>\n  <li>The <strong>.nav-cta</strong> is a button: blue background, white text, small font, medium weight, horizontal and vertical padding, and rounded corners.</li>\n</ul>\n<p>Think about what <code>justify-between</code> and <code>items-center</code> do on the container.</p>",
 
       "feynmanPrompt": "Describe a scenario where you would give a flex child <code>flex-1</code> versus <code>flex-none</code>. Then explain what happens visually if you use <code>flex-1</code> on an image that should stay its natural size — and how you would debug it.",
 

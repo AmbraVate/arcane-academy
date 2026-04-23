@@ -8,5 +8,6 @@ public enum QuestionType {
     WHATS_THE_OUTPUT,
     DEBUGGING,
     SCENARIO,
-    COMPARE_CONTRAST
+    COMPARE_CONTRAST,
+  APPLICATION
 }

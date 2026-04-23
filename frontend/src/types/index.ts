@@ -32,7 +32,7 @@ export interface ChunkDetail {
 }
 
 // ── Encoding ─────────────────────────────────────────────────────────────────
-export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
+export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'SOLO_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
 
 export interface SubChunkEncoding {
   subChunkId: string; chunkId: string; topicId: string; title: string
@@ -40,6 +40,7 @@ export interface SubChunkEncoding {
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null
   guidedPracticeHtml: string | null; starterCode: string | null
+  soloPracticeHtml: string | null
   testCaseLabels: TestCaseLabel[] | null; filename: string | null
   retrievalQuestions: QuestionDto[] | null
   feynmanPrompt: string | null; xpReward: number

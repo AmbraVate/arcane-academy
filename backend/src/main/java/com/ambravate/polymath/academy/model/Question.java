@@ -32,7 +32,7 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String optionsJson;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String correctAnswer;
 
     @Column(columnDefinition = "TEXT")

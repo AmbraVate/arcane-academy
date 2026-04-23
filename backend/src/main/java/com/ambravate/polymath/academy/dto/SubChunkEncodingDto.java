@@ -17,6 +17,7 @@ public class SubChunkEncodingDto {
     private String explanationHtml;
     private Object storyBeats;
     private String guidedPracticeHtml;
+    private String soloPracticeHtml;
     private String starterCode;
     private Object testCaseLabels;
     private String filename;

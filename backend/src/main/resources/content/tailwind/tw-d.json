@@ -280,7 +280,7 @@
         {
           "type": "example",
           "speaker": "group / group-hover: pattern",
-          "text": "<div class=\"group\">\n  <div class=\"bg-gray-100 group-hover:bg-indigo-600 transition-colors\">⚡</div>\n  <h3>Frontend Engineering</h3>\n</div>"
+          "text": "&lt;div class=\"group\"&gt;\n  &lt;div class=\"bg-gray-100 group-hover:bg-indigo-600 transition-colors\"&gt;⚡&lt;/div&gt;\n  &lt;h3&gt;Frontend Engineering&lt;/h3&gt;\n&lt;/div&gt;"
         }
       ],
       "guidedPracticeHtml": "<p>Build the Arcane Guild's services section with three feature cards. The key techniques are: the <code>group</code>/<code>group-hover:</code> pattern for parent-driven child hover effects, <code>ring-*</code> utilities for the featured card highlight, and <code>transition-all</code> for multi-property card hover transitions.</p>\n<ul>\n<li><strong>.services</strong> — light slate background, generous vertical padding</li>\n<li><strong>.services-grid</strong> — responsive grid: 1 col → 3 col at md</li>\n<li><strong>.service-card</strong> — white rounded card with border, hover effects, and group context</li>\n<li><strong>.service-icon</strong> — small rounded square with indigo background that reacts to parent hover</li>\n<li><strong>.service-card--featured</strong> — ring highlight for the middle featured card</li>\n</ul>",
@@ -387,7 +387,7 @@
         {
           "type": "example",
           "speaker": "Relative/absolute status dot pattern",
-          "text": "<div class=\"relative w-24 h-24\">\n  <img class=\"w-24 h-24 rounded-full object-cover ring-4 ring-white\">\n  <span class=\"absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full ring-2 ring-white\"></span>\n</div>"
+          "text": "&lt;div class=\"relative w-24 h-24\"&gt;\n  &lt;img class=\"w-24 h-24 rounded-full object-cover ring-4 ring-white\"&gt;\n  &lt;span class=\"absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full ring-2 ring-white\"&gt;&lt;/span&gt;\n&lt;/div&gt;"
         }
       ],
       "guidedPracticeHtml": "<p>Build the Arcane Guild's team section. Key techniques in this section: <code>object-cover</code> for consistent avatar crops, <code>relative</code>/<code>absolute</code> positioning for the status dot, <code>ring-*</code> for avatar frames with hover colour change, and a three-breakpoint responsive grid.</p>\n<ul>\n<li><strong>.team</strong> — white background, generous vertical padding</li>\n<li><strong>.team-grid</strong> — 1 col → 2 col (sm) → 4 col (lg)</li>\n<li><strong>.team-card</strong> — centred text, group context for hover effects</li>\n<li><strong>.team-avatar-wrap</strong> — relative positioning context for the status dot</li>\n<li><strong>.team-avatar</strong> — circular, object-cover, ring frame with group-hover colour change</li>\n<li><strong>.team-status</strong> — absolutely positioned green dot with white ring</li>\n</ul>",

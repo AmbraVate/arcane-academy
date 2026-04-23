@@ -43,6 +43,8 @@ export default function EncodingPage() {
   const [feynmanResult, setFeynmanResult] = useState<FeynmanResultDto | null>(null)
   const [submittingFeynman, setSubmittingFeynman] = useState(false)
 
+  const [showHint, setShowHint] = useState(false)
+
   const [isSaved, setIsSaved] = useState(false)
   const [savingPin, setSavingPin] = useState(false)
 
@@ -90,11 +92,11 @@ export default function EncodingPage() {
     if (!subChunkId) return
     const enc = await encodingApi.advance(subChunkId)
     setEncoding(enc)
-    if (enc.starterCode) setCode(enc.starterCode)
+    setCode(enc.starterCode ?? '')
     setAnswers({}); setRetrievalResult(null); setFeynmanResult(null); setFeynmanText('')
     setPracticeSolved(false); setPracticeView('brief'); setShowTaskOverlay(false)
     setOutput([{ text: '// Cast your spell to run the code.', type: 'system' }])
-    setTestResults(new Map()); setMentorFeedback(null)
+    setTestResults(new Map()); setMentorFeedback(null); setShowHint(false)
   }
 
   async function handleRun() {
@@ -187,6 +189,59 @@ export default function EncodingPage() {
     finally { setRunning(false) }
   }
 
+  async function handleSubmitSoloPractice() {
+    if (!subChunkId || running) return
+    setRunning(true); setMentorFeedback(null)
+    setOutput([{ text: '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
+    try {
+      const result: PracticeResult = await encodingApi.submitSoloPractice(subChunkId, code)
+      if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
+        setOutput([{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }])
+        setMentorErrorType(result.errorType)
+        if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 300) }
+        return
+      }
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
+      })
+      setTestResults(newResults)
+      if (result.allPassed) {
+        lines.push({ text: '✓ All test cases passed! You built it from scratch!', type: 'success' })
+        setPracticeSolved(true); setShowTaskOverlay(false)
+      } else {
+        lines.push({ text: '✗ Some test cases failed — keep going!', type: 'error' })
+        if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 400) }
+      }
+      setOutput(lines)
+    } catch { setOutput([{ text: 'Error submitting code.', type: 'error' }]) }
+    finally { setRunning(false) }
+  }
+
+  async function handleSubmitTailwindSolo() {
+    if (!subChunkId || running) return
+    setRunning(true); setMentorFeedback(null)
+    setOutput([{ text: '// Checking your Tailwind classes…', type: 'system' }]); setTestResults(new Map())
+    try {
+      const result: PracticeResult = await tailwindApi.submitSoloPractice(subChunkId, code)
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+      })
+      setTestResults(newResults)
+      if (result.allPassed) {
+        lines.push({ text: '✓ All checks passed! Well done!', type: 'success' })
+        setPracticeSolved(true); setShowTaskOverlay(false)
+      } else { lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' }) }
+      setOutput(lines)
+    } catch { setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }]) }
+    finally { setRunning(false) }
+  }
+
   async function handleSubmitRetrieval() {
     if (!subChunkId) return
     setSubmittingRetrieval(true)
@@ -248,7 +303,7 @@ export default function EncodingPage() {
         <div className="flex-1 min-w-0">
           <div className="text-[16px] font-bold text-text truncate max-[480px]:text-[13px]">{encoding.title}</div>
           <div className="flex gap-1.5 mt-1 overflow-x-auto flex-nowrap scrollbar-none max-[480px]:gap-1">
-            {(['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'RETRIEVAL_CHECK', 'COMPLETE'] as const).map(p => (
+            {(['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'SOLO_PRACTICE', 'RETRIEVAL_CHECK', 'COMPLETE'] as const).map(p => (
               <span key={p} className={cn(
                 'text-[10px] px-2 py-0.5 rounded-[10px] bg-surface text-muted whitespace-nowrap flex-shrink-0',
                 p === phase && 'bg-purple text-white',
@@ -283,17 +338,29 @@ export default function EncodingPage() {
             {/* Top & bottom gradient lines */}
             <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: 'linear-gradient(90deg, transparent 0%, var(--purple) 25%, var(--teal) 75%, transparent 100%)' }} />
             <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: 'linear-gradient(90deg, transparent 0%, var(--teal) 25%, var(--purple) 75%, transparent 100%)' }} />
-            <div className="text-[11px] font-semibold tracking-[0.18em] uppercase text-muted opacity-75 mb-4 max-[480px]:text-[10px]">
-              {encoding.title}
+            {/* Chapter eyebrow */}
+            <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-muted mb-3 max-[480px]:text-[9px]">
+              ✦ Arcane Academy
             </div>
-            <div className="w-12 h-px mx-auto mb-7" style={{ background: 'linear-gradient(90deg, transparent, var(--purple), transparent)' }} />
+            {/* Lesson title — the hero element */}
+            <h1
+              className="font-cinzel text-[22px] font-bold leading-[1.35] mb-2 max-[480px]:text-[17px]"
+              style={{ color: '#c9a227', textShadow: '0 0 28px rgba(201,162,39,.35)' }}
+            >
+              {encoding.title}
+            </h1>
+            {/* Gradient rule */}
+            <div className="w-24 h-px mx-auto mb-7 max-[480px]:mb-5" style={{ background: 'linear-gradient(90deg, transparent, var(--purple) 30%, var(--teal) 70%, transparent)' }} />
+            {/* Hook prose */}
             <div
-              className="text-[23px] leading-[1.8] text-text italic max-[480px]:text-[17px] max-[480px]:leading-[1.7]
-                [&_p]:m-0 [&_p]:mb-3.5 [&_p:last-child]:mb-0 [&_strong]:text-gold [&_strong]:not-italic [&_strong]:font-bold [&_em]:text-purple-light"
+              className="text-[18px] leading-[1.85] text-text max-[480px]:text-[15px] max-[480px]:leading-[1.75]
+                [&_p]:m-0 [&_p]:mb-4 [&_p:last-child]:mb-0
+                [&_strong]:text-gold [&_strong]:font-bold
+                [&_em]:text-purple-light [&_em]:italic"
               dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }}
             />
           </div>
-          <button className="btn btn-primary mt-8" onClick={handleAdvance}>Begin →</button>
+          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={handleAdvance}>Begin →</button>
         </div>
       )}
 
@@ -420,6 +487,137 @@ export default function EncodingPage() {
         </div>
       )}
 
+      {/* SOLO_PRACTICE — brief */}
+      {phase === 'SOLO_PRACTICE' && practiceView === 'brief' && (
+        <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
+          <div className="text-[13px] font-bold mb-1 tracking-[0.06em] uppercase" style={{ color: 'var(--teal)' }}>🏹 Solo Challenge</div>
+          <p className="text-muted text-[12px] mb-4 leading-[1.6]">
+            Now rebuild this from a blank slate — no starter code. If you get stuck, peek at the guided practice for a hint.
+          </p>
+          <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
+          {encoding.testCaseLabels && <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>}
+
+          {/* Hint toggle */}
+          <div className="mt-5">
+            <button
+              className="btn btn-ghost text-[12px] px-3 py-1.5"
+              onClick={() => setShowHint(h => !h)}
+            >
+              {showHint ? '▲ Hide hint' : '👁 Peek at Guided Practice'}
+            </button>
+            {showHint && (
+              <div className="mt-3 p-4 rounded-[10px] border border-dashed border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.05)]">
+                <div className="text-[11px] font-semibold text-muted uppercase tracking-[0.1em] mb-2.5">Guided Practice reference</div>
+                <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+              </div>
+            )}
+          </div>
+
+          <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding →</button>
+        </div>
+      )}
+
+      {/* SOLO_PRACTICE — coding */}
+      {phase === 'SOLO_PRACTICE' && practiceView === 'code' && (
+        <div className="flex flex-1 overflow-hidden min-h-0">
+          {/* Mobile task overlay */}
+          {showTaskOverlay && (
+            <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[768px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
+              <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-8 max-h-[70vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
+                <div className="flex justify-between items-center mb-3.5">
+                  <span className="text-[13px] font-bold uppercase tracking-[0.06em]" style={{ color: 'var(--teal)' }}>🏹 Solo Challenge</span>
+                  <button className="btn btn-ghost text-[12px]" onClick={() => setShowTaskOverlay(false)}>✕</button>
+                </div>
+                <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
+                {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
+              </div>
+            </div>
+          )}
+
+          {/* Left panel — desktop */}
+          <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[768px]:hidden">
+            <div className="text-[13px] font-bold uppercase tracking-[0.06em]" style={{ color: 'var(--teal)' }}>🏹 Solo Challenge</div>
+            <p className="text-muted text-[11px] leading-[1.6] mt-[-4px]">No starter code — build it from memory.</p>
+            <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
+            {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
+
+            {/* Hint toggle */}
+            <div className="border-t border-border pt-2.5 mt-1">
+              <button className="btn btn-ghost text-[11px] px-2.5 py-1" onClick={() => setShowHint(h => !h)}>
+                {showHint ? '▲ Hide hint' : '👁 Peek at Guided Practice'}
+              </button>
+              {showHint && (
+                <div className="mt-2.5 p-3 rounded-[8px] border border-dashed border-[rgba(139,92,246,0.3)] bg-[rgba(139,92,246,0.05)]">
+                  <div className="text-[10px] font-semibold text-muted uppercase tracking-[0.1em] mb-2">Guided reference</div>
+                  <div className={cn(proseHtml, 'text-[12px]')} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+                </div>
+              )}
+            </div>
+
+            {practiceSolved && (
+              <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
+                <div className="text-[14px] font-bold text-teal mb-2.5">✦ Solo Challenge Complete!</div>
+                <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check →</button>
+              </div>
+            )}
+          </div>
+
+          {/* Right panel — editor */}
+          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+            <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="text-[12px] text-muted truncate">☽ {encoding.filename}</span>
+                <button
+                  className="hidden max-[768px]:inline-flex items-center text-[11px] px-2.5 py-[3px] rounded-[10px] bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.3)] cursor-pointer whitespace-nowrap flex-shrink-0"
+                  onClick={() => setShowTaskOverlay(true)}
+                >
+                  📋 Task
+                </button>
+              </div>
+              <div className="flex gap-2 flex-shrink-0">
+                {encoding.practiceType !== 'TAILWIND' && (
+                  <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px]', running && 'opacity-70')} onClick={handleRun} disabled={running}>
+                    {running ? '⟳ Running…' : '▶ Run'}
+                  </button>
+                )}
+                <button
+                  className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px]')}
+                  onClick={encoding.practiceType === 'TAILWIND' ? handleSubmitTailwindSolo : handleSubmitSoloPractice}
+                  disabled={running || practiceSolved}
+                >
+                  {practiceSolved ? '✓ Solved' : '⚡ Submit'}
+                </button>
+              </div>
+            </div>
+
+            {encoding.practiceType === 'TAILWIND' ? (
+              <>
+                <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Solo Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <CodeEditor value={code} onChange={setCode} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Solo Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+                <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* RETRIEVAL_CHECK */}
       {phase === 'RETRIEVAL_CHECK' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
@@ -513,10 +711,10 @@ export default function EncodingPage() {
 }
 
 function phaseOrder(p: string): number {
-  return ['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'RETRIEVAL_CHECK', 'COMPLETE'].indexOf(p)
+  return ['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'SOLO_PRACTICE', 'RETRIEVAL_CHECK', 'COMPLETE'].indexOf(p)
 }
 function phaseLabel(p: string): string {
-  return ({ HOOK: 'Hook', EXPLANATION: 'Learn', GUIDED_PRACTICE: 'Practice', RETRIEVAL_CHECK: 'Check', COMPLETE: 'Done' })[p] ?? p
+  return ({ HOOK: 'Hook', EXPLANATION: 'Learn', GUIDED_PRACTICE: 'Practice', SOLO_PRACTICE: 'Solo', RETRIEVAL_CHECK: 'Check', COMPLETE: 'Done' })[p] ?? p
 }
 function calculateRank(xp: number): string {
   if (xp >= 11000) return 'Lord Magus'

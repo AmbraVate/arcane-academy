@@ -45,6 +45,10 @@ export const encodingApi = {
     const { data } = await api.post(`/api/encoding/${subChunkId}/guided-practice/submit`, { code })
     return data
   },
+  submitSoloPractice: async (subChunkId: string, code: string): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/encoding/${subChunkId}/solo-practice/submit`, { code })
+    return data
+  },
   submitRetrieval: async (subChunkId: string, answers: AnswerEntry[]): Promise<RetrievalResultDto> => {
     const { data } = await api.post(`/api/encoding/${subChunkId}/retrieval-check/submit`, { answers })
     return data
@@ -140,6 +144,10 @@ export const curiosityApi = {
 export const tailwindApi = {
   submit: async (subChunkId: string, html: string): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/tailwind/${subChunkId}/submit`, { html })
+    return data
+  },
+  submitSoloPractice: async (subChunkId: string, html: string): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/tailwind/${subChunkId}/solo-practice/submit`, { html })
     return data
   },
 }
