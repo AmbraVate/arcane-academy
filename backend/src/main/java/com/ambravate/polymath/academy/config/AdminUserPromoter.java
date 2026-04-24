@@ -17,9 +17,15 @@ public class AdminUserPromoter {
 
     /**
      * Ensures the admin email address has ROLE_ADMIN.
+     * Also backfills any legacy rows that have NULL in the role column.
      * Idempotent — safe to call on every startup.
      */
     public void promote() {
+        int fixed = userRepository.backfillNullRoles();
+        if (fixed > 0) {
+            log.info("[AdminUserPromoter] Backfilled role=USER for {} legacy user(s).", fixed);
+        }
+
         userRepository.findByEmail(ADMIN_EMAIL).ifPresentOrElse(user -> {
             if (user.getRole() != User.UserRole.ADMIN) {
                 user.setRole(User.UserRole.ADMIN);

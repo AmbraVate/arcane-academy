@@ -31,7 +31,9 @@ public class AdminUserController {
             @RequestParam(required = false)    String search) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<User> users = userRepository.findBySearchTerm(search, pageable);
+        Page<User> users = (search == null || search.isBlank())
+                ? userRepository.findAll(pageable)
+                : userRepository.findBySearchTerm(search, pageable);
 
         return ResponseEntity.ok(Map.of(
                 "content", users.getContent().stream().map(u -> {

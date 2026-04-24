@@ -55,7 +55,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
+    @Getter(AccessLevel.NONE)   // suppress Lombok getter; we provide a null-safe one below
     private UserRole role = UserRole.USER;
+
+    /** Never returns null — legacy rows with a NULL role column are treated as USER. */
+    public UserRole getRole() {
+        return role != null ? role : UserRole.USER;
+    }
 
     public enum AuthProvider { LOCAL, GOOGLE }
     public enum UserRole    { USER, ADMIN }
