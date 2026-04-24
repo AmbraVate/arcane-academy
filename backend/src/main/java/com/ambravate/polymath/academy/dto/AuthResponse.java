@@ -16,4 +16,5 @@ public class AuthResponse {
     private int totalXp;
     private String rank;
     private int streakDays;
+    private String role;
 }

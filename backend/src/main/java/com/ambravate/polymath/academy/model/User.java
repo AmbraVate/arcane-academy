@@ -53,7 +53,10 @@ public class User {
     @Builder.Default
     private LearnerPath learnerPath = LearnerPath.FOUNDATION;
 
-    public enum AuthProvider {
-        LOCAL, GOOGLE
-    }
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private UserRole role = UserRole.USER;
+
+    public enum AuthProvider { LOCAL, GOOGLE }
+    public enum UserRole    { USER, ADMIN }
 }

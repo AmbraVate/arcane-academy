@@ -43,6 +43,15 @@ public class JsonContentSeeder {
     private final ApplicationContext applicationContext;
 
     /**
+     * Upserts a single chunk from a DTO — used by the admin import endpoint.
+     * JPA's {@code save} performs insert-or-update by entity ID, so re-importing
+     * an existing chunk safely overwrites it.
+     */
+    public void upsertChunk(ChunkContentDto dto) throws Exception {
+        seedChunk(dto);
+    }
+
+    /**
      * Seeds all chunks found in classpath:content/**&#47;*.json.
      *
      * @return the number of chunk files loaded.

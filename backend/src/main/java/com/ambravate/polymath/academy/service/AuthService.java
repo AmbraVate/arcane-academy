@@ -43,7 +43,7 @@ public class AuthService {
 
         userRepository.save(user);
         log.info("[Auth] Registered new user | userId={} username={}", user.getId(), user.getUsername());
-        String token = jwtService.generateToken(user.getId(), user.getUsername());
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name());
         return buildResponse(user, token);
     }
 
@@ -70,7 +70,7 @@ public class AuthService {
 
         log.info("[Auth] Login success | userId={} username={} streak={} totalXp={}",
                 user.getId(), user.getUsername(), user.getStreakDays(), user.getTotalXp());
-        String token = jwtService.generateToken(user.getId(), user.getUsername());
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name());
         return buildResponse(user, token);
     }
 
@@ -137,6 +137,7 @@ public class AuthService {
                 .withTotalXp(user.getTotalXp())
                 .withRank(user.getRank())
                 .withStreakDays(user.getStreakDays())
+                .withRole(user.getRole().name())
                 .build();
     }
 }

@@ -75,6 +75,17 @@ export default function Nav() {
           ⚗ {user.rank}
         </div>
 
+        {/* Admin shortcut */}
+        {user.role === 'ADMIN' && (
+          <button
+            className="btn btn-ghost px-3 py-1 text-[12px]"
+            style={{ borderColor: 'rgba(201,162,39,.3)', color: '#c9a227' }}
+            onClick={() => navigate('/admin')}
+          >
+            ⚙ Admin
+          </button>
+        )}
+
         {/* Nav buttons */}
         {[
           { label: 'Topics',  icon: '📚', path: '/topics' },

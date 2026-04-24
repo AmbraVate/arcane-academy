@@ -12,12 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class DataSeeder {
 
-    // ── Expected totals ────────────────────────────────────────────────────
-    // Java: 14 Foundation (A-N) + 14 Practitioner (PA-PN) + 10 Expert (XA-XJ)
-    // Tailwind: tw-a (Foundation) + tw-b (Practitioner) + tw-c (Expert)
-    private static final int EXPECTED_CHUNK_COUNT = 41;
-
-    // ── Repositories (for clean reseed) ───────────────────────────────────
+    // ── Repositories ──────────────────────────────────────────────────────
     private final ChunkRepository chunkRepository;
     private final SubChunkRepository subChunkRepository;
     private final QuestionRepository questionRepository;
@@ -25,21 +20,20 @@ public class DataSeeder {
     private final UserChunkProgressRepository userChunkProgressRepository;
     private final CuriosityQueueItemRepository curiosityQueueItemRepository;
 
-    // ── JSON content seeder — loads all content from resources/content/**/*.json
+    // ── Seeders ────────────────────────────────────────────────────────────
     private final JsonContentSeeder jsonContentSeeder;
-
-    // ── Test users ─────────────────────────────────────────────────────────
     private final TestUserSeeder testUserSeeder;
+    private final AdminUserPromoter adminUserPromoter;
+    private final TopicSeeder topicSeeder;
 
     @Bean
     public ApplicationRunner seedData() {
         return args -> {
             long currentCount = chunkRepository.count();
-            if (currentCount != EXPECTED_CHUNK_COUNT) {
-                log.info("Reseeding: found {} chunks, expected {}. Clearing and rebuilding...",
-                        currentCount, EXPECTED_CHUNK_COUNT);
+            if (currentCount == 0) {
+                log.info("[DataSeeder] No chunks found — running initial seed...");
 
-                // Clear in FK-safe order
+                // Clear dependents in FK-safe order (in case of partial seed)
                 userChunkProgressRepository.deleteAll();
                 curiosityQueueItemRepository.deleteAll();
                 questionRepository.deleteAll();
@@ -47,15 +41,15 @@ public class DataSeeder {
                 subChunkRepository.deleteAll();
                 chunkRepository.deleteAll();
 
-                // Seed all content from JSON resource files
                 jsonContentSeeder.seed();
-
-                log.info("Seeded {} chunks.", chunkRepository.count());
+                log.info("[DataSeeder] Seeded {} chunks.", chunkRepository.count());
             } else {
-                log.info("Chunk data already seeded ({} chunks).", currentCount);
+                log.info("[DataSeeder] Content already present ({} chunks) — skipping seed.", currentCount);
             }
 
+            topicSeeder.seed();
             testUserSeeder.seed();
+            adminUserPromoter.promote();
         };
     }
 }

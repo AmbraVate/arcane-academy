@@ -14,9 +14,10 @@ export default function OAuthCallbackPage() {
     const totalXp = parseInt(params.get('totalXp') ?? '0', 10)
     const rank = params.get('rank') ?? 'Novice'
     const streakDays = parseInt(params.get('streakDays') ?? '0', 10)
+    const role = (params.get('role') as 'USER' | 'ADMIN') ?? 'USER'
 
     if (token && userId && username) {
-      loginWithToken({ token, userId, username, totalXp, rank, streakDays })
+      loginWithToken({ token, userId, username, totalXp, rank, streakDays, role })
       navigate('/topics', { replace: true })
     } else {
       navigate('/login', { replace: true })

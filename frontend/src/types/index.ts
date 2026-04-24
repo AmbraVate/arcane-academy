@@ -1,6 +1,7 @@
 // ── Auth ──────────────────────────────────────────────────────────────────────
 export interface User {
   userId: string; username: string; totalXp: number; rank: string; streakDays: number; token: string
+  role?: 'USER' | 'ADMIN'
 }
 
 // ── Shared (kept from old system) ────────────────────────────────────────────

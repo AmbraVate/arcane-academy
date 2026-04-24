@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
 import LandingPage from './pages/LandingPage'
 import TopicsPage from './pages/TopicsPage'
@@ -18,17 +18,32 @@ import TopicPage from './pages/TopicPage'
 import TopicOnboardingPage from './pages/TopicOnboardingPage'
 import TopicDiagnosticPage from './pages/TopicDiagnosticPage'
 import Nav from './components/layout/Nav'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminChunksPage from './pages/admin/AdminChunksPage'
+import AdminSubChunksPage from './pages/admin/AdminSubChunksPage'
+import AdminSubChunkEditorPage from './pages/admin/AdminSubChunkEditorPage'
+import AdminQuestionsPage from './pages/admin/AdminQuestionsPage'
+import AdminUsersPage from './pages/admin/AdminUsersPage'
+import AdminImportExportPage from './pages/admin/AdminImportExportPage'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
   return user ? <>{children}</> : <Navigate to="/login" replace />
 }
 
+function AdminRoute() {
+  const { user } = useAuth()
+  if (!user) return <Navigate to="/login" replace />
+  if (user.role !== 'ADMIN') return <Navigate to="/" replace />
+  return <Outlet />
+}
+
 export default function App() {
   const { user } = useAuth()
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {user && <Nav />}
+      {user && !location.pathname.startsWith('/admin') && <Nav />}
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
       <Routes>
         <Route path="/login"    element={user ? <Navigate to="/" replace /> : <LoginPage />} />
@@ -48,6 +63,20 @@ export default function App() {
         <Route path="/topic/:topicId" element={<PrivateRoute><TopicPage /></PrivateRoute>} />
         <Route path="/topic/:topicId/onboarding" element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
         <Route path="/topic/:topicId/diagnostic" element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
+
+        {/* Admin — completely separate layout, no learner Nav */}
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboardPage />} />
+            <Route path="chunks" element={<AdminChunksPage />} />
+            <Route path="chunks/:chunkId/subchunks" element={<AdminSubChunksPage />} />
+            <Route path="subchunks/:subChunkId/edit" element={<AdminSubChunkEditorPage />} />
+            <Route path="subchunks/:subChunkId/questions" element={<AdminQuestionsPage />} />
+            <Route path="users" element={<AdminUsersPage />} />
+            <Route path="import-export" element={<AdminImportExportPage />} />
+          </Route>
+        </Route>
+
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
       </div>

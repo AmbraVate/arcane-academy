@@ -15,4 +15,5 @@ public interface UserChunkProgressRepository extends JpaRepository<UserChunkProg
     List<UserChunkProgress> findByUserIdAndNextReviewAtBefore(String userId, Instant now);
     List<UserChunkProgress> findByUserIdAndStatusIn(String userId, List<SubChunkStatus> statuses);
     List<UserChunkProgress> findByUserIdAndSubChunkIdIn(String userId, List<String> subChunkIds);
+    long countByUserIdAndStatus(String userId, SubChunkStatus status);
 }
