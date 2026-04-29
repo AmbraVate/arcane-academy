@@ -29,6 +29,7 @@
         {"label": "Prints 1 to 10", "input": "null", "expected": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10"}
       ],
       "feynmanPrompt": "Explain the three parts of a for loop (initialisation, condition, update) as if you were teaching someone who has never seen a loop before.",
+      "soloPracticeHtml": "<p>Without any starter code, use a <code>for</code> loop to print every <strong>odd</strong> number from <strong>1 to 15</strong> inclusive — one per line. Expected output starts: 1, 3, 5, 7 … 15.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -91,6 +92,7 @@
         {"label": "Countdown and blast off", "input": "null", "expected": "5\n4\n3\n2\n1\nBlast off!"}
       ],
       "feynmanPrompt": "Explain when you would choose a while loop over a for loop, and what makes infinite loops dangerous.",
+      "soloPracticeHtml": "<p>Without any starter code, use a <code>while</code> loop to print every third number from <strong>3 up to 30</strong> (i.e. 3, 6, 9 … 30), each on its own line. After the loop, print <code>Done!</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -147,6 +149,7 @@
         {"label": "Even numbers 2 to 20", "input": "null", "expected": "2\n4\n6\n8\n10\n12\n14\n16\n18\n20"}
       ],
       "feynmanPrompt": "Explain the difference between break and continue with a real-world analogy for each.",
+      "soloPracticeHtml": "<p>Without any starter code, loop from 1 to 50. Use <code>continue</code> to skip any number that is <strong>not</strong> a multiple of 7, and use <code>break</code> to stop after you have printed <strong>four</strong> multiples. Expected output: 7, 14, 21, 28.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -204,6 +207,7 @@
         {"label": "3x3 multiplication table", "input": "null", "expected": "1 2 3 \n2 4 6 \n3 6 9 "}
       ],
       "feynmanPrompt": "Explain the enhanced for-each loop and describe a situation where you would use nested loops, including why nested loops can be slow for large inputs.",
+      "soloPracticeHtml": "<p>Without any starter code, use nested <code>for</code> loops to print a <strong>4×4 multiplication table</strong>. Print each product followed by a tab character (<code>\\t</code>), and a newline after each row. Expected first row: <code>1\\t2\\t3\\t4\\t</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

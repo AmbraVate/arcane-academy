@@ -28,6 +28,7 @@
         {"label": "Equals", "input": "null", "expected": "false"}
       ],
       "feynmanPrompt": "Explain the six comparison operators in Java. What type of value do they produce?",
+      "soloPracticeHtml": "<p>Declare <code>int x = 14</code> and <code>int y = 9</code>. Without any starter code, print three lines: whether <code>x</code> is greater than <code>y</code>, whether <code>x</code> is less than or equal to <code>y</code>, and whether <code>x</code> equals <code>y</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -74,6 +75,7 @@
         {"label": "Grade B", "input": "null", "expected": "B"}
       ],
       "feynmanPrompt": "Explain if/else to a friend who has never coded. Use a real-world analogy.",
+      "soloPracticeHtml": "<p>From a blank file, write a grade checker for <code>int score = 73</code>. Print <code>A</code> if the score is ≥ 90, <code>B</code> if ≥ 80, <code>C</code> if ≥ 70, or <code>F</code> otherwise. The expected output for 73 is <code>C</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -120,6 +122,7 @@
         {"label": "Login", "input": "null", "expected": "Login successful"}
       ],
       "feynmanPrompt": "Explain &&, ||, and ! operators with a real-world example for each.",
+      "soloPracticeHtml": "<p>A door opens if the visitor knows the passphrase (<code>\"arcane\"</code>) <strong>OR</strong> their rank is <code>\"ADMIN\"</code>. Declare <code>String passphrase = \"arcane\"</code> and <code>String rank = \"USER\"</code>. Print whether the door opens (<code>true</code> or <code>false</code>). Then change <code>rank</code> to <code>\"ADMIN\"</code> and print again.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -165,6 +168,7 @@
         {"label": "Friday", "input": "null", "expected": "Friday"}
       ],
       "feynmanPrompt": "Explain switch statements. When use one instead of if/else?",
+      "soloPracticeHtml": "<p>Write a switch statement from scratch that maps <code>int month = 3</code> to its full name. Print the month name. Add a <code>default</code> case that prints <code>Unknown</code>. Expected output: <code>March</code>. (You only need to handle months 1–12.)</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -203,6 +207,7 @@
         {"label": "Max", "input": "null", "expected": "Max: 22"}
       ],
       "feynmanPrompt": "Explain the ternary operator. When should you use it vs if/else?",
+      "soloPracticeHtml": "<p>Without any starter code, use a ternary expression to determine the status of a player. Declare <code>int hp = 8</code>. If hp is greater than 0 the player is <code>\"Alive\"</code>, otherwise <code>\"Dead\"</code>. Store the result in a <code>String status</code> and print it.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

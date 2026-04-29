@@ -6,6 +6,36 @@ The pedagogical thesis: polymaths don't suffer from breadth — they suffer from
 
 ---
 
+## 0. Status & Drift
+
+This document describes both **design intent** and **shipping reality**. They differ in several places — the audit (April 2026) flagged the gaps below. Treat anything not in this list as accurate.
+
+**Active topics:** Java (38 chunks, content depth verified), Tailwind CSS (4 chunks, shallower than §1.3 plans), **React (4 chunks: `rx-a` … `rx-d`, registered in TopicSeeder, JSON content auto-loaded by `JsonContentSeeder`, practice dispatched to `ReactPracticeService` via in-iframe runner)**. Tier enum extended with `CAPSTONE` for `rx-d` ("The Guild Portal"). React practice grading is **client-trusted in v1** — the iframe runs tests, posts results to the backend, which performs a structural sanity check on the JSX source before awarding XP. Document this in §14a-equivalent before any leaderboard ships.
+
+**Java package:** root is `com.ambravate.polymath.academy`, not `com.arcane.academy`. Build artefact is `polymath-academy`.
+
+**Frontend state management:** uses React Context (`useAuth`), not Zustand. Zustand appears in **content** (rx-c5 teaching material) but is not a runtime dependency.
+
+**Tailwind version:** frontend runs **Tailwind v4** via `@tailwindcss/vite`. Content (`tw-a`…`tw-d`) and platform are aligned. The migration from v3 swapped:
+- `@tailwind base/components/utilities` → `@import "tailwindcss"` in `src/index.css`
+- `tailwind.config.js` `theme.extend` → `@theme { ... }` block in `src/index.css` (naming: `--color-*`, `--font-*`, `--animate-*`)
+- `tailwind.config.js` + `postcss.config.js` + `autoprefixer` deps → all deleted (the Vite plugin bakes them in)
+
+**One v4 default change worth knowing:** the default border colour changed from `gray-200` to `currentColor`. We restore the legacy default with a `@layer base` rule in `index.css` so existing `border` utilities without a colour still produce a visible neutral border. Remove that rule once every `border` utility in the codebase specifies an explicit colour.
+
+**Visual-QA risks to spot-check** (caused by the migration):
+- Custom colour utilities (`bg-gold`, `text-purple-light`, etc.) — same hex values, should be identical
+- The `@layer components` block — buttons, chips, hook-card — still applied; spot-check on `EncodingPage` and `LandingPage`
+- `animate-fade-up` — the v3 setup had two different `fade-up` keyframes (24px in config, 18px in CSS); we unified on 24px, so any inline `animate-[fade-up_...]` reads will be slightly larger
+
+**Tests:** the Java/JUnit and Vitest+RTL+Playwright setup described in §13 is the target, not the current state. Test scaffolding is in progress; see `backend/src/test` and `frontend/vitest.config.ts` for what actually exists.
+
+**AI Mentor:** `AiMentorService` and `AiMentorController` exist in code but the LLM provider, prompt template, rate limit, and PII policy are **not yet documented**. See §14a below for the standard to meet before public launch.
+
+**Onboarding prerequisite check:** `/topic/:topicId/prereq-check` and `/topic/:topicId/css-primer` exist for Tailwind and React. Triggered when a CSS-dependent topic is selected and the user has no localStorage record of having passed/skipped the check.
+
+---
+
 ## 1. Product Vision
 
 ### Target Learner
@@ -213,29 +243,46 @@ Never commit secrets. Local dev uses `.env` (git-ignored); test/prod pull from t
 ## 6. Project Structure
 
 ```
-backend/src/main/java/com/arcane/academy/
+backend/src/main/java/com/ambravate/polymath/academy/
   config/
-    AbstractChapterSeeder.java       — DSL helpers for content authoring
-    java/Ch1Seeder.java … Ch8Seeder  — Java topic quest content (per-topic folders)
-    tailwind/TwASeeder.java          — Tailwind topic content
-    BossSeeder.java                  — boss content per topic
+    AbstractChunkSeeder.java         — DSL helpers for content authoring
+    JsonContentSeeder.java           — loads content/*/*.json into the DB
+    ChunkASeeder … ChunkMtoNSeeder   — Java Foundation/Practitioner chunk wiring
+    PractitionerSeeder1/2.java       — Java Practitioner-tier seeders
+    ExpertSeeder1/2.java             — Java Expert-tier seeders
+    TailwindSeeder.java + TailwindPractitionerSeeder + TailwindExpertSeeder
+    TopicSeeder.java                 — registers topics (java, tailwind, …)
     DataSeeder.java                  — orchestrates all seeders (dev only)
     TestUserSeeder.java              — dev/test accounts
     SecurityConfig.java              — JWT + OAuth2 + BCrypt
+    AdminUserPromoter.java           — promotes seeded admin in dev
   model/
-    User, Topic, Quest, Boss, UserProgress, UserBadge, BadgeDefinition
-    ReviewItem, ReviewSchedule, ReviewSession, ReviewGrade   ← review engine
+    User, Topic, Chunk, SubChunk, Question, UserChunkProgress,
+    UserBadge, BadgeDefinition,
+    ReviewSession, ReviewGrade, CuriosityQueueItem
   repository/    — Spring Data JPA
   service/
-    QuestService, BossService, BadgeService
-    ReviewScheduler, ReviewSessionService                    ← review engine
-  controller/    — /api/auth, /api/topics, /api/quests, /api/code, /api/boss,
-                   /api/badges, /api/reviews
-  runner/        — JavaCodeRunner
-  dto/           — response DTOs
+    EncodingService                  — quest/learning flow
+    SpacingService                   — SM-2 + decayed memory strength
+    InterleavingService              — cross-topic review mixing
+    DiagnosticService, RetrievalService, FeynmanService
+    BadgeService, StreakService, DashboardService
+    AiMentorService                  — LLM-backed hints (provider TBD, see §14a)
+    AdminStatsService, RabbitHoleService, CuriosityQueueService
+    TailwindPracticeService          — Jsoup-based class validation
+  controller/    — /api/auth, /api/chunks, /api/encoding, /api/code,
+                   /api/reviews, /api/diagnostic, /api/dashboard,
+                   /api/badges, /api/rabbit-holes, /api/curiosity-queue,
+                   /api/tailwind, /api/ai-mentor, /api/admin/*
+  runner/        — JavaCodeRunner (sandboxed)
+  dto/           — response DTOs (incl. dto/admin/*)
   security/      — JwtAuthFilter, JwtService, OAuth2LoginSuccessHandler
 
-backend/src/main/resources/db/migration/   — Flyway SQL migrations
+backend/src/main/resources/
+  content/java/        — 38 chunk JSON files (chunk-a … chunk-xj, chunk-cap)
+  content/tailwind/    — tw-a, tw-b, tw-c, tw-d
+  content/react/       — rx-a, rx-b, rx-c, rx-d (NOT YET ACTIVE; see §0)
+  db/migration/        — Flyway SQL migrations
 
 frontend/src/
   pages/
@@ -416,12 +463,60 @@ Badge definitions live in the `BadgeDefinition` enum (code, not DB rows). `user_
 
 ---
 
+## 14a. AI Mentor — Integration Policy (REQUIRED before public launch)
+
+The platform exposes an AI mentor for hints during coding quests via `AiMentorService` and `/api/ai-mentor`. Before public launch, the following must be documented and enforced — **not yet implemented**:
+
+| Requirement | Standard |
+|---|---|
+| **Provider** | Document which LLM provider/model is used (e.g. Anthropic Claude Sonnet 4.7, OpenAI GPT-4.x). Pin model version. |
+| **Prompt template** | Versioned and stored in code, not constructed at runtime from user input alone. Must include the system instruction "Do not give the answer outright — guide the learner toward it." |
+| **Cost cap** | Per-user daily token budget (default suggested: 50k input + 10k output). Hard-fail with a friendly message when exceeded. Stored in `user_ai_usage` table or equivalent. |
+| **Rate limit** | Per-user per-minute request cap (default 10/min) at the controller level. Use Bucket4j or Spring's built-in. |
+| **PII / data policy** | Document explicitly what is sent to the LLM provider: at minimum the learner's code submission, the quest brief, and any error message. **Must not** send: email, real name, JWT, or any other identifier. The user must consent to this in onboarding. |
+| **Provider env vars** | `AI_PROVIDER` (`anthropic` / `openai` / `none`), `AI_API_KEY`, `AI_MODEL`, `AI_DAILY_TOKEN_CAP`. Absence of `AI_API_KEY` must disable the mentor cleanly (UI hides the panel) — not crash. |
+| **Failure mode** | Network/timeout/rate-limit → mentor returns a generic "I can't help right now, try the hint" rather than a stack trace. |
+| **Observability** | Log per-call: user hash, quest id, prompt token count, response token count, latency, status. No prompt/response content in logs (privacy). |
+
+Until the above is in place, the mentor should be feature-flagged off in production via `AI_MENTOR_ENABLED=false`.
+
+---
+
 ## 14. Observability & Operations
 
 - `GET /actuator/health` — only `health` exposed publicly
 - `GET /actuator/prometheus` — internal scrape only
 - Structured JSON logs in prod; no stack traces in responses (`GlobalExceptionHandler` returns `{ "message": "…" }`)
 - Key metrics: review-session completion rate, per-topic retention %, code-runner p95 latency, auth error rate
+
+### Engagement Telemetry — Event Catalog
+
+`TelemetryService` emits two channels per event: a Micrometer counter (low-cardinality labels only — Prometheus-friendly) and a structured log line (named logger `TELEMETRY`, with HMAC-SHA256-hashed user IDs for privacy).
+
+| Event | Counter | Labels | Triggered by |
+|---|---|---|---|
+| **quest_started** | `arcane_quest_started_total` | `topic` | First time a learner enters a sub-chunk's encoding session |
+| **quest_completed** | `arcane_quest_completed_total` | `topic` | Sub-chunk transitions to `COMPLETE` (first time only) |
+| **review_grade_given** | `arcane_review_grade_given_total` | `cadence`, `passed` | Each individual question answered in a review/retrieval session |
+| **review_session_completed** | `arcane_review_session_completed_total` | `cadence` | A whole review session is submitted |
+| **streak_extended** | `arcane_streak_extended_total` | (none) | A learner's streak grows by 1 day |
+| **streak_broken** | `arcane_streak_broken_total` | (none) | A learner returns after >1 day idle (resets to 1) |
+| **badge_earned** | `arcane_badge_earned_total` | `category` | `BadgeService.evaluateAndAward` saves a new `UserBadge` |
+| **diagnostic_completed** | `arcane_diagnostic_completed_total` | `topic`, `tier` | A learner completes (or skips) the placement diagnostic |
+
+**`topic` label values:** `java | tailwind | react | unknown` (derived from `chunkId` prefix — `chunk-*` → java, `tw-*` → tailwind, `rx-*` → react). Anything else falls to `unknown` to defend against cardinality blow-ups.
+
+**`cadence` label values:** `DAILY | WEEKLY | MONTHLY | RETRIEVAL | DIAGNOSTIC | unknown`.
+
+**Privacy / PII:** user IDs are NEVER raw in logs. They go through HMAC-SHA256 with the `TELEMETRY_HASH_SALT` env var (default in dev: `dev-salt-rotate-in-production`), truncated to 16 hex chars. Same user → same pseudonym, but the hash cannot be reversed to a UUID without the salt. **Set `TELEMETRY_HASH_SALT` to a strong random value (≥32 chars) in production**.
+
+**Why no `user_id` label on counters?** Prometheus creates a separate time series per unique label combination. Putting user IDs there would create one series per user → tens of thousands of series, killing query performance. Per-user behavioural analysis belongs in the log channel.
+
+### Recommended Grafana Dashboards (3 to build first)
+
+1. **Engagement health** — quest_started/completed rates by topic; review_session_completed rate; streak_broken vs extended ratio (the leading indicator of churn)
+2. **Content quality** — `review_grade_given{passed="false"}` by cadence (subjects that consistently fail signal weak content); funnel drop at `diagnostic_completed{tier=...}` distribution
+3. **Reliability** — Spring Boot's built-in counters: HTTP 5xx rate by endpoint, code-runner p95 latency, auth failure rate
 
 ---
 

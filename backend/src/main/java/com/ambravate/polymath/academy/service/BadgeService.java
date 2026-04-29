@@ -23,6 +23,7 @@ public class BadgeService {
   private final SubChunkRepository subChunkRepository;
   private final UserLearnerProfileRepository profileRepository;
   private final ReviewSessionRepository reviewSessionRepository;
+  private final TelemetryService telemetry;
 
   public List<BadgeDto> getAllForUser(String userId) {
     Map<String, UserBadge> earned = badgeRepository.findByUserId(userId)
@@ -116,6 +117,7 @@ public class BadgeService {
       );
 
       log.info("[BadgeService] Badge awarded | userId={} badge={}", userId, def.name());
+      telemetry.badgeEarned(userId, def.name(), def.getCategory().name());
     }
 
     return newBadges;

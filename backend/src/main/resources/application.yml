@@ -45,10 +45,26 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        # /actuator/health is public via SecurityConfig; /actuator/prometheus is
+        # scraped internally by Prometheus. If exposing prometheus to the public
+        # internet, add an auth filter to SecurityConfig.
+        include: health,prometheus
   endpoint:
     health:
       show-details: never
+  metrics:
+    tags:
+      application: polymath-academy
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+# Telemetry config — see TelemetryService.
+# In prod, set TELEMETRY_HASH_SALT to a long random string (≥32 chars) so user
+# IDs in logs cannot be rainbow-tabled back to the underlying UUIDs.
+telemetry:
+  hash-salt: ${TELEMETRY_HASH_SALT:dev-salt-rotate-in-production}
 
 logging:
   level:

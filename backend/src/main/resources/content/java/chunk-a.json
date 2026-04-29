@@ -30,6 +30,7 @@
         {"label": "Prints age", "input": "null", "expected": "30"}
       ],
       "feynmanPrompt": "Explain what a variable is in Java as if you were describing it to a friend who has never programmed.",
+      "soloPracticeHtml": "<p>Create a character profile for a wizard named <strong>Gareth</strong>. Without any starter code, declare three variables — his name (a <code>String</code>), his level (an <code>int</code> set to <code>12</code>), and his mana multiplier (a <code>double</code> set to <code>2.5</code>). Print each on its own line.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -88,6 +89,7 @@
         {"label": "Prints city", "input": "null", "expected": "London"}
       ],
       "feynmanPrompt": "Explain the difference between int, double, boolean, char, and String to someone who has never coded.",
+      "soloPracticeHtml": "<p>Without any starter code, store five values about a dungeon monster: a name (<code>String</code>), a hit-point count (<code>int</code>), an attack multiplier (<code>double</code>), whether it is flying (<code>boolean</code>), and its threat-tier letter (<code>char</code>). Choose sensible values and print each variable on its own line.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -137,6 +139,7 @@
         {"label": "Total cost", "input": "null", "expected": "61"}
       ],
       "feynmanPrompt": "Explain how arithmetic operators and string concatenation work in Java, including the difference between + for numbers and + for strings.",
+      "soloPracticeHtml": "<p>A merchant sells <strong>4 torches</strong> at <strong>12 gold</strong> each and <strong>3 maps</strong> at <strong>20 gold</strong> each. From a blank file, declare the necessary variables, calculate the total cost, and print it. Then print a summary line like: <code>Total: 108</code> using string concatenation.</p>",
       "questions": [
         {
           "type": "WHATS_THE_OUTPUT",
@@ -195,6 +198,7 @@
         {"label": "Cast result", "input": "null", "expected": "9"}
       ],
       "feynmanPrompt": "Explain implicit and explicit type casting in Java as if you were teaching a classmate, including why integer division can be surprising.",
+      "soloPracticeHtml": "<p>You have <code>int bottles = 11</code> and <code>int crates = 4</code>. Without any starter code: print the exact decimal result of dividing <code>bottles</code> by <code>crates</code> (should be <code>2.75</code>). Then narrow-cast <code>7.89</code> to an <code>int</code> and print that result too.</p>",
       "questions": [
         {
           "type": "WHATS_THE_OUTPUT",

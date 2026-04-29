@@ -28,6 +28,7 @@
         {"label": "Prints banner 3 times", "input": "null", "expected": "=== Welcome ===\n=== Welcome ===\n=== Welcome ==="}
       ],
       "feynmanPrompt": "Explain what a method is, why we use them, and what the 'static' and 'void' keywords mean in a method signature.",
+      "soloPracticeHtml": "<p>Without any starter code, write a complete class. Define a <code>static void</code> method called <code>printSeparator()</code> that prints <code>----------</code>. In <code>main</code>, print <code>Section 1</code>, call <code>printSeparator()</code>, print <code>Section 2</code>, then call <code>printSeparator()</code> again.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -83,6 +84,7 @@
         {"label": "add(7, 5) == 12", "input": "null", "expected": "12\n123"}
       ],
       "feynmanPrompt": "Explain the difference between a parameter and an argument, and why return values make methods more useful.",
+      "soloPracticeHtml": "<p>Without any starter code, write a class that defines a <code>static double multiply(double a, double b)</code> method returning the product of its two parameters. In <code>main</code>, call it with <code>3.5</code> and <code>4.0</code> and print the result. Expected output: <code>14.0</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -138,6 +140,7 @@
         {"label": "All three overloads", "input": "null", "expected": "Name: Alice\nName: Bob, Age: 25\nName: Carol, Age: 30, Role: Engineer"}
       ],
       "feynmanPrompt": "Explain method overloading: what it is, how Java decides which overload to call, and why you cannot overload based on return type alone.",
+      "soloPracticeHtml": "<p>Without any starter code, write a class with an overloaded method called <code>area</code>: one version takes a single <code>int side</code> (square area = side × side), another takes <code>int width</code> and <code>int height</code> (rectangle area). Call both from <code>main</code> with values of your choice and print each result.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -185,6 +188,7 @@
         {"label": "Scope demo", "input": "null", "expected": "Outer: 10\nInner: 20\n10"}
       ],
       "feynmanPrompt": "Explain variable scope in Java using a real-world analogy, describing what happens when you try to use a variable outside its scope.",
+      "soloPracticeHtml": "<p>Without any starter code, demonstrate scope: declare <code>int total = 0</code> before a <code>for</code> loop that runs from 1 to 5. Inside each iteration, declare <code>int step = i * 2</code> and add it to <code>total</code>. After the loop, print <code>total</code>. Expected output: <code>30</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

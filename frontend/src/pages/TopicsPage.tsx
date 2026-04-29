@@ -21,15 +21,15 @@ interface TopicData {
 }
 
 const TOPICS: Topic[] = [
-  { id: 'java',       name: 'Java',           glyph: '☕', tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',          status: 'active',      chunks: 11, accentStroke: 'var(--teal)' },
-  { id: 'tailwind',   name: 'Tailwind CSS',   glyph: '🎨', tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',  status: 'active',      chunks: 1,  accentStroke: 'var(--teal)' },
+  { id: 'java',       name: 'Java',           glyph: '☕', tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',          status: 'active',      chunks: 14, accentStroke: 'var(--teal)' },
+  { id: 'tailwind',   name: 'Tailwind CSS',   glyph: '🎨', tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',  status: 'active',      chunks: 4,  accentStroke: 'var(--purple)' },
   { id: 'html',       name: 'HTML',           glyph: '📄', tagline: 'The structure of the web. Learn to author the skeleton of every page.',          status: 'coming_soon', chunks: 8,  accentStroke: 'var(--orange)' },
   { id: 'css',        name: 'CSS',            glyph: '🖌️', tagline: 'Craft beautiful, responsive interfaces from the ground up.',                     status: 'coming_soon', chunks: 10, accentStroke: 'var(--purple)' },
   { id: 'javascript', name: 'JavaScript',     glyph: '⚡', tagline: 'Bring the web to life. Logic, events, async, and the DOM.',                     status: 'coming_soon', chunks: 14, accentStroke: 'var(--gold)' },
   { id: 'python',     name: 'Python',         glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.',                 status: 'coming_soon', chunks: 12, accentStroke: 'var(--teal)' },
   { id: 'sql',        name: 'SQL',            glyph: '🗃️', tagline: 'Query, transform, and model data with precision.',                              status: 'coming_soon', chunks: 9,  accentStroke: 'var(--purple)' },
   { id: 'typescript', name: 'TypeScript',     glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',       status: 'coming_soon', chunks: 10, accentStroke: 'var(--gold)' },
-  { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend.',                  status: 'coming_soon', chunks: 12, accentStroke: 'var(--teal)' },
+  { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.', status: 'active',      chunks: 4,  accentStroke: 'var(--teal)' },
 ]
 
 const ACTIVE_TOPICS = TOPICS.filter(t => t.status === 'active').map(t => t.id)
@@ -168,13 +168,16 @@ export default function TopicsPage() {
               className={cn(
                 'bg-card border border-border rounded-[14px] px-5 py-6 pb-5 flex flex-col gap-2.5',
                 'relative overflow-hidden transition-[border-color,transform,box-shadow] duration-200',
-                'before:absolute before:top-0 before:left-0 before:right-0 before:h-0.5 before:opacity-0 before:transition-opacity before:duration-200',
                 active
-                  ? 'cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:before:opacity-100'
+                  ? 'cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
                   : 'cursor-default opacity-55 saturate-50',
-                active && topic.accentStroke === 'var(--teal)' && 'hover:border-[rgba(45,212,191,0.5)]',
               )}
-              style={active ? { '--tw-before-bg': topic.accentStroke } as React.CSSProperties : undefined}
+              style={active ? {
+                borderTopColor: `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)`,
+                borderTopWidth: 2,
+              } : undefined}
+              onMouseEnter={e => { if (active) (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${topic.accentStroke} 50%, transparent)` }}
+              onMouseLeave={e => { if (active) { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)'; (e.currentTarget as HTMLDivElement).style.borderTopColor = `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)` } }}
               onClick={() => handleTopicClick(topic)}
             >
               <div className="flex items-start justify-between mb-1">

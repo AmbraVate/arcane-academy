@@ -70,10 +70,16 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Actuator (health checks) -->
+    <!-- Actuator (health checks + metrics) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- Prometheus registry — exposes /actuator/prometheus for scraping. See TelemetryService. -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
     </dependency>
 
     <!-- Validation -->

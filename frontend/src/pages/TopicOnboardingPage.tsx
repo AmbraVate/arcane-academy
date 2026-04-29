@@ -1,22 +1,40 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 import { diagnosticApi } from '../api/services'
+import { CSS_PREREQ_TOPICS, prereqStorageKey } from '../data/cssPrimer'
 
 const TOPIC_META: Record<string, { name: string; glyph: string; question: string }> = {
+  java:     { name: 'Java',         glyph: '☕', question: 'Have you written Java code before?' },
   tailwind: { name: 'Tailwind CSS', glyph: '🎨', question: 'Have you used Tailwind CSS before?' },
+  react:    { name: 'React',        glyph: '⚛️', question: 'Have you built UIs with React before?' },
 }
 
 export default function TopicOnboardingPage() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [loading, setLoading] = useState(false)
 
   const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', question: `Have you studied ${topicId} before?` }
 
+  /** Has this user already passed/completed the CSS prereq check for this topic? */
+  function prereqAlreadyDone(): boolean {
+    if (!user || !topicId || !CSS_PREREQ_TOPICS.has(topicId)) return true
+    return !!localStorage.getItem(prereqStorageKey(user.userId, topicId))
+  }
+
   async function handleNew() {
     setLoading(true)
-    try { await diagnosticApi.skip(topicId!); navigate(`/topic/${topicId}`, { replace: true }) }
-    catch { setLoading(false) }
+    try {
+      await diagnosticApi.skip(topicId!)
+      // For CSS-dependent topics, route through the prereq check on first visit
+      if (CSS_PREREQ_TOPICS.has(topicId!) && !prereqAlreadyDone()) {
+        navigate(`/topic/${topicId}/prereq-check`)
+      } else {
+        navigate(`/topic/${topicId}`, { replace: true })
+      }
+    } catch { setLoading(false) }
   }
 
   function handleExperienced() { navigate(`/topic/${topicId}/diagnostic`) }

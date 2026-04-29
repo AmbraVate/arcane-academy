@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class StreakService {
 
     private final UserRepository userRepository;
+    private final TelemetryService telemetry;
 
     /**
      * Called on login and on quest/boss completion.
@@ -47,9 +48,11 @@ public class StreakService {
             } else if (daysSince == 1) {
                 user.setStreakDays(user.getStreakDays() + 1);
                 log.info("[Streak] Extended | userId={} {} → {}", userId, previousStreak, user.getStreakDays());
+                telemetry.streakExtended(userId, user.getStreakDays());
             } else {
                 user.setStreakDays(1);
                 log.info("[Streak] RESET (missed {} days) | userId={} {} → 1", daysSince, userId, previousStreak);
+                telemetry.streakBroken(userId, previousStreak, daysSince);
             }
         }
 

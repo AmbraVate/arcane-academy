@@ -1,0 +1,782 @@
+{
+  "id": "rx-d",
+  "title": "React Capstone — The Guild Portal",
+  "tier": "CAPSTONE",
+  "topicId": "react",
+  "prerequisites": [
+    "rx-a",
+    "rx-b",
+    "rx-c"
+  ],
+  "description": "Build a complete, deployed React application from scratch. You will architect a multi-page Guild Portal — a quest-browsing app with routing, data fetching, TypeScript, global state, and a live public URL. This is your proof of mastery.",
+  "subChunks": [
+    {
+      "id": "rx-d1",
+      "title": "Project Architecture: Laying the Foundation",
+      "xpReward": 100,
+      "filename": "App.tsx",
+      "hookHtml": "<p>Every great structure starts with a blueprint. Before you write a single component, you decide <em>how the pieces fit together</em> — folder structure, routing skeleton, shared types. Get this right and the rest flows naturally. Get it wrong and you'll be refactoring forever.</p>",
+      "explanationHtml": "\n<h2>Architecting a React App</h2>\n\n<h3>The folder structure we'll use</h3>\n<pre><code>src/\n  components/     # Reusable UI pieces\n  pages/          # Route-level components (one per URL)\n  hooks/          # Custom hooks\n  store/          # Zustand stores\n  types/          # TypeScript interfaces\n  api/            # Fetch helpers\n  App.tsx         # Routes live here\n  main.tsx        # ReactDOM.createRoot</code></pre>\n\n<h3>Routing skeleton first</h3>\n<p>Define all your routes before you fill in the pages. This forces you to think about navigation flows upfront.</p>\n<pre><code>// App.tsx\nimport { BrowserRouter, Routes, Route } from \"react-router-dom\";\nimport { Layout } from \"./components/Layout\";\nimport { HomePage } from \"./pages/HomePage\";\nimport { QuestsPage } from \"./pages/QuestsPage\";\nimport { QuestDetailPage } from \"./pages/QuestDetailPage\";\nimport { ProfilePage } from \"./pages/ProfilePage\";\n\nexport default function App() {\n  return (\n    &lt;BrowserRouter&gt;\n      &lt;Routes&gt;\n        &lt;Route path=\"/\" element={&lt;Layout /&gt;}&gt;\n          &lt;Route index element={&lt;HomePage /&gt;} /&gt;\n          &lt;Route path=\"quests\" element={&lt;QuestsPage /&gt;} /&gt;\n          &lt;Route path=\"quests/:id\" element={&lt;QuestDetailPage /&gt;} /&gt;\n          &lt;Route path=\"profile\" element={&lt;ProfilePage /&gt;} /&gt;\n        &lt;/Route&gt;\n      &lt;/Routes&gt;\n    &lt;/BrowserRouter&gt;\n  );\n}</code></pre>\n\n<h3>Shared TypeScript types</h3>\n<p>Define your data shapes once, import everywhere. This eliminates an entire category of bugs.</p>\n<pre><code>// src/types/index.ts\nexport interface Quest {\n  id: number;\n  title: string;\n  difficulty: \"FOUNDATION\" | \"PRACTITIONER\" | \"EXPERT\";\n  xpReward: number;\n  completed: boolean;\n  tags: string[];\n  description: string;\n}\n\nexport interface User {\n  id: number;\n  username: string;\n  totalXp: number;\n  rank: string;\n  completedQuestIds: number[];\n}</code></pre>\n\n<h3>The Layout component — persistent shell</h3>\n<p>Use React Router's <code>Outlet</code> to render child routes inside a persistent navbar/shell. The nav never re-mounts; only the page content swaps.</p>\n<pre><code>// src/components/Layout.tsx\nimport { Outlet, NavLink } from \"react-router-dom\";\n\nexport function Layout() {\n  return (\n    &lt;div className=\"app-shell\"&gt;\n      &lt;nav className=\"navbar\"&gt;\n        &lt;span className=\"brand\"&gt;⚗️ Guild Portal&lt;/span&gt;\n        &lt;NavLink to=\"/\"&gt;Home&lt;/NavLink&gt;\n        &lt;NavLink to=\"/quests\"&gt;Quests&lt;/NavLink&gt;\n        &lt;NavLink to=\"/profile\"&gt;Profile&lt;/NavLink&gt;\n      &lt;/nav&gt;\n      &lt;main className=\"page-content\"&gt;\n        &lt;Outlet /&gt;\n      &lt;/main&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>NavLink vs Link</h3>\n<p><code>NavLink</code> automatically adds an <code>active</code> class when its <code>to</code> matches the current URL — perfect for highlighting the current nav item without manual state.</p>\n      ",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Grand Archmage Solomon unrolls a vast scroll across the war table. It's a map — not of lands, but of components."
+        },
+        {
+          "speaker": "Solomon",
+          "emoji": "🧙",
+          "type": "dialogue",
+          "cssClass": "solomon",
+          "text": "You have learned each spell in isolation. Now comes the true test: building something complete. A Guild Portal — where apprentices browse quests, track their progress, and prove their worth."
+        },
+        {
+          "type": "narration",
+          "text": "Vex appears beside you, toolkit already open."
+        },
+        {
+          "speaker": "Vex",
+          "emoji": "⚗️",
+          "type": "dialogue",
+          "cssClass": "vex",
+          "text": "The secret architects know: spend twenty minutes on structure and you save hours of refactoring. Routing skeleton, shared types, layout shell — then fill in the pages. Let's start there."
+        }
+      ],
+      "guidedPracticeHtml": "\n<h3>🏗️ Guided: Build the App Shell</h3>\n<p>You're starting with a blank <code>App.tsx</code>. Wire up the routing skeleton with three routes, a Layout component that uses Outlet, and the NavLink navbar.</p>\n<p><strong>Requirements:</strong></p>\n<ul>\n  <li>BrowserRouter wrapping everything</li>\n  <li>Layout route at <code>/</code> with a <code>data-testid=\"layout\"</code> wrapper div</li>\n  <li>Three child routes: index (HomePage), <code>/quests</code> (QuestsPage), <code>/quests/:id</code> (QuestDetailPage)</li>\n  <li>Navbar with NavLinks to <code>/</code>, <code>/quests</code>, and a brand span reading \"Guild Portal\"</li>\n  <li>Each page renders a heading with its name: \"Home\", \"Quests\", \"Quest Detail\"</li>\n</ul>\n      ",
+      "guidedPracticeStarterCode": "import { BrowserRouter, Routes, Route, NavLink, Outlet, useParams } from \"react-router-dom\";\n\nfunction Layout() {\n  return (\n    <div data-testid=\"layout\">\n      <nav>\n        {/* Add brand span and NavLinks here */}\n      </nav>\n      <main>\n        {/* Outlet renders the matched child route */}\n      </main>\n    </div>\n  );\n}\n\nfunction HomePage() {\n  return <h1>Home</h1>;\n}\n\nfunction QuestsPage() {\n  return <h1>Quests</h1>;\n}\n\nfunction QuestDetailPage() {\n  const { id } = useParams();\n  return <h1>Quest Detail</h1>;\n}\n\nexport default function App() {\n  // Wire up BrowserRouter + Routes + Route here\n  return <div>TODO</div>;\n}",
+      "guidedPracticeTests": [
+        {
+          "selector": "[data-testid='layout']",
+          "exists": true
+        },
+        {
+          "selector": "nav",
+          "exists": true
+        },
+        {
+          "selector": "nav",
+          "requiredText": "Guild Portal"
+        },
+        {
+          "selector": "h1",
+          "requiredText": "Home"
+        },
+        {
+          "action": "navigate",
+          "path": "/quests",
+          "then": {
+            "selector": "h1",
+            "requiredText": "Quests"
+          }
+        },
+        {
+          "action": "navigate",
+          "path": "/quests/42",
+          "then": {
+            "selector": "h1",
+            "requiredText": "Quest Detail"
+          }
+        }
+      ],
+      "soloPracticeHtml": "\n<h3>🧩 Solo: Add a Profile Route</h3>\n<p>Extend the app shell from guided practice:</p>\n<ul>\n  <li>Add a <code>/profile</code> route rendering a <code>ProfilePage</code> component</li>\n  <li>ProfilePage renders <code>&lt;h1&gt;Profile&lt;/h1&gt;</code></li>\n  <li>Add a NavLink for <code>/profile</code> in the navbar</li>\n  <li>Navigating to <code>/unknown-route</code> should render a <code>&lt;p&gt;404 — Page not found&lt;/p&gt;</code> catch-all</li>\n</ul>\n      ",
+      "feynmanPrompt": "Explain why you define routes in App.tsx before filling in page components, as if you were advising a junior developer starting their first React project.",
+      "questions": [
+        {
+          "id": "rx-d1-q1",
+          "type": "MCQ",
+          "options": [
+            "The nearest parent route's component",
+            "The matched child route's component",
+            "A loading spinner until navigation completes",
+            "The root <App /> component"
+          ],
+          "explanation": "Outlet is a placeholder inside a layout route that renders whichever child route currently matches the URL.",
+          "prompt": "What does React Router's <Outlet /> render?",
+          "answer": "The matched child route's component",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d1-q2",
+          "type": "MCQ",
+          "options": [
+            "NavLink is faster because it skips the virtual DOM",
+            "NavLink automatically applies an active CSS class when its href matches the current URL",
+            "NavLink prevents page reload, whereas Link causes a full refresh",
+            "NavLink supports data-fetching; Link does not"
+          ],
+          "explanation": "NavLink adds an 'active' class (customisable) when its 'to' prop matches the current location — perfect for highlighting the current nav item.",
+          "prompt": "What is the advantage of NavLink over Link in a navigation bar?",
+          "answer": "NavLink automatically applies an active CSS class when its href matches the current URL",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d1-q3",
+          "type": "MCQ",
+          "options": [
+            "Inline in each component that uses them",
+            "In a dedicated src/types/index.ts file, imported wherever needed",
+            "In the global window object for easy access",
+            "In the store file alongside Zustand state"
+          ],
+          "explanation": "A central types/index.ts file means you define the shape once and import it everywhere — one source of truth, no duplication.",
+          "prompt": "Where is the best place to define shared TypeScript interfaces (e.g. Quest, User) in a multi-page React app?",
+          "answer": "In a dedicated src/types/index.ts file, imported wherever needed",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d1-q4",
+          "type": "MCQ",
+          "options": [
+            "React Router requires all routes to be declared before any components render",
+            "It forces you to think through navigation flows and data needs upfront, reducing later refactoring",
+            "TypeScript will error if routes reference components that don't exist yet",
+            "The browser caches route definitions and requires them at startup"
+          ],
+          "explanation": "Defining routes first is an architectural discipline — you reason about what pages exist and how users move between them before writing any page logic.",
+          "prompt": "Why is it recommended to set up your routing skeleton before filling in page content?",
+          "answer": "It forces you to think through navigation flows and data needs upfront, reducing later refactoring",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        }
+      ],
+      "sortOrder": 1,
+      "practiceType": "REACT"
+    },
+    {
+      "id": "rx-d2",
+      "title": "The Quest Browser: Data, Filtering, and Lists",
+      "xpReward": 125,
+      "filename": "QuestsPage.tsx",
+      "hookHtml": "<p>The beating heart of the Guild Portal is the quest browser. Learners need to see all available quests, filter by difficulty, and find what to tackle next. This page exercises every pattern from the Practitioner tier in one cohesive feature.</p>",
+      "explanationHtml": "\n<h2>Building the Quest Browser</h2>\n\n<h3>Simulating an API with local data</h3>\n<p>In a real app you'd fetch from a server. For the capstone we'll use a local mock so you focus on the React patterns, not network setup.</p>\n<pre><code>// src/api/quests.ts\nimport { Quest } from \"../types\";\n\nconst MOCK_QUESTS: Quest[] = [\n  { id: 1, title: \"The Component Model\", difficulty: \"FOUNDATION\", xpReward: 75,\n    completed: true, tags: [\"jsx\", \"components\"], description: \"Learn JSX and build your first component.\" },\n  { id: 2, title: \"Props: Feeding Components Data\", difficulty: \"FOUNDATION\", xpReward: 75,\n    completed: true, tags: [\"props\", \"typescript\"], description: \"Pass data into components via props.\" },\n  { id: 3, title: \"State and useState\", difficulty: \"FOUNDATION\", xpReward: 100,\n    completed: false, tags: [\"state\", \"hooks\"], description: \"Add interactivity with the useState hook.\" },\n  { id: 4, title: \"useEffect: Side Effects\", difficulty: \"PRACTITIONER\", xpReward: 125,\n    completed: false, tags: [\"hooks\", \"effects\"], description: \"Synchronise with the outside world.\" },\n  { id: 5, title: \"Context API\", difficulty: \"EXPERT\", xpReward: 175,\n    completed: false, tags: [\"context\", \"state\"], description: \"Share state without prop drilling.\" },\n  { id: 6, title: \"TypeScript with React\", difficulty: \"EXPERT\", xpReward: 200,\n    completed: false, tags: [\"typescript\"], description: \"Add full type safety to your components.\" },\n];\n\n// Simulate async fetch\nexport async function fetchQuests(): Promise&lt;Quest[]&gt; {\n  return new Promise(resolve => setTimeout(() => resolve(MOCK_QUESTS), 300));\n}</code></pre>\n\n<h3>Three-state loading pattern (typed)</h3>\n<pre><code>type LoadState = \"loading\" | \"error\" | \"success\";\n\nfunction QuestsPage() {\n  const [quests, setQuests] = useState&lt;Quest[]&gt;([]);\n  const [status, setStatus] = useState&lt;LoadState&gt;(\"loading\");\n  const [filter, setFilter] = useState&lt;\"ALL\" | Quest[\"difficulty\"]&gt;(\"ALL\");\n\n  useEffect(() => {\n    let cancelled = false;\n    fetchQuests()\n      .then(data => { if (!cancelled) { setQuests(data); setStatus(\"success\"); } })\n      .catch(() => { if (!cancelled) setStatus(\"error\"); });\n    return () => { cancelled = true; };\n  }, []);\n  // ...\n}</code></pre>\n\n<h3>Derived state via useMemo</h3>\n<pre><code>const visibleQuests = useMemo(\n  () => filter === \"ALL\" ? quests : quests.filter(q => q.difficulty === filter),\n  [quests, filter]\n);</code></pre>\n\n<h3>The QuestCard component</h3>\n<pre><code>interface QuestCardProps {\n  quest: Quest;\n  onSelect: (id: number) => void;\n}\n\nfunction QuestCard({ quest, onSelect }: QuestCardProps) {\n  return (\n    &lt;div\n      className={`quest-card ${quest.completed ? \"completed\" : \"\"}`}\n      data-testid=\"quest-card\"\n    &gt;\n      &lt;div className=\"quest-header\"&gt;\n        &lt;h3&gt;{quest.title}&lt;/h3&gt;\n        &lt;span className={`badge badge-${quest.difficulty.toLowerCase()}`}&gt;\n          {quest.difficulty}\n        &lt;/span&gt;\n      &lt;/div&gt;\n      &lt;p&gt;{quest.description}&lt;/p&gt;\n      &lt;div className=\"quest-footer\"&gt;\n        &lt;span className=\"xp\"&gt;+{quest.xpReward} XP&lt;/span&gt;\n        {quest.completed\n          ? &lt;span className=\"done\"&gt;✓ Complete&lt;/span&gt;\n          : &lt;button onClick={() =&gt; onSelect(quest.id)}&gt;Start Quest&lt;/button&gt;\n        }\n      &lt;/div&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n      ",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Quest Board flickers into existence — hundreds of glowing parchments, each a challenge waiting to be accepted."
+        },
+        {
+          "speaker": "Vex",
+          "emoji": "⚗️",
+          "type": "dialogue",
+          "cssClass": "vex",
+          "text": "A board with no filter is just noise. The apprentice's first act of craft is making information findable. Three-state loading, derived filter state, a card per quest — patterns you already know, now working in concert."
+        }
+      ],
+      "guidedPracticeHtml": "\n<h3>🏗️ Guided: Build QuestsPage with Filtering</h3>\n<p>Build a page that fetches quest data (use the mock below), shows a loading state, then renders filterable quest cards.</p>\n<p><strong>Mock data is injected — use the <code>fetchQuests</code> function already available in scope.</strong></p>\n<p><strong>Requirements:</strong></p>\n<ul>\n  <li>Show <code>data-testid=\"loading\"</code> while fetching</li>\n  <li>Show <code>data-testid=\"quest-list\"</code> with one <code>data-testid=\"quest-card\"</code> per quest</li>\n  <li>Each card shows the quest title and difficulty</li>\n  <li>Filter buttons: ALL, FOUNDATION, PRACTITIONER, EXPERT — wrap in <code>data-testid=\"filters\"</code></li>\n  <li>Clicking a filter shows only matching quests (or all for ALL)</li>\n  <li>Active filter button has class <code>active</code></li>\n</ul>\n      ",
+      "guidedPracticeStarterCode": "import { useState, useEffect, useMemo } from \"react\";\n\n// Mock data available in scope:\n// interface Quest { id, title, difficulty, xpReward, completed, description }\n// async function fetchQuests(): Promise<Quest[]>\n\nexport default function QuestsPage() {\n  const [quests, setQuests] = useState([]);\n  const [status, setStatus] = useState(\"loading\");\n  const [filter, setFilter] = useState(\"ALL\");\n\n  useEffect(() => {\n    // Fetch quests here — remember the cancellation flag pattern\n  }, []);\n\n  const visibleQuests = useMemo(\n    () => filter === \"ALL\" ? quests : quests.filter(q => q.difficulty === filter),\n    [quests, filter]\n  );\n\n  if (status === \"loading\") return <div data-testid=\"loading\">Loading quests…</div>;\n  if (status === \"error\") return <p>Failed to load quests.</p>;\n\n  return (\n    <div>\n      <div data-testid=\"filters\">\n        {/* Render filter buttons: ALL, FOUNDATION, PRACTITIONER, EXPERT */}\n      </div>\n      <div data-testid=\"quest-list\">\n        {/* Map visibleQuests to quest cards */}\n      </div>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "selector": "[data-testid='loading']",
+          "exists": true
+        },
+        {
+          "action": "wait",
+          "ms": 400,
+          "then": {
+            "selector": "[data-testid='quest-list']",
+            "exists": true
+          }
+        },
+        {
+          "selector": "[data-testid='quest-card']",
+          "count": 6
+        },
+        {
+          "selector": "[data-testid='filters']",
+          "exists": true
+        },
+        {
+          "action": "click",
+          "selector": "button[data-filter='FOUNDATION']",
+          "then": {
+            "selector": "[data-testid='quest-card']",
+            "count": 2
+          }
+        },
+        {
+          "action": "click",
+          "selector": "button[data-filter='EXPERT']",
+          "then": {
+            "selector": "[data-testid='quest-card']",
+            "count": 2
+          }
+        },
+        {
+          "action": "click",
+          "selector": "button[data-filter='ALL']",
+          "then": {
+            "selector": "[data-testid='quest-card']",
+            "count": 6
+          }
+        }
+      ],
+      "soloPracticeHtml": "\n<h3>🧩 Solo: Add a Search Bar</h3>\n<p>Extend the quest list with text search:</p>\n<ul>\n  <li>Add a text input with <code>data-testid=\"search\"</code> and placeholder \"Search quests…\"</li>\n  <li>Filter cards so only quests whose title <strong>or</strong> description contains the search string (case-insensitive) are shown</li>\n  <li>Search and difficulty filter should work together (a quest must pass both)</li>\n  <li>Show <code>data-testid=\"empty-state\"</code> with text \"No quests match your search\" when the combined filter produces 0 results</li>\n</ul>\n      ",
+      "feynmanPrompt": "Explain the three-state loading pattern (loading / error / success) to someone who just learned useState yesterday — why three states instead of just a boolean?",
+      "questions": [
+        {
+          "id": "rx-d2-q1",
+          "type": "MCQ",
+          "options": [
+            "useMemo is required whenever you call array methods in React",
+            "useMemo caches the filtered result and only recomputes when quests or filter changes, avoiding unnecessary work on every render",
+            "Filtering in render causes an infinite re-render loop",
+            "useMemo makes the filter synchronous, whereas inline filtering is asynchronous"
+          ],
+          "explanation": "useMemo memoises expensive computations. Filtering a large array on every render (e.g. triggered by an unrelated state change) wastes CPU. useMemo only recomputes when its dependencies change.",
+          "prompt": "Why use useMemo for the filtered quest list rather than filtering directly in the render?",
+          "answer": "useMemo caches the filtered result and only recomputes when quests or filter changes, avoiding unnecessary work on every render",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d2-q2",
+          "type": "MCQ",
+          "options": [
+            "It prevents duplicate API calls when React strict mode double-invokes effects",
+            "It prevents setting state on an unmounted component if the response arrives after navigation away",
+            "It prevents the browser from caching the fetch response",
+            "It prevents TypeScript from inferring the wrong return type"
+          ],
+          "explanation": "If a user navigates away before the fetch resolves, the component unmounts. Without a cancellation flag, the .then() still runs and calls setState on the unmounted component — a React warning and potential memory leak.",
+          "prompt": "What does the cancellation flag pattern (let cancelled = false) prevent in a useEffect data fetch?",
+          "answer": "It prevents setting state on an unmounted component if the response arrives after navigation away",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d2-q3",
+          "type": "MCQ",
+          "options": [
+            "TypeScript automatically widens the union to include 'ARCHIVED'",
+            "The app crashes immediately when the data loads",
+            "TypeScript won't error at compile time, but runtime data won't match the declared type — a reminder that TypeScript only validates compile-time structure, not runtime API responses",
+            "The browser silently coerces 'ARCHIVED' to undefined"
+          ],
+          "explanation": "TypeScript types are erased at runtime. If the API returns a value outside the declared union, TypeScript won't catch it. Use runtime validation (Zod, type guards) for data that crosses an API boundary.",
+          "prompt": "A QuestCard receives a quest prop of type Quest. Inside the card, you render quest.difficulty. TypeScript shows no error. Later the API adds a new difficulty level 'ARCHIVED' not in the union type. What happens?",
+          "answer": "TypeScript won't error at compile time, but runtime data won't match the declared type — a reminder that TypeScript only validates compile-time structure, not runtime API responses",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d2-q4",
+          "type": "MCQ",
+          "options": [
+            "useEffect(() => { setVisible(...) }, [quests, filter])",
+            "useMemo(() => filter === 'ALL' ? quests : quests.filter(...), [quests, filter])",
+            "useState(quests.filter(...))",
+            "useCallback(() => quests.filter(...), [quests, filter])"
+          ],
+          "explanation": "useMemo computes a derived value and caches it. useEffect with setState would cause an extra render cycle. useState initialises once and doesn't react to prop changes. useCallback is for memoising functions, not values.",
+          "prompt": "You want the quest list to re-filter whenever either quests or filter changes, but not on every render. Which hook and dependency array is correct?",
+          "answer": "useMemo(() => filter === 'ALL' ? quests : quests.filter(...), [quests, filter])",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        }
+      ],
+      "sortOrder": 2,
+      "practiceType": "REACT"
+    },
+    {
+      "id": "rx-d3",
+      "title": "Quest Detail Page: URL Params and Navigation",
+      "xpReward": 125,
+      "filename": "QuestDetailPage.tsx",
+      "hookHtml": "<p>A list is only half the picture. When a user selects a quest, they need a full detail view — a separate URL they can bookmark, share, and return to. React Router's <code>useParams</code> and <code>useNavigate</code> make this seamless.</p>",
+      "explanationHtml": "\n<h2>Dynamic Routes and the Detail Page</h2>\n\n<h3>Reading URL params</h3>\n<pre><code>// Route defined as: &lt;Route path=\"quests/:id\" element={&lt;QuestDetailPage /&gt;} /&gt;\n\nimport { useParams, useNavigate } from \"react-router-dom\";\n\nfunction QuestDetailPage() {\n  const { id } = useParams&lt;{ id: string }&gt;();\n  const navigate = useNavigate();\n  const [quest, setQuest] = useState&lt;Quest | null&gt;(null);\n  const [status, setStatus] = useState&lt;\"loading\" | \"error\" | \"success\"&gt;(\"loading\");\n\n  useEffect(() => {\n    let cancelled = false;\n    fetchQuestById(Number(id))\n      .then(data => { if (!cancelled) { setQuest(data); setStatus(\"success\"); } })\n      .catch(() => { if (!cancelled) setStatus(\"error\"); });\n    return () => { cancelled = true; };\n  }, [id]); // re-fetch when the id param changes\n\n  if (status === \"loading\") return &lt;div data-testid=\"loading\"&gt;Loading…&lt;/div&gt;;\n  if (status === \"error\" || !quest) return &lt;div data-testid=\"not-found\"&gt;Quest not found.&lt;/div&gt;;\n\n  return (\n    &lt;div data-testid=\"quest-detail\"&gt;\n      &lt;button onClick={() =&gt; navigate(-1)}&gt;← Back&lt;/button&gt;\n      &lt;h1&gt;{quest.title}&lt;/h1&gt;\n      &lt;span className=\"badge\"&gt;{quest.difficulty}&lt;/span&gt;\n      &lt;p&gt;{quest.description}&lt;/p&gt;\n      &lt;p&gt;Reward: +{quest.xpReward} XP&lt;/p&gt;\n      {!quest.completed &amp;&amp; (\n        &lt;button\n          data-testid=\"accept-btn\"\n          onClick={() =&gt; handleAccept(quest.id)}\n        &gt;\n          Accept Quest\n        &lt;/button&gt;\n      )}\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>Programmatic navigation</h3>\n<pre><code>// Go back in history\nnavigate(-1);\n\n// Navigate to a specific route\nnavigate(\"/quests\");\n\n// Navigate and replace (no back button history entry)\nnavigate(\"/quests\", { replace: true });\n\n// Navigate after an action completes\nasync function handleAccept(questId: number) {\n  await markQuestAccepted(questId);\n  navigate(\"/quests\"); // return to list\n}</code></pre>\n\n<h3>id in useEffect dependencies</h3>\n<p>Notice <code>[id]</code> in the dependency array. If the user navigates from <code>/quests/3</code> to <code>/quests/7</code> the component stays mounted (same route, different param) and the effect re-runs with the new id — fetching fresh data automatically.</p>\n\n<h3>Linking from the quest list</h3>\n<pre><code>import { Link } from \"react-router-dom\";\n\n// In QuestCard:\n&lt;Link to={\"/quests/\" + quest.id}&gt;View Details&lt;/Link&gt;</code></pre>\n      ",
+      "storyBeats": [
+        {
+          "speaker": "Vex",
+          "emoji": "⚗️",
+          "type": "dialogue",
+          "cssClass": "vex",
+          "text": "The URL is a contract. '/quests/3' should always show quest 3 — whether the user arrives by clicking a card or pasting the link into a new tab. useParams lets you honour that contract."
+        },
+        {
+          "type": "narration",
+          "text": "You focus the URL bar and type the address directly. The detail page loads instantly, every field populated from the id alone. The contract holds."
+        }
+      ],
+      "guidedPracticeHtml": "\n<h3>🏗️ Guided: Build QuestDetailPage</h3>\n<p>Build a detail page that reads the quest id from the URL, fetches that quest, and renders it.</p>\n<p><strong>Requirements:</strong></p>\n<ul>\n  <li><code>data-testid=\"loading\"</code> while fetching</li>\n  <li><code>data-testid=\"not-found\"</code> if the id doesn't match any quest</li>\n  <li><code>data-testid=\"quest-detail\"</code> wrapping the loaded content</li>\n  <li>Shows quest title in an h1, difficulty in a span, description in a p, xpReward as \"+N XP\"</li>\n  <li>A back button using <code>navigate(-1)</code></li>\n  <li><code>data-testid=\"accept-btn\"</code> shown only for incomplete quests</li>\n</ul>\n      ",
+      "guidedPracticeStarterCode": "import { useState, useEffect } from \"react\";\nimport { useParams, useNavigate } from \"react-router-dom\";\n\n// fetchQuestById(id: number): Promise<Quest | null> is available in scope\n\nexport default function QuestDetailPage() {\n  const { id } = useParams();\n  const navigate = useNavigate();\n  const [quest, setQuest] = useState(null);\n  const [status, setStatus] = useState(\"loading\");\n\n  useEffect(() => {\n    // Fetch quest by id — include cancellation flag\n    // On success: setQuest(data), setStatus(\"success\")\n    // On error: setStatus(\"error\")\n  }, [id]);\n\n  if (status === \"loading\") return <div data-testid=\"loading\">Loading…</div>;\n  if (status === \"error\" || !quest) return <div data-testid=\"not-found\">Quest not found.</div>;\n\n  return (\n    <div data-testid=\"quest-detail\">\n      {/* Back button, title, difficulty, description, xpReward, accept button */}\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "action": "navigate",
+          "path": "/quests/1",
+          "then": {
+            "selector": "[data-testid='loading']",
+            "exists": true
+          }
+        },
+        {
+          "action": "wait",
+          "ms": 400,
+          "then": {
+            "selector": "[data-testid='quest-detail']",
+            "exists": true
+          }
+        },
+        {
+          "selector": "h1",
+          "requiredText": "The Component Model"
+        },
+        {
+          "selector": "[data-testid='accept-btn']",
+          "exists": false
+        },
+        {
+          "action": "navigate",
+          "path": "/quests/3",
+          "then": {
+            "selector": "[data-testid='accept-btn']",
+            "exists": true
+          }
+        },
+        {
+          "action": "navigate",
+          "path": "/quests/999",
+          "then": {
+            "selector": "[data-testid='not-found']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "\n<h3>🧩 Solo: Tags and Related Quests</h3>\n<p>Extend the detail page:</p>\n<ul>\n  <li>Render the quest's <code>tags</code> array as span chips inside a <code>data-testid=\"tags\"</code> container</li>\n  <li>Below the detail, add a <code>data-testid=\"related\"</code> section that shows up to 2 other quests with the same difficulty (fetched from the full list, filtered client-side)</li>\n  <li>Each related quest is a Link to <code>/quests/:id</code></li>\n  <li>If no related quests exist, show <code>data-testid=\"no-related\"</code></li>\n</ul>\n      ",
+      "feynmanPrompt": "Explain why id must be in the useEffect dependency array for the detail page, as if explaining to someone who thinks 'it worked without it so why add it?'",
+      "questions": [
+        {
+          "id": "rx-d3-q1",
+          "type": "MCQ",
+          "options": [
+            "Nothing — the component is already mounted, so useEffect doesn't re-run",
+            "The component unmounts and remounts, triggering the effect from scratch",
+            "The effect re-runs because id is in the dependency array and its value changed from '3' to '7'",
+            "The effect re-runs only if useNavigate is called inside the component"
+          ],
+          "explanation": "React Router keeps the same component mounted for same-pattern routes (/quests/:id). The id param changes, which changes the dependency, which triggers the effect to re-run and fetch the new quest.",
+          "prompt": "A user navigates from /quests/3 to /quests/7. The QuestDetailPage component is already mounted. What happens to the useEffect that fetches by id?",
+          "answer": "The effect re-runs because id is in the dependency array and its value changed from '3' to '7'",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d3-q2",
+          "type": "MCQ",
+          "options": [
+            "Change Quest.id to string to match useParams",
+            "Cast it with Number(id) or parseInt(id) before using it in fetch calls that expect a number",
+            "Nothing — JavaScript automatically coerces string '3' to number 3 in all arithmetic",
+            "Use parseInt only if the string might contain decimals"
+          ],
+          "explanation": "URL params are always strings. If your data model uses number ids, convert explicitly with Number(id) or parseInt(id, 10). Relying on implicit coercion is fragile and breaks TypeScript's type checking.",
+          "prompt": "useParams returns id as a string even though your Quest type uses number. What should you do?",
+          "answer": "Cast it with Number(id) or parseInt(id) before using it in fetch calls that expect a number",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d3-q3",
+          "type": "MCQ",
+          "options": [
+            "When you want to skip the loading state on the destination page",
+            "When you want the navigation to not create a history entry, so the back button skips past it — e.g. after a successful form submission or login",
+            "When navigating to an external URL",
+            "When navigating within the same page (hash links)"
+          ],
+          "explanation": "replace: true replaces the current history entry instead of pushing a new one. This is useful after actions like login or form submission — you don't want users hitting the back button to re-submit the form.",
+          "prompt": "When should you use navigate('/quests', { replace: true }) instead of navigate('/quests')?",
+          "answer": "When you want the navigation to not create a history entry, so the back button skips past it — e.g. after a successful form submission or login",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d3-q4",
+          "type": "MCQ",
+          "options": [
+            "Link renders faster because it uses a web worker",
+            "Link prevents the full-page reload that href causes, enabling client-side navigation and preserving React state",
+            "href attributes are not supported in JSX",
+            "Link components automatically prefetch the destination page's data"
+          ],
+          "explanation": "<a href> causes a full browser navigation — React state is wiped, the bundle is re-parsed. <Link> intercepts the click, updates the URL via the History API, and lets React Router swap components without a reload.",
+          "prompt": "Why use <Link to='/quests/3'> instead of <a href='/quests/3'>?",
+          "answer": "Link prevents the full-page reload that href causes, enabling client-side navigation and preserving React state",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        }
+      ],
+      "sortOrder": 3,
+      "practiceType": "REACT"
+    },
+    {
+      "id": "rx-d4",
+      "title": "The Profile Page: Zustand Store and Persistence",
+      "xpReward": 150,
+      "filename": "ProfilePage.tsx",
+      "hookHtml": "<p>A guild portal without progress tracking is just a list. The Profile page needs to know which quests the user has accepted, their total XP, and their current rank — state that persists across page reloads. This is Zustand's home turf.</p>",
+      "explanationHtml": "\n<h2>Global State with Zustand</h2>\n\n<h3>Defining the store</h3>\n<pre><code>// src/store/userStore.ts\nimport { create } from \"zustand\";\nimport { persist } from \"zustand/middleware\";\nimport { Quest } from \"../types\";\n\ninterface UserState {\n  username: string;\n  totalXp: number;\n  acceptedQuestIds: number[];\n  acceptQuest: (quest: Quest) => void;\n  reset: () => void;\n}\n\nexport const useUserStore = create&lt;UserState&gt;()(\n  persist(\n    (set) => ({\n      username: \"Apprentice\",\n      totalXp: 0,\n      acceptedQuestIds: [],\n\n      acceptQuest: (quest) =>\n        set((state) => {\n          if (state.acceptedQuestIds.includes(quest.id)) return state; // idempotent\n          return {\n            totalXp: state.totalXp + quest.xpReward,\n            acceptedQuestIds: [...state.acceptedQuestIds, quest.id],\n          };\n        }),\n\n      reset: () => set({ username: \"Apprentice\", totalXp: 0, acceptedQuestIds: [] }),\n    }),\n    { name: \"guild-portal-user\" } // localStorage key\n  )\n);</code></pre>\n\n<h3>Using the store in components</h3>\n<pre><code>// Scoped subscription — component only re-renders when totalXp changes\nconst totalXp = useUserStore((s) => s.totalXp);\nconst acceptQuest = useUserStore((s) => s.acceptQuest);\n\n// In QuestDetailPage accept button:\n&lt;button onClick={() =&gt; acceptQuest(quest)}&gt;Accept Quest&lt;/button&gt;</code></pre>\n\n<h3>Computing rank from XP</h3>\n<pre><code>// src/utils/rank.ts\nexport function getRank(xp: number): string {\n  if (xp >= 8000) return \"Archmage\";\n  if (xp >= 4000) return \"Mage\";\n  if (xp >= 2000) return \"Adept\";\n  if (xp >= 800)  return \"Apprentice\";\n  return \"Novice\";\n}\n\n// Usage in ProfilePage:\nconst totalXp = useUserStore((s) => s.totalXp);\nconst rank = getRank(totalXp);</code></pre>\n\n<h3>The Profile page layout</h3>\n<pre><code>function ProfilePage() {\n  const { username, totalXp, acceptedQuestIds, reset } = useUserStore();\n  const rank = getRank(totalXp);\n\n  return (\n    &lt;div data-testid=\"profile\"&gt;\n      &lt;h1&gt;{username}&lt;/h1&gt;\n      &lt;p data-testid=\"rank\"&gt;Rank: {rank}&lt;/p&gt;\n      &lt;p data-testid=\"total-xp\"&gt;Total XP: {totalXp}&lt;/p&gt;\n      &lt;p data-testid=\"quest-count\"&gt;Quests accepted: {acceptedQuestIds.length}&lt;/p&gt;\n      &lt;button onClick={reset}&gt;Reset Progress&lt;/button&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n      ",
+      "storyBeats": [
+        {
+          "speaker": "Vex",
+          "emoji": "⚗️",
+          "type": "dialogue",
+          "cssClass": "vex",
+          "text": "Local state dies when the component unmounts. Context dies when the page reloads. Zustand with persist middleware? That outlives the session — it writes to localStorage and reads back on startup. Your XP survives a browser close."
+        },
+        {
+          "type": "narration",
+          "text": "You accept three quests, note the XP counter climb, then refresh the browser. The numbers hold. The scroll remembers."
+        }
+      ],
+      "guidedPracticeHtml": "\n<h3>🏗️ Guided: Wire Up the User Store and Profile Page</h3>\n<p>Build the Zustand store and Profile page.</p>\n<p><strong>Requirements:</strong></p>\n<ul>\n  <li>Zustand store with <code>totalXp</code>, <code>acceptedQuestIds</code>, <code>acceptQuest(quest)</code>, <code>reset()</code></li>\n  <li>Use <code>persist</code> middleware with key <code>\"guild-portal-user\"</code></li>\n  <li>ProfilePage renders <code>data-testid=\"profile\"</code>, <code>data-testid=\"rank\"</code>, <code>data-testid=\"total-xp\"</code>, <code>data-testid=\"quest-count\"</code></li>\n  <li>Rank computed by XP thresholds: Novice(0) → Apprentice(800) → Adept(2000) → Mage(4000) → Archmage(8000)</li>\n  <li>Reset button calls <code>reset()</code></li>\n  <li>Accepting a quest twice does not double-count XP</li>\n</ul>\n      ",
+      "guidedPracticeStarterCode": "import { create } from \"zustand\";\nimport { persist } from \"zustand/middleware\";\n\n// --- Store ---\nexport const useUserStore = create(\n  persist(\n    (set) => ({\n      username: \"Apprentice\",\n      totalXp: 0,\n      acceptedQuestIds: [],\n      acceptQuest: (quest) => set((state) => {\n        // Implement: idempotent, adds xpReward, records id\n      }),\n      reset: () => set({ username: \"Apprentice\", totalXp: 0, acceptedQuestIds: [] }),\n    }),\n    { name: \"guild-portal-user\" }\n  )\n);\n\n// --- Rank helper ---\nfunction getRank(xp) {\n  // Implement rank thresholds\n}\n\n// --- Profile Page ---\nexport default function ProfilePage() {\n  const { username, totalXp, acceptedQuestIds, reset } = useUserStore();\n  const rank = getRank(totalXp);\n\n  return (\n    <div data-testid=\"profile\">\n      {/* Render username, rank, totalXp, quest count, reset button */}\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "selector": "[data-testid='profile']",
+          "exists": true
+        },
+        {
+          "selector": "[data-testid='rank']",
+          "requiredText": "Novice"
+        },
+        {
+          "selector": "[data-testid='total-xp']",
+          "requiredText": "0"
+        },
+        {
+          "selector": "[data-testid='quest-count']",
+          "requiredText": "0"
+        },
+        {
+          "action": "dispatch",
+          "event": "acceptQuest",
+          "payload": {
+            "id": 1,
+            "xpReward": 75
+          },
+          "then": {
+            "selector": "[data-testid='total-xp']",
+            "requiredText": "75"
+          }
+        },
+        {
+          "action": "dispatch",
+          "event": "acceptQuest",
+          "payload": {
+            "id": 1,
+            "xpReward": 75
+          },
+          "then": {
+            "selector": "[data-testid='total-xp']",
+            "requiredText": "75"
+          }
+        },
+        {
+          "action": "dispatch",
+          "event": "acceptQuest",
+          "payload": {
+            "id": 2,
+            "xpReward": 800
+          },
+          "then": {
+            "selector": "[data-testid='rank']",
+            "requiredText": "Apprentice"
+          }
+        }
+      ],
+      "soloPracticeHtml": "\n<h3>🧩 Solo: XP Progress Bar</h3>\n<p>Add a visual XP progress bar to the Profile page:</p>\n<ul>\n  <li>Show the XP needed to reach the next rank (e.g. \"875 / 2000 XP to Adept\")</li>\n  <li>Render a <code>data-testid=\"xp-bar\"</code> div with a child <code>data-testid=\"xp-fill\"</code> whose inline <code>width</code> style reflects progress (0–100% within current rank band)</li>\n  <li>At max rank (Archmage), show \"Max rank achieved\" and a full bar</li>\n</ul>\n      ",
+      "feynmanPrompt": "Explain why Zustand's persist middleware is preferable to storing user progress in a useState inside the ProfilePage component, as if talking to someone who says 'but useState already works fine for me'.",
+      "questions": [
+        {
+          "id": "rx-d4-q1",
+          "type": "MCQ",
+          "options": [
+            "Zustand's set function automatically deduplicates calls with the same arguments",
+            "In real apps, accept buttons may be clicked multiple times, event handlers may fire twice, or optimistic updates may re-trigger — checking before updating prevents corrupted state",
+            "Zustand's persist middleware deduplicates localStorage writes",
+            "React Strict Mode calls event handlers twice, so all handlers must be idempotent"
+          ],
+          "explanation": "Defensive state updates assume that the same action may fire more than once. Checking `acceptedQuestIds.includes(quest.id)` before updating makes the store reliable regardless of how many times the action is dispatched.",
+          "prompt": "Why should acceptQuest be idempotent (no double-counting if called twice with the same quest)?",
+          "answer": "In real apps, accept buttons may be clicked multiple times, event handlers may fire twice, or optimistic updates may re-trigger — checking before updating prevents corrupted state",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d4-q2",
+          "type": "MCQ",
+          "options": [
+            "const store = useUserStore(); — read the whole store",
+            "const { totalXp } = useUserStore(); — destructure at the call site",
+            "const totalXp = useUserStore((s) => s.totalXp); — pass a selector function",
+            "const totalXp = useUserStore.getState().totalXp; — read outside React"
+          ],
+          "explanation": "Passing a selector function subscribes only to that slice. When other parts of the store change, this component doesn't re-render. Reading the whole store or destructuring from it subscribes to every change.",
+          "prompt": "Which selector pattern minimises unnecessary re-renders when reading from a Zustand store?",
+          "answer": "const totalXp = useUserStore((s) => s.totalXp); — pass a selector function",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d4-q3",
+          "type": "MCQ",
+          "options": [
+            "It is synchronous and blocks the main thread, so it should be avoided in production",
+            "Data survives page reloads and browser restarts without a server, but is browser-specific, has a ~5 MB limit, and is inaccessible to other browsers or devices",
+            "localStorage is encrypted by the browser, so persist is secure for sensitive data",
+            "persist requires a server round-trip on every store update"
+          ],
+          "explanation": "localStorage persistence is great for non-sensitive, device-local data (preferences, draft state). It doesn't sync across devices, has storage limits, and isn't appropriate for sensitive data. For multi-device sync, you'd combine Zustand with a backend API.",
+          "prompt": "The persist middleware writes to localStorage. What are the tradeoffs of this approach?",
+          "answer": "Data survives page reloads and browser restarts without a server, but is browser-specific, has a ~5 MB limit, and is inaccessible to other browsers or devices",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d4-q4",
+          "type": "MCQ",
+          "options": [
+            "Inside the component — it needs access to the component's state",
+            "Outside the component — it's a pure utility with no React dependencies; keeping it outside avoids recreating it on every render",
+            "Inside a useCallback — pure functions always need memoisation",
+            "Inside a useMemo — it must rerun whenever XP changes"
+          ],
+          "explanation": "Pure functions that don't depend on React state or props belong outside components. Defining them inside means a new function identity on every render (harmless but wasteful). The component simply calls getRank(totalXp) inline.",
+          "prompt": "getRank is a pure function that takes XP and returns a string. Should it be defined inside or outside the React component?",
+          "answer": "Outside the component — it's a pure utility with no React dependencies; keeping it outside avoids recreating it on every render",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        }
+      ],
+      "sortOrder": 4,
+      "practiceType": "REACT"
+    },
+    {
+      "id": "rx-d5",
+      "title": "Polish and Accessibility: The Final Layer",
+      "xpReward": 125,
+      "filename": "App.tsx",
+      "hookHtml": "<p>A working app and a <em>good</em> app are separated by the details: keyboard navigation, screen reader labels, loading states that don't flash, and transitions that feel alive. This is what separates a portfolio piece from a throwaway exercise.</p>",
+      "explanationHtml": "\n<h2>Accessibility and Polish</h2>\n\n<h3>Semantic HTML first</h3>\n<pre><code>// ❌ div soup\n&lt;div class=\"nav\"&gt;\n  &lt;div class=\"nav-item\" onClick={...}&gt;Home&lt;/div&gt;\n&lt;/div&gt;\n\n// ✅ semantic — keyboard focusable, screen-reader announced correctly\n&lt;nav aria-label=\"Main navigation\"&gt;\n  &lt;NavLink to=\"/\"&gt;Home&lt;/NavLink&gt;\n&lt;/nav&gt;</code></pre>\n\n<h3>Icon-only buttons need labels</h3>\n<pre><code>// ❌ screen reader announces \"button\" with no context\n&lt;button onClick={onClose}&gt;✕&lt;/button&gt;\n\n// ✅ aria-label provides the accessible name\n&lt;button onClick={onClose} aria-label=\"Close dialog\"&gt;✕&lt;/button&gt;</code></pre>\n\n<h3>Loading states — avoid layout shift</h3>\n<pre><code>// ❌ nothing visible while loading → jarring pop-in\nif (loading) return null;\n\n// ✅ skeleton or spinner with correct ARIA role\nif (loading) return (\n  &lt;div role=\"status\" aria-live=\"polite\" aria-label=\"Loading quests\"&gt;\n    &lt;div className=\"skeleton\" /&gt;\n    &lt;div className=\"skeleton\" /&gt;\n    &lt;div className=\"skeleton\" /&gt;\n  &lt;/div&gt;\n);</code></pre>\n\n<h3>Keyboard navigation for filter buttons</h3>\n<pre><code>// Use role=\"group\" + aria-label on the filter container\n&lt;div role=\"group\" aria-label=\"Filter by difficulty\"&gt;\n  {DIFFICULTIES.map(d =&gt; (\n    &lt;button\n      key={d}\n      onClick={() =&gt; setFilter(d)}\n      aria-pressed={filter === d}  // toggles true/false for screen readers\n    &gt;\n      {d}\n    &lt;/button&gt;\n  ))}\n&lt;/div&gt;</code></pre>\n\n<h3>Focus management after navigation</h3>\n<pre><code>// After navigating to the detail page, move focus to the heading\nconst headingRef = useRef&lt;HTMLHeadingElement&gt;(null);\n\nuseEffect(() =&gt; {\n  headingRef.current?.focus();\n}, [quest?.id]); // runs when quest loads\n\n&lt;h1 ref={headingRef} tabIndex={-1}&gt;{quest.title}&lt;/h1&gt;\n// tabIndex={-1} makes it programmatically focusable without adding it to the tab order</code></pre>\n\n<h3>CSS transitions for list re-renders</h3>\n<pre><code>.quest-card {\n  transition: opacity 200ms ease, transform 200ms ease;\n}\n/* With a key prop, React remounts on filter change →\n   add an entry animation class on mount */</code></pre>\n\n<h3>prefers-reduced-motion</h3>\n<pre><code>@media (prefers-reduced-motion: reduce) {\n  .quest-card { transition: none; }\n}</code></pre>\n      ",
+      "storyBeats": [
+        {
+          "speaker": "Vex",
+          "emoji": "⚗️",
+          "type": "dialogue",
+          "cssClass": "vex",
+          "text": "A sighted user with a mouse never notices accessibility work. But a keyboard user, a screen-reader user, a user on a slow connection — they notice every gap. Polish is not decoration. It's respect for your users."
+        },
+        {
+          "type": "narration",
+          "text": "You tab through the entire app without touching the mouse. Every button is reachable. Every state is announced. The portal is complete — not just functional, but considerate."
+        }
+      ],
+      "guidedPracticeHtml": "\n<h3>🏗️ Guided: Accessible Filter Buttons</h3>\n<p>Rewrite the quest filter buttons to be fully accessible.</p>\n<p><strong>Requirements:</strong></p>\n<ul>\n  <li>Wrap filters in a div with <code>role=\"group\"</code> and <code>aria-label=\"Filter by difficulty\"</code></li>\n  <li>Each button has <code>aria-pressed=\"true\"</code> when active, <code>aria-pressed=\"false\"</code> otherwise</li>\n  <li>Active button has class <code>active</code></li>\n  <li>All buttons are keyboard focusable and activatable with Enter/Space (default button behaviour)</li>\n  <li>The filter container has <code>data-testid=\"filter-group\"</code></li>\n</ul>\n      ",
+      "guidedPracticeStarterCode": "import { useState } from \"react\";\n\nconst DIFFICULTIES = [\"ALL\", \"FOUNDATION\", \"PRACTITIONER\", \"EXPERT\"];\n\nexport default function FilterButtons() {\n  const [active, setActive] = useState(\"ALL\");\n\n  return (\n    <div>\n      {/* Convert to accessible filter group */}\n      {DIFFICULTIES.map(d => (\n        <button key={d} onClick={() => setActive(d)}>\n          {d}\n        </button>\n      ))}\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "selector": "[data-testid='filter-group']",
+          "exists": true
+        },
+        {
+          "selector": "[role='group'][aria-label='Filter by difficulty']",
+          "exists": true
+        },
+        {
+          "selector": "button[aria-pressed='true']",
+          "requiredText": "ALL"
+        },
+        {
+          "action": "click",
+          "selector": "button:nth-child(2)",
+          "then": {
+            "selector": "button[aria-pressed='true']",
+            "requiredText": "FOUNDATION"
+          }
+        },
+        {
+          "action": "click",
+          "selector": "button:nth-child(2)",
+          "then": {
+            "selector": "button.active",
+            "requiredText": "FOUNDATION"
+          }
+        }
+      ],
+      "soloPracticeHtml": "\n<h3>🧩 Solo: Add Skip Navigation</h3>\n<p>Screen reader users often want to skip repetitive navigation and jump straight to main content.</p>\n<ul>\n  <li>Add a \"Skip to main content\" link as the very first focusable element in the page — <code>href=\"#main-content\"</code></li>\n  <li>Style it visually hidden by default (<code>position: absolute; left: -9999px</code>) but visible when focused (<code>:focus { left: 0; }</code>)</li>\n  <li>Give the main content area <code>id=\"main-content\"</code> and <code>tabIndex={-1}</code></li>\n  <li>Add <code>data-testid=\"skip-link\"</code> to the skip link</li>\n</ul>\n      ",
+      "feynmanPrompt": "Explain why aria-pressed is used on toggle buttons instead of aria-selected or aria-checked, as if a developer just asked 'aren't they all the same thing?'",
+      "questions": [
+        {
+          "id": "rx-d5-q1",
+          "type": "MCQ",
+          "options": [
+            "Add title='Close' — tooltips make the button accessible",
+            "Add aria-label='Close dialog' — this provides the accessible name to screen readers",
+            "Wrap it in a span with text — then hide the span with CSS",
+            "No fix needed — screen readers can infer intent from the icon's Unicode name"
+          ],
+          "explanation": "aria-label directly provides the accessible name for screen readers without altering the visual design. title only shows on hover and is not consistently announced by screen readers. Hiding text with CSS is a valid alternative but more complex.",
+          "prompt": "A button renders only an X icon with no visible text. What is the correct accessibility fix?",
+          "answer": "Add aria-label='Close dialog' — this provides the accessible name to screen readers",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d5-q2",
+          "type": "MCQ",
+          "options": [
+            "The element is removed from the DOM entirely",
+            "The element is skipped in the natural tab order but can be focused programmatically via .focus()",
+            "The element becomes the first focusable element on the page",
+            "The element receives focus after all tabIndex={0} elements"
+          ],
+          "explanation": "tabIndex={-1} removes an element from the sequential tab order (users can't tab to it) but allows programmatic focus via element.focus(). This is the standard pattern for focus management — e.g. moving focus to a heading or dialog when it opens.",
+          "prompt": "What does tabIndex={-1} on an element mean?",
+          "answer": "The element is skipped in the natural tab order but can be focused programmatically via .focus()",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d5-q3",
+          "type": "MCQ",
+          "options": [
+            "Animated transitions are deprecated in modern browsers",
+            "Some users experience dizziness, nausea, or seizures from motion. Disabling or reducing transitions for users who have enabled this OS-level accessibility setting is a WCAG requirement.",
+            "prefers-reduced-motion is only relevant for video content, not CSS transitions",
+            "CSS transitions block the main thread and cause jank on low-end devices"
+          ],
+          "explanation": "Users with vestibular disorders, epilepsy, or motion sensitivity can set prefers-reduced-motion in their OS settings. Respecting it by disabling or reducing animations is a WCAG 2.1 AA success criterion (2.3.3).",
+          "prompt": "Why should you respect prefers-reduced-motion in your CSS transitions?",
+          "answer": "Some users experience dizziness, nausea, or seizures from motion. Disabling or reducing transitions for users who have enabled this OS-level accessibility setting is a WCAG requirement.",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d5-q4",
+          "type": "MCQ",
+          "options": [
+            "null is better — fewer DOM nodes means faster rendering",
+            "Skeleton is better — it preserves the layout shape so content appears in place rather than jumping into view, reducing cumulative layout shift (CLS) and perceived wait time",
+            "Both are equivalent — the user experience is identical",
+            "null is better because it avoids the risk of skeleton styles conflicting with content styles"
+          ],
+          "explanation": "Returning null causes a content pop-in — the page jumps as content appears. A skeleton (or spinner in a stable container) maintains layout, reduces CLS, and gives users a sense of progress. CLS is a Core Web Vital that affects both UX and SEO.",
+          "prompt": "Which renders a better loading experience: returning null while data loads, or rendering a skeleton?",
+          "answer": "Skeleton is better — it preserves the layout shape so content appears in place rather than jumping into view, reducing cumulative layout shift (CLS) and perceived wait time",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        }
+      ],
+      "sortOrder": 5,
+      "practiceType": "REACT"
+    },
+    {
+      "id": "rx-d6",
+      "title": "The Grand Commission: Deploy the Guild Portal",
+      "xpReward": 350,
+      "filename": "index.html",
+      "hookHtml": "<p>Everything you have built lives only on your machine. A craftsperson's work is only real when others can see it. The Grand Commission is your final act: ship the Guild Portal to a live URL, share it, and claim your Expert badge.</p>",
+      "explanationHtml": "\n<h2>Deploying a Vite + React App</h2>\n\n<h3>Option A — Vercel (recommended, ~3 minutes)</h3>\n<ol>\n  <li>Push your project to a GitHub repository</li>\n  <li>Go to <a href=\"https://vercel.com\" target=\"_blank\">vercel.com</a> → \"New Project\" → import from GitHub</li>\n  <li>Framework preset: <strong>Vite</strong> — Vercel detects it automatically</li>\n  <li>Click Deploy. Done. You get a URL like <code>https://guild-portal-abc.vercel.app</code></li>\n  <li>Every push to main auto-redeploys</li>\n</ol>\n\n<h3>Option B — Netlify (~3 minutes)</h3>\n<ol>\n  <li>Push to GitHub</li>\n  <li>Go to <a href=\"https://netlify.com\" target=\"_blank\">netlify.com</a> → \"Add new site\" → import from GitHub</li>\n  <li>Build command: <code>npm run build</code></li>\n  <li>Publish directory: <code>dist</code></li>\n  <li>Deploy. URL like <code>https://guild-portal-abc.netlify.app</code></li>\n</ol>\n\n<h3>Option C — CodeSandbox (no git, ~2 minutes)</h3>\n<ol>\n  <li>Go to <a href=\"https://codesandbox.io\" target=\"_blank\">codesandbox.io</a></li>\n  <li>Create a new sandbox → \"Vite + React\" template</li>\n  <li>Paste your component files into the editor</li>\n  <li>The sandbox URL is live immediately: <code>https://abc123.csb.app</code></li>\n  <li>Export → \"Fork to GitHub\" to make it permanent</li>\n</ol>\n\n<h3>Pre-deploy checklist</h3>\n<pre><code># Run locally first\nnpm run build      # Vite compiles to dist/\nnpm run preview    # Serves dist/ — test this before deploying\n\n# Common issues before deployment:\n# 1. Environment variables — any VITE_* vars needed?\n# 2. React Router with BrowserRouter — add a _redirects file (Netlify)\n#    or configure rewrites (Vercel) so direct URL access works\n# 3. Console errors — fix all errors before deploying</code></pre>\n\n<h3>React Router on deployed static hosts</h3>\n<p>BrowserRouter uses real URLs like <code>/quests/3</code>. Static hosts serve files by path — they'll 404 on a direct visit to <code>/quests/3</code> because there's no file there. Fix:</p>\n<pre><code># Netlify — create public/_redirects:\n/*    /index.html   200\n\n# Vercel — create vercel.json at project root:\n{\n  \"rewrites\": [{ \"source\": \"/(.*)\", \"destination\": \"/index.html\" }]\n}</code></pre>\n\n<h3>What your submission must include</h3>\n<ul>\n  <li>✅ A live URL (Vercel / Netlify / CodeSandbox)</li>\n  <li>✅ Quest browser page renders and filters work</li>\n  <li>✅ Quest detail page loads via /quests/:id</li>\n  <li>✅ Profile page shows XP and rank</li>\n  <li>✅ Accepting a quest on the detail page increments profile XP</li>\n  <li>✅ No console errors in production</li>\n</ul>\n\n<blockquote style=\"border-left:4px solid #7c3aed;padding-left:1rem;margin:1.5rem 0;font-style:italic;color:#6b7280;\">\n  \"The URL is not the destination. It is the proof that the journey happened.\"\n  <br>— Grand Archmage Solomon\n</blockquote>\n      ",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Grand Archmage Solomon stands at the window of the Academy's highest tower, looking out over the city."
+        },
+        {
+          "speaker": "Solomon",
+          "emoji": "🧙",
+          "type": "dialogue",
+          "cssClass": "solomon",
+          "text": "From the first component to the final deployment — you have walked the full path. Not every apprentice completes the journey. Many learn. Fewer build. Fewer still ship."
+        },
+        {
+          "speaker": "Vex",
+          "emoji": "⚗️",
+          "type": "dialogue",
+          "cssClass": "vex",
+          "text": "The concepts will fade if you don't use them. But a URL with your name on it? That you can point to in an interview. That's evidence."
+        },
+        {
+          "speaker": "Solomon",
+          "emoji": "🧙",
+          "type": "dialogue",
+          "cssClass": "solomon",
+          "text": "Deploy the portal. Submit the URL. The Expert badge awaits — but more than the badge, you earn the right to say: I built something real."
+        }
+      ],
+      "guidedPracticeHtml": "\n<h3>🏗️ Guided: Pre-Deploy Build Check</h3>\n<p>Before deploying to a host, run the production build locally and fix any issues.</p>\n<p><strong>Steps:</strong></p>\n<ol>\n  <li>Run <code>npm run build</code> in your project root — fix any TypeScript or build errors</li>\n  <li>Run <code>npm run preview</code> — open the preview URL and verify all three pages work</li>\n  <li>Open the browser console — confirm zero errors and zero warnings</li>\n  <li>Manually navigate to <code>/quests</code> and <code>/quests/1</code> in the preview — confirm they load without 404</li>\n  <li>Create the React Router fix file for your chosen host (see explanation above)</li>\n</ol>\n<p><strong>This is a checklist exercise — there is no automated test. Complete each step and check it off before proceeding to the deployment challenge.</strong></p>\n      ",
+      "guidedPracticeStarterCode": "# Pre-deploy checklist (complete each step, then move to Solo)\n\n# Step 1: Build\n# npm run build\n\n# Step 2: Preview\n# npm run preview\n\n# Step 3: Browser console — must show zero errors\n\n# Step 4: Direct URL navigation — /quests and /quests/1 must load\n\n# Step 5: Create router fix file\n# For Netlify — create public/_redirects containing:\n#   /*    /index.html   200\n\n# For Vercel — create vercel.json containing:\n# {\n#   \"rewrites\": [{ \"source\": \"/(.*)\", \"destination\": \"/index.html\" }]\n# }",
+      "guidedPracticeTests": [],
+      "soloPracticeHtml": "\n<h3>🏆 The Grand Commission: Deploy and Submit</h3>\n<p>This is your final challenge. No automated grader — your work is judged by whether it runs live.</p>\n<ol>\n  <li><strong>Choose a host</strong>: Vercel (recommended), Netlify, or CodeSandbox</li>\n  <li><strong>Deploy</strong> your Guild Portal following the steps in the explanation</li>\n  <li><strong>Verify the live URL</strong>:\n    <ul>\n      <li>Home page loads</li>\n      <li>Quest browser renders and filters correctly</li>\n      <li>Clicking a quest opens its detail page at <code>/quests/:id</code></li>\n      <li>Accepting a quest updates XP on the Profile page</li>\n      <li>Refreshing <code>/quests/1</code> directly does not 404</li>\n      <li>Browser console shows zero errors</li>\n    </ul>\n  </li>\n  <li><strong>Submit your URL</strong> in the field below to claim the React Expert badge</li>\n</ol>\n\n<div style=\"background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:20px;margin-top:20px;\">\n  <p style=\"font-weight:700;margin:0 0 8px;\">Submit your deployment URL</p>\n  <p style=\"color:#64748b;font-size:14px;margin:0 0 12px;\">Paste the live URL of your Guild Portal (e.g. https://guild-portal-abc.vercel.app)</p>\n  <input\n    type=\"url\"\n    data-testid=\"deployment-url\"\n    placeholder=\"https://your-guild-portal.vercel.app\"\n    style=\"width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px;\"\n  />\n  <p style=\"color:#94a3b8;font-size:12px;margin:12px 0 0;\">This URL is your proof of completion. No submission = no badge.</p>\n</div>\n      ",
+      "feynmanPrompt": "Explain why a React app with BrowserRouter returns a 404 when you directly visit a deep URL on a static host — and why the _redirects fix works — as if explaining to someone who just deployed their first React app and is confused.",
+      "questions": [
+        {
+          "id": "rx-d6-q1",
+          "type": "MCQ",
+          "options": [
+            "The page loads correctly — Netlify serves index.html for all routes by default",
+            "The page returns a 404 — Netlify looks for a file at /quests/3, finds none, and serves the default 404 page",
+            "The page returns a 500 — Vite builds generate broken paths without special config",
+            "The page loads but React Router state is reset"
+          ],
+          "explanation": "Static file hosts serve files literally. /quests/3 maps to a file at that path, which doesn't exist. The _redirects rule tells Netlify to serve index.html for every path, letting React Router handle routing client-side.",
+          "prompt": "You deploy a Vite + React app to Netlify without a _redirects file. A user visits https://your-app.netlify.app/quests/3 directly. What happens?",
+          "answer": "The page returns a 404 — Netlify looks for a file at /quests/3, finds none, and serves the default 404 page",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d6-q2",
+          "type": "MCQ",
+          "options": [
+            "No risk — TypeScript errors are compile-time warnings and don't affect runtime behaviour",
+            "The undefined value may cause a runtime crash when the component tries to access a property on it, resulting in a white screen error for users",
+            "Vercel will refuse to deploy an app with TypeScript errors",
+            "The prop will be silently set to null at runtime, preventing a crash"
+          ],
+          "explanation": "TypeScript errors are warnings about places where your code's assumptions don't hold. Ignoring them means the edge case is still there — when the undefined value is accessed at runtime (e.g. quest.title on null), you get an uncaught error and likely a broken UI.",
+          "prompt": "You run npm run build and see a TypeScript error about a prop being potentially undefined. You ignore it and deploy anyway. What is the risk?",
+          "answer": "The undefined value may cause a runtime crash when the component tries to access a property on it, resulting in a white screen error for users",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d6-q3",
+          "type": "MCQ",
+          "options": [
+            "Zustand stores are cleared on refresh — you need to re-fetch from the server",
+            "The persist middleware was configured but the storage key changed between builds, invalidating the stored data",
+            "The Zustand persist middleware was not included, so state is only in memory and lost on page unload",
+            "Vercel clears localStorage between deployments as a security measure"
+          ],
+          "explanation": "Without persist middleware, Zustand state lives only in memory. A page refresh is a fresh JavaScript environment — the store re-initialises to defaults. Adding persist with a stable key fixes this by reading from localStorage on startup.",
+          "prompt": "After deploying, you find a bug: accepting a quest updates XP in the current session but the XP is gone after a browser refresh. What is the most likely cause?",
+          "answer": "The Zustand persist middleware was not included, so state is only in memory and lost on page unload",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        },
+        {
+          "id": "rx-d6-q4",
+          "type": "MCQ",
+          "options": [
+            "Accessibility is required by law in most countries, so it must be done first",
+            "Accessibility built in from the start costs far less than retrofitting it — semantic HTML and ARIA labels are written once at component creation; fixing a built app requires auditing and rewriting every component",
+            "Accessibility improves SEO, so it should be prioritised for business reasons",
+            "Modern browsers handle accessibility automatically if you use React"
+          ],
+          "explanation": "Retrofitting accessibility is significantly more expensive than building it in from the start. Writing a semantic button instead of a div-with-onClick takes zero extra time. Auditing and rewriting a complete app later does not. The 'later' that never comes is one of the most common quality debts in frontend development.",
+          "prompt": "A friend says 'I'll add accessibility later once the features are done.' What is the most important counterargument?",
+          "answer": "Accessibility built in from the start costs far less than retrofitting it — semantic HTML and ARIA labels are written once at component creation; fixing a built app requires auditing and rewriting every component",
+          "tier": "RECALL",
+          "minPath": "EXPERT"
+        }
+      ],
+      "sortOrder": 6,
+      "practiceType": "NONE"
+    }
+  ],
+  "sortOrder": 4,
+  "glyph": "🏛️"
+}

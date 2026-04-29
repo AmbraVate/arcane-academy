@@ -1,12 +1,13 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi, tailwindApi, curiosityApi } from '../api/services'
+import { encodingApi, codeApi, tailwindApi, reactApi, curiosityApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
 import QuestionCard from '../components/quest/QuestionCard'
 import CodeEditor from '../components/quest/CodeEditor'
 import TailwindEditor from '../components/quest/TailwindEditor'
+import ReactEditor, { type ReactEditorHandle, type ReactTestSpec } from '../components/quest/ReactEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
 import AiMentorPanel from '../components/quest/AiMentorPanel'
@@ -52,6 +53,7 @@ export default function EncodingPage() {
   const [levelUpInfo, setLevelUpInfo] = useState<{ level: number; rank: string } | null>(null)
   const [newBadges, setNewBadges] = useState<Badge[]>([])
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
+  const reactEditorRef = useRef<ReactEditorHandle>(null)
 
   useEffect(() => {
     if (!subChunkId) return
@@ -187,6 +189,57 @@ export default function EncodingPage() {
       setOutput(lines)
     } catch { setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }]) }
     finally { setRunning(false) }
+  }
+
+  // ── React (JSX) practice ───────────────────────────────────────────────────
+  // Tests run in an iframe sandbox via ReactEditor.runTests(); per-test pass/fail
+  // is then forwarded to the backend along with the source code. See
+  // ReactPracticeService for the trust model rationale.
+
+  async function handleSubmitReact(solo: boolean) {
+    if (!subChunkId || !encoding || running) return
+    setRunning(true); setMentorFeedback(null)
+    setOutput([{ text: '// Rendering and running tests in the sandbox…', type: 'system' }])
+    setTestResults(new Map())
+    try {
+      const specs: ReactTestSpec[] = Array.isArray(encoding.testCaseLabels)
+        ? (encoding.testCaseLabels as ReactTestSpec[])
+        : []
+      const clientResults = (await reactEditorRef.current?.runTests(specs)) ?? []
+      const submitFn = solo ? reactApi.submitSoloPractice : reactApi.submit
+      const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({
+          text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`,
+          type: t.passed ? 'success' : 'error',
+        })
+      })
+      setTestResults(newResults)
+      if (result.allPassed) {
+        lines.push({ text: '✓ All tests passed!', type: 'success' })
+        setPracticeSolved(true); setShowTaskOverlay(false)
+        if (result.xpEarned > 0) {
+          const prevRank = calculateRank(user?.totalXp ?? 0)
+          const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
+          updateXp(result.xpEarned, newRank); showToast(`✦ +${result.xpEarned} XP`)
+          if (newRank !== prevRank) {
+            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
+            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
+          }
+          if (result.newBadges?.length) setNewBadges(result.newBadges)
+        }
+      } else {
+        lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
+      }
+      setOutput(lines)
+    } catch {
+      setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }])
+    } finally {
+      setRunning(false)
+    }
   }
 
   async function handleSubmitSoloPractice() {
@@ -425,7 +478,7 @@ export default function EncodingPage() {
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
                 <div className="text-[14px] font-bold text-teal mb-2.5">✦ Practice Complete!</div>
-                <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check →</button>
+                <button className="btn btn-primary" onClick={handleAdvance}>Continue →</button>
               </div>
             )}
           </div>
@@ -444,14 +497,18 @@ export default function EncodingPage() {
                 </button>
               </div>
               <div className="flex gap-2 flex-shrink-0">
-                {encoding.practiceType !== 'TAILWIND' && (
+                {encoding.practiceType === 'JAVA' && (
                   <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px]', running && 'opacity-70')} onClick={handleRun} disabled={running}>
                     {running ? '⟳ Running…' : '▶ Run'}
                   </button>
                 )}
                 <button
                   className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px]')}
-                  onClick={encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind : handleSubmitPractice}
+                  onClick={
+                    encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind
+                    : encoding.practiceType === 'REACT' ? () => handleSubmitReact(false)
+                    : handleSubmitPractice
+                  }
                   disabled={running || practiceSolved}
                 >
                   {practiceSolved ? '✓ Solved' : '⚡ Submit'}
@@ -462,6 +519,17 @@ export default function EncodingPage() {
             {encoding.practiceType === 'TAILWIND' ? (
               <>
                 <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : encoding.practiceType === 'REACT' ? (
+              <>
+                <ReactEditor ref={reactEditorRef} value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
@@ -575,14 +643,18 @@ export default function EncodingPage() {
                 </button>
               </div>
               <div className="flex gap-2 flex-shrink-0">
-                {encoding.practiceType !== 'TAILWIND' && (
+                {encoding.practiceType === 'JAVA' && (
                   <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px]', running && 'opacity-70')} onClick={handleRun} disabled={running}>
                     {running ? '⟳ Running…' : '▶ Run'}
                   </button>
                 )}
                 <button
                   className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px]')}
-                  onClick={encoding.practiceType === 'TAILWIND' ? handleSubmitTailwindSolo : handleSubmitSoloPractice}
+                  onClick={
+                    encoding.practiceType === 'TAILWIND' ? handleSubmitTailwindSolo
+                    : encoding.practiceType === 'REACT' ? () => handleSubmitReact(true)
+                    : handleSubmitSoloPractice
+                  }
                   disabled={running || practiceSolved}
                 >
                   {practiceSolved ? '✓ Solved' : '⚡ Submit'}
@@ -593,6 +665,17 @@ export default function EncodingPage() {
             {encoding.practiceType === 'TAILWIND' ? (
               <>
                 <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Solo Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : encoding.practiceType === 'REACT' ? (
+              <>
+                <ReactEditor ref={reactEditorRef} value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">

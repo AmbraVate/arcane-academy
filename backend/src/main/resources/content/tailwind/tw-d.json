@@ -5,7 +5,9 @@
   "sortOrder": 4,
   "tier": "EXPERT",
   "topicId": "tailwind",
-  "prerequisites": ["tw-c"],
+  "prerequisites": [
+    "tw-c"
+  ],
   "rabbitHoles": [],
   "subChunks": [
     {
@@ -55,24 +57,89 @@
       "guidedPracticeHtml": "<p>Build the Arcane Guild's sticky header. The HTML structure is provided — your job is to apply the correct Tailwind classes to each element.</p>\n<ul>\n<li><strong>.site-header</strong> — sticky, top-0, z-50, frosted-glass background, bottom border</li>\n<li><strong>.header-inner</strong> — max-width container, horizontal padding, flex layout with space-between</li>\n<li><strong>.site-logo</strong> — bold indigo monospace text</li>\n<li><strong>.nav-links</strong> — hidden on mobile, flex row on md+</li>\n<li><strong>.nav-link</strong> — muted text with indigo hover and smooth colour transition</li>\n<li><strong>.header-cta</strong> — indigo button with hover state and colour transition</li>\n</ul>",
       "guidedPracticeStarterCode": "<header class=\"site-header\">\n  <div class=\"header-inner\">\n    <a href=\"#\" class=\"site-logo\">⬡ ArcaneGuild</a>\n    <nav class=\"nav-links\">\n      <a href=\"#\" class=\"nav-link\">Services</a>\n      <a href=\"#\" class=\"nav-link\">Work</a>\n      <a href=\"#\" class=\"nav-link\">Team</a>\n      <a href=\"#\" class=\"nav-link\">Contact</a>\n    </nav>\n    <a href=\"#\" class=\"header-cta\">Get Started</a>\n  </div>\n</header>",
       "guidedPracticeTests": [
-        {"label": "Header is sticky", "selector": ".site-header", "requiredClass": "sticky"},
-        {"label": "Header is top-0", "selector": ".site-header", "requiredClass": "top-0"},
-        {"label": "Header has z-50", "selector": ".site-header", "requiredClass": "z-50"},
-        {"label": "Header has border-b", "selector": ".site-header", "requiredClass": "border-b"},
-        {"label": "Header has backdrop-blur-sm", "selector": ".site-header", "requiredClass": "backdrop-blur-sm"},
-        {"label": "Inner container is flex", "selector": ".header-inner", "requiredClass": "flex"},
-        {"label": "Inner container has items-center", "selector": ".header-inner", "requiredClass": "items-center"},
-        {"label": "Inner container has justify-between", "selector": ".header-inner", "requiredClass": "justify-between"},
-        {"label": "Inner container has max-w-7xl", "selector": ".header-inner", "requiredClass": "max-w-7xl"},
-        {"label": "Nav is hidden on mobile", "selector": ".nav-links", "requiredClass": "hidden"},
-        {"label": "Nav is flex on md+", "selector": ".nav-links", "requiredClass": "md:flex"},
-        {"label": "Nav link has hover:text-indigo-600", "selector": ".nav-link", "requiredClass": "hover:text-indigo-600"},
-        {"label": "Nav link has transition-colors", "selector": ".nav-link", "requiredClass": "transition-colors"},
-        {"label": "CTA has bg-indigo-600", "selector": ".header-cta", "requiredClass": "bg-indigo-600"},
-        {"label": "CTA is rounded-lg", "selector": ".header-cta", "requiredClass": "rounded-lg"},
-        {"label": "CTA has hover:bg-indigo-700", "selector": ".header-cta", "requiredClass": "hover:bg-indigo-700"}
+        {
+          "label": "Header is sticky",
+          "selector": ".site-header",
+          "requiredClass": "sticky"
+        },
+        {
+          "label": "Header is top-0",
+          "selector": ".site-header",
+          "requiredClass": "top-0"
+        },
+        {
+          "label": "Header has z-50",
+          "selector": ".site-header",
+          "requiredClass": "z-50"
+        },
+        {
+          "label": "Header has border-b",
+          "selector": ".site-header",
+          "requiredClass": "border-b"
+        },
+        {
+          "label": "Header has backdrop-blur-sm",
+          "selector": ".site-header",
+          "requiredClass": "backdrop-blur-sm"
+        },
+        {
+          "label": "Inner container is flex",
+          "selector": ".header-inner",
+          "requiredClass": "flex"
+        },
+        {
+          "label": "Inner container has items-center",
+          "selector": ".header-inner",
+          "requiredClass": "items-center"
+        },
+        {
+          "label": "Inner container has justify-between",
+          "selector": ".header-inner",
+          "requiredClass": "justify-between"
+        },
+        {
+          "label": "Inner container has max-w-7xl",
+          "selector": ".header-inner",
+          "requiredClass": "max-w-7xl"
+        },
+        {
+          "label": "Nav is hidden on mobile",
+          "selector": ".nav-links",
+          "requiredClass": "hidden"
+        },
+        {
+          "label": "Nav is flex on md+",
+          "selector": ".nav-links",
+          "requiredClass": "md:flex"
+        },
+        {
+          "label": "Nav link has hover:text-indigo-600",
+          "selector": ".nav-link",
+          "requiredClass": "hover:text-indigo-600"
+        },
+        {
+          "label": "Nav link has transition-colors",
+          "selector": ".nav-link",
+          "requiredClass": "transition-colors"
+        },
+        {
+          "label": "CTA has bg-indigo-600",
+          "selector": ".header-cta",
+          "requiredClass": "bg-indigo-600"
+        },
+        {
+          "label": "CTA is rounded-lg",
+          "selector": ".header-cta",
+          "requiredClass": "rounded-lg"
+        },
+        {
+          "label": "CTA has hover:bg-indigo-700",
+          "selector": ".header-cta",
+          "requiredClass": "hover:bg-indigo-700"
+        }
       ],
       "feynmanPrompt": "A colleague asks why you used <code>sticky top-0 z-50</code> on the header rather than <code>fixed top-0 left-0 right-0 z-50</code>. Explain the difference between sticky and fixed positioning, and describe one practical scenario where each would be the better choice.",
+      "soloPracticeHtml": "<p>Build a <strong>sticky page header with scroll shadow</strong> from scratch. The header contains a logo on the left and two nav links on the right. It should be <code>sticky top-0</code> with a <code>z-50</code> to stay above content. Add a bottom shadow to signal elevation. No scaffold provided.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -175,28 +242,109 @@
       "guidedPracticeHtml": "<p>Build the Arcane Guild's hero section. This is the most technically rich section of the commission — gradient backgrounds, gradient text, coloured shadows, and a responsive two-column layout all come together here.</p>\n<ul>\n<li><strong>.hero</strong> — three-stop diagonal gradient background, generous vertical padding</li>\n<li><strong>.hero-inner</strong> — max-width grid, 1-col mobile → 2-col lg, centered items</li>\n<li><strong>.hero-eyebrow</strong> — indigo-400 text, widest tracking, all-caps, small size</li>\n<li><strong>.hero-heading</strong> — extrabold 5xl text, tight leading, white</li>\n<li><strong>.hero-heading span</strong> — gradient text using the three-class recipe</li>\n<li><strong>.hero-body</strong> — slate-300 text, relaxed leading</li>\n<li><strong>.hero-cta-primary</strong> — indigo button with brand-coloured shadow and xl rounding</li>\n<li><strong>.hero-cta-secondary</strong> — ghost button with slate border and hover state</li>\n<li><strong>.hero-visual</strong> — hidden on mobile, block on lg</li>\n<li><strong>.hero-card</strong> — glassmorphism card with backdrop blur</li>\n</ul>",
       "guidedPracticeStarterCode": "<section class=\"hero\">\n  <div class=\"hero-inner\">\n    <div class=\"hero-content\">\n      <p class=\"hero-eyebrow\">Arcane Guild · Est. 1842</p>\n      <h1 class=\"hero-heading\">\n        We craft digital<br>\n        <span>experiences</span><br>\n        that endure.\n      </h1>\n      <p class=\"hero-body\">From rapid prototypes to production-grade systems — we build with craft, clarity, and the full depth of the arcane arts.</p>\n      <div class=\"flex flex-col sm:flex-row gap-4\">\n        <a href=\"#\" class=\"hero-cta-primary\">Start a Project →</a>\n        <a href=\"#\" class=\"hero-cta-secondary\">View Our Work</a>\n      </div>\n    </div>\n    <div class=\"hero-visual\">\n      <div class=\"hero-card\">\n        <div class=\"text-4xl mb-4\">⬡</div>\n        <div class=\"text-white font-semibold text-xl mb-2\">Project Nexus</div>\n        <div class=\"text-slate-400 text-sm\">42 components · Design system · 98% Lighthouse</div>\n      </div>\n    </div>\n  </div>\n</section>",
       "guidedPracticeTests": [
-        {"label": "Hero has bg-gradient-to-br", "selector": ".hero", "requiredClass": "bg-gradient-to-br"},
-        {"label": "Hero has from-indigo-950", "selector": ".hero", "requiredClass": "from-indigo-950"},
-        {"label": "Hero has via-purple-950", "selector": ".hero", "requiredClass": "via-purple-950"},
-        {"label": "Hero has py-24", "selector": ".hero", "requiredClass": "py-24"},
-        {"label": "Hero inner is a grid", "selector": ".hero-inner", "requiredClass": "grid"},
-        {"label": "Hero inner has lg:grid-cols-2", "selector": ".hero-inner", "requiredClass": "lg:grid-cols-2"},
-        {"label": "Hero inner has items-center", "selector": ".hero-inner", "requiredClass": "items-center"},
-        {"label": "Eyebrow has tracking-widest", "selector": ".hero-eyebrow", "requiredClass": "tracking-widest"},
-        {"label": "Eyebrow is uppercase", "selector": ".hero-eyebrow", "requiredClass": "uppercase"},
-        {"label": "Heading is font-extrabold", "selector": ".hero-heading", "requiredClass": "font-extrabold"},
-        {"label": "Heading is text-5xl", "selector": ".hero-heading", "requiredClass": "text-5xl"},
-        {"label": "Gradient span has bg-clip-text", "selector": ".hero-heading span", "requiredClass": "bg-clip-text"},
-        {"label": "Gradient span has text-transparent", "selector": ".hero-heading span", "requiredClass": "text-transparent"},
-        {"label": "Primary CTA has shadow-lg", "selector": ".hero-cta-primary", "requiredClass": "shadow-lg"},
-        {"label": "Primary CTA is rounded-xl", "selector": ".hero-cta-primary", "requiredClass": "rounded-xl"},
-        {"label": "Primary CTA has hover:bg-indigo-400", "selector": ".hero-cta-primary", "requiredClass": "hover:bg-indigo-400"},
-        {"label": "Hero visual is hidden on mobile", "selector": ".hero-visual", "requiredClass": "hidden"},
-        {"label": "Hero visual is block on lg", "selector": ".hero-visual", "requiredClass": "lg:block"},
-        {"label": "Hero card has backdrop-blur-sm", "selector": ".hero-card", "requiredClass": "backdrop-blur-sm"},
-        {"label": "Hero card is rounded-2xl", "selector": ".hero-card", "requiredClass": "rounded-2xl"}
+        {
+          "label": "Hero has bg-gradient-to-br",
+          "selector": ".hero",
+          "requiredClass": "bg-gradient-to-br"
+        },
+        {
+          "label": "Hero has from-indigo-950",
+          "selector": ".hero",
+          "requiredClass": "from-indigo-950"
+        },
+        {
+          "label": "Hero has via-purple-950",
+          "selector": ".hero",
+          "requiredClass": "via-purple-950"
+        },
+        {
+          "label": "Hero has py-24",
+          "selector": ".hero",
+          "requiredClass": "py-24"
+        },
+        {
+          "label": "Hero inner is a grid",
+          "selector": ".hero-inner",
+          "requiredClass": "grid"
+        },
+        {
+          "label": "Hero inner has lg:grid-cols-2",
+          "selector": ".hero-inner",
+          "requiredClass": "lg:grid-cols-2"
+        },
+        {
+          "label": "Hero inner has items-center",
+          "selector": ".hero-inner",
+          "requiredClass": "items-center"
+        },
+        {
+          "label": "Eyebrow has tracking-widest",
+          "selector": ".hero-eyebrow",
+          "requiredClass": "tracking-widest"
+        },
+        {
+          "label": "Eyebrow is uppercase",
+          "selector": ".hero-eyebrow",
+          "requiredClass": "uppercase"
+        },
+        {
+          "label": "Heading is font-extrabold",
+          "selector": ".hero-heading",
+          "requiredClass": "font-extrabold"
+        },
+        {
+          "label": "Heading is text-5xl",
+          "selector": ".hero-heading",
+          "requiredClass": "text-5xl"
+        },
+        {
+          "label": "Gradient span has bg-clip-text",
+          "selector": ".hero-heading span",
+          "requiredClass": "bg-clip-text"
+        },
+        {
+          "label": "Gradient span has text-transparent",
+          "selector": ".hero-heading span",
+          "requiredClass": "text-transparent"
+        },
+        {
+          "label": "Primary CTA has shadow-lg",
+          "selector": ".hero-cta-primary",
+          "requiredClass": "shadow-lg"
+        },
+        {
+          "label": "Primary CTA is rounded-xl",
+          "selector": ".hero-cta-primary",
+          "requiredClass": "rounded-xl"
+        },
+        {
+          "label": "Primary CTA has hover:bg-indigo-400",
+          "selector": ".hero-cta-primary",
+          "requiredClass": "hover:bg-indigo-400"
+        },
+        {
+          "label": "Hero visual is hidden on mobile",
+          "selector": ".hero-visual",
+          "requiredClass": "hidden"
+        },
+        {
+          "label": "Hero visual is block on lg",
+          "selector": ".hero-visual",
+          "requiredClass": "lg:block"
+        },
+        {
+          "label": "Hero card has backdrop-blur-sm",
+          "selector": ".hero-card",
+          "requiredClass": "backdrop-blur-sm"
+        },
+        {
+          "label": "Hero card is rounded-2xl",
+          "selector": ".hero-card",
+          "requiredClass": "rounded-2xl"
+        }
       ],
       "feynmanPrompt": "Explain how the three classes <code>text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400</code> work together to create gradient text. What would the element look like if you removed only <code>text-transparent</code>? What if you removed only <code>bg-clip-text</code>?",
+      "soloPracticeHtml": "<p>Build a <strong>hero headline with gradient text</strong> from scratch. The headline should use the <code>text-transparent bg-clip-text bg-gradient-to-r</code> technique with colour stops of your choice. Below it, add a one-line subheading in plain white. No class list given — recall the gradient-text pattern from memory.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -286,24 +434,89 @@
       "guidedPracticeHtml": "<p>Build the Arcane Guild's services section with three feature cards. The key techniques are: the <code>group</code>/<code>group-hover:</code> pattern for parent-driven child hover effects, <code>ring-*</code> utilities for the featured card highlight, and <code>transition-all</code> for multi-property card hover transitions.</p>\n<ul>\n<li><strong>.services</strong> — light slate background, generous vertical padding</li>\n<li><strong>.services-grid</strong> — responsive grid: 1 col → 3 col at md</li>\n<li><strong>.service-card</strong> — white rounded card with border, hover effects, and group context</li>\n<li><strong>.service-icon</strong> — small rounded square with indigo background that reacts to parent hover</li>\n<li><strong>.service-card--featured</strong> — ring highlight for the middle featured card</li>\n</ul>",
       "guidedPracticeStarterCode": "<section class=\"services\">\n  <div class=\"services-inner\">\n    <h2 class=\"services-heading\">What We Build</h2>\n    <p class=\"services-subheading\">Three disciplines. One philosophy: software that works and interfaces that delight.</p>\n    <div class=\"services-grid\">\n      <div class=\"service-card\">\n        <div class=\"service-icon\">⚡</div>\n        <h3 class=\"service-title\">Frontend Engineering</h3>\n        <p class=\"service-description\">Pixel-perfect interfaces with React, TypeScript, and Tailwind. Performance budgets respected. Accessibility baked in.</p>\n        <a href=\"#\" class=\"service-link\">Learn more →</a>\n      </div>\n      <div class=\"service-card service-card--featured\">\n        <div class=\"service-icon\">🏛️</div>\n        <h3 class=\"service-title\">System Architecture</h3>\n        <p class=\"service-description\">Scalable backends, domain-driven design, event-sourced systems. Built to grow with you, not against you.</p>\n        <a href=\"#\" class=\"service-link\">Learn more →</a>\n      </div>\n      <div class=\"service-card\">\n        <div class=\"service-icon\">🔮</div>\n        <h3 class=\"service-title\">Design Systems</h3>\n        <p class=\"service-description\">Token-driven design systems, component libraries, and documentation that your whole team can contribute to.</p>\n        <a href=\"#\" class=\"service-link\">Learn more →</a>\n      </div>\n    </div>\n  </div>\n</section>",
       "guidedPracticeTests": [
-        {"label": "Services section has bg-slate-50", "selector": ".services", "requiredClass": "bg-slate-50"},
-        {"label": "Services section has py-24", "selector": ".services", "requiredClass": "py-24"},
-        {"label": "Services grid is a grid", "selector": ".services-grid", "requiredClass": "grid"},
-        {"label": "Services grid has md:grid-cols-3", "selector": ".services-grid", "requiredClass": "md:grid-cols-3"},
-        {"label": "Services grid has gap-8", "selector": ".services-grid", "requiredClass": "gap-8"},
-        {"label": "Service card is rounded-2xl", "selector": ".service-card", "requiredClass": "rounded-2xl"},
-        {"label": "Service card has hover:border-indigo-300", "selector": ".service-card", "requiredClass": "hover:border-indigo-300"},
-        {"label": "Service card has hover:shadow-xl", "selector": ".service-card", "requiredClass": "hover:shadow-xl"},
-        {"label": "Service card has group class", "selector": ".service-card", "requiredClass": "group"},
-        {"label": "Service card has transition-all", "selector": ".service-card", "requiredClass": "transition-all"},
-        {"label": "Service icon has group-hover:bg-indigo-600", "selector": ".service-icon", "requiredClass": "group-hover:bg-indigo-600"},
-        {"label": "Service icon is rounded-xl", "selector": ".service-icon", "requiredClass": "rounded-xl"},
-        {"label": "Service icon is flex", "selector": ".service-icon", "requiredClass": "flex"},
-        {"label": "Featured card has ring-2", "selector": ".service-card--featured", "requiredClass": "ring-2"},
-        {"label": "Featured card has ring-indigo-500", "selector": ".service-card--featured", "requiredClass": "ring-indigo-500"},
-        {"label": "Featured card has ring-offset-2", "selector": ".service-card--featured", "requiredClass": "ring-offset-2"}
+        {
+          "label": "Services section has bg-slate-50",
+          "selector": ".services",
+          "requiredClass": "bg-slate-50"
+        },
+        {
+          "label": "Services section has py-24",
+          "selector": ".services",
+          "requiredClass": "py-24"
+        },
+        {
+          "label": "Services grid is a grid",
+          "selector": ".services-grid",
+          "requiredClass": "grid"
+        },
+        {
+          "label": "Services grid has md:grid-cols-3",
+          "selector": ".services-grid",
+          "requiredClass": "md:grid-cols-3"
+        },
+        {
+          "label": "Services grid has gap-8",
+          "selector": ".services-grid",
+          "requiredClass": "gap-8"
+        },
+        {
+          "label": "Service card is rounded-2xl",
+          "selector": ".service-card",
+          "requiredClass": "rounded-2xl"
+        },
+        {
+          "label": "Service card has hover:border-indigo-300",
+          "selector": ".service-card",
+          "requiredClass": "hover:border-indigo-300"
+        },
+        {
+          "label": "Service card has hover:shadow-xl",
+          "selector": ".service-card",
+          "requiredClass": "hover:shadow-xl"
+        },
+        {
+          "label": "Service card has group class",
+          "selector": ".service-card",
+          "requiredClass": "group"
+        },
+        {
+          "label": "Service card has transition-all",
+          "selector": ".service-card",
+          "requiredClass": "transition-all"
+        },
+        {
+          "label": "Service icon has group-hover:bg-indigo-600",
+          "selector": ".service-icon",
+          "requiredClass": "group-hover:bg-indigo-600"
+        },
+        {
+          "label": "Service icon is rounded-xl",
+          "selector": ".service-icon",
+          "requiredClass": "rounded-xl"
+        },
+        {
+          "label": "Service icon is flex",
+          "selector": ".service-icon",
+          "requiredClass": "flex"
+        },
+        {
+          "label": "Featured card has ring-2",
+          "selector": ".service-card--featured",
+          "requiredClass": "ring-2"
+        },
+        {
+          "label": "Featured card has ring-indigo-500",
+          "selector": ".service-card--featured",
+          "requiredClass": "ring-indigo-500"
+        },
+        {
+          "label": "Featured card has ring-offset-2",
+          "selector": ".service-card--featured",
+          "requiredClass": "ring-offset-2"
+        }
       ],
       "feynmanPrompt": "Explain the Tailwind <code>group</code> / <code>group-hover:</code> pattern to a colleague who only knows basic hover states. Why can't you use a simple <code>hover:</code> variant on the child element (the icon) to achieve the same effect? Give a concrete example of where parent-driven hover control is necessary.",
+      "soloPracticeHtml": "<p>Build a <strong>project card with image zoom and title reveal</strong> from scratch using <code>group</code> and <code>group-hover:</code>. The card shows an image placeholder (coloured div) that scales on hover, and a title that transitions from muted to full white. No class scaffold given — apply the group pattern without guidance.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -393,25 +606,94 @@
       "guidedPracticeHtml": "<p>Build the Arcane Guild's team section. Key techniques in this section: <code>object-cover</code> for consistent avatar crops, <code>relative</code>/<code>absolute</code> positioning for the status dot, <code>ring-*</code> for avatar frames with hover colour change, and a three-breakpoint responsive grid.</p>\n<ul>\n<li><strong>.team</strong> — white background, generous vertical padding</li>\n<li><strong>.team-grid</strong> — 1 col → 2 col (sm) → 4 col (lg)</li>\n<li><strong>.team-card</strong> — centred text, group context for hover effects</li>\n<li><strong>.team-avatar-wrap</strong> — relative positioning context for the status dot</li>\n<li><strong>.team-avatar</strong> — circular, object-cover, ring frame with group-hover colour change</li>\n<li><strong>.team-status</strong> — absolutely positioned green dot with white ring</li>\n</ul>",
       "guidedPracticeStarterCode": "<section class=\"team\">\n  <div class=\"team-inner\">\n    <h2 class=\"team-heading\">The Guild Council</h2>\n    <p class=\"team-subheading\">Four disciplines. Four masters. One shared obsession with doing the work well.</p>\n    <div class=\"team-grid\">\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=1\" alt=\"Archmage Eldrin\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Archmage Eldrin</h3>\n        <p class=\"team-role\">Chief Architect</p>\n        <p class=\"team-bio\">20 years crafting systems that outlast their requirements. Specialises in Java, distributed architecture.</p>\n      </div>\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=5\" alt=\"Lyra the Scribe\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Lyra the Scribe</h3>\n        <p class=\"team-role\">Design Lead</p>\n        <p class=\"team-bio\">Translates intent into interface. Utility-first, accessibility-always, obsessive about spacing.</p>\n      </div>\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=9\" alt=\"Maester Cordell\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Maester Cordell</h3>\n        <p class=\"team-role\">DevOps Mage</p>\n        <p class=\"team-bio\">If it isn't deployed, it isn't real. Docker, CI/CD, zero-downtime deploys — the invisible work made visible.</p>\n      </div>\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=12\" alt=\"Sable the Illuminator\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Sable</h3>\n        <p class=\"team-role\">UX Researcher</p>\n        <p class=\"team-bio\">Runs user tests before writing a line of code. Proof: the features we removed made the product better.</p>\n      </div>\n    </div>\n  </div>\n</section>",
       "guidedPracticeTests": [
-        {"label": "Team section has bg-white", "selector": ".team", "requiredClass": "bg-white"},
-        {"label": "Team section has py-24", "selector": ".team", "requiredClass": "py-24"},
-        {"label": "Team grid is a grid", "selector": ".team-grid", "requiredClass": "grid"},
-        {"label": "Team grid has sm:grid-cols-2", "selector": ".team-grid", "requiredClass": "sm:grid-cols-2"},
-        {"label": "Team grid has lg:grid-cols-4", "selector": ".team-grid", "requiredClass": "lg:grid-cols-4"},
-        {"label": "Team card has group", "selector": ".team-card", "requiredClass": "group"},
-        {"label": "Avatar is rounded-full", "selector": ".team-avatar", "requiredClass": "rounded-full"},
-        {"label": "Avatar has ring-4", "selector": ".team-avatar", "requiredClass": "ring-4"},
-        {"label": "Avatar has group-hover:ring-indigo-300", "selector": ".team-avatar", "requiredClass": "group-hover:ring-indigo-300"},
-        {"label": "Avatar has shadow-lg", "selector": ".team-avatar", "requiredClass": "shadow-lg"},
-        {"label": "Avatar has object-cover", "selector": ".team-avatar", "requiredClass": "object-cover"},
-        {"label": "Status dot is rounded-full", "selector": ".team-status", "requiredClass": "rounded-full"},
-        {"label": "Status dot has bg-green-400", "selector": ".team-status", "requiredClass": "bg-green-400"},
-        {"label": "Status dot is absolute", "selector": ".team-status", "requiredClass": "absolute"},
-        {"label": "Team role has text-indigo-600", "selector": ".team-role", "requiredClass": "text-indigo-600"},
-        {"label": "Team role has font-semibold", "selector": ".team-role", "requiredClass": "font-semibold"},
-        {"label": "Avatar wrap is relative", "selector": ".team-avatar-wrap", "requiredClass": "relative"}
+        {
+          "label": "Team section has bg-white",
+          "selector": ".team",
+          "requiredClass": "bg-white"
+        },
+        {
+          "label": "Team section has py-24",
+          "selector": ".team",
+          "requiredClass": "py-24"
+        },
+        {
+          "label": "Team grid is a grid",
+          "selector": ".team-grid",
+          "requiredClass": "grid"
+        },
+        {
+          "label": "Team grid has sm:grid-cols-2",
+          "selector": ".team-grid",
+          "requiredClass": "sm:grid-cols-2"
+        },
+        {
+          "label": "Team grid has lg:grid-cols-4",
+          "selector": ".team-grid",
+          "requiredClass": "lg:grid-cols-4"
+        },
+        {
+          "label": "Team card has group",
+          "selector": ".team-card",
+          "requiredClass": "group"
+        },
+        {
+          "label": "Avatar is rounded-full",
+          "selector": ".team-avatar",
+          "requiredClass": "rounded-full"
+        },
+        {
+          "label": "Avatar has ring-4",
+          "selector": ".team-avatar",
+          "requiredClass": "ring-4"
+        },
+        {
+          "label": "Avatar has group-hover:ring-indigo-300",
+          "selector": ".team-avatar",
+          "requiredClass": "group-hover:ring-indigo-300"
+        },
+        {
+          "label": "Avatar has shadow-lg",
+          "selector": ".team-avatar",
+          "requiredClass": "shadow-lg"
+        },
+        {
+          "label": "Avatar has object-cover",
+          "selector": ".team-avatar",
+          "requiredClass": "object-cover"
+        },
+        {
+          "label": "Status dot is rounded-full",
+          "selector": ".team-status",
+          "requiredClass": "rounded-full"
+        },
+        {
+          "label": "Status dot has bg-green-400",
+          "selector": ".team-status",
+          "requiredClass": "bg-green-400"
+        },
+        {
+          "label": "Status dot is absolute",
+          "selector": ".team-status",
+          "requiredClass": "absolute"
+        },
+        {
+          "label": "Team role has text-indigo-600",
+          "selector": ".team-role",
+          "requiredClass": "text-indigo-600"
+        },
+        {
+          "label": "Team role has font-semibold",
+          "selector": ".team-role",
+          "requiredClass": "font-semibold"
+        },
+        {
+          "label": "Avatar wrap is relative",
+          "selector": ".team-avatar-wrap",
+          "requiredClass": "relative"
+        }
       ],
       "feynmanPrompt": "Explain how <code>relative</code> on the avatar wrapper and <code>absolute bottom-1 right-1</code> on the status dot work together to place the dot correctly in the corner of the avatar. What would happen visually if you removed <code>relative</code> from the wrapper?",
+      "soloPracticeHtml": "<p>Build an <strong>avatar with a positioned status dot</strong> from scratch using Tailwind positioning utilities. The avatar is a circular image placeholder (<code>w-14 h-14</code>) with a small <code>w-3.5 h-3.5</code> green dot anchored to its bottom-right corner. The dot must stay in the corner regardless of the avatar size. Apply <code>relative</code> and <code>absolute</code> without any class scaffold — recall the containment relationship yourself.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -462,7 +744,7 @@
       "filename": "index.html",
       "practiceType": "TAILWIND",
       "hookHtml": "<p>Four sections. One page. Everything you have learned — sticky headers, gradient backgrounds, gradient text, coloured shadows, the group pattern, ring highlights, multi-breakpoint grids, object-cover, absolute positioning — converges here.</p><p>The guild is watching. Grand Archmage Solomon himself will review the final page. This is the moment that separates a practitioner from an expert.</p><p><strong>The Grand Commission is open. Demonstrate your mastery.</strong></p>",
-      "explanationHtml": "<p>The guild's great hall has never been this quiet. Every lantern is lit. The full Guild Council stands in a line before the large presentation screen. Grand Archmage Solomon stands apart, hands clasped behind his back. He does not speak immediately.</p>\n\n<div class=\"dialogue archmage\"><p><strong>Grand Archmage Solomon:</strong> \"You have learned every technique this commission requires. The gradient background. The gradient text. The sticky header. The group pattern. The ring. The status dot. The responsive grids. Individually they are tools. Together, assembled with judgment and precision, they are a product. You will now assemble them.\"</p></div>\n\n<p>Lyra steps forward, unrolling a parchment.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"I have prepared the HTML skeleton. Every section is present. Every semantic class name is applied. But the Tailwind utilities are stripped. You must restore them from memory and understanding, not from copying. The starter code has comments at each section reminding you what is required. Trust your knowledge.\"</p></div>\n\n<h3>What this challenge tests</h3>\n\n<p>This is not a recall exercise — it is a synthesis exercise. You will encounter moments where you must choose between similar approaches:</p>\n\n<ul>\n<li><strong>Sticky vs fixed</strong> for the header — you know the answer</li>\n<li><strong>Ring vs border</strong> for the featured card — you know which affects layout and which does not</li>\n<li><strong>hidden lg:block</strong> vs <strong>lg:hidden block</strong> for the hero visual — the order of mobile-first matters</li>\n<li><strong>text-transparent bg-clip-text</strong> vs just a coloured heading — you know which creates the gradient text effect</li>\n</ul>\n\n<h3>Reading the comments</h3>\n\n<p>Each section in the starter code has an HTML comment listing the key classes to apply. These are the same classes you applied in TWD1–TWD4. The comments are hints, not cheats — they tell you what the design requires, and you must know how to express that requirement in Tailwind.</p>\n\n<h3>Working methodically</h3>\n\n<p>Work section by section. Start with the header — it is the simplest. Then the hero. Then services. Then team. Do not jump around. Each section is self-contained.</p>\n\n<p>When you are done, the page should look like a real agency website. Not a practice exercise. A real product.</p>\n\n<div class=\"dialogue archmage\"><p><strong>Grand Archmage Solomon:</strong> \"There is one final consideration that separates this commission from all previous exercises. A real product will be maintained by others, expanded over time, and possibly rebranded. When you finish, ask yourself: if the client decides to change the brand colour from indigo to violet tomorrow, how would you do it efficiently? A master does not just build for today. A master builds for what comes after.\"</p></div>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"Begin. The guild's reputation is in your hands now.\"</p></div>",
+      "explanationHtml": "<p>The guild's great hall has never been this quiet. Every lantern is lit. The full Guild Council stands in a line before the large presentation screen. Grand Archmage Solomon stands apart, hands clasped behind his back. He does not speak immediately.</p>\n\n<div class=\"dialogue archmage\"><p><strong>Grand Archmage Solomon:</strong> \"You have learned every technique this commission requires. The gradient background. The gradient text. The sticky header. The group pattern. The ring. The status dot. The responsive grids. Individually they are tools. Together, assembled with judgment and precision, they are a product. You will now assemble them.\"</p></div>\n\n<p>Lyra steps forward, unrolling a parchment.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"I have prepared the HTML skeleton. Every section is present. Every semantic class name is applied. But the Tailwind utilities are stripped. You must restore them from memory and understanding, not from copying. The starter code has comments at each section reminding you what is required. Trust your knowledge.\"</p></div>\n\n<h3>What this challenge tests</h3>\n\n<p>This is not a recall exercise — it is a synthesis exercise. You will encounter moments where you must choose between similar approaches:</p>\n\n<ul>\n<li><strong>Sticky vs fixed</strong> for the header — you know the answer</li>\n<li><strong>Ring vs border</strong> for the featured card — you know which affects layout and which does not</li>\n<li><strong>hidden lg:block</strong> vs <strong>lg:hidden block</strong> for the hero visual — the order of mobile-first matters</li>\n<li><strong>text-transparent bg-clip-text</strong> vs just a coloured heading — you know which creates the gradient text effect</li>\n</ul>\n\n<h3>Reading the comments</h3>\n\n<p>Each section in the starter code has an HTML comment listing the key classes to apply. These are the same classes you applied in TWD1–TWD4. The comments are hints, not cheats — they tell you what the design requires, and you must know how to express that requirement in Tailwind.</p>\n\n<h3>Working methodically</h3>\n\n<p>Work section by section. Start with the header — it is the simplest. Then the hero. Then services. Then team. Do not jump around. Each section is self-contained.</p>\n\n<p>When you are done, the page should look like a real agency website. Not a practice exercise. A real product.</p>\n\n<div class=\"dialogue archmage\"><p><strong>Grand Archmage Solomon:</strong> \"There is one final consideration that separates this commission from all previous exercises. A real product will be maintained by others, expanded over time, and possibly rebranded. When you finish, ask yourself: if the client decides to change the brand colour from indigo to violet tomorrow, how would you do it efficiently? A master does not just build for today. A master builds for what comes after.\"</p></div>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"Begin. The guild's reputation is in your hands now.\"</p></div>\n<h3>Deploying your commission</h3>\n<p>The Grand Commission is not complete until it lives at a real URL. Your completed page uses the Tailwind CDN — no build step required. Two paths:</p>\n<h4>CodePen (fastest — 2 minutes)</h4>\n<ol>\n<li>Go to <strong>codepen.io</strong>, create a free account, click <strong>+ New Pen</strong></li>\n<li>Paste your completed HTML into the HTML panel — the CDN script is already in the starter code, so it renders immediately</li>\n<li>Click <strong>Save</strong> — your page is live at a <code>codepen.io/…/pen/…</code> URL</li>\n<li>Click <strong>Change View → Full Page Preview</strong> to see it as a standalone site</li>\n</ol>\n<h4>GitHub Pages (portfolio-grade — 5 minutes)</h4>\n<ol>\n<li>Create a new public GitHub repo named <code>arcane-guild</code></li>\n<li>Add your HTML as <code>index.html</code>, commit to <code>main</code></li>\n<li>Go to Settings → Pages → Source: <code>main</code> branch → Save</li>\n<li>Your site is live at <code>https://your-username.github.io/arcane-guild/</code> within 60 seconds</li>\n</ol>\n<div class=\"dialogue archmage\"><p><strong>Grand Archmage Solomon:</strong> \"A craftsperson without a portfolio is invisible. Every future employer will ask to see your work. This URL is evidence — of your taste, your precision, and your craft. Guard it. Maintain it. Point to it with pride.\"</p></div>",
       "storyBeats": [
         {
           "type": "narration",
@@ -504,40 +786,169 @@
       "guidedPracticeHtml": "<p>Apply all Tailwind classes to the complete Arcane Guild page. The HTML structure is provided with all four sections. Your task is to restore every class from TWD1 through TWD4:</p>\n<ol>\n<li><strong>Header</strong> — sticky frosted-glass header with responsive navigation</li>\n<li><strong>Hero</strong> — dark gradient section with two-column layout and gradient text</li>\n<li><strong>Services</strong> — three-card grid with group hover effects and featured ring</li>\n<li><strong>Team</strong> — four-column grid with circular avatars and status dots</li>\n</ol>\n<p>The comments in the starter code tell you which classes each section requires. This is a full-page synthesis — every technique from this chapter must be applied correctly for all tests to pass.</p>",
       "guidedPracticeStarterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <script src=\"https://cdn.tailwindcss.com\"></script>\n  <title>Arcane Guild</title>\n</head>\n<body class=\"font-sans antialiased\">\n\n  <!-- HEADER: apply sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 -->\n  <header class=\"site-header\">\n    <!-- HEADER INNER: apply max-w-7xl mx-auto px-6 py-4 flex items-center justify-between -->\n    <div class=\"header-inner\">\n      <!-- LOGO: apply text-xl font-bold text-indigo-600 font-mono -->\n      <a href=\"#\" class=\"site-logo\">⬡ ArcaneGuild</a>\n      <!-- NAV: apply hidden md:flex items-center gap-8 -->\n      <nav class=\"nav-links\">\n        <!-- NAV LINK: apply text-gray-600 hover:text-indigo-600 text-sm font-medium transition-colors duration-200 -->\n        <a href=\"#\" class=\"nav-link\">Services</a>\n        <a href=\"#\" class=\"nav-link\">Work</a>\n        <a href=\"#\" class=\"nav-link\">Team</a>\n        <a href=\"#\" class=\"nav-link\">Contact</a>\n      </nav>\n      <!-- CTA: apply bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors duration-200 -->\n      <a href=\"#\" class=\"header-cta\">Get Started</a>\n    </div>\n  </header>\n\n  <!-- HERO: apply py-24 px-6 bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900 -->\n  <section class=\"hero\">\n    <!-- HERO INNER: apply max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center -->\n    <div class=\"hero-inner\">\n      <div>\n        <!-- EYEBROW: apply text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-4 -->\n        <p class=\"hero-eyebrow\">Arcane Guild · Est. 1842</p>\n        <!-- HEADING: apply text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 -->\n        <h1 class=\"hero-heading\">\n          We craft digital<br>\n          <!-- SPAN: apply text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 -->\n          <span>experiences</span><br>\n          that endure.\n        </h1>\n        <!-- BODY: apply text-lg text-slate-300 leading-relaxed mb-10 -->\n        <p class=\"hero-body\">From rapid prototypes to production-grade systems — we build with craft, clarity, and the full depth of the arcane arts.</p>\n        <div class=\"flex flex-col sm:flex-row gap-4\">\n          <!-- PRIMARY CTA: apply bg-indigo-500 hover:bg-indigo-400 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/25 -->\n          <a href=\"#\" class=\"hero-cta-primary\">Start a Project →</a>\n          <!-- SECONDARY CTA: apply border border-slate-600 text-slate-300 hover:border-slate-400 hover:text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 -->\n          <a href=\"#\" class=\"hero-cta-secondary\">View Our Work</a>\n        </div>\n      </div>\n      <!-- VISUAL: apply hidden lg:block relative -->\n      <div class=\"hero-visual\">\n        <!-- CARD: apply bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 -->\n        <div class=\"hero-card\">\n          <div class=\"text-4xl mb-4\">⬡</div>\n          <div class=\"text-white font-semibold\">Project Nexus</div>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- SERVICES: apply py-24 px-6 bg-slate-50 -->\n  <section class=\"services\">\n    <!-- INNER: apply max-w-7xl mx-auto -->\n    <div class=\"services-inner\">\n      <!-- HEADING: apply text-4xl font-bold text-slate-900 text-center mb-4 -->\n      <h2 class=\"services-heading\">What We Build</h2>\n      <!-- SUBHEADING: apply text-lg text-slate-500 text-center max-w-2xl mx-auto mb-16 -->\n      <p class=\"services-subheading\">Three disciplines. One philosophy.</p>\n      <!-- GRID: apply grid grid-cols-1 md:grid-cols-3 gap-8 -->\n      <div class=\"services-grid\">\n        <!-- CARD: apply bg-white rounded-2xl p-8 border border-slate-200 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 group -->\n        <div class=\"service-card\">\n          <!-- ICON: apply w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-indigo-600 transition-colors duration-300 -->\n          <div class=\"service-icon\">⚡</div>\n          <!-- TITLE: apply text-xl font-bold text-slate-900 mb-3 -->\n          <h3 class=\"service-title\">Frontend Engineering</h3>\n          <!-- DESC: apply text-slate-500 leading-relaxed mb-6 -->\n          <p class=\"service-description\">Pixel-perfect interfaces, accessibility baked in.</p>\n          <!-- LINK: apply text-indigo-600 font-semibold text-sm hover:text-indigo-800 inline-flex items-center gap-1 -->\n          <a href=\"#\" class=\"service-link\">Learn more →</a>\n        </div>\n        <!-- FEATURED CARD: same as .service-card PLUS ring-2 ring-indigo-500 ring-offset-2 -->\n        <div class=\"service-card service-card--featured\">\n          <div class=\"service-icon\">🏛️</div>\n          <h3 class=\"service-title\">System Architecture</h3>\n          <p class=\"service-description\">Scalable backends, domain-driven design.</p>\n          <a href=\"#\" class=\"service-link\">Learn more →</a>\n        </div>\n        <div class=\"service-card\">\n          <div class=\"service-icon\">🔮</div>\n          <h3 class=\"service-title\">Design Systems</h3>\n          <p class=\"service-description\">Token-driven, team-ready component libraries.</p>\n          <a href=\"#\" class=\"service-link\">Learn more →</a>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- TEAM: apply py-24 px-6 bg-white -->\n  <section class=\"team\">\n    <!-- INNER: apply max-w-7xl mx-auto -->\n    <div class=\"team-inner\">\n      <!-- HEADING: apply text-4xl font-bold text-slate-900 text-center mb-4 -->\n      <h2 class=\"team-heading\">The Guild Council</h2>\n      <!-- SUBHEADING: apply text-lg text-slate-500 text-center max-w-xl mx-auto mb-16 -->\n      <p class=\"team-subheading\">Four disciplines. Four masters.</p>\n      <!-- GRID: apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 -->\n      <div class=\"team-grid\">\n        <!-- CARD: apply text-center group -->\n        <div class=\"team-card\">\n          <!-- WRAP: apply relative w-24 h-24 mx-auto mb-5 -->\n          <div class=\"team-avatar-wrap\">\n            <!-- AVATAR: apply w-24 h-24 rounded-full object-cover ring-4 ring-white shadow-lg group-hover:ring-indigo-300 transition-all duration-300 -->\n            <img src=\"https://i.pravatar.cc/96?img=1\" alt=\"Eldrin\" class=\"team-avatar\">\n            <!-- STATUS: apply absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full ring-2 ring-white -->\n            <span class=\"team-status\"></span>\n          </div>\n          <!-- NAME: apply text-lg font-bold text-slate-900 mb-1 -->\n          <h3 class=\"team-name\">Archmage Eldrin</h3>\n          <!-- ROLE: apply text-sm text-indigo-600 font-semibold mb-3 -->\n          <p class=\"team-role\">Chief Architect</p>\n        </div>\n        <div class=\"team-card\">\n          <div class=\"team-avatar-wrap\">\n            <img src=\"https://i.pravatar.cc/96?img=5\" alt=\"Lyra\" class=\"team-avatar\">\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Lyra the Scribe</h3>\n          <p class=\"team-role\">Design Lead</p>\n        </div>\n        <div class=\"team-card\">\n          <div class=\"team-avatar-wrap\">\n            <img src=\"https://i.pravatar.cc/96?img=9\" alt=\"Cordell\" class=\"team-avatar\">\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Maester Cordell</h3>\n          <p class=\"team-role\">DevOps Mage</p>\n        </div>\n        <div class=\"team-card\">\n          <div class=\"team-avatar-wrap\">\n            <img src=\"https://i.pravatar.cc/96?img=12\" alt=\"Sable\" class=\"team-avatar\">\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Sable</h3>\n          <p class=\"team-role\">UX Researcher</p>\n        </div>\n      </div>\n    </div>\n  </section>\n\n</body>\n</html>",
       "guidedPracticeTests": [
-        {"label": "Header is sticky", "selector": ".site-header", "requiredClass": "sticky"},
-        {"label": "Header has border-b", "selector": ".site-header", "requiredClass": "border-b"},
-        {"label": "Header inner is flex", "selector": ".header-inner", "requiredClass": "flex"},
-        {"label": "Header inner has justify-between", "selector": ".header-inner", "requiredClass": "justify-between"},
-        {"label": "Header inner has max-w-7xl", "selector": ".header-inner", "requiredClass": "max-w-7xl"},
-        {"label": "Nav is hidden on mobile", "selector": ".nav-links", "requiredClass": "hidden"},
-        {"label": "Nav is flex on md+", "selector": ".nav-links", "requiredClass": "md:flex"},
-        {"label": "Header CTA has bg-indigo-600", "selector": ".header-cta", "requiredClass": "bg-indigo-600"},
-        {"label": "Header CTA is rounded-lg", "selector": ".header-cta", "requiredClass": "rounded-lg"},
-        {"label": "Hero has bg-gradient-to-br", "selector": ".hero", "requiredClass": "bg-gradient-to-br"},
-        {"label": "Hero has py-24", "selector": ".hero", "requiredClass": "py-24"},
-        {"label": "Hero inner is a grid", "selector": ".hero-inner", "requiredClass": "grid"},
-        {"label": "Hero inner has lg:grid-cols-2", "selector": ".hero-inner", "requiredClass": "lg:grid-cols-2"},
-        {"label": "Gradient text span has bg-clip-text", "selector": ".hero-heading span", "requiredClass": "bg-clip-text"},
-        {"label": "Gradient text span has text-transparent", "selector": ".hero-heading span", "requiredClass": "text-transparent"},
-        {"label": "Primary CTA has bg-indigo-500", "selector": ".hero-cta-primary", "requiredClass": "bg-indigo-500"},
-        {"label": "Primary CTA is rounded-xl", "selector": ".hero-cta-primary", "requiredClass": "rounded-xl"},
-        {"label": "Services section has bg-slate-50", "selector": ".services", "requiredClass": "bg-slate-50"},
-        {"label": "Services grid is a grid", "selector": ".services-grid", "requiredClass": "grid"},
-        {"label": "Services grid has md:grid-cols-3", "selector": ".services-grid", "requiredClass": "md:grid-cols-3"},
-        {"label": "Service card has group", "selector": ".service-card", "requiredClass": "group"},
-        {"label": "Service card has hover:shadow-xl", "selector": ".service-card", "requiredClass": "hover:shadow-xl"},
-        {"label": "Service icon has group-hover:bg-indigo-600", "selector": ".service-icon", "requiredClass": "group-hover:bg-indigo-600"},
-        {"label": "Featured card has ring-2", "selector": ".service-card--featured", "requiredClass": "ring-2"},
-        {"label": "Featured card has ring-indigo-500", "selector": ".service-card--featured", "requiredClass": "ring-indigo-500"},
-        {"label": "Team grid has sm:grid-cols-2", "selector": ".team-grid", "requiredClass": "sm:grid-cols-2"},
-        {"label": "Team grid has lg:grid-cols-4", "selector": ".team-grid", "requiredClass": "lg:grid-cols-4"},
-        {"label": "Team avatar is rounded-full", "selector": ".team-avatar", "requiredClass": "rounded-full"},
-        {"label": "Team avatar has ring-4", "selector": ".team-avatar", "requiredClass": "ring-4"},
-        {"label": "Team status dot is absolute", "selector": ".team-status", "requiredClass": "absolute"},
-        {"label": "Team status dot has bg-green-400", "selector": ".team-status", "requiredClass": "bg-green-400"},
-        {"label": "Team role has text-indigo-600", "selector": ".team-role", "requiredClass": "text-indigo-600"}
+        {
+          "label": "Header is sticky",
+          "selector": ".site-header",
+          "requiredClass": "sticky"
+        },
+        {
+          "label": "Header has border-b",
+          "selector": ".site-header",
+          "requiredClass": "border-b"
+        },
+        {
+          "label": "Header inner is flex",
+          "selector": ".header-inner",
+          "requiredClass": "flex"
+        },
+        {
+          "label": "Header inner has justify-between",
+          "selector": ".header-inner",
+          "requiredClass": "justify-between"
+        },
+        {
+          "label": "Header inner has max-w-7xl",
+          "selector": ".header-inner",
+          "requiredClass": "max-w-7xl"
+        },
+        {
+          "label": "Nav is hidden on mobile",
+          "selector": ".nav-links",
+          "requiredClass": "hidden"
+        },
+        {
+          "label": "Nav is flex on md+",
+          "selector": ".nav-links",
+          "requiredClass": "md:flex"
+        },
+        {
+          "label": "Header CTA has bg-indigo-600",
+          "selector": ".header-cta",
+          "requiredClass": "bg-indigo-600"
+        },
+        {
+          "label": "Header CTA is rounded-lg",
+          "selector": ".header-cta",
+          "requiredClass": "rounded-lg"
+        },
+        {
+          "label": "Hero has bg-gradient-to-br",
+          "selector": ".hero",
+          "requiredClass": "bg-gradient-to-br"
+        },
+        {
+          "label": "Hero has py-24",
+          "selector": ".hero",
+          "requiredClass": "py-24"
+        },
+        {
+          "label": "Hero inner is a grid",
+          "selector": ".hero-inner",
+          "requiredClass": "grid"
+        },
+        {
+          "label": "Hero inner has lg:grid-cols-2",
+          "selector": ".hero-inner",
+          "requiredClass": "lg:grid-cols-2"
+        },
+        {
+          "label": "Gradient text span has bg-clip-text",
+          "selector": ".hero-heading span",
+          "requiredClass": "bg-clip-text"
+        },
+        {
+          "label": "Gradient text span has text-transparent",
+          "selector": ".hero-heading span",
+          "requiredClass": "text-transparent"
+        },
+        {
+          "label": "Primary CTA has bg-indigo-500",
+          "selector": ".hero-cta-primary",
+          "requiredClass": "bg-indigo-500"
+        },
+        {
+          "label": "Primary CTA is rounded-xl",
+          "selector": ".hero-cta-primary",
+          "requiredClass": "rounded-xl"
+        },
+        {
+          "label": "Services section has bg-slate-50",
+          "selector": ".services",
+          "requiredClass": "bg-slate-50"
+        },
+        {
+          "label": "Services grid is a grid",
+          "selector": ".services-grid",
+          "requiredClass": "grid"
+        },
+        {
+          "label": "Services grid has md:grid-cols-3",
+          "selector": ".services-grid",
+          "requiredClass": "md:grid-cols-3"
+        },
+        {
+          "label": "Service card has group",
+          "selector": ".service-card",
+          "requiredClass": "group"
+        },
+        {
+          "label": "Service card has hover:shadow-xl",
+          "selector": ".service-card",
+          "requiredClass": "hover:shadow-xl"
+        },
+        {
+          "label": "Service icon has group-hover:bg-indigo-600",
+          "selector": ".service-icon",
+          "requiredClass": "group-hover:bg-indigo-600"
+        },
+        {
+          "label": "Featured card has ring-2",
+          "selector": ".service-card--featured",
+          "requiredClass": "ring-2"
+        },
+        {
+          "label": "Featured card has ring-indigo-500",
+          "selector": ".service-card--featured",
+          "requiredClass": "ring-indigo-500"
+        },
+        {
+          "label": "Team grid has sm:grid-cols-2",
+          "selector": ".team-grid",
+          "requiredClass": "sm:grid-cols-2"
+        },
+        {
+          "label": "Team grid has lg:grid-cols-4",
+          "selector": ".team-grid",
+          "requiredClass": "lg:grid-cols-4"
+        },
+        {
+          "label": "Team avatar is rounded-full",
+          "selector": ".team-avatar",
+          "requiredClass": "rounded-full"
+        },
+        {
+          "label": "Team avatar has ring-4",
+          "selector": ".team-avatar",
+          "requiredClass": "ring-4"
+        },
+        {
+          "label": "Team status dot is absolute",
+          "selector": ".team-status",
+          "requiredClass": "absolute"
+        },
+        {
+          "label": "Team status dot has bg-green-400",
+          "selector": ".team-status",
+          "requiredClass": "bg-green-400"
+        },
+        {
+          "label": "Team role has text-indigo-600",
+          "selector": ".team-role",
+          "requiredClass": "text-indigo-600"
+        }
       ],
       "feynmanPrompt": "You have just built a complete multi-section landing page with Tailwind. The client now wants to change the brand colour from indigo to violet across the entire site. Describe two different approaches: one that works for the current codebase (utility classes throughout), and one that would have been the ideal architectural choice from the start. Which approach would you recommend if you were starting fresh today?",
+      "soloPracticeHtml": "<p><strong>The final act of every commission is delivery.</strong> Take your completed Grand Commission page and deploy it to a live public URL — this is your portfolio artefact.</p>\n<ol>\n  <li><strong>Open <a href=\"https://codepen.io\" target=\"_blank\">codepen.io</a></strong> and create a free account (or log in). Click <strong>+ New Pen</strong>.</li>\n  <li><strong>Paste your completed HTML</strong> — the full <code>&lt;!DOCTYPE html&gt;</code> page from the guided practice, with all four sections and your Tailwind classes applied. The Tailwind CDN is already in the starter code; it works immediately.</li>\n  <li><strong>Verify it live</strong> — open the full-page preview. Confirm: sticky header stays visible on scroll, gradient text renders in the hero, card hover effects work, team grid is responsive.</li>\n  <li><strong>Save and copy the URL</strong> — this is your deliverable. A real agency landing page, live at a URL anyone can visit.</li>\n</ol>\n<p><em>Alternatively: create a GitHub repo, add your HTML as <code>index.html</code> on <code>main</code>, enable GitHub Pages under Settings → Pages. URL: <code>https://your-username.github.io/arcane-guild/</code>.</em></p>\n<p>No auto-grader. Professional judgement: does the deployed page match the design you built in the guided practice? If yes — the Grand Commission is complete. Paste your URL into the submission field to earn the Expert badge.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

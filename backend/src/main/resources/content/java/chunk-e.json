@@ -29,6 +29,7 @@
         {"label": "Length, charAt, isEmpty", "input": "null", "expected": "14\nA\nfalse"}
       ],
       "feynmanPrompt": "Explain String immutability in Java: what it means, why it matters, and what actually happens when you 'change' a String.",
+      "soloPracticeHtml": "<p>Given <code>String title = \"Grand Archmage\"</code>, without any starter code print three things on separate lines: its length, the character at index 6, and whether it contains the substring <code>\"Arch\"</code> (use <code>contains()</code>).</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -84,6 +85,7 @@
         {"label": "trim, toUpperCase, substring", "input": "null", "expected": "fireball of doom\nFIREBALL OF DOOM\nfireball"}
       ],
       "feynmanPrompt": "Describe at least five String methods, what they do, and give a small example of each.",
+      "soloPracticeHtml": "<p>Given <code>String raw = \"  enchanted sword  \"</code>, without any starter code print three things: the trimmed version, the trimmed version in uppercase, and only the first 9 characters of the trimmed result (should be <code>enchanted</code>).</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -140,6 +142,7 @@
         {"label": "equals, equalsIgnoreCase, format", "input": "null", "expected": "false\ntrue\nThe Apprentice ranks as level 3"}
       ],
       "feynmanPrompt": "Explain why you should always use .equals() instead of == for String comparison in Java, and describe how String.format() works.",
+      "soloPracticeHtml": "<p>Without any starter code, declare <code>String s1 = \"JAVA\"</code> and <code>String s2 = \"java\"</code>. Print whether they are exactly equal (using <code>.equals()</code>), then whether they are equal ignoring case (<code>.equalsIgnoreCase()</code>). Finally, use <code>String.format()</code> to print <code>Level 5 Wizard</code>.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -196,6 +199,7 @@
         {"label": "Comma-separated 1 to 5", "input": "null", "expected": "1, 2, 3, 4, 5"}
       ],
       "feynmanPrompt": "Explain why StringBuilder is more efficient than using + for String concatenation inside a loop, and describe three useful StringBuilder methods.",
+      "soloPracticeHtml": "<p>Without any starter code, use a <code>StringBuilder</code> and a loop to build the string <code>a-b-c-d-e</code>. No trailing dash. Print the final result. (Hint: append each letter; for letters a–d also append <code>\"-\"</code>; skip the dash after the last letter.)</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

@@ -167,13 +167,13 @@ public class EncodingController {
             case GUIDED_PRACTICE -> {
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setStarterCode(sc.getGuidedPracticeStarterCode());
-                dto.setTestCaseLabels(extractTestLabels(sc.getGuidedPracticeTestsJson()));
+                dto.setTestCaseLabels(testCasesFor(sc));
             }
             case SOLO_PRACTICE -> {
                 dto.setSoloPracticeHtml(sc.getSoloPracticeHtml());
                 // Guided practice HTML doubles as the "peek" hint — no starter code
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
-                dto.setTestCaseLabels(extractTestLabels(sc.getGuidedPracticeTestsJson()));
+                dto.setTestCaseLabels(testCasesFor(sc));
             }
             case RETRIEVAL_CHECK -> dto.setFeynmanPrompt(sc.getFeynmanPrompt());
             case COMPLETE -> {}
@@ -207,5 +207,23 @@ public class EncodingController {
                     .map(tc -> java.util.Map.of("label", tc.getOrDefault("label", "")))
                     .collect(Collectors.toList());
         } catch (Exception e) { return List.of(); }
+    }
+
+    /**
+     * For JAVA/TAILWIND practice, only test labels are sent to the client (the
+     * server holds the full specs and runs them). For REACT practice, the full
+     * test specs are sent because tests run inside the iframe — see
+     * {@link com.ambravate.polymath.academy.service.ReactPracticeService}.
+     */
+    private Object testCasesFor(SubChunk sc) {
+        if (sc.getPracticeType() == SubChunkPracticeType.REACT) {
+            String json = sc.getGuidedPracticeTestsJson();
+            if (json == null) return List.of();
+            try {
+                return objectMapper.readValue(json,
+                        new com.fasterxml.jackson.core.type.TypeReference<List<java.util.Map<String, Object>>>() {});
+            } catch (Exception e) { return List.of(); }
+        }
+        return extractTestLabels(sc.getGuidedPracticeTestsJson());
     }
 }

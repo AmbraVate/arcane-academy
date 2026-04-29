@@ -163,14 +163,14 @@
       "filename": "index.html",
       "practiceType": "TAILWIND",
 
-      "hookHtml": "<p>Ninety percent of new React projects today use Vite. Understanding the exact setup sequence — and the one gotcha that causes styles to disappear in production — is a genuine job-readiness skill.</p>",
+      "hookHtml": "<p>Ninety percent of new React projects today use Vite. Tailwind v4 made setup dramatically simpler: two commands, one CSS import, no config file. Understanding the setup sequence — and the one scanning rule that can still catch you out — is a genuine job-readiness skill.</p>",
 
-      "explanationHtml": "<h3>Installing Tailwind in a Vite + React project</h3>\n<p>This is the exact sequence you will run for every new project. Memorise it:</p>\n<pre><code># 1. Create the project (if you haven't already)\nnpm create vite@latest my-app -- --template react-ts\ncd my-app\n\n# 2. Install Tailwind and its PostCSS peer dependencies\nnpm install -D tailwindcss postcss autoprefixer\n\n# 3. Generate config files\nnpx tailwindcss init -p\n# -p generates postcss.config.js at the same time\n</code></pre>\n\n<h3>What those files look like</h3>\n<p><code>tailwind.config.js</code> — the most important file in your Tailwind setup:</p>\n<pre><code>/** @type {import('tailwindcss').Config} */\nexport default {\n  content: [\n    './index.html',\n    './src/**/*.{js,ts,jsx,tsx}',\n  ],\n  theme: {\n    extend: {},\n  },\n  plugins: [],\n};\n</code></pre>\n<p><code>postcss.config.js</code> — rarely touched after creation:</p>\n<pre><code>export default {\n  plugins: {\n    tailwindcss: {},\n    autoprefixer: {},\n  },\n};\n</code></pre>\n\n<h3>The three @tailwind directives</h3>\n<p>Add these to <code>src/index.css</code> (replace any existing content):</p>\n<pre><code>@tailwind base;\n@tailwind components;\n@tailwind utilities;\n</code></pre>\n<p>Then import that file in <code>src/main.tsx</code>:</p>\n<pre><code>import './index.css';\n</code></pre>\n\n<h3>The #1 production gotcha: the content array</h3>\n<p>Tailwind uses <strong>Just-In-Time (JIT) compilation</strong> — it scans your source files at build time and emits only the CSS for classes it actually finds. If a file is not covered by the <code>content</code> glob, its classes produce no output.</p>\n<p>The standard glob for Vite + React is:</p>\n<pre><code>'./src/**/*.{js,ts,jsx,tsx}'\n</code></pre>\n<p>Common mistakes that cause styles to vanish in production:</p>\n<ul>\n  <li>Forgetting <code>./index.html</code> (classes in the root HTML file are never scanned)</li>\n  <li>Using <code>*.js</code> only (misses <code>.tsx</code> and <code>.ts</code> files)</li>\n  <li>Adding a new <code>components/</code> subfolder outside the glob path</li>\n  <li>Deploying without running the build (dev server uses a different pipeline)</li>\n</ul>\n\n<h3>The dynamic class interpolation trap</h3>\n<p>Because Tailwind scans for <em>complete</em> class strings, dynamic interpolation always breaks:</p>\n<pre><code>// BROKEN — Tailwind never sees 'bg-blue-500' or 'bg-red-500' as complete strings\nconst cls = `bg-${colour}-500`;\n\n// CORRECT — complete strings are present in source code\nconst colourMap = {\n  blue: 'bg-blue-500',\n  red:  'bg-red-500',\n  green: 'bg-green-500',\n};\nconst cls = colourMap[colour];\n</code></pre>\n<p>This is the second most common Tailwind bug in production code. When you see it in a code review, flag it immediately.</p>\n\n<h3>Verifying the setup works</h3>\n<p>Run <code>npm run dev</code> and add <code>className=\"bg-blue-500 text-white p-4\"</code> to any element. If you see a blue box with white text, the setup is correct.</p>",
+      "explanationHtml": "<h3>Installing Tailwind v4 in a Vite + React project</h3>\n<p>Two commands. No config file. No PostCSS setup required.</p>\n<pre><code># 1. Create the project (if you haven't already)\nnpm create vite@latest my-app -- --template react-ts\ncd my-app\n\n# 2. Install Tailwind and its Vite plugin\nnpm install -D tailwindcss @tailwindcss/vite\n</code></pre>\n\n<h3>Configure the Vite plugin</h3>\n<p>Open <code>vite.config.ts</code> and register the Tailwind plugin:</p>\n<pre><code>import { defineConfig } from 'vite'\nimport react from '@vitejs/plugin-react'\nimport tailwindcss from '@tailwindcss/vite'\n\nexport default defineConfig({\n  plugins: [\n    react(),\n    tailwindcss(),  // ← this is the entire Tailwind setup\n  ],\n})\n</code></pre>\n<p>No <code>postcss.config.js</code> required. The Vite plugin handles compilation, scanning, and hot-reload internally.</p>\n\n<h3>Import Tailwind in your CSS</h3>\n<p>Replace all contents of <code>src/index.css</code> with a single line:</p>\n<pre><code>@import \"tailwindcss\";\n</code></pre>\n<p>That single import replaces the three <code>@tailwind base/components/utilities</code> directives from v3. Import the file in <code>src/main.tsx</code>:</p>\n<pre><code>import './index.css';\n</code></pre>\n\n<h3>Automatic content detection</h3>\n<p>Tailwind v4 scans your project files automatically — no <code>content</code> array to configure or maintain. For the vast majority of Vite + React projects you are fully set up at this point.</p>\n<p>The one edge case: if you use a component library in <code>node_modules</code> that ships Tailwind classes in its source, add an explicit <code>@source</code> directive:</p>\n<pre><code>@import \"tailwindcss\";\n\n/* Scan a third-party UI library */\n@source \"../node_modules/@my-org/ui/src/**/*.tsx\";\n</code></pre>\n\n<h3>The dynamic class trap — still applies in v4</h3>\n<p>Automatic detection changed how <em>file paths</em> are found. It did not change how <em>class names</em> are found. Tailwind v4 is still a <strong>text scanner</strong> — every class string must appear verbatim in a scanned file.</p>\n<pre><code>// BROKEN — 'bg-blue-500' never appears as a complete string in source\nconst cls = `bg-${colour}-500`;\n\n// CORRECT — full strings are visible in source\nconst colourMap = {\n  blue:  'bg-blue-500',\n  red:   'bg-red-500',\n  green: 'bg-green-500',\n};\nconst cls = colourMap[colour];\n</code></pre>\n<p>This is still the most common Tailwind bug in production code. When you see it in a code review, flag it immediately.</p>\n\n<h3>Safelisting classes from external data</h3>\n<p>When class names come from a CMS, database, or API and cannot appear verbatim in source, use <code>@source inline()</code> in your CSS:</p>\n<pre><code>/* Safelist explicit class names */\n@source inline(\"bg-red-500 bg-green-500 text-red-800 text-green-800\");\n\n/* Pattern syntax for a whole family */\n@source inline(\"{bg,text}-{red,green,blue}-{100,500,900}\");\n</code></pre>\n\n<h3>Using Tailwind in React (className, not class)</h3>\n<p>React uses <code>className</code>, not <code>class</code>. This is the only HTML syntax difference you need to remember:</p>\n<pre><code>// HTML\n&lt;div class=\"bg-white p-6 rounded-xl shadow-md\"&gt;\n\n// JSX (React)\n&lt;div className=\"bg-white p-6 rounded-xl shadow-md\"&gt;\n</code></pre>\n\n<h3>Verifying the setup</h3>\n<p>Run <code>npm run dev</code> and add <code>className=\"bg-blue-500 text-white p-4\"</code> to any element. Blue box with white text = setup is correct.</p>",
 
       "storyBeats": [
         {
           "type": "narration",
-          "text": "Lyra leads you through a heavy door into a workshop that smells of hot metal and fresh parchment. A broad-shouldered mage in a leather apron looks up from a workbench covered in tools."
+          "text": "Lyra leads you through a heavy door into a workshop. A broad-shouldered mage in a leather apron looks up from a workbench covered in tools."
         },
         {
           "type": "dialogue",
@@ -178,20 +178,12 @@
           "cls": "maester",
           "speaker": "Maester Cordell",
           "sCls": "mentor",
-          "text": "Ah — new apprentice. Cordell. I handle the Foundry: the forges that turn your glyphs into spells the page can actually run. Without me, your beautiful Tailwind classes produce exactly nothing."
-        },
-        {
-          "type": "dialogue",
-          "av": "🧙‍♀️",
-          "cls": "mentor",
-          "speaker": "Lyra the Scribe",
-          "sCls": "mentor",
-          "text": "Cordell, show them the setup sequence. The one they will run for every new project."
+          "text": "Ah — new apprentice. Cordell. The Foundry. In the old days, setting up Tailwind meant three tools, a config file, and a content array. Tailwind v4 changed all of that. Two commands and one CSS import — that is the entire setup."
         },
         {
           "type": "example",
-          "speaker": "The three installation commands",
-          "text": "npm install -D tailwindcss postcss autoprefixer\nnpx tailwindcss init -p"
+          "speaker": "The two installation commands",
+          "text": "npm install -D tailwindcss @tailwindcss/vite"
         },
         {
           "type": "dialogue",
@@ -199,12 +191,12 @@
           "cls": "maester",
           "speaker": "Maester Cordell",
           "sCls": "mentor",
-          "text": "Now listen carefully — this is the part every apprentice skips and then spends hours debugging. The <strong>content array</strong> in <code>tailwind.config.js</code> tells the scanner which files to read. Miss a file path here and your glyphs silently produce no CSS in production."
+          "text": "Add the Tailwind plugin to <code>vite.config.ts</code>. Then put a single line in your CSS file: <code>@import \"tailwindcss\"</code>. No config file. No PostCSS configuration. No content array. Tailwind detects your source files automatically."
         },
         {
           "type": "example",
-          "speaker": "tailwind.config.js — the critical content array",
-          "text": "content: [\n  './index.html',\n  './src/**/*.{js,ts,jsx,tsx}',\n],"
+          "speaker": "The entire CSS setup — one line",
+          "text": "@import \"tailwindcss\";"
         },
         {
           "type": "dialogue",
@@ -212,7 +204,7 @@
           "cls": "maester",
           "speaker": "Maester Cordell",
           "sCls": "mentor",
-          "text": "Production styles missing? That array is your first stop. Nine times in ten, a path is wrong or a file extension is missing."
+          "text": "Now — the one trap that did <em>not</em> change. The scanner reads your source files as plain text. If a complete class string does not appear verbatim in a scanned file, that class does not exist in production. Automatic detection removed the path configuration. It did not remove the scanning rule."
         }
       ],
 
@@ -234,73 +226,73 @@
 
       "soloPracticeHtml": "<p>Style this configuration panel from scratch — remember the class names without looking them up.</p>\n<ul>\n  <li>The <strong>.setup-panel</strong> needs a light slate background, a visible border, matching border colour, rounded corners, and comfortable all-around padding.</li>\n  <li>The <strong>.setup-title</strong> should be large text, semi-bold, in a dark slate colour.</li>\n  <li>The <strong>.setup-status</strong> should be small, green, medium-weight text with a top margin to separate it from the title.</li>\n</ul>\n<p>Use the <code>bg-slate-*</code>, <code>border-slate-*</code>, <code>text-slate-*</code>, and <code>text-green-*</code> palettes you learned.</p>",
 
-      "feynmanPrompt": "Walk through the complete setup sequence for Tailwind in a brand-new Vite + React TypeScript project, from the first npm command to the point where you can verify styles are working. Include the exact content array you would use and explain what happens if it is misconfigured.",
+      "feynmanPrompt": "Walk through the complete setup sequence for Tailwind v4 in a brand-new Vite + React TypeScript project, from the first npm command to the point where you can verify styles are working. Explain what @tailwindcss/vite does, what @import 'tailwindcss' replaces, and what the one production trap is that still exists despite automatic content detection.",
 
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which three directives must appear in your main CSS file to activate Tailwind?</p>",
+          "questionHtml": "<p>What is the single CSS declaration needed to activate all of Tailwind v4 in your stylesheet?</p>",
           "options": [
+            "@import \"tailwindcss\";",
             "@tailwind base; @tailwind components; @tailwind utilities;",
-            "@import tailwind; @import tailwind-base; @import tailwind-utils;",
-            "import 'tailwindcss'; import 'tailwindcss/base'; import 'tailwindcss/utilities';",
-            "@use tailwind/base; @use tailwind/components; @use tailwind/utilities;"
+            "@import url('tailwindcss/base') url('tailwindcss/utilities');",
+            "@use \"tailwindcss\";"
           ],
-          "correctAnswer": "@tailwind base; @tailwind components; @tailwind utilities;",
-          "explanationHtml": "<p>The three <code>@tailwind</code> directives are required. They inject Tailwind's reset styles (<code>base</code>), any component layer classes (<code>components</code>), and all utility classes (<code>utilities</code>) into your compiled CSS output.</p>"
+          "correctAnswer": "@import \"tailwindcss\";",
+          "explanationHtml": "<p>Tailwind v4 replaces the three <code>@tailwind</code> directives from v3 with a single standard CSS <code>@import</code>. This one line activates the base reset, all utility classes, and the theme system.</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What does the <code>content</code> array in <code>tailwind.config.js</code> control?</p>",
+          "questionHtml": "<p>Which npm package provides the Vite plugin for Tailwind v4?</p>",
           "options": [
-            "Which source files Tailwind scans to determine which utility classes to include in the compiled CSS",
-            "Which HTML elements Tailwind styles by default",
-            "The order in which Tailwind processes CSS layers",
-            "Which Tailwind plugins are loaded"
+            "@tailwindcss/vite",
+            "tailwindcss (PostCSS plugin)",
+            "vite-plugin-tailwindcss",
+            "@vitejs/plugin-tailwind"
           ],
-          "correctAnswer": "Which source files Tailwind scans to determine which utility classes to include in the compiled CSS",
-          "explanationHtml": "<p>Tailwind's JIT compiler scans every file matched by the <code>content</code> globs and emits CSS only for complete class strings it finds. Files outside these globs are not scanned, so any classes used only in those files will not appear in the output CSS — causing styles to silently disappear.</p>"
+          "correctAnswer": "@tailwindcss/vite",
+          "explanationHtml": "<p><code>@tailwindcss/vite</code> is a dedicated first-party Vite plugin. It replaces the PostCSS pipeline from v3, handling compilation, scanning, and HMR in one plugin. You no longer need <code>postcss.config.js</code>, <code>autoprefixer</code>, or a separate <code>tailwindcss</code> PostCSS entry.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>How does Tailwind v4 determine which source files to scan for utility class names?</p>",
+          "options": [
+            "Automatically — v4 detects project files without any configuration",
+            "Via the content array in tailwind.config.js",
+            "Via globs defined in postcss.config.js",
+            "By reading the import graph from your main.tsx entry file"
+          ],
+          "correctAnswer": "Automatically — v4 detects project files without any configuration",
+          "explanationHtml": "<p>Tailwind v4 removed the need for a <code>content</code> array entirely. It automatically detects and scans your project files. For edge cases — such as a component library in <code>node_modules</code> — you can add an explicit <code>@source</code> directive to your CSS file.</p>"
         },
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>You add a <code>components/</code> folder to your project and create <code>Button.tsx</code> inside it. Your current content array is <code>['./index.html', './src/**/*.{ts,tsx}']</code>. Will the Tailwind classes in <code>Button.tsx</code> compile correctly?</p>",
+          "questionHtml": "<p>A developer writes <code>const cls = `bg-${colour}-500`</code> where <code>colour</code> comes from a prop. The class never applies in production despite Tailwind v4's automatic detection. Why?</p>",
           "options": [
-            "Yes, because Button.tsx is inside src/ which is covered by the glob",
-            "No, because components/ is a subfolder not explicitly listed",
-            "Only in development mode, not production",
-            "Only if the classes are also used somewhere else in the project"
+            "Tailwind still scans as plain text — complete class strings must appear verbatim; 'bg-blue-500' is never a complete string in source",
+            "Automatic detection does not scan component props or variables",
+            "Template literals require a @source inline() entry to be detected",
+            "v4's Vite plugin only scans .tsx files, not dynamic expressions"
           ],
-          "correctAnswer": "Yes, because Button.tsx is inside src/ which is covered by the glob",
-          "explanationHtml": "<p>The glob <code>./src/**/*.{ts,tsx}</code> matches all <code>.ts</code> and <code>.tsx</code> files anywhere inside <code>src/</code>, including every subfolder at any depth. <code>src/components/Button.tsx</code> is covered. A problem would arise only if <code>Button.tsx</code> were placed <em>outside</em> the <code>src/</code> directory.</p>"
-        },
-        {
-          "type": "MULTIPLE_CHOICE",
-          "tier": "APPLICATION",
-          "questionHtml": "<p>A developer writes this in a React component: <code>const cls = `text-${size}-600`</code> where <code>size</code> comes from a prop. The class never applies in production. Why?</p>",
-          "options": [
-            "Tailwind scans for complete class strings at build time; the interpolated template literal is never a complete string in source code",
-            "Template literals are not valid in className attributes",
-            "The text- prefix requires a fixed value, not a variable",
-            "It works in development but the production build minifies away dynamic classes"
-          ],
-          "correctAnswer": "Tailwind scans for complete class strings at build time; the interpolated template literal is never a complete string in source code",
-          "explanationHtml": "<p>Tailwind's JIT scanner performs static analysis — it looks for literal strings like <code>text-sm-600</code> or <code>text-lg-600</code> in your source files. A template literal like <code>`text-${size}-600`</code> is never a complete, recognisable class name during the scan, so no CSS is emitted. The fix is a lookup object mapping each valid <code>size</code> value to its full class string.</p>"
+          "correctAnswer": "Tailwind still scans as plain text — complete class strings must appear verbatim; 'bg-blue-500' is never a complete string in source",
+          "explanationHtml": "<p>Automatic detection changed which <em>files</em> are scanned, not how <em>class names</em> are found. The scanner still performs text matching — <code>bg-blue-500</code> must appear as a complete string somewhere in a scanned file. A template literal like <code>`bg-${colour}-500`</code> produces only the fragments <code>bg-</code> and <code>-500</code>. The fix is a lookup object: <code>const map = { blue: 'bg-blue-500', red: 'bg-red-500' }</code>.</p>"
         },
         {
           "type": "SCENARIO",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A junior developer deploys a React app to production and reports: &quot;All styles work perfectly on localhost but about a third of the Tailwind classes are missing on the live site.&quot; The dev server is Vite. The deployment platform runs <code>npm run build</code> then serves the <code>dist/</code> folder.</p>\n<p>Which investigation step will most quickly identify the root cause?</p>",
+          "questionHtml": "<p>A team is upgrading an existing Vite + React app from Tailwind v3 to v4. They currently have a <code>tailwind.config.js</code>, a <code>postcss.config.js</code>, and the three <code>@tailwind</code> directives in their CSS. What is the correct migration sequence?</p>",
           "options": [
-            "Check the content array in tailwind.config.js — some file paths likely match the dev server's file watcher but miss the JIT scanner's glob",
-            "Rebuild with NODE_ENV=development to preserve unoptimised CSS",
-            "Check for CORS errors in the network tab blocking the CSS file",
-            "Downgrade to Tailwind v2 which does not use JIT compilation"
+            "Install @tailwindcss/vite, add it to vite.config.ts, replace the three @tailwind directives with @import 'tailwindcss', move theme customisations to @theme {} in CSS, delete tailwind.config.js and postcss.config.js",
+            "Just upgrade the tailwindcss package to v4 — it is backward compatible with v3 configuration files",
+            "Delete tailwind.config.js and postcss.config.js without adding any replacement — v4 needs nothing",
+            "Replace the content array globs with @source directives but keep everything else identical"
           ],
-          "correctAnswer": "Check the content array in tailwind.config.js — some file paths likely match the dev server's file watcher but miss the JIT scanner's glob",
-          "explanationHtml": "<p>The dev server uses a real-time watcher that processes every file on the fly regardless of the content array (styles appear as you type). The production build uses the JIT scanner, which <em>only</em> processes files matching the content globs. Classes in files outside the globs appear in dev but are absent in the production bundle. The fix is to widen the content array to cover all relevant file paths and extensions. This is the most common cause of the exact symptom described.</p>"
+          "correctAnswer": "Install @tailwindcss/vite, add it to vite.config.ts, replace the three @tailwind directives with @import 'tailwindcss', move theme customisations to @theme {} in CSS, delete tailwind.config.js and postcss.config.js",
+          "explanationHtml": "<p>The v4 migration has four parts: (1) swap the PostCSS pipeline for <code>@tailwindcss/vite</code>, (2) replace the three <code>@tailwind</code> directives with <code>@import \"tailwindcss\"</code>, (3) migrate any theme customisations from <code>tailwind.config.js</code> into <code>@theme {}</code> blocks in your CSS, and (4) delete the now-redundant config and PostCSS files. The utility class API is largely unchanged — most component classes keep working without modification.</p>"
         }
       ]
     },
@@ -536,7 +528,7 @@
             "Applies emerald-600 to every other character"
           ],
           "correctAnswer": "Sets the text colour to emerald-600 at 50% opacity",
-          "explanationHtml": "<p>The slash modifier (<code>/N</code>) appended to any colour utility sets the opacity of that specific property. <code>text-emerald-600/50</code> is equivalent to setting <code>color: rgb(5 150 105 / 0.5)</code>. This works with <code>bg-*</code>, <code>border-*</code>, and <code>ring-*</code> utilities too. It was introduced in Tailwind v3 and replaces the older <code>text-opacity-*</code> approach.</p>"
+          "explanationHtml": "<p>The slash modifier (<code>/N</code>) appended to any colour utility sets the opacity of that specific property. <code>text-emerald-600/50</code> is equivalent to setting <code>color: rgb(5 150 105 / 0.5)</code>. This works with <code>bg-*</code>, <code>border-*</code>, and <code>ring-*</code> utilities too. It replaces the older <code>text-opacity-*</code> approach from Tailwind v2 and is the standard way to apply opacity to any colour utility.</p>"
         },
         {
           "type": "SCENARIO",

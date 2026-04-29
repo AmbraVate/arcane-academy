@@ -34,6 +34,15 @@ public class TopicSeeder {
                 .accentColor("#38bdf8")
                 .sortOrder(2)
                 .active(true)
+                .build(),
+            Topic.builder()
+                .id("react")
+                .name("React")
+                .glyph("⚛️")
+                .tagline("Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.")
+                .accentColor("#61dafb")
+                .sortOrder(3)
+                .active(true)
                 .build()
         );
 

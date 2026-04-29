@@ -1,0 +1,834 @@
+{
+  "id": "rx-b",
+  "title": "React Practitioner — The Hook Weaver",
+  "glyph": "🪝",
+  "sortOrder": 2,
+  "tier": "PRACTITIONER",
+  "topicId": "react",
+  "prerequisites": [
+    "rx-a"
+  ],
+  "subChunks": [
+    {
+      "id": "rx-b1",
+      "title": "useEffect: Side Effects and the Outside World",
+      "sortOrder": 1,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Components render UI from data. But what about operations that <em>reach outside</em> the component — fetching from an API, reading localStorage, starting a timer, subscribing to a WebSocket? These are side effects: actions that touch the world beyond React's render cycle. <code>useEffect</code> is the hook that manages them safely.</p>",
+      "explanationHtml": "<h3>What is a side effect?</h3>\n\n<p>A side effect is anything a component does that isn't \"take props and state → return JSX\". Examples:</p>\n<ul>\n  <li>Fetching data from an API</li>\n  <li>Setting the document title</li>\n  <li>Starting or stopping a timer</li>\n  <li>Subscribing to a WebSocket or event listener</li>\n  <li>Reading/writing localStorage</li>\n</ul>\n\n<p>Side effects don't belong directly in the render function — they run on every render, including intermediate ones, causing duplicated calls or infinite loops.</p>\n\n<h3>useEffect syntax</h3>\n\n<pre><code>import { useEffect } from 'react';\n\nuseEffect(() =&gt; {\n  // Side effect code goes here\n}, [dependencies]);</code></pre>\n\n<p>useEffect takes two arguments: an effect function and a dependency array.</p>\n\n<h3>The dependency array — the most important part</h3>\n\n<pre><code>// 1. No array — runs after EVERY render (rarely what you want):\nuseEffect(() =&gt; {\n  console.log('Runs after every render');\n});\n\n// 2. Empty array — runs ONCE after the first render (mount):\nuseEffect(() =&gt; {\n  console.log('Runs once on mount');\n}, []);\n\n// 3. With dependencies — runs after mount AND whenever a dep changes:\nuseEffect(() =&gt; {\n  console.log('userId changed:', userId);\n}, [userId]);</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The dependency array is a contract: 'this effect depends on these values.' If you use a value inside the effect, it must be in the array. ESLint's <code>exhaustive-deps</code> rule enforces this. If you find yourself wanting to omit a dependency to 'avoid re-running', that's a design smell — you probably need a different structure.\"</p></div>\n\n<h3>Cleanup functions</h3>\n\n<p>If your effect sets up a subscription or timer, it must tear it down when the component unmounts (or before the next run). Return a cleanup function:</p>\n\n<pre><code>useEffect(() =&gt; {\n  const id = setInterval(() =&gt; {\n    setTick(t =&gt; t + 1);\n  }, 1000);\n\n  // This runs when the component unmounts or before the next effect:\n  return () =&gt; clearInterval(id);\n}, []); // Empty array: start once, clear on unmount</code></pre>\n\n<p>Without cleanup, the interval would keep running after the component unmounts — causing state updates on an unmounted component (a React warning) and eventually a memory leak.</p>\n\n<h3>Setting the document title — a safe first effect</h3>\n\n<pre><code>function QuestPage({ questTitle }) {\n  useEffect(() =&gt; {\n    document.title = `${questTitle} — Arcane Academy`;\n\n    // Optional cleanup: reset title when component unmounts\n    return () =&gt; {\n      document.title = 'Arcane Academy';\n    };\n  }, [questTitle]); // Re-run whenever questTitle changes\n\n  return &lt;h1&gt;{questTitle}&lt;/h1&gt;;\n}</code></pre>\n\n<h3>What useEffect is not for</h3>\n\n<p>Don't use useEffect to transform data for rendering — do that inline in the component body or with useMemo:</p>\n\n<pre><code>// ❌ Unnecessary effect — this is just a derived value:\nconst [filtered, setFiltered] = useState([]);\nuseEffect(() =&gt; {\n  setFiltered(items.filter(i =&gt; i.done));\n}, [items]);\n\n// ✅ Compute it directly — no effect needed:\nconst filtered = items.filter(i =&gt; i.done);</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex holds up a component diagram. Inside the render box, everything is clean. Outside it: timers, network requests, browser APIs. She draws a boundary between them."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "A component's render function must be pure — the same props and state always produce the same JSX. Fetching data, setting timers, reading localStorage — these are side effects. They touch the world outside React. useEffect is the designated place to run them safely, after the render is committed to the screen."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The dependency array is the key. Empty array: run once on mount. No array: run after every render. Values in the array: run after mount and whenever those values change. If you use a value inside the effect, it belongs in the array — no exceptions."
+        },
+        {
+          "type": "example",
+          "speaker": "Effect with cleanup",
+          "text": "useEffect(() => {\n  const id = setInterval(() => setTick(t => t + 1), 1000);\n  return () => clearInterval(id); // cleanup on unmount\n}, []);"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;PageTitleSync title /&gt;</code> component. It should use <code>useEffect</code> to set <code>document.title</code> to the value of the <code>title</code> prop every time <code>title</code> changes. When the component unmounts, reset <code>document.title</code> to <code>'Arcane Academy'</code>.</p><p>Also render the title in an <code>&lt;h1 data-testid=\"heading\"&gt;</code> so it is visible on screen.</p>",
+      "guidedPracticeStarterCode": "import { useEffect } from 'react';\n\nexport default function PageTitleSync({ title }) {\n  useEffect(() => {\n    // TODO: set document.title to the title prop\n    // TODO: return a cleanup that resets document.title\n  }, [/* TODO: dependency */]);\n\n  return <h1 data-testid=\"heading\">{title}</h1>;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders h1 with title",
+          "selector": "[data-testid='heading']",
+          "requiredText": "Quest: The Component Trial"
+        },
+        {
+          "label": "Sets document.title on mount",
+          "documentTitle": "Quest: The Component Trial — Arcane Academy",
+          "props": {
+            "title": "Quest: The Component Trial"
+          }
+        },
+        {
+          "label": "Updates document.title when prop changes",
+          "documentTitle": "New Quest — Arcane Academy",
+          "props": {
+            "title": "New Quest"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;CountdownTimer seconds /&gt;</code> component from scratch. It takes a <code>seconds</code> prop (initial countdown value). Every second, the displayed count decreases by 1. When it reaches 0, display <strong>Time's up!</strong> instead of a number. Use <code>useEffect</code> for the interval and make sure you clean it up. Hint: you'll need both <code>useState</code> and <code>useEffect</code>.</p>",
+      "feynmanPrompt": "Explain useEffect's dependency array to a colleague. What does it control? What are the three different behaviours depending on whether the array is absent, empty, or contains values? What breaks when you use a value inside an effect but leave it out of the dependency array?",
+      "questions": [
+        {
+          "id": "rxb1q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What does passing an empty array `[]` as useEffect's second argument cause?",
+          "options": [
+            "The effect runs once after the first render and never again",
+            "The effect runs after every render",
+            "The effect never runs",
+            "The effect runs before the first render"
+          ],
+          "answer": "The effect runs once after the first render and never again",
+          "explanation": "An empty dependency array tells React 'this effect has no dependencies — nothing can cause it to re-run.' It fires once after the initial render (mount) and the cleanup runs once when the component unmounts. This is the correct pattern for one-time setup like subscribing to a WebSocket or fetching initial data."
+        },
+        {
+          "id": "rxb1q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is the purpose of the function returned from a useEffect callback?",
+          "options": [
+            "It runs when the component unmounts or before the next effect run — used to cancel subscriptions and clear timers",
+            "It runs before the effect to set up preconditions",
+            "It is a callback React calls with the effect's result",
+            "It tells React whether to re-run the effect"
+          ],
+          "answer": "It runs when the component unmounts or before the next effect run — used to cancel subscriptions and clear timers",
+          "explanation": "The cleanup function prevents memory leaks and stale subscriptions. React calls it in two situations: when the component unmounts, and before re-running the effect (if dependencies changed). Always return a cleanup from effects that set up subscriptions, intervals, or event listeners."
+        },
+        {
+          "id": "rxb1q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A component fetches user data based on a `userId` prop. Which dependency array is correct?\n\nuseEffect(() => {\n  fetchUser(userId).then(setUser);\n}, [???]);",
+          "options": [
+            "[userId] — the effect must re-run whenever userId changes",
+            "[] — fetch only once on mount",
+            "No array — re-fetch on every render",
+            "[userId, fetchUser] — include all referenced values"
+          ],
+          "answer": "[userId] — the effect must re-run whenever userId changes",
+          "explanation": "The effect uses userId, so it belongs in the dependency array. Without it, the effect would only run on mount and the displayed user would never update when userId changes. fetchUser is typically a stable function defined outside the component and doesn't need to be listed (or you can wrap it in useCallback if it's defined inside)."
+        },
+        {
+          "id": "rxb1q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A component filters a list of items for display. A developer writes:\n\nuseEffect(() => setFiltered(items.filter(i => i.done)), [items]);\n\nWhat is the problem with this approach?",
+          "options": [
+            "It creates an unnecessary extra render — filtered is a derived value that can be computed directly in the component body",
+            "useEffect cannot call setState functions",
+            "The filter function mutates the original array",
+            "Missing cleanup will cause a memory leak"
+          ],
+          "answer": "It creates an unnecessary extra render — filtered is a derived value that can be computed directly in the component body",
+          "explanation": "Storing derived data in state (values computed from other state/props) adds a wasted render cycle: items changes → effect runs → setFiltered → another render. Instead, compute inline: const filtered = items.filter(i => i.done). This is synchronous, always up-to-date, and requires no effect."
+        }
+      ]
+    },
+    {
+      "id": "rx-b2",
+      "title": "Fetching Data from APIs",
+      "sortOrder": 2,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Most real React apps consume data from a server. Fetching, tracking loading state, handling errors, and displaying the result are the four-step pattern every component that talks to an API must implement. Get this pattern right once and you'll use it everywhere.</p>",
+      "explanationHtml": "<h3>The three-state pattern</h3>\n\n<p>Every data fetch has three possible states your UI must handle:</p>\n<ul>\n  <li><strong>Loading</strong> — the request is in flight</li>\n  <li><strong>Error</strong> — the request failed</li>\n  <li><strong>Success</strong> — data is available</li>\n</ul>\n\n<pre><code>import { useState, useEffect } from 'react';\n\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() =&gt; {\n    setLoading(true);\n    setError(null);\n\n    fetch(`https://api.example.com/users/${userId}`)\n      .then(res =&gt; {\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        return res.json();\n      })\n      .then(data =&gt; {\n        setUser(data);\n        setLoading(false);\n      })\n      .catch(err =&gt; {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, [userId]);\n\n  if (loading) return &lt;p data-testid=\"loading\"&gt;Loading...&lt;/p&gt;;\n  if (error)   return &lt;p data-testid=\"error\"&gt;Error: {error}&lt;/p&gt;;\n  return &lt;div data-testid=\"user\"&gt;&lt;h2&gt;{user.name}&lt;/h2&gt;&lt;/div&gt;;\n}</code></pre>\n\n<h3>Using async/await with useEffect</h3>\n\n<p>You cannot make the effect callback itself async (it would return a Promise, which React doesn't expect). Define an async function inside the effect and call it immediately:</p>\n\n<pre><code>useEffect(() =&gt; {\n  async function loadUser() {\n    try {\n      setLoading(true);\n      const res = await fetch(`/api/users/${userId}`);\n      if (!res.ok) throw new Error(`HTTP ${res.status}`);\n      const data = await res.json();\n      setUser(data);\n    } catch (err) {\n      setError(err.message);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  loadUser();\n}, [userId]);</code></pre>\n\n<h3>Avoiding race conditions with a cleanup flag</h3>\n\n<p>If the user changes <code>userId</code> quickly, two requests may be in flight simultaneously. The slower one might resolve last and overwrite the correct data. A cleanup flag prevents stale updates:</p>\n\n<pre><code>useEffect(() =&gt; {\n  let cancelled = false;\n\n  async function loadUser() {\n    try {\n      setLoading(true);\n      const res = await fetch(`/api/users/${userId}`);\n      const data = await res.json();\n      if (!cancelled) setUser(data); // Only update if still current\n    } catch (err) {\n      if (!cancelled) setError(err.message);\n    } finally {\n      if (!cancelled) setLoading(false);\n    }\n  }\n\n  loadUser();\n  return () =&gt; { cancelled = true; }; // Cleanup: mark as stale\n}, [userId]);</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Always reset loading and error state at the start of a new fetch. If you skip resetting error, a user who retried after an error will see the old error flash briefly before the new data arrives. Small detail. Visible to every user.\"</p></div>\n\n<h3>Using a public test API</h3>\n\n<p>For practice, <a href=\"https://jsonplaceholder.typicode.com\" target=\"_blank\">jsonplaceholder.typicode.com</a> provides free REST endpoints with realistic fake data:</p>\n\n<pre><code>// GET /posts — array of 100 posts\n// GET /posts/1 — single post\n// GET /users — array of 10 users\nfetch('https://jsonplaceholder.typicode.com/posts/1')\n  .then(r =&gt; r.json())\n  .then(data =&gt; console.log(data));\n// { id: 1, title: '...', body: '...', userId: 1 }</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A messenger raven arrives with a scroll. Vex holds it up: 'The Guild's quest board is now live — data from a real server. How do we display it?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Every data fetch has three possible states: loading, error, and success. Your UI must handle all three. Show a spinner while loading. Show an error message if the request fails. Show the data when it arrives. Skip any of the three and users will see broken, confusing interfaces."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The effect can't be async directly — React doesn't expect a Promise back. Define an async function inside the effect and call it immediately. This is the standard pattern. You'll write it dozens of times."
+        },
+        {
+          "type": "example",
+          "speaker": "The three-state fetch pattern",
+          "text": "const [data, setData] = useState(null);\nconst [loading, setLoading] = useState(true);\nconst [error, setError] = useState(null);\n\nuseEffect(() => {\n  async function load() {\n    try {\n      const res = await fetch('/api/quests');\n      if (!res.ok) throw new Error(`HTTP ${res.status}`);\n      setData(await res.json());\n    } catch (e) {\n      setError(e.message);\n    } finally {\n      setLoading(false);\n    }\n  }\n  load();\n}, []);"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;PostViewer postId /&gt;</code> component that fetches a post from <code>https://jsonplaceholder.typicode.com/posts/{postId}</code>.</p><ul><li>While loading: render <code>&lt;p data-testid=\"loading\"&gt;Loading...&lt;/p&gt;</code></li><li>On error: render <code>&lt;p data-testid=\"error\"&gt;Failed to load post.&lt;/p&gt;</code></li><li>On success: render a <code>&lt;div data-testid=\"post\"&gt;</code> containing an <code>&lt;h2&gt;</code> with the post's <code>title</code> and a <code>&lt;p&gt;</code> with the post's <code>body</code></li><li>Re-fetch whenever <code>postId</code> changes</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useEffect } from 'react';\n\nexport default function PostViewer({ postId }) {\n  const [post, setPost] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    // TODO: reset loading/error state\n    // TODO: define async loadPost() function\n    // TODO: fetch from jsonplaceholder, handle error\n    // TODO: call loadPost()\n  }, [postId]);\n\n  // TODO: render loading, error, and success states\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Shows loading state initially",
+          "selector": "[data-testid='loading']",
+          "exists": true
+        },
+        {
+          "label": "Shows post title after load",
+          "selector": "[data-testid='post'] h2",
+          "exists": true
+        },
+        {
+          "label": "Shows post body after load",
+          "selector": "[data-testid='post'] p",
+          "exists": true
+        },
+        {
+          "label": "Shows error on failed fetch",
+          "selector": "[data-testid='error']",
+          "exists": true,
+          "simulateError": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;UserList&gt;</code> component from scratch. Fetch all users from <code>https://jsonplaceholder.typicode.com/users</code> once on mount. Show a loading state, an error state, and — on success — render each user's <code>name</code> and <code>email</code> in a list. Include a Retry button that appears in the error state and re-triggers the fetch when clicked. No scaffold.</p>",
+      "feynmanPrompt": "Walk through the three-state data-fetching pattern. What state variables do you need, what are their initial values, and why? What breaks if you forget to reset the error state before re-fetching? What is a race condition in this context, and how does a cleanup flag prevent it?",
+      "questions": [
+        {
+          "id": "rxb2q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "Why can't you make the useEffect callback itself an async function?",
+          "options": [
+            "An async function returns a Promise, but useEffect expects either nothing or a cleanup function",
+            "async/await is not supported inside React hooks",
+            "It would cause the component to suspend rendering",
+            "Async callbacks are not supported in JavaScript functions"
+          ],
+          "answer": "An async function returns a Promise, but useEffect expects either nothing or a cleanup function",
+          "explanation": "useEffect's return value is treated as a cleanup function. If you return a Promise (by making the effect async), React doesn't know how to call it as a cleanup, and you'll get unexpected behavior. The fix: define an async function inside the effect and call it immediately — the effect itself remains synchronous."
+        },
+        {
+          "id": "rxb2q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "The Fetch API does not throw an error for 4xx or 5xx HTTP responses. How do you handle this?",
+          "options": [
+            "Check `res.ok` and throw manually: `if (!res.ok) throw new Error('HTTP ' + res.status)`",
+            "The fetch Promise rejects automatically for any non-2xx response",
+            "Use res.status === 200 to check before calling res.json()",
+            "Wrap the entire fetch in a try/catch — it will catch HTTP errors automatically"
+          ],
+          "answer": "Check `res.ok` and throw manually: `if (!res.ok) throw new Error('HTTP ' + res.status)`",
+          "explanation": "fetch() only rejects its Promise for network failures (no connection, DNS failure). A 404 or 500 response resolves successfully with res.ok === false. You must check res.ok and throw to route those cases into your catch block. This is one of the most common data-fetching bugs."
+        },
+        {
+          "id": "rxb2q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "After a failed fetch, the user clicks a button to retry. They see the old error flash before the new loading state appears. What is the most likely cause?",
+          "options": [
+            "The error state is not reset at the start of the new fetch",
+            "setLoading(true) is called before setError(null)",
+            "The retry button is rendering a new component instance",
+            "React batches the state updates and applies loading last"
+          ],
+          "answer": "The error state is not reset at the start of the new fetch",
+          "explanation": "If you set loading to true but don't clear the error, the component first renders with loading=true AND error='...' — whichever branch runs first shows stale UI. Always reset both at the start of every fetch: setLoading(true); setError(null)."
+        },
+        {
+          "id": "rxb2q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A user quickly switches between two userId values (1, then 2). Without a cleanup flag, what can go wrong?",
+          "options": [
+            "Both requests complete, but the slower one may resolve last and overwrite the result for userId=2 with data for userId=1",
+            "React cancels the first fetch automatically when userId changes",
+            "The component will throw a runtime error due to two concurrent state updates",
+            "Both results are displayed simultaneously, causing a duplicate render"
+          ],
+          "answer": "Both requests complete, but the slower one may resolve last and overwrite the result for userId=2 with data for userId=1",
+          "explanation": "This is a race condition. Two fetches are in flight; the network doesn't guarantee order. If the fetch for userId=1 is slower, it resolves after userId=2's fetch, calling setUser with stale data. The cleanup flag (let cancelled = true in cleanup) prevents the stale response from calling setState."
+        }
+      ]
+    },
+    {
+      "id": "rx-b3",
+      "title": "React Router: Navigation and URL Params",
+      "sortOrder": 3,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Single-page apps don't reload the page when navigating — they swap components. React Router gives your app URL-based navigation: different URLs render different components, the back button works, and links are shareable. It's the difference between an app and a demo.</p>",
+      "explanationHtml": "<h3>Setup — wrapping your app in a Router</h3>\n\n<pre><code>// main.jsx\nimport { BrowserRouter } from 'react-router-dom';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')).render(\n  &lt;BrowserRouter&gt;\n    &lt;App /&gt;\n  &lt;/BrowserRouter&gt;\n);</code></pre>\n\n<p><code>BrowserRouter</code> provides the routing context for the entire app. It must wrap everything that uses Router features.</p>\n\n<h3>Defining routes</h3>\n\n<pre><code>import { Routes, Route } from 'react-router-dom';\n\nfunction App() {\n  return (\n    &lt;Routes&gt;\n      &lt;Route path=\"/\" element={&lt;HomePage /&gt;} /&gt;\n      &lt;Route path=\"/quests\" element={&lt;QuestListPage /&gt;} /&gt;\n      &lt;Route path=\"/quests/:id\" element={&lt;QuestDetailPage /&gt;} /&gt;\n      &lt;Route path=\"*\" element={&lt;NotFoundPage /&gt;} /&gt;\n    &lt;/Routes&gt;\n  );\n}</code></pre>\n\n<p><code>:id</code> is a URL parameter — a dynamic segment captured from the URL. <code>*</code> is a catch-all for unknown routes.</p>\n\n<h3>Navigation — Link and useNavigate</h3>\n\n<pre><code>import { Link, useNavigate } from 'react-router-dom';\n\n// Declarative navigation — use in JSX:\n&lt;Link to=\"/quests\"&gt;View Quests&lt;/Link&gt;\n&lt;Link to={`/quests/${quest.id}`}&gt;{quest.title}&lt;/Link&gt;\n\n// Programmatic navigation — use after an action:\nfunction QuestForm() {\n  const navigate = useNavigate();\n\n  async function handleSubmit(e) {\n    e.preventDefault();\n    await submitQuest(formData);\n    navigate('/quests'); // Redirect after success\n  }\n}</code></pre>\n\n<p>Always use <code>&lt;Link&gt;</code> instead of <code>&lt;a href&gt;</code> for internal navigation. <code>&lt;a&gt;</code> triggers a full page reload; <code>&lt;Link&gt;</code> uses the Router's client-side navigation.</p>\n\n<h3>Reading URL parameters</h3>\n\n<pre><code>import { useParams } from 'react-router-dom';\n\n// Route: /quests/:id\nfunction QuestDetailPage() {\n  const { id } = useParams(); // id is always a string — parse if needed\n  const questId = parseInt(id, 10);\n\n  // ... fetch quest by questId\n}</code></pre>\n\n<h3>Nested routes and shared layouts</h3>\n\n<pre><code>function App() {\n  return (\n    &lt;Routes&gt;\n      &lt;Route path=\"/\" element={&lt;Layout /&gt;}&gt;\n        &lt;!-- Child routes render inside &lt;Outlet /&gt; in Layout --&gt;\n        &lt;Route index element={&lt;HomePage /&gt;} /&gt;\n        &lt;Route path=\"quests\" element={&lt;QuestListPage /&gt;} /&gt;\n        &lt;Route path=\"quests/:id\" element={&lt;QuestDetailPage /&gt;} /&gt;\n      &lt;/Route&gt;\n    &lt;/Routes&gt;\n  );\n}\n\n// Layout renders the nav bar + current child page:\nimport { Outlet } from 'react-router-dom';\nfunction Layout() {\n  return (\n    &lt;&gt;\n      &lt;nav&gt;&lt;Link to=\"/\"&gt;Home&lt;/Link&gt; | &lt;Link to=\"/quests\"&gt;Quests&lt;/Link&gt;&lt;/nav&gt;\n      &lt;main&gt;&lt;Outlet /&gt;&lt;/main&gt;\n    &lt;/&gt;\n  );\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The Outlet component is where React Router renders the matched child route inside a layout. Think of it as a placeholder that says 'put the current page's content here.' Without an Outlet, nested child routes never appear.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The single-page workbench now has multiple rooms — different views accessible through doorways. Vex gestures at the doorways."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "A real app has multiple pages. React Router gives URLs meaning without reloading the page. Different URLs render different components. The back button works. Links can be bookmarked and shared. Without routing, you have a demo. With routing, you have an app."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Three concepts to master: Routes (which component to show at which URL), Link (navigate without a page reload), and useParams (read the dynamic segments from the URL). The fourth — useNavigate — is for redirecting after actions like form submissions."
+        },
+        {
+          "type": "example",
+          "speaker": "Routes, Link, and useParams",
+          "text": "// Define:\n<Route path=\"/quests/:id\" element={<QuestPage />} />\n\n// Link to:\n<Link to={`/quests/${quest.id}`}>{quest.title}</Link>\n\n// Read the param:\nconst { id } = useParams();"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a two-page app with React Router:</p><ul><li><strong>Home page</strong> (<code>/</code>): renders <code>&lt;h1 data-testid=\"home\"&gt;Home&lt;/h1&gt;</code> and a <code>&lt;Link to=\"/about\"&gt;About&lt;/Link&gt;</code></li><li><strong>About page</strong> (<code>/about</code>): renders <code>&lt;h1 data-testid=\"about\"&gt;About&lt;/h1&gt;</code> and a <code>&lt;Link to=\"/\"&gt;Home&lt;/Link&gt;</code></li><li>A catch-all <code>*</code> route that renders <code>&lt;p data-testid=\"404\"&gt;Page not found&lt;/p&gt;</code></li></ul><p>Wrap the app in <code>&lt;BrowserRouter&gt;</code>.</p>",
+      "guidedPracticeStarterCode": "import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';\n\nfunction HomePage() {\n  // TODO: render h1 with data-testid=\"home\" and Link to /about\n  return null;\n}\n\nfunction AboutPage() {\n  // TODO: render h1 with data-testid=\"about\" and Link to /\n  return null;\n}\n\nexport default function App() {\n  return (\n    <BrowserRouter>\n      <Routes>\n        {/* TODO: Route for / → HomePage */}\n        {/* TODO: Route for /about → AboutPage */}\n        {/* TODO: catch-all * route → <p data-testid=\"404\">Page not found</p> */}\n      </Routes>\n    </BrowserRouter>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Home page renders at /",
+          "selector": "[data-testid='home']",
+          "requiredText": "Home",
+          "path": "/"
+        },
+        {
+          "label": "About page renders at /about",
+          "selector": "[data-testid='about']",
+          "requiredText": "About",
+          "path": "/about"
+        },
+        {
+          "label": "404 page renders for unknown route",
+          "selector": "[data-testid='404']",
+          "exists": true,
+          "path": "/unknown-path"
+        },
+        {
+          "label": "Link navigates from home to about",
+          "action": "click",
+          "selector": "a[href='/about']",
+          "then": {
+            "selector": "[data-testid='about']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a mini quest browser from scratch with three pages:</p><ul><li><code>/</code> — lists three quests (hardcoded) as Links to <code>/quests/1</code>, <code>/quests/2</code>, <code>/quests/3</code></li><li><code>/quests/:id</code> — shows the quest ID from the URL in a heading: <strong>Quest #1</strong></li><li><code>*</code> — not found page</li></ul><p>Wrap in a shared Layout component with a persistent nav bar showing a Home link. No scaffold provided.</p>",
+      "feynmanPrompt": "Explain the difference between using an `<a href>` tag and React Router's `<Link>` component for internal navigation. What does each do to the browser? When would you use `useNavigate` instead of `<Link>`?",
+      "questions": [
+        {
+          "id": "rxb3q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is the difference between using `<a href=\"/about\">` and `<Link to=\"/about\">` inside a React Router app?",
+          "options": [
+            "<a> causes a full page reload; <Link> uses client-side navigation without reloading",
+            "They are functionally identical — React Router intercepts all <a> tags",
+            "<Link> is slower because it re-renders the entire app on navigation",
+            "<a> is required for accessibility; <Link> should only be used for buttons"
+          ],
+          "answer": "<a> causes a full page reload; <Link> uses client-side navigation without reloading",
+          "explanation": "A standard <a href> makes the browser request a new URL and reload the entire page — losing React state and showing a flash of white. React Router's <Link> pushes to the browser's history API without a page reload, React swaps the matching component, and state persists. Always use <Link> for internal navigation."
+        },
+        {
+          "id": "rxb3q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "The route `/quests/:id` is matched. Inside the `QuestDetailPage` component, how do you access the `id` value?",
+          "options": [
+            "const { id } = useParams()",
+            "const id = props.params.id",
+            "const id = useRoute().id",
+            "const { id } = useLocation().state"
+          ],
+          "answer": "const { id } = useParams()",
+          "explanation": "useParams() returns an object containing all dynamic segments from the matched URL. For a route /quests/:id matched against /quests/42, useParams() returns { id: '42' }. Note that URL params are always strings — parse to a number if needed."
+        },
+        {
+          "id": "rxb3q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "After a form submission succeeds, you want to redirect the user to `/dashboard`. Which React Router tool do you use?",
+          "options": [
+            "useNavigate — call navigate('/dashboard') in the submit handler after the async action succeeds",
+            "Link — render <Link to=\"/dashboard\" /> in the form's onSubmit",
+            "useLocation — update the current location object",
+            "Route — add a redirect Route that activates on form success"
+          ],
+          "answer": "useNavigate — call navigate('/dashboard') in the submit handler after the async action succeeds",
+          "explanation": "Link is for declarative navigation in JSX — clicking an element. useNavigate is for programmatic navigation triggered by code: after a successful API call, after a timeout, or after any event that isn't a direct user click on a link. Call the returned navigate function with the target path."
+        },
+        {
+          "id": "rxb3q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "You have a Layout component with a nav bar that should appear on every page. The page content should render below it. Which React Router feature renders the matched child route inside the Layout?",
+          "options": [
+            "<Outlet /> — a placeholder component from react-router-dom that renders the current child route",
+            "props.children — pass the current page as children to Layout",
+            "<Route /> — nest a Route inside Layout's JSX",
+            "useLocation() — read the current path and conditionally render the right component"
+          ],
+          "answer": "<Outlet /> — a placeholder component from react-router-dom that renders the current child route",
+          "explanation": "When you use nested routes (<Route element={<Layout />}> with child <Route> elements inside), React Router renders Layout's element and replaces <Outlet /> with the matched child route's element. This is how you share a nav bar, sidebar, or page frame across multiple routes without duplicating it."
+        }
+      ]
+    },
+    {
+      "id": "rx-b4",
+      "title": "Forms: Validation and Multi-Field Patterns",
+      "sortOrder": 4,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Single-field forms are straightforward. Real forms have five, ten, twenty fields — and they need validation, error messages, and submission state. The patterns you use for multi-field forms determine whether your code stays manageable or collapses under its own weight.</p>",
+      "explanationHtml": "<h3>Managing multi-field state with an object</h3>\n\n<p>Instead of a separate useState for every field, store all field values in one object:</p>\n\n<pre><code>function RegistrationForm() {\n  const [fields, setFields] = useState({\n    username: '',\n    email: '',\n    password: '',\n  });\n\n  function handleChange(e) {\n    const { name, value } = e.target;\n    setFields(prev =&gt; ({ ...prev, [name]: value }));\n  }\n\n  return (\n    &lt;form&gt;\n      &lt;input name=\"username\" value={fields.username} onChange={handleChange} /&gt;\n      &lt;input name=\"email\"    value={fields.email}    onChange={handleChange} /&gt;\n      &lt;input name=\"password\" value={fields.password} onChange={handleChange} type=\"password\" /&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<p>The trick: <code>name</code> attribute on each input matches the key in the state object. One <code>handleChange</code> function handles all fields using computed property names (<code>[name]: value</code>).</p>\n\n<h3>Validation — two strategies</h3>\n\n<p><strong>Validate on submit:</strong> Check all fields when the user submits. Simple, less annoying for users.</p>\n\n<pre><code>const [errors, setErrors] = useState({});\n\nfunction validate(fields) {\n  const errs = {};\n  if (!fields.username.trim()) errs.username = 'Username is required';\n  if (!fields.email.includes('@')) errs.email = 'Enter a valid email';\n  if (fields.password.length &lt; 8) errs.password = 'At least 8 characters';\n  return errs;\n}\n\nfunction handleSubmit(e) {\n  e.preventDefault();\n  const errs = validate(fields);\n  if (Object.keys(errs).length &gt; 0) {\n    setErrors(errs);\n    return;\n  }\n  // Proceed with submission\n}</code></pre>\n\n<p><strong>Validate on blur:</strong> Validate a field when the user leaves it (<code>onBlur</code>). More immediate feedback.</p>\n\n<pre><code>function handleBlur(e) {\n  const { name, value } = e.target;\n  // Validate just this field and merge into errors:\n  const fieldError = validateField(name, value);\n  setErrors(prev =&gt; ({ ...prev, [name]: fieldError }));\n}</code></pre>\n\n<h3>Submission state</h3>\n\n<p>Prevent double-submissions and show feedback during async operations:</p>\n\n<pre><code>const [submitting, setSubmitting] = useState(false);\nconst [submitError, setSubmitError] = useState(null);\n\nasync function handleSubmit(e) {\n  e.preventDefault();\n  if (submitting) return; // Guard against double-click\n\n  setSubmitting(true);\n  setSubmitError(null);\n\n  try {\n    await registerUser(fields);\n    navigate('/welcome');\n  } catch (err) {\n    setSubmitError(err.message);\n  } finally {\n    setSubmitting(false);\n  }\n}\n\n// In JSX:\n&lt;button type=\"submit\" disabled={submitting}&gt;\n  {submitting ? 'Creating account...' : 'Create Account'}\n&lt;/button&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Disable the submit button while submitting. Show loading text. These are not polish — they are correctness. A double-submitted registration creates two accounts. A form that shows no feedback while waiting looks broken. Both cost you users.\"</p></div>\n\n<h3>useRef for uncontrolled inputs</h3>\n\n<p>For simple cases where you only need the value on submit (not on every keystroke), an uncontrolled input with a ref is lighter:</p>\n\n<pre><code>import { useRef } from 'react';\n\nfunction SimpleSearch() {\n  const inputRef = useRef(null);\n\n  function handleSubmit(e) {\n    e.preventDefault();\n    console.log(inputRef.current.value);\n  }\n\n  return (\n    &lt;form onSubmit={handleSubmit}&gt;\n      &lt;input ref={inputRef} type=\"text\" /&gt;\n      &lt;button type=\"submit\"&gt;Search&lt;/button&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<p>Prefer controlled inputs (useState) for most forms — they are easier to validate, reset, and test. Use useRef for cases where you truly only need the value at submission time and have no need for real-time validation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A complex registration scroll appears on the workbench — username, email, password, repeat password, role selection. Vex spreads it flat."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "One useState per field is fine for two fields. For ten fields it is noise. Store all field values in one state object — the field's name attribute is the key. One handleChange function updates any field by reading e.target.name."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Validation and submission state are the parts beginners skip. Validate on submit at minimum — build an errors object, set it in state, show the messages inline. Disable the submit button while the async call is in flight. Both of these are correctness, not polish."
+        },
+        {
+          "type": "example",
+          "speaker": "One handleChange for all fields",
+          "text": "function handleChange(e) {\n  const { name, value } = e.target;\n  setFields(prev => ({ ...prev, [name]: value }));\n}\n\n<input name=\"email\" value={fields.email} onChange={handleChange} />"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;LoginForm onSubmit /&gt;</code> component with two fields: <code>email</code> and <code>password</code>.</p><ul><li>Use a single state object for both fields and a single <code>handleChange</code> handler</li><li>On submit, validate: email must contain <code>@</code>, password must be at least 6 characters</li><li>Show inline errors in <code>&lt;p data-testid=\"error-email\"&gt;</code> and <code>&lt;p data-testid=\"error-password\"&gt;</code> when invalid</li><li>If valid, call <code>onSubmit(fields)</code> and do not show errors</li><li>Disable the submit button while <code>submitting</code> state is true (you can simulate this with a 1-second delay)</li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nexport default function LoginForm({ onSubmit }) {\n  const [fields, setFields] = useState({ email: '', password: '' });\n  const [errors, setErrors] = useState({});\n  const [submitting, setSubmitting] = useState(false);\n\n  function handleChange(e) {\n    // TODO: update the correct field using e.target.name\n  }\n\n  async function handleSubmit(e) {\n    e.preventDefault();\n    // TODO: validate fields, set errors if invalid\n    // TODO: call onSubmit(fields), manage submitting state\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      {/* TODO: email input, error message, password input, error message, submit button */}\n    </form>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders email and password inputs",
+          "selector": "input[name='email']",
+          "exists": true
+        },
+        {
+          "label": "Shows email error when invalid",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "input[name='email']",
+              "value": "notanemail"
+            },
+            {
+              "action": "click",
+              "selector": "button[type='submit']"
+            }
+          ],
+          "then": {
+            "selector": "[data-testid='error-email']",
+            "exists": true
+          }
+        },
+        {
+          "label": "Shows password error when too short",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "input[name='password']",
+              "value": "abc"
+            },
+            {
+              "action": "click",
+              "selector": "button[type='submit']"
+            }
+          ],
+          "then": {
+            "selector": "[data-testid='error-password']",
+            "exists": true
+          }
+        },
+        {
+          "label": "Calls onSubmit with valid data",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "input[name='email']",
+              "value": "user@test.com"
+            },
+            {
+              "action": "type",
+              "selector": "input[name='password']",
+              "value": "password123"
+            },
+            {
+              "action": "click",
+              "selector": "button[type='submit']"
+            }
+          ],
+          "onSubmitCalledWith": {
+            "email": "user@test.com",
+            "password": "password123"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;RegistrationForm&gt;</code> from scratch with three fields: <code>username</code> (required, min 3 chars), <code>email</code> (must contain @), <code>password</code> (min 8 chars). Use a single state object and a single handleChange. Show inline validation errors. Disable the submit button while submitting. On successful validation, log the fields to the console. No scaffold.</p>",
+      "feynmanPrompt": "Explain the pattern of storing all form fields in one state object with a shared handleChange function. Why is this preferable to a separate useState for each field? Walk through what happens step by step when a user types into the email input.",
+      "questions": [
+        {
+          "id": "rxb4q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "In the single-object form state pattern, how does one `handleChange` function update the correct field for any input?",
+          "options": [
+            "It reads `e.target.name` (matching the input's `name` attribute) and uses it as a computed property key to update only that field",
+            "It reads `e.target.id` and finds the matching state key by ID",
+            "React automatically maps onChange events to the matching state key by input position",
+            "It updates all fields simultaneously and React diffs to find the changed one"
+          ],
+          "answer": "It reads `e.target.name` (matching the input's `name` attribute) and uses it as a computed property key to update only that field",
+          "explanation": "const { name, value } = e.target gives you the input's name attribute and its new value. setFields(prev => ({ ...prev, [name]: value })) spreads the existing fields and overwrites only the matching key. This works for any number of fields as long as each input's name attribute matches the corresponding state key."
+        },
+        {
+          "id": "rxb4q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "Why should the submit button be disabled while a form submission is in progress?",
+          "options": [
+            "To prevent double-submissions — a second click would trigger a second async request before the first completes",
+            "Disabled buttons look more professional in loading states",
+            "React throws an error if state is updated on an unmounted component after double-submit",
+            "The browser would reload the page if a submit event fires twice"
+          ],
+          "answer": "To prevent double-submissions — a second click would trigger a second async request before the first completes",
+          "explanation": "If the user clicks Submit twice before the async request completes, two identical requests go out. For actions like creating an account or placing an order, this creates duplicate records. Disabling the button (and optionally checking a submitting guard inside handleSubmit) prevents this class of bug."
+        },
+        {
+          "id": "rxb4q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "When is `useRef` for an uncontrolled input preferable over `useState` for a controlled input?",
+          "options": [
+            "When you only need the value at submission time and have no real-time validation, character counting, or derived UI",
+            "When the form has more than 5 fields — useRef performs better at scale",
+            "When the input value might be empty — useState can't represent empty strings",
+            "useRef is always preferable — controlled inputs cause unnecessary re-renders"
+          ],
+          "answer": "When you only need the value at submission time and have no real-time validation, character counting, or derived UI",
+          "explanation": "Controlled inputs re-render on every keystroke — which is exactly what you need for live validation or character counters. If you don't need any of that (e.g., a simple search box that only needs the value on Enter), useRef reads the value once at submission without any state overhead. Most forms benefit from controlled inputs."
+        },
+        {
+          "id": "rxb4q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Validate-on-submit vs validate-on-blur: which strategy is more appropriate for a long registration form?",
+          "options": [
+            "Validate on blur for individual fields (immediate per-field feedback) combined with a full validate-on-submit pass as the final gate",
+            "Validate on submit only — validation on blur is too aggressive and frustrates users",
+            "Validate on every keystroke using onChange — gives the most immediate feedback",
+            "Validate on blur only — on-submit validation is redundant if each field was already validated"
+          ],
+          "answer": "Validate on blur for individual fields (immediate per-field feedback) combined with a full validate-on-submit pass as the final gate",
+          "explanation": "Validating on every keystroke (onChange) shows errors while the user is still typing — e.g., 'email is invalid' appearing after the first character. Blur validation shows errors after the user finishes a field, which feels natural. A final on-submit pass catches fields the user skipped entirely. The combination gives good UX without being aggressive."
+        }
+      ]
+    },
+    {
+      "id": "rx-b5",
+      "title": "Component Patterns: Composition and Lifting State",
+      "sortOrder": 5,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>As apps grow, two problems emerge: state that needs to be shared between components, and UI that needs to be flexible without becoming a tangle of props. Lifting state and composition patterns are the structural answers — and getting them right is what separates scalable React apps from spaghetti.</p>",
+      "explanationHtml": "<h3>Lifting state up</h3>\n\n<p>When two components need to share the same state, move the state to their closest common ancestor and pass it down as props:</p>\n\n<pre><code>// ❌ Each input owns its own state — they can't see each other:\nfunction FilterInput() {\n  const [query, setQuery] = useState('');\n  // List doesn't know about query\n}\n\n// ✅ Parent owns the state and distributes it:\nfunction SearchPage() {\n  const [query, setQuery] = useState('');\n\n  return (\n    &lt;&gt;\n      &lt;FilterInput query={query} onQueryChange={setQuery} /&gt;\n      &lt;ResultsList query={query} /&gt;\n    &lt;/&gt;\n  );\n}\n\nfunction FilterInput({ query, onQueryChange }) {\n  return (\n    &lt;input value={query} onChange={(e) =&gt; onQueryChange(e.target.value)} /&gt;\n  );\n}</code></pre>\n\n<h3>Prop drilling — and when it becomes a problem</h3>\n\n<p>Passing props through two or three levels is fine. When you're passing the same prop through five levels of components that don't use it themselves — just to get it to a deeply nested component — that's prop drilling. Solutions:</p>\n<ul>\n  <li>Component composition (see below) — often eliminates the need to drill</li>\n  <li>Context API — for truly global data (covered in Expert tier)</li>\n</ul>\n\n<h3>Composition: children and render slots</h3>\n\n<p>Instead of passing data down through many levels, rearrange the component tree so the component that needs the data is rendered at the right level:</p>\n\n<pre><code>// ❌ Prop drilling: App → Page → Section → Widget → Button needs user\nfunction App() {\n  const user = useUser();\n  return &lt;Page user={user} /&gt;;\n}\nfunction Page({ user }) {\n  return &lt;Section user={user} /&gt;;  // Page doesn't use user itself\n}\n\n// ✅ Composition: render &lt;UserButton&gt; at the level that has user\nfunction App() {\n  const user = useUser();\n  return (\n    &lt;Page&gt;\n      &lt;Section&gt;\n        &lt;UserButton user={user} /&gt;  {/* user only travels one level */}\n      &lt;/Section&gt;\n    &lt;/Page&gt;\n  );\n}\nfunction Page({ children }) { return &lt;div&gt;{children}&lt;/div&gt;; }\nfunction Section({ children }) { return &lt;section&gt;{children}&lt;/section&gt;; }</code></pre>\n\n<h3>The render prop pattern</h3>\n\n<p>Pass a function as a prop that returns JSX — gives the parent control over what renders, the child control over when it renders:</p>\n\n<pre><code>function DataLoader({ url, render }) {\n  const [data, setData] = useState(null);\n  useEffect(() =&gt; { fetch(url).then(r =&gt; r.json()).then(setData); }, [url]);\n  if (!data) return &lt;p&gt;Loading...&lt;/p&gt;;\n  return render(data); // Parent decides how to display it\n}\n\n// Usage:\n&lt;DataLoader\n  url=\"/api/user\"\n  render={(user) =&gt; &lt;UserProfile name={user.name} /&gt;}\n/&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Render props look clever and they are sometimes the right tool. But before reaching for them, ask: can I solve this with lifting state and children props? Usually the answer is yes, and the result is simpler.\"</p></div>\n\n<h3>Controlled components — the React way</h3>\n\n<p>A controlled component pattern applies beyond inputs. Any component whose state is owned externally and passed in as props is 'controlled':</p>\n\n<pre><code>// Uncontrolled modal — owns its own open/closed state\nfunction Modal() {\n  const [open, setOpen] = useState(false);\n}\n\n// Controlled modal — parent owns the state, gives full control:\nfunction Modal({ open, onClose }) {\n  if (!open) return null;\n  return &lt;div className=\"modal\"&gt;... &lt;button onClick={onClose}&gt;Close&lt;/button&gt;&lt;/div&gt;;\n}</code></pre>\n\n<p>Controlled components are more reusable — the parent can open/close the modal in response to anything, not just clicks inside the modal itself.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Two components on the workbench need to stay in sync — a search input and a results list. Neither can see the other's state. Vex draws an arrow pointing up to their parent."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "When two components need the same data, don't try to sync them — lift the state to their common parent and pass it down. The parent owns truth. Children receive and report. This is the first structural pattern every React developer must master."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Prop drilling becomes a problem at depth — passing props through components that don't use them, just to get data somewhere deep. Before reaching for Context, ask: can composition solve this? Passing children or rendering components higher in the tree often cuts the chain entirely."
+        },
+        {
+          "type": "example",
+          "speaker": "Lifting state to the common parent",
+          "text": "function SearchPage() {\n  const [query, setQuery] = useState('');\n  return (\n    <>\n      <FilterInput value={query} onChange={setQuery} />\n      <ResultsList query={query} />\n    </>\n  );\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;FilterableList&gt;</code> component that lifts state correctly:</p><ul><li>It contains a <code>&lt;SearchInput value onSearch /&gt;</code> and an <code>&lt;ItemList items /&gt;</code></li><li>The parent <code>&lt;FilterableList&gt;</code> owns the <code>query</code> state and passes it to both children</li><li><code>SearchInput</code> renders a controlled text input and calls <code>onSearch</code> with the input value on each keystroke</li><li><code>ItemList</code> receives the full <code>items</code> array (objects with <code>id</code> and <code>name</code>) and renders only items whose name includes the query (case-insensitive)</li><li>Show <code>&lt;p data-testid=\"empty\"&gt;No results.&lt;/p&gt;</code> when nothing matches</li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nfunction SearchInput({ value, onSearch }) {\n  // TODO: controlled input that calls onSearch on change\n  return null;\n}\n\nfunction ItemList({ items, query }) {\n  // TODO: filter items by query (case-insensitive name match)\n  // TODO: show empty state if no results\n  return null;\n}\n\nexport default function FilterableList({ items }) {\n  // TODO: own the query state, pass to SearchInput and ItemList\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders search input",
+          "selector": "input",
+          "exists": true
+        },
+        {
+          "label": "Filters list on typing",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "input",
+              "value": "react"
+            }
+          ],
+          "then": {
+            "selector": "li",
+            "count": 1,
+            "props": {
+              "items": [
+                {
+                  "id": 1,
+                  "name": "React Hooks"
+                },
+                {
+                  "id": 2,
+                  "name": "TypeScript Basics"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "Shows empty state when no match",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "input",
+              "value": "zzznomatch"
+            }
+          ],
+          "then": {
+            "selector": "[data-testid='empty']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <strong>controlled accordion</strong> from scratch. An <code>&lt;Accordion&gt;</code> component renders a list of items (each with a <code>title</code> and <code>content</code>). Only one item can be expanded at a time. The expanded item's index is owned by the <code>Accordion</code> parent — each <code>AccordionItem</code> receives an <code>isOpen</code> boolean and an <code>onToggle</code> callback. No scaffold.</p>",
+      "feynmanPrompt": "Explain 'lifting state up' to a colleague. What is the symptom that tells you state needs to be lifted? Walk through a concrete example — a filter input and a filtered list — describing exactly what changes when you lift the state.",
+      "questions": [
+        {
+          "id": "rxb5q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "When should you lift state up to a parent component?",
+          "options": [
+            "When two or more sibling components need to read or respond to the same state",
+            "When a component has too many useState calls and needs to simplify",
+            "When the state is only read once during the component's lifetime",
+            "Only when the component is re-rendering too frequently"
+          ],
+          "answer": "When two or more sibling components need to read or respond to the same state",
+          "explanation": "State lives at the lowest level of the component tree where it needs to be accessible. If only one component needs it, keep it there. If two siblings need it, the closest common ancestor is the right home. 'Lifting state' means moving it up to that ancestor and distributing it via props."
+        },
+        {
+          "id": "rxb5q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is prop drilling and at what point does it become a problem?",
+          "options": [
+            "Passing props through intermediate components that don't use the data themselves — it becomes a problem when the chain is 3-5+ levels deep",
+            "Passing too many props to a single component — more than 5 props is a code smell",
+            "Passing functions as props — this creates tight coupling between parent and child",
+            "Prop drilling is always a problem and should be avoided at any depth"
+          ],
+          "answer": "Passing props through intermediate components that don't use the data themselves — it becomes a problem when the chain is 3-5+ levels deep",
+          "explanation": "Two or three levels of prop passing is normal and manageable. The problem appears when Page passes user to Section which passes it to Widget which passes it to Button — and none of the intermediate components use user themselves. Every added level couples more components to the data shape and makes refactoring harder."
+        },
+        {
+          "id": "rxb5q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A Modal component that owns its open/closed state internally can only be opened by clicks inside itself. How do you make it openable from anywhere in the app?",
+          "options": [
+            "Make it a controlled component: accept open and onClose as props, let the parent own the state",
+            "Use a global variable to store the modal's open state",
+            "Add a ref to the Modal and call modalRef.current.open() from outside",
+            "Use useEffect to watch for a custom DOM event and open on that"
+          ],
+          "answer": "Make it a controlled component: accept open and onClose as props, let the parent own the state",
+          "explanation": "A controlled Modal receives its open state from outside and calls onClose when it wants to close. The parent can open it from a button, a timeout, or any event. The uncontrolled version (internal state) can only be opened by something inside the modal. Controlled components are more reusable and composable."
+        },
+        {
+          "id": "rxb5q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Data is needed 5 levels deep in the component tree. Before reaching for Context API, which composition technique often eliminates the prop drilling?",
+          "options": [
+            "Render the component that needs the data at the level where the data is available, and pass it as children down through layout components",
+            "Convert all intermediate components to class components to access the data via this.props",
+            "Use useRef to store the data at the top level and read it anywhere without props",
+            "Inline all intermediate components into one large parent component"
+          ],
+          "answer": "Render the component that needs the data at the level where the data is available, and pass it as children down through layout components",
+          "explanation": "Component composition is the first tool to reach for before Context. If UserButton needs the user object that lives in App, render <UserButton user={user} /> in App and pass it as children through Page → Section → Widget. Page, Section, and Widget become layout-only components that don't need to know about user at all. The data travels one level, not five."
+        }
+      ]
+    },
+    {
+      "id": "rx-b6",
+      "title": "Custom Hooks: Extracting Reusable Logic",
+      "sortOrder": 6,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>When the same combination of useState and useEffect appears in three components, it's time to extract a custom hook. Custom hooks let you package stateful logic — fetching, timers, local storage sync, form handling — into a single reusable function. The result: components that are readable, and logic that is testable.</p>",
+      "explanationHtml": "<h3>What is a custom hook?</h3>\n\n<p>A custom hook is a JavaScript function whose name starts with <code>use</code> and that calls other hooks. That's the entire definition.</p>\n\n<pre><code>// This is a custom hook:\nfunction useWindowWidth() {\n  const [width, setWidth] = useState(window.innerWidth);\n\n  useEffect(() =&gt; {\n    const handleResize = () =&gt; setWidth(window.innerWidth);\n    window.addEventListener('resize', handleResize);\n    return () =&gt; window.removeEventListener('resize', handleResize);\n  }, []);\n\n  return width;\n}\n\n// Used in any component:\nfunction ResponsiveLayout() {\n  const width = useWindowWidth();\n  return &lt;p&gt;{width &gt; 768 ? 'Desktop' : 'Mobile'}&lt;/p&gt;;\n}</code></pre>\n\n<p>The <code>use</code> prefix is a convention React enforces: hooks can only be called at the top level of components or other hooks. The prefix signals to React's linting tools where hook rules apply.</p>\n\n<h3>useFetch — the most useful custom hook you'll write</h3>\n\n<pre><code>function useFetch(url) {\n  const [data, setData] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() =&gt; {\n    let cancelled = false;\n\n    async function load() {\n      setLoading(true);\n      setError(null);\n      try {\n        const res = await fetch(url);\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        const json = await res.json();\n        if (!cancelled) setData(json);\n      } catch (e) {\n        if (!cancelled) setError(e.message);\n      } finally {\n        if (!cancelled) setLoading(false);\n      }\n    }\n\n    load();\n    return () =&gt; { cancelled = true; };\n  }, [url]);\n\n  return { data, loading, error };\n}\n\n// Now every component that fetches data is a one-liner:\nfunction UserProfile({ userId }) {\n  const { data: user, loading, error } = useFetch(`/api/users/${userId}`);\n  if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;\n  if (error)   return &lt;p&gt;Error: {error}&lt;/p&gt;;\n  return &lt;h2&gt;{user.name}&lt;/h2&gt;;\n}</code></pre>\n\n<h3>useLocalStorage</h3>\n\n<pre><code>function useLocalStorage(key, initialValue) {\n  const [value, setValue] = useState(() =&gt; {\n    try {\n      const stored = localStorage.getItem(key);\n      return stored ? JSON.parse(stored) : initialValue;\n    } catch {\n      return initialValue;\n    }\n  });\n\n  function setStoredValue(newValue) {\n    setValue(newValue);\n    localStorage.setItem(key, JSON.stringify(newValue));\n  }\n\n  return [value, setStoredValue];\n}\n\n// Drop-in replacement for useState that persists across page reloads:\nconst [theme, setTheme] = useLocalStorage('theme', 'light');</code></pre>\n\n<h3>When to extract a custom hook</h3>\n\n<p>Extract when:</p>\n<ul>\n  <li>The same useState + useEffect combination appears in multiple components</li>\n  <li>A component's logic is complex enough that the hook logic dominates — making the component hard to read</li>\n  <li>You want to unit test the logic independently of the UI</li>\n</ul>\n\n<p>Don't extract when the logic is used in only one place and straightforward — premature extraction adds indirection without benefit.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Custom hooks are the final piece of the Foundation-to-Practitioner bridge. Components describe <em>what to render</em>. Custom hooks contain <em>how to get the data that drives the render</em>. Keep them separate and both become easier to read, test, and change.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Three components on the workbench each contain the same fetch-loading-error pattern — copied and slightly modified each time. Vex circles all three."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "When you see the same useState and useEffect combination in three places, that is a custom hook waiting to be written. A custom hook is just a function that starts with 'use' and calls other hooks. Extract it once. Use it everywhere."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "useFetch is the first custom hook most developers write because it has the highest leverage — every component that loads data goes from 15 lines to 3. The hook contains all the complexity; the component contains only intent."
+        },
+        {
+          "type": "example",
+          "speaker": "useFetch — write once, use everywhere",
+          "text": "function useFetch(url) {\n  const [data, setData] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n  useEffect(() => { /* fetch logic */ }, [url]);\n  return { data, loading, error };\n}\n\n// Every component:\nconst { data, loading, error } = useFetch('/api/quests');"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Extract the data-fetching logic from the lesson into a <code>useFetch(url)</code> custom hook, then use it in a <code>&lt;QuestList&gt;</code> component.</p><ul><li><code>useFetch</code> accepts a URL string and returns <code>{ data, loading, error }</code></li><li>It handles loading state, error state, and the race-condition cleanup flag</li><li><code>QuestList</code> calls <code>useFetch('https://jsonplaceholder.typicode.com/todos?_limit=5')</code> and renders a loading message, error message, or a <code>&lt;ul&gt;</code> of item titles</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useEffect } from 'react';\n\n// TODO: implement useFetch(url) that returns { data, loading, error }\nfunction useFetch(url) {\n  // ...\n}\n\nexport default function QuestList() {\n  // TODO: use useFetch to load from jsonplaceholder /todos?_limit=5\n  // TODO: render loading, error, or list of item.title values\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Shows loading state initially",
+          "selector": "[data-testid='loading']",
+          "exists": true
+        },
+        {
+          "label": "Shows list after load",
+          "selector": "ul",
+          "exists": true
+        },
+        {
+          "label": "Renders 5 list items",
+          "selector": "li",
+          "count": 5
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>useLocalStorage(key, initialValue)</code> custom hook from scratch. It should behave exactly like useState — return <code>[value, setValue]</code> — but persist the value to localStorage under <code>key</code> on every update, and read the stored value as the initial value on mount. Then use it in a <code>&lt;ThemeToggle&gt;</code> component that persists 'light' or 'dark' across page refreshes. No scaffold.</p>",
+      "feynmanPrompt": "Explain what a custom hook is and why the `use` prefix matters. Walk through how you would extract a repeated fetch pattern into a `useFetch` hook — what does the hook contain, what does it return, and what does the component look like after the extraction?",
+      "questions": [
+        {
+          "id": "rxb6q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What are the two requirements for a function to be a React custom hook?",
+          "options": [
+            "Its name must start with `use`, and it must call at least one React hook",
+            "It must be defined inside a component and return JSX",
+            "It must accept props as its first argument and return state",
+            "It must be exported from a separate file and imported explicitly"
+          ],
+          "answer": "Its name must start with `use`, and it must call at least one React hook",
+          "explanation": "The `use` prefix is a convention React's linter and runtime use to enforce hook rules (don't call hooks inside conditions or loops, don't call hooks outside components or other hooks). Any function starting with `use` that calls useState, useEffect, or other hooks is a valid custom hook."
+        },
+        {
+          "id": "rxb6q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "Two components that call the same custom hook — do they share state?",
+          "options": [
+            "No — each component gets its own independent state from the hook",
+            "Yes — hooks share state between all components that call them",
+            "Only if the hook uses useContext internally",
+            "Only if both components are rendered by the same parent"
+          ],
+          "answer": "No — each component gets its own independent state from the hook",
+          "explanation": "Custom hooks are not singletons. Each call to a custom hook creates an independent set of state variables and effects for that specific component instance. This is the same as calling useState directly — two components with useState(0) have two separate, independent values."
+        },
+        {
+          "id": "rxb6q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "You have a `useFetch(url)` hook. A component calls it with a URL that depends on a prop. What must you ensure about the URL argument?",
+          "options": [
+            "The full URL string must be constructed before passing to useFetch, and the hook's dependency array must include url",
+            "Pass the base URL and params separately — useFetch builds the final URL internally",
+            "Memoize the URL with useMemo to prevent the effect from re-running",
+            "The URL must be a constant — dynamic URLs require a separate useEffect"
+          ],
+          "answer": "The full URL string must be constructed before passing to useFetch, and the hook's dependency array must include url",
+          "explanation": "useFetch receives a url argument and uses it in its internal useEffect. That effect's dependency array must include url so the effect re-runs and re-fetches when the URL changes. The component is responsible for building the correct URL string before passing it: useFetch(`/api/users/${userId}`)."
+        },
+        {
+          "id": "rxb6q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "When is it NOT appropriate to extract logic into a custom hook?",
+          "options": [
+            "When the logic is used in only one place and is straightforward — the abstraction adds indirection without benefit",
+            "When the logic involves more than two useState calls",
+            "When the hook would need to call useEffect",
+            "When the logic is synchronous — custom hooks are for async operations only"
+          ],
+          "answer": "When the logic is used in only one place and is straightforward — the abstraction adds indirection without benefit",
+          "explanation": "Extract when the pattern repeats across components or when a component's logic is complex enough that the hook dominates readability. Don't extract for the sake of 'cleanliness' when there's only one usage — you create an additional file to navigate, a new abstraction to understand, and no concrete benefit. Premature extraction is a real problem in React codebases."
+        }
+      ]
+    }
+  ]
+}

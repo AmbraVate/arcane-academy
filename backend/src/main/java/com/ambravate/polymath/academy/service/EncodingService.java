@@ -29,6 +29,7 @@ public class EncodingService {
     private final SpacingService spacingService;
     private final StreakService streakService;
     private final BadgeService badgeService;
+    private final TelemetryService telemetry;
     private final ObjectMapper objectMapper;
 
     /**
@@ -38,6 +39,8 @@ public class EncodingService {
     public SubChunkSession startSubChunk(String userId, String subChunkId) {
         SubChunk subChunk = subChunkRepository.findById(subChunkId)
                 .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+
+        boolean isFirstStart = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).isEmpty();
 
         UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId)
                 .orElseGet(() -> {
@@ -54,6 +57,11 @@ public class EncodingService {
             progress.setStatus(SubChunkStatus.IN_PROGRESS);
             progress.setCurrentPhase(EncodingPhase.HOOK);
             progressRepository.save(progress);
+        }
+
+        // Telemetry: emit quest_started only on the first start (resumes shouldn't double-count)
+        if (isFirstStart) {
+            telemetry.questStarted(userId, subChunkId, subChunk.getChunkId());
         }
 
         return new SubChunkSession(subChunk, progress);
@@ -83,6 +91,9 @@ public class EncodingService {
             case COMPLETE -> EncodingPhase.COMPLETE;
         };
 
+        boolean transitionsToComplete = next == EncodingPhase.COMPLETE
+                && progress.getStatus() != SubChunkStatus.COMPLETE; // emit telemetry only on first completion
+
         progress.setCurrentPhase(next);
         if (next == EncodingPhase.COMPLETE) {
             progress.setStatus(SubChunkStatus.COMPLETE);
@@ -91,6 +102,11 @@ public class EncodingService {
         progressRepository.save(progress);
 
         log.info("[Encoding] Phase advanced | user={} subChunk={} phase={}", userId, subChunkId, next);
+
+        if (transitionsToComplete) {
+            telemetry.questCompleted(userId, subChunkId, subChunk.getChunkId(), subChunk.getXpReward());
+        }
+
         return new SubChunkSession(subChunk, progress);
     }
 
@@ -233,6 +249,7 @@ public class EncodingService {
 
         if (passed) {
             UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).orElseThrow();
+            boolean firstCompletion = progress.getStatus() != SubChunkStatus.COMPLETE;
             progress.setCurrentPhase(EncodingPhase.COMPLETE);
             progress.setStatus(SubChunkStatus.COMPLETE);
             progress.setCompletedAt(Instant.now());
@@ -240,6 +257,12 @@ public class EncodingService {
 
             xpEarned = awardXp(userId, subChunkId + "-retrieval", 25);
             newBadges = badgeService.evaluateAndAward(userId);
+
+            if (firstCompletion) {
+                SubChunk sc = subChunkRepository.findById(subChunkId).orElse(null);
+                telemetry.questCompleted(userId, subChunkId,
+                        sc != null ? sc.getChunkId() : null, xpEarned);
+            }
         }
 
         return new RetrievalCheckResult(graded.score(), graded.correct(), graded.total(),

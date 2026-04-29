@@ -6,11 +6,24 @@ import type { DashboardDto, ChunkHealthDto } from '../types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 
-const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string }> = {
+const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string; accent: string }> = {
+  java: {
+    name: 'Java',
+    glyph: '☕',
+    tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',
+    accent: 'var(--teal)',
+  },
   tailwind: {
     name: 'Tailwind CSS',
     glyph: '🎨',
     tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',
+    accent: 'var(--purple)',
+  },
+  react: {
+    name: 'React',
+    glyph: '⚛️',
+    tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',
+    accent: 'var(--teal)',
   },
 }
 
@@ -18,7 +31,7 @@ const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-teal', YELLOW: 'bg-orange', RED: 'bg-red',
 }
 
-function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void }) {
+function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto; onClick: () => void; accent?: string }) {
   const locked = ch.status === 'LOCKED'
   const done   = ch.status === 'COMPLETE'
   const pct    = Math.round(ch.memoryStrength * 100)
@@ -27,10 +40,11 @@ function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void })
     <div
       className={cn(
         'bg-card border rounded-[12px] p-[18px] px-4 flex flex-col gap-2 cursor-pointer transition-[border-color,transform] duration-200',
-        locked ? 'opacity-50 cursor-default saturate-[0.4] border-border' :
-        done   ? 'border-[rgba(45,212,191,0.25)] hover:border-teal hover:-translate-y-0.5' :
-                 'border-border hover:border-teal hover:-translate-y-0.5',
+        locked ? 'opacity-50 cursor-default saturate-[0.4] border-border' : 'border-border hover:-translate-y-0.5',
       )}
+      style={!locked ? { ['--hover-border' as string]: accent } : undefined}
+      onMouseEnter={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderColor = accent }}
+      onMouseLeave={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderColor = done ? `color-mix(in srgb, ${accent} 25%, transparent)` : 'var(--border)' }}
       onClick={onClick}
     >
       <div className="flex items-center justify-between">
@@ -54,7 +68,7 @@ function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void })
           <div className="flex-1 h-[3px] bg-border rounded-full overflow-hidden">
             <div className={cn('h-full rounded-full', MEM_COLORS[ch.healthColor ?? 'GREEN'] ?? 'bg-teal')} style={{ width: `${pct}%` }} />
           </div>
-          <span className="text-[10px] text-muted flex-shrink-0">{pct}% memory</span>
+          <span className="text-[10px] text-muted flex-shrink-0">{pct}% mem</span>
         </div>
       )}
     </div>
@@ -68,7 +82,7 @@ export default function TopicPage() {
   const [dashboard, setDashboard] = useState<DashboardDto | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', tagline: '' }
+  const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', tagline: '', accent: 'var(--teal)' }
 
   useEffect(() => {
     if (!topicId) return
@@ -95,21 +109,24 @@ export default function TopicPage() {
     <div className="max-w-[900px] mx-auto px-5 py-6 pb-[72px] max-[600px]:px-3 max-[600px]:py-4">
       {/* Hero */}
       <div
-        className="flex flex-col items-center text-center px-5 py-8 pb-7 rounded-[16px] mb-6 border border-[rgba(45,212,191,0.2)] relative"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(45,212,191,.12) 0%, transparent 60%), var(--card)' }}
+        className="flex flex-col items-center text-center px-5 py-8 pb-7 rounded-[16px] mb-6 relative overflow-hidden"
+        style={{
+          border: `1px solid color-mix(in srgb, ${meta.accent} 25%, transparent)`,
+          background: `radial-gradient(ellipse at 50% 0%, color-mix(in srgb, ${meta.accent} 12%, transparent) 0%, transparent 60%), var(--card)`,
+        }}
       >
         <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/topics')}>
           ← All Topics
         </button>
         <div className="text-[52px] mb-2.5 max-[600px]:text-[40px]">{meta.glyph}</div>
-        <h1 className="font-cinzel text-[28px] font-bold text-teal m-0 mb-2 max-[600px]:text-[22px]">{meta.name}</h1>
+        <h1 className="font-cinzel text-[28px] font-bold m-0 mb-2 max-[600px]:text-[22px]" style={{ color: meta.accent }}>{meta.name}</h1>
         <p className="text-[14px] text-muted leading-[1.7] max-w-[480px] m-0 mb-5">{meta.tagline}</p>
         <div className="w-full max-w-[400px]">
           <div className="flex justify-between text-[12px] text-muted mb-1.5">
             <span>Overall mastery</span><span>{progressPct}%</span>
           </div>
           <div className="h-[6px] bg-border rounded-full overflow-hidden">
-            <div className="h-full bg-teal rounded-full transition-[width] duration-400" style={{ width: `${progressPct}%` }} />
+            <div className="h-full rounded-full transition-[width] duration-400" style={{ width: `${progressPct}%`, background: meta.accent }} />
           </div>
         </div>
       </div>
@@ -135,6 +152,7 @@ export default function TopicPage() {
           <ChunkCard
             key={ch.chunkId}
             ch={ch}
+            accent={meta.accent}
             onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.chunkId}`)}
           />
         ))}

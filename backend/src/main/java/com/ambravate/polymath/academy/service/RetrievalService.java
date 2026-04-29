@@ -19,6 +19,7 @@ public class RetrievalService {
     private final QuestionRepository questionRepository;
     private final UserLearnerProfileRepository profileRepository;
     private final ReviewSessionRepository sessionRepository;
+    private final TelemetryService telemetry;
 
     /**
      * Generate a retrieval check for a sub-chunk: 3-5 questions distributed by tier.
@@ -91,7 +92,16 @@ public class RetrievalService {
                 .correctAnswers(result.correct())
                 .score(result.score())
                 .build();
-        return sessionRepository.save(session);
+        ReviewSession saved = sessionRepository.save(session);
+
+        // Telemetry: one event per session, plus per-answer grade events for granular dashboards
+        String cadence = type.name();
+        telemetry.reviewSessionCompleted(userId, cadence, result.correct(), result.total());
+        for (QuestionResult qr : result.results()) {
+            telemetry.reviewGradeGiven(userId, cadence, qr.correct() ? 1.0 : 0.0);
+        }
+
+        return saved;
     }
 
     private LearnerPath getPath(String userId) {

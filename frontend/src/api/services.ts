@@ -152,6 +152,35 @@ export const tailwindApi = {
   },
 }
 
+// ── React Practice ────────────────────────────────────────────────────────────
+// Tests run in the iframe sandbox client-side (see ReactEditor); the per-test
+// pass/fail is sent here for XP awarding. Backend does a structural sanity
+// check on the JSX source — see ReactPracticeService for rationale.
+export interface ReactClientTestResult {
+  label: string
+  passed: boolean
+  actual: string
+}
+
+export const reactApi = {
+  submit: async (
+    subChunkId: string,
+    code: string,
+    clientTestResults: ReactClientTestResult[],
+  ): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/react/${subChunkId}/submit`, { code, clientTestResults })
+    return data
+  },
+  submitSoloPractice: async (
+    subChunkId: string,
+    code: string,
+    clientTestResults: ReactClientTestResult[],
+  ): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/react/${subChunkId}/solo-practice/submit`, { code, clientTestResults })
+    return data
+  },
+}
+
 // ── Code (kept) ──────────────────────────────────────────────────────────────
 export const codeApi = {
   run: async (code: string, testInput?: string): Promise<CodeRunResponse> => {

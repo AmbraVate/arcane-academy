@@ -5,7 +5,6 @@ import TopicsPage from './pages/TopicsPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import OAuthCallbackPage from './pages/OAuthCallbackPage'
-import DashboardPage from './pages/DashboardPage'
 import ChunkMapPage from './pages/ChunkMapPage'
 import EncodingPage from './pages/EncodingPage'
 import ReviewPage from './pages/ReviewPage'
@@ -17,6 +16,8 @@ import ProfilePage from './pages/ProfilePage'
 import TopicPage from './pages/TopicPage'
 import TopicOnboardingPage from './pages/TopicOnboardingPage'
 import TopicDiagnosticPage from './pages/TopicDiagnosticPage'
+import PrerequisiteCheckPage from './pages/PrerequisiteCheckPage'
+import CssPrimerPage from './pages/CssPrimerPage'
 import Nav from './components/layout/Nav'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
@@ -53,7 +54,8 @@ export default function App() {
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/"         element={user ? <Navigate to="/topics" replace /> : <LandingPage />} />
-        <Route path="/topic/java" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
+        {/* All topics (including java) go through the unified /topic/:topicId → TopicPage flow.
+            DashboardPage is reserved for an aggregate, multi-topic view — not a Java special case. */}
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />
         <Route path="/learn/:subChunkId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
@@ -61,8 +63,10 @@ export default function App() {
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
         <Route path="/topics" element={<PrivateRoute><TopicsPage /></PrivateRoute>} />
         <Route path="/topic/:topicId" element={<PrivateRoute><TopicPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId/onboarding" element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId/diagnostic" element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId/onboarding"   element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId/diagnostic"   element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
+        <Route path="/topic/:topicId/css-primer"   element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
 
         {/* Admin — completely separate layout, no learner Nav */}
         <Route element={<AdminRoute />}>

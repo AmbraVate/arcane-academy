@@ -24,6 +24,7 @@ public class DiagnosticService {
     private final UserLearnerProfileRepository profileRepository;
     private final UserTopicProfileRepository topicProfileRepository;
     private final RetrievalService retrievalService;
+    private final TelemetryService telemetry;
     private final ObjectMapper objectMapper;
 
     // ── Start ────────────────────────────────────────────────────────────────
@@ -152,6 +153,7 @@ public class DiagnosticService {
         }
 
         log.info("[Diagnostic] Completed for user={} topic={} path={}", userId, topicId, recommended);
+        telemetry.diagnosticCompleted(userId, topicId, recommended.name(), graded.score());
         return new DiagnosticResult(recommended, chunkRecommendations, graded.score());
     }
 
@@ -181,5 +183,6 @@ public class DiagnosticService {
             topicProfileRepository.save(profile);
         }
         log.info("[Diagnostic] Skipped for user={} topic={}", userId, topicId);
+        telemetry.diagnosticCompleted(userId, topicId, "SKIPPED", 0.0);
     }
 }
