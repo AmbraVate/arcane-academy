@@ -1,0 +1,233 @@
+{
+  "id": "sql-b",
+  "title": "Refining the Question — Filtering",
+  "glyph": "🔍",
+  "sortOrder": 2,
+  "tier": "FOUNDATION",
+  "topicId": "sql",
+  "prerequisites": ["sql-a"],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sql-b1",
+      "title": "Combining Conditions — AND, OR, NOT",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>One <code>WHERE</code> condition is rarely enough. \"Apprentices who are Mages and have over 4000 XP\" is a question with two filters joined by <strong>AND</strong>. The boolean operators — <code>AND</code>, <code>OR</code>, <code>NOT</code> — are how you stack conditions. Mix them carelessly and you'll get the wrong answer without ever seeing an error.</p>",
+
+      "explanationHtml": "<h3>The three boolean operators</h3>\n<pre><code>-- AND — both must be true:\nSELECT name FROM apprentices\nWHERE rank = 'Mage' AND xp &gt; 4000;\n\n-- OR — at least one must be true:\nSELECT name FROM apprentices\nWHERE rank = 'Mage' OR rank = 'Adept';\n\n-- NOT — invert the next condition:\nSELECT name FROM apprentices\nWHERE NOT rank = 'Novice';</code></pre>\n\n<h3>Operator precedence — the trap</h3>\n<p><code>AND</code> binds tighter than <code>OR</code>. This:</p>\n<pre><code>WHERE rank = 'Mage' OR rank = 'Adept' AND xp &gt; 4000</code></pre>\n<p>does <em>not</em> mean \"a Mage or Adept who has over 4000 XP.\" It means \"a Mage, OR (an Adept with over 4000 XP).\" An Apprentice-rank Mage with 100 XP would still match, because the first half — <code>rank = 'Mage'</code> — is satisfied.</p>\n<p>The fix is parentheses. Always.</p>\n<pre><code>-- The bug:\nWHERE rank = 'Mage' OR rank = 'Adept' AND xp &gt; 4000\n\n-- The fix:\nWHERE (rank = 'Mage' OR rank = 'Adept') AND xp &gt; 4000</code></pre>\n<p>If you ever doubt how SQL will group your conditions, parenthesise. Engines never punish you for being explicit.</p>\n\n<h3>De Morgan's laws — for when NOT meets a compound</h3>\n<p>If you ever need to negate a compound condition, two algebraic identities help:</p>\n<pre><code>NOT (A AND B)  ≡  (NOT A) OR  (NOT B)\nNOT (A OR  B)  ≡  (NOT A) AND (NOT B)</code></pre>\n<p>So \"NOT (a Mage with over 4000 XP)\" = \"NOT a Mage, OR not over 4000 XP.\" These laws come up surprisingly often when writing exclusion filters.</p>\n\n<h3>Read your conditions out loud</h3>\n<p>Best discipline: when you write a <code>WHERE</code> clause, read it back to yourself in plain English. \"Rank is Mage and xp is greater than 4000.\" If the English makes sense, the SQL probably does too. If you can't say it cleanly, the conditions are tangled and you should add parentheses or split the query.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher slides three new requests across the desk — apprentices needing answers from the archives."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Today's questions are <em>compound</em>. The first runner wants \"all Mages with over 4000 XP.\" The second wants \"all Mages or Adepts.\" The third wants \"everyone who is <em>not</em> a Novice.\" Each is built from a primitive condition plus a connector — <code>AND</code>, <code>OR</code>, <code>NOT</code>. Simple in isolation. Treacherous when mixed."
+        },
+        {
+          "type": "example",
+          "speaker": "The trap of mixed AND/OR",
+          "text": "-- WRONG — \"Mages, OR Adepts with over 4000 XP\":\nSELECT name FROM apprentices\nWHERE rank = 'Mage' OR rank = 'Adept' AND xp > 4000;\n\n-- This catches every Mage regardless of XP, plus only high-XP Adepts.\n-- Probably not what was asked.\n\n-- RIGHT — \"a Mage or Adept who has over 4000 XP\":\nSELECT name FROM apprentices\nWHERE (rank = 'Mage' OR rank = 'Adept') AND xp > 4000;"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "The reason: <code>AND</code> binds tighter than <code>OR</code>. The engine groups <code>rank = 'Adept' AND xp &gt; 4000</code> first, then ORs the result with <code>rank = 'Mage'</code>. Parentheses override the default — and even when they would not change the result, they prevent the next reader from misinterpreting your query."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Practical rule: if you have both <code>AND</code> and <code>OR</code> in the same WHERE clause, parenthesise. Always. The cost of an extra pair of brackets is zero. The cost of a wrong answer in a production report is — well, you don't want to find out."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Reason about each query</h3>\n<p>For each query below, predict the result. Pay close attention to operator precedence and to where the parentheses are (or aren't).</p>",
+
+      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- Query A:\nSELECT name FROM apprentices\nWHERE rank = 'Mage' AND xp > 4000;\n\n-- Query B — note the missing parentheses:\nSELECT name FROM apprentices\nWHERE rank = 'Mage' OR rank = 'Adept' AND xp > 4000;\n\n-- Query C — same conditions, different grouping:\nSELECT name FROM apprentices\nWHERE (rank = 'Mage' OR rank = 'Adept') AND xp > 4000;\n\n-- Query D:\nSELECT name FROM apprentices\nWHERE NOT rank = 'Novice';",
+
+      "feynmanPrompt": "Explain to a teammate why \"WHERE rank = 'Mage' OR rank = 'Adept' AND xp > 4000\" gives a different answer than \"WHERE (rank = 'Mage' OR rank = 'Adept') AND xp > 4000\". Use the apprentices ledger to walk through which rows each query returns and why.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which boolean operator binds <em>tightest</em> in SQL — i.e. is evaluated before the others when no parentheses are used?</p>",
+          "options": ["AND", "OR", "NOT", "They all have equal precedence"],
+          "correctAnswer": "NOT",
+          "explanationHtml": "<p>Standard precedence is <code>NOT</code> &gt; <code>AND</code> &gt; <code>OR</code>. NOT binds to its single operand first; AND groups before OR. The practical takeaway: use parentheses whenever you mix AND with OR.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Given the apprentices table from the lesson, what does this query return?</p>\n<pre><code>SELECT name FROM apprentices\nWHERE rank = 'Mage' OR rank = 'Adept' AND xp &gt; 4000;</code></pre>",
+          "options": [
+            "Cassia (every Mage; no Adept has xp>4000)",
+            "Cassia, Bjorn (every Mage or Adept)",
+            "Nobody (no row satisfies all three primitive conditions)",
+            "Bjorn (the only Adept with high XP)"
+          ],
+          "correctAnswer": "Cassia (every Mage; no Adept has xp>4000)",
+          "explanationHtml": "<p><code>AND</code> binds first, so the engine groups it as <code>rank='Mage' OR (rank='Adept' AND xp&gt;4000)</code>. Cassia is a Mage → matches the first half. Bjorn is an Adept but xp is 2400, so the AND part fails. Result: just Cassia.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which query correctly returns \"all apprentices who are NOT a Novice and NOT an Apprentice\"?</p>",
+          "options": [
+            "WHERE rank <> 'Novice' AND rank <> 'Apprentice'",
+            "WHERE NOT rank = 'Novice' OR rank = 'Apprentice'",
+            "WHERE rank <> 'Novice' OR rank <> 'Apprentice'",
+            "WHERE NOT (rank = 'Novice' AND rank = 'Apprentice')"
+          ],
+          "correctAnswer": "WHERE rank <> 'Novice' AND rank <> 'Apprentice'",
+          "explanationHtml": "<p>\"Not Novice AND not Apprentice\" excludes both. Option 3 (using OR) is true for every row — every rank is at least one of \"not Novice\" or \"not Apprentice\". Option 4 is true for every row, since no row has rank equal to both at once. By De Morgan, <code>rank&lt;&gt;'Novice' AND rank&lt;&gt;'Apprentice'</code> equals <code>NOT (rank='Novice' OR rank='Apprentice')</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior wants \"users who are admins or who have premium accounts, and have logged in this week.\" They write:</p>\n<pre><code>WHERE role = 'admin' OR plan = 'premium' AND last_login &gt; :week_start</code></pre>\n<p>Why is this likely a bug?</p>",
+          "options": [
+            "AND binds tighter than OR, so the engine reads it as 'role=admin OR (plan=premium AND last_login>...)' — every admin matches regardless of login activity",
+            "OR is not a valid keyword in SQL; it should be ||",
+            "Three conditions can never be combined in one WHERE clause without subqueries",
+            "The query is correct as written; AND and OR have equal precedence in SQL"
+          ],
+          "correctAnswer": "AND binds tighter than OR, so the engine reads it as 'role=admin OR (plan=premium AND last_login>...)' — every admin matches regardless of login activity",
+          "explanationHtml": "<p>Classic AND/OR precedence trap. The fix is parentheses: <code>WHERE (role = 'admin' OR plan = 'premium') AND last_login &gt; :week_start</code>. This is one of the most common production SQL bugs — it doesn't error, it just returns wrong data, often silently for months until somebody notices.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-b2",
+      "title": "Patterns and Lists — IN, BETWEEN, LIKE, NULL",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>You have <code>=</code>, <code>&lt;</code>, <code>&gt;</code>. They're powerful but verbose. Real-world filters reach for <code>IN</code> (membership), <code>BETWEEN</code> (range), <code>LIKE</code> (pattern), and <code>IS NULL</code> (absence). Each one collapses ten lines of equivalent <code>OR</code>s into one clear expression.</p>",
+
+      "explanationHtml": "<h3>IN — value is one of these</h3>\n<pre><code>-- Long-hand:\nWHERE rank = 'Mage' OR rank = 'Adept' OR rank = 'Archmage'\n\n-- Equivalent, idiomatic:\nWHERE rank IN ('Mage', 'Adept', 'Archmage')\n\n-- Negated:\nWHERE rank NOT IN ('Novice', 'Apprentice')</code></pre>\n<p><code>IN</code> works with any number of values, and most powerfully with a subquery — but we'll meet subqueries later.</p>\n\n<h3>BETWEEN — value falls in a range (inclusive)</h3>\n<pre><code>-- xp from 1000 to 4000, inclusive of both ends:\nWHERE xp BETWEEN 1000 AND 4000\n\n-- Equivalent:\nWHERE xp &gt;= 1000 AND xp &lt;= 4000</code></pre>\n<p><code>BETWEEN</code> is <strong>inclusive</strong> on both ends. <code>BETWEEN 1 AND 5</code> includes 1 and 5. If you mean exclusive, write the explicit comparison.</p>\n\n<h3>LIKE — pattern matching for strings</h3>\n<pre><code>-- Names starting with 'A':\nWHERE name LIKE 'A%'\n\n-- Names ending in 'a':\nWHERE name LIKE '%a'\n\n-- Names containing 'rc' anywhere:\nWHERE name LIKE '%rc%'\n\n-- Five-letter names:\nWHERE name LIKE '_____'\n\n-- Names where the second letter is 'l':\nWHERE name LIKE '_l%'</code></pre>\n<p>Two wildcards: <code>%</code> means \"any number of characters (including zero),\" <code>_</code> means \"exactly one character.\" Case sensitivity is engine-dependent — PostgreSQL is case-sensitive, MySQL is not by default.</p>\n\n<h3>NULL — the value that isn't</h3>\n<p>NULL means \"unknown\" or \"absent\" — not zero, not empty string. NULL <em>infects</em> comparisons:</p>\n<pre><code>-- These never return rows where the column is NULL:\nWHERE col = 'something'\nWHERE col &lt;&gt; 'something'\nWHERE col IS NOT 'something'   -- WRONG: 'IS' only works with NULL/TRUE/FALSE\n\n-- The correct way to test for NULL:\nWHERE col IS NULL\nWHERE col IS NOT NULL</code></pre>\n<p>This is the most common SQL bug for newcomers: writing <code>WHERE col = NULL</code>. It's not a syntax error; it just <em>never</em> returns any row, because <code>NULL = NULL</code> evaluates to NULL, not TRUE. Use <code>IS NULL</code>, always.</p>\n\n<h3>Combining everything</h3>\n<pre><code>-- Apprentices whose name starts with 'A' or 'B',\n-- have between 1000 and 5000 xp,\n-- and whose rank is one we care about:\nSELECT name, rank, xp\nFROM apprentices\nWHERE (name LIKE 'A%' OR name LIKE 'B%')\n  AND xp BETWEEN 1000 AND 5000\n  AND rank IN ('Apprentice', 'Adept', 'Mage');</code></pre>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher pulls a new ledger from a tall shelf — this one has a column you haven't seen before, with several blank entries."
+        },
+        {
+          "type": "example",
+          "speaker": "The quests ledger — note the blanks",
+          "text": "id | title              | xp_reward | difficulty   | completed_by\n---+--------------------+-----------+--------------+--------------\n 1 | Tame the Slime     |   100     | Foundation   | 1\n 2 | Decode the Glyph   |   180     | Foundation   | 2\n 3 | Forge the Blade    |   400     | Practitioner | NULL\n 4 | Slay the Drake     |  1200     | Expert       | NULL\n 5 | Brew the Elixir    |   220     | NULL         | 3"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Look closely. Some quests have no <code>completed_by</code> — nobody has finished them. Some have no <code>difficulty</code> — the Headmaster hasn't decided yet. These blanks are <strong>NULL</strong>: not zero, not empty text. <em>Unknown</em>. Absent. Different from any value you can write down."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And NULL is treacherous. <code>WHERE completed_by = NULL</code> looks reasonable. It returns nothing. Always. Because comparing anything to NULL with <code>=</code> produces NULL, not TRUE. To find rows where a column has no value, you write <code>WHERE completed_by IS NULL</code>. It is a special syntax for a special case."
+        },
+        {
+          "type": "example",
+          "speaker": "Filtering with IN, BETWEEN, LIKE, IS NULL",
+          "text": "-- Foundation or Practitioner difficulty:\nSELECT title FROM quests\nWHERE difficulty IN ('Foundation', 'Practitioner');\n\n-- Mid-tier rewards (200-500 xp, inclusive):\nSELECT title, xp_reward FROM quests\nWHERE xp_reward BETWEEN 200 AND 500;\n\n-- Quests with 'the' in the title:\nSELECT title FROM quests\nWHERE title LIKE '%the%';\n\n-- Quests nobody has completed yet:\nSELECT title FROM quests\nWHERE completed_by IS NULL;"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Each operator collapses what would otherwise be a long compound expression. <code>IN</code> replaces a chain of <code>OR</code>s. <code>BETWEEN</code> replaces a pair of inequalities. <code>LIKE</code> handles partial matches. <code>IS NULL</code> is the only correct way to ask about the absence of a value. Practise them until they're as natural as <code>=</code>."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace the queries</h3>\n<p>Use the quests table from the lesson. Predict each query's output before checking your reasoning in the retrieval check.</p>",
+
+      "guidedPracticeStarterCode": "-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — quests nobody finished yet:\nSELECT title FROM quests WHERE completed_by IS NULL;\n\n-- Query B — quests with 'the' in the title:\nSELECT title FROM quests WHERE title LIKE '%the%';\n\n-- Query C — Foundation OR Practitioner only:\nSELECT title FROM quests WHERE difficulty IN ('Foundation', 'Practitioner');\n\n-- Query D — mid-tier reward, 200-500 inclusive:\nSELECT title, xp_reward FROM quests WHERE xp_reward BETWEEN 200 AND 500;\n\n-- Query E — TRICK: why does this return nothing?\nSELECT title FROM quests WHERE difficulty = NULL;",
+
+      "feynmanPrompt": "Explain why `WHERE completed_by = NULL` always returns zero rows, even when the table contains rows where completed_by is null. Then explain when to use `IN`, `BETWEEN`, and `LIKE` instead of stacking equality checks with OR.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>How do you correctly test whether a column <code>completed_by</code> has no value (i.e. is NULL)?</p>",
+          "options": [
+            "WHERE completed_by IS NULL",
+            "WHERE completed_by = NULL",
+            "WHERE completed_by == NULL",
+            "WHERE NULL(completed_by)"
+          ],
+          "correctAnswer": "WHERE completed_by IS NULL",
+          "explanationHtml": "<p>NULL never equals anything — not even another NULL — when compared with <code>=</code>. The special <code>IS NULL</code> / <code>IS NOT NULL</code> syntax is the only correct way to test for absence.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the quests table, which titles does this query return?</p>\n<pre><code>SELECT title FROM quests WHERE xp_reward BETWEEN 200 AND 500;</code></pre>",
+          "options": [
+            "Forge the Blade, Brew the Elixir",
+            "Forge the Blade only",
+            "Brew the Elixir only",
+            "Forge the Blade, Slay the Drake, Brew the Elixir"
+          ],
+          "correctAnswer": "Forge the Blade, Brew the Elixir",
+          "explanationHtml": "<p><code>BETWEEN 200 AND 500</code> is inclusive on both ends. Forge the Blade has xp=400, Brew the Elixir has xp=220. Tame the Slime (100) and Decode the Glyph (180) are below 200; Slay the Drake (1200) is above 500.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which expression is equivalent to <code>WHERE rank IN ('Mage', 'Adept', 'Archmage')</code>?</p>",
+          "options": [
+            "WHERE rank = 'Mage' OR rank = 'Adept' OR rank = 'Archmage'",
+            "WHERE rank = 'Mage' AND rank = 'Adept' AND rank = 'Archmage'",
+            "WHERE rank LIKE 'Mage|Adept|Archmage'",
+            "WHERE rank BETWEEN 'Adept' AND 'Mage'"
+          ],
+          "correctAnswer": "WHERE rank = 'Mage' OR rank = 'Adept' OR rank = 'Archmage'",
+          "explanationHtml": "<p><code>IN</code> is shorthand for a chain of <code>OR</code>-equality checks. Useful both for readability and because some engines optimise <code>IN</code> with a hash lookup when the list is large.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>An apprentice writes <code>WHERE name LIKE 'a_%'</code>. Which name does this match?</p>",
+          "options": [
+            "Any name starting with 'a' that has at least one more character: 'al', 'alice', 'amber'",
+            "Only the literal string 'a_'",
+            "Any name containing 'a' followed immediately by '_'",
+            "Names ending in 'a' followed by anything"
+          ],
+          "correctAnswer": "Any name starting with 'a' that has at least one more character: 'al', 'alice', 'amber'",
+          "explanationHtml": "<p>In <code>LIKE</code>, <code>_</code> matches exactly one character; <code>%</code> matches any number (including zero). So <code>'a_%'</code> = \"a, then exactly one character, then any number more.\" Effectively: any name starting with 'a' and at least 2 characters long. The literal underscore would be matched with the engine's escape mechanism (e.g. <code>LIKE 'a\\_%' ESCAPE '\\'</code>).</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "id": "sql-c",
+  "title": "Counting and Summarising — Aggregation",
+  "glyph": "∑",
+  "sortOrder": 3,
+  "tier": "FOUNDATION",
+  "topicId": "sql",
+  "prerequisites": ["sql-b"],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sql-c1",
+      "title": "Aggregate Functions — COUNT, SUM, AVG, MIN, MAX",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>So far every query has returned <em>rows</em>. Sometimes you don't want rows — you want a <em>summary</em>. \"How many apprentices?\" \"What's the total XP awarded?\" \"What's the highest grade?\" These collapse a whole column into one number. The five functions that do it are <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>.</p>",
+
+      "explanationHtml": "<h3>The five aggregate functions</h3>\n<table>\n  <tr><th>Function</th><th>Meaning</th><th>Type</th></tr>\n  <tr><td><code>COUNT(*)</code></td><td>How many rows</td><td>Works on any table</td></tr>\n  <tr><td><code>COUNT(col)</code></td><td>How many non-NULL values in <code>col</code></td><td>Any column</td></tr>\n  <tr><td><code>SUM(col)</code></td><td>Total of all values</td><td>Numeric only</td></tr>\n  <tr><td><code>AVG(col)</code></td><td>Average value</td><td>Numeric only</td></tr>\n  <tr><td><code>MIN(col)</code></td><td>Smallest value</td><td>Numeric, text, or date</td></tr>\n  <tr><td><code>MAX(col)</code></td><td>Largest value</td><td>Numeric, text, or date</td></tr>\n</table>\n\n<h3>The shape of an aggregate query</h3>\n<pre><code>-- How many apprentices in total?\nSELECT COUNT(*) FROM apprentices;\n\n-- Highest XP among all apprentices:\nSELECT MAX(xp) FROM apprentices;\n\n-- Total XP across all apprentices:\nSELECT SUM(xp) FROM apprentices;\n\n-- Average XP:\nSELECT AVG(xp) FROM apprentices;</code></pre>\n<p>Each query returns a <strong>single row, single column</strong>. The whole table collapses into one number.</p>\n\n<h3>The COUNT(*) vs COUNT(col) distinction</h3>\n<p>This trips everyone up at first.</p>\n<pre><code>-- COUNT(*) — every row, regardless of NULLs:\nSELECT COUNT(*) FROM quests;          -- 5\n\n-- COUNT(column) — rows where that column is NOT NULL:\nSELECT COUNT(completed_by) FROM quests;  -- 3\n--   (rows 1, 2, 5 have completed_by; rows 3, 4 are NULL)\n\n-- COUNT(DISTINCT column) — distinct non-NULL values:\nSELECT COUNT(DISTINCT difficulty) FROM quests;  -- 3\n--   (Foundation, Practitioner, Expert)</code></pre>\n<p>Use <code>COUNT(*)</code> when you want \"how many rows.\" Use <code>COUNT(col)</code> when you want \"how many rows have a value in this column.\" Use <code>COUNT(DISTINCT col)</code> when you want \"how many unique values.\"</p>\n\n<h3>NULL is invisible to aggregates (except COUNT(*))</h3>\n<p>Aggregates <em>skip NULLs</em>:</p>\n<pre><code>-- If quests has 5 rows and 2 have NULL difficulty,\n-- AVG only divides by 3, not 5.\nSELECT AVG(xp_reward) FROM quests;</code></pre>\n<p>This is usually what you want — averaging zero-where-actually-unknown would skew results. But it means <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code> may quietly ignore data you didn't realise was missing. Always check whether NULLs are meaningful in your dataset.</p>\n\n<h3>Combine with WHERE for filtered aggregates</h3>\n<pre><code>-- Average XP among Mages only:\nSELECT AVG(xp) FROM apprentices WHERE rank = 'Mage';\n\n-- Number of Foundation quests with rewards over 100:\nSELECT COUNT(*) FROM quests\nWHERE difficulty = 'Foundation' AND xp_reward &gt; 100;</code></pre>\n<p>WHERE filters first, the aggregate runs over what's left. Same precedence as before: SELECT, FROM, WHERE — and now the SELECT clause contains an aggregate function.</p>\n\n<h3>Naming the result</h3>\n<p>Aggregate columns get ugly default names like <code>count(*)</code>. Rename with <code>AS</code> for tidy output:</p>\n<pre><code>SELECT COUNT(*) AS total_apprentices,\n       AVG(xp) AS mean_xp,\n       MAX(xp) AS top_xp\nFROM apprentices;</code></pre>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher dusts a heavy black ledger and lays it open. The first page is blank — except for a single number written in red ink at the top right corner."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "The Headmaster reads <em>summaries</em>. He doesn't want to see every row. He wants <em>one number</em>. Total XP awarded last term. Average grade. Number of apprentices in each rank. The shape of his question is not 'show me data' — it is 'collapse the data into one figure.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "There are five workhorses. <code>COUNT</code> — how many. <code>SUM</code> — total. <code>AVG</code> — average. <code>MIN</code> and <code>MAX</code> — smallest and largest. Each one takes a column and gives back a single value. The whole ledger boils down to a single cell."
+        },
+        {
+          "type": "example",
+          "speaker": "Five summaries of the apprentices ledger",
+          "text": "SELECT COUNT(*)  AS num_apprentices,\n       SUM(xp)   AS total_xp,\n       AVG(xp)   AS mean_xp,\n       MIN(xp)   AS lowest_xp,\n       MAX(xp)   AS highest_xp\nFROM apprentices;\n\n-- Result, given our four-row ledger:\n-- num_apprentices | total_xp | mean_xp | lowest_xp | highest_xp\n-- ----------------+----------+---------+-----------+-----------\n--        4        |   8480   |  2120.0 |    80     |   4800"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And one trap: <code>COUNT(*)</code> counts every row. <code>COUNT(column_name)</code> counts only rows where that column is <em>not NULL</em>. If half your <code>completed_by</code> values are NULL, <code>COUNT(completed_by)</code> will be smaller than <code>COUNT(*)</code> — and that's usually the truth you want, but only if you remember to ask for it correctly."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Aggregates are also where NULL becomes useful, in a way. <code>AVG</code>, <code>SUM</code>, <code>MIN</code>, <code>MAX</code> all <em>skip</em> NULL values automatically. So if a column has 100 entries and 30 are NULL, the average divides by 70, not 100. Whether that's the right answer depends on what NULL <em>means</em> in your data. Check, every time."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Predict the summaries</h3>\n<p>Use the apprentices and quests tables. Predict each query's single-row output before checking your reasoning in the retrieval check.</p>",
+
+      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — total apprentices and total XP:\nSELECT COUNT(*), SUM(xp) FROM apprentices;\n\n-- Query B — note the NULLs:\nSELECT COUNT(*), COUNT(completed_by), COUNT(difficulty) FROM quests;\n\n-- Query C — aggregates with WHERE:\nSELECT AVG(xp_reward) FROM quests WHERE difficulty = 'Foundation';\n\n-- Query D — distinct count:\nSELECT COUNT(DISTINCT difficulty) FROM quests;",
+
+      "feynmanPrompt": "Explain the difference between COUNT(*), COUNT(column), and COUNT(DISTINCT column). Use the quests table to give a concrete value for each, and explain why a junior who writes COUNT(completed_by) might be surprised by the result.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>SUM(xp)</code> return when applied to the apprentices table?</p>",
+          "options": [
+            "The arithmetic sum of every non-NULL xp value",
+            "The number of apprentices",
+            "The largest xp value",
+            "The smallest xp value"
+          ],
+          "correctAnswer": "The arithmetic sum of every non-NULL xp value",
+          "explanationHtml": "<p><code>SUM</code> totals the values, skipping NULL. <code>COUNT</code> counts rows. <code>MIN</code> and <code>MAX</code> return the smallest and largest values respectively.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the quests table from the lesson (5 rows, 2 NULL difficulties, 2 NULL completed_by), what does this return?</p>\n<pre><code>SELECT COUNT(*), COUNT(completed_by), COUNT(DISTINCT difficulty) FROM quests;</code></pre>",
+          "options": [
+            "5, 3, 3",
+            "5, 5, 4",
+            "3, 3, 3",
+            "5, 3, 4"
+          ],
+          "correctAnswer": "5, 3, 3",
+          "explanationHtml": "<p><code>COUNT(*)</code> = 5 rows total. <code>COUNT(completed_by)</code> = 3 (rows 3 and 4 are NULL). <code>COUNT(DISTINCT difficulty)</code> = 3 (Foundation, Practitioner, Expert — NULL is not a distinct value for COUNT DISTINCT).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which query returns the highest <code>xp</code> among Adepts?</p>",
+          "options": [
+            "SELECT MAX(xp) FROM apprentices WHERE rank = 'Adept';",
+            "SELECT TOP(xp) FROM apprentices WHERE rank = 'Adept';",
+            "SELECT xp FROM apprentices WHERE rank = 'Adept' AND xp = MAX;",
+            "SELECT MAX(rank) FROM apprentices WHERE xp = 'Adept';"
+          ],
+          "correctAnswer": "SELECT MAX(xp) FROM apprentices WHERE rank = 'Adept';",
+          "explanationHtml": "<p>WHERE filters to Adepts; MAX(xp) collapses the remaining rows into a single largest-xp value. The other forms either use non-existent functions or compare wrong columns.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two queries claim to find \"the average XP of all completed quests.\" Which one is correct, given that <code>completed_by</code> is NULL when nobody has completed the quest?</p>",
+          "options": [
+            "SELECT AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL;",
+            "SELECT AVG(xp_reward) FROM quests WHERE completed_by != NULL;",
+            "SELECT AVG(xp_reward) FROM quests;",
+            "SELECT COUNT(xp_reward) / COUNT(*) FROM quests;"
+          ],
+          "correctAnswer": "SELECT AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL;",
+          "explanationHtml": "<p>Option 1 is correct. Option 2 fails because <code>!= NULL</code> never matches anything (you must use IS NOT NULL). Option 3 averages over <em>all</em> quests including unfinished ones — wrong scope. Option 4 computes the ratio of non-NULL rewards to total rows, which is a different statistic entirely (it's the fraction of quests with a defined reward).</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-c2",
+      "title": "GROUP BY — Aggregating per-bucket",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>One number is good. <em>One number per category</em> is better. \"Total XP\" is interesting; \"total XP <strong>per rank</strong>\" tells you which tier of the Academy is doing the most work. <code>GROUP BY</code> is what turns a single summary into a per-bucket breakdown — and once you internalise it, half of all SQL queries fall into place.</p>",
+
+      "explanationHtml": "<h3>The mental model</h3>\n<p><code>GROUP BY column</code> tells SQL: \"divide the rows into buckets where every row in a bucket has the same value of <code>column</code>. Then run the aggregate functions <em>within each bucket</em>.\"</p>\n<pre><code>-- One row per rank, with a count + average xp per rank:\nSELECT rank,\n       COUNT(*)  AS num_apprentices,\n       AVG(xp)   AS mean_xp\nFROM apprentices\nGROUP BY rank;\n\n-- Result, given our 4-row table:\n-- rank        | num_apprentices | mean_xp\n-- ------------+-----------------+--------\n-- Apprentice  |       1         |  1200\n-- Adept       |       1         |  2400\n-- Mage        |       1         |  4800\n-- Novice      |       1         |    80</code></pre>\n\n<h3>The rule that catches everyone</h3>\n<p>When you use <code>GROUP BY</code>, every column in the <code>SELECT</code> list must either be:</p>\n<ul>\n  <li>Listed in the <code>GROUP BY</code> clause, OR</li>\n  <li>Wrapped in an aggregate function</li>\n</ul>\n<p>This won't work in PostgreSQL or in standard SQL:</p>\n<pre><code>-- ERROR — `name` is neither grouped nor aggregated:\nSELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank;</code></pre>\n<p>Why? Each rank-bucket may contain many rows, each with a different <code>name</code>. SQL doesn't know which name to pick. (MySQL with default settings will silently pick an arbitrary one — a footgun. Other engines throw an error.)</p>\n<p>Either group by name too:</p>\n<pre><code>SELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank, name;</code></pre>\n<p>… or aggregate it (e.g. <code>STRING_AGG(name, ', ')</code>) — though that's an advanced move.</p>\n\n<h3>Multi-column GROUP BY</h3>\n<pre><code>-- One row per (difficulty, completion-status) combination:\nSELECT difficulty,\n       (completed_by IS NOT NULL) AS finished,\n       COUNT(*) AS num_quests\nFROM quests\nGROUP BY difficulty, finished;</code></pre>\n<p>The bucket key is the <em>tuple</em> of grouped columns. Two rows are in the same bucket only if they match on every grouped column.</p>\n\n<h3>WHERE happens before GROUP BY</h3>\n<pre><code>-- Average xp per rank, restricted to apprentices with non-zero xp:\nSELECT rank, AVG(xp) AS mean_xp\nFROM apprentices\nWHERE xp &gt; 0\nGROUP BY rank;</code></pre>\n<p>Pipeline: WHERE filters → GROUP BY buckets → aggregates compute. Filtering happens first, on raw rows. To filter <em>after</em> aggregation (e.g. \"only ranks where the count is &gt; 1\"), you need <code>HAVING</code> — next sub-chunk.</p>\n\n<h3>The full clause order, revised</h3>\n<pre><code>SELECT &lt;columns and aggregates&gt;\nFROM &lt;table&gt;\nWHERE &lt;row-level condition&gt;\nGROUP BY &lt;bucket columns&gt;\nORDER BY &lt;sort columns&gt;\nLIMIT &lt;n&gt;;</code></pre>\n<p>WHERE filters rows. GROUP BY makes buckets. ORDER BY sorts the result rows. LIMIT trims. Always in that sequence.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher unrolls a fresh sheet of parchment and ink-stamps a heading: 'XP per rank.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "The Headmaster's question is no longer 'how many apprentices?' but 'how many apprentices <em>at each rank</em>?' We are no longer collapsing to a single number — we are producing one number <em>per category</em>. This is what <code>GROUP BY</code> does."
+        },
+        {
+          "type": "example",
+          "speaker": "Per-rank summary",
+          "text": "SELECT rank,\n       COUNT(*) AS num_apprentices,\n       AVG(xp)  AS mean_xp\nFROM apprentices\nGROUP BY rank;\n\n-- One row per distinct rank value:\n-- rank        | num_apprentices | mean_xp\n-- ------------+-----------------+--------\n-- Apprentice  |       1         |  1200\n-- Adept       |       1         |  2400\n-- Mage        |       1         |  4800\n-- Novice      |       1         |    80"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "The rule you must internalise: every column in the SELECT list is <em>either</em> in the GROUP BY clause, <em>or</em> wrapped in an aggregate. Nothing else is allowed. <code>SELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank</code> is nonsense — for a given rank-bucket there are many possible names, so which one would the engine pick? Standard SQL refuses to choose."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Picture it as physically <em>sorting the rows into piles</em>. One pile per distinct value of the GROUP BY columns. Then for each pile you compute one summary row — that's what comes out. If a column varies inside a pile, the engine has no single answer to give for it. Either include it in the bucketing, or aggregate it."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace the buckets</h3>\n<p>For each query, identify which buckets are created and what value each aggregate produces in each bucket. Some queries are intentionally malformed — spot the bug.</p>",
+
+      "guidedPracticeStarterCode": "-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — quests per difficulty:\nSELECT difficulty, COUNT(*) AS num_quests\nFROM quests\nGROUP BY difficulty;\n\n-- Query B — total reward per difficulty:\nSELECT difficulty, SUM(xp_reward) AS total_xp\nFROM quests\nGROUP BY difficulty;\n\n-- Query C — BUG: title is neither grouped nor aggregated.\nSELECT difficulty, title, COUNT(*)\nFROM quests\nGROUP BY difficulty;\n\n-- Query D — finished vs unfinished:\nSELECT (completed_by IS NOT NULL) AS finished, COUNT(*) AS num\nFROM quests\nGROUP BY finished;",
+
+      "feynmanPrompt": "Explain why the query 'SELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank' is invalid in standard SQL. Walk through what each rank-bucket would contain and why there is no sensible value for 'name' in the result row.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>GROUP BY rank</code> do?</p>",
+          "options": [
+            "Divides the rows into buckets by rank, then runs aggregates per bucket",
+            "Sorts the result by rank",
+            "Removes duplicate rank values",
+            "Filters rows where rank is NULL"
+          ],
+          "correctAnswer": "Divides the rows into buckets by rank, then runs aggregates per bucket",
+          "explanationHtml": "<p>GROUP BY produces one output row per distinct combination of grouped values. Aggregates in the SELECT clause run within each bucket. ORDER BY does sorting; DISTINCT does deduplication; WHERE / IS NULL handle filtering.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the quests table, what does this query return?</p>\n<pre><code>SELECT difficulty, COUNT(*) AS num\nFROM quests\nGROUP BY difficulty;</code></pre>",
+          "options": [
+            "Foundation 2, Practitioner 1, Expert 1, NULL 1",
+            "Foundation 2, Practitioner 1, Expert 1 (the NULL row is silently dropped)",
+            "Foundation, Practitioner, Expert (one row each, no counts)",
+            "5 (single number — total quests)"
+          ],
+          "correctAnswer": "Foundation 2, Practitioner 1, Expert 1, NULL 1",
+          "explanationHtml": "<p>GROUP BY does <em>not</em> drop NULL values — they form their own bucket. So you get four buckets: Foundation (2 rows), Practitioner (1), Expert (1), and NULL (1, for Brew the Elixir). This surprises many newcomers.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does this query fail in PostgreSQL?</p>\n<pre><code>SELECT difficulty, title, COUNT(*)\nFROM quests\nGROUP BY difficulty;</code></pre>",
+          "options": [
+            "<code>title</code> is neither in the GROUP BY clause nor wrapped in an aggregate, so the engine has no single value to pick per bucket",
+            "<code>COUNT(*)</code> can only appear with one other column in SELECT",
+            "GROUP BY must always include every column in the SELECT list, even those wrapped in aggregates",
+            "<code>title</code> is a reserved word"
+          ],
+          "correctAnswer": "<code>title</code> is neither in the GROUP BY clause nor wrapped in an aggregate, so the engine has no single value to pick per bucket",
+          "explanationHtml": "<p>This is the canonical GROUP BY rule: every non-aggregated column in SELECT must appear in GROUP BY. Each bucket has multiple rows with potentially different titles — the engine refuses to pick one arbitrarily. (MySQL with default settings will pick an arbitrary one, which is a notorious footgun.)</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You want \"average xp_reward per difficulty, but only counting quests that have been completed.\" Which query is correct?</p>",
+          "options": [
+            "SELECT difficulty, AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL GROUP BY difficulty;",
+            "SELECT difficulty, AVG(xp_reward) FROM quests GROUP BY difficulty WHERE completed_by IS NOT NULL;",
+            "SELECT difficulty, AVG(xp_reward) FROM quests GROUP BY difficulty AND completed_by IS NOT NULL;",
+            "SELECT difficulty, AVG(xp_reward) FROM quests HAVING completed_by IS NOT NULL GROUP BY difficulty;"
+          ],
+          "correctAnswer": "SELECT difficulty, AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL GROUP BY difficulty;",
+          "explanationHtml": "<p>WHERE filters rows <em>before</em> grouping — exactly what we want here (drop unfinished quests, then bucket what's left). The other forms either put WHERE in the wrong position (syntax error), use AND inside GROUP BY (syntax error), or misuse HAVING (HAVING filters <em>buckets</em>, not rows — covered next sub-chunk).</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-c3",
+      "title": "HAVING — Filtering Buckets",
+      "sortOrder": 3,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>WHERE filters rows. GROUP BY makes buckets. <strong>HAVING filters buckets.</strong> Once you internalise the difference between row-level conditions and bucket-level conditions, the entire SQL clause-ordering puzzle clicks into place.</p>",
+
+      "explanationHtml": "<h3>The full pipeline</h3>\n<p>Every SELECT query runs in this conceptual order:</p>\n<ol>\n  <li><strong>FROM</strong> — pick the source rows</li>\n  <li><strong>WHERE</strong> — drop rows that don't match a row-level condition</li>\n  <li><strong>GROUP BY</strong> — divide remaining rows into buckets</li>\n  <li><strong>HAVING</strong> — drop buckets whose summary doesn't match a bucket-level condition</li>\n  <li><strong>SELECT</strong> — project the result columns + aggregates</li>\n  <li><strong>ORDER BY</strong> — sort the output</li>\n  <li><strong>LIMIT</strong> — cap the number of result rows</li>\n</ol>\n<p>You write them in the order SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT. The engine evaluates them in the order above. The mismatch is what makes SQL feel weird at first; once you internalise it, queries become trivial to read.</p>\n\n<h3>HAVING — the canonical example</h3>\n<pre><code>-- One row per rank, but ONLY ranks with more than one apprentice:\nSELECT rank, COUNT(*) AS num\nFROM apprentices\nGROUP BY rank\nHAVING COUNT(*) &gt; 1;</code></pre>\n<p>You cannot use <code>WHERE COUNT(*) &gt; 1</code> for this — WHERE runs on individual rows, before any aggregation has happened. There is no count yet for WHERE to compare against. HAVING runs <em>after</em> grouping, when each bucket has its summary computed.</p>\n\n<h3>WHERE vs HAVING — the distinction</h3>\n<pre><code>-- WHERE: drop rows BEFORE grouping (filter raw quests)\nSELECT difficulty, AVG(xp_reward)\nFROM quests\nWHERE difficulty IS NOT NULL\nGROUP BY difficulty;\n\n-- HAVING: drop buckets AFTER grouping (filter difficulty groups\n--         by their group-level statistic)\nSELECT difficulty, AVG(xp_reward) AS mean\nFROM quests\nGROUP BY difficulty\nHAVING AVG(xp_reward) &gt; 200;</code></pre>\n<p>You can use both in one query. WHERE drops rows that aren't worth bucketing in the first place; HAVING drops buckets that don't satisfy a post-aggregation condition.</p>\n\n<h3>HAVING without GROUP BY</h3>\n<p>It's legal but unusual. With no GROUP BY, the entire table is one implicit bucket, and HAVING decides whether to return that single summary row.</p>\n<pre><code>-- Returns one row only if the average is over 1000:\nSELECT AVG(xp) FROM apprentices HAVING AVG(xp) &gt; 1000;</code></pre>\n<p>You'll see this rarely in practice — but knowing it's allowed prevents confusion when you encounter it.</p>\n\n<h3>Putting it all together</h3>\n<pre><code>SELECT difficulty,\n       COUNT(*)         AS num_quests,\n       AVG(xp_reward)   AS mean_reward\nFROM quests\nWHERE difficulty IS NOT NULL                  -- drop the NULL-difficulty row\nGROUP BY difficulty                            -- bucket by difficulty\nHAVING COUNT(*) &gt;= 2                          -- only difficulties with 2+ quests\nORDER BY mean_reward DESC                      -- highest-mean first\nLIMIT 5;                                       -- top 5 max</code></pre>\n<p>Read it as a pipeline: rows flow in, get filtered, bucketed, the buckets get filtered, the surviving buckets get projected, sorted, and capped. Every clause has a precise role in that flow.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher pushes back from the desk and stretches. The afternoon light has shifted across the Hall."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Two filters, not one. Most apprentices don't notice the difference for years. <code>WHERE</code> filters <em>rows</em> — individual records. <code>HAVING</code> filters <em>buckets</em> — groups, after they've been formed and summarised. They look superficially the same. They are not. Mistaking one for the other is the second-most-common SQL bug, after the <code>= NULL</code> trap."
+        },
+        {
+          "type": "example",
+          "speaker": "WHERE vs HAVING",
+          "text": "-- WRONG — WHERE COUNT(*) is meaningless;\n-- WHERE runs before COUNT exists.\nSELECT rank, COUNT(*)\nFROM apprentices\nWHERE COUNT(*) > 1\nGROUP BY rank;          -- ERROR\n\n-- RIGHT — HAVING runs after grouping.\nSELECT rank, COUNT(*)\nFROM apprentices\nGROUP BY rank\nHAVING COUNT(*) > 1;"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Think of it as two filters at two different stations. WHERE is the gate at the entrance — it decides which rows even enter the room. GROUP BY then sorts the survivors into stalls. HAVING is the inspector who walks past the stalls afterwards and ejects the ones whose summary doesn't qualify."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And the order on the parchment is fixed: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT. You can't put HAVING before GROUP BY, or WHERE after it. The engine will refuse to read the page. Memorise the order — and remember that the engine <em>evaluates</em> them in a different order than they appear, which is exactly the asymmetry that makes the language confusing for the first month."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Pipeline practice</h3>\n<p>For each query, identify which clause is filtering at which stage, and predict the result. Spot any malformed queries.</p>",
+
+      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — only ranks with at least one apprentice (trivially all four here):\nSELECT rank, COUNT(*) FROM apprentices GROUP BY rank HAVING COUNT(*) >= 1;\n\n-- Query B — average reward per difficulty, only difficulties averaging over 200:\nSELECT difficulty, AVG(xp_reward) AS mean\nFROM quests\nWHERE difficulty IS NOT NULL\nGROUP BY difficulty\nHAVING AVG(xp_reward) > 200;\n\n-- Query C — BUG: WHERE on an aggregate.\nSELECT difficulty, COUNT(*)\nFROM quests\nWHERE COUNT(*) > 1\nGROUP BY difficulty;\n\n-- Query D — full pipeline:\nSELECT difficulty, COUNT(*) AS num, SUM(xp_reward) AS total\nFROM quests\nWHERE difficulty IS NOT NULL\nGROUP BY difficulty\nHAVING SUM(xp_reward) > 200\nORDER BY total DESC\nLIMIT 3;",
+
+      "feynmanPrompt": "Explain the difference between WHERE and HAVING to someone who has just learned GROUP BY. Use a quests-table example: write one query that demonstrates a row-level filter (WHERE) and one that demonstrates a bucket-level filter (HAVING), and explain why each filter belongs at its stage of the pipeline.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which clause filters <em>buckets</em> after GROUP BY has run?</p>",
+          "options": ["HAVING", "WHERE", "FILTER", "GROUP BY itself"],
+          "correctAnswer": "HAVING",
+          "explanationHtml": "<p>WHERE filters rows before grouping. HAVING filters the resulting buckets, and is the only clause where you can use aggregate functions (e.g. <code>HAVING COUNT(*) &gt; 1</code>) as the condition.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the correct on-the-page order of clauses in a SELECT query?</p>",
+          "options": [
+            "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT",
+            "SELECT, FROM, GROUP BY, WHERE, HAVING, ORDER BY, LIMIT",
+            "SELECT, FROM, HAVING, GROUP BY, WHERE, ORDER BY, LIMIT",
+            "SELECT, FROM, WHERE, HAVING, GROUP BY, ORDER BY, LIMIT"
+          ],
+          "correctAnswer": "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT",
+          "explanationHtml": "<p>Fixed grammar. The engine evaluates them in a slightly different order (FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT) but on the page the order above is the only valid one.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the quests table, what does this query return?</p>\n<pre><code>SELECT difficulty, COUNT(*) AS num\nFROM quests\nWHERE difficulty IS NOT NULL\nGROUP BY difficulty\nHAVING COUNT(*) &gt;= 2;</code></pre>",
+          "options": [
+            "Foundation 2",
+            "Foundation 2, Practitioner 1, Expert 1",
+            "Foundation 2, Practitioner 1, Expert 1, NULL 1",
+            "Nothing — no difficulty has 2 or more quests"
+          ],
+          "correctAnswer": "Foundation 2",
+          "explanationHtml": "<p>WHERE drops the NULL-difficulty quest. GROUP BY makes three buckets: Foundation (2 rows), Practitioner (1 row), Expert (1 row). HAVING <code>COUNT(*) &gt;= 2</code> keeps only Foundation. The result is a single row.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You want \"all difficulty categories where the <em>average</em> reward is over 200, looking only at quests that have been completed.\" Which query expresses this correctly?</p>",
+          "options": [
+            "SELECT difficulty, AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL GROUP BY difficulty HAVING AVG(xp_reward) &gt; 200;",
+            "SELECT difficulty, AVG(xp_reward) FROM quests GROUP BY difficulty HAVING completed_by IS NOT NULL AND AVG(xp_reward) &gt; 200;",
+            "SELECT difficulty, AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL AND AVG(xp_reward) &gt; 200 GROUP BY difficulty;",
+            "SELECT difficulty, AVG(xp_reward) FROM quests HAVING completed_by IS NOT NULL GROUP BY difficulty WHERE AVG(xp_reward) &gt; 200;"
+          ],
+          "correctAnswer": "SELECT difficulty, AVG(xp_reward) FROM quests WHERE completed_by IS NOT NULL GROUP BY difficulty HAVING AVG(xp_reward) &gt; 200;",
+          "explanationHtml": "<p>Two filters at two stages: WHERE drops uncompleted quests <em>before</em> grouping, then HAVING drops difficulty buckets whose post-aggregation average is too low. Option 2 misuses HAVING (you cannot reference <code>completed_by</code> there because it isn't grouped or aggregated). Option 3 puts an aggregate in WHERE, which is invalid (aggregates don't exist yet at that pipeline stage). Option 4 has the clauses in an order the parser will reject.</p>"
+        }
+      ]
+    }
+  ]
+}

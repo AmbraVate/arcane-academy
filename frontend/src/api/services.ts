@@ -200,3 +200,80 @@ export const badgeApi = {
     return data
   },
 }
+
+// ── Leaderboards ─────────────────────────────────────────────────────────────
+export interface LeaderboardEntry {
+  rank: number
+  username: string
+  xpEarned: number
+  globalXp: number
+  streakDays: number
+  rankTitle: string
+  topicCount: number   // -1 on topic boards (only set for /polymath)
+  badgeCount: number
+}
+
+export const leaderboardApi = {
+  topicWeekly: async (topicId: string, limit = 20): Promise<LeaderboardEntry[]> => {
+    const { data } = await api.get(`/api/leaderboard/topic/${topicId}/weekly?limit=${limit}`)
+    return data
+  },
+  topicAllTime: async (topicId: string, limit = 20): Promise<LeaderboardEntry[]> => {
+    const { data } = await api.get(`/api/leaderboard/topic/${topicId}/all-time?limit=${limit}`)
+    return data
+  },
+  polymath: async (limit = 20): Promise<LeaderboardEntry[]> => {
+    const { data } = await api.get(`/api/leaderboard/polymath?limit=${limit}`)
+    return data
+  },
+}
+
+// ── Public profile ───────────────────────────────────────────────────────────
+export interface PublicProfileTopic {
+  topicId: string
+  name: string
+  glyph: string
+  accentColor: string | null
+  xpEarned: number
+  subChunksCompleted: number
+}
+
+export interface PublicProfileBadge {
+  id: string
+  displayName: string
+  glyph: string
+  category: string
+  earnedAt: string
+}
+
+export interface PublicProfile {
+  username: string
+  memberSince: string
+  rank: string
+  totalXp: number
+  streakDays: number
+  topics: PublicProfileTopic[]
+  badges: PublicProfileBadge[]
+}
+
+export const profileApi = {
+  getPublic: async (username: string): Promise<PublicProfile | null> => {
+    try {
+      const { data } = await api.get(`/api/profile/public/${encodeURIComponent(username)}`)
+      return data
+    } catch (err: unknown) {
+      // 404 = user doesn't exist OR is opted out
+      const status = (err as { response?: { status?: number } })?.response?.status
+      if (status === 404) return null
+      throw err
+    }
+  },
+  getVisibility: async (): Promise<boolean> => {
+    const { data } = await api.get('/api/profile/visibility')
+    return Boolean(data?.enabled)
+  },
+  setVisibility: async (enabled: boolean): Promise<boolean> => {
+    const { data } = await api.post('/api/profile/visibility', { enabled })
+    return Boolean(data?.enabled)
+  },
+}

@@ -446,10 +446,23 @@ export default function EncodingPage() {
       {/* GUIDED_PRACTICE — brief */}
       {phase === 'GUIDED_PRACTICE' && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">✦ Guided Practice</div>
+          <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">
+            {encoding.practiceType === 'NONE' ? '📜 Study Material' : '✦ Guided Practice'}
+          </div>
           <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
-          {encoding.testCaseLabels && <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>}
-          <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding →</button>
+          {encoding.practiceType === 'NONE' && encoding.starterCode && (
+            <pre className="mt-5 p-4 rounded-[10px] bg-bg border border-border text-[12px] leading-[1.55] overflow-x-auto whitespace-pre">
+              <code>{encoding.starterCode}</code>
+            </pre>
+          )}
+          {encoding.testCaseLabels && encoding.practiceType !== 'NONE' && (
+            <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>
+          )}
+          {encoding.practiceType === 'NONE' ? (
+            <button className="btn btn-primary mt-6" onClick={handleAdvance}>Mark as studied →</button>
+          ) : (
+            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding →</button>
+          )}
         </div>
       )}
 

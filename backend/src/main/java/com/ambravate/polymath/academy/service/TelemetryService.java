@@ -177,7 +177,7 @@ public class TelemetryService {
     private static String safeTopic(String topicId) {
         if (topicId == null) return "unknown";
         return switch (topicId) {
-            case "java", "tailwind", "react" -> topicId;
+            case "java", "tailwind", "react", "sql" -> topicId;
             default -> "unknown";
         };
     }
@@ -188,6 +188,7 @@ public class TelemetryService {
      *   <li>{@code chunk-*} or {@code chunk-cap} → java</li>
      *   <li>{@code tw-*} → tailwind</li>
      *   <li>{@code rx-*} → react</li>
+     *   <li>{@code sql-*} → sql</li>
      * </ul>
      * Anything else returns {@code unknown}.
      */
@@ -196,6 +197,7 @@ public class TelemetryService {
         if (chunkId.startsWith("chunk-")) return "java";
         if (chunkId.startsWith("tw-"))    return "tailwind";
         if (chunkId.startsWith("rx-"))    return "react";
+        if (chunkId.startsWith("sql-"))   return "sql";
         return "unknown";
     }
 

@@ -25,6 +25,12 @@ const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string;
     tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',
     accent: 'var(--teal)',
   },
+  sql: {
+    name: 'SQL',
+    glyph: '🗃️',
+    tagline: 'The language of data. Read, filter, summarise — every backend dev writes it daily.',
+    accent: 'var(--teal)',
+  },
 }
 
 const MEM_COLORS: Record<string, string> = {

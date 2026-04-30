@@ -241,6 +241,8 @@ class TelemetryServiceTest {
         @Test
         void reactPrefix() { assertThat(TelemetryService.topicFromChunkId("rx-d")).isEqualTo("react"); }
         @Test
+        void sqlPrefix() { assertThat(TelemetryService.topicFromChunkId("sql-a")).isEqualTo("sql"); }
+        @Test
         void unknown() { assertThat(TelemetryService.topicFromChunkId("xyz-9")).isEqualTo("unknown"); }
         @Test
         void nullInput() { assertThat(TelemetryService.topicFromChunkId(null)).isEqualTo("unknown"); }

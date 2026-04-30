@@ -8,6 +8,7 @@ const TOPIC_META: Record<string, { name: string; glyph: string; question: string
   java:     { name: 'Java',         glyph: '☕', question: 'Have you written Java code before?' },
   tailwind: { name: 'Tailwind CSS', glyph: '🎨', question: 'Have you used Tailwind CSS before?' },
   react:    { name: 'React',        glyph: '⚛️', question: 'Have you built UIs with React before?' },
+  sql:      { name: 'SQL',          glyph: '🗃️', question: 'Have you written SQL queries before?' },
 }
 
 export default function TopicOnboardingPage() {

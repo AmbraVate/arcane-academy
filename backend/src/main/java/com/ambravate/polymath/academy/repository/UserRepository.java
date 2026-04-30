@@ -15,9 +15,13 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
     Optional<User> findByAuthProviderAndProviderId(User.AuthProvider provider, String providerId);
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
+
+    /** Used by leaderboards — only opted-in users appear in rankings. */
+    List<User> findByPublicProfileEnabledTrue();
 
     // Admin queries
     long countByLastLoginAtAfter(Instant after);

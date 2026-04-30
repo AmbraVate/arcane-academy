@@ -1,0 +1,343 @@
+{
+  "id": "sql-d",
+  "title": "Joining Ledgers — JOINs",
+  "glyph": "🔗",
+  "sortOrder": 4,
+  "tier": "PRACTITIONER",
+  "topicId": "sql",
+  "prerequisites": ["sql-c"],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sql-d1",
+      "title": "Why Joins Exist — The Relational Model",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Up until now, every query has read from a single table. Real databases never look like that. The Academy's records are split across many ledgers — apprentices in one, quests in another, completions in a third. The whole point of a relational database is that you split data across tables, then <em>rejoin them at query time</em>. That recombination is called a <strong>JOIN</strong>.</p>",
+
+      "explanationHtml": "<h3>Why split data into multiple tables?</h3>\n<p>Imagine the Headmaster keeps everything in one fat table:</p>\n<pre><code>monolith(\n  apprentice_name TEXT, apprentice_rank TEXT, apprentice_xp INT,\n  quest_title TEXT, quest_reward INT,\n  completed_at TIMESTAMP\n)</code></pre>\n<p>Three problems immediately:</p>\n<ol>\n  <li><strong>Repetition.</strong> Alice's name and rank are written down once for every quest she completes. Update her rank → twenty rows to fix.</li>\n  <li><strong>Inconsistency.</strong> If row 7 says Alice is an Apprentice and row 8 says Alice is an Adept, who's right?</li>\n  <li><strong>Can't represent absence.</strong> An apprentice who has never completed a quest doesn't appear in the table at all.</li>\n</ol>\n<p>The relational model solves all three by <em>normalising</em> — splitting data into separate tables, each with one purpose:</p>\n<pre><code>apprentices(id PK, name, rank, xp)\nquests(id PK, title, xp_reward, difficulty)\ncompletions(id PK, apprentice_id FK, quest_id FK, completed_at)</code></pre>\n<p>Each fact is stored once. References between tables go through <strong>foreign keys</strong> (FK) that point to <strong>primary keys</strong> (PK).</p>\n\n<h3>Foreign keys — the wiring</h3>\n<p>A foreign key is a column whose value matches the primary key of another table. <code>completions.apprentice_id = 1</code> means \"this completion belongs to the apprentice with id = 1\" — Alice. The database can <em>enforce</em> that you can't insert a completion for an apprentice that doesn't exist.</p>\n<pre><code>CREATE TABLE completions (\n  id            INT PRIMARY KEY,\n  apprentice_id INT REFERENCES apprentices(id),\n  quest_id      INT REFERENCES quests(id),\n  completed_at  TIMESTAMP\n);</code></pre>\n\n<h3>The trade-off</h3>\n<p>Normalised data is clean, consistent, and updatable. But to <em>read</em> Alice's name alongside her completed quest titles, you have to <em>recombine</em> the tables. That recombination is what JOINs do.</p>\n<p>Denormalised (one fat table) is fast to read but a nightmare to maintain. Normalised + JOINs is the universal default. We'll meet the cases where you intentionally denormalise (called \"reporting tables\" or \"materialised views\") much later.</p>\n\n<h3>The Cartesian product — what JOIN starts from</h3>\n<p>Mentally: a JOIN starts by pairing every row of table A with every row of table B (the <em>Cartesian product</em>), then filters the pairs to keep only the matches. If <code>apprentices</code> has 4 rows and <code>completions</code> has 6, the Cartesian product has 24 pair-rows. The JOIN's <code>ON</code> condition keeps only the pairs where <code>apprentices.id = completions.apprentice_id</code> — usually 6 rows out of the 24. The other 18 are discarded.</p>\n<p>Real engines don't materialise the full product — they use indexes and clever algorithms. But the mental model is correct, and it's what makes JOINs feel obvious once it clicks.</p>\n\n<h3>The shape of a JOIN query</h3>\n<pre><code>SELECT a.name, q.title, c.completed_at\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests       q ON q.id = c.quest_id;</code></pre>\n<p>Three tables joined into one result. Each row in the result represents \"one apprentice completing one quest at one moment.\" The <code>a.</code>, <code>c.</code>, <code>q.</code> prefixes are <strong>aliases</strong> — short table names you assign in the FROM clause. They prevent column-name collisions (every table has an <code>id</code>) and make queries dramatically more readable.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher leads you to a different part of the Hall — three smaller ledgers laid open on a long table. The first lists apprentices. The second lists quests. The third — thinner than you'd expect — lists which apprentice completed which quest, and when."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Look at the third ledger. Each entry is just three numbers and a date — <code>apprentice_id</code>, <code>quest_id</code>, <code>completed_at</code>. No names. No quest titles. Just <em>references</em> to the other two ledgers. This is normalisation: every fact stored exactly once, and the relationships drawn through foreign keys."
+        },
+        {
+          "type": "example",
+          "speaker": "The three ledgers",
+          "text": "-- apprentices:                 -- quests:\n-- id | name    | rank        --  id | title           | xp_reward\n-- ---+---------+----------    -- ----+-----------------+-----------\n--  1 | Alice   | Apprentice   --   1 | Tame the Slime  |  100\n--  2 | Bjorn   | Adept        --   2 | Decode the Glyph|  180\n--  3 | Cassia  | Mage         --   3 | Forge the Blade |  400\n\n-- completions:\n-- id | apprentice_id | quest_id | completed_at\n-- ---+---------------+----------+--------------\n--  1 |       1       |    1     | 2026-04-01\n--  2 |       2       |    1     | 2026-04-02\n--  3 |       2       |    2     | 2026-04-05\n--  4 |       3       |    3     | 2026-04-10"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "If the Headmaster asks 'show me each apprentice's name and the title of every quest they've completed,' I cannot answer from any single ledger. I must <em>combine</em> them. The completions ledger tells me which ids go together — apprentice 2 + quest 2 — and the other two ledgers turn those ids back into names. That recombination is a JOIN."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Imagine I lay every apprentice card next to every completion card — every possible pair. Most pairs are nonsense — Alice paired with Bjorn's completion. Then I filter to keep only the pairs where <code>apprentices.id = completions.apprentice_id</code>. That filter is the <strong>ON</strong> clause of a JOIN. The Cartesian product of pairs, then filtered down — that is the mental model. Real engines optimise it heavily, but the picture in your head is correct."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace the model</h3>\n<p>Read the schemas and the example data carefully. Identify:</p>\n<ul>\n  <li>Which columns are primary keys, which are foreign keys</li>\n  <li>What the Cartesian product of <em>apprentices × completions</em> would look like (4 × 4 = 16 pair-rows), and which 4 survive when we keep only matching pairs</li>\n  <li>What information is reachable only by combining all three tables</li>\n</ul>",
+
+      "guidedPracticeStarterCode": "-- The three normalised tables:\nCREATE TABLE apprentices (\n  id   INT PRIMARY KEY,\n  name TEXT NOT NULL,\n  rank TEXT NOT NULL,\n  xp   INT NOT NULL\n);\n\nCREATE TABLE quests (\n  id        INT PRIMARY KEY,\n  title     TEXT NOT NULL,\n  xp_reward INT NOT NULL\n);\n\nCREATE TABLE completions (\n  id            INT PRIMARY KEY,\n  apprentice_id INT REFERENCES apprentices(id),\n  quest_id      INT REFERENCES quests(id),\n  completed_at  TIMESTAMP NOT NULL\n);\n\n-- The data:\n-- apprentices: 1=Alice (Apprentice, 1200), 2=Bjorn (Adept, 2400),\n--              3=Cassia (Mage, 4800)\n-- quests:      1=Tame the Slime (100), 2=Decode the Glyph (180),\n--              3=Forge the Blade (400)\n-- completions: (1, app=1, q=1, 2026-04-01), (2, app=2, q=1, 2026-04-02),\n--              (3, app=2, q=2, 2026-04-05), (4, app=3, q=3, 2026-04-10)\n\n-- A query that would need ALL THREE tables:\nSELECT a.name, q.title, c.completed_at\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests q       ON q.id = c.quest_id;",
+
+      "feynmanPrompt": "Explain to a junior why we put apprentices, quests, and completions in three separate tables instead of one fat table with name+rank+title repeated on every row. Give one concrete update that becomes easy with the normalised model and a nightmare with the denormalised one.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is a <strong>foreign key</strong>?</p>",
+          "options": [
+            "A column whose value matches a primary key in another table",
+            "The first column listed in a CREATE TABLE statement",
+            "A column that must always be NULL",
+            "A column that cannot be indexed"
+          ],
+          "correctAnswer": "A column whose value matches a primary key in another table",
+          "explanationHtml": "<p>Foreign keys are how relational databases express \"this row references that row.\" The database can enforce that the FK value actually exists in the target table — that's <em>referential integrity</em>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the <strong>Cartesian product</strong> of two tables?</p>",
+          "options": [
+            "Every possible pair of one row from each table",
+            "Only the pairs that satisfy a join condition",
+            "The intersection of the two tables' columns",
+            "The union of all rows from both tables"
+          ],
+          "correctAnswer": "Every possible pair of one row from each table",
+          "explanationHtml": "<p>The Cartesian product of A (m rows) and B (n rows) has m × n pair-rows. JOIN starts mentally from the Cartesian product and keeps only the pairs where the ON condition is true.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You have <code>apprentices</code> with 4 rows and <code>completions</code> with 6 rows. How many rows are in the Cartesian product, and how many would typically survive a JOIN on <code>apprentices.id = completions.apprentice_id</code>?</p>",
+          "options": [
+            "Cartesian product: 24 rows. Joined: 6 rows (one per completion, since each completion matches exactly one apprentice)",
+            "Cartesian product: 6 rows. Joined: 4 rows",
+            "Cartesian product: 10 rows. Joined: 4 rows",
+            "Cartesian product: 24 rows. Joined: 24 rows"
+          ],
+          "correctAnswer": "Cartesian product: 24 rows. Joined: 6 rows (one per completion, since each completion matches exactly one apprentice)",
+          "explanationHtml": "<p>4 × 6 = 24 candidate pairs. Each completion has exactly one apprentice_id pointing into apprentices, so 6 of the 24 pairs satisfy the ON condition. The other 18 are discarded.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior proposes \"flattening\" the three tables back into one big <code>everything</code> table that has apprentice_name, quest_title, etc. on every completion row. Which is the <strong>strongest single argument against</strong> their proposal?</p>",
+          "options": [
+            "Updating an apprentice's rank now requires rewriting every completion row that references them, and inconsistencies are easy to introduce",
+            "Single-table queries are slower than multi-table queries",
+            "Foreign keys are not allowed in flat tables",
+            "SQL doesn't support tables with more than ten columns"
+          ],
+          "correctAnswer": "Updating an apprentice's rank now requires rewriting every completion row that references them, and inconsistencies are easy to introduce",
+          "explanationHtml": "<p>The data-redundancy argument is the deepest. Single-table queries are usually <em>faster</em> (no JOINs) — that's actually a tempting reason to denormalise. But the cost is consistency. Once a fact is stored in many places, every update must reach every copy, and any miss creates a contradiction. The fix is to keep the source-of-truth normalised, and optionally maintain a denormalised \"reporting\" copy for analytics — at the cost of having to refresh it.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-d2",
+      "title": "INNER JOIN — The Workhorse",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p><code>INNER JOIN</code> is what most code calls \"a join.\" It returns only the row pairs where the ON condition is true — non-matches are dropped on both sides. 80% of your career's joins will be inner joins. Get this one fluent.</p>",
+
+      "explanationHtml": "<h3>Syntax</h3>\n<pre><code>SELECT a.name, q.title\nFROM apprentices a\nINNER JOIN completions c ON c.apprentice_id = a.id\nINNER JOIN quests       q ON q.id = c.quest_id;</code></pre>\n<p>The keyword <code>INNER</code> is optional — <code>JOIN</code> alone means <code>INNER JOIN</code> in every modern engine. Writing <code>INNER</code> explicitly is the convention some teams adopt for clarity, especially in mixed codebases that also use LEFT/RIGHT joins.</p>\n\n<h3>Aliases — adopt the habit immediately</h3>\n<p>Every table gets a short alias in the FROM clause. <code>FROM apprentices a</code> is shorthand for <code>FROM apprentices AS a</code>. From that point on you write <code>a.name</code>, not <code>apprentices.name</code>.</p>\n<pre><code>-- Without aliases — verbose and error-prone:\nSELECT apprentices.name, quests.title\nFROM apprentices\nJOIN completions ON completions.apprentice_id = apprentices.id\nJOIN quests      ON quests.id = completions.quest_id;\n\n-- With aliases — clean:\nSELECT a.name, q.title\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id;</code></pre>\n<p>Convention: single-letter aliases for one-table queries, two-letter for clarity in big joins. Pick a style and stick with it.</p>\n\n<h3>ON vs USING</h3>\n<p><code>ON</code> takes any condition: <code>ON c.apprentice_id = a.id</code>. <code>USING</code> takes a column name that exists on both tables and joins on equality:</p>\n<pre><code>-- These two are equivalent if both tables have a column called user_id:\nSELECT u.name, o.total FROM users u JOIN orders o USING (user_id);\nSELECT u.name, o.total FROM users u JOIN orders o ON u.user_id = o.user_id;</code></pre>\n<p><code>USING</code> is concise but rare in big codebases — most joins involve mismatched names (<code>users.id</code> = <code>orders.user_id</code>) where USING doesn't apply. Stick with <code>ON</code> as the default.</p>\n\n<h3>Multi-table chains</h3>\n<p>You can join as many tables as you need. Each new join adds one ON clause. Each new join logically pairs its rows with the running result of all prior joins:</p>\n<pre><code>SELECT a.name, q.title, c.completed_at\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id\nWHERE q.xp_reward &gt; 100\nORDER BY c.completed_at DESC;</code></pre>\n<p>Read it as: \"start with apprentices, attach their completions, attach the quest details, then filter and sort.\" The full pipeline (FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY, LIMIT) still applies — JOINs all happen in the FROM phase.</p>\n\n<h3>Joining on more than equality</h3>\n<p><code>ON</code> is just a boolean expression. You can join on inequalities, ranges, or compound conditions:</p>\n<pre><code>-- Match each event to all events that happened later in the same session:\nSELECT a.id, b.id\nFROM events a\nJOIN events b ON a.session_id = b.session_id AND b.ts &gt; a.ts;</code></pre>\n<p>Equality joins are 95% of cases (and engines optimise them best with hash and merge algorithms). Non-equality joins exist and are powerful when needed — e.g. matching events to their successors, or rows to ranges.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher hands you a fresh sheet and a quill. 'Now we make the queries themselves.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "<code>INNER JOIN</code> — or just <code>JOIN</code>, they mean the same thing — keeps only the matches. If an apprentice has never completed a quest, they vanish from the result. If a quest has never been completed, it too vanishes. Inner joins are <em>strict</em>. The match must exist on both sides."
+        },
+        {
+          "type": "example",
+          "speaker": "Three tables, one query",
+          "text": "SELECT a.name, q.title, c.completed_at\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id\nORDER BY c.completed_at;\n\n-- Result, given our data:\n-- name   | title            | completed_at\n-- -------+------------------+--------------\n-- Alice  | Tame the Slime   | 2026-04-01\n-- Bjorn  | Tame the Slime   | 2026-04-02\n-- Bjorn  | Decode the Glyph | 2026-04-05\n-- Cassia | Forge the Blade  | 2026-04-10\n\n-- Note: no row for Forge the Blade with apprentice info\n-- joined to the unknown completer, because no completion exists\n-- linking it to anyone... wait, this one has Cassia. Re-read.\n-- The apprentices who haven't completed anything ARE missing\n-- from the result. There are no completions for them.\n-- (Our data has only 3 apprentices and they each appear above.)"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Watch the aliases. <code>a</code>, <code>c</code>, <code>q</code> — each table gets a short name. Without them, you'd be writing <code>apprentices.name</code> and <code>completions.apprentice_id</code> all day. With them, the query reads like a sentence. Aliases are the single biggest readability win in SQL. Use them on every query that touches more than one table."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And one trap: never write <code>SELECT *</code> on a multi-table join. You'll get every column from every table, often with duplicate column names that the engine renames silently. Always project the columns you actually want. <em>Especially</em> in production code — the day someone adds a new column to a joined table is the day SELECT * starts breaking downstream consumers."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace the joins</h3>\n<p>Use the three-table model from sql-d1. Predict each query's result before checking the retrieval check.</p>",
+
+      "guidedPracticeStarterCode": "-- apprentices: 1=Alice (1200xp), 2=Bjorn (2400xp), 3=Cassia (4800xp)\n-- quests:      1=Tame the Slime (100), 2=Decode the Glyph (180),\n--              3=Forge the Blade (400)\n-- completions: (1, app=1, q=1, 2026-04-01), (2, app=2, q=1, 2026-04-02),\n--              (3, app=2, q=2, 2026-04-05), (4, app=3, q=3, 2026-04-10)\n\n-- Query A — names and titles, every completion:\nSELECT a.name, q.title\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id\nORDER BY a.name, q.title;\n\n-- Query B — count completions per apprentice:\nSELECT a.name, COUNT(*) AS num_completed\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nGROUP BY a.name;\n\n-- Query C — total XP earned per apprentice (joining quests for the reward):\nSELECT a.name, SUM(q.xp_reward) AS earned\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id\nGROUP BY a.name;\n\n-- Query D — only completions worth more than 150 XP:\nSELECT a.name, q.title, q.xp_reward\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id\nWHERE q.xp_reward > 150;",
+
+      "feynmanPrompt": "Explain to a teammate why aliases (a, c, q) are non-negotiable on multi-table joins. Then explain why SELECT * on a JOIN is a bad habit even when it works today.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>INNER JOIN</code> return?</p>",
+          "options": [
+            "Only the row pairs where the ON condition is true; non-matches on either side are dropped",
+            "Every row from the left table, with NULLs filled in for non-matches on the right",
+            "Every row from both tables, regardless of matches",
+            "Only rows where the join column is NULL"
+          ],
+          "correctAnswer": "Only the row pairs where the ON condition is true; non-matches on either side are dropped",
+          "explanationHtml": "<p>INNER JOIN is strict. If an apprentice has no completions, they vanish from the result. If a quest has no completions, it vanishes too. Outer joins (LEFT/RIGHT/FULL — next sub-chunk) are how you keep non-matches.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the three-table model from the lesson, how many rows does this query return?</p>\n<pre><code>SELECT a.name, q.title\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id;</code></pre>",
+          "options": [
+            "4 — one row per completion",
+            "3 — one row per apprentice",
+            "12 — Cartesian product of apprentices × quests",
+            "Variable — depends on engine"
+          ],
+          "correctAnswer": "4 — one row per completion",
+          "explanationHtml": "<p>The completions table has 4 rows; each one matches exactly one apprentice and one quest. So the joined result has 4 rows. The general rule for INNER JOIN: the number of result rows equals the number of \"completed paths\" through the foreign-key links — usually the same as the rows in the most central table, here completions.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which is the cleanest way to write \"the names and titles, with each table given a short alias\"?</p>",
+          "options": [
+            "FROM apprentices a JOIN completions c ON c.apprentice_id = a.id JOIN quests q ON q.id = c.quest_id; SELECT a.name, q.title",
+            "FROM apprentices, completions, quests; SELECT name, title",
+            "FROM apprentices INNER JOIN completions INNER JOIN quests; SELECT name, title",
+            "JOIN apprentices, completions, quests USING (id)"
+          ],
+          "correctAnswer": "FROM apprentices a JOIN completions c ON c.apprentice_id = a.id JOIN quests q ON q.id = c.quest_id; SELECT a.name, q.title",
+          "explanationHtml": "<p>Aliases (<code>a</code>, <code>c</code>, <code>q</code>) plus explicit ON conditions. Option 2 (\"comma-join\") is technically a Cartesian product with no filter — the engine returns 48 rows of nonsense. Option 3 is a syntax error (every JOIN needs an ON). Option 4 won't work because the columns aren't all named <code>id</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior writes a query and gets back <em>far more</em> rows than expected. Investigating, they realise their JOIN's <code>ON</code> condition is just <code>ON 1=1</code>. What does this mean?</p>",
+          "options": [
+            "Every pair of rows passes the condition — the join becomes a Cartesian product. Number of result rows = rows-on-left × rows-on-right",
+            "The query returns exactly one row",
+            "The query returns no rows because 1 cannot equal 1 in SQL",
+            "The query is invalid; ON conditions must reference at least one column"
+          ],
+          "correctAnswer": "Every pair of rows passes the condition — the join becomes a Cartesian product. Number of result rows = rows-on-left × rows-on-right",
+          "explanationHtml": "<p><code>ON 1=1</code> is always true, so every pair of rows passes — you get the full Cartesian product. This is sometimes done deliberately (with <code>CROSS JOIN</code>, which is the explicit syntax for it), but if you find yourself writing <code>1=1</code> by accident, almost certainly you forgot the real ON condition. Result: row count explodes; bug spotted.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-d3",
+      "title": "Outer Joins — LEFT, RIGHT, FULL",
+      "sortOrder": 3,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>INNER JOIN drops non-matches. Sometimes that's the bug. \"Show every apprentice and their completed quests, even apprentices who haven't completed any\" — INNER JOIN silently omits the lazy ones. <strong>LEFT JOIN</strong> keeps them, filling in NULLs where there's no match. Outer joins are how you ask \"who's missing?\" — and once you internalise them, they're as essential as INNER.</p>",
+
+      "explanationHtml": "<h3>The three outer-join variants</h3>\n<table>\n  <tr><th>Join</th><th>Keeps</th><th>Fills with NULL when no match</th></tr>\n  <tr><td><code>LEFT OUTER JOIN</code></td><td>All rows from the LEFT table</td><td>The right-side columns</td></tr>\n  <tr><td><code>RIGHT OUTER JOIN</code></td><td>All rows from the RIGHT table</td><td>The left-side columns</td></tr>\n  <tr><td><code>FULL OUTER JOIN</code></td><td>All rows from both tables</td><td>Whichever side doesn't match</td></tr>\n</table>\n<p>The <code>OUTER</code> keyword is optional — <code>LEFT JOIN</code> and <code>LEFT OUTER JOIN</code> mean the same thing. Most teams just write <code>LEFT JOIN</code>.</p>\n\n<h3>LEFT JOIN — the most useful</h3>\n<pre><code>SELECT a.name, c.completed_at\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id;\n\n-- name    | completed_at\n-- --------+--------------\n-- Alice   | 2026-04-01\n-- Bjorn   | 2026-04-02\n-- Bjorn   | 2026-04-05\n-- Cassia  | 2026-04-10\n-- Dorian  | NULL          ← Dorian has no completions; LEFT JOIN keeps the row anyway\n</code></pre>\n<p>Compare to INNER JOIN, which would have dropped Dorian entirely. The LEFT JOIN is what you want for \"all apprentices and any completions they may have.\"</p>\n\n<h3>RIGHT JOIN — rarely used in practice</h3>\n<p><code>RIGHT JOIN</code> is the mirror of LEFT — it keeps all rows from the right table. In practice almost nobody uses it because <em>every RIGHT JOIN can be rewritten as a LEFT JOIN by swapping the table order</em>:</p>\n<pre><code>-- These two are equivalent:\nFROM A LEFT  JOIN B ON ...\nFROM B RIGHT JOIN A ON ...</code></pre>\n<p>Pick LEFT JOIN as the convention. RIGHT JOIN is legal but reads as \"someone joined a query bottom-up,\" which is unusual. You will encounter it occasionally in legacy code.</p>\n\n<h3>FULL OUTER JOIN — symmetric</h3>\n<p>Keeps all rows from both sides. Where one side has no match, the other side's columns are NULL.</p>\n<pre><code>SELECT a.name, q.title\nFROM apprentices a\nFULL JOIN completions c ON c.apprentice_id = a.id\nFULL JOIN quests      q ON q.id = c.quest_id;</code></pre>\n<p>Used for reconciliation reports — \"which apprentices have no completions, AND which quests nobody has completed?\" — and rarely for normal queries. MySQL famously did not support FULL OUTER JOIN for years; you had to UNION a LEFT and a RIGHT.</p>\n\n<h3>The classic anti-pattern: WHERE that breaks LEFT JOIN</h3>\n<p>This trips everyone up at least once:</p>\n<pre><code>-- Intended: \"all apprentices, plus their high-XP completed quests if any\"\n-- Actual: \"only apprentices with at least one high-XP completion\"\nSELECT a.name, q.title\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id\nLEFT JOIN quests      q ON q.id = c.quest_id\nWHERE q.xp_reward &gt; 100;          ← THE BUG</code></pre>\n<p>The WHERE clause runs <em>after</em> the join. Apprentices with no completions get a row with <code>q.xp_reward = NULL</code>. The condition <code>NULL &gt; 100</code> evaluates to NULL (not TRUE), so the row is filtered out — defeating the LEFT JOIN entirely.</p>\n<p>The fix: move the condition into the ON clause, where it's evaluated <em>before</em> the LEFT-JOIN \"keep all left rows\" rule kicks in.</p>\n<pre><code>-- Correct version:\nSELECT a.name, q.title\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id\nLEFT JOIN quests      q ON q.id = c.quest_id AND q.xp_reward &gt; 100;</code></pre>\n\n<h3>Finding rows that DON'T match — the IS NULL trick</h3>\n<p>One of the most useful patterns in all of SQL:</p>\n<pre><code>-- All apprentices who have NEVER completed a quest:\nSELECT a.name\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id\nWHERE c.id IS NULL;</code></pre>\n<p>Read it as: \"left-join everything; the apprentices with no match get NULL on the right side; filter to only those.\" This is the canonical way to find \"orphans\" — rows in one table with no corresponding row in another.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher pulls a fourth name from the apprentice ledger and points to it: 'Dorian. Joined a week ago. Completed nothing yet.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "If the Headmaster asks 'show me every apprentice and their completed quests,' an INNER JOIN <em>silently drops Dorian</em>. The Headmaster sees three names, not four. The data is wrong, and the wrongness is invisible — the query ran, returned rows, no error. This is one of the more dangerous SQL bugs because nothing screams 'I am missing.'"
+        },
+        {
+          "type": "example",
+          "speaker": "INNER vs LEFT — the difference visible",
+          "text": "-- INNER JOIN — Dorian vanishes:\n-- name   | completed_at\n-- -------+--------------\n-- Alice  | 2026-04-01\n-- Bjorn  | 2026-04-02\n-- Bjorn  | 2026-04-05\n-- Cassia | 2026-04-10\n\n-- LEFT JOIN — Dorian appears with NULL:\n-- name   | completed_at\n-- -------+--------------\n-- Alice  | 2026-04-01\n-- Bjorn  | 2026-04-02\n-- Bjorn  | 2026-04-05\n-- Cassia | 2026-04-10\n-- Dorian | NULL"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Useful corollary: if you want to find the apprentices who have <em>never</em> completed a quest — Dorian alone — LEFT JOIN and then filter <code>WHERE c.id IS NULL</code>. The non-matching rows are the only ones with NULL on the right. This pattern is one of the workhorses of data-quality reporting."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And memorise the classic trap: a WHERE filter on a right-side column <em>breaks</em> a LEFT JOIN. The WHERE runs after the join; non-matches have NULL there; <code>NULL &gt; 100</code> is NULL, not TRUE, so the row is excluded. If you need a per-row condition that should still let unmatched left rows survive, put it in the ON clause, not the WHERE. ON conditions are evaluated <em>during</em> the join, before the keep-all-left rule applies."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace each variant</h3>\n<p>Apprentices now has 4 rows: Alice(1), Bjorn(2), Cassia(3), Dorian(4). Completions still has the same 4 rows from sql-d1. Predict the result of each query.</p>",
+
+      "guidedPracticeStarterCode": "-- apprentices: 1=Alice, 2=Bjorn, 3=Cassia, 4=Dorian\n-- completions: (app=1, q=1), (app=2, q=1), (app=2, q=2), (app=3, q=3)\n\n-- Query A — INNER JOIN (Dorian missing):\nSELECT a.name, c.id\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id;\n\n-- Query B — LEFT JOIN (Dorian present, c.id NULL):\nSELECT a.name, c.id\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id;\n\n-- Query C — apprentices who completed nothing:\nSELECT a.name\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id\nWHERE c.id IS NULL;\n\n-- Query D — TRAP: WHERE breaks the LEFT JOIN.\n-- (Result: Dorian is dropped because his c.id is NULL,\n--  and `c.id < 999` is NULL, not TRUE.)\nSELECT a.name, c.id\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id\nWHERE c.id < 999;\n\n-- Query E — the FIX: condition lives in the ON clause.\nSELECT a.name, c.id\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id AND c.id < 999;",
+
+      "feynmanPrompt": "Explain to a teammate why the query 'SELECT a.name FROM apprentices a LEFT JOIN completions c ON c.apprentice_id = a.id WHERE c.completed_at > \"2026-04-01\"' silently behaves like an INNER JOIN. Then write the corrected query that preserves the LEFT-JOIN intent.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>LEFT OUTER JOIN</code> return?</p>",
+          "options": [
+            "All rows from the left table; matching rows from the right; NULL on the right side when no match exists",
+            "Only rows where the join condition is true",
+            "All rows from both tables, regardless of matches",
+            "All rows from the right table; left-side NULLs for non-matches"
+          ],
+          "correctAnswer": "All rows from the left table; matching rows from the right; NULL on the right side when no match exists",
+          "explanationHtml": "<p>LEFT JOIN preserves every left-table row. Right-side columns are filled with NULL when no match exists. The mirror of this — \"all rows from the right table\" — is RIGHT JOIN. \"All rows from both\" is FULL OUTER JOIN.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the four-apprentice / four-completion model, what does this query return?</p>\n<pre><code>SELECT a.name\nFROM apprentices a\nLEFT JOIN completions c ON c.apprentice_id = a.id\nWHERE c.id IS NULL;</code></pre>",
+          "options": [
+            "Dorian (the only apprentice with no completions)",
+            "All four apprentices",
+            "Nothing — every apprentice has at least one row in completions",
+            "Alice, Bjorn, Cassia (those WITH completions)"
+          ],
+          "correctAnswer": "Dorian (the only apprentice with no completions)",
+          "explanationHtml": "<p>This is the canonical \"find orphans\" pattern. The LEFT JOIN keeps every apprentice row; non-matchers (Dorian) get NULL on the right; <code>WHERE c.id IS NULL</code> filters to only those. Dorian is the only one.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You want \"every apprentice plus their highest-XP completion if they have one.\" Which version is correct?</p>",
+          "options": [
+            "FROM apprentices a LEFT JOIN completions c ON c.apprentice_id = a.id LEFT JOIN quests q ON q.id = c.quest_id AND q.xp_reward >= 100;",
+            "FROM apprentices a LEFT JOIN completions c ON c.apprentice_id = a.id LEFT JOIN quests q ON q.id = c.quest_id WHERE q.xp_reward >= 100;",
+            "FROM apprentices a INNER JOIN completions c ON c.apprentice_id = a.id INNER JOIN quests q ON q.id = c.quest_id WHERE q.xp_reward >= 100;",
+            "FROM apprentices a JOIN completions c ON c.apprentice_id = a.id JOIN quests q ON q.id = c.quest_id WHERE q.xp_reward >= 100 OR a.id IS NULL;"
+          ],
+          "correctAnswer": "FROM apprentices a LEFT JOIN completions c ON c.apprentice_id = a.id LEFT JOIN quests q ON q.id = c.quest_id AND q.xp_reward >= 100;",
+          "explanationHtml": "<p>Option 1 puts the <code>xp_reward &gt;= 100</code> condition in the ON clause, so it's evaluated <em>during</em> the join — non-matching apprentices still survive. Option 2's WHERE clause runs after the join and silently filters out apprentices with no completion (their q.xp_reward is NULL, and NULL &gt;= 100 is NULL, not TRUE) — defeating the LEFT JOIN. Options 3 and 4 use INNER JOINs that drop apprentices with no completions outright.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Which pair of queries are <strong>equivalent</strong>?</p>",
+          "options": [
+            "FROM A LEFT JOIN B ON A.id = B.a_id  ≡  FROM B RIGHT JOIN A ON A.id = B.a_id",
+            "FROM A LEFT JOIN B ON A.id = B.a_id  ≡  FROM A INNER JOIN B ON A.id = B.a_id",
+            "FROM A LEFT JOIN B ON A.id = B.a_id  ≡  FROM A FULL JOIN B ON A.id = B.a_id",
+            "FROM A LEFT JOIN B ON A.id = B.a_id  ≡  FROM A, B WHERE A.id = B.a_id"
+          ],
+          "correctAnswer": "FROM A LEFT JOIN B ON A.id = B.a_id  ≡  FROM B RIGHT JOIN A ON A.id = B.a_id",
+          "explanationHtml": "<p>RIGHT JOIN is just LEFT JOIN with the operands swapped — both keep \"all rows from A.\" That's why most teams pick LEFT JOIN as the only convention they use; the RIGHT-JOIN form reads backwards. The other options are not equivalent: INNER drops non-matches, FULL keeps both sides' non-matches, and the comma-WHERE form is an INNER JOIN in disguise.</p>"
+        }
+      ]
+    }
+  ]
+}

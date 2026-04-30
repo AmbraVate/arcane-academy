@@ -88,9 +88,10 @@ export default function Nav() {
 
         {/* Nav buttons */}
         {[
-          { label: 'Topics',  icon: '📚', path: '/topics' },
-          { label: 'Review',  icon: '📖', path: '/review' },
-          { label: 'Profile', icon: '👤', path: '/profile' },
+          { label: 'Topics',     icon: '📚', path: '/topics' },
+          { label: 'Review',     icon: '📖', path: '/review' },
+          { label: 'Ranks',      icon: '🏆', path: '/leaderboard' },
+          { label: 'Profile',    icon: '👤', path: '/profile' },
         ].map(({ label, icon, path }) => (
           <button
             key={path}

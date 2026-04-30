@@ -53,6 +53,13 @@ public class User {
     @Builder.Default
     private LearnerPath learnerPath = LearnerPath.FOUNDATION;
 
+    /**
+     * Privacy switch — when true the user appears on leaderboards and at /u/:username.
+     * Default false: opt-in. Toggled from the profile page.
+     */
+    @Builder.Default
+    private boolean publicProfileEnabled = false;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @Getter(AccessLevel.NONE)   // suppress Lombok getter; we provide a null-safe one below

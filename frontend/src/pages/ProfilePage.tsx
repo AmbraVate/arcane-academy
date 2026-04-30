@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../hooks/useAuth'
-import { badgeApi } from '../api/services'
+import { badgeApi, profileApi } from '../api/services'
 import type { Badge } from '@/types'
 import { cn } from '@/lib/utils'
 
@@ -8,10 +8,26 @@ export default function ProfilePage() {
   const { user } = useAuth()
   const [badges, setBadges] = useState<Badge[]>([])
   const [loading, setLoading] = useState(true)
+  const [publicEnabled, setPublicEnabled] = useState<boolean | null>(null)
+  const [savingVisibility, setSavingVisibility] = useState(false)
 
   useEffect(() => {
     badgeApi.getAll().then(setBadges).finally(() => setLoading(false))
+    profileApi.getVisibility().then(setPublicEnabled).catch(() => setPublicEnabled(false))
   }, [])
+
+  async function toggleVisibility() {
+    if (publicEnabled === null || savingVisibility) return
+    setSavingVisibility(true)
+    try {
+      const next = await profileApi.setVisibility(!publicEnabled)
+      setPublicEnabled(next)
+    } catch {
+      // keep prior state on failure
+    } finally {
+      setSavingVisibility(false)
+    }
+  }
 
   if (!user) return null
 
@@ -26,6 +42,32 @@ export default function ProfilePage() {
   return (
     <div className="flex-1 overflow-y-auto px-6 py-8 max-[600px]:px-3 max-[600px]:py-5">
       <div className="max-w-[800px] mx-auto">
+        {/* Visibility / public-profile toggle */}
+        <div className="bg-card border border-border rounded-[12px] px-5 py-4 mb-5 flex items-center justify-between gap-4 max-[480px]:flex-col max-[480px]:items-start">
+          <div>
+            <div className="font-cinzel text-[13px] text-text mb-0.5">
+              Public profile {publicEnabled ? <span className="text-green">· On</span> : <span className="text-muted">· Off</span>}
+            </div>
+            <div className="text-[11px] text-muted leading-snug">
+              {publicEnabled
+                ? `Your username, rank, badges, and per-topic XP are visible at /u/${user.username} and on leaderboards.`
+                : 'Opt in to appear on leaderboards and at /u/your-username. Email + auth details are never shown either way.'}
+            </div>
+          </div>
+          <button
+            onClick={toggleVisibility}
+            disabled={publicEnabled === null || savingVisibility}
+            className={cn(
+              'px-4 py-1.5 rounded-[7px] text-[12px] font-cinzel tracking-wide border transition-[background,border-color] duration-150 disabled:opacity-50',
+              publicEnabled
+                ? 'bg-purple-dim border-purple text-purple-light'
+                : 'bg-card border-border text-muted hover:border-purple-dim'
+            )}
+          >
+            {savingVisibility ? 'Saving…' : publicEnabled ? 'Make private' : 'Make public'}
+          </button>
+        </div>
+
         {/* Profile header */}
         <div className="flex items-center gap-6 p-7 bg-card border border-border rounded-[14px] mb-8 max-[600px]:flex-col max-[600px]:text-center">
           <div className="text-[56px] w-20 h-20 flex items-center justify-center bg-purple-dim border-2 border-purple rounded-full flex-shrink-0 max-[480px]:text-[44px] max-[480px]:w-16 max-[480px]:h-16">

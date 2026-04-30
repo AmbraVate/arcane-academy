@@ -27,7 +27,7 @@ const TOPICS: Topic[] = [
   { id: 'css',        name: 'CSS',            glyph: '🖌️', tagline: 'Craft beautiful, responsive interfaces from the ground up.',                     status: 'coming_soon', chunks: 10, accentStroke: 'var(--purple)' },
   { id: 'javascript', name: 'JavaScript',     glyph: '⚡', tagline: 'Bring the web to life. Logic, events, async, and the DOM.',                     status: 'coming_soon', chunks: 14, accentStroke: 'var(--gold)' },
   { id: 'python',     name: 'Python',         glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.',                 status: 'coming_soon', chunks: 12, accentStroke: 'var(--teal)' },
-  { id: 'sql',        name: 'SQL',            glyph: '🗃️', tagline: 'Query, transform, and model data with precision.',                              status: 'coming_soon', chunks: 9,  accentStroke: 'var(--purple)' },
+  { id: 'sql',        name: 'SQL',            glyph: '🗃️', tagline: 'The language of data. Read, filter, summarise — every backend dev writes it daily.',                              status: 'active',      chunks: 3,  accentStroke: 'var(--teal)' },
   { id: 'typescript', name: 'TypeScript',     glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',       status: 'coming_soon', chunks: 10, accentStroke: 'var(--gold)' },
   { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.', status: 'active',      chunks: 4,  accentStroke: 'var(--teal)' },
 ]

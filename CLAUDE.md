@@ -10,7 +10,9 @@ The pedagogical thesis: polymaths don't suffer from breadth — they suffer from
 
 This document describes both **design intent** and **shipping reality**. They differ in several places — the audit (April 2026) flagged the gaps below. Treat anything not in this list as accurate.
 
-**Active topics:** Java (38 chunks, content depth verified), Tailwind CSS (4 chunks, shallower than §1.3 plans), **React (4 chunks: `rx-a` … `rx-d`, registered in TopicSeeder, JSON content auto-loaded by `JsonContentSeeder`, practice dispatched to `ReactPracticeService` via in-iframe runner)**. Tier enum extended with `CAPSTONE` for `rx-d` ("The Guild Portal"). React practice grading is **client-trusted in v1** — the iframe runs tests, posts results to the backend, which performs a structural sanity check on the JSX source before awarding XP. Document this in §14a-equivalent before any leaderboard ships.
+**Active topics:** Java (38 chunks, content depth verified), Tailwind CSS (4 chunks, shallower than §1.3 plans), **React (4 chunks: `rx-a` … `rx-d`, registered in TopicSeeder, JSON content auto-loaded by `JsonContentSeeder`, practice dispatched to `ReactPracticeService` via in-iframe runner)**, **SQL (3 Foundation chunks: `sql-a` SELECT, `sql-b` Filtering, `sql-c` Aggregation — all `practiceType: NONE` for v1; learning happens via reading + retrieval-check questions, no live SQL execution yet)**. Tier enum extended with `CAPSTONE` for `rx-d` ("The Guild Portal"). React practice grading is **client-trusted in v1** — the iframe runs tests, posts results to the backend, which performs a structural sanity check on the JSX source before awarding XP. Document this in §14a-equivalent before any leaderboard ships.
+
+**SQL track scope (v1):** the 3 Foundation chunks ship without an interactive SQL runner. Each sub-chunk has hookHtml, explanationHtml, story beats, a "study material" guided phase (no editor — `practiceType: NONE` triggers a read-only view in `EncodingPage` with a "Mark as studied →" advance), and 4 retrieval-check questions per sub-chunk (mix of RECALL / APPLICATION / DISCRIMINATION). Practitioner (joins, subqueries, modifying data) and Expert (indexes, query plans, window functions) tiers are intentionally deferred — adding them is roughly the same authoring effort again. A future iteration should ship sql.js (SQLite-WASM) as the in-iframe runner using the same client-trusted pattern as React.
 
 **Java package:** root is `com.ambravate.polymath.academy`, not `com.arcane.academy`. Build artefact is `polymath-academy`.
 
@@ -33,6 +35,8 @@ This document describes both **design intent** and **shipping reality**. They di
 **AI Mentor:** `AiMentorService` and `AiMentorController` exist in code but the LLM provider, prompt template, rate limit, and PII policy are **not yet documented**. See §14a below for the standard to meet before public launch.
 
 **Onboarding prerequisite check:** `/topic/:topicId/prereq-check` and `/topic/:topicId/css-primer` exist for Tailwind and React. Triggered when a CSS-dependent topic is selected and the user has no localStorage record of having passed/skipped the check.
+
+**Leaderboards & public profiles:** `/leaderboard` (three boards — per-topic weekly, per-topic all-time, polymath breadth) and `/u/:username` (read-only profile aggregating per-topic XP + badges). Both gated by an opt-in `User.publicProfileEnabled` flag (default `false`); users toggle it from `/profile`. See §17a for the full surface area, the privacy contract, and the v1 performance trade-offs.
 
 ---
 
@@ -281,7 +285,8 @@ backend/src/main/java/com/ambravate/polymath/academy/
 backend/src/main/resources/
   content/java/        — 38 chunk JSON files (chunk-a … chunk-xj, chunk-cap)
   content/tailwind/    — tw-a, tw-b, tw-c, tw-d
-  content/react/       — rx-a, rx-b, rx-c, rx-d (NOT YET ACTIVE; see §0)
+  content/react/       — rx-a, rx-b, rx-c, rx-d (active; see §0)
+  content/sql/         — sql-a, sql-b, sql-c (Foundation tier only; practiceType=NONE)
   db/migration/        — Flyway SQL migrations
 
 frontend/src/
@@ -504,7 +509,7 @@ Until the above is in place, the mentor should be feature-flagged off in product
 | **badge_earned** | `arcane_badge_earned_total` | `category` | `BadgeService.evaluateAndAward` saves a new `UserBadge` |
 | **diagnostic_completed** | `arcane_diagnostic_completed_total` | `topic`, `tier` | A learner completes (or skips) the placement diagnostic |
 
-**`topic` label values:** `java | tailwind | react | unknown` (derived from `chunkId` prefix — `chunk-*` → java, `tw-*` → tailwind, `rx-*` → react). Anything else falls to `unknown` to defend against cardinality blow-ups.
+**`topic` label values:** `java | tailwind | react | sql | unknown` (derived from `chunkId` prefix — `chunk-*` → java, `tw-*` → tailwind, `rx-*` → react, `sql-*` → sql). Anything else falls to `unknown` to defend against cardinality blow-ups.
 
 **`cadence` label values:** `DAILY | WEEKLY | MONTHLY | RETRIEVAL | DIAGNOSTIC | unknown`.
 
@@ -550,6 +555,41 @@ Password for all: **`Test1234!`**
 
 ---
 
-## 17. Active Branch
+## 17. Leaderboards & Public Profiles
+
+### Surface area
+
+| Method | Path | Notes |
+|---|---|---|
+| `GET` | `/api/leaderboard/topic/{topicId}/weekly` | Top N users by XP earned in `topicId` since current ISO-week start (Mon 00:00 UTC) |
+| `GET` | `/api/leaderboard/topic/{topicId}/all-time` | Top N users by XP earned in `topicId` since signup |
+| `GET` | `/api/leaderboard/polymath` | Top N users by distinct topics they've earned XP in; tie-break = total XP |
+| `GET` | `/api/profile/public/{username}` | Read-only profile; **404 if user is opted out** (intentional — same response for "doesn't exist" and "private", to avoid enumeration leakage) |
+| `GET` | `/api/profile/visibility` | `{ enabled: boolean }` — caller's current opt-in state |
+| `POST` | `/api/profile/visibility` | Body `{ enabled: boolean }` — caller toggles their own visibility |
+
+Frontend routes: `/leaderboard` (`?board=weekly|all-time|polymath` + `?topic=java|tailwind|react`) and `/u/:username`. Toggle lives at the top of `/profile`.
+
+### Privacy contract
+
+- **Default is opt-in `false`.** No data appears anywhere until the user explicitly toggles it on. The intent is "leaderboards are a feature you choose to use," not a default exposure.
+- The public profile DTO **never** includes: email, role, providerId, password hash, or per-sub-chunk completion timestamps. It does include: username, member-since (month/year), rank title, totalXp, streakDays, per-topic xp+completion counts, earned badge IDs.
+- Leaderboard rows expose: username, rank title, streakDays, badgeCount, xpEarned (windowed or total), globalXp, topicCount (polymath board only).
+- Username clicks on the leaderboard go to `/u/{username}` — already gated behind authentication. We do **not** expose any of this without a logged-in caller.
+
+### XP attribution
+
+Per-topic XP is computed by joining `UserChunkProgress.completedAt` (with status COMPLETE) → `SubChunk.xpReward` → `Chunk.topicId`. We deliberately do NOT use `User.totalXp` for topic-windowed numbers because that ledger is global and includes review XP we don't want to attribute to a single topic.
+
+### v1 performance
+
+`LeaderboardService` aggregates in memory: one `progressRepository.findAll()` + one `subChunkRepository.findAll()` per request. Acceptable up to ~10k completed sub-chunks across all users — switch to a native SQL aggregation (or a materialised `weekly_xp_by_user` table refreshed on a cron) when the table grows past that. `topicSubChunkIds()` is bounded per topic.
+
+### Tests
+`LeaderboardServiceTest` (11 tests) covers the privacy filter, the COMPLETE-only filter, the ISO-week boundary, topic isolation, ordering, limits, and the breadth-then-depth polymath sort. `PublicProfileServiceTest` (5 tests) covers the opt-in gate, the per-topic aggregation, the badge decoration + ordering, and the "unknown badge id" fallback.
+
+---
+
+## 18. Active Branch
 
 `rewrite-java-syllabus` → target `master`

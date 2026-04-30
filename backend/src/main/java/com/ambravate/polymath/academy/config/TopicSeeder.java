@@ -43,6 +43,15 @@ public class TopicSeeder {
                 .accentColor("#61dafb")
                 .sortOrder(3)
                 .active(true)
+                .build(),
+            Topic.builder()
+                .id("sql")
+                .name("SQL")
+                .glyph("🗃️")
+                .tagline("The language of data. Read, filter, summarise — the queries every backend dev writes daily.")
+                .accentColor("#7dd3fc")
+                .sortOrder(4)
+                .active(true)
                 .build()
         );
 

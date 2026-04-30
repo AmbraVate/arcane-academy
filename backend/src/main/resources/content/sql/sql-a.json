@@ -1,0 +1,359 @@
+{
+  "id": "sql-a",
+  "title": "Reading the Archives — SELECT",
+  "glyph": "🗃️",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "sql",
+  "prerequisites": [],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sql-a1",
+      "title": "Tables — The Shape of Recorded Knowledge",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Every record the Academy has ever kept — every apprentice, every quest, every grade — sits in a <strong>table</strong>. Before you write a single query, you must learn to <em>read</em> a table. The shape of the data dictates the shape of the question you can ask.</p>",
+
+      "explanationHtml": "<h3>What a table is</h3>\n<p>A table is a grid. Rows are records, columns are attributes. A table named <code>apprentices</code> might look like this:</p>\n<pre><code>id  | name      | rank        | xp\n----+-----------+-------------+------\n 1  | Alice     | Apprentice  | 1200\n 2  | Bjorn     | Adept       | 2400\n 3  | Cassia    | Mage        | 4800\n 4  | Dorian    | Novice      |   80\n</code></pre>\n<p>Four <strong>rows</strong>. Four <strong>columns</strong>. Each column has a <em>type</em> — <code>id</code> and <code>xp</code> are integers, <code>name</code> and <code>rank</code> are text. The combination of column names + types is the table's <strong>schema</strong>.</p>\n\n<h3>Why this matters</h3>\n<p>SQL doesn't ask \"give me Alice's XP.\" It asks \"give me the <code>xp</code> column from the <code>apprentices</code> row where <code>name = 'Alice'</code>.\" The query is shaped by the schema. Wrong column name → query fails. Wrong type comparison → query fails or returns garbage. Reading the schema is the first move every time.</p>\n\n<h3>The vocabulary</h3>\n<ul>\n  <li><strong>Database</strong> — a collection of tables (e.g. \"academy_db\")</li>\n  <li><strong>Table</strong> — a named grid of rows and columns (e.g. \"apprentices\")</li>\n  <li><strong>Row</strong> (or <em>record</em>, or <em>tuple</em>) — one entity stored in the table</li>\n  <li><strong>Column</strong> (or <em>field</em>, or <em>attribute</em>) — one named piece of information per row</li>\n  <li><strong>Primary key</strong> — a column whose value uniquely identifies each row (almost always <code>id</code>)</li>\n  <li><strong>NULL</strong> — the absence of a value. Different from 0 or empty string. We'll meet NULL properly in sql-b.</li>\n</ul>\n\n<h3>Reading a schema fluently</h3>\n<p>When you see this:</p>\n<pre><code>quests(id INT PRIMARY KEY,\n       title TEXT NOT NULL,\n       xp INT NOT NULL,\n       difficulty TEXT,\n       completed_by INT)</code></pre>\n<p>You should immediately think: <em>\"a quest has an id, a title, an XP value, an optional difficulty, and an optional reference to who completed it. Title and xp are required; difficulty and completed_by may be null.\"</em> That instinct is the foundation of every query you'll ever write.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You descend a long stone staircase into the Academy's <em>Hall of Records</em>. The air is cool and dry. Shelves stretch into the dim distance, each one packed with leather-bound ledgers. A figure in deep blue robes glances up from an enormous open volume."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Welcome, apprentice. Down here we keep <em>everything</em>. Every name, every grade, every quest ever undertaken. Other apprentices come asking me questions — \"who has the highest XP?\", \"how many novices joined last month?\" — and I answer them by <em>reading these ledgers</em>. SQL is the language of asking questions of ledgers. But before questions, you must learn to read."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Each ledger is what we call a <strong>table</strong>. Look — this one is the <code>apprentices</code> ledger. Every row is one apprentice. Every column is one fact about them — their name, their rank, their experience points."
+        },
+        {
+          "type": "example",
+          "speaker": "The apprentices ledger",
+          "text": "id  | name      | rank        | xp\n----+-----------+-------------+------\n 1  | Alice     | Apprentice  | 1200\n 2  | Bjorn     | Adept       | 2400\n 3  | Cassia    | Mage        | 4800\n 4  | Dorian    | Novice      |   80"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Notice the columns have <em>types</em>. The <code>id</code> column holds whole numbers — integers. The <code>name</code> column holds text. If you ask me for the <code>name</code> of apprentice with <code>xp</code> greater than two thousand, I can do that. If you ask me for the <code>name</code> of an apprentice greater than two thousand — that's nonsense. Names aren't numbers. The types tell us which questions are <em>shaped correctly</em>."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Always start by reading the schema. <em>What columns exist? What types? What's the primary key?</em> The schema is the map. Without it, every query is a guess. Now study the example ledger below — and then I'll teach you to ask your first question."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Read the schema</h3>\n<p>Before we run a single query, study the schema below. Identify:</p>\n<ul>\n  <li>Which columns are <strong>required</strong> (NOT NULL)</li>\n  <li>Which columns are the <strong>primary key</strong></li>\n  <li>What <strong>type</strong> each column holds</li>\n  <li>What questions you could <em>not</em> meaningfully ask of this table (e.g. \"name &gt; 100\")</li>\n</ul>\n<p>Then continue to the retrieval check — we'll test whether you've internalised the shape.</p>",
+
+      "guidedPracticeStarterCode": "-- The 'apprentices' table schema\nCREATE TABLE apprentices (\n  id   INT  PRIMARY KEY,\n  name TEXT NOT NULL,\n  rank TEXT NOT NULL,\n  xp   INT  NOT NULL\n);\n\n-- And here is the data inside it:\n--\n-- id  | name    | rank        | xp\n-- ----+---------+-------------+------\n--  1  | Alice   | Apprentice  | 1200\n--  2  | Bjorn   | Adept       | 2400\n--  3  | Cassia  | Mage        | 4800\n--  4  | Dorian  | Novice      |   80",
+
+      "feynmanPrompt": "Explain to a friend who has never seen a database what a table is and why every column has a type. Use the apprentices table as your example, and explain why \"give me apprentices where rank > 100\" is a malformed question.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In SQL, what is a <strong>row</strong>?</p>",
+          "options": [
+            "One record (one entity) stored in a table",
+            "One named attribute that every record shares",
+            "A type definition like INT or TEXT",
+            "A relationship between two tables"
+          ],
+          "correctAnswer": "One record (one entity) stored in a table",
+          "explanationHtml": "<p>A row is one record — one apprentice, one quest, one event. A column is the named attribute (e.g. <code>xp</code>); a row is one full entity with values for every column.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is a <strong>primary key</strong>?</p>",
+          "options": [
+            "A column whose value uniquely identifies each row",
+            "The first column in a table",
+            "A column that cannot be NULL",
+            "A reserved keyword for sorting"
+          ],
+          "correctAnswer": "A column whose value uniquely identifies each row",
+          "explanationHtml": "<p>The primary key uniquely identifies each row. There can only be one primary-key value per row, and no two rows can share it. Almost always called <code>id</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Given this schema, which question is <strong>type-incorrect</strong> — i.e. malformed because it compares mismatched types?</p>\n<pre><code>apprentices(id INT, name TEXT, rank TEXT, xp INT)</code></pre>",
+          "options": [
+            "Find apprentices where name = 1200",
+            "Find apprentices where xp > 2000",
+            "Find apprentices where rank = 'Mage'",
+            "Find apprentices where id = 3"
+          ],
+          "correctAnswer": "Find apprentices where name = 1200",
+          "explanationHtml": "<p><code>name</code> is TEXT, but 1200 is an integer. The other three compare each column to a value of its declared type. SQL engines will sometimes coerce types implicitly, but this is exactly the kind of bug you should learn to spot in your head before the query runs.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two friends describe \"a database.\" Whose description is <strong>most accurate</strong>?</p>",
+          "options": [
+            "\"A collection of named tables, where each table holds rows of structured data.\"",
+            "\"A single big spreadsheet with every fact in one place.\"",
+            "\"A folder of plain text files you grep through.\"",
+            "\"A program that writes code automatically based on questions.\""
+          ],
+          "correctAnswer": "\"A collection of named tables, where each table holds rows of structured data.\"",
+          "explanationHtml": "<p>A database is a collection of tables. Each table has its own schema, its own rows, its own purpose. The relational model's whole power comes from breaking data into multiple specialised tables and joining them — we'll meet joins later. The other answers describe spreadsheets, file systems, or AI tools — all distinct from a relational database.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-a2",
+      "title": "Your First Query — SELECT, FROM, WHERE",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>You can read a ledger. Now you'll <em>question</em> one. The three keywords that do 80% of all SQL work are <code>SELECT</code>, <code>FROM</code>, and <code>WHERE</code>. Master them and you can retrieve any single fact from any table the Academy keeps.</p>",
+
+      "explanationHtml": "<h3>The basic shape of a query</h3>\n<p>Every read query in SQL has the same skeleton:</p>\n<pre><code>SELECT &lt;columns&gt;\nFROM &lt;table&gt;\nWHERE &lt;condition&gt;;\n</code></pre>\n<p>That's it. Add other clauses later, but this is the spine.</p>\n\n<h3>SELECT — choosing columns</h3>\n<pre><code>-- All columns:\nSELECT * FROM apprentices;\n\n-- Specific columns:\nSELECT name, xp FROM apprentices;\n\n-- Rename in the result with AS:\nSELECT name AS apprentice_name, xp AS experience\nFROM apprentices;</code></pre>\n<p><code>*</code> is convenient for exploring; in production code, list columns explicitly so the query doesn't break when someone adds a new column.</p>\n\n<h3>FROM — choosing the table</h3>\n<p><code>FROM apprentices</code> says \"the rows we're working with come from this table.\" You'll see fancier <code>FROM</code> clauses later (with joins) but for one table, it's just the table name.</p>\n\n<h3>WHERE — filtering rows</h3>\n<p>Without <code>WHERE</code>, the query returns <em>every</em> row. With <code>WHERE</code>, it returns only rows where the condition is true.</p>\n<pre><code>-- Apprentices with more than 1000 XP:\nSELECT name, xp FROM apprentices\nWHERE xp &gt; 1000;\n\n-- A specific name:\nSELECT * FROM apprentices\nWHERE name = 'Alice';\n\n-- Exact rank:\nSELECT name FROM apprentices\nWHERE rank = 'Mage';</code></pre>\n\n<h3>String literals are single-quoted</h3>\n<p>Pay attention: <code>'Alice'</code>, not <code>\"Alice\"</code>. Double quotes have a different meaning in standard SQL (they refer to identifiers like column names). Single quotes always mean \"this is a string value.\" Many SQL engines tolerate double quotes for strings, but writing single quotes is the portable habit.</p>\n\n<h3>Common comparison operators</h3>\n<table>\n  <tr><th>Operator</th><th>Meaning</th></tr>\n  <tr><td><code>=</code></td><td>Equal</td></tr>\n  <tr><td><code>&lt;&gt;</code> or <code>!=</code></td><td>Not equal</td></tr>\n  <tr><td><code>&lt; &lt;= &gt; &gt;=</code></td><td>Less / less-or-equal / greater / greater-or-equal</td></tr>\n</table>\n\n<h3>Reading queries in your head</h3>\n<p>Read SQL <em>inside-out, last-clause-first</em>:</p>\n<pre><code>SELECT name, xp\nFROM apprentices\nWHERE rank = 'Mage';</code></pre>\n<p>\"From the apprentices table, take the rows where rank is Mage. From those rows, give me name and xp.\" The engine actually executes WHERE before SELECT — filtering happens first, then the chosen columns are projected.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher slides the ledger toward you and produces a quill."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Three words. <code>SELECT</code> — the columns you want. <code>FROM</code> — the table they live in. <code>WHERE</code> — the filter that decides which rows. Three words and you can ask almost anything."
+        },
+        {
+          "type": "example",
+          "speaker": "Three forms of the same shape",
+          "text": "-- Every column, every row:\nSELECT * FROM apprentices;\n\n-- Two columns, every row:\nSELECT name, xp FROM apprentices;\n\n-- Two columns, only some rows:\nSELECT name, xp FROM apprentices\nWHERE rank = 'Mage';"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Watch the quotes. <code>'Mage'</code> is a string — single quotes. Double quotes mean something else entirely in SQL — they refer to identifiers. If you write <code>WHERE rank = \"Mage\"</code> in a strict engine, it asks \"is the value of the <em>column called Mage</em> equal to the value of the <em>column called rank</em>?\" — which makes no sense. Single quotes for strings. Always."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And read the query <em>inside-out</em>. <code>SELECT name, xp FROM apprentices WHERE xp &gt; 1000</code>: <em>start</em> with apprentices. <em>Filter</em> to rows with xp over a thousand. <em>Then</em> project name and xp from each. The clauses appear in one order; the engine evaluates them in another. Knowing that order will save you when queries get complicated."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Predict the output</h3>\n<p>Below is a small <code>apprentices</code> table and three queries. Read each query carefully and predict what it returns. Then verify your prediction by working through the table by hand. We'll test your reasoning in the retrieval check.</p>\n<p>Don't run anything yet — the goal is to internalise <em>how SQL evaluates a query</em>, not to memorise outputs.</p>",
+
+      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- Query A:\nSELECT name FROM apprentices WHERE xp >= 2000;\n\n-- Query B:\nSELECT * FROM apprentices WHERE rank = 'Novice';\n\n-- Query C:\nSELECT name, xp FROM apprentices WHERE name <> 'Alice';\n\n-- Take a moment. Trace each query by hand. What rows come out?",
+
+      "feynmanPrompt": "In your own words, explain what SELECT, FROM, and WHERE each do. Then explain why the query SELECT name FROM apprentices WHERE rank = \"Mage\" — note the double quotes — would fail or behave unexpectedly in a strict SQL engine.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In a SQL query, what does the <code>WHERE</code> clause do?</p>",
+          "options": [
+            "Filters rows so only those matching the condition are returned",
+            "Picks which columns appear in the result",
+            "Sorts the output",
+            "Specifies which table to read from"
+          ],
+          "correctAnswer": "Filters rows so only those matching the condition are returned",
+          "explanationHtml": "<p><code>SELECT</code> chooses columns; <code>FROM</code> chooses the table; <code>WHERE</code> filters which rows. Sorting is done with <code>ORDER BY</code> (next sub-chunk).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Using the apprentices table from the lesson, what does this query return?</p>\n<pre><code>SELECT name FROM apprentices WHERE xp &gt;= 2000;</code></pre>",
+          "options": [
+            "Bjorn, Cassia",
+            "Alice, Bjorn, Cassia",
+            "Cassia",
+            "Alice, Bjorn"
+          ],
+          "correctAnswer": "Bjorn, Cassia",
+          "explanationHtml": "<p>Bjorn (xp=2400) and Cassia (xp=4800) both satisfy xp ≥ 2000. Alice (1200) and Dorian (80) don't. Only the <code>name</code> column is selected, so just two names come back.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which of these queries selects the names of apprentices whose rank is <em>not</em> 'Novice'?</p>",
+          "options": [
+            "SELECT name FROM apprentices WHERE rank <> 'Novice';",
+            "SELECT name FROM apprentices WHERE rank NOT 'Novice';",
+            "SELECT name FROM apprentices WHERE rank = NOT 'Novice';",
+            "SELECT name FROM apprentices WHERE rank ~ 'Novice';"
+          ],
+          "correctAnswer": "SELECT name FROM apprentices WHERE rank <> 'Novice';",
+          "explanationHtml": "<p><code>&lt;&gt;</code> (or equivalently <code>!=</code>) means \"not equal\". The other forms are not valid SQL syntax for inequality.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two apprentices write <em>almost</em> the same query. Which subtle difference matters?</p>\n<pre><code>-- Apprentice A:\nSELECT name FROM apprentices WHERE name = 'Alice';\n\n-- Apprentice B:\nSELECT name FROM apprentices WHERE name = \"Alice\";</code></pre>",
+          "options": [
+            "Apprentice A is correct; B's double quotes refer to an identifier, not a string, and may fail in strict engines",
+            "Both are equivalent — SQL treats single and double quotes identically",
+            "Apprentice B is correct; single quotes are for column names",
+            "Both are wrong; SQL strings must use backticks"
+          ],
+          "correctAnswer": "Apprentice A is correct; B's double quotes refer to an identifier, not a string, and may fail in strict engines",
+          "explanationHtml": "<p>In standard SQL, single quotes denote string literals; double quotes denote <em>identifiers</em> (table or column names that contain reserved words or special characters). Many engines (MySQL by default) tolerate double-quoted strings, but PostgreSQL and the SQL standard do not. Always single-quote strings — it's the portable habit.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-a3",
+      "title": "Ordering and Limiting — ORDER BY, LIMIT",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>SQL doesn't promise to return rows in any particular order. \"The top 5 apprentices by XP\" only makes sense if you tell SQL <em>sort first, then take 5</em>. <code>ORDER BY</code> and <code>LIMIT</code> are the two clauses that turn an unordered set into a ranked list.</p>",
+
+      "explanationHtml": "<h3>The default order is undefined</h3>\n<p>This may surprise you: a relational database does not guarantee row order unless you ask. Two engines, or even two runs of the same query on the same data, may return rows in different orders. If you care about order, you must say so.</p>\n\n<h3>ORDER BY — sorting the result</h3>\n<pre><code>-- Lowest XP first (ascending — the default):\nSELECT name, xp FROM apprentices\nORDER BY xp;\n\n-- Highest XP first (descending):\nSELECT name, xp FROM apprentices\nORDER BY xp DESC;\n\n-- Sort by multiple columns:\nSELECT name, rank, xp FROM apprentices\nORDER BY rank, xp DESC;</code></pre>\n<p>Multi-column sort goes left-to-right: rows are first sorted by <code>rank</code>; ties on <code>rank</code> are broken by <code>xp DESC</code>.</p>\n\n<h3>LIMIT — taking the top N</h3>\n<pre><code>-- The single highest-XP apprentice:\nSELECT name, xp FROM apprentices\nORDER BY xp DESC\nLIMIT 1;\n\n-- The top 3:\nSELECT name, xp FROM apprentices\nORDER BY xp DESC\nLIMIT 3;</code></pre>\n<p><code>LIMIT</code> caps the number of rows returned <em>after</em> ORDER BY runs. Without ORDER BY, \"LIMIT 3\" gives you three arbitrary rows — almost never what you want.</p>\n\n<h3>The full skeleton, expanded</h3>\n<pre><code>SELECT &lt;columns&gt;\nFROM &lt;table&gt;\nWHERE &lt;condition&gt;\nORDER BY &lt;columns&gt;\nLIMIT &lt;n&gt;;</code></pre>\n<p>The clauses always appear in this order, even if you only use some of them. Forget the order, the engine throws a syntax error.</p>\n\n<h3>Engine-specific note</h3>\n<p><code>LIMIT</code> works in PostgreSQL, MySQL, SQLite, MariaDB. SQL Server uses <code>TOP N</code> directly after <code>SELECT</code>. Oracle (older versions) uses <code>ROWNUM</code>. The standard is <code>FETCH FIRST n ROWS ONLY</code>, which most modern engines now support. For learning, <code>LIMIT</code> is the friendliest — and what you'll see in 80% of code.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher closes the ledger and pulls a different one closer — a thinner volume bound in red."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Now then. The Headmaster sent a runner this morning. He wants the names of the top three apprentices by XP, posted on the Hall board by noon. How do you ask the ledger that?"
+        },
+        {
+          "type": "dialogue",
+          "av": "🤔",
+          "cls": "self",
+          "speaker": "You",
+          "sCls": "self",
+          "text": "<em>Top three by XP</em> — that's a sort and then a take."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Exactly. <code>ORDER BY xp DESC</code> sorts highest-first. <code>LIMIT 3</code> takes the first three. Without ordering, the ledger does not promise any particular sequence — \"give me three apprentices\" might give you any three."
+        },
+        {
+          "type": "example",
+          "speaker": "Top 3 by XP",
+          "text": "SELECT name, xp\nFROM apprentices\nORDER BY xp DESC\nLIMIT 3;\n\n-- Result, given the ledger we have:\n-- name    | xp\n-- --------+------\n-- Cassia  | 4800\n-- Bjorn   | 2400\n-- Alice   | 1200"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And remember the <em>order of the clauses</em>. SELECT, FROM, WHERE, ORDER BY, LIMIT — always in that sequence. Different engines have a couple of variations on LIMIT — SQL Server uses TOP, Oracle has its own form — but PostgreSQL, MySQL, and SQLite all use LIMIT, and that's most of what you'll meet."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace the queries</h3>\n<p>Predict the result of each query against the apprentices table. Pay attention to:</p>\n<ul>\n  <li>Whether <code>DESC</code> is present (default is ascending)</li>\n  <li>How multi-column sort breaks ties</li>\n  <li>What happens when <code>LIMIT</code> is used without <code>ORDER BY</code></li>\n</ul>",
+
+      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- Query A — names sorted alphabetically:\nSELECT name FROM apprentices ORDER BY name;\n\n-- Query B — top 2 by XP:\nSELECT name, xp FROM apprentices ORDER BY xp DESC LIMIT 2;\n\n-- Query C — without ORDER BY:\nSELECT name FROM apprentices LIMIT 2;",
+
+      "feynmanPrompt": "Explain why a query with LIMIT but no ORDER BY is almost always wrong. Use the apprentices ledger as your example, and describe what could go wrong if a junior writes \"give me 5 apprentices, LIMIT 5\" without ordering them.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>ORDER BY xp</code> do, with no <code>DESC</code> keyword?</p>",
+          "options": [
+            "Sorts ascending — lowest xp first",
+            "Sorts descending — highest xp first",
+            "Returns rows in whatever order the engine prefers",
+            "Throws an error — DESC is required"
+          ],
+          "correctAnswer": "Sorts ascending — lowest xp first",
+          "explanationHtml": "<p>Ascending is the default. <code>ORDER BY xp</code> and <code>ORDER BY xp ASC</code> are equivalent. To reverse, write <code>ORDER BY xp DESC</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this query return, given the apprentices table?</p>\n<pre><code>SELECT name, xp FROM apprentices\nORDER BY xp DESC\nLIMIT 2;</code></pre>",
+          "options": [
+            "Cassia 4800, Bjorn 2400",
+            "Dorian 80, Alice 1200",
+            "Cassia 4800, Alice 1200",
+            "Alice 1200, Bjorn 2400"
+          ],
+          "correctAnswer": "Cassia 4800, Bjorn 2400",
+          "explanationHtml": "<p>Sort by xp descending: Cassia (4800), Bjorn (2400), Alice (1200), Dorian (80). LIMIT 2 takes the first two — Cassia and Bjorn.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which clause goes <strong>before</strong> which? Pick the only valid ordering.</p>",
+          "options": [
+            "SELECT → FROM → WHERE → ORDER BY → LIMIT",
+            "SELECT → WHERE → FROM → ORDER BY → LIMIT",
+            "SELECT → FROM → ORDER BY → WHERE → LIMIT",
+            "SELECT → FROM → LIMIT → WHERE → ORDER BY"
+          ],
+          "correctAnswer": "SELECT → FROM → WHERE → ORDER BY → LIMIT",
+          "explanationHtml": "<p>This is fixed by the SQL grammar. The engine evaluates them in a different order (FROM and WHERE happen before SELECT internally), but you must <em>write</em> them in this sequence or the parser rejects the query.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior writes the following query:</p>\n<pre><code>SELECT name FROM apprentices LIMIT 3;</code></pre>\n<p>Why is this almost always a bug, even though it runs without error?</p>",
+          "options": [
+            "There is no ORDER BY, so 'three rows' could be any three rows the engine happens to return — not the top three or the first three by any meaningful sense",
+            "LIMIT 3 always returns the same three rows in every engine, so the query is trivially correct",
+            "SELECT name without WHERE is a syntax error",
+            "LIMIT must always be the last word in the query, including after the semicolon"
+          ],
+          "correctAnswer": "There is no ORDER BY, so 'three rows' could be any three rows the engine happens to return — not the top three or the first three by any meaningful sense",
+          "explanationHtml": "<p>The relational model says rows are an unordered set. Without ORDER BY, \"the first three\" has no defined meaning — different engines, different storage orders, even different query plans, can return different rows. This is the most common SQL bug for newcomers: writing LIMIT without ORDER BY and assuming a stable result.</p>"
+        }
+      ]
+    }
+  ]
+}

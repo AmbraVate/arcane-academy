@@ -18,6 +18,8 @@ import TopicOnboardingPage from './pages/TopicOnboardingPage'
 import TopicDiagnosticPage from './pages/TopicDiagnosticPage'
 import PrerequisiteCheckPage from './pages/PrerequisiteCheckPage'
 import CssPrimerPage from './pages/CssPrimerPage'
+import LeaderboardPage from './pages/LeaderboardPage'
+import PublicProfilePage from './pages/PublicProfilePage'
 import Nav from './components/layout/Nav'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
@@ -67,6 +69,8 @@ export default function App() {
         <Route path="/topic/:topicId/diagnostic"   element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
         <Route path="/topic/:topicId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
         <Route path="/topic/:topicId/css-primer"   element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
+        <Route path="/leaderboard"   element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
+        <Route path="/u/:username"   element={<PrivateRoute><PublicProfilePage /></PrivateRoute>} />
 
         {/* Admin — completely separate layout, no learner Nav */}
         <Route element={<AdminRoute />}>

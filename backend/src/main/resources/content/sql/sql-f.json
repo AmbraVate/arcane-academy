@@ -1,0 +1,343 @@
+{
+  "id": "sql-f",
+  "title": "Inscribing Changes — INSERT, UPDATE, DELETE, Transactions",
+  "glyph": "✍️",
+  "sortOrder": 6,
+  "tier": "PRACTITIONER",
+  "topicId": "sql",
+  "prerequisites": ["sql-e"],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sql-f1",
+      "title": "INSERT — Adding Rows",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>SELECT reads. <strong>INSERT</strong>, <strong>UPDATE</strong>, and <strong>DELETE</strong> write. The pattern matters because writes are <em>permanent</em> by default — a SELECT that returns the wrong rows is annoying, but a DELETE that targets the wrong rows is a recovery operation. Start with INSERT, the safest of the three.</p>",
+
+      "explanationHtml": "<h3>Single-row INSERT — the explicit form</h3>\n<pre><code>INSERT INTO apprentices (name, rank, xp)\nVALUES ('Eleanor', 'Novice', 0);</code></pre>\n<p>Two parts: <code>(name, rank, xp)</code> lists the columns you're providing values for. <code>VALUES (...)</code> lists the values in the same order.</p>\n<p>Why list columns explicitly? Because the table might have other columns — a primary key id (auto-generated), a created_at timestamp (auto-defaulted) — that you want the database to fill in.</p>\n\n<h3>The dangerous shorthand — no column list</h3>\n<pre><code>-- Works today but breaks tomorrow:\nINSERT INTO apprentices VALUES (5, 'Eleanor', 'Novice', 0);</code></pre>\n<p>Without the column list, you must provide a value for <em>every</em> column in declaration order. Any later schema change — adding a new column, reordering — silently breaks every INSERT statement that uses this form. Always list columns explicitly in production code.</p>\n\n<h3>Multi-row INSERT</h3>\n<pre><code>INSERT INTO apprentices (name, rank, xp)\nVALUES\n  ('Eleanor', 'Novice', 0),\n  ('Faelar',  'Novice', 0),\n  ('Gareth',  'Novice', 0);</code></pre>\n<p>Most engines support comma-separated VALUES tuples. Roughly N times faster than running N separate INSERTs because there's only one round-trip and one transaction overhead.</p>\n\n<h3>INSERT ... SELECT</h3>\n<pre><code>-- Copy rows from one table into another:\nINSERT INTO archived_apprentices (id, name, rank, xp, archived_at)\nSELECT id, name, rank, xp, NOW()\nFROM apprentices\nWHERE last_active &lt; NOW() - INTERVAL '1 year';</code></pre>\n<p>Use the result of any SELECT as the source for an INSERT. Powerful for batch operations — archiving, denormalisation refreshes, ETL.</p>\n\n<h3>RETURNING — get back what was just inserted</h3>\n<p>PostgreSQL and a few other engines let you ask for the inserted row(s) back, including any auto-generated values:</p>\n<pre><code>INSERT INTO apprentices (name, rank, xp)\nVALUES ('Eleanor', 'Novice', 0)\nRETURNING id, created_at;</code></pre>\n<p>Without RETURNING you'd need a separate SELECT after the INSERT, which is two round-trips and a race condition risk if other inserts happen in between.</p>\n\n<h3>What can go wrong</h3>\n<ul>\n  <li><strong>NOT NULL violation</strong> — you didn't supply a value for a NOT NULL column with no default</li>\n  <li><strong>FK violation</strong> — you inserted a row whose foreign key points to a non-existent parent</li>\n  <li><strong>Unique violation</strong> — the values would create a duplicate of a UNIQUE column or PK</li>\n  <li><strong>CHECK violation</strong> — the values fail a CHECK constraint (e.g. <code>xp &gt;= 0</code>)</li>\n</ul>\n<p>Constraint violations are loud — the engine errors and rolls back the INSERT. They are not silent corruption. Embrace constraints; they are the database's way of catching bugs before bad data lands.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher hands you the master quill — the one used for binding new entries into the ledgers. 'Up to now you have only read. Now you write.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Reading is reversible. Writing is not. Or rather: it is reversible only inside a <em>transaction</em>, which we will get to. But the default behaviour of an INSERT is permanent. The Headmaster has approved a new apprentice — Eleanor. Bind her into the ledger."
+        },
+        {
+          "type": "example",
+          "speaker": "INSERT, two ways",
+          "text": "-- Best practice — name the columns explicitly:\nINSERT INTO apprentices (name, rank, xp)\nVALUES ('Eleanor', 'Novice', 0);\n\n-- Shorthand that bites you later:\nINSERT INTO apprentices VALUES (5, 'Eleanor', 'Novice', 0);\n-- Tomorrow someone adds a 'last_login' column.\n-- This second statement now fails — wrong number of values.\n-- Or worse: it shifts every value into the wrong column.\n-- The first statement is unaffected by the schema change."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Always name your columns. Always. The cost is one extra line. The benefit is that your INSERT statement is robust against every future schema change. It is the cheapest discipline in SQL — and almost every junior I have trained has been bitten by ignoring it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And don't fear constraint violations. NOT NULL, FOREIGN KEY, UNIQUE, CHECK — these are the database refusing to accept inconsistent data. They are doing exactly the work you want. A constraint error is a bug caught early. The alternative — disabling constraints to avoid errors — is the path to a database full of garbage that nobody can clean up."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Predict the outcomes</h3>\n<p>For each statement, predict whether it succeeds and what it leaves in the database. Several deliberately fail — identify why.</p>",
+
+      "guidedPracticeStarterCode": "-- Schema:\n-- apprentices(id PK, name TEXT NOT NULL, rank TEXT NOT NULL, xp INT NOT NULL DEFAULT 0)\n-- Existing rows: 1=Alice, 2=Bjorn, 3=Cassia, 4=Dorian\n\n-- Statement A — succeeds, id auto-generated:\nINSERT INTO apprentices (name, rank, xp) VALUES ('Eleanor', 'Novice', 0);\n\n-- Statement B — succeeds, xp defaults to 0:\nINSERT INTO apprentices (name, rank) VALUES ('Faelar', 'Novice');\n\n-- Statement C — three rows in one statement:\nINSERT INTO apprentices (name, rank, xp) VALUES\n  ('Gareth', 'Apprentice', 100),\n  ('Hilde',  'Apprentice', 150),\n  ('Ivan',   'Apprentice', 200);\n\n-- Statement D — FAILS: name is NOT NULL.\nINSERT INTO apprentices (rank, xp) VALUES ('Novice', 0);\n\n-- Statement E — FAILS in a strict engine if id 1 already exists:\nINSERT INTO apprentices (id, name, rank, xp)\nVALUES (1, 'Duplicate', 'Novice', 0);\n\n-- Statement F — INSERT ... SELECT — copies all Novices into a backup table:\nINSERT INTO apprentices_archive (id, name, rank, xp, archived_at)\nSELECT id, name, rank, xp, NOW()\nFROM apprentices\nWHERE rank = 'Novice';",
+
+      "feynmanPrompt": "Explain why the form `INSERT INTO apprentices VALUES ('Eleanor', 'Novice', 0);` (no column list) is a maintenance liability even when it works today. Walk through what happens when a teammate later adds a 'last_login' column.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What's the safer form of INSERT for production code?</p>",
+          "options": [
+            "INSERT INTO apprentices (name, rank, xp) VALUES ('Eleanor', 'Novice', 0);",
+            "INSERT INTO apprentices VALUES ('Eleanor', 'Novice', 0);",
+            "INSERT 'Eleanor', 'Novice', 0 INTO apprentices;",
+            "INSERT VALUES ('Eleanor', 'Novice', 0) INTO apprentices;"
+          ],
+          "correctAnswer": "INSERT INTO apprentices (name, rank, xp) VALUES ('Eleanor', 'Novice', 0);",
+          "explanationHtml": "<p>Always list columns explicitly. The shorthand without a column list silently breaks (or worse, mis-fills) when the schema changes — adding a new column, reordering columns. The explicit form is robust.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>INSERT INTO apprentices_archive ... SELECT ... FROM apprentices WHERE ...</code> do?</p>",
+          "options": [
+            "Copies the rows from one table into another in a single statement",
+            "Replaces every row in apprentices_archive with the SELECT's result",
+            "Defines a view called apprentices_archive",
+            "Creates a foreign-key relationship"
+          ],
+          "correctAnswer": "Copies the rows from one table into another in a single statement",
+          "explanationHtml": "<p>INSERT ... SELECT is the workhorse for batch copies — archiving, refreshing denormalised tables, ETL. The SELECT runs first, and its result rows are inserted into the target table.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>The schema is <code>apprentices(id PK auto-generated, name TEXT NOT NULL, rank TEXT NOT NULL, xp INT NOT NULL DEFAULT 0)</code>. Which of these statements <strong>succeeds without error</strong>?</p>",
+          "options": [
+            "INSERT INTO apprentices (name, rank) VALUES ('Faelar', 'Novice');  -- xp defaults to 0",
+            "INSERT INTO apprentices (rank, xp) VALUES ('Novice', 0);  -- name omitted",
+            "INSERT INTO apprentices VALUES ('Faelar', 'Novice');  -- two values for four columns",
+            "INSERT INTO apprentices (name, rank) VALUES ('Faelar', NULL);  -- rank is NOT NULL"
+          ],
+          "correctAnswer": "INSERT INTO apprentices (name, rank) VALUES ('Faelar', 'Novice');  -- xp defaults to 0",
+          "explanationHtml": "<p>Option 1 omits xp, which has a DEFAULT 0, so the engine fills it in. Option 2 omits the NOT NULL <code>name</code> column with no default — error. Option 3 supplies the wrong number of values for the implicit column list — error. Option 4 supplies NULL to a NOT NULL column — error.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A teammate suggests \"disabling foreign-key constraints during a bulk import to avoid errors.\" Why is this usually a bad idea?</p>",
+          "options": [
+            "Constraint errors signal bad data; suppressing them just allows inconsistent rows in, which then break every later query that joins through those FKs",
+            "FK constraints cannot be disabled in any modern SQL engine",
+            "Disabling constraints permanently corrupts the table",
+            "It would force the import to run in a single transaction"
+          ],
+          "correctAnswer": "Constraint errors signal bad data; suppressing them just allows inconsistent rows in, which then break every later query that joins through those FKs",
+          "explanationHtml": "<p>FK errors are the database telling you \"this row references a parent that doesn't exist.\" Disabling the constraint doesn't fix the underlying problem — it just lets the inconsistent row in, where it'll cause silent join failures, mysteriously NULL-laden reports, and eventually a data-integrity emergency. The right fix is almost always to insert parents before children, or to use a transaction so partial imports roll back cleanly.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-f2",
+      "title": "UPDATE & DELETE — The Always-WHERE Rule",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>The two most dangerous statements in SQL are <code>UPDATE</code> without a WHERE and <code>DELETE</code> without a WHERE. The first silently corrupts every row in a table. The second silently empties it. Both run quietly. Both have ended careers. Learn the discipline now: <strong>always WHERE, always preview, always be explicit.</strong></p>",
+
+      "explanationHtml": "<h3>UPDATE — modifying existing rows</h3>\n<pre><code>UPDATE apprentices\nSET    rank = 'Adept',\n       xp   = xp + 500\nWHERE  id = 1;</code></pre>\n<p>Three parts: the table, the SET assignments, and the WHERE filter. Every row matching the WHERE has its columns updated to the SET values. Rows that don't match are unchanged.</p>\n<p>Note <code>xp = xp + 500</code> — you can reference a column's existing value on the right-hand side. The SET assignments all see the <em>old</em> values, not the partially-updated values, so this is well-defined.</p>\n\n<h3>The catastrophic UPDATE</h3>\n<pre><code>-- Intent: bump Alice's xp\nUPDATE apprentices SET xp = xp + 500;\n--                                  ↑ no WHERE — every row is updated</code></pre>\n<p>This is the quintessential SQL disaster. There is no error, no warning, no \"are you sure?\" The query runs. Every apprentice's xp goes up by 500. Recovery requires backups, point-in-time restore, or rebuilding from logs.</p>\n<p>Most production teams use a <strong>safe-update mode</strong> in their database client (MySQL has one built in) that refuses UPDATE/DELETE without a WHERE on a key column. Worth turning on locally too.</p>\n\n<h3>DELETE — removing rows</h3>\n<pre><code>DELETE FROM apprentices\nWHERE  rank = 'Novice' AND xp = 0;</code></pre>\n<p>Same shape: table, WHERE filter. Rows matching the WHERE are removed.</p>\n<p>Same disaster mode: <code>DELETE FROM apprentices;</code> empties the table. Same prevention: always preview, always have a WHERE.</p>\n\n<h3>The preview habit</h3>\n<p>The single most valuable habit when writing UPDATE or DELETE: <strong>write the SELECT first.</strong></p>\n<pre><code>-- Step 1: Confirm what rows you'd touch.\nSELECT * FROM apprentices WHERE rank = 'Novice' AND xp = 0;\n\n-- Step 2: Eyeball the result. Is it the rows you intend?\n--          If you see something unexpected, STOP.\n\n-- Step 3: Convert SELECT to DELETE/UPDATE.\nDELETE FROM apprentices WHERE rank = 'Novice' AND xp = 0;</code></pre>\n<p>Same WHERE clause, same row set. The preview catches WHERE-clause bugs before they're irreversible. This habit is non-negotiable in production database work.</p>\n\n<h3>UPDATE with a JOIN — engine-specific syntax</h3>\n<p>Sometimes you need to update one table based on values in another:</p>\n<pre><code>-- PostgreSQL form:\nUPDATE apprentices a\nSET    xp = a.xp + 100\nFROM   recent_completions c\nWHERE  c.apprentice_id = a.id;\n\n-- MySQL form:\nUPDATE apprentices a\nJOIN   recent_completions c ON c.apprentice_id = a.id\nSET    a.xp = a.xp + 100;</code></pre>\n<p>Engine differences matter here. Check the manual for your database. The intent is identical — update rows in A based on a join with B.</p>\n\n<h3>Atomicity — multiple statements that must succeed together</h3>\n<p>UPDATE alone updates one table. What if you need to update two tables — \"transfer 100 XP from Alice to Bjorn\"? You need both UPDATEs to succeed, or both to fail (you don't want to debit Alice and forget to credit Bjorn). That's what transactions do — next sub-chunk.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher's voice goes quiet. He sets the quill down deliberately."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Listen carefully. The two most dangerous statements I will teach you in this entire course are <code>UPDATE</code> without a WHERE, and <code>DELETE</code> without a WHERE. They run silently. They give no warning. They modify or destroy <em>every row</em> in the table. I have seen ten years of an institution's records vanish in under a second."
+        },
+        {
+          "type": "example",
+          "speaker": "The catastrophe",
+          "text": "-- Intent: bump Alice's XP by 500.\n-- Reality: the apprentice forgot the WHERE.\nUPDATE apprentices SET xp = xp + 500;\n\n-- Every apprentice's XP just went up by 500.\n-- Recovery: backups, audit logs, careful reconstruction.\n-- Time required: hours to days.\n-- Time required to PREVENT it: writing 'WHERE id = 1'."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "There is one habit that separates senior database hands from juniors, and it is this: <strong>write the SELECT first</strong>. Same WHERE clause. Look at the rows that come back. Are they the rows you intended? If yes, swap SELECT for DELETE or UPDATE. If anything looks off — anything at all — stop and re-examine. The preview catches almost every WHERE-clause bug before it lands."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And one more. When you must run an UPDATE or DELETE on production data, run it inside a transaction first. <code>BEGIN; UPDATE ...; SELECT ...;</code> — verify the result before <code>COMMIT;</code>. If anything looks wrong, <code>ROLLBACK;</code> and nothing changed. We will cover transactions next. They are how you make irreversible operations <em>reversible</em> until you say otherwise."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace each modification</h3>\n<p>Predict what each statement does to the apprentices table. Several are intentionally dangerous — identify them.</p>",
+
+      "guidedPracticeStarterCode": "-- apprentices: 1=Alice (Apprentice, 1200), 2=Bjorn (Adept, 2400),\n--              3=Cassia (Mage, 4800), 4=Dorian (Novice, 80)\n\n-- Statement A — single-row UPDATE:\nUPDATE apprentices SET xp = xp + 500 WHERE id = 1;\n\n-- Statement B — multi-row UPDATE:\nUPDATE apprentices SET rank = 'Adept' WHERE rank = 'Apprentice' AND xp >= 1000;\n\n-- Statement C — DANGEROUS: missing WHERE.\n-- Updates EVERY row.\nUPDATE apprentices SET xp = 0;\n\n-- Statement D — single-row DELETE:\nDELETE FROM apprentices WHERE id = 4;\n\n-- Statement E — DANGEROUS: missing WHERE.\n-- Empties the table.\nDELETE FROM apprentices;\n\n-- Statement F — preview first (safe habit):\nSELECT * FROM apprentices WHERE xp = 0;\n-- Result: just Dorian if his xp was reset; nobody otherwise.\n-- Then convert to a DELETE only if the SELECT result is what you want:\nDELETE FROM apprentices WHERE xp = 0;",
+
+      "feynmanPrompt": "Explain to a junior the 'always SELECT first' habit when writing UPDATE or DELETE. Walk through one concrete scenario where the preview would have saved them from a production-data disaster.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>UPDATE apprentices SET xp = xp + 500;</code> do?</p>",
+          "options": [
+            "Updates every row in the apprentices table — adds 500 to each one's xp",
+            "Updates only the first row matching xp = xp + 500",
+            "Errors out — UPDATE requires a WHERE clause",
+            "Returns a list of rows where xp + 500 would be valid"
+          ],
+          "correctAnswer": "Updates every row in the apprentices table — adds 500 to each one's xp",
+          "explanationHtml": "<p>Without a WHERE, every row matches and is updated. The engine does not require WHERE — it assumes \"no filter\" means \"all rows.\" This is the canonical SQL disaster.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You want to delete only the Novice apprentices with zero XP. Which statement is correct AND safe?</p>",
+          "options": [
+            "First run SELECT * FROM apprentices WHERE rank = 'Novice' AND xp = 0; verify the result is what you intend; then run DELETE FROM apprentices WHERE rank = 'Novice' AND xp = 0;",
+            "DELETE FROM apprentices; -- and rely on quick reflexes if it looks wrong",
+            "DELETE FROM apprentices WHERE rank IS NOT NULL;",
+            "TRUNCATE apprentices WHERE rank = 'Novice';"
+          ],
+          "correctAnswer": "First run SELECT * FROM apprentices WHERE rank = 'Novice' AND xp = 0; verify the result is what you intend; then run DELETE FROM apprentices WHERE rank = 'Novice' AND xp = 0;",
+          "explanationHtml": "<p>The preview-as-SELECT-first habit. Same WHERE, you see the rows you'd delete, you eyeball them, then you swap SELECT for DELETE. Option 2 deletes everything. Option 3's WHERE matches almost every row (Novice or not, as long as rank isn't NULL). Option 4 isn't valid SQL — TRUNCATE doesn't take a WHERE clause; it empties whole tables.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>In <code>UPDATE apprentices SET xp = xp + 100 WHERE id = 1;</code>, what does the right-hand <code>xp</code> refer to?</p>",
+          "options": [
+            "The current (pre-update) value of xp for that row",
+            "The new (post-update) value of xp for that row",
+            "The xp value of a different table called xp",
+            "Always 0 — column references on the right-hand side default to 0"
+          ],
+          "correctAnswer": "The current (pre-update) value of xp for that row",
+          "explanationHtml": "<p>Right-hand-side column references in SET see the row's existing values. So <code>xp = xp + 100</code> reads the current xp, adds 100, and stores the result. All SET expressions see the same pre-update snapshot, so updates that mutually reference each other are well-defined.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior is debugging a query and runs <code>DELETE FROM apprentices WHERE name = 'Eleanor';</code>. Nobody named Eleanor exists. What happens?</p>",
+          "options": [
+            "Zero rows are deleted; the statement succeeds with a 'rows affected: 0' message and no error",
+            "All rows in the table are deleted because the WHERE matches nothing",
+            "The engine throws an error because no rows match",
+            "The engine prompts for confirmation"
+          ],
+          "correctAnswer": "Zero rows are deleted; the statement succeeds with a 'rows affected: 0' message and no error",
+          "explanationHtml": "<p>A WHERE that matches no rows is not an error — it's a successful statement that affected zero rows. This is one reason why \"the DELETE succeeded\" is not the same as \"the DELETE did what you intended.\" Always check the rows-affected count and ideally use the SELECT-first habit to confirm the row set before running.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-f3",
+      "title": "Transactions — All or Nothing",
+      "sortOrder": 3,
+      "xpReward": 70,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>A transfer of 100 XP from Alice to Bjorn is two UPDATEs — minus 100 from Alice, plus 100 to Bjorn. If the second one fails, you've debited Alice without crediting Bjorn — money lost from the system. <strong>Transactions</strong> are how you bundle multiple statements into an all-or-nothing unit. <code>BEGIN</code>, <code>COMMIT</code>, <code>ROLLBACK</code> — three keywords that turn SQL from a sequence of risks into a reliable system of record.</p>",
+
+      "explanationHtml": "<h3>The shape of a transaction</h3>\n<pre><code>BEGIN;\n  UPDATE apprentices SET xp = xp - 100 WHERE id = 1;  -- Alice\n  UPDATE apprentices SET xp = xp + 100 WHERE id = 2;  -- Bjorn\nCOMMIT;</code></pre>\n<p><code>BEGIN</code> opens a transaction. The two UPDATEs happen <em>tentatively</em> — visible only to the current connection until COMMIT. <code>COMMIT</code> publishes them atomically: either both succeed and become permanent together, or neither does.</p>\n<p>If the second UPDATE failed, the application could call <code>ROLLBACK</code> instead, and both UPDATEs would be undone as if they never happened.</p>\n\n<h3>Auto-commit — the default mode</h3>\n<p>Most database connections run in <em>auto-commit mode</em>: every individual statement is implicitly wrapped in <code>BEGIN; ...; COMMIT;</code>. You don't see the BEGIN/COMMIT, but they're there. To group statements, you turn off auto-commit (or explicitly begin a transaction) and write COMMIT yourself.</p>\n<p>Different clients handle this differently:</p>\n<ul>\n  <li><strong>psql</strong> (PostgreSQL CLI): auto-commit on by default; <code>BEGIN</code> turns it off until COMMIT/ROLLBACK</li>\n  <li><strong>JDBC / Java</strong>: <code>connection.setAutoCommit(false)</code>, then <code>connection.commit()</code> or <code>connection.rollback()</code></li>\n  <li><strong>Spring</strong>: <code>@Transactional</code> annotation does the BEGIN/COMMIT around your method body</li>\n</ul>\n\n<h3>ACID — what transactions guarantee</h3>\n<table>\n  <tr><th>Letter</th><th>Meaning</th></tr>\n  <tr><td><strong>A</strong>tomicity</td><td>All statements in a transaction succeed together or none do</td></tr>\n  <tr><td><strong>C</strong>onsistency</td><td>The database's invariants (constraints, triggers) hold before and after</td></tr>\n  <tr><td><strong>I</strong>solation</td><td>Concurrent transactions don't see each other's uncommitted state</td></tr>\n  <tr><td><strong>D</strong>urability</td><td>Once COMMIT returns, the data survives crashes</td></tr>\n</table>\n<p>Atomicity is the most relevant on day one. Isolation gets interesting when many users hit the database at once (different isolation levels offer different trade-offs — covered in advanced material). Durability is what makes \"the database is the source of truth.\"</p>\n\n<h3>SAVEPOINT — partial rollback</h3>\n<pre><code>BEGIN;\n  INSERT INTO orders (...) VALUES (...);\n  SAVEPOINT before_lines;\n  INSERT INTO order_lines (...) VALUES (...);   -- this fails\n  ROLLBACK TO SAVEPOINT before_lines;            -- undo just the lines\n  -- order is still there; can try a different INSERT\nCOMMIT;</code></pre>\n<p>SAVEPOINT lets you undo to a specific point inside a transaction without rolling back the whole thing. Useful for batch operations where individual items may fail but you want to keep the successes.</p>\n\n<h3>Idempotency — write statements that are safe to retry</h3>\n<p>If your application retries a transaction after a transient failure (network blip, deadlock retry), make sure each statement is safe to apply once or many times.</p>\n<pre><code>-- Idempotent — fine to retry:\nUPDATE apprentices SET rank = 'Adept' WHERE id = 1;\n\n-- NOT idempotent — retry doubles the increment:\nUPDATE apprentices SET xp = xp + 100 WHERE id = 1;\n\n-- Made idempotent with a guard:\nUPDATE apprentices SET xp = xp + 100\nWHERE id = 1 AND NOT EXISTS (\n  SELECT 1 FROM xp_audit\n  WHERE apprentice_id = 1 AND idempotency_key = 'transfer-2026-04-30-abc'\n);\nINSERT INTO xp_audit (apprentice_id, idempotency_key) VALUES (1, 'transfer-...');</code></pre>\n<p>The pattern: pair the increment with an audit row using a unique key. The retry sees the audit row and skips the increment. This is how production payment systems handle retries.</p>\n\n<h3>The discipline</h3>\n<ol>\n  <li>Anything that touches more than one row or table → wrap in a transaction</li>\n  <li>Anything you want to undo → run inside a transaction and ROLLBACK</li>\n  <li>Anything that might be retried → make it idempotent</li>\n</ol>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher draws a small box on the parchment, with two arrows entering and one arrow leaving."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "The Headmaster wants 100 XP transferred from Alice to Bjorn. Two updates: one debit, one credit. If only the debit succeeds, XP has vanished from the system. If only the credit succeeds, XP appeared from nowhere. Both must happen, or neither must happen. This <em>all-or-nothing</em> guarantee is the entire purpose of a transaction."
+        },
+        {
+          "type": "example",
+          "speaker": "BEGIN, COMMIT, ROLLBACK",
+          "text": "BEGIN;\n  UPDATE apprentices SET xp = xp - 100 WHERE id = 1;\n  UPDATE apprentices SET xp = xp + 100 WHERE id = 2;\nCOMMIT;\n\n-- If anything between BEGIN and COMMIT fails, the application calls\n-- ROLLBACK; instead, and the database forgets both UPDATEs entirely.\n-- Other connections never saw the in-progress state.\n\n-- A common production pattern: BEGIN, run an UPDATE, SELECT to verify\n-- the result, and only then COMMIT.\nBEGIN;\n  UPDATE apprentices SET xp = 0 WHERE rank = 'Novice';\n  SELECT id, name, xp FROM apprentices WHERE rank = 'Novice';\n  -- Eyeball the result. If wrong:\n  -- ROLLBACK; (and nothing changed)\n  -- If right:\nCOMMIT;"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Atomicity is the headline guarantee. The acronym is ACID — Atomicity, Consistency, Isolation, Durability. The other three matter, especially when many users use the database at once. But in your first year of database work, atomicity is the one that turns SQL from 'a sequence of risks' into 'a reliable system.' Use transactions whenever you touch more than one row or more than one table."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And remember: applications retry. Networks blip, deadlocks happen, the system tries again. Make your statements <em>idempotent</em> — safe to apply once or many times. <code>UPDATE xp = xp + 100</code> is <strong>not</strong> idempotent — a retry doubles the credit. The fix is an audit row with a unique key, and a guard that skips if the audit row already exists. Production payment systems live and die by this discipline."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Reason about the transaction</h3>\n<p>For each block, identify what state the database ends in. Pay attention to which blocks COMMIT vs ROLLBACK.</p>",
+
+      "guidedPracticeStarterCode": "-- Block A — succeeds end-to-end:\nBEGIN;\n  UPDATE apprentices SET xp = xp - 100 WHERE id = 1;\n  UPDATE apprentices SET xp = xp + 100 WHERE id = 2;\nCOMMIT;\n-- Final: id=1 has xp-100, id=2 has xp+100, both visible to others.\n\n-- Block B — application changes its mind:\nBEGIN;\n  UPDATE apprentices SET xp = 0 WHERE rank = 'Novice';\n  -- Realise this was wrong.\nROLLBACK;\n-- Final: nothing changed. Other connections never saw the UPDATE.\n\n-- Block C — second statement fails:\nBEGIN;\n  UPDATE apprentices SET xp = xp - 100 WHERE id = 1;\n  -- Engine throws (e.g. constraint violation):\n  UPDATE apprentices SET xp = xp + 100 WHERE id = 9999;\n  -- ↑ id 9999 doesn't exist; not really an error in standard SQL,\n  --   but imagine the second UPDATE fails for any reason.\n-- Application catches the error and:\nROLLBACK;\n-- Final: nothing changed.\n\n-- Block D — auto-commit (no transaction):\nUPDATE apprentices SET xp = xp - 100 WHERE id = 1;\n-- Engine implicitly: BEGIN; <UPDATE>; COMMIT;\n-- Final: id=1's xp-100 is permanent immediately.",
+
+      "feynmanPrompt": "Explain to a junior why an XP transfer between two apprentices must run inside a transaction. What goes wrong if the two UPDATEs run as separate auto-committed statements and the connection drops between them?",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does the <code>A</code> in ACID stand for, and what does it guarantee?</p>",
+          "options": [
+            "Atomicity — all statements in a transaction succeed together, or none do",
+            "Aliasing — every column gets a unique name",
+            "Authentication — only logged-in users can run transactions",
+            "Asynchrony — transactions don't block each other"
+          ],
+          "correctAnswer": "Atomicity — all statements in a transaction succeed together, or none do",
+          "explanationHtml": "<p>Atomicity is the all-or-nothing guarantee. C is Consistency (constraints hold), I is Isolation (concurrent transactions don't see each other's in-progress state), D is Durability (committed data survives crashes).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You run this in a fresh psql session:</p>\n<pre><code>BEGIN;\n  UPDATE apprentices SET xp = 0 WHERE id = 1;\n  -- you decide this was wrong\nROLLBACK;</code></pre>\n<p>What is the state of apprentice id=1 after ROLLBACK?</p>",
+          "options": [
+            "Unchanged — the UPDATE never became permanent because the transaction was rolled back",
+            "xp = 0 — the UPDATE was permanent before ROLLBACK ran",
+            "Half-updated — ROLLBACK only undoes the most recent statement",
+            "The row is deleted"
+          ],
+          "correctAnswer": "Unchanged — the UPDATE never became permanent because the transaction was rolled back",
+          "explanationHtml": "<p>Inside a transaction, statements are tentative until COMMIT. ROLLBACK undoes everything since BEGIN. Other connections never even saw the UPDATE happen — only this connection's queries within the transaction did.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which UPDATE is <strong>idempotent</strong> — safe to apply more than once?</p>",
+          "options": [
+            "UPDATE apprentices SET rank = 'Adept' WHERE id = 1;",
+            "UPDATE apprentices SET xp = xp + 100 WHERE id = 1;",
+            "UPDATE apprentices SET xp = xp * 2 WHERE id = 1;",
+            "UPDATE apprentices SET xp = xp - 50 WHERE id = 1;"
+          ],
+          "correctAnswer": "UPDATE apprentices SET rank = 'Adept' WHERE id = 1;",
+          "explanationHtml": "<p>Setting rank to a literal value is idempotent — applying it twice gives the same result as applying it once. Increment/decrement/multiply update statements are NOT idempotent — running them twice doubles the effect. To make them idempotent, pair them with an audit row keyed by a unique idempotency key.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A teammate writes a script that runs five UPDATEs to update five rows in different tables, no transaction. The third UPDATE fails halfway. What's the state of the database afterwards?</p>",
+          "options": [
+            "Inconsistent — UPDATEs 1 and 2 are permanent, 3 failed, 4 and 5 never ran. The database is in a partially-updated state and recovery requires manual surgery",
+            "Atomic — the failure rolled back UPDATEs 1 and 2 automatically",
+            "Atomic — all five UPDATEs ran because the engine retries failures",
+            "Identical to the start state — failed scripts always undo their changes"
+          ],
+          "correctAnswer": "Inconsistent — UPDATEs 1 and 2 are permanent, 3 failed, 4 and 5 never ran. The database is in a partially-updated state and recovery requires manual surgery",
+          "explanationHtml": "<p>Without an explicit transaction, each UPDATE is its own auto-committed transaction. They are independent. If the third one fails, the first two are already permanent and the last two never run. This is exactly the failure mode that transactions exist to prevent. Wrap multi-statement work in BEGIN ... COMMIT to make it atomic.</p>"
+        }
+      ]
+    }
+  ]
+}
