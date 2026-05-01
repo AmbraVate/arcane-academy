@@ -113,7 +113,7 @@ function makePageTexture(side: 'left' | 'right'): THREE.CanvasTexture {
       'each card just as it begins',
       'to fade. Forgetting is the gift.',
     ]
-    lines.forEach((ln, i) => g.fillText(ln, 256, 180 + i * 26))
+    lines.forEach((ln, i) => g.fillText(ln, 256, 220 + i * 32))
 
     g.font = '40px serif'
     g.fillStyle = '#c9a227'
@@ -160,7 +160,7 @@ function GrimoireScene({ isOpen, onToggle }: { isOpen: boolean; onToggle: () => 
     scene.fog = new THREE.Fog(0x0e0c1a, 8, 22)
 
     const camera = new THREE.PerspectiveCamera(40, W / H, 0.1, 100)
-    camera.position.set(0, 0.4, 8)
+    camera.position.set(0, 0.4, 12)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(W, H)
@@ -1134,7 +1134,7 @@ export default function LandingPage() {
             Take the entry diagnostic. The Academy adapts to where you are — and the first chunk is always
             the easiest one you've already half-mastered.
           </p>
-          <button className="btn-seal" onClick={goCta} style={{ fontSize: 16, padding: '18px 48px' }}>
+          <button className="btn-seal" onClick={goCta} style={{ fontSize: 16, padding: '18px 48px', marginBottom: 24 }}>
             BEGIN YOUR JOURNEY
           </button>
           <div
