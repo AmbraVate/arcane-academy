@@ -1,6 +1,7 @@
 package com.ambravate.polymath.academy.model;
 
 public enum QuestionType {
+    MCQ,
     MULTIPLE_CHOICE,
     FILL_BLANK,
     TRUE_FALSE,

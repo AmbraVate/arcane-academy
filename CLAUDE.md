@@ -10,9 +10,16 @@ The pedagogical thesis: polymaths don't suffer from breadth — they suffer from
 
 This document describes both **design intent** and **shipping reality**. They differ in several places — the audit (April 2026) flagged the gaps below. Treat anything not in this list as accurate.
 
-**Active topics:** Java (38 chunks, content depth verified), Tailwind CSS (4 chunks, shallower than §1.3 plans), **React (4 chunks: `rx-a` … `rx-d`, registered in TopicSeeder, JSON content auto-loaded by `JsonContentSeeder`, practice dispatched to `ReactPracticeService` via in-iframe runner)**, **SQL (3 Foundation chunks: `sql-a` SELECT, `sql-b` Filtering, `sql-c` Aggregation — all `practiceType: NONE` for v1; learning happens via reading + retrieval-check questions, no live SQL execution yet)**. Tier enum extended with `CAPSTONE` for `rx-d` ("The Guild Portal"). React practice grading is **client-trusted in v1** — the iframe runs tests, posts results to the backend, which performs a structural sanity check on the JSX source before awarding XP. Document this in §14a-equivalent before any leaderboard ships.
+**Active topics:** Java (38 chunks, content depth verified), Tailwind CSS (4 chunks, shallower than §1.3 plans), **React (4 chunks: `rx-a` … `rx-d`, registered in TopicSeeder, JSON content auto-loaded by `JsonContentSeeder`, practice dispatched to `ReactPracticeService` via in-iframe runner)**, **SQL (8 chunks across all three tiers: Foundation `sql-a/b/c`, Practitioner `sql-d/e/f`, Expert `sql-g/h` — 22 sub-chunks, all `practiceType: NONE`; learning happens via reading + retrieval-check questions, no live SQL execution yet)**. Tier enum extended with `CAPSTONE` for `rx-d` ("The Guild Portal"). React practice grading is **client-trusted in v1** — the iframe runs tests, posts results to the backend, which performs a structural sanity check on the JSX source before awarding XP. Document this in §14a-equivalent before any leaderboard ships.
 
-**SQL track scope (v1):** the 3 Foundation chunks ship without an interactive SQL runner. Each sub-chunk has hookHtml, explanationHtml, story beats, a "study material" guided phase (no editor — `practiceType: NONE` triggers a read-only view in `EncodingPage` with a "Mark as studied →" advance), and 4 retrieval-check questions per sub-chunk (mix of RECALL / APPLICATION / DISCRIMINATION). Practitioner (joins, subqueries, modifying data) and Expert (indexes, query plans, window functions) tiers are intentionally deferred — adding them is roughly the same authoring effort again. A future iteration should ship sql.js (SQLite-WASM) as the in-iframe runner using the same client-trusted pattern as React.
+**SQL track scope:** the 8 chunks ship with the in-iframe **sql.js (SQLite-WASM) runner** for interactive practice. Each sub-chunk has hookHtml, explanationHtml, story beats with the in-fiction mentor "Cipher the Archivist", a guided practice phase, and ~4 retrieval-check questions (mix of RECALL / APPLICATION / DISCRIMINATION). Topic outline:
+- **Foundation:** `sql-a` Tables & SELECT, `sql-b` Filtering (AND/OR/NOT, IN/BETWEEN/LIKE, NULL), `sql-c` Aggregation (COUNT/SUM/AVG, GROUP BY, HAVING)
+- **Practitioner:** `sql-d` JOINs (INNER + LEFT/RIGHT/FULL), `sql-e` Subqueries & CTEs (incl. EXISTS, NOT IN/NULL trap), `sql-f` Modifying data (INSERT/UPDATE/DELETE, transactions, ACID, idempotency)
+- **Expert:** `sql-g` Indexes (B-trees, leftmost prefix, selectivity) & EXPLAIN (plan reading, EXPLAIN ANALYZE), `sql-h` Window functions (ROW_NUMBER/RANK/LAG/LEAD, framing) & recursive CTEs (anchor + recursive step, cycle detection)
+
+**SQL practice runner (architecture).** `SqlEditor.tsx` mounts a sandboxed iframe that loads sql.js from `cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/`. Each test spec runs against a fresh in-memory SQLite database seeded by the spec's `setup` SQL (the first spec's setup is shared as the preview seed). Match modes supported: `rowsExact` (order-sensitive), `rowsAnyOrder` (set comparison), `rowCount` (count only), `columns` (column-name check). Test specs can supply either an `expectedQuery` (run as the reference) or literal `expectedRows` / `expectedRowCount` / `expectedColumns`. Per-test pass/fail is posted back via `postMessage` and forwarded to `/api/sql/{subChunkId}/submit`, where `SqlPracticeService` performs a structural sanity check (must contain SELECT/INSERT/UPDATE/DELETE/WITH and ≥6 chars) before idempotently awarding XP — same client-trusted trust model as React.
+
+**11 of 22 SQL sub-chunks are interactive** as of this iteration: the entire Foundation tier (sql-a2/a3, sql-b1/b2, sql-c1/c2/c3) plus the most interview-relevant Practitioner/Expert exercises (sql-d2 INNER JOIN, sql-d3 LEFT JOIN orphan-finder, sql-e1 scalar subqueries, sql-h1 ROW_NUMBER + PARTITION BY for top-N-per-group). The remaining 11 sub-chunks stay `practiceType: NONE` because they're conceptually read-only — schema reading (sql-a1), relational model (sql-d1), correlated subqueries + CTEs (sql-e2/e3 — sql.js semantics differ enough to mislead), modifying data (sql-f — fresh DB per test makes UPDATE/DELETE/transactions academic), indexes & EXPLAIN (sql-g — toy data shows nothing), recursive CTEs (sql-h2). These show as a "Mark as studied →" view in `EncodingPage`.
 
 **Java package:** root is `com.ambravate.polymath.academy`, not `com.arcane.academy`. Build artefact is `polymath-academy`.
 
@@ -286,7 +293,7 @@ backend/src/main/resources/
   content/java/        — 38 chunk JSON files (chunk-a … chunk-xj, chunk-cap)
   content/tailwind/    — tw-a, tw-b, tw-c, tw-d
   content/react/       — rx-a, rx-b, rx-c, rx-d (active; see §0)
-  content/sql/         — sql-a, sql-b, sql-c (Foundation tier only; practiceType=NONE)
+  content/sql/         — sql-a..sql-h (Foundation/Practitioner/Expert; practiceType=NONE; 22 sub-chunks)
   db/migration/        — Flyway SQL migrations
 
 frontend/src/
@@ -437,6 +444,19 @@ Badge definitions live in the `BadgeDefinition` enum (code, not DB rows). `user_
 | **Review / Retention** | Daily Ritualist (7 daily reviews), Mnemonic Master (30d review streak), Deep Recall (90%+ retention over a month) |
 | **Polymath (global)** | Dual Path (2 topics active), Triad (3 topics), Renaissance (5 topics with rank ≥ Adept) |
 | **Streak** | Consistent Apprentice (3d), Week of Dedication (7d), Unyielding Will (30d) |
+
+### SQL track badges (LEARNING category)
+
+Four milestone badges across the SQL track, mirroring the Tailwind/React minimalism (one badge per tier + a track-master capstone) rather than Java's per-chunk approach:
+
+| Badge | Trigger | Glyph |
+|---|---|---|
+| **Query Initiate** (`SQL_QUERY_INITIATE`) | All sub-chunks in `sql-a` complete (Tables & SELECT) | 🪄 |
+| **Join Weaver** (`SQL_JOIN_WEAVER`) | All sub-chunks in `sql-d` complete (JOINs) | 🔗 |
+| **Query Optimiser** (`SQL_QUERY_OPTIMISER`) | All sub-chunks in `sql-g` complete (Indexes & EXPLAIN) | ⚙️ |
+| **Cipher's Heir** (`SQL_TRACK_MASTER`) | All 8 SQL chunks complete (`sql-a` … `sql-h`) | 🗃️ |
+
+Conditions live in `BadgeService.checkCondition` and key off the `completedChunks` set (chunk IDs match the JSON content's `id` field — `sql-a`, `sql-b`, etc.). Awarded automatically by `BadgeService.evaluateAndAward(userId)`, which already runs after every quest submission, retrieval-check pass, and review session.
 
 ---
 

@@ -16,7 +16,7 @@
       "sortOrder": 1,
       "xpReward": 70,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>Sometimes a single SELECT can't answer your question. \"Apprentices whose XP exceeds the average\" requires you to <em>compute</em> the average first, then filter against it. The answer is a <strong>subquery</strong> — a query nested inside another. Once you see the pattern, half of \"hard SQL questions\" become straightforward.</p>",
 
@@ -58,9 +58,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Trace each subquery</h3>\n<p>For each query, identify what the inner subquery returns (number? list? table?), then resolve the outer query against that result.</p>",
+      "guidedPracticeHtml": "<h3>🪄 Above average</h3>\n<p>Cipher wants the names and XP of <strong>apprentices whose XP exceeds the table's average</strong>. The catch: the average depends on the data, so you must compute it inside the query — that's a scalar subquery.</p>\n<ul>\n  <li>Two columns: <code>name</code> and <code>xp</code></li>\n  <li>Use a scalar subquery in WHERE: <code>WHERE xp &gt; (SELECT AVG(xp) FROM apprentices)</code></li>\n</ul>\n<p>Reference data (avg = 8480 / 4 = 2120):</p>\n<pre><code>id | name    | rank        | xp\n---+---------+-------------+------\n 1 | Alice   | Apprentice  | 1200\n 2 | Bjorn   | Adept       | 2400\n 3 | Cassia  | Mage        | 4800\n 4 | Dorian  | Novice      |   80</code></pre>\n<p>Expected: Bjorn (2400) and Cassia (4800). Alice (1200) and Dorian (80) are below 2120.</p>",
 
-      "guidedPracticeStarterCode": "-- apprentices: Alice(1, 1200), Bjorn(2, 2400), Cassia(3, 4800), Dorian(4, 80)\n-- quests:      1=Tame the Slime(100), 2=Decode the Glyph(180),\n--              3=Forge the Blade(400)\n-- completions: (app=1,q=1), (app=2,q=1), (app=2,q=2), (app=3,q=3)\n\n-- Query A — above average XP:\nSELECT name, xp\nFROM apprentices\nWHERE xp > (SELECT AVG(xp) FROM apprentices);\n\n-- Query B — apprentices who completed any quest worth more than 150 XP:\nSELECT name\nFROM apprentices\nWHERE id IN (\n  SELECT c.apprentice_id\n  FROM completions c\n  JOIN quests q ON q.id = c.quest_id\n  WHERE q.xp_reward > 150\n);\n\n-- Query C — derived table in FROM:\nSELECT rank, mean_xp\nFROM (\n  SELECT rank, AVG(xp) AS mean_xp\n  FROM apprentices\n  GROUP BY rank\n) per_rank\nWHERE mean_xp > 1000;\n\n-- Query D — scalar subquery in SELECT:\nSELECT a.name,\n       (SELECT COUNT(*) FROM completions c WHERE c.apprentice_id = a.id)\n         AS num_done\nFROM apprentices a;",
+      "guidedPracticeStarterCode": "-- Apprentices with above-average XP.\n-- The average must be computed inside the query.\nSELECT name, xp\nFROM apprentices\nWHERE\n  -- xp > (subquery returning the average)\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns 2 rows",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80);",
+          "expectedRowCount": 2,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Columns are 'name' and 'xp'",
+          "expectedColumns": ["name", "xp"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Returns Bjorn and Cassia",
+          "expectedQuery": "SELECT name, xp FROM apprentices WHERE xp > (SELECT AVG(xp) FROM apprentices)",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — The richest in their rank</h3>\n<p>Same data, harder ask: write a query that returns the names of apprentices whose XP equals the <strong>maximum XP within their own rank</strong>. With one apprentice per rank in this dataset, every name qualifies — but the query should still use a correlated subquery: <code>WHERE xp = (SELECT MAX(xp) FROM apprentices a2 WHERE a2.rank = apprentices.rank)</code>.</p>",
 
       "feynmanPrompt": "Walk a junior through the query 'WHERE xp > (SELECT AVG(xp) FROM apprentices)' step by step. Then explain the difference between a scalar subquery (returns one value) and a list subquery (returns one column with many values), and where each is used.",
 

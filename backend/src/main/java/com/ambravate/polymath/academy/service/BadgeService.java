@@ -147,6 +147,13 @@ public class BadgeService {
       case JAVA_CAPSTONE_COMPLETE -> completedChunks.contains("CAP");
       case TAILWIND_CAPSTONE_COMPLETE -> completedChunks.contains("tw-d");
 
+      // SQL track — one badge per tier, plus the track-master capstone
+      case SQL_QUERY_INITIATE -> completedChunks.contains("sql-a");
+      case SQL_JOIN_WEAVER -> completedChunks.contains("sql-d");
+      case SQL_QUERY_OPTIMISER -> completedChunks.contains("sql-g");
+      case SQL_TRACK_MASTER -> completedChunks.containsAll(java.util.List.of(
+          "sql-a", "sql-b", "sql-c", "sql-d", "sql-e", "sql-f", "sql-g", "sql-h"));
+
       // Mastery
       case PERFECT_REVIEW -> hasPerfectReview;
       case MEMORY_MASTER -> false; // Checked separately via dashboard

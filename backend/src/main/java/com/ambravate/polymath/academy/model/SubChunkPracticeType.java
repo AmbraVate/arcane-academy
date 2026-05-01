@@ -12,6 +12,14 @@ public enum SubChunkPracticeType {
      * backend for XP awarding (see ReactPracticeService).
      */
     REACT,
+    /**
+     * SQL editor with sql.js (SQLite-WASM via CDN) running in an iframe.
+     * Tests run client-side: the seed SQL builds an in-memory database,
+     * the user's query executes, and the result rows are compared to an
+     * expected row set or to a reference query. Results are posted back
+     * to the backend for XP awarding (see SqlPracticeService).
+     */
+    SQL,
     /** No coding practice — explanation and retrieval check only. */
     NONE
 }

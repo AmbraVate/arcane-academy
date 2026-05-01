@@ -89,3 +89,7 @@ logging:
       max-file-size: 10MB
       max-history: 7
       file-name-pattern: logs/polymath-academy.%d{yyyy-MM-dd}.%i.log
+
+groq:
+  api:
+    key: ${GROQ_API_KEY:}

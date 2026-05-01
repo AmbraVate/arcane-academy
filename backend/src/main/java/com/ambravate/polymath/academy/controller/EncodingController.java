@@ -211,12 +211,14 @@ public class EncodingController {
 
     /**
      * For JAVA/TAILWIND practice, only test labels are sent to the client (the
-     * server holds the full specs and runs them). For REACT practice, the full
-     * test specs are sent because tests run inside the iframe — see
-     * {@link com.ambravate.polymath.academy.service.ReactPracticeService}.
+     * server holds the full specs and runs them). For REACT and SQL practice,
+     * the full test specs are sent because tests run inside the iframe — see
+     * {@link com.ambravate.polymath.academy.service.ReactPracticeService} and
+     * {@link com.ambravate.polymath.academy.service.SqlPracticeService}.
      */
     private Object testCasesFor(SubChunk sc) {
-        if (sc.getPracticeType() == SubChunkPracticeType.REACT) {
+        if (sc.getPracticeType() == SubChunkPracticeType.REACT
+                || sc.getPracticeType() == SubChunkPracticeType.SQL) {
             String json = sc.getGuidedPracticeTestsJson();
             if (json == null) return List.of();
             try {

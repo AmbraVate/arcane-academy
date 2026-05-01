@@ -55,7 +55,7 @@ export default function App() {
         <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-        <Route path="/"         element={user ? <Navigate to="/topics" replace /> : <LandingPage />} />
+        <Route path="/"         element={<LandingPage />} />
         {/* All topics (including java) go through the unified /topic/:topicId → TopicPage flow.
             DashboardPage is reserved for an aggregate, multi-topic view — not a Java special case. */}
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />

@@ -16,7 +16,7 @@
       "sortOrder": 1,
       "xpReward": 60,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>One <code>WHERE</code> condition is rarely enough. \"Apprentices who are Mages and have over 4000 XP\" is a question with two filters joined by <strong>AND</strong>. The boolean operators — <code>AND</code>, <code>OR</code>, <code>NOT</code> — are how you stack conditions. Mix them carelessly and you'll get the wrong answer without ever seeing an error.</p>",
 
@@ -58,9 +58,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Reason about each query</h3>\n<p>For each query below, predict the result. Pay close attention to operator precedence and to where the parentheses are (or aren't).</p>",
+      "guidedPracticeHtml": "<h3>🪄 The parentheses test</h3>\n<p>Cipher needs the names of <strong>apprentices who are Mages OR Adepts AND who have more than 1,000 XP</strong>. Both conditions must hold — i.e. they must be either a Mage or an Adept, AND they must have more than 1,000 XP. Get the parentheses right.</p>\n<p>Reference data has 5 apprentices now (Eleanor was added):</p>\n<pre><code>id | name    | rank        | xp\n---+---------+-------------+------\n 1 | Alice   | Apprentice  | 1200\n 2 | Bjorn   | Adept       | 2400\n 3 | Cassia  | Mage        | 4800\n 4 | Dorian  | Novice      |   80\n 5 | Eleanor | Adept       |  500</code></pre>\n<p>Expected: <strong>Bjorn (2400) and Cassia (4800)</strong> — both qualify. Eleanor is an Adept but has only 500 XP. Alice is an Apprentice. Dorian is a Novice with 80 XP.</p>",
 
-      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- Query A:\nSELECT name FROM apprentices\nWHERE rank = 'Mage' AND xp > 4000;\n\n-- Query B — note the missing parentheses:\nSELECT name FROM apprentices\nWHERE rank = 'Mage' OR rank = 'Adept' AND xp > 4000;\n\n-- Query C — same conditions, different grouping:\nSELECT name FROM apprentices\nWHERE (rank = 'Mage' OR rank = 'Adept') AND xp > 4000;\n\n-- Query D:\nSELECT name FROM apprentices\nWHERE NOT rank = 'Novice';",
+      "guidedPracticeStarterCode": "-- Mages OR Adepts AND xp > 1000.\n-- Mind the parentheses!\nSELECT name\nFROM apprentices\nWHERE\n  -- your condition here\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns exactly 2 rows",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Eleanor','Adept',500);",
+          "expectedRowCount": 2,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Selects only the 'name' column",
+          "expectedColumns": ["name"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Returns Bjorn and Cassia (excludes low-XP Adept Eleanor)",
+          "expectedQuery": "SELECT name FROM apprentices WHERE (rank = 'Mage' OR rank = 'Adept') AND xp > 1000",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — NOT a Novice</h3>\n<p>Same data. Write a query that returns the names of all apprentices whose rank is <strong>not 'Novice'</strong>. Use <code>NOT</code> or <code>&lt;&gt;</code> — your choice.</p>",
 
       "feynmanPrompt": "Explain to a teammate why \"WHERE rank = 'Mage' OR rank = 'Adept' AND xp > 4000\" gives a different answer than \"WHERE (rank = 'Mage' OR rank = 'Adept') AND xp > 4000\". Use the apprentices ledger to walk through which rows each query returns and why.",
 
@@ -121,7 +142,7 @@
       "sortOrder": 2,
       "xpReward": 60,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>You have <code>=</code>, <code>&lt;</code>, <code>&gt;</code>. They're powerful but verbose. Real-world filters reach for <code>IN</code> (membership), <code>BETWEEN</code> (range), <code>LIKE</code> (pattern), and <code>IS NULL</code> (absence). Each one collapses ten lines of equivalent <code>OR</code>s into one clear expression.</p>",
 
@@ -168,9 +189,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Trace the queries</h3>\n<p>Use the quests table from the lesson. Predict each query's output before checking your reasoning in the retrieval check.</p>",
+      "guidedPracticeHtml": "<h3>🪄 Mid-tier rewards</h3>\n<p>Cipher needs the <strong>titles of all quests with rewards between 200 and 500 XP, inclusive</strong>. Use <code>BETWEEN</code> — it's the idiomatic operator for inclusive ranges.</p>\n<p>Reference data:</p>\n<pre><code>id | title              | xp_reward | difficulty   | completed_by\n---+--------------------+-----------+--------------+--------------\n 1 | Tame the Slime     |   100     | Foundation   | 1\n 2 | Decode the Glyph   |   180     | Foundation   | 2\n 3 | Forge the Blade    |   400     | Practitioner | NULL\n 4 | Slay the Drake     |  1200     | Expert       | NULL\n 5 | Brew the Elixir    |   220     | NULL         | 3</code></pre>\n<p>Expected: <strong>Forge the Blade</strong> (400) and <strong>Brew the Elixir</strong> (220). Tame the Slime (100) and Decode the Glyph (180) are below the range; Slay the Drake (1200) is above.</p>",
 
-      "guidedPracticeStarterCode": "-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — quests nobody finished yet:\nSELECT title FROM quests WHERE completed_by IS NULL;\n\n-- Query B — quests with 'the' in the title:\nSELECT title FROM quests WHERE title LIKE '%the%';\n\n-- Query C — Foundation OR Practitioner only:\nSELECT title FROM quests WHERE difficulty IN ('Foundation', 'Practitioner');\n\n-- Query D — mid-tier reward, 200-500 inclusive:\nSELECT title, xp_reward FROM quests WHERE xp_reward BETWEEN 200 AND 500;\n\n-- Query E — TRICK: why does this return nothing?\nSELECT title FROM quests WHERE difficulty = NULL;",
+      "guidedPracticeStarterCode": "-- Titles of quests with reward between 200 and 500 (inclusive).\nSELECT title\nFROM quests\nWHERE\n  -- BETWEEN ... AND ... ?\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns exactly 2 rows",
+          "setup": "CREATE TABLE quests (id INTEGER PRIMARY KEY, title TEXT NOT NULL, xp_reward INTEGER NOT NULL, difficulty TEXT, completed_by INTEGER); INSERT INTO quests VALUES (1,'Tame the Slime',100,'Foundation',1),(2,'Decode the Glyph',180,'Foundation',2),(3,'Forge the Blade',400,'Practitioner',NULL),(4,'Slay the Drake',1200,'Expert',NULL),(5,'Brew the Elixir',220,NULL,3);",
+          "expectedRowCount": 2,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Selects only 'title'",
+          "expectedColumns": ["title"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Returns Forge the Blade and Brew the Elixir",
+          "expectedQuery": "SELECT title FROM quests WHERE xp_reward BETWEEN 200 AND 500",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — Unfinished business</h3>\n<p>Same quests table. Write a query that returns the titles of all quests <strong>nobody has completed yet</strong> — i.e. <code>completed_by IS NULL</code>. Order doesn't matter.</p>\n<p>Hint: remember that <code>= NULL</code> never matches anything. Use <code>IS NULL</code>.</p>",
 
       "feynmanPrompt": "Explain why `WHERE completed_by = NULL` always returns zero rows, even when the table contains rows where completed_by is null. Then explain when to use `IN`, `BETWEEN`, and `LIKE` instead of stacking equality checks with OR.",
 

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi, tailwindApi, reactApi, curiosityApi } from '../api/services'
+import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, curiosityApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '../types'
 import StoryPanel from '../components/quest/StoryPanel'
@@ -8,6 +8,7 @@ import QuestionCard from '../components/quest/QuestionCard'
 import CodeEditor from '../components/quest/CodeEditor'
 import TailwindEditor from '../components/quest/TailwindEditor'
 import ReactEditor, { type ReactEditorHandle, type ReactTestSpec } from '../components/quest/ReactEditor'
+import SqlEditor, { type SqlEditorHandle, type SqlTestSpec } from '../components/quest/SqlEditor'
 import OutputPanel from '../components/quest/OutputPanel'
 import TestChips from '../components/quest/TestChips'
 import AiMentorPanel from '../components/quest/AiMentorPanel'
@@ -16,6 +17,13 @@ import BadgeToast from '../components/layout/BadgeToast'
 import { cn } from '@/lib/utils'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
+
+/** For SQL practice: pull the seed SQL out of the first test spec's `setup` field. */
+function extractSqlSetup(specs: unknown): string | null {
+  if (!Array.isArray(specs) || specs.length === 0) return null
+  const first = specs[0] as { setup?: unknown }
+  return typeof first?.setup === 'string' ? first.setup : null
+}
 
 export default function EncodingPage() {
   const { subChunkId } = useParams<{ subChunkId: string }>()
@@ -54,6 +62,7 @@ export default function EncodingPage() {
   const [newBadges, setNewBadges] = useState<Badge[]>([])
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
   const reactEditorRef = useRef<ReactEditorHandle>(null)
+  const sqlEditorRef = useRef<SqlEditorHandle>(null)
 
   useEffect(() => {
     if (!subChunkId) return
@@ -207,6 +216,53 @@ export default function EncodingPage() {
         : []
       const clientResults = (await reactEditorRef.current?.runTests(specs)) ?? []
       const submitFn = solo ? reactApi.submitSoloPractice : reactApi.submit
+      const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({
+          text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`,
+          type: t.passed ? 'success' : 'error',
+        })
+      })
+      setTestResults(newResults)
+      if (result.allPassed) {
+        lines.push({ text: '✓ All tests passed!', type: 'success' })
+        setPracticeSolved(true); setShowTaskOverlay(false)
+        if (result.xpEarned > 0) {
+          const prevRank = calculateRank(user?.totalXp ?? 0)
+          const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
+          updateXp(result.xpEarned, newRank); showToast(`✦ +${result.xpEarned} XP`)
+          if (newRank !== prevRank) {
+            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
+            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
+          }
+          if (result.newBadges?.length) setNewBadges(result.newBadges)
+        }
+      } else {
+        lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
+      }
+      setOutput(lines)
+    } catch {
+      setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }])
+    } finally {
+      setRunning(false)
+    }
+  }
+
+  // ── SQL submission — same client-trusted pattern as React (see SqlPracticeService).
+  async function handleSubmitSql(solo: boolean) {
+    if (!subChunkId || !encoding || running) return
+    setRunning(true); setMentorFeedback(null)
+    setOutput([{ text: '// Running query and tests in the SQLite sandbox…', type: 'system' }])
+    setTestResults(new Map())
+    try {
+      const specs: SqlTestSpec[] = Array.isArray(encoding.testCaseLabels)
+        ? (encoding.testCaseLabels as SqlTestSpec[])
+        : []
+      const clientResults = (await sqlEditorRef.current?.runTests(specs)) ?? []
+      const submitFn = solo ? sqlApi.submitSoloPractice : sqlApi.submit
       const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
       const newResults = new Map<string, boolean>()
       const lines: OutputLine[] = []
@@ -520,6 +576,7 @@ export default function EncodingPage() {
                   onClick={
                     encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind
                     : encoding.practiceType === 'REACT' ? () => handleSubmitReact(false)
+                    : encoding.practiceType === 'SQL' ? () => handleSubmitSql(false)
                     : handleSubmitPractice
                   }
                   disabled={running || practiceSolved}
@@ -543,6 +600,23 @@ export default function EncodingPage() {
             ) : encoding.practiceType === 'REACT' ? (
               <>
                 <ReactEditor ref={reactEditorRef} value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : encoding.practiceType === 'SQL' ? (
+              <>
+                <SqlEditor
+                  ref={sqlEditorRef}
+                  value={code}
+                  onChange={setCode}
+                  setup={extractSqlSetup(encoding.testCaseLabels)}
+                  disabled={practiceSolved}
+                />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
@@ -666,6 +740,7 @@ export default function EncodingPage() {
                   onClick={
                     encoding.practiceType === 'TAILWIND' ? handleSubmitTailwindSolo
                     : encoding.practiceType === 'REACT' ? () => handleSubmitReact(true)
+                    : encoding.practiceType === 'SQL' ? () => handleSubmitSql(true)
                     : handleSubmitSoloPractice
                   }
                   disabled={running || practiceSolved}
@@ -689,6 +764,23 @@ export default function EncodingPage() {
             ) : encoding.practiceType === 'REACT' ? (
               <>
                 <ReactEditor ref={reactEditorRef} value={code} onChange={setCode} disabled={practiceSolved} />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Solo Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : encoding.practiceType === 'SQL' ? (
+              <>
+                <SqlEditor
+                  ref={sqlEditorRef}
+                  value={code}
+                  onChange={setCode}
+                  setup={extractSqlSetup(encoding.testCaseLabels)}
+                  disabled={practiceSolved}
+                />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">

@@ -1,0 +1,249 @@
+{
+  "id": "sql-g",
+  "title": "The Engine's Plan — Indexes & EXPLAIN",
+  "glyph": "⚙️",
+  "sortOrder": 7,
+  "tier": "EXPERT",
+  "topicId": "sql",
+  "prerequisites": ["sql-f"],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sql-g1",
+      "title": "Indexes — How the Engine Finds Rows Fast",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>A query that runs in 5 ms on 1,000 rows can take 5 seconds on 1,000,000 — and 5 minutes on 100,000,000. The query is the same. The difference is whether the engine can <em>look up</em> the matching rows or has to <em>scan</em> them all. <strong>Indexes</strong> are the data structure that turns scans into lookups, and they're the single biggest performance lever a Junior can pull.</p>",
+
+      "explanationHtml": "<h3>The problem indexes solve</h3>\n<p>Imagine the apprentices table has a million rows. You run:</p>\n<pre><code>SELECT * FROM apprentices WHERE name = 'Eleanor';</code></pre>\n<p>Without an index on <code>name</code>, the engine has no choice but to read <em>every row</em> and check whether <code>name = 'Eleanor'</code>. This is a <strong>full table scan</strong>. On 1M rows, that's a million comparisons, plus the I/O cost of reading every disk page.</p>\n<p>With an index on <code>name</code>, the engine consults a separate sorted data structure that maps name values to row locations. Finding 'Eleanor' is now <code>O(log n)</code> instead of <code>O(n)</code> — about 20 lookups for 1M rows instead of 1,000,000.</p>\n\n<h3>What an index actually is</h3>\n<p>The default index in every major database is a <strong>B-tree</strong> — a balanced tree where each node holds many sorted keys. Looking up a value is a tree traversal: start at the root, descend to the leaf, find the key. The leaf node contains a pointer to the actual row in the table.</p>\n<pre><code>CREATE INDEX idx_apprentices_name ON apprentices (name);</code></pre>\n<p>That's it. The database now maintains a B-tree mapping <code>name</code> values to row locations. Every INSERT, UPDATE, and DELETE that touches the indexed column updates this tree as well. Indexes are not free — they cost write performance and disk space — but for read-heavy workloads they're transformative.</p>\n\n<h3>What indexes are good for</h3>\n<table>\n  <tr><th>Operation</th><th>Index helps?</th></tr>\n  <tr><td>Equality: <code>WHERE name = 'Eleanor'</code></td><td>Yes — direct B-tree lookup</td></tr>\n  <tr><td>Range: <code>WHERE xp BETWEEN 1000 AND 5000</code></td><td>Yes — B-tree scans contiguous keys</td></tr>\n  <tr><td>Sorting: <code>ORDER BY name</code></td><td>Often yes — tree is already sorted</td></tr>\n  <tr><td>Prefix LIKE: <code>WHERE name LIKE 'El%'</code></td><td>Yes — \"sorted by name\" handles prefix</td></tr>\n  <tr><td>Suffix LIKE: <code>WHERE name LIKE '%nor'</code></td><td>NO — sort order doesn't help suffix matching</td></tr>\n  <tr><td>Function: <code>WHERE LOWER(name) = 'eleanor'</code></td><td>NO — index is on <code>name</code>, not <code>LOWER(name)</code></td></tr>\n  <tr><td>JOIN on indexed FK</td><td>Yes — JOIN is essentially a lookup per row</td></tr>\n</table>\n\n<h3>Composite indexes — multiple columns</h3>\n<pre><code>CREATE INDEX idx_completions_app_quest ON completions (apprentice_id, quest_id);</code></pre>\n<p>This index is sorted first by <code>apprentice_id</code>, then by <code>quest_id</code>. It can serve queries that filter on:</p>\n<ul>\n  <li><code>WHERE apprentice_id = 1</code> — yes, leftmost prefix</li>\n  <li><code>WHERE apprentice_id = 1 AND quest_id = 2</code> — yes, full prefix</li>\n  <li><code>WHERE quest_id = 2</code> — <strong>no</strong>, this isn't a prefix</li>\n</ul>\n<p>The <em>leftmost prefix rule</em> is one of the most-asked SQL interview questions. A composite index <code>(A, B)</code> can serve queries on A, or on A+B — but not on B alone.</p>\n\n<h3>Primary keys are automatically indexed</h3>\n<p>Every table's primary key has an index built automatically — that's how the engine enforces uniqueness in <code>O(log n)</code>. Most databases also auto-index foreign keys, though some (older MySQL) require you to do it yourself. Always index your foreign keys; otherwise JOINs degrade to table scans on large tables.</p>\n\n<h3>The cost of indexes</h3>\n<ol>\n  <li><strong>Slower writes.</strong> Every INSERT/UPDATE/DELETE that touches an indexed column also updates the index B-tree.</li>\n  <li><strong>Disk space.</strong> Indexes are stored on disk; large composite indexes can rival the table itself in size.</li>\n  <li><strong>Maintenance.</strong> Indexes occasionally need rebuilding for optimal performance.</li>\n</ol>\n<p>Practical rule: index columns you filter on (WHERE), join on (ON), or sort by (ORDER BY) <em>often</em>. Don't index columns you only project (SELECT) or rarely query.</p>\n\n<h3>When indexes hurt — selectivity</h3>\n<p>An index works best when the indexed column is <em>selective</em> — most values are rare. <code>WHERE email = 'x@y.com'</code> on a unique-email column is highly selective; the index points to one row.</p>\n<p>An index on <code>WHERE active = TRUE</code>, where 95% of rows are active, is barely better than a scan. The engine may even skip the index and scan anyway, because lots of small index lookups can be slower than one big sequential read.</p>\n<p>Rule of thumb: index columns where typical filter values match &lt;5% of rows. Below that, the index pays for itself.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher leads you to a different room — much smaller, lined floor to ceiling with thin index cards. Each card has a name and a number on it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "These are the lookup cards. Every name in the apprentices ledger has a card here. The cards are sorted alphabetically. When the Headmaster asks 'where is Eleanor's row?', I do not flip through every page of the ledger — I open the card box at 'E', find Eleanor's card, and the card tells me which page of the ledger holds her row. Twenty cards consulted instead of a thousand pages."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "This is what an <strong>index</strong> is. A separate sorted structure that maps key values to row locations. The default form is a B-tree — a balanced tree of sorted keys, with each leaf pointing to the row in the actual table. Looking up by an indexed column is <code>O(log n)</code>. Looking up without an index is <code>O(n)</code> — every row consulted."
+        },
+        {
+          "type": "example",
+          "speaker": "Creating an index",
+          "text": "-- Default B-tree index:\nCREATE INDEX idx_apprentices_name ON apprentices (name);\n\n-- Composite index — leftmost prefix matters:\nCREATE INDEX idx_completions_app_quest\n  ON completions (apprentice_id, quest_id);\n\n-- Now this is a fast index lookup, not a scan:\nSELECT * FROM apprentices WHERE name = 'Eleanor';\n\n-- This too — leftmost prefix on the composite:\nSELECT * FROM completions WHERE apprentice_id = 1;\n\n-- This DOES NOT use the composite index — quest_id alone is\n-- not a prefix of (apprentice_id, quest_id):\nSELECT * FROM completions WHERE quest_id = 2;"
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Indexes have a cost. Every INSERT, UPDATE, or DELETE on an indexed column must also rebalance the tree. So indexes speed up reads at the cost of writes. The ratio is usually fine — most production tables are read 100x more than written — but \"add an index for every column\" is a junior's mistake. Index the columns you actually filter, join, or sort on."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And one more trap. <code>WHERE LOWER(name) = 'eleanor'</code> does <em>not</em> use an index on <code>name</code>. The index is sorted on <code>name</code>, but you're asking about <code>LOWER(name)</code> — a different value. The fix in PostgreSQL is a functional index: <code>CREATE INDEX ON apprentices (LOWER(name))</code>. The fix in most engines is to lowercase data on insert, store it that way, and avoid the function on lookup."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Reason about index usage</h3>\n<p>For each query, identify whether the index can help, and if so, why. The schema has these indexes:</p>\n<ul>\n  <li><code>idx_apprentices_name ON apprentices(name)</code></li>\n  <li><code>idx_completions_app_quest ON completions(apprentice_id, quest_id)</code></li>\n  <li>(Plus the implicit primary-key indexes on every <code>id</code> column.)</li>\n</ul>",
+
+      "guidedPracticeStarterCode": "-- Indexes:\n-- idx_apprentices_name      ON apprentices (name)\n-- idx_completions_app_quest ON completions (apprentice_id, quest_id)\n\n-- Query A — uses idx_apprentices_name (equality lookup):\nSELECT * FROM apprentices WHERE name = 'Eleanor';\n\n-- Query B — uses idx_apprentices_name (prefix LIKE — sortable):\nSELECT * FROM apprentices WHERE name LIKE 'El%';\n\n-- Query C — does NOT use the index (suffix LIKE):\nSELECT * FROM apprentices WHERE name LIKE '%nor';\n\n-- Query D — uses idx_completions_app_quest (leftmost prefix on composite):\nSELECT * FROM completions WHERE apprentice_id = 1;\n\n-- Query E — DOES NOT use idx_completions_app_quest\n-- (quest_id alone is not a prefix of (apprentice_id, quest_id)):\nSELECT * FROM completions WHERE quest_id = 2;\n\n-- Query F — does NOT use idx_apprentices_name\n-- (function applied to the indexed column):\nSELECT * FROM apprentices WHERE LOWER(name) = 'eleanor';",
+
+      "feynmanPrompt": "Explain the leftmost-prefix rule for composite indexes. Use the index `(apprentice_id, quest_id)` as your example, and explain which of these three queries can use it: a) WHERE apprentice_id = 1; b) WHERE apprentice_id = 1 AND quest_id = 2; c) WHERE quest_id = 2.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What data structure does a default SQL index typically use?</p>",
+          "options": [
+            "A balanced tree (B-tree) of sorted keys, with leaves pointing to row locations",
+            "A hash map — direct key-to-location mapping",
+            "A linked list of all values",
+            "A sorted in-memory array"
+          ],
+          "correctAnswer": "A balanced tree (B-tree) of sorted keys, with leaves pointing to row locations",
+          "explanationHtml": "<p>B-trees are the default in PostgreSQL, MySQL InnoDB, SQLite, and most other engines. Some databases also offer hash indexes (great for equality, useless for ranges), GIN/GiST (PostgreSQL — for full-text and spatial), and bitmap (data warehouses), but B-tree is the universal default.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You have a composite index <code>(apprentice_id, quest_id)</code>. Which query can use this index?</p>",
+          "options": [
+            "WHERE apprentice_id = 1 AND quest_id = 2",
+            "WHERE quest_id = 2",
+            "WHERE LOWER(apprentice_id::text) = '1'",
+            "WHERE apprentice_id != 1"
+          ],
+          "correctAnswer": "WHERE apprentice_id = 1 AND quest_id = 2",
+          "explanationHtml": "<p>Leftmost prefix: the index is sorted by <code>apprentice_id</code> first, so any query whose WHERE filters on <code>apprentice_id</code> (or on <code>apprentice_id AND quest_id</code>) can use the index. <code>quest_id</code> alone cannot — there's no way to find a quest_id efficiently when the data is sorted by apprentice_id first. The function form skips the index. Inequalities (!=) typically scan rather than seek.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does <code>WHERE LOWER(name) = 'eleanor'</code> typically NOT use an index on <code>name</code>?</p>",
+          "options": [
+            "The index is sorted by <code>name</code>'s actual values; LOWER(name) is a different computation per row, and the engine cannot use the index to seek to it",
+            "LOWER is a deprecated function",
+            "Indexes only work on integer columns",
+            "The query is a syntax error"
+          ],
+          "correctAnswer": "The index is sorted by <code>name</code>'s actual values; LOWER(name) is a different computation per row, and the engine cannot use the index to seek to it",
+          "explanationHtml": "<p>Applying a function to an indexed column generally invalidates the index. The fix is either a <em>functional index</em> on <code>LOWER(name)</code> (PostgreSQL supports this), or storing data already-lowercased so you don't need the function at query time.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior asks \"should we add an index on every column to make queries fast?\" What's the strongest single reason to say no?</p>",
+          "options": [
+            "Every index slows down INSERT, UPDATE, and DELETE on that column, because the engine must update each index alongside the row. Indexes have a real write cost; over-indexing degrades write-heavy workloads",
+            "Most engines limit you to 5 indexes per table",
+            "Indexes are deprecated in favour of materialised views",
+            "Multiple indexes on the same table cause data corruption"
+          ],
+          "correctAnswer": "Every index slows down INSERT, UPDATE, and DELETE on that column, because the engine must update each index alongside the row. Indexes have a real write cost; over-indexing degrades write-heavy workloads",
+          "explanationHtml": "<p>Indexes trade write speed for read speed. Each one adds maintenance overhead to writes touching the indexed column. Over-indexing is a real problem in write-heavy workloads (event tables, audit logs). The discipline: index columns you filter, join, or sort on; don't index columns you only project. Profile, don't guess.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sql-g2",
+      "title": "EXPLAIN — Reading the Query Plan",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "filename": "query.sql",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Before you tune a query, you need to see what the engine is actually doing. <code>EXPLAIN</code> shows the <strong>query plan</strong> — the tree of operations the engine will execute. Reading a plan is one of the highest-leverage skills in database engineering: a 30-second EXPLAIN can find a missing index that would have taken hours to debug by trial and error.</p>",
+
+      "explanationHtml": "<h3>The basic shape of EXPLAIN</h3>\n<pre><code>EXPLAIN\nSELECT a.name, q.title\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests      q ON q.id = c.quest_id\nWHERE a.rank = 'Mage';</code></pre>\n<p>The output is engine-specific, but every modern database returns a tree of operations. PostgreSQL's looks roughly like:</p>\n<pre><code>Hash Join  (cost=...)  ← top-level join\n  Hash Cond: (q.id = c.quest_id)\n  -&gt;  Seq Scan on quests q\n  -&gt;  Hash\n        -&gt;  Hash Join\n              Hash Cond: (c.apprentice_id = a.id)\n              -&gt;  Seq Scan on completions c\n              -&gt;  Hash\n                    -&gt;  Index Scan using idx_apprentices_rank on apprentices a\n                          Index Cond: (rank = 'Mage')</code></pre>\n<p>Read it bottom-up: leaves are scans, intermediate nodes are joins/sorts/aggregates, the root is the final result. The numbers in <code>cost=...</code> are the engine's estimate.</p>\n\n<h3>The three core access methods</h3>\n<table>\n  <tr><th>Operation</th><th>What it means</th><th>When it appears</th></tr>\n  <tr><td><strong>Seq Scan</strong></td><td>Full table scan — read every row</td><td>No usable index, or table small enough that scanning is faster</td></tr>\n  <tr><td><strong>Index Scan</strong></td><td>Walk the index, then look up matching rows in the table</td><td>An index covers the WHERE filter</td></tr>\n  <tr><td><strong>Index Only Scan</strong></td><td>Walk the index alone — never touch the table</td><td>An index covers all the columns you SELECTed</td></tr>\n</table>\n<p>Index Only Scan is the fastest of the three — the engine doesn't even need to read the table. This requires a <em>covering index</em>: one that contains every column the query references. PostgreSQL's <code>CREATE INDEX ... INCLUDE (...)</code> syntax exists exactly for this.</p>\n\n<h3>Join algorithms</h3>\n<table>\n  <tr><th>Algorithm</th><th>How it works</th><th>Used when</th></tr>\n  <tr><td><strong>Nested Loop</strong></td><td>For each left row, look up matching right rows (often via index on right)</td><td>Small left side, indexed right side</td></tr>\n  <tr><td><strong>Hash Join</strong></td><td>Build hash of one side, probe with the other</td><td>Medium-sized inputs, no useful sort order</td></tr>\n  <tr><td><strong>Merge Join</strong></td><td>Sort both sides, walk in parallel</td><td>Both inputs already sorted (e.g. by index)</td></tr>\n</table>\n<p>You don't usually choose the algorithm — the optimiser picks based on the table sizes and indexes. But knowing what they mean lets you read a plan and predict where the time goes.</p>\n\n<h3>EXPLAIN ANALYZE — the actual runtime</h3>\n<pre><code>EXPLAIN ANALYZE\nSELECT ...;</code></pre>\n<p><code>EXPLAIN</code> alone shows the planner's estimate. <code>EXPLAIN ANALYZE</code> actually runs the query and reports both the estimate and the real numbers. Use this when tuning — discrepancies between estimate and actual usually point to outdated statistics (run <code>ANALYZE table_name;</code> to refresh) or query patterns the optimiser doesn't model well.</p>\n<p><strong>Caution:</strong> <code>EXPLAIN ANALYZE</code> on a DELETE/UPDATE actually performs the modification. Wrap it in a transaction with ROLLBACK if you only want to see the plan:</p>\n<pre><code>BEGIN;\nEXPLAIN ANALYZE DELETE FROM big_table WHERE ...;\nROLLBACK;</code></pre>\n\n<h3>Reading a plan — the seven questions</h3>\n<ol>\n  <li><strong>Are we scanning when we should be seeking?</strong> A Seq Scan on a 1M-row table for a single-row lookup is a missing index.</li>\n  <li><strong>Is the join order surprising?</strong> Tiny table joined first is usually right; massive table first is usually a stats issue.</li>\n  <li><strong>Are estimated and actual row counts close?</strong> Big mismatches mean stale statistics; run ANALYZE.</li>\n  <li><strong>Is there a sort step that could be eliminated by an index?</strong> An ORDER BY that walks an index in order is free.</li>\n  <li><strong>Are we hitting the same table twice?</strong> Sometimes a self-join can be rewritten as a window function (sql-h).</li>\n  <li><strong>What's the most expensive node?</strong> 80% of query time is usually in one operation — find it.</li>\n  <li><strong>Are we returning more rows than we use?</strong> Excess rows that get filtered later are wasted I/O.</li>\n</ol>\n\n<h3>Concrete example — a slow query made fast</h3>\n<pre><code>-- Slow:\nEXPLAIN ANALYZE\nSELECT * FROM completions WHERE quest_id = 2;\n--   Seq Scan on completions  (cost=0..18000 rows=10) actual time=12.4 ms\n\n-- The Seq Scan reads 100k rows to find ~10. We need an index on quest_id.\nCREATE INDEX idx_completions_quest ON completions (quest_id);\n\n-- Fast:\nEXPLAIN ANALYZE\nSELECT * FROM completions WHERE quest_id = 2;\n--   Index Scan using idx_completions_quest  (cost=0..40 rows=10) actual time=0.08 ms\n\n-- 150x faster. One index. 30 seconds of work.</code></pre>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Cipher pulls a peculiar lens from a drawer — a thin glass disc set in a brass frame. He hands it to you."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "When a query is slow, do not guess. Look. <code>EXPLAIN</code> is the lens that lets you see what the engine actually plans to do. Every database has it. Every senior database hand reads it. The query plan is a tree of operations — leaves are scans, branches are joins and sorts, the root is the result. Read bottom-up."
+        },
+        {
+          "type": "example",
+          "speaker": "A plan in PostgreSQL",
+          "text": "EXPLAIN\nSELECT a.name FROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nWHERE a.rank = 'Mage';\n\n-- Hash Join                         (cost=4..50 rows=10)\n--   Hash Cond: (c.apprentice_id = a.id)\n--   ->  Seq Scan on completions c   (cost=0..30 rows=100)\n--   ->  Hash\n--         ->  Index Scan on apprentices a  (cost=0..4 rows=2)\n--               Index Cond: (rank = 'Mage')\n\n-- Read bottom-up:\n-- 1. Index-scan apprentices for rank='Mage' (uses idx on rank). 2 rows.\n-- 2. Hash those 2 rows.\n-- 3. Seq-scan completions (no index on apprentice_id alone).\n-- 4. Hash-join probes each completion against the hash. ~10 matches."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "Three operations dominate every plan. <code>Seq Scan</code> reads every row of a table. <code>Index Scan</code> walks the index, then looks up matching rows. <code>Index Only Scan</code> is the fastest — the engine answers the query entirely from the index, never touching the table. The three join algorithms — Nested Loop, Hash Join, Merge Join — are picked by the optimiser, not you. Knowing what they mean lets you spot when a join is the slow step."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "And use <code>EXPLAIN ANALYZE</code> for tuning. <code>EXPLAIN</code> alone shows the planner's <em>estimate</em>. EXPLAIN ANALYZE actually runs the query and shows you the <em>actual</em> row counts and times. Big gaps between estimate and actual usually mean the table's statistics are out of date — run <code>ANALYZE tablename;</code> to refresh. The single most common reason for a sudden query slowdown in production is exactly this: stale stats, the optimiser picks a bad plan, latency triples overnight."
+        },
+        {
+          "type": "dialogue",
+          "av": "📖",
+          "cls": "mentor",
+          "speaker": "Cipher the Archivist",
+          "sCls": "mentor",
+          "text": "<strong>Warning</strong>: EXPLAIN ANALYZE on UPDATE or DELETE <em>actually performs the modification</em>. Wrap it in <code>BEGIN; EXPLAIN ANALYZE ...; ROLLBACK;</code> if you only want to see the plan. I have seen apprentices accidentally delete production rows because they forgot this. The lens cuts both ways."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Read each plan</h3>\n<p>For each plan fragment, identify what the engine is doing and what the bottleneck is. Some plans show a missing index — say which one would fix it.</p>",
+
+      "guidedPracticeStarterCode": "-- Plan A — fast lookup with an index:\nEXPLAIN SELECT * FROM apprentices WHERE id = 1;\n-- Index Scan using apprentices_pkey  (cost=0..8 rows=1)\n--   Index Cond: (id = 1)\n--\n-- Reading: PK is auto-indexed; this is a single-row seek. Optimal.\n\n-- Plan B — full scan, suspect missing index:\nEXPLAIN SELECT * FROM apprentices WHERE rank = 'Mage';\n-- Seq Scan on apprentices  (cost=0..1700 rows=4)\n--   Filter: (rank = 'Mage')\n--\n-- Reading: 4 rows out of millions, but the engine has to read them all\n-- to find them. CREATE INDEX idx_apprentices_rank ON apprentices(rank);\n-- — but only if rank is selective. If 95% of rows are Mage,\n-- the engine may still scan even with the index.\n\n-- Plan C — join on indexed FK is fast:\nEXPLAIN\nSELECT a.name, c.completed_at\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nWHERE a.id = 1;\n-- Nested Loop  (cost=0..40 rows=2)\n--   ->  Index Scan using apprentices_pkey on apprentices a\n--         Index Cond: (id = 1)\n--   ->  Index Scan using idx_completions_app_quest on completions c\n--         Index Cond: (apprentice_id = a.id)\n--\n-- Reading: tiny join, both sides indexed. As fast as it gets.\n\n-- Plan D — sort step that an index could eliminate:\nEXPLAIN\nSELECT * FROM apprentices ORDER BY name LIMIT 10;\n-- Limit  (cost=...)\n--   ->  Sort  (cost=...)         <- expensive on big tables\n--         Sort Key: name\n--         ->  Seq Scan on apprentices\n--\n-- Reading: every row must be sorted before the LIMIT can apply.\n-- CREATE INDEX idx_apprentices_name ON apprentices(name); turns this\n-- into an Index Scan that walks the first 10 names directly.",
+
+      "feynmanPrompt": "Walk a junior through reading an EXPLAIN plan. Use Plan B above as your example: explain what 'Seq Scan' means, why it's slow on a large table, and what concrete change would make it fast.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>EXPLAIN</code> (without ANALYZE) show?</p>",
+          "options": [
+            "The query plan the engine intends to execute, with cost estimates — but it does not actually run the query",
+            "The actual runtime of the query in milliseconds",
+            "The output rows of the query",
+            "Nothing — EXPLAIN is deprecated"
+          ],
+          "correctAnswer": "The query plan the engine intends to execute, with cost estimates — but it does not actually run the query",
+          "explanationHtml": "<p>Plain EXPLAIN is a planning-only operation; the query is not executed. EXPLAIN ANALYZE runs the query and reports both the plan and the actual row counts and timings. For SELECTs, both are safe; for UPDATE/DELETE, EXPLAIN is safe but EXPLAIN ANALYZE actually performs the modification.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which plan operation is the <strong>fastest</strong> for a large table?</p>",
+          "options": [
+            "Index Only Scan — the index covers all selected columns, so the table is never touched",
+            "Sequential Scan — reads every row in order",
+            "Hash Aggregate — one big hash table",
+            "Merge Join — both sides sorted"
+          ],
+          "correctAnswer": "Index Only Scan — the index covers all selected columns, so the table is never touched",
+          "explanationHtml": "<p>Index Only Scan returns answers entirely from the index B-tree without consulting the underlying table. This requires a <em>covering index</em> — every column the query reads must be in the index. PostgreSQL's <code>INCLUDE</code> clause is the explicit way to add non-key columns to an index for this purpose.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Your <code>EXPLAIN ANALYZE</code> shows estimated rows = 10 but actual rows = 1,000,000. What's the most likely cause?</p>",
+          "options": [
+            "The table's statistics are stale — run ANALYZE on the table to refresh them so the optimiser can plan accurately",
+            "EXPLAIN ANALYZE is broken in this engine version",
+            "The query is incorrect SQL",
+            "The estimates are always wrong; ignore them"
+          ],
+          "correctAnswer": "The table's statistics are stale — run ANALYZE on the table to refresh them so the optimiser can plan accurately",
+          "explanationHtml": "<p>The optimiser uses statistics (row counts, value distributions) to choose join algorithms and access paths. When stats are stale — usually after a big bulk insert or delete — the estimates can be wildly off, leading to bad plans. <code>ANALYZE table_name</code> refreshes them. Most production databases auto-analyze, but heavy bulk loads can outpace the auto-analyzer.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two queries on the same table run at very different speeds. Their plans show the slow one uses Seq Scan and the fast one uses Index Scan. Both filter on the same column. What's the most likely difference?</p>",
+          "options": [
+            "The slow query applies a function to the indexed column (e.g. LOWER(name)); the fast query compares the raw column. Function application invalidates the index",
+            "The slow query is missing a WHERE clause",
+            "The slow query uses a DIFFERENT engine internally",
+            "Index Scan is always faster than Seq Scan; the slow one must have a bug"
+          ],
+          "correctAnswer": "The slow query applies a function to the indexed column (e.g. LOWER(name)); the fast query compares the raw column. Function application invalidates the index",
+          "explanationHtml": "<p>This is the canonical \"my index isn't being used\" gotcha. <code>WHERE LOWER(name) = 'eleanor'</code> can't use an index on <code>name</code> — the engine would have to compute LOWER for every row to find matches. The fixes are functional indexes (PostgreSQL: <code>CREATE INDEX ON apprentices (LOWER(name))</code>) or storing the data already-normalised. Note: \"Index Scan is always faster than Seq Scan\" is FALSE — for highly non-selective filters, Seq Scan can be faster because it reads sequentially, while Index Scan does many random lookups.</p>"
+        }
+      ]
+    }
+  ]
+}

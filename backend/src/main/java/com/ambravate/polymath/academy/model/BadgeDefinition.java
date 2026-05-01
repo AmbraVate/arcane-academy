@@ -22,6 +22,12 @@ public enum BadgeDefinition {
     JAVA_CAPSTONE_COMPLETE("Grand Champion", "Conquer the Grand Tournament \u2014 Java capstone project", "\uD83C\uDFC6", Category.LEARNING),
     TAILWIND_CAPSTONE_COMPLETE("Agency Archmage", "Deliver The Agency Commission \u2014 Tailwind capstone project", "\uD83C\uDF10", Category.LEARNING),
 
+    // SQL track milestones \u2014 one per tier, plus a track-master capstone
+    SQL_QUERY_INITIATE("Query Initiate", "Master sql-a: Tables & SELECT", "\uD83E\uDE84", Category.LEARNING),
+    SQL_JOIN_WEAVER("Join Weaver", "Master sql-d: JOINs across tables", "\uD83D\uDD17", Category.LEARNING),
+    SQL_QUERY_OPTIMISER("Query Optimiser", "Master sql-g: Indexes & EXPLAIN \u2014 read the engine's plan", "\u2699\uFE0F", Category.LEARNING),
+    SQL_TRACK_MASTER("Cipher's Heir", "Complete every chunk in the SQL track \u2014 Foundation through Expert", "\uD83D\uDDC3\uFE0F", Category.LEARNING),
+
     // Review & mastery
     PERFECT_REVIEW("Flawless Recall", "Score 100% on a review session", "\uD83C\uDFAF", Category.MASTERY),
     MEMORY_MASTER("Eternal Memory", "All chunks at green memory health", "\uD83E\uDDE0", Category.MASTERY),

@@ -16,7 +16,7 @@
       "sortOrder": 1,
       "xpReward": 60,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>So far every query has returned <em>rows</em>. Sometimes you don't want rows — you want a <em>summary</em>. \"How many apprentices?\" \"What's the total XP awarded?\" \"What's the highest grade?\" These collapse a whole column into one number. The five functions that do it are <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>.</p>",
 
@@ -66,9 +66,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Predict the summaries</h3>\n<p>Use the apprentices and quests tables. Predict each query's single-row output before checking your reasoning in the retrieval check.</p>",
+      "guidedPracticeHtml": "<h3>🪄 Summary statistics</h3>\n<p>The Headmaster wants <strong>three numbers in one row</strong> from the apprentices table:</p>\n<ul>\n  <li>Total number of apprentices, aliased <code>num_apprentices</code></li>\n  <li>Sum of all XP, aliased <code>total_xp</code></li>\n  <li>The highest XP value, aliased <code>top_xp</code></li>\n</ul>\n<p>One query, one row, three columns. Use <code>AS</code> to rename each aggregate.</p>\n<p>Reference data:</p>\n<pre><code>id | name    | rank        | xp\n---+---------+-------------+------\n 1 | Alice   | Apprentice  | 1200\n 2 | Bjorn   | Adept       | 2400\n 3 | Cassia  | Mage        | 4800\n 4 | Dorian  | Novice      |   80</code></pre>\n<p>Expected single-row result: <code>num_apprentices=4, total_xp=8480, top_xp=4800</code>.</p>",
 
-      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — total apprentices and total XP:\nSELECT COUNT(*), SUM(xp) FROM apprentices;\n\n-- Query B — note the NULLs:\nSELECT COUNT(*), COUNT(completed_by), COUNT(difficulty) FROM quests;\n\n-- Query C — aggregates with WHERE:\nSELECT AVG(xp_reward) FROM quests WHERE difficulty = 'Foundation';\n\n-- Query D — distinct count:\nSELECT COUNT(DISTINCT difficulty) FROM quests;",
+      "guidedPracticeStarterCode": "-- One row, three aggregate columns.\nSELECT\n  -- COUNT(*)  AS num_apprentices,\n  -- SUM(xp)   AS total_xp,\n  -- MAX(xp)   AS top_xp\nFROM apprentices;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns exactly 1 row",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80);",
+          "expectedRowCount": 1,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Columns named num_apprentices, total_xp, top_xp",
+          "expectedColumns": ["num_apprentices", "total_xp", "top_xp"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Values are 4, 8480, 4800",
+          "expectedQuery": "SELECT COUNT(*) AS num_apprentices, SUM(xp) AS total_xp, MAX(xp) AS top_xp FROM apprentices",
+          "matchMode": "rowsExact"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — Mage stats</h3>\n<p>Same data. Write a query that returns the <strong>average XP among Mages only</strong>. One row, one column called <code>mage_avg</code>. Hint: combine <code>AVG()</code> with a <code>WHERE</code> clause.</p>",
 
       "feynmanPrompt": "Explain the difference between COUNT(*), COUNT(column), and COUNT(DISTINCT column). Use the quests table to give a concrete value for each, and explain why a junior who writes COUNT(completed_by) might be surprised by the result.",
 
@@ -134,7 +155,7 @@
       "sortOrder": 2,
       "xpReward": 70,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>One number is good. <em>One number per category</em> is better. \"Total XP\" is interesting; \"total XP <strong>per rank</strong>\" tells you which tier of the Academy is doing the most work. <code>GROUP BY</code> is what turns a single summary into a per-bucket breakdown — and once you internalise it, half of all SQL queries fall into place.</p>",
 
@@ -176,9 +197,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Trace the buckets</h3>\n<p>For each query, identify which buckets are created and what value each aggregate produces in each bucket. Some queries are intentionally malformed — spot the bug.</p>",
+      "guidedPracticeHtml": "<h3>🪄 Quest count per difficulty</h3>\n<p>The Headmaster wants <strong>one row per difficulty</strong>, with the count of quests in each. Filter out the NULL-difficulty quest first — it's a known data-entry mistake.</p>\n<ul>\n  <li>Two columns: <code>difficulty</code> and <code>num_quests</code> (COUNT(*) aliased)</li>\n  <li>Filter <code>difficulty IS NOT NULL</code> in WHERE</li>\n  <li>Group by difficulty</li>\n</ul>\n<p>Reference data:</p>\n<pre><code>id | title              | xp_reward | difficulty   | completed_by\n---+--------------------+-----------+--------------+--------------\n 1 | Tame the Slime     |   100     | Foundation   | 1\n 2 | Decode the Glyph   |   180     | Foundation   | 2\n 3 | Forge the Blade    |   400     | Practitioner | NULL\n 4 | Slay the Drake     |  1200     | Expert       | NULL\n 5 | Brew the Elixir    |   220     | NULL         | 3</code></pre>\n<p>Expected: Foundation=2, Practitioner=1, Expert=1.</p>",
 
-      "guidedPracticeStarterCode": "-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — quests per difficulty:\nSELECT difficulty, COUNT(*) AS num_quests\nFROM quests\nGROUP BY difficulty;\n\n-- Query B — total reward per difficulty:\nSELECT difficulty, SUM(xp_reward) AS total_xp\nFROM quests\nGROUP BY difficulty;\n\n-- Query C — BUG: title is neither grouped nor aggregated.\nSELECT difficulty, title, COUNT(*)\nFROM quests\nGROUP BY difficulty;\n\n-- Query D — finished vs unfinished:\nSELECT (completed_by IS NOT NULL) AS finished, COUNT(*) AS num\nFROM quests\nGROUP BY finished;",
+      "guidedPracticeStarterCode": "-- One row per difficulty, with the count.\n-- Drop the NULL-difficulty row first.\nSELECT difficulty, COUNT(*) AS num_quests\nFROM quests\nWHERE\n  -- only non-NULL difficulties\nGROUP BY\n  -- ?\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns 3 rows (one per non-NULL difficulty)",
+          "setup": "CREATE TABLE quests (id INTEGER PRIMARY KEY, title TEXT NOT NULL, xp_reward INTEGER NOT NULL, difficulty TEXT, completed_by INTEGER); INSERT INTO quests VALUES (1,'Tame the Slime',100,'Foundation',1),(2,'Decode the Glyph',180,'Foundation',2),(3,'Forge the Blade',400,'Practitioner',NULL),(4,'Slay the Drake',1200,'Expert',NULL),(5,'Brew the Elixir',220,NULL,3);",
+          "expectedRowCount": 3,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Columns are 'difficulty' and 'num_quests'",
+          "expectedColumns": ["difficulty", "num_quests"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Counts are Foundation=2, Practitioner=1, Expert=1",
+          "expectedQuery": "SELECT difficulty, COUNT(*) AS num_quests FROM quests WHERE difficulty IS NOT NULL GROUP BY difficulty",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — Total XP per difficulty</h3>\n<p>Same data. Write a query that returns one row per non-NULL difficulty, with the <strong>total xp_reward</strong> across that difficulty's quests. Columns: <code>difficulty</code> and <code>total_reward</code>. Use <code>SUM</code>.</p>",
 
       "feynmanPrompt": "Explain why the query 'SELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank' is invalid in standard SQL. Walk through what each rank-bucket would contain and why there is no sensible value for 'name' in the result row.",
 
@@ -244,7 +286,7 @@
       "sortOrder": 3,
       "xpReward": 70,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>WHERE filters rows. GROUP BY makes buckets. <strong>HAVING filters buckets.</strong> Once you internalise the difference between row-level conditions and bucket-level conditions, the entire SQL clause-ordering puzzle clicks into place.</p>",
 
@@ -286,9 +328,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Pipeline practice</h3>\n<p>For each query, identify which clause is filtering at which stage, and predict the result. Spot any malformed queries.</p>",
+      "guidedPracticeHtml": "<h3>🪄 The full pipeline</h3>\n<p>The Headmaster wants <strong>only the difficulties where the average reward is over 200 XP</strong>, and for each, both the count of quests and the average reward.</p>\n<ul>\n  <li>Filter NULL difficulties out via <code>WHERE</code> first</li>\n  <li>Group by difficulty</li>\n  <li>Filter buckets via <code>HAVING AVG(xp_reward) &gt; 200</code></li>\n  <li>Three columns: <code>difficulty</code>, <code>num_quests</code> (COUNT(*) aliased), <code>mean_reward</code> (AVG(xp_reward) aliased)</li>\n</ul>\n<p>Reference data:</p>\n<pre><code>id | title              | xp_reward | difficulty   | completed_by\n---+--------------------+-----------+--------------+--------------\n 1 | Tame the Slime     |   100     | Foundation   | 1\n 2 | Decode the Glyph   |   180     | Foundation   | 2\n 3 | Forge the Blade    |   400     | Practitioner | NULL\n 4 | Slay the Drake     |  1200     | Expert       | NULL\n 5 | Brew the Elixir    |   220     | NULL         | 3</code></pre>\n<p>Expected: Foundation has avg=140 (excluded), Practitioner has avg=400 (included), Expert has avg=1200 (included). Result: 2 rows.</p>",
 
-      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- The quests table:\n-- id | title              | xp_reward | difficulty   | completed_by\n-- ---+--------------------+-----------+--------------+--------------\n--  1 | Tame the Slime     |   100     | Foundation   | 1\n--  2 | Decode the Glyph   |   180     | Foundation   | 2\n--  3 | Forge the Blade    |   400     | Practitioner | NULL\n--  4 | Slay the Drake     |  1200     | Expert       | NULL\n--  5 | Brew the Elixir    |   220     | NULL         | 3\n\n-- Query A — only ranks with at least one apprentice (trivially all four here):\nSELECT rank, COUNT(*) FROM apprentices GROUP BY rank HAVING COUNT(*) >= 1;\n\n-- Query B — average reward per difficulty, only difficulties averaging over 200:\nSELECT difficulty, AVG(xp_reward) AS mean\nFROM quests\nWHERE difficulty IS NOT NULL\nGROUP BY difficulty\nHAVING AVG(xp_reward) > 200;\n\n-- Query C — BUG: WHERE on an aggregate.\nSELECT difficulty, COUNT(*)\nFROM quests\nWHERE COUNT(*) > 1\nGROUP BY difficulty;\n\n-- Query D — full pipeline:\nSELECT difficulty, COUNT(*) AS num, SUM(xp_reward) AS total\nFROM quests\nWHERE difficulty IS NOT NULL\nGROUP BY difficulty\nHAVING SUM(xp_reward) > 200\nORDER BY total DESC\nLIMIT 3;",
+      "guidedPracticeStarterCode": "-- Difficulty buckets where average reward > 200.\nSELECT difficulty,\n       COUNT(*)       AS num_quests,\n       AVG(xp_reward) AS mean_reward\nFROM quests\nWHERE\n  -- difficulty IS NOT NULL\nGROUP BY difficulty\nHAVING\n  -- AVG(xp_reward) > 200\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns 2 rows (Practitioner and Expert)",
+          "setup": "CREATE TABLE quests (id INTEGER PRIMARY KEY, title TEXT NOT NULL, xp_reward INTEGER NOT NULL, difficulty TEXT, completed_by INTEGER); INSERT INTO quests VALUES (1,'Tame the Slime',100,'Foundation',1),(2,'Decode the Glyph',180,'Foundation',2),(3,'Forge the Blade',400,'Practitioner',NULL),(4,'Slay the Drake',1200,'Expert',NULL),(5,'Brew the Elixir',220,NULL,3);",
+          "expectedRowCount": 2,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Columns are difficulty, num_quests, mean_reward",
+          "expectedColumns": ["difficulty", "num_quests", "mean_reward"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Practitioner (1, 400) and Expert (1, 1200) — Foundation excluded",
+          "expectedQuery": "SELECT difficulty, COUNT(*) AS num_quests, AVG(xp_reward) AS mean_reward FROM quests WHERE difficulty IS NOT NULL GROUP BY difficulty HAVING AVG(xp_reward) > 200",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — Difficulties with multiple quests</h3>\n<p>Same data. Write a query that returns just the difficulty names where there is <strong>more than one quest</strong>. One column called <code>difficulty</code>. Use <code>HAVING COUNT(*) &gt; 1</code>.</p>",
 
       "feynmanPrompt": "Explain the difference between WHERE and HAVING to someone who has just learned GROUP BY. Use a quests-table example: write one query that demonstrates a row-level filter (WHERE) and one that demonstrates a bucket-level filter (HAVING), and explain why each filter belongs at its stage of the pipeline.",
 

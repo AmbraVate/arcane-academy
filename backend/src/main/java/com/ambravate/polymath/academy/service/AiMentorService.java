@@ -2,6 +2,17 @@ package com.ambravate.polymath.academy.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
+
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.URI;
+import java.time.Duration;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +31,59 @@ import java.util.Map;
 @Slf4j
 public class AiMentorService {
 
+    @Value("${groq.api.key:}")
+    private String groqApiKey;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final HttpClient httpClient = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(10))
+            .build();
+
+    private String callGroqApi(String systemPrompt, String userPrompt) {
+        if (groqApiKey == null || groqApiKey.trim().isEmpty()) {
+            log.info("[Mentor] No Groq API key set, falling back to static mentor.");
+            return null;
+        }
+        try {
+            ObjectNode root = objectMapper.createObjectNode();
+            root.put("model", "llama3-8b-8192");
+            ArrayNode messages = root.putArray("messages");
+            
+            ObjectNode systemMsg = objectMapper.createObjectNode();
+            systemMsg.put("role", "system");
+            systemMsg.put("content", systemPrompt);
+            messages.add(systemMsg);
+            
+            ObjectNode userMsg = objectMapper.createObjectNode();
+            userMsg.put("role", "user");
+            userMsg.put("content", userPrompt);
+            messages.add(userMsg);
+
+            String requestBody = objectMapper.writeValueAsString(root);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
+                    .header("Authorization", "Bearer " + groqApiKey)
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            if (response.statusCode() == 200) {
+                JsonNode responseJson = objectMapper.readTree(response.body());
+                String content = responseJson.path("choices").get(0).path("message").path("content").asText();
+                return "Master Velan: \"" + content.replace("\"", "") + "\"";
+            } else {
+                log.error("[Mentor] Groq API error ({}): {}", response.statusCode(), response.body());
+                return null;
+            }
+        } catch (Exception e) {
+            log.error("[Mentor] Failed to call Groq API", e);
+            return null;
+        }
+    }
+
     // ─────────────────────────────────────────────────────────────────────────
     // COMPILE ERROR FEEDBACK
     // ─────────────────────────────────────────────────────────────────────────
@@ -29,6 +93,12 @@ public class AiMentorService {
         log.info("[Mentor] Compile error for quest='{}' topic='{}' — analysing pattern",
                 questTitle, topic);
         log.debug("[Mentor] Compiler error text: {}", compilerError);
+
+        String groqFeedback = callGroqApi(
+            "You are Master Velan, a Socratic wizard mentor teaching Java at the Arcane Academy. The student has encountered a compiler error. Give a short, 2-3 sentence magical hint that guides them to the answer without writing code for them.",
+            "Quest: " + questTitle + "\nCode:\n" + code + "\nError:\n" + compilerError
+        );
+        if (groqFeedback != null) return groqFeedback;
 
         String lower = compilerError == null ? "" : compilerError.toLowerCase();
         String codeLower = code == null ? "" : code.toLowerCase();
@@ -131,6 +201,12 @@ public class AiMentorService {
                 questTitle, topic);
         log.debug("[Mentor] Runtime error text: {}", runtimeError);
 
+        String groqFeedback = callGroqApi(
+            "You are Master Velan, a Socratic wizard mentor teaching Java at the Arcane Academy. The student has encountered a runtime error. Give a short, 2-3 sentence magical hint that guides them to the answer without writing code for them.",
+            "Quest: " + questTitle + "\nCode:\n" + code + "\nError:\n" + runtimeError
+        );
+        if (groqFeedback != null) return groqFeedback;
+
         String lower = runtimeError == null ? "" : runtimeError.toLowerCase();
 
         // --- Division by zero ---
@@ -211,6 +287,12 @@ public class AiMentorService {
         log.info("[Mentor] Test failure for quest='{}' topic='{}' failedTests='{}'",
                 questTitle, topic, failedTests);
         log.debug("[Mentor] Student code length: {} chars", code == null ? 0 : code.length());
+
+        String groqFeedback = callGroqApi(
+            "You are Master Velan, a Socratic wizard mentor teaching Java at the Arcane Academy. The student's code failed some tests. Give a short, 2-3 sentence magical hint that guides them to fix the logic, without writing the code for them.",
+            "Quest: " + questTitle + "\nTopic: " + topic + "\nCode:\n" + code + "\nFailed Tests:\n" + failedTests
+        );
+        if (groqFeedback != null) return groqFeedback;
 
         String topicLower = topic == null ? "" : topic.toLowerCase();
         String failedLower = failedTests == null ? "" : failedTests.toLowerCase();

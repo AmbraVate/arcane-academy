@@ -134,7 +134,7 @@
       "sortOrder": 2,
       "xpReward": 60,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>You can read a ledger. Now you'll <em>question</em> one. The three keywords that do 80% of all SQL work are <code>SELECT</code>, <code>FROM</code>, and <code>WHERE</code>. Master them and you can retrieve any single fact from any table the Academy keeps.</p>",
 
@@ -176,9 +176,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Predict the output</h3>\n<p>Below is a small <code>apprentices</code> table and three queries. Read each query carefully and predict what it returns. Then verify your prediction by working through the table by hand. We'll test your reasoning in the retrieval check.</p>\n<p>Don't run anything yet — the goal is to internalise <em>how SQL evaluates a query</em>, not to memorise outputs.</p>",
+      "guidedPracticeHtml": "<h3>🪄 Cast your first query</h3>\n<p>The Headmaster wants the names and XP of every apprentice with <strong>at least 2,000 XP</strong>. Write a single SELECT query against the <code>apprentices</code> table that:</p>\n<ul>\n  <li>Returns two columns: <code>name</code> and <code>xp</code></li>\n  <li>Includes only rows where <code>xp &gt;= 2000</code></li>\n  <li>You can order them however you like — order isn't tested</li>\n</ul>\n<p>The right pane runs your query against a real SQLite database as you type. Submit when the result looks correct.</p>\n<p><strong>Reference data (already loaded):</strong></p>\n<pre><code>id | name    | rank        | xp\n---+---------+-------------+------\n 1 | Alice   | Apprentice  | 1200\n 2 | Bjorn   | Adept       | 2400\n 3 | Cassia  | Mage        | 4800\n 4 | Dorian  | Novice      |   80</code></pre>",
 
-      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- Query A:\nSELECT name FROM apprentices WHERE xp >= 2000;\n\n-- Query B:\nSELECT * FROM apprentices WHERE rank = 'Novice';\n\n-- Query C:\nSELECT name, xp FROM apprentices WHERE name <> 'Alice';\n\n-- Take a moment. Trace each query by hand. What rows come out?",
+      "guidedPracticeStarterCode": "-- Write a query that returns name and xp\n-- for apprentices with at least 2000 XP.\nSELECT\n  -- columns here\nFROM apprentices\nWHERE\n  -- your filter here\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns the right number of rows (2)",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80);",
+          "expectedRowCount": 2,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Selects exactly the columns 'name' and 'xp'",
+          "expectedColumns": ["name", "xp"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Returns Bjorn and Cassia (any order)",
+          "expectedQuery": "SELECT name, xp FROM apprentices WHERE xp >= 2000",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — From scratch</h3>\n<p>Same data, slightly harder ask: write a query that returns the names of apprentices whose rank is <strong>not 'Novice'</strong> and whose XP is greater than 1,000.</p>\n<ul>\n  <li>Return only the <code>name</code> column</li>\n  <li>Filter by both conditions</li>\n  <li>Three apprentices should match</li>\n</ul>\n<p>If you get stuck, peek at the guided practice for the WHERE-clause shape.</p>",
 
       "feynmanPrompt": "In your own words, explain what SELECT, FROM, and WHERE each do. Then explain why the query SELECT name FROM apprentices WHERE rank = \"Mage\" — note the double quotes — would fail or behave unexpectedly in a strict SQL engine.",
 
@@ -244,7 +265,7 @@
       "sortOrder": 3,
       "xpReward": 60,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>SQL doesn't promise to return rows in any particular order. \"The top 5 apprentices by XP\" only makes sense if you tell SQL <em>sort first, then take 5</em>. <code>ORDER BY</code> and <code>LIMIT</code> are the two clauses that turn an unordered set into a ranked list.</p>",
 
@@ -294,9 +315,30 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Trace the queries</h3>\n<p>Predict the result of each query against the apprentices table. Pay attention to:</p>\n<ul>\n  <li>Whether <code>DESC</code> is present (default is ascending)</li>\n  <li>How multi-column sort breaks ties</li>\n  <li>What happens when <code>LIMIT</code> is used without <code>ORDER BY</code></li>\n</ul>",
+      "guidedPracticeHtml": "<h3>🪄 Top of the leaderboard</h3>\n<p>The Headmaster wants the <strong>top 3 apprentices by XP</strong>, highest first. Write a single SELECT query that:</p>\n<ul>\n  <li>Returns two columns: <code>name</code> and <code>xp</code></li>\n  <li>Sorts by <code>xp</code> descending</li>\n  <li>Returns at most 3 rows</li>\n</ul>\n<p><strong>Reference data:</strong></p>\n<pre><code>id | name    | rank        | xp\n---+---------+-------------+------\n 1 | Alice   | Apprentice  | 1200\n 2 | Bjorn   | Adept       | 2400\n 3 | Cassia  | Mage        | 4800\n 4 | Dorian  | Novice      |   80</code></pre>",
 
-      "guidedPracticeStarterCode": "-- The apprentices table:\n-- id | name    | rank        | xp\n-- ---+---------+-------------+------\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n\n-- Query A — names sorted alphabetically:\nSELECT name FROM apprentices ORDER BY name;\n\n-- Query B — top 2 by XP:\nSELECT name, xp FROM apprentices ORDER BY xp DESC LIMIT 2;\n\n-- Query C — without ORDER BY:\nSELECT name FROM apprentices LIMIT 2;",
+      "guidedPracticeStarterCode": "-- Top 3 apprentices by XP, highest first.\nSELECT name, xp\nFROM apprentices\n-- ORDER BY ... ?\n-- LIMIT ... ?\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns 3 rows",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80);",
+          "expectedRowCount": 3,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Selects exactly 'name' and 'xp'",
+          "expectedColumns": ["name", "xp"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Cassia, Bjorn, Alice in that exact order (sorted by xp DESC)",
+          "expectedQuery": "SELECT name, xp FROM apprentices ORDER BY xp DESC LIMIT 3",
+          "matchMode": "rowsExact"
+        }
+      ],
+
+      "soloPracticeHtml": "<h3>🏹 Solo Challenge — Bottom of the pile</h3>\n<p>Same data, opposite question: write a query that returns the <strong>two apprentices with the lowest XP</strong>, lowest first. Return their <code>name</code> and <code>xp</code>.</p>",
 
       "feynmanPrompt": "Explain why a query with LIMIT but no ORDER BY is almost always wrong. Use the apprentices ledger as your example, and describe what could go wrong if a junior writes \"give me 5 apprentices, LIMIT 5\" without ordering them.",
 

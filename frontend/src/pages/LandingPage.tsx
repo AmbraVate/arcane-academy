@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { Button } from '@/components/ui/button'
 
 const PILLARS = [
   { icon: '🧩', name: 'Chunking',          desc: 'Knowledge broken into tight, meaningful units — each one a stepping stone in a larger graph.' },
@@ -11,207 +10,224 @@ const PILLARS = [
   { icon: '🪶', name: 'Feynman Technique',  desc: "Explain it in plain language. If you can't teach it, you don't know it yet." },
 ]
 
-const TRACK_STEPS = [
-  { num: 'A', label: 'Variables & Types' },
-  { num: 'B', label: 'Control Flow' },
-  { num: 'C', label: 'Loops' },
-  { num: 'D', label: 'Methods' },
-  { num: 'E', label: 'Arrays & Collections' },
-  { num: 'F', label: 'Classes & Objects' },
-  { num: 'G', label: 'Inheritance' },
-  { num: 'H', label: 'Interfaces' },
-  { num: 'I', label: 'Polymorphism' },
-  { num: 'J', label: 'Exceptions' },
-  { num: 'K', label: 'Core APIs' },
-]
-
 export default function LandingPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
-  const ctaLabel = user ? 'Continue Learning →' : 'Begin Your Journey →'
-  const ctaDest  = user ? '/' : '/login'
+  const ctaLabel = user ? 'Dashboard' : 'Start Learning Free'
+  const ctaDest  = user ? '/topics' : '/register'
 
   return (
-    <div className="min-h-full overflow-y-auto bg-bg text-text font-crimson">
-      {/* Header */}
-      <header className="sticky top-0 z-[100] flex items-center justify-between px-12 py-4 bg-[rgba(13,11,26,0.85)] backdrop-blur-[12px] border-b border-border max-[768px]:px-5 max-[768px]:py-3.5">
-        <div className="font-cinzel text-[18px] text-gold tracking-[0.04em]">✦ Arcane Academy</div>
-        <div className="flex gap-2.5 items-center">
-          {user ? (
-            <Button variant="primary" onClick={() => navigate('/')}>Dashboard</Button>
-          ) : (
-            <>
-              <Button variant="ghost" onClick={() => navigate('/login')}>Login</Button>
-              <Button variant="primary" onClick={() => navigate('/register')}>Sign Up Free</Button>
-            </>
-          )}
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#05030A] text-[#E8E0F0] font-sans selection:bg-purple-light/30 selection:text-white overflow-x-hidden relative">
+      
+      {/* ── Ambient Background Glows ── */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-light/10 blur-[150px] rounded-full mix-blend-screen" />
+        <div className="absolute top-[30%] right-[-10%] w-[40vw] h-[40vw] bg-teal/10 blur-[150px] rounded-full mix-blend-screen" />
+      </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden px-12 pt-[100px] pb-20 text-center max-[768px]:px-5 max-[768px]:pt-[72px] max-[768px]:pb-14">
-        <div className="absolute top-[-180px] left-1/2 -translate-x-1/2 w-[900px] h-[600px] pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.22) 0%, transparent 70%)' }} />
-        <div className="relative max-w-[780px] mx-auto animate-[fade-up_0.7s_ease_both]">
-          <div className="inline-block font-cinzel text-[11px] tracking-[0.08em] text-teal bg-[rgba(45,212,191,0.08)] border border-[rgba(45,212,191,0.25)] rounded-[20px] px-4 py-[5px] mb-7">
-            🔬 Science-backed accelerated learning
+      {/* ── Step 1: Floating Capsule Navbar ──────────────────────────────── */}
+      <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+        <header className="pointer-events-auto flex items-center justify-between w-full max-w-5xl h-16 px-6 bg-black/40 backdrop-blur-2xl rounded-full border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+          
+          <div className="text-lg font-bold tracking-widest text-white flex items-center gap-3 cursor-pointer hover:text-gold transition-colors font-cinzel" onClick={() => navigate('/')}>
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple to-teal flex items-center justify-center shadow-[0_0_15px_rgba(45,212,191,0.3)]">
+              <span className="text-white font-black text-xs">A</span>
+            </div>
+            ARCANE
           </div>
-          <h1 className="font-cinzel font-bold leading-[1.1] text-text mb-6" style={{ fontSize: 'clamp(36px, 5vw, 64px)' }}>
-            Train your mind like<br />
-            <span style={{
-              background: 'linear-gradient(135deg, var(--gold) 0%, var(--purple-light) 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>
-              the great polymaths did.
-            </span>
-          </h1>
-          <p className="text-[20px] text-muted leading-[1.7] max-w-[580px] mx-auto mb-9">
-            Arcane Academy combines six research-proven techniques into a single adaptive
-            learning system — forging polymaths, one skill at a time.
-          </p>
-          <div className="flex flex-col items-center gap-2.5 mb-14">
-            <Button variant="primary" className="font-cinzel text-[16px] px-10 py-3.5 rounded-[8px] tracking-[0.04em]" onClick={() => navigate(ctaDest)}>
-              {ctaLabel}
-            </Button>
-            {!user && <span className="text-[13px] text-muted">Free. No credit card required.</span>}
-          </div>
-
-          {/* Stats strip */}
-          <div className="flex items-center justify-center bg-card border border-border rounded-[12px] px-8 py-5 max-[768px]:flex-col max-[768px]:gap-4 max-[768px]:px-5">
-            {[
-              { num: '6×',  lbl: 'faster retention vs passive reading' },
-              null,
-              { num: '11',  lbl: 'knowledge chunks per track' },
-              null,
-              { num: 'SM-2', lbl: 'spaced repetition algorithm' },
-            ].map((item, i) =>
-              item === null
-                ? <div key={i} className="w-px h-12 bg-border mx-0 max-[768px]:w-4/5 max-[768px]:h-px" />
-                : <div key={i} className="flex flex-col items-center gap-1 px-7">
-                    <span className="font-cinzel text-[28px] font-bold text-gold">{item.num}</span>
-                    <span className="text-[12px] text-muted text-center max-w-[120px] leading-[1.4]">{item.lbl}</span>
-                  </div>
+          
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#A1A1A1]">
+            <span className="hover:text-white cursor-pointer transition-colors">Curriculum</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Methodology</span>
+          </nav>
+          
+          <div className="flex items-center gap-4">
+            {!user && (
+              <button className="text-sm font-medium text-[#A1A1A1] hover:text-white transition-colors" onClick={() => navigate('/login')}>
+                Log in
+              </button>
             )}
+            <button 
+              onClick={() => navigate(ctaDest)}
+              className="text-sm font-bold bg-white text-black px-6 py-2 rounded-full hover:scale-105 hover:bg-[#E8E0F0] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            >
+              {user ? 'Dashboard' : 'Sign Up Free'}
+            </button>
           </div>
-        </div>
-      </section>
+          
+        </header>
+      </div>
 
-      {/* Polymath section */}
-      <section className="px-12 py-20 bg-surface max-[768px]:px-5 max-[768px]:py-14">
-        <div className="max-w-[960px] mx-auto">
-          <div className="bg-card border border-border border-l-4 border-l-purple rounded-[12px] px-12 py-10 max-w-[780px] mx-auto max-[768px]:px-6 max-[768px]:py-7">
-            <div className="font-cinzel text-[22px] text-gold mb-7 italic">
-              "A person of wide knowledge or learning."
+      <main className="relative z-10 pt-40 pb-20">
+        
+        {/* ── Step 2: Hero Section ───────────────────────────────────────── */}
+        <section className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16 min-h-[75vh]">
+          
+          {/* Left Text */}
+          <div className="flex-1 text-left relative z-10">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/5 bg-white/5 backdrop-blur-md mb-8 shadow-inner">
+              <div className="w-2 h-2 rounded-full bg-purple-light shadow-[0_0_10px_rgba(196,181,253,1)] animate-pulse"></div>
+              <span className="text-xs font-semibold tracking-widest text-[#E8E0F0] uppercase">Cognitive Engine v2.0 Live</span>
             </div>
-            <div className="space-y-4 text-[17px] text-muted leading-[1.8]">
-              <p>Da Vinci mastered painting, anatomy, and engineering. Leibniz invented calculus and philosophy simultaneously. Lovelace wove mathematics and poetry into the world's first algorithm.</p>
-              <p>They weren't born with superhuman memory. They used structured, deliberate methods to encode knowledge deeply — the same methods science has since confirmed as optimal.</p>
-              <p><strong className="text-purple-light not-italic">Arcane Academy brings those methods to you.</strong></p>
+            
+            <h1 className="text-6xl md:text-7xl lg:text-[84px] font-bold tracking-tighter leading-[1.05] text-white mb-8 font-cinzel">
+              Master complex <br className="hidden lg:block"/> skills like a <br className="hidden lg:block"/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-teal drop-shadow-[0_0_15px_rgba(45,212,191,0.3)]">Polymath.</span>
+            </h1>
+            
+            <p className="text-xl text-[#A1A1A1] max-w-xl leading-relaxed mb-10 font-light">
+              Replace passive tutorials with a high-fidelity cognitive engine. Arcane Academy combines gamification, interactive AI, and spaced repetition to build true expertise.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <button 
+                onClick={() => navigate(ctaDest)}
+                className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-purple to-purple-light text-white font-bold rounded-full hover:scale-105 hover:shadow-[0_0_40px_rgba(139,92,246,0.5)] transition-all duration-300 text-lg shadow-[0_0_20px_rgba(139,92,246,0.3)]"
+              >
+                {ctaLabel}
+              </button>
+              {!user && (
+                <button 
+                  onClick={() => navigate('/login')}
+                  className="w-full sm:w-auto px-10 py-4 bg-transparent border border-white/10 text-white font-bold rounded-full hover:bg-white/5 transition-all duration-300 text-lg backdrop-blur-md"
+                >
+                  View Curriculum
+                </button>
+              )}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Six Pillars */}
-      <section className="px-12 py-20 max-[768px]:px-5 max-[768px]:py-14">
-        <div className="max-w-[960px] mx-auto">
-          <div className="font-cinzel text-[11px] tracking-[0.12em] text-teal uppercase mb-3">The Method</div>
-          <h2 className="font-cinzel text-gold mb-4 leading-[1.2]" style={{ fontSize: 'clamp(24px, 3vw, 36px)' }}>
-            Six pillars of accelerated learning
-          </h2>
-          <p className="text-[17px] text-muted leading-[1.7] max-w-[620px] mb-12">
-            Every lesson is engineered around cognitive science. Not one technique — all six, working together.
-          </p>
-          <div className="grid grid-cols-3 gap-4 max-[768px]:grid-cols-2 max-[480px]:grid-cols-1">
-            {PILLARS.map((p, i) => (
-              <div key={i} className="bg-card border border-border rounded-[12px] px-6 py-7 transition-[border-color,transform] duration-200 hover:border-purple hover:-translate-y-[3px]">
-                <div className="text-[32px] mb-3">{p.icon}</div>
-                <div className="font-cinzel text-[15px] text-gold mb-2.5">{p.name}</div>
-                <div className="text-[14px] text-muted leading-[1.6]">{p.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          {/* Right Visual (Floating 3D Glass Element) */}
+          <div className="flex-1 w-full relative group perspective-1000">
+            {/* Custom slow-float animation wrapper */}
+            <div className="relative w-full h-[500px] md:h-[600px] animate-slow-float">
+              
+              {/* Outer Gradient Glass Border (1px) */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple/40 via-white/5 to-teal/40 rounded-[40px] p-[1px] shadow-[0_0_80px_rgba(139,92,246,0.15)] transform rotate-[-2deg] group-hover:rotate-0 transition-transform duration-700 ease-out">
+                {/* Inner Dark Card */}
+                <div className="w-full h-full bg-[#0A0710]/90 backdrop-blur-3xl rounded-[39px] overflow-hidden flex flex-col relative">
+                  
+                  {/* Subtle inner top glow */}
+                  <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent z-10" />
+                  
+                  {/* Fake Window Header */}
+                  <div className="h-14 border-b border-white/5 bg-white/5 flex items-center px-6 gap-3">
+                    <div className="flex gap-2.5">
+                      <div className="w-3.5 h-3.5 rounded-full bg-red-500/50"></div>
+                      <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/50"></div>
+                      <div className="w-3.5 h-3.5 rounded-full bg-green-500/50"></div>
+                    </div>
+                    <div className="ml-4 text-xs font-bold text-[#A1A1A1] uppercase tracking-widest font-mono">Master_Velan.exe</div>
+                  </div>
+                  
+                  {/* Code / Chat Interface */}
+                  <div className="p-8 flex flex-col gap-6 font-mono text-sm md:text-base relative z-10">
+                    <div className="bg-white/5 p-5 rounded-2xl border border-white/5 backdrop-blur-md max-w-[90%] shadow-[0_4px_24px_rgba(0,0,0,0.5)] transform transition-transform hover:-translate-y-1">
+                      <span className="text-purple-light font-bold tracking-wide text-shadow-[0_0_10px_rgba(196,181,253,0.5)]">Master Velan:</span>
+                      <p className="text-white/90 mt-3 leading-relaxed">
+                        "Your spell collapsed because you are dividing by zero. Look closely at your 'mana_drain' calculation."
+                      </p>
+                    </div>
+                    
+                    <div className="self-end bg-gradient-to-br from-purple/20 to-teal/10 p-5 rounded-2xl border border-white/10 backdrop-blur-md max-w-[85%] shadow-[0_4px_24px_rgba(0,0,0,0.5)] transform transition-transform hover:-translate-y-1">
+                      <p className="text-white leading-relaxed">
+                        &gt; Ah, so I need to check if the shield is greater than zero first?
+                      </p>
+                    </div>
+                    
+                    <div className="bg-white/5 p-5 rounded-2xl border border-white/5 backdrop-blur-md max-w-[90%] shadow-[0_4px_24px_rgba(0,0,0,0.5)] transform transition-transform hover:-translate-y-1">
+                      <span className="text-purple-light font-bold tracking-wide text-shadow-[0_0_10px_rgba(196,181,253,0.5)]">Master Velan:</span>
+                      <p className="text-white/90 mt-3 leading-relaxed">
+                        "Precisely. A wise mage never casts into the void. Implement the check and run the test again."
+                      </p>
+                    </div>
+                  </div>
 
-      {/* Track path */}
-      <section className="px-12 py-20 bg-surface max-[768px]:px-5 max-[768px]:py-14">
-        <div className="max-w-[960px] mx-auto">
-          <div className="font-cinzel text-[11px] tracking-[0.12em] text-teal uppercase mb-3">First Track</div>
-          <h2 className="font-cinzel text-gold mb-4 leading-[1.2]" style={{ fontSize: 'clamp(24px, 3vw, 36px)' }}>
-            Java — from zero to job-ready
-          </h2>
-          <p className="text-[17px] text-muted leading-[1.7] max-w-[620px] mb-12">
-            Our inaugural track takes a complete beginner through every concept needed for a first Apprenticeship or Junior Developer role.
-          </p>
-          <div className="flex flex-wrap items-start mb-6 max-[480px]:gap-1">
-            {TRACK_STEPS.map((step, i) => (
-              <div key={step.num} className="flex flex-col items-center flex-shrink-0 relative">
-                <div className="w-12 h-12 rounded-full bg-purple-dim border-2 border-purple flex items-center justify-center mb-2 relative z-[1]">
-                  <span className="font-cinzel text-[16px] text-purple-light font-bold">{step.num}</span>
+                  {/* Overlapping glowing element breaking the frame */}
+                  <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-teal/20 blur-[80px] rounded-full pointer-events-none" />
                 </div>
-                <div className="text-[11px] text-muted text-center max-w-[72px] leading-[1.3]">{step.label}</div>
-                {i < TRACK_STEPS.length - 1 && (
-                  <div
-                    className="w-8 h-0.5 self-center mb-7 flex-shrink-0 absolute top-6 left-full max-[768px]:w-5"
-                    style={{ background: 'linear-gradient(90deg, var(--purple), var(--purple-dim))' }}
-                  />
-                )}
               </div>
-            ))}
+            </div>
           </div>
-          <p className="text-[14px] text-muted italic text-center">
-            Complete the entry diagnostic to skip what you already know and start exactly where you should.
-          </p>
-        </div>
-      </section>
+        </section>
 
-      {/* How it works */}
-      <section className="px-12 py-20 max-[768px]:px-5 max-[768px]:py-14">
-        <div className="max-w-[960px] mx-auto">
-          <div className="font-cinzel text-[11px] tracking-[0.12em] text-teal uppercase mb-3">The Experience</div>
-          <h2 className="font-cinzel text-gold mb-12 leading-[1.2]" style={{ fontSize: 'clamp(24px, 3vw, 36px)' }}>
-            Learning that feels like an adventure
-          </h2>
-          <div className="grid grid-cols-2 gap-4 max-[768px]:grid-cols-1">
-            {[
-              { num: '01', title: 'Hook', desc: 'Every concept opens with a story hook — a question, a puzzle, a surprise that primes your brain to receive the new knowledge.' },
-              { num: '02', title: 'Guided by Eldrin', desc: 'Archmage Eldrin narrates each lesson with vivid analogies, worked examples, and the wisdom of someone who has taught this for a thousand years.' },
-              { num: '03', title: 'Code in the Academy', desc: 'Real Java, compiled and run instantly. Guided practice with test feedback before you\'re asked to do it alone.' },
-              { num: '04', title: 'Prove It', desc: 'Retrieval checks, daily reviews, and Feynman explanations ensure the knowledge is truly yours — not just recently seen.' },
-            ].map(card => (
-              <div key={card.num} className="bg-card border border-border rounded-[12px] px-7 py-8">
-                <div className="font-cinzel text-[11px] text-teal tracking-[0.1em] mb-3">{card.num}</div>
-                <div className="font-cinzel text-[18px] text-gold mb-3">{card.title}</div>
-                <p className="text-[15px] text-muted leading-[1.7]">{card.desc}</p>
+        {/* ── Trust / Stats Strip ────────────────────────────────────────── */}
+        <section className="py-12 mt-12 relative z-10">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-32 text-center">
+              <div className="flex flex-col items-center group">
+                <div className="text-5xl md:text-6xl font-cinzel font-bold text-white mb-3 tracking-tighter drop-shadow-[0_0_15px_rgba(201,162,39,0.3)] group-hover:text-gold transition-colors">6×</div>
+                <div className="text-[#A1A1A1] text-xs uppercase tracking-[0.2em] font-bold">Faster Retention</div>
               </div>
-            ))}
+              <div className="flex flex-col items-center group">
+                <div className="text-5xl md:text-6xl font-cinzel font-bold text-white mb-3 tracking-tighter drop-shadow-[0_0_15px_rgba(139,92,246,0.3)] group-hover:text-purple-light transition-colors">AI</div>
+                <div className="text-[#A1A1A1] text-xs uppercase tracking-[0.2em] font-bold">Socratic Guidance</div>
+              </div>
+              <div className="flex flex-col items-center group">
+                <div className="text-5xl md:text-6xl font-cinzel font-bold text-white mb-3 tracking-tighter drop-shadow-[0_0_15px_rgba(45,212,191,0.3)] group-hover:text-teal transition-colors">SM-2</div>
+                <div className="text-[#A1A1A1] text-xs uppercase tracking-[0.2em] font-bold">Spaced Repetition</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Final CTA */}
-      <section className="relative overflow-hidden px-12 py-[100px] text-center bg-surface max-[768px]:px-5 max-[768px]:py-[72px]">
-        <div className="absolute bottom-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[600px] pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 70%)' }} />
-        <div className="relative max-w-[540px] mx-auto">
-          <div className="text-[56px] mb-5">🧙</div>
-          <h2 className="font-cinzel text-[40px] text-gold mb-4">Your grimoire awaits.</h2>
-          <p className="text-[18px] text-muted leading-[1.7] mb-9">
-            Join the Academy. Master Java. Become the developer you were meant to be.
-          </p>
-          <Button variant="primary" className="font-cinzel text-[16px] px-10 py-3.5 rounded-[8px] tracking-[0.04em]" onClick={() => navigate(ctaDest)}>
-            {ctaLabel}
-          </Button>
-        </div>
-      </section>
+        {/* ── Features / Pillars Bento Box (Preview for Step 3) ──────────── */}
+        <section className="py-32 relative z-10">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6 font-cinzel">Built on Cognitive Science</h2>
+              <p className="text-xl text-[#A1A1A1] max-w-xl mx-auto font-light">We replaced the standard methodology with six scientifically proven pillars of deep learning.</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {PILLARS.map((pillar, idx) => (
+                <div key={idx} className="group relative bg-[#0A0710]/80 backdrop-blur-xl rounded-[32px] p-10 shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  {/* Outer Gradient Glass Border (1px) */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-[32px] p-[1px] -z-10 group-hover:from-purple/40 group-hover:to-teal/10 transition-colors duration-500">
+                    <div className="w-full h-full bg-[#0A0710] rounded-[31px]"></div>
+                  </div>
+                  
+                  <div className="relative z-10 text-3xl mb-8 bg-white/5 w-16 h-16 flex items-center justify-center rounded-2xl border border-white/10 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                    {pillar.icon}
+                  </div>
+                  <h3 className="relative z-10 text-2xl font-cinzel font-bold text-white mb-4">{pillar.name}</h3>
+                  <p className="relative z-10 text-[#A1A1A1] leading-relaxed text-[17px] font-light">{pillar.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      {/* Footer */}
-      <footer className="flex items-center justify-between px-12 py-6 border-t border-border font-cinzel text-[13px] text-gold max-[768px]:flex-col max-[768px]:gap-2 max-[768px]:px-5 max-[768px]:py-5 max-[768px]:text-center">
-        <span>✦ Arcane Academy</span>
-        <span className="font-crimson text-muted text-[13px]">Built on science. Wrapped in story.</span>
+        {/* ── Final CTA ────────────────────────────────────────────────── */}
+        <section className="py-48 relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple/10 blur-[150px] rounded-full pointer-events-none" />
+          <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-8 leading-tight font-cinzel">Ready to forge <br/> your skills?</h2>
+            <p className="text-2xl text-muted mb-16 max-w-2xl mx-auto font-light">
+              Join Arcane Academy today. The first track is completely free for early scholars.
+            </p>
+            <button 
+              onClick={() => navigate(ctaDest)}
+              className="px-14 py-6 bg-gradient-to-r from-purple to-purple-light text-white font-bold rounded-full hover:scale-105 transition-all text-xl shadow-[0_0_60px_rgba(139,92,246,0.4)] hover:shadow-[0_0_80px_rgba(139,92,246,0.6)]"
+            >
+              {ctaLabel}
+            </button>
+          </div>
+        </section>
+
+      </main>
+
+      {/* ── Footer ───────────────────────────────────────────────────────── */}
+      <footer className="border-t border-white/5 bg-[#05030A] py-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-3 text-gold font-bold tracking-widest text-lg font-cinzel">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-purple to-purple-light flex items-center justify-center">
+              <span className="text-white font-black text-[10px]">A</span>
+            </div>
+            ARCANE ACADEMY
+          </div>
+          <div className="text-[#8B7FA0] font-light text-sm tracking-wide">© {new Date().getFullYear()} Arcane Academy. Built on Science.</div>
+        </div>
       </footer>
     </div>
   )

@@ -5,9 +5,9 @@ services:
   # Backend API (Java 21 + Spring Boot)
   - type: web
     name: polymath-academy-api
-    runtime: docker
-    dockerfilePath: backend/Dockerfile
-    dockerContext: backend
+    env: java
+    buildCommand: cd backend && ./mvnw clean package -DskipTests
+    startCommand: java -jar backend/target/polymath-academy-0.0.1-SNAPSHOT.jar
     plan: free
     healthCheckPath: /actuator/health
     envVars:
@@ -32,6 +32,8 @@ services:
       - key: GOOGLE_CLIENT_ID
         sync: false  # Set manually in dashboard
       - key: GOOGLE_CLIENT_SECRET
+        sync: false  # Set manually in dashboard
+      - key: GROQ_API_KEY
         sync: false  # Set manually in dashboard
 
   # Frontend (Static Site)

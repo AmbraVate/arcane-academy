@@ -181,6 +181,36 @@ export const reactApi = {
   },
 }
 
+// ── SQL Practice ──────────────────────────────────────────────────────────────
+// sql.js (SQLite-WASM) runs inside the iframe; the harness compares the user's
+// query result to expected rows or to a reference query and reports per-test
+// pass/fail. Backend does a structural sanity check on the SQL source before
+// awarding XP — see SqlPracticeService.
+export interface SqlClientTestResult {
+  label: string
+  passed: boolean
+  actual: string
+}
+
+export const sqlApi = {
+  submit: async (
+    subChunkId: string,
+    code: string,
+    clientTestResults: SqlClientTestResult[],
+  ): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/sql/${subChunkId}/submit`, { code, clientTestResults })
+    return data
+  },
+  submitSoloPractice: async (
+    subChunkId: string,
+    code: string,
+    clientTestResults: SqlClientTestResult[],
+  ): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/sql/${subChunkId}/solo-practice/submit`, { code, clientTestResults })
+    return data
+  },
+}
+
 // ── Code (kept) ──────────────────────────────────────────────────────────────
 export const codeApi = {
   run: async (code: string, testInput?: string): Promise<CodeRunResponse> => {
