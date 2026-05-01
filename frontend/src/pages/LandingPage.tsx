@@ -160,7 +160,7 @@ function GrimoireScene({ isOpen, onToggle }: { isOpen: boolean; onToggle: () => 
     scene.fog = new THREE.Fog(0x0e0c1a, 8, 22)
 
     const camera = new THREE.PerspectiveCamera(40, W / H, 0.1, 100)
-    camera.position.set(0, 0.4, 12)
+    camera.position.set(0, 0.4, 8)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(W, H)

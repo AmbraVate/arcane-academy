@@ -29,6 +29,7 @@ import AdminSubChunkEditorPage from './pages/admin/AdminSubChunkEditorPage'
 import AdminQuestionsPage from './pages/admin/AdminQuestionsPage'
 import AdminUsersPage from './pages/admin/AdminUsersPage'
 import AdminImportExportPage from './pages/admin/AdminImportExportPage'
+import React from "react";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()

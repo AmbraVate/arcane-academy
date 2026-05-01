@@ -1,9 +1,3 @@
-/* ──────────────────────────────────────────────────────────────────────────────
- * Tailwind v4 — CSS-first configuration.
- * The @import below replaces the v3 `@tailwind base/components/utilities`
- * directives. The @theme block below replaces theme.extend in tailwind.config.js.
- * ────────────────────────────────────────────────────────────────────────────── */
-
 @import "tailwindcss";
 
 @theme {
@@ -88,8 +82,6 @@
 }
 
 /* ── Reset + base ─────────────────────────────────────────────────────────── */
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body, #root {
   height: 100%;
