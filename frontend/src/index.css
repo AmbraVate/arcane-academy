@@ -53,6 +53,7 @@
   --border:       #2e2850;
   --gold:         #c9a227;
   --gold-dim:     #4a3a0a;
+  --gold-strong:  #7a5c10;
   --purple:       #8b5cf6;
   --purple-dim:   #2e1a5e;
   --purple-light: #c4b5fd;
@@ -63,6 +64,16 @@
   --red:          #f87171;
   --green:        #4ade80;
   --orange:       #fb923c;
+
+  /* ── Grimoire / landing palette (from arcane-academy-design-system) ── */
+  --ink:               #1a0e08;   /* darkest grimoire ink */
+  --parchment:         #ebd9b8;   /* warm aged paper */
+  --parchment-deep:    #d6bf95;
+  --gold-foil:         #d4a437;
+  --gold-foil-bright:  #f0c862;
+  --gold-foil-deep:    #8a6510;
+  --leather:           #2a1a0d;
+  --candle:            #f5d189;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
@@ -234,6 +245,118 @@ button { font-family: inherit; cursor: pointer; }
   .chip-red    { background: rgba(248,113,113,.12); border-color: rgba(248,113,113,.3);  color: #f87171; }
   .chip-orange { background: rgba(251,146,60,.12);  border-color: rgba(251,146,60,.3);   color: #fb923c; }
   .chip-gray   { background: rgba(139,127,160,.1);  border-color: rgba(139,127,160,.25); color: #8b7fa0; }
+
+  /* ── Grimoire / landing utilities (from design system landing.css) ─────── */
+
+  /* Gold-foil text on a dark surface — used for hero accents and brand */
+  .foil-on-dark {
+    background: linear-gradient(135deg, #8a6510 0%, #d4a437 30%, #f0c862 50%, #d4a437 70%, #8a6510 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Section eyebrow — small Cinzel all-caps gold-foil label above headings */
+  .section-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold-foil);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  /* Ornate divider — "✦ HOW A CHUNK WORKS ✦" with hairline tendrils */
+  .ornate-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-family: 'Cinzel', serif;
+    color: var(--gold-foil);
+    font-size: 12px;
+    letter-spacing: 4px;
+  }
+  .ornate-divider::before, .ornate-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    max-width: 180px;
+    background: linear-gradient(90deg, transparent, var(--gold-foil) 50%, transparent);
+  }
+
+  /* Section title (large Cinzel display) and subtitle (italic Crimson) */
+  .section-title-grimoire {
+    font-family: 'Cinzel', serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    margin: 0 0 18px;
+  }
+  .section-sub-grimoire {
+    font-family: 'Crimson Pro', serif;
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 640px;
+    font-style: italic;
+  }
+
+  /* Gold-foil seal CTA — the signature "BEGIN YOUR JOURNEY" button */
+  .btn-seal {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(180deg, #c9a227 0%, #8a6510 100%);
+    color: #1a0e08;
+    font-weight: 600;
+    position: relative;
+    box-shadow:
+      0 0 0 1px #6a4a08,
+      0 0 0 2px #d4a437,
+      0 0 0 3px #6a4a08,
+      0 6px 20px rgba(201, 162, 39, 0.4),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-seal:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px #6a4a08,
+      0 0 0 2px #f0c862,
+      0 0 0 3px #6a4a08,
+      0 12px 28px rgba(201, 162, 39, 0.55),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .btn-seal:active { transform: translateY(0) scale(.98); }
+
+  /* Brand mark — "✦ ARCANE ACADEMY" lockup */
+  .brand-mark {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+
+  /* Twinkling stars — used in hero starfield SVG */
+  .star { animation: twinkle 4s ease-in-out infinite; }
+
+  /* Scroll-reveal — toggled by .in via IntersectionObserver */
+  .grim-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .9s ease, transform .9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .grim-reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
@@ -279,6 +402,12 @@ button { font-family: inherit; cursor: pointer; }
   0%   { opacity: 0; transform: scale(0.85); }
   60%  { opacity: 1; transform: scale(1.04); }
   100% { opacity: 1; transform: scale(1); }
+}
+
+/* Grimoire — twinkle for the hero starfield */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
 }
 
 /* Utility: scrollbar-none */
