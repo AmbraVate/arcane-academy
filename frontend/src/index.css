@@ -259,6 +259,123 @@ button { font-family: inherit; cursor: pointer; }
     margin-bottom: 18px;
   }
 
+  /* ── Orbiting magical embers around hero text ──────────────────────────── */
+  .ember {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #f0c862 0%, #d4a437 50%, transparent 70%);
+    box-shadow:
+      0 0 8px rgba(212, 164, 55, 0.8),
+      0 0 16px rgba(212, 164, 55, 0.5),
+      inset -1px -1px 4px rgba(138, 101, 16, 0.4);
+    filter: blur(0.5px);
+  }
+  .ember::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(240, 200, 98, 0.6) 0%, transparent 70%);
+    filter: blur(2px);
+  }
+  .ember::after {
+    /* Mana trail effect */
+    content: '';
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    background: radial-gradient(circle, rgba(212, 164, 55, 0.22) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(6px);
+    opacity: 0.65;
+    animation: ember-trail 12s linear infinite;
+  }
+
+  .hero-text-wrapper {
+    position: relative;
+    display: inline-block;
+    --ember-gap-vertical: 15px;
+    --ember-gap-horizontal: 12px;
+  }
+
+  .hero-heading {
+    font-size: clamp(42px, 8vw, 72px);
+  }
+
+  /* Ember 1 — starts top-left, orbits clockwise */
+  .ember-1 {
+    animation: ember-orbit-1 12s linear infinite;
+    top: calc(-1 * var(--ember-gap-vertical));
+    left: calc(-1 * var(--ember-gap-horizontal));
+  }
+
+  /* Ember 2 — starts bottom-right, also orbits clockwise */
+  .ember-2 {
+    animation: ember-orbit-2 12s linear infinite;
+    top: calc(100% + var(--ember-gap-vertical));
+    left: calc(100% + var(--ember-gap-horizontal));
+  }
+
+  @keyframes ember-trail {
+    0%, 100% { opacity: 0.65; transform: scale(1); }
+    50% { opacity: 0.15; transform: scale(1.4); }
+  }
+
+  /* Keyframe animation for ember 1 orbiting clockwise around the wrapper */
+  @keyframes ember-orbit-1 {
+    0%, 100% {
+      top: calc(-1 * var(--ember-gap-vertical));
+      left: calc(-1 * var(--ember-gap-horizontal));
+    }
+    25% {
+      top: calc(-1 * var(--ember-gap-vertical));
+      left: calc(100% + var(--ember-gap-horizontal));
+    }
+    50% {
+      top: calc(100% + var(--ember-gap-vertical));
+      left: calc(100% + var(--ember-gap-horizontal));
+    }
+    75% {
+      top: calc(100% + var(--ember-gap-vertical));
+      left: calc(-1 * var(--ember-gap-horizontal));
+    }
+  }
+
+  /* Ember 2 — same clockwise orbit starting from bottom-right */
+  @keyframes ember-orbit-2 {
+    0%, 100% {
+      top: calc(100% + var(--ember-gap-vertical));
+      left: calc(100% + var(--ember-gap-horizontal));
+    }
+    25% {
+      top: calc(100% + var(--ember-gap-vertical));
+      left: calc(-1 * var(--ember-gap-horizontal));
+    }
+    50% {
+      top: calc(-1 * var(--ember-gap-vertical));
+      left: calc(-1 * var(--ember-gap-horizontal));
+    }
+    75% {
+      top: calc(-1 * var(--ember-gap-vertical));
+      left: calc(100% + var(--ember-gap-horizontal));
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .hero-heading {
+      font-size: 32px;
+    }
+    .hero-text-wrapper {
+      --ember-gap-vertical: 20px;
+      --ember-gap-horizontal: 8px;
+    }
+  }
+
   /* Ornate divider — "✦ HOW A CHUNK WORKS ✦" with hairline tendrils */
   .ornate-divider {
     display: flex;
