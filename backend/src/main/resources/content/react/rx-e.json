@@ -1,0 +1,658 @@
+{
+  "id": "rx-e",
+  "title": "React Performance & Architecture",
+  "glyph": "⚡",
+  "sortOrder": 5,
+  "tier": "EXPERT",
+  "topicId": "react",
+  "prerequisites": [
+    "rx-c"
+  ],
+  "subChunks": [
+    {
+      "id": "rx-e1",
+      "title": "The React Profiler",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Optimisation without measurement is superstition. Before you reach for <code>memo</code> or <code>useCallback</code>, you need evidence of what is actually slow — and the React Profiler is the lens that turns vague \"feels laggy\" into specific, named, timed re-renders. Reading a flame graph is a senior-level skill, and it's the entry ticket for everything else in this chapter.</p>",
+      "explanationHtml": "<p>You've earned your way to the Expert tier. Vex meets you in a quieter chamber than usual — a long oak workbench, a single laptop, and a flame graph paused mid-recording on the screen.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex the Interface Weaver:</strong> \"Every junior engineer who learns about <code>memo</code> immediately wants to wrap everything in it. Every senior engineer has watched a colleague do that and make the app slower. The difference between the two is one tool: the Profiler. Before you optimise anything, you measure. Before you measure, you reproduce. Before you reproduce, you describe the problem in concrete terms. We start there.\"</p></div>\n\n<h3>Two ways to profile — extension and API</h3>\n\n<p>The <strong>React DevTools browser extension</strong> ships a <em>Profiler</em> tab next to the <em>Components</em> tab. You hit Record, interact with the page, and stop. The extension hands you a session of <em>commits</em> — moments when React updated the DOM. Each commit shows which components rendered, in what order, and how long each took.</p>\n\n<p>The in-component <code>&lt;Profiler&gt;</code> API is the programmatic counterpart. You wrap a subtree, give it an <code>id</code>, and pass a callback. React invokes the callback on every commit:</p>\n\n<pre><code>import { Profiler } from 'react';\n\nfunction onRender(id, phase, actualDuration, baseDuration, startTime, commitTime) {\n  // phase: 'mount' | 'update' | 'nested-update'\n  // actualDuration: ms spent rendering THIS commit (with memoization savings)\n  // baseDuration: ms it would have taken without any memoization\n  console.log(id, phase, actualDuration.toFixed(2));\n}\n\n&lt;Profiler id=\"QuestList\" onRender={onRender}&gt;\n  &lt;QuestList /&gt;\n&lt;/Profiler&gt;</code></pre>\n\n<p>Use the extension during development. Use the API to capture production-shaped data (sampled, behind a flag) when the user reports something slow that you can't reproduce locally.</p>\n\n<h3>Reading a commit — flame graph vs ranked view</h3>\n\n<p>Every commit has two presentations in the extension:</p>\n\n<ul>\n  <li><strong>Flame graph</strong> — the component tree, coloured by render time. Wide bars are slow. Grey bars didn't render this commit (memoization or no state change). This is the structural view: <em>where</em> in the tree did the work happen?</li>\n  <li><strong>Ranked view</strong> — the same components, sorted by render time, longest first. This is the cost view: <em>which components</em> dominated this commit?</li>\n</ul>\n\n<p>Hover any component and the panel on the right tells you <strong>why it rendered</strong>: <em>props changed</em> (and which ones), <em>state changed</em>, <em>parent rendered</em>, <em>hook changed</em>, or <em>context changed</em>. This single field — \"why did this render?\" — is where every optimisation decision starts.</p>\n\n<h3>The wasted-render pattern — the most important thing to spot</h3>\n\n<p>A <em>wasted render</em> is a component that rendered with <strong>the same props it had before</strong>, producing identical output. The Profiler highlights these clearly: the component appears in the flame graph (so it ran), but every prop is unchanged.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"One wasted render is invisible. The same wasted render multiplied across a 500-row table on every keystroke is the difference between a snappy app and one that feels broken. Wasted renders compound under list iteration — that is where you find the fires worth fighting.\"</p></div>\n\n<h3>The trap: \"everything renders fast\" is not the same as \"nothing to fix\"</h3>\n\n<p>A common junior mistake: \"the slowest component is 1.2ms — there's nothing to optimise.\" But 1.2ms × 200 list items × every keystroke = 240ms per keystroke. A flame graph that shows uniform short bars across hundreds of components is often the sickest case, because no single component looks expensive — but the cumulative cost of re-rendering all of them is the lag the user feels.</p>\n\n<p>The fix isn't to make each component faster. It's to make the right components <em>not render at all</em> when their inputs didn't change.</p>\n\n<h3>When the Profiler lies</h3>\n\n<p>Two important caveats every senior engineer learns the hard way:</p>\n\n<ul>\n  <li><strong>DevTools overhead inflates timings.</strong> Just having the Profiler enabled adds 10–30% to every render. Numbers are useful for <em>relative</em> comparison (component A vs component B, before vs after a change), not absolute targets. Always profile in production builds via the <code>profiling</code> bundle of React DOM, not the dev build.</li>\n  <li><strong>Strict Mode double-renders in development.</strong> If you see every component rendering twice during a commit, that's Strict Mode helping you find effects that aren't idempotent. It's not the production behaviour. Production runs every render once.</li>\n</ul>\n\n<p>The senior engineer's loop is: <em>describe a slow interaction → reproduce in a production build → record a Profiler session → identify wasted renders or genuinely expensive work → apply the precise fix → re-record and verify.</em> Skip any step and you're guessing.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex's workshop is unusually quiet today. The flame graphs that normally pulse on the wall-screens are paused — frozen mid-commit. A laptop sits open at the centre of the workbench, a recording session loaded but unread."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "You've crossed into the Expert tier, and the rules change. Up to now I've taught you what to write. Now I have to teach you when to <em>change</em> what you've written — and the only honest answer involves measurement. Welcome to the Profiler."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "There are two presentations of every commit. The flame graph — the tree of your components, coloured by render time. The ranked view — the same components sorted by cost. The flame graph tells you <em>where</em> the work happened. The ranked view tells you <em>which components</em> dominated. Look at both. They reveal different patterns."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The skill I want you to leave with is recognising the wasted render. It's the component that ran but produced identical output — same props, same state, same result. One wasted render is invisible. Five hundred of them, on every keystroke, is the lag you feel in the app you're about to optimise."
+        },
+        {
+          "type": "example",
+          "speaker": "The in-component Profiler API",
+          "text": "import { Profiler } from 'react';\n\nfunction onRender(id, phase, actualDuration, baseDuration) {\n  // actualDuration: ms spent rendering this commit\n  // baseDuration: ms it would have taken without memoization\n  console.log(id, phase, actualDuration.toFixed(2));\n}\n\n<Profiler id=\"QuestList\" onRender={onRender}>\n  <QuestList />\n</Profiler>"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "One last warning before you go. The Profiler lies. DevTools adds 10–30% to every render simply by being enabled. Use the numbers for <em>relative</em> comparisons — before vs after, A vs B — never as absolute targets. And always profile in a production build of React. The dev build runs slower for legitimate reasons that don't apply to your users."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Read a Profiler session — the questions to answer</h3>\n<p>You've been handed a recorded Profiler session of a search-as-you-type interface. The user typed 6 characters, producing 6 commits. The flame graph shows:</p>\n<ul>\n  <li><code>App</code> rendered every commit (1.1 ms)</li>\n  <li><code>SearchBar</code> rendered every commit (0.4 ms)</li>\n  <li><code>ResultList</code> rendered every commit (8.2 ms)</li>\n  <li>Inside <code>ResultList</code>, 200 <code>ResultRow</code> components each rendered every commit (~0.04 ms each)</li>\n</ul>\n<p>Hovering <code>ResultRow</code> shows the same props every commit: same <code>result</code> object, same <code>onSelect</code> function reference.</p>\n\n<h3>Internalise the analysis</h3>\n<ol>\n  <li><strong>What is the slowest single component?</strong> <code>ResultList</code> at 8.2 ms.</li>\n  <li><strong>Where is the cumulative cost?</strong> 200 × 0.04 ms = 8 ms — the <code>ResultRow</code> sea is most of <code>ResultList</code>'s time.</li>\n  <li><strong>What is the optimisation opportunity?</strong> Every <code>ResultRow</code> is a wasted render. Same props, identical output. Wrap in <code>memo</code> and stabilise <code>onSelect</code> with <code>useCallback</code> in the parent so the memoised rows actually skip.</li>\n  <li><strong>What is <em>not</em> the optimisation?</strong> Making <code>ResultList</code> faster individually. The 8.2 ms isn't intrinsic — it's the sum of children rendering unnecessarily.</li>\n</ol>\n<p>This is the loop. Profile, identify wasted renders, apply the precise fix, re-profile. The retrieval check below tests whether you can read the same kind of session yourself.</p>",
+      "feynmanPrompt": "Explain to a colleague who has never opened the React Profiler what a 'wasted render' is, why a flame graph showing uniform short bars across hundreds of components is often the sickest case, and what one piece of information in the Profiler tells you most of what you need to fix it.",
+      "questions": [
+        {
+          "id": "rxe1q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does the Profiler call a 'wasted render'?",
+          "options": [
+            "A component that rendered with the same props as the previous render, producing identical output",
+            "A component whose render took more than 16ms (one frame)",
+            "A component that threw an error during rendering and was retried",
+            "A component that was rendered but then unmounted before the commit phase finished"
+          ],
+          "answer": "A component that rendered with the same props as the previous render, producing identical output",
+          "explanation": "A wasted render is a component that did the work of rendering despite none of its inputs changing — same props, same state, same context. The output is identical to last time, so the work was wasted. One wasted render is invisible; thousands of them, multiplied across list items on every keystroke, is the lag the user feels."
+        },
+        {
+          "id": "rxe1q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the difference between the Profiler's `actualDuration` and `baseDuration` callback arguments?",
+          "options": [
+            "actualDuration is what this commit took with current memoization in place; baseDuration is what it would have taken with no memoization at all",
+            "actualDuration is wall-clock time including network; baseDuration excludes network",
+            "actualDuration measures the parent; baseDuration measures all children",
+            "They are identical — one is in milliseconds, the other in microseconds"
+          ],
+          "answer": "actualDuration is what this commit took with current memoization in place; baseDuration is what it would have taken with no memoization at all",
+          "explanation": "The pair lets you measure the value of your memoization. If actualDuration is much smaller than baseDuration, your memoization is saving real work. If they are nearly equal, the memoization either isn't helping or isn't being applied. This is the single best way to verify that a memo or useCallback is actually doing something."
+        },
+        {
+          "id": "rxe1q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A flame graph shows that every commit re-renders all 200 rows of a list, even when only one row's data changed. The single-row render time is 0.04ms — fast. What is the right diagnosis?",
+          "options": [
+            "Cumulative wasted-render cost: 200 × 0.04ms = 8ms per commit. The rows render with unchanged props on every keystroke. The fix is memo + a stable callback in the parent so unchanged rows skip rendering",
+            "There is no problem — 0.04ms per row is well within the 16ms frame budget",
+            "The rows are rendering fast but the parent must be slow — focus optimisation on the parent component",
+            "Switch to virtualisation immediately — only render visible rows"
+          ],
+          "answer": "Cumulative wasted-render cost: 200 × 0.04ms = 8ms per commit. The rows render with unchanged props on every keystroke. The fix is memo + a stable callback in the parent so unchanged rows skip rendering",
+          "explanation": "This is the single most common pattern in real apps. Each row looks fine in isolation; the cumulative cost is the killer. Virtualisation can help when rows are off-screen, but the first fix is preventing wasted renders for unchanged rows. Wrap the row in React.memo and stabilise any callback props with useCallback so the memo comparison actually returns equal."
+        },
+        {
+          "id": "rxe1q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "Which Profiler observation is the LEAST trustworthy as an absolute number to optimise against?",
+          "options": [
+            "A render time recorded in the development build with the React DevTools extension enabled",
+            "A render time recorded in a production-profiling build with no extension overhead",
+            "A relative comparison: 'component X went from 8ms to 1ms after wrapping in memo'",
+            "A relative comparison: 'commit count dropped from 60 to 12 over the same interaction'"
+          ],
+          "answer": "A render time recorded in the development build with the React DevTools extension enabled",
+          "explanation": "Dev mode runs slower (extra checks, double-renders under Strict Mode, no minification), and the Profiler extension itself adds 10–30% overhead. The number is fine for relative before/after comparison, but you should never tell a stakeholder 'this takes 8ms' based on a dev-build measurement. Always profile in a production build with React's profiling bundle for absolute numbers."
+        }
+      ]
+    },
+    {
+      "id": "rx-e2",
+      "title": "Memoization Decisions (Beyond the Basics)",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>You already know <em>how</em> <code>memo</code>, <code>useMemo</code>, and <code>useCallback</code> work. The senior-level skill is knowing <em>when</em> they help and when they cost more than they save. And then there's a different tool entirely — <strong>concurrent React</strong> — that solves a class of problems where the answer is: don't memoize, tell React to deprioritise.</p>",
+      "explanationHtml": "<p>The Profiler showed you what's slow. Now you need a precise vocabulary for the tools that fix it — and an honest acknowledgement of when each tool is the wrong choice.</p>\n\n<h3>The cost of memoization</h3>\n\n<p>Every <code>memo</code>, <code>useMemo</code>, and <code>useCallback</code> has a price tag the tutorials skip:</p>\n\n<ul>\n  <li>The comparison itself takes time. A shallow prop comparison on a row component with 12 props is not free; if the comparison runs more often than the savings it produces, you've made the app slower.</li>\n  <li>The closures captured by <code>useCallback</code> keep their dependencies alive. A callback that closes over a large in-memory cache prevents that cache from being garbage-collected while the component is mounted.</li>\n  <li>Cache invalidation has cognitive cost. Every dependency array is one more thing the next reader of your code must verify. Wrong dependencies cause stale closures — bugs that only manifest in specific user paths.</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The default is no memoization. You earn the right to add it by showing a Profiler trace where it saves measurable time. The default is not 'wrap everything in <code>useCallback</code> just in case' — that's how codebases become unreadable while staying just as slow.\"</p></div>\n\n<h3>The premature-memoisation anti-pattern</h3>\n\n<pre><code>// ❌ Premature: every prop wrapped \"defensively\"\nfunction QuestPanel({ quest }) {\n  const onSelect = useCallback(() =&gt; pick(quest.id), [quest.id]);\n  const onDelete = useCallback(() =&gt; remove(quest.id), [quest.id]);\n  const labels = useMemo(() =&gt; quest.tags.map(t =&gt; t.name), [quest.tags]);\n  // The child isn't even memoized — the callbacks save nothing.\n  return &lt;QuestRow quest={quest} onSelect={onSelect} onDelete={onDelete} labels={labels} /&gt;;\n}\n\n// ✅ Honest: the child re-renders anyway, no memoization needed\nfunction QuestPanel({ quest }) {\n  return (\n    &lt;QuestRow\n      quest={quest}\n      onSelect={() =&gt; pick(quest.id)}\n      onDelete={() =&gt; remove(quest.id)}\n      labels={quest.tags.map(t =&gt; t.name)}\n    /&gt;\n  );\n}</code></pre>\n\n<p><code>useCallback</code> only matters when its receiver is memoized. If the child is plain, <code>useCallback</code> in the parent costs setup time and produces zero savings.</p>\n\n<h3>The decision matrix</h3>\n\n<table>\n  <thead>\n    <tr><th>Scenario</th><th>Right tool</th><th>Why</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Memoised child receives a function prop that changes every render</td><td><code>useCallback</code></td><td>Stabilise the reference so memo's shallow compare returns true</td></tr>\n    <tr><td>Memoised child receives a derived array or object that changes every render</td><td><code>useMemo</code></td><td>Same reason — preserve referential equality across renders</td></tr>\n    <tr><td>Component receives the same props but rerenders because parent rerenders</td><td><code>React.memo</code></td><td>Skip the re-render via shallow prop comparison</td></tr>\n    <tr><td>Expensive pure calculation on every render</td><td><code>useMemo</code></td><td>Cache the result keyed on dependencies</td></tr>\n    <tr><td>Cheap derived value (filter of 50 items, simple map)</td><td><strong>None — leave it alone</strong></td><td>Memoization overhead exceeds the savings</td></tr>\n    <tr><td>Heavy render driven by user input (search, filter)</td><td><code>useDeferredValue</code></td><td>Tell React this update is non-urgent; keep the input responsive</td></tr>\n    <tr><td>Expensive state transition triggered by an event (tab switch)</td><td><code>useTransition</code></td><td>Mark the slow update as transition; React keeps prior UI visible</td></tr>\n  </tbody>\n</table>\n\n<h3>Concurrent React — when YOU don't memoize, you defer</h3>\n\n<p>React 18 added two hooks that solve a different problem from memoization. They don't make work faster; they tell React the work is <em>non-urgent</em>, so React keeps the urgent UI responsive while the slow work happens in the background.</p>\n\n<h4><code>useDeferredValue</code> — for derived expensive renders</h4>\n\n<pre><code>function SearchPage() {\n  const [query, setQuery] = useState('');\n  const deferredQuery = useDeferredValue(query);\n\n  return (\n    &lt;&gt;\n      &lt;input value={query} onChange={e =&gt; setQuery(e.target.value)} /&gt;\n      {/* Receives the LATEST query — input stays snappy */}\n      {/* SlowResults receives a deferred query — may lag behind, no big deal */}\n      &lt;SlowResults query={deferredQuery} /&gt;\n    &lt;/&gt;\n  );\n}</code></pre>\n\n<p>The input updates on every keystroke. <code>SlowResults</code> may render with a slightly stale query while the user is still typing — and when typing pauses, React catches up. The user perceives a responsive input even when the result list is genuinely expensive to render.</p>\n\n<h4><code>useTransition</code> — for expensive state updates triggered by events</h4>\n\n<pre><code>function TabbedDashboard() {\n  const [tab, setTab] = useState('overview');\n  const [isPending, startTransition] = useTransition();\n\n  function selectTab(next) {\n    startTransition(() =&gt; {\n      setTab(next); // The slow update — wrapped in startTransition\n    });\n  }\n\n  return (\n    &lt;&gt;\n      &lt;TabBar onSelect={selectTab} active={tab} /&gt;\n      {isPending &amp;&amp; &lt;Spinner /&gt;}\n      &lt;TabContent tab={tab} /&gt;\n    &lt;/&gt;\n  );\n}</code></pre>\n\n<p>Without <code>startTransition</code>, clicking a tab freezes the UI until <code>TabContent</code> finishes rendering. With it, React keeps the previous tab's content on screen while the new tab renders in the background, exposing <code>isPending</code> so you can show a loading indicator.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The mental model: <code>memo</code> says 'don't do this work at all if inputs match'. <code>useDeferredValue</code> says 'do this work, but later, when the urgent work is done'. They're not interchangeable. If your input is still janky after wrapping the result list in memo, the cost is intrinsic — you need to defer it, not skip it.\"</p></div>\n\n<h3>The honest order of operations</h3>\n\n<ol>\n  <li>Profile. Identify the actual problem.</li>\n  <li>If wasted renders dominate → <code>memo</code> + stable callbacks/values.</li>\n  <li>If a single calculation is expensive → <code>useMemo</code>.</li>\n  <li>If the work is genuinely expensive and can't be eliminated → <code>useDeferredValue</code> or <code>useTransition</code>.</li>\n  <li>If the work is conceptually unrelated to the urgent UI → split components / lift state up so the urgent path doesn't see the expensive subtree at all.</li>\n  <li>Re-profile and verify.</li>\n</ol>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex slides a worn-out keyboard across the workbench — the W, A, S, and D keys are visibly more polished than the rest. \"This was an engineer's keyboard. They wrapped every callback in useCallback. The app got 18% slower.\""
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The temptation when you first learn memoization is to apply it everywhere. Resist. Each <code>memo</code>, <code>useMemo</code>, and <code>useCallback</code> has a cost — the comparison itself takes time, the closure captures keep memory alive, the dependency array is one more thing for the next reader to verify. The default is <em>no</em> memoization. You earn the right to add it by showing a Profiler trace where it saves measurable time."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "And there's a tool you haven't met yet that makes some memoization unnecessary. Concurrent React — <code>useDeferredValue</code> and <code>useTransition</code>. Instead of memoizing to skip work, you tell React the work isn't urgent. The input stays responsive while the slow result list renders in the background. Different tool, different problem, different mental model."
+        },
+        {
+          "type": "example",
+          "speaker": "useDeferredValue — keep the input snappy",
+          "text": "function SearchPage() {\n  const [query, setQuery] = useState('');\n  const deferredQuery = useDeferredValue(query);\n\n  return (\n    <>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      <SlowResults query={deferredQuery} />\n    </>\n  );\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "<code>useTransition</code> is the same idea for events instead of derived values. The user clicks a tab; the tab content takes 80ms to render; without transitions the browser freezes for 80ms. Wrap the state update in <code>startTransition</code> and React keeps the previous tab visible while the new one renders, with <code>isPending</code> so you can show a spinner. The work is the same. The user's perception of the work is completely different."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Below, you'll be given a slow component re-rendering excessively. Your task is to identify which tool is the right answer for the scenario described — memo, useDeferredValue, or 'leave it alone'. Read the comments before you write code."
+        }
+      ],
+      "guidedPracticeHtml": "<p>You're handed a search-as-you-type interface. The input is laggy because <code>SlowResults</code> takes 60ms to render on every keystroke. Profile-confirmed: the rendering work is intrinsic — there are no wasted renders to eliminate, the work is genuinely expensive, and reducing the data set isn't an option.</p>\n<ul>\n  <li>Apply <code>useDeferredValue</code> so the input stays responsive while <code>SlowResults</code> renders with a deferred copy of the query</li>\n  <li>The input must update on every keystroke (no debounce)</li>\n  <li>The deferred query is what gets passed to <code>SlowResults</code></li>\n  <li>Render the <code>data-testid=\"deferred\"</code> span showing the deferred value, so the test can verify it</li>\n</ul>\n<p>Note: <code>SlowResults</code> in this exercise is a stub that just renders the query string — the test verifies you wired <code>useDeferredValue</code> correctly, not that you can simulate concurrent React's scheduling.</p>",
+      "guidedPracticeStarterCode": "import { useState, useDeferredValue } from 'react';\n\nfunction SlowResults({ query }) {\n  // In real code this would render thousands of rows.\n  return <div data-testid=\"results\">Results for: {query}</div>;\n}\n\nexport default function SearchPage() {\n  const [query, setQuery] = useState('');\n  // TODO: derive a deferred value from query using useDeferredValue\n\n  return (\n    <div>\n      <input\n        data-testid=\"input\"\n        value={query}\n        onChange={e => setQuery(e.target.value)}\n      />\n      {/* TODO: render <span data-testid=\"deferred\">{deferredQuery}</span> */}\n      {/* TODO: pass deferredQuery to <SlowResults /> */}\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders the search input",
+          "selector": "[data-testid='input']",
+          "exists": true
+        },
+        {
+          "label": "Renders the deferred-value span",
+          "selector": "[data-testid='deferred']",
+          "exists": true
+        },
+        {
+          "label": "Renders the SlowResults output",
+          "selector": "[data-testid='results']",
+          "exists": true
+        },
+        {
+          "label": "Typing 'react' updates the input value",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "[data-testid='input']",
+              "value": "react"
+            }
+          ],
+          "then": {
+            "selector": "[data-testid='input']",
+            "value": "react"
+          }
+        },
+        {
+          "label": "After typing, deferred span eventually shows the typed value",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "[data-testid='input']",
+              "value": "hooks"
+            }
+          ],
+          "then": {
+            "selector": "[data-testid='deferred']",
+            "requiredText": "hooks"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;TabbedDashboard&gt;</code> component from scratch using <code>useTransition</code>. Three tabs: 'Overview', 'Activity', 'Reports'. Clicking a tab triggers a state update that you wrap in <code>startTransition</code>. While <code>isPending</code> is true, render a <code>&lt;span data-testid=\"spinner\"&gt;Loading…&lt;/span&gt;</code> next to the tab bar. The active tab content is just a <code>&lt;p&gt;</code> with the tab name; in real code it would be expensive. The Solo challenge is wiring <code>useTransition</code> correctly — destructure <code>[isPending, startTransition]</code>, wrap the <code>setTab</code> call, render the spinner conditionally. No scaffold provided.</p>",
+      "feynmanPrompt": "Explain to a colleague why wrapping every callback in useCallback can make an app slower, not faster. Then explain the mental-model difference between memo (which skips work) and useDeferredValue (which defers work). Give one realistic scenario for each.",
+      "questions": [
+        {
+          "id": "rxe2q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What problem does `useDeferredValue` solve that `useMemo` does not?",
+          "options": [
+            "useDeferredValue keeps urgent UI (like an input) responsive by letting React render a downstream expensive component with a slightly stale value while the user is still interacting",
+            "useDeferredValue caches the result of an expensive calculation across renders",
+            "useDeferredValue prevents a component from rendering until its data has finished loading",
+            "useDeferredValue is a synonym for useMemo with a different name for clarity"
+          ],
+          "answer": "useDeferredValue keeps urgent UI (like an input) responsive by letting React render a downstream expensive component with a slightly stale value while the user is still interacting",
+          "explanation": "useMemo caches a value so it isn't recomputed when nothing changes. useDeferredValue is a different concept — it tells React 'this derived value is non-urgent, defer rendering anything that depends on it'. The user keeps typing into an input that updates instantly; the slow result list lags behind by a frame or two. They solve different problems."
+        },
+        {
+          "id": "rxe2q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does `useTransition` return?",
+          "options": [
+            "A tuple [isPending, startTransition] — isPending is true while the transition update is rendering; startTransition wraps non-urgent state updates",
+            "A single function startTransition that wraps state updates",
+            "A boolean indicating whether React is currently in a transition",
+            "An object { pending, start } similar to a Promise"
+          ],
+          "answer": "A tuple [isPending, startTransition] — isPending is true while the transition update is rendering; startTransition wraps non-urgent state updates",
+          "explanation": "const [isPending, startTransition] = useTransition(). startTransition(() => setSomething(value)) marks that update as a transition — React renders it in the background while keeping the previous UI on screen. isPending is true during that window — use it to render a spinner or dim the previous content."
+        },
+        {
+          "id": "rxe2q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A junior developer wraps every prop in `useCallback` and every derived value in `useMemo` 'just in case'. The Profiler shows no measurable improvement and the codebase has become harder to read. What is the most accurate critique?",
+          "options": [
+            "useCallback only saves work when the receiver is wrapped in memo. Without that, useCallback adds setup cost and produces zero savings — the work was wasted",
+            "useCallback always improves performance; the Profiler must be misreading the data",
+            "The codebase is correctly optimised; the readability problem is unavoidable",
+            "useMemo and useCallback only help in production builds — the dev build measurements are unreliable"
+          ],
+          "answer": "useCallback only saves work when the receiver is wrapped in memo. Without that, useCallback adds setup cost and produces zero savings — the work was wasted",
+          "explanation": "useCallback returns a stable function reference. The only consumer of that stability is React.memo's shallow prop comparison. If the child component isn't memoized, the stable reference is irrelevant — the child re-renders for other reasons, and useCallback was pure overhead. Apply useCallback strategically: only when you have evidence that a memoized child is being defeated by a changing function reference."
+        },
+        {
+          "id": "rxe2q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "A heavy result list renders 60ms on every keystroke in a search input. You've already wrapped each row in memo and there are no wasted renders — the work is intrinsic. Which is the right next move?",
+          "options": [
+            "useDeferredValue on the query so the input stays responsive while the result list renders with a slightly delayed query in the background",
+            "More aggressive memoization — wrap the result list itself in memo and useCallback every prop",
+            "Replace useState with useReducer for batching",
+            "Use useMemo to cache the rendered JSX of the result list"
+          ],
+          "answer": "useDeferredValue on the query so the input stays responsive while the result list renders with a slightly delayed query in the background",
+          "explanation": "Memoization can't help here — the work is genuinely needed, there are no wasted renders to skip. The right tool is to defer the work, not skip it. useDeferredValue tells React the result list's update is non-urgent; the input updates immediately on every keystroke, and the result list catches up when typing pauses. The user perceives a responsive input even when the rendering work is genuinely expensive."
+        }
+      ]
+    },
+    {
+      "id": "rx-e3",
+      "title": "Code Splitting & Lazy Loading",
+      "sortOrder": 3,
+      "xpReward": 80,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>The first paint of your app is the most expensive page-view a user ever experiences. Every kilobyte of JavaScript in the initial bundle is JavaScript the browser has to download, parse, compile, and execute before the user can interact with anything. Code splitting is the discipline of <em>not shipping what isn't needed yet</em>.</p>",
+      "explanationHtml": "<p>You've optimised what runs. Now you optimise what loads. The cheapest render in the world is still expensive if the user spent four seconds downloading the JavaScript that runs it.</p>\n\n<h3>The bundle problem</h3>\n\n<p>By default, every component you import becomes part of the initial bundle. A user landing on the homepage downloads — and parses, and compiles — the JavaScript for the admin dashboard, the markdown editor, the chart library, the date picker, even though they may never visit the routes that need them.</p>\n\n<pre><code>// Synchronous import — bundled with the page that imports it,\n// which usually means bundled with the entire app:\nimport AdminDashboard from './pages/AdminDashboard';\nimport MarkdownEditor from './components/MarkdownEditor';\nimport HeavyChart from './components/HeavyChart';</code></pre>\n\n<p>The fix: tell the bundler 'this code can be in its own chunk; load it only when needed'.</p>\n\n<h3><code>React.lazy</code> + <code>&lt;Suspense&gt;</code> — the route-level pattern</h3>\n\n<pre><code>import { lazy, Suspense } from 'react';\nimport { Routes, Route } from 'react-router-dom';\n\n// Each lazy() call creates a separate chunk:\nconst HomePage = lazy(() =&gt; import('./pages/HomePage'));\nconst AdminDashboard = lazy(() =&gt; import('./pages/AdminDashboard'));\nconst SettingsPage = lazy(() =&gt; import('./pages/SettingsPage'));\n\nfunction App() {\n  return (\n    &lt;Suspense fallback={&lt;PageLoadingSkeleton /&gt;}&gt;\n      &lt;Routes&gt;\n        &lt;Route path=\"/\" element={&lt;HomePage /&gt;} /&gt;\n        &lt;Route path=\"/admin\" element={&lt;AdminDashboard /&gt;} /&gt;\n        &lt;Route path=\"/settings\" element={&lt;SettingsPage /&gt;} /&gt;\n      &lt;/Routes&gt;\n    &lt;/Suspense&gt;\n  );\n}</code></pre>\n\n<p>The user lands on <code>/</code>: the bundler downloads the homepage chunk, not the admin chunk. They click a link to <code>/admin</code>: <em>now</em> the admin chunk downloads. <code>Suspense</code> shows the fallback during that download, then the admin page renders. The initial bundle is smaller; the time-to-interactive on the homepage is faster.</p>\n\n<h3>Component-level splitting — for heavy widgets</h3>\n\n<p>Routes are the obvious split points, but any heavy component that's <em>conditionally</em> rendered is a candidate. Charting libraries, rich-text editors, code editors, complex date pickers — all are typically tens to hundreds of kilobytes minified.</p>\n\n<pre><code>const HeavyChart = lazy(() =&gt; import('./HeavyChart'));\n\nfunction Dashboard() {\n  const [showChart, setShowChart] = useState(false);\n\n  return (\n    &lt;&gt;\n      &lt;button onClick={() =&gt; setShowChart(true)}&gt;Show analytics&lt;/button&gt;\n      {showChart &amp;&amp; (\n        &lt;Suspense fallback={&lt;p&gt;Loading chart…&lt;/p&gt;}&gt;\n          &lt;HeavyChart /&gt;\n        &lt;/Suspense&gt;\n      )}\n    &lt;/&gt;\n  );\n}</code></pre>\n\n<p>The chart's bundle is only fetched when the user clicks 'Show analytics'. Most users never click. Most users never download it. The dashboard's initial render is faster for everyone.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The instinct is to lazy-load everything. Don't. Each lazy boundary is an extra network round-trip and an extra Suspense boundary the user might see flash. The right question is: <em>does this code run in the user's first session, or only sometimes?</em> Always-needed code: bundle it. Conditional code: split it.\"</p></div>\n\n<h3>The bundle-analysis loop</h3>\n\n<p>Senior engineers don't guess what's heavy. They measure with a bundle analyser. For Vite, <code>vite-bundle-visualizer</code> opens a treemap showing every module and its weight in the production build:</p>\n\n<pre><code>npm i -D vite-bundle-visualizer\nnpx vite-bundle-visualizer\n# → opens an interactive treemap of your built bundle</code></pre>\n\n<p>The loop:</p>\n<ol>\n  <li>Build the production bundle.</li>\n  <li>Run the analyser. Identify the largest chunks and which modules they contain.</li>\n  <li>Split the heaviest, conditionally-rendered offenders with <code>React.lazy</code>.</li>\n  <li>Rebuild and re-measure. The initial bundle should be smaller.</li>\n</ol>\n\n<p>Common offenders, in rough order: <code>moment</code> (replaceable with <code>date-fns</code> or <code>dayjs</code>), <code>lodash</code> (use ES module imports — <code>import debounce from 'lodash/debounce'</code> not <code>import { debounce } from 'lodash'</code>), <code>chart.js</code>/<code>recharts</code>/<code>d3</code>, <code>monaco-editor</code>/<code>codemirror</code>, <code>quill</code>/<code>tinymce</code>, large icon sets imported as a whole.</p>\n\n<h3>Preloading — fast splits without the wait</h3>\n\n<p>Lazy-loaded chunks have one downside: when the user actually navigates, they wait for the network. <strong>Preloading</strong> downloads the chunk in the background before the user clicks, so it's already cached when they do.</p>\n\n<pre><code>// On hover or focus of the link, kick off the import:\nfunction NavLink({ to, children, importFn }) {\n  const handlePrefetch = () =&gt; {\n    // Triggers the dynamic import; result is cached by the browser\n    importFn();\n  };\n  return (\n    &lt;Link to={to} onMouseEnter={handlePrefetch} onFocus={handlePrefetch}&gt;\n      {children}\n    &lt;/Link&gt;\n  );\n}\n\n&lt;NavLink to=\"/admin\" importFn={() =&gt; import('./pages/AdminDashboard')}&gt;\n  Admin\n&lt;/NavLink&gt;</code></pre>\n\n<p><code>&lt;link rel=\"modulepreload\" href=\"...\"&gt;</code> in <code>index.html</code> is the static equivalent for chunks you know everyone will need shortly. Modern routers like TanStack Router, Next.js App Router, and Remix automate this — when the user is near a link, the chunk is fetched.</p>\n\n<h3>The fallback — make it survive a slow network</h3>\n\n<p><code>Suspense</code>'s <code>fallback</code> is what the user sees while the chunk loads. On a fast connection, this is invisible — the chunk downloads in milliseconds. On a slow connection, the fallback might be on screen for seconds. Design it intentionally:</p>\n\n<ul>\n  <li>Use a layout-preserving skeleton, not a centred spinner — the page shouldn't jump when the real content arrives.</li>\n  <li>Match the dimensions of the eventual content. A 600-pixel-tall skeleton becoming a 600-pixel-tall page means no cumulative layout shift; a 50-pixel spinner becoming a 600-pixel page is a CLS warning in Core Web Vitals.</li>\n  <li>Place <code>Suspense</code> boundaries close to the lazy-loaded component, not at the app root — otherwise one slow chunk blanks the entire page.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex's screen splits into two windows. On the left: a Lighthouse score for an unoptimised app — Performance 38, Time to Interactive 7.4 seconds. On the right: the same app after splitting — Performance 91, TTI 1.6 seconds. The diff is a single page-routing file."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The cheapest render in the world is still expensive if the user spent four seconds downloading the JavaScript that runs it. Code splitting is the discipline of not shipping what the user doesn't need yet. The tools are <code>React.lazy</code> and <code>&lt;Suspense&gt;</code>; the discipline is knowing where to put the splits."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Two split granularities. Routes are the obvious one — the homepage doesn't need the admin dashboard's code. The second is heavier individual components: charting libraries, rich-text editors, code editors. They're often the size of the rest of your app combined. If they're conditionally rendered, lazy-load them. Most users will never download them."
+        },
+        {
+          "type": "example",
+          "speaker": "React.lazy + Suspense — the canonical shape",
+          "text": "import { lazy, Suspense } from 'react';\n\nconst AdminDashboard = lazy(() => import('./pages/AdminDashboard'));\n\nfunction App() {\n  return (\n    <Suspense fallback={<PageSkeleton />}>\n      <Routes>\n        <Route path=\"/admin\" element={<AdminDashboard />} />\n      </Routes>\n    </Suspense>\n  );\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "And measure, always. <code>vite-bundle-visualizer</code> opens a treemap of your production bundle. The biggest blocks are the candidates for splitting. Don't guess. Don't split everything. Identify the conditional heavy hitters, split those, re-measure. The loop is: build → analyse → split → rebuild → verify the initial bundle shrunk."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Convert a synchronously-imported heavy component to a lazy-loaded one with a fallback.</p>\n<ul>\n  <li>Replace the synchronous <code>import HeavyChart from './HeavyChart'</code> with <code>const HeavyChart = lazy(() =&gt; import('./HeavyChart'))</code></li>\n  <li>Wrap the conditional render in <code>&lt;Suspense&gt;</code> with a fallback containing <code>data-testid=\"fallback\"</code> and the text <strong>Loading chart…</strong></li>\n  <li>The chart should only render after the user clicks the <code>data-testid=\"show\"</code> button</li>\n  <li>The chart stub component is provided inline — your job is the lazy + Suspense wiring, not the chart itself</li>\n</ul>\n<p>Note: in this iframe the dynamic <code>import()</code> resolves immediately because the chart module is mocked, so the fallback may flash too quickly to see. The test verifies the structure, not the timing.</p>",
+      "guidedPracticeStarterCode": "import { useState, lazy, Suspense } from 'react';\n\n// In real code this would be: const HeavyChart = lazy(() => import('./HeavyChart'));\n// We simulate a lazy module here so the iframe has something to load.\nconst HeavyChart = lazy(() =>\n  Promise.resolve({\n    default: () => <div data-testid=\"chart\">Chart contents</div>,\n  })\n);\n\nexport default function Dashboard() {\n  const [showChart, setShowChart] = useState(false);\n\n  return (\n    <div>\n      <button data-testid=\"show\" onClick={() => setShowChart(true)}>\n        Show analytics\n      </button>\n      {/* TODO: when showChart is true, render <HeavyChart /> wrapped in <Suspense> */}\n      {/* TODO: the Suspense fallback must contain <p data-testid=\"fallback\">Loading chart…</p> */}\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders the show-analytics button",
+          "selector": "[data-testid='show']",
+          "exists": true
+        },
+        {
+          "label": "Chart is not rendered before the button is clicked",
+          "selector": "[data-testid='chart']",
+          "exists": false
+        },
+        {
+          "label": "After clicking show, the chart eventually renders",
+          "action": "click",
+          "selector": "[data-testid='show']",
+          "then": {
+            "selector": "[data-testid='chart']",
+            "exists": true
+          }
+        },
+        {
+          "label": "Suspense boundary is wired (fallback element exists in source structure)",
+          "checkLazySuspense": "HeavyChart"
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a route-level code-splitting setup from scratch. Imagine an app with three pages: <code>HomePage</code>, <code>AdminDashboard</code>, <code>ReportsPage</code>. Lazy-load all three with <code>React.lazy</code>. Wrap your <code>&lt;Routes&gt;</code> in a single top-level <code>&lt;Suspense&gt;</code> with a layout-preserving skeleton fallback (a div with the same min-height as your real pages). Add a <code>NavLink</code> wrapper component that triggers the dynamic import on <code>onMouseEnter</code> and <code>onFocus</code> to preload the chunk before the user clicks. No scaffold — assemble it from the patterns in the lesson.</p>",
+      "feynmanPrompt": "Explain to a colleague why code splitting matters for time-to-interactive, even when their app already feels fast. Then explain when NOT to lazy-load: which kinds of components should remain in the initial bundle, and why over-splitting can be counterproductive.",
+      "questions": [
+        {
+          "id": "rxe3q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does `React.lazy(() => import('./Page'))` accomplish?",
+          "options": [
+            "It tells the bundler to put Page in its own chunk that downloads on first render, and returns a component compatible with React (used inside <Suspense>)",
+            "It memoizes the Page component to prevent unnecessary re-renders",
+            "It defers Page's rendering until the user scrolls it into view",
+            "It evaluates Page lazily on the server, sending only its props to the client"
+          ],
+          "answer": "It tells the bundler to put Page in its own chunk that downloads on first render, and returns a component compatible with React (used inside <Suspense>)",
+          "explanation": "lazy() takes a dynamic import() and returns a special component. Bundlers (Vite, Webpack, Rollup) recognise the dynamic import and emit a separate chunk. When React first renders the lazy component, it triggers the import, suspends until it resolves, and renders the component. Suspense provides the fallback during the load."
+        },
+        {
+          "id": "rxe3q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the role of the <Suspense> boundary's `fallback` prop?",
+          "options": [
+            "It is the UI shown while any descendant lazy component (or other suspended resource) is still loading",
+            "It is the fallback shown when an error occurs in a descendant — equivalent to an Error Boundary",
+            "It is rendered always, alongside the real children, in the same DOM container",
+            "It is rendered only on the server during SSR, never in the browser"
+          ],
+          "answer": "It is the UI shown while any descendant lazy component (or other suspended resource) is still loading",
+          "explanation": "Suspense's fallback is React's declarative loading state. While any child is suspended (a lazy component still downloading, or a Suspense-aware data source still resolving), the closest enclosing Suspense boundary renders its fallback. Errors are NOT handled by Suspense — that's an ErrorBoundary's job. Place ErrorBoundary outside Suspense to handle both cases."
+        },
+        {
+          "id": "rxe3q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A bundle analysis shows that `chart.js` (180kb minified) is in the initial bundle even though only the analytics page uses it. The analytics page is one of six pages and most users never visit it. What is the right action?",
+          "options": [
+            "Lazy-load the page that uses chart.js (or chart.js itself if multiple pages need it conditionally) so its bundle is downloaded only when the user actually navigates there",
+            "Switch from chart.js to a lighter library — that's the only legitimate fix",
+            "Set up a Service Worker to pre-cache chart.js after first paint",
+            "Disable tree-shaking for chart.js to reduce build complexity"
+          ],
+          "answer": "Lazy-load the page that uses chart.js (or chart.js itself if multiple pages need it conditionally) so its bundle is downloaded only when the user actually navigates there",
+          "explanation": "This is the classic case for code splitting. A heavy library used on a single, conditionally-visited route doesn't belong in the initial bundle. Lazy-loading the route (or the chart component itself) means most users never download the 180kb. Switching libraries is a separate, larger conversation; lazy-loading is the minimal-risk first move."
+        },
+        {
+          "id": "rxe3q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When is preloading a lazy chunk on hover (`onMouseEnter={() => import('./Page')}`) appropriate?",
+          "options": [
+            "When the chunk is large enough to cause a noticeable wait on click but small enough that downloading on hover doesn't waste significant bandwidth — typically routes a user is likely to navigate to",
+            "Always — preloading every lazy chunk on hover eliminates all loading states for free",
+            "Never — preloading defeats the purpose of code splitting and reintroduces the original bundle problem",
+            "Only on mobile — desktop networks are fast enough that hover preloading isn't useful"
+          ],
+          "answer": "When the chunk is large enough to cause a noticeable wait on click but small enough that downloading on hover doesn't waste significant bandwidth — typically routes a user is likely to navigate to",
+          "explanation": "Preloading is a balance. The benefit: when the user clicks, the chunk is already cached and the navigation feels instant. The cost: bandwidth is spent on a chunk the user might never have clicked. The right targets are likely-to-be-visited routes (the next page in a wizard, the settings link the user just hovered) and not unlikely paths (every link in a dropdown). Modern routers automate this; rolling your own is fine for one or two strategic links."
+        }
+      ]
+    },
+    {
+      "id": "rx-e4",
+      "title": "Server-State Libraries",
+      "sortOrder": 4,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Half the bugs in production React apps come from one mistaken assumption: that data fetched from a server should be managed the same way as data the user typed into a form. It shouldn't. Server state has freshness, caching, deduplication, retry, and out-of-band invalidation concerns that <code>useState + useEffect</code> doesn't address. Server-state libraries — TanStack Query and SWR — are how senior engineers solve this.</p>",
+      "explanationHtml": "<p>You've shipped a real React app. Then someone clicks a list item, the page navigates, they hit Back, and the list spinner appears for two seconds even though they had the data three seconds ago. Or they open the app in two tabs and the data drifts. Or two components on the same page both fetch <code>/api/user/me</code> and you make two identical requests. Or the app fails silently when the network blips for 200ms. Welcome to server state.</p>\n\n<h3>The fundamental insight: server state is not client state</h3>\n\n<p>Client state is what the user typed into a form, the toggle they flipped, the active tab. You own it; it lives where you put it; nothing else can change it.</p>\n\n<p>Server state is a different beast:</p>\n\n<ul>\n  <li><strong>It can become stale.</strong> The server's copy may have changed since you last fetched it. How fresh is fresh enough?</li>\n  <li><strong>It is shared.</strong> The same data may be needed by many components. Should they each fetch it independently? (No.)</li>\n  <li><strong>Other clients can change it.</strong> A teammate edits a shared document; the server now disagrees with what your tab thinks is true. How do you find out?</li>\n  <li><strong>The network can fail.</strong> Transient network errors should retry; persistent failures should give the user a real error. The line between the two is timing and policy.</li>\n  <li><strong>It can be mutated.</strong> The user submits a form. The server returns the new state. Now every cached query that touched the affected data is potentially stale.</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Every team that built a non-trivial React app from scratch eventually rebuilt the same thing — caching, deduplication, refetch on focus, retry, mutation invalidation. They built it badly because the team was solving a different problem. Server-state libraries are that infrastructure, written well, by people who specialised. Reaching for one is not over-engineering — it's <em>not re-engineering it badly yourself</em>.\"</p></div>\n\n<h3>The naive pattern — why useEffect+useState breaks at scale</h3>\n\n<pre><code>function UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() =&gt; {\n    setLoading(true);\n    fetch(`/api/users/${userId}`)\n      .then(r =&gt; r.json())\n      .then(setUser)\n      .catch(setError)\n      .finally(() =&gt; setLoading(false));\n  }, [userId]);\n\n  // …render loading / error / user\n}</code></pre>\n\n<p>This is fine for a tutorial. In a real app, it has at least seven problems:</p>\n\n<ol>\n  <li><strong>Race condition.</strong> The user changes from id=1 to id=2 while the first fetch is still in flight. The slower request resolves last and overwrites the correct data with stale data.</li>\n  <li><strong>No deduplication.</strong> Three components mounted at once each call <code>/api/users/1</code> in parallel. Three identical requests, three identical responses, three identical state updates.</li>\n  <li><strong>No caching.</strong> Navigate away and back: a fresh spinner, even though the data didn't change.</li>\n  <li><strong>No retry.</strong> A 200ms network blip is a hard failure. The user has to refresh manually.</li>\n  <li><strong>No invalidation.</strong> A mutation elsewhere changes the user's name; this view doesn't know and shows the old name forever.</li>\n  <li><strong>No refetch on focus.</strong> The user comes back to a tab that's been idle for 20 minutes; the data is potentially ancient.</li>\n  <li><strong>No status differentiation.</strong> Is this a fresh fetch, a background refetch, a retry? The UI can't tell, so it can't render the right indicator.</li>\n</ol>\n\n<h3>TanStack Query (formerly React Query) — the standard answer</h3>\n\n<pre><code>import { useQuery } from '@tanstack/react-query';\n\nfunction UserProfile({ userId }) {\n  const { data: user, isLoading, isError, error } = useQuery({\n    queryKey: ['user', userId],\n    queryFn: () =&gt; fetch(`/api/users/${userId}`).then(r =&gt; r.json()),\n    staleTime: 60_000,         // 1 minute — data considered fresh for this long\n    gcTime: 5 * 60_000,        // 5 minutes — cache held in memory after last use\n  });\n\n  if (isLoading) return &lt;Spinner /&gt;;\n  if (isError) return &lt;ErrorView error={error} /&gt;;\n  return &lt;Profile user={user} /&gt;;\n}</code></pre>\n\n<p>The library handles every problem in the list above:</p>\n\n<ul>\n  <li><strong>Query keys are the cache.</strong> <code>['user', userId]</code> is the cache key. Two components asking for the same key share the same query — one network request, two consumers.</li>\n  <li><strong>staleTime</strong> says \"this data is considered fresh for 60 seconds\". Within that window, mounting a new consumer of the same key returns the cached data instantly with no refetch. After staleTime, the data is shown immediately but a background refetch starts.</li>\n  <li><strong>gcTime</strong> (formerly <code>cacheTime</code>) says \"keep the cache entry in memory for 5 minutes after the last consumer unmounts\". Navigate away and back within 5 minutes: instant render from cache, optional background refetch.</li>\n  <li><strong>Race conditions are eliminated.</strong> When userId changes, the old query is cancelled (or its result is ignored on resolve).</li>\n  <li><strong>Retry is on by default.</strong> Failed queries retry with exponential backoff. Configurable per query.</li>\n  <li><strong>Refetch on window focus is on by default.</strong> Tab regaining focus → background refetch of stale queries.</li>\n</ul>\n\n<h3>Mutations and invalidation</h3>\n\n<pre><code>import { useMutation, useQueryClient } from '@tanstack/react-query';\n\nfunction EditProfile() {\n  const queryClient = useQueryClient();\n\n  const mutation = useMutation({\n    mutationFn: (updates) =&gt;\n      fetch('/api/users/me', { method: 'PATCH', body: JSON.stringify(updates) }),\n\n    onSuccess: () =&gt; {\n      // Mark every query touching this user as stale — they refetch on next render\n      queryClient.invalidateQueries({ queryKey: ['user', 'me'] });\n    },\n  });\n\n  return &lt;form onSubmit={(e) =&gt; { e.preventDefault(); mutation.mutate(formData); }} /&gt;;\n}</code></pre>\n\n<p>The pattern: <code>useMutation</code> wraps the write. <code>onSuccess</code> tells the cache which queries are now stale. Every component reading those queries refetches on next render. The UI converges on the new server state without any manual coordination.</p>\n\n<h3>SWR — the smaller-surface alternative</h3>\n\n<p>SWR (from Vercel) solves the same problems with a smaller API. The mental model is the same — keys, stale-while-revalidate, focus refetch, mutations — but the surface is roughly half the size. For straightforward apps without heavy mutation logic, it's a perfectly defensible choice.</p>\n\n<pre><code>import useSWR, { mutate } from 'swr';\n\nfunction UserProfile({ userId }) {\n  const { data: user, error, isLoading } = useSWR(\n    `/api/users/${userId}`,\n    (url) =&gt; fetch(url).then(r =&gt; r.json())\n  );\n  // …\n}\n\n// Invalidation is a global function call:\nawait fetch('/api/users/me', { method: 'PATCH', body: ... });\nmutate('/api/users/me'); // SWR refetches everywhere this key is used</code></pre>\n\n<p>TanStack Query has more knobs (parallel queries, dependent queries, infinite queries, optimistic updates, persistence). SWR has fewer concepts to learn. Either is a strict upgrade over hand-rolled <code>useEffect+useState</code>.</p>\n\n<h3>Optimistic updates — the conceptual overview</h3>\n\n<p>Optimistic updates show the expected post-mutation state <em>before</em> the server confirms it, then roll back if the mutation fails. They make apps feel instantaneous. The mechanic, in TanStack Query:</p>\n\n<ol>\n  <li>On <code>onMutate</code>, snapshot the current cache for the affected query.</li>\n  <li>Update the cache optimistically with the expected new value.</li>\n  <li>On <code>onError</code>, restore the snapshot.</li>\n  <li>On <code>onSettled</code> (success or error), invalidate so the cache reconciles with the server.</li>\n</ol>\n\n<p>Use them for the operations users repeat dozens of times per session — toggling a like, marking a quest complete, reordering items. Don't use them for irreversible operations or anything where 'almost certainly succeeded' isn't safe.</p>\n\n<h3>When NOT to reach for a server-state library</h3>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The library is the right tool when the problem is server state. It is not the right tool for client-only state — local form values, the active tab, a wizard's current step. And for a single one-shot fetch on app boot — say, a feature flag config that loads once and never changes — useEffect+useState is fine. Reach for the library when the data is shared, refetched, mutated, or invalidated. That's most of your app's data. But not all of it.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex pulls up an issue tracker showing seven open bugs. Every one of them has the same root cause, written differently: 'data is stale after navigation', 'shows old name after save', 'two requests for the same user'. Vex closes the tracker."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Every team that built a non-trivial React app eventually rebuilt the same infrastructure — caching, deduplication, refetch on focus, retry, mutation invalidation. They built it badly, because their team was working on a product, not a library. The shape of the problem is the same in every codebase. The right answer is the same too: don't rebuild the infrastructure. Pick one of the two libraries that have already done it."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "TanStack Query is the gold standard. Its mental model is keys and stale time. Every query has a key — same key, same cache entry, shared across components. Stale time says how long the data is fresh; gc time says how long the cache survives after no one's using it. Mutations invalidate keys; consumers refetch automatically. SWR is the smaller-surface alternative — same model, half the API."
+        },
+        {
+          "type": "example",
+          "speaker": "useQuery — the canonical shape",
+          "text": "const { data: user, isLoading, isError } = useQuery({\n  queryKey: ['user', userId],\n  queryFn: () => fetch(`/api/users/${userId}`).then(r => r.json()),\n  staleTime: 60_000,\n  gcTime: 5 * 60_000,\n});"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Two warnings. First: server-state libraries are not for client-only state. Don't put your wizard's current step in TanStack Query. Don't put a controlled form's values in SWR. Those are local. Second: a single one-shot fetch on app boot — a feature flag config that loads once — doesn't need the library either. Reach for it when the data is shared, refetched, mutated, or invalidated. That's most of your app's network state, but not all of it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Read the comparison — and the reasoning behind it</h3>\n<p>Below are two implementations of the same component: a <code>UserProfile</code> that fetches a user by id and re-fetches when the id changes. Read both carefully, then internalise <em>why</em> the second is the right answer for production.</p>\n\n<h4>Naive — useEffect + useState</h4>\n<pre><code>function UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() =&gt; {\n    setLoading(true);\n    fetch(`/api/users/${userId}`)\n      .then(r =&gt; r.json())\n      .then(setUser)\n      .catch(setError)\n      .finally(() =&gt; setLoading(false));\n  }, [userId]);\n  // … render\n}</code></pre>\n\n<h4>TanStack Query</h4>\n<pre><code>function UserProfile({ userId }) {\n  const { data: user, isLoading, isError, error } = useQuery({\n    queryKey: ['user', userId],\n    queryFn: () =&gt; fetch(`/api/users/${userId}`).then(r =&gt; r.json()),\n    staleTime: 60_000,\n    gcTime: 5 * 60_000,\n  });\n  // … render\n}</code></pre>\n\n<h4>What you get for free with the library</h4>\n<ol>\n  <li><strong>Race condition fixed.</strong> Quickly switching userId 1 → 2 → 3 won't have request 1 overwriting request 3's data on a slow network.</li>\n  <li><strong>Deduplication.</strong> Three components asking for <code>['user', 1]</code> at the same time → one request, three subscribers.</li>\n  <li><strong>Cache.</strong> Navigate away and back within <code>gcTime</code> → instant render from cache.</li>\n  <li><strong>Retry.</strong> A transient network failure retries with exponential backoff.</li>\n  <li><strong>Refetch on focus.</strong> Tab regaining focus → stale queries refetch.</li>\n  <li><strong>Invalidation.</strong> A mutation elsewhere can mark <code>['user', 1]</code> stale; this component refetches on next render.</li>\n</ol>\n\n<p>The retrieval check below tests whether you can recognise these patterns in scenarios you might face on the job.</p>",
+      "guidedPracticeStarterCode": "// Conceptual reading — no code to write for this sub-chunk.\n// Compare the naive pattern with the TanStack Query version above\n// and identify which production concerns each addresses.",
+      "feynmanPrompt": "Explain to a colleague why server state and client state should be managed by different tools. Give two specific bugs that useEffect+useState produces under realistic conditions, and how a server-state library prevents them.",
+      "questions": [
+        {
+          "id": "rxe4q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "In TanStack Query, what does the `queryKey` represent?",
+          "options": [
+            "The unique identifier for a piece of cached data — multiple components asking for the same key share the same query and cache entry",
+            "The URL of the endpoint to fetch — TanStack Query uses it to send the request",
+            "The dependency array for the queryFn, similar to useEffect's deps",
+            "A debugging label that appears in DevTools but has no functional role"
+          ],
+          "answer": "The unique identifier for a piece of cached data — multiple components asking for the same key share the same query and cache entry",
+          "explanation": "queryKey is the cache key. ['user', userId] uniquely identifies one cached entry. If three components mount with the same key, TanStack Query makes one network request and feeds all three from the resulting cache entry. The key is also what mutations invalidate — invalidateQueries({ queryKey: ['user', 1] }) marks that entry stale and triggers refetches in every consumer."
+        },
+        {
+          "id": "rxe4q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the difference between TanStack Query's `staleTime` and `gcTime` (formerly `cacheTime`)?",
+          "options": [
+            "staleTime is how long data is considered fresh (no background refetch within this window). gcTime is how long the cache entry stays in memory after the last consumer unmounts",
+            "They are aliases for the same concept; only the API name differs",
+            "staleTime is for the network layer; gcTime is for the React layer",
+            "staleTime is in seconds; gcTime is in minutes — that is the only difference"
+          ],
+          "answer": "staleTime is how long data is considered fresh (no background refetch within this window). gcTime is how long the cache entry stays in memory after the last consumer unmounts",
+          "explanation": "Two independent dimensions. Within staleTime, mounting a new consumer reads from cache with no refetch. After staleTime, the data is still rendered immediately but a background refetch is scheduled. gcTime starts when no component is using the entry — after that long with no consumers, the entry is dropped. Tune them based on how fresh data needs to be vs how often the user navigates away and back."
+        },
+        {
+          "id": "rxe4q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A useEffect+useState fetch component has a bug where rapidly changing `userId` from 1 → 2 → 3 sometimes shows user 1's data after the userId is 3. What is happening, and how does TanStack Query's useQuery prevent it?",
+          "options": [
+            "The first request resolves last (slow network), and its setUser call overwrites the more recent data. TanStack Query keys the cache by ['user', userId] and ignores stale resolutions for queries the user has navigated away from",
+            "The component is re-rendering before the fetch finishes — wrap setUser in startTransition to fix it",
+            "Multiple effects are running in parallel — switch from useEffect to useLayoutEffect",
+            "fetch isn't cancellable in browsers, so this is unsolvable in any library"
+          ],
+          "answer": "The first request resolves last (slow network), and its setUser call overwrites the more recent data. TanStack Query keys the cache by ['user', userId] and ignores stale resolutions for queries the user has navigated away from",
+          "explanation": "This is the classic race condition. Network responses don't arrive in send order on slow or variable connections. The naive pattern has no idea which request is the one whose result is currently relevant. TanStack Query keys queries by their key tuple; when userId changes, the previous query is cancelled (or its result is discarded on resolve), and only the current key's result is written to the cache the UI reads."
+        },
+        {
+          "id": "rxe4q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "Which piece of state is INAPPROPRIATE to manage with TanStack Query or SWR?",
+          "options": [
+            "The current step number in a multi-step signup wizard — purely client-side state with no server origin",
+            "The currently authenticated user's profile, fetched once per session and updated via mutations",
+            "A paginated list of orders that refreshes when the user filters or sorts",
+            "A search-as-you-type result list that re-fetches as the query changes"
+          ],
+          "answer": "The current step number in a multi-step signup wizard — purely client-side state with no server origin",
+          "explanation": "Server-state libraries are for state that originates on (and needs to be reconciled with) a server. A wizard's current step is purely local UI state — the server has no opinion about it, no other client cares, and there's nothing to invalidate. useState is correct here. The other three are all server-derived and benefit from caching, deduplication, and invalidation."
+        }
+      ]
+    },
+    {
+      "id": "rx-e5",
+      "title": "Suspense for Data Fetching",
+      "sortOrder": 5,
+      "xpReward": 90,
+      "practiceType": "NONE",
+      "filename": "App.jsx",
+      "hookHtml": "<p>The traditional dance for data-driven UI is verbose: <em>fetch starts, set loading true, await response, set data, set loading false</em>. <code>&lt;Suspense&gt;</code> is React's bet on a fundamentally different model — components that <em>suspend</em> while their data is loading, with the loading UI declared at a boundary above them. Less code per component, more discipline at the framework level. It's reshaping how Next.js and Remix work; you need to understand it.</p>",
+      "explanationHtml": "<p>You've used <code>&lt;Suspense&gt;</code> already — to wrap a <code>React.lazy</code> component. The same primitive does something far more ambitious: it lets <em>any</em> component declare \"I am not ready to render yet\" and have React rewind to the closest <code>&lt;Suspense&gt;</code> boundary above it.</p>\n\n<h3>The new model — components suspend</h3>\n\n<p>In the traditional pattern, every data-fetching component tracks its own loading state:</p>\n\n<pre><code>function Profile({ id }) {\n  const { data, isLoading } = useUser(id);\n  if (isLoading) return &lt;Spinner /&gt;;\n  return &lt;ProfileView user={data} /&gt;;\n}</code></pre>\n\n<p>In the Suspense model, the component never sees the loading state. It just <em>uses</em> the data, and if the data isn't ready, the framework intercepts and renders the closest fallback instead:</p>\n\n<pre><code>function Profile({ id }) {\n  const user = use(userResource(id)); // Suspends if not ready\n  return &lt;ProfileView user={user} /&gt;;  // Only runs once data is here\n}\n\nfunction Page() {\n  return (\n    &lt;Suspense fallback={&lt;ProfileSkeleton /&gt;}&gt;\n      &lt;Profile id={42} /&gt;\n    &lt;/Suspense&gt;\n  );\n}</code></pre>\n\n<p>The <code>Profile</code> component has no <code>isLoading</code> branch. The loading UI is declared once, at the boundary, and applies to anything below that suspends. This is the inversion: <em>loading is composed at the boundary, not implemented per component</em>.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The first time it clicks for an experienced React developer, it feels almost wrong — the data fetch is invisible in the component code. But that's the point. The component only describes the rendered output. <em>When</em> the data arrives is not its concern; the framework handles waiting.\"</p></div>\n\n<h3>The three patterns of data fetching</h3>\n\n<table>\n  <thead>\n    <tr><th>Pattern</th><th>Where the fetch starts</th><th>Trade-off</th></tr>\n  </thead>\n  <tbody>\n    <tr><td><strong>Fetch-on-render</strong></td><td>Inside a useEffect after the component mounts</td><td>Simple to write, latency-bad — the network round-trip starts only after rendering. Sub-component fetches cascade (waterfalls)</td></tr>\n    <tr><td><strong>Fetch-then-render</strong></td><td>Before the component renders (e.g. in a router loader)</td><td>One round-trip up front; the component renders only when data is ready. No cascading waterfalls, but TTFB is later</td></tr>\n    <tr><td><strong>Render-as-you-fetch</strong></td><td>Started early (often at navigation), then read inside the component which suspends if not ready</td><td>The Suspense pattern. Fetch begins as early as possible; rendering streams as parts of the data arrive; loading UI is declarative</td></tr>\n  </tbody>\n</table>\n\n<p>Render-as-you-fetch is the model frameworks like Next.js App Router and Remix are converging on. You declare the data your route needs at the route level; the framework starts the fetch immediately on navigation; components consume the data and suspend if not ready. The user sees rendered HTML the moment any part of the page is ready, not after every part is ready.</p>\n\n<h3>Streaming SSR — Suspense's killer app</h3>\n\n<p>Suspense is also what makes <strong>streaming server-side rendering</strong> work. The server can flush chunks of HTML as soon as they're ready, instead of waiting for the entire page:</p>\n\n<pre><code>// Conceptual server render — actual API depends on framework:\n&lt;html&gt;\n  &lt;body&gt;\n    &lt;Header /&gt;             {/* Renders immediately */}\n    &lt;Suspense fallback={&lt;NavSkeleton /&gt;}&gt;\n      &lt;Nav /&gt;              {/* Streams when its data arrives */}\n    &lt;/Suspense&gt;\n    &lt;Suspense fallback={&lt;FeedSkeleton /&gt;}&gt;\n      &lt;Feed /&gt;             {/* Streams when its data arrives */}\n    &lt;/Suspense&gt;\n  &lt;/body&gt;\n&lt;/html&gt;</code></pre>\n\n<p>The server flushes the HTML for the header and the two skeleton fallbacks immediately. The user sees the page shell in milliseconds. As <code>Nav</code> and <code>Feed</code> finish loading on the server, their HTML streams down and replaces the skeletons in place — no extra round-trips, no client-side data fetching for the initial render.</p>\n\n<h3>Boundary-design discipline — where do <code>&lt;Suspense&gt;</code> boundaries belong?</h3>\n\n<p>This is the senior-level skill. Too few boundaries: one slow component blanks the whole page. Too many: the page becomes a flickering mosaic of skeletons. The right answer depends on the page's information architecture.</p>\n\n<ul>\n  <li><strong>Around independent regions of a layout.</strong> The header, sidebar, main feed, and right-rail of a dashboard should each have their own boundary if their data sources are independent. The header doesn't need to wait for the feed.</li>\n  <li><strong>Around heavy components inside a region.</strong> A page might have one boundary for the page-level data and a nested boundary for an in-page chart that loads slower than the rest.</li>\n  <li><strong>Not too granular.</strong> A boundary around every list item produces 50 skeleton flashes when the list loads. Boundaries belong around <em>conceptual sections</em>, not arbitrary components.</li>\n  <li><strong>Pair with Error Boundaries.</strong> Suspense handles the loading case; ErrorBoundary handles the failure case. Wrap each Suspense boundary in an ErrorBoundary or you've handled half the problem.</li>\n</ul>\n\n<h3>Where it stands today (React 18, May 2026)</h3>\n\n<p>Be honest with your team about the state of Suspense for data fetching:</p>\n\n<ul>\n  <li><strong>Inside a framework</strong> (Next.js App Router, Remix, TanStack Start) — well-supported. The framework provides a sanctioned way to declare data, suspend on it, and stream SSR. This is where Suspense for data is real today.</li>\n  <li><strong>With TanStack Query</strong> — partially supported via <code>useSuspenseQuery</code>. You opt in per-query.</li>\n  <li><strong>With raw <code>use()</code> and your own resources</strong> — the underlying primitive exists but is not the path most apps should take. The integration burden is high; mistakes cause render-loops or wasted fetches.</li>\n  <li><strong>Pure client-side React without a framework</strong> — possible but you're on a path that the ecosystem hasn't fully paved. <code>useSuspenseQuery</code> from TanStack Query is the most pragmatic adoption.</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"My honest framing: <em>understand</em> Suspense for data fetching now, because frameworks are making it the default. <em>Use</em> it now if you're building on a framework that supports it, or via <code>useSuspenseQuery</code> on top of TanStack Query. Don't roll your own resource caches in plain React 18 — the ecosystem will do it for you within the next major version, and the API is still stabilising.\"</p></div>\n\n<h3>Trade-off summary</h3>\n\n<ul>\n  <li><strong>Wins:</strong> simpler component code (no per-component loading branches), declarative loading UI, naturally supports streaming SSR, eliminates waterfall fetches.</li>\n  <li><strong>Costs:</strong> boundary-design becomes a discipline you have to learn, not all libraries are Suspense-aware yet, error handling needs explicit Error Boundary pairing.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex pulls up two side-by-side diffs: the same dashboard component, written for React 18 with hooks, and rewritten for the Suspense model. The Suspense version is shorter — every isLoading branch is gone."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The traditional model: every data-fetching component tracks its own loading state, returns its own spinner, branches on isLoading. The Suspense model: components just <em>use</em> data. If the data isn't ready, React rewinds to the closest Suspense boundary and renders its fallback. Loading UI is declared once at the boundary, not implemented per component. The component code shrinks; the discipline shifts to boundary design."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "There are three patterns of data fetching. Fetch-on-render: kick off the fetch in a useEffect after the component mounts. Simple, but slow — and prone to waterfalls when nested. Fetch-then-render: the framework or router fetches before rendering; the component never sees the loading state. Render-as-you-fetch: start the fetch as early as possible, render whatever's ready, stream in the rest. That last one is what Suspense unlocks. It's why streaming SSR works."
+        },
+        {
+          "type": "example",
+          "speaker": "Suspense — the conceptual shape",
+          "text": "function Profile({ id }) {\n  const user = use(userResource(id)); // Suspends if not ready\n  return <ProfileView user={user} />;  // Only runs once data is here\n}\n\nfunction Page() {\n  return (\n    <Suspense fallback={<ProfileSkeleton />}>\n      <Profile id={42} />\n    </Suspense>\n  );\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Boundary design is the new skill. Too few boundaries and one slow component blanks the entire page. Too many and the user sees a flickering mosaic of skeletons. The right answer is one boundary per <em>conceptual section</em> — header, sidebar, main feed, right rail. Pair every Suspense boundary with an ErrorBoundary, or you've only solved half the problem: loading without failure-handling is a half-built UI."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "An honest read on where this stands today: inside frameworks like Next.js App Router and Remix, Suspense for data is real and shipped. With TanStack Query's <code>useSuspenseQuery</code>, you can opt in. Rolling your own resource caches in plain React 18 is technically possible but the ergonomics aren't where the ecosystem will land. <em>Understand</em> the model now. <em>Use</em> it where the framework or library has paved the road."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Read the architecture diagram — and the boundary decisions</h3>\n<p>Below is a dashboard layout. Read the component tree, then study where the <code>&lt;Suspense&gt;</code> boundaries are placed and why.</p>\n\n<pre><code>&lt;DashboardPage&gt;\n  &lt;Header /&gt;                                 {/* Static — no boundary */}\n\n  &lt;ErrorBoundary&gt;\n    &lt;Suspense fallback={&lt;NavSkeleton /&gt;}&gt;\n      &lt;Nav /&gt;                               {/* Independent data source */}\n    &lt;/Suspense&gt;\n  &lt;/ErrorBoundary&gt;\n\n  &lt;main&gt;\n    &lt;ErrorBoundary&gt;\n      &lt;Suspense fallback={&lt;FeedSkeleton /&gt;}&gt;\n        &lt;Feed /&gt;                            {/* The main data — biggest fetch */}\n        &lt;ErrorBoundary&gt;\n          &lt;Suspense fallback={&lt;ChartSkeleton /&gt;}&gt;\n            &lt;TrendingChart /&gt;               {/* Slower than the feed */}\n          &lt;/Suspense&gt;\n        &lt;/ErrorBoundary&gt;\n      &lt;/Suspense&gt;\n    &lt;/ErrorBoundary&gt;\n  &lt;/main&gt;\n\n  &lt;ErrorBoundary&gt;\n    &lt;Suspense fallback={&lt;RailSkeleton /&gt;}&gt;\n      &lt;RightRail /&gt;                         {/* Independent data source */}\n    &lt;/Suspense&gt;\n  &lt;/ErrorBoundary&gt;\n&lt;/DashboardPage&gt;</code></pre>\n\n<h4>Why those boundaries, and not others</h4>\n<ol>\n  <li><strong>Header has no boundary</strong> because it's static. There's nothing to suspend or fail.</li>\n  <li><strong>Nav, Feed, RightRail each get their own boundary</strong> because their data sources are independent. The Nav doesn't need to wait for the Feed; the Right Rail doesn't need to wait for either. Each can stream in as it's ready.</li>\n  <li><strong>TrendingChart has a nested boundary inside Feed</strong> because the chart loads slower than the rest of the feed. Without the nested boundary, the entire feed would wait for the chart. With it, the feed shows immediately and the chart slot shows a skeleton until it's ready.</li>\n  <li><strong>Every Suspense is paired with an ErrorBoundary</strong> because Suspense handles loading, not failure. A Feed that errors should show \"Feed unavailable\" — without an ErrorBoundary, an exception would bubble to the next handler up and could blank the whole page.</li>\n  <li><strong>No boundary around individual feed items</strong> because that would produce a flickering mosaic of skeletons. Boundaries belong at conceptual section level, not at the granularity of individual items in a list.</li>\n</ol>\n\n<p>The retrieval check below tests whether you've internalised the boundary-design vocabulary.</p>",
+      "guidedPracticeStarterCode": "// Conceptual reading — no code to write for this sub-chunk.\n// Read the architecture in the prose above and identify the\n// reasoning behind each boundary placement.",
+      "feynmanPrompt": "Explain to a colleague the difference between fetch-on-render, fetch-then-render, and render-as-you-fetch. Give one realistic scenario where the third (Suspense) noticeably wins over the first. Then explain why every Suspense boundary should be paired with an ErrorBoundary.",
+      "questions": [
+        {
+          "id": "rxe5q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What happens when a component 'suspends' inside a <Suspense> boundary?",
+          "options": [
+            "React rewinds to the closest enclosing Suspense boundary and renders its fallback until the suspended resource is ready, then re-renders the component",
+            "React unmounts the component and replaces it with the fallback for the remainder of the page's life",
+            "React throws an error that must be caught with try/catch in the parent",
+            "The component renders immediately with undefined data and shows the fallback only on the next render"
+          ],
+          "answer": "React rewinds to the closest enclosing Suspense boundary and renders its fallback until the suspended resource is ready, then re-renders the component",
+          "explanation": "Suspending is a control-flow primitive: the component throws a special signal that React intercepts. React renders the closest Suspense boundary's fallback in place of the suspended subtree. When the underlying resource resolves, React re-renders the suspended component — this time it doesn't suspend, the JSX renders, and the fallback is replaced with the real output."
+        },
+        {
+          "id": "rxe5q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the 'render-as-you-fetch' pattern, and how does it differ from 'fetch-on-render'?",
+          "options": [
+            "render-as-you-fetch starts the network request as early as possible (e.g. on navigation), so the data is in flight while the component starts rendering. fetch-on-render starts the fetch only after the component has mounted, adding a full network round-trip to the time-to-content",
+            "They are alternative names for the same pattern — the difference is purely terminological",
+            "render-as-you-fetch is for server-side rendering only; fetch-on-render is for client-side rendering only",
+            "render-as-you-fetch is older and deprecated; fetch-on-render is the modern recommendation"
+          ],
+          "answer": "render-as-you-fetch starts the network request as early as possible (e.g. on navigation), so the data is in flight while the component starts rendering. fetch-on-render starts the fetch only after the component has mounted, adding a full network round-trip to the time-to-content",
+          "explanation": "fetch-on-render: component renders → useEffect fires → fetch starts → response arrives → setState → re-render with data. Latency is dominated by the network round-trip that begins after rendering. render-as-you-fetch: navigation triggers the fetch immediately → component renders concurrently → component reads from the in-flight resource (suspending if not ready). The two latencies overlap, the user sees content sooner. Frameworks like Next.js App Router and Remix automate this at the route level."
+        },
+        {
+          "id": "rxe5q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A dashboard has Header, Nav, Feed, and TrendingChart. Feed and TrendingChart both fetch data independently; TrendingChart is the slowest. Where should <Suspense> boundaries go?",
+          "options": [
+            "One boundary per independent data source: separate boundaries for Nav, Feed, and TrendingChart (the chart's boundary nested inside Feed if it lives inside the feed visually). Header has no boundary — it has no data to suspend on",
+            "One boundary at the top wrapping the entire page so the whole UI shows a single fallback while anything is loading",
+            "One boundary per HTML element — every <div>, <main>, and <aside> should have its own Suspense",
+            "No boundaries — components should manage their own loading states with isLoading booleans"
+          ],
+          "answer": "One boundary per independent data source: separate boundaries for Nav, Feed, and TrendingChart (the chart's boundary nested inside Feed if it lives inside the feed visually). Header has no boundary — it has no data to suspend on",
+          "explanation": "Suspense boundaries belong at conceptual section level. Independent data sources get their own boundary so a slow one doesn't block the fast ones — the user sees Nav and the page shell while Feed is still loading. Nesting a boundary around TrendingChart inside Feed lets the rest of Feed render immediately and just the chart slot shows a skeleton. Wrapping the entire page is too coarse (one slow query blanks everything); per-element is too granular (mosaic of skeletons)."
+        },
+        {
+          "id": "rxe5q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "Which statement most accurately describes the production-readiness of Suspense for data fetching as of React 18?",
+          "options": [
+            "Inside frameworks (Next.js App Router, Remix) and via TanStack Query's useSuspenseQuery it is well-supported and shipping. Rolling your own resource caches in plain React 18 is possible but ergonomically rough — the ecosystem hasn't paved that path yet",
+            "It is fully GA across all React 18 use cases — any team can adopt it without framework or library help",
+            "It is purely experimental — every production team should avoid it until React 19 ships",
+            "It only works on the server (SSR) — client-side rendering still requires useEffect+useState"
+          ],
+          "answer": "Inside frameworks (Next.js App Router, Remix) and via TanStack Query's useSuspenseQuery it is well-supported and shipping. Rolling your own resource caches in plain React 18 is possible but ergonomically rough — the ecosystem hasn't paved that path yet",
+          "explanation": "Be honest with your team. Suspense for data fetching is real where the framework or library supports it — Next.js App Router, Remix, and TanStack Query's Suspense mode all ship it today. The underlying primitive (use(), throwing promises, resource caches) is in React 18, but writing your own resource layer in plain React without a library is a sharp tool and not where most teams should invest. Understand the model now; adopt it through the layer that has paved the road for you."
+        }
+      ]
+    }
+  ]
+}
