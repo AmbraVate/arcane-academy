@@ -17,9 +17,9 @@ This document describes both **design intent** and **shipping reality**. They di
 - **Practitioner:** `sql-d` JOINs (INNER + LEFT/RIGHT/FULL), `sql-e` Subqueries & CTEs (incl. EXISTS, NOT IN/NULL trap), `sql-f` Modifying data (INSERT/UPDATE/DELETE, transactions, ACID, idempotency)
 - **Expert:** `sql-g` Indexes (B-trees, leftmost prefix, selectivity) & EXPLAIN (plan reading, EXPLAIN ANALYZE), `sql-h` Window functions (ROW_NUMBER/RANK/LAG/LEAD, framing) & recursive CTEs (anchor + recursive step, cycle detection)
 
-**SQL practice runner (architecture).** `SqlEditor.tsx` mounts a sandboxed iframe that loads sql.js from `cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/`. Each test spec runs against a fresh in-memory SQLite database seeded by the spec's `setup` SQL (the first spec's setup is shared as the preview seed). Match modes supported: `rowsExact` (order-sensitive), `rowsAnyOrder` (set comparison), `rowCount` (count only), `columns` (column-name check). Test specs can supply either an `expectedQuery` (run as the reference) or literal `expectedRows` / `expectedRowCount` / `expectedColumns`. Per-test pass/fail is posted back via `postMessage` and forwarded to `/api/sql/{subChunkId}/submit`, where `SqlPracticeService` performs a structural sanity check (must contain SELECT/INSERT/UPDATE/DELETE/WITH and ≥6 chars) before idempotently awarding XP — same client-trusted trust model as React.
+**SQL practice runner (architecture).** `SqlEditor.tsx` mounts a sandboxed iframe that loads sql.js from `cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/`. Each test spec runs against a fresh in-memory SQLite database seeded by the spec's `setup` SQL (the first spec's setup is shared as the preview seed). Match modes supported: `rowsExact` (order-sensitive), `rowsAnyOrder` (set comparison), `rowCount` (count only), `columns` (column-name check). Test specs can supply either an `expectedQuery` (run as the reference) or literal `expectedRows` / `expectedRowCount` / `expectedColumns`. For mutating practice (INSERT/UPDATE/DELETE) where the user's query has no result set, set `verifyQuery` on the spec — the harness runs it against the post-mutation DB and uses ITS rows as the comparison subject (backward-compatible: specs without `verifyQuery` are unaffected). Per-test pass/fail is posted back via `postMessage` and forwarded to `/api/sql/{subChunkId}/submit`, where `SqlPracticeService` performs a structural sanity check (must contain SELECT/INSERT/UPDATE/DELETE/WITH and ≥6 chars) before idempotently awarding XP — same client-trusted trust model as React.
 
-**11 of 22 SQL sub-chunks are interactive** as of this iteration: the entire Foundation tier (sql-a2/a3, sql-b1/b2, sql-c1/c2/c3) plus the most interview-relevant Practitioner/Expert exercises (sql-d2 INNER JOIN, sql-d3 LEFT JOIN orphan-finder, sql-e1 scalar subqueries, sql-h1 ROW_NUMBER + PARTITION BY for top-N-per-group). The remaining 11 sub-chunks stay `practiceType: NONE` because they're conceptually read-only — schema reading (sql-a1), relational model (sql-d1), correlated subqueries + CTEs (sql-e2/e3 — sql.js semantics differ enough to mislead), modifying data (sql-f — fresh DB per test makes UPDATE/DELETE/transactions academic), indexes & EXPLAIN (sql-g — toy data shows nothing), recursive CTEs (sql-h2). These show as a "Mark as studied →" view in `EncodingPage`.
+**13 of 22 SQL sub-chunks are interactive** as of this iteration: the entire Foundation tier (sql-a2/a3, sql-b1/b2, sql-c1/c2/c3), the entire `sql-d` JOINs chunk (sql-d1 your-first-JOIN, sql-d2 INNER JOIN, sql-d3 LEFT JOIN orphan-finder), sql-e1 scalar subqueries, sql-f1 multi-row INSERT (uses the `verifyQuery` extension to assert post-INSERT state without trusting an empty user-result), and sql-h1 ROW_NUMBER + PARTITION BY for top-N-per-group. The remaining 9 sub-chunks stay `practiceType: NONE` because they're conceptually read-only — schema reading (sql-a1), correlated subqueries + CTEs (sql-e2/e3 — sql.js semantics differ enough to mislead), UPDATE/DELETE/transactions (sql-f2/f3 — fresh DB per test makes the consequence academic), indexes & EXPLAIN (sql-g — toy data shows nothing meaningful in EXPLAIN plans), recursive CTEs (sql-h2). These show as a "Mark as studied →" view in `EncodingPage`.
 
 **Java package:** root is `com.ambravate.polymath.academy`, not `com.arcane.academy`. Build artefact is `polymath-academy`.
 
@@ -44,6 +44,12 @@ This document describes both **design intent** and **shipping reality**. They di
 **Onboarding prerequisite check:** `/topic/:topicId/prereq-check` and `/topic/:topicId/css-primer` exist for Tailwind and React. Triggered when a CSS-dependent topic is selected and the user has no localStorage record of having passed/skipped the check.
 
 **Leaderboards & public profiles:** `/leaderboard` (three boards — per-topic weekly, per-topic all-time, polymath breadth) and `/u/:username` (read-only profile aggregating per-topic XP + badges). Both gated by an opt-in `User.publicProfileEnabled` flag (default `false`); users toggle it from `/profile`. See §17a for the full surface area, the privacy contract, and the v1 performance trade-offs.
+
+**Non-technical tracks (Foundation tier shipped):** three new topics ship a Foundation tier each — **Psychology** (`topicId: psychology`, mentor "Aetherius the Mind-Walker", purple accent — 3 chunks `psy-a/b/c`, 15 sub-chunks), **Genealogy** (`topicId: genealogy`, mentor "Theodora of the Thousand Names", gold accent — 3 chunks `gen-a/b/c`, 15 sub-chunks), and **Natural Sciences** (`topicId: sciences`, mentor "Master Vesper", teal accent — 3 chunks `sci-a/b/c`, 15 sub-chunks). All 45 sub-chunks are `practiceType: NONE` — learning is read explanation + retrieval-check questions, no live runner (same model as the read-only SQL sub-chunks; `EncodingPage` shows the "Mark as studied →" path). Content lives in `backend/src/main/resources/content/{psychology,genealogy,sciences}/` and is auto-loaded by `JsonContentSeeder`. Chunks are registered in `TopicSeeder`. Practitioner / Expert / Capstone tiers are sketched in §1.4 / §1.5 / §1.6 below but **deferred to follow-up batches** — only Foundation is committed in this batch. See §11 for the three new Foundation milestone badges.
+
+**SQL sql-g deepened:** the Expert-tier "Indexes & EXPLAIN" chunk grew from 2 sub-chunks (~9k chars total explanation) to 3 sub-chunks (~21k chars) and now covers `sql-g1` How Indexes Work / B-Trees, `sql-g2` Selectivity & Composite Indexes, and `sql-g3` Reading EXPLAIN / EXPLAIN ANALYZE. `practiceType` stays `NONE` (toy data shows nothing meaningful in EXPLAIN plans, and the cost-model intuition is the actual learning goal). Total SQL sub-chunk count is now 23, not 22; the "13 of 22 interactive" line above has not been updated because no new interactive specs landed — `sql-g3` joins the read-only set.
+
+**In-flight (NOT in this batch — defer to follow-up PRs if they land):** Tailwind `tw-b5` Transitions and `tw-b6` Component Extraction are being authored in a parallel agent. Tailwind `tw-c` is unchanged from the original 1196-line file (a regression rewrite was discarded; the §1.3 plan target remains intact). React `rx-e` is being authored in a parallel agent. Treat any of these as not-yet-landed until their own PR updates §1.3 / §0.
 
 ---
 
@@ -166,6 +172,108 @@ Ship production UI at team scale.
 
 ---
 
+## 1.4 Syllabus — Psychology
+
+**Goal:** zero formal psychology background → competence equivalent to BPS / APA undergraduate-major core competencies (perception, learning, social, developmental, clinical, neuro, methods).
+
+**Mentor:** Aetherius the Mind-Walker — an in-fiction archivist of the inner world who frames cognition as a system to be mapped rather than a mystery. Purple accent.
+
+**Mode:** all sub-chunks are `practiceType: NONE` — read explanation + retrieval-check questions. No code editor, no live runner. Same model as the read-only SQL sub-chunks.
+
+### Foundation — "Cartographer of Mind" (psy-a … psy-c) — SHIPPED
+Build the vocabulary and mental scaffolding of cognition, learning, and the social mind.
+
+- **psy-a — The Cognition Compass**: Perception & Attention, Working & Long-Term Memory, Decision-Making & Cognitive Biases, Language & Thought, Problem-Solving & Reasoning
+- **psy-b — Behavior & Learning**: Classical Conditioning, Operant Conditioning, Habit Formation, Motivation & Self-Determination Theory, Cognitive-Behavioral Foundations
+- **psy-c — Social Psychology**: Social Cognition & Schemas, Conformity & Obedience, Persuasion & Elaboration Likelihood Model, Group Dynamics, Attribution Theory & Self-Concept
+- **Foundation Grand Boss** *(planned)* — "The Mind Map": mixed retrieval-check on perception/learning/social fundamentals
+
+### Practitioner — "Healer of Patterns" *(planned, not shipped)*
+Apply Foundation models to lifespan, individual differences, and the clinical lens.
+
+- **Developmental Psychology**: stages (Piaget, Erikson, Vygotsky), attachment, adolescence, ageing
+- **Clinical Foundations**: DSM/ICD frameworks, mood/anxiety/trauma disorders at a literate-generalist level, the diathesis-stress model
+- **Personality Theory**: Big Five, trait vs state, temperament, identity formation
+- **Practitioner Grand Boss** *(planned)* — case-formulation drill: read a vignette, identify mechanisms, propose framework-aligned interventions
+
+### Expert — "Polymath of the Psyche" *(planned, not shipped)*
+Architecture-level thinking: brain ↔ behaviour, evidence-based therapy, research literacy.
+
+- **Neuropsychology**: brain regions ↔ functions, lesion logic, fMRI/EEG basics, neuroplasticity
+- **Therapy Modalities**: CBT, ACT, psychodynamic, systems/family, evidence base for each
+- **Research Methods**: study design, effect sizes, replication crisis, p-hacking, pre-registration
+- **Expert Grand Boss** *(planned)* — "The Replication Audit": read a published study, identify methodological strengths/weaknesses, recommend a replication design
+
+---
+
+## 1.5 Syllabus — Genealogy
+
+**Goal:** zero formal training → ready to begin BCG (Board for Certification of Genealogists) certification preparation. Methodology-first, not surname-collecting.
+
+**Mentor:** Theodora of the Thousand Names — an in-fiction archivist who treats every name as a citation and every claim as a hypothesis. Gold accent.
+
+**Mode:** all sub-chunks are `practiceType: NONE` — read explanation + retrieval-check questions. No code editor, no live runner.
+
+### Foundation — "Apprentice of the Archive" (gen-a … gen-c) — SHIPPED
+Learn to find sources, evaluate them, and extract evidence from human DNA.
+
+- **gen-a — Records & Sources**: Vital Records, Census Records, Church/Parish Records, Immigration & Naturalization, Source Types: Primary/Derivative/Authored
+- **gen-b — Research Methodology**: Genealogical Proof Standard, Source Citation per Evidence Explained, Reasonably Exhaustive Search, Conflict Analysis & Resolution, Research Logs & Documentation
+- **gen-c — DNA & Genetic Genealogy**: Autosomal DNA Basics, mtDNA & Haplogroups, Y-DNA Inheritance, Centimorgans & Match Interpretation, Triangulation & Chromosome Mapping
+- **Foundation Grand Boss** *(planned)* — "The First Proof": construct a fully-cited proof statement from supplied source extracts
+
+### Practitioner — "Locality Specialist" *(planned, not shipped)*
+Apply the GPS to real research workflows and progressively harder problems.
+
+- **Locality-Based Research**: jurisdictional history, repository finding aids, FAN-club (Friends/Associates/Neighbours) methodology
+- **Brick-Wall Methodology**: cluster research, negative searches, alternative-record substitution
+- **Indirect-Evidence Proof Arguments**: building a conclusion from accumulated indirect evidence per the GPS, written proof argument structure
+- **Practitioner Grand Boss** *(planned)* — "The Brick-Wall Trial": resolve a deliberately-ambiguous identity question with indirect evidence
+
+### Expert — "Master Researcher" *(planned, not shipped)*
+Pre-1850 records, complex evidence, BCG portfolio readiness.
+
+- **Pre-1850 Research**: pre-civil-registration records, parish reconstitution, paleography, Latin/older script literacy
+- **Land Records & Probate**: deed analysis, metes-and-bounds, intestate succession, wills as evidence of family structure
+- **Forensic Genealogy**: heir searches, military repatriation, unknown-parentage cases, ethical handling of living-relative DNA matches
+- **Expert Grand Boss** *(planned)* — "The Portfolio Submission": deliver a BCG-spec kinship-determination project against a reference rubric
+
+---
+
+## 1.6 Syllabus — Natural Sciences
+
+**Goal:** zero formal science background → science-literate generalist equivalent to AP / A-level combined-sciences mastery, with statistical reasoning baked in throughout.
+
+**Mentor:** Master Vesper — an in-fiction natural philosopher who treats experiment as ritual and replication as the only proof. Teal accent.
+
+**Mode:** all sub-chunks are `practiceType: NONE` — read explanation + retrieval-check questions. No live wet-lab, no simulation runner (yet).
+
+### Foundation — "Apprentice Naturalist" (sci-a … sci-c) — SHIPPED
+Acquire the method itself, then the vocabulary of physics and biology.
+
+- **sci-a — The Scientific Method**: Hypothesis Formation, Controlled Experiments & Variables, Statistical Reasoning, Peer Review & Replication, Pseudoscience Detection
+- **sci-b — Physics Foundations**: Newton's Laws & Forces, Energy & Conservation, Waves & Sound, Electromagnetism Intro, Modern Physics Glimpse
+- **sci-c — Biology Foundations**: Cells & Cellular Processes, Genetics & DNA, Evolution by Natural Selection, Ecosystems & Energy Flow, Human Body Systems Overview
+- **Foundation Grand Boss** *(planned)* — "The First Investigation": read a popular-science claim, identify the underlying hypothesis, evaluate evidence quality
+
+### Practitioner — "Field Investigator" *(planned, not shipped)*
+Round out the major branches the Foundation skipped, and build statistical fluency.
+
+- **Chemistry Foundations**: atoms, periodic logic, bonding, stoichiometry, reaction types, acids/bases
+- **Earth & Climate Science**: plate tectonics, the rock cycle, atmospheric systems, the carbon cycle, climate-vs-weather, anthropogenic forcing
+- **Ecology**: populations, communities, biogeochemical cycles, biodiversity, conservation thresholds
+- **Practitioner Grand Boss** *(planned)* — "The System Diagram": given a real-world phenomenon (e.g. ocean acidification), trace it across chemistry / ecology / climate
+
+### Expert — "Synthesist of the Sciences" *(planned, not shipped)*
+Modern physics, molecular biology, and proper statistical methods.
+
+- **Modern Physics Deep-Dive**: relativity (special then general at intuition level), quantum mechanics fundamentals, particle physics overview, cosmology
+- **Genetics & Molecular Biology**: DNA replication/transcription/translation in detail, gene regulation, CRISPR, epigenetics, GWAS literacy
+- **Statistical Methods for Science**: hypothesis testing, p-values vs effect sizes, confidence intervals, power analysis, multiple-comparisons correction, Bayesian basics
+- **Expert Grand Boss** *(planned)* — "The Synthesis": review a contemporary research paper across these domains, write a literate-generalist explanation that survives peer scrutiny
+
+---
+
 ## 2. Accelerated Learning Engine
 
 Every review-eligible item (quest objective, boss question, concept card) produces one or more `ReviewItem`s. Each review item has an independent memory trace per user, scheduled by a spaced-repetition algorithm (SM-2 derived, with interleaving and difficulty weighting).
@@ -245,9 +353,23 @@ Three tiers, enforced by Spring profiles and separate infra:
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | OAuth2 (optional in dev) |
 | `OAUTH2_FRONTEND_REDIRECT` | OAuth callback URL |
 | `REVIEW_SCHEDULER_ENABLED` | Feature flag for the review engine |
+| `SENTRY_DSN` | Backend Sentry DSN. Empty (default) → starter auto-disables. Required in prod. |
+| `SENTRY_ENVIRONMENT` | Tag attached to every event. Default `dev` (overridden to `prod` in `application-prod.yml`). |
+| `SENTRY_TRACES_SAMPLE_RATE` | 0.0–1.0. Dev default 0.0; prod default 0.1. |
+| `VITE_SENTRY_DSN` | Frontend Sentry DSN. Read by `main.tsx` at build time; empty → `Sentry.init` is skipped. |
+| `VITE_SENTRY_ENVIRONMENT` | Frontend env tag. Default `dev`. |
+| `VITE_SENTRY_TRACES_SAMPLE_RATE` | Frontend trace sample rate. Default `0`. |
+| `RATELIMIT_ENABLED` | `true` (default) / `false`. Master toggle for the rate-limit filter. |
+| `RATELIMIT_AUTH_*` / `RATELIMIT_AI_*` / `RATELIMIT_CODE_*` | Per-bucket capacity, refill, and period overrides. See `application.yml` defaults (10/10/60s for auth + AI mentor; 30/30/60s for code runner). |
 
 ### Secrets
 Never commit secrets. Local dev uses `.env` (git-ignored); test/prod pull from the host's secret manager (Render env vars / AWS Secrets Manager).
+
+### Behind a proxy / CDN (prod checklist)
+
+The `RateLimitFilter` keys auth-endpoint buckets on `HttpServletRequest.getRemoteAddr()`. When the app sits behind Render's load balancer, Cloudflare, or any other proxy, the direct peer is the proxy — not the user — and every request would share one bucket key.
+
+Fix: set `server.forward-headers-strategy=framework` in the prod profile (and trust the upstream X-Forwarded-For). This is **not** wired by default; turn it on once you know which proxy headers the host injects and how many hops the trust chain has.
 
 ---
 
@@ -458,6 +580,30 @@ Four milestone badges across the SQL track, mirroring the Tailwind/React minimal
 
 Conditions live in `BadgeService.checkCondition` and key off the `completedChunks` set (chunk IDs match the JSON content's `id` field — `sql-a`, `sql-b`, etc.). Awarded automatically by `BadgeService.evaluateAndAward(userId)`, which already runs after every quest submission, retrieval-check pass, and review session.
 
+### React track badges (LEARNING category)
+
+Three milestone badges across the React track, mirroring the Tailwind capstone pattern (Foundation + Practitioner milestones plus the capstone) rather than Java's per-chunk approach. The Expert tier (`rx-c`) is intentionally unbadged — completing it on the way to the capstone is the reward, and `REACT_CAPSTONE_COMPLETE` doubles as the track-master since `rx-d` is the terminal chunk:
+
+| Badge | Trigger | Glyph |
+|---|---|---|
+| **Hook Initiate** (`REACT_HOOK_INITIATE`) | All sub-chunks in `rx-a` complete (Components, props, useState) | ⚛️ |
+| **State Weaver** (`REACT_STATE_WEAVER`) | All sub-chunks in `rx-b` complete (useEffect, custom hooks, lifting state) | 🧶 |
+| **Guild Architect** (`REACT_CAPSTONE_COMPLETE`) | All sub-chunks in `rx-d` complete (The Guild Portal capstone) | 🏛️ |
+
+Conditions live in `BadgeService.checkCondition` and key off the same `completedChunks` set as the SQL/Tailwind/Java badges. Awarded automatically by `BadgeService.evaluateAndAward(userId)`, which `ReactPracticeService.recordPracticeCompletion` already invokes after every successful sub-chunk submission; sub-chunks marked as studied via the read-only path through `EncodingService` also trigger the same evaluation.
+
+### Non-technical track Foundation badges (LEARNING category)
+
+One milestone badge per non-technical track, awarded when all three Foundation chunks complete. Practitioner / Expert badges will land alongside those tiers in follow-up batches:
+
+| Badge | Trigger | Glyph |
+|---|---|---|
+| **Mind-Walker** (`PSY_FOUNDATION_COMPLETE`) | `psy-a`, `psy-b`, `psy-c` all complete | 🧠 |
+| **Lineage Scholar** (`GEN_FOUNDATION_COMPLETE`) | `gen-a`, `gen-b`, `gen-c` all complete | 🌳 |
+| **Natural Philosopher** (`SCI_FOUNDATION_COMPLETE`) | `sci-a`, `sci-b`, `sci-c` all complete | 🔬 |
+
+Enum values are added in `BadgeDefinition.java`; conditions live in `BadgeService.checkCondition` and key off the `completedChunks` set (same pattern as the SQL / React / Tailwind / Java badges). Awarding is automatic via `BadgeService.evaluateAndAward(userId)`, which already runs after every quest submission, retrieval-check pass, login, and review session — and these tracks complete via the retrieval-check path because all sub-chunks are `practiceType: NONE`.
+
 ---
 
 ## 12. Authentication
@@ -483,8 +629,12 @@ Conditions live in `BadgeService.checkCondition` and key off the `completedChunk
 - **Integration tests** (Spring Boot + Testcontainers Postgres): repositories, controllers, security
 - **Code-runner tests**: sandbox timeout, malicious code, common student mistakes
 - **Frontend unit** (Vitest + React Testing Library): components, hooks
-- **E2E** (Playwright): critical flows — register, complete first quest, run a daily review
-- **CI gate**: all suites + Flyway migration dry-run must pass before merge
+- **Accessibility tests** (Vitest + jest-axe in jsdom): UI primitives — Button, Card. Catches semantic WCAG AA failures (alt text, ARIA, headings, labels) at <2s. Visual rules (contrast, focus indicators, layout overlap) need a real browser; pair with `@axe-core/playwright` once Playwright is wired.
+- **E2E** (Playwright): critical flows — register, complete first quest, run a daily review. Not yet wired.
+- **CI gate**: GitHub Actions (`.github/workflows/ci.yml`). Two parallel jobs:
+  - **Backend** — `mvn -B verify` on Java 21. Tests currently `-DskipTests` because the suite is bootstrapped only; remove the flag once the JUnit harness exists.
+  - **Frontend** — `npm ci → lint → tsc --noEmit → test → test:a11y → build`. All steps green on `master` today.
+  - The pipeline cancels in-progress runs on the same branch (`concurrency`) so a force-push doesn't queue a backlog.
 
 ---
 
@@ -497,7 +647,7 @@ The platform exposes an AI mentor for hints during coding quests via `AiMentorSe
 | **Provider** | Document which LLM provider/model is used (e.g. Anthropic Claude Sonnet 4.7, OpenAI GPT-4.x). Pin model version. |
 | **Prompt template** | Versioned and stored in code, not constructed at runtime from user input alone. Must include the system instruction "Do not give the answer outright — guide the learner toward it." |
 | **Cost cap** | Per-user daily token budget (default suggested: 50k input + 10k output). Hard-fail with a friendly message when exceeded. Stored in `user_ai_usage` table or equivalent. |
-| **Rate limit** | Per-user per-minute request cap (default 10/min) at the controller level. Use Bucket4j or Spring's built-in. |
+| **Rate limit** | ✅ Shipped via `RateLimitFilter` (Bucket4j, in-memory). Default 10 req/min per user on `/api/ai-mentor/**`, configurable via `RATELIMIT_AI_*` env vars. Returns 429 + `Retry-After`. Filter runs BEFORE `JwtAuthFilter` so a flood doesn't burn JWT-parse CPU. |
 | **PII / data policy** | Document explicitly what is sent to the LLM provider: at minimum the learner's code submission, the quest brief, and any error message. **Must not** send: email, real name, JWT, or any other identifier. The user must consent to this in onboarding. |
 | **Provider env vars** | `AI_PROVIDER` (`anthropic` / `openai` / `none`), `AI_API_KEY`, `AI_MODEL`, `AI_DAILY_TOKEN_CAP`. Absence of `AI_API_KEY` must disable the mentor cleanly (UI hides the panel) — not crash. |
 | **Failure mode** | Network/timeout/rate-limit → mentor returns a generic "I can't help right now, try the hint" rather than a stack trace. |
@@ -513,6 +663,18 @@ Until the above is in place, the mentor should be feature-flagged off in product
 - `GET /actuator/prometheus` — internal scrape only
 - Structured JSON logs in prod; no stack traces in responses (`GlobalExceptionHandler` returns `{ "message": "…" }`)
 - Key metrics: review-session completion rate, per-topic retention %, code-runner p95 latency, auth error rate
+
+### Sentry — error & performance monitoring
+
+Backend wires `sentry-spring-boot-starter-jakarta`; frontend wires `@sentry/react`. Both **auto-disable when their DSN env var is empty**, which is the default in dev — so the codebase boots cleanly with zero Sentry network traffic until you opt in by setting `SENTRY_DSN` (backend) and `VITE_SENTRY_DSN` (frontend).
+
+**Privacy contract:**
+- `sentry.send-default-pii: false` — Sentry's auto-attached IPs/cookies/headers are off.
+- We never call `Sentry.setUser(...)` (backend or frontend). Errors include exception messages and stack traces only.
+- The Logback integration captures `ERROR`-level log lines as Sentry events. **Audit existing `log.error(...)` calls** before turning Sentry on in prod — anything that interpolates user input (emails, JWT contents, query strings) becomes a Sentry payload. Telemetry log lines already pseudonymise via HMAC; everything else is on the author.
+- Frontend trace sample rate defaults to `0`. Browser tracing is opt-in via `VITE_SENTRY_TRACES_SAMPLE_RATE`.
+
+**Failure mode:** missing or malformed DSN → starter logs a single warning and stays silent. The app does not crash. Sentry init failures on the frontend likewise no-op.
 
 ### Engagement Telemetry — Event Catalog
 
