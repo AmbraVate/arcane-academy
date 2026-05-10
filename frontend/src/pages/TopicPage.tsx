@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { dashboardApi } from '../api/services'
 import { useAuth } from '../hooks/useAuth'
-import type { DashboardDto, ChunkHealthDto } from '../types'
+import type { DashboardDto, ChunkHealthDto } from '@/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 

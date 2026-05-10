@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
-import LandingPage from './pages/LandingPage'
 import TopicsPage from './pages/TopicsPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -56,7 +55,7 @@ export default function App() {
         <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-        <Route path="/"         element={<LandingPage />} />
+        <Route path="/"         element={<LoginPage />} />
         {/* All topics (including java) go through the unified /topic/:topicId → TopicPage flow.
             DashboardPage is reserved for an aggregate, multi-topic view — not a Java special case. */}
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />
