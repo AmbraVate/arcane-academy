@@ -28,6 +28,16 @@ public enum BadgeDefinition {
     SQL_QUERY_OPTIMISER("Query Optimiser", "Master sql-g: Indexes & EXPLAIN \u2014 read the engine's plan", "\u2699\uFE0F", Category.LEARNING),
     SQL_TRACK_MASTER("Cipher's Heir", "Complete every chunk in the SQL track \u2014 Foundation through Expert", "\uD83D\uDDC3\uFE0F", Category.LEARNING),
 
+    // React track milestones \u2014 mirrors the Tailwind minimalism (Foundation/Practitioner + capstone)
+    REACT_HOOK_INITIATE("Hook Initiate", "Master rx-a: Components, props, and your first hook", "\u269B\uFE0F", Category.LEARNING),
+    REACT_STATE_WEAVER("State Weaver", "Master rx-b: useEffect, custom hooks, and lifting state", "\uD83E\uDDF6", Category.LEARNING),
+    REACT_CAPSTONE_COMPLETE("Guild Architect", "Deliver The Guild Portal \u2014 React capstone project", "\uD83C\uDFDB\uFE0F", Category.LEARNING),
+
+    // Non-technical track Foundation milestones \u2014 one Foundation badge per new track
+    PSY_FOUNDATION_COMPLETE("Mind-Walker", "Master the Foundation tier of Psychology \u2014 psy-a, psy-b, psy-c", "\uD83E\uDDE0", Category.LEARNING),
+    GEN_FOUNDATION_COMPLETE("Lineage Scholar", "Master the Foundation tier of Genealogy \u2014 gen-a, gen-b, gen-c", "\uD83C\uDF33", Category.LEARNING),
+    SCI_FOUNDATION_COMPLETE("Natural Philosopher", "Master the Foundation tier of Natural Sciences \u2014 sci-a, sci-b, sci-c", "\uD83D\uDD2C", Category.LEARNING),
+
     // Review & mastery
     PERFECT_REVIEW("Flawless Recall", "Score 100% on a review session", "\uD83C\uDFAF", Category.MASTERY),
     MEMORY_MASTER("Eternal Memory", "All chunks at green memory health", "\uD83E\uDDE0", Category.MASTERY),

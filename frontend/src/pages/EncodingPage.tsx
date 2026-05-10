@@ -129,8 +129,9 @@ export default function EncodingPage() {
 
   async function handleSubmitPractice() {
     if (!subChunkId || running) return
+    const written = encoding?.practiceType === 'NONE'
     setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
+    setOutput([{ text: written ? '// Checking your written response...' : '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
     try {
       const result: PracticeResult = await encodingApi.submitPractice(subChunkId, code)
       if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
@@ -143,6 +144,10 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
+        if (written) {
+          lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.actualOutput}`, type: t.passed ? 'success' : 'error' })
+          return
+        }
         lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
       })
       setTestResults(newResults)
@@ -164,7 +169,7 @@ export default function EncodingPage() {
         if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 400) }
       }
       setOutput(lines)
-    } catch { setOutput([{ text: 'Error submitting code.', type: 'error' }]) }
+    } catch { setOutput([{ text: written ? 'Error submitting response.' : 'Error submitting code.', type: 'error' }]) }
     finally { setRunning(false) }
   }
 
@@ -300,8 +305,9 @@ export default function EncodingPage() {
 
   async function handleSubmitSoloPractice() {
     if (!subChunkId || running) return
+    const written = encoding?.practiceType === 'NONE'
     setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
+    setOutput([{ text: written ? '// Checking your independent response...' : '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
     try {
       const result: PracticeResult = await encodingApi.submitSoloPractice(subChunkId, code)
       if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
@@ -515,7 +521,7 @@ export default function EncodingPage() {
             <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>
           )}
           {encoding.practiceType === 'NONE' ? (
-            <button className="btn btn-primary mt-6" onClick={handleAdvance}>Mark as studied →</button>
+            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Writing →</button>
           ) : (
             <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding →</button>
           )}
@@ -586,7 +592,24 @@ export default function EncodingPage() {
               </div>
             </div>
 
-            {encoding.practiceType === 'TAILWIND' ? (
+            {encoding.practiceType === 'NONE' ? (
+              <>
+                <WrittenResponseEditor
+                  value={code}
+                  onChange={setCode}
+                  disabled={practiceSolved}
+                  placeholder="Write your guided response here. Follow the steps in the task panel, explain your reasoning, and use the lesson vocabulary."
+                />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Guided Response Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+                <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+              </>
+            ) : encoding.practiceType === 'TAILWIND' ? (
               <>
                 <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
@@ -750,7 +773,24 @@ export default function EncodingPage() {
               </div>
             </div>
 
-            {encoding.practiceType === 'TAILWIND' ? (
+            {encoding.practiceType === 'NONE' ? (
+              <>
+                <WrittenResponseEditor
+                  value={code}
+                  onChange={setCode}
+                  disabled={practiceSolved}
+                  placeholder="Write your solo response here. Use your own example or case, and explain what evidence would support your answer."
+                />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Solo Response Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+                <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
+              </>
+            ) : encoding.practiceType === 'TAILWIND' ? (
               <>
                 <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
@@ -903,6 +943,35 @@ function phaseOrder(p: string): number {
 }
 function phaseLabel(p: string): string {
   return ({ HOOK: 'Hook', EXPLANATION: 'Learn', GUIDED_PRACTICE: 'Practice', SOLO_PRACTICE: 'Solo', RETRIEVAL_CHECK: 'Check', COMPLETE: 'Done' })[p] ?? p
+}
+function WrittenResponseEditor({
+  value,
+  onChange,
+  disabled,
+  placeholder,
+}: {
+  value: string
+  onChange: (value: string) => void
+  disabled?: boolean
+  placeholder: string
+}) {
+  const words = value.trim() ? value.trim().split(/\s+/).length : 0
+
+  return (
+    <div className="flex-1 flex flex-col min-h-0 bg-bg">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-card text-[12px] text-muted">
+        <span>Written response</span>
+        <span>{words} words</span>
+      </div>
+      <textarea
+        className="flex-1 w-full resize-none bg-bg text-text font-crimson text-[15px] leading-[1.7] p-4 border-0 outline-none box-border disabled:opacity-70"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        disabled={disabled}
+        placeholder={placeholder}
+      />
+    </div>
+  )
 }
 function calculateRank(xp: number): string {
   if (xp >= 11000) return 'Lord Magus'

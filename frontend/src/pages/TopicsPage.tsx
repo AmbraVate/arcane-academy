@@ -30,6 +30,9 @@ const TOPICS: Topic[] = [
   { id: 'sql',        name: 'SQL',            glyph: '🗃️', tagline: 'The language of data. SELECT to window functions — the queries every backend dev writes daily.',                              status: 'active',      chunks: 8,  accentStroke: 'var(--teal)' },
   { id: 'typescript', name: 'TypeScript',     glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',       status: 'coming_soon', chunks: 10, accentStroke: 'var(--gold)' },
   { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.', status: 'active',      chunks: 4,  accentStroke: 'var(--teal)' },
+  { id: 'psychology', name: 'Psychology',     glyph: '🧠', tagline: 'A self-paced route through foundations, human behaviour, advanced understanding, and academic thinking.', status: 'active', chunks: 9, accentStroke: 'var(--purple)' },
+  { id: 'genealogy',  name: 'Genealogy',      glyph: '🌳', tagline: 'Records, lineages, and DNA — the methods of family history.', status: 'active', chunks: 3, accentStroke: 'var(--gold)' },
+  { id: 'sciences',   name: 'Natural Sciences', glyph: '🔬', tagline: 'Scientific method, physics, biology — the laws of the world.', status: 'active', chunks: 3, accentStroke: 'var(--teal)' },
 ]
 
 const ACTIVE_TOPICS = TOPICS.filter(t => t.status === 'active').map(t => t.id)

@@ -16,7 +16,7 @@
       "sortOrder": 1,
       "xpReward": 70,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>Up until now, every query has read from a single table. Real databases never look like that. The Academy's records are split across many ledgers — apprentices in one, quests in another, completions in a third. The whole point of a relational database is that you split data across tables, then <em>rejoin them at query time</em>. That recombination is called a <strong>JOIN</strong>.</p>",
 
@@ -58,9 +58,28 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Trace the model</h3>\n<p>Read the schemas and the example data carefully. Identify:</p>\n<ul>\n  <li>Which columns are primary keys, which are foreign keys</li>\n  <li>What the Cartesian product of <em>apprentices × completions</em> would look like (4 × 4 = 16 pair-rows), and which 4 survive when we keep only matching pairs</li>\n  <li>What information is reachable only by combining all three tables</li>\n</ul>",
+      "guidedPracticeHtml": "<h3>🪄 Your first JOIN — completions paired with their apprentice</h3>\n<p>The <code>completions</code> ledger only stores <em>numbers</em>: which apprentice id completed which quest id, and when. To make sense of the data you have to JOIN it back to the <code>apprentices</code> table so you can see the names.</p>\n<p>Write a query that returns each completion as one row, with two columns:</p>\n<ul>\n  <li><code>name</code> — the apprentice's name (from <code>apprentices</code>)</li>\n  <li><code>completed_at</code> — when they completed it (from <code>completions</code>)</li>\n</ul>\n<p>Use a single JOIN with the apprentices table aliased as <code>a</code> and completions aliased as <code>c</code>. The lesson above shows the pattern — copy it, drop the third table, and pick the two columns asked for.</p>\n<p>Expected: 4 rows — Alice/2026-04-01, Bjorn/2026-04-02, Bjorn/2026-04-05, Cassia/2026-04-10. Dorian shows up in the apprentices table but has no completions, so an INNER JOIN drops him here (we'll keep him with LEFT JOIN later).</p>",
 
-      "guidedPracticeStarterCode": "-- The three normalised tables:\nCREATE TABLE apprentices (\n  id   INT PRIMARY KEY,\n  name TEXT NOT NULL,\n  rank TEXT NOT NULL,\n  xp   INT NOT NULL\n);\n\nCREATE TABLE quests (\n  id        INT PRIMARY KEY,\n  title     TEXT NOT NULL,\n  xp_reward INT NOT NULL\n);\n\nCREATE TABLE completions (\n  id            INT PRIMARY KEY,\n  apprentice_id INT REFERENCES apprentices(id),\n  quest_id      INT REFERENCES quests(id),\n  completed_at  TIMESTAMP NOT NULL\n);\n\n-- The data:\n-- apprentices: 1=Alice (Apprentice, 1200), 2=Bjorn (Adept, 2400),\n--              3=Cassia (Mage, 4800)\n-- quests:      1=Tame the Slime (100), 2=Decode the Glyph (180),\n--              3=Forge the Blade (400)\n-- completions: (1, app=1, q=1, 2026-04-01), (2, app=2, q=1, 2026-04-02),\n--              (3, app=2, q=2, 2026-04-05), (4, app=3, q=3, 2026-04-10)\n\n-- A query that would need ALL THREE tables:\nSELECT a.name, q.title, c.completed_at\nFROM apprentices a\nJOIN completions c ON c.apprentice_id = a.id\nJOIN quests q       ON q.id = c.quest_id;",
+      "guidedPracticeStarterCode": "-- Your first JOIN: name + completed_at, joined through apprentice_id.\nSELECT a.name, c.completed_at\nFROM apprentices a\n-- JOIN completions c ON ... = ...\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Returns 4 rows (one per completion)",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); CREATE TABLE quests (id INTEGER PRIMARY KEY, title TEXT NOT NULL, xp_reward INTEGER NOT NULL); CREATE TABLE completions (id INTEGER PRIMARY KEY, apprentice_id INTEGER, quest_id INTEGER, completed_at TEXT); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80); INSERT INTO quests VALUES (1,'Tame the Slime',100),(2,'Decode the Glyph',180),(3,'Forge the Blade',400); INSERT INTO completions VALUES (1,1,1,'2026-04-01'),(2,2,1,'2026-04-02'),(3,2,2,'2026-04-05'),(4,3,3,'2026-04-10');",
+          "expectedRowCount": 4,
+          "matchMode": "rowCount"
+        },
+        {
+          "label": "Columns are 'name' and 'completed_at'",
+          "expectedColumns": ["name", "completed_at"],
+          "matchMode": "columns"
+        },
+        {
+          "label": "Each completion paired with the right apprentice — Dorian excluded",
+          "expectedQuery": "SELECT a.name, c.completed_at FROM apprentices a JOIN completions c ON c.apprentice_id = a.id",
+          "matchMode": "rowsAnyOrder"
+        }
+      ],
 
       "feynmanPrompt": "Explain to a junior why we put apprentices, quests, and completions in three separate tables instead of one fat table with name+rank+title repeated on every row. Give one concrete update that becomes easy with the normalised model and a nightmare with the denormalised one.",
 

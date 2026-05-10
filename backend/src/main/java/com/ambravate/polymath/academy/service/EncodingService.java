@@ -119,6 +119,10 @@ public class EncodingService {
         SubChunk subChunk = subChunkRepository.findById(subChunkId)
                 .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
 
+        if (subChunk.getPracticeType() == SubChunkPracticeType.NONE) {
+            return gradeWrittenPractice(userId, subChunk, code, false);
+        }
+
         List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
         if (testCases.isEmpty()) {
             return new PracticeResult(true, List.of(), 0, null, null, List.of());
@@ -182,6 +186,10 @@ public class EncodingService {
     public PracticeResult submitSoloPractice(String userId, String subChunkId, String code) {
         SubChunk subChunk = subChunkRepository.findById(subChunkId)
                 .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+
+        if (subChunk.getPracticeType() == SubChunkPracticeType.NONE) {
+            return gradeWrittenPractice(userId, subChunk, code, true);
+        }
 
         List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
         if (testCases.isEmpty()) {
@@ -293,6 +301,113 @@ public class EncodingService {
     private List<Map<String, Object>> parseTestCases(String json) {
         if (json == null) return List.of();
         try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
+    }
+
+    private PracticeResult gradeWrittenPractice(String userId, SubChunk subChunk, String response, boolean solo) {
+        String answer = response == null ? "" : response.trim();
+        String lowerAnswer = answer.toLowerCase(Locale.ROOT);
+        int wordCount = answer.isBlank() ? 0 : answer.split("\\s+").length;
+        int sentenceCount = answer.isBlank() ? 0 : answer.split("[.!?]+").length;
+
+        Set<String> expectedTerms = expectedTerms(subChunk);
+        long matchedTerms = expectedTerms.stream()
+                .filter(term -> lowerAnswer.contains(term.toLowerCase(Locale.ROOT)))
+                .count();
+
+        int minWords = solo ? 70 : 45;
+        int minTerms = Math.min(solo ? 6 : 4, Math.max(3, expectedTerms.size() / 4));
+
+        List<TestResult> results = new ArrayList<>();
+        results.add(new TestResult(
+                solo ? "Independent written response" : "Guided written response",
+                wordCount >= minWords,
+                wordCount >= minWords
+                        ? "Enough detail included (" + wordCount + " words)."
+                        : "Add more detail: " + wordCount + "/" + minWords + " words.",
+                minWords + "+ words"
+        ));
+        results.add(new TestResult(
+                "Uses lesson vocabulary",
+                matchedTerms >= minTerms,
+                matchedTerms >= minTerms
+                        ? "Used " + matchedTerms + " key terms from the lesson."
+                        : "Use more lesson vocabulary: " + matchedTerms + "/" + minTerms + " key terms found.",
+                minTerms + "+ key terms"
+        ));
+        results.add(new TestResult(
+                "Explains rather than lists",
+                sentenceCount >= 3 && lowerAnswer.contains("because"),
+                sentenceCount >= 3 && lowerAnswer.contains("because")
+                        ? "Includes explanation and reasoning."
+                        : "Add at least three sentences and use 'because' to explain your reasoning.",
+                "3+ sentences with reasoning"
+        ));
+
+        if (solo) {
+            boolean hasIndependentApplication = lowerAnswer.contains("example")
+                    || lowerAnswer.contains("case")
+                    || lowerAnswer.contains("evidence")
+                    || lowerAnswer.contains("would");
+            results.add(new TestResult(
+                    "Applies the idea independently",
+                    hasIndependentApplication,
+                    hasIndependentApplication
+                            ? "Includes independent application language."
+                            : "Add your own example, case, evidence, or what you would do next.",
+                    "Own example or application"
+            ));
+        }
+
+        boolean allPassed = results.stream().allMatch(TestResult::passed);
+        int xpEarned = 0;
+        List<BadgeDto> newBadges = List.of();
+        String mentorFeedback = null;
+
+        if (allPassed && !solo) {
+            xpEarned = awardXp(userId, subChunk.getId(), subChunk.getXpReward());
+            newBadges = badgeService.evaluateAndAward(userId);
+        } else if (!allPassed) {
+            mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
+                    + "and explain why the ideas matter. "
+                    + (solo ? "For solo practice, add your own case or example rather than following the guided wording." : "");
+        }
+
+        return new PracticeResult(allPassed, results, xpEarned, mentorFeedback,
+                allPassed ? null : "TEXT_CHECK_FAILURE", newBadges);
+    }
+
+    private Set<String> expectedTerms(SubChunk subChunk) {
+        String source = String.join(" ",
+                Optional.ofNullable(subChunk.getTitle()).orElse(""),
+                Optional.ofNullable(subChunk.getExplanationHtml()).orElse(""),
+                Optional.ofNullable(subChunk.getGuidedPracticeHtml()).orElse(""));
+
+        String text = source
+                .replaceAll("<[^>]+>", " ")
+                .replaceAll("&[a-zA-Z]+;", " ")
+                .toLowerCase(Locale.ROOT);
+
+        Set<String> stopWords = Set.of(
+                "this", "that", "with", "from", "your", "they", "them", "then", "than",
+                "into", "what", "when", "where", "which", "write", "lesson", "module",
+                "practice", "guided", "solo", "because", "about", "after", "before",
+                "should", "could", "would", "their", "there", "these", "those"
+        );
+
+        Set<String> terms = new LinkedHashSet<>();
+        for (String token : text.split("[^a-z0-9-]+")) {
+            if (token.length() >= 5 && !stopWords.contains(token)) {
+                terms.add(token);
+            }
+            if (terms.size() >= 24) break;
+        }
+
+        if (terms.isEmpty()) {
+            terms.add("psychology");
+            terms.add("example");
+            terms.add("evidence");
+        }
+        return terms;
     }
 
     // Inner records for return types

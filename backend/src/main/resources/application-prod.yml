@@ -13,3 +13,11 @@ logging:
     org.springframework.security: WARN
     org.springframework.web: WARN
     org.hibernate.SQL: WARN
+
+# Production overrides for Sentry — sample 10% of traces, tag environment.
+# DSN MUST come from env (SENTRY_DSN); leaving the application.yml default ('')
+# means prod boots cleanly even if the env var is forgotten — Sentry just stays
+# silent rather than spamming a malformed-DSN exception on startup.
+sentry:
+  environment: ${SENTRY_ENVIRONMENT:prod}
+  traces-sample-rate: ${SENTRY_TRACES_SAMPLE_RATE:0.1}

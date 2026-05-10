@@ -16,7 +16,7 @@
       "sortOrder": 1,
       "xpReward": 70,
       "filename": "query.sql",
-      "practiceType": "NONE",
+      "practiceType": "SQL",
 
       "hookHtml": "<p>SELECT reads. <strong>INSERT</strong>, <strong>UPDATE</strong>, and <strong>DELETE</strong> write. The pattern matters because writes are <em>permanent</em> by default — a SELECT that returns the wrong rows is annoying, but a DELETE that targets the wrong rows is a recovery operation. Start with INSERT, the safest of the three.</p>",
 
@@ -58,9 +58,31 @@
         }
       ],
 
-      "guidedPracticeHtml": "<h3>📜 Predict the outcomes</h3>\n<p>For each statement, predict whether it succeeds and what it leaves in the database. Several deliberately fail — identify why.</p>",
+      "guidedPracticeHtml": "<h3>🪄 Bind three new apprentices into the ledger</h3>\n<p>The Headmaster has approved three new Novices: <strong>Eleanor</strong>, <strong>Faelar</strong>, and <strong>Gareth</strong>. All three start at <code>0</code> xp. Bind them into the <code>apprentices</code> ledger using a <strong>single multi-row INSERT</strong> with an explicit column list (no shorthand).</p>\n<ul>\n  <li>One INSERT statement, three VALUES tuples</li>\n  <li>Specify columns explicitly: <code>(name, rank, xp)</code></li>\n  <li>The original four apprentices (Alice, Bjorn, Cassia, Dorian) must remain untouched</li>\n  <li>The <code>id</code> column auto-increments — don't supply it</li>\n</ul>\n<p>Schema:</p>\n<pre><code>apprentices(\n  id   INTEGER PRIMARY KEY AUTOINCREMENT,\n  name TEXT NOT NULL,\n  rank TEXT NOT NULL,\n  xp   INTEGER NOT NULL DEFAULT 0\n)\n-- existing rows: Alice/Apprentice/1200, Bjorn/Adept/2400,\n--                Cassia/Mage/4800, Dorian/Novice/80</code></pre>",
 
-      "guidedPracticeStarterCode": "-- Schema:\n-- apprentices(id PK, name TEXT NOT NULL, rank TEXT NOT NULL, xp INT NOT NULL DEFAULT 0)\n-- Existing rows: 1=Alice, 2=Bjorn, 3=Cassia, 4=Dorian\n\n-- Statement A — succeeds, id auto-generated:\nINSERT INTO apprentices (name, rank, xp) VALUES ('Eleanor', 'Novice', 0);\n\n-- Statement B — succeeds, xp defaults to 0:\nINSERT INTO apprentices (name, rank) VALUES ('Faelar', 'Novice');\n\n-- Statement C — three rows in one statement:\nINSERT INTO apprentices (name, rank, xp) VALUES\n  ('Gareth', 'Apprentice', 100),\n  ('Hilde',  'Apprentice', 150),\n  ('Ivan',   'Apprentice', 200);\n\n-- Statement D — FAILS: name is NOT NULL.\nINSERT INTO apprentices (rank, xp) VALUES ('Novice', 0);\n\n-- Statement E — FAILS in a strict engine if id 1 already exists:\nINSERT INTO apprentices (id, name, rank, xp)\nVALUES (1, 'Duplicate', 'Novice', 0);\n\n-- Statement F — INSERT ... SELECT — copies all Novices into a backup table:\nINSERT INTO apprentices_archive (id, name, rank, xp, archived_at)\nSELECT id, name, rank, xp, NOW()\nFROM apprentices\nWHERE rank = 'Novice';",
+      "guidedPracticeStarterCode": "-- Add Eleanor, Faelar, and Gareth as new Novices with 0 xp.\n-- Single multi-row INSERT, explicit (name, rank, xp).\n\nINSERT INTO apprentices (name, rank, xp) VALUES\n  -- ('Eleanor', ..., ...),\n  -- ('Faelar',  ..., ...),\n  -- ('Gareth',  ..., ...)\n;",
+
+      "guidedPracticeTests": [
+        {
+          "label": "Three new Novice apprentices added (Eleanor, Faelar, Gareth)",
+          "setup": "CREATE TABLE apprentices (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL DEFAULT 0); INSERT INTO apprentices (name, rank, xp) VALUES ('Alice','Apprentice',1200),('Bjorn','Adept',2400),('Cassia','Mage',4800),('Dorian','Novice',80);",
+          "verifyQuery": "SELECT name FROM apprentices WHERE rank = 'Novice' AND xp = 0 ORDER BY name",
+          "expectedRows": [["Eleanor"], ["Faelar"], ["Gareth"]],
+          "matchMode": "rowsExact"
+        },
+        {
+          "label": "Total apprentice count grows from 4 to 7",
+          "verifyQuery": "SELECT COUNT(*) FROM apprentices",
+          "expectedRows": [[7]],
+          "matchMode": "rowsExact"
+        },
+        {
+          "label": "Original four apprentices unchanged",
+          "verifyQuery": "SELECT name, rank, xp FROM apprentices WHERE id <= 4 ORDER BY id",
+          "expectedRows": [["Alice", "Apprentice", 1200], ["Bjorn", "Adept", 2400], ["Cassia", "Mage", 4800], ["Dorian", "Novice", 80]],
+          "matchMode": "rowsExact"
+        }
+      ],
 
       "feynmanPrompt": "Explain why the form `INSERT INTO apprentices VALUES ('Eleanor', 'Novice', 0);` (no column list) is a maintenance liability even when it works today. Walk through what happens when a teammate later adds a 'last_login' column.",
 

@@ -132,10 +132,49 @@ export default function LandingPage() {
       <section className="relative z-[2] flex items-center justify-center min-h-[60vh] px-6 pt-[80px]">
         <div className="text-center max-w-[800px] mx-auto">
           <div className="hero-text-wrapper relative inline-block">
-            {/* Orbiting golden magical embers */}
-            <div className="ember ember-1" aria-hidden="true"></div>
-            <div className="ember ember-2" aria-hidden="true"></div>
-            
+            {/* 3D dual-line comet orb — ONE system, lead + 5 trailing echoes.
+             *
+             * Path matches the user's annotated drawing: tight vertical loops
+             * left-to-right across LINE 1, then teleport + repeat across LINE 2.
+             *
+             * Each shell is a nested pair:
+             *   .ember-shell  → outer  → animates X (slow 12s) + line-Y switch
+             *   .ember-orbit  → inner  → animates Y/Z circle (fast 0.75s, 8 loops/line)
+             *   .ember-core   → static visible glow with per-instance opacity/scale
+             *
+             * Lead has the most-negative animation-delay (furthest along the path);
+             * each echo lags by TRAIL_GAP_MS. Both outer and inner share the SAME
+             * delay so trail dots are coherent in both X and Y/Z dimensions —
+             * tracing the actual past positions of the lead. */}
+            {(() => {
+              const TRAIL_LENGTH = 6
+              const TRAIL_GAP_MS = 50
+              return Array.from({ length: TRAIL_LENGTH }).map((_, i) => {
+                // i = 0 is the lead; i = TRAIL_LENGTH−1 is the tail
+                const delayMs = -(TRAIL_LENGTH - 1 - i) * TRAIL_GAP_MS
+                const fade = 1 - i / (TRAIL_LENGTH - 1)
+                const delayCss = `${delayMs}ms`
+                return (
+                  <div
+                    key={`ember-${i}`}
+                    className="ember-shell"
+                    style={{ animationDelay: delayCss }}
+                    aria-hidden="true"
+                  >
+                    <div className="ember-orbit" style={{ animationDelay: delayCss }}>
+                      <div
+                        className={`ember-core${i === 0 ? '' : ' is-trail'}`}
+                        style={{
+                          opacity: 0.25 + 0.75 * fade,
+                          transform: `scale(${0.55 + 0.45 * fade})`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                )
+              })
+            })()}
+
             <h1
               className="hero-heading text-text foil-on-dark"
               style={{

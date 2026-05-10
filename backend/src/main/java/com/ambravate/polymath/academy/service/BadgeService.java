@@ -154,6 +154,16 @@ public class BadgeService {
       case SQL_TRACK_MASTER -> completedChunks.containsAll(java.util.List.of(
           "sql-a", "sql-b", "sql-c", "sql-d", "sql-e", "sql-f", "sql-g", "sql-h"));
 
+      // React track — Foundation/Practitioner milestones plus the capstone (mirrors Tailwind)
+      case REACT_HOOK_INITIATE -> completedChunks.contains("rx-a");
+      case REACT_STATE_WEAVER -> completedChunks.contains("rx-b");
+      case REACT_CAPSTONE_COMPLETE -> completedChunks.contains("rx-d");
+
+      // Non-technical track Foundation milestones — one badge per Foundation tier
+      case PSY_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("psy-a", "psy-b", "psy-c"));
+      case GEN_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("gen-a", "gen-b", "gen-c"));
+      case SCI_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("sci-a", "sci-b", "sci-c"));
+
       // Mastery
       case PERFECT_REVIEW -> hasPerfectReview;
       case MEMORY_MASTER -> false; // Checked separately via dashboard

@@ -18,11 +18,23 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
  * The first spec's `setup` is also used as the preview-pane seed. If a spec
  * omits `setup`, it inherits the first spec's. Authors usually put the full
  * CREATE+INSERT in the first test and let the rest inherit.
+ *
+ * For mutating practice (INSERT/UPDATE/DELETE) where the user's query returns
+ * no result set, set `verifyQuery` to a SELECT that runs against the (now
+ * mutated) database. Its result becomes the subject of comparison instead
+ * of the user's empty query result. Backward-compatible: existing specs
+ * without `verifyQuery` are unaffected.
  */
 
 export interface SqlTestSpec {
   label?: string
   setup?: string
+  /**
+   * Optional. SELECT run against the post-userQuery DB; its result becomes the
+   * subject compared against expectedQuery / expectedRows / etc. Use for
+   * INSERT/UPDATE/DELETE practice where the user's statement has no result set.
+   */
+  verifyQuery?: string
   expectedQuery?: string
   expectedRows?: Array<Array<unknown>>
   expectedColumns?: string[]
@@ -232,6 +244,19 @@ function buildTestHarness(specs: SqlTestSpec[]): string {
       } catch (e) {
         db.close();
         return { label: spec.label || 'Test', passed: false, actual: 'Query error: ' + (e && e.message ? e.message : e) };
+      }
+
+      // verifyQuery: for INSERT/UPDATE/DELETE practice, the user query mutates
+      // the DB and returns no rows. Run a SELECT against the mutated DB and
+      // use ITS result as the subject of comparison instead.
+      if (typeof spec.verifyQuery === 'string' && spec.verifyQuery.trim()) {
+        try {
+          const v = db.exec(spec.verifyQuery);
+          userResult = v.length === 0 ? { columns: [], values: [] } : v[v.length - 1];
+        } catch (e) {
+          db.close();
+          return { label: spec.label || 'Test', passed: false, actual: 'Verify error: ' + (e && e.message ? e.message : e) };
+        }
       }
 
       const mode = spec.matchMode || (spec.expectedQuery || spec.expectedRows ? 'rowsAnyOrder' : 'rowCount');

@@ -66,6 +66,42 @@ management:
 telemetry:
   hash-salt: ${TELEMETRY_HASH_SALT:dev-salt-rotate-in-production}
 
+# Sentry — error & performance monitoring.
+#  • dsn empty → starter auto-disables, no network calls. Safe default for dev.
+#  • environment → tags every event so prod/dev can be filtered server-side.
+#  • traces-sample-rate → 0.0 in dev (no perf overhead); set 0.1–0.2 in prod.
+#  • send-default-pii: false → never auto-attach IPs, cookies, headers (privacy).
+#  • PII in events requires explicit scope.setUser(...) — we never call it.
+sentry:
+  dsn: ${SENTRY_DSN:}
+  environment: ${SENTRY_ENVIRONMENT:dev}
+  traces-sample-rate: ${SENTRY_TRACES_SAMPLE_RATE:0.0}
+  send-default-pii: false
+  in-app-includes:
+    - com.ambravate.polymath.academy
+  exception-resolver-order: -2147483647   # before Spring's default handler
+  logging:
+    minimum-event-level: error
+    minimum-breadcrumb-level: info
+
+# Rate limiting — token-bucket caps via Bucket4j. See RateLimitFilter.
+# Caps are per identifier (IP for unauthenticated routes, userId for the rest).
+# Set ratelimit.enabled=false to disable everything (e.g. local load testing).
+ratelimit:
+  enabled: ${RATELIMIT_ENABLED:true}
+  auth:
+    capacity: ${RATELIMIT_AUTH_CAPACITY:10}
+    refill-tokens: ${RATELIMIT_AUTH_REFILL:10}
+    refill-period-seconds: ${RATELIMIT_AUTH_PERIOD:60}
+  ai-mentor:
+    capacity: ${RATELIMIT_AI_CAPACITY:10}
+    refill-tokens: ${RATELIMIT_AI_REFILL:10}
+    refill-period-seconds: ${RATELIMIT_AI_PERIOD:60}
+  code-runner:
+    capacity: ${RATELIMIT_CODE_CAPACITY:30}
+    refill-tokens: ${RATELIMIT_CODE_REFILL:30}
+    refill-period-seconds: ${RATELIMIT_CODE_PERIOD:60}
+
 logging:
   level:
     root: INFO

@@ -1,0 +1,372 @@
+{
+  "id": "psy-a",
+  "title": "Pathway 1: Foundations of Psychology",
+  "glyph": "PSY",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "psychology",
+  "prerequisites": [],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "psy-a0",
+      "title": "Self-paced orientation: Foundation",
+      "sortOrder": 0,
+      "xpReward": 40,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>This orientation turns a large subject into a manageable plan: learn the language first, then build explanations layer by layer.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Psychology rewards steady sequencing. In this phase you build the vocabulary, biological background, cognitive models, and basic research habits that later topics depend on.</p><h3>Key ideas</h3><ul><li>Treat the phase as a map, not a race.</li><li>Keep a learning journal with definitions, examples, and uncertainties.</li><li>Use retrieval practice after each module before starting the next.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Self-paced orientation: Foundation. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "This orientation turns a large subject into a manageable plan: learn the language first, then build explanations layer by layer."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the four Foundation pathway names in order.</li><li><strong>Step 2:</strong> Under each pathway, write one reason it must come before advanced topics.</li><li><strong>Step 3:</strong> Circle the pathway you expect to find hardest and write a review plan for it.</li></ol><h3>Why you are writing it</h3><p>This makes the route visible and turns self-paced study into a sequence of deliberate choices.</p>",
+      "feynmanPrompt": "Explain Self-paced orientation: Foundation to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Self-paced orientation: Foundation</strong>?</p>",
+          "options": [
+            "Treat the phase as a map, not a race.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Treat the phase as a map, not a race.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Treat the phase as a map, not a race.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Self-paced orientation: Foundation</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Create your own 2-3 month Foundation calendar. Decide how many study sessions each pathway gets and where you will place review days.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-a1",
+      "title": "Module 1a: What is Psychology?",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Psychology begins with a deceptively simple question: how can behaviour and mental life be studied scientifically?</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Psychology is the scientific study of behaviour and mental processes. It grew from philosophy, physiology, and medicine, but became distinctive when psychologists began testing claims with observation, measurement, and experiment.</p><h3>Key ideas</h3><ul><li>Early structuralists tried to analyse conscious experience; functionalists asked what mental processes do.</li><li>Modern psychology studies observable behaviour, cognition, emotion, development, biology, and social life.</li><li>A psychological explanation should be testable, evidence-based, and open to revision.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 1a: What is Psychology?. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Psychology begins with a deceptively simple question: how can behaviour and mental life be studied scientifically?"
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write a one-sentence definition of psychology.</li><li><strong>Step 2:</strong> Add two examples: one visible behaviour and one internal mental process.</li><li><strong>Step 3:</strong> Write why psychology needs scientific methods rather than common sense alone.</li></ol><h3>Why you are writing it</h3><p>The learner is separating the subject matter from the method: psychology studies people, but it does so by making claims testable.</p>",
+      "feynmanPrompt": "Explain Module 1a: What is Psychology? to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 1a: What is Psychology?</strong>?</p>",
+          "options": [
+            "Early structuralists tried to analyse conscious experience; functionalists asked what mental processes do.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Early structuralists tried to analyse conscious experience; functionalists asked what mental processes do.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Early structuralists tried to analyse conscious experience; functionalists asked what mental processes do.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 1a: What is Psychology?</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Choose a familiar behaviour, such as procrastinating or checking a phone. Write three possible psychological explanations and one observation that could support or weaken each explanation.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-a2",
+      "title": "Module 1b: Major Perspectives",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>The major perspectives are different lenses. None explains everything, but each reveals something important that the others can miss.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Psychological perspectives organise explanations. Behaviourism focuses on learning from consequences, cognitive psychology on information processing, biological psychology on nervous-system mechanisms, psychodynamic theory on unconscious conflict, humanistic psychology on growth and meaning, and evolutionary psychology on adaptive pressures.</p><h3>Key ideas</h3><ul><li>Perspectives are tools, not teams to join permanently.</li><li>The same behaviour can be explained at several levels at once.</li><li>Good psychological thinking asks which lens fits the evidence and the question.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 1b: Major Perspectives. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "The major perspectives are different lenses. None explains everything, but each reveals something important that the others can miss."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Make a six-row table: behaviourist, cognitive, biological, psychodynamic, humanistic, evolutionary.</li><li><strong>Step 2:</strong> For each row, write what that perspective looks for first.</li><li><strong>Step 3:</strong> Use the same behaviour, such as exam anxiety, and write one explanation from each lens.</li></ol><h3>Why you are writing it</h3><p>Writing parallel explanations trains flexible thinking and prevents the common mistake of treating one perspective as the whole truth.</p>",
+      "feynmanPrompt": "Explain Module 1b: Major Perspectives to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 1b: Major Perspectives</strong>?</p>",
+          "options": [
+            "Perspectives are tools, not teams to join permanently.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Perspectives are tools, not teams to join permanently.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Perspectives are tools, not teams to join permanently.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 1b: Major Perspectives</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Pick a real behaviour from your week. Analyse it using at least three perspectives, then decide which explanation currently seems strongest and what evidence would change your mind.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-a3",
+      "title": "Module 1c: Critical Thinking",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Psychology is full of attractive explanations. Critical thinking is how you stop an attractive explanation from becoming an unearned belief.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Critical thinking means evaluating claims by evidence, logic, methods, and alternative explanations. In psychology this includes spotting cognitive biases, distinguishing correlation from causation, checking sample quality, and asking whether a claim could be tested or falsified.</p><h3>Key ideas</h3><ul><li>Correlation means variables move together; it does not prove one caused the other.</li><li>Biases such as confirmation bias and availability bias make weak evidence feel strong.</li><li>Scientific scepticism is active curiosity, not automatic dismissal.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 1c: Critical Thinking. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Psychology is full of attractive explanations. Critical thinking is how you stop an attractive explanation from becoming an unearned belief."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the claim: \"People who use social media more are lonelier.\"</li><li><strong>Step 2:</strong> List three explanations: social media causes loneliness, loneliness causes more social media use, and a third variable affects both.</li><li><strong>Step 3:</strong> Write what kind of study would help separate those explanations.</li></ol><h3>Why you are writing it</h3><p>This forces the learner to practise causal caution instead of jumping from a correlation to a story.</p>",
+      "feynmanPrompt": "Explain Module 1c: Critical Thinking to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 1c: Critical Thinking</strong>?</p>",
+          "options": [
+            "Correlation means variables move together; it does not prove one caused the other.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Correlation means variables move together; it does not prove one caused the other.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Correlation means variables move together; it does not prove one caused the other.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 1c: Critical Thinking</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Find a psychology claim in an article, advert, podcast, or social post. Write the claim, the evidence offered, two alternative explanations, and one question you would ask before believing it.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-a4",
+      "title": "Module 1d: Ethics in Psychology",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Psychology studies real people, often at vulnerable moments. Ethics is not paperwork around the science; it is part of the science.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Ethical psychology protects participants through informed consent, confidentiality, the right to withdraw, debriefing, risk assessment, and independent review. Famous failures such as Milgram-style distress, Stanford Prison Experiment harms, and deception without proper safeguards show why ethical committees exist.</p><h3>Key ideas</h3><ul><li>Consent must be informed, voluntary, and ongoing.</li><li>Confidentiality protects participants from social, legal, or personal harm.</li><li>Ethics committees weigh scientific value against participant risk before a study begins.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 1d: Ethics in Psychology. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Psychology studies real people, often at vulnerable moments. Ethics is not paperwork around the science; it is part of the science."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Design a tiny study about sleep and mood.</li><li><strong>Step 2:</strong> Write a consent statement in plain language.</li><li><strong>Step 3:</strong> Write two risks, two protections, and one debrief sentence.</li></ol><h3>Why you are writing it</h3><p>The learner practises translating ethical principles into actual study design choices.</p>",
+      "feynmanPrompt": "Explain Module 1d: Ethics in Psychology to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 1d: Ethics in Psychology</strong>?</p>",
+          "options": [
+            "Consent must be informed, voluntary, and ongoing.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Consent must be informed, voluntary, and ongoing.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Consent must be informed, voluntary, and ongoing.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 1d: Ethics in Psychology</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Evaluate a famous psychology study from an ethics perspective. Identify what the researchers wanted to learn, who could be harmed, and what safeguards would be required today.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-a5",
+      "title": "Pathway 1 Outcome: Foundations Language",
+      "sortOrder": 5,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>This checkpoint asks whether you can speak the basic language of psychology accurately and cautiously.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>By the end of the first pathway, you should be able to define psychology, compare major perspectives, question evidence, and explain why ethics is central to research.</p><h3>Key ideas</h3><ul><li>Use perspectives flexibly.</li><li>Separate evidence from interpretation.</li><li>Treat ethics as a design requirement.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Pathway 1 Outcome: Foundations Language. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "This checkpoint asks whether you can speak the basic language of psychology accurately and cautiously."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write a one-page Foundations summary.</li><li><strong>Step 2:</strong> Use four headings: definition, perspectives, evidence, ethics.</li><li><strong>Step 3:</strong> Under each heading, write one example and one caution.</li></ol><h3>Why you are writing it</h3><p>This consolidates the pathway into a reusable reference page before biology and cognition add more detail.</p>",
+      "feynmanPrompt": "Explain Pathway 1 Outcome: Foundations Language to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Pathway 1 Outcome: Foundations Language</strong>?</p>",
+          "options": [
+            "Use perspectives flexibly.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Use perspectives flexibly.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Use perspectives flexibly.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Pathway 1 Outcome: Foundations Language</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Teach the foundations of psychology to someone else or to an empty room. Afterwards, write down the questions you could not answer confidently.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    }
+  ]
+}

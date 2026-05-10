@@ -259,111 +259,177 @@ button { font-family: inherit; cursor: pointer; }
     margin-bottom: 18px;
   }
 
-  /* ── Orbiting magical embers around hero text ──────────────────────────── */
-  .ember {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #f0c862 0%, #d4a437 50%, transparent 70%);
-    box-shadow:
-      0 0 8px rgba(212, 164, 55, 0.8),
-      0 0 16px rgba(212, 164, 55, 0.5),
-      inset -1px -1px 4px rgba(138, 101, 16, 0.4);
-    filter: blur(0.5px);
-  }
-  .ember::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 40%, rgba(240, 200, 98, 0.6) 0%, transparent 70%);
-    filter: blur(2px);
-  }
-  .ember::after {
-    /* Mana trail effect */
-    content: '';
-    position: absolute;
-    width: 140%;
-    height: 140%;
-    top: -20%;
-    left: -20%;
-    background: radial-gradient(circle, rgba(212, 164, 55, 0.22) 0%, transparent 60%);
-    border-radius: 50%;
-    filter: blur(6px);
-    opacity: 0.65;
-    animation: ember-trail 12s linear infinite;
-  }
+  /* ── 3D dual-line comet orbs around hero text ─────────────────────────────
+   * Path shape (per the user's annotated drawing):
+   *   1) Tight vertical loops left-to-right across LINE 1 of the heading
+   *   2) Then teleport to the left edge of LINE 2 and trace LINE 2 the same way
+   *   3) Loop forever
+   *
+   * Architecture (composes two transforms via nested elements):
+   *   .hero-text-wrapper  — establishes the 3D context (perspective + preserve-3d)
+   *   .hero-heading       — at translateZ(0); the depth reference plane
+   *   .ember-shell        — slow X traversal + line-Y switch (12s linear)
+   *   .ember-orbit        — fast Y/Z circle in the YZ plane (0.75s linear → ~8 loops/line)
+   *   .ember-core         — static visible glow; per-instance opacity/scale via inline style
+   *
+   * The GPU sorts all shells in 3D depth order, so when translateZ < 0 the orbs
+   * pass behind the H1 and when > 0 they glow over it. mix-blend-mode is
+   * intentionally avoided — it would flatten the 3D context and break depth sorting.
+   * ───────────────────────────────────────────────────────────────────────── */
 
   .hero-text-wrapper {
     position: relative;
     display: inline-block;
-    --ember-gap-vertical: 15px;
-    --ember-gap-horizontal: 12px;
+    perspective: 1100px;
+    transform-style: preserve-3d;
+    --ember-x-amplitude:   280px;  /* horizontal half-range across each line */
+    --ember-y-amplitude:    22px;  /* vertical half-range PER LOOP */
+    --ember-z-amplitude:   220px;  /* depth half-range — behind/in-front swing */
+    --ember-line-offset:    28px;  /* ± from heading centerline to line 1 / line 2 */
   }
 
   .hero-heading {
     font-size: clamp(42px, 8vw, 72px);
+    transform: translateZ(0);    /* anchor at the depth-reference plane */
+    position: relative;
+    z-index: 1;
   }
 
-  /* Ember 1 — starts top-left, orbits clockwise */
-  .ember-1 {
-    animation: ember-orbit-1 12s linear infinite;
-    top: calc(-1 * var(--ember-gap-vertical));
-    left: calc(-1 * var(--ember-gap-horizontal));
+  /* OUTER — slow X traversal + line-Y switch (12s) */
+  .ember-shell {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+    animation: ember-x-dual-line 12s linear infinite;
   }
 
-  /* Ember 2 — starts bottom-right, also orbits clockwise */
-  .ember-2 {
-    animation: ember-orbit-2 12s linear infinite;
-    top: calc(100% + var(--ember-gap-vertical));
-    left: calc(100% + var(--ember-gap-horizontal));
+  /* INNER — fast Y/Z circle (0.75s → 8 loops per 6s line traversal) */
+  .ember-orbit {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+    animation: ember-loop 0.75s linear infinite;
   }
 
-  @keyframes ember-trail {
-    0%, 100% { opacity: 0.65; transform: scale(1); }
-    50% { opacity: 0.15; transform: scale(1.4); }
+  .ember-core {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+        #fff7d6 0%,
+        #f0c862 30%,
+        #d4a437 55%,
+        transparent 75%);
+    box-shadow:
+      0 0  6px 1px rgba(255, 220, 140, 0.95),
+      0 0 14px 4px rgba(212, 164, 55, 0.55),
+      0 0 28px 10px rgba(212, 164, 55, 0.22),
+      0 0 56px 20px rgba(212, 164, 55, 0.08);
+    filter: blur(0.4px);
+    transform-origin: center;
+    will-change: transform, opacity;
   }
 
-  /* Keyframe animation for ember 1 orbiting clockwise around the wrapper */
-  @keyframes ember-orbit-1 {
-    0%, 100% {
-      top: calc(-1 * var(--ember-gap-vertical));
-      left: calc(-1 * var(--ember-gap-horizontal));
+  /* Trail echoes get a subtler glow so they read as fading sparks */
+  .ember-core.is-trail {
+    background: radial-gradient(circle at 40% 40%,
+        #fce7a8 0%,
+        #d4a437 50%,
+        transparent 75%);
+    box-shadow:
+      0 0  4px 1px rgba(212, 164, 55, 0.65),
+      0 0 12px 4px rgba(212, 164, 55, 0.30),
+      0 0 24px  8px rgba(212, 164, 55, 0.10);
+  }
+
+  /* OUTER keyframes — X linear -amp → +amp, Y switches between line 1 and line 2.
+   * Cycle: 0–50%  = line 1 traversal (Y = -line_offset)
+   *        50%   = teleport to left edge of line 2 (opacity 0 hides the cut)
+   *        50–100% = line 2 traversal (Y = +line_offset)
+   * Opacity ramps in/out at each line's edges so the orb fades on and off rather
+   * than appearing mid-air. */
+  @keyframes ember-x-dual-line {
+    0%   {
+      transform: translate(-50%, -50%) translate3d(
+          calc(var(--ember-x-amplitude) * -1),
+          calc(var(--ember-line-offset) * -1),
+          0);
+      opacity: 0;
     }
-    25% {
-      top: calc(-1 * var(--ember-gap-vertical));
-      left: calc(100% + var(--ember-gap-horizontal));
+    3%   { opacity: 1; }
+    47%  { opacity: 1; }
+    50%  {
+      transform: translate(-50%, -50%) translate3d(
+          var(--ember-x-amplitude),
+          calc(var(--ember-line-offset) * -1),
+          0);
+      opacity: 0;
     }
-    50% {
-      top: calc(100% + var(--ember-gap-vertical));
-      left: calc(100% + var(--ember-gap-horizontal));
+    /* Instant teleport to start of line 2 (opacity is 0 here, so invisible) */
+    50.01% {
+      transform: translate(-50%, -50%) translate3d(
+          calc(var(--ember-x-amplitude) * -1),
+          var(--ember-line-offset),
+          0);
+      opacity: 0;
     }
-    75% {
-      top: calc(100% + var(--ember-gap-vertical));
-      left: calc(-1 * var(--ember-gap-horizontal));
+    53%  { opacity: 1; }
+    97%  { opacity: 1; }
+    100% {
+      transform: translate(-50%, -50%) translate3d(
+          var(--ember-x-amplitude),
+          var(--ember-line-offset),
+          0);
+      opacity: 0;
     }
   }
 
-  /* Ember 2 — same clockwise orbit starting from bottom-right */
-  @keyframes ember-orbit-2 {
-    0%, 100% {
-      top: calc(100% + var(--ember-gap-vertical));
-      left: calc(100% + var(--ember-gap-horizontal));
+  /* INNER keyframes — closed circle in the YZ plane.
+   * 0%   front (Y=0,    Z=+amp)  ← in front of text
+   * 25%  top   (Y=-amp, Z=0)     ← at text plane, above
+   * 50%  back  (Y=0,    Z=-amp)  ← behind text
+   * 75%  bot   (Y=+amp, Z=0)     ← at text plane, below
+   * 100% front (loops)
+   * One full revolution every 0.75s — combined with the outer 12s X traversal,
+   * the orb completes ~8 loops over each line (6s ÷ 0.75s = 8). */
+  @keyframes ember-loop {
+    0%   { transform: translate3d(0, 0, var(--ember-z-amplitude)); }
+    25%  { transform: translate3d(0, calc(var(--ember-y-amplitude) * -1), 0); }
+    50%  { transform: translate3d(0, 0, calc(var(--ember-z-amplitude) * -1)); }
+    75%  { transform: translate3d(0, var(--ember-y-amplitude), 0); }
+    100% { transform: translate3d(0, 0, var(--ember-z-amplitude)); }
+  }
+
+  /* Smaller path on narrow viewports — keep the orb path inside the screen */
+  @media (max-width: 768px) {
+    .hero-text-wrapper {
+      --ember-x-amplitude: 180px;
+      --ember-y-amplitude:  18px;
+      --ember-z-amplitude: 160px;
+      --ember-line-offset:  22px;
     }
-    25% {
-      top: calc(100% + var(--ember-gap-vertical));
-      left: calc(-1 * var(--ember-gap-horizontal));
+  }
+  @media (max-width: 420px) {
+    .hero-text-wrapper {
+      --ember-x-amplitude: 130px;
+      --ember-y-amplitude:  14px;
+      --ember-z-amplitude: 120px;
+      --ember-line-offset:  18px;
     }
-    50% {
-      top: calc(-1 * var(--ember-gap-vertical));
-      left: calc(-1 * var(--ember-gap-horizontal));
-    }
-    75% {
-      top: calc(-1 * var(--ember-gap-vertical));
-      left: calc(100% + var(--ember-gap-horizontal));
-    }
+    .ember-core { width: 12px; height: 12px; top: -6px; left: -6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ember-shell, .ember-orbit { animation: none; opacity: 0.5; }
   }
 
   @media screen and (max-width: 360px) {

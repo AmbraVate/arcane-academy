@@ -6,7 +6,15 @@ import type { DashboardDto, ChunkHealthDto } from '../types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 
-const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string; accent: string }> = {
+type TopicMeta = {
+  name: string
+  glyph: string
+  tagline: string
+  accent: string
+  studyOrder?: { label: string; detail: string; tiers: string[] }[]
+}
+
+const TOPIC_META: Record<string, TopicMeta> = {
   java: {
     name: 'Java',
     glyph: '☕',
@@ -31,8 +39,31 @@ const TOPIC_META: Record<string, { name: string; glyph: string; tagline: string;
     tagline: 'The language of data. Read, filter, summarise — every backend dev writes it daily.',
     accent: 'var(--teal)',
   },
+  psychology: {
+    name: 'Psychology',
+    glyph: 'PSY',
+    tagline: 'Self-paced psychology: foundations first, then human behaviour, advanced understanding, and academic thinking.',
+    accent: 'var(--purple)',
+    studyOrder: [
+      { label: 'Foundation', detail: 'Foundations, brain and biology, cognition, and memory.', tiers: ['FOUNDATION'] },
+      { label: 'Human Behaviour', detail: 'Development, social behaviour, personality, motivation, and individual differences.', tiers: ['PRACTITIONER'] },
+      { label: 'Advanced Understanding', detail: 'Mental health, treatment models, and applied psychology in real settings.', tiers: ['PRACTITIONER'] },
+      { label: 'Academic Thinking', detail: 'Research design, statistics, paper critique, and replication-aware reading.', tiers: ['EXPERT'] },
+    ],
+  },
+  genealogy: {
+    name: 'Genealogy',
+    glyph: 'GEN',
+    tagline: 'Records, lineages, and DNA: the methods of family history.',
+    accent: 'var(--gold)',
+  },
+  sciences: {
+    name: 'Natural Sciences',
+    glyph: 'SCI',
+    tagline: 'Scientific method, physics, biology, and the laws of the world.',
+    accent: 'var(--teal)',
+  },
 }
-
 const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-teal', YELLOW: 'bg-orange', RED: 'bg-red',
 }
@@ -136,6 +167,25 @@ export default function TopicPage() {
           </div>
         </div>
       </div>
+
+      {meta.studyOrder && (
+        <div className="mb-7">
+          <div className="font-cinzel text-[14px] font-bold text-gold tracking-[0.08em] uppercase mb-3.5">Suggested Study Order</div>
+          <div className="grid gap-3 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))' }}>
+            {meta.studyOrder.map((phase, index) => (
+              <div
+                key={`${phase.label}-${index}`}
+                className="bg-card border border-border rounded-[12px] p-4"
+                style={{ borderTopColor: `color-mix(in srgb, ${meta.accent} 55%, transparent)`, borderTopWidth: 2 }}
+              >
+                <div className="text-[11px] text-muted font-cinzel uppercase tracking-[0.08em] mb-1">Phase {index + 1}</div>
+                <div className="text-[14px] font-bold text-text mb-1.5">{phase.label}</div>
+                <p className="text-[12px] text-muted leading-[1.55] m-0">{phase.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Reviews due */}
       {dashboard.reviewsDue > 0 && (

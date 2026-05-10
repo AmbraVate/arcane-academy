@@ -52,6 +52,33 @@ public class TopicSeeder {
                 .accentColor("#7dd3fc")
                 .sortOrder(4)
                 .active(true)
+                .build(),
+            Topic.builder()
+                .id("psychology")
+                .name("Psychology")
+                .glyph("🧠")
+                .tagline("Cognition, behaviour, and the architecture of mind.")
+                .accentColor("#a78bfa")
+                .sortOrder(5)
+                .active(true)
+                .build(),
+            Topic.builder()
+                .id("genealogy")
+                .name("Genealogy")
+                .glyph("🌳")
+                .tagline("Records, lineages, and DNA — the methods of family history.")
+                .accentColor("#d4a73f")
+                .sortOrder(6)
+                .active(true)
+                .build(),
+            Topic.builder()
+                .id("sciences")
+                .name("Natural Sciences")
+                .glyph("🔬")
+                .tagline("Scientific method, physics, biology — the laws of the world.")
+                .accentColor("#5dd5b5")
+                .sortOrder(7)
+                .active(true)
                 .build()
         );
 

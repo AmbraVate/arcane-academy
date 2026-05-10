@@ -1,0 +1,634 @@
+{
+  "id": "gen-a",
+  "title": "Records & Sources",
+  "glyph": "📜",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "genealogy",
+  "prerequisites": [],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "gen-a1",
+      "title": "Vital Records — The Big Three",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Births, marriages, and deaths — the three doors every life passes through. Most of what genealogy can prove begins on a vital certificate. But the certificate is never the whole truth: <em>what it captures, what it omits, and who said it</em> determine how far you can trust it.</p>",
+
+      "explanationHtml": "<h3>The big three</h3>\n<p><strong>Vital records</strong> are the official documents of birth, marriage, and death — sometimes abbreviated <strong>BMD</strong>. They are the spine of every genealogical case. Civil authorities (governments) keep them now; for centuries before, churches did the recording. The transition from church to civil registration is the single most important date in your jurisdiction's record landscape, because it changes who created the record, what they captured, and where you go to find it.</p>\n\n<h3>When civil registration begins (jurisdiction matters)</h3>\n<p>Civil registration started at very different dates depending on country, and even region within a country. A few key starting points to memorise:</p>\n<table>\n  <tr><th>Jurisdiction</th><th>Civil registration begins</th><th>Notes</th></tr>\n  <tr><td>England &amp; Wales</td><td>1 July 1837</td><td>General Register Office (GRO); enforcement weak until 1875</td></tr>\n  <tr><td>Scotland</td><td>1 January 1855</td><td>Statutory registers; the most detailed BMDs in the British Isles</td></tr>\n  <tr><td>Ireland</td><td>1 January 1864</td><td>Non-Catholic marriages from 1845; full BMD from 1864</td></tr>\n  <tr><td>United States</td><td>State by state, 1850s–1920s</td><td>Massachusetts 1841 early; many southern states not until 1910s–20s</td></tr>\n  <tr><td>Australia</td><td>State by state, 1842–1856</td><td>Tasmania 1838 earliest</td></tr>\n  <tr><td>Canada</td><td>Province by province, 1860s–1920s</td><td>Quebec began with parish-only until 1926</td></tr>\n</table>\n<p>Before these dates, you switch to <strong>parish registers</strong> (gen-a3). After them, you have civil indexes <em>plus</em> in many places continued church recording — meaning two parallel record streams exist for the same event.</p>\n\n<h3>What's typically captured (and what's frequently missing)</h3>\n<p>A <strong>birth certificate</strong> normally captures: child's name, date and place of birth, sex, parents' names, father's occupation, sometimes mother's maiden name, the informant (the person reporting the birth), and the registration date. Frequently <em>missing</em>: the father's name on illegitimate births before the late 20th century — many jurisdictions left it blank by policy, even when paternity was known. In England before 1875, the mother's maiden name on a birth certificate is sometimes only the surname she gave the registrar, which need not be her actual maiden name.</p>\n<p>A <strong>marriage certificate</strong> normally captures: names, ages (often \"of full age\" or \"21\" rather than the actual age — a polite fiction), occupations, residences at the time of marriage (which may be where the bride or groom lodged for a few weeks to qualify), fathers' names and occupations, witnesses. Frequently <em>missing</em>: mother's name (England did not require it on marriage certificates until 1837 marriage forms reformed in 2021), and a precise statement of birthplace.</p>\n<p>A <strong>death certificate</strong> captures: name, date and place of death, age at death, occupation, cause of death, informant, and (sometimes) parents' names. It's <em>two records in one</em>: information about the death itself (date, place, cause) is typically reliable because the informant — a doctor or relative present at the death — has direct knowledge. Information about the deceased's birth (date, place, parents) is reliable only as far as the informant's memory and motivation; we'll meet this distinction properly in gen-a5.</p>\n\n<h3>Indexes vs the actual record image</h3>\n<p>Most online genealogy sites first show you an <strong>index</strong> — a typed transcription summarising the record. Indexes are convenient but lossy. The original image often contains marginal notes, witness signatures, the registrar's handwriting (which may show alterations), the page header (which dates the volume), and the surrounding entries (which are often siblings or neighbours). <em>Always view the image when one exists.</em> An index error is the most common single cause of a stuck research case.</p>\n\n<h3>Common errors to expect</h3>\n<ul>\n  <li><strong>Transcription errors:</strong> \"Smith\" misread as \"Smyth\"; \"Mary\" mistaken for \"Many\"; numerical ages off by a digit.</li>\n  <li><strong>Deliberate misstatements:</strong> ages at marriage rounded down (or up to reach the age of consent); occupations elevated for social reasons; \"widower\" claimed when in fact divorced or deserted.</li>\n  <li><strong>Phonetic spelling:</strong> a registrar wrote down what they heard. \"O'Connor,\" \"Connor,\" \"Conner,\" and \"Konner\" can all refer to the same family across two generations.</li>\n  <li><strong>Estimated ages:</strong> ages on death certificates are commonly off by 2–5 years, especially in pre-1900 records, because the informant was guessing.</li>\n</ul>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You step into a long stone hall lined with shelves of leather portfolios. The air smells of beeswax and old paper. A woman in muted scholar's robes looks up from an index card she has been writing in copperplate. She gestures you toward the table — three certificates lie there, fanned out in chronological order: a birth, a marriage, a death."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Welcome. Sit down — and look, but do not yet touch. These three slips of paper are the spine of any case I have ever worked. <em>Birth. Marriage. Death.</em> They are the doors a soul passes through. Almost everything we can prove about a life begins on a vital certificate."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "But pay close attention. <em>Civil</em> registration — the kind kept by the state — does not begin everywhere at the same time. England and Wales, July of 1837. Scotland not until 1855 — though when Scotland did finally begin, they did it best in the British Isles. Ireland 1864. The United States, state by state, drifting in across the late nineteenth and early twentieth centuries. Before those dates, you do not have civil records. You have <em>church</em> records. We will meet those soon."
+        },
+        {
+          "type": "example",
+          "speaker": "An England &amp; Wales civil birth entry, 1841",
+          "text": "Registration District: ST PANCRAS\nSub-district: REGENT'S PARK\nWhen and where born: 14 March 1841, 27 Mornington Crescent\nName: Edmund Lawrence\nSex: Boy\nName and surname of father: Thomas WALLACE\nName and maiden surname of mother: Eliza WALLACE, formerly HOLLOWAY\nOccupation of father: Cabinet maker\nInformant: Eliza Wallace, mother, 27 Mornington Crescent\nWhen registered: 28 April 1841\nSignature of registrar: J. R. Spence"
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now — what is on this certificate, and what is not. The mother's maiden name appears here: <em>Holloway</em>. That is the name to chase if you want to find her own birth or marriage. But the certificate does not tell you her age, nor where she was born, nor when she married Thomas. You will need a marriage certificate or a census entry for that. <em>Each record answers some questions and leaves others open.</em>"
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "A discipline I want you to take from this hall: <em>always view the image, never the index alone</em>. The transcription on the screen is a copy of a copy — fast, lossy, error-prone. The image will show you the registrar's handwriting, the marginal note, the witness who signed below, the names of the children registered on the same page. Indexes lie by omission far more often than by malice. Promise me this habit before you take another step."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And one warning before we move on. Certificates carry stories — but also carry <em>lies</em>. Ages at marriage, miswritten down to dodge a parent's objection. Fathers' names left blank, not because they were unknown, but because the law required the mother's permission to enter them. A widower who was in fact a deserter. The certificate is a <em>witness</em>, not an oracle. Treat what it says with respect, and with suspicion. Now — to your retrieval check."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Anchor the dates</h3>\n<p>Before you continue, retrieve from memory (without scrolling back):</p>\n<ul>\n  <li>What year did civil registration begin in <strong>England &amp; Wales</strong>?</li>\n  <li>What year did civil registration begin in <strong>Scotland</strong>? In <strong>Ireland</strong>?</li>\n  <li>Name <em>three things</em> typically captured on a marriage certificate, and <em>one thing</em> often missing.</li>\n  <li>Why must you always view the record image rather than relying on the index?</li>\n</ul>\n<p>If any of these slipped, scroll up and re-read the relevant section before the questions below.</p>",
+
+      "feynmanPrompt": "Explain to a friend who has never researched their family why a death certificate is partly trustworthy and partly not — and why an index transcription is no substitute for the actual record image.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Civil registration of births, marriages, and deaths began in <strong>England and Wales</strong> in which year?</p>",
+          "options": [
+            "1837",
+            "1855",
+            "1864",
+            "1875"
+          ],
+          "correctAnswer": "1837",
+          "explanationHtml": "<p>Civil registration in England and Wales began on 1 July 1837, run by the General Register Office. Scotland followed in 1855, Ireland in 1864 (full BMD; non-Catholic marriages from 1845). Enforcement of registration in England was weak until 1875, after which fines made compliance near-universal.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <strong>BMD</strong> stand for in genealogy?</p>",
+          "options": [
+            "Birth, Marriage, Death",
+            "Baptism, Marriage, Death",
+            "Birth, Migration, Death",
+            "Baptism, Marriage, Death-bed"
+          ],
+          "correctAnswer": "Birth, Marriage, Death",
+          "explanationHtml": "<p>BMD = Birth, Marriage, Death — the three vital records kept by civil authorities. Baptism, marriage, and burial (the church-record equivalents) form a parallel \"BMB\" set found in parish registers.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are trying to confirm a man's <strong>mother's maiden name</strong>. He was born in 1845 in England, married in 1872, and died in 1908. Which single record is most likely to give you the cleanest answer?</p>",
+          "options": [
+            "His birth certificate",
+            "His marriage certificate",
+            "His death certificate",
+            "His own children's birth certificates"
+          ],
+          "correctAnswer": "His birth certificate",
+          "explanationHtml": "<p>Post-1837 English birth certificates explicitly include the mother's maiden surname (\"formerly\" or \"née\"). Marriage certificates in England before 2021 did not record either party's mother. Death certificates rarely list the deceased's parents at all. The man's own children's births list <em>their</em> mother's maiden name — i.e. his wife's — not his mother's.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A junior researcher boasts that they found a great-great-grandfather's birth date on a death certificate, and they consider the case closed. Theodora frowns. Why?</p>",
+          "options": [
+            "The death certificate's information about the death itself is usually reliable, but the deceased's birth date depends on a relative's memory and is often off by years — it is secondary information requiring corroboration",
+            "Death certificates never record birth dates, so the junior must have invented the entry",
+            "Birth dates on death certificates are always falsified for legal reasons and should be ignored",
+            "Death certificates are not genealogical records — only baptism records count"
+          ],
+          "correctAnswer": "The death certificate's information about the death itself is usually reliable, but the deceased's birth date depends on a relative's memory and is often off by years — it is secondary information requiring corroboration",
+          "explanationHtml": "<p>A death certificate is two records in one: the death event (date, place, cause) is reported by an eyewitness — the doctor or attending relative — and is generally reliable. The deceased's birth date and parentage, by contrast, are reported from someone's recollection — often a grieving relative under pressure. Ages at death are commonly off by 2–5 years; birthplaces and parents' names are sometimes simply guessed. The case is not closed; it merely has a hypothesis that needs corroborating against an actual birth record. We'll formalise this distinction in gen-a5 (\"primary vs secondary information\").</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-a2",
+      "title": "Census Records — Households at a Moment",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Once a decade, a state pauses and counts every household in its territory. The result is a snapshot of who lived with whom, where, and what they did for a living. Census records are the cheapest way to track a family across decades — and the most error-strewn, if you don't know what each year actually asked.</p>",
+
+      "explanationHtml": "<h3>The decennial census model</h3>\n<p>The modern census — a periodic, household-level enumeration — is a recent invention. The United States started in 1790 (the constitution required it); the United Kingdom from 1801, with named-individual enumeration from 1841; Canada systematic from 1851; Australia colony-by-colony from 1828, then nationally from 1911. Most run on a roughly ten-year cadence, which is why they are called <em>decennial</em>. Decennial cadence is also why they are so valuable: a family that disappears for thirty years between vital events can usually be picked up in three census snapshots.</p>\n\n<h3>What each census actually captured (it changed over time)</h3>\n<p>Don't assume every census asked the same questions. The columns evolve, and the columns are everything.</p>\n<ul>\n  <li><strong>UK 1841</strong>: name, age (rounded down to the nearest 5 for adults), sex, occupation, born-in-county-yes/no. Relationships not given. Ages of adults are notoriously rough.</li>\n  <li><strong>UK 1851 onward</strong>: exact age, marital status, relationship to head of household, parish of birth.</li>\n  <li><strong>US 1790–1840</strong>: only the head of household named; everyone else counted by tally in age/sex/race buckets.</li>\n  <li><strong>US 1850</strong>: first to name <em>every free person</em> in the household. Slaves still counted separately on the slave schedules.</li>\n  <li><strong>US 1880</strong>: first to record <em>relationship to head of household</em>. Also: birthplaces of each person's father and mother — invaluable for tracking immigration generations.</li>\n  <li><strong>US 1900</strong>: month and year of birth, year of immigration, year of naturalisation. The richest single year for many researchers.</li>\n</ul>\n\n<h3>The 1890 US census fire</h3>\n<p>A near-total catastrophe. On 10 January 1921, a fire in the Commerce Department building destroyed about 75% of the 1890 US census schedules; bureaucratic neglect destroyed most of the rest in 1934–35. Only fragments survive — a few thousand names from a population of about 63 million. This creates a <em>20-year gap</em> for any American family between 1880 and 1900. Migration tracking suffers most: a family that arrived in 1882 and is hard to identify in a crowded port-city neighbourhood may not surface clearly in any census until 1900. State censuses (e.g. New York 1892, Iowa 1885 and 1895) and city directories partly fill the gap.</p>\n\n<h3>Privacy release rules</h3>\n<table>\n  <tr><th>Country</th><th>Embargo</th><th>Latest available (as of 2026)</th></tr>\n  <tr><td>United States</td><td>72 years</td><td>1950 (released 2022)</td></tr>\n  <tr><td>United Kingdom</td><td>100 years</td><td>1921 (released January 2022)</td></tr>\n  <tr><td>Canada</td><td>92 years</td><td>1931 (released 2023)</td></tr>\n  <tr><td>Ireland</td><td>100 years</td><td>1926 (released April 2026)</td></tr>\n</table>\n<p>The 100-year UK rule means the 1921 census's release was a major event for British family historians; 1931 was destroyed by fire; 1941 was not taken (war); the 1939 National Register is a partial substitute, released in 2015 with redactions for living individuals.</p>\n\n<h3>Reading enumerator handwriting</h3>\n<p>Enumerators wrote at speed in nineteenth-century cursive — often the \"Spencerian\" or English copperplate hand — using abbreviations you must learn to read. Marital status:</p>\n<table>\n  <tr><th>Abbreviation</th><th>Meaning</th></tr>\n  <tr><td>M / Md</td><td>Married</td></tr>\n  <tr><td>S / Sg / Single</td><td>Single (never married)</td></tr>\n  <tr><td>W / Wd / Wid</td><td>Widow / Widower</td></tr>\n  <tr><td>D / Div</td><td>Divorced</td></tr>\n</table>\n<p>Relationship to head of household:</p>\n<table>\n  <tr><th>Abbreviation</th><th>Meaning</th></tr>\n  <tr><td>Hd / Head</td><td>Head of household</td></tr>\n  <tr><td>Wf / Wife</td><td>Wife</td></tr>\n  <tr><td>Son</td><td>Son</td></tr>\n  <tr><td>Dau / Daur</td><td>Daughter</td></tr>\n  <tr><td>Bdr / Bdr</td><td>Boarder (a paying lodger, not family)</td></tr>\n  <tr><td>Svt / Serv</td><td>Servant</td></tr>\n  <tr><td>Ldgr</td><td>Lodger</td></tr>\n  <tr><td>F-i-L / M-i-L</td><td>Father-in-law / Mother-in-law</td></tr>\n</table>\n\n<h3>Common census quirks</h3>\n<ul>\n  <li><strong>Ages drift.</strong> A woman aged 28 in 1851 might be 35 in 1861, then 47 in 1871. People rounded their ages, and women in particular often shaved years on the marriage record and added them later. Don't expect ages across censuses to subtract neatly.</li>\n  <li><strong>Ethnic identity is inconsistent.</strong> The same Irish-born man may be marked \"Ireland\" in 1851, \"Free State\" in 1921, and \"unknown\" in 1841 (which only asked county-of-England yes/no).</li>\n  <li><strong>\"Boarder\" households are common.</strong> A widow with three small children would often take in two or three boarders to make rent. Don't assume everyone at the address is family.</li>\n  <li><strong>Census date matters.</strong> A child born after the census date but before enumeration may or may not be listed; an adult away on census night (sailor, soldier, traveller) won't appear at the home address — they'll appear wherever they slept that night.</li>\n</ul>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora moves to a long oak desk and lays out four large sheets — facsimiles of census pages, each with a different decade's column layout. The 1841 page has only six columns. The 1880 page is dense with a dozen."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Once every ten years a state stops and counts itself. <em>Every ten years.</em> Think about that. If a family disappears for thirty years between a birth and a death, three census snapshots will usually catch them anyway. That regularity is the gift the census gives us — and it is a gift you must learn to receive carefully."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Each year asked different questions. In England 1841 they wanted a name and a rough age — adults rounded <em>down</em> to the nearest five. In 1851 they began to ask the parish of birth and the relationship to the head of household. In 1880 the United States first asked relationship to head — before that, you guessed at family connections from age and surname alone. Read the column headers <em>before</em> you interpret a row. The columns are everything."
+        },
+        {
+          "type": "example",
+          "speaker": "A US 1880 census row, transcribed",
+          "text": "Page 14, Dwelling 102, Family 110\nWALSH, John       Hd  M  W  43  M    Stonemason   Ireland  Ireland  Ireland\nWALSH, Bridget    Wf  F  W  39  M    Keeping hse  Ireland  Ireland  Ireland\nWALSH, Mary       Dau F  W  16  S    At school    NY       Ireland  Ireland\nWALSH, Patrick    Son M  W  11  S    At school    NY       Ireland  Ireland\nWALSH, Anne       Dau F  W   3  S                  NY       Ireland  Ireland\nMURPHY, James     Bdr M  W  28  S    Stonemason   Ireland  Ireland  Ireland"
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Read this with me. <em>Hd, Wf, Dau, Son, Bdr</em> — head, wife, daughter, son, boarder. Three children, all born in New York; both parents born in Ireland. The 1880 census's three rightmost columns are birthplace of the person, then birthplace of the person's father, then birthplace of the person's mother. So Mary Walsh, sixteen, has Irish-born parents. That is two generations of immigration data on one row. <em>Treasure</em>."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And note: James Murphy, lodging with the family, was a <em>boarder</em>. Not a brother, not a son. A paying tenant. A great many beginners assume everyone at the address is family — and chase down the wrong tree for years. <em>Hd, Wf, Dau, Son, Bdr, Svt</em>. Learn the abbreviations. They will save you generations of error."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "I must tell you about the <em>fire</em>. In January of 1921, a fire in Washington destroyed most of the 1890 United States census. Bureaucrats let the rest rot in storage and the surviving fragments were burned outright in 1935. We have, in the whole country, a few thousand names — from a population of <em>sixty-three million</em>. For an American family between 1880 and 1900, you have a twenty-year hole. State censuses, city directories, and naturalisation papers may close it. Often they do not. This one disaster has shaped the whole shape of American genealogy."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Anchor the columns</h3>\n<p>Before the questions, retrieve from memory:</p>\n<ul>\n  <li>What year did the US census first list <strong>every free person</strong> in the household? What year did it first add <strong>relationship to head of household</strong>?</li>\n  <li>What is the privacy embargo length for the US census? For the UK?</li>\n  <li>What does <strong>Bdr</strong> mean — and why does it matter?</li>\n  <li>Why does the 1890 fire create a research problem specifically for tracking <em>migration</em>?</li>\n</ul>\n<p>If your answers wobble, re-read the relevant table before continuing.</p>",
+
+      "feynmanPrompt": "Explain to a friend why \"this man's age in 1851 was 28 and in 1861 was 35, so the census must be wrong about one of them\" is a naive complaint — and what a careful researcher would actually do with that age drift.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which US census was the <strong>first to record relationship to head of household</strong> for every member?</p>",
+          "options": [
+            "1880",
+            "1850",
+            "1900",
+            "1840"
+          ],
+          "correctAnswer": "1880",
+          "explanationHtml": "<p>The 1880 US census added a \"relationship to head of household\" column for every person. 1850 was the first to <em>name</em> every free person, but it did not give relationships — researchers had to infer family connections from surname and age. 1900 added month/year of birth and immigration year, but relationship had already been a column since 1880.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You see this entry on an 1880 US census schedule:</p>\n<pre><code>O'BRIEN, Catherine  Hd  F  W  41  Wd  Laundress\nO'BRIEN, Thomas     Son M  W  14  S   At school\nMcGRATH, Sean       Bdr M  W  29  S   Labourer</code></pre>\n<p>What is Sean McGrath's relationship to Catherine O'Brien?</p>",
+          "options": [
+            "He is a paying boarder unrelated to the family",
+            "He is Catherine's son from a previous marriage",
+            "He is Catherine's brother",
+            "He is Catherine's husband"
+          ],
+          "correctAnswer": "He is a paying boarder unrelated to the family",
+          "explanationHtml": "<p><code>Bdr</code> = boarder. A boarder is a paying tenant who shares the household but is not (necessarily) related. Catherine is marked Wd (widow), so she has no current husband; her son's surname is O'Brien, not McGrath. The most common rookie error in census reading is to assume everyone at the address is family — Catherine has likely taken in McGrath to help pay the rent.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>An American family is hard to find between 1880 and 1900. Which single fact about US census records most sharply explains this gap?</p>",
+          "options": [
+            "Most of the 1890 census was destroyed by fire and bureaucratic neglect, leaving only fragments and a 20-year gap",
+            "The 1890 census was deliberately suppressed for political reasons",
+            "Census-takers in 1890 were not paid, so most schedules were never returned",
+            "The 1890 census was taken only in cities, not in rural areas"
+          ],
+          "correctAnswer": "Most of the 1890 census was destroyed by fire and bureaucratic neglect, leaving only fragments and a 20-year gap",
+          "explanationHtml": "<p>A January 1921 fire in the Department of Commerce building damaged most 1890 US schedules; bureaucratic neglect destroyed most of the surviving fragments by 1935. Only a few thousand names survive from a population of about 63 million. This is the single largest record loss in US genealogy and forces researchers tracking late-19th-century immigrant families to lean on state censuses, city directories, and naturalisation papers to close the gap.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A novice researcher tells you: \"My ancestor's age is 28 in the 1851 census and 35 in 1861. The 1851 record must be wrong — they only aged seven years in ten.\" Which response is the most professional?</p>",
+          "options": [
+            "Age drift of two to five years across censuses is extremely common — neither record is necessarily \"wrong\"; both are statements taken at one moment by one informant who may have rounded, guessed, or had a motive to misstate, and the researcher should treat the actual birth record as the corroborating anchor",
+            "The 1851 census is generally less reliable than 1861, so the 1861 age should always be preferred",
+            "Census ages are legally guaranteed to be exact, so one of the two must be a transcription error and a re-transcription is required",
+            "Ten years passed, so the 1851 age must be 25, not 28 — the index is misread"
+          ],
+          "correctAnswer": "Age drift of two to five years across censuses is extremely common — neither record is necessarily \"wrong\"; both are statements taken at one moment by one informant who may have rounded, guessed, or had a motive to misstate, and the researcher should treat the actual birth record as the corroborating anchor",
+          "explanationHtml": "<p>Census ages drift for many reasons: the informant rounded; the informant guessed; women in particular often shaved years off the marriage record and added them back later; UK 1841 specifically rounded adult ages down to the nearest five. Treating the census as an oracle is a beginner's error. The professional move is to use census ages as <em>evidence</em> pointing to a birth-year window, then verify against the actual birth or baptism record.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-a3",
+      "title": "Church &amp; Parish Records — The Pre-Civil Backbone",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Before the state began counting births and marriages, the parish priest already had been — for centuries. Church registers are the only continuous record of ordinary people's lives in Europe before the mid-1800s. Reading a parish register is reading history with the priest's own pen.</p>",
+
+      "explanationHtml": "<h3>Why parish registers exist</h3>\n<p>In England, parish registers begin in 1538. In that year, Thomas Cromwell, as Henry VIII's vicegerent, ordered every parish to keep a book recording every <strong>baptism, marriage, and burial</strong>. Compliance was uneven for the first century — some parishes obeyed, others did not, and many early registers were destroyed during the Civil War or simply lost in damp churches — but from roughly 1600 onward, English parish registers are the dominant source for ordinary people. They predate civil registration by <em>three centuries</em> and remain a crucial parallel record for nearly a century after 1837.</p>\n\n<h3>Bishop's Transcripts (BTs)</h3>\n<p>From 1598, English parishes were required to send an annual copy of their register entries to the diocesan bishop. These copies are called <strong>Bishop's Transcripts</strong>. They are valuable because (a) they sometimes survive when the original parish register has been lost, (b) they sometimes preserve entries that are now illegible in the original, and (c) they let you cross-check a doubtful original against an independent transcript. They are not always complete — some incumbents skipped years — but BTs have closed many a research gap.</p>\n\n<h3>Other denominational records</h3>\n<table>\n  <tr><th>Tradition</th><th>Record name</th><th>Notable features</th></tr>\n  <tr><td>Roman Catholic</td><td>Parish registers</td><td>Latin until the 20th century in many countries; godparents often recorded; \"sub conditione\" baptisms reflect uncertainty about a prior baptism</td></tr>\n  <tr><td>Lutheran (Germany, Scandinavia)</td><td>Kirchenbücher</td><td>Often record cause of death and exact age in years/months/days; from 16th c. in many regions</td></tr>\n  <tr><td>Society of Friends (Quaker)</td><td>Monthly meeting minutes; \"digests\" of births, marriages, deaths</td><td>Uniquely detailed — record removals, marriages outside the meeting, disownments, and reasons</td></tr>\n  <tr><td>Methodist, Baptist, Congregational</td><td>Chapel registers</td><td>Often less complete; many baptism-only (no burials) because non-conformists were buried in CofE churchyards</td></tr>\n  <tr><td>Jewish (UK)</td><td>Synagogue registers; often Hebrew</td><td>From 17th c.; central registers (London, etc.) richer than provincial</td></tr>\n</table>\n\n<h3>Reading old hands and Latin</h3>\n<p>Pre-1733 English parish registers were often kept in <strong>Latin</strong>, and the dominant script was <strong>secretary hand</strong> — a sixteenth- and seventeenth-century cursive whose letterforms (especially <em>e</em>, <em>r</em>, <em>s</em>, and the long <em>s</em>) bear little resemblance to modern handwriting. After 1733 the Latin became English and the script gradually shifted to a more legible round hand, but you will still meet abbreviations.</p>\n<p>A few Latin terms to recognise on sight:</p>\n<table>\n  <tr><th>Latin</th><th>Meaning</th></tr>\n  <tr><td><em>baptizatus / baptizata</em></td><td>baptised (male / female)</td></tr>\n  <tr><td><em>filius / filia</em></td><td>son / daughter</td></tr>\n  <tr><td><em>uxor</em></td><td>wife</td></tr>\n  <tr><td><em>vidua / viduus</em></td><td>widow / widower</td></tr>\n  <tr><td><em>sepultus / sepulta</em></td><td>buried (male / female)</td></tr>\n  <tr><td><em>nuper</em></td><td>recently / formerly</td></tr>\n  <tr><td><em>eodem die</em></td><td>on the same day</td></tr>\n  <tr><td><em>illegitimus / spurius</em></td><td>illegitimate / a euphemism (\"base-born\")</td></tr>\n</table>\n\n<h3>Banns vs marriage entries; \"by licence\" vs \"by banns\"</h3>\n<p>An English marriage in the Church of England could be conducted in one of two ways:</p>\n<ul>\n  <li><strong>By banns:</strong> the couple's intent to marry was announced (\"banned\") on three successive Sundays in the parishes of both parties. If no objection was raised, the marriage proceeded. Banns were free, slow, and public.</li>\n  <li><strong>By licence:</strong> the couple paid for a marriage licence from a bishop or surrogate, which dispensed with the banns. Licences were faster, more private, and more expensive — typically used by the better-off, by widows and widowers, by those who needed to marry across parish boundaries, and by those in a hurry.</li>\n</ul>\n<p>Banns books survive separately in many parishes — and they are valuable because <em>banns called are not always banns kept</em>. A couple's banns may appear with no following marriage entry, indicating either an objection, a change of heart, or that the marriage took place in another parish.</p>\n\n<h3>An example entry</h3>\n<pre><code>1672, July 14: Joannes filius Thomae Wallis baptizatus est.\n1675, April  3: Maria filia Thomae Wallis et Anna uxor sepulta est.\n1696, Sept  21: Thomas Wallis viduus huius parochiae et\n                Elizabetha Holloway de parochia Sancti Pancratii\n                in matrimonium copulati sunt per licentiam.</code></pre>\n<p>Translated: \"14 July 1672, John son of Thomas Wallis was baptised. 3 April 1675, Mary daughter of Thomas Wallis and Anna [his] wife was buried. 21 September 1696, Thomas Wallis, widower, of this parish, and Elizabeth Holloway of the parish of St Pancras were joined in matrimony by licence.\" Three entries, three life events, one family thread — and the words <em>viduus</em> and <em>per licentiam</em> tell you Thomas was a widower marrying with a paid licence rather than waiting for banns.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora unlocks a low cabinet and lifts out a small leather volume, much older than the certificates on the desk. The cover is soft from centuries of handling. She opens it carefully and tilts it toward you so the candlelight catches the writing."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This is a parish register from a rural Hampshire church. The earliest entries are from <em>1538</em>. That year, Thomas Cromwell, on behalf of Henry VIII, ordered every parish in England to keep a book — every baptism, every marriage, every burial. Many parishes obeyed; many ignored him. Some books were destroyed in the Civil War; some were eaten by mice. But what remains is the only continuous record of ordinary people's lives we have, for three centuries before civil registration began."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "In 1598 they added a second protection — the <em>Bishop's Transcript</em>. Once a year, every parish was to send a copy of its entries to the diocesan bishop. So when the original burns or rots, the bishop's copy may yet remain. I cannot tell you how many of my cases have been saved by a Bishop's Transcript. Always check whether one survives. Always."
+        },
+        {
+          "type": "example",
+          "speaker": "A 1696 marriage entry, in Latin",
+          "text": "1696, Sept 21: Thomas Wallis viduus huius parochiae et\n                Elizabetha Holloway de parochia Sancti Pancratii\n                in matrimonium copulati sunt per licentiam.\n\n— \"21 Sept 1696, Thomas Wallis, widower, of this parish,\n   and Elizabeth Holloway of the parish of St Pancras\n   were joined in matrimony by licence.\""
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Note the Latin — until 1733, English parish registers were kept in Latin. <em>Filius</em> son. <em>Filia</em> daughter. <em>Uxor</em> wife. <em>Viduus, vidua</em> widower, widow. <em>Baptizatus, sepultus</em> baptised, buried. A short list, repeated in millions of entries. Memorise these eight or ten words and you can read three centuries of ordinary lives."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Note also the phrase <em>per licentiam</em> — \"by licence.\" In England a couple could marry one of two ways. <em>By banns</em>: their intent was announced on three successive Sundays, free and public; if nobody objected, the wedding went ahead. <em>By licence</em>: the couple paid a bishop's surrogate for a licence and skipped the banns. Quicker, quieter, more expensive. The choice itself tells you something — the well-off, the widowed, the ones in a hurry, the ones marrying across parishes — they chose licences. Banns called and not married? Look elsewhere — perhaps an objection, perhaps a change of heart, perhaps they were married in the other party's parish."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And remember other traditions kept their own books, often more detailed than the established church's. The Quakers — the Society of Friends — kept <em>monthly meeting minutes</em>, recording not only births and burials but also marriages outside the meeting, removals to other meetings, and disownments. If a Quaker ancestor crossed your path, thank your fortune; their records will tell you more than any Anglican register."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Anchor the church record landscape</h3>\n<p>Retrieve before continuing:</p>\n<ul>\n  <li>In what year did Thomas Cromwell order parishes in England to keep registers? In what year did <strong>Bishop's Transcripts</strong> begin?</li>\n  <li>What language were English parish registers kept in until 1733?</li>\n  <li>Translate: <em>filius, filia, uxor, viduus, sepultus, per licentiam</em>.</li>\n  <li>What is the difference between marrying <strong>by banns</strong> and <strong>by licence</strong>, and what does the choice imply about the couple?</li>\n</ul>",
+
+      "feynmanPrompt": "Explain to a friend why English parish registers from 1538 are still relevant in 2026 — and why a Bishop's Transcript is sometimes more useful than the original parish book.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In what year did Cromwell mandate that every parish in England keep a register of baptisms, marriages, and burials?</p>",
+          "options": [
+            "1538",
+            "1598",
+            "1733",
+            "1837"
+          ],
+          "correctAnswer": "1538",
+          "explanationHtml": "<p>1538. Thomas Cromwell's order, on behalf of Henry VIII, established the parish-register system. 1598 added the Bishop's Transcript backup. 1733 ended the legal use of Latin in English public records. 1837 began civil registration.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In a Latin parish register, what does <em>uxor</em> mean?</p>",
+          "options": [
+            "Wife",
+            "Daughter",
+            "Widow",
+            "Witness"
+          ],
+          "correctAnswer": "Wife",
+          "explanationHtml": "<p><em>Uxor</em> = wife. <em>Filia</em> = daughter; <em>vidua</em> = widow; <em>testis</em> = witness. These five or six words appear in millions of entries — memorise them and you can read three centuries of records.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are searching for the 1789 baptism of an English ancestor in a parish whose original register was destroyed in a 19th-century fire. What is the most productive next step?</p>",
+          "options": [
+            "Check whether a Bishop's Transcript survives for that parish and year — the bishop's annual copy may still exist in the diocesan record office",
+            "Conclude that the baptism is unrecoverable; civil registration began in 1837 so there is no other source",
+            "Search the 1841 census for the ancestor's age and accept that as a substitute for a baptism record",
+            "Check the parish's burial register for a death entry and infer the baptism from it"
+          ],
+          "correctAnswer": "Check whether a Bishop's Transcript survives for that parish and year — the bishop's annual copy may still exist in the diocesan record office",
+          "explanationHtml": "<p>From 1598, English parishes sent an annual copy of their register entries to the diocesan bishop. When the original perishes — fire, damp, theft — the BT may yet survive. Many a research case is saved by checking the BT, and it should be the first move whenever a parish register is lost.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A pair of English researchers find a marriage entry that ends with the phrase <em>per licentiam</em> rather than <em>per banns</em>. Which inference is most likely warranted?</p>",
+          "options": [
+            "The couple paid for a marriage licence rather than waiting three Sundays for banns to be called — this often signalled the better-off, a widow or widower, a marriage across parish boundaries, or a couple in a hurry",
+            "The couple were not legally married, since only banns produced a valid marriage in the Church of England",
+            "The couple were Roman Catholic and married outside the Anglican system",
+            "The marriage took place outside England, in a colony"
+          ],
+          "correctAnswer": "The couple paid for a marriage licence rather than waiting three Sundays for banns to be called — this often signalled the better-off, a widow or widower, a marriage across parish boundaries, or a couple in a hurry",
+          "explanationHtml": "<p>Both \"by licence\" and \"by banns\" produce valid Anglican marriages. A licence cost money and dispensed with the three-Sunday banns process. The wealthier, the widowed, the cross-parish, and the in-a-hurry typically chose a licence. The choice itself is a small piece of social evidence — it suggests something about the couple's circumstances, even before you read the witness names.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-a4",
+      "title": "Immigration &amp; Naturalisation — Crossing Borders",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>For most American, Australian, and Canadian families, somewhere in the tree there is an arrival. The records of that arrival — passenger lists, naturalisation papers, departure manifests — are richer after about 1893 and frustratingly thin before. Knowing which record was even <em>created</em> for your ancestor's crossing is half the battle.</p>",
+
+      "explanationHtml": "<h3>Passenger lists — what they captured, and when</h3>\n<p>The standard story for the United States is two great processing stations:</p>\n<ul>\n  <li><strong>Castle Garden, New York (1855–1890):</strong> the first organised state-run immigrant depot in the US. Pre-1893 federal lists are sparse — typically just name, age, sex, occupation, and country of origin, often with vague spellings. Compatriots travelling together might be lumped on one line. Castle Garden's own arrival index for 1820–1892 is searchable but lacks the depth of later records.</li>\n  <li><strong>Ellis Island, New York (1892–1954):</strong> after the Immigration Act of 1891 a federal Bureau took over inspection. From 1893 manifests are dramatically more detailed — name, age, sex, marital status, occupation, last residence, final destination, contact in the US, who paid for the passage, height, eye and hair colour, and (after 1906) place of birth. Ellis Island processed roughly 12 million arrivals.</li>\n</ul>\n<p>Other major stations of the same era: <strong>Philadelphia, Boston, Baltimore, New Orleans, San Francisco</strong> (US); <strong>Pier 21, Halifax</strong> (Canada, 1928–1971); <strong>Sydney and Melbourne</strong> (Australia). Each kept its own manifests in slightly different formats.</p>\n\n<h3>The asymmetry of departure vs arrival</h3>\n<p>Arrival records survive much better than departure records. The country accepting an immigrant had a clear administrative reason to log them; the country losing them did not, until later. UK <strong>outbound passenger lists</strong> exist only from 1890 onward (BT27 series at the National Archives). German <strong>departure lists</strong> from Hamburg survive from 1850 (the famous Hamburg Auswanderungslisten); Bremen's were almost entirely destroyed in WWII air raids. Italian departure records are scattered. If the arrival record is missing, the departure record may not exist.</p>\n\n<h3>Naturalisation — three documents</h3>\n<p>In the United States, becoming a citizen between roughly 1790 and 1906 was a two-step (sometimes three-step) judicial process recorded in any \"court of record\" — federal, state, county, even municipal. The three documents you should know:</p>\n<table>\n  <tr><th>Document</th><th>What it is</th><th>Genealogical value</th></tr>\n  <tr><td><strong>Declaration of Intention</strong> (\"first papers\")</td><td>The applicant declares intent to renounce foreign allegiance. Filed any time after arrival.</td><td>From 1906 onward, often gives birthplace, port and date of arrival, vessel name — i.e. it tells you which manifest to look on.</td></tr>\n  <tr><td><strong>Petition for Naturalisation</strong> (\"second papers\")</td><td>Filed 2–7 years after the declaration; sworn in court.</td><td>Usually richer than the declaration, often including spouse and children's names and birthplaces.</td></tr>\n  <tr><td><strong>Certificate of Naturalisation</strong></td><td>The actual citizenship certificate.</td><td>Held by the family; courthouse copies often slimmer than the petition.</td></tr>\n</table>\n<p>Before 1906 the federal government did not standardise these forms — county clerks used whatever paper they had. From 27 September 1906, the Bureau of Immigration and Naturalization issued standard forms, and from that date naturalisation records are some of the richest immigrant documents that exist.</p>\n\n<h3>Place names that no longer exist</h3>\n<p>Immigrants travelling between 1850 and 1920 often gave a homeland that has since vanished from maps. A few you must recognise:</p>\n<ul>\n  <li><strong>Galicia</strong> — a province of the Austro-Hungarian Empire (until 1918), now divided between south-east Poland and western Ukraine. A man giving \"Galicia\" as his birthplace in 1900 might today be Polish, Ukrainian, or Jewish.</li>\n  <li><strong>Bohemia</strong>, <strong>Moravia</strong> — Habsburg provinces, now the western and eastern halves of the Czech Republic.</li>\n  <li><strong>Posen</strong> — German imperial province until 1918, now west-central Poland (Poznań).</li>\n  <li><strong>Prussia</strong>, <strong>Pomerania</strong>, <strong>Silesia</strong> — pre-1945 German provinces, most now in Poland.</li>\n  <li><strong>Bessarabia</strong> — Russian/Romanian, now Moldova and Ukraine.</li>\n  <li><strong>Austria</strong> on a 19th-century manifest does <em>not</em> mean modern Austria — it means somewhere within the Austro-Hungarian Empire (which was vast).</li>\n</ul>\n<p>Don't read \"Russia\" on a 1905 manifest as \"Russian Federation, 2026.\" The Russian Empire of 1905 included Poland, Lithuania, Latvia, Estonia, Finland, much of Ukraine, Belarus, and the Caucasus. \"Russian\" on a Jewish-immigrant manifest very often meant Polish or Lithuanian Jew. Cross-reference with town-name and synagogue records.</p>\n\n<h3>An example — a 1903 Ellis Island manifest line</h3>\n<pre><code>SS Vaderland, sailing from Antwerp, arrived New York 17 May 1903.\n\nLine 14: WALSH, Bridget — Female, age 22, Single, Servant,\n  able to read &amp; write, Irish, Last residence: Cobh, Co. Cork,\n  Final destination: New York, Joining: cousin Patrick Walsh,\n  149 W. 40th St, Passage paid by: cousin, $7 in pocket,\n  Height: 5'3\", Hair: brown, Eyes: blue,\n  Place of birth: Cobh, Cork, Ireland.</code></pre>\n<p>This is a single line on a single manifest. It tells you where she sailed from, with whom she travelled (the lines above and below are her shipmates — often kin or villagers), where she planned to go, who was waiting for her, who paid, and what she looked like. Pre-1893 you would have got perhaps her name and her age.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora moves to a different cabinet and brings out a long, narrow ledger — its pages roughly the dimensions of a ship's manifest. She lays it open and points to a single inked line near the bottom of the page."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Most American, Canadian, and Australian trees end at the sea. Somewhere a name boards a ship in a port you've never visited and steps off in a port the family will speak of for three generations. The records of that crossing are why your tree connects across continents at all — and they are <em>extraordinarily</em> uneven before about 1893."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Castle Garden ran from 1855 to 1890. Ellis Island opened in 1892. Between them they processed most of the great Atlantic immigration. But until the Immigration Act of 1891 brought the federal Bureau in, the manifests were sparse — a name, an age, a country, a smudge. After 1893, the columns multiply: last residence, final destination, who is meeting you, who paid for the passage, how tall you are, the colour of your eyes. <em>Twelve million arrivals</em> through Ellis Island alone. The flood of detail begins exactly when the federal government takes over."
+        },
+        {
+          "type": "example",
+          "speaker": "A 1903 Ellis Island manifest line",
+          "text": "SS Vaderland, sailing from Antwerp, arrived NY 17 May 1903.\n\nLine 14: WALSH, Bridget — F, 22, Single, Servant\n  Last residence: Cobh, Co. Cork\n  Final destination: New York\n  Joining: cousin Patrick Walsh, 149 W. 40th St\n  Passage paid by: cousin\n  $7 in pocket\n  Height 5'3\", brown hair, blue eyes\n  Place of birth: Cobh, Cork, Ireland."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Read the lines above and below Bridget's. The shipmates are very often kin, neighbours, villagers from the same townland — a chain migration. If Bridget's cousin Patrick paid her passage, his own arrival was probably a year or two earlier; you can find <em>him</em> on an earlier manifest. One line is a thread; the page is a tapestry."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And the citizenship paperwork — three documents, in sequence. The <em>Declaration of Intention</em> — \"first papers\" — filed any time after arrival, declaring intent to renounce foreign allegiance. Then, two to seven years later, the <em>Petition for Naturalisation</em> — \"second papers\" — sworn in court. And then the <em>Certificate</em> itself, the keepsake the family kept in a drawer. After September 1906, the forms become standardised by the Bureau of Immigration and Naturalisation, and the petitions become some of the richest immigrant documents we have — birthplace, port and date of arrival, ship's name, spouse and children. Before 1906, the county clerk used whatever paper was on the table."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And read place names <em>as of the date the record was made</em>, not as the map looks today. <em>Galicia</em> in 1895 was a province of Austria-Hungary; today it is split between Poland and Ukraine. <em>Bohemia</em> is now the western Czech Republic. <em>Posen</em> is now Polish Poznań. \"Austria\" on a 1900 manifest meant the empire — Czech, Slovak, Hungarian, Croatian, Slovenian, Galician, even northern-Italian. \"Russia\" included Poland, Lithuania, Latvia, Estonia, much of Ukraine. <em>The borders moved. The records did not.</em> Always check the town-name first, the country-name second."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Anchor the immigrant landscape</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What were the years of operation of <strong>Castle Garden</strong>? Of <strong>Ellis Island</strong>?</li>\n  <li>What changes happen to the richness of US arrival manifests after 1893?</li>\n  <li>Name the three US naturalisation documents in sequence.</li>\n  <li>Where would \"Galicia\" be today? \"Posen\"? What did \"Austria\" most likely mean on an 1895 manifest?</li>\n</ul>",
+
+      "feynmanPrompt": "Explain to a friend why an ancestor's 1903 Ellis Island arrival record is gold but a 1865 Castle Garden arrival is much thinner — and what \"Austria\" on a 19th-century US manifest most likely actually means.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which years cover the operation of <strong>Ellis Island</strong> as the main US east-coast immigrant processing station?</p>",
+          "options": [
+            "1892–1954",
+            "1855–1890",
+            "1820–1900",
+            "1840–1920"
+          ],
+          "correctAnswer": "1892–1954",
+          "explanationHtml": "<p>Ellis Island opened in 1892 (after Castle Garden closed in 1890) and processed about 12 million immigrants until 1954. Castle Garden ran 1855–1890. The richer post-1893 manifests reflect the federal Bureau's takeover after the Immigration Act of 1891.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are tracing a great-grandfather who arrived in New York around 1908 from \"Austria.\" His descendants understand him to have spoken Czech. Where on the modern map should you most plausibly look for his birth town?</p>",
+          "options": [
+            "Bohemia or Moravia, in the western and eastern parts of the modern Czech Republic",
+            "The modern Republic of Austria, especially around Vienna",
+            "Switzerland, where some Czech-speakers settled",
+            "South-eastern Germany"
+          ],
+          "correctAnswer": "Bohemia or Moravia, in the western and eastern parts of the modern Czech Republic",
+          "explanationHtml": "<p>\"Austria\" on a pre-1918 manifest means somewhere in the Austro-Hungarian Empire, which included Bohemia, Moravia, Slovakia, Hungary, parts of Croatia, Slovenia, Galicia (now split Poland/Ukraine), and more. A Czech-speaking emigrant from \"Austria\" almost certainly came from Bohemia or Moravia, the western and eastern halves of today's Czech Republic. Always read place names as of the date the record was made.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You find a 1912 US <strong>Petition for Naturalisation</strong> for an immigrant ancestor. Compared to a pre-1906 county-clerk record, what makes this 1912 petition particularly valuable to you as a researcher?</p>",
+          "options": [
+            "From September 1906, naturalisation forms were standardised by the federal Bureau and routinely include port and date of arrival, ship's name, and spouse and children's information — connecting the petition directly to the manifest",
+            "Petitions filed after 1906 also conferred citizenship on the applicant's parents in the country of origin",
+            "Pre-1906 petitions are forgeries; only post-1906 petitions are admissible as evidence",
+            "1912 petitions list every job the applicant had held since age 16"
+          ],
+          "correctAnswer": "From September 1906, naturalisation forms were standardised by the federal Bureau and routinely include port and date of arrival, ship's name, and spouse and children's information — connecting the petition directly to the manifest",
+          "explanationHtml": "<p>The Bureau of Immigration and Naturalisation, established 27 September 1906, standardised naturalisation forms across all US courts of record. From that date, petitions and declarations typically list birthplace, port and date of arrival, vessel name, and family members — making them the single richest bridge between an immigrant's American life and their European origin. Pre-1906 records are valid but inconsistent in detail because each court used its own paperwork.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>An ancestor crossed from England to New York in 1885. You cannot find a UK <strong>departure</strong> record for him. Which is the most accurate explanation?</p>",
+          "options": [
+            "UK outbound passenger lists (BT27) were not kept systematically until 1890; before that there is often no UK departure record, even when a US arrival record exists",
+            "All UK departure records were destroyed during the Second World War",
+            "Departure records are always kept by the country of arrival, never by the country of departure, so a UK departure record cannot exist by definition",
+            "The ancestor must have left illegally if no departure record can be found"
+          ],
+          "correctAnswer": "UK outbound passenger lists (BT27) were not kept systematically until 1890; before that there is often no UK departure record, even when a US arrival record exists",
+          "explanationHtml": "<p>The country accepting an immigrant has obvious administrative reasons to record them; the country losing them historically did not. UK outbound passenger lists (Board of Trade series BT27) survive only from 1890. German records survive from Hamburg from 1850 but were largely destroyed for Bremen in WWII. The asymmetry between arrival and departure records is one of the structural facts of immigration genealogy — and absence of a departure record is normal, not evidence of wrongdoing.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-a5",
+      "title": "Source Types — Primary, Derivative, Authored",
+      "sortOrder": 5,
+      "xpReward": 70,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Two researchers can hold the same death certificate and reach opposite conclusions — because one is treating it as a fact, and the other is treating it as a witness. Genealogy's most important discipline is the careful classification of every source on three independent axes: originality, information, evidence.</p>",
+
+      "explanationHtml": "<h3>The three axes of source evaluation</h3>\n<p>Every record you cite must be classified along three independent axes. The Board for Certification of Genealogists (BCG) standards make these distinctions central to the Genealogical Proof Standard.</p>\n\n<table>\n  <tr><th>Axis</th><th>Values</th><th>Question it answers</th></tr>\n  <tr><td><strong>Originality of the source</strong></td><td>Original / Derivative / Authored</td><td>How close to the actual original document am I looking?</td></tr>\n  <tr><td><strong>Originality of the information</strong></td><td>Primary / Secondary / Undetermined</td><td>How close to the event was the informant who reported this fact?</td></tr>\n  <tr><td><strong>Type of evidence</strong></td><td>Direct / Indirect / Negative</td><td>How does this fact answer the research question?</td></tr>\n</table>\n\n<h3>Axis 1 — Originality of the source</h3>\n<ul>\n  <li><strong>Original.</strong> The actual record as first created — the parish register page, the original certificate in the registrar's bound volume, the manifest line in the steamer's logbook. Photographs and high-resolution scans of the original count as original.</li>\n  <li><strong>Derivative.</strong> A copy, transcription, abstract, or extract derived from another source. Bishop's Transcripts are derivative (copied from the parish register); index entries are derivative; printed extracts in a county history are derivative; an Ancestry index summary is derivative. Derivatives are <em>useful</em> — sometimes the only surviving copy — but each step of derivation is an opportunity for error.</li>\n  <li><strong>Authored.</strong> A narrative work compiled by a researcher or writer who synthesised multiple sources. A published family genealogy, a county history's biographical sketch, a tree on a public website, a Wikipedia article — all authored. Authored works are not records; they are <em>arguments</em>. They cite (or fail to cite) underlying records, and you must always trace those underlying records yourself.</li>\n</ul>\n<p><em>The discipline:</em> never accept an authored work's conclusion without finding the original it cites. Family trees on Ancestry, FamilySearch, MyHeritage and the like are authored — frequently by amateurs copying from each other — and they propagate errors aggressively. They are useful as hypothesis generators; they are useless as evidence.</p>\n\n<h3>Axis 2 — Originality of the information</h3>\n<ul>\n  <li><strong>Primary information.</strong> Reported by someone with direct knowledge — typically a witness or participant in the event. The doctor who attends a death has primary knowledge of the death; the registrar who marries the couple has primary knowledge of the marriage; the parents have primary knowledge of a birth they witnessed.</li>\n  <li><strong>Secondary information.</strong> Reported by someone whose knowledge is second-hand — a recollection, a family story, a reconstructed estimate. The grieving relative who reports a 73-year-old's birth date to the registrar is reporting from memory of what the deceased said about themselves; that's secondary.</li>\n  <li><strong>Undetermined.</strong> When you cannot tell who reported the information or what their relationship to the event was. Many indexes give you no informant. Treat as secondary by default.</li>\n</ul>\n\n<h3>The single record can carry multiple types of information</h3>\n<p>This is the most important point of this whole chunk. <em>A single record almost always combines primary and secondary information.</em> The classic example is the death certificate:</p>\n<table>\n  <tr><th>Fact on a death certificate</th><th>Source originality</th><th>Information originality</th></tr>\n  <tr><td>Date and place of death</td><td>Original (the certificate)</td><td>Primary — reported by the attending doctor</td></tr>\n  <tr><td>Cause of death</td><td>Original</td><td>Primary — reported by the doctor</td></tr>\n  <tr><td>Date and place of birth</td><td>Original</td><td>Secondary — reported by a relative from memory</td></tr>\n  <tr><td>Name of parents</td><td>Original</td><td>Secondary — reported by the relative from memory</td></tr>\n  <tr><td>Age at death (in years)</td><td>Original</td><td>Secondary — usually estimated</td></tr>\n</table>\n<p>So when you cite a death certificate, you cite it for a specific <em>fact</em>, not as a whole. \"John Walsh died on 14 March 1908 in Brooklyn (death certificate, primary information)\" is solid. \"John Walsh was born on 12 June 1843 in Cobh, Ireland (death certificate, secondary information)\" is a hypothesis that needs corroboration from a baptism or birth record. Same certificate, two different evidentiary statuses.</p>\n\n<h3>Axis 3 — Type of evidence</h3>\n<ul>\n  <li><strong>Direct.</strong> The source explicitly answers your question. \"Was Mary Holloway Edmund's mother?\" — the birth certificate says \"mother: Eliza Holloway.\" Direct evidence.</li>\n  <li><strong>Indirect.</strong> The source supports your answer only through inference combined with other sources. \"Was Mary Holloway Edmund's mother?\" — the 1851 census shows a Mary Holloway aged 32 at the same household with a 10-year-old Edmund Wallace; you must <em>infer</em>. Indirect evidence.</li>\n  <li><strong>Negative.</strong> The <em>absence</em> of an expected record is itself evidence. \"Did Edmund Wallace die before 1851?\" — exhaustive search of the 1851 census, parish burials, and probate finds nothing pointing to a living Edmund — that absence supports a death hypothesis. Negative evidence is real evidence, but only if the search was exhaustive.</li>\n</ul>\n\n<h3>Why \"authored\" trees on Ancestry are not evidence</h3>\n<p>An online family tree compiled by another user is an <em>authored work</em>. It rests on the underlying records the author cited — and on the records the author copied from <em>another</em> authored work, which copied from another, and so on. The errors are infectious. The discipline that distinguishes a serious researcher from a tree-collector is: <em>cite the specific record element you used, not the database aggregator</em>. Don't write \"Ancestry.com.\" Write \"England &amp; Wales birth registration index, June quarter 1841, St Pancras registration district, vol. 1, p. 247, line for Edmund Wallace, citing image of GRO entry 1841/STP/247.\" That citation can be checked. \"Ancestry.com\" cannot.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora pulls the original death certificate from the desk and lays it side by side with a printed family tree someone else has produced. She taps each in turn."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now we come to the discipline that separates the serious researcher from the tree-collector. <em>Source evaluation.</em> Every record I have ever cited, I classify along three axes. <em>How close is this to the original document? How close was the informant to the event? And how does this fact answer my actual question?</em> Three axes. They are independent. They take years to use fluently. We will start now."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Look at this death certificate. It says John Walsh, aged 64, died on the 14th of March 1908 in Brooklyn, of pneumonia, attended by Dr Henry Lewis. It also says he was born on the 12th of June 1843 in Cobh, Ireland, parents Thomas Walsh and Bridget Murphy. <em>One certificate. One sheet of paper. Two completely different reliabilities.</em>"
+        },
+        {
+          "type": "example",
+          "speaker": "One record, two evidentiary statuses",
+          "text": "Death certificate of John Walsh (Brooklyn, 14 Mar 1908):\n\n  ✓ Date of death (14 Mar 1908)        — PRIMARY (Dr Lewis was there)\n  ✓ Cause of death (pneumonia)         — PRIMARY (Dr Lewis attended)\n  ✓ Place of death (Brooklyn)          — PRIMARY (the death happened there)\n\n  ? Age at death (64)                   — SECONDARY (relative reported)\n  ? Date of birth (12 Jun 1843)         — SECONDARY (relative reported from memory)\n  ? Place of birth (Cobh, Ireland)      — SECONDARY (relative reported from memory)\n  ? Parents (Thomas + Bridget)          — SECONDARY (relative reported from memory)"
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now do you see? The doctor who signed the certificate <em>was there</em> — present at the death, reporting what he witnessed. <em>Primary</em> information. But the deceased's age, his birth date, his birthplace, his parents — these were given by a grieving informant, recalling whatever John had said about himself in life. <em>Secondary</em> information. The same certificate. The same ink. Different reliabilities for different facts. We do not say \"the death certificate is reliable\" or \"unreliable.\" We say <em>which fact</em> on it carries which weight."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And then a third axis. <em>Type of evidence.</em> Does the source <em>directly</em> answer my question? Or does it support my answer only through inference, alongside other records? <em>Indirect.</em> Or — and this is subtle but real — does the absence of an expected record itself carry weight? <em>Negative.</em> The careful search that finds nothing is sometimes the strongest evidence of all, provided the search was truly exhaustive."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And finally — and I will repeat this until you despise me for saying it — <em>family trees on the great commercial websites are not evidence</em>. They are <em>authored works</em>. They were compiled by an unseen amateur from sources they may or may not have checked, often copied from another tree which copied from another. They propagate errors with extraordinary efficiency. Use them as hypothesis generators if you must — but never, ever cite them. Cite the specific record element you used. Cite the GRO entry number, the FHL film, the parish register page. <em>That</em> citation can be checked. \"Ancestry.com\" cannot. The whole discipline of our craft turns on this one habit."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Anchor the three axes</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>Name the three values along the <strong>originality of the source</strong> axis.</li>\n  <li>Name the values along the <strong>originality of the information</strong> axis.</li>\n  <li>Name the values along the <strong>type of evidence</strong> axis.</li>\n  <li>Why is a death certificate considered <em>partly</em> primary and <em>partly</em> secondary information? Give one fact of each type.</li>\n  <li>Why is an Ancestry public family tree an \"authored\" source — and what discipline does that imply when you cite it?</li>\n</ul>",
+
+      "feynmanPrompt": "Explain to a friend, using a death certificate as your example, why the same record can be primary information for one fact and secondary information for another — and why \"the death certificate says he was born in 1843\" is a hypothesis, not a proof.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>The three classifications along the <strong>originality of the source</strong> axis are:</p>",
+          "options": [
+            "Original / Derivative / Authored",
+            "Primary / Secondary / Undetermined",
+            "Direct / Indirect / Negative",
+            "Civil / Church / Census"
+          ],
+          "correctAnswer": "Original / Derivative / Authored",
+          "explanationHtml": "<p>Originality of the source: <em>Original</em> (the actual document as first created), <em>Derivative</em> (a copy, transcription, abstract), <em>Authored</em> (a narrative compiled from multiple sources, e.g. a published genealogy or an online family tree). The other two triples are different axes: information originality (Primary/Secondary/Undetermined) and evidence type (Direct/Indirect/Negative). All three axes are evaluated independently.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are evaluating a 1908 death certificate for John Walsh. The certificate gives his date of death (14 March 1908) and his date of birth (12 June 1843). Which classification is correct?</p>",
+          "options": [
+            "Date of death is primary information; date of birth is secondary information",
+            "Both date of death and date of birth are primary information because they are both on an original document",
+            "Both date of death and date of birth are secondary information because they were both written down after the events",
+            "Date of death is secondary; date of birth is primary because it is older"
+          ],
+          "correctAnswer": "Date of death is primary information; date of birth is secondary information",
+          "explanationHtml": "<p>The attending doctor witnessed the death and reports it directly — primary information. The date of birth, by contrast, is reported by a relative from memory of what the deceased said about themselves — secondary information. The same certificate carries different evidentiary weight for different facts. This is the central insight of source evaluation: classify the <em>fact</em>, not the document.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are trying to establish that a researched ancestor died before 1851. You exhaustively search the 1851 census for his name in every district where he might have lived, you check parish burial registers in those districts, and you check probate calendars. You find no positive trace of him alive. Which type of evidence have you produced?</p>",
+          "options": [
+            "Negative evidence — the careful, exhaustive absence of an expected record supports the hypothesis of a pre-1851 death",
+            "Direct evidence — the search itself is a direct proof of death",
+            "Authored evidence — your search notes are a published source",
+            "No evidence at all — only positive records count"
+          ],
+          "correctAnswer": "Negative evidence — the careful, exhaustive absence of an expected record supports the hypothesis of a pre-1851 death",
+          "explanationHtml": "<p>Negative evidence is real evidence within the Genealogical Proof Standard, provided the search was truly exhaustive. The absence of an expected record where one would normally appear can support a hypothesis. The discipline lies in proving the search was exhaustive — listing the searches conducted and the results — so that a reader can judge whether the absence is meaningful or whether the search just missed the relevant district.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two researchers cite the same fact differently. Researcher A writes: \"Birthdate per Ancestry.com family tree.\" Researcher B writes: \"England &amp; Wales birth registration June quarter 1841, St Pancras district, vol. 1, p. 247, GRO entry for Edmund Wallace.\" Which is correct, and why?</p>",
+          "options": [
+            "Researcher B is correct — citation must point to the specific record element actually examined; an online family tree is an authored secondary work whose error chain cannot be checked, while B's citation can be independently verified",
+            "Researcher A is correct — Ancestry.com is the most reliable genealogical source available",
+            "Both are equally valid because they refer to the same fact",
+            "Neither is correct — only church records can be cited in genealogy"
+          ],
+          "correctAnswer": "Researcher B is correct — citation must point to the specific record element actually examined; an online family tree is an authored secondary work whose error chain cannot be checked, while B's citation can be independently verified",
+          "explanationHtml": "<p>Researcher B cites the actual underlying record: register, district, volume, page, line. That citation can be retrieved and checked by anyone. Researcher A cites a database aggregator hosting an authored tree — the tree may be wrong, the underlying record may be different, and the citation cannot be verified by anyone trying to reconstruct the work. The Genealogical Proof Standard requires citation of the specific record element used, not of the platform on which it was viewed. \"Ancestry.com\" is a delivery channel, not a source.</p>"
+        }
+      ]
+    }
+
+  ]
+}

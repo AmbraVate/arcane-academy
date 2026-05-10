@@ -1,0 +1,593 @@
+{
+  "id": "sci-b",
+  "title": "Physics Foundations",
+  "glyph": "⚛️",
+  "sortOrder": 2,
+  "tier": "FOUNDATION",
+  "topicId": "sciences",
+  "prerequisites": [],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sci-b1",
+      "title": "Newton's Laws & Forces",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "physics.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Three laws, written in the 1680s, that still describe the behaviour of every car, bridge, planet, and projectile you'll meet in ordinary life. The trick is realising the <em>first</em> law is the most subtle of them — and that <strong>force</strong> is not what most people think it is.</p>",
+
+      "explanationHtml": "<h3>The first law — inertia, and why nothing is special about being still</h3>\n<p>Newton's first law: <em>an object at rest stays at rest, and an object in motion stays in motion in a straight line at constant speed, unless acted upon by a net external force.</em></p>\n<p>The naive reading is \"things stop on their own.\" Aristotle thought so. But push a hockey puck on ice and it slides for a long time. Push it in space and it slides forever. The reason your coffee mug doesn't drift across the table is friction — a force — not some inherent preference for stillness. <strong>Rest and constant-velocity motion are physically equivalent</strong>. There is no \"natural\" velocity-zero state; the universe doesn't care whether you're sitting in a chair or coasting at 30,000 km/h around the Sun.</p>\n<p>This is why a passenger in a smoothly moving train can pour tea exactly as they would at the station. From inside, no experiment can tell you whether you're moving. Galileo's insight, dressed up by Newton.</p>\n\n<h3>The second law — F = ma</h3>\n<p>The most quotable equation in physics. <strong>Net force equals mass times acceleration.</strong> Three things to notice:</p>\n<ul>\n  <li><strong>It's the <em>net</em> force that matters.</strong> If gravity pulls a book down with 10 N and the table pushes back with 10 N, the net force is zero and the book doesn't accelerate. The forces are real; they just cancel.</li>\n  <li><strong>Acceleration, not velocity.</strong> A constant force produces constant acceleration — so velocity grows linearly with time. No force, no acceleration. Constant velocity needs no force at all to maintain.</li>\n  <li><strong>Mass is resistance to acceleration.</strong> Heavier objects need more force to change their motion. This is what we mean by <em>inertial mass</em> — the m in F = ma.</li>\n</ul>\n\n<h3>The third law — equal and opposite</h3>\n<p>For every action there is an equal and opposite reaction. When you push on a wall with 50 N, the wall pushes back on you with 50 N. The forces act on <em>different bodies</em> — that's why they don't cancel. Your push is on the wall; the wall's push is on you. A rocket works because exhaust gas pushes down on the rocket; the rocket pushes back on the gas. The pair is always equal in magnitude, opposite in direction, simultaneous, and applied to different objects.</p>\n\n<h3>The common forces and their symbols</h3>\n<table>\n  <tr><th>Force</th><th>Magnitude / Direction</th><th>Notes</th></tr>\n  <tr><td>Gravity (near Earth)</td><td><code>F = mg</code> downward</td><td>g ≈ 9.81 m/s² near Earth's surface</td></tr>\n  <tr><td>Normal force</td><td>Perpendicular to the surface</td><td>Whatever magnitude is needed to prevent interpenetration</td></tr>\n  <tr><td>Static friction</td><td>≤ μ_s · N, opposes attempted motion</td><td>Up to a limit; once exceeded, motion starts</td></tr>\n  <tr><td>Kinetic friction</td><td>= μ_k · N, opposes actual motion</td><td>μ_k &lt; μ_s — that's why pushing a stalled car is hard at first then easier</td></tr>\n  <tr><td>Tension</td><td>Along a rope or cable</td><td>Same magnitude throughout an ideal massless rope</td></tr>\n  <tr><td>Applied force</td><td>Whatever is being pushed/pulled</td><td>The force you supply</td></tr>\n</table>\n\n<h3>Free-body diagrams — the universal first move</h3>\n<p>To solve any force problem, draw the object as a dot, then draw an arrow for every force acting on it. Don't draw forces it exerts on others. Don't draw \"motion\" as a force — motion is a consequence of forces, not itself a force. Once the diagram is right, the answer is mostly bookkeeping.</p>\n<pre><code>Block on a horizontal table:\n\n              N (normal, up)\n              ↑\n  ──────  ●  ──────  →  F_applied\n              ↓\n              W = mg (gravity, down)\n\n  Net vertical: N - mg = 0  →  N = mg\n  Net horizontal: F_applied - friction = ma\n</code></pre>\n\n<h3>Worked example — block on an incline</h3>\n<p>A block sits on a ramp tilted at angle θ. Gravity still pulls straight down with magnitude <code>mg</code>. But the block can only move along the ramp's surface. The trick is to <em>decompose</em> gravity into two components: one parallel to the ramp (pulling the block down-slope, magnitude <code>mg sin θ</code>) and one perpendicular to the ramp (pressing the block into the surface, magnitude <code>mg cos θ</code>). The normal force balances the perpendicular component; the parallel component is what tries to slide the block.</p>\n<p>You don't need numbers to see the structure: steeper ramp → more <code>sin θ</code> → more sliding force, less <code>cos θ</code> → less normal force, less friction available. At some critical angle, friction can no longer hold the block. That's the angle of repose, and it's why scree slopes have a characteristic steepness.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Vesper's workshop is a long stone hall lit by windows along one wall. Brass instruments sit on every bench — balances, prisms, a pendulum the length of a man. Vesper is rolling a heavy iron ball along a polished groove cut into one of the tables, watching it slow."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Tell me, apprentice — why does this ball stop?"
+        },
+        {
+          "type": "dialogue",
+          "av": "🤔",
+          "cls": "self",
+          "speaker": "You",
+          "sCls": "self",
+          "text": "Because… it wants to? Things naturally come to rest."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "<em>Wrong.</em> Excellent answer — wrong in exactly the way most people are wrong. The ball stops because <em>friction</em> drains its motion. In a frictionless world, it would roll forever. There is nothing special about being still. A planet hurtling through empty space at thirty kilometres a second is no more 'in motion' than this floor beneath your feet — which, I remind you, is <em>also</em> hurtling through empty space at thirty kilometres a second."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "This is Newton's first law. The universe does not prefer rest. It prefers <em>continuation</em> — whatever you are doing, you keep doing, until something pushes you. Force is the universe's currency. It buys changes in motion. No force, no change."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "The second law tells you the price. <code>F = ma</code>. The bigger the mass, the more force you must spend to change its motion by a given amount. The third law tells you the receipt — every transaction has two sides. You push the wall; the wall pushes you. That is not a metaphor; it is geometry. Now, before we move on — draw me a free-body diagram of a book resting on this bench. Every force, no extras. Lying about a single arrow will ruin every problem you ever try to solve."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Retrieve before you read on</h3>\n<p>Without scrolling back, try to answer each of these out loud or in writing:</p>\n<ul>\n  <li>State Newton's three laws in your own words. Which is the most subtle, and why?</li>\n  <li>Why is rest physically equivalent to constant-velocity motion? What does this mean for a passenger inside a smoothly moving train?</li>\n  <li>What does <code>F = ma</code> mean by \"net force\"? Give a one-line example of two forces that cancel.</li>\n  <li>For a book on a table: list every force acting on the book. Then list every force the book exerts on something else. (These are different lists — that's the point of the third law.)</li>\n  <li>Why is μ_k &lt; μ_s, and why does this make stalled cars hard to start pushing but easier to keep going?</li>\n</ul>\n<p>Then take the retrieval check below.</p>",
+
+      "feynmanPrompt": "Explain to a friend why a satellite in stable orbit is in <em>free fall</em>, even though it never hits the ground. Use Newton's first and second laws, and the concept of net force.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does Newton's first law actually say?</p>",
+          "options": [
+            "An object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted upon by a net external force",
+            "Force equals mass times acceleration",
+            "Every action has an equal and opposite reaction",
+            "Objects naturally come to rest unless pushed"
+          ],
+          "correctAnswer": "An object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted upon by a net external force",
+          "explanationHtml": "<p>The first law (inertia) says rest and constant-velocity motion are equivalent — both persist without force. The 'objects naturally come to rest' answer is the pre-Galilean intuition the law was designed to overturn. F = ma is the second law; equal and opposite is the third.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A 2 kg book sits on a horizontal table. Gravity pulls it down with about 19.6 N. What is the magnitude of the normal force the table exerts on it, and why?</p>",
+          "options": [
+            "19.6 N upward, because the book is not accelerating, so the net vertical force must be zero",
+            "0 N, because the book is not moving",
+            "9.8 N upward, because g is 9.8 m/s²",
+            "39.2 N upward, because Newton's third law doubles the force"
+          ],
+          "correctAnswer": "19.6 N upward, because the book is not accelerating, so the net vertical force must be zero",
+          "explanationHtml": "<p>Not accelerating ⇒ net force is zero (Newton's second law with a = 0). Gravity pulls down with 19.6 N, so the normal must push up with 19.6 N. The third-law partner of the table's push <em>on the book</em> is the book's push <em>on the table</em> — those don't cancel because they act on different objects.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A skater pushes off a wall and glides backward. Which pair of forces correctly illustrates Newton's third law?</p>",
+          "options": [
+            "The skater pushes the wall forward; the wall pushes the skater backward — different objects, equal magnitudes, opposite directions",
+            "The skater pushes the wall; the floor pushes the skater — these are the action-reaction pair",
+            "The skater pushes the wall; gravity pulls the skater down — these cancel",
+            "The skater pushes the wall; the wall accelerates because force equals mass times acceleration"
+          ],
+          "correctAnswer": "The skater pushes the wall forward; the wall pushes the skater backward — different objects, equal magnitudes, opposite directions",
+          "explanationHtml": "<p>Action-reaction pairs always act on <em>two different bodies</em> and are always equal in magnitude and opposite in direction. The wall doesn't visibly move because it is rigidly attached to a much larger system (the building, the Earth) — its acceleration is negligible, but the force on it is real.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>What is the difference between an object's <strong>mass</strong> and its <strong>weight</strong>?</p>",
+          "options": [
+            "Mass is the amount of matter (kg) and is the same everywhere; weight is the gravitational force on that mass (N) and depends on local gravity",
+            "They are the same thing measured in different units",
+            "Mass is weight divided by 10",
+            "Mass changes with altitude; weight does not"
+          ],
+          "correctAnswer": "Mass is the amount of matter (kg) and is the same everywhere; weight is the gravitational force on that mass (N) and depends on local gravity",
+          "explanationHtml": "<p>Mass (kg) is intrinsic — your mass is the same on Earth, the Moon, or in deep space. Weight is the force <code>W = mg</code> and depends on g (about 9.8 m/s² on Earth, 1.6 on the Moon, ~0 in free fall). The 'kg' on bathroom scales is a convenient shorthand — what they actually measure is force.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-b2",
+      "title": "Energy & Conservation",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "physics.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Energy is what the universe is made of, and the bookkeeping is exact. Every joule that disappears from one form reappears, exactly, somewhere else. Once you internalise this, perpetual motion machines become obviously absurd — and the rest of physics gets a lot easier.</p>",
+
+      "explanationHtml": "<h3>Two flavours of mechanical energy</h3>\n<p>For everyday mechanics, two forms dominate.</p>\n<ul>\n  <li><strong>Kinetic energy</strong> — energy of motion. <code>KE = ½mv²</code>. Notice the v² — doubling the speed quadruples the energy. This is why a car at 60 mph carries four times the energy of one at 30 mph, and why crash forces scale so dramatically with speed.</li>\n  <li><strong>Potential energy</strong> — energy of position. Two common kinds: <em>gravitational</em> <code>PE = mgh</code> (a brick on a shelf) and <em>elastic</em> <code>PE = ½kx²</code> (a stretched or compressed spring, where k is the spring constant and x the displacement from equilibrium).</li>\n</ul>\n\n<h3>Conservation of energy — the master rule</h3>\n<p>In an isolated system with no friction or other dissipation, the total mechanical energy <code>KE + PE</code> is constant. Energy can change form — a ball falling off a shelf trades PE for KE — but the sum stays fixed. With friction, the lost mechanical energy doesn't vanish; it becomes heat, sound, deformation. The bookkeeping always closes; you just need to count <em>all</em> the receipts.</p>\n<table>\n  <tr><th>Form</th><th>Formula</th><th>Units</th></tr>\n  <tr><td>Kinetic energy</td><td><code>KE = ½mv²</code></td><td>joules (J)</td></tr>\n  <tr><td>Gravitational PE (near surface)</td><td><code>PE = mgh</code></td><td>joules (J)</td></tr>\n  <tr><td>Spring PE</td><td><code>PE = ½kx²</code></td><td>joules (J)</td></tr>\n  <tr><td>Power</td><td><code>P = W / t = E / t</code></td><td>watts (W = J/s)</td></tr>\n  <tr><td>Momentum</td><td><code>p = mv</code></td><td>kg·m/s</td></tr>\n</table>\n\n<h3>The work-energy theorem</h3>\n<p><strong>Work</strong> is what a force does as it pushes something through a distance: <code>W = F·d</code> when the force is along the motion. Work done <em>on</em> an object equals the change in its kinetic energy:</p>\n<pre><code>W_net = ΔKE = ½m·v_final²  -  ½m·v_initial²</code></pre>\n<p>This is the bridge between forces (Newton's world) and energy (the bookkeeper's world). If you know the net work, you know the change in KE — without ever computing acceleration or time. For many problems this is dramatically easier than F = ma.</p>\n\n<h3>Power — energy per unit time</h3>\n<p>Power is the rate at which energy is transferred or transformed. <code>P = W / t</code>. The unit is the <strong>watt</strong>: one joule per second. A 100 W lightbulb dissipates 100 joules every second as heat and light. A human at rest produces about 80–100 W of metabolic power, mostly as heat — the same as a bulb. A car at highway speed needs roughly 20 kW to overcome air drag.</p>\n\n<h3>Why perpetual motion machines violate the first law (always)</h3>\n<p>A perpetual motion machine of the first kind is a device that produces work indefinitely without an external energy source — it manufactures energy from nothing. This violates conservation of energy outright. Every claim of one ever made has either been a fraud or a measurement error; energy is not creatable. (A second-kind perpetual motion machine extracts useful work from a single thermal reservoir; that violates the second law of thermodynamics, a different rule. Either way: no.)</p>\n\n<pre><code>Thought experiment — falling brick\n\n  A 1 kg brick is held 2 m above the ground.\n  Initial:  KE = 0, PE = mgh = 1·9.8·2 = 19.6 J.  Total = 19.6 J.\n  Halfway:  PE = 1·9.8·1 = 9.8 J. So KE must be 9.8 J. Total = 19.6 J. ✓\n  Just before impact: PE = 0. KE = 19.6 J — the brick has\n                      converted all its PE into KE.\n  After impact: KE = 0, PE = 0. The 19.6 J became heat,\n                sound, and a small dent. The total is unchanged.\n</code></pre>\n\n<h3>Conservation of momentum — the second great conservation law</h3>\n<p>Momentum <code>p = mv</code> is also conserved in isolated systems. When two billiard balls collide, the total momentum before equals the total momentum after — even though kinetic energy may be partially lost to heat and sound. Energy and momentum are <em>independent</em> ledgers; both must balance.</p>\n<p>Why two laws? Emmy Noether proved in 1915 that every continuous symmetry of the laws of physics corresponds to a conservation law. <strong>Time-translation symmetry</strong> (the laws are the same today as yesterday) gives energy conservation. <strong>Space-translation symmetry</strong> (the laws are the same here as one metre to the left) gives momentum conservation. <strong>Rotational symmetry</strong> gives angular momentum. The conservation laws are not arbitrary rules — they are the structural shadow of the symmetries of spacetime itself. We'll meet symmetry again in modern physics.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vesper is at the workshop bench, tightening a brass spring inside a wooden cradle. He releases it, and a small lead weight launches across the bench, lands, and rolls to a stop."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Where did the energy come from, and where did it go?"
+        },
+        {
+          "type": "dialogue",
+          "av": "🤔",
+          "cls": "self",
+          "speaker": "You",
+          "sCls": "self",
+          "text": "From the spring. Then… into the weight. Then it ran out."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "<em>It did not run out.</em> Energy never runs out. It changes <em>form</em>. The compressed spring held elastic potential energy — half k x squared. When released, that energy became kinetic — half m v squared. The weight rolled, friction acted, and that kinetic energy became <em>heat</em> in the wood and the air, and a faint sound. Lay your palm on the path the weight took — you will not feel it, but the wood there is a hair's breadth warmer. The ledger is exact."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Charlatans peddle perpetual motion machines. Wheels that spin forever, gears that turn each other, fountains that pump themselves. <em>Every one</em> is either a deception or a mistake. The first law of thermodynamics — which is conservation of energy in another suit — forbids it. You cannot create energy. You can only convert it, and at every conversion some leaks away as heat. The universe is an honest accountant."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "There is a second ledger, too — <em>momentum</em>, which is mass times velocity. When my lead weight strikes another, energy may be lost to heat, but momentum passes cleanly between them. Both ledgers must balance, always. And here is the deepest fact I will tell you today: these conservation laws are not arbitrary. They are the shadow of <em>symmetry</em>. Because the laws of physics are the same yesterday and today, energy is conserved. Because they are the same here and one foot to the left, momentum is conserved. Noether proved this — a hundred years ago. The bookkeeping has structure all the way down."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Retrieve before you read on</h3>\n<p>Without scrolling back:</p>\n<ul>\n  <li>Write down the formulas for kinetic energy, gravitational PE near Earth, and spring PE. What are the units?</li>\n  <li>A car going 60 mph has how many times the kinetic energy of one going 30 mph? Why?</li>\n  <li>State the work-energy theorem in your own words. When is it more useful than F = ma?</li>\n  <li>What is power? What's the unit, and roughly what power does a human at rest dissipate?</li>\n  <li>Why is a perpetual motion machine of the first kind impossible? Which conservation law forbids it?</li>\n  <li>What's the connection between time-translation symmetry and energy conservation? (You don't need the math — just the qualitative idea.)</li>\n</ul>",
+
+      "feynmanPrompt": "A friend says, 'I get that energy is conserved, but a battery clearly runs out, so where does its energy go?' Use the concepts of energy <em>transformation</em> and dissipation to explain — without resorting to magic.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A car's speed doubles from 30 km/h to 60 km/h. By what factor does its kinetic energy change?</p>",
+          "options": [
+            "It quadruples (×4)",
+            "It doubles (×2)",
+            "It increases by 50% (×1.5)",
+            "It stays the same"
+          ],
+          "correctAnswer": "It quadruples (×4)",
+          "explanationHtml": "<p>KE = ½mv², which scales with the <em>square</em> of velocity. Doubling v multiplies KE by 4. This is why braking distance, crash energy, and air drag all rise sharply with speed — and why \"just 10 mph faster\" is more dangerous than it sounds.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A 0.5 kg ball is held 4 m above the ground and released. Ignoring air resistance, what is its kinetic energy <em>just before</em> it hits the ground? (g = 9.8 m/s²)</p>",
+          "options": [
+            "About 19.6 J",
+            "About 4 J",
+            "About 9.8 J",
+            "Zero — energy is destroyed by gravity"
+          ],
+          "correctAnswer": "About 19.6 J",
+          "explanationHtml": "<p>Initial PE = mgh = 0.5 × 9.8 × 4 ≈ 19.6 J. Initial KE = 0. By conservation, just before impact PE = 0 and KE = 19.6 J. This is the work-energy theorem in action — gravity did 19.6 J of work, and that work became kinetic energy.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two billiard balls of equal mass collide head-on. After the collision, kinetic energy is partially lost to heat and sound, but momentum is exactly conserved. Which best explains the asymmetry?</p>",
+          "options": [
+            "Energy and momentum are independent quantities with separate conservation laws — momentum is preserved when no external force acts, while kinetic energy is preserved only in elastic collisions",
+            "Momentum is just another name for kinetic energy, so they are conserved together",
+            "Kinetic energy is only conserved when the masses are equal",
+            "Momentum is not actually conserved here — it's just an approximation"
+          ],
+          "correctAnswer": "Energy and momentum are independent quantities with separate conservation laws — momentum is preserved when no external force acts, while kinetic energy is preserved only in elastic collisions",
+          "explanationHtml": "<p>Energy and momentum are independent ledgers tied to different symmetries (time-translation and space-translation, via Noether). In an inelastic collision, kinetic energy converts to heat/sound/deformation — total energy is still conserved, but kinetic energy alone is not. Momentum, however, requires only that no external force act on the system, which holds during a brief collision.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>An inventor claims a sealed wheel that spins forever and produces useful electricity, with no input. Which is the strongest <em>physics</em> reason this cannot work?</p>",
+          "options": [
+            "It would create energy from nothing, violating conservation of energy (the first law of thermodynamics)",
+            "Gravity always slows things down",
+            "Magnets eventually wear out",
+            "Any spinning object has air resistance"
+          ],
+          "correctAnswer": "It would create energy from nothing, violating conservation of energy (the first law of thermodynamics)",
+          "explanationHtml": "<p>Air resistance and bearing friction <em>also</em> stop perpetual machines, but the deeper reason — the one that rules out even idealised frictionless versions — is that producing energy from nothing violates conservation of energy. No exception has ever been observed; conservation is one of the most thoroughly tested laws in science.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-b3",
+      "title": "Waves & Sound",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "filename": "physics.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Almost every signal you experience — sound, light, ripples on water, vibrations in a violin string, even the radio waves carrying this page to your screen — is a <em>wave</em>. The same handful of equations describes them all.</p>",
+
+      "explanationHtml": "<h3>The four parameters of any wave</h3>\n<p>Every wave can be characterised by:</p>\n<ul>\n  <li><strong>Amplitude</strong> (A) — how big the oscillation is. Loudness for sound, brightness for light, height for water.</li>\n  <li><strong>Wavelength</strong> (λ, lambda) — the spatial distance between two repeating features (e.g. crest to crest). Measured in metres.</li>\n  <li><strong>Frequency</strong> (f) — how many oscillations pass a fixed point per second. Measured in <em>hertz</em> (Hz). Pitch for sound, colour for light.</li>\n  <li><strong>Period</strong> (T) — the time for one full cycle. <code>T = 1 / f</code>.</li>\n</ul>\n<p>These four are tied by the <strong>wave equation</strong>:</p>\n<pre><code>v = f · λ\n\n(speed = frequency × wavelength)</code></pre>\n<p>Speed depends on the <em>medium</em>; frequency depends on the <em>source</em>. When a wave moves from one medium to another (light hitting glass; sound entering water) frequency stays the same but speed and wavelength change together to keep the equation balanced.</p>\n\n<h3>Transverse vs longitudinal</h3>\n<p>Two ways the medium can oscillate relative to the wave's direction of travel:</p>\n<ul>\n  <li><strong>Transverse</strong> — oscillation is <em>perpendicular</em> to the direction of travel. A guitar string vibrates up and down while the wave travels along its length. Light is transverse (oscillating electric and magnetic fields).</li>\n  <li><strong>Longitudinal</strong> — oscillation is <em>parallel</em> to the direction of travel. Sound in air is longitudinal: air molecules push and pull along the direction the sound is going, creating compressions and rarefactions.</li>\n</ul>\n<pre><code>Transverse (e.g. string):       Longitudinal (e.g. sound):\n\n   ↕ direction of vibration       → → → direction of vibration\n   ───→ direction of travel       ───→ direction of travel\n   ╱╲╱╲╱╲╱╲                       ░░ ░ ░░░ ░ ░░  (compressions)\n</code></pre>\n\n<h3>Superposition and interference</h3>\n<p>Two waves passing through the same place don't collide — they <em>add</em>. The total displacement at any point is the sum of the individual displacements. This is the principle of superposition.</p>\n<ul>\n  <li><strong>Constructive interference</strong> — crests align with crests; the result is bigger than either input.</li>\n  <li><strong>Destructive interference</strong> — crests align with troughs; they cancel, partially or completely.</li>\n</ul>\n<p>Noise-cancelling headphones are a direct application: they generate a sound wave exactly out of phase with ambient noise, and the two cancel.</p>\n\n<h3>Standing waves and resonance — why music exists</h3>\n<p>When a wave reflects off a boundary and interferes with itself, you get a <em>standing wave</em> — a pattern with fixed nodes (no motion) and antinodes (maximum motion). A guitar string fixed at both ends supports standing waves whose wavelengths are 2L, L, 2L/3, etc. — the fundamental and its harmonics. Every instrument's sound is its mix of these harmonics; that mix is what makes a violin sound different from a flute playing the same note.</p>\n<p><strong>Resonance</strong> is when a system is driven at a frequency near its natural frequency and the amplitude grows enormous. Pushing a child on a swing at the swing's natural frequency builds the motion; pushing arbitrarily does not. The Tacoma Narrows Bridge collapse (1940) is the famous cautionary tale — wind-driven oscillations matched the bridge's natural frequency.</p>\n\n<h3>The Doppler effect</h3>\n<p>When source and observer move relative to each other, the observed frequency changes. An ambulance approaching has compressed wavelengths in front and stretched wavelengths behind — you hear a higher pitch as it nears, a lower pitch after it passes. The same effect on light is how astronomers measure stellar velocities (red-shift / blue-shift). The mathematical form differs slightly for sound (which travels through a medium) and light (which doesn't), but the qualitative behaviour is identical.</p>\n\n<h3>Why sound speed depends on the medium</h3>\n<p>Sound is a mechanical wave — it needs molecules to push on each other. Speed is set by how stiff the medium is and how massive the molecules are. Stiffer + lighter = faster.</p>\n<table>\n  <tr><th>Medium</th><th>Approximate sound speed (m/s)</th></tr>\n  <tr><td>Air at 20°C</td><td>~340</td></tr>\n  <tr><td>Water</td><td>~1480</td></tr>\n  <tr><td>Steel</td><td>~5100</td></tr>\n  <tr><td>Vacuum</td><td>0 (no medium)</td></tr>\n</table>\n<p>This is the opposite of intuition: most people guess sound travels fastest in air because air is what we hear it through. In fact, denser, more rigidly bonded media transmit sound far faster. (Light is the reverse — it slows down in denser media. Different beast, different rules.)</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A long table runs the length of one wall of the workshop, holding a row of glass jars half-filled with water at different levels. Vesper taps each with a small steel rod; each gives a different note."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Music is mathematics in disguise. Each jar resonates at its own natural frequency, set by its size, its water level, the stiffness of the glass. Tap it, and the air column inside oscillates — back and forth, back and forth. Compressions and rarefactions march outward at three hundred and forty metres a second, reach your ear, push your eardrum at exactly that frequency, and your brain calls the result a 'note'."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Sound is a <em>longitudinal</em> wave — the air moves in the same direction the wave travels. Light, by contrast, is <em>transverse</em> — its electric and magnetic fields oscillate sideways, perpendicular to motion. Two different geometries; the same wave equation governs both. <code>v = f · λ</code>. Speed equals frequency times wavelength. Memorise this; it will serve you for everything from radio antennas to atomic spectra."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now — a strange fact. Strike two of these jars together. The two waves pass through each other in the air <em>without colliding</em>. Where their crests align, the sound is louder. Where crest meets trough, they cancel. This is <em>superposition</em>, and it is the principle behind every interference pattern, every noise-cancelling headphone, every two-slit experiment that has confused undergraduates for a hundred years."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "And one last lesson — sound travels <em>faster</em> in solids than in air. Most apprentices guess the opposite. Place your ear on a long iron rail and have a friend strike it a hundred metres away; you will hear the strike through the iron before you hear it through the air. Stiffer medium, faster propagation. Light, perversely, does the opposite — it slows in glass. That is a tale for the next chapter."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Retrieve before you read on</h3>\n<p>Without scrolling back:</p>\n<ul>\n  <li>State the wave equation. What are the units of each quantity in SI?</li>\n  <li>Define amplitude, wavelength, frequency, and period. Which two are reciprocals of each other?</li>\n  <li>Sound is transverse or longitudinal? Light? A rope shaken side to side?</li>\n  <li>Explain constructive and destructive interference in your own words. Where does each happen?</li>\n  <li>Why does an ambulance's siren sound higher-pitched approaching and lower-pitched departing?</li>\n  <li>Order air, water, steel, and vacuum by sound speed (slowest to fastest). Why is the order what it is?</li>\n</ul>",
+
+      "feynmanPrompt": "Explain to a friend why a guitar string of given length and tension can only produce certain notes — its 'fundamental' and 'harmonics' — and not arbitrary frequencies. Use the idea of standing waves.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the wave equation that ties speed, frequency, and wavelength?</p>",
+          "options": [
+            "v = f × λ",
+            "v = f / λ",
+            "v = f + λ",
+            "v = ½fλ²"
+          ],
+          "correctAnswer": "v = f × λ",
+          "explanationHtml": "<p>Speed equals frequency times wavelength. The same equation works for sound, light, water waves, and every other wave you'll meet. Speed is set by the medium; frequency is set by the source; wavelength adjusts to satisfy the equation.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Which is the correct distinction between transverse and longitudinal waves?</p>",
+          "options": [
+            "In a transverse wave the medium oscillates perpendicular to the direction of travel; in a longitudinal wave it oscillates parallel to the direction of travel",
+            "Transverse waves are faster; longitudinal are slower",
+            "Transverse waves carry more energy than longitudinal waves",
+            "Transverse waves only travel in solids; longitudinal only in gases"
+          ],
+          "correctAnswer": "In a transverse wave the medium oscillates perpendicular to the direction of travel; in a longitudinal wave it oscillates parallel to the direction of travel",
+          "explanationHtml": "<p>The difference is purely geometric: the direction of oscillation relative to the direction of travel. Sound in air is longitudinal (compressions and rarefactions along the direction of travel). Light and waves on a string are transverse. Speed and energy are unrelated to which kind it is.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are standing still as an ambulance speeds towards you, then past you, with its siren at a fixed frequency. What do you hear?</p>",
+          "options": [
+            "A higher pitch as it approaches, then a lower pitch as it recedes — the Doppler effect",
+            "The same pitch the whole time, only louder near you",
+            "A lower pitch as it approaches, then a higher pitch as it recedes",
+            "The siren cuts out as it passes you, then resumes"
+          ],
+          "correctAnswer": "A higher pitch as it approaches, then a lower pitch as it recedes — the Doppler effect",
+          "explanationHtml": "<p>Approach compresses successive wavefronts (shorter wavelength → higher frequency); recession stretches them (longer wavelength → lower frequency). The siren itself is unchanged; what changes is the geometry of how the wavefronts arrive at your ear. The same effect on light tells astronomers how fast galaxies are moving.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Two identical sound waves arrive at the same point exactly out of phase (crest of one aligned with trough of the other). What happens?</p>",
+          "options": [
+            "Destructive interference — the waves cancel and the point is silent",
+            "Constructive interference — the waves add and the point is twice as loud",
+            "The waves bounce off each other and reverse direction",
+            "Both waves disappear entirely as energy is destroyed"
+          ],
+          "correctAnswer": "Destructive interference — the waves cancel and the point is silent",
+          "explanationHtml": "<p>Superposition: total displacement is the sum. Equal magnitudes, opposite signs, sum is zero — destructive interference. Energy is not destroyed; it moves to other places where the same two waves interfere constructively. This is exactly how noise-cancelling headphones work.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-b4",
+      "title": "Electromagnetism Intro",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "filename": "physics.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Electricity and magnetism look like two unrelated phenomena until you stare at them long enough. Then you realise they are the same field viewed from different angles — and that <em>light itself</em> is what falls out of the equations when you put them together.</p>",
+
+      "explanationHtml": "<h3>Charge — the source of everything electrical</h3>\n<p>Some particles carry an intrinsic property called <strong>electric charge</strong>. Two values: positive (proton) and negative (electron). Like charges repel; opposite charges attract. The force between two point charges is given by <strong>Coulomb's law</strong>:</p>\n<pre><code>F = k · (q₁ · q₂) / r²</code></pre>\n<p>The key feature is the <code>1/r²</code> — the force falls off with the square of distance, exactly like gravity. Double the distance, quarter the force. The constant k is a measured number that fixes the strength of the electromagnetic interaction. It's enormous compared to gravity — the electric repulsion between two protons is about 10³⁶ times stronger than their gravitational attraction. Gravity wins on cosmic scales only because matter is overwhelmingly neutral and electric forces cancel.</p>\n<p><strong>Conductors vs insulators</strong>: in conductors (metals), some electrons are loosely bound and can flow freely. In insulators (rubber, glass, dry wood), electrons are locked to atoms. This single distinction underpins every wire, every switch, every circuit you'll ever meet.</p>\n\n<h3>Electric field and potential</h3>\n<p>A charge produces an <strong>electric field</strong> in the space around it — a vector at every point that says \"a positive test charge placed here would feel this much force in this direction.\" Field lines point away from positive charges and into negative ones. Field is force per unit charge: <code>E = F / q</code>.</p>\n<p><strong>Electric potential</strong> (V, measured in volts) is the energy per unit charge — what it costs in energy to bring a charge to a given point. A 9 V battery establishes a 9-volt potential difference across its terminals; for every coulomb of charge that flows between them, 9 joules of energy is delivered.</p>\n\n<h3>Current, voltage, resistance — Ohm's law</h3>\n<p>When charges actually flow, you have <strong>current</strong> (I), measured in <em>amperes</em>: 1 A = 1 coulomb of charge per second. The driver is the potential difference (voltage, V). The opposition is <strong>resistance</strong> (R), measured in <em>ohms</em> (Ω). They are tied together by <strong>Ohm's law</strong>:</p>\n<pre><code>V = I · R</code></pre>\n<table>\n  <tr><th>Quantity</th><th>Symbol</th><th>Unit</th><th>Analogy (water pipe)</th></tr>\n  <tr><td>Voltage</td><td>V</td><td>volt (V)</td><td>Pressure difference</td></tr>\n  <tr><td>Current</td><td>I</td><td>ampere (A)</td><td>Flow rate</td></tr>\n  <tr><td>Resistance</td><td>R</td><td>ohm (Ω)</td><td>Pipe narrowness</td></tr>\n  <tr><td>Power</td><td>P = VI</td><td>watt (W)</td><td>Total flow work</td></tr>\n</table>\n<p>The water-pipe analogy is imperfect (electrons don't 'flow' through wires the way water flows through pipes — they drift very slowly while signals propagate near light-speed), but for circuit intuition it's reliable. High pressure with a tiny pipe = small flow; low pressure with a wide pipe = big flow.</p>\n\n<h3>Magnetic fields and the right-hand rule</h3>\n<p>Moving charges produce <strong>magnetic fields</strong>. A current-carrying wire is surrounded by a circular magnetic field; you find its direction with the <em>right-hand rule</em>: point your thumb along the current, your fingers curl in the direction of the field.</p>\n<p>Equally importantly: magnetic fields exert forces on moving charges. A charge q moving with velocity v through a field B feels a force perpendicular to both v and B, with magnitude <code>F = qvB</code> (when v and B are perpendicular). This perpendicular force is why electric motors work — the field deflects the current, and the deflected current makes the rotor spin.</p>\n\n<h3>Maxwell's revolution — and why light is electromagnetic</h3>\n<p>James Clerk Maxwell's four equations (1860s) tied together everything known about electricity and magnetism. The deepest insight: <strong>a changing electric field produces a magnetic field, and a changing magnetic field produces an electric field.</strong> If you set up an oscillating electric field, it creates an oscillating magnetic field, which creates another electric field, which creates another magnetic field — and the whole thing propagates outward as a self-sustaining wave.</p>\n<p>When Maxwell calculated the speed of this wave from his equations, the answer was about 3 × 10⁸ m/s. That's the measured speed of light. The conclusion was forced: <em>light is an electromagnetic wave.</em> Radio waves, microwaves, infrared, visible light, ultraviolet, X-rays, gamma rays — all the same phenomenon, differing only in frequency and wavelength. This unification is one of the great moments in physics.</p>\n\n<h3>Why we transmit power as AC</h3>\n<p>Direct current (DC) flows in one direction; alternating current (AC) reverses 50 or 60 times per second. We use AC for grid power for one reason: <strong>transformers</strong>. A transformer steps voltage up or down using changing magnetic fields between two coils — and transformers only work with changing currents (AC, not DC). To send electricity 200 km without massive resistive losses you want very high voltage and low current (since power loss in a wire is <code>P = I²R</code>, halving I quarters the loss). Transformers let you boost to hundreds of kilovolts for long-distance transmission, then step down to 230/120 V at the wall. Edison fought this fiercely; Tesla and Westinghouse won, and we use AC now because of physics, not politics.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A different bench. On it: a glass rod, a wool cloth, a small brass needle on a pivot, and a coil of copper wire wrapped around an iron nail. Vesper rubs the rod against the wool, and the needle twitches towards the rod from across the bench."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Charge. The rod has acquired some, the wool the equal opposite. Like charges repel, opposite charges attract — that much was known to the Greeks, who rubbed amber against fur and watched dust leap. The force falls with the square of distance — Coulomb measured it, two thousand years later. Same shape as gravity, different scale entirely. Between two protons, the electric repulsion is something like ten to the thirty-sixth times stronger than their gravitational pull. Gravity only matters because matter is, on the whole, almost perfectly neutral."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "\"Now watch this.\" [<em>Vesper connects the coil to a battery; the iron nail leaps up and clings to a piece of iron filings on the bench.</em>] \"Current — moving charge — produces a magnetic field. Stop the current, the field collapses. Reverse the current, the field reverses. Electricity and magnetism are not two things. They are one thing, viewed from two angles.\""
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Maxwell wrote down four equations a century and a half ago. From them, a strange thing falls out — a changing electric field makes a magnetic one; a changing magnetic field makes an electric one; together they propagate as a wave. He calculated the wave's speed: three hundred million metres per second. The measured speed of <em>light</em>. Light, apprentice. Light is an electromagnetic wave. Radio, infrared, visible, X-rays, gamma — the same phenomenon, only different frequencies. Read that sentence twice. It is one of the greatest unifications in the history of human thought."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "For circuits, three quantities will carry you a long way. <em>Voltage</em> — the pressure. <em>Current</em> — the flow. <em>Resistance</em> — how the wire opposes flow. Ohm's law: <code>V = I R</code>. As reliable as F = ma in its own domain. Power is voltage times current — and that is why your kingdom transmits electricity as <em>alternating</em> current. High voltage, low current, low losses, then transformers step it down at the wall. Politics aside, physics chose AC."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Retrieve before you read on</h3>\n<p>Without scrolling back:</p>\n<ul>\n  <li>State Coulomb's law in words. What does the <code>1/r²</code> tell you about the force at twice the distance?</li>\n  <li>What is the difference between a conductor and an insulator? Give an example of each.</li>\n  <li>State Ohm's law. What are the units of voltage, current, and resistance?</li>\n  <li>What is the qualitative direction relationship between a current in a wire and the magnetic field it produces? (No equations — just the right-hand rule in words.)</li>\n  <li>What did Maxwell discover that <em>light</em> actually is? Why was the calculation so persuasive?</li>\n  <li>Why is alternating current preferred for long-distance power transmission?</li>\n</ul>",
+
+      "feynmanPrompt": "Explain to a friend why a compass needle deflects when held next to a wire carrying a strong current. Use the concept of \"moving charges produce magnetic fields\" — and avoid invoking magic.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Two charged particles are separated by 10 cm and feel a Coulomb force F. If the distance is increased to 20 cm with everything else unchanged, what is the new force?</p>",
+          "options": [
+            "F / 4",
+            "F / 2",
+            "2F",
+            "F (unchanged)"
+          ],
+          "correctAnswer": "F / 4",
+          "explanationHtml": "<p>Coulomb's law goes as 1/r². Doubling r divides the force by 4. (Compare with gravity, which has the same 1/r² shape — Newton and Coulomb gave us the same geometric law for both.)</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Ohm's law is:</p>",
+          "options": [
+            "V = IR",
+            "P = mgh",
+            "F = ma",
+            "V = ½IR²"
+          ],
+          "correctAnswer": "V = IR",
+          "explanationHtml": "<p>Voltage = current × resistance. Memorise this — it's the F = ma of basic circuits, and almost every electrical question reduces to it eventually.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>According to Maxwell's equations, what is the relationship between changing electric and magnetic fields?</p>",
+          "options": [
+            "A changing electric field produces a magnetic field, and a changing magnetic field produces an electric field — together they propagate as electromagnetic waves",
+            "Electric and magnetic fields are entirely independent phenomena that happen to use similar mathematics",
+            "Magnetic fields produce electric fields only when iron is present",
+            "Only static (unchanging) fields can produce each other"
+          ],
+          "correctAnswer": "A changing electric field produces a magnetic field, and a changing magnetic field produces an electric field — together they propagate as electromagnetic waves",
+          "explanationHtml": "<p>This is the heart of Maxwell's unification. The two fields are coupled — each <em>change</em> in one creates the other — and the resulting self-sustaining oscillation propagates at exactly the speed of light. Light, radio, X-rays, and gamma rays are all the same kind of wave, differing only in frequency.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>What does it mean to say that an electric field 'causes' a magnetic field, in Maxwell's framework?</p>",
+          "options": [
+            "Only a <em>changing</em> electric field produces a magnetic field; a static (unchanging) electric field, by itself, does not",
+            "Any electric field, whether changing or not, produces a magnetic field equal in strength",
+            "Electric fields and magnetic fields are unrelated — Maxwell's claim is metaphorical",
+            "An electric field destroys the magnetic field around it"
+          ],
+          "correctAnswer": "Only a <em>changing</em> electric field produces a magnetic field; a static (unchanging) electric field, by itself, does not",
+          "explanationHtml": "<p>Subtle but crucial. A static charge has only an electric field around it, no magnetic field. A <em>moving</em> charge — a current — carries a changing electric field somewhere, and that change produces a magnetic field. This is exactly the asymmetry that makes generators and transformers work, and it's the whole reason AC dominates long-distance power transmission.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-b5",
+      "title": "Modern Physics Glimpse",
+      "sortOrder": 5,
+      "xpReward": 70,
+      "filename": "physics.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Twentieth-century physics broke almost every common-sense intuition humans had about reality. Time stretches. Space curves. Particles behave like waves. Most of the universe is invisible. We can't tell you the math here — but you should walk away knowing the <em>shape</em> of these revolutions.</p>",
+
+      "explanationHtml": "<h3>Special relativity — the constancy of c</h3>\n<p>Einstein's 1905 starting point: the speed of light in vacuum, c ≈ 3 × 10⁸ m/s, is the same for <em>every</em> observer, regardless of how fast they are moving relative to the source. This is bizarre. If you run towards a thrown ball, the ball seems faster relative to you. If you run towards a beam of light, the light is still measured at exactly c. Every experiment ever done confirms this.</p>\n<p>From this single postulate, plus the principle that physical laws look the same in any inertial frame, two surprises follow:</p>\n<ul>\n  <li><strong>Time dilation</strong> — moving clocks tick slower as seen from a stationary observer's frame. A clock on a fast spaceship records less elapsed time than a synchronised clock back home. The effect is tiny at everyday speeds but real and measured (atomic clocks on aircraft confirm it).</li>\n  <li><strong>Length contraction</strong> — moving objects appear shorter (along their direction of motion) when viewed from a stationary frame.</li>\n</ul>\n<p>Einstein's two famous thought experiments — light bouncing inside a moving train carriage, two simultaneous lightning strikes seen from the platform vs from a moving train — are not rigorous proofs but rigorous <em>structural</em> arguments. They show that if c is constant, simultaneity itself becomes relative: what is 'now' for one observer is not 'now' for another moving relative to them. And from that, time dilation and length contraction are forced. The universe doesn't have a single master clock.</p>\n<p>Special relativity also gives us <code>E = mc²</code> — mass and energy are interconvertible, with c² as the absurdly large conversion factor. A small mass corresponds to a vast amount of energy; this is the basis of nuclear power and stellar nucleosynthesis.</p>\n\n<h3>General relativity — gravity as curved spacetime</h3>\n<p>Einstein's 1915 follow-up replaces gravity-as-force with <em>gravity-as-geometry</em>. Mass and energy curve the spacetime around them, and objects move along the straightest available paths through that curved geometry. A planet orbiting the Sun isn't being pulled by an invisible force — it's freely following the straightest path through the warped spacetime around the Sun.</p>\n<p>Three classic tests:</p>\n<ul>\n  <li><strong>Mercury's perihelion</strong> — the closest point of Mercury's orbit precesses by a tiny excess that Newtonian gravity could not explain. General relativity predicted the excess exactly.</li>\n  <li><strong>Gravitational lensing</strong> — light from distant stars bends as it passes near the Sun. First measured during a 1919 eclipse, the deflection matched Einstein's prediction (and made him a global celebrity).</li>\n  <li><strong>GPS time corrections</strong> — GPS satellites' clocks tick slightly faster than ground clocks (less spacetime curvature at altitude) and slightly slower from special-relativistic motion. Without correcting for both, GPS would drift by several kilometres per day. Your phone's location is, every second, a working confirmation of general relativity.</li>\n</ul>\n\n<h3>Quantum mechanics — wave-particle duality</h3>\n<p>At very small scales (atoms, photons, electrons), the world stops behaving like the classical world. Three core surprises:</p>\n<ul>\n  <li><strong>Wave-particle duality</strong> — every particle has wave-like properties; every wave has particle-like properties. Light, which Maxwell showed was a wave, also arrives in discrete packets called <em>photons</em>. Electrons, which feel like particles, produce interference patterns when fired through two slits.</li>\n  <li><strong>The double-slit experiment</strong> — fire individual electrons one at a time through a barrier with two slits, and they build up an interference pattern on the far screen, as though each electron <em>went through both slits</em>. Try to detect which slit they go through, and the interference vanishes. Measurement changes the system.</li>\n  <li><strong>The uncertainty principle</strong> — Heisenberg showed there is a fundamental limit to how precisely you can know certain pairs of properties simultaneously. The product of the uncertainties in position and momentum cannot be smaller than a particular tiny constant (ℏ/2). Pin down position exactly, momentum becomes wholly undetermined; vice versa. This is not a measurement-tool limitation — it's structural to reality.</li>\n</ul>\n\n<h3>The Standard Model — the inventory of matter</h3>\n<p>By the 1970s, particle physicists had assembled a Standard Model of all known matter and forces.</p>\n<table>\n  <tr><th>Category</th><th>Examples</th><th>Role</th></tr>\n  <tr><td>Quarks</td><td>up, down, charm, strange, top, bottom</td><td>Bound by the strong force into protons, neutrons, and other hadrons</td></tr>\n  <tr><td>Leptons</td><td>electron, muon, tau, and three neutrinos</td><td>Don't feel the strong force; electrons orbit nuclei in atoms</td></tr>\n  <tr><td>Force carriers</td><td>photon (electromagnetism), gluons (strong), W and Z (weak)</td><td>Particles whose exchange <em>is</em> the force</td></tr>\n  <tr><td>Higgs boson</td><td>discovered 2012</td><td>Field whose interaction gives other particles mass</td></tr>\n</table>\n<p>The Standard Model has been tested to extraordinary precision and predicts a vast range of experiments correctly. <em>Gravity is conspicuously missing</em> — it does not fit into this quantum framework, and reconciling general relativity with quantum mechanics is the unsolved problem.</p>\n\n<h3>What's still open</h3>\n<ul>\n  <li><strong>Dark matter</strong> — galaxies rotate as if they contain about five times more mass than their visible matter accounts for. This invisible mass — gravitationally real, electromagnetically silent — is everywhere, and we don't know what it is.</li>\n  <li><strong>Dark energy</strong> — the expansion of the universe is <em>accelerating</em>, against the gravitational pull of all matter. Whatever drives this is called dark energy, and accounts for about 70% of the total energy content of the universe. We have, essentially, no idea what it is either.</li>\n  <li><strong>Quantum gravity</strong> — at very small distances or extreme conditions (the Big Bang, the inside of a black hole), both general relativity and quantum mechanics matter, and they don't get along. String theory, loop quantum gravity, and other candidates exist; none has yet been confirmed.</li>\n</ul>\n<p>This is exhilarating, not embarrassing: there is plenty left to discover.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vesper closes the workshop's heavy oak shutters. The only light is from a small flame in a brass lamp on the central table. He pulls out a worn folio of notes — younger handwriting than his current one."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now I am going to tell you things that will, I expect, refuse to fit in your head. Do not worry. They refused to fit in mine. I have lived with them for forty years, and they still feel like the universe is teasing me."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "First. The speed of light in vacuum is the same for every observer. <em>Every</em> observer. Including one chasing the light at nine-tenths of c. The light still recedes from them at exactly c. From this single fact — verified by every careful experiment for a hundred and twenty years — Einstein deduced that moving clocks tick slower than stationary ones. Moving rulers contract along their motion. Two events that are simultaneous for me are not simultaneous for you, if you are moving. There is no master clock anywhere. The universe does not bother to keep one."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Second. <em>Gravity is not a force.</em> Gravity is the <em>shape</em> of spacetime. Mass and energy curve the geometry around them; objects in free fall travel along the straightest paths through that curved geometry. A planet orbiting the Sun is, in Einstein's picture, not being pulled — it is freely following its natural path through warped space. The clocks on the satellites high above your head tick at a different rate to the ones on the ground, because the curvature is slightly less up there. Without that correction, your maps would be useless. Your kingdom's navigators have made daily peace with general relativity for sixty years and most of them do not know it."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Third. The very small does not behave like the everyday. Particles are also waves. Fire one electron at a barrier with two slits and it interferes with <em>itself</em>, as if it travelled both paths at once. Try to peek and see which slit it took, and the interference vanishes — the act of measurement changes what was measured. There is a fundamental limit, the uncertainty principle, on how precisely you may simultaneously know a particle's position and its momentum. This is not because our instruments are crude. It is because reality itself does not <em>have</em> sharper values to be measured."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "And — last lesson, then I will let you sleep — the universe is mostly stuff we cannot see. About a quarter of its mass is something gravitationally real but optically invisible — we call it dark matter. About seventy percent of its energy content is something <em>pushing space apart</em> faster and faster — we call it dark energy. We have measured both with embarrassing precision and explained neither at all. So. Do not, ever, mistake the present catalogue of physics for the final one. There is more to learn. Every century has thought it was nearly done, and every century has been spectacularly wrong."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Retrieve before you read on</h3>\n<p>Without scrolling back:</p>\n<ul>\n  <li>State Einstein's starting postulate of special relativity in one sentence. Why is it surprising?</li>\n  <li>What is time dilation? Length contraction? Give the qualitative direction (faster vs slower, longer vs shorter) and what 'as seen from where' means.</li>\n  <li>In general relativity, what causes gravity? (Hint: not a force.)</li>\n  <li>Name three experimental confirmations of general relativity.</li>\n  <li>Describe the double-slit experiment and what it implies about electrons.</li>\n  <li>What is the uncertainty principle? Is it a limit of measurement instruments, or something deeper?</li>\n  <li>Name the four categories of particles in the Standard Model. Which fundamental interaction is missing?</li>\n  <li>What are dark matter and dark energy, in one sentence each? Roughly what fraction of the universe is each?</li>\n</ul>",
+
+      "feynmanPrompt": "Explain to a friend why GPS satellites must correct for both special <em>and</em> general relativity, and what would happen if they didn't. (Roughly: how far off would your location be after a day?)",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is Einstein's starting postulate for special relativity?</p>",
+          "options": [
+            "The speed of light in vacuum is the same for every observer, regardless of relative motion",
+            "Light always travels at the speed of the source plus the speed of the medium",
+            "Mass and energy are interchangeable: E = mc²",
+            "Gravity is the curvature of spacetime"
+          ],
+          "correctAnswer": "The speed of light in vacuum is the same for every observer, regardless of relative motion",
+          "explanationHtml": "<p>This single postulate is the seed from which time dilation, length contraction, the relativity of simultaneity, and E = mc² all follow. The 'gravity is curvature' answer is general relativity (a later, separate theory). E = mc² is a <em>consequence</em> of special relativity, not its postulate.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>In general relativity, what is the cause of gravity?</p>",
+          "options": [
+            "Mass and energy curve spacetime, and objects in free fall move along the straightest available paths in the resulting curved geometry",
+            "An invisible attractive force that acts instantaneously across any distance",
+            "The Higgs field's interaction with massive particles",
+            "Magnetic attraction between very large objects"
+          ],
+          "correctAnswer": "Mass and energy curve spacetime, and objects in free fall move along the straightest available paths in the resulting curved geometry",
+          "explanationHtml": "<p>Einstein's 1915 reformulation replaced Newton's force-at-a-distance with geometry. The Higgs field gives elementary particles their <em>mass</em> — a different problem. And gravity is not magnetic; the two interactions have radically different structures.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>The double-slit experiment with single electrons demonstrates that:</p>",
+          "options": [
+            "Individual electrons exhibit wave-like behaviour, producing an interference pattern even when fired one at a time, and measurement of which slit each took destroys the pattern",
+            "Electrons are tiny solid spheres that bounce off the slits randomly",
+            "Two slits double the rate at which electrons reach the screen",
+            "Electrons absorb light when they pass through slits"
+          ],
+          "correctAnswer": "Individual electrons exhibit wave-like behaviour, producing an interference pattern even when fired one at a time, and measurement of which slit each took destroys the pattern",
+          "explanationHtml": "<p>This is one of the most famous results in physics. Even one electron at a time, the build-up over thousands of trials produces interference fringes — implying the single electron 'went through both slits' as a wave. Detect which slit and you collapse the wavefunction; the interference vanishes. Wave-particle duality made unavoidable.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is dark energy, in current cosmological understanding?</p>",
+          "options": [
+            "An unknown component, accounting for about 70% of the universe's total energy, that drives the accelerating expansion of space",
+            "The energy of dark stars that have collapsed into black holes",
+            "Light that has been redshifted past the visible spectrum",
+            "An archaic term for radioactive decay"
+          ],
+          "correctAnswer": "An unknown component, accounting for about 70% of the universe's total energy, that drives the accelerating expansion of space",
+          "explanationHtml": "<p>The accelerating expansion was discovered in the late 1990s from supernova measurements. Whatever is causing it — Einstein's cosmological constant, a slowly evolving field, or something else entirely — accounts for about 70% of the universe's total mass-energy budget. We measure its effects with high precision, but we do not yet have a satisfying physical explanation.</p>"
+        }
+      ]
+    }
+
+  ]
+}

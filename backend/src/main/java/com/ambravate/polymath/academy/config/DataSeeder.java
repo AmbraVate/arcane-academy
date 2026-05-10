@@ -30,22 +30,9 @@ public class DataSeeder {
     public ApplicationRunner seedData() {
         return args -> {
             long currentCount = chunkRepository.count();
-            if (currentCount == 0) {
-                log.info("[DataSeeder] No chunks found — running initial seed...");
-
-                // Clear dependents in FK-safe order (in case of partial seed)
-                userChunkProgressRepository.deleteAll();
-                curiosityQueueItemRepository.deleteAll();
-                questionRepository.deleteAll();
-                rabbitHoleRepository.deleteAll();
-                subChunkRepository.deleteAll();
-                chunkRepository.deleteAll();
-
-                jsonContentSeeder.seed();
-                log.info("[DataSeeder] Seeded {} chunks.", chunkRepository.count());
-            } else {
-                log.info("[DataSeeder] Content already present ({} chunks) — skipping seed.", currentCount);
-            }
+            log.info("[DataSeeder] Syncing JSON content ({} chunks currently present)...", currentCount);
+            int loaded = jsonContentSeeder.seed();
+            log.info("[DataSeeder] Synced {} JSON chunk files; database now has {} chunks.", loaded, chunkRepository.count());
 
             topicSeeder.seed();
             testUserSeeder.seed();

@@ -12,4 +12,5 @@ public interface QuestionRepository extends JpaRepository<Question, String> {
     List<Question> findBySubChunkIdAndTier(String subChunkId, QuestionTier tier);
     List<Question> findBySubChunkIdIn(List<String> subChunkIds);
     List<Question> findBySubChunkIdInAndMinPathLessThanEqual(List<String> subChunkIds, LearnerPath path);
+    void deleteBySubChunkIdIn(List<String> subChunkIds);
 }

@@ -1,0 +1,374 @@
+{
+  "id": "psy-b",
+  "title": "Pathway 2: Brain, Biology and Behaviour",
+  "glyph": "PSY",
+  "sortOrder": 2,
+  "tier": "FOUNDATION",
+  "topicId": "psychology",
+  "prerequisites": [
+    "psy-a"
+  ],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "psy-b0",
+      "title": "Self-paced orientation: Foundation",
+      "sortOrder": 0,
+      "xpReward": 40,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>This orientation turns a large subject into a manageable plan: learn the language first, then build explanations layer by layer.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Psychology rewards steady sequencing. In this phase you build the vocabulary, biological background, cognitive models, and basic research habits that later topics depend on.</p><h3>Key ideas</h3><ul><li>Treat the phase as a map, not a race.</li><li>Keep a learning journal with definitions, examples, and uncertainties.</li><li>Use retrieval practice after each module before starting the next.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Self-paced orientation: Foundation. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "This orientation turns a large subject into a manageable plan: learn the language first, then build explanations layer by layer."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the four Foundation pathway names in order.</li><li><strong>Step 2:</strong> Under each pathway, write one reason it must come before advanced topics.</li><li><strong>Step 3:</strong> Circle the pathway you expect to find hardest and write a review plan for it.</li></ol><h3>Why you are writing it</h3><p>This makes the route visible and turns self-paced study into a sequence of deliberate choices.</p>",
+      "feynmanPrompt": "Explain Self-paced orientation: Foundation to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Self-paced orientation: Foundation</strong>?</p>",
+          "options": [
+            "Treat the phase as a map, not a race.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Treat the phase as a map, not a race.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Treat the phase as a map, not a race.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Self-paced orientation: Foundation</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Create your own 2-3 month Foundation calendar. Decide how many study sessions each pathway gets and where you will place review days.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-b1",
+      "title": "Module 2: The Nervous System",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Before behaviour becomes visible, the nervous system has already detected, transmitted, and coordinated information.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>The nervous system links body and behaviour. The central nervous system includes the brain and spinal cord. The peripheral nervous system carries signals to and from the body. The sympathetic system mobilises energy for threat or effort, while the parasympathetic system supports recovery and regulation.</p><h3>Key ideas</h3><ul><li>CNS and PNS describe different parts of the communication network.</li><li>Sympathetic activation prepares action; parasympathetic activation restores balance.</li><li>Neurons communicate through electrical impulses and chemical signalling at synapses.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 2: The Nervous System. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Before behaviour becomes visible, the nervous system has already detected, transmitted, and coordinated information."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Draw a two-level map: CNS and PNS.</li><li><strong>Step 2:</strong> Under PNS, add sympathetic and parasympathetic branches.</li><li><strong>Step 3:</strong> Write one everyday example of each branch in action.</li></ol><h3>Why you are writing it</h3><p>Mapping the system makes later topics, such as stress, emotion, and medication, easier to understand.</p>",
+      "feynmanPrompt": "Explain Module 2: The Nervous System to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 2: The Nervous System</strong>?</p>",
+          "options": [
+            "CNS and PNS describe different parts of the communication network.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "CNS and PNS describe different parts of the communication network.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: CNS and PNS describe different parts of the communication network.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 2: The Nervous System</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Track one bodily stress response during the day. Describe what you noticed, which nervous-system branch was likely active, and what helped your body return toward baseline.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-b2",
+      "title": "Module 3: The Brain",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>The brain is not a set of labelled boxes. It is a network where specialised regions cooperate to produce thought, emotion, memory, and action.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Brain anatomy gives psychology a biological level of explanation. Frontal regions support planning and inhibition, temporal regions contribute to hearing and memory, occipital regions process vision, and parietal regions integrate spatial and sensory information. Many functions depend on networks rather than a single spot.</p><h3>Key ideas</h3><ul><li>Localisation is useful but can be oversimplified.</li><li>Emotion regulation, decision-making, memory, and language depend on interacting systems.</li><li>Neuroplasticity means experience can alter brain organisation and efficiency.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 3: The Brain. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "The brain is not a set of labelled boxes. It is a network where specialised regions cooperate to produce thought, emotion, memory, and action."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write four headings: frontal, temporal, occipital, parietal.</li><li><strong>Step 2:</strong> Under each, write one major function and one example behaviour.</li><li><strong>Step 3:</strong> Add a final sentence explaining why complex behaviour needs networks, not just one brain area.</li></ol><h3>Why you are writing it</h3><p>This builds anatomical anchors while protecting the learner from cartoon brain explanations.</p>",
+      "feynmanPrompt": "Explain Module 3: The Brain to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 3: The Brain</strong>?</p>",
+          "options": [
+            "Localisation is useful but can be oversimplified.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Localisation is useful but can be oversimplified.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Localisation is useful but can be oversimplified.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 3: The Brain</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Choose one skill you have learned. Explain how repeated practice might change attention, memory, motor control, or language networks over time.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-b3",
+      "title": "Module 4: Genetics and Behaviour",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Genes influence behaviour, but they rarely dictate it. Psychology lives in the interaction between inherited tendencies and lived environments.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Behavioural genetics estimates how much variation in a trait is associated with genetic differences in a population. Twin studies, adoption studies, heritability estimates, gene-environment interaction, and epigenetics all show that nature and nurture work together rather than competing like rival explanations.</p><h3>Key ideas</h3><ul><li>Heritability describes variation in a population, not destiny for one person.</li><li>Environments can amplify, suppress, or redirect genetic tendencies.</li><li>Epigenetic mechanisms can change gene expression in response to conditions such as stress.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 4: Genetics and Behaviour. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Genes influence behaviour, but they rarely dictate it. Psychology lives in the interaction between inherited tendencies and lived environments."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write a definition of heritability in your own words.</li><li><strong>Step 2:</strong> Write one sentence explaining what heritability does not mean.</li><li><strong>Step 3:</strong> Use stress, height, or reading ability to describe a gene-environment interaction.</li></ol><h3>Why you are writing it</h3><p>The writing task blocks deterministic misunderstandings and prepares the learner to read genetic claims carefully.</p>",
+      "feynmanPrompt": "Explain Module 4: Genetics and Behaviour to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 4: Genetics and Behaviour</strong>?</p>",
+          "options": [
+            "Heritability describes variation in a population, not destiny for one person.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Heritability describes variation in a population, not destiny for one person.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Heritability describes variation in a population, not destiny for one person.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 4: Genetics and Behaviour</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Analyse a popular claim that a trait is \"genetic.\" Rewrite it in a more careful form that includes environment, development, and population-level variation.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-b4",
+      "title": "Module 5: Evolutionary Psychology",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Evolutionary psychology asks whether some patterns of mind and behaviour were shaped by recurring survival and reproduction problems.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>Evolutionary explanations consider adaptation, mate selection, kinship, cooperation, threat detection, and social exchange. The approach can be powerful, but it is easy to misuse when explanations become just-so stories without evidence, cultural sensitivity, or alternative hypotheses.</p><h3>Key ideas</h3><ul><li>An evolutionary explanation must generate testable predictions.</li><li>Human cooperation can be studied through kin selection, reciprocity, reputation, and group living.</li><li>Criticisms matter: not every modern behaviour is an adaptation.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 5: Evolutionary Psychology. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Evolutionary psychology asks whether some patterns of mind and behaviour were shaped by recurring survival and reproduction problems."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Pick one behaviour, such as cooperation or jealousy.</li><li><strong>Step 2:</strong> Write a possible evolutionary explanation.</li><li><strong>Step 3:</strong> Write one alternative non-evolutionary explanation and one testable prediction.</li></ol><h3>Why you are writing it</h3><p>This teaches evolutionary reasoning as hypothesis-building, not storytelling after the fact.</p>",
+      "feynmanPrompt": "Explain Module 5: Evolutionary Psychology to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 5: Evolutionary Psychology</strong>?</p>",
+          "options": [
+            "An evolutionary explanation must generate testable predictions.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "An evolutionary explanation must generate testable predictions.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: An evolutionary explanation must generate testable predictions.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 5: Evolutionary Psychology</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Read or recall an evolutionary claim about human behaviour. Evaluate whether it offers evidence, alternatives, and a prediction that could be wrong.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-b5",
+      "title": "Pathway 2 Outcome: Biology Shapes Behaviour",
+      "sortOrder": 5,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>This checkpoint tests whether biological explanations have become useful without becoming simplistic.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>You should now be able to connect nervous-system activity, brain networks, genes, environments, epigenetics, and evolution to behaviour while avoiding deterministic claims.</p><h3>Key ideas</h3><ul><li>Biology enables behaviour; it does not erase context.</li><li>Brain functions usually depend on networks.</li><li>Genes and environments interact across development.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Pathway 2 Outcome: Biology Shapes Behaviour. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "This checkpoint tests whether biological explanations have become useful without becoming simplistic."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write a biological explanation of anxiety in four layers: nervous system, brain, genes/environment, evolution.</li><li><strong>Step 2:</strong> For each layer, add one sentence about what it explains and one sentence about what it cannot explain alone.</li></ol><h3>Why you are writing it</h3><p>Layered writing helps the learner avoid single-cause explanations.</p>",
+      "feynmanPrompt": "Explain Pathway 2 Outcome: Biology Shapes Behaviour to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Pathway 2 Outcome: Biology Shapes Behaviour</strong>?</p>",
+          "options": [
+            "Biology enables behaviour; it does not erase context.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Biology enables behaviour; it does not erase context.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Biology enables behaviour; it does not erase context.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Pathway 2 Outcome: Biology Shapes Behaviour</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>Choose a behaviour from everyday life and build your own multi-layer biological explanation, including at least one limitation.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    }
+  ]
+}

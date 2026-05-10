@@ -1,0 +1,374 @@
+{
+  "id": "psy-g",
+  "title": "Pathway 7: Mental Health and Psychological Disorders",
+  "glyph": "PSY",
+  "sortOrder": 7,
+  "tier": "PRACTITIONER",
+  "topicId": "psychology",
+  "prerequisites": [
+    "psy-f"
+  ],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "psy-g0",
+      "title": "Self-paced orientation: Advanced Understanding",
+      "sortOrder": 0,
+      "xpReward": 40,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Self-paced orientation: Advanced Understanding is a working model for understanding Phase label: Advanced Understanding, Suggested pacing: 2-3 months across mental health and applied professional domains, Use retrieval practice after each module, Keep a learning journal of examples, uncertainties, and papers to revisit.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>This module focuses on Phase label: Advanced Understanding, Suggested pacing: 2-3 months across mental health and applied professional domains, Use retrieval practice after each module, Keep a learning journal of examples, uncertainties, and papers to revisit. The aim is to move from recognition to usable explanation: define the core ideas, apply them to cases, and notice where simple explanations become too narrow.</p><h3>Key ideas</h3><ul><li>Phase label: Advanced Understanding: define the idea, then attach it to a concrete example.</li><li>Suggested pacing: 2-3 months across mental health and applied professional domains: define the idea, then attach it to a concrete example.</li><li>Use retrieval practice after each module: define the idea, then attach it to a concrete example.</li><li>Keep a learning journal of examples, uncertainties, and papers to revisit: define the idea, then attach it to a concrete example.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Self-paced orientation: Advanced Understanding. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Self-paced orientation: Advanced Understanding is a working model for understanding Phase label: Advanced Understanding, Suggested pacing: 2-3 months across mental health and applied professional domains, Use retrieval practice after each module, Keep a learning journal of examples, uncertainties, and papers to revisit."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the title \"Self-paced orientation: Advanced Understanding\" at the top of a note.</li><li><strong>Step 2:</strong> Create one short definition for each key idea in the lesson.</li><li><strong>Step 3:</strong> For each definition, add one everyday example and one question you still have.</li></ol><h3>Why you are writing it</h3><p>This turns reading into an organised study artefact and exposes gaps while the lesson is still fresh.</p>",
+      "feynmanPrompt": "Explain Self-paced orientation: Advanced Understanding to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Self-paced orientation: Advanced Understanding</strong>?</p>",
+          "options": [
+            "Phase label: Advanced Understanding: define the idea, then attach it to a concrete example.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Phase label: Advanced Understanding: define the idea, then attach it to a concrete example.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Phase label: Advanced Understanding: define the idea, then attach it to a concrete example.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Self-paced orientation: Advanced Understanding</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>On your own, find a real or imagined case where self-paced orientation: advanced understanding matters. Analyse it using the module vocabulary, then decide what extra evidence you would need.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-g1",
+      "title": "Module 22: Foundations of Mental Health",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Module 22: Foundations of Mental Health is a working model for understanding Classification systems, Diagnosis, Criticisms of diagnosis.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>This module focuses on Classification systems, Diagnosis, Criticisms of diagnosis. The aim is to move from recognition to usable explanation: define the core ideas, apply them to cases, and notice where simple explanations become too narrow.</p><h3>Key ideas</h3><ul><li>Classification systems: define the idea, then attach it to a concrete example.</li><li>Diagnosis: define the idea, then attach it to a concrete example.</li><li>Criticisms of diagnosis: define the idea, then attach it to a concrete example.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 22: Foundations of Mental Health. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Module 22: Foundations of Mental Health is a working model for understanding Classification systems, Diagnosis, Criticisms of diagnosis."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the title \"Module 22: Foundations of Mental Health\" at the top of a note.</li><li><strong>Step 2:</strong> Create one short definition for each key idea in the lesson.</li><li><strong>Step 3:</strong> For each definition, add one everyday example and one question you still have.</li></ol><h3>Why you are writing it</h3><p>This turns reading into an organised study artefact and exposes gaps while the lesson is still fresh.</p>",
+      "feynmanPrompt": "Explain Module 22: Foundations of Mental Health to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 22: Foundations of Mental Health</strong>?</p>",
+          "options": [
+            "Classification systems: define the idea, then attach it to a concrete example.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Classification systems: define the idea, then attach it to a concrete example.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Classification systems: define the idea, then attach it to a concrete example.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 22: Foundations of Mental Health</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>On your own, find a real or imagined case where module 22: foundations of mental health matters. Analyse it using the module vocabulary, then decide what extra evidence you would need.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-g2",
+      "title": "Module 23: Anxiety Disorders",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Module 23: Anxiety Disorders is a working model for understanding Phobias, OCD, Panic disorder.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>This module focuses on Phobias, OCD, Panic disorder. The aim is to move from recognition to usable explanation: define the core ideas, apply them to cases, and notice where simple explanations become too narrow.</p><h3>Key ideas</h3><ul><li>Phobias: define the idea, then attach it to a concrete example.</li><li>OCD: define the idea, then attach it to a concrete example.</li><li>Panic disorder: define the idea, then attach it to a concrete example.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 23: Anxiety Disorders. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Module 23: Anxiety Disorders is a working model for understanding Phobias, OCD, Panic disorder."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the title \"Module 23: Anxiety Disorders\" at the top of a note.</li><li><strong>Step 2:</strong> Create one short definition for each key idea in the lesson.</li><li><strong>Step 3:</strong> For each definition, add one everyday example and one question you still have.</li></ol><h3>Why you are writing it</h3><p>This turns reading into an organised study artefact and exposes gaps while the lesson is still fresh.</p>",
+      "feynmanPrompt": "Explain Module 23: Anxiety Disorders to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 23: Anxiety Disorders</strong>?</p>",
+          "options": [
+            "Phobias: define the idea, then attach it to a concrete example.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Phobias: define the idea, then attach it to a concrete example.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Phobias: define the idea, then attach it to a concrete example.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 23: Anxiety Disorders</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>On your own, find a real or imagined case where module 23: anxiety disorders matters. Analyse it using the module vocabulary, then decide what extra evidence you would need.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-g3",
+      "title": "Module 24: Mood Disorders",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Module 24: Mood Disorders is a working model for understanding Depression, Bipolar disorder.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>This module focuses on Depression, Bipolar disorder. The aim is to move from recognition to usable explanation: define the core ideas, apply them to cases, and notice where simple explanations become too narrow.</p><h3>Key ideas</h3><ul><li>Depression: define the idea, then attach it to a concrete example.</li><li>Bipolar disorder: define the idea, then attach it to a concrete example.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 24: Mood Disorders. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Module 24: Mood Disorders is a working model for understanding Depression, Bipolar disorder."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the title \"Module 24: Mood Disorders\" at the top of a note.</li><li><strong>Step 2:</strong> Create one short definition for each key idea in the lesson.</li><li><strong>Step 3:</strong> For each definition, add one everyday example and one question you still have.</li></ol><h3>Why you are writing it</h3><p>This turns reading into an organised study artefact and exposes gaps while the lesson is still fresh.</p>",
+      "feynmanPrompt": "Explain Module 24: Mood Disorders to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 24: Mood Disorders</strong>?</p>",
+          "options": [
+            "Depression: define the idea, then attach it to a concrete example.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Depression: define the idea, then attach it to a concrete example.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Depression: define the idea, then attach it to a concrete example.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 24: Mood Disorders</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>On your own, find a real or imagined case where module 24: mood disorders matters. Analyse it using the module vocabulary, then decide what extra evidence you would need.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-g4",
+      "title": "Module 25: Severe Mental Illness",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Module 25: Severe Mental Illness is a working model for understanding Schizophrenia, Psychosis.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>This module focuses on Schizophrenia, Psychosis. The aim is to move from recognition to usable explanation: define the core ideas, apply them to cases, and notice where simple explanations become too narrow.</p><h3>Key ideas</h3><ul><li>Schizophrenia: define the idea, then attach it to a concrete example.</li><li>Psychosis: define the idea, then attach it to a concrete example.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 25: Severe Mental Illness. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Module 25: Severe Mental Illness is a working model for understanding Schizophrenia, Psychosis."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the title \"Module 25: Severe Mental Illness\" at the top of a note.</li><li><strong>Step 2:</strong> Create one short definition for each key idea in the lesson.</li><li><strong>Step 3:</strong> For each definition, add one everyday example and one question you still have.</li></ol><h3>Why you are writing it</h3><p>This turns reading into an organised study artefact and exposes gaps while the lesson is still fresh.</p>",
+      "feynmanPrompt": "Explain Module 25: Severe Mental Illness to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 25: Severe Mental Illness</strong>?</p>",
+          "options": [
+            "Schizophrenia: define the idea, then attach it to a concrete example.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "Schizophrenia: define the idea, then attach it to a concrete example.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: Schizophrenia: define the idea, then attach it to a concrete example.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 25: Severe Mental Illness</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>On your own, find a real or imagined case where module 25: severe mental illness matters. Analyse it using the module vocabulary, then decide what extra evidence you would need.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    },
+    {
+      "id": "psy-g5",
+      "title": "Module 26: Therapy and Treatment",
+      "sortOrder": 5,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+      "hookHtml": "<p>Module 26: Therapy and Treatment is a working model for understanding CBT, Psychodynamic therapy, Humanistic therapy, Medication and psychology.</p>",
+      "explanationHtml": "<h3>Core lesson</h3><p>This module focuses on CBT, Psychodynamic therapy, Humanistic therapy, Medication and psychology. The aim is to move from recognition to usable explanation: define the core ideas, apply them to cases, and notice where simple explanations become too narrow.</p><h3>Key ideas</h3><ul><li>CBT: define the idea, then attach it to a concrete example.</li><li>Psychodynamic therapy: define the idea, then attach it to a concrete example.</li><li>Humanistic therapy: define the idea, then attach it to a concrete example.</li><li>Medication and psychology: define the idea, then attach it to a concrete example.</li></ul><h3>How to study this module</h3><p>Read the lesson once, then close it. Try to rebuild the explanation in your own words before you check the notes. Psychology becomes useful when you can move between definition, example, evidence, and limitation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You start a focused study session on Module 26: Therapy and Treatment. The page is blank, which is useful: it will show what you can actually build from memory."
+        },
+        {
+          "type": "dialogue",
+          "av": "PSY",
+          "cls": "mentor",
+          "speaker": "The Psychology Tutor",
+          "sCls": "mentor",
+          "text": "Module 26: Therapy and Treatment is a working model for understanding CBT, Psychodynamic therapy, Humanistic therapy, Medication and psychology."
+        },
+        {
+          "type": "example",
+          "speaker": "Learning move",
+          "text": "Write first. Check second. Revise third.\n\nThe goal is not to copy the lesson. The goal is to produce a clear explanation, then use the lesson to repair it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided lesson: what to write</h3><p>Open your notes and write the following. Each line has a purpose: it turns the idea into something you can retrieve and use later.</p><ol><li><strong>Step 1:</strong> Write the title \"Module 26: Therapy and Treatment\" at the top of a note.</li><li><strong>Step 2:</strong> Create one short definition for each key idea in the lesson.</li><li><strong>Step 3:</strong> For each definition, add one everyday example and one question you still have.</li></ol><h3>Why you are writing it</h3><p>This turns reading into an organised study artefact and exposes gaps while the lesson is still fresh.</p>",
+      "feynmanPrompt": "Explain Module 26: Therapy and Treatment to a beginner. Include the central idea, one concrete example, and one limitation or caution.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement best captures a key idea from <strong>Module 26: Therapy and Treatment</strong>?</p>",
+          "options": [
+            "CBT: define the idea, then attach it to a concrete example.",
+            "A single explanation should be accepted if it feels intuitive.",
+            "Psychological claims do not need evidence when they describe everyday life.",
+            "The best study strategy is passive rereading without retrieval."
+          ],
+          "correctAnswer": "CBT: define the idea, then attach it to a concrete example.",
+          "explanationHtml": "<p>This is one of the core claims the module asks you to retrieve and use: CBT: define the idea, then attach it to a concrete example.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why does the guided lesson for <strong>Module 26: Therapy and Treatment</strong> ask you to write before checking the notes?</p>",
+          "options": [
+            "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+            "Because copying text word-for-word is the fastest route to expertise",
+            "Because examples are less important than memorising headings",
+            "Because solo practice should happen before any explanation"
+          ],
+          "correctAnswer": "Because writing from memory exposes gaps and turns the lesson into usable knowledge",
+          "explanationHtml": "<p>Guided writing is retrieval plus organisation. It helps the learner discover what they can explain and what still needs repair.</p>"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo practice</h3><p>On your own, find a real or imagined case where module 26: therapy and treatment matters. Analyse it using the module vocabulary, then decide what extra evidence you would need.</p><p>Do this without using the guided steps as a template. Afterwards, compare your answer with the lesson and mark one thing to improve.</p>"
+    }
+  ]
+}

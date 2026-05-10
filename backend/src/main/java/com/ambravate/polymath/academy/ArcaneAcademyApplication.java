@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PolymathAcademyApplication {
+public class ArcaneAcademyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PolymathAcademyApplication.class, args);
+        SpringApplication.run(ArcaneAcademyApplication.class, args);
     }
 }

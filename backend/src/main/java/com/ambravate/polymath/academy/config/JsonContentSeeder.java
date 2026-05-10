@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -47,7 +48,9 @@ public class JsonContentSeeder {
      * JPA's {@code save} performs insert-or-update by entity ID, so re-importing
      * an existing chunk safely overwrites it.
      */
+    @Transactional
     public void upsertChunk(ChunkContentDto dto) throws Exception {
+        replaceGeneratedChildren(dto);
         seedChunk(dto);
     }
 
@@ -56,6 +59,7 @@ public class JsonContentSeeder {
      *
      * @return the number of chunk files loaded.
      */
+    @Transactional
     public int seed() throws Exception {
         Resource[] resources = applicationContext.getResources("classpath:content/**/*.json");
         Arrays.sort(resources, Comparator.comparing(r -> r.getFilename() == null ? "" : r.getFilename()));
@@ -64,10 +68,23 @@ public class JsonContentSeeder {
         for (Resource resource : resources) {
             log.info("Loading chunk content: {}", resource.getFilename());
             ChunkContentDto dto = objectMapper.readValue(resource.getInputStream(), ChunkContentDto.class);
+            replaceGeneratedChildren(dto);
             seedChunk(dto);
             count++;
         }
         return count;
+    }
+
+    private void replaceGeneratedChildren(ChunkContentDto dto) {
+        List<String> subChunkIds = dto.subChunks == null
+                ? List.of()
+                : dto.subChunks.stream().map(sc -> sc.id).toList();
+
+        if (!subChunkIds.isEmpty()) {
+            questionRepository.deleteBySubChunkIdIn(subChunkIds);
+        }
+
+        rabbitHoleRepository.deleteByChunkId(dto.id);
     }
 
     // ── Chunk ─────────────────────────────────────────────────────────────────

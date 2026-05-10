@@ -1,0 +1,626 @@
+{
+  "id": "sci-c",
+  "title": "Biology Foundations",
+  "glyph": "🌱",
+  "sortOrder": 3,
+  "tier": "FOUNDATION",
+  "topicId": "sciences",
+  "prerequisites": [],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "sci-c1",
+      "title": "Cells & Cellular Processes",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Every living thing you've ever met — every yeast colony, every redwood, every apprentice — is built from <strong>cells</strong>. Once you see life as cells obeying chemistry, biology stops being a list of names and becomes a system of machines.</p>",
+
+      "explanationHtml": "<h3>Cell theory — the founding claim of biology</h3>\n<p>Between 1838 and 1855, three observations were stitched into a single thesis:</p>\n<ol>\n  <li><strong>All living things are made of cells</strong> (Schleiden, plants, 1838; Schwann, animals, 1839).</li>\n  <li><strong>The cell is the basic unit of life</strong> — the smallest thing that does what life does: metabolise, reproduce, respond.</li>\n  <li><strong>All cells come from pre-existing cells</strong> (Virchow, 1855: <em>omnis cellula e cellula</em>). No spontaneous generation.</li>\n</ol>\n<p>That third point was the killing blow against centuries of \"meat rots into maggots all on its own.\" Life, biology now claimed, has continuity — every cell alive today descends from one in 1855, which descended from one in 1755, and so on backwards through ~3.5 billion years.</p>\n\n<h3>The deep divide: prokaryotes vs eukaryotes</h3>\n<p>There are two fundamentally different cell architectures, and the gap between them is larger than the gap between you and a mushroom.</p>\n<table>\n  <tr><th>&nbsp;</th><th>Prokaryotic</th><th>Eukaryotic</th></tr>\n  <tr><td>Examples</td><td>Bacteria, archaea</td><td>Animals, plants, fungi, protists</td></tr>\n  <tr><td>Nucleus?</td><td>No — DNA floats free</td><td>Yes — DNA inside a membrane</td></tr>\n  <tr><td>Organelles?</td><td>Few / none with membranes</td><td>Many membrane-bound organelles</td></tr>\n  <tr><td>Size</td><td>~1–5 μm</td><td>~10–100 μm</td></tr>\n  <tr><td>DNA shape</td><td>Single circular chromosome</td><td>Multiple linear chromosomes</td></tr>\n</table>\n<p>The eukaryotic cell is itself a <em>fusion</em> — its mitochondria (and, in plants, its chloroplasts) descend from once-independent bacteria swallowed by an ancestral host cell roughly 2 billion years ago. They still carry their own circular DNA. This is the <strong>endosymbiotic theory</strong>, and the mitochondrion in your liver cell remembers it.</p>\n\n<h3>Major organelles and what they do</h3>\n<table>\n  <tr><th>Organelle</th><th>Function</th></tr>\n  <tr><td><strong>Nucleus</strong></td><td>Houses the DNA; site of transcription</td></tr>\n  <tr><td><strong>Mitochondria</strong></td><td>Power plants — produce ATP via cellular respiration</td></tr>\n  <tr><td><strong>Ribosomes</strong></td><td>Build proteins from mRNA</td></tr>\n  <tr><td><strong>Rough ER</strong> (ribosome-studded)</td><td>Synthesises proteins destined for export or membranes</td></tr>\n  <tr><td><strong>Smooth ER</strong></td><td>Synthesises lipids; detoxifies in liver cells</td></tr>\n  <tr><td><strong>Golgi apparatus</strong></td><td>Modifies, sorts, packages proteins for shipment</td></tr>\n  <tr><td><strong>Lysosomes</strong></td><td>Acidic waste-disposal sacs; digest worn-out organelles</td></tr>\n  <tr><td><strong>Cytoskeleton</strong></td><td>Internal scaffolding; enables shape and movement</td></tr>\n</table>\n<p>Plant cells add three structures animal cells lack:</p>\n<ul>\n  <li><strong>Cell wall</strong> — rigid cellulose; gives shape and structural strength</li>\n  <li><strong>Chloroplasts</strong> — site of photosynthesis</li>\n  <li><strong>Central vacuole</strong> — large fluid-filled sac; turgor pressure and storage</li>\n</ul>\n\n<h3>The two great energy currencies</h3>\n<p>Two opposite reactions run the biosphere. Each is a controlled multi-step chemistry, but the net summary is what you should hold:</p>\n<pre><code>Cellular respiration:\n  C6H12O6 + 6 O2  →  6 CO2 + 6 H2O + ~30 ATP\n  (glucose oxidised; energy captured in ATP)\n\nPhotosynthesis:\n  6 CO2 + 6 H2O + light  →  C6H12O6 + 6 O2\n  (CO2 reduced using solar energy; oxygen released)</code></pre>\n<p>Cellular respiration runs in three stages: <strong>glycolysis</strong> (cytoplasm — splits glucose), the <strong>Krebs / citric acid cycle</strong> (mitochondrial matrix — strips electrons from carbon), and the <strong>electron transport chain</strong> (inner mitochondrial membrane — uses those electrons to pump protons, then ATP synthase rides the proton gradient back to make ATP). Photosynthesis runs in the chloroplast and has its own two stages: the <strong>light-dependent reactions</strong> (split water, generate ATP and NADPH) and the <strong>Calvin cycle</strong> (use that ATP to fix CO₂ into sugar).</p>\n<p>The oxygen you're breathing right now was waste from a cyanobacterium photosynthesising somewhere. Almost every atom of carbon in your body once passed through a chloroplast. The two reactions are coupled across the whole planet.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Vesper has set up a brass microscope on the workbench beside an open ledger of pencil sketches — diaphanous shapes labelled in his neat hand. A drop of pondwater has been placed on a glass slide; something inside it is moving."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Look. That little organism, swimming in circles — one cell. One <em>cell</em>, apprentice. It eats, it moves, it will divide before the hour is out. Everything you call \"alive\" is built of cells, or is itself a single cell. Schleiden and Schwann pieced this together in 1838 and '39. Virchow added the killing line: <em>omnis cellula e cellula</em> — every cell from a cell. No spontaneous generation. Life has continuity all the way back."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "And do not be fooled into thinking all cells are alike. There is a deeper division in biology than the one between you and a mushroom — the divide between <strong>prokaryotes</strong> and <strong>eukaryotes</strong>. A bacterium has no nucleus; its DNA floats loose. Your cells lock the DNA inside a membrane and carry membrane-bound organelles like little factories. The factories themselves were once free-living bacteria — swallowed, then domesticated. Mitochondria still carry their own circular DNA. They never quite stopped being passengers."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "I want you to think of a cell as a chemical workshop. The nucleus is the archive. The ribosomes are the workers. The endoplasmic reticulum is the assembly line — rough where it studs ribosomes for protein work, smooth where it spins lipids. The Golgi is the post office, addressing parcels for shipment. Lysosomes are the disposal pits — acidic, dangerous, necessary. The mitochondria are power plants. Plant cells add a wall, a vacuole, and chloroplasts. That is it. The names are intimidating; the functions are not."
+        },
+        {
+          "type": "example",
+          "speaker": "The two energy reactions of the biosphere",
+          "text": "Cellular respiration:\n  C6H12O6 + 6 O2  →  6 CO2 + 6 H2O + ~30 ATP\n\nPhotosynthesis:\n  6 CO2 + 6 H2O + light  →  C6H12O6 + 6 O2\n\n(Note: each is a multi-step pathway. These are the net summaries — the\n bookkeeping, not the chemistry.)"
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Notice — they are mirror images. Photosynthesis pulls carbon dioxide out of the air and binds it into sugar using sunlight. Respiration takes that sugar back apart, captures the released energy as ATP, and exhales the carbon as CO₂. Plants do both. Animals only do the latter. Every breath you take, every step you climb, is paid for in glucose that a chloroplast assembled out of light. Biology is, at the bottom, two coupled chemical reactions running on a planetary scale."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now study the organelle table. Memorise the function, not just the name. When I ask later <em>where in the cell does X happen?</em>, I want the answer instantly."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Lock the cell map down</h3>\n<p>For each organelle below, recall its <strong>function in one sentence</strong> without looking. Then check yourself against the table in the lesson:</p>\n<ul>\n  <li>nucleus, mitochondrion, ribosome, rough ER, smooth ER, Golgi apparatus, lysosome</li>\n  <li>(plants) cell wall, chloroplast, central vacuole</li>\n</ul>\n<p>Then, in your head, walk a glucose molecule from your mouth to ATP: which organelle does each step happen in? (Glycolysis happens where? The Krebs cycle? The electron transport chain?) If you can answer all three, you have the cell-energy map.</p>",
+
+      "feynmanPrompt": "Explain to a friend why a mitochondrion has its own DNA. Use the endosymbiotic theory. Then explain — without saying the word \"machine\" — why a chloroplast and a mitochondrion can be thought of as running the same chemistry in opposite directions.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which statement is part of <strong>cell theory</strong>?</p>",
+          "options": [
+            "All living things are made of cells, and all cells come from pre-existing cells",
+            "All cells must contain a nucleus to be considered alive",
+            "All cells reproduce sexually",
+            "Cells emerge spontaneously from non-living matter under the right conditions"
+          ],
+          "correctAnswer": "All living things are made of cells, and all cells come from pre-existing cells",
+          "explanationHtml": "<p>Cell theory has three pillars: all life is cellular, the cell is the basic unit of life, and all cells come from pre-existing cells (Virchow's <em>omnis cellula e cellula</em>). The fourth option — spontaneous generation — is exactly what cell theory <em>refuted</em>. Many cells (e.g. bacteria) have no nucleus, so the second option is false.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A liver cell is detoxifying a drug, then packaging an exported protein for the bloodstream. Which two organelles are doing most of the work, in that order?</p>",
+          "options": [
+            "Smooth ER (detox), then rough ER + Golgi (protein synthesis and packaging)",
+            "Lysosome (detox), then nucleus (packaging)",
+            "Mitochondrion (detox), then ribosome (packaging)",
+            "Cell wall (detox), then central vacuole (packaging)"
+          ],
+          "correctAnswer": "Smooth ER (detox), then rough ER + Golgi (protein synthesis and packaging)",
+          "explanationHtml": "<p>Smooth ER is heavily involved in detoxification (especially in liver cells). Rough ER (ribosomes attached) synthesises secreted proteins; the Golgi modifies and packages them into vesicles for export. Lysosomes digest waste, mitochondria make ATP, the cell wall is plant-only, and the central vacuole is plant-only — none fits this scenario.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A student says: \"Photosynthesis and cellular respiration are basically the same thing.\" What's the most accurate correction?</p>",
+          "options": [
+            "They are opposite, coupled reactions: photosynthesis fixes CO₂ into glucose using light; respiration burns glucose back to CO₂ to release energy as ATP",
+            "They are the same — both happen in the mitochondrion and produce ATP",
+            "They are the same — both happen in the chloroplast and produce glucose",
+            "They are unrelated; photosynthesis is a chemical reaction, respiration is a physical one"
+          ],
+          "correctAnswer": "They are opposite, coupled reactions: photosynthesis fixes CO₂ into glucose using light; respiration burns glucose back to CO₂ to release energy as ATP",
+          "explanationHtml": "<p>They share inputs and outputs (mirror-image equations) but are not the same — different organelles (chloroplast vs mitochondrion in eukaryotes), different energy flow (light → chemical bonds vs chemical bonds → ATP), different end products. Plants do both; animals only respire. The biosphere works because the two are coupled.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which is the deepest cellular divide in biology?</p>",
+          "options": [
+            "Prokaryotic vs eukaryotic",
+            "Plant vs animal",
+            "Single-celled vs multicellular",
+            "Aerobic vs anaerobic"
+          ],
+          "correctAnswer": "Prokaryotic vs eukaryotic",
+          "explanationHtml": "<p>The prokaryote/eukaryote split — defined by whether the cell has a membrane-bound nucleus and organelles — is the deepest architectural division in biology. The other distinctions are real but shallower; plant vs animal is a sub-division within eukaryotes, and single- vs multicellular crosses both groups.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-c2",
+      "title": "Genetics & DNA",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>The information that builds you was written in a four-letter alphabet, copied through every cell division of your life, and read out by tiny molecular machines that have been refining their job for three billion years. The chemistry is small. The consequences are everything.</p>",
+
+      "explanationHtml": "<h3>The structure of DNA</h3>\n<p>In 1953 James Watson and Francis Crick published the <strong>double-helix</strong> model of DNA. They were heavily — and now openly acknowledged — informed by Rosalind Franklin's X-ray diffraction work, especially the famous <em>Photo 51</em> taken by her student Raymond Gosling. Franklin's contribution was decisive; the model would not have arrived in 1953 without it. Maurice Wilkins, who shared the 1962 Nobel Prize with Watson and Crick, had shown the photograph to Watson without Franklin's knowledge.</p>\n<p>The structure itself:</p>\n<ul>\n  <li>Two strands twisted around each other in a right-handed double helix.</li>\n  <li>Each strand is a chain of <strong>nucleotides</strong> — sugar (deoxyribose) + phosphate + a nitrogenous base.</li>\n  <li>Four bases: <strong>A, T, G, C</strong> (adenine, thymine, guanine, cytosine).</li>\n  <li><strong>Base pairing</strong> is strict: A pairs with T (two hydrogen bonds), G pairs with C (three).</li>\n  <li>The strands are <strong>antiparallel</strong> — one runs 5′→3′, the other 3′→5′. This matters for replication and transcription.</li>\n</ul>\n<pre><code>5'- A T G C C T A G -3'\n    | | | | | | | |\n3'- T A C G G A T C -5'</code></pre>\n\n<h3>Replication is semi-conservative</h3>\n<p>When a cell divides, every new cell needs a full copy of the DNA. Watson and Crick suggested in their 1953 paper that the two strands separate, each acting as a template for a new complementary strand — so each daughter molecule has one old and one new strand. Meselson and Stahl confirmed this experimentally in 1958 using nitrogen isotopes (<sup>15</sup>N → <sup>14</sup>N density-gradient centrifugation). \"Semi-conservative\" beat \"conservative\" and \"dispersive\" decisively. It remains one of biology's most beautiful experiments.</p>\n\n<h3>The central dogma: DNA → RNA → Protein</h3>\n<p>Crick named this the <strong>central dogma of molecular biology</strong> — information flows from nucleic acid to protein, not the reverse.</p>\n<table>\n  <tr><th>Step</th><th>Process</th><th>Where</th><th>Output</th></tr>\n  <tr><td>1</td><td><strong>Transcription</strong></td><td>Nucleus (in eukaryotes)</td><td>messenger RNA (mRNA), a copy of one DNA strand with U replacing T</td></tr>\n  <tr><td>2</td><td><strong>Translation</strong></td><td>Ribosome</td><td>Polypeptide (protein) — read 3 mRNA bases at a time (a <em>codon</em>) → 1 amino acid</td></tr>\n</table>\n<p>The genetic code maps 64 codons to 20 amino acids (plus a start codon AUG and three stop codons). The full table is best looked up rather than memorised, but the structure is worth holding:</p>\n<pre><code>A codon is 3 RNA letters. 4 letters × 4 × 4 = 64 codons.\n\nExamples:\n  AUG → Methionine  (also: \"start translation\")\n  UUU → Phenylalanine\n  GCA → Alanine\n  UAA, UAG, UGA → \"stop\"  (no amino acid; end of protein)\n\nThe code is degenerate — most amino acids have multiple codons.\nIt is also nearly universal: a bacterium and you read the same code.</code></pre>\n\n<h3>Mendelian genetics — and where it breaks</h3>\n<p>Gregor Mendel (1860s) crossed pea plants and noticed traits passed in clean ratios. He inferred two key things without ever seeing a chromosome:</p>\n<ul>\n  <li>Each trait has two <strong>alleles</strong>, one from each parent.</li>\n  <li>One allele can be <strong>dominant</strong> (masks the other) and one <strong>recessive</strong> (only visible when both copies match).</li>\n</ul>\n<p>A Punnett square for one heterozygous cross (Bb × Bb):</p>\n<pre><code>          B           b\n     +---------+---------+\n  B  |   BB    |   Bb    |\n     +---------+---------+\n  b  |   Bb    |   bb    |\n     +---------+---------+\n\nGenotypes: 1 BB : 2 Bb : 1 bb     (1:2:1)\nPhenotypes (B dominant): 3 'B' : 1 'b'   (3:1)</code></pre>\n<p><strong>Where Mendel breaks down.</strong> The 3:1 ratio is the simplest, cleanest case — and most real human traits are not like that. The catalogue of \"Mendelian exceptions\" is most of human genetics:</p>\n<ul>\n  <li><strong>Incomplete dominance</strong> — heterozygotes are intermediate (red × white snapdragons → pink).</li>\n  <li><strong>Codominance</strong> — both alleles fully expressed (ABO blood type: an AB individual expresses both A and B antigens).</li>\n  <li><strong>Polygenic traits</strong> — height, skin colour, intelligence are influenced by many genes plus environment; they form continuous distributions, not 3:1 buckets.</li>\n  <li><strong>Pleiotropy</strong> — one gene affects many traits (sickle-cell trait, Marfan syndrome).</li>\n  <li><strong>Epigenetics</strong> — heritable changes to gene <em>expression</em> (methylation, histone modification) without changing the DNA sequence. Some are reset across generations; some are not.</li>\n</ul>\n<p>Mendel got cleanly Mendelian traits because pea-plant flower colour really is a single-locus dominant/recessive. Most of biology is messier, and the messiness is the rule.</p>\n\n<h3>Chromosomes, mitosis, meiosis</h3>\n<p>Eukaryotic DNA is packaged into <strong>chromosomes</strong>. Humans have 46 — 23 pairs (one of each pair from each parent). Two cell-division programmes do very different jobs:</p>\n<table>\n  <tr><th>&nbsp;</th><th>Mitosis</th><th>Meiosis</th></tr>\n  <tr><td>Where</td><td>Somatic (body) cells</td><td>Germ cells → eggs, sperm</td></tr>\n  <tr><td>Daughter cells</td><td>2, identical to parent</td><td>4, each genetically distinct</td></tr>\n  <tr><td>Chromosome number</td><td>Diploid (2n) → diploid</td><td>Diploid (2n) → haploid (n)</td></tr>\n  <tr><td>Recombination?</td><td>No</td><td>Yes — crossing-over in prophase I</td></tr>\n  <tr><td>Purpose</td><td>Growth, repair, asexual reproduction</td><td>Sexual reproduction; genetic variation</td></tr>\n</table>\n<p>Meiosis is where genetic variation comes from in sexually reproducing species: chromosomes pair up, swap segments via <strong>crossing-over</strong>, and assort independently into the four resulting gametes. That, plus mutation, is why no two siblings (except identical twins) are alike.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Vesper has cleared the bench and laid out a long string of coloured beads — red, green, blue, yellow — twisted into a loose double helix. He picks up one strand and lets the other dangle."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Four letters. <strong>A, T, G, C</strong>. That is the entire alphabet of inheritance. Two strands, antiparallel — one running this way, one running the other. Adenine pairs with Thymine; Guanine pairs with Cytosine. The pairing is not a convention — it is forced by hydrogen bonding geometry. Watson and Crick worked the structure out in 1953, but be honest about the history: Rosalind Franklin's X-ray diffraction images, especially Photo 51, gave them the dimensions they needed to make their model fit. She was decisive. The Nobel committee, by their own rules, could not award her posthumously."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now — this string of beads must be copied every time a cell divides. The two strands separate, each becomes a template for a new partner. So every daughter molecule has one old strand and one new strand. <em>Semi-conservative</em>. Watson and Crick proposed it in 1953; Meselson and Stahl proved it in 1958 with nitrogen isotopes. It is, to my mind, biology's most elegant experiment."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now follow the information. DNA does not build proteins directly. The cell makes an RNA copy of a gene — that is <strong>transcription</strong>. The RNA leaves the nucleus, finds a ribosome, and is read three letters at a time. Each triplet — a <em>codon</em> — specifies one amino acid. That is <strong>translation</strong>. Build amino acids in order, you have built a protein. Information flows: DNA → RNA → Protein. Crick called it the <em>central dogma</em>, and the name has stuck."
+        },
+        {
+          "type": "example",
+          "speaker": "The shape of the genetic code",
+          "text": "A codon is 3 RNA letters. 4 × 4 × 4 = 64 codons.\n\nAUG → Methionine  (also: \"start\")\nUUU → Phenylalanine\nGCA → Alanine\nUAA, UAG, UGA → stop\n\nThe code is degenerate — most amino acids map from\nseveral codons. It is also nearly universal across all\nliving things, which is itself a piece of evidence for\nuniversal common ancestry."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now — Mendel. He grew peas in a monastery garden and worked out, without ever seeing a chromosome, that traits come in pairs and that one can hide the other. He was right about the peas. People take \"Mendelian inheritance\" and try to apply it to <em>everything</em> — eye colour, intelligence, height — and they end up with bad genetics. Most real traits are <strong>polygenic</strong> — many genes, each contributing a little. Some traits show <strong>incomplete dominance</strong> (heterozygotes are intermediate) or <strong>codominance</strong> (both alleles visible — your blood type, if it's AB). And then there is <strong>epigenetics</strong>, where the same DNA can be expressed differently depending on which bits are chemically silenced. Mendel is the start of the story, not the whole of it."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Last piece. Two division programmes. <strong>Mitosis</strong> makes two identical daughter cells from one — that is how you grow, repair wounds, replace skin. <strong>Meiosis</strong> makes four <em>different</em> haploid cells — that is how eggs and sperm are made. Meiosis is also where chromosomes <em>cross over</em> and shuffle their genes. That shuffling, plus the random fertilisation, is why siblings differ. Confuse mitosis and meiosis at your peril; their outputs are nothing alike."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace the information</h3>\n<p>Take a single short DNA sequence and walk it through the central dogma yourself:</p>\n<pre><code>DNA template strand:  3'- TAC GGA TCT -5'\n</code></pre>\n<ul>\n  <li>Write the complementary mRNA (5'→3') — remembering U replaces T, and that mRNA reads off the <em>template</em> strand</li>\n  <li>Identify the start codon</li>\n  <li>Translate the rest using a codon table (look one up; this is the moment to learn how to read it)</li>\n</ul>\n<p>Then sketch a Punnett square for Bb × bb. What ratio of phenotypes do you predict, assuming B is dominant? Verify against the lesson before moving on.</p>",
+
+      "feynmanPrompt": "Explain to a friend, without using the words 'gene' or 'protein', why mitosis and meiosis are not just two names for the same thing. Then describe one trait Mendel's pea-plant rules predict well, and one trait they predict badly — and say why.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In DNA, base pairing follows which rule?</p>",
+          "options": [
+            "A pairs with T; G pairs with C",
+            "A pairs with G; T pairs with C",
+            "A pairs with C; T pairs with G",
+            "Bases pair randomly — there is no rule"
+          ],
+          "correctAnswer": "A pairs with T; G pairs with C",
+          "explanationHtml": "<p>Adenine (A) hydrogen-bonds with Thymine (T) — two H-bonds — and Guanine (G) with Cytosine (C) — three H-bonds. The geometry is forced by the molecules; it is not a convention. In RNA, Uracil (U) replaces Thymine, and U pairs with A.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A student says: \"Transcription and translation are the same — they both make proteins from DNA.\" What is the correction?</p>",
+          "options": [
+            "Transcription copies DNA into mRNA in the nucleus; translation reads mRNA codons into amino acids at the ribosome — only translation builds protein",
+            "They are the same; both happen in the nucleus",
+            "They are the same; both happen at the ribosome",
+            "Transcription builds protein; translation copies DNA — the student has them backwards"
+          ],
+          "correctAnswer": "Transcription copies DNA into mRNA in the nucleus; translation reads mRNA codons into amino acids at the ribosome — only translation builds protein",
+          "explanationHtml": "<p>Transcription and translation are two distinct steps of the central dogma. Transcription happens in the nucleus (eukaryotes) and produces mRNA. Translation happens at the ribosome and produces a polypeptide. Conflating them is one of the most common mistakes in introductory biology.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Two parents are both heterozygous for a Mendelian trait (Bb × Bb). B is dominant. What phenotype ratio do you predict in their offspring?</p>",
+          "options": [
+            "3 B : 1 b",
+            "1 B : 1 b",
+            "1 B : 2 Bb : 1 bb (always shown as three phenotypes)",
+            "All B (the dominant allele is always inherited)"
+          ],
+          "correctAnswer": "3 B : 1 b",
+          "explanationHtml": "<p>The Punnett square for Bb × Bb gives genotypes 1 BB : 2 Bb : 1 bb. Because B is dominant, BB and Bb both express the B phenotype. So the phenotype ratio is 3 B : 1 b. Note this is the simplest Mendelian case — many real traits do not follow it because of incomplete dominance, polygeny, or epistasis.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Why is human height a poor candidate for a single Mendelian Punnett-square analysis?</p>",
+          "options": [
+            "Height is polygenic and strongly influenced by environment, so it forms a continuous distribution, not 3:1 buckets",
+            "Height is determined by a single gene with no environmental influence",
+            "Height is not heritable at all",
+            "Height is determined entirely by the X chromosome"
+          ],
+          "correctAnswer": "Height is polygenic and strongly influenced by environment, so it forms a continuous distribution, not 3:1 buckets",
+          "explanationHtml": "<p>Height is influenced by many genes (estimates put the count in the hundreds) and by environmental factors like nutrition. The result is a continuous distribution — most people clustered near the mean, fewer at the extremes — not the discrete 3:1 ratio Mendel saw in his peas. Polygenic + environmental traits are the rule, not the exception, in human biology.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-c3",
+      "title": "Evolution by Natural Selection",
+      "sortOrder": 3,
+      "xpReward": 70,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Evolution is the single most explanatory idea in biology — and the single most misunderstood. It is not a ladder, not a goal, not a force pushing toward perfection. It is a filter. Once you understand the filter, the diversity of life stops looking miraculous and starts looking inevitable.</p>",
+
+      "explanationHtml": "<h3>Darwin's four conditions</h3>\n<p>Charles Darwin (and, independently, Alfred Russel Wallace) saw that natural selection is mechanically inevitable whenever four things hold:</p>\n<ol>\n  <li><strong>Variation</strong> — individuals in a population differ from one another.</li>\n  <li><strong>Heritability</strong> — at least some of those differences are passed to offspring.</li>\n  <li><strong>Differential reproduction</strong> — some variants leave more offspring than others, because of how their traits interact with the environment.</li>\n  <li><strong>Time</strong> — generations pass, and the trait distribution shifts.</li>\n</ol>\n<p>That is the entire mechanism. Notice what is <em>not</em> in the list: any goal, any direction, any force. Selection has no foresight. It is a sieve, not a sculptor.</p>\n\n<h3>What evolution is not</h3>\n<p>The misconceptions are stubborn enough that they need addressing directly:</p>\n<ul>\n  <li><strong>\"Evolution is just a theory.\"</strong> — A scientific theory is not a guess. It is a well-tested explanatory framework that survives repeated attempts to break it. Gravity is a theory in this sense; so is germ theory; so is the theory of plate tectonics. Evolution by natural selection has survived 165 years of attempted refutation and is the single most strongly supported framework in biology.</li>\n  <li><strong>\"Humans evolved from monkeys.\"</strong> — No. Humans and modern monkeys share <em>common ancestors</em>. Cousins, not parents. The last common ancestor between humans and chimpanzees lived ~6 million years ago and was neither a chimp nor a human.</li>\n  <li><strong>Lamarckism</strong> — Jean-Baptiste Lamarck proposed (1809) that traits acquired during a lifetime — a blacksmith's strong arms, a giraffe's stretched neck — are passed to offspring. This is wrong as a general account: lifting weights does not give your children stronger arms because the change is not in your germ-line DNA. <em>However</em>, modern <strong>epigenetics</strong> shows some inheritable modifications of gene expression do exist, complicating (but not vindicating) the original claim. \"Mostly wrong, but biology has a few asterisks\" is the honest summary.</li>\n  <li><strong>\"Selection is goal-directed.\"</strong> — Selection has no goal. Antibiotic resistance evolves because the few resistant bacteria already in the population survive antibiotics and reproduce — not because the bacteria \"wanted\" to resist.</li>\n</ul>\n\n<h3>Microevolution vs macroevolution</h3>\n<table>\n  <tr><th>Microevolution</th><th>Macroevolution</th></tr>\n  <tr><td>Change in allele frequencies within a population</td><td>Speciation and the emergence of larger taxonomic groups</td></tr>\n  <tr><td>Generations: tens to thousands</td><td>Generations: tens of thousands to millions</td></tr>\n  <tr><td>Examples: peppered moth wing colour, Galapagos finch beaks within a year, antibiotic resistance</td><td>Examples: the origin of mammals from cynodonts, of birds from theropod dinosaurs</td></tr>\n</table>\n<p>The mechanism is the same; the timescale and accumulated change differ. There is no separate \"macroevolution force\" — give microevolution enough time and reproductive isolation, and you get speciation.</p>\n\n<h3>Speciation — how one lineage becomes two</h3>\n<ul>\n  <li><strong>Allopatric</strong> — populations are physically separated (mountain range, ocean, glacier) and diverge until they can no longer interbreed. The most common mode.</li>\n  <li><strong>Sympatric</strong> — speciation without geographic isolation, often via niche differentiation, sexual selection, or polyploidy in plants.</li>\n  <li><strong>Peripatric</strong> — a small subgroup at the edge of a range becomes isolated; founder effects accelerate divergence.</li>\n</ul>\n\n<h3>The evidence</h3>\n<p>Evolution is supported by multiple, independent lines of evidence that all converge:</p>\n<ul>\n  <li><strong>Fossil record</strong> — sequenced strata show forms appearing, changing, and disappearing in lawful succession; <em>Tiktaalik</em>, <em>Archaeopteryx</em>, the cetacean (whale) transition fossils are textbook intermediates.</li>\n  <li><strong>Comparative anatomy</strong> — the same skeletal pattern (one bone — two bones — many bones — digits) underlies a human arm, a whale flipper, and a bat wing. Common descent, not common design, predicts this.</li>\n  <li><strong>Molecular phylogenetics</strong> — DNA sequence similarity tracks the predicted family tree. We share ~98–99% of protein-coding DNA with chimpanzees, ~85% with mice, ~60% with bananas (yes, really — for shared metabolic genes).</li>\n  <li><strong>Observed evolution</strong> — antibiotic resistance in bacteria; pesticide resistance in insects; Galapagos finch beak depth tracking drought (Grant &amp; Grant, multi-decade study); peppered moth wing colour shifts during industrial pollution.</li>\n</ul>\n<p>Each line is independently strong. Together they are decisive.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Vesper has set out three weathered fossil casts — a fish-thing with stubby legs, a feathered reptile with teeth, a half-flippered land mammal. He gestures at them in turn."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Tiktaalik. Archaeopteryx. Pakicetus. A fish becoming a tetrapod. A dinosaur becoming a bird. A land mammal becoming a whale. Each of these was predicted to exist <em>before it was found</em>, in roughly the strata it was found in. That is what a working theory looks like — it makes risky predictions and they come true."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Now — the mechanism. Darwin's four conditions. Variation: individuals differ. Heritability: some of that difference passes to offspring. Differential reproduction: some variants leave more offspring than others. Time: generations stack up. Where those four conditions hold, evolution is not mysterious — it is <em>arithmetic</em>. The trait distribution must shift. A sieve cannot help but sort."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "And take the misconceptions seriously, because they are everywhere. \"Just a theory\" — no. A scientific theory is the strongest tier of explanation, not the weakest. Gravity is a theory. \"Humans evolved from monkeys\" — no, we share common ancestors with them. Cousins, not parents. \"Selection has a goal\" — no, it has no foresight. Resistant bacteria survive an antibiotic <em>not</em> because they wanted to but because the antibiotic kills the others."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "What about Lamarck — the idea that what you do in your lifetime is passed on? Mostly wrong. The blacksmith's strong arms do not transmit. The DNA of his germ cells is not changed by his lifting. <em>But</em> — be honest — modern epigenetics has shown that some chemical modifications of DNA, like methylation patterns, can persist across generations under certain conditions. So Lamarck was not entirely wrong; biology has a few asterisks. Selection is still the dominant mechanism."
+        },
+        {
+          "type": "example",
+          "speaker": "Galapagos finches — observed microevolution",
+          "text": "Peter and Rosemary Grant studied the medium ground finch on Daphne Major\nfor decades. In 1977 a severe drought killed plants with small soft seeds.\nFinches with deeper, stronger beaks could crack the remaining hard seeds;\nshallow-beaked finches starved.\n\nWithin a single generation the population's mean beak depth had measurably\nincreased. When wetter years returned and small seeds came back, the trend\npartially reversed.\n\nThis is evolution by natural selection, observed in real time."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Microevolution becomes macroevolution when populations stop interbreeding long enough for differences to accumulate past the species threshold. Most often that means physical separation — a mountain range, a glacier, an ocean — for thousands of generations. We call that <em>allopatric speciation</em>. Same machinery as Darwin's finches. Just more time."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Stress-test your model</h3>\n<p>Pick three concrete examples of evolution and articulate, for each, all four of Darwin's conditions. Suggested examples:</p>\n<ul>\n  <li>Antibiotic resistance in <em>Staphylococcus aureus</em></li>\n  <li>The Grant finch beak depth shift during the 1977 drought</li>\n  <li>Peppered moth wing colour during the Industrial Revolution</li>\n</ul>\n<p>For each, identify: <em>What was the variation? Was it heritable? What was the selective pressure (the differential reproduction)? Over how many generations?</em></p>\n<p>Then practise correcting the misconception: a friend says \"the moths <em>chose</em> to be darker so they wouldn't be eaten\". Write a one-paragraph correction. (Selection is not goal-directed; the dark moths were already in the population at low frequency, and their survival rate rose when soot-covered tree bark made them less visible to birds.)</p>",
+
+      "feynmanPrompt": "Explain to a friend why the sentence \"evolution is just a theory\" is a misuse of the word 'theory'. Then explain why \"humans evolved from monkeys\" is wrong, and what the correct claim is.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which set is the four conditions Darwin identified for natural selection to occur?</p>",
+          "options": [
+            "Variation, heritability, differential reproduction, and time",
+            "Mutation, sexual reproduction, environmental change, and competition",
+            "Survival of the fittest, struggle for existence, drift, and migration",
+            "Adaptation, speciation, isolation, and inheritance"
+          ],
+          "correctAnswer": "Variation, heritability, differential reproduction, and time",
+          "explanationHtml": "<p>The mechanism reduces to four ingredients: differences exist (variation), some differences are passed on (heritability), some variants leave more offspring (differential reproduction), and generations accumulate (time). The other answers contain real biological terms but are not Darwin's four conditions.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A friend says: \"Antibiotic resistance evolved because bacteria <em>wanted</em> to survive.\" What is the correct framing?</p>",
+          "options": [
+            "Resistant variants were already present at low frequency; antibiotics killed the susceptible ones, so resistant bacteria left disproportionately more offspring — selection is a filter, not a goal",
+            "Bacteria sense the antibiotic and intentionally develop resistance during their lifetime",
+            "Antibiotic resistance is acquired through use; the bacteria 'practise' surviving and pass on the practice",
+            "Resistance is genuinely random and has nothing to do with the antibiotic"
+          ],
+          "correctAnswer": "Resistant variants were already present at low frequency; antibiotics killed the susceptible ones, so resistant bacteria left disproportionately more offspring — selection is a filter, not a goal",
+          "explanationHtml": "<p>Selection is not goal-directed. Resistance arose by random mutation or horizontal transfer <em>before</em> the antibiotic was applied; the antibiotic just kills susceptible variants and leaves resistant ones to multiply. Anthropomorphising the bacteria (\"wanted to\") is a useful shorthand but a wrong mechanistic claim — and it slides into Lamarckian thinking very quickly.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is <strong>allopatric speciation</strong>?</p>",
+          "options": [
+            "Speciation driven by physical/geographic isolation, where separated populations diverge until they can no longer interbreed",
+            "Speciation that happens without any reproductive isolation",
+            "Speciation that occurs in a single generation by a major mutation",
+            "The rapid radiation of one species into many during a mass extinction"
+          ],
+          "correctAnswer": "Speciation driven by physical/geographic isolation, where separated populations diverge until they can no longer interbreed",
+          "explanationHtml": "<p>Allopatric (literally \"different homeland\") speciation is the most common mode: populations are split by a physical barrier — mountain, ocean, glacier — and accumulate differences in isolation until interbreeding is no longer possible if they meet again. Sympatric speciation is the contrast: divergence without geographic separation, often via niche differentiation or polyploidy.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>The Grant study of finches on Daphne Major showed mean beak depth increase after the 1977 drought. Which of Darwin's four conditions is most directly demonstrated by the rapid shift in just one generation?</p>",
+          "options": [
+            "Differential reproduction (deep-beaked finches survived and bred; shallow-beaked ones starved)",
+            "Time (the drought lasted long enough for new species to evolve)",
+            "Mutation (a new beak-depth gene appeared during the drought)",
+            "Sympatric speciation (two finch species formed during the drought)"
+          ],
+          "correctAnswer": "Differential reproduction (deep-beaked finches survived and bred; shallow-beaked ones starved)",
+          "explanationHtml": "<p>Variation in beak depth already existed in the population; it was heritable; the drought provided a selection pressure that produced differential reproduction (deep-beaked finches outcompeted shallow-beaked ones for the remaining hard seeds). Time was minimal — that's the point of the study; selection can produce a measurable shift in a single generation when the pressure is strong. No new species formed; this is microevolution within one species.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-c4",
+      "title": "Ecosystems & Energy Flow",
+      "sortOrder": 4,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>An ecosystem is a network of organisms eating, being eaten, and recycling atoms through one another. Look at it from a thermodynamic angle and most of biology's puzzles — why apex predators are rare, why crashes happen, why every food chain ends — answer themselves.</p>",
+
+      "explanationHtml": "<h3>Trophic levels</h3>\n<p>Every organism in an ecosystem occupies a <strong>trophic level</strong> — a step in the chain of who-eats-what.</p>\n<table>\n  <tr><th>Level</th><th>Name</th><th>Examples</th></tr>\n  <tr><td>1</td><td><strong>Producers</strong> (autotrophs)</td><td>Plants, algae, cyanobacteria — fix energy from sunlight (or chemicals) into sugars</td></tr>\n  <tr><td>2</td><td><strong>Primary consumers</strong> (herbivores)</td><td>Cows, rabbits, zooplankton, caterpillars</td></tr>\n  <tr><td>3</td><td><strong>Secondary consumers</strong> (carnivores eating herbivores)</td><td>Foxes, small fish, songbirds eating insects</td></tr>\n  <tr><td>4</td><td><strong>Tertiary consumers</strong> (top carnivores)</td><td>Wolves, sharks, hawks</td></tr>\n  <tr><td>—</td><td><strong>Decomposers</strong></td><td>Bacteria, fungi — break dead matter back into the nutrient pool</td></tr>\n</table>\n\n<h3>The 10% rule — why apex predators are rare</h3>\n<p>Energy flow up the trophic ladder is <em>lossy</em>. As a rough rule, only ~10% of the energy at one level becomes biomass at the next. The other 90% is lost as heat (cellular respiration), excreted, or never eaten in the first place.</p>\n<pre><code>Trophic level     Energy (relative)\n----------------+------------------\nProducers       |  10 000 kJ\n  ↓ ~10%\nHerbivores      |   1 000 kJ\n  ↓ ~10%\nSmall predators |     100 kJ\n  ↓ ~10%\nApex predators  |      10 kJ\n</code></pre>\n<p>This is why food chains rarely have more than 4–5 links. By level 5, there is barely any energy left to support a population. It is also why the sustainable biomass of apex predators is tiny compared to the producers below them — and why removing the producers (deforestation, ocean dead zones) cascades upward catastrophically.</p>\n\n<h3>Nutrient cycles</h3>\n<p>Energy flows through ecosystems and is lost as heat. Atoms — carbon, nitrogen, water, phosphorus — are <em>recycled</em>. Life on Earth is approximately a closed system for matter.</p>\n<ul>\n  <li><strong>Carbon cycle</strong> — CO₂ ⇌ organic carbon. Photosynthesis pulls atmospheric CO₂ into sugars and structural tissue; respiration, decomposition, and combustion return it to the atmosphere. Burning fossil fuels short-circuits the slow geological branch by releasing buried carbon faster than the cycle can absorb it.</li>\n  <li><strong>Nitrogen cycle</strong> — N₂ is the most abundant gas in the atmosphere (~78%) but plants cannot use it directly; the N≡N triple bond is too stable. <strong>Nitrogen-fixing bacteria</strong> (some free-living, others in legume root nodules) convert atmospheric N₂ to ammonia (NH₃ / NH₄⁺); other bacteria nitrify it to NO₂⁻ and NO₃⁻; plants take up nitrate; animals get nitrogen by eating plants; denitrifying bacteria return nitrogen to the atmosphere as N₂. Without bacterial nitrogen fixation, the biosphere as we know it does not exist.</li>\n  <li><strong>Water cycle</strong> — evaporation → atmospheric vapour → precipitation → runoff/groundwater → evaporation. Driven by solar energy and gravity.</li>\n  <li><strong>Phosphorus cycle</strong> — unlike the others, has no significant atmospheric phase. Phosphorus moves from rocks → soil → plants → animals → decomposition → soil/sediments. In agriculture, phosphorus is mined as rock phosphate; this is finite, and its scarcity is a long-term problem.</li>\n</ul>\n\n<h3>Niches and competitive exclusion</h3>\n<p>An <strong>ecological niche</strong> is the role a species plays in its ecosystem — what it eats, where it lives, when it is active, what eats it. Georgii Gause's <strong>competitive exclusion principle</strong> (1934, from experiments on <em>Paramecium</em>) states: <em>two species competing for exactly the same limiting resource cannot coexist indefinitely</em>. One outcompetes the other, or one shifts its niche (resource partitioning) to reduce overlap. Coexistence in nature is usually evidence that the competitors have already differentiated their niches.</p>\n\n<h3>Keystone species</h3>\n<p>A <strong>keystone species</strong> exerts disproportionate influence on its ecosystem relative to its abundance. Robert Paine's classic 1966 experiment removed the seastar <em>Pisaster ochraceus</em> from intertidal zones; mussel populations exploded and biodiversity collapsed because the seastar's predation had been keeping the dominant competitor in check. Wolves in Yellowstone (reintroduced 1995) are another canonical example — their predation on elk allowed willow and aspen to recover, which in turn changed riverbank erosion and beaver populations. Remove the keystone, and the ecosystem reorganises into something quite different.</p>\n\n<h3>Carrying capacity and population dynamics</h3>\n<p>A population growing in unlimited resources grows exponentially. In any real environment, resources are limited — and the growth slows as the population approaches the <strong>carrying capacity</strong> (<em>K</em>) of the environment. The result is the <strong>logistic growth curve</strong>:</p>\n<pre><code>      ↑ Population size\n      |               ___________  K (carrying capacity)\n      |             /\n      |           /\n      |         /\n      |       /\n      |     /\n      |   /\n      | /\n      +-------------------→ Time</code></pre>\n<p>Boom-and-crash cycles happen when populations briefly overshoot K and resources collapse. Predator–prey systems often show coupled oscillations (the lynx–snowshoe hare cycle in Canada is the textbook case).</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Vesper has unrolled a wide chart on the bench: a crude pyramid with the base shaded green for plants, the next layer for herbivores, the next for carnivores, and a sliver at the top for the apex predator. He taps the green base."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Energy enters the biosphere here — at the bottom, in the producers. Plants, algae, cyanobacteria. They fix sunlight into sugar. Everything else is, ultimately, rearranging that sugar. Now — the brutal part of the diagram. As you climb the pyramid, only about ten percent of the energy at one level becomes biomass at the next. The other ninety is lost — heat, waste, organisms that are never eaten. That is why apex predators are rare, and why food chains rarely run longer than four or five links. The thermodynamics will not allow it."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Energy flows one way and is lost as heat. <em>Atoms</em> are different. Atoms are recycled. The carbon in your hand was, at some point, a CO₂ molecule in the lung of a Triassic reptile, and before that, a fragment of mineral. The biosphere is an approximately closed system for matter."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "I will single out one cycle for special respect — nitrogen. Plants need nitrogen to make proteins and DNA. The atmosphere is seventy-eight percent nitrogen gas, and plants cannot touch it. The triple bond in N₂ is too stable. Without <strong>nitrogen-fixing bacteria</strong> living free or in legume root nodules — converting N₂ to ammonia — the entire green tier of the biosphere collapses. Bacteria you cannot see are doing the chemistry that lets a forest exist."
+        },
+        {
+          "type": "example",
+          "speaker": "Paine's seastar — the keystone idea",
+          "text": "Intertidal rocky shore. 1966.\n\nRobert Paine removes the seastar Pisaster ochraceus from\nexperimental plots and leaves it in control plots.\n\nResult, over ~1 year:\n  Control plots:    ~15 species. Seastars eat mussels, keep them in check.\n  Removal plots:    Mussels dominate, crowd out everything.\n                    Diversity collapses to ~8 species.\n\nA single species — not particularly abundant — was holding\nthe whole community together. Paine called it a 'keystone'."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Two more concepts. First — competitive exclusion. Gause showed in 1934 that two species competing for <em>identical</em> limiting resources cannot coexist; one wins. Coexistence in nature is therefore evidence of niche differentiation, not absence of competition. Second — carrying capacity. A population in unlimited resources grows exponentially. In a real environment, growth slows and plateaus at the carrying capacity of the environment. Logistic growth. When populations briefly overshoot, the result is a crash. Boom and bust. Plan accordingly, even if you only ever plan for human populations."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Trace a calorie</h3>\n<p>Pick a single sandwich you ate in the last week. For each component (bread, cheese, lettuce, tomato, ham, etc.), identify:</p>\n<ul>\n  <li>The trophic level it came from</li>\n  <li>How many trophic-level transfers separate it from the original solar-fixed energy</li>\n  <li>Roughly what fraction of the original solar energy is in your sandwich</li>\n</ul>\n<p>Then sketch a simple food chain (4 levels) and label the approximate energy at each level using the 10% rule. Why is it ecologically more efficient to eat plants than to eat animals that ate plants?</p>",
+
+      "feynmanPrompt": "Explain to a friend, using only the 10% rule and the difference between energy flow and matter cycling, why a forest can support a million leaves but only a handful of wolves.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Roughly what proportion of the energy at one trophic level becomes biomass at the next?</p>",
+          "options": [
+            "About 10%",
+            "About 50%",
+            "About 90%",
+            "100% — energy is conserved"
+          ],
+          "correctAnswer": "About 10%",
+          "explanationHtml": "<p>The 10% rule is the standard rule of thumb: ~10% of the energy at one trophic level transfers to the next; the other ~90% is lost as heat (respiration), excreted, or never consumed. Energy is conserved overall (first law of thermodynamics), but most of it leaves the food chain as heat at each step (second law).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>If you remove all the wolves from a forest ecosystem and the elk population explodes, browsing the willow saplings down to nothing — and willow loss then collapses the beaver population — what is the wolf playing the role of?</p>",
+          "options": [
+            "A keystone species",
+            "A primary consumer",
+            "A producer",
+            "A decomposer"
+          ],
+          "correctAnswer": "A keystone species",
+          "explanationHtml": "<p>This is the actual Yellowstone reintroduction story (1995, in reverse). The wolf is a keystone predator — its abundance is small relative to the trophic biomass below it, but its removal causes a cascading reorganisation of the whole ecosystem. \"Keystone\" was coined by Robert Paine in 1966 from his seastar removal experiments.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>What is the key difference between energy flow and matter cycling in an ecosystem?</p>",
+          "options": [
+            "Energy flows through and is ultimately lost as heat; matter (atoms) is recycled within the biosphere",
+            "Both flow through and are lost; the biosphere needs constant input of new atoms",
+            "Both are recycled perfectly; ecosystems are closed systems for both energy and matter",
+            "Energy is recycled but matter is lost — most atoms eventually escape into space"
+          ],
+          "correctAnswer": "Energy flows through and is ultimately lost as heat; matter (atoms) is recycled within the biosphere",
+          "explanationHtml": "<p>The biosphere is approximately a closed system for matter (atoms cycle through carbon, nitrogen, water, phosphorus pathways) but an open system for energy (sunlight enters, heat leaves). Confusing the two leads to bad ecology — for instance, thinking we can run out of carbon atoms (we cannot, in any meaningful sense), or thinking we cannot run out of usable energy (we can, locally).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Why are <strong>nitrogen-fixing bacteria</strong> ecologically essential?</p>",
+          "options": [
+            "Plants cannot use atmospheric N₂ directly because the triple bond is too stable; bacteria convert it to ammonia, which makes nitrogen biologically available",
+            "Bacteria are the main consumers of nitrogen in the biosphere",
+            "Bacteria store atmospheric oxygen and release nitrogen during respiration",
+            "Bacteria carry out photosynthesis on the ocean floor and produce nitrogen as waste"
+          ],
+          "correctAnswer": "Plants cannot use atmospheric N₂ directly because the triple bond is too stable; bacteria convert it to ammonia, which makes nitrogen biologically available",
+          "explanationHtml": "<p>The N≡N triple bond is so stable that plants cannot break it. Free-living and symbiotic (e.g. <em>Rhizobium</em> in legume root nodules) nitrogen-fixing bacteria convert atmospheric N₂ to NH₃/NH₄⁺ using the nitrogenase enzyme. The whole nitrogen-dependent biosphere — protein, DNA, every amino acid — runs on bacterial chemistry that we have only recently learned to imitate industrially (the Haber-Bosch process).</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "sci-c5",
+      "title": "Human Body Systems Overview",
+      "sortOrder": 5,
+      "xpReward": 60,
+      "filename": "notes.md",
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Anatomy textbooks split the body into 11 organ systems. The split is useful for studying — but the systems do not actually work in isolation. The unifying principle, and the only one worth memorising, is <strong>homeostasis</strong>: keeping internal conditions steady against external change.</p>",
+
+      "explanationHtml": "<h3>The 11 organ systems</h3>\n<table>\n  <tr><th>System</th><th>One-line purpose</th><th>Key structures</th></tr>\n  <tr><td><strong>Integumentary</strong></td><td>Outer barrier; thermoregulation; sensation</td><td>Skin, hair, nails, sweat glands</td></tr>\n  <tr><td><strong>Skeletal</strong></td><td>Structural support; protection; blood-cell production; mineral store</td><td>Bones, joints, cartilage, bone marrow</td></tr>\n  <tr><td><strong>Muscular</strong></td><td>Movement and force generation</td><td>Skeletal muscle, cardiac muscle, smooth muscle</td></tr>\n  <tr><td><strong>Nervous</strong></td><td>Fast signalling; sensation; coordination; cognition</td><td>Brain, spinal cord, peripheral nerves</td></tr>\n  <tr><td><strong>Endocrine</strong></td><td>Slow chemical signalling via hormones</td><td>Pituitary, thyroid, adrenals, pancreas (islets), gonads</td></tr>\n  <tr><td><strong>Cardiovascular</strong></td><td>Pumps blood; transports O₂, CO₂, nutrients, hormones, heat</td><td>Heart, arteries, veins, capillaries</td></tr>\n  <tr><td><strong>Lymphatic / Immune</strong></td><td>Returns interstitial fluid; defends against pathogens</td><td>Lymph nodes, spleen, thymus, white blood cells</td></tr>\n  <tr><td><strong>Respiratory</strong></td><td>Gas exchange — O₂ in, CO₂ out</td><td>Trachea, bronchi, lungs, alveoli, diaphragm</td></tr>\n  <tr><td><strong>Digestive</strong></td><td>Breaks down food; absorbs nutrients</td><td>Mouth, stomach, small intestine, liver, pancreas (exocrine)</td></tr>\n  <tr><td><strong>Urinary</strong></td><td>Filters blood; excretes nitrogenous waste; regulates fluid &amp; electrolytes</td><td>Kidneys, ureters, bladder, urethra</td></tr>\n  <tr><td><strong>Reproductive</strong></td><td>Production of gametes; reproduction; sex hormones</td><td>Gonads (testes / ovaries), uterus, accessory organs</td></tr>\n</table>\n\n<h3>Homeostasis — the unifying principle</h3>\n<p>The body's internal conditions — temperature, pH, blood glucose, blood oxygen, fluid volume — are held remarkably constant despite huge variation in external conditions. The mechanism is almost always a <strong>negative feedback loop</strong>:</p>\n<ol>\n  <li>A <em>sensor</em> detects deviation from the set point.</li>\n  <li>An <em>integrator</em> (often the hypothalamus) compares actual to desired.</li>\n  <li>An <em>effector</em> acts to oppose the deviation.</li>\n  <li>The deviation shrinks; the effector quietens. The system settles.</li>\n</ol>\n<p>Negative feedback is the engine of stability. Positive feedback is rarer and usually drives a runaway process to a definite end-point — childbirth, blood clotting, action potentials.</p>\n\n<h3>Cross-system integration — three concrete examples</h3>\n<p>The 11-system split is a teaching simplification. Real physiology is integrated. Three examples:</p>\n<h4>1. Blood-glucose regulation (endocrine + digestive + nervous)</h4>\n<ul>\n  <li>You eat; the digestive system absorbs glucose into the blood; blood glucose rises.</li>\n  <li>Pancreatic β-cells (endocrine) detect the rise and release <strong>insulin</strong>.</li>\n  <li>Insulin signals liver, muscle, and fat cells to take up glucose; blood glucose falls back to the set point.</li>\n  <li>If glucose drops too low, pancreatic α-cells release <strong>glucagon</strong>; the liver breaks down glycogen and releases glucose.</li>\n  <li>The nervous system (hypothalamic glucose sensors) modulates appetite and the autonomic response.</li>\n</ul>\n<p>Diabetes mellitus is what happens when this loop fails — type 1 (insulin not produced) or type 2 (target cells become insulin-resistant).</p>\n\n<h4>2. Thermoregulation (integumentary + cardiovascular + nervous)</h4>\n<ul>\n  <li>The hypothalamus holds the set point at ~37°C.</li>\n  <li><em>If too hot:</em> blood vessels in the skin dilate (cardiovascular); sweat glands secrete (integumentary); evaporation cools the surface; the heart rate increases to maintain pressure.</li>\n  <li><em>If too cold:</em> skin vessels constrict, conserving core heat; shivering (muscular, under nervous control) generates heat; thyroid hormone increases basal metabolic rate over longer timescales.</li>\n</ul>\n\n<h4>3. The inflammatory / immune response (immune + cardiovascular + lymphatic)</h4>\n<ul>\n  <li>Tissue is damaged; resident immune cells (macrophages, mast cells) release histamine and cytokines.</li>\n  <li>Local blood vessels dilate (cardiovascular) and become more permeable; plasma and white blood cells leak into the tissue — this is the redness, heat, swelling.</li>\n  <li>Lymphatic vessels drain excess fluid and carry pathogens to lymph nodes, where adaptive immunity (T and B cells) is activated.</li>\n  <li>Once the threat is cleared, anti-inflammatory signals quiet the response. Autoimmune disease is what happens when this off-switch fails.</li>\n</ul>\n\n<h3>Why the integration matters</h3>\n<p>You will rarely see a clinical problem confined to one \"system.\" Heart failure looks cardiovascular but causes kidney damage, fluid retention, breathlessness — every transport-dependent system suffers. Sepsis looks immune but kills via cardiovascular collapse. Memorise the 11 systems for orientation; <em>think</em> in terms of how they interact for explanation.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Master Vesper has rolled out an old anatomical chart — eleven coloured silhouettes, one per system, side by side. He taps each in turn, then sets the chart aside."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Eleven systems. Memorise the names — integumentary, skeletal, muscular, nervous, endocrine, cardiovascular, lymphatic, respiratory, digestive, urinary, reproductive. Memorise one sentence of purpose for each. That gives you a vocabulary. But do not mistake the vocabulary for the thing itself."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "The body does not actually run as eleven independent machines. The split is for textbooks. The reality is that every interesting bit of physiology cuts across systems. So learn the eleven, but learn <strong>homeostasis</strong> harder."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Homeostasis is the maintenance of stable internal conditions despite external change. Body temperature near 37°C. Blood pH between 7.35 and 7.45. Blood glucose around 4–6 millimolar. The mechanism is almost always a <em>negative feedback loop</em>. Sensor detects deviation. Integrator — often the hypothalamus — compares to a set point. Effector acts to oppose the deviation. The deviation shrinks. The effector quietens. The system settles."
+        },
+        {
+          "type": "example",
+          "speaker": "Blood-glucose regulation: three systems, one loop",
+          "text": "1. You eat. Digestive system absorbs glucose → blood glucose rises.\n2. Pancreatic beta cells (endocrine) sense rise → secrete insulin.\n3. Liver, muscle, fat take up glucose → blood glucose falls.\n4. If glucose falls too far, alpha cells secrete glucagon → liver releases stored glucose.\n5. Nervous system (hypothalamus) tunes appetite and autonomic responses throughout.\n\nThree 'systems' interleaved. Diabetes is the failure mode."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "Thermoregulation is another. Get hot — skin vessels dilate, sweat glands fire, evaporation cools you. Get cold — skin vessels constrict, you shiver, the thyroid kicks the metabolic rate up over days. Integumentary, cardiovascular, muscular, nervous, endocrine — five \"systems\", one homeostatic outcome. Inflammation is a third. Cardiovascular brings the white cells; lymphatic drains the fluid and shuttles antigens to lymph nodes; the immune system fires the adaptive response. The redness, heat, swelling, pain you feel around a cut is three systems, coordinated."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Master Vesper",
+          "sCls": "mentor",
+          "text": "When you study this material later, do not stop at \"name the eleven systems\". Try to articulate, for any one of them, <em>which others does it depend on, and which depend on it?</em> That is the question a real biologist — or a real physician — answers in their sleep."
+        }
+      ],
+
+      "guidedPracticeHtml": "<h3>📜 Map the integration</h3>\n<p>For each of the three integrated examples in the lesson — blood-glucose regulation, thermoregulation, and the inflammatory response — list:</p>\n<ul>\n  <li>The set point being defended (or the trigger, for inflammation)</li>\n  <li>Each organ system involved, and what it contributes</li>\n  <li>Whether the loop is negative feedback (blood glucose, thermoregulation) or has a positive-feedback phase (inflammation, until the off-switch engages)</li>\n</ul>\n<p>Then pick one of the 11 systems and articulate, in writing, two other systems it depends on and one that depends on it. Try not to say \"all of them\" — be specific about a real, named cross-system mechanism.</p>",
+
+      "feynmanPrompt": "Explain homeostasis to a friend using only the example of body temperature on a hot day. Identify the sensor, the integrator, and at least two effectors. Then explain why the system is called a 'negative' feedback loop even though it keeps you alive.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is <strong>homeostasis</strong>?</p>",
+          "options": [
+            "The maintenance of relatively stable internal conditions despite external change",
+            "The growth of an organism from cell to adult",
+            "The transmission of genetic information to offspring",
+            "The progressive evolutionary improvement of a species"
+          ],
+          "correctAnswer": "The maintenance of relatively stable internal conditions despite external change",
+          "explanationHtml": "<p>Homeostasis is the active maintenance of stable internal conditions — temperature, blood pH, glucose, fluid volume, etc. — usually via negative feedback loops. It is not growth (development), not heredity (genetics), and not adaptation (evolution). All three are real biological processes; they are not synonyms for homeostasis.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You eat a sugary meal and your blood glucose rises. Which system <em>directly</em> releases the hormone (insulin) that brings blood glucose back down?</p>",
+          "options": [
+            "Endocrine (specifically the pancreatic β-cells)",
+            "Digestive (the stomach lining)",
+            "Cardiovascular (the heart muscle)",
+            "Urinary (the kidneys filter glucose out)"
+          ],
+          "correctAnswer": "Endocrine (specifically the pancreatic β-cells)",
+          "explanationHtml": "<p>Insulin is secreted by β-cells of the pancreatic islets — part of the endocrine system. The digestive system absorbs the glucose, but it does not release the regulatory hormone. The cardiovascular system distributes insulin once it is in the blood. The kidneys can excrete glucose only when blood levels are very high (a sign of failure of the regulatory loop, as in untreated diabetes).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A student says: \"Thermoregulation is a job for the integumentary system — the skin handles it.\" What is the most accurate correction?</p>",
+          "options": [
+            "Thermoregulation involves at least the integumentary, cardiovascular, muscular, nervous, and endocrine systems together — the skin is one effector among several",
+            "Correct as stated — only the skin is involved",
+            "It is handled entirely by the nervous system",
+            "It is handled entirely by the endocrine system, via thyroid hormone alone"
+          ],
+          "correctAnswer": "Thermoregulation involves at least the integumentary, cardiovascular, muscular, nervous, and endocrine systems together — the skin is one effector among several",
+          "explanationHtml": "<p>The hypothalamus (nervous) integrates; sweat glands and skin vessels (integumentary, cardiovascular) act as immediate effectors; shivering (muscular under autonomic control) generates heat; thyroid hormone (endocrine) tunes basal metabolic rate over longer timescales. The skin is one piece, not the whole picture. The 11-system split is a teaching device; real physiology is integrated.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>The redness, heat, swelling, and pain at the site of a small cut are caused by which set of integrated processes?</p>",
+          "options": [
+            "Local immune cells release inflammatory mediators; cardiovascular vessels dilate and become more permeable; lymphatic system drains and carries antigens to lymph nodes",
+            "Damaged cells exhale CO₂ that causes redness; the heart rate slows to reduce blood loss",
+            "The integumentary system contracts to seal the wound and the kidneys filter out the bacteria",
+            "The endocrine system releases insulin, which causes inflammation as a side effect"
+          ],
+          "correctAnswer": "Local immune cells release inflammatory mediators; cardiovascular vessels dilate and become more permeable; lymphatic system drains and carries antigens to lymph nodes",
+          "explanationHtml": "<p>Inflammation is a coordinated response across the immune, cardiovascular, and lymphatic systems. Mast cells and macrophages release histamine and cytokines, vessels dilate (causing the redness and warmth) and leak (causing the swelling), and lymphatics drain the fluid and carry antigens to lymph nodes for adaptive immune activation. The other answers contain plausible-sounding but incorrect physiology.</p>"
+        }
+      ]
+    }
+
+  ]
+}

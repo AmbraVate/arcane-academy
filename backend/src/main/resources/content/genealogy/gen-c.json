@@ -1,0 +1,603 @@
+{
+  "id": "gen-c",
+  "title": "DNA & Genetic Genealogy",
+  "glyph": "🧬",
+  "sortOrder": 3,
+  "tier": "FOUNDATION",
+  "topicId": "genealogy",
+  "prerequisites": [],
+  "rabbitHoles": [],
+
+  "subChunks": [
+
+    {
+      "id": "gen-c1",
+      "title": "Autosomal DNA Basics",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Autosomal DNA is the testing kit you've seen advertised — the one that finds you cousins and tells you what percentage Scottish you are. Before it does either of those things well, you need to understand <em>what is actually being measured</em>, and why the answer is necessarily probabilistic.</p>",
+
+      "explanationHtml": "<h3>The 22 autosomes</h3>\n<p>Humans have 23 pairs of chromosomes. The first 22 pairs — the <strong>autosomes</strong> — are inherited 50/50: one copy of each pair from your mother, one from your father. The 23rd pair is the sex chromosomes (XX or XY) and behaves differently — we'll meet those in the next two sub-chunks.</p>\n<p>An <strong>autosomal DNA test</strong> reads roughly 600,000 to 700,000 specific positions (SNPs — single-nucleotide polymorphisms) across these 22 chromosome pairs and compares your readings to those of every other person in the testing company's database.</p>\n\n<h3>Random recombination — why siblings differ</h3>\n<p>You inherit exactly 50% of your autosomal DNA from each parent. But the 50% you got from your mother is a <em>random</em> mix of the DNA she got from <em>her</em> mother and the DNA she got from <em>her</em> father. So is your sibling's 50%. As a result:</p>\n<ul>\n  <li>You and a full sibling share, on average, 50% of your autosomal DNA — but the actual figure varies from roughly 38% to 62%.</li>\n  <li>You and a first cousin share, on average, 12.5% — actual range roughly 4% to 23%.</li>\n  <li>By the 5th-cousin level, the average is about 0.05%, and there's a meaningful chance you share <em>no detectable autosomal DNA at all</em> with that cousin even though you genuinely descend from the same ancestor.</li>\n</ul>\n<p>This is the central limitation of autosomal testing: it works reliably for around 5–7 generations back from the present day, beyond which the segments inherited from any one ancestor are usually too short to be detected, or have been lost entirely from your genome through recombination.</p>\n\n<h3>The major testing companies</h3>\n<p>Five major databases dominate autosomal genetic genealogy. Each has different strengths, populations, and tools:</p>\n<table>\n  <tr><th>Company</th><th>Approx. database size</th><th>Strength</th><th>Chromosome browser?</th></tr>\n  <tr><td>AncestryDNA</td><td>~25 million</td><td>Largest database; integrated tree-matching (ThruLines)</td><td>No</td></tr>\n  <tr><td>23andMe</td><td>~14 million</td><td>Health reports; international diversity</td><td>Yes</td></tr>\n  <tr><td>MyHeritage</td><td>~8 million</td><td>European matches; Theory of Family Relativity</td><td>Yes</td></tr>\n  <tr><td>FamilyTreeDNA</td><td>~2 million autosomal</td><td>Y-DNA and mtDNA testing (next sub-chunks); long-running surname projects</td><td>Yes</td></tr>\n  <tr><td>LivingDNA</td><td>~0.5 million</td><td>Granular British Isles ethnicity</td><td>Yes</td></tr>\n</table>\n<p>Two consequences follow from these size differences. First, the <strong>database you should be in depends on your research question</strong> — if you're hunting Eastern European ancestry, MyHeritage gives you the best match pool; if you want unknown-parent searches with American roots, AncestryDNA's sheer scale dominates. Second, <strong>being in multiple databases multiplies your chances</strong> of finding any specific cousin, because most testers test only once. A serious genealogist tests at one company and uploads their raw data file to GEDmatch, MyHeritage, FamilyTreeDNA, and LivingDNA (all of which accept transfers from competitors, often free or at low cost). AncestryDNA and 23andMe do not accept transfers.</p>\n\n<h3>Ethnicity estimates — what they actually tell you</h3>\n<p>The percentage breakdowns (\"43% Scottish, 22% Norwegian, 18% Italian…\") are not measurements of your ancestors' nationalities. They are statistical inferences: the company compares your DNA to a <em>reference panel</em> of people who self-identify as belonging to particular populations, and reports which panel-clusters your DNA most resembles.</p>\n<p>This means:</p>\n<ul>\n  <li>Estimates differ between companies for the same person — the reference panels differ.</li>\n  <li>Estimates change over time as companies update their panels (your \"Scandinavian\" percentage can move 10 points overnight).</li>\n  <li>Estimates are most reliable at the continental level (\"European,\" \"Sub-Saharan African\") and least reliable at the sub-regional level (\"Northern Italy vs. Southern Italy\").</li>\n  <li>An ethnicity estimate <strong>cannot</strong> tell you about a specific ancestor — if your great-great-grandmother was Cherokee, that's typically too far back and too small a fraction to show up reliably.</li>\n</ul>\n<p>For genealogy, ethnicity estimates are a flavour, not a finding. The real value of an autosomal test is the match list — the people who share segments of DNA with you, and what those segments imply about your shared ancestry. That's the topic of sub-chunk 4.</p>",
+
+      "guidedPracticeHtml": "<h3>📜 Study prompt</h3>\n<p>For your own family tree, pick the autosomal testing strategy that fits your research goal:</p>\n<ul>\n  <li>If you have unknown-parent or unknown-grandparent questions → test at AncestryDNA first (largest database).</li>\n  <li>If your origins are heavily European → also upload to MyHeritage.</li>\n  <li>If you'll later want Y-DNA or mtDNA testing → consider testing at FamilyTreeDNA so all results sit in one account.</li>\n  <li>If you want maximum reach → test once, then transfer your raw DNA file to every site that accepts it.</li>\n</ul>\n<p>Then review the consent and privacy implications: each transfer means another company holds a copy of your genome.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "You return to Theodora's research room. A new object sits in the centre of her wide oak desk: a small glass vial, meticulously labelled, containing a swab. Beside it, a printout headed <em>Autosomal Match Report</em>."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "DNA is another record type, apprentice. Like a parish register or a will, it carries information — and like any record, it must be read with discipline. The kit on the desk reads about six hundred thousand specific positions across your twenty-two non-sex chromosomes. From you it reads them. From every person already in the company's database, it has read them. The match list is the company's report of who else's readings overlap yours."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now mark this carefully. You inherited fifty percent of these readings from your mother, fifty from your father. But the fifty from your mother was itself a <em>random shuffle</em> of what she received from her own parents. Your sister received a different shuffle. You and she share, on average, half your DNA — but the variance is enormous. I have seen full siblings share thirty-eight percent and others share sixty-two."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The implication is uncomfortable. A fifth cousin of yours, a real one with a documented common ancestor, may share <em>no detectable autosomal DNA with you at all</em>. The segments that came from that ancestor were lost in shuffling, generation after generation. Autosomal DNA is reliable for five to seven generations back. Beyond that, absence of a match is not absence of relationship."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Five major companies hold the great databases — Ancestry, 23andMe, MyHeritage, FamilyTreeDNA, LivingDNA. The largest is Ancestry, by a wide margin. But size is not everything: MyHeritage holds the European matches Ancestry under-represents, and FamilyTreeDNA is the gateway to Y-DNA and mtDNA work, which we shall come to next. The serious researcher tests at one and transfers the raw file to as many others as accept it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And the ethnicity percentages — pretty pie charts of <em>forty-three percent Scottish, twenty-two percent Norwegian</em> — are not measurements. They are comparisons to a reference panel. They shift when the panel shifts. They are accurate at the continental scale, increasingly speculative below it, and they cannot identify a specific ancestor. Treat them as flavour. The real fruit of an autosomal test is the <em>match list</em>, and we will spend the rest of this chunk learning to read it."
+        }
+      ],
+
+      "feynmanPrompt": "Explain to a curious cousin why two full siblings can show very different ethnicity estimates from the same testing company, and why a documented fifth cousin may share no detectable autosomal DNA with you despite a real, traceable common ancestor.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>How many autosomal chromosome pairs does a human have, and from where are they inherited?</p>",
+          "options": [
+            "22 pairs, one of each pair inherited from each parent",
+            "23 pairs, all inherited from the mother",
+            "22 pairs, all inherited from a single grandparent",
+            "46 pairs, divided equally between parents"
+          ],
+          "correctAnswer": "22 pairs, one of each pair inherited from each parent",
+          "explanationHtml": "<p>Humans have 23 chromosome pairs total: 22 autosomal pairs (the ones an autosomal DNA test reads) plus the sex-chromosome pair (XX or XY). For every autosomal pair, one chromosome comes from the mother and one from the father.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You want to find living descendants of an unknown biological grandfather, and you have no other clues. Your research is rooted in the United States. Which testing strategy is the strongest first move?</p>",
+          "options": [
+            "Test at AncestryDNA first (largest database, best chance of finding cousins), then transfer the raw data file to MyHeritage, FamilyTreeDNA, and GEDmatch to widen the match net",
+            "Skip autosomal testing entirely and order a mitochondrial DNA test, which traces your father's father's line",
+            "Test only at LivingDNA, because its smaller database means more accurate matches",
+            "Test once at 23andMe and rely entirely on the ethnicity estimate to identify the grandfather's region"
+          ],
+          "correctAnswer": "Test at AncestryDNA first (largest database, best chance of finding cousins), then transfer the raw data file to MyHeritage, FamilyTreeDNA, and GEDmatch to widen the match net",
+          "explanationHtml": "<p>Unknown-parent and unknown-grandparent searches depend on the size of the match pool. AncestryDNA holds the largest U.S.-rooted database, so it's the highest-probability first test. Transferring (not retesting — most sites accept the raw data file from another company) into MyHeritage, FamilyTreeDNA, and GEDmatch multiplies the chances of finding the closest match. Ethnicity alone identifies no individual; mtDNA traces only the strict maternal line, not the father's father.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>An apprentice tests at AncestryDNA and is told he is \"58% Scottish, 21% Norwegian.\" His sister, tested at the same company on the same day, is told she is \"49% Scottish, 31% Norwegian.\" Which interpretation is the most accurate?</p>",
+          "options": [
+            "Each sibling inherited a different random 50% of each parent's DNA, and the ethnicity estimate compares that sample against a reference panel — so different samples produce different estimates from the same parents",
+            "One of them is not a full sibling — these numbers are too far apart for siblings",
+            "The lab made a mistake; full siblings should always show identical ethnicity estimates",
+            "Norwegian DNA mutates faster than Scottish DNA, so it shifts between siblings"
+          ],
+          "correctAnswer": "Each sibling inherited a different random 50% of each parent's DNA, and the ethnicity estimate compares that sample against a reference panel — so different samples produce different estimates from the same parents",
+          "explanationHtml": "<p>This is one of the most common questions Theodora-equivalent professionals receive. Full siblings receive different random shuffles of each parent's DNA, and ethnicity estimates are computed from that shuffle, not from the parents directly. Differences of 10–15 percentage points between full siblings on the same date at the same company are entirely normal and prove nothing about parentage.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>An ethnicity estimate of \"3% Indigenous American\" is most accurately described as:</p>",
+          "options": [
+            "A statistical comparison to a reference panel that suggests <em>some</em> ancestry from that broad regional group, but is unreliable at small percentages and cannot identify any specific ancestor",
+            "Direct evidence of an Indigenous American great-great-grandparent",
+            "Proof of tribal enrolment eligibility",
+            "A measurement of how many Indigenous American genes the test-taker carries"
+          ],
+          "correctAnswer": "A statistical comparison to a reference panel that suggests <em>some</em> ancestry from that broad regional group, but is unreliable at small percentages and cannot identify any specific ancestor",
+          "explanationHtml": "<p>Ethnicity estimates are statistical comparisons to reference panels, not direct measurements of ancestral identity. At small percentages (under about 5%), they are particularly noisy and can shift dramatically between updates of the reference panel. They cannot pinpoint a specific ancestor, and they have no legal bearing on tribal enrolment, which is governed by tribal nations themselves and their own membership criteria — not by commercial DNA tests.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-c2",
+      "title": "Mitochondrial DNA & Haplogroups",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Mitochondrial DNA traces a single line — mother to mother to mother to mother — across tens of thousands of years. It rarely identifies your great-grandmother, but it can place your maternal lineage on the human migration map. Knowing exactly what mtDNA does and does not do is a hallmark of disciplined genetic genealogy.</p>",
+
+      "explanationHtml": "<h3>What mtDNA is, and why it traces only one line</h3>\n<p>Most of your DNA lives in the nucleus of every cell. Mitochondrial DNA — <strong>mtDNA</strong> — sits inside the cell's mitochondria, the small organelles that produce energy. Mitochondria have their own tiny circular genome of about 16,569 base pairs, separate from the nuclear genome.</p>\n<p>The crucial fact for genealogy: <strong>mitochondria are inherited only from the mother</strong>. The egg cell brings mitochondria into the zygote; the sperm cell's mitochondria are destroyed shortly after fertilisation. As a result, your mtDNA is identical (give or take a handful of mutations over many generations) to your mother's, your maternal grandmother's, and so on indefinitely up the strict matrilineal line.</p>\n<p>This is powerful but narrow. Your mtDNA tells you absolutely nothing about your father, your mother's father, your maternal grandmother's father, or any of the dozens of other lines feeding your tree at any given generation. It traces <em>one</em> path through your ancestry — the one that goes mother-to-mother indefinitely backward.</p>\n\n<h3>Haplogroups — deep-ancestry signatures</h3>\n<p>Mutations accumulate in mtDNA slowly — roughly one substitution every 3,500 to 8,000 years on average. By comparing the specific pattern of mutations in your mtDNA to a reference tree built from thousands of sequenced samples worldwide, your sample is assigned to a <strong>haplogroup</strong>: a branch of the global human matrilineal tree.</p>\n<p>Haplogroups are labelled with letters and numbers. The most common European haplogroup is H (about 40% of European maternal lines); other European-frequent haplogroups include U, K, T, J, V, X. African lineages cluster in haplogroup L and its branches; East Asian lineages in M, D, A, B, F; Indigenous American lineages in A, B, C, D, X.</p>\n<p>Haplogroups are <em>deep</em> markers. Your mtDNA haplogroup describes the matrilineal lineage your female ancestor belonged to tens of thousands of years ago. It is genuinely informative about prehistoric migration patterns. It is rarely informative about your great-grandmother, because two unrelated women living in the same village in 1850 may share the same haplogroup simply by virtue of both being European.</p>\n\n<h3>Mutation rate — too slow for recent genealogy</h3>\n<p>The same property that makes mtDNA useful for deep ancestry — its slow mutation rate — makes it almost useless for genealogy in historical timeframes. If you and another person both belong to haplogroup H1a1, you may share a common matrilineal ancestor 200 years ago, or 5,000 years ago, or 8,000 years ago. The test cannot distinguish those possibilities.</p>\n<p>Two specific genealogical uses survive this limitation:</p>\n<ul>\n  <li><strong>Confirming or refuting a specific matrilineal hypothesis.</strong> If documentary evidence suggests two living people share a matrilineal ancestor four generations back, their mtDNA must match (full-sequence) to nearly all positions. A mismatch refutes the hypothesis decisively.</li>\n  <li><strong>Adopted-person and unknown-mother cases.</strong> The haplogroup tells you the broad geographic origin of your maternal line, which can narrow a search.</li>\n</ul>\n\n<h3>HVR1, HVR2, full-sequence</h3>\n<p>The mitochondrial genome has two especially mutation-prone regions called the hypervariable regions: <strong>HVR1</strong> (positions 16024–16365) and <strong>HVR2</strong> (positions 73–340). These accumulate mutations faster than the rest of the mitochondrial genome and were the first regions to be cheaply sequenced.</p>\n<table>\n  <tr><th>Test</th><th>What's sequenced</th><th>What it tells you</th></tr>\n  <tr><td>HVR1 only</td><td>The first hypervariable region (~340 base pairs)</td><td>Approximate haplogroup; unreliable for matching</td></tr>\n  <tr><td>HVR1 + HVR2</td><td>Both hypervariable regions (~600 base pairs)</td><td>Better haplogroup confidence; rough matching</td></tr>\n  <tr><td>Full mitochondrial sequence (mtFull)</td><td>All ~16,569 base pairs</td><td>Definitive haplogroup; precise matching for genealogy hypotheses</td></tr>\n</table>\n<p>For any serious mtDNA work, only the full sequence is meaningful. HVR-only matches generate too many false positives to be useful. As of writing, FamilyTreeDNA's mtFull is the standard. 23andMe and AncestryDNA assign a haplogroup as a side product of their autosomal test, but do not sequence the full mitochondrial genome.</p>",
+
+      "guidedPracticeHtml": "<h3>📜 Study prompt</h3>\n<p>Before ordering an mtDNA test, write out the precise question you want it to answer. If the question is \"who was my great-great-grandmother?\", the test will not answer it. If the question is \"are these two living women descended from a common matrilineal ancestor in the last few centuries?\" or \"what is the deep prehistoric origin of my mother's mother's line?\", the test will. Then decide whether you need full-sequence (almost always yes) or whether HVR-only is sufficient (almost always no).</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora produces a small slim vellum from a drawer — a hand-drawn diagram of branching matrilineal lines, fanning back twenty thousand years."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Mitochondrial DNA traces a single thread through your tapestry. Your mother. Her mother. <em>Her</em> mother. And so on, backward, in a perfectly straight line. The thread does not branch and it does not jump. Every other ancestor in your tree — your father, your father's mother, your mother's father — contributes nothing to your mitochondrial DNA. Nothing at all."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "It mutates slowly. About one substitution every three to eight thousand years. Which means that two women alive today in the same village, with no shared ancestor in any family memory, may carry essentially identical mitochondrial DNA, because their matrilineal lines converged ten thousand years ago, before any record could ever exist."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "What it <em>can</em> tell you is your <em>haplogroup</em> — a label for the prehistoric branch your matrilineal lineage belongs to. H if your matrilineal ancestors were European. L if they were African. A, B, C, D, or X if they were Indigenous American. Within those, finer subdivisions: H1a, H3, U5b, and so on. These tell you about prehistoric migration. They rarely tell you about your great-grandmother, and you should not expect them to."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Where it <em>does</em> earn its keep in genealogy is the falsification test. If two living women are claimed to share a matrilineal ancestor four generations back, their full mitochondrial sequences must match closely. If they do not, the claim is wrong. mtDNA cannot prove a relationship. It can disprove one."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Order the full sequence — the test FamilyTreeDNA calls mtFull. The cheaper HVR-only tests look only at two small hypervariable regions of the genome and produce too many spurious matches to be useful. As with all evidence: pay for the full reading, or expect noise."
+        }
+      ],
+
+      "feynmanPrompt": "Explain to a beginner why mitochondrial DNA is informative about a prehistoric maternal-line ancestor but rarely useful for identifying a specific great-grandmother.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Mitochondrial DNA is inherited:</p>",
+          "options": [
+            "Only from the mother — passed unchanged (apart from rare mutations) along the strict matrilineal line",
+            "Equally from both parents, like autosomal DNA",
+            "Only from the father — passed through the Y chromosome",
+            "Randomly from one parent or the other, varying by generation"
+          ],
+          "correctAnswer": "Only from the mother — passed unchanged (apart from rare mutations) along the strict matrilineal line",
+          "explanationHtml": "<p>The egg cell supplies the mitochondria; the sperm cell's mitochondria are destroyed shortly after fertilisation. Your mtDNA is therefore essentially identical to your mother's, her mother's, and so on indefinitely up the matrilineal line. It traces <em>one</em> ancestral line out of the many feeding your tree.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You want to test the hypothesis that your mother's father's mother and another living person's mother's mother's mother share a common matrilineal ancestor four generations back. Which test is appropriate?</p>",
+          "options": [
+            "An mtDNA full-sequence test on a living matrilineal descendant from each line — and confirm the chain through the strict mother-to-mother path on both sides",
+            "A Y-DNA test, because the hypothesis crosses several generations",
+            "An autosomal DNA test, because mtDNA cannot detect any relationship that recent",
+            "An ethnicity estimate from any major company"
+          ],
+          "correctAnswer": "An mtDNA full-sequence test on a living matrilineal descendant from each line — and confirm the chain through the strict mother-to-mother path on both sides",
+          "explanationHtml": "<p>This is the classic mtDNA use case: testing whether two strict matrilineal lines converge. The test must be on living descendants whose path back to the proposed common ancestor is mother-to-mother all the way (no fathers in the chain on either side). A mismatch refutes the hypothesis. Note that your <em>own</em> mtDNA does not include your mother's father's mother — your father's lines never enter your mtDNA at all.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two living people share the same mtDNA full sequence. Which conclusion is justified?</p>",
+          "options": [
+            "They share a common matrilineal ancestor — but the date of that ancestor could be anywhere from a few generations to several thousand years ago, depending on the haplogroup and the matches available",
+            "They are first cousins through their mothers' line",
+            "They are siblings",
+            "They share an ancestor in the past two centuries"
+          ],
+          "correctAnswer": "They share a common matrilineal ancestor — but the date of that ancestor could be anywhere from a few generations to several thousand years ago, depending on the haplogroup and the matches available",
+          "explanationHtml": "<p>An exact mtDNA match means a shared matrilineal ancestor at <em>some</em> point. The mutation rate is slow enough that the common ancestor could be a great-great-grandmother, a Bronze Age woman, or anything between. Without independent documentary evidence to constrain the timeframe, a perfect mtDNA match alone tells you the relationship exists — not when.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>An apprentice asks: \"My mtDNA haplogroup is H1a. Doesn't that prove my great-grandmother Mary, who I think was from Cornwall, was European?\" Which response is correct?</p>",
+          "options": [
+            "H1a tells you your strict matrilineal lineage was European in <em>prehistory</em>, but it cannot single out a specific great-grandmother — and even if Mary's ancestry were entirely non-European, she could still appear in your tree as long as she's not on your strict mother-to-mother line",
+            "H1a is a definitive proof that great-grandmother Mary was Cornish",
+            "H1a contradicts a Cornish ancestor — H1a is found only in Scandinavia",
+            "Haplogroups change every generation, so H1a tells you about your mother only"
+          ],
+          "correctAnswer": "H1a tells you your strict matrilineal lineage was European in <em>prehistory</em>, but it cannot single out a specific great-grandmother — and even if Mary's ancestry were entirely non-European, she could still appear in your tree as long as she's not on your strict mother-to-mother line",
+          "explanationHtml": "<p>Two errors are common here. First, the haplogroup describes the deep prehistoric origin of one line — it does not identify any specific recent ancestor. Second, learners often forget that great-grandmother Mary may not even be on the matrilineal line being traced; only your mother's mother's mother is. A great-grandmother on, say, your father's side contributes nothing to your mtDNA.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-c3",
+      "title": "Y-DNA Inheritance",
+      "sortOrder": 3,
+      "xpReward": 60,
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>The Y chromosome is passed father-to-son with extraordinary fidelity. For genealogists, this makes it the cleanest line in the genome — and one of the most narrowly informative. Y-DNA tells you almost everything about a single thread of your ancestry, and absolutely nothing about every other thread.</p>",
+
+      "explanationHtml": "<h3>Y inheritance — strict, narrow, deep</h3>\n<p>The Y chromosome is the smaller of the two sex chromosomes. Only people assigned male at birth carry it, and they receive it only from their father, who received it only from his father, and so on indefinitely up the strict patrilineal line. Like mtDNA on the mother's side, but the inverse: <strong>Y-DNA traces one line and only one line</strong> — father to father to father to father.</p>\n<p>This means a man's Y-DNA tells you nothing about:</p>\n<ul>\n  <li>His mother</li>\n  <li>His father's mother</li>\n  <li>His father's father's mother</li>\n  <li>Or any of dozens of other lines in his tree</li>\n</ul>\n<p>It tells you about exactly one ancestor at each generation. People assigned female at birth do not carry a Y chromosome and cannot test their own Y-DNA — but they can ask a brother, father, paternal uncle, or paternal-line cousin to test, since those men carry the same Y-DNA she would have inherited had she been male.</p>\n\n<h3>STRs vs SNPs</h3>\n<p>Y-DNA tests measure two different kinds of variation:</p>\n<ul>\n  <li><strong>STRs</strong> — Short Tandem Repeats. Short DNA sequences that are repeated end-to-end a variable number of times (e.g. <code>CAGA CAGA CAGA CAGA</code> = 4 repeats). The number of repeats at each STR location is what's measured. STRs mutate <em>fast</em> on the genealogical timescale: useful for distinguishing closely related lineages over the past few centuries.</li>\n  <li><strong>SNPs</strong> — Single Nucleotide Polymorphisms. A change of a single base (e.g. A → G at a specific position). SNPs mutate <em>slowly</em>: useful for assigning a deep haplogroup, much like mtDNA. Y-SNPs build the global Y-tree of patrilineal humanity.</li>\n</ul>\n<p>For genealogy in historical timeframes (the last few hundred years), STRs do the work. For deep prehistory and migration history, SNPs do the work. A modern \"Big Y\" test reads both.</p>\n\n<h3>The FamilyTreeDNA tier system</h3>\n<table>\n  <tr><th>Test</th><th>What's measured</th><th>Best for</th></tr>\n  <tr><td>Y-37</td><td>37 STR markers</td><td>Surname-project comparison; rough genealogical matching</td></tr>\n  <tr><td>Y-67</td><td>67 STR markers</td><td>Sharper genealogical matching; better TMRCA estimates</td></tr>\n  <tr><td>Y-111</td><td>111 STR markers</td><td>Resolves close vs slightly more distant patrilineal cousins</td></tr>\n  <tr><td>Big Y-700</td><td>~700 STR markers + a comprehensive SNP read across the testable Y chromosome</td><td>Definitive haplogroup assignment, recent SNP discovery, and deep ancestry — the standard for serious Y-DNA work today</td></tr>\n</table>\n<p>The historical norm was to start at Y-37 and upgrade. The current advice — given how SNP-rich Big Y has reshaped the field — is to go straight to Big Y-700 if budget permits, especially for unknown-paternal-line cases. Big Y is the only test that can place you on a recent branch of the Y tree at single-SNP resolution.</p>\n\n<h3>Surname projects</h3>\n<p>One of the most enduring uses of Y-DNA is the <strong>surname project</strong>: a volunteer-administered group at FamilyTreeDNA where men sharing a surname (and supposedly a patrilineal lineage) test their Y-DNA and compare results. This works because in many cultures, the surname has been passed father-to-son alongside the Y chromosome itself for centuries. So men named <em>Gilligan</em> who all descend from a single 17th-century Gilligan should — barring non-paternity events — share substantially identical Y-DNA at low genetic distance.</p>\n<p>Surname projects routinely uncover:</p>\n<ul>\n  <li>Multiple unrelated patrilineal origins of a surname (\"five different Smith families,\" each with its own Y-haplogroup)</li>\n  <li>Non-paternity events (a son with a different Y-DNA from his recorded father — adoption, illegitimacy, or a name change)</li>\n  <li>Connections between surname variants (Gilligan, Gilligane, McGilligan all sharing the same Y-DNA)</li>\n</ul>\n\n<h3>Genetic distance and TMRCA</h3>\n<p>When two men's Y-STR results are compared, FamilyTreeDNA reports the <strong>genetic distance</strong>: the count of mismatched markers across the panel tested. A genetic distance of 0/37 (perfect match across 37 STRs) is suggestive of a very recent shared patrilineal ancestor — but does not <em>prove</em> a recent connection.</p>\n<p>From genetic distance and the panel size, software estimates the <strong>TMRCA — time to most recent common ancestor</strong> — as a probability distribution. Note this is a <em>distribution</em>, not a point. A genetic distance of 0/37 might give you a 50% chance the common ancestor is within 5 generations, but a non-trivial chance it's 10 or more. As with autosomal cM ranges, the prediction is a confidence interval, never a single date.</p>\n\n<h3>The fundamental limitation</h3>\n<p>Y-DNA is enormously powerful for one specific question: <em>who shares my strict patrilineal line?</em> It is silent on every other ancestral question. Half the tester's tree (the mother's side) is invisible. A man's father's mother is invisible. A man's father's father's mother is invisible. The test answers one question with high confidence and refuses every other.</p>",
+
+      "guidedPracticeHtml": "<h3>📜 Study prompt</h3>\n<p>Before ordering Y-DNA, ask yourself two questions. First: is the question I want to answer specifically about a strict patrilineal line? If not, Y-DNA is not the right test. Second: is the test-taker the right person? Only people assigned male at birth carry Y-DNA. A woman researching her father's patrilineal line must ask a male relative on that line to test. If you have an existing surname project for the family, join it before ordering — the project administrator can advise on the optimal panel size and arrange the standard surname-project group discount.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora unrolls a different chart now: a long vertical lineage, father to son to son to son, marked with generation numbers and a small column for marker mutations."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "If mitochondrial DNA traced one thread of your tapestry, the Y chromosome traces another — its mirror image. Father to son. Indefinitely. With remarkable fidelity, generation after generation. A man's Y is, give or take a handful of mutations, identical to his father's, his grandfather's, his great-grandfather's. It is the cleanest single-line record in the human genome."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Two kinds of marker. <strong>STRs</strong> — short tandem repeats, where short DNA sequences are repeated some variable number of times — mutate quickly on a human timescale. They are how we distinguish two cousins who share a great-grandfather from two others who share a great-great-great-grandfather. <strong>SNPs</strong> — single-nucleotide polymorphisms — mutate slowly. They build the deep tree of patrilineal humanity, all the way back to the most recent common male-line ancestor of our species."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "FamilyTreeDNA sells these in tiers. Y-37, Y-67, Y-111, Big Y-700. The first three measure increasing numbers of STRs. The Big Y measures the full panel of useful STRs <em>and</em> reads SNPs across most of the Y chromosome, placing your sample on a single twig of the global Y-tree. Twenty years ago we started at Y-37 and upgraded. Today, for serious work, I send researchers straight to Big Y. The resolution gain is that consequential."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And a Y test reports a number called <em>genetic distance</em> — how many markers differ between two testers — and from that an estimate of <em>TMRCA</em>, the time to the most recent common ancestor. Mark this carefully: TMRCA is a probability distribution, not a date. A perfect match at thirty-seven markers might mean a common ancestor four generations back, or eight, or twelve. The estimate sharpens with more markers, but never collapses to a single point."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now the limitation. Y-DNA traces <em>only</em> the strict patrilineal line. A man's mother — invisible. His father's mother — invisible. The maternal grandfathers, the maternal grandmothers, every line that does not run father-to-son indefinitely back — invisible. The test illuminates one path through the tree with extraordinary clarity, and casts no light at all on the others. As with mtDNA: ask the right question, or expect a useless answer."
+        }
+      ],
+
+      "feynmanPrompt": "Explain to a beginner why a Y-DNA test on a male relative can prove (or refute) a connection between two surnames at the patrilineal-line level, and why the same test tells you nothing about that man's mother or his father's mother.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Y-DNA is inherited:</p>",
+          "options": [
+            "Only from father to son, along the strict patrilineal line",
+            "Equally from both parents",
+            "Only from the mother",
+            "Only by people assigned female at birth"
+          ],
+          "correctAnswer": "Only from father to son, along the strict patrilineal line",
+          "explanationHtml": "<p>The Y chromosome is passed only from a father to his son. People assigned female at birth do not carry one; men carry the Y they received from their father, who received it from his father, and so on backward in a strict patrilineal line.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Mary wants to investigate whether her father's father's father was related to a particular man named John Gilligan in 18th-century Ireland. Mary has no brothers and her father has died. Which is the best testing strategy?</p>",
+          "options": [
+            "Ask a paternal-line male relative — for example, her father's brother (Mary's uncle), her father's brother's son, or any other man whose patrilineal line traces back through her father's father — to take a Big Y-700 test, ideally joining a Gilligan surname project at FamilyTreeDNA",
+            "Take an mtDNA full-sequence test on herself, since mitochondrial DNA traces all male-line ancestors",
+            "Take an autosomal test on herself and look at the ethnicity estimate",
+            "Y-DNA cannot answer this question; the only option is documentary research"
+          ],
+          "correctAnswer": "Ask a paternal-line male relative — for example, her father's brother (Mary's uncle), her father's brother's son, or any other man whose patrilineal line traces back through her father's father — to take a Big Y-700 test, ideally joining a Gilligan surname project at FamilyTreeDNA",
+          "explanationHtml": "<p>Mary herself does not carry the Y chromosome of her patrilineal line, but her father's brother does (same Y as her father, same Y as her grandfather). Big Y-700 gives the highest resolution; joining the relevant surname project compares results against other Gilligan lineages and unlocks the standard surname-project pricing.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two men test Y-67 and have a genetic distance of 0/67 (perfect match across all 67 markers). Which is the most accurate interpretation?</p>",
+          "options": [
+            "They share a common patrilineal ancestor; the most recent common ancestor is most likely within roughly the last several hundred years, but the estimate is a probability distribution, not a fixed date — and even a 0/67 match can occasionally be older than expected",
+            "They are full brothers",
+            "They share an ancestor exactly 5 generations back",
+            "Y-DNA matches do not imply any relationship at all"
+          ],
+          "correctAnswer": "They share a common patrilineal ancestor; the most recent common ancestor is most likely within roughly the last several hundred years, but the estimate is a probability distribution, not a fixed date — and even a 0/67 match can occasionally be older than expected",
+          "explanationHtml": "<p>A perfect match across 67 STRs is strong evidence of a shared patrilineal ancestor in the genealogically meaningful past. But TMRCA is reported as a probability range, not a point — and Y-STR mutation is stochastic, so two distantly related lines can occasionally still match at all 67. Documentary evidence is needed to constrain the date.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A surname-project administrator finds that 30 men named \"Smith\" cluster into <em>five distinct Y-DNA groups</em>, each internally consistent but unrelated to the others on the Y. Which conclusion is best supported?</p>",
+          "options": [
+            "There are at least five separate Smith patrilines — likely independent surname adoptions in different families. Surnames do not always map to single patrilines, and DNA reveals the underlying biological reality",
+            "All 30 men are mistaken about their surname",
+            "The lab made an error on at least four of the groups",
+            "Y-DNA test results randomise after about 10 generations, so the clustering is meaningless"
+          ],
+          "correctAnswer": "There are at least five separate Smith patrilines — likely independent surname adoptions in different families. Surnames do not always map to single patrilines, and DNA reveals the underlying biological reality",
+          "explanationHtml": "<p>Surnames like Smith were adopted independently by many unrelated families (occupational origin), so multiple unrelated patrilines sharing a name is the historical norm. Y-DNA reveals these biological clusters cleanly. This is exactly the kind of finding surname projects produce regularly, and it is one of the most useful applications of Y-DNA testing.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-c4",
+      "title": "Centimorgans & Match Interpretation",
+      "sortOrder": 4,
+      "xpReward": 70,
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Open any autosomal DNA match list and you'll see two numbers next to each match: a <strong>cM</strong> total and a <strong>predicted relationship</strong>. Both are heavily misunderstood. The relationship is not a fact — it's a probability range pulled from a distribution, and that distribution is wider than you would guess.</p>",
+
+      "explanationHtml": "<h3>What a centimorgan is</h3>\n<p>A <strong>centimorgan (cM)</strong> is a unit of genetic distance, not physical distance. Specifically, 1 cM is the length of DNA over which there is, on average, a 1% chance of a recombination event occurring during meiosis (the cell division that produces eggs and sperm). It's an old unit, named after the geneticist Thomas Hunt Morgan, and it predates direct DNA sequencing.</p>\n<p>For genealogy, the practical points are:</p>\n<ul>\n  <li>The human autosomal genome totals roughly <strong>6,800 cM</strong> when measured this way (numbers vary slightly by company and reference build, but 6,800 is the figure to remember).</li>\n  <li>You share approximately 3,400 cM with each parent (half the total).</li>\n  <li>You share, on average, ~2,550 cM with a full sibling — but the actual range, observed in the Shared cM Project, is roughly 2,209 to 3,384 cM.</li>\n  <li>You share, on average, ~850 cM with a first cousin — actual range roughly 396 to 1,397 cM.</li>\n</ul>\n\n<h3>The Shared cM Project — the standard reference</h3>\n<p>Blaine Bettinger's <strong>Shared cM Project</strong> (most recent comprehensive update: 2020) collected tens of thousands of self-reported relationships from genealogists, plotted the actual shared-cM distributions, and produced reference tables for every relationship from full sibling out to 8th cousin. <strong>DNA Painter</strong> hosts the interactive Shared cM Tool — type in a total cM number and see the full list of plausible relationships and their probabilities.</p>\n<p>Here are some characteristic ranges from the 2020 update — note the heavy overlap, which is the entire point of looking at this:</p>\n<table>\n  <tr><th>Relationship</th><th>Average cM</th><th>Observed range</th></tr>\n  <tr><td>Parent / child</td><td>~3,485</td><td>3,330–3,720</td></tr>\n  <tr><td>Full sibling</td><td>~2,613</td><td>2,209–3,384</td></tr>\n  <tr><td>Grandparent / grandchild</td><td>~1,766</td><td>1,156–2,311</td></tr>\n  <tr><td>Aunt or uncle / niece or nephew</td><td>~1,750</td><td>1,201–2,282</td></tr>\n  <tr><td>Half-sibling</td><td>~1,759</td><td>1,160–2,436</td></tr>\n  <tr><td>1st cousin</td><td>~866</td><td>396–1,397</td></tr>\n  <tr><td>1st cousin once removed (1C1R)</td><td>~433</td><td>102–980</td></tr>\n  <tr><td>Half-1st cousin</td><td>~449</td><td>137–856</td></tr>\n  <tr><td>2nd cousin</td><td>~229</td><td>41–592</td></tr>\n  <tr><td>2nd cousin once removed</td><td>~123</td><td>0–457</td></tr>\n  <tr><td>3rd cousin</td><td>~73</td><td>0–217</td></tr>\n</table>\n<p>Notice how aggressively the ranges overlap. A person sharing 600 cM with you might be a 1st cousin once removed (average 433, range 102–980), a half-first-cousin (average 449, range 137–856), a great-grandparent's full sibling (1C2R), or several other things. <strong>The predicted-relationship label your testing company shows you is only the most likely option in that range, not the only possibility.</strong></p>\n\n<h3>Total shared cM vs largest segment</h3>\n<p>Two numbers usually appear for each match:</p>\n<ul>\n  <li><strong>Total shared cM</strong> — the sum of all DNA segments shared with the match.</li>\n  <li><strong>Largest segment</strong> — the size of the single longest contiguous shared segment.</li>\n</ul>\n<p>Both matter, for different reasons.</p>\n<p>Total cM correlates with degree of relatedness. Largest segment is a clue to <em>how many generations back</em> the common ancestor lies, because shared segments are sliced shorter with each generation of recombination. A 600 cM total made up of one 400 cM segment plus a few small ones suggests a recent and direct connection. A 600 cM total made up of fifteen segments of 30–40 cM each suggests <em>endogamy</em> — many small segments inherited from a tight-knit population — and the relationship is probably more distant than the simple cM total predicts.</p>\n<p>A widely-cited heuristic: <strong>a single segment of 7 cM or smaller has a meaningful chance of being false (\"identical by chance,\" not \"identical by descent\")</strong>. Most companies don't show you anything below 7 cM for this reason. When working at the limits of autosomal detection, give weight to longer segments and disregard the small ones.</p>\n\n<h3>Endogamy — when the standard ranges break</h3>\n<p><strong>Endogamy</strong> is the practice, over many generations, of marrying within a tightly bounded population — small island groups, isolated religious communities, geographically isolated regions. The genetic consequence is that any two members of the population share <em>multiple</em> common ancestors at <em>multiple</em> points back in time. As a result, a pair of people from an endogamous population shares more total cM than the standard ranges (built from outbred American/European samples) predict for a given documented relationship.</p>\n<p>The classic endogamous populations in autosomal genetic genealogy include:</p>\n<ul>\n  <li>Ashkenazi Jewish populations</li>\n  <li>Acadian / French-Canadian populations</li>\n  <li>Polynesian, Hawaiian, and other Pacific-island populations</li>\n  <li>Mennonite, Amish, and similar closed religious populations</li>\n  <li>Small geographically isolated rural populations historically</li>\n</ul>\n<p>For an endogamous tester, a 200 cM match might predict \"second to third cousin\" by the standard tool but actually represent a fourth cousin who happens to share several common ancestors through different lines. The standard ranges <em>over-predict</em> closeness in these populations. Specialised approaches — discounting small segments, using the largest-segment number more heavily, manually building cluster trees — are needed.</p>\n\n<h3>Reading a match in practice</h3>\n<p>An example match readout (this is the format genealogists actually look at every day):</p>\n<pre><code>Match: Margaret R.\n  Total shared:    423 cM\n  Largest segment:  65 cM\n  Shared segments:  12\n  Predicted:       2nd–3rd cousin (Ancestry estimate)</code></pre>\n<p>Plug 423 cM into DNA Painter's Shared cM Tool and you get a list of plausible relationships ranked by probability. The most likely options at 423 cM are 1st cousin once removed (~21%), 2nd cousin (~21%), half-first cousin (~15%), great-aunt/uncle (~12%), and several others, including (less likely) half-grand-aunt/uncle. The 65 cM largest segment is consistent with all of those. The truth could be any of them. The predicted-relationship label \"2nd–3rd cousin\" is one of several plausible answers — it is not <em>the</em> answer.</p>",
+
+      "guidedPracticeHtml": "<h3>📜 Study prompt</h3>\n<p>Pick three of your own autosomal matches at any company. For each, write down the total cM, the largest segment, the predicted relationship, and the documented (or inferred) actual relationship if known. Then look up the cM total in DNA Painter's Shared cM Tool and read the full list of plausible relationships. Notice how often \"predicted\" and \"actual\" do not match — and how the predicted is rarely uniquely the most-likely option once you account for half-relationships and removed cousins.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a thick reference table — Bettinger's Shared cM Project, the 2020 update, with handwritten annotations in three colours."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The centimorgan is a unit of genetic distance. The whole autosomal genome — the part that gets measured by these tests — totals roughly six thousand eight hundred centimorgans. You share about half of it with each parent. About a quarter, on average, with a grandparent. About an eighth with a first cousin. The averages are clean. The <em>distributions</em> are not."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Bettinger's Shared cM Project surveyed tens of thousands of documented relationships and published the actual ranges. A first cousin: average eight hundred sixty-six, range three hundred ninety-six to one thousand three hundred ninety-seven. A second cousin: average two hundred twenty-nine, range forty-one to five hundred ninety-two. The ranges <em>overlap heavily</em>. A six-hundred-cM match could be a first-cousin-once-removed, or a half-first-cousin, or a great-aunt's grandchild, or several other things."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "When the testing company shows you a <em>predicted</em> relationship — \"2nd to 3rd cousin\" — it is showing you the most likely band in the distribution, not the only possibility. DNA Painter's Shared cM Tool will show you the full list, properly weighted. Use it. Always."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Look also at the <em>longest segment</em>, not only the total. A four-hundred-cM match made of one long segment is a recent direct connection. The same total made of fifteen short segments suggests endogamy — many small inheritances from a tightly-related population — and the true relationship is likely more distant than the cM number alone predicts. Single segments under seven centimorgans have a real chance of being chance matches rather than true descent. Discount them."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And mark this carefully: in endogamous populations — Ashkenazi, Acadian, Polynesian, Mennonite — the standard ranges <em>over-predict</em> closeness. A 200 cM match predicts second cousin by the standard tool, but in an endogamous population may actually be a fourth cousin sharing through several distinct ancestral lines. The Shared cM Project itself notes the limitation. For endogamous research, an experienced practitioner discounts small segments and weights the largest-segment number more heavily."
+        }
+      ],
+
+      "feynmanPrompt": "Explain why \"predicted relationship: 2nd–3rd cousin\" on a DNA match should be read as a most-likely-band rather than a fact, and why the same shared-cM number means something different for an Ashkenazi tester than for a tester with no endogamy in their tree.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Approximately how many centimorgans does the entire human autosomal genome span?</p>",
+          "options": [
+            "About 6,800 cM",
+            "About 100 cM",
+            "About 23 cM (one per chromosome pair)",
+            "About 3 billion cM (one per base pair)"
+          ],
+          "correctAnswer": "About 6,800 cM",
+          "explanationHtml": "<p>The autosomal genome spans roughly 6,800 cM in total when measured genetically. (The exact number varies slightly by company and reference build, but 6,800 is the standard figure to remember.) You share roughly 3,400 cM with each parent — half of the total — and the cM amounts you share with more distant relatives scale down accordingly.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You see a match showing <strong>423 cM total, 65 cM largest segment</strong>, and the testing company's label says \"predicted: 2nd–3rd cousin.\" Which is the most accurate description of what this means?</p>",
+          "options": [
+            "423 cM falls in a wide range of plausible relationships — 1st cousin once removed, 2nd cousin, half-first cousin, great-aunt/uncle, and several others — ranked by probability. The company's \"2nd–3rd cousin\" label is one likely band but not a unique answer; consult the Shared cM Tool for the full set",
+            "It means the match is exactly your second cousin",
+            "It means the match is your second or third cousin and cannot be anything else",
+            "It means there is no real biological relationship — 423 cM is below the threshold of detection"
+          ],
+          "correctAnswer": "423 cM falls in a wide range of plausible relationships — 1st cousin once removed, 2nd cousin, half-first cousin, great-aunt/uncle, and several others — ranked by probability. The company's \"2nd–3rd cousin\" label is one likely band but not a unique answer; consult the Shared cM Tool for the full set",
+          "explanationHtml": "<p>This is the foundational lesson of cM interpretation: predicted-relationship labels collapse a probability distribution into a single phrase. At 423 cM, the actual relationship could be any of half a dozen possibilities, several of which are about equally likely. DNA Painter's Shared cM Tool surfaces the full list. Treating the predicted label as definitive is the most common cM-interpretation mistake.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>An Ashkenazi Jewish tester sees a match at 250 cM and the standard Shared cM Tool suggests the most likely relationships are 2nd cousin or half-1st cousin. The actual genealogically documented relationship is 4th cousin. Which best explains the discrepancy?</p>",
+          "options": [
+            "Ashkenazi Jewish populations are endogamous — the pair shares DNA through several distinct ancestral lines, not just one — so the standard ranges (built from outbred populations) over-predict closeness. The 4th-cousin documented relationship plus several other very distant shared lines plausibly together produce 250 cM",
+            "The Shared cM Project is wrong; the real relationship must be 2nd cousin",
+            "DNA tests cannot detect 4th cousins at all under any circumstances",
+            "The pair must have been miscategorised by the testing company"
+          ],
+          "correctAnswer": "Ashkenazi Jewish populations are endogamous — the pair shares DNA through several distinct ancestral lines, not just one — so the standard ranges (built from outbred populations) over-predict closeness. The 4th-cousin documented relationship plus several other very distant shared lines plausibly together produce 250 cM",
+          "explanationHtml": "<p>This is the classic endogamy effect. The standard Shared cM ranges assume outbred ancestry, where a given pair shares DNA through one (or a few) ancestral lines. In endogamous populations, the same pair often descends from many shared distant ancestors, inflating their total shared cM well above what the standard tool predicts for any single documented relationship. Experienced practitioners account for this by discounting small segments, weighting the largest-segment number more heavily, and not trusting the standard predicted-relationship labels for endogamous testers.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two matches both show 600 cM total. Match A's 600 cM is one segment of 280 cM plus several smaller ones. Match B's 600 cM is fifteen segments, none larger than 50 cM. Which interpretation is best supported?</p>",
+          "options": [
+            "Match A is most likely a relatively recent direct relative (the long segment indicates few generations of recombination); Match B's profile suggests endogamy or a more distant relationship through multiple lines, so the simple cM total is misleading for B",
+            "Match A and Match B are equally close — the total cM is the only number that matters",
+            "Match B is closer than Match A because B has more segments",
+            "Both matches are false; 600 cM is below the threshold of detection"
+          ],
+          "correctAnswer": "Match A is most likely a relatively recent direct relative (the long segment indicates few generations of recombination); Match B's profile suggests endogamy or a more distant relationship through multiple lines, so the simple cM total is misleading for B",
+          "explanationHtml": "<p>Long contiguous segments survive few generations of recombination — a 280 cM segment strongly suggests a close, direct lineal connection. Many short segments scattered across chromosomes is the genetic fingerprint of either endogamy or shared ancestry through many distant lines. Treating total cM as the only number — ignoring the largest-segment column — is one of the most common errors in match interpretation.</p>"
+        }
+      ]
+    },
+
+    {
+      "id": "gen-c5",
+      "title": "Triangulation & Chromosome Mapping",
+      "sortOrder": 5,
+      "xpReward": 70,
+      "practiceType": "NONE",
+
+      "hookHtml": "<p>Two cousins matching you doesn't mean those two cousins matched you through the <em>same</em> ancestor. <strong>Triangulation</strong> is the discipline of proving that they did, by showing that all three of you share the <em>same segment of DNA on the same chromosome</em>. It is the technique that turns a match list into a chromosome map.</p>",
+
+      "explanationHtml": "<h3>The triangulation principle</h3>\n<p>You match Person B. You match Person C. Person B matches Person C. Are all three of you related through the <em>same</em> ancestor? Possibly — but not necessarily. You and B might match through a paternal-line ancestor, while you and C match through a maternal-line ancestor, while B and C match through some third unrelated line. <strong>Three matches alone is not triangulation.</strong></p>\n<p>True triangulation requires <em>segment overlap</em>:</p>\n<ol>\n  <li>You and B share a specific segment on chromosome 7, positions 12,000,000–28,000,000.</li>\n  <li>You and C share a segment on chromosome 7 that overlaps the same range.</li>\n  <li>B and C share a segment on chromosome 7 that overlaps the same range.</li>\n</ol>\n<p>When all three pairwise comparisons converge on the <em>same physical segment</em>, that segment was inherited by all three of you from a single common ancestor. The segment came from one ancestor, was passed down through three different paths, and shows up in three living people who all carry it. Without segment overlap, three people merely matching each other proves nothing about a single shared ancestor.</p>\n\n<h3>The mathematical intuition</h3>\n<p>Why does segment overlap matter so much? Because every segment of your autosomal DNA came from <em>exactly one</em> ancestor at any given generation. If you carry a particular segment on chromosome 7, you got it either from your mother or from your father — not both. From your mother, you got it from one of her parents — not both. And so on backward, narrowing at each step.</p>\n<p>Two people sharing the same segment must have inherited it from a common ancestor along the only line where that segment travelled. Three people sharing the same segment fixes the line further. As more triangulating cousins are added to a segment cluster, the ancestor on that segment becomes increasingly identifiable — sometimes pinpointable to a single couple in the 1700s.</p>\n\n<h3>Which sites support triangulation?</h3>\n<table>\n  <tr><th>Site</th><th>Chromosome browser?</th><th>Triangulation tool?</th></tr>\n  <tr><td>23andMe</td><td>Yes</td><td>Limited (manual via DNA Relatives)</td></tr>\n  <tr><td>MyHeritage</td><td>Yes</td><td>Yes — \"Triangulation\" feature</td></tr>\n  <tr><td>FamilyTreeDNA</td><td>Yes</td><td>Yes — Chromosome Browser + Matrix</td></tr>\n  <tr><td>GEDmatch</td><td>Yes — best in the field</td><td>Yes — Triangulation, Tier1 tools</td></tr>\n  <tr><td>AncestryDNA</td><td><strong>No</strong></td><td>No — segment data is not exposed</td></tr>\n</table>\n<p>The critical absence is AncestryDNA. Despite holding the largest match database, Ancestry deliberately does not expose chromosome-segment data: you cannot see <em>where</em> on the genome you match anyone. This is why serious autosomal genealogists transfer their raw data to MyHeritage, FamilyTreeDNA, and GEDmatch — to gain access to the chromosome browser tools needed for triangulation. Ancestry's matches are still useful (they're the largest pool, and ThruLines builds tree-based hypotheses), but to <em>prove</em> a connection by segment evidence, the work moves to one of the other sites.</p>\n\n<h3>DNA Painter — building a chromosome map</h3>\n<p><strong>DNA Painter</strong> is a third-party tool (browser-based, freemium) for accumulating segment information into a personal chromosome map. The workflow:</p>\n<ol>\n  <li>You identify a triangulated segment shared with cousins on a specific known ancestral line — say, a 24 cM segment on chromosome 5 shared with a documented 3rd cousin descended from your mother's father's parents.</li>\n  <li>You \"paint\" that segment on chromosome 5 with the colour assigned to the relevant ancestral couple.</li>\n  <li>Over time, painting more triangulated segments, you build a coloured map showing which regions of which chromosomes came from which ancestral line.</li>\n  <li>When a new unknown match appears, you check whether their shared segment overlaps an already-painted region — and if so, you instantly know which of your ancestral lines they connect through.</li>\n</ol>\n<p>This is the highest-leverage long-term use of autosomal data. A well-painted map turns every new match into a directed lookup rather than a fresh investigation.</p>\n\n<h3>How far back does triangulation work?</h3>\n<p>Triangulation works while autosomal segments remain detectable — typically out to about 4th–5th cousin range, occasionally to 6th cousin under favourable circumstances. Beyond that, segments are too short, too sparse, or simply absent. For deeper-line proof, Y-DNA (along the patrilineal line) and mtDNA (along the matrilineal line) take over.</p>\n<p>One important caveat: <strong>small triangulated segments below ~7 cM should be discounted</strong>, the same way they should in raw match interpretation. Three people sharing a 5 cM segment on chromosome 4 is consistent with three independent identical-by-chance matches, not a true common ancestor. Triangulation strengthens evidence at <em>each</em> participating segment level, but a small segment shared three ways is still a small segment, and the false-match risk does not disappear.</p>\n\n<h3>An example, end-to-end</h3>\n<pre><code>You match three cousins on the same area of chromosome 14:\n\n  Cousin Anna       chr 14, 38–61 Mb,  21 cM\n  Cousin Brendan    chr 14, 42–66 Mb,  19 cM\n  Cousin Carla      chr 14, 40–58 Mb,  17 cM\n\nThe overlapping region: chr 14, 42–58 Mb (~17 cM).\n\nAnna and Brendan match each other on chr 14, 41–63 Mb.\nBrendan and Carla match each other on chr 14, 42–60 Mb.\nAnna and Carla match each other on chr 14, 40–58 Mb.\n\nAll three pairwise comparisons cover the same chr 14, 42–58 Mb region.\n\nDocumentary research shows Anna, Brendan, and Carla all\ndescend from John &amp; Mary Cooper (married 1798).\nNo other shared ancestral line is known.\n\nConclusion: chr 14, 42–58 Mb came down to all four of\nyou (you, Anna, Brendan, Carla) from John &amp; Mary Cooper.\nPaint that segment on chromosome 14 with their colour.</code></pre>",
+
+      "guidedPracticeHtml": "<h3>📜 Study prompt</h3>\n<p>For your most genetically active known ancestral line, identify two cousins on that line who appear in your match list at MyHeritage, FamilyTreeDNA, GEDmatch, or 23andMe (sites with chromosome browsers). Check whether they share a segment with each other in addition to with you, and whether all three of your shared regions overlap on the same chromosome. If they do, you have your first triangulation. Open DNA Painter, create a free profile, and paint that segment with the ancestral couple's name. Then proceed to the next ancestral line. Over months, the map fills in.</p>",
+
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora pulls out the largest sheet you've seen yet — a printout of all 22 chromosome pairs as horizontal bars, divided into coloured segments. Each colour is labelled with an ancestral couple and a date."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Three matches do not make a triangulation. Mark this carefully — it is the most common confusion in the discipline. You match B. You match C. B and C match each other. None of that, by itself, proves the three of you share <em>one</em> ancestor. You and B might match through your father's side. You and C might match through your mother's. B and C might match through some entirely different line that has nothing to do with you."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "True triangulation requires <em>segment overlap</em>. You and B share a region on chromosome seven. You and C share a region on chromosome seven that overlaps. B and C share a region on chromosome seven that overlaps both. When all three pairwise comparisons converge on the same physical segment of the same chromosome, you have proof: that segment travelled from a single ancestor, down three branches, into three living people."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "AncestryDNA — note this — does not show you where on the genome you match anyone. No chromosome browser, no segment data. The largest database in the world, and the analytical step that proves descent is unavailable on it. This is why a serious researcher tests once at Ancestry, then transfers the raw file to MyHeritage, FamilyTreeDNA, and GEDmatch. Those are where the proof is built."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And once you have a triangulated segment, paint it. <em>DNA Painter</em> is the tool. Each ancestral couple is a colour. Each proven segment is a stripe on the appropriate chromosome. Over months, your twenty-two chromosomes fill in like a stained-glass window. Then, when a new unknown match appears sharing a segment that overlaps a painted region — you know instantly which line they connect through. The map turns every new match into a directed lookup rather than a fresh investigation."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Triangulation reaches reliably to about fourth or fifth cousin. Sometimes sixth. Beyond that, autosomal segments are too short and too sparse, and segment-based proof gives way. For deeper male-line work, Y-DNA. For deeper female-line work, mtDNA. Each tool to its question. As ever — ask the right question, and use the right record."
+        }
+      ],
+
+      "feynmanPrompt": "Explain to a beginner why \"three people matching each other\" is not enough to prove they share a single common ancestor, and why segment overlap on a specific chromosome region is the additional evidence required.",
+
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does triangulation, in autosomal genetic genealogy, require?</p>",
+          "options": [
+            "Three people who all match each other AND share the same overlapping segment on the same chromosome",
+            "Three people who all match each other, regardless of where on the genome those matches occur",
+            "Three different testing companies confirming the same match",
+            "Three generations of documented genealogy"
+          ],
+          "correctAnswer": "Three people who all match each other AND share the same overlapping segment on the same chromosome",
+          "explanationHtml": "<p>The defining feature of triangulation is segment overlap. Three people merely matching each other proves only that pairwise relationships exist; the three pairs could trace through three completely different ancestral lines. Triangulation requires that all three pairwise matches cover the same physical segment of the same chromosome — that is the proof that one ancestor's DNA travelled down three branches into three living people.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Your most active match list is at AncestryDNA. You want to triangulate matches against your father's mother's line. What's the appropriate workflow?</p>",
+          "options": [
+            "Download the raw DNA data file from AncestryDNA, transfer it to MyHeritage, FamilyTreeDNA, and GEDmatch (which support chromosome browsers and segment data), and do the triangulation work there. AncestryDNA itself does not expose segment data, so triangulation cannot be done on Ancestry directly",
+            "Use AncestryDNA's chromosome browser to identify overlapping segments",
+            "Triangulation cannot be done on autosomal DNA at all; you must use Y-DNA",
+            "Run the analysis on the ethnicity-estimate breakdown"
+          ],
+          "correctAnswer": "Download the raw DNA data file from AncestryDNA, transfer it to MyHeritage, FamilyTreeDNA, and GEDmatch (which support chromosome browsers and segment data), and do the triangulation work there. AncestryDNA itself does not expose segment data, so triangulation cannot be done on Ancestry directly",
+          "explanationHtml": "<p>This is the standard practical answer. AncestryDNA has the largest database for finding matches but deliberately does not expose chromosome-segment data, which makes triangulation impossible on the platform. The accepted workflow is to test (or already be tested) at Ancestry for the match-pool size, then transfer the raw data file to one or more of the chromosome-browser-supporting sites for the proof work.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You match three cousins (A, B, C). All three match each other. A's match with you is on chromosome 5; B's match with you is on chromosome 12; C's match with you is on chromosome 18. Have you triangulated a common ancestor?</p>",
+          "options": [
+            "No. The three of you matching each other on different chromosomes is consistent with three different shared ancestral lines, not one common ancestor. Triangulation requires the same segment, on the same chromosome, in all three pairwise comparisons",
+            "Yes. Three pairwise matches between the same three people automatically proves a single common ancestor",
+            "Yes, because all three are on autosomes (rather than X or Y), the line is automatically maternal",
+            "No, because triangulation can only be done with four or more cousins"
+          ],
+          "correctAnswer": "No. The three of you matching each other on different chromosomes is consistent with three different shared ancestral lines, not one common ancestor. Triangulation requires the same segment, on the same chromosome, in all three pairwise comparisons",
+          "explanationHtml": "<p>This is exactly the trap that triangulation is designed to avoid. Pairwise matches scattered across different chromosomes show only that three people are each related to the others — possibly through three different lines. The conclusion \"single common ancestor\" requires the additional evidence that the same physical segment is shared across all three pairs.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You think you've found a triangulated segment: you, your cousin Anna, and your cousin Brendan all share an overlapping region of about 5 cM on chromosome 4. Is this strong evidence of a single shared ancestor?</p>",
+          "options": [
+            "Not on its own. Segments below about 7 cM have a meaningful chance of being identical-by-chance rather than identical-by-descent, even when shared three ways. Treat such small triangulations as suggestive, not conclusive — and look for additional triangulating cousins or larger segments elsewhere",
+            "Yes. Triangulation guarantees descent, regardless of segment size",
+            "No. Triangulation is impossible on chromosome 4 specifically",
+            "Yes. Any cM amount above 1 cM is conclusive when shared three ways"
+          ],
+          "correctAnswer": "Not on its own. Segments below about 7 cM have a meaningful chance of being identical-by-chance rather than identical-by-descent, even when shared three ways. Treat such small triangulations as suggestive, not conclusive — and look for additional triangulating cousins or larger segments elsewhere",
+          "explanationHtml": "<p>The under-7-cM caution applies to triangulated segments too. Each individual small segment carries a non-trivial false-match probability, and three independent false matches at the same small region — while less likely than one — are not impossible. Triangulation strengthens evidence but does not eliminate the segment-size threshold. Disciplined practice: weight the segment, don't rely on it alone, and seek corroboration.</p>"
+        }
+      ]
+    }
+  ]
+}
