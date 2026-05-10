@@ -21,18 +21,18 @@ interface TopicData {
 }
 
 const TOPICS: Topic[] = [
-  { id: 'java',       name: 'Java',           glyph: '☕', tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',          status: 'active',      chunks: 14, accentStroke: 'var(--teal)' },
-  { id: 'tailwind',   name: 'Tailwind CSS',   glyph: '🎨', tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',  status: 'active',      chunks: 4,  accentStroke: 'var(--purple)' },
-  { id: 'html',       name: 'HTML',           glyph: '📄', tagline: 'The structure of the web. Learn to author the skeleton of every page.',          status: 'coming_soon', chunks: 8,  accentStroke: 'var(--orange)' },
-  { id: 'css',        name: 'CSS',            glyph: '🖌️', tagline: 'Craft beautiful, responsive interfaces from the ground up.',                     status: 'coming_soon', chunks: 10, accentStroke: 'var(--purple)' },
-  { id: 'javascript', name: 'JavaScript',     glyph: '⚡', tagline: 'Bring the web to life. Logic, events, async, and the DOM.',                     status: 'coming_soon', chunks: 14, accentStroke: 'var(--gold)' },
-  { id: 'python',     name: 'Python',         glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.',                 status: 'coming_soon', chunks: 12, accentStroke: 'var(--teal)' },
-  { id: 'sql',        name: 'SQL',            glyph: '🗃️', tagline: 'The language of data. SELECT to window functions — the queries every backend dev writes daily.',                              status: 'active',      chunks: 8,  accentStroke: 'var(--teal)' },
-  { id: 'typescript', name: 'TypeScript',     glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',       status: 'coming_soon', chunks: 10, accentStroke: 'var(--gold)' },
-  { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.', status: 'active',      chunks: 4,  accentStroke: 'var(--teal)' },
-  { id: 'psychology', name: 'Psychology',     glyph: '🧠', tagline: 'A self-paced route through foundations, human behaviour, advanced understanding, and academic thinking.', status: 'active', chunks: 9, accentStroke: 'var(--purple)' },
-  { id: 'genealogy',  name: 'Genealogy',      glyph: '🌳', tagline: 'Records, lineages, and DNA — the methods of family history.', status: 'active', chunks: 3, accentStroke: 'var(--gold)' },
-  { id: 'sciences',   name: 'Natural Sciences', glyph: '🔬', tagline: 'Scientific method, physics, biology — the laws of the world.', status: 'active', chunks: 3, accentStroke: 'var(--teal)' },
+  { id: 'java',       name: 'Java',           glyph: '☕', tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',  status: 'active', chunks: 14, accentStroke: 'var(--teal)' },
+  { id: 'tailwind',   name: 'Tailwind CSS',   glyph: '🎨', tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',  status: 'coming_soon', chunks: 4,  accentStroke: 'var(--purple)' },
+  { id: 'html',       name: 'HTML',           glyph: '📄', tagline: 'The structure of the web. Learn to author the skeleton of every page.', status: 'coming_soon', chunks: 8,  accentStroke: 'var(--orange)' },
+  { id: 'css',        name: 'CSS',            glyph: '🖌️', tagline: 'Craft beautiful, responsive interfaces from the ground up.', status: 'coming_soon', chunks: 10, accentStroke: 'var(--purple)' },
+  { id: 'javascript', name: 'JavaScript',     glyph: '⚡', tagline: 'Bring the web to life. Logic, events, async, and the DOM.', status: 'coming_soon', chunks: 14, accentStroke: 'var(--gold)' },
+  { id: 'python',     name: 'Python',         glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.', status: 'coming_soon', chunks: 12, accentStroke: 'var(--teal)' },
+  { id: 'sql',        name: 'SQL',            glyph: '🗃️', tagline: 'The language of data. SELECT to window functions — the queries every backend dev writes daily.', status: 'coming_soon', chunks: 8,  accentStroke: 'var(--teal)' },
+  { id: 'typescript', name: 'TypeScript',     glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.', status: 'coming_soon', chunks: 10, accentStroke: 'var(--gold)' },
+  { id: 'react',      name: 'React',          glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.', status: 'coming_soon', chunks: 4,  accentStroke: 'var(--teal)' },
+  { id: 'psychology', name: 'Psychology',     glyph: '🧠', tagline: 'A self-paced route through foundations, human behaviour, advanced understanding, and academic thinking.', status: 'coming_soon', chunks: 9, accentStroke: 'var(--purple)' },
+  { id: 'genealogy',  name: 'Genealogy',      glyph: '🌳', tagline: 'Records, lineages, and DNA — the methods of family history.', status: 'coming_soon', chunks: 3, accentStroke: 'var(--gold)' },
+  { id: 'sciences',   name: 'Natural Sciences', glyph: '🔬', tagline: 'Scientific method, physics, biology — the laws of the world.', status: 'coming_soon', chunks: 3, accentStroke: 'var(--teal)' },
 ]
 
 const ACTIVE_TOPICS = TOPICS.filter(t => t.status === 'active').map(t => t.id)
