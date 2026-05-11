@@ -118,7 +118,7 @@ export default function PrerequisiteCheckPage() {
               <p className="text-[15px] text-muted leading-[1.7] max-w-[480px] mx-auto m-0">
                 {topicId === 'tailwind'
                   ? 'Tailwind CSS maps directly onto HTML class attributes and CSS properties. You\'ll move fastest if you already know the basics: what a class is, what padding and margin do, and how flexbox works.'
-                  : 'React is a JavaScript framework for building HTML-based UIs. To write JSX and reason about layout, you\'ll need to understand HTML elements, CSS selectors, and the box model.'}
+                  : 'React is a JavaScript framework for building HTML-based UIs. To write JSX and reason about layout, you\'ll need to understand HTML elements, CSS selectors, and the box domain.'}
               </p>
             </div>
 

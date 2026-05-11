@@ -1,0 +1,435 @@
+package com.ambravate.arcane.academy.practice.service;
+
+import com.ambravate.arcane.academy.ai.domain.AnswerPair;
+import com.ambravate.arcane.academy.ai.domain.GradeResult;
+import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
+import com.ambravate.arcane.academy.common.dto.BadgeDto;
+import com.ambravate.arcane.academy.common.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.common.domain.EncodingPhase;
+import com.ambravate.arcane.academy.common.domain.ReviewSession;
+import com.ambravate.arcane.academy.common.domain.SessionType;
+import com.ambravate.arcane.academy.common.domain.SubChunk;
+import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
+import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.User;
+import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
+import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.ai.service.AiMentorService;
+import com.ambravate.arcane.academy.gamification.service.BadgeService;
+import com.ambravate.arcane.academy.ai.service.RetrievalService;
+import com.ambravate.arcane.academy.gamification.service.SpacingService;
+import com.ambravate.arcane.academy.gamification.service.StreakService;
+
+import com.ambravate.arcane.academy.practice.domain.PracticeResult;
+import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
+import com.ambravate.arcane.academy.practice.domain.SubChunkSession;
+import com.ambravate.arcane.academy.practice.domain.TestResult;
+import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class EncodingService {
+
+    private final SubChunkRepository subChunkRepository;
+    private final UserChunkProgressRepository progressRepository;
+    private final UserRepository userRepository;
+    private final JavaCodeRunner codeRunner;
+    private final AiMentorService aiMentorService;
+    private final RetrievalService retrievalService;
+    private final SpacingService spacingService;
+    private final StreakService streakService;
+    private final BadgeService badgeService;
+    private final TelemetryService telemetry;
+    private final ObjectMapper objectMapper;
+
+    /**
+     * Start or resume a sub-chunk. Creates UserChunkProgress if not exists.
+     */
+    @Transactional
+    public SubChunkSession startSubChunk(String userId, String subChunkId) {
+        SubChunk subChunk = subChunkRepository.findById(subChunkId)
+                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+
+        boolean isFirstStart = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).isEmpty();
+
+        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId)
+                .orElseGet(() -> {
+                    UserChunkProgress p = UserChunkProgress.builder()
+                            .userId(userId)
+                            .subChunkId(subChunkId)
+                            .status(SubChunkStatus.IN_PROGRESS)
+                            .currentPhase(EncodingPhase.HOOK)
+                            .build();
+                    return progressRepository.save(p);
+                });
+
+        if (progress.getStatus() == SubChunkStatus.NOT_STARTED) {
+            progress.setStatus(SubChunkStatus.IN_PROGRESS);
+            progress.setCurrentPhase(EncodingPhase.HOOK);
+            progressRepository.save(progress);
+        }
+
+        // Telemetry: emit quest_started only on the first start (resumes shouldn't double-count)
+        if (isFirstStart) {
+            telemetry.questStarted(userId, subChunkId, subChunk.getChunkId());
+        }
+
+        return new SubChunkSession(subChunk, progress);
+    }
+
+    /**
+     * Advance to the next encoding phase.
+     */
+    @Transactional
+    public SubChunkSession advancePhase(String userId, String subChunkId) {
+        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId)
+                .orElseThrow(() -> new IllegalStateException("No progress for " + subChunkId));
+        SubChunk subChunk = subChunkRepository.findById(subChunkId).orElseThrow();
+
+        EncodingPhase next = switch (progress.getCurrentPhase()) {
+            case HOOK -> EncodingPhase.EXPLANATION;
+            case EXPLANATION -> EncodingPhase.GUIDED_PRACTICE;
+            case GUIDED_PRACTICE -> {
+                // Only enter SOLO_PRACTICE if content is defined for this sub-chunk
+                String solo = subChunk.getSoloPracticeHtml();
+                yield (solo != null && !solo.isBlank())
+                        ? EncodingPhase.SOLO_PRACTICE
+                        : EncodingPhase.RETRIEVAL_CHECK;
+            }
+            case SOLO_PRACTICE -> EncodingPhase.RETRIEVAL_CHECK;
+            case RETRIEVAL_CHECK -> EncodingPhase.COMPLETE;
+            case COMPLETE -> EncodingPhase.COMPLETE;
+        };
+
+        boolean transitionsToComplete = next == EncodingPhase.COMPLETE
+                && progress.getStatus() != SubChunkStatus.COMPLETE; // emit telemetry only on first completion
+
+        progress.setCurrentPhase(next);
+        if (next == EncodingPhase.COMPLETE) {
+            progress.setStatus(SubChunkStatus.COMPLETE);
+            progress.setCompletedAt(Instant.now());
+        }
+        progressRepository.save(progress);
+
+        log.info("[Encoding] Phase advanced | user={} subChunk={} phase={}", userId, subChunkId, next);
+
+        if (transitionsToComplete) {
+            telemetry.questCompleted(userId, subChunkId, subChunk.getChunkId(), subChunk.getXpReward());
+        }
+
+        return new SubChunkSession(subChunk, progress);
+    }
+
+    /**
+     * Submit guided practice code — compile and run against tests.
+     * Same pattern as the old QuestService.evaluateSubmission.
+     */
+    @Transactional
+    public PracticeResult submitGuidedPractice(String userId, String subChunkId, String code) {
+        SubChunk subChunk = subChunkRepository.findById(subChunkId)
+                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+
+        if (subChunk.getPracticeType() == SubChunkPracticeType.NONE) {
+            return gradeWrittenPractice(userId, subChunk, code, false);
+        }
+
+        List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
+        if (testCases.isEmpty()) {
+            return new PracticeResult(true, List.of(), 0, null, null, List.of());
+        }
+
+        // Probe first test for compile/runtime errors
+        CodeRunResponse probe = codeRunner.run(code,
+                (String) testCases.getFirst().getOrDefault("input", null));
+
+        if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
+            String feedback = aiMentorService.explainCompileError(
+                    subChunk.getTitle(), "Java", code, probe.getError());
+            return new PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
+        }
+
+        if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
+                || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
+            String feedback = aiMentorService.explainRuntimeError(
+                    subChunk.getTitle(), "Java", code,
+                    probe.getError() != null ? probe.getError() : "Timeout — possible infinite loop");
+            return new PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
+        }
+
+        // Run all tests
+        List<TestResult> results = new ArrayList<>();
+        boolean allPassed = true;
+        List<String> failedLabels = new ArrayList<>();
+
+        for (Map<String, Object> tc : testCases) {
+            String label = (String) tc.get("label");
+            String input = (String) tc.getOrDefault("input", null);
+            String expected = (String) tc.get("expected");
+            CodeRunResponse run = codeRunner.run(code, input);
+            String actual = run.getOutput() != null ? run.getOutput().trim() : "";
+            boolean passed = actual.contains(expected.trim());
+            results.add(new TestResult(label, passed, actual, expected));
+            if (!passed) { allPassed = false; failedLabels.add(label); }
+        }
+
+        int xpEarned = 0;
+        String mentorFeedback = null;
+        List<BadgeDto> newBadges = List.of();
+
+        if (allPassed) {
+            xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
+            newBadges = badgeService.evaluateAndAward(userId);
+        } else {
+            mentorFeedback = aiMentorService.getFeedback(subChunk.getTitle(), "Java",
+                    "", code, String.join(", ", failedLabels));
+        }
+
+        return new PracticeResult(allPassed, results, xpEarned, mentorFeedback,
+                allPassed ? null : "TEST_FAILURE", newBadges);
+    }
+
+    /**
+     * Submit solo practice code — same tests as guided practice, but no XP award
+     * (XP was already earned during GUIDED_PRACTICE).
+     */
+    @Transactional
+    public PracticeResult submitSoloPractice(String userId, String subChunkId, String code) {
+        SubChunk subChunk = subChunkRepository.findById(subChunkId)
+                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+
+        if (subChunk.getPracticeType() == SubChunkPracticeType.NONE) {
+            return gradeWrittenPractice(userId, subChunk, code, true);
+        }
+
+        List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
+        if (testCases.isEmpty()) {
+            return new PracticeResult(true, List.of(), 0, null, null, List.of());
+        }
+
+        CodeRunResponse probe = codeRunner.run(code,
+                (String) testCases.getFirst().getOrDefault("input", null));
+
+        if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
+            String feedback = aiMentorService.explainCompileError(
+                    subChunk.getTitle(), "Java", code, probe.getError());
+            return new PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
+        }
+        if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
+                || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
+            String feedback = aiMentorService.explainRuntimeError(
+                    subChunk.getTitle(), "Java", code,
+                    probe.getError() != null ? probe.getError() : "Timeout — possible infinite loop");
+            return new PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
+        }
+
+        List<TestResult> results = new ArrayList<>();
+        boolean allPassed = true;
+        List<String> failedLabels = new ArrayList<>();
+
+        for (Map<String, Object> tc : testCases) {
+            String label = (String) tc.get("label");
+            String input = (String) tc.getOrDefault("input", null);
+            String expected = (String) tc.get("expected");
+            CodeRunResponse run = codeRunner.run(code, input);
+            String actual = run.getOutput() != null ? run.getOutput().trim() : "";
+            boolean passed = actual.contains(expected.trim());
+            results.add(new TestResult(label, passed, actual, expected));
+            if (!passed) { allPassed = false; failedLabels.add(label); }
+        }
+
+        String mentorFeedback = null;
+        if (!allPassed) {
+            mentorFeedback = aiMentorService.getFeedback(subChunk.getTitle(), "Java",
+                    "", code, String.join(", ", failedLabels));
+        }
+
+        // No XP — already earned during GUIDED_PRACTICE
+        return new PracticeResult(allPassed, results, 0, mentorFeedback,
+                allPassed ? null : "TEST_FAILURE", List.of());
+    }
+
+    /**
+     * Submit retrieval check answers, grade them, update SM-2 spacing.
+     */
+    @Transactional
+    public RetrievalCheckResult submitRetrievalCheck(String userId, String subChunkId,
+                                                      List<AnswerPair> answers) {
+        GradeResult graded = retrievalService.gradeAnswers(answers);
+        ReviewSession session = retrievalService.saveSession(userId, SessionType.RETRIEVAL_CHECK, graded);
+
+        // Update SM-2 spacing
+        spacingService.updateSpacing(userId, subChunkId, graded.score());
+
+        // If score >= 60%, mark retrieval as passed and advance to COMPLETE
+        boolean passed = graded.score() >= 0.6;
+        int xpEarned = 0;
+        List<BadgeDto> newBadges = List.of();
+
+        if (passed) {
+            UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).orElseThrow();
+            boolean firstCompletion = progress.getStatus() != SubChunkStatus.COMPLETE;
+            progress.setCurrentPhase(EncodingPhase.COMPLETE);
+            progress.setStatus(SubChunkStatus.COMPLETE);
+            progress.setCompletedAt(Instant.now());
+            progressRepository.save(progress);
+
+            xpEarned = awardXp(userId, subChunkId + "-retrieval", 25);
+            newBadges = badgeService.evaluateAndAward(userId);
+
+            if (firstCompletion) {
+                SubChunk sc = subChunkRepository.findById(subChunkId).orElse(null);
+                telemetry.questCompleted(userId, subChunkId,
+                        sc != null ? sc.getChunkId() : null, xpEarned);
+            }
+        }
+
+        return new RetrievalCheckResult(graded.score(), graded.correct(), graded.total(),
+                graded.results(), passed, xpEarned, newBadges,
+                passed ? null : "Score below 60%. Consider re-encoding this sub-chunk.");
+    }
+
+    private int awardXp(String userId, String itemId, int xp) {
+        streakService.updateStreak(userId);
+        User user = userRepository.findById(userId).orElseThrow();
+        int newXp = user.getTotalXp() + xp;
+        user.setTotalXp(newXp);
+        user.setRank(calculateRank(newXp));
+        userRepository.save(user);
+        return xp;
+    }
+
+    public static String calculateRank(int xp) {
+        if (xp >= 11000) return "Lord Magus";
+        if (xp >= 8000)  return "Magus";
+        if (xp >= 6500)  return "Archmage";
+        if (xp >= 4000)  return "Mage";
+        if (xp >= 2000)  return "Adept";
+        if (xp >= 800)   return "Apprentice";
+        return "Novice";
+    }
+
+    private List<Map<String, Object>> parseTestCases(String json) {
+        if (json == null) return List.of();
+        try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
+    }
+
+    private PracticeResult gradeWrittenPractice(String userId, SubChunk subChunk, String response, boolean solo) {
+        String answer = response == null ? "" : response.trim();
+        String lowerAnswer = answer.toLowerCase(Locale.ROOT);
+        int wordCount = answer.isBlank() ? 0 : answer.split("\\s+").length;
+        int sentenceCount = answer.isBlank() ? 0 : answer.split("[.!?]+").length;
+
+        Set<String> expectedTerms = expectedTerms(subChunk);
+        long matchedTerms = expectedTerms.stream()
+                .filter(term -> lowerAnswer.contains(term.toLowerCase(Locale.ROOT)))
+                .count();
+
+        int minWords = solo ? 70 : 45;
+        int minTerms = Math.min(solo ? 6 : 4, Math.max(3, expectedTerms.size() / 4));
+
+        List<TestResult> results = new ArrayList<>();
+        results.add(new TestResult(
+                solo ? "Independent written response" : "Guided written response",
+                wordCount >= minWords,
+                wordCount >= minWords
+                        ? "Enough detail included (" + wordCount + " words)."
+                        : "Add more detail: " + wordCount + "/" + minWords + " words.",
+                minWords + "+ words"
+        ));
+        results.add(new TestResult(
+                "Uses lesson vocabulary",
+                matchedTerms >= minTerms,
+                matchedTerms >= minTerms
+                        ? "Used " + matchedTerms + " key terms from the lesson."
+                        : "Use more lesson vocabulary: " + matchedTerms + "/" + minTerms + " key terms found.",
+                minTerms + "+ key terms"
+        ));
+        results.add(new TestResult(
+                "Explains rather than lists",
+                sentenceCount >= 3 && lowerAnswer.contains("because"),
+                sentenceCount >= 3 && lowerAnswer.contains("because")
+                        ? "Includes explanation and reasoning."
+                        : "Add at least three sentences and use 'because' to explain your reasoning.",
+                "3+ sentences with reasoning"
+        ));
+
+        if (solo) {
+            boolean hasIndependentApplication = lowerAnswer.contains("example")
+                    || lowerAnswer.contains("case")
+                    || lowerAnswer.contains("evidence")
+                    || lowerAnswer.contains("would");
+            results.add(new TestResult(
+                    "Applies the idea independently",
+                    hasIndependentApplication,
+                    hasIndependentApplication
+                            ? "Includes independent application language."
+                            : "Add your own example, case, evidence, or what you would do next.",
+                    "Own example or application"
+            ));
+        }
+
+        boolean allPassed = results.stream().allMatch(TestResult::passed);
+        int xpEarned = 0;
+        List<BadgeDto> newBadges = List.of();
+        String mentorFeedback = null;
+
+        if (allPassed && !solo) {
+            xpEarned = awardXp(userId, subChunk.getId(), subChunk.getXpReward());
+            newBadges = badgeService.evaluateAndAward(userId);
+        } else if (!allPassed) {
+            mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
+                    + "and explain why the ideas matter. "
+                    + (solo ? "For solo practice, add your own case or example rather than following the guided wording." : "");
+        }
+
+        return new PracticeResult(allPassed, results, xpEarned, mentorFeedback,
+                allPassed ? null : "TEXT_CHECK_FAILURE", newBadges);
+    }
+
+    private Set<String> expectedTerms(SubChunk subChunk) {
+        String source = String.join(" ",
+                Optional.ofNullable(subChunk.getTitle()).orElse(""),
+                Optional.ofNullable(subChunk.getExplanationHtml()).orElse(""),
+                Optional.ofNullable(subChunk.getGuidedPracticeHtml()).orElse(""));
+
+        String text = source
+                .replaceAll("<[^>]+>", " ")
+                .replaceAll("&[a-zA-Z]+;", " ")
+                .toLowerCase(Locale.ROOT);
+
+        Set<String> stopWords = Set.of(
+                "this", "that", "with", "from", "your", "they", "them", "then", "than",
+                "into", "what", "when", "where", "which", "write", "lesson", "module",
+                "practice", "guided", "solo", "because", "about", "after", "before",
+                "should", "could", "would", "their", "there", "these", "those"
+        );
+
+        Set<String> terms = new LinkedHashSet<>();
+        for (String token : text.split("[^a-z0-9-]+")) {
+            if (token.length() >= 5 && !stopWords.contains(token)) {
+                terms.add(token);
+            }
+            if (terms.size() >= 24) break;
+        }
+
+        if (terms.isEmpty()) {
+            terms.add("psychology");
+            terms.add("example");
+            terms.add("evidence");
+        }
+        return terms;
+    }
+
+}

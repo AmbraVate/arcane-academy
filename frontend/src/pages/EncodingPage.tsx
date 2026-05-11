@@ -208,7 +208,7 @@ export default function EncodingPage() {
   // ── React (JSX) practice ───────────────────────────────────────────────────
   // Tests run in an iframe sandbox via ReactEditor.runTests(); per-test pass/fail
   // is then forwarded to the backend along with the source code. See
-  // ReactPracticeService for the trust model rationale.
+  // ReactPracticeService for the trust domain rationale.
 
   async function handleSubmitReact(solo: boolean) {
     if (!subChunkId || !encoding || running) return
