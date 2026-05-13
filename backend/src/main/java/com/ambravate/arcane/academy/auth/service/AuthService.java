@@ -1,9 +1,9 @@
 package com.ambravate.arcane.academy.auth.service;
 
 import com.ambravate.arcane.academy.common.domain.AuthProvider;
-import com.ambravate.arcane.academy.common.dto.AuthResponse;
-import com.ambravate.arcane.academy.common.dto.LoginRequest;
-import com.ambravate.arcane.academy.common.dto.RegisterRequest;
+import com.ambravate.arcane.academy.auth.dto.AuthResponse;
+import com.ambravate.arcane.academy.auth.dto.LoginRequest;
+import com.ambravate.arcane.academy.auth.dto.RegisterRequest;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.JwtService;

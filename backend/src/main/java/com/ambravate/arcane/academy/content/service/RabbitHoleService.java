@@ -1,9 +1,9 @@
 package com.ambravate.arcane.academy.content.service;
 
 import com.ambravate.arcane.academy.ai.service.AiMentorService;
-import com.ambravate.arcane.academy.common.dto.CodeRunResponse;
-import com.ambravate.arcane.academy.common.domain.RabbitHoleModule;
-import com.ambravate.arcane.academy.common.repository.RabbitHoleModuleRepository;
+import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
+import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.TestResult;
 import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;

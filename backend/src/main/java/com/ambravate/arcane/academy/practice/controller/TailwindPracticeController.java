@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.practice.controller;
 
-import com.ambravate.arcane.academy.common.dto.SubmitResponse;
-import com.ambravate.arcane.academy.common.dto.TailwindSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
+import com.ambravate.arcane.academy.practice.dto.TailwindSubmitRequest;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.practice.service.TailwindPracticeService;
 import lombok.RequiredArgsConstructor;

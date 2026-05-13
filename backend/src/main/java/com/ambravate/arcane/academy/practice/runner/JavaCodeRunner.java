@@ -1,6 +1,6 @@
 package com.ambravate.arcane.academy.practice.runner;
 
-import com.ambravate.arcane.academy.common.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

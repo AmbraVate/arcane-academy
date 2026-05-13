@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.practice.controller;
 
-import com.ambravate.arcane.academy.common.dto.CodeRunRequest;
-import com.ambravate.arcane.academy.common.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.practice.dto.CodeRunRequest;
+import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
 import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import jakarta.validation.Valid;

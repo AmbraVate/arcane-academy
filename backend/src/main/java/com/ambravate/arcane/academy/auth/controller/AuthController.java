@@ -1,8 +1,8 @@
 package com.ambravate.arcane.academy.auth.controller;
 
-import com.ambravate.arcane.academy.common.dto.AuthResponse;
-import com.ambravate.arcane.academy.common.dto.LoginRequest;
-import com.ambravate.arcane.academy.common.dto.RegisterRequest;
+import com.ambravate.arcane.academy.auth.dto.AuthResponse;
+import com.ambravate.arcane.academy.auth.dto.LoginRequest;
+import com.ambravate.arcane.academy.auth.dto.RegisterRequest;
 import com.ambravate.arcane.academy.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.ai.controller;
 
-import com.ambravate.arcane.academy.common.dto.MentorFeedbackRequest;
-import com.ambravate.arcane.academy.common.dto.MentorFeedbackResponse;
+import com.ambravate.arcane.academy.ai.dto.MentorFeedbackRequest;
+import com.ambravate.arcane.academy.ai.dto.MentorFeedbackResponse;
 import com.ambravate.arcane.academy.ai.service.AiMentorService;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import jakarta.validation.Valid;

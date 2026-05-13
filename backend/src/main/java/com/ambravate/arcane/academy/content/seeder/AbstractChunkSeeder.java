@@ -5,12 +5,12 @@ import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.QuestionTier;
 import com.ambravate.arcane.academy.common.domain.QuestionType;
-import com.ambravate.arcane.academy.common.domain.RabbitHoleModule;
+import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
 import com.ambravate.arcane.academy.common.repository.ChunkRepository;
 import com.ambravate.arcane.academy.common.repository.QuestionRepository;
-import com.ambravate.arcane.academy.common.repository.RabbitHoleModuleRepository;
+import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
 import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 
 

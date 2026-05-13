@@ -36,6 +36,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     /** Backfill: set role = USER for any legacy rows that have NULL in the role column. */
     @Modifying
     @Transactional
-    @Query("UPDATE User u SET u.role = com.ambravate.polymath.academy.model.User.UserRole.USER WHERE u.role IS NULL")
+    @Query("UPDATE User u SET u.role = com.ambravate.arcane.academy.common.domain.UserRole.USER WHERE u.role IS NULL")
     int backfillNullRoles();
 }

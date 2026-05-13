@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.content.service;
 
-import com.ambravate.arcane.academy.common.domain.CuriosityQueueItem;
-import com.ambravate.arcane.academy.common.repository.CuriosityQueueItemRepository;
+import com.ambravate.arcane.academy.content.domain.CuriosityQueueItem;
+import com.ambravate.arcane.academy.content.repository.CuriosityQueueItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

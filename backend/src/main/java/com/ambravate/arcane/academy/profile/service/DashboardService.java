@@ -16,10 +16,8 @@ import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepositor
 import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.common.repository.UserTopicProfileRepository;
-import com.ambravate.arcane.academy.gamification.service.SpacingService;
+import com.ambravate.arcane.academy.ai.service.SpacingService;
 import com.ambravate.arcane.academy.gamification.service.StreakService;
-import com.ambravate.polymath.academy.model.*;
-import com.ambravate.polymath.academy.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

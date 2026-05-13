@@ -4,7 +4,7 @@ import com.ambravate.arcane.academy.ai.domain.AnswerPair;
 import com.ambravate.arcane.academy.ai.domain.GradeResult;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
-import com.ambravate.arcane.academy.common.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
 import com.ambravate.arcane.academy.common.domain.EncodingPhase;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;
@@ -19,7 +19,7 @@ import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.ai.service.AiMentorService;
 import com.ambravate.arcane.academy.gamification.service.BadgeService;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
-import com.ambravate.arcane.academy.gamification.service.SpacingService;
+import com.ambravate.arcane.academy.ai.service.SpacingService;
 import com.ambravate.arcane.academy.gamification.service.StreakService;
 
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;

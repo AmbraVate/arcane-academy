@@ -1,8 +1,8 @@
 package com.ambravate.arcane.academy.content.controller;
 
-import com.ambravate.arcane.academy.common.dto.ChunkDetailDto;
-import com.ambravate.arcane.academy.common.dto.ChunkSummaryDto;
-import com.ambravate.arcane.academy.common.dto.SubChunkSummaryDto;
+import com.ambravate.arcane.academy.content.dto.ChunkDetailDto;
+import com.ambravate.arcane.academy.content.dto.ChunkSummaryDto;
+import com.ambravate.arcane.academy.practice.dto.SubChunkSummaryDto;
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
@@ -13,7 +13,7 @@ import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.content.service.ChunkGraphService;
-import com.ambravate.arcane.academy.gamification.service.SpacingService;
+import com.ambravate.arcane.academy.ai.service.SpacingService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 package com.ambravate.arcane.academy.practice.service;
 
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
-import com.ambravate.arcane.academy.common.dto.ReactSubmitRequest;
-import com.ambravate.arcane.academy.common.dto.SubmitResponse;
+import com.ambravate.arcane.academy.practice.dto.ReactSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.User;

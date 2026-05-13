@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.practice.controller;
 
-import com.ambravate.arcane.academy.common.dto.SqlSubmitRequest;
-import com.ambravate.arcane.academy.common.dto.SubmitResponse;
+import com.ambravate.arcane.academy.practice.dto.SqlSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.practice.service.SqlPracticeService;
 import lombok.RequiredArgsConstructor;

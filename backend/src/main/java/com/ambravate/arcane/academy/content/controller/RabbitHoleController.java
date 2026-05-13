@@ -1,8 +1,8 @@
 package com.ambravate.arcane.academy.content.controller;
 
-import com.ambravate.arcane.academy.common.dto.CodeSubmitRequest;
-import com.ambravate.arcane.academy.common.dto.SubmitResponse;
-import com.ambravate.arcane.academy.common.domain.RabbitHoleModule;
+import com.ambravate.arcane.academy.practice.dto.CodeSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
+import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.content.service.RabbitHoleService;

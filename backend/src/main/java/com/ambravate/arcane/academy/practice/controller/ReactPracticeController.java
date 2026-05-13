@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.practice.controller;
 
-import com.ambravate.arcane.academy.common.dto.ReactSubmitRequest;
-import com.ambravate.arcane.academy.common.dto.SubmitResponse;
+import com.ambravate.arcane.academy.practice.dto.ReactSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.practice.service.ReactPracticeService;
 import lombok.RequiredArgsConstructor;
