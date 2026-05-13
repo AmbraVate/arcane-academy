@@ -1,4 +1,4 @@
-# Polymath Academy
+# Arcane Academy
 
 A gamified Java learning platform with a wizardry RPG theme. Built with React + Spring Boot + PostgreSQL, fully containerised with Docker.
 
