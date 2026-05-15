@@ -49,13 +49,13 @@ export default function App() {
       {user && !location.pathname.startsWith('/admin') && <Nav />}
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
       <Routes>
-        <Route path="/login"    element={user ? <Navigate to="/" replace /> : <LoginPage />} />
-        <Route path="/register" element={user ? <Navigate to="/" replace /> : <RegisterPage />} />
+        <Route path="/login"    element={user ? <Navigate to="/topics" replace /> : <LoginPage />} />
+        <Route path="/register" element={user ? <Navigate to="/topics" replace /> : <RegisterPage />} />
         <Route path="/oauth2/callback" element={<OAuthCallbackPage />} />
         <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-        <Route path="/"         element={<LoginPage />} />
+        <Route path="/"         element={user ? <Navigate to="/topics" replace /> : <LandingPage />} />
         {/* All topics (including java) go through the unified /topic/:topicId → TopicPage flow.
             DashboardPage is reserved for an aggregate, multi-topic view — not a Java special case. */}
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />

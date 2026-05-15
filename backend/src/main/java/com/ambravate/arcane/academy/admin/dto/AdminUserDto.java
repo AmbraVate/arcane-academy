@@ -13,6 +13,7 @@ public class AdminUserDto {
     private int streakDays;
     private String authProvider;
     private String role;
+    private boolean blocked;
     private Instant createdAt;
     private Instant lastLoginAt;
     private long completedSubChunks;

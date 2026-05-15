@@ -146,17 +146,17 @@ export default function AdminSubChunksPage() {
       setShowForm(false)
       setEditSc(null)
     } catch {
-      setError('Failed to save sub-chunk')
+      setError('Failed to save lesson')
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this sub-chunk and all its questions?')) return
+    if (!confirm('Delete this lesson and all its questions?')) return
     try {
       await adminSubChunkApi.delete(id)
       setSubChunks(prev => prev.filter(s => s.id !== id))
     } catch {
-      setError('Failed to delete sub-chunk')
+      setError('Failed to delete lesson')
     }
   }
 
@@ -172,12 +172,12 @@ export default function AdminSubChunksPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
         <div>
           <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, color: '#c9a227' }}>
-            {chunk ? `${chunk.glyph} ${chunk.title}` : 'Sub-Chunks'}
+            {chunk ? `${chunk.glyph} ${chunk.title}` : 'Lessons'}
           </h1>
-          <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>Manage learning steps for this chunk</p>
+          <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>Manage lessons for this module</p>
         </div>
         <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={() => { setEditSc(null); setShowForm(true) }}>
-          + New Sub-Chunk
+          + New Lesson
         </button>
       </div>
 
@@ -196,7 +196,7 @@ export default function AdminSubChunksPage() {
         <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {subChunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No sub-chunks yet.</div>}
+          {subChunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No lessons yet.</div>}
           {subChunks.map(sc => (
             <SubChunkRow
               key={sc.id}

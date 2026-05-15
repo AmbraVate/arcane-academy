@@ -67,7 +67,7 @@ export default function AdminImportExportPage() {
             📤 Export Chunk
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
-            Download a full chunk (including all sub-chunks, questions, and story beats) as a JSON file.
+            Download a full module (including all lessons, questions, and story beats) as a JSON file.
           </p>
 
           {/* Topic filter */}
@@ -90,7 +90,7 @@ export default function AdminImportExportPage() {
           </div>
 
           {loadingChunks ? (
-            <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading chunks…</div>
+            <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading modules…</div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 360, overflowY: 'auto' }}>
               {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
@@ -105,7 +105,7 @@ export default function AdminImportExportPage() {
                   <span style={{ fontSize: 18 }}>{chunk.glyph}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 13, color: '#e8e0f0', fontWeight: 600 }}>{chunk.title}</div>
-                    <div style={{ fontSize: 11, color: '#8b7fa0' }}>{chunk.subChunkCount} sub-chunks</div>
+                    <div style={{ fontSize: 11, color: '#8b7fa0' }}>{chunk.subChunkCount} lessons</div>
                   </div>
                   <button
                     className="btn btn-ghost"
@@ -180,7 +180,7 @@ export default function AdminImportExportPage() {
                 ✓ Import Successful
               </div>
               <div style={{ fontSize: 12, color: '#e8e0f0' }}>
-                Chunk <strong>{importResult.chunkId}</strong> — {importResult.subChunks} sub-chunks imported
+                Module <strong>{importResult.chunkId}</strong> — {importResult.subChunks} lessons imported
               </div>
             </div>
           )}
@@ -201,7 +201,7 @@ export default function AdminImportExportPage() {
             <div style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: '#c4b5fd', marginBottom: 6 }}>Format notes</div>
             <ul style={{ listStyle: 'disc', paddingLeft: 16, fontSize: 11, color: '#8b7fa0', display: 'flex', flexDirection: 'column', gap: 4 }}>
               <li>The JSON must contain a top-level <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>chunk</code> object and a <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>subChunks</code> array</li>
-              <li>Questions are included under each sub-chunk as a <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>questions</code> array</li>
+              <li>Questions are included under each lesson as a <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>questions</code> array</li>
               <li>Story beats are stored as a JSON array in <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>storyBeats</code></li>
             </ul>
           </div>

@@ -15,6 +15,11 @@ import AiMentorPanel from '@/features/learning/components/AiMentorPanel'
 import LevelUpModal from '@/shared/components/layout/LevelUpModal'
 import BadgeToast from '@/shared/components/layout/BadgeToast'
 import { cn } from '@/lib/utils'
+import {
+  ArrowLeft, Bookmark, Pin, ClipboardList, BookOpen,
+  Play, Loader2, Zap, Check, Eye, EyeOff, FlaskConical,
+  PenLine, Target,
+} from 'lucide-react'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
 
@@ -53,6 +58,8 @@ export default function EncodingPage() {
   const [submittingFeynman, setSubmittingFeynman] = useState(false)
 
   const [showHint, setShowHint] = useState(false)
+
+  const [storyOpen, setStoryOpen] = useState(false)
 
   const [isSaved, setIsSaved] = useState(false)
   const [savingPin, setSavingPin] = useState(false)
@@ -393,7 +400,7 @@ export default function EncodingPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-muted">
-        <div className="text-[48px] mb-3 animate-pulse">🔮</div>
+        <div className="w-10 h-10 mb-3 animate-spin rounded-full border-2 border-border border-t-purple" />
         <p>Opening the Grimoire...</p>
       </div>
     )
@@ -414,7 +421,7 @@ export default function EncodingPage() {
     <div className="flex flex-col flex-1 overflow-hidden min-h-0">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border bg-card flex-shrink-0 max-[480px]:px-2.5 max-[480px]:py-2 max-[480px]:gap-2">
-        <button className="btn btn-ghost text-[12px]" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>← Back</button>
+        <button className="btn btn-ghost text-[12px] flex items-center gap-1" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}><ArrowLeft size={13} strokeWidth={1.75} /> Back</button>
         <div className="flex-1 min-w-0">
           <div className="text-[16px] font-bold text-text truncate max-[480px]:text-[13px]">{encoding.title}</div>
           <div className="flex gap-1.5 mt-1 overflow-x-auto flex-nowrap scrollbar-none max-[480px]:gap-1">
@@ -434,7 +441,7 @@ export default function EncodingPage() {
           onClick={handleTogglePin} disabled={savingPin}
           title={isSaved ? 'Remove from Curiosity Queue' : 'Save for later'}
         >
-          {isSaved ? '📌' : '🔖'} {isSaved ? 'Saved' : 'Save'}
+          {isSaved ? <Pin size={13} strokeWidth={1.75} /> : <Bookmark size={13} strokeWidth={1.75} />}{isSaved ? ' Saved' : ' Save'}
         </button>
       </div>
 
@@ -509,7 +516,7 @@ export default function EncodingPage() {
       {phase === 'GUIDED_PRACTICE' && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">
-            {encoding.practiceType === 'NONE' ? '📜 Study Material' : '✦ Guided Practice'}
+            {encoding.practiceType === 'NONE' ? 'Study Material' : '✦ Guided Practice'}
           </div>
           <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
           {encoding.practiceType === 'NONE' && encoding.starterCode && (
@@ -533,7 +540,7 @@ export default function EncodingPage() {
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Mobile task overlay */}
           {showTaskOverlay && (
-            <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[768px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
+            <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[640px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
               <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-8 max-h-[70vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
                   <span className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</span>
@@ -546,7 +553,7 @@ export default function EncodingPage() {
           )}
 
           {/* Left panel — desktop */}
-          <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[768px]:hidden">
+          <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
             <div className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</div>
             <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
@@ -562,23 +569,28 @@ export default function EncodingPage() {
           <div className="flex-1 flex flex-col overflow-hidden min-w-0">
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="text-[12px] text-muted truncate">☽ {encoding.filename}</span>
+                <span className="text-[12px] text-muted truncate font-medium">{encoding.title}</span>
                 {/* Mobile task toggle */}
                 <button
-                  className="hidden max-[768px]:inline-flex items-center text-[11px] px-2.5 py-[3px] rounded-[10px] bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.3)] cursor-pointer whitespace-nowrap flex-shrink-0"
+                  className="hidden max-[640px]:inline-flex items-center gap-1 text-[11px] px-2.5 py-[3px] rounded-[10px] bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.3)] cursor-pointer whitespace-nowrap flex-shrink-0"
                   onClick={() => setShowTaskOverlay(true)}
                 >
-                  📋 Task
+                  <ClipboardList size={12} strokeWidth={1.75} /> Task
                 </button>
               </div>
               <div className="flex gap-2 flex-shrink-0">
+                {encoding.storyBeats?.length ? (
+                  <button className="btn btn-ghost text-[12px] px-3 py-[5px] flex items-center gap-1" onClick={() => setStoryOpen(true)} title="Re-read the story">
+                    <BookOpen size={12} strokeWidth={1.75} /> Story
+                  </button>
+                ) : null}
                 {encoding.practiceType === 'JAVA' && (
-                  <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px]', running && 'opacity-70')} onClick={handleRun} disabled={running}>
-                    {running ? '⟳ Running…' : '▶ Run'}
+                  <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px] flex items-center gap-1', running && 'opacity-70')} onClick={handleRun} disabled={running}>
+                    {running ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Running…</> : <><Play size={13} strokeWidth={1.75} /> Run</>}
                   </button>
                 )}
                 <button
-                  className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px]')}
+                  className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px] flex items-center gap-1')}
                   onClick={
                     encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind
                     : encoding.practiceType === 'REACT' ? () => handleSubmitReact(false)
@@ -587,7 +599,7 @@ export default function EncodingPage() {
                   }
                   disabled={running || practiceSolved}
                 >
-                  {practiceSolved ? '✓ Solved' : '⚡ Submit'}
+                  {practiceSolved ? <><Check size={13} strokeWidth={2} /> Solved</> : <><Zap size={13} strokeWidth={1.75} /> Submit</>}
                 </button>
               </div>
             </div>
@@ -602,7 +614,7 @@ export default function EncodingPage() {
                 />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Guided Response Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -614,7 +626,7 @@ export default function EncodingPage() {
                 <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -625,7 +637,7 @@ export default function EncodingPage() {
                 <ReactEditor ref={reactEditorRef} value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -642,7 +654,7 @@ export default function EncodingPage() {
                 />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -653,7 +665,7 @@ export default function EncodingPage() {
                 <CodeEditor value={code} onChange={setCode} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -668,7 +680,7 @@ export default function EncodingPage() {
       {/* SOLO_PRACTICE — brief */}
       {phase === 'SOLO_PRACTICE' && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-[13px] font-bold mb-1 tracking-[0.06em] uppercase" style={{ color: 'var(--teal)' }}>🏹 Solo Challenge</div>
+          <div className="text-[13px] font-bold mb-1 tracking-[0.06em] uppercase flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</div>
           <p className="text-muted text-[12px] mb-4 leading-[1.6]">
             Now rebuild this from a blank slate — no starter code. If you get stuck, peek at the guided practice for a hint.
           </p>
@@ -678,10 +690,10 @@ export default function EncodingPage() {
           {/* Hint toggle */}
           <div className="mt-5">
             <button
-              className="btn btn-ghost text-[12px] px-3 py-1.5"
+              className="btn btn-ghost text-[12px] px-3 py-1.5 flex items-center gap-1.5"
               onClick={() => setShowHint(h => !h)}
             >
-              {showHint ? '▲ Hide hint' : '👁 Peek at Guided Practice'}
+              {showHint ? <><EyeOff size={13} strokeWidth={1.75} /> Hide hint</> : <><Eye size={13} strokeWidth={1.75} /> Peek at Guided Practice</>}
             </button>
             {showHint && (
               <div className="mt-3 p-4 rounded-[10px] border border-dashed border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.05)]">
@@ -700,10 +712,10 @@ export default function EncodingPage() {
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Mobile task overlay */}
           {showTaskOverlay && (
-            <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[768px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
+            <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[640px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
               <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-8 max-h-[70vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
-                  <span className="text-[13px] font-bold uppercase tracking-[0.06em]" style={{ color: 'var(--teal)' }}>🏹 Solo Challenge</span>
+                  <span className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</span>
                   <button className="btn btn-ghost text-[12px]" onClick={() => setShowTaskOverlay(false)}>✕</button>
                 </div>
                 <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
@@ -713,16 +725,16 @@ export default function EncodingPage() {
           )}
 
           {/* Left panel — desktop */}
-          <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[768px]:hidden">
-            <div className="text-[13px] font-bold uppercase tracking-[0.06em]" style={{ color: 'var(--teal)' }}>🏹 Solo Challenge</div>
+          <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
+            <div className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</div>
             <p className="text-muted text-[11px] leading-[1.6] mt-[-4px]">No starter code — build it from memory.</p>
             <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
 
             {/* Hint toggle */}
             <div className="border-t border-border pt-2.5 mt-1">
-              <button className="btn btn-ghost text-[11px] px-2.5 py-1" onClick={() => setShowHint(h => !h)}>
-                {showHint ? '▲ Hide hint' : '👁 Peek at Guided Practice'}
+              <button className="btn btn-ghost text-[11px] px-2.5 py-1 flex items-center gap-1.5" onClick={() => setShowHint(h => !h)}>
+                {showHint ? <><EyeOff size={13} strokeWidth={1.75} /> Hide hint</> : <><Eye size={13} strokeWidth={1.75} /> Peek at Guided Practice</>}
               </button>
               {showHint && (
                 <div className="mt-2.5 p-3 rounded-[8px] border border-dashed border-[rgba(139,92,246,0.3)] bg-[rgba(139,92,246,0.05)]">
@@ -744,22 +756,27 @@ export default function EncodingPage() {
           <div className="flex-1 flex flex-col overflow-hidden min-w-0">
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="text-[12px] text-muted truncate">☽ {encoding.filename}</span>
+                <span className="text-[12px] text-muted truncate font-medium">{encoding.title}</span>
                 <button
-                  className="hidden max-[768px]:inline-flex items-center text-[11px] px-2.5 py-[3px] rounded-[10px] bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.3)] cursor-pointer whitespace-nowrap flex-shrink-0"
+                  className="hidden max-[640px]:inline-flex items-center gap-1 text-[11px] px-2.5 py-[3px] rounded-[10px] bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.3)] cursor-pointer whitespace-nowrap flex-shrink-0"
                   onClick={() => setShowTaskOverlay(true)}
                 >
-                  📋 Task
+                  <ClipboardList size={12} strokeWidth={1.75} /> Task
                 </button>
               </div>
               <div className="flex gap-2 flex-shrink-0">
+                {encoding.storyBeats?.length ? (
+                  <button className="btn btn-ghost text-[12px] px-3 py-[5px] flex items-center gap-1" onClick={() => setStoryOpen(true)} title="Re-read the story">
+                    <BookOpen size={12} strokeWidth={1.75} /> Story
+                  </button>
+                ) : null}
                 {encoding.practiceType === 'JAVA' && (
-                  <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px]', running && 'opacity-70')} onClick={handleRun} disabled={running}>
-                    {running ? '⟳ Running…' : '▶ Run'}
+                  <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px] flex items-center gap-1', running && 'opacity-70')} onClick={handleRun} disabled={running}>
+                    {running ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Running…</> : <><Play size={13} strokeWidth={1.75} /> Run</>}
                   </button>
                 )}
                 <button
-                  className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px]')}
+                  className={cn(practiceSolved ? 'bg-teal text-bg border-none rounded-md cursor-default' : 'btn btn-primary', 'text-[12px] px-3.5 py-[5px] flex items-center gap-1')}
                   onClick={
                     encoding.practiceType === 'TAILWIND' ? handleSubmitTailwindSolo
                     : encoding.practiceType === 'REACT' ? () => handleSubmitReact(true)
@@ -768,7 +785,7 @@ export default function EncodingPage() {
                   }
                   disabled={running || practiceSolved}
                 >
-                  {practiceSolved ? '✓ Solved' : '⚡ Submit'}
+                  {practiceSolved ? <><Check size={13} strokeWidth={2} /> Solved</> : <><Zap size={13} strokeWidth={1.75} /> Submit</>}
                 </button>
               </div>
             </div>
@@ -783,7 +800,7 @@ export default function EncodingPage() {
                 />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Response Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -795,7 +812,7 @@ export default function EncodingPage() {
                 <TailwindEditor value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -806,7 +823,7 @@ export default function EncodingPage() {
                 <ReactEditor ref={reactEditorRef} value={code} onChange={setCode} disabled={practiceSolved} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -823,7 +840,7 @@ export default function EncodingPage() {
                 />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -834,7 +851,7 @@ export default function EncodingPage() {
                 <CodeEditor value={code} onChange={setCode} />
                 <OutputPanel lines={output} />
                 {practiceSolved && (
-                  <div className="hidden max-[768px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
@@ -858,7 +875,7 @@ export default function EncodingPage() {
                 <QuestionCard key={q.id} question={q} index={i} answer={answers[q.id] ?? ''} onChange={v => setAnswers(prev => ({ ...prev, [q.id]: v }))} />
               ))}
               <button className="btn btn-primary mt-1" onClick={handleSubmitRetrieval} disabled={submittingRetrieval}>
-                {submittingRetrieval ? 'Submitting...' : '⚡ Submit Answers'}
+                {submittingRetrieval ? 'Submitting...' : 'Submit Answers'}
               </button>
             </>
           ) : (
@@ -891,15 +908,15 @@ export default function EncodingPage() {
 
             {encoding.feynmanPrompt && !feynmanResult && (
               <div className="text-left mt-6 p-[18px] bg-card border border-border rounded-[10px]">
-                <div className="text-[16px] font-bold text-purple mb-1.5">🧪 Feynman Challenge (Optional)</div>
+                <div className="text-[16px] font-bold text-purple mb-1.5 flex items-center gap-1.5"><FlaskConical size={15} strokeWidth={1.75} /> Feynman Challenge (Optional)</div>
                 <p className="text-[13px] text-muted mb-3 italic">{encoding.feynmanPrompt}</p>
                 <textarea
                   className="w-full bg-surface border border-border rounded-md px-3 py-3 text-[14px] text-text font-crimson resize-y mb-2.5 box-border focus:outline-none focus:border-purple"
                   placeholder="Explain this concept in your own words..."
                   value={feynmanText} onChange={e => setFeynmanText(e.target.value)} rows={6}
                 />
-                <button className="btn btn-primary" onClick={handleSubmitFeynman} disabled={submittingFeynman || !feynmanText.trim()}>
-                  {submittingFeynman ? 'Evaluating...' : '📝 Submit Explanation'}
+                <button className="btn btn-primary flex items-center gap-1.5" onClick={handleSubmitFeynman} disabled={submittingFeynman || !feynmanText.trim()}>
+                  {submittingFeynman ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Evaluating...</> : <><PenLine size={13} strokeWidth={1.75} /> Submit Explanation</>}
                 </button>
               </div>
             )}
@@ -917,15 +934,43 @@ export default function EncodingPage() {
               </div>
             )}
 
-            <div className="flex gap-2.5 justify-center mt-5 max-[480px]:flex-col max-[480px]:items-center">
+            <div className="flex gap-2.5 justify-center mt-5 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
               <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>Return to Chunk →</button>
               <button className="btn btn-ghost" onClick={() => navigate(`/topic/${encoding.topicId ?? 'java'}`)}>
                 Dashboard
               </button>
+              {encoding.storyBeats?.length ? (
+                <button className="btn btn-ghost flex items-center gap-1.5" onClick={() => setStoryOpen(true)}>
+                  <BookOpen size={14} strokeWidth={1.75} />
+                  Re-read Story
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
       )}
+
+      {/* Story re-read modal */}
+      {storyOpen && encoding.storyBeats?.length ? (
+        <div
+          className="fixed inset-0 z-[300] flex items-center justify-center p-4"
+          style={{ background: 'rgba(0,0,0,0.72)' }}
+          onClick={() => setStoryOpen(false)}
+        >
+          <div
+            className="relative bg-card border border-[rgba(139,92,246,0.35)] rounded-[16px] w-full max-w-[680px] max-h-[82vh] flex flex-col shadow-[0_8px_48px_rgba(0,0,0,0.6)]"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-border flex-shrink-0">
+              <span className="text-[13px] font-bold text-gold tracking-[0.06em] uppercase">📖 Story</span>
+              <button className="btn btn-ghost text-[13px] px-2.5 py-1" onClick={() => setStoryOpen(false)}>✕ Close</button>
+            </div>
+            <div className="overflow-y-auto flex-1 px-5 py-5">
+              <StoryPanel beats={encoding.storyBeats} fullPage />
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {toast && (
         <div className="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-card border border-gold rounded-lg px-4 py-2.5 text-[13px] text-gold font-cinzel shadow-[0_4px_16px_rgba(0,0,0,0.4)] pointer-events-none animate-[toast-in_0.3s_ease]">

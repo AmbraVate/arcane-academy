@@ -60,6 +60,13 @@ public class User {
     @Builder.Default
     private boolean publicProfileEnabled = false;
 
+    /**
+     * Admin-controlled block flag. When true the user's JWT is rejected at the filter
+     * layer and they cannot access any authenticated endpoint.
+     */
+    @Builder.Default
+    private boolean blocked = false;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @Getter(AccessLevel.NONE)   // suppress Lombok getter; we provide a null-safe one below

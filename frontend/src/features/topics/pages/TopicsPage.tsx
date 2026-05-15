@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { dashboardApi } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { TopicIcon } from '@/components/icons/TopicIcon'
+import { Sparkles, RefreshCcw, Check } from 'lucide-react'
 
 interface Topic {
   id: string
@@ -18,6 +20,8 @@ interface TopicData {
   progress: number
   diagnosticCompleted: boolean
   diagnosticCompletedAt: string | null
+  totalChunks: number
+  totalLessons: number
 }
 
 const TOPICS: Topic[] = [
@@ -79,6 +83,8 @@ export default function TopicsPage() {
             progress: Math.round(d.overallProgress * 100),
             diagnosticCompleted: d.diagnosticCompleted,
             diagnosticCompletedAt: d.diagnosticCompletedAt ?? null,
+            totalChunks: d.chunkHealth.length,
+            totalLessons: d.chunkHealth.reduce((sum, ch) => sum + ch.totalSubChunks, 0),
           }
         })))
         .catch(() => {})
@@ -87,7 +93,14 @@ export default function TopicsPage() {
 
   function handleTopicClick(topic: Topic) {
     if (topic.status !== 'active') return
-    navigate(`/topic/${topic.id}`)
+    const data = topicData[topic.id]
+    // Intercept on first visit or when diagnostic has expired — show onboarding prompt
+    const needsOnboarding = !data || !data.diagnosticCompleted || diagnosticExpired(data.diagnosticCompletedAt)
+    if (needsOnboarding) {
+      navigate(`/topic/${topic.id}/onboarding`)
+    } else {
+      navigate(`/topic/${topic.id}`)
+    }
   }
 
   function handleDiagnosticClick(e: React.MouseEvent, topicId: string) {
@@ -112,7 +125,8 @@ export default function TopicsPage() {
             hover:bg-[rgba(139,92,246,0.15)] hover:border-purple"
           onClick={e => handleDiagnosticClick(e, topic.id)}
         >
-          🔮 Take Diagnostic
+          <Sparkles size={12} strokeWidth={1.75} />
+          Take Diagnostic
         </button>
       )
     }
@@ -127,7 +141,8 @@ export default function TopicsPage() {
             hover:bg-[rgba(201,162,39,0.15)] hover:border-gold"
           onClick={e => handleDiagnosticClick(e, topic.id)}
         >
-          🔁 Retake Diagnostic
+          <RefreshCcw size={12} strokeWidth={1.75} />
+          Retake Diagnostic
         </button>
       )
     }
@@ -143,7 +158,7 @@ export default function TopicsPage() {
     return (
       <div className="mt-1 flex items-center gap-1.5 px-3 py-1.5 rounded-[7px]
         bg-[rgba(0,200,83,0.06)] border border-[rgba(0,200,83,0.2)] text-teal text-[11px] font-cinzel">
-        <span className="font-bold">✓</span>
+        <Check size={12} strokeWidth={2.5} />
         <span>Diagnostic done{completedDate ? ` · ${completedDate}` : ''}</span>
         {daysLeft !== null && (
           <span className="ml-auto text-muted text-[10px]">retake in {daysLeft}d</span>
@@ -161,7 +176,7 @@ export default function TopicsPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 mb-12 max-[600px]:gap-2.5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+      <div className="grid gap-4 mb-12 max-[600px]:gap-2.5 max-[480px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
         {TOPICS.map(topic => {
           const active = topic.status === 'active'
           const progress = topicData[topic.id]?.progress ?? 0
@@ -170,6 +185,7 @@ export default function TopicsPage() {
               key={topic.id}
               className={cn(
                 'bg-card border border-border rounded-[14px] px-5 py-6 pb-5 flex flex-col gap-2.5',
+                'max-[480px]:px-3.5 max-[480px]:py-4',
                 'relative overflow-hidden transition-[border-color,transform,box-shadow] duration-200',
                 active
                   ? 'cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
@@ -184,7 +200,9 @@ export default function TopicsPage() {
               onClick={() => handleTopicClick(topic)}
             >
               <div className="flex items-start justify-between mb-1">
-                <span className="text-[36px] leading-none max-[600px]:text-[28px]">{topic.glyph}</span>
+                <div className="opacity-90">
+                  <TopicIcon topicId={topic.id} size={active ? 34 : 30} />
+                </div>
                 <div className="flex flex-col items-end gap-1.5">
                   <ProgressRing pct={progress} active={active} stroke={topic.accentStroke} />
                   <Badge variant={active ? 'active' : 'soon'}>{active ? 'Active' : 'Coming Soon'}</Badge>
@@ -196,9 +214,13 @@ export default function TopicsPage() {
 
               {active && renderDiagnosticRow(topic)}
 
-              <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto">
-                <span className="text-[11px] text-muted font-cinzel">{topic.chunks} knowledge chunks</span>
-                {active && <span className="text-[13px] text-teal font-semibold">Continue →</span>}
+              <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
+                <span className="text-[11px] text-muted font-cinzel leading-[1.4]">
+                  {active && topicData[topic.id]
+                    ? <>{topicData[topic.id].totalChunks} modules · {topicData[topic.id].totalLessons} lessons</>
+                    : <>{topic.chunks} modules</>}
+                </span>
+                {active && <span className="text-[13px] text-teal font-semibold flex-shrink-0">Continue →</span>}
               </div>
             </div>
           )

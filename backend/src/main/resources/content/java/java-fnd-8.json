@@ -1,0 +1,267 @@
+{
+  "id": "java-fnd-8",
+  "title": "Generics Basics",
+  "glyph": "🔷",
+  "tier": "FOUNDATION",
+  "topicId": "java",
+  "sortOrder": 8,
+  "prerequisites": ["java-fnd-3", "java-fnd-5"],
+  "subChunks": [
+    {
+      "id": "java-fnd-8a",
+      "title": "Generic Classes & Type Parameters",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "practiceType": "JAVA",
+      "hookHtml": "<p>You write a <code>Box</code> class to hold a <code>String</code>. Then you need one for <code>Integer</code>. Then for <code>Spell</code>. You end up copy-pasting the same logic three times, swapping only the type name. Somewhere, a compiler weeps.</p><p>Generics let you write <em>one</em> class that works safely with <em>any</em> type — no duplication, no casting, no <code>ClassCastException</code> landmines at runtime.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's Grand Library held a peculiar archive: shelf after shelf of identical wooden boxes, each labelled with a different rune — 'String Box', 'Integer Box', 'Spell Box', 'Dragon Box'. The apprentice stared at the absurdity."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "Observe the futility. Every box works identically — put something in, take it out. Yet we maintain a separate class for each type. If I added a new type tomorrow, someone would have to carve another box."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Apprentice",
+          "av": "🧑‍💻",
+          "cls": "learner",
+          "text": "Why not just store everything as an <code>Object</code>?"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "Because then you lose all type information. You put in a <code>String</code>, you get back an <code>Object</code>. You must cast it — and if you cast it wrong, you get a <code>ClassCastException</code> at runtime. The compiler cannot warn you. Bugs hide until production."
+        },
+        {
+          "type": "example",
+          "label": "The Object approach — compiles, explodes at runtime",
+          "text": "class BoxOfAnything {\n    private Object value;\n    void set(Object v) { this.value = v; }\n    Object get() { return this.value; }\n}\n\nBoxOfAnything box = new BoxOfAnything();\nbox.set(\"Fireball\");\nInteger n = (Integer) box.get(); // compiles fine — BOOM at runtime"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "Generics solve this with a <em>type parameter</em> — a placeholder declared with angle brackets. Write <code>Box&lt;T&gt;</code> and the compiler treats <code>T</code> as a stand-in for whatever type the caller specifies. Type safety is enforced at compile time, not runtime."
+        },
+        {
+          "type": "example",
+          "label": "Generic Box — one class, infinite types, zero casts",
+          "text": "class Box<T> {\n    private T value;\n\n    void set(T v) { this.value = v; }\n    T get() { return this.value; }\n}\n\nBox<String> spellBox = new Box<>();\nspellBox.set(\"Fireball\");\nString name = spellBox.get(); // no cast needed\n\nBox<Integer> manaBox = new Box<>();\nmanaBox.set(42);\n// manaBox.set(\"oops\"); // compile error — type safe!"
+        },
+        {
+          "type": "narration",
+          "text": "The shelves of duplicate boxes vanished, replaced by a single elegant template etched in silver. The apprentice noticed the diamond operator — <code>&lt;&gt;</code> — on the right side of the declaration."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "The diamond operator on the right-hand side tells the compiler: infer the type from the left. You do not need to write <code>new Box&lt;String&gt;()</code> — <code>new Box&lt;&gt;()</code> suffices. Convention uses single uppercase letters: <code>T</code> for Type, <code>E</code> for Element, <code>K</code> and <code>V</code> for Key and Value."
+        },
+        {
+          "type": "example",
+          "label": "Multiple type parameters — a generic Pair",
+          "text": "class Pair<K, V> {\n    private K key;\n    private V value;\n\n    Pair(K key, V value) {\n        this.key = key;\n        this.value = value;\n    }\n\n    K getKey()   { return key; }\n    V getValue() { return value; }\n\n    @Override\n    public String toString() {\n        return \"(\" + key + \", \" + value + \")\";\n    }\n}\n\nPair<String, Integer> score = new Pair<>(\"Eldrin\", 9000);\nSystem.out.println(score); // (Eldrin, 9000)"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "Note that you cannot use primitive types as type arguments. Write <code>Box&lt;int&gt;</code> and the compiler refuses. Use wrapper classes — <code>Integer</code>, <code>Double</code>, <code>Boolean</code>. Java's autoboxing handles the conversion silently when assigning literals."
+        }
+      ],
+      "explanationHtml": "<h3>Generic Classes</h3><p>A <strong>generic class</strong> declares one or more <em>type parameters</em> in angle brackets after the class name:</p><pre><code>class Box&lt;T&gt; { ... }</code></pre><p><code>T</code> is a placeholder. Every use of <code>T</code> inside the class is replaced by the actual type when a caller instantiates <code>Box&lt;String&gt;</code> or <code>Box&lt;Integer&gt;</code>.</p><h3>Why generics?</h3><ul><li><strong>Type safety:</strong> the compiler rejects wrong-type assignments at compile time, not runtime.</li><li><strong>No casting:</strong> <code>box.get()</code> returns exactly <code>T</code>, not <code>Object</code> — no cast required.</li><li><strong>DRY:</strong> one class, all types.</li></ul><h3>Type parameter conventions</h3><table><thead><tr><th>Letter</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td>T</td><td>Type (generic)</td><td><code>Box&lt;T&gt;</code></td></tr><tr><td>E</td><td>Element</td><td><code>List&lt;E&gt;</code></td></tr><tr><td>K, V</td><td>Key, Value</td><td><code>Map&lt;K, V&gt;</code></td></tr><tr><td>R</td><td>Return type</td><td>Function results</td></tr></tbody></table><h3>Diamond operator</h3><p>On the right side of a declaration, <code>&lt;&gt;</code> tells the compiler to infer the type from the variable declaration:</p><pre><code>Box&lt;String&gt; box = new Box&lt;&gt;(); // infers Box&lt;String&gt;</code></pre><h3>Primitives not allowed</h3><p>Type parameters must be reference types. Use wrapper classes: <code>Integer</code>, <code>Double</code>, <code>Boolean</code>, <code>Character</code>. Autoboxing converts primitives automatically when assigning literals.</p><h3>Multiple type parameters</h3><pre><code>class Pair&lt;K, V&gt; {\n    K key;\n    V value;\n    Pair(K k, V v) { key = k; value = v; }\n}</code></pre>",
+      "guidedPracticeHtml": "<h3>Task: Build a Generic <code>Result&lt;T&gt;</code> class</h3><p>In many APIs, an operation either succeeds (returning a value) or fails (returning an error message). Model this as a generic class:</p><ul><li>Fields: <code>private T value</code>, <code>private String error</code>, <code>private boolean success</code></li><li>Two static factory methods: <code>ok(T value)</code> sets <code>success=true</code> and stores the value; <code>fail(String error)</code> sets <code>success=false</code> and stores the error message</li><li><code>boolean isSuccess()</code> — returns <code>success</code></li><li><code>T getValue()</code> — returns <code>value</code> (may be null if failed)</li><li><code>String getError()</code> — returns <code>error</code> (may be null if succeeded)</li><li><code>toString()</code> — returns <code>\"OK: \" + value</code> when successful, <code>\"FAIL: \" + error</code> when not</li></ul><p>The <code>main</code> method is already written — your job is to complete the class so its output matches exactly.</p>",
+      "guidedPracticeStarterCode": "class Result<T> {\n    private T value;\n    private String error;\n    private boolean success;\n\n    // TODO: private constructor (called only by factory methods)\n    private Result(T value, String error, boolean success) {\n        // fill in\n    }\n\n    // TODO: static factory method for success\n    public static <T> Result<T> ok(T value) {\n        // fill in\n        return null;\n    }\n\n    // TODO: static factory method for failure\n    public static <T> Result<T> fail(String error) {\n        // fill in\n        return null;\n    }\n\n    public boolean isSuccess() {\n        // fill in\n        return false;\n    }\n\n    public T getValue() {\n        // fill in\n        return null;\n    }\n\n    public String getError() {\n        // fill in\n        return null;\n    }\n\n    @Override\n    public String toString() {\n        // fill in\n        return \"\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Result<String> win  = Result.ok(\"Fireball cast!\");\n        Result<String> fail = Result.fail(\"Not enough mana\");\n        Result<Integer> num = Result.ok(42);\n\n        System.out.println(win);\n        System.out.println(fail);\n        System.out.println(num.isSuccess());\n        System.out.println(num.getValue() + 8);\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "ok() result prints 'OK: Fireball cast!'",
+          "input": "null",
+          "expected": "OK: Fireball cast!\nFAIL: Not enough mana\ntrue\n50"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo Challenge: Generic Stack</h3><p>Implement a <code>Stack&lt;T&gt;</code> class backed by an <code>ArrayList</code>:</p><ul><li><code>void push(T item)</code> — adds item to the top</li><li><code>T pop()</code> — removes and returns the top item; if empty, prints <code>Stack is empty</code> and returns <code>null</code></li><li><code>T peek()</code> — returns the top item without removing it; if empty, returns <code>null</code></li><li><code>boolean isEmpty()</code> — returns true if no items</li><li><code>int size()</code> — returns item count</li><li><code>toString()</code> — returns <code>[bottom, ..., top]</code> format</li></ul><p>Test with a <code>Stack&lt;String&gt;</code> pushing three spells, peeking, popping all, then attempting a pop on the empty stack.</p>",
+      "feynmanPrompt": "Explain to a non-programmer why Java generics exist. Use an analogy — perhaps a filing cabinet that only accepts specific types of documents. Why is a generic filing cabinet better than one that accepts 'anything' but loses track of what's inside?",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What does the <code>T</code> in <code>class Box&lt;T&gt;</code> represent?",
+          "options": [
+            "A type parameter — a placeholder for any reference type specified when creating a Box",
+            "The letter T specifically — Box can only hold types whose name starts with T",
+            "A template keyword similar to C++",
+            "An interface that all stored values must implement"
+          ],
+          "correctAnswer": "A type parameter — a placeholder for any reference type specified when creating a Box",
+          "explanationHtml": "T is a type parameter — a placeholder resolved when the caller writes Box<String> or Box<Integer>. It can be any reference type."
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<code>Box&lt;int&gt; b = new Box&lt;&gt;();</code> is valid Java.",
+          "correctAnswer": "False",
+          "explanationHtml": "Type parameters must be reference types, not primitives. Use the wrapper class Integer instead: Box<Integer>."
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "Given <code>class Pair&lt;K, V&gt;</code>, which instantiation correctly creates a pair mapping a <code>String</code> key to an <code>Integer</code> value?",
+          "options": [
+            "<code>Pair&lt;String, Integer&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
+            "<code>Pair p = new Pair(\"key\", 42);</code>",
+            "<code>Pair&lt;K, V&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
+            "<code>Pair&lt;String&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>"
+          ],
+          "correctAnswer": "<code>Pair&lt;String, Integer&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
+          "explanationHtml": "Both type arguments must be supplied: Pair<String, Integer>. The diamond operator on the right infers from the left. Raw types (no angle brackets) lose type safety."
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "What is the key difference between <code>Box&lt;Object&gt;</code> and <code>Box&lt;T&gt;</code> (a generic class)?",
+          "options": [
+            "Box<Object> accepts any type but loses type information at extraction — a cast is required and can fail at runtime. Box<T> preserves the exact type so the compiler enforces correct usage.",
+            "Box<Object> and Box<T> are identical — generics are just syntactic sugar for Object.",
+            "Box<T> is slower because generics require reflection at runtime.",
+            "Box<Object> is only usable with String and Integer; Box<T> works with all types."
+          ],
+          "correctAnswer": "Box<Object> accepts any type but loses type information at extraction — a cast is required and can fail at runtime. Box<T> preserves the exact type so the compiler enforces correct usage.",
+          "explanationHtml": "Box<Object>.get() returns Object — you must cast it, and a wrong cast silently compiles but crashes at runtime. With Box<T>, get() returns exactly T; wrong types are rejected at compile time."
+        }
+      ]
+    },
+    {
+      "id": "java-fnd-8b",
+      "title": "Generic Methods & Bounded Types",
+      "sortOrder": 2,
+      "xpReward": 65,
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Your generic <code>Box&lt;T&gt;</code> works for any type — but what if you need to <em>compare</em> what's inside? Or call <code>.length()</code> on it? With a plain <code>T</code>, the compiler refuses: it has no idea what type <code>T</code> actually is.</p><p>Bounded type parameters let you constrain <code>T</code> — 'any type, but it must implement <code>Comparable</code>'. Suddenly, your generic code can call methods, and the compiler still has your back.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Having mastered the generic Box, the apprentice grew ambitious. She wanted to write a method that found the larger of two values — but her generic method wouldn't compile. The compiler refused to call compareTo on a plain T."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "The issue is this: when you write <code>T</code> with no constraints, the compiler assumes it could be <em>anything</em> — including a type with no useful methods at all. You must declare a <strong>bound</strong>: <code>T extends Comparable&lt;T&gt;</code> tells the compiler that whatever T is, it guarantees the <code>compareTo</code> method."
+        },
+        {
+          "type": "example",
+          "label": "Bounded type parameter — finds the maximum",
+          "text": "// T must implement Comparable<T>\npublic static <T extends Comparable<T>> T max(T a, T b) {\n    return a.compareTo(b) >= 0 ? a : b;\n}\n\n// Works for any Comparable type\nSystem.out.println(max(10, 25));        // 25\nSystem.out.println(max(\"apple\", \"mango\")); // mango\nSystem.out.println(max(3.14, 2.71));    // 3.14"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "Notice that the bound uses <code>extends</code> even for interfaces — <code>T extends Comparable&lt;T&gt;</code>, not <code>implements</code>. This is Java's convention for bounds. You may bound with multiple types using <code>&amp;</code>: <code>T extends Comparable&lt;T&gt; &amp; Serializable</code>."
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice noticed the static <code>&lt;T&gt;</code> before the return type — different from the class-level parameter."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "Good eye. A <strong>generic method</strong> declares its own type parameter independently, even inside a generic class. The <code>&lt;T&gt;</code> before the return type is mandatory — it introduces T for that method alone. The method's T is resolved per call, not per class instantiation."
+        },
+        {
+          "type": "example",
+          "label": "Generic method in a non-generic class",
+          "text": "class Sorter {\n    // Generic method — <T> before return type is required\n    public static <T extends Comparable<T>> void bubbleSort(T[] arr) {\n        int n = arr.length;\n        for (int i = 0; i < n - 1; i++) {\n            for (int j = 0; j < n - i - 1; j++) {\n                if (arr[j].compareTo(arr[j + 1]) > 0) {\n                    T temp = arr[j];\n                    arr[j] = arr[j + 1];\n                    arr[j + 1] = temp;\n                }\n            }\n        }\n    }\n}\n\nInteger[] scores = {42, 7, 99, 13};\nSorter.bubbleSort(scores);\nSystem.out.println(Arrays.toString(scores)); // [7, 13, 42, 99]"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Archmage Eldrin",
+          "av": "🧙",
+          "cls": "mentor",
+          "text": "One final pattern: <strong>type erasure</strong>. At compile time, generics are checked thoroughly. At runtime, the JVM erases the type parameter — <code>Box&lt;String&gt;</code> and <code>Box&lt;Integer&gt;</code> are the same <code>Box</code> at runtime. This is why you cannot write <code>new T()</code> or <code>instanceof Box&lt;String&gt;</code>. Generics are a compile-time safety net, not a runtime mechanism."
+        },
+        {
+          "type": "example",
+          "label": "Type erasure — what the JVM actually sees",
+          "text": "// What you write:\nBox<String> box = new Box<>();\n\n// What the JVM runs (after erasure):\nBox box = new Box();\n\n// Therefore — these do NOT work:\n// T obj = new T();            // can't instantiate type parameter\n// if (box instanceof Box<String>) // can't check generic type at runtime\n\n// This DOES work (raw type check):\nif (box instanceof Box) { ... } // fine"
+        }
+      ],
+      "explanationHtml": "<h3>Generic Methods</h3><p>Any method — static or instance, inside a generic class or not — can declare its own type parameters. The syntax puts <code>&lt;T&gt;</code> <em>before</em> the return type:</p><pre><code>public static &lt;T&gt; T identity(T value) {\n    return value;\n}</code></pre><p>Each call site resolves T independently based on the argument type.</p><h3>Bounded Type Parameters</h3><p>A plain <code>T</code> provides no methods beyond those on <code>Object</code>. To call specific methods, add an upper bound with <code>extends</code>:</p><pre><code>// T must implement Comparable&lt;T&gt;\npublic static &lt;T extends Comparable&lt;T&gt;&gt; T max(T a, T b) {\n    return a.compareTo(b) &gt;= 0 ? a : b;\n}</code></pre><p>Now <code>compareTo</code> is available on every <code>T</code>. The bound can be a class <em>or</em> an interface; the keyword is always <code>extends</code> in this context.</p><h3>Multiple bounds</h3><pre><code>// T must be a Number AND implement Comparable\n&lt;T extends Number &amp; Comparable&lt;T&gt;&gt;</code></pre><p>A class bound (if any) must come first; interface bounds follow with <code>&amp;</code>.</p><h3>Type Erasure</h3><p>Generics are a <strong>compile-time</strong> feature. The JVM erases type parameters at runtime — <code>Box&lt;String&gt;</code> becomes raw <code>Box</code>. Consequences:</p><ul><li>Cannot create instances of type parameters: <code>new T()</code> is illegal</li><li>Cannot use <code>instanceof</code> with generic types: <code>obj instanceof List&lt;String&gt;</code> is illegal</li><li>Can use raw type checks: <code>obj instanceof List</code> is fine</li></ul><h3>Wildcards (preview)</h3><p>You may see <code>List&lt;?&gt;</code> — an <em>unbounded wildcard</em> meaning 'a List of some unknown type'. Wildcards are used in method parameters to accept wider ranges of generic types. They are read-only for the unknown type; you can call <code>size()</code> and <code>get()</code> but not <code>add()</code>. Full wildcard rules are an Advanced topic.</p>",
+      "guidedPracticeHtml": "<h3>Task: Generic <code>MinMax&lt;T&gt;</code> Tracker</h3><p>Build a class that tracks the minimum and maximum values seen so far among any <code>Comparable</code> type:</p><ul><li>Class signature: <code>class MinMax&lt;T extends Comparable&lt;T&gt;&gt;</code></li><li><code>void add(T value)</code> — updates min and max if needed; initialises both on the first call</li><li><code>T getMin()</code> — returns the minimum seen (or <code>null</code> if empty)</li><li><code>T getMax()</code> — returns the maximum seen (or <code>null</code> if empty)</li><li><code>toString()</code> — returns <code>\"min=X max=Y\"</code></li></ul><p>The main method tests it with integers and strings — make it pass.</p>",
+      "guidedPracticeStarterCode": "class MinMax<T extends Comparable<T>> {\n    private T min;\n    private T max;\n\n    // TODO: add(T value)\n    public void add(T value) {\n        // Hint: use compareTo to compare with current min/max\n        // Handle the first element (both min and max are null)\n    }\n\n    public T getMin() {\n        // TODO\n        return null;\n    }\n\n    public T getMax() {\n        // TODO\n        return null;\n    }\n\n    @Override\n    public String toString() {\n        return \"min=\" + min + \" max=\" + max;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        MinMax<Integer> nums = new MinMax<>();\n        nums.add(5);\n        nums.add(2);\n        nums.add(9);\n        nums.add(1);\n        System.out.println(nums);\n        System.out.println(nums.getMin());\n        System.out.println(nums.getMax());\n\n        MinMax<String> words = new MinMax<>();\n        words.add(\"mango\");\n        words.add(\"apple\");\n        words.add(\"pear\");\n        System.out.println(words);\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "MinMax tracks min and max correctly for integers and strings",
+          "input": "null",
+          "expected": "min=1 max=9\n1\n9\nmin=apple max=pear"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Solo Challenge: Generic <code>Cache&lt;K, V&gt;</code></h3><p>Build a simple fixed-capacity generic cache:</p><ul><li>Constructor takes a <code>int capacity</code></li><li><code>void put(K key, V value)</code> — stores the value; if already at capacity, print <code>Cache full</code> and do nothing</li><li><code>V get(K key)</code> — returns the value for the key, or <code>null</code> if not present</li><li><code>boolean containsKey(K key)</code></li><li><code>int size()</code></li><li><code>toString()</code> — returns the underlying map's toString</li></ul><p>Backed by a <code>HashMap&lt;K, V&gt;</code> internally. Test with a <code>Cache&lt;String, Integer&gt;</code> of capacity 2.</p>",
+      "feynmanPrompt": "Explain type erasure to someone who knows what generics are but is confused about why you cannot write 'new T()' or check 'instanceof List<String>'. Use an analogy of a shipping label that gets removed once the package is en route — the warehouse can read it, but the delivery truck cannot.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What does <code>&lt;T extends Comparable&lt;T&gt;&gt;</code> mean on a method?",
+          "options": [
+            "T must be a type that implements the Comparable interface, allowing compareTo to be called inside the method",
+            "T must extend the Comparable class directly using class inheritance",
+            "T can be any type; the bound is just documentation and not enforced",
+            "T is limited to numeric types (Integer, Double, Long)"
+          ],
+          "correctAnswer": "T must be a type that implements the Comparable interface, allowing compareTo to be called inside the method",
+          "explanationHtml": "The extends keyword in a type bound can mean 'implements' for interfaces. T extends Comparable<T> means T must implement Comparable, guaranteeing compareTo is available."
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "After compilation, <code>Box&lt;String&gt;</code> and <code>Box&lt;Integer&gt;</code> are different classes at runtime.",
+          "correctAnswer": "False",
+          "explanationHtml": "Type erasure removes generic type information at compile time. At runtime, both are simply Box — the JVM has no notion of Box<String> vs Box<Integer>."
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "Complete the generic method signature so it accepts an array of any Comparable type and returns the smallest element:\n<pre><code>public static ______ T findMin(T[] items) {\n    T result = items[0];\n    for (T item : items) {\n        if (item.compareTo(result) &lt; 0) result = item;\n    }\n    return result;\n}</code></pre>",
+          "options": [
+            "<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>",
+            "<code>&lt;T&gt;</code>",
+            "<code>&lt;T implements Comparable&lt;T&gt;&gt;</code>",
+            "<code>Comparable</code>"
+          ],
+          "correctAnswer": "<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>",
+          "explanationHtml": "<T extends Comparable<T>> is required so the compiler knows compareTo is available on T. Plain <T> would prevent the compareTo call. 'implements' is not valid syntax for type bounds."
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "Which of the following is NOT allowed due to type erasure?",
+          "options": [
+            "<code>if (list instanceof List&lt;String&gt;) { ... }</code>",
+            "<code>List&lt;String&gt; words = new ArrayList&lt;&gt;();</code>",
+            "<code>if (list instanceof List) { ... }</code>",
+            "<code>T value = box.getValue();</code>"
+          ],
+          "correctAnswer": "<code>if (list instanceof List&lt;String&gt;) { ... }</code>",
+          "explanationHtml": "Checking instanceof with a parameterised type like List<String> is illegal because the JVM has erased the String parameter — it can only see List. Raw type instanceof (option 3) is fine. The other options are standard generic usage."
+        }
+      ]
+    }
+  ]
+}

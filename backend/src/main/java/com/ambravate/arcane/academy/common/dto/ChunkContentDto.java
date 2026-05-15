@@ -30,7 +30,8 @@ public class ChunkContentDto {
     public String tier;
     /** E.g. "tailwind" or "java" */
     public String topicId;
-    /** IDs of chunks that must be completed first. */
+    /** IDs of chunks that must be completed first. Also accepted as "prerequisiteIds". */
+    @JsonAlias("prerequisiteIds")
     public List<String> prerequisites;
 
     public List<SubChunkDto> subChunks;
@@ -118,10 +119,11 @@ public class ChunkContentDto {
         /**
          * Required. One of:
          * MULTIPLE_CHOICE | TRUE_FALSE | FILL_BLANK |
-         * CODE_COMPLETION | WHATS_THE_OUTPUT | DEBUGGING | SCENARIO | COMPARE_CONTRAST
+         * CODE_COMPLETION | WHATS_THE_OUTPUT | DEBUGGING | SCENARIO | COMPARE_CONTRAST | DISCRIMINATION
          */
         public String type;
-        /** RECALL | APPLICATION | DISCRIMINATION */
+        /** RECALL | APPLICATION | DISCRIMINATION — also accepted as "difficulty". */
+        @JsonAlias("difficulty")
         public String tier;
         /** Question body. HTML string — also accepted as "prompt". */
         @JsonAlias("prompt")
@@ -130,9 +132,15 @@ public class ChunkContentDto {
         public String codeSnippet;
         /** Answer choices. For TRUE_FALSE this can be omitted — loader fills ["True","False"]. */
         public List<String> options;
-        /** Required. The correct answer text — also accepted as "answer". */
+        /** The correct answer text — also accepted as "answer". Mutually exclusive with correctIndex. */
         @JsonAlias("answer")
         public String correctAnswer;
+        /**
+         * Zero-based index into options[] of the correct answer.
+         * Alternative to correctAnswer for MULTIPLE_CHOICE questions.
+         * The seeder resolves this to the option text before persisting.
+         */
+        public Integer correctIndex;
         /** Shown after the learner answers. HTML string — also accepted as "explanation". */
         @JsonAlias("explanation")
         public String explanationHtml;

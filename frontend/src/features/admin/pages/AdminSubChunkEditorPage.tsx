@@ -172,7 +172,7 @@ export default function AdminSubChunkEditorPage() {
   }
 
   if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
-  if (!sc) return <div style={{ color: '#f87171', fontSize: 14 }}>{error ?? 'Sub-chunk not found'}</div>
+  if (!sc) return <div style={{ color: '#f87171', fontSize: 14 }}>{error ?? 'Lesson not found'}</div>
 
   return (
     <div>
@@ -180,7 +180,7 @@ export default function AdminSubChunkEditorPage() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
         <span>›</span>
-        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.chunkId}/subchunks`)}>Sub-chunks</span>
+        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.chunkId}/subchunks`)}>Lessons</span>
         <span>›</span>
         <span style={{ color: '#e8e0f0' }}>{sc.title}</span>
       </div>

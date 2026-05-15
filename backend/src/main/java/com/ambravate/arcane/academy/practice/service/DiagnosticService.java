@@ -120,7 +120,7 @@ public class DiagnosticService {
             : chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
         topicChunks.forEach(c -> chunkRecommendations.putIfAbsent(c.getId(), "FULL"));
 
-        // Determine path (Java only uses FOUNDATION/PRACTITIONER/EXPERT)
+        // Determine path: FOUNDATION → ADVANCED → PRACTITIONER → EXPERT
         long skipCount = chunkRecommendations.values().stream().filter("SKIP"::equals).count();
         long totalChunks = chunkRecommendations.size();
         LearnerPath recommended;
@@ -128,6 +128,8 @@ public class DiagnosticService {
             recommended = LearnerPath.EXPERT;
         } else if (totalChunks > 0 && (double) skipCount / totalChunks > 0.7) {
             recommended = LearnerPath.PRACTITIONER;
+        } else if (totalChunks > 0 && (double) skipCount / totalChunks > 0.5) {
+            recommended = LearnerPath.ADVANCED;
         } else {
             recommended = LearnerPath.FOUNDATION;
         }

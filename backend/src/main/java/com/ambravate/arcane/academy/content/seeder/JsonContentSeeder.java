@@ -25,7 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Loads chunk content from JSON files under src/main/resources/content/
@@ -52,6 +55,7 @@ public class JsonContentSeeder {
     private final SubChunkRepository subChunkRepository;
     private final QuestionRepository questionRepository;
     private final RabbitHoleModuleRepository rabbitHoleRepository;
+    private final UserChunkProgressRepository userChunkProgressRepository;
     private final ObjectMapper objectMapper;
     private final ApplicationContext applicationContext;
 
@@ -76,15 +80,60 @@ public class JsonContentSeeder {
         Resource[] resources = applicationContext.getResources("classpath:content/**/*.json");
         Arrays.sort(resources, Comparator.comparing(r -> r.getFilename() == null ? "" : r.getFilename()));
 
+        // Track topic+tier → set of chunk IDs loaded from JSON, for stale-chunk pruning
+        Map<String, Set<String>> jsonIdsByTopicTier = new HashMap<>();
+
         int count = 0;
         for (Resource resource : resources) {
             log.info("Loading chunk content: {}", resource.getFilename());
             ChunkContentDto dto = objectMapper.readValue(resource.getInputStream(), ChunkContentDto.class);
             replaceGeneratedChildren(dto);
             seedChunk(dto);
+            String key = dto.topicId + "|" + dto.tier;
+            jsonIdsByTopicTier.computeIfAbsent(key, k -> new HashSet<>()).add(dto.id);
             count++;
         }
+
+        // Prune stale DB chunks: for each (topicId, tier) that has JSON content, remove any
+        // DB chunk in that same (topicId, tier) whose ID wasn't in the JSON files.
+        // This cleans up old seeder-based chunks superseded by JSON content without touching
+        // tiers that have no JSON replacement yet (e.g. Practitioner/Expert if not yet migrated).
+        pruneStaleChunks(jsonIdsByTopicTier);
+
         return count;
+    }
+
+    private void pruneStaleChunks(Map<String, Set<String>> jsonIdsByTopicTier) {
+        for (Map.Entry<String, Set<String>> entry : jsonIdsByTopicTier.entrySet()) {
+            String[] parts = entry.getKey().split("\\|", 2);
+            String topicId = parts[0];
+            String tier    = parts[1];
+            Set<String> validIds = entry.getValue();
+
+            LearnerPath tierEnum;
+            try { tierEnum = LearnerPath.valueOf(tier); }
+            catch (IllegalArgumentException e) { continue; }
+
+            List<Chunk> stale = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId).stream()
+                    .filter(c -> c.getTier() == tierEnum && !validIds.contains(c.getId()))
+                    .toList();
+
+            if (stale.isEmpty()) continue;
+
+            List<String> staleChunkIds = stale.stream().map(Chunk::getId).toList();
+            log.info("[JsonContentSeeder] Pruning {} stale chunk(s) for topic='{}' tier='{}': {}",
+                    stale.size(), topicId, tier, staleChunkIds);
+
+            List<SubChunk> staleSubs = subChunkRepository.findByChunkIdIn(staleChunkIds);
+            if (!staleSubs.isEmpty()) {
+                List<String> staleSubIds = staleSubs.stream().map(SubChunk::getId).toList();
+                questionRepository.deleteBySubChunkIdIn(staleSubIds);
+                userChunkProgressRepository.deleteBySubChunkIdIn(staleSubIds);
+                subChunkRepository.deleteAll(staleSubs);
+            }
+            stale.forEach(chunk -> rabbitHoleRepository.deleteByChunkId(chunk.getId()));
+            chunkRepository.deleteAll(stale);
+        }
     }
 
     private void replaceGeneratedChildren(ChunkContentDto dto) {
@@ -182,6 +231,21 @@ public class JsonContentSeeder {
                 ? objectMapper.writeValueAsString(q.crossChunkIds)
                 : null;
 
+        // Resolve correctAnswer: prefer explicit text, fall back to options[correctIndex]
+        String correctAnswer = q.correctAnswer;
+        if (correctAnswer == null && q.correctIndex != null
+                && q.options != null && q.correctIndex < q.options.size()) {
+            correctAnswer = q.options.get(q.correctIndex);
+        }
+        // TRUE_FALSE: map boolean-style answers to canonical "True"/"False"
+        if ("TRUE_FALSE".equals(q.type) && correctAnswer != null) {
+            if ("true".equalsIgnoreCase(correctAnswer) || Boolean.TRUE.toString().equalsIgnoreCase(correctAnswer)) {
+                correctAnswer = "True";
+            } else if ("false".equalsIgnoreCase(correctAnswer) || Boolean.FALSE.toString().equalsIgnoreCase(correctAnswer)) {
+                correctAnswer = "False";
+            }
+        }
+
         // DISCRIMINATION questions are practitioner-level minimum
         QuestionTier questionTier = q.tier != null ? QuestionTier.valueOf(q.tier) : QuestionTier.RECALL;
         LearnerPath minPath = questionTier == QuestionTier.DISCRIMINATION
@@ -195,7 +259,7 @@ public class JsonContentSeeder {
                 .questionHtml(q.questionHtml)
                 .codeSnippet(q.codeSnippet)
                 .optionsJson(optionsJson)
-                .correctAnswer(q.correctAnswer)
+                .correctAnswer(correctAnswer)
                 .explanationHtml(q.explanationHtml)
                 .crossChunkIds(crossChunkJson)
                 .minPath(minPath)
@@ -258,6 +322,19 @@ public class JsonContentSeeder {
             // 3. Map "code" → "text" (used by EXAMPLE beats)
             if (!beat.containsKey("text") && beat.containsKey("code")) {
                 beat.put("text", beat.remove("code"));
+            }
+
+            // 4. Map "content" → "text" (alternate key used in some authored chunks)
+            if (!beat.containsKey("text") && beat.containsKey("content")) {
+                beat.put("text", beat.remove("content"));
+            }
+
+            // 5. Map "avatarEmoji" → "av" and "cssClass" → "cls" (frontend expects short keys)
+            if (!beat.containsKey("av") && beat.containsKey("avatarEmoji")) {
+                beat.put("av", beat.remove("avatarEmoji"));
+            }
+            if (!beat.containsKey("cls") && beat.containsKey("cssClass")) {
+                beat.put("cls", beat.remove("cssClass"));
             }
 
             return (Map<String, Object>) beat;

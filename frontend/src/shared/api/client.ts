@@ -14,14 +14,23 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Redirect to login on 401
+// Redirect to login on 401 (token expired) or 403 with "Account is blocked"
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    const status = err.response?.status
+    if (status === 401) {
       localStorage.removeItem('arcane_token')
       localStorage.removeItem('arcane_user')
       window.location.href = '/login'
+    } else if (status === 403) {
+      // Only force-logout on a blocked-account response (auth-level 403, not resource-level)
+      const msg: string = err.response?.data?.message ?? ''
+      if (msg.toLowerCase().includes('blocked')) {
+        localStorage.removeItem('arcane_token')
+        localStorage.removeItem('arcane_user')
+        window.location.href = '/login?reason=blocked'
+      }
     }
     return Promise.reject(err)
   }

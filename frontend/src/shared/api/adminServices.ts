@@ -7,7 +7,7 @@ export interface AdminStats {
   totalChunks: number; totalSubChunks: number; totalQuestions: number
   recentSignups: AdminUser[]; contentHealth: ContentHealthItem[]
 }
-export interface ContentHealthItem { subChunkId: string; title: string; chunkTitle: string; issues: string[] }
+export interface ContentHealthItem { subChunkId: string; title: string; chunkTitle: string; topicId?: string; tier?: string; issues: string[] }
 
 export interface AdminTopic {
   id: string; name: string; glyph: string; tagline: string
@@ -47,7 +47,17 @@ export interface AdminQuestion {
 export interface AdminUser {
   id: string; username: string; email: string; rank: string
   totalXp: number; streakDays: number; authProvider: string; role: string
+  blocked: boolean
   createdAt: string; lastLoginAt: string | null; completedSubChunks: number
+}
+
+export interface UserStats {
+  userId: string; username: string; email: string
+  totalXp: number; rank: string; streakDays: number
+  subChunksCompleted: number; chunksCompleted: number
+  badgesEarned: number; reviewSessionsCompleted: number
+  joinedAt: string; lastLoginAt: string | null
+  blocked: boolean; role: string
 }
 
 export interface PagedResponse<T> {
@@ -162,8 +172,20 @@ export const adminUserApi = {
     const { data } = await api.get(`/api/admin/users/${id}`)
     return data
   },
+  getStats: async (id: string): Promise<UserStats> => {
+    const { data } = await api.get(`/api/admin/users/${id}/stats`)
+    return data
+  },
   resetProgress: async (id: string): Promise<void> => {
     await api.delete(`/api/admin/users/${id}/progress`)
+  },
+  setBlocked: async (id: string, blocked: boolean): Promise<AdminUser> => {
+    const { data } = await api.put(`/api/admin/users/${id}/blocked`, { blocked })
+    return data
+  },
+  setRole: async (id: string, role: string): Promise<AdminUser> => {
+    const { data } = await api.put(`/api/admin/users/${id}/role`, { role })
+    return data
   },
 }
 

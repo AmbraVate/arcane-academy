@@ -258,6 +258,21 @@ export const leaderboardApi = {
   },
 }
 
+// ── Rabbit Hole Terms ─────────────────────────────────────────────────────────
+export const rabbitHoleTermApi = {
+  getAll: async (): Promise<RabbitHoleTerm[]> => {
+    const { data } = await api.get('/api/rabbit-hole-terms')
+    return data
+  },
+  save: async (term: string, description: string, subChunkId: string, topicId: string): Promise<RabbitHoleTerm> => {
+    const { data } = await api.post('/api/rabbit-hole-terms', { term, description, subChunkId, topicId })
+    return data
+  },
+  remove: async (term: string): Promise<void> => {
+    await api.delete(`/api/rabbit-hole-terms/${encodeURIComponent(term)}`)
+  },
+}
+
 // ── Public profile ───────────────────────────────────────────────────────────
 export interface PublicProfileTopic {
   topicId: string

@@ -187,18 +187,22 @@ public class EncodingController {
                 dto.setStoryBeats(parseJson(sc.getStoryJson()));
             }
             case GUIDED_PRACTICE -> {
+                dto.setStoryBeats(parseJson(sc.getStoryJson()));
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setStarterCode(sc.getGuidedPracticeStarterCode());
                 dto.setTestCaseLabels(testCasesFor(sc));
             }
             case SOLO_PRACTICE -> {
+                dto.setStoryBeats(parseJson(sc.getStoryJson()));
                 dto.setSoloPracticeHtml(sc.getSoloPracticeHtml());
                 // Guided practice HTML doubles as the "peek" hint — no starter code
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setTestCaseLabels(testCasesFor(sc));
             }
             case RETRIEVAL_CHECK -> dto.setFeynmanPrompt(sc.getFeynmanPrompt());
-            case COMPLETE -> {}
+            // COMPLETE: send story beats so the frontend can offer a "Re-read Story" option.
+            // Do NOT send practice content — the review loop never surfaces story, only questions.
+            case COMPLETE -> dto.setStoryBeats(parseJson(sc.getStoryJson()));
         }
 
         return dto;

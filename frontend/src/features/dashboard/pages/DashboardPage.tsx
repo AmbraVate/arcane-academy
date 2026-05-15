@@ -4,12 +4,13 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import { dashboardApi } from '@/shared/api/services'
 import type { DashboardDto, ChunkHealthDto } from '@/shared/types'
 import { cn } from '@/lib/utils'
+import { TierIcon } from '@/components/icons/TierIcon'
+import { Lock, Sparkles, BookOpen, Flame } from 'lucide-react'
 
 const TIERS = [
   {
     key: 'FOUNDATION',
     label: 'Foundational',
-    glyph: '🌱',
     desc: 'Core building blocks — variables, control flow, loops, and methods.',
     labelColor: 'text-teal',
     borderColor: 'border-[rgba(45,212,191,0.25)]',
@@ -17,7 +18,6 @@ const TIERS = [
   {
     key: 'PRACTITIONER',
     label: 'Practitioner',
-    glyph: '⚗️',
     desc: 'Applied mastery — arrays, collections, classes, encapsulation, and inheritance.',
     labelColor: 'text-purple-light',
     borderColor: 'border-[rgba(139,92,246,0.25)]',
@@ -25,7 +25,6 @@ const TIERS = [
   {
     key: 'EXPERT',
     label: 'Expert',
-    glyph: '🔮',
     desc: 'Advanced craft — polymorphism, exception handling, and core APIs.',
     labelColor: 'text-gold',
     borderColor: 'border-[rgba(201,162,39,0.25)]',
@@ -53,7 +52,9 @@ function ChunkCard({ ch, onClick }: { ch: ChunkHealthDto; onClick: () => void })
       )}
       onClick={onClick}
     >
-      <div className="text-[28px] mb-1.5">{locked ? '🔒' : ch.glyph}</div>
+      <div className="mb-1.5 flex items-center text-[26px] leading-none">
+        {locked ? <Lock size={22} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
+      </div>
       <div className="text-[13px] font-semibold text-text mb-1.5">{ch.title}</div>
       <div className="text-[11px] text-muted mb-2">
         {locked ? 'Locked' : `${ch.completedSubChunks}/${ch.totalSubChunks} concepts`}
@@ -89,7 +90,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-muted">
-        <div className="text-[48px] mb-3 animate-pulse">🧙</div>
+        <div className="w-10 h-10 mb-3 animate-spin rounded-full border-2 border-border border-t-purple" />
         <p>Consulting the Grimoire...</p>
       </div>
     )
@@ -105,7 +106,6 @@ export default function DashboardPage() {
     <div className="max-w-[900px] mx-auto px-4 py-6 pb-[60px] max-[480px]:px-3 max-[480px]:py-4 max-[480px]:pb-12">
       {/* Hero */}
       <div className="text-center mb-7">
-        <div className="text-[56px] mb-2 max-[480px]:text-[44px]">🧙</div>
         <h1 className="text-[28px] font-bold text-gold m-0 mb-1 max-[480px]:text-[22px]">The Java Grimoire</h1>
         <p className="text-muted text-[14px] m-0 mb-4 max-[480px]:text-[13px]">Your path from apprentice to Archmage</p>
         <div className="max-w-[400px] mx-auto">
@@ -123,13 +123,16 @@ export default function DashboardPage() {
       {/* Stats row */}
       <div className="grid grid-cols-4 gap-3 mb-6 max-[600px]:grid-cols-2">
         {[
-          { val: dashboard.totalXp,       lbl: 'total xp',  extra: '' },
-          { val: dashboard.rank,           lbl: 'rank',      extra: '' },
-          { val: `🔥 ${dashboard.streakDays}`, lbl: 'day streak', extra: dashboard.streakAtRisk ? 'text-orange' : '' },
-          { val: dashboard.currentPath,    lbl: 'path',      extra: '' },
+          { val: dashboard.totalXp,    lbl: 'total xp',  extra: '' },
+          { val: dashboard.rank,        lbl: 'rank',      extra: '' },
+          { val: dashboard.streakDays,  lbl: 'day streak', extra: dashboard.streakAtRisk ? 'text-orange' : '' },
+          { val: dashboard.currentPath, lbl: 'path',      extra: '' },
         ].map(({ val, lbl, extra }) => (
           <div key={lbl} className="bg-card border border-border rounded-[8px] px-2.5 py-3.5 text-center">
-            <div className={cn('text-[20px] font-bold text-text max-[480px]:text-[17px]', extra)}>{val}</div>
+            <div className={cn('text-[20px] font-bold text-text max-[480px]:text-[17px] flex items-center justify-center gap-1.5', extra)}>
+              {lbl === 'day streak' && <Flame size={16} color={dashboard.streakAtRisk ? 'var(--orange)' : 'var(--teal)'} strokeWidth={1.75} />}
+              {val}
+            </div>
             <div className="text-[11px] text-muted uppercase mt-0.5">{lbl}</div>
           </div>
         ))}
@@ -143,7 +146,7 @@ export default function DashboardPage() {
               transition-[border-color] duration-200 hover:border-purple max-[600px]:min-w-0"
             onClick={() => navigate('/diagnostic')}
           >
-            <div className="text-[28px] mb-1.5">🔮</div>
+            <div className="mb-1.5"><Sparkles size={28} color="var(--purple-light)" strokeWidth={1.5} /></div>
             <div className="text-[15px] font-semibold text-text mb-1">Take Entry Diagnostic</div>
             <div className="text-[12px] text-muted leading-[1.5]">Find your starting point — skip what you already know</div>
           </div>
@@ -154,7 +157,7 @@ export default function DashboardPage() {
               transition-[border-color] duration-200 hover:border-purple max-[600px]:min-w-0"
             onClick={() => navigate('/review')}
           >
-            <div className="text-[28px] mb-1.5">📖</div>
+            <div className="mb-1.5"><BookOpen size={28} color="var(--teal)" strokeWidth={1.5} /></div>
             <div className="text-[15px] font-semibold text-text mb-1">{dashboard.reviewsDue} Reviews Due</div>
             <div className="text-[12px] text-muted leading-[1.5]">Strengthen fading memories before they slip away</div>
           </div>
@@ -170,7 +173,9 @@ export default function DashboardPage() {
         return (
           <div key={tier.key} className={cn('border rounded-[14px] p-5 mb-5 bg-card', tier.borderColor)}>
             <div className="flex items-start gap-3.5 mb-4">
-              <span className="text-[28px] flex-shrink-0 mt-0.5">{tier.glyph}</span>
+              <div className="flex-shrink-0 mt-0.5">
+                <TierIcon tier={tier.key} size={24} />
+              </div>
               <div>
                 <div className={cn('font-cinzel text-[14px] font-bold tracking-[0.04em] mb-0.5', tier.labelColor)}>
                   {tier.label}

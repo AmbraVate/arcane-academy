@@ -83,14 +83,40 @@ public class ChunkController {
         Map<String, UserChunkProgress> progressMap = progressRepository.findByUserId(user.getId()).stream()
                 .collect(Collectors.toMap(UserChunkProgress::getSubChunkId, p -> p, (a, b) -> a));
 
+        // Build set of completed/skipped sub-chunk IDs for sequential-lock computation
+        Set<String> completedSubChunkIds = progressMap.values().stream()
+                .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE
+                          || p.getStatus() == SubChunkStatus.SKIPPED)
+                .map(UserChunkProgress::getSubChunkId)
+                .collect(Collectors.toSet());
+
         List<SubChunkSummaryDto> subDtos = subs.stream().map(sc -> {
             UserChunkProgress p = progressMap.get(sc.getId());
             double strength = p != null ? spacingService.computeDecayedStrength(p) : 0.0;
             String health = strength > 0.7 ? "GREEN" : strength >= 0.4 ? "YELLOW" : "RED";
 
+            // Determine effective status: sub-chunks after the first are LOCKED
+            // until all prior siblings (by sortOrder) are complete/skipped.
+            String effectiveStatus;
+            if (p != null && (p.getStatus() == SubChunkStatus.COMPLETE
+                    || p.getStatus() == SubChunkStatus.SKIPPED
+                    || p.getStatus() == SubChunkStatus.IN_PROGRESS)) {
+                // Already started or finished — never retroactively lock
+                effectiveStatus = p.getStatus().name();
+            } else if (sc.getSortOrder() > 1) {
+                boolean allPriorDone = subs.stream()
+                        .filter(other -> other.getSortOrder() < sc.getSortOrder())
+                        .allMatch(other -> completedSubChunkIds.contains(other.getId()));
+                effectiveStatus = allPriorDone
+                        ? (p != null ? p.getStatus().name() : "NOT_STARTED")
+                        : "LOCKED";
+            } else {
+                effectiveStatus = p != null ? p.getStatus().name() : "NOT_STARTED";
+            }
+
             return SubChunkSummaryDto.builder()
                     .id(sc.getId()).title(sc.getTitle()).sortOrder(sc.getSortOrder())
-                    .status(p != null ? p.getStatus().name() : "NOT_STARTED")
+                    .status(effectiveStatus)
                     .currentPhase(p != null ? p.getCurrentPhase().name() : "HOOK")
                     .memoryStrength(strength).healthColor(health)
                     .feynmanCompleted(p != null && p.isFeynmanCompleted())

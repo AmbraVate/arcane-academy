@@ -4,6 +4,7 @@ import { chunkApi, rabbitHoleApi } from '@/shared/api/services'
 import type { ChunkDetail, RabbitHoleModule } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { Lock, Check, Rabbit, ArrowRight, Loader2 } from 'lucide-react'
 
 const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-green', YELLOW: 'bg-orange', RED: 'bg-red',
@@ -28,8 +29,8 @@ export default function ChunkMapPage() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-muted">
-        <div className="text-[48px] mb-3">📜</div>
-        <p>Loading chunk...</p>
+        <Loader2 size={32} className="mb-3 animate-spin" color="var(--muted)" />
+        <p>Loading module...</p>
       </div>
     )
   }
@@ -57,11 +58,11 @@ export default function ChunkMapPage() {
       </div>
 
       <div className="flex flex-col gap-2">
-        {chunk.subChunks.map((sc, i) => {
-          const isLocked = sc.status === 'NOT_STARTED' && i > 0 &&
-            chunk.subChunks[i - 1].status !== 'COMPLETE' &&
-            chunk.subChunks[i - 1].status !== 'SKIPPED'
-          const isDone = sc.status === 'COMPLETE' || sc.status === 'SKIPPED'
+        {chunk.subChunks.map(sc => {
+          // Use the authoritative backend status — EncodingController + ChunkController
+          // both set "LOCKED" for sub-chunks whose sequential prerequisite is not met.
+          const isLocked = sc.status === 'LOCKED'
+          const isDone   = sc.status === 'COMPLETE' || sc.status === 'SKIPPED'
 
           return (
             <div
@@ -77,15 +78,24 @@ export default function ChunkMapPage() {
             >
               <div className={cn(
                 'w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-bold flex-shrink-0',
-                isDone ? 'bg-teal text-bg' : 'bg-surface text-muted',
+                isDone   ? 'bg-teal text-bg'   :
+                isLocked ? 'bg-surface text-border' :
+                           'bg-surface text-muted',
               )}>
-                {sc.sortOrder}
+                {isLocked
+                  ? <Lock size={13} strokeWidth={2} />
+                  : isDone
+                    ? <Check size={13} strokeWidth={2.5} />
+                    : sc.sortOrder}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-[14px] font-semibold text-text max-[600px]:text-[13px]">{sc.title}</div>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant={isDone ? 'active' : sc.status === 'IN_PROGRESS' ? 'application' : sc.status === 'COMPRESSED' ? 'gold' : 'gray'}>
-                    {sc.status === 'COMPRESSED' ? 'Quick review' : sc.status.replace('_', ' ')}
+                  <Badge variant={isDone ? 'active' : sc.status === 'IN_PROGRESS' ? 'application' : isLocked ? 'gray' : sc.status === 'COMPRESSED' ? 'gold' : 'green'}>
+                    {sc.status === 'LOCKED'      ? 'Locked'       :
+                     sc.status === 'COMPRESSED'  ? 'Quick review' :
+                     isDone ? sc.status.charAt(0) + sc.status.slice(1).toLowerCase() :
+                     sc.status.replace('_', ' ')}
                   </Badge>
                   {sc.currentPhase && sc.status === 'IN_PROGRESS' && (
                     <span className="text-[10px] text-muted uppercase">{sc.currentPhase.replace('_', ' ')}</span>
@@ -93,8 +103,6 @@ export default function ChunkMapPage() {
                 </div>
               </div>
               <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-                {isLocked && <span className="text-[16px]">🔒</span>}
-                {isDone   && <span className="text-teal font-bold text-[16px]">✓</span>}
                 {!isLocked && !isDone && (
                   <Badge variant="green">+{sc.xpReward} xp</Badge>
                 )}
@@ -114,7 +122,10 @@ export default function ChunkMapPage() {
 
       {rabbitHoles.length > 0 && (
         <div className="mt-9">
-          <div className="text-[15px] font-bold text-gold mb-1">🐇 Rabbit Holes</div>
+          <div className="text-[15px] font-bold text-gold mb-1 flex items-center gap-2">
+            <Rabbit size={16} color="var(--gold)" strokeWidth={1.75} />
+            Rabbit Holes
+          </div>
           <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives — explore when curious.</p>
           <div className="flex flex-col gap-2">
             {rabbitHoles.map(rh => (
@@ -124,7 +135,7 @@ export default function ChunkMapPage() {
                 onClick={() => navigate(`/rabbit-hole/${rh.id}`)}
               >
                 <span className="text-[14px] font-semibold text-text">{rh.title}</span>
-                <span className="text-muted text-[14px]">→</span>
+                <ArrowRight size={15} color="var(--muted)" strokeWidth={1.75} />
               </div>
             ))}
           </div>
