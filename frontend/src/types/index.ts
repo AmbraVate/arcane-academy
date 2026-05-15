@@ -127,3 +127,9 @@ export interface RabbitHoleModule {
 export interface CuriosityQueueItem {
   id: string; userId: string; subChunkId: string; savedAt: string
 }
+
+// ── Rabbit Hole Terms ────────────────────────────────────────────────────────
+export interface RabbitHoleTerm {
+  id: string; term: string; description: string | null
+  subChunkId: string | null; topicId: string | null; savedAt: string
+}

@@ -1,15 +1,18 @@
 import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Wand2 } from 'lucide-react'
 
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const blockedReason = searchParams.get('reason') === 'blocked'
+  const [error, setError] = useState(blockedReason ? 'Your account has been blocked. Please contact support.' : '')
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: FormEvent) {
@@ -31,7 +34,9 @@ export default function LoginPage() {
   return (
     <div className="flex-1 flex items-center justify-center p-6 overflow-y-auto">
       <div className="bg-card border border-border rounded-[14px] p-9 px-8 w-full max-w-[400px] text-center">
-        <div className="text-[48px] mb-3">🧙</div>
+        <div className="flex items-center justify-center mb-3">
+          <Wand2 size={48} className="text-gold" strokeWidth={1.5} />
+        </div>
         <h1 className="font-cinzel text-[22px] text-gold tracking-[1px] mb-2">Arcane Academy</h1>
         <p className="text-[15px] text-muted italic mb-7">Enter your credentials to continue your journey</p>
 

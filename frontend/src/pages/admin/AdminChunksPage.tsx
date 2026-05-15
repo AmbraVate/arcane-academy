@@ -105,7 +105,7 @@ export default function AdminChunksPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this chunk and all its sub-chunks?')) return
+    if (!confirm('Delete this module and all its lessons?')) return
     try {
       await adminChunkApi.delete(id)
       setChunks(prev => prev.filter(c => c.id !== id))
@@ -124,7 +124,7 @@ export default function AdminChunksPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
         <div>
           <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, color: '#c9a227' }}>Content</h1>
-          <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>Manage chunks and sub-chunks</p>
+          <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>Manage modules and lessons</p>
         </div>
         <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={() => { setEditChunk(null); setShowForm(true) }}>
           + New Chunk
@@ -181,7 +181,7 @@ export default function AdminChunksPage() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontWeight: 600, fontSize: 14, color: '#e8e0f0' }}>{chunk.title}</div>
                 <div style={{ fontSize: 11, color: '#8b7fa0', marginTop: 2 }}>
-                  {topicName(chunk.topicId)} · {chunk.subChunkCount} sub-chunks · order {chunk.sortOrder}
+                  {topicName(chunk.topicId)} · {chunk.subChunkCount} lessons · order {chunk.sortOrder}
                 </div>
               </div>
               <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', padding: '2px 8px', borderRadius: 4, border: `1px solid ${tierColor[chunk.tier] ?? '#2e2850'}`, color: tierColor[chunk.tier] ?? '#8b7fa0' }}>
@@ -193,7 +193,7 @@ export default function AdminChunksPage() {
                   style={{ fontSize: 11, padding: '4px 12px' }}
                   onClick={() => navigate(`/admin/chunks/${chunk.id}/subchunks`)}
                 >
-                  Sub-chunks
+                  Lessons
                 </button>
                 <button
                   className="btn btn-ghost"

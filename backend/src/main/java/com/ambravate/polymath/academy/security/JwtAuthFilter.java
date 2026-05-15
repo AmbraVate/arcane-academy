@@ -1,5 +1,6 @@
 package com.ambravate.polymath.academy.security;
 
+import com.ambravate.polymath.academy.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +24,7 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -42,6 +44,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String userId = claims.getSubject();
             String username = claims.get("username", String.class);
             String role = claims.get("role", String.class);
+
+            // Reject requests from blocked users immediately
+            boolean isBlocked = userRepository.findById(userId)
+                    .map(u -> u.isBlocked())
+                    .orElse(false);
+            if (isBlocked) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Account is blocked");
+                return;
+            }
 
             List<GrantedAuthority> authorities = (role != null)
                     ? List.of(new SimpleGrantedAuthority("ROLE_" + role))

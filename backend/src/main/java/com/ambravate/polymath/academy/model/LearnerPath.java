@@ -2,6 +2,8 @@ package com.ambravate.polymath.academy.model;
 
 public enum LearnerPath {
     FOUNDATION,
+    /** Between Foundation and Practitioner — covers concurrency, streams, modern Java features. */
+    ADVANCED,
     PRACTITIONER,
     EXPERT,
     /**

@@ -4,7 +4,7 @@ import type {
   ChunkSummary, ChunkDetail, SubChunkEncoding, PracticeResult,
   RetrievalResultDto, ReviewSessionDto, ReviewResultDto,
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
-  RabbitHoleModule, CuriosityQueueItem, AnswerEntry,
+  RabbitHoleModule, CuriosityQueueItem, RabbitHoleTerm, AnswerEntry,
 } from '../types'
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
@@ -255,6 +255,21 @@ export const leaderboardApi = {
   polymath: async (limit = 20): Promise<LeaderboardEntry[]> => {
     const { data } = await api.get(`/api/leaderboard/polymath?limit=${limit}`)
     return data
+  },
+}
+
+// ── Rabbit Hole Terms ─────────────────────────────────────────────────────────
+export const rabbitHoleTermApi = {
+  getAll: async (): Promise<RabbitHoleTerm[]> => {
+    const { data } = await api.get('/api/rabbit-hole-terms')
+    return data
+  },
+  save: async (term: string, description: string, subChunkId: string, topicId: string): Promise<RabbitHoleTerm> => {
+    const { data } = await api.post('/api/rabbit-hole-terms', { term, description, subChunkId, topicId })
+    return data
+  },
+  remove: async (term: string): Promise<void> => {
+    await api.delete(`/api/rabbit-hole-terms/${encodeURIComponent(term)}`)
   },
 }
 

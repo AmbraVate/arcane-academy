@@ -117,7 +117,7 @@ export default function ReviewPage() {
             <button className="btn btn-primary" onClick={() => setCurrentQ(c => c + 1)}>Next →</button>
           ) : (
             <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered || submitting}>
-              {submitting ? 'Submitting...' : '⚡ Submit Review'}
+              {submitting ? 'Submitting...' : 'Submit Review'}
             </button>
           )}
         </div>

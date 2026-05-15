@@ -5,6 +5,9 @@ import { useAuth } from '../hooks/useAuth'
 import type { DashboardDto, ChunkHealthDto } from '@/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { TopicIcon } from '@/components/icons/TopicIcon'
+import { TierIcon } from '@/components/icons/TierIcon'
+import { RefreshCcw, Check, MapPin, Lock, BookOpen, Sparkles } from 'lucide-react'
 
 type TopicMeta = {
   name: string
@@ -68,6 +71,22 @@ const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-teal', YELLOW: 'bg-orange', RED: 'bg-red',
 }
 
+const TIER_ORDER = ['FOUNDATION', 'ADVANCED', 'PRACTITIONER', 'EXPERT', 'CAPSTONE']
+const TIER_LABELS: Record<string, string> = {
+  FOUNDATION:   'Foundation',
+  ADVANCED:     'Advanced',
+  PRACTITIONER: 'Practitioner',
+  EXPERT:       'Expert',
+  CAPSTONE:     'Capstone',
+}
+const TIER_DESC: Record<string, string> = {
+  FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
+  ADVANCED:     'Concurrency, streams, and modern Java — intermediate fluency.',
+  PRACTITIONER: 'Spring Boot, JPA, and enterprise patterns — real-world project skills.',
+  EXPERT:       'High-performance computing, cloud-native, and distributed systems.',
+  CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
+}
+
 function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto; onClick: () => void; accent?: string }) {
   const locked = ch.status === 'LOCKED'
   const done   = ch.status === 'COMPLETE'
@@ -85,7 +104,9 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto
       onClick={onClick}
     >
       <div className="flex items-center justify-between">
-        <span className="text-[28px] leading-none">{locked ? '🔒' : ch.glyph}</span>
+        <span className="flex items-center text-[26px] leading-none">
+          {locked ? <Lock size={22} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
+        </span>
         <Badge variant={done ? 'active' : ch.status === 'IN_PROGRESS' ? 'application' : locked ? 'gray' : 'green' as 'active' | 'application' | 'gray'}>
           {done ? 'Complete' : ch.status === 'IN_PROGRESS' ? 'In Progress' : locked ? 'Locked' : 'Start'}
         </Badge>
@@ -143,7 +164,7 @@ export default function TopicPage() {
   const progressPct = Math.round(dashboard.overallProgress * 100)
 
   return (
-    <div className="max-w-[900px] mx-auto px-5 py-6 pb-[72px] max-[600px]:px-3 max-[600px]:py-4">
+    <div className="max-w-[900px] mx-auto px-5 py-6 pb-[72px] max-[600px]:px-3 max-[600px]:py-4 max-[480px]:px-2.5">
       {/* Hero */}
       <div
         className="flex flex-col items-center text-center px-5 py-8 pb-7 rounded-[16px] mb-6 relative overflow-hidden"
@@ -155,7 +176,9 @@ export default function TopicPage() {
         <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/topics')}>
           ← All Topics
         </button>
-        <div className="text-[52px] mb-2.5 max-[600px]:text-[40px]">{meta.glyph}</div>
+        <div className="mb-2.5 flex justify-center">
+          <TopicIcon topicId={topicId ?? ''} size={52} />
+        </div>
         <h1 className="font-cinzel text-[28px] font-bold m-0 mb-2 max-[600px]:text-[22px]" style={{ color: meta.accent }}>{meta.name}</h1>
         <p className="text-[14px] text-muted leading-[1.7] max-w-[480px] m-0 mb-5">{meta.tagline}</p>
         <div className="w-full max-w-[400px]">
@@ -194,25 +217,73 @@ export default function TopicPage() {
             className="flex-1 min-w-[200px] bg-card border border-border rounded-[12px] p-4 px-[18px] flex flex-col gap-1 cursor-pointer transition-[border-color,transform] duration-200 hover:border-teal hover:-translate-y-0.5 max-[600px]:min-w-0"
             onClick={() => navigate('/review')}
           >
-            <div className="text-[24px]">📖</div>
+            <div className="flex items-center"><BookOpen size={24} color="var(--teal)" strokeWidth={1.75} /></div>
             <div className="text-[15px] font-bold text-text">{dashboard.reviewsDue} Reviews Due</div>
             <div className="text-[12px] text-muted leading-[1.5]">Strengthen fading memories before they slip away</div>
           </div>
         </div>
       )}
 
-      {/* Chunk grid */}
-      <div className="font-cinzel text-[14px] font-bold text-gold tracking-[0.08em] uppercase mb-3.5">Knowledge Chunks</div>
-      <div className="grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
-        {dashboard.chunkHealth.map(ch => (
-          <ChunkCard
-            key={ch.chunkId}
-            ch={ch}
-            accent={meta.accent}
-            onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.chunkId}`)}
-          />
-        ))}
-      </div>
+      {/* Tier-grouped chunk grid */}
+      {(() => {
+        const byTier = TIER_ORDER.reduce<Record<string, typeof dashboard.chunkHealth>>((acc, t) => {
+          acc[t] = dashboard.chunkHealth.filter(ch => ch.tier === t)
+          return acc
+        }, {})
+        const activeTiers = TIER_ORDER.filter(t => (byTier[t]?.length ?? 0) > 0)
+        return activeTiers.map(tier => {
+          const chunks = byTier[tier]
+          const tierComplete = chunks.every(ch => ch.status === 'COMPLETE')
+          const tierStarted  = chunks.some(ch => ch.status !== 'LOCKED')
+          const placedHere   = dashboard.currentPath === tier
+          return (
+            <div key={tier} className="mb-8">
+              <div className="flex items-center gap-3 mb-3.5 flex-wrap">
+                <TierIcon tier={tier} size={20} />
+                <div className="flex flex-col gap-0.5 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-cinzel text-[15px] font-bold text-gold tracking-[0.06em] uppercase">
+                      {TIER_LABELS[tier]}
+                    </span>
+                    {placedHere && (
+                      <span className="chip chip-purple text-[10px] py-[2px] px-2 flex items-center gap-1">
+                        <MapPin size={10} strokeWidth={2} /> Placed here
+                      </span>
+                    )}
+                    {tierComplete && (
+                      <span className="chip chip-teal text-[10px] py-[2px] px-2 flex items-center gap-1">
+                        <Check size={10} strokeWidth={2.5} /> Complete
+                      </span>
+                    )}
+                    {!tierStarted && !tierComplete && (
+                      <span className="chip chip-gray text-[10px] py-[2px] px-2">Locked</span>
+                    )}
+                  </div>
+                  <span className="text-[12px] text-muted">{TIER_DESC[tier]}</span>
+                </div>
+                <button
+                  className="btn btn-ghost text-[11px] py-1 px-3 self-start flex-shrink-0 max-[480px]:hidden"
+                  onClick={() => navigate(`/topic/${topicId}/diagnostic`)}
+                  title="Retake diagnostic"
+                >
+                  <Sparkles size={12} strokeWidth={1.75} />
+                  Retake Diagnostic
+                </button>
+              </div>
+              <div className="grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+                {chunks.map(ch => (
+                  <ChunkCard
+                    key={ch.chunkId}
+                    ch={ch}
+                    accent={meta.accent}
+                    onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.chunkId}`)}
+                  />
+                ))}
+              </div>
+            </div>
+          )
+        })
+      })()}
     </div>
   )
 }

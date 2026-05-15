@@ -132,19 +132,21 @@ public class BadgeService {
     return switch (def) {
       // Learning
       case FIRST_CONCEPT -> completedSubChunks >= 1;
-      case CHUNK_A_MASTERED -> completedChunks.contains("A");
-      case CHUNK_B_MASTERED -> completedChunks.contains("B");
-      case CHUNK_C_MASTERED -> completedChunks.contains("C");
-      case CHUNK_D_MASTERED -> completedChunks.contains("D");
-      case CHUNK_E_MASTERED -> completedChunks.contains("E");
-      case CHUNK_F_MASTERED -> completedChunks.contains("F");
-      case CHUNK_G_MASTERED -> completedChunks.contains("G");
-      case CHUNK_H_MASTERED -> completedChunks.contains("H");
-      case CHUNK_I_MASTERED -> completedChunks.contains("I");
-      case CHUNK_J_MASTERED -> completedChunks.contains("J");
-      case CHUNK_K_MASTERED -> completedChunks.contains("K");
-      case ALL_CHUNKS_COMPLETE -> completedChunks.size() >= 11;
-      case JAVA_CAPSTONE_COMPLETE -> completedChunks.contains("CAP");
+
+      // Java Foundation milestones (java-fnd-1 through java-fnd-8)
+      case JAVA_FND_1_COMPLETE -> completedChunks.contains("java-fnd-1");
+      case JAVA_FND_2_COMPLETE -> completedChunks.contains("java-fnd-2");
+      case JAVA_FND_3_COMPLETE -> completedChunks.contains("java-fnd-3");
+      case JAVA_FND_4_COMPLETE -> completedChunks.contains("java-fnd-4");
+      case JAVA_FND_5_COMPLETE -> completedChunks.contains("java-fnd-5");
+      case JAVA_FND_6_COMPLETE -> completedChunks.contains("java-fnd-6");
+      case JAVA_FND_7_COMPLETE -> completedChunks.contains("java-fnd-7");
+      case JAVA_FND_8_COMPLETE -> completedChunks.contains("java-fnd-8");
+      case JAVA_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of(
+          "java-fnd-1", "java-fnd-2", "java-fnd-3", "java-fnd-4",
+          "java-fnd-5", "java-fnd-6", "java-fnd-7", "java-fnd-8"));
+
+      case JAVA_CAPSTONE_COMPLETE -> completedChunks.contains("java-cap");
       case TAILWIND_CAPSTONE_COMPLETE -> completedChunks.contains("tw-d");
 
       // SQL track — one badge per tier, plus the track-master capstone

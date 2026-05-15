@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { Check, X } from 'lucide-react'
 import type { QuestionDto, QuestionResultDto } from '../../types'
 
 const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E']
@@ -115,8 +116,8 @@ export default function QuestionCard({ question, index, answer, onChange, result
                 <span className={cn('text-[14px] text-text flex-1 leading-[1.5] max-[600px]:text-[13px]', selected && 'font-medium')}>
                   {opt}
                 </span>
-                {isCorrect && <span className="text-[16px] font-bold text-green flex-shrink-0">✓</span>}
-                {isWrong   && <span className="text-[16px] font-bold text-red flex-shrink-0">✗</span>}
+                {isCorrect && <Check size={15} strokeWidth={2.5} className="text-green flex-shrink-0" />}
+                {isWrong   && <X    size={15} strokeWidth={2.5} className="text-red   flex-shrink-0" />}
               </label>
             )
           })}
@@ -154,7 +155,7 @@ export default function QuestionCard({ question, index, answer, onChange, result
       {result && !result.correct && (
         <div className="mt-4 p-3.5 px-4 bg-[rgba(248,113,113,0.06)] border border-[rgba(248,113,113,0.25)] rounded-[10px]">
           <div className="text-[13px] font-bold text-red mb-2.5 flex items-center gap-1.5">
-            <span className="text-[14px]">✗</span> Incorrect
+            <X size={14} strokeWidth={2.5} /> Incorrect
           </div>
           <div className="flex gap-2.5 items-baseline mb-1.5 text-[13px] flex-wrap">
             <span className="text-[11px] text-muted uppercase tracking-[0.05em] flex-shrink-0">Your answer:</span>
@@ -177,7 +178,7 @@ export default function QuestionCard({ question, index, answer, onChange, result
       {/* Result — correct */}
       {result?.correct && (
         <div className="mt-3.5 px-3.5 py-2.5 bg-[rgba(74,222,128,0.06)] border border-[rgba(74,222,128,0.2)] rounded-[10px] text-[13px] font-semibold text-green">
-          <span className="text-[14px]">✓</span> Correct
+          <Check size={14} strokeWidth={2.5} className="inline mr-1" /> Correct
         </div>
       )}
     </div>

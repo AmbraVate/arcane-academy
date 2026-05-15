@@ -153,7 +153,7 @@ export default function AdminQuestionsPage() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
         <span>›</span>
-        {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.chunkId}/subchunks`)}>Sub-chunks</span>}
+        {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.chunkId}/subchunks`)}>Lessons</span>}
         {sc && <span>›</span>}
         <span style={{ color: '#e8e0f0' }}>{sc?.title ?? 'Questions'}</span>
       </div>
@@ -161,7 +161,7 @@ export default function AdminQuestionsPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
         <div>
           <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: 22, color: '#c9a227' }}>Questions</h1>
-          <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>{questions.length} questions for this sub-chunk</p>
+          <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>{questions.length} questions for this lesson</p>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           {sc && (

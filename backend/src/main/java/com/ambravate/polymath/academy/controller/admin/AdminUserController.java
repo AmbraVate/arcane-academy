@@ -1,15 +1,18 @@
 package com.ambravate.polymath.academy.controller.admin;
 
 import com.ambravate.polymath.academy.dto.admin.AdminUserDto;
+import com.ambravate.polymath.academy.dto.admin.UserStatsDto;
 import com.ambravate.polymath.academy.model.SubChunkStatus;
 import com.ambravate.polymath.academy.model.User;
 import com.ambravate.polymath.academy.repository.*;
+import com.ambravate.polymath.academy.security.UserPrincipal;
 import com.ambravate.polymath.academy.service.AdminStatsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -62,5 +65,78 @@ public class AdminUserController {
         var progress = progressRepository.findByUserId(id);
         progressRepository.deleteAll(progress);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Change a user's role (ADMIN ↔ USER).
+     * An admin cannot demote their own account.
+     */
+    @PutMapping("/{userId}/role")
+    public ResponseEntity<AdminUserDto> changeRole(
+            @PathVariable String userId,
+            @RequestBody Map<String, String> body,
+            @AuthenticationPrincipal UserPrincipal caller) {
+
+        if (caller.getId().equals(userId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        String roleStr = body.get("role");
+        if (roleStr == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User.UserRole newRole;
+        try {
+            newRole = User.UserRole.valueOf(roleStr.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
+        user.setRole(newRole);
+        userRepository.save(user);
+
+        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        return ResponseEntity.ok(statsService.toUserDto(user, completed));
+    }
+
+    /**
+     * Block or unblock a user.
+     * An admin cannot block their own account.
+     */
+    @PutMapping("/{userId}/blocked")
+    public ResponseEntity<AdminUserDto> setBlocked(
+            @PathVariable String userId,
+            @RequestBody Map<String, Boolean> body,
+            @AuthenticationPrincipal UserPrincipal caller) {
+
+        if (caller.getId().equals(userId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Boolean blocked = body.get("blocked");
+        if (blocked == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
+        user.setBlocked(blocked);
+        userRepository.save(user);
+
+        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        return ResponseEntity.ok(statsService.toUserDto(user, completed));
+    }
+
+    /**
+     * Detailed stats for a single user — for the admin user-detail panel.
+     */
+    @GetMapping("/{userId}/stats")
+    public ResponseEntity<UserStatsDto> getUserStats(@PathVariable String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
+        return ResponseEntity.ok(statsService.toUserStatsDto(user));
     }
 }

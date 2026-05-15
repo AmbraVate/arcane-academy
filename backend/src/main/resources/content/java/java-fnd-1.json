@@ -1,0 +1,243 @@
+{
+  "id": "java-fnd-1",
+  "title": "Syntax Basics",
+  "glyph": "📝",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "java",
+  "prerequisites": [],
+  "subChunks": [
+    {
+      "id": "java-fnd-1a",
+      "title": "Variables, Primitives & Wrapper Classes",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "SyntaxBasics.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Before a wizard can cast spells, they must understand the building blocks of magic — the containers that hold power. In Java, those containers are called <strong>variables</strong>.</p>",
+      "explanationHtml": "<h3>Variables and Primitive Types</h3><p>A variable is a named container that holds a value. Java is <em>statically typed</em> — every variable must be declared with a type before it can be used.</p><h4>The Eight Primitive Types</h4><pre><code>byte   b = 127;           // -128 to 127\nshort  s = 32_000;        // -32,768 to 32,767\nint    i = 2_000_000;     // most common whole-number type\nlong   l = 9_000_000_000L;// needs L suffix\nfloat  f = 3.14f;         // needs f suffix, less precise\ndouble d = 3.14159;       // default decimal type\nboolean flag = true;      // only true or false\nchar   c = 'A';           // single Unicode character</code></pre><h4>Wrapper Classes</h4><p>Each primitive has a <strong>wrapper class</strong> — an object version that lives in the standard library:</p><pre><code>Integer count = 42;    // wraps int\nDouble  price = 9.99;  // wraps double\nBoolean active = true; // wraps boolean</code></pre><p>Wrappers are needed whenever an API requires an object (e.g., <code>List&lt;Integer&gt;</code> — you cannot write <code>List&lt;int&gt;</code>). Java <strong>autoboxes</strong> primitives to their wrappers automatically in most contexts, and <strong>unboxes</strong> them back:</p><pre><code>Integer x = 5;    // autoboxing: int 5 → Integer\nint     y = x;    // unboxing: Integer → int</code></pre><p>Wrapper classes also offer useful utility methods: <code>Integer.parseInt(\"42\")</code> converts a String to an int, <code>Integer.MAX_VALUE</code> gives the largest possible int, and <code>Integer.toBinaryString(42)</code> shows the binary representation.</p><h4>String: Not a Primitive</h4><p><code>String</code> is a class, not a primitive, but it behaves like one in common usage:</p><pre><code>String name = \"Eldrin\";          // string literal\nString title = new String(\"Archmage\"); // heap object (avoid)\nSystem.out.println(name.length()); // 6\nSystem.out.println(name.toUpperCase()); // ELDRIN</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "You arrive at the Arcane Academy's intake hall. Stone runes glow faintly on the walls. A stern-faced wizard in obsidian robes approaches, eyeing you the way a blacksmith eyes raw ore."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Apprentice. Before you learn a single spell, you must understand what magic is made of. Everything — every fireball, every portal, every ward — begins with a container. We call them <strong>runes</strong>. The rest of the world calls them variables."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Java has eight primitive types — the raw essences. <code>int</code> for whole numbers. <code>double</code> for decimals. <code>boolean</code> for truth and falsehood. <code>char</code> for a single glyph. Each is a specific shape of vessel that holds a specific kind of energy."},
+        {"type": "example", "speaker": "Declaring runes", "text": "int manaPoints = 100;\ndouble spellPower = 7.5;\nboolean isEnchanted = true;\nchar tier = 'S';"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "But sometimes the Academy's records systems demand <em>object</em> vessels, not raw essence. For those moments, we have <strong>Wrapper Classes</strong> — <code>Integer</code>, <code>Double</code>, <code>Boolean</code>. Java can convert between primitive and wrapper automatically. We call this <em>autoboxing</em>."},
+        {"type": "example", "speaker": "Autoboxing in action", "text": "Integer scrollCount = 5;   // autoboxed from int\nint rolled = scrollCount;  // unboxed back to int\nSystem.out.println(Integer.MAX_VALUE); // 2147483647"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Now, the most versatile rune of all — <code>String</code>. Not a primitive; a full class. But used so often it gets special treatment. Learn it well — it will be your constant companion."}
+      ],
+      "guidedPracticeHtml": "<p>The Academy's intake scroll requires a new student profile. Declare the following variables and print each on its own line:</p><ul><li>A <code>String</code> called <code>wizardName</code> set to <code>\"Lyria\"</code></li><li>An <code>int</code> called <code>level</code> set to <code>1</code></li><li>A <code>double</code> called <code>manaReserve</code> set to <code>100.5</code></li><li>A <code>boolean</code> called <code>enrolled</code> set to <code>true</code></li><li>An <code>Integer</code> wrapper called <code>spellsLearned</code> set to <code>0</code></li></ul><p>Then print the maximum possible <code>int</code> value using <code>Integer.MAX_VALUE</code>.</p>",
+      "guidedPracticeStarterCode": "// Student intake profile\n\n\n// Print each variable\n\n\n// Print Integer.MAX_VALUE\n",
+      "guidedPracticeTests": [
+        {"label": "Prints wizardName", "input": "null", "expected": "Lyria"},
+        {"label": "Prints level", "input": "null", "expected": "1"},
+        {"label": "Prints manaReserve", "input": "null", "expected": "100.5"},
+        {"label": "Prints enrolled", "input": "null", "expected": "true"},
+        {"label": "Prints spellsLearned", "input": "null", "expected": "0"},
+        {"label": "Prints MAX_VALUE", "input": "null", "expected": "2147483647"}
+      ],
+      "feynmanPrompt": "Explain the difference between Java's eight primitive types and their wrapper classes. Why do wrapper classes exist, and when would you use Integer instead of int?",
+      "soloPracticeHtml": "<p>Without looking at your guided practice, rebuild the student intake profile from scratch — no starter code this time. Declare all five variables for a wizard named <code>\"Lyria\"</code> at level <code>1</code>, with <code>100.5</code> mana reserve, <code>true</code> for enrolled, and an <code>Integer</code> wrapper for spells learned starting at <code>0</code>. Print each variable on its own line, then print the maximum possible <code>int</code> value.</p>",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which of the following is a <strong>primitive</strong> type in Java?</p>",
+          "options": ["String", "Integer", "double", "Character"],
+          "correctAnswer": "double",
+          "explanationHtml": "<p><code>double</code> is one of Java's eight primitive types. <code>String</code>, <code>Integer</code>, and <code>Character</code> are all classes (objects).</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Java, <code>List&lt;int&gt;</code> is valid syntax.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Java generics only work with reference types (objects). You must use the wrapper class: <code>List&lt;Integer&gt;</code>. The compiler then autoboxes values for you.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which primitive type holds a single character in Java?</p>",
+          "options": ["String", "char", "Character", "byte"],
+          "correctAnswer": "char",
+          "explanationHtml": "<p><code>char</code> holds a single Unicode character, e.g. <code>char c = 'A';</code>. <code>String</code> (a class) holds multiple characters. <code>Character</code> is the wrapper class for <code>char</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Java's <code>byte</code> type can hold values from -256 to 255.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p><code>byte</code> is an 8-bit signed integer and holds values from -128 to 127. The range -256 to 255 is a common misconception — that would require 9 bits.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What suffix is required when assigning a <code>long</code> literal that exceeds <code>int</code> range?</p>",
+          "options": ["L or l", "LL", "long", "No suffix needed"],
+          "correctAnswer": "L or l",
+          "explanationHtml": "<p>Long literals larger than <code>Integer.MAX_VALUE</code> require the <code>L</code> suffix (e.g. <code>long x = 9_000_000_000L;</code>). Without it the compiler treats it as an <code>int</code> literal and reports an overflow error.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "Integer a = 100;\nint b = a;\nSystem.out.println(b + 1);",
+          "correctAnswer": "101",
+          "explanationHtml": "<p><code>Integer a = 100</code> autoboxes. <code>int b = a</code> unboxes. Then <code>b + 1</code> is normal int arithmetic giving <code>101</code>.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "System.out.println(Integer.MIN_VALUE);",
+          "correctAnswer": "-2147483648",
+          "explanationHtml": "<p><code>Integer.MIN_VALUE</code> is the smallest possible <code>int</code> value: −2<sup>31</sup> = −2,147,483,648.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A developer writes <code>double price = 9.99f;</code>. What is stored in <code>price</code>?</p>",
+          "options": ["Exactly 9.99 as a double", "9.99 as a float", "double, but precision may differ from 9.99", "A compile error"],
+          "correctAnswer": "double, but precision may differ from 9.99",
+          "explanationHtml": "<p>The <code>float</code> literal <code>9.99f</code> is widened to <code>double</code>, but <code>float</code> has less precision, so the stored value may not be exactly <code>9.99</code>. Always use a <code>double</code> literal (e.g. <code>9.99</code>) when assigning to a <code>double</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Which method converts a <code>String</code> to an <code>int</code> in Java?</p>",
+          "options": ["Integer.parseInt()", "String.toInt()", "(int) str", "Integer.valueOf().intValue()"],
+          "correctAnswer": "Integer.parseInt()",
+          "explanationHtml": "<p><code>Integer.parseInt(\"42\")</code> parses a String and returns an <code>int</code>. <code>Integer.valueOf(\"42\")</code> returns an <code>Integer</code> object. The cast <code>(int) str</code> does not compile.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer writes: <code>Integer count = null; int value = count;</code> — what happens at runtime?</p>",
+          "correctAnswer": "NullPointerException — unboxing null throws NPE",
+          "explanationHtml": "<p>Unboxing a <code>null</code> <code>Integer</code> calls <code>intValue()</code> on a <code>null</code> reference, throwing a <code>NullPointerException</code>. Always null-check wrapper types before unboxing, or use <code>Objects.requireNonNullElse(count, 0)</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When should you prefer <code>int</code> over <code>Integer</code>?</p>",
+          "options": ["For simple arithmetic — int is faster and uses less memory", "Integer should always be used for clarity", "int cannot be null so it is always safer regardless of context", "There is no practical difference"],
+          "correctAnswer": "For simple arithmetic — int is faster and uses less memory",
+          "explanationHtml": "<p>Primitives avoid object overhead and are stored on the stack. Use <code>Integer</code> when you need null-ability, generics (<code>List&lt;Integer&gt;</code>), or utility methods like <code>Integer.parseInt()</code>. For plain arithmetic, <code>int</code> is always preferred.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-fnd-1b",
+      "title": "Operators & Operator Precedence",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "Operators.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A wizard who casts spells in the wrong order risks catastrophe. Java expressions follow strict rules about which operations happen first — master <strong>operator precedence</strong> or face unpredictable results.</p>",
+      "explanationHtml": "<h3>Arithmetic Operators</h3><pre><code>int a = 17, b = 5;\nSystem.out.println(a + b);  // 22 — addition\nSystem.out.println(a - b);  // 12 — subtraction\nSystem.out.println(a * b);  // 85 — multiplication\nSystem.out.println(a / b);  // 3  — integer division (truncates!)\nSystem.out.println(a % b);  // 2  — modulo (remainder)</code></pre><h3>Comparison &amp; Logical Operators</h3><pre><code>boolean eq  = (a == b); // false — equality\nboolean neq = (a != b); // true  — not equal\nboolean gt  = (a > b);  // true  — greater than\nboolean and = (a > 0 &amp;&amp; b > 0); // true — both conditions\nboolean or  = (a < 0 || b > 0); // true — at least one\nboolean not = !(a == b);        // true — negation</code></pre><h3>Compound Assignment</h3><pre><code>int x = 10;\nx += 5;  // x = 15\nx -= 3;  // x = 12\nx *= 2;  // x = 24\nx /= 4;  // x = 6\nx %= 4;  // x = 2</code></pre><h3>Increment &amp; Decrement</h3><pre><code>int n = 5;\nSystem.out.println(n++); // prints 5, then n becomes 6 (post)\nSystem.out.println(++n); // n becomes 7, then prints 7 (pre)</code></pre><h3>Operator Precedence (high → low)</h3><ol><li><code>++</code> <code>--</code> (postfix), then <code>++</code> <code>--</code> (prefix), <code>!</code></li><li><code>*</code> <code>/</code> <code>%</code></li><li><code>+</code> <code>-</code></li><li><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></li><li><code>==</code> <code>!=</code></li><li><code>&amp;&amp;</code></li><li><code>||</code></li><li><code>=</code> <code>+=</code> <code>-=</code> etc.</li></ol><p>When in doubt, use parentheses: <code>(a + b) * c</code> is always clear.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "Eldrin draws a complex rune diagram on the chalkboard — nested circles within circles, each with small symbols connecting them."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Magic is applied in sequence. <code>3 + 4 * 2</code> — do you add first, or multiply first? If you said multiply, you are correct. Multiplication has higher <em>precedence</em> than addition. The result is 11, not 14."},
+        {"type": "example", "speaker": "Precedence trap", "text": "int wrong = 3 + 4 * 2; // 11 (not 14!)\nint clear = (3 + 4) * 2; // 14 — parentheses win"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Now for the subtlest trick — <em>post</em>-increment versus <em>pre</em>-increment. <code>n++</code> returns the current value, <em>then</em> increments. <code>++n</code> increments <em>first</em>, then returns. Many apprentices have lost marks on exams over this."},
+        {"type": "example", "speaker": "Pre vs post increment", "text": "int n = 5;\nSystem.out.println(n++); // 5 (returns 5, then n→6)\nSystem.out.println(n);   // 6\nSystem.out.println(++n); // 7 (increments first, then returns 7)"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "And the modulo operator — <code>%</code> — gives you the <em>remainder</em> after division. Use it to test if a number is even (<code>n % 2 == 0</code>), to wrap indices around an array, or to extract digits. It is more useful than you might think."}
+      ],
+      "guidedPracticeHtml": "<p>Calculate and print the following three values:</p><ol><li>The result of <code>3 + 4 * 2 - 1</code> (follow normal precedence, no extra parentheses)</li><li>The remainder of <code>29 % 6</code></li><li>Starting with <code>int score = 10</code>, apply <code>score += 5</code> then <code>score *= 2</code> and print the final score</li></ol>",
+      "guidedPracticeStarterCode": "// 1. Operator precedence\n\n\n// 2. Modulo\n\n\n// 3. Compound assignment\nint score = 10;\n\n\n",
+      "guidedPracticeTests": [
+        {"label": "Precedence result", "input": "null", "expected": "10"},
+        {"label": "Modulo result", "input": "null", "expected": "5"},
+        {"label": "Compound assignment result", "input": "null", "expected": "30"}
+      ],
+      "feynmanPrompt": "Explain Java operator precedence to a friend. Include an example where getting the order wrong produces a surprising answer, and explain how to avoid the problem.",
+      "soloPracticeHtml": "<p>An alchemist needs three quick calculations for their potion lab. Write the code from scratch — no starter this time:</p><ol><li>A basic recipe requires <code>3 * 4 - 8 / 4</code> drops of essence. Print the result — watch your precedence, both <code>*</code> and <code>/</code> bind before <code>-</code>.</li><li>The alchemist has 35 moonflower petals split evenly into bags of 6. Print the remainder left over using <code>%</code>.</li><li>Start with <code>int gold = 20</code>. Deduct 5 for ingredients (<code>gold -= 5</code>), then double the result by selling the finished potion (<code>gold *= 2</code>). Print the final amount.</li></ol>",
+      "questions": [
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "System.out.println(2 + 3 * 4);",
+          "correctAnswer": "14",
+          "explanationHtml": "<p>Multiplication has higher precedence than addition. <code>3 * 4 = 12</code>, then <code>2 + 12 = 14</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Java, <code>7 / 2</code> evaluates to <code>3.5</code>.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>When both operands are integers, Java performs <em>integer division</em> and truncates the decimal. <code>7 / 2 = 3</code>. Use <code>7.0 / 2</code> or <code>(double) 7 / 2</code> to get <code>3.5</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does the <code>%</code> operator return?</p>",
+          "options": ["The quotient of division", "The remainder after division", "The result rounded to the nearest integer", "The fractional part of the division"],
+          "correctAnswer": "The remainder after division",
+          "explanationHtml": "<p><code>%</code> is the modulo operator. <code>17 % 5 = 2</code> because <code>17 = 3 × 5 + 2</code>. It's useful for detecting even/odd numbers, cycling through array indices, and extracting digits.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int n = 10;\n++n;\nSystem.out.println(n);",
+          "correctAnswer": "11",
+          "explanationHtml": "<p><code>++n</code> is the pre-increment operator — it increments <code>n</code> by 1 before any other operation. After <code>++n</code>, <code>n</code> is 11, so <code>println</code> prints <code>11</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Post-increment (<code>n++</code>) changes <code>n</code> <em>before</em> returning its value.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p><code>n++</code> returns the current value of <code>n</code> <em>first</em>, then increments it. Pre-increment (<code>++n</code>) increments first and then returns the new value.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this print?</p>",
+          "codeSnippet": "int n = 5;\nSystem.out.println(n++);\nSystem.out.println(n);",
+          "correctAnswer": "5\n6",
+          "explanationHtml": "<p><code>n++</code> (post-increment) returns the <em>current</em> value (5) before incrementing. After the statement, <code>n</code> is 6.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is <code>17 % 5</code>?</p>",
+          "options": ["2", "3", "3.4", "5"],
+          "correctAnswer": "2",
+          "explanationHtml": "<p><code>17 / 5 = 3</code> remainder <code>2</code>. The <code>%</code> operator returns the remainder.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int x = 8;\nx -= 3;\nx *= 2;\nSystem.out.println(x);",
+          "correctAnswer": "10",
+          "explanationHtml": "<p><code>x -= 3</code> sets <code>x = 5</code>. Then <code>x *= 2</code> sets <code>x = 10</code>. Compound operators modify the variable in place, applying in sequence.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer wants to check if a number is <em>odd</em>. What is wrong with this condition?</p>",
+          "codeSnippet": "if (n % 2 == 1) { System.out.println(\"odd\"); }",
+          "correctAnswer": "It fails for negative odd numbers, where n % 2 is -1, not 1. Use n % 2 != 0 instead.",
+          "explanationHtml": "<p>In Java, the sign of the result of <code>%</code> matches the sign of the left operand. So <code>-3 % 2</code> is <code>-1</code>, not <code>1</code>. The safe idiom for odd-check is <code>n % 2 != 0</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer writes <code>int result = 5 / 0;</code> — what happens?</p>",
+          "correctAnswer": "ArithmeticException — integer division by zero throws an exception",
+          "explanationHtml": "<p>Integer division by zero throws <code>java.lang.ArithmeticException: / by zero</code> at runtime. Note: floating-point division by zero does <em>not</em> throw — it produces <code>Infinity</code> or <code>NaN</code> (e.g. <code>5.0 / 0</code> = <code>Infinity</code>).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer wants to toggle a <code>boolean</code> flag. Which is the cleanest approach?</p>",
+          "options": ["flag = !flag", "flag = flag == false", "if (flag) flag = false; else flag = true;", "flag ^= true"],
+          "correctAnswer": "flag = !flag",
+          "explanationHtml": "<p><code>flag = !flag</code> uses the logical NOT operator for a clean, idiomatic toggle. <code>flag ^= true</code> works but is less readable. The <code>if/else</code> is unnecessarily verbose. <code>flag = flag == false</code> also works but reads awkwardly.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -106,7 +106,7 @@ export default function PublicProfilePage() {
                   <div className="text-[18px] font-semibold text-gold">
                     {topic.xpEarned.toLocaleString()}<span className="text-[11px] text-muted ml-1">xp</span>
                   </div>
-                  <div className="text-[11px] text-muted">{topic.subChunksCompleted} sub-chunks complete</div>
+                  <div className="text-[11px] text-muted">{topic.subChunksCompleted} lessons complete</div>
                 </div>
               ))}
             </div>

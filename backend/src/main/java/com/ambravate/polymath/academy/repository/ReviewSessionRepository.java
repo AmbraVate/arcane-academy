@@ -9,4 +9,5 @@ import java.util.List;
 public interface ReviewSessionRepository extends JpaRepository<ReviewSession, String> {
     List<ReviewSession> findByUserIdOrderByStartedAtDesc(String userId);
     List<ReviewSession> findByUserIdAndSessionType(String userId, SessionType type);
+    long countByUserIdAndCompletedAtIsNotNull(String userId);
 }

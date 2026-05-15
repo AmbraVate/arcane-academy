@@ -1,0 +1,136 @@
+{
+  "id": "java-fnd-2",
+  "title": "Control Flow",
+  "glyph": "🔀",
+  "sortOrder": 2,
+  "tier": "FOUNDATION",
+  "topicId": "java",
+  "prerequisites": ["java-fnd-1"],
+  "subChunks": [
+    {
+      "id": "java-fnd-2a",
+      "title": "Conditionals: if/else & switch-expressions",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "Conditionals.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A spell that always fires the same way is a toy. Real magic responds to the situation — to the enemy's weakness, the weather, the phase of the moon. In Java, your code makes decisions using <strong>conditionals</strong>.</p>",
+      "explanationHtml": "<h3>if / else if / else</h3><pre><code>int mana = 75;\n\nif (mana >= 100) {\n    System.out.println(\"Full power spell\");\n} else if (mana >= 50) {\n    System.out.println(\"Half-power spell\");\n} else {\n    System.out.println(\"No mana — rest!\");\n}</code></pre><p>Conditions use comparison operators (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) and logical operators (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>).</p><h3>Ternary Operator</h3><p>A concise one-liner for simple if/else:</p><pre><code>String result = (mana >= 50) ? \"Cast\" : \"Rest\";\nSystem.out.println(result);</code></pre><h3>switch-expression (Java 14+)</h3><p>Modern Java replaces the old fall-through <code>switch</code> statement with the cleaner <strong>switch-expression</strong>:</p><pre><code>String grade = \"B\";\nString feedback = switch (grade) {\n    case \"A\" -> \"Outstanding!\";\n    case \"B\" -> \"Well done.\";\n    case \"C\" -> \"Acceptable.\";\n    default  -> \"Keep studying.\";\n};\nSystem.out.println(feedback);</code></pre><p>Arrow syntax (<code>-></code>) prevents fall-through automatically and makes the expression return a value directly. You can also use <code>yield</code> for multi-statement cases:</p><pre><code>int points = switch (grade) {\n    case \"A\" -> 100;\n    case \"B\" -> {\n        System.out.println(\"Computing B points...\");\n        yield 80;\n    }\n    default -> 0;\n};</code></pre><h3>String equality</h3><p>Never compare strings with <code>==</code> — it checks reference identity, not content. Use <code>.equals()</code>:</p><pre><code>String spell = \"Fireball\";\nif (spell.equals(\"Fireball\")) { // correct\n    System.out.println(\"Casting!\");\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Eldrin leads you into the Academy's training arena. Six different enemies stand at different distances, each with a different weakness."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "A spell that fires the same way every time is useless in battle. You must adapt. In Java, this is done with <code>if</code>, <code>else if</code>, and <code>else</code>. The code chooses a branch based on a condition."},
+        {"type": "example", "speaker": "Choosing a spell by mana", "text": "int mana = 75;\nif (mana >= 100) {\n    System.out.println(\"Ultimate spell!\");\n} else if (mana >= 50) {\n    System.out.println(\"Standard spell\");\n} else {\n    System.out.println(\"Rest — out of mana\");\n}"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "For quick yes/no choices, the <em>ternary operator</em> is your friend — three operands in one line. Condition, question mark, then the two outcomes separated by a colon."},
+        {"type": "example", "speaker": "Ternary operator", "text": "String status = (mana >= 50) ? \"Ready\" : \"Exhausted\";\nSystem.out.println(status);"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "And when you're matching one value against many cases — a spell school, a direction, a day of the week — use the <em>switch-expression</em>. Modern Java's arrow syntax is clean and prevents the dreaded fall-through bug."},
+        {"type": "example", "speaker": "switch-expression", "text": "String element = \"Fire\";\nint damage = switch (element) {\n    case \"Fire\"  -> 100;\n    case \"Water\" -> 80;\n    case \"Earth\" -> 60;\n    default      -> 40;\n};\nSystem.out.println(\"Damage: \" + damage);"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "One final warning: comparing Strings with <code>==</code> is a common trap. It checks whether two variables point to the <em>same object</em>, not whether they contain the same text. Always use <code>.equals()</code> for Strings."}
+      ],
+      "guidedPracticeHtml": "<p>A dungeon room has a <code>String</code> variable <code>door</code> which can be <code>\"north\"</code>, <code>\"south\"</code>, <code>\"east\"</code>, or <code>\"west\"</code>.</p><p>Set <code>door = \"east\"</code>. Use a <strong>switch-expression</strong> to assign a <code>String</code> called <code>description</code>:</p><ul><li><code>\"north\"</code> → <code>\"Stone corridor\"</code></li><li><code>\"south\"</code> → <code>\"Treasury\"</code></li><li><code>\"east\"</code> → <code>\"Dragon's lair\"</code></li><li><code>\"west\"</code> → <code>\"Exit\"</code></li><li>anything else → <code>\"Solid wall\"</code></li></ul><p>Print <code>description</code>. Then use a ternary to print either <code>\"Brave!\"</code> or <code>\"Sensible.\"</code> depending on whether <code>door</code> equals <code>\"east\"</code>.</p>",
+      "guidedPracticeStarterCode": "String door = \"east\";\n\n// switch-expression for description\nString description = switch (door) {\n    // fill in the cases\n};\nSystem.out.println(description);\n\n// ternary\n",
+      "guidedPracticeTests": [
+        {"label": "Correct room description", "input": "null", "expected": "Dragon's lair"},
+        {"label": "Ternary result", "input": "null", "expected": "Brave!"}
+      ],
+      "feynmanPrompt": "Explain the difference between an if/else chain and a switch-expression in Java. When would you choose one over the other? Include a note about why == fails with Strings.",
+      "soloPracticeHtml": "<p>Without any starter code, write a health-status reporter for a hero:</p><ul><li>Set <code>int health = 35</code>.</li><li>Use <code>if / else if / else</code> to print <code>\"Healthy\"</code> (health &gt;= 75), <code>\"Injured\"</code> (health &gt;= 30), or <code>\"Critical\"</code> (below 30).</li><li>Use a ternary to set a <code>boolean</code> called <code>needsPotion</code> to <code>true</code> if health &lt; 50, otherwise <code>false</code>. Print it.</li><li>Use a switch-expression on a <code>String spellSchool = \"Frost\"</code> to assign a damage bonus: <code>\"Fire\"</code> → 50, <code>\"Frost\"</code> → 35, <code>\"Lightning\"</code> → 45, default → 20. Print the bonus.</li></ul>",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which operator is used for logical AND in Java?</p>",
+          "options": ["&", "&&", "AND", "||"],
+          "correctAnswer": "&&",
+          "explanationHtml": "<p><code>&&</code> is the logical AND operator. <code>&</code> is the bitwise AND operator — it evaluates both operands even if the first is false. <code>&&</code> short-circuits (stops early if the first operand is false), which is both safer and more efficient.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int x = 5;\nString label = (x % 2 == 0) ? \"even\" : \"odd\";\nSystem.out.println(label);",
+          "correctAnswer": "odd",
+          "explanationHtml": "<p><code>5 % 2 == 1</code>, not 0, so the condition is false. The ternary returns <code>\"odd\"</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is wrong with this String comparison?</p>",
+          "codeSnippet": "String s = \"hello\";\nif (s == \"hello\") {\n    System.out.println(\"match\");\n}",
+          "correctAnswer": "Should use s.equals(\"hello\") instead of ==. The == operator compares references, not content.",
+          "explanationHtml": "<p><code>==</code> on objects checks whether both variables point to the same memory location. String literals may or may not be the same object depending on whether Java interns them. Always use <code>.equals()</code> for content comparison.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>What advantage does the switch-expression arrow syntax (<code>-></code>) have over the old switch statement with <code>:</code> and <code>break</code>?</p>",
+          "options": ["It is faster at runtime", "It prevents fall-through and can return a value directly", "It supports more data types", "It requires fewer lines of code"],
+          "correctAnswer": "It prevents fall-through and can return a value directly",
+          "explanationHtml": "<p>Old switch statements used <code>break</code> to stop fall-through; forgetting it caused all subsequent cases to run. Arrow syntax (<code>-></code>) eliminates fall-through entirely and lets the switch produce a value, making the code cleaner and less error-prone.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-fnd-2b",
+      "title": "Loops: for, while, and break/continue",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "Loops.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A wizard who casts a hundred fireballs must not write a hundred lines of code. <strong>Loops</strong> are the art of repetition — doing the same thing many times, or until a condition is met.</p>",
+      "explanationHtml": "<h3>for loop — when you know how many times</h3><pre><code>// init; condition; update\nfor (int i = 0; i < 5; i++) {\n    System.out.println(\"Round \" + i);\n}</code></pre><h3>enhanced for-each — iterating a collection</h3><pre><code>int[] scores = {85, 90, 72, 95};\nfor (int s : scores) {\n    System.out.println(s);\n}</code></pre><h3>while loop — when the count is unknown</h3><pre><code>int mana = 100;\nwhile (mana > 0) {\n    System.out.println(\"Casting... mana: \" + mana);\n    mana -= 20;\n}</code></pre><h3>do-while — runs at least once</h3><pre><code>int attempts = 0;\ndo {\n    System.out.println(\"Attempt \" + ++attempts);\n} while (attempts < 3);</code></pre><h3>break and continue</h3><pre><code>for (int i = 0; i < 10; i++) {\n    if (i == 3) continue; // skip 3\n    if (i == 7) break;    // stop at 7\n    System.out.println(i);\n}\n// prints: 0 1 2 4 5 6</code></pre><p><code>break</code> exits the loop entirely. <code>continue</code> skips to the next iteration.</p><h3>Common pitfall: infinite loops</h3><pre><code>// DANGER: condition never becomes false\nwhile (true) {\n    System.out.println(\"Forever...\");\n    // forgot to update the condition!\n}</code></pre><p>Always ensure your loop condition will eventually become false, or use <code>break</code> to exit.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "Eldrin leads you to a practice dummy that regenerates itself. Fifty identical fireballs are needed to defeat it."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "If I asked you to write <code>System.out.println(\"Fireball!\");</code> fifty times, you would quit by the third line. Loops are the answer. The <em>for</em> loop has three parts: initialise, check, update."},
+        {"type": "example", "speaker": "for loop", "text": "for (int i = 1; i <= 5; i++) {\n    System.out.println(\"Fireball #\" + i);\n}"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "When you do not know how many times to loop — perhaps you cast until your mana runs out — use a <em>while</em> loop. The condition is checked <em>before</em> each iteration."},
+        {"type": "example", "speaker": "while loop", "text": "int mana = 100;\nwhile (mana >= 20) {\n    System.out.println(\"Cast! Mana: \" + mana);\n    mana -= 20;\n}\nSystem.out.println(\"Exhausted. Mana: \" + mana);"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Two powerful tools inside any loop: <code>break</code> shatters the loop immediately. <code>continue</code> skips the rest of the current iteration and jumps to the next. Use them sparingly — too many breaks and continues make loops hard to reason about."},
+        {"type": "example", "speaker": "break and continue", "text": "for (int i = 0; i < 10; i++) {\n    if (i % 2 == 0) continue; // skip even numbers\n    if (i > 7)     break;     // stop after 7\n    System.out.println(i); // prints 1, 3, 5, 7\n}"}
+      ],
+      "guidedPracticeHtml": "<p>Use a <code>for</code> loop to print the sum of all integers from <strong>1 to 100</strong> inclusive. Print only the final sum (not each number).</p><p>Then use a <code>while</code> loop to count down from <strong>10 to 1</strong>, printing each number, but skip <strong>5</strong> using <code>continue</code>.</p>",
+      "guidedPracticeStarterCode": "// Sum 1 to 100 with for loop\nint sum = 0;\n\n\nSystem.out.println(sum);\n\n// Countdown 10 to 1, skipping 5\nint count = 10;\n\n",
+      "guidedPracticeTests": [
+        {"label": "Sum of 1 to 100", "input": "null", "expected": "5050"},
+        {"label": "Countdown includes 6", "input": "null", "expected": "6"},
+        {"label": "Countdown skips 5", "input": "null", "expected": "4"},
+        {"label": "Countdown includes 1", "input": "null", "expected": "1"}
+      ],
+      "feynmanPrompt": "Explain Java's three main loop types — for, while, and do-while — and describe a situation where you'd choose each one. Include an explanation of break and continue.",
+      "soloPracticeHtml": "<p>From a blank file, write a number analyser for values 1 through 30:</p><ul><li>Loop from 1 to 30 inclusive.</li><li>If the number is divisible by both 3 and 5, print <code>\"FizzBuzz\"</code>.</li><li>Else if divisible by 3, print <code>\"Fizz\"</code>.</li><li>Else if divisible by 5, print <code>\"Buzz\"</code>.</li><li>Otherwise print the number.</li><li>Stop the loop early (with <code>break</code>) when you encounter the <strong>second</strong> FizzBuzz. Use a counter variable to track how many FizzBuzz values you've seen.</li></ul>",
+      "questions": [
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "RECALL",
+          "questionHtml": "<p>How many times does this loop print?</p>",
+          "codeSnippet": "for (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}",
+          "correctAnswer": "5",
+          "explanationHtml": "<p>The loop runs for <code>i = 0, 1, 2, 3, 4</code> — five values total. The condition <code>i < 5</code> becomes false when <code>i</code> reaches 5.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>continue</code> do inside a loop?</p>",
+          "options": ["Exits the loop", "Skips to the next iteration", "Restarts the loop from i=0", "Throws an exception"],
+          "correctAnswer": "Skips to the next iteration",
+          "explanationHtml": "<p><code>continue</code> skips the remaining code in the current iteration and jumps to the loop's update expression (for a <code>for</code> loop) or re-checks the condition (for a <code>while</code> loop).</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int x = 0;\ndo {\n    x += 3;\n} while (x < 10);\nSystem.out.println(x);",
+          "correctAnswer": "12",
+          "explanationHtml": "<p>The do-while always executes at least once. Iterations: x=3, x=6, x=9, x=12. When x=12, the condition <code>12 < 10</code> is false, so the loop ends. Final value: 12.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>This loop is supposed to print 1 through 5 but it runs forever. Why?</p>",
+          "codeSnippet": "int i = 1;\nwhile (i <= 5) {\n    System.out.println(i);\n}",
+          "correctAnswer": "The loop variable i is never incremented, so i <= 5 is always true — infinite loop. Add i++ inside the loop body.",
+          "explanationHtml": "<p>A while loop relies on the programmer to update the condition variable. Forgetting <code>i++</code> means the condition never becomes false, causing an infinite loop.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,15 +1,106 @@
 import { cn } from '@/lib/utils'
 import type { StoryBeat } from '../../types'
+import { useEffect, useRef, useState, useCallback } from 'react'
+import { rabbitHoleTermApi } from '../../api/services'
 
-export default function StoryPanel({ beats, fullPage = false }: { beats: StoryBeat[]; fullPage?: boolean }) {
+interface Popover { term: string; description: string; x: number; y: number }
+
+interface StoryPanelProps {
+  beats: StoryBeat[]
+  fullPage?: boolean
+  subChunkId?: string
+  topicId?: string
+}
+
+export default function StoryPanel({ beats, fullPage = false, subChunkId, topicId }: StoryPanelProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [popover, setPopover] = useState<Popover | null>(null)
+  const [savedTerms, setSavedTerms] = useState<Set<string>>(new Set())
+  const [saving, setSaving] = useState(false)
+
+  const handleClick = useCallback((e: MouseEvent) => {
+    const target = (e.target as HTMLElement).closest('[data-rh]') as HTMLElement | null
+    if (!target) { setPopover(null); return }
+    const term = target.dataset.rh ?? ''
+    const description = target.dataset.rhDesc ?? ''
+    const rect = target.getBoundingClientRect()
+    setPopover({ term, description, x: rect.left + rect.width / 2, y: rect.bottom + 6 })
+    e.stopPropagation()
+  }, [])
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    el.addEventListener('click', handleClick)
+    return () => el.removeEventListener('click', handleClick)
+  }, [handleClick])
+
+  useEffect(() => {
+    const close = () => setPopover(null)
+    document.addEventListener('click', close)
+    return () => document.removeEventListener('click', close)
+  }, [])
+
+  async function handleSave() {
+    if (!popover || saving) return
+    setSaving(true)
+    try {
+      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId ?? '', topicId ?? '')
+      setSavedTerms(prev => new Set(prev).add(popover.term))
+    } catch { /* ignore */ } finally {
+      setSaving(false)
+    }
+  }
+
+  async function handleUnsave() {
+    if (!popover || saving) return
+    setSaving(true)
+    try {
+      await rabbitHoleTermApi.remove(popover.term)
+      setSavedTerms(prev => { const s = new Set(prev); s.delete(popover.term); return s })
+    } catch { /* ignore */ } finally {
+      setSaving(false)
+    }
+  }
+
   return (
-    <div className="flex flex-col gap-3">
-      {beats.map((beat, i) => {
-        if (beat.type === 'narration') return <Narration key={i} text={beat.text} fullPage={fullPage} />
-        if (beat.type === 'example')  return <Example key={i} beat={beat} fullPage={fullPage} />
-        return <Dialogue key={i} beat={beat} fullPage={fullPage} />
-      })}
-    </div>
+    <>
+      <div ref={containerRef} className="flex flex-col gap-3">
+        {beats.map((beat, i) => {
+          if (beat.type === 'narration') return <Narration key={i} text={beat.text} fullPage={fullPage} />
+          if (beat.type === 'example')  return <Example key={i} beat={beat} fullPage={fullPage} />
+          return <Dialogue key={i} beat={beat} fullPage={fullPage} />
+        })}
+      </div>
+
+      {popover && (
+        <div
+          className="fixed z-[400] max-w-[280px] bg-card border border-[rgba(139,92,246,0.4)] rounded-[10px] shadow-[0_6px_24px_rgba(0,0,0,0.5)] p-3.5"
+          style={{ left: Math.min(popover.x, window.innerWidth - 288), top: popover.y }}
+          onClick={e => e.stopPropagation()}
+        >
+          <div className="text-[13px] font-bold text-gold mb-1">🐇 {popover.term}</div>
+          {popover.description && (
+            <p className="text-[12px] text-muted leading-[1.55] mb-2.5">{popover.description}</p>
+          )}
+          {savedTerms.has(popover.term) ? (
+            <button
+              className="text-[11px] px-3 py-1.5 rounded-md bg-teal-dim text-teal border border-teal cursor-pointer"
+              onClick={handleUnsave} disabled={saving}
+            >
+              {saving ? '…' : '✓ Saved — Remove'}
+            </button>
+          ) : (
+            <button
+              className="text-[11px] px-3 py-1.5 rounded-md bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.4)] cursor-pointer hover:bg-[rgba(139,92,246,0.2)]"
+              onClick={handleSave} disabled={saving}
+            >
+              {saving ? '…' : '🐇 Save to Rabbit Holes'}
+            </button>
+          )}
+        </div>
+      )}
+    </>
   )
 }
 
@@ -20,6 +111,7 @@ function Narration({ text, fullPage }: { text: string; fullPage: boolean }) {
         'font-crimson italic text-muted leading-[1.75] pl-2.5 border-l-2 border-border',
         fullPage && 'text-[16px] leading-[1.9] py-3.5 px-5 border-l-[3px] border-purple bg-[rgba(139,92,246,0.05)] rounded-r-lg mb-5 text-text text-[13px]',
         !fullPage && 'text-[13px]',
+        '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold',
       )}
       dangerouslySetInnerHTML={{ __html: text }}
     />
@@ -91,6 +183,7 @@ function Dialogue({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
         <div
           className={cn(
             'text-[13px] leading-[1.75] [&_em]:text-teal [&_em]:not-italic [&_em]:font-semibold',
+            '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold',
             fullPage && 'text-[15px] leading-[1.8]',
           )}
           dangerouslySetInnerHTML={{ __html: beat.text ?? '' }}

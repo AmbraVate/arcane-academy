@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { Check, X } from 'lucide-react'
 import type { TestCaseLabel } from '../../types'
 
 interface Props {
@@ -17,14 +18,14 @@ export default function TestChips({ labels, results }: Props) {
           <span
             key={label}
             className={cn(
-              'text-[11px] px-2.5 py-[3px] rounded-[10px] font-mono transition-all duration-300',
+              'inline-flex items-center gap-1 text-[11px] px-2.5 py-[3px] rounded-[10px] font-mono transition-all duration-300',
               result === undefined && 'bg-card border border-border text-muted',
               result === true      && 'bg-[#08200e] border border-green text-green',
               result === false     && 'bg-[#200808] border border-red text-red',
             )}
           >
-            {result === true  && '✓ '}
-            {result === false && '✗ '}
+            {result === true  && <Check size={10} strokeWidth={2.5} />}
+            {result === false && <X size={10} strokeWidth={2.5} />}
             {label}
           </span>
         )

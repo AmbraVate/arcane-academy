@@ -183,7 +183,9 @@ public class JavaCodeRunner {
         }
 
         // No class — wrap in boilerplate.
-        String injectedVars = (testInput != null && !testInput.isBlank()) ? testInput + "\n" : "";
+        // Treat the sentinel string "null" (from JSON test specs) the same as Java null.
+        String injectedVars = (testInput != null && !testInput.isBlank() && !"null".equalsIgnoreCase(testInput))
+                ? testInput + "\n" : "";
         String cleanCode = studentCode;
         // Remove conflicting variable declarations for any variable that is re-declared by the test input
         if (!injectedVars.isBlank()) {

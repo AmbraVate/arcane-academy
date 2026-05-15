@@ -7,18 +7,18 @@ public enum BadgeDefinition {
 
     // Learning milestones
     FIRST_CONCEPT("First Spell Cast", "Complete your first sub-chunk", "\u2728", Category.LEARNING),
-    CHUNK_A_MASTERED("Rune of Variables", "Master Chunk A: Variables & Data Types", "\uD83D\uDD2E", Category.LEARNING),
-    CHUNK_B_MASTERED("Rune of Control", "Master Chunk B: Operators & Control Flow", "\uD83D\uDCDC", Category.LEARNING),
-    CHUNK_C_MASTERED("Rune of Loops", "Master Chunk C: Loops", "\uD83D\uDD04", Category.LEARNING),
-    CHUNK_D_MASTERED("Rune of Methods", "Master Chunk D: Methods", "\uD83D\uDDDD", Category.LEARNING),
-    CHUNK_E_MASTERED("Rune of Collections", "Master Chunk E: Arrays & Collections", "\uD83D\uDCDA", Category.LEARNING),
-    CHUNK_F_MASTERED("Rune of Objects", "Master Chunk F: Classes & Objects", "\uD83D\uDCD6", Category.LEARNING),
-    CHUNK_G_MASTERED("Rune of Encapsulation", "Master Chunk G: Encapsulation", "\uD83D\uDD12", Category.LEARNING),
-    CHUNK_H_MASTERED("Rune of Inheritance", "Master Chunk H: Inheritance", "\uD83C\uDF33", Category.LEARNING),
-    CHUNK_I_MASTERED("Rune of Polymorphism", "Master Chunk I: Polymorphism & Abstraction", "\uD83C\uDF00", Category.LEARNING),
-    CHUNK_J_MASTERED("Rune of Exceptions", "Master Chunk J: Exception Handling", "\u26A0", Category.LEARNING),
-    CHUNK_K_MASTERED("Rune of APIs", "Master Chunk K: Common APIs & Utils", "\uD83D\uDEE0", Category.LEARNING),
-    ALL_CHUNKS_COMPLETE("Grand Archmage", "Complete all chunks A\u2013K", "\uD83D\uDC51", Category.LEARNING),
+
+    // Java Foundation milestones \u2014 one badge per chunk (java-fnd-1 through java-fnd-8)
+    JAVA_FND_1_COMPLETE("Rune of Syntax", "Master java-fnd-1: Syntax Basics \u2014 variables, primitives, operators", "\uD83D\uDCDD", Category.LEARNING),
+    JAVA_FND_2_COMPLETE("Rune of Control", "Master java-fnd-2: Control Flow \u2014 conditionals, loops, switch-expressions", "\uD83D\uDD04", Category.LEARNING),
+    JAVA_FND_3_COMPLETE("Rune of Objects", "Master java-fnd-3: Object-Oriented Programming \u2014 classes, inheritance, polymorphism", "\uD83D\uDCD6", Category.LEARNING),
+    JAVA_FND_4_COMPLETE("Rune of Memory", "Master java-fnd-4: Memory Management \u2014 stack vs heap, garbage collection", "\uD83E\uDDE0", Category.LEARNING),
+    JAVA_FND_5_COMPLETE("Rune of Collections", "Master java-fnd-5: Java Collections Framework \u2014 List, Set, Map", "\uD83D\uDCDA", Category.LEARNING),
+    JAVA_FND_6_COMPLETE("Rune of Exceptions", "Master java-fnd-6: Exception Handling \u2014 try/catch, custom exceptions", "\u26A0\uFE0F", Category.LEARNING),
+    JAVA_FND_7_COMPLETE("Rune of Streams", "Master java-fnd-7: Input/Output \u2014 console I/O, file reading and writing", "\uD83D\uDCBE", Category.LEARNING),
+    JAVA_FND_8_COMPLETE("Rune of Generics", "Master java-fnd-8: Generics Basics \u2014 type parameters, bounded types", "\uD83D\uDD37", Category.LEARNING),
+    JAVA_FOUNDATION_COMPLETE("Foundation Archmage", "Complete all 8 Java Foundation chunks", "\uD83C\uDF1F", Category.LEARNING),
+
     JAVA_CAPSTONE_COMPLETE("Grand Champion", "Conquer the Grand Tournament \u2014 Java capstone project", "\uD83C\uDFC6", Category.LEARNING),
     TAILWIND_CAPSTONE_COMPLETE("Agency Archmage", "Deliver The Agency Commission \u2014 Tailwind capstone project", "\uD83C\uDF10", Category.LEARNING),
 

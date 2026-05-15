@@ -47,6 +47,14 @@ public class UserChunkProgress {
     @Builder.Default
     private double lastScore = 0.0;
 
+    /** Set to true once guided practice has been submitted with a passing result. */
+    @Builder.Default
+    private boolean guidedPracticePassed = false;
+
+    /** Set to true once solo practice has been submitted with a passing result. */
+    @Builder.Default
+    private boolean soloPracticePassed = false;
+
     @Builder.Default
     private boolean feynmanCompleted = false;
 

@@ -19,6 +19,10 @@ public class AdminStatsDto {
         private String subChunkId;
         private String title;
         private String chunkTitle;
+        /** Top-level subject area (e.g. "java", "sql", "tailwind"). */
+        private String topicId;
+        /** Tier within the topic (e.g. "FOUNDATION", "PRACTITIONER"). */
+        private String tier;
         private List<String> issues;
     }
 }

@@ -1,0 +1,133 @@
+{
+  "id": "java-fnd-4",
+  "title": "Memory Management",
+  "glyph": "🧠",
+  "sortOrder": 4,
+  "tier": "FOUNDATION",
+  "topicId": "java",
+  "prerequisites": ["java-fnd-3"],
+  "subChunks": [
+    {
+      "id": "java-fnd-4a",
+      "title": "Stack vs Heap Memory",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "StackAndHeap.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Why does calling a method not corrupt your variables? Why does creating a thousand objects not run out of memory immediately? The answer lies in how Java divides and manages its two main memory regions: the <strong>stack</strong> and the <strong>heap</strong>.</p>",
+      "explanationHtml": "<h3>Stack Memory</h3><p>The stack is a LIFO (Last-In, First-Out) structure. It holds:</p><ul><li>Local primitive variables (<code>int x = 5</code>)</li><li>Local reference variables (the pointer to an object, not the object itself)</li><li>Method call frames — when a method is called, a new frame is pushed; when it returns, the frame is popped</li></ul><p>Stack access is <strong>fast</strong> and <strong>automatic</strong> — the frame disappears when the method ends. Stack memory is limited (typically 512KB–1MB). A very deep recursion causes a <code>StackOverflowError</code>.</p><h3>Heap Memory</h3><p>The heap is a larger, unordered region that holds:</p><ul><li>All objects created with <code>new</code></li><li>Arrays</li><li>String objects (though string <em>literals</em> go in the string pool, a special region of the heap)</li></ul><p>Objects on the heap persist until the <strong>Garbage Collector</strong> reclaims them.</p><h3>Primitives vs References</h3><pre><code>int x = 42;               // primitive — value lives on the stack\nString s = \"hello\";       // reference on stack; object on heap\nint[] arr = {1, 2, 3};   // reference on stack; array on heap\n\nint a = 10;\nint b = a;  // b gets a COPY of 10 — changing b does not affect a\nb = 99;\nSystem.out.println(a); // still 10\n\nint[] arr1 = {1, 2, 3};\nint[] arr2 = arr1; // arr2 points to the SAME array!\narr2[0] = 99;\nSystem.out.println(arr1[0]); // 99 — arr1 also changed!</code></pre><p>This distinction — value semantics for primitives, reference semantics for objects — is one of the most important concepts in Java.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "Eldrin takes you to the Academy's magical library — two wings, divided by a glass wall. The left wing is tiny but blazingly fast; the right wing is vast but takes a moment to navigate."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "The left wing is the <strong>stack</strong> — small, ordered, lightning-fast. Every time you call a method, a new shelf appears at the top. Local variables are placed on that shelf. When the method returns, the entire shelf vanishes — no cleanup needed."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "The right wing is the <strong>heap</strong> — vast, unordered, holding every object you create with <code>new</code>. The stack holds only a <em>reference</em> — a magical pointer — to the heap object. The object itself lives on the heap until the garbage collector claims it."},
+        {"type": "example", "speaker": "Stack vs heap", "text": "// Primitive: value lives entirely on the stack\nint x = 42;\n\n// Object: reference on stack, object on heap\nWizard w = new Wizard(\"Lyria\", 100);"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "This creates the most important distinction in Java: <em>value semantics</em> versus <em>reference semantics</em>. Copying a primitive gives you an independent duplicate. Copying a reference gives you a second pointer to the <em>same</em> object."},
+        {"type": "example", "speaker": "The reference trap", "text": "int a = 10;\nint b = a;  // independent copy\nb = 99;\nSystem.out.println(a); // 10 — unaffected\n\nint[] arr1 = {1, 2, 3};\nint[] arr2 = arr1; // both point to the same array!\narr2[0] = 99;\nSystem.out.println(arr1[0]); // 99 — arr1 also changed!"}
+      ],
+      "guidedPracticeHtml": "<p>Demonstrate the difference between value and reference semantics:</p><ol><li>Declare <code>int p = 5</code> and <code>int q = p</code>. Modify <code>q</code> to <code>99</code>. Print <code>p</code> (it should still be 5).</li><li>Declare <code>int[] arr1 = {10, 20, 30}</code> and <code>int[] arr2 = arr1</code>. Set <code>arr2[1] = 999</code>. Print <code>arr1[1]</code> (it should be 999 — same array).</li><li>Print the result of <code>\"hello\" == \"hello\"</code> and of <code>new String(\"hello\") == new String(\"hello\")</code> to see string literal pooling vs heap objects.</li></ol>",
+      "guidedPracticeStarterCode": "// 1. Primitive copy (value semantics)\nint p = 5;\nint q = p;\nq = 99;\nSystem.out.println(p); // should be 5\n\n// 2. Array alias (reference semantics)\nint[] arr1 = {10, 20, 30};\nint[] arr2 = arr1;\narr2[1] = 999;\nSystem.out.println(arr1[1]); // should be 999\n\n// 3. String == comparison\n",
+      "guidedPracticeTests": [
+        {"label": "Primitive unchanged after copy-modify", "input": "null", "expected": "5"},
+        {"label": "Array shared via reference", "input": "null", "expected": "999"},
+        {"label": "String literal == true", "input": "null", "expected": "true"},
+        {"label": "new String == false", "input": "null", "expected": "false"}
+      ],
+      "feynmanPrompt": "Explain the difference between the stack and the heap in Java as if you were teaching a junior developer. Include what types of data go where, and explain the difference between value and reference semantics with a concrete example.",
+      "soloPracticeHtml": "<p>From a blank file, write a reference-semantics investigator:</p><ul><li>Create a simple class <code>Counter</code> with a <code>public int count</code> field and a no-args constructor that sets <code>count = 0</code>.</li><li>In main: create <code>Counter c1 = new Counter()</code>. Set <code>Counter c2 = c1</code>. Increment <code>c2.count</code> three times. Print <code>c1.count</code> — it should be 3.</li><li>Now create <code>Counter c3 = new Counter()</code> (a brand-new object). Increment <code>c3.count</code> twice. Print <code>c1.count</code> again — it should still be 3.</li><li>Print a sentence explaining what you observe (just a <code>System.out.println</code> with a string literal).</li></ul>",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Where are objects created with <code>new</code> stored?</p>",
+          "options": ["Stack", "Heap", "String pool", "Register"],
+          "correctAnswer": "Heap",
+          "explanationHtml": "<p>Objects created with <code>new</code> are allocated on the heap. The <em>reference</em> to the object (the variable) lives on the stack, but the actual object data is on the heap.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int x = 10;\nint y = x;\ny = 50;\nSystem.out.println(x);",
+          "correctAnswer": "10",
+          "explanationHtml": "<p>Primitives use value semantics — <code>y</code> gets a copy of <code>x</code>'s value. Changing <code>y</code> does not affect <code>x</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Two variables reference the same array. If you modify the array through one variable, what happens when you read via the other?</p>",
+          "options": ["The other variable still has the old values", "The other variable sees the updated values", "A ConcurrentModificationException is thrown", "The array is copied automatically"],
+          "correctAnswer": "The other variable sees the updated values",
+          "explanationHtml": "<p>Arrays are objects stored on the heap. Both variables hold references (pointers) to the same memory. Modifying the array through one reference is immediately visible through the other.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer sees this and is confused that the value is unchanged. What is the bug?</p>",
+          "codeSnippet": "static void addFive(int n) { n += 5; }\n// in main:\nint value = 10;\naddFive(value);\nSystem.out.println(value); // still 10",
+          "correctAnswer": "Java passes primitives by value. addFive gets a copy of n; changing that copy does not affect the caller's variable. To return a modified value, the method should return int and the caller should reassign: value = addFive(value);",
+          "explanationHtml": "<p>Java is always <em>pass-by-value</em>. For primitives, the method receives a copy of the value. Modifications inside the method do not affect the original variable. For objects, the method receives a copy of the <em>reference</em> — you can mutate the object through it, but reassigning the reference variable inside the method does not affect the caller's reference.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-fnd-4b",
+      "title": "Garbage Collection Concepts",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "GarbageCollection.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>In C, programmers manually free memory. Forgetting causes <em>memory leaks</em>. In Java, an automated system called the <strong>Garbage Collector</strong> handles cleanup — but understanding it prevents subtle performance bugs.</p>",
+      "explanationHtml": "<h3>What is Garbage Collection?</h3><p>The Garbage Collector (GC) automatically reclaims memory occupied by objects that are no longer reachable from any live reference. You never call <code>free()</code> in Java — the JVM handles it.</p><h3>When is an object eligible for GC?</h3><pre><code>Wizard w = new Wizard(\"Lyria\", 100); // object on heap, w references it\nw = null;                            // w no longer references the object\n// the Wizard object is now eligible for GC\n\n// OR: reference goes out of scope\nvoid createWizard() {\n    Wizard temp = new Wizard(\"Temp\", 10);\n    // temp goes out of scope when method ends — object eligible for GC\n}</code></pre><h3>GC Roots</h3><p>An object is <em>reachable</em> if there is a chain of references from a GC root to it. GC roots include: local variables on the stack, static fields, and JNI references. Everything else is collectible.</p><h3>Generational GC</h3><p>Modern JVMs divide the heap into generations:</p><ul><li><strong>Young generation</strong> — newly created objects (Eden space + Survivor spaces). Most objects die young — GC here is fast.</li><li><strong>Old generation (Tenured)</strong> — objects that survived several young-GC cycles. Collected less frequently.</li></ul><p>This matches the observation that most objects are short-lived (e.g., a loop variable, a temporary result).</p><h3>Avoiding memory leaks in Java</h3><p>Java can still leak memory if you hold unintended references:</p><pre><code>// A growing static list holds references forever\nstatic List&lt;byte[]&gt; held = new ArrayList&lt;&gt;();\nfor (int i = 0; i &lt; 1000; i++) {\n    held.add(new byte[1_000_000]); // 1 MB each — never collected!\n}</code></pre><p>Always remove references you no longer need: clear collections, close resources with <code>try-with-resources</code>.</p><p><strong>Note on finalize():</strong> <code>finalize()</code> is deprecated for removal in Java 21 and must not be used in new code. For deterministic cleanup, implement <code>AutoCloseable</code> and use <code>try-with-resources</code>. For GC-triggered cleanup when try-with-resources is not applicable (e.g. wrapping a native resource), register a <code>java.lang.ref.Cleaner</code> action:</p><pre><code>// finalize() is deprecated for removal — use Cleaner instead\nprivate static final java.lang.ref.Cleaner CLEANER = java.lang.ref.Cleaner.create();\nprivate final java.lang.ref.Cleaner.Cleanable cleanable;\n\nMyResource() {\n    cleanable = CLEANER.register(this, () -&gt; System.out.println(\"Resource cleaned up\"));\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Deep below the Academy, enchanted automata silently patrol the vaults, dissolving conjurations that no wizard is still holding."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Unlike the old days when wizards had to dissolve their own constructs — and some forgot, causing catastrophic overloads — Java employs <strong>Garbage Collectors</strong>. Any object that no wizard is still pointing to is dissolved automatically."},
+        {"type": "example", "speaker": "Making an object eligible", "text": "Wizard w = new Wizard(\"Lyria\", 100);\n// w is the only reference to this Wizard\nw = null;\n// Now the Wizard object has no references — eligible for GC"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "The GC finds collectible objects by walking from <em>roots</em> — the live variables on the stack and static fields. Anything reachable is safe. Everything else is claimed."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Java's GC is <em>generational</em>. Most objects are short-lived — a loop counter, a builder, a temporary result. These live in the <em>young generation</em> and are cleared rapidly. Objects that survive long enough are promoted to the <em>old generation</em>, collected less frequently but more thoroughly."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "But never be complacent. Even in Java, you can leak memory by holding references you no longer need — a static collection that grows forever, an event listener never deregistered. The GC cannot collect what is still referenced."}
+      ],
+      "guidedPracticeHtml": "<p>This exercise is observational — we'll demonstrate reachability with a simulation using a simple tracking class.</p><p>Write a class <code>TrackedObject</code> with a <code>String label</code> field, a constructor, and a <code>close()</code> method that prints <code>\"[label] closed\"</code>. Use <code>try-with-resources</code> to ensure the object is closed automatically by implementing <code>AutoCloseable</code>.</p><p><strong>Note:</strong> <code>finalize()</code> is deprecated for removal in Java 21. The modern approach for cleanup actions is to implement <code>AutoCloseable</code> and use <code>try-with-resources</code>, or to register a <code>java.lang.ref.Cleaner</code> action for cases where try-with-resources is not applicable.</p><p>In main: use a <code>try-with-resources</code> block to create a <code>TrackedObject</code> named <code>\"Alpha\"</code> — the close method will be called automatically. Then create <code>TrackedObject b = new TrackedObject(\"Beta\")</code> and print <code>b.label</code>. Finally, print <code>\"Done\"</code>.</p>",
+      "guidedPracticeStarterCode": "class TrackedObject implements AutoCloseable {\n    public String label;\n\n    public TrackedObject(String label) {\n        this.label = label;\n    }\n\n    @Override\n    public void close() {\n        System.out.println(label + \" closed\");\n    }\n}\n\n// In main:\ntry (TrackedObject a = new TrackedObject(\"Alpha\")) {\n    // Alpha will be closed automatically when this block ends\n}\nTrackedObject b = new TrackedObject(\"Beta\");\nSystem.out.println(b.label); // Beta must still be accessible\nSystem.out.println(\"Done\");\n",
+      "guidedPracticeTests": [
+        {"label": "Alpha closed automatically", "input": "null", "expected": "Alpha closed"},
+        {"label": "b.label still accessible", "input": "null", "expected": "Beta"},
+        {"label": "Done is printed", "input": "null", "expected": "Done"}
+      ],
+      "feynmanPrompt": "Explain Java's garbage collection to someone coming from a C/C++ background. What does the GC do for you? What can still go wrong? Mention the concept of generational GC.",
+      "soloPracticeHtml": "<p>From a blank file, write a memory-awareness demonstration:</p><ul><li>Create a <code>Resource</code> class with a <code>String name</code>. Override <code>toString()</code> to return the name.</li><li>In main, create a <code>List&lt;Resource&gt;</code> called <code>cache</code>. Add 5 resources with names <code>\"R1\"</code> through <code>\"R5\"</code> using a for loop.</li><li>Print the list size.</li><li>Remove resources at index 0 and 2. Print the size again.</li><li>Clear the entire list. Print the size one final time (should be 0).</li><li>Print the string <code>\"Cache cleared — resources eligible for GC\"</code>.</li></ul>",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>When does an object become eligible for garbage collection?</p>",
+          "options": ["When the programmer calls System.gc()", "When no live references point to it", "When the JVM runs out of heap space", "After 30 seconds of inactivity"],
+          "correctAnswer": "When no live references point to it",
+          "explanationHtml": "<p>An object is eligible for GC when it is no longer reachable — no chain of references from any GC root leads to it. <code>System.gc()</code> is only a hint, not a guarantee.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Java's garbage collector guarantees that memory will be freed at a predictable point in time.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>The GC runs at its own discretion, not on a predictable schedule. <code>System.gc()</code> is a hint that may be ignored. You cannot rely on <code>finalize()</code> being called at a specific time.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which of the following can cause a memory leak in Java despite the GC?</p>",
+          "options": ["Using local variables inside a method", "Adding objects to a static List and never removing them", "Creating objects inside a loop that terminates", "Passing objects to methods as arguments"],
+          "correctAnswer": "Adding objects to a static List and never removing them",
+          "explanationHtml": "<p>A static field is a GC root. Objects held in a static collection remain reachable forever — the GC cannot collect them even if your code never uses them again. This is the most common source of memory leaks in Java applications.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Why does Java's GC use generational collection (young + old generation) rather than a single scan of the whole heap?</p>",
+          "options": ["To support multiple threads", "Because most objects die young — frequent short scans of the young generation are cheaper than scanning everything", "To support both stack and heap", "Java's GC is not generational"],
+          "correctAnswer": "Because most objects die young — frequent short scans of the young generation are cheaper than scanning everything",
+          "explanationHtml": "<p>Empirical data shows most objects are short-lived (temporary variables, builders, DTOs). Collecting only the young generation frequently is cheap and reclaims the vast majority of garbage. Long-lived objects are promoted to the old generation and collected less frequently, avoiding the cost of scanning stable objects over and over.</p>"
+        }
+      ]
+    }
+  ]
+}
