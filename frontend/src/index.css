@@ -588,3 +588,634 @@ button { font-family: inherit; cursor: pointer; }
 /* Utility: scrollbar-none */
 .scrollbar-none { scrollbar-width: none; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+ * BlizzardFrame component styles  (bz-*)
+ * Only loaded when <BlizzardFrame> mounts (theme === 'blizzard'), so no
+ * additional [data-theme] scoping is required here.
+ * ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Outer fixed overlay ────────────────────────────────────────────────────── */
+.bz-frame {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: visible;
+}
+
+/* ── Stone border bars ──────────────────────────────────────────────────────── */
+.bz-bar {
+  position: absolute;
+}
+
+.bz-bar-top {
+  top: 0; left: 0; right: 0;
+  height: 12px;
+  background: linear-gradient(180deg,
+    #0c1e3c 0%,
+    #142a52 45%,
+    #1a3660 78%,
+    #0e2244 100%);
+  box-shadow:
+    inset 0 -3px 10px rgba(74, 158, 218, 0.35),
+    0 2px 0 rgba(74, 158, 218, 0.2),
+    0 4px 18px rgba(74, 158, 218, 0.14);
+  z-index: 3;
+}
+
+.bz-bar-left {
+  top: 0; left: 0; bottom: 0;
+  width: 16px;
+  background: linear-gradient(90deg, #0a1c38 0%, #122848 55%, #1a3460 100%);
+  box-shadow: inset -3px 0 10px rgba(74, 158, 218, 0.28), 1px 0 0 rgba(74, 158, 218, 0.14);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+  z-index: 2;
+}
+
+.bz-bar-right {
+  top: 0; right: 0; bottom: 0;
+  width: 16px;
+  background: linear-gradient(-90deg, #0a1c38 0%, #122848 55%, #1a3460 100%);
+  box-shadow: inset 3px 0 10px rgba(74, 158, 218, 0.28), -1px 0 0 rgba(74, 158, 218, 0.14);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+  z-index: 2;
+}
+
+.bz-bar-bottom {
+  bottom: 0; left: 0; right: 0;
+  height: 10px;
+  background: linear-gradient(0deg, #0a1c38 0%, #122848 55%, #1a3460 100%);
+  box-shadow: inset 0 3px 10px rgba(74, 158, 218, 0.22), 0 -1px 0 rgba(74, 158, 218, 0.12);
+  z-index: 3;
+}
+
+/* ── Corner caps ────────────────────────────────────────────────────────────── */
+.bz-corner {
+  position: absolute;
+  width: 20px;
+  height: 16px;
+  background: #0a1c38;
+  z-index: 5;
+}
+.bz-corner::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 9px; height: 9px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #182e54;
+  border: 1px solid rgba(74, 158, 218, 0.5);
+  box-shadow: 0 0 8px rgba(74, 158, 218, 0.35);
+}
+.bz-corner-tl { top: 0;    left: 0;  }
+.bz-corner-tr { top: 0;    right: 0; }
+.bz-corner-bl { bottom: 0; left: 0;  }
+.bz-corner-br { bottom: 0; right: 0; }
+
+/* ── Rune medallion ─────────────────────────────────────────────────────────── */
+.bz-medallion {
+  position: absolute;
+  top: -23px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  animation: bz-rune-pulse 3.5s ease-in-out infinite;
+}
+
+/* ── Icicle row ─────────────────────────────────────────────────────────────── */
+.bz-icicle-row {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  height: 80px;
+  pointer-events: none;
+}
+
+.bz-icicle {
+  position: absolute;
+  top: 0;
+  /* Tapers from wide at top to a sharp point at bottom */
+  clip-path: polygon(10% 0%, 90% 0%, 78% 48%, 60% 76%, 50% 100%, 40% 76%, 22% 48%);
+  background: linear-gradient(180deg,
+    rgba(158, 214, 255, 0.96) 0%,
+    rgba(195, 235, 255, 0.88) 28%,
+    rgba(214, 244, 255, 0.72) 58%,
+    rgba(234, 250, 255, 0.44) 80%,
+    rgba(248, 254, 255, 0.14) 100%
+  );
+  filter:
+    drop-shadow(0 2px 4px rgba(74, 158, 218, 0.55))
+    drop-shadow(0 0 6px  rgba(140, 205, 255, 0.35));
+}
+
+/* ── Chain links ────────────────────────────────────────────────────────────── */
+.bz-chain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bz-link {
+  flex-shrink: 0;
+  width: 9px;
+  height: 14px;
+  border: 2px solid rgba(44, 84, 138, 0.88);
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(24, 54, 94, 0.9), rgba(12, 30, 62, 0.8));
+  margin: -1.5px 0;
+  box-shadow:
+    inset 0 1px 1px rgba(82, 152, 222, 0.18),
+    0 1px 3px rgba(0, 0, 0, 0.65);
+}
+.bz-link-e { transform: rotate(22deg);  }
+.bz-link-o { transform: rotate(-22deg); }
+
+/* ── Torch glows ────────────────────────────────────────────────────────────── */
+.bz-torch {
+  position: fixed;
+  top: 32%;
+  width: 80px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  animation: bz-torch-flicker 3.2s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+.bz-torch-l {
+  left: -12px;
+  background: radial-gradient(ellipse at 0% 50%,
+    rgba(18, 115, 255, 0.42) 0%,
+    rgba(10,  82, 230, 0.20) 38%,
+    rgba(5,   52, 185, 0.06) 65%,
+    transparent 82%);
+}
+.bz-torch-r {
+  right: -12px;
+  background: radial-gradient(ellipse at 100% 50%,
+    rgba(18, 115, 255, 0.42) 0%,
+    rgba(10,  82, 230, 0.20) 38%,
+    rgba(5,   52, 185, 0.06) 65%,
+    transparent 82%);
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────────────────── */
+@keyframes bz-torch-flicker {
+  0%,  100% { opacity: 0.70; transform: scaleY(1.00) scaleX(1.00); }
+  18%        { opacity: 0.88; transform: scaleY(1.08) scaleX(0.93); }
+  36%        { opacity: 0.58; transform: scaleY(0.94) scaleX(1.05); }
+  54%        { opacity: 0.82; transform: scaleY(1.05) scaleX(0.97); }
+  72%        { opacity: 0.72; transform: scaleY(0.97) scaleX(1.02); }
+}
+
+@keyframes bz-rune-pulse {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0  8px rgba(74, 158, 218, 0.70))
+      drop-shadow(0 0 18px rgba(74, 158, 218, 0.32));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 14px rgba(74,  158, 218, 1.00))
+      drop-shadow(0 0 28px rgba(74,  158, 218, 0.55))
+      drop-shadow(0 0 50px rgba(0,   180, 255, 0.18));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+ * BLIZZARD THEME — [data-theme="blizzard"] on <html>
+ *
+ * Full structural transformation inspired by Blizzard Entertainment's dark
+ * fantasy UI (World of Warcraft, Diablo IV): midnight navy backgrounds,
+ * ornate multi-layer metallic card frames, frost/ice glow accents, carved
+ * stone input channels, embossed metallic buttons, atmospheric depth fog,
+ * and gothic rune brand animation.
+ *
+ * Architecture: all rules are scoped to html[data-theme="blizzard"] so they
+ * only activate when ThemeProvider (hooks/useTheme.tsx) sets the attribute.
+ * CSS variable overrides cascade into every Tailwind utility class that
+ * references a custom property (bg-surface, text-muted, border-border, etc.).
+ * Inline styles that reference var(--token) pick up the new values too.
+ * ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Design token overrides ─────────────────────────────────────────────── */
+html[data-theme="blizzard"] {
+  /* Tailwind @theme tokens — utility classes like bg-surface reference these */
+  --color-bg:           #060e1e;
+  --color-surface:      #091828;
+  --color-card:         #0c1e36;
+  --color-border:       #1e4268;
+  --color-gold:         #e8b830;
+  --color-gold-dim:     #3a2808;
+  --color-purple:       #4a9eda;
+  --color-purple-dim:   #0a1e38;
+  --color-purple-light: #90c8f0;
+  --color-teal:         #00ccee;
+  --color-teal-dim:     #0a2030;
+  --color-text:         #cce0f5;
+  --color-muted:        #587898;
+  --color-red:          #f87171;
+  --color-green:        #4ade80;
+  --color-orange:       #e8a030;
+
+  /* Legacy unprefixed tokens (inline styles + arbitrary Tailwind classes) */
+  --bg:           #060e1e;
+  --surface:      #091828;
+  --card:         #0c1e36;
+  --border:       #1e4268;
+  --gold:         #e8b830;
+  --gold-dim:     #3a2808;
+  --gold-strong:  #7a5c10;
+  --purple:       #4a9eda;
+  --purple-dim:   #0a1e38;
+  --purple-light: #90c8f0;
+  --teal:         #00ccee;
+  --teal-dim:     #0a2030;
+  --text:         #cce0f5;
+  --muted:        #587898;
+  --red:          #f87171;
+  --green:        #4ade80;
+  --orange:       #e8a030;
+
+  /* Landing / grimoire palette — frost replaces warm parchment */
+  --gold-foil:        #4a9eda;
+  --gold-foil-bright: #90c8f0;
+  --gold-foil-deep:   #1a3a5c;
+}
+
+/* ── 2. Atmospheric background ──────────────────────────────────────────────── */
+html[data-theme="blizzard"],
+html[data-theme="blizzard"] body,
+html[data-theme="blizzard"] #root {
+  background: #060e1e;
+  color: #cce0f5;
+}
+
+/* Dark fantasy night atmosphere — layered radial gradients suggest ruins depth */
+html[data-theme="blizzard"] body {
+  background:
+    radial-gradient(ellipse 80% 28% at 50%  0%,  rgba(65, 130, 210, 0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 20% 55% at  5% 48%,  rgba(14,  42,  88, 0.50) 0%, transparent 62%),
+    radial-gradient(ellipse 20% 55% at 95% 48%,  rgba(14,  42,  88, 0.50) 0%, transparent 62%),
+    radial-gradient(ellipse 58% 18% at 50% 54%,  rgba(18,  55, 112, 0.16) 0%, transparent 80%),
+    linear-gradient(180deg, #020810 0%, #040c18 14%, #060f1e 34%, #081526 58%, #0a1830 80%, #060e1e 100%);
+  background-attachment: fixed;
+}
+
+/* Scrollbar — frost steel */
+html[data-theme="blizzard"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1e4060 0%, #152a40 100%);
+}
+html[data-theme="blizzard"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2a5a8c 0%, #1e3a5c 100%);
+}
+
+/* ── 3. Layout inset — push content below the icicle fringe and inside side bars ── */
+html[data-theme="blizzard"] #root {
+  padding: 85px 18px 12px;
+  box-sizing: border-box;
+}
+
+/* ── 4. Nav — stone fortress with ornate frost seam ────────────────────────── */
+html[data-theme="blizzard"] nav {
+  background: linear-gradient(180deg, #0f2244 0%, #0a1630 60%, #070f20 100%);
+  border-bottom: none;
+  box-shadow:
+    0 1px 0 #1e3a60,
+    0 2px 0 rgba(74, 158, 218, 0.12),
+    0 6px 28px rgba(0, 0, 0, 0.75);
+  position: relative;
+}
+
+/* Glowing frost seam along the nav bottom edge */
+html[data-theme="blizzard"] nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent        0%,
+    rgba(74,158,218,.2) 12%,
+    rgba(74,158,218,.7) 35%,
+    rgba(144,200,240,1) 50%,
+    rgba(74,158,218,.7) 65%,
+    rgba(74,158,218,.2) 88%,
+    transparent        100%
+  );
+  pointer-events: none;
+}
+
+/* ── 4. Cards / panels — Blizzard ornate multi-layer frame ──────────────────── *
+ *                                                                               *
+ *  The signature Blizzard look: a beveled stone-and-metal frame built from      *
+ *  layered box-shadows:                                                         *
+ *   • inset top highlight  → catches imaginary top light like polished metal    *
+ *   • inset bottom shadow  → darkens the base for depth                        *
+ *   • outer dark ring #1   → the "carved channel" between panel and frame      *
+ *   • outer blue ring #2   → the metallic outer lip glowing with frost         *
+ *   • outer dark ring #3   → second dark channel completing the triple border  *
+ *   • ambient frost aura   → very soft blue halo in the background             *
+ *   • deep drop shadow     → lifts the panel off the background                *
+ * ─────────────────────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .bg-card {
+  background: linear-gradient(160deg, #102038 0%, #0c1830 55%, #081425 100%);
+  border-color: #2a5888 !important;
+  border-radius: 8px;
+  box-shadow:
+    inset 0  1px 0   rgba(74, 158, 218, 0.2),
+    inset 0 -1px 0   rgba(0,   0,   0,  0.45),
+    inset 1px  0 0   rgba(74, 158, 218, 0.06),
+    0 0 0 1px rgba(4,  14,  30,  0.95),
+    0 0 0 2px rgba(30, 72, 130,  0.55),
+    0 0 0 3px rgba(4,  12,  26,  0.85),
+    0 4px 24px rgba(74, 158, 218, 0.06),
+    0 8px 40px rgba(0,   0,   0,  0.6);
+  position: relative;
+}
+
+/* Faint frost shimmer line across the top of every card */
+html[data-theme="blizzard"] .bg-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent            0%,
+    rgba(74,158,218,0.3)  25%,
+    rgba(144,200,240,0.6) 50%,
+    rgba(74,158,218,0.3)  75%,
+    transparent           100%
+  );
+  pointer-events: none;
+  border-radius: 1px;
+  z-index: 1;
+}
+
+/* Surface panels (slightly lighter than card) */
+html[data-theme="blizzard"] .bg-surface {
+  background: linear-gradient(180deg, #0c1e36 0%, #081428 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(74, 158, 218, 0.1),
+    0 2px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ── 5. Form inputs — carved stone channel ──────────────────────────────────── */
+html[data-theme="blizzard"] input[type="email"],
+html[data-theme="blizzard"] input[type="password"],
+html[data-theme="blizzard"] input[type="text"],
+html[data-theme="blizzard"] input[type="search"],
+html[data-theme="blizzard"] textarea {
+  background: linear-gradient(180deg, #030a14 0%, #05101e 100%);
+  border-color: #1e4060 !important;
+  color: #c0d8f0;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0   rgba(0, 0, 0, 0.5);
+}
+html[data-theme="blizzard"] input:focus,
+html[data-theme="blizzard"] textarea:focus {
+  border-color: #4a9eda !important;
+  outline: none;
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.55),
+    0 0 0 2px rgba(74, 158, 218, 0.18),
+    0 0 14px rgba(74, 158, 218, 0.1);
+}
+
+/* ── 6. Buttons ─────────────────────────────────────────────────────────────── */
+
+/* Primary — deep navy steel with frost hover glow */
+html[data-theme="blizzard"] .btn-primary {
+  background:   linear-gradient(180deg, #1e5898 0%, #122e68 55%, #0a1e4c 100%);
+  border-color: #3878b8 !important;
+  color:        #c8e8ff;
+  text-shadow:  0 1px 3px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+  box-shadow:
+    inset 0  1px 0 rgba(144, 200, 240, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.45);
+}
+html[data-theme="blizzard"] .btn-primary:hover:not(:disabled) {
+  background:   linear-gradient(180deg, #2870b8 0%, #1a3e80 55%, #102458 100%);
+  border-color: #5898d8 !important;
+  box-shadow:
+    inset 0  1px 0 rgba(144, 200, 240, 0.3),
+    0 0 18px rgba(74, 158, 218, 0.55),
+    0 0 36px rgba(74, 158, 218, 0.2),
+    0 4px 14px rgba(0, 0, 0, 0.45);
+}
+html[data-theme="blizzard"] .btn-primary:active:not(:disabled) {
+  background:   linear-gradient(180deg, #0e2458 0%, #091840 100%);
+  box-shadow:   inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Ghost — dark recessed with frost on hover */
+html[data-theme="blizzard"] .btn-ghost {
+  background:   rgba(6, 14, 30, 0.5);
+  border-color: #1e3a5c !important;
+  color:        #5a7898;
+}
+html[data-theme="blizzard"] .btn-ghost:hover:not(:disabled) {
+  background:   rgba(12, 28, 58, 0.8);
+  border-color: #4a9eda !important;
+  color:        #90c8f0;
+  box-shadow:   0 0 10px rgba(74, 158, 218, 0.18);
+}
+html[data-theme="blizzard"] .btn-ghost:active:not(:disabled) {
+  background: rgba(8, 18, 38, 0.9);
+}
+
+/* Success — cyan with frost glow */
+html[data-theme="blizzard"] .btn-success {
+  background:   linear-gradient(180deg, #0a3040 0%, #061e2c 100%);
+  border-color: #00aac8 !important;
+  color:        #40ccee;
+  box-shadow:   inset 0 1px 0 rgba(0, 200, 230, 0.12);
+  text-shadow:  0 0 8px rgba(0, 200, 230, 0.3);
+}
+html[data-theme="blizzard"] .btn-success:hover:not(:disabled) {
+  background:   rgba(0, 170, 204, 0.12);
+  border-color: #30d8f0 !important;
+  color:        #60e8ff;
+  box-shadow:   0 0 16px rgba(0, 200, 230, 0.35),
+                inset 0 1px 0 rgba(0, 200, 230, 0.18);
+}
+html[data-theme="blizzard"] .btn-success:active:not(:disabled) {
+  background: rgba(0, 100, 130, 0.2);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Seal — ice-blue CTA with multi-ring frame */
+html[data-theme="blizzard"] .btn-seal {
+  background:  linear-gradient(180deg, #3a88c8 0%, #1a4880 55%, #0c2858 100%);
+  color:       #e0f2ff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 0 0 1px #081e3c,
+    0 0 0 2px #3070a8,
+    0 0 0 3px #081428,
+    inset 0 1px 0 rgba(144, 200, 240, 0.3),
+    0 6px 24px rgba(58, 136, 200, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+html[data-theme="blizzard"] .btn-seal:hover {
+  box-shadow:
+    0 0 0 1px #081e3c,
+    0 0 0 2px #589ed8,
+    0 0 0 3px #081428,
+    inset 0 1px 0 rgba(144, 200, 240, 0.4),
+    0 12px 36px rgba(58, 136, 200, 0.65),
+    0 0 44px rgba(74, 158, 218, 0.22);
+}
+
+/* ── 7. Chips — frost palette ───────────────────────────────────────────────── */
+html[data-theme="blizzard"] .chip-purple {
+  background:   rgba(74, 158, 218, 0.12);
+  border-color: rgba(74, 158, 218, 0.35);
+  color:        #90c8f0;
+  box-shadow:   0 0 6px rgba(74, 158, 218, 0.08);
+}
+html[data-theme="blizzard"] .chip-teal {
+  background:   rgba(0, 180, 220, 0.1);
+  border-color: rgba(0, 180, 220, 0.28);
+  color:        #40ccee;
+  box-shadow:   0 0 6px rgba(0, 180, 220, 0.08);
+}
+html[data-theme="blizzard"] .chip-gold {
+  background:   rgba(232, 184, 48, 0.1);
+  border-color: rgba(232, 184, 48, 0.3);
+  color:        #e8b830;
+}
+html[data-theme="blizzard"] .chip-green {
+  background:   rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.22);
+  color:        #4ade80;
+}
+html[data-theme="blizzard"] .chip-gray {
+  background:   rgba(30, 60, 100, 0.3);
+  border-color: rgba(50, 90, 140, 0.3);
+  color:        #587898;
+}
+
+/* ── 8. Hook-card accent lines — frost ice ──────────────────────────────────── */
+html[data-theme="blizzard"] .hook-card::before {
+  background: linear-gradient(90deg, transparent 0%, #1a4a7c 20%, #4a9eda 50%, #1a4a7c 80%, transparent 100%);
+}
+html[data-theme="blizzard"] .hook-card::after {
+  background: linear-gradient(90deg, transparent 0%, #4a9eda 25%, #00ccee 50%, #4a9eda 75%, transparent 100%);
+}
+
+/* ── 9. Typography — gold headings glow, frost eyebrow ─────────────────────── */
+html[data-theme="blizzard"] .text-gold.font-cinzel {
+  text-shadow:
+    0 0 20px rgba(232, 184, 48, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+}
+html[data-theme="blizzard"] .section-eyebrow {
+  color:       #4a9eda;
+  text-shadow: 0 0 10px rgba(74, 158, 218, 0.3);
+}
+html[data-theme="blizzard"] .ornate-divider {
+  color:       #4a9eda;
+  text-shadow: 0 0 12px rgba(74, 158, 218, 0.45);
+}
+html[data-theme="blizzard"] .ornate-divider::before,
+html[data-theme="blizzard"] .ornate-divider::after {
+  background: linear-gradient(90deg, transparent, rgba(74,158,218,0.65) 50%, transparent);
+}
+
+/* ── 10. Foil text — ice crystal gradient ────────────────────────────────────── */
+html[data-theme="blizzard"] .foil-on-dark {
+  background: linear-gradient(
+    135deg,
+    #1e4a7c 0%,
+    #4a9eda 30%,
+    #90c8f0 50%,
+    #4a9eda 70%,
+    #1e4a7c 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── 11. Landing — OAuth link button ────────────────────────────────────────── */
+html[data-theme="blizzard"] a.font-cinzel.border-border {
+  background: linear-gradient(180deg, #0c1e36 0%, #081428 100%);
+  border-color: #1e3a5c;
+  box-shadow:
+    inset 0 1px 0 rgba(74, 158, 218, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+}
+html[data-theme="blizzard"] a.font-cinzel.border-border:hover {
+  border-color: #3a6a9a;
+  box-shadow:
+    inset 0 1px 0 rgba(74, 158, 218, 0.1),
+    0 0 10px rgba(74, 158, 218, 0.1);
+}
+
+/* ── 12. Ember orbs — frost blue ────────────────────────────────────────────── */
+html[data-theme="blizzard"] .ember-core {
+  background: radial-gradient(circle at 35% 35%,
+    #f0f8ff 0%,
+    #90c8f0 25%,
+    #4a9eda 55%,
+    transparent 75%);
+  box-shadow:
+    0 0  5px 1px rgba(144, 200, 240, 0.95),
+    0 0 12px 3px rgba(74,  158, 218, 0.6),
+    0 0 24px 8px rgba(74,  158, 218, 0.25),
+    0 0 50px 18px rgba(74, 158, 218, 0.08);
+}
+html[data-theme="blizzard"] .ember-core.is-trail {
+  background: radial-gradient(circle at 40% 40%,
+    #d0e8ff 0%,
+    #4a9eda 45%,
+    transparent 75%);
+  box-shadow:
+    0 0  3px 1px rgba(74, 158, 218, 0.7),
+    0 0 10px 3px rgba(74, 158, 218, 0.3),
+    0 0 20px 7px rgba(74, 158, 218, 0.1);
+}
+
+/* ── 13. Nav brand — frost rune glow ────────────────────────────────────────── */
+html[data-theme="blizzard"] .blizzard-rune-glow {
+  animation: blizzard-rune-glow 3s ease-in-out infinite;
+}
+
+/* ── 14. Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes blizzard-rune-glow {
+  0%, 100% {
+    text-shadow:
+      0 0 8px  rgba(74, 158, 218, 0.4),
+      0 0 16px rgba(74, 158, 218, 0.15);
+    opacity: 0.92;
+  }
+  50% {
+    text-shadow:
+      0 0 12px rgba(74,  158, 218, 0.75),
+      0 0 28px rgba(0,  180, 255, 0.35),
+      0 0 48px rgba(0,  180, 255, 0.1);
+    opacity: 1;
+  }
+}
+
+@keyframes blizzard-frost-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(74, 158, 218, 0.2), 0 0 0 1px rgba(74,158,218,0.1); }
+  50%       { box-shadow: 0 0 22px rgba(74, 158, 218, 0.5), 0 0 0 1px rgba(74,158,218,0.3); }
+}

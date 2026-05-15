@@ -1,34 +1,37 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
-import { useAuth } from '@/shared/hooks/useAuth'
-import TopicsPage from '@/features/topics/pages/TopicsPage'
-import LoginPage from '@/features/auth/pages/LoginPage'
-import RegisterPage from '@/features/auth/pages/RegisterPage'
-import OAuthCallbackPage from '@/features/auth/pages/OAuthCallbackPage'
-import ChunkMapPage from '@/features/topics/pages/ChunkMapPage'
-import EncodingPage from '@/features/learning/pages/EncodingPage'
-import ReviewPage from '@/features/review/pages/ReviewPage'
-import DiagnosticPage from '@/features/diagnostic/pages/DiagnosticPage'
-import OnboardingPage from '@/features/auth/pages/OnboardingPage'
-import RabbitHolePage from '@/features/exploration/pages/RabbitHolePage'
-import CuriosityQueuePage from '@/features/exploration/pages/CuriosityQueuePage'
-import ProfilePage from '@/features/profile/pages/ProfilePage'
-import TopicPage from '@/features/topics/pages/TopicPage'
-import TopicOnboardingPage from '@/features/onboarding/pages/TopicOnboardingPage'
-import TopicDiagnosticPage from '@/features/diagnostic/pages/TopicDiagnosticPage'
-import PrerequisiteCheckPage from '@/features/onboarding/pages/PrerequisiteCheckPage'
-import CssPrimerPage from '@/features/onboarding/pages/CssPrimerPage'
-import LeaderboardPage from '@/features/leaderboard/pages/LeaderboardPage'
-import PublicProfilePage from '@/features/profile/pages/PublicProfilePage'
-import Nav from '@/shared/components/layout/Nav'
-import AdminLayout from '@/features/admin/pages/AdminLayout'
-import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage'
-import AdminChunksPage from '@/features/admin/pages/AdminChunksPage'
-import AdminSubChunksPage from '@/features/admin/pages/AdminSubChunksPage'
-import AdminSubChunkEditorPage from '@/features/admin/pages/AdminSubChunkEditorPage'
-import AdminQuestionsPage from '@/features/admin/pages/AdminQuestionsPage'
-import AdminUsersPage from '@/features/admin/pages/AdminUsersPage'
-import AdminImportExportPage from '@/features/admin/pages/AdminImportExportPage'
-import React from 'react'
+import { useAuth } from './hooks/useAuth'
+import TopicsPage from './pages/TopicsPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import OAuthCallbackPage from './pages/OAuthCallbackPage'
+import ChunkMapPage from './pages/ChunkMapPage'
+import EncodingPage from './pages/EncodingPage'
+import ReviewPage from './pages/ReviewPage'
+import DiagnosticPage from './pages/DiagnosticPage'
+import OnboardingPage from './pages/OnboardingPage'
+import RabbitHolePage from './pages/RabbitHolePage'
+import CuriosityQueuePage from './pages/CuriosityQueuePage'
+import ProfilePage from './pages/ProfilePage'
+import TopicPage from './pages/TopicPage'
+import TopicOnboardingPage from './pages/TopicOnboardingPage'
+import TopicDiagnosticPage from './pages/TopicDiagnosticPage'
+import PrerequisiteCheckPage from './pages/PrerequisiteCheckPage'
+import CssPrimerPage from './pages/CssPrimerPage'
+import LeaderboardPage from './pages/LeaderboardPage'
+import PublicProfilePage from './pages/PublicProfilePage'
+import Nav from './components/layout/Nav'
+import BlizzardFrame from './components/layout/BlizzardFrame'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminChunksPage from './pages/admin/AdminChunksPage'
+import AdminSubChunksPage from './pages/admin/AdminSubChunksPage'
+import AdminSubChunkEditorPage from './pages/admin/AdminSubChunkEditorPage'
+import AdminQuestionsPage from './pages/admin/AdminQuestionsPage'
+import AdminUsersPage from './pages/admin/AdminUsersPage'
+import AdminImportExportPage from './pages/admin/AdminImportExportPage'
+import LandingPage from './pages/LandingPage'
+import { useTheme } from './hooks/useTheme'
+import React from "react";
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
@@ -44,8 +47,10 @@ function AdminRoute() {
 
 export default function App() {
   const { user } = useAuth()
+  const { theme } = useTheme()
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {theme === 'blizzard' && <BlizzardFrame />}
       {user && !location.pathname.startsWith('/admin') && <Nav />}
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
       <Routes>

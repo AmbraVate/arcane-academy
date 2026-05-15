@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
 import App from './App'
-import { AuthProvider } from '@/shared/hooks/useAuth'
+import { AuthProvider } from './hooks/useAuth'
+import { ThemeProvider } from './hooks/useTheme'
 import './index.css'
 
 // Sentry — gated on VITE_SENTRY_DSN. When empty (the dev default), init() is
@@ -28,9 +29,11 @@ if (SENTRY_DSN) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 )
