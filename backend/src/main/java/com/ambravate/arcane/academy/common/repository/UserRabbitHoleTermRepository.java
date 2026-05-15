@@ -1,6 +1,6 @@
-package com.ambravate.polymath.academy.repository;
+package com.ambravate.arcane.academy.common.repository;
 
-import com.ambravate.polymath.academy.model.UserRabbitHoleTerm;
+import com.ambravate.arcane.academy.common.domain.UserRabbitHoleTerm;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

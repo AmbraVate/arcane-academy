@@ -1,8 +1,8 @@
-package com.ambravate.polymath.academy.controller;
+package com.ambravate.arcane.academy.practice.controller;
 
-import com.ambravate.polymath.academy.dto.RabbitHoleTermDto;
-import com.ambravate.polymath.academy.security.UserPrincipal;
-import com.ambravate.polymath.academy.service.UserRabbitHoleTermService;
+import com.ambravate.arcane.academy.ai.service.UserRabbitHoleTermService;
+import com.ambravate.arcane.academy.common.security.UserPrincipal;
+import com.ambravate.arcane.academy.practice.dto.RabbitHoleTermDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

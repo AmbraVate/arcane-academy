@@ -3,14 +3,20 @@ package com.ambravate.arcane.academy.admin.service;
 import com.ambravate.arcane.academy.admin.dto.AdminStatsDto;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
 import com.ambravate.arcane.academy.admin.dto.ContentHealthDto;
+import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
+import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
+import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.User;
+import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.repository.ChunkRepository;
 import com.ambravate.arcane.academy.common.repository.QuestionRepository;
+import com.ambravate.arcane.academy.common.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.common.repository.TopicRepository;
+import com.ambravate.arcane.academy.common.repository.UserBadgeRepository;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 
@@ -68,6 +74,7 @@ public class AdminStatsService {
                 issues.add("No retrieval questions");
 
             if (!issues.isEmpty()) {
+                Chunk parent = chunkById.get(sc.getChunkId());
                 health.add(ContentHealthDto.builder()
                         .subChunkId(sc.getId())
                         .title(sc.getTitle())

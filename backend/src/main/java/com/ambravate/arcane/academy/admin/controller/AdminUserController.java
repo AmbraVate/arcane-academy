@@ -1,11 +1,14 @@
 package com.ambravate.arcane.academy.admin.controller;
 
-import com.ambravate.arcane.academy.admin.service.AdminStatsService;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
+import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
+import com.ambravate.arcane.academy.admin.service.AdminStatsService;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.User;
+import com.ambravate.arcane.academy.common.domain.UserRole;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -86,9 +89,9 @@ public class AdminUserController {
             return ResponseEntity.badRequest().build();
         }
 
-        User.UserRole newRole;
+        UserRole newRole;
         try {
-            newRole = User.UserRole.valueOf(roleStr.toUpperCase());
+            newRole = UserRole.valueOf(roleStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }

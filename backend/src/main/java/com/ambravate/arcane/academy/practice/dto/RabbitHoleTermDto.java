@@ -1,6 +1,6 @@
-package com.ambravate.polymath.academy.dto;
+package com.ambravate.arcane.academy.practice.dto;
 
-import com.ambravate.polymath.academy.model.UserRabbitHoleTerm;
+import com.ambravate.arcane.academy.common.domain.UserRabbitHoleTerm;
 import lombok.Data;
 
 import java.time.Instant;

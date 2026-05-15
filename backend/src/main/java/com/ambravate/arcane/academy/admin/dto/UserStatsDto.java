@@ -1,4 +1,4 @@
-package com.ambravate.polymath.academy.dto.admin;
+package com.ambravate.arcane.academy.admin.dto;
 
 public record UserStatsDto(
         String userId,

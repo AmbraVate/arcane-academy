@@ -1,4 +1,4 @@
-package com.ambravate.polymath.academy.model;
+package com.ambravate.arcane.academy.common.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
