@@ -67,6 +67,8 @@ public class User {
     @Builder.Default
     private boolean blocked = false;
 
+    private String refreshToken;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @Getter(AccessLevel.NONE)   // suppress Lombok getter; we provide a null-safe one below

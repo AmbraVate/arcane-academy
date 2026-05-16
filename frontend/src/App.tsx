@@ -1,37 +1,47 @@
+import React, { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
-import { useAuth } from './hooks/useAuth'
-import TopicsPage from './pages/TopicsPage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import OAuthCallbackPage from './pages/OAuthCallbackPage'
-import ChunkMapPage from './pages/ChunkMapPage'
-import EncodingPage from './pages/EncodingPage'
-import ReviewPage from './pages/ReviewPage'
-import DiagnosticPage from './pages/DiagnosticPage'
-import OnboardingPage from './pages/OnboardingPage'
-import RabbitHolePage from './pages/RabbitHolePage'
-import CuriosityQueuePage from './pages/CuriosityQueuePage'
-import ProfilePage from './pages/ProfilePage'
-import TopicPage from './pages/TopicPage'
-import TopicOnboardingPage from './pages/TopicOnboardingPage'
-import TopicDiagnosticPage from './pages/TopicDiagnosticPage'
-import PrerequisiteCheckPage from './pages/PrerequisiteCheckPage'
-import CssPrimerPage from './pages/CssPrimerPage'
-import LeaderboardPage from './pages/LeaderboardPage'
-import PublicProfilePage from './pages/PublicProfilePage'
+import { useAuth } from './shared/hooks/useAuth'
+import { useTheme } from './hooks/useTheme'
 import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
-import AdminLayout from './pages/admin/AdminLayout'
-import AdminDashboardPage from './pages/admin/AdminDashboardPage'
-import AdminChunksPage from './pages/admin/AdminChunksPage'
-import AdminSubChunksPage from './pages/admin/AdminSubChunksPage'
-import AdminSubChunkEditorPage from './pages/admin/AdminSubChunkEditorPage'
-import AdminQuestionsPage from './pages/admin/AdminQuestionsPage'
-import AdminUsersPage from './pages/admin/AdminUsersPage'
-import AdminImportExportPage from './pages/admin/AdminImportExportPage'
-import LandingPage from './pages/LandingPage'
-import { useTheme } from './hooks/useTheme'
-import React from "react";
+
+const TopicsPage           = lazy(() => import('./features/topics/pages/TopicsPage'))
+const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
+const RegisterPage         = lazy(() => import('./features/auth/pages/RegisterPage'))
+const OAuthCallbackPage    = lazy(() => import('./features/auth/pages/OAuthCallbackPage'))
+const ChunkMapPage         = lazy(() => import('./features/topics/pages/ChunkMapPage'))
+const EncodingPage         = lazy(() => import('./features/learning/pages/EncodingPage'))
+const ReviewPage           = lazy(() => import('./features/review/pages/ReviewPage'))
+const DiagnosticPage       = lazy(() => import('./features/diagnostic/pages/DiagnosticPage'))
+const OnboardingPage       = lazy(() => import('./features/auth/pages/OnboardingPage'))
+const RabbitHolePage       = lazy(() => import('./features/exploration/pages/RabbitHolePage'))
+const CuriosityQueuePage   = lazy(() => import('./features/exploration/pages/CuriosityQueuePage'))
+const ProfilePage          = lazy(() => import('./features/profile/pages/ProfilePage'))
+const TopicPage            = lazy(() => import('./features/topics/pages/TopicPage'))
+const TopicOnboardingPage  = lazy(() => import('./features/onboarding/pages/TopicOnboardingPage'))
+const TopicDiagnosticPage  = lazy(() => import('./features/diagnostic/pages/TopicDiagnosticPage'))
+const PrerequisiteCheckPage = lazy(() => import('./features/onboarding/pages/PrerequisiteCheckPage'))
+const CssPrimerPage        = lazy(() => import('./features/onboarding/pages/CssPrimerPage'))
+const LeaderboardPage      = lazy(() => import('./features/leaderboard/pages/LeaderboardPage'))
+const PublicProfilePage    = lazy(() => import('./features/profile/pages/PublicProfilePage'))
+const LandingPage          = lazy(() => import('./features/auth/pages/LandingPage'))
+const AdminLayout          = lazy(() => import('./features/admin/pages/AdminLayout'))
+const AdminDashboardPage   = lazy(() => import('./features/admin/pages/AdminDashboardPage'))
+const AdminChunksPage      = lazy(() => import('./features/admin/pages/AdminChunksPage'))
+const AdminSubChunksPage   = lazy(() => import('./features/admin/pages/AdminSubChunksPage'))
+const AdminSubChunkEditorPage = lazy(() => import('./features/admin/pages/AdminSubChunkEditorPage'))
+const AdminQuestionsPage   = lazy(() => import('./features/admin/pages/AdminQuestionsPage'))
+const AdminUsersPage       = lazy(() => import('./features/admin/pages/AdminUsersPage'))
+const AdminImportExportPage = lazy(() => import('./features/admin/pages/AdminImportExportPage'))
+const AdminTopicsPage      = lazy(() => import('./features/admin/pages/AdminTopicsPage'))
+
+function PageFallback() {
+  return (
+    <div className="flex items-center justify-center h-[60vh] text-muted">
+      <div className="w-8 h-8 animate-spin rounded-full border-2 border-border border-t-purple" />
+    </div>
+  )
+}
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()
@@ -53,6 +63,7 @@ export default function App() {
       {theme === 'blizzard' && <BlizzardFrame />}
       {user && !location.pathname.startsWith('/admin') && <Nav />}
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+      <Suspense fallback={<PageFallback />}>
       <Routes>
         <Route path="/login"    element={user ? <Navigate to="/topics" replace /> : <LoginPage />} />
         <Route path="/register" element={user ? <Navigate to="/topics" replace /> : <RegisterPage />} />
@@ -81,6 +92,7 @@ export default function App() {
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
+            <Route path="topics" element={<AdminTopicsPage />} />
             <Route path="chunks" element={<AdminChunksPage />} />
             <Route path="chunks/:chunkId/subchunks" element={<AdminSubChunksPage />} />
             <Route path="subchunks/:subChunkId/edit" element={<AdminSubChunkEditorPage />} />
@@ -92,6 +104,7 @@ export default function App() {
 
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
+      </Suspense>
       </div>
     </div>
   )

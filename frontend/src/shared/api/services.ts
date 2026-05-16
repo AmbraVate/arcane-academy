@@ -1,20 +1,26 @@
-import api from './client'
+import api, { REFRESH_TOKEN_KEY } from './client'
 import type {
   User, Badge, CodeRunResponse,
   ChunkSummary, ChunkDetail, SubChunkEncoding, PracticeResult,
   RetrievalResultDto, ReviewSessionDto, ReviewResultDto,
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
-  RabbitHoleModule, CuriosityQueueItem, AnswerEntry,
+  RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
 } from '@/shared/types'
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
+function storeRefreshToken(data: { refreshToken?: string }) {
+  if (data.refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken)
+}
+
 export const authApi = {
   register: async (username: string, email: string, password: string): Promise<User> => {
     const { data } = await api.post('/api/auth/register', { username, email, password })
+    storeRefreshToken(data)
     return data
   },
   login: async (email: string, password: string): Promise<User> => {
     const { data } = await api.post('/api/auth/login', { email, password })
+    storeRefreshToken(data)
     return data
   },
 }

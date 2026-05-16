@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
-import { useTheme } from '../../hooks/useTheme'
-import { dashboardApi } from '../../api/services'
+import { useAuth } from '@/shared/hooks/useAuth'
+import { useTheme } from '@/hooks/useTheme'
+import { useReviewsDue } from '@/hooks/queries'
 import { cn } from '@/lib/utils'
 import {
   Flame, Library, RotateCcw, Trophy, User, LogOut,
@@ -13,12 +12,7 @@ export default function Nav() {
   const { user, logout } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
-  const [reviewsDue, setReviewsDue] = useState(0)
-
-  useEffect(() => {
-    if (!user) return
-    dashboardApi.getReviewsDue().then(setReviewsDue).catch(() => {})
-  }, [user])
+  const { data: reviewsDue = 0 } = useReviewsDue()
 
   if (!user) return null
 

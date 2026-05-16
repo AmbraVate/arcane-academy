@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, curiosityApi } from '@/shared/api/services'
 import { useAuth } from '@/shared/hooks/useAuth'
@@ -30,62 +30,188 @@ function extractSqlSetup(specs: unknown): string | null {
   return typeof first?.setup === 'string' ? first.setup : null
 }
 
+// ── State machine ──────────────────────────────────────────────────────────────
+
+type EncodingState = {
+  encoding: SubChunkEncoding | null
+  loading: boolean
+  practiceView: 'brief' | 'code'
+  showTaskOverlay: boolean
+  code: string
+  output: OutputLine[]
+  testResults: Map<string, boolean>
+  running: boolean
+  mentorFeedback: string | null
+  mentorLoading: boolean
+  mentorErrorType: string | null
+  practiceSolved: boolean
+  answers: Record<string, string>
+  retrievalResult: RetrievalResultDto | null
+  submittingRetrieval: boolean
+  feynmanText: string
+  feynmanResult: FeynmanResultDto | null
+  submittingFeynman: boolean
+  showHint: boolean
+  storyOpen: boolean
+  isSaved: boolean
+  savingPin: boolean
+}
+
+type EncodingAction =
+  | { type: 'LOADED'; encoding: SubChunkEncoding; code: string; isSaved: boolean }
+  | { type: 'PHASE_ADVANCED'; encoding: SubChunkEncoding }
+  | { type: 'PRACTICE_VIEW'; view: 'brief' | 'code' }
+  | { type: 'TASK_OVERLAY'; open: boolean }
+  | { type: 'CODE_CHANGED'; code: string }
+  | { type: 'RUN_START'; message: string }
+  | { type: 'RUN_DONE'; output: OutputLine[] }
+  | { type: 'SUBMIT_START'; message: string }
+  | { type: 'COMPILE_ERROR'; output: OutputLine[]; errorType: string }
+  | { type: 'MENTOR_LOADING' }
+  | { type: 'MENTOR_READY'; feedback: string }
+  | { type: 'SUBMIT_RESULT'; output: OutputLine[]; testResults: Map<string, boolean> }
+  | { type: 'PRACTICE_SOLVED' }
+  | { type: 'RUN_END' }
+  | { type: 'ANSWER_CHANGED'; questionId: string; answer: string }
+  | { type: 'RETRIEVAL_START' }
+  | { type: 'RETRIEVAL_DONE'; result: RetrievalResultDto | null }
+  | { type: 'FEYNMAN_TEXT'; text: string }
+  | { type: 'FEYNMAN_START' }
+  | { type: 'FEYNMAN_DONE'; result: FeynmanResultDto | null }
+  | { type: 'HINT_TOGGLE' }
+  | { type: 'STORY_OPEN'; open: boolean }
+  | { type: 'PIN_START' }
+  | { type: 'PIN_DONE'; isSaved: boolean }
+
+const INITIAL_OUTPUT: OutputLine[] = [{ text: '// Cast your spell to run the code.', type: 'system' }]
+
+const initialState: EncodingState = {
+  encoding: null,
+  loading: true,
+  practiceView: 'brief',
+  showTaskOverlay: false,
+  code: '',
+  output: INITIAL_OUTPUT,
+  testResults: new Map(),
+  running: false,
+  mentorFeedback: null,
+  mentorLoading: false,
+  mentorErrorType: null,
+  practiceSolved: false,
+  answers: {},
+  retrievalResult: null,
+  submittingRetrieval: false,
+  feynmanText: '',
+  feynmanResult: null,
+  submittingFeynman: false,
+  showHint: false,
+  storyOpen: false,
+  isSaved: false,
+  savingPin: false,
+}
+
+function encodingReducer(state: EncodingState, action: EncodingAction): EncodingState {
+  switch (action.type) {
+    case 'LOADED':
+      return { ...state, loading: false, encoding: action.encoding, code: action.code, isSaved: action.isSaved }
+    case 'PHASE_ADVANCED':
+      return {
+        ...state,
+        encoding: action.encoding,
+        code: action.encoding.starterCode ?? '',
+        answers: {},
+        retrievalResult: null,
+        feynmanResult: null,
+        feynmanText: '',
+        practiceSolved: false,
+        practiceView: 'brief',
+        showTaskOverlay: false,
+        output: INITIAL_OUTPUT,
+        testResults: new Map(),
+        mentorFeedback: null,
+        showHint: false,
+      }
+    case 'PRACTICE_VIEW':   return { ...state, practiceView: action.view }
+    case 'TASK_OVERLAY':    return { ...state, showTaskOverlay: action.open }
+    case 'CODE_CHANGED':    return { ...state, code: action.code }
+    case 'RUN_START':
+      return { ...state, running: true, mentorFeedback: null, output: [{ text: action.message, type: 'system' }] }
+    case 'RUN_DONE':        return { ...state, running: false, output: action.output }
+    case 'SUBMIT_START':
+      return { ...state, running: true, mentorFeedback: null, output: [{ text: action.message, type: 'system' }], testResults: new Map() }
+    case 'COMPILE_ERROR':
+      return { ...state, running: false, output: action.output, mentorErrorType: action.errorType }
+    case 'MENTOR_LOADING':  return { ...state, mentorLoading: true }
+    case 'MENTOR_READY':    return { ...state, mentorLoading: false, mentorFeedback: action.feedback }
+    case 'SUBMIT_RESULT':   return { ...state, output: action.output, testResults: action.testResults }
+    case 'PRACTICE_SOLVED': return { ...state, running: false, practiceSolved: true, showTaskOverlay: false }
+    case 'RUN_END':         return { ...state, running: false }
+    case 'ANSWER_CHANGED':
+      return { ...state, answers: { ...state.answers, [action.questionId]: action.answer } }
+    case 'RETRIEVAL_START': return { ...state, submittingRetrieval: true }
+    case 'RETRIEVAL_DONE':  return { ...state, submittingRetrieval: false, retrievalResult: action.result }
+    case 'FEYNMAN_TEXT':    return { ...state, feynmanText: action.text }
+    case 'FEYNMAN_START':   return { ...state, submittingFeynman: true }
+    case 'FEYNMAN_DONE':    return { ...state, submittingFeynman: false, feynmanResult: action.result }
+    case 'HINT_TOGGLE':     return { ...state, showHint: !state.showHint }
+    case 'STORY_OPEN':      return { ...state, storyOpen: action.open }
+    case 'PIN_START':       return { ...state, savingPin: true }
+    case 'PIN_DONE':        return { ...state, savingPin: false, isSaved: action.isSaved }
+    default:                return state
+  }
+}
+
+// ── Component ──────────────────────────────────────────────────────────────────
+
 export default function EncodingPage() {
   const { subChunkId } = useParams<{ subChunkId: string }>()
   const navigate = useNavigate()
   const { user, updateXp } = useAuth()
 
-  const [encoding, setEncoding] = useState<SubChunkEncoding | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [state, dispatch] = useReducer(encodingReducer, initialState)
+  const {
+    encoding, loading, practiceView, showTaskOverlay, code, output, testResults,
+    running, mentorFeedback, mentorLoading, mentorErrorType, practiceSolved,
+    answers, retrievalResult, submittingRetrieval, feynmanText, feynmanResult,
+    submittingFeynman, showHint, storyOpen, isSaved, savingPin,
+  } = state
 
-  const [practiceView, setPracticeView] = useState<'brief' | 'code'>('brief')
-  const [showTaskOverlay, setShowTaskOverlay] = useState(false)
-  const [code, setCode] = useState('')
-  const [output, setOutput] = useState<OutputLine[]>([{ text: '// Cast your spell to run the code.', type: 'system' }])
-  const [testResults, setTestResults] = useState<Map<string, boolean>>(new Map())
-  const [running, setRunning] = useState(false)
-  const [mentorFeedback, setMentorFeedback] = useState<string | null>(null)
-  const [mentorLoading, setMentorLoading] = useState(false)
-  const [mentorErrorType, setMentorErrorType] = useState<string | null>(null)
-  const [practiceSolved, setPracticeSolved] = useState(false)
-
-  const [answers, setAnswers] = useState<Record<string, string>>({})
-  const [retrievalResult, setRetrievalResult] = useState<RetrievalResultDto | null>(null)
-  const [submittingRetrieval, setSubmittingRetrieval] = useState(false)
-
-  const [feynmanText, setFeynmanText] = useState('')
-  const [feynmanResult, setFeynmanResult] = useState<FeynmanResultDto | null>(null)
-  const [submittingFeynman, setSubmittingFeynman] = useState(false)
-
-  const [showHint, setShowHint] = useState(false)
-
-  const [storyOpen, setStoryOpen] = useState(false)
-
-  const [isSaved, setIsSaved] = useState(false)
-  const [savingPin, setSavingPin] = useState(false)
-
+  // Notification UI stays as useState — independent of the phase state machine
   const [toast, setToast] = useState<string | null>(null)
   const [levelUpInfo, setLevelUpInfo] = useState<{ level: number; rank: string } | null>(null)
   const [newBadges, setNewBadges] = useState<Badge[]>([])
+
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
   const reactEditorRef = useRef<ReactEditorHandle>(null)
   const sqlEditorRef = useRef<SqlEditorHandle>(null)
 
+  // Adapter wrappers so JSX that calls these directly doesn't need to change
+  const setCode = (c: string) => dispatch({ type: 'CODE_CHANGED', code: c })
+  const setPracticeView = (view: 'brief' | 'code') => dispatch({ type: 'PRACTICE_VIEW', view })
+  const setShowTaskOverlay = (open: boolean) => dispatch({ type: 'TASK_OVERLAY', open })
+  const setStoryOpen = (open: boolean) => dispatch({ type: 'STORY_OPEN', open })
+  const setFeynmanText = (text: string) => dispatch({ type: 'FEYNMAN_TEXT', text })
+
   useEffect(() => {
     if (!subChunkId) return
-    encodingApi.start(subChunkId)
-      .then(async enc => {
-        // If the sub-chunk has no hook content, skip straight to EXPLANATION
+    const load = async () => {
+      try {
+        let enc = await encodingApi.start(subChunkId)
         if (enc.phase === 'HOOK' && !enc.hookHtml?.trim()) {
           enc = await encodingApi.advance(subChunkId)
         }
-        setEncoding(enc); if (enc.starterCode) setCode(enc.starterCode)
-      })
-      .catch(() => navigate('/'))
-      .finally(() => setLoading(false))
-    curiosityApi.getAll()
-      .then(items => setIsSaved(items.some(i => i.subChunkId === subChunkId)))
-      .catch(() => {})
+        const savedItems = await curiosityApi.getAll().catch(() => [])
+        dispatch({
+          type: 'LOADED',
+          encoding: enc,
+          code: enc.starterCode ?? '',
+          isSaved: savedItems.some(i => i.subChunkId === subChunkId),
+        })
+      } catch {
+        navigate('/')
+      }
+    }
+    load()
   }, [subChunkId, navigate])
 
   const showToast = useCallback((msg: string) => {
@@ -94,33 +220,47 @@ export default function EncodingPage() {
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
 
+  function handleXpEarned(xpEarned: number, earnedBadges?: Badge[]) {
+    if (xpEarned <= 0) return
+    const prevRank = calculateRank(user?.totalXp ?? 0)
+    const newRank = calculateRank((user?.totalXp ?? 0) + xpEarned)
+    updateXp(xpEarned, newRank)
+    showToast(`✦ +${xpEarned} XP`)
+    if (newRank !== prevRank) {
+      const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
+      setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
+    }
+    if (earnedBadges?.length) setNewBadges(earnedBadges)
+  }
+
   async function handleTogglePin() {
     if (!subChunkId || savingPin) return
-    setSavingPin(true)
+    dispatch({ type: 'PIN_START' })
     try {
       if (isSaved) {
-        await curiosityApi.remove(subChunkId); setIsSaved(false); showToast('Removed from Curiosity Queue')
+        await curiosityApi.remove(subChunkId)
+        dispatch({ type: 'PIN_DONE', isSaved: false })
+        showToast('Removed from Curiosity Queue')
       } else {
-        await curiosityApi.save(subChunkId); setIsSaved(true); showToast('📌 Saved to Curiosity Queue')
+        await curiosityApi.save(subChunkId)
+        dispatch({ type: 'PIN_DONE', isSaved: true })
+        showToast('📌 Saved to Curiosity Queue')
       }
-    } catch { showToast('Could not update queue') } finally { setSavingPin(false) }
+    } catch {
+      showToast('Could not update queue')
+      dispatch({ type: 'PIN_DONE', isSaved })
+    }
   }
 
   async function handleAdvance() {
     if (!subChunkId) return
     const enc = await encodingApi.advance(subChunkId)
-    setEncoding(enc)
-    setCode(enc.starterCode ?? '')
-    setAnswers({}); setRetrievalResult(null); setFeynmanResult(null); setFeynmanText('')
-    setPracticeSolved(false); setPracticeView('brief'); setShowTaskOverlay(false)
-    setOutput([{ text: '// Cast your spell to run the code.', type: 'system' }])
-    setTestResults(new Map()); setMentorFeedback(null); setShowHint(false)
+    dispatch({ type: 'PHASE_ADVANCED', encoding: enc })
   }
 
   async function handleRun() {
     if (running) return
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Running...', type: 'system' }])
+    dispatch({ type: 'RUN_START', message: '// Running...' })
     try {
       const result: CodeRunResponse = await codeApi.run(code)
       const lines: OutputLine[] = []
@@ -129,61 +269,48 @@ export default function EncodingPage() {
       else if (result.error)
         result.error.split('\n').forEach(l => lines.push({ text: l, type: 'error' }))
       else lines.push({ text: '// No output produced.', type: 'system' })
-      setOutput(lines)
-    } catch { setOutput([{ text: 'Error connecting to server.', type: 'error' }]) }
-    finally { setRunning(false) }
+      dispatch({ type: 'RUN_DONE', output: lines })
+    } catch {
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error connecting to server.', type: 'error' }] })
+    }
   }
 
   async function handleSubmitPractice() {
     if (!subChunkId || running) return
     const written = encoding?.practiceType === 'NONE'
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: written ? '// Checking your written response...' : '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
+    dispatch({ type: 'SUBMIT_START', message: written ? '// Checking your written response...' : '// Running all test cases...' })
     try {
       const result: PracticeResult = await encodingApi.submitPractice(subChunkId, code)
       if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
-        setOutput([{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }])
-        setMentorErrorType(result.errorType)
-        if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 300) }
+        dispatch({ type: 'COMPILE_ERROR', output: [{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }], errorType: result.errorType })
+        if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 300) }
         return
       }
       const newResults = new Map<string, boolean>()
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        if (written) {
-          lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.actualOutput}`, type: t.passed ? 'success' : 'error' })
-          return
-        }
+        if (written) { lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.actualOutput}`, type: t.passed ? 'success' : 'error' }); return }
         lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
       })
-      setTestResults(newResults)
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
         lines.push({ text: '✓ All test cases passed!', type: 'success' })
-        setPracticeSolved(true); setShowTaskOverlay(false)
-        if (result.xpEarned > 0) {
-          const prevRank = calculateRank(user?.totalXp ?? 0)
-          const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
-          updateXp(result.xpEarned, newRank); showToast(`✦ +${result.xpEarned} XP`)
-          if (newRank !== prevRank) {
-            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
-            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
-          }
-          if (result.newBadges?.length) setNewBadges(result.newBadges)
-        }
+        dispatch({ type: 'PRACTICE_SOLVED' })
+        handleXpEarned(result.xpEarned, result.newBadges)
       } else {
         lines.push({ text: '✗ Some test cases failed.', type: 'error' })
-        if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 400) }
+        dispatch({ type: 'RUN_END' })
+        if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 400) }
       }
-      setOutput(lines)
-    } catch { setOutput([{ text: written ? 'Error submitting response.' : 'Error submitting code.', type: 'error' }]) }
-    finally { setRunning(false) }
+    } catch {
+      dispatch({ type: 'RUN_DONE', output: [{ text: written ? 'Error submitting response.' : 'Error submitting code.', type: 'error' }] })
+    }
   }
 
   async function handleSubmitTailwind() {
     if (!subChunkId || running) return
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Checking your Tailwind classes…', type: 'system' }]); setTestResults(new Map())
+    dispatch({ type: 'SUBMIT_START', message: '// Checking your Tailwind classes…' })
     try {
       const result: PracticeResult = await tailwindApi.submit(subChunkId, code)
       const newResults = new Map<string, boolean>()
@@ -192,40 +319,25 @@ export default function EncodingPage() {
         newResults.set(t.label, t.passed)
         lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
-      setTestResults(newResults)
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
         lines.push({ text: '✓ All checks passed!', type: 'success' })
-        setPracticeSolved(true); setShowTaskOverlay(false)
-        if (result.xpEarned > 0) {
-          const prevRank = calculateRank(user?.totalXp ?? 0)
-          const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
-          updateXp(result.xpEarned, newRank); showToast(`✦ +${result.xpEarned} XP`)
-          if (newRank !== prevRank) {
-            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
-            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
-          }
-          if (result.newBadges?.length) setNewBadges(result.newBadges)
-        }
-      } else { lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' }) }
-      setOutput(lines)
-    } catch { setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }]) }
-    finally { setRunning(false) }
+        dispatch({ type: 'PRACTICE_SOLVED' })
+        handleXpEarned(result.xpEarned, result.newBadges)
+      } else {
+        lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' })
+        dispatch({ type: 'RUN_END' })
+      }
+    } catch {
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
+    }
   }
-
-  // ── React (JSX) practice ───────────────────────────────────────────────────
-  // Tests run in an iframe sandbox via ReactEditor.runTests(); per-test pass/fail
-  // is then forwarded to the backend along with the source code. See
-  // ReactPracticeService for the trust domain rationale.
 
   async function handleSubmitReact(solo: boolean) {
     if (!subChunkId || !encoding || running) return
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Rendering and running tests in the sandbox…', type: 'system' }])
-    setTestResults(new Map())
+    dispatch({ type: 'SUBMIT_START', message: '// Rendering and running tests in the sandbox…' })
     try {
-      const specs: ReactTestSpec[] = Array.isArray(encoding.testCaseLabels)
-        ? (encoding.testCaseLabels as ReactTestSpec[])
-        : []
+      const specs: ReactTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as ReactTestSpec[]) : []
       const clientResults = (await reactEditorRef.current?.runTests(specs)) ?? []
       const submitFn = solo ? reactApi.submitSoloPractice : reactApi.submit
       const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
@@ -233,46 +345,27 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({
-          text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`,
-          type: t.passed ? 'success' : 'error',
-        })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
-      setTestResults(newResults)
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
         lines.push({ text: '✓ All tests passed!', type: 'success' })
-        setPracticeSolved(true); setShowTaskOverlay(false)
-        if (result.xpEarned > 0) {
-          const prevRank = calculateRank(user?.totalXp ?? 0)
-          const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
-          updateXp(result.xpEarned, newRank); showToast(`✦ +${result.xpEarned} XP`)
-          if (newRank !== prevRank) {
-            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
-            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
-          }
-          if (result.newBadges?.length) setNewBadges(result.newBadges)
-        }
+        dispatch({ type: 'PRACTICE_SOLVED' })
+        handleXpEarned(result.xpEarned, result.newBadges)
       } else {
         lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
+        dispatch({ type: 'RUN_END' })
       }
-      setOutput(lines)
     } catch {
-      setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }])
-    } finally {
-      setRunning(false)
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
-  // ── SQL submission — same client-trusted pattern as React (see SqlPracticeService).
   async function handleSubmitSql(solo: boolean) {
     if (!subChunkId || !encoding || running) return
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Running query and tests in the SQLite sandbox…', type: 'system' }])
-    setTestResults(new Map())
+    dispatch({ type: 'SUBMIT_START', message: '// Running query and tests in the SQLite sandbox…' })
     try {
-      const specs: SqlTestSpec[] = Array.isArray(encoding.testCaseLabels)
-        ? (encoding.testCaseLabels as SqlTestSpec[])
-        : []
+      const specs: SqlTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as SqlTestSpec[]) : []
       const clientResults = (await sqlEditorRef.current?.runTests(specs)) ?? []
       const submitFn = solo ? sqlApi.submitSoloPractice : sqlApi.submit
       const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
@@ -280,47 +373,31 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({
-          text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`,
-          type: t.passed ? 'success' : 'error',
-        })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
-      setTestResults(newResults)
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
         lines.push({ text: '✓ All tests passed!', type: 'success' })
-        setPracticeSolved(true); setShowTaskOverlay(false)
-        if (result.xpEarned > 0) {
-          const prevRank = calculateRank(user?.totalXp ?? 0)
-          const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
-          updateXp(result.xpEarned, newRank); showToast(`✦ +${result.xpEarned} XP`)
-          if (newRank !== prevRank) {
-            const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
-            setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
-          }
-          if (result.newBadges?.length) setNewBadges(result.newBadges)
-        }
+        dispatch({ type: 'PRACTICE_SOLVED' })
+        handleXpEarned(result.xpEarned, result.newBadges)
       } else {
         lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
+        dispatch({ type: 'RUN_END' })
       }
-      setOutput(lines)
     } catch {
-      setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }])
-    } finally {
-      setRunning(false)
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
   async function handleSubmitSoloPractice() {
     if (!subChunkId || running) return
     const written = encoding?.practiceType === 'NONE'
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: written ? '// Checking your independent response...' : '// Running all test cases...', type: 'system' }]); setTestResults(new Map())
+    dispatch({ type: 'SUBMIT_START', message: written ? '// Checking your independent response...' : '// Running all test cases...' })
     try {
       const result: PracticeResult = await encodingApi.submitSoloPractice(subChunkId, code)
       if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
-        setOutput([{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }])
-        setMentorErrorType(result.errorType)
-        if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 300) }
+        dispatch({ type: 'COMPILE_ERROR', output: [{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }], errorType: result.errorType })
+        if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 300) }
         return
       }
       const newResults = new Map<string, boolean>()
@@ -329,23 +406,23 @@ export default function EncodingPage() {
         newResults.set(t.label, t.passed)
         lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
       })
-      setTestResults(newResults)
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
         lines.push({ text: '✓ All test cases passed! You built it from scratch!', type: 'success' })
-        setPracticeSolved(true); setShowTaskOverlay(false)
+        dispatch({ type: 'PRACTICE_SOLVED' })
       } else {
         lines.push({ text: '✗ Some test cases failed — keep going!', type: 'error' })
-        if (result.mentorFeedback) { setMentorLoading(true); setTimeout(() => { setMentorFeedback(result.mentorFeedback); setMentorLoading(false) }, 400) }
+        dispatch({ type: 'RUN_END' })
+        if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 400) }
       }
-      setOutput(lines)
-    } catch { setOutput([{ text: 'Error submitting code.', type: 'error' }]) }
-    finally { setRunning(false) }
+    } catch {
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting code.', type: 'error' }] })
+    }
   }
 
   async function handleSubmitTailwindSolo() {
     if (!subChunkId || running) return
-    setRunning(true); setMentorFeedback(null)
-    setOutput([{ text: '// Checking your Tailwind classes…', type: 'system' }]); setTestResults(new Map())
+    dispatch({ type: 'SUBMIT_START', message: '// Checking your Tailwind classes…' })
     try {
       const result: PracticeResult = await tailwindApi.submitSoloPractice(subChunkId, code)
       const newResults = new Map<string, boolean>()
@@ -354,23 +431,26 @@ export default function EncodingPage() {
         newResults.set(t.label, t.passed)
         lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
-      setTestResults(newResults)
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
         lines.push({ text: '✓ All checks passed! Well done!', type: 'success' })
-        setPracticeSolved(true); setShowTaskOverlay(false)
-      } else { lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' }) }
-      setOutput(lines)
-    } catch { setOutput([{ text: 'Error submitting — check your connection.', type: 'error' }]) }
-    finally { setRunning(false) }
+        dispatch({ type: 'PRACTICE_SOLVED' })
+      } else {
+        lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' })
+        dispatch({ type: 'RUN_END' })
+      }
+    } catch {
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
+    }
   }
 
   async function handleSubmitRetrieval() {
     if (!subChunkId) return
-    setSubmittingRetrieval(true)
+    dispatch({ type: 'RETRIEVAL_START' })
     try {
       const answerList: AnswerEntry[] = Object.entries(answers).map(([questionId, answer]) => ({ questionId, answer }))
       const result = await encodingApi.submitRetrieval(subChunkId, answerList)
-      setRetrievalResult(result)
+      dispatch({ type: 'RETRIEVAL_DONE', result })
       if (result.xpEarned > 0) {
         const prevRank = calculateRank(user?.totalXp ?? 0)
         const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
@@ -382,19 +462,23 @@ export default function EncodingPage() {
         }
       }
       if (result.newBadges?.length) setNewBadges(result.newBadges)
-    } catch { showToast('Error submitting answers') }
-    finally { setSubmittingRetrieval(false) }
+    } catch {
+      showToast('Error submitting answers')
+      dispatch({ type: 'RETRIEVAL_DONE', result: null })
+    }
   }
 
   async function handleSubmitFeynman() {
     if (!subChunkId || !feynmanText.trim()) return
-    setSubmittingFeynman(true)
+    dispatch({ type: 'FEYNMAN_START' })
     try {
       const result = await encodingApi.submitFeynman(subChunkId, feynmanText)
-      setFeynmanResult(result)
+      dispatch({ type: 'FEYNMAN_DONE', result })
       if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`✦ +${result.xpEarned} XP — Feynman complete`) }
-    } catch { showToast('Error submitting explanation') }
-    finally { setSubmittingFeynman(false) }
+    } catch {
+      showToast('Error submitting explanation')
+      dispatch({ type: 'FEYNMAN_DONE', result: null })
+    }
   }
 
   if (loading) {
@@ -489,7 +573,7 @@ export default function EncodingPage() {
       {/* EXPLANATION */}
       {phase === 'EXPLANATION' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          {encoding.storyBeats && <StoryPanel beats={encoding.storyBeats} fullPage />}
+          {encoding.storyBeats && <StoryPanel beats={encoding.storyBeats} fullPage subChunkId={encoding.subChunkId} topicId={encoding.topicId} rabbitHoleTerms={encoding.rabbitHoleTerms} />}
           {encoding.explanationHtml && (
             <div
               className={cn('text-[15px] leading-[1.8] text-text my-6',
@@ -691,7 +775,7 @@ export default function EncodingPage() {
           <div className="mt-5">
             <button
               className="btn btn-ghost text-[12px] px-3 py-1.5 flex items-center gap-1.5"
-              onClick={() => setShowHint(h => !h)}
+              onClick={() => dispatch({ type: 'HINT_TOGGLE' })}
             >
               {showHint ? <><EyeOff size={13} strokeWidth={1.75} /> Hide hint</> : <><Eye size={13} strokeWidth={1.75} /> Peek at Guided Practice</>}
             </button>
@@ -733,7 +817,7 @@ export default function EncodingPage() {
 
             {/* Hint toggle */}
             <div className="border-t border-border pt-2.5 mt-1">
-              <button className="btn btn-ghost text-[11px] px-2.5 py-1 flex items-center gap-1.5" onClick={() => setShowHint(h => !h)}>
+              <button className="btn btn-ghost text-[11px] px-2.5 py-1 flex items-center gap-1.5" onClick={() => dispatch({ type: 'HINT_TOGGLE' })}>
                 {showHint ? <><EyeOff size={13} strokeWidth={1.75} /> Hide hint</> : <><Eye size={13} strokeWidth={1.75} /> Peek at Guided Practice</>}
               </button>
               {showHint && (
@@ -869,10 +953,16 @@ export default function EncodingPage() {
           <div className="text-[20px] font-bold text-gold mb-1.5">✦ Retrieval Check</div>
           <p className="text-muted text-[13px] mb-5">Answer these questions to test your understanding.</p>
 
-          {!retrievalResult ? (
+          {!retrievalResult && !encoding.retrievalQuestions?.length ? (
+            // Already submitted on a prior visit — let the user advance
+            <div className="p-4 bg-card border border-border rounded-[10px]">
+              <p className="text-muted text-[13px] mb-3">You have already completed this retrieval check.</p>
+              <button className="btn btn-primary" onClick={handleAdvance}>Continue →</button>
+            </div>
+          ) : !retrievalResult ? (
             <>
               {encoding.retrievalQuestions?.map((q, i) => (
-                <QuestionCard key={q.id} question={q} index={i} answer={answers[q.id] ?? ''} onChange={v => setAnswers(prev => ({ ...prev, [q.id]: v }))} />
+                <QuestionCard key={q.id} question={q} index={i} answer={answers[q.id] ?? ''} onChange={v => dispatch({ type: 'ANSWER_CHANGED', questionId: q.id, answer: v })} />
               ))}
               <button className="btn btn-primary mt-1" onClick={handleSubmitRetrieval} disabled={submittingRetrieval}>
                 {submittingRetrieval ? 'Submitting...' : 'Submit Answers'}
@@ -966,7 +1056,7 @@ export default function EncodingPage() {
               <button className="btn btn-ghost text-[13px] px-2.5 py-1" onClick={() => setStoryOpen(false)}>✕ Close</button>
             </div>
             <div className="overflow-y-auto flex-1 px-5 py-5">
-              <StoryPanel beats={encoding.storyBeats} fullPage />
+              <StoryPanel beats={encoding.storyBeats} fullPage subChunkId={encoding.subChunkId} topicId={encoding.topicId} rabbitHoleTerms={encoding.rabbitHoleTerms} />
             </div>
           </div>
         </div>

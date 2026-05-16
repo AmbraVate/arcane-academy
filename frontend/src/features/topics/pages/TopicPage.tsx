@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { dashboardApi } from '@/shared/api/services'
+import { useDashboard } from '@/hooks/queries'
 import { useAuth } from '@/shared/hooks/useAuth'
-import type { DashboardDto, ChunkHealthDto } from '@/shared/types'
+import type { ChunkHealthDto } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { TopicIcon } from '@/components/icons/TopicIcon'
@@ -146,20 +145,11 @@ export default function TopicPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { theme } = useTheme()
-  const [dashboard, setDashboard] = useState<DashboardDto | null>(null)
-  const [loading, setLoading] = useState(true)
+  const { data: dashboard, isLoading } = useDashboard(topicId ?? '')
 
   const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', tagline: '', accent: 'var(--teal)' }
 
-  useEffect(() => {
-    if (!topicId) return
-    dashboardApi.get(topicId)
-      .then(d => { setDashboard(d) })
-      .catch(console.error)
-      .finally(() => setLoading(false))
-  }, [topicId, navigate])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-muted">
         <div className="text-[48px] mb-3">{meta.glyph}</div>

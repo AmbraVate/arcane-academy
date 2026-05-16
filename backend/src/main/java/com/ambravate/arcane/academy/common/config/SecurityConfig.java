@@ -36,6 +36,9 @@ public class SecurityConfig {
     @Value("${cors.allowed-origins}")
     private String allowedOrigins;
 
+    @Value("${https.required:false}")
+    private boolean httpsRequired;
+
     /**
      * Constructed here (not @Component) so the servlet container does NOT
      * auto-register the filter as a global bean. We add it to the security
@@ -61,7 +64,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, RateLimitFilter rateLimitFilter) throws Exception {
-        return http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -76,8 +79,13 @@ public class SecurityConfig {
                         .successHandler(oAuth2LoginSuccessHandler)
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(rateLimitFilter, JwtAuthFilter.class)
-                .build();
+                .addFilterBefore(rateLimitFilter, JwtAuthFilter.class);
+
+        if (httpsRequired) {
+            http.requiresChannel(channel -> channel.anyRequest().requiresSecure());
+        }
+
+        return http.build();
     }
 
     @Bean

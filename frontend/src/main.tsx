@@ -2,10 +2,20 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import * as Sentry from '@sentry/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App'
-import { AuthProvider } from './hooks/useAuth'
+import { AuthProvider } from './shared/hooks/useAuth'
 import { ThemeProvider } from './hooks/useTheme'
 import './index.css'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,       // cached data stays fresh for 1 min
+      retry: 1,
+    },
+  },
+})
 
 // Sentry — gated on VITE_SENTRY_DSN. When empty (the dev default), init() is
 // skipped entirely so there is zero network noise and no runtime overhead.
@@ -28,12 +38,14 @@ if (SENTRY_DSN) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ThemeProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>
 )

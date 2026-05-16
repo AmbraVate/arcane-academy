@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { badgeApi, profileApi, dashboardApi, rabbitHoleTermApi } from '@/shared/api/services'
-import type { Badge, DashboardDto, RabbitHoleTerm } from '@/shared/types'
+import { badgeApi, profileApi, rabbitHoleTermApi } from '@/shared/api/services'
+import { useDashboard } from '@/hooks/queries'
+import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 
@@ -24,8 +25,7 @@ export default function ProfilePage() {
   const [badgesLoading, setBadgesLoading] = useState(false)
   const [badgeCategoryFilter, setBadgeCategoryFilter] = useState<string>('ALL')
 
-  const [javaDash, setJavaDash] = useState<DashboardDto | null>(null)
-  const [dashLoading, setDashLoading] = useState(false)
+  const { data: javaDash, isLoading: dashLoading } = useDashboard('java')
 
   const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleTerm[]>([])
   const [rhLoading, setRhLoading] = useState(false)
@@ -44,10 +44,6 @@ export default function ProfilePage() {
     if (tab === 'badges' && badges.length === 0 && !badgesLoading) {
       setBadgesLoading(true)
       badgeApi.getAll().then(setBadges).finally(() => setBadgesLoading(false))
-    }
-    if (tab === 'topics' && !javaDash && !dashLoading) {
-      setDashLoading(true)
-      dashboardApi.get('java').then(setJavaDash).catch(() => {}).finally(() => setDashLoading(false))
     }
     if (tab === 'rabbit-holes' && rabbitHoles.length === 0 && !rhLoading) {
       setRhLoading(true)

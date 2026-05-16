@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
+import { REFRESH_TOKEN_KEY } from '@/shared/api/client'
 
 export default function OAuthCallbackPage() {
   const [params] = useSearchParams()
@@ -9,6 +10,7 @@ export default function OAuthCallbackPage() {
 
   useEffect(() => {
     const token = params.get('token')
+    const refreshToken = params.get('refreshToken')
     const userId = params.get('userId')
     const username = params.get('username')
     const totalXp = parseInt(params.get('totalXp') ?? '0', 10)
@@ -17,6 +19,7 @@ export default function OAuthCallbackPage() {
     const role = (params.get('role') as 'USER' | 'ADMIN') ?? 'USER'
 
     if (token && userId && username) {
+      if (refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
       loginWithToken({ token, userId, username, totalXp, rank, streakDays, role })
       navigate('/topics', { replace: true })
     } else {

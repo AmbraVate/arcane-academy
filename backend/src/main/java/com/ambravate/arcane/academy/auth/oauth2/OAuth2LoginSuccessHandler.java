@@ -46,6 +46,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         String redirectUrl = UriComponentsBuilder.fromUriString(frontendRedirectUri)
                 .queryParam("token", token)
+                .queryParam("refreshToken", user.getRefreshToken())
                 .queryParam("userId", user.getId())
                 .queryParam("username", URLEncoder.encode(user.getUsername(), StandardCharsets.UTF_8))
                 .queryParam("totalXp", user.getTotalXp())

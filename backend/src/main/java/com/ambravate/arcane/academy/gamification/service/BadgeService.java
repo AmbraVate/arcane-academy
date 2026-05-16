@@ -225,23 +225,33 @@ public class BadgeService implements GamificationFacade {
   }
 
   private Set<String> getCompletedChunkIds(List<UserChunkProgress> allProgress) {
-    // Group progress by chunk via sub-chunk → chunk mapping
-    Map<String, String> subChunkToChunk = new HashMap<>();
-    for (SubChunk sc : subChunkRepository.findAll()) {
-      subChunkToChunk.put(sc.getId(), sc.getChunkId());
-    }
+    if (allProgress.isEmpty()) return Collections.emptySet();
+
+    // Load only the sub-chunks this user has touched — avoids a full-table scan
+    List<String> subChunkIds = allProgress.stream()
+        .map(UserChunkProgress::getSubChunkId)
+        .distinct()
+        .collect(Collectors.toList());
+    Map<String, String> subChunkToChunk = subChunkRepository.findAllById(subChunkIds).stream()
+        .collect(Collectors.toMap(SubChunk::getId, SubChunk::getChunkId));
 
     Map<String, List<UserChunkProgress>> byChunk = allProgress.stream()
         .collect(Collectors.groupingBy(p -> subChunkToChunk.getOrDefault(p.getSubChunkId(), "?")));
 
+    // Load all sub-chunks for the relevant chunks in a single query
+    List<String> chunkIds = new ArrayList<>(byChunk.keySet());
+    chunkIds.remove("?");
+    Map<String, Long> subChunkCountByChunk = subChunkRepository.findByChunkIdIn(chunkIds).stream()
+        .collect(Collectors.groupingBy(SubChunk::getChunkId, Collectors.counting()));
+
     Set<String> completed = new HashSet<>();
     for (var entry : byChunk.entrySet()) {
       String chunkId = entry.getKey();
-      List<SubChunk> allSubs = subChunkRepository.findByChunkIdOrderBySortOrderAsc(chunkId);
-      if (!allSubs.isEmpty() && entry.getValue().stream()
+      long totalSubs = subChunkCountByChunk.getOrDefault(chunkId, 0L);
+      if (totalSubs > 0 && entry.getValue().stream()
           .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE
               || p.getStatus() == SubChunkStatus.SKIPPED)
-          .count() >= allSubs.size()) {
+          .count() >= totalSubs) {
         completed.add(chunkId);
       }
     }

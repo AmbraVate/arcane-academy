@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
 import type { User } from '@/shared/types'
 import { authApi } from '@/shared/api/services'
+import { REFRESH_TOKEN_KEY } from '@/shared/api/client'
 
 interface AuthContextValue {
   user: User | null
@@ -49,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(() => {
     localStorage.removeItem('arcane_token')
     localStorage.removeItem('arcane_user')
+    localStorage.removeItem(REFRESH_TOKEN_KEY)
     setUser(null)
   }, [])
 

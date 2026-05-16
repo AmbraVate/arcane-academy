@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { dashboardApi } from '@/shared/api/services'
+import { useTopicsDashboard } from '@/hooks/queries'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { TopicIcon } from '@/components/icons/TopicIcon'
@@ -72,24 +71,19 @@ function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; s
 
 export default function TopicsPage() {
   const navigate = useNavigate()
-  const [topicData, setTopicData] = useState<Record<string, TopicData>>({})
+  const rawTopicData = useTopicsDashboard(ACTIVE_TOPICS)
 
-  useEffect(() => {
-    ACTIVE_TOPICS.forEach(id => {
-      dashboardApi.get(id)
-        .then(d => setTopicData(prev => ({
-          ...prev,
-          [id]: {
-            progress: Math.round(d.overallProgress * 100),
-            diagnosticCompleted: d.diagnosticCompleted,
-            diagnosticCompletedAt: d.diagnosticCompletedAt ?? null,
-            totalChunks: d.chunkHealth.length,
-            totalLessons: d.chunkHealth.reduce((sum, ch) => sum + ch.totalSubChunks, 0),
-          }
-        })))
-        .catch(() => {})
-    })
-  }, [])
+  const topicData: Record<string, TopicData> = Object.fromEntries(
+    Object.entries(rawTopicData)
+      .filter(([, d]) => d != null)
+      .map(([id, d]) => [id, {
+        progress: Math.round(d!.overallProgress * 100),
+        diagnosticCompleted: d!.diagnosticCompleted,
+        diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
+        totalChunks: d!.chunkHealth.length,
+        totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalSubChunks, 0),
+      }])
+  )
 
   function handleTopicClick(topic: Topic) {
     if (topic.status !== 'active') return

@@ -1,7 +1,0 @@
--- Baseline migration — schema is managed by Hibernate (ddl-auto: update) in dev.
--- This file exists so Flyway has a known baseline for staging/prod deployments.
--- In prod, run this once on a fresh database, then subsequent versions apply deltas.
---
--- The LearnerPath column is VARCHAR (EnumType.STRING), so adding new enum values
--- in Java requires no ALTER TABLE — the column already accepts any string value.
--- ADVANCED was added in the Java enum in May 2026.

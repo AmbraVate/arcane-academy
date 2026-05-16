@@ -15,6 +15,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -43,6 +45,7 @@ public class AuthService {
                 .withPasswordHash(passwordEncoder.encode(request.getPassword()))
                 .build();
 
+        user.setRefreshToken(UUID.randomUUID().toString());
         userRepository.save(user);
         log.info("[Auth] Registered new user | userId={} username={}", user.getId(), user.getUsername());
         String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
@@ -72,6 +75,8 @@ public class AuthService {
             throw new IllegalStateException("Account is blocked. Please contact support.");
         }
 
+        user.setRefreshToken(UUID.randomUUID().toString());
+        userRepository.save(user);
         eventPublisher.publishEvent(new UserEngagedEvent(user.getId()));
 
         log.info("[Auth] Login success | userId={} username={} streak={} totalXp={}",
@@ -94,9 +99,11 @@ public class AuthService {
                 log.warn("[Auth] OAuth2 rejected — account blocked | userId={}", user.getId());
                 throw new IllegalStateException("Account is blocked. Please contact support.");
             }
+            user.setRefreshToken(UUID.randomUUID().toString());
+            userRepository.save(user);
             eventPublisher.publishEvent(new UserEngagedEvent(user.getId()));
             log.info("[Auth] OAuth2 returning user | userId={} provider={}", user.getId(), provider);
-            return userRepository.findById(user.getId()).orElse(user);
+            return user;
         }
 
         // Try to find by email (account linking)
@@ -109,10 +116,11 @@ public class AuthService {
             }
             user.setAuthProvider(provider);
             user.setProviderId(providerId);
+            user.setRefreshToken(UUID.randomUUID().toString());
             userRepository.save(user);
             eventPublisher.publishEvent(new UserEngagedEvent(user.getId()));
             log.info("[Auth] OAuth2 linked existing account | userId={} provider={}", user.getId(), provider);
-            return userRepository.findById(user.getId()).orElse(user);
+            return user;
         }
 
         // Create new user
@@ -122,6 +130,7 @@ public class AuthService {
                 .withEmail(email)
                 .withAuthProvider(provider)
                 .withProviderId(providerId)
+                .withRefreshToken(UUID.randomUUID().toString())
                 .build();
         userRepository.save(user);
         log.info("[Auth] OAuth2 new user created | userId={} username={} provider={}", user.getId(), username, provider);
@@ -141,9 +150,21 @@ public class AuthService {
         return candidate;
     }
 
+    public AuthResponse refreshToken(String refreshToken) {
+        User user = userRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new BadCredentialsException("Invalid refresh token"));
+        if (user.isBlocked()) throw new IllegalStateException("Account is blocked");
+        // Rotate the refresh token on every use
+        user.setRefreshToken(UUID.randomUUID().toString());
+        userRepository.save(user);
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
+        return buildResponse(user, token);
+    }
+
     private AuthResponse buildResponse(User user, String token) {
         return AuthResponse.anAuthResponse()
                 .withToken(token)
+                .withRefreshToken(user.getRefreshToken())
                 .withUserId(user.getId())
                 .withUsername(user.getUsername())
                 .withTotalXp(user.getTotalXp())
