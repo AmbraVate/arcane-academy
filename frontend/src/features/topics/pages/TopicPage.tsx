@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { TopicIcon } from '@/components/icons/TopicIcon'
 import { TierIcon } from '@/components/icons/TierIcon'
 import { RefreshCcw, Check, MapPin, Lock, BookOpen, Sparkles } from 'lucide-react'
+import { useTheme } from '@/hooks/useTheme'
 
 type TopicMeta = {
   name: string
@@ -95,7 +96,7 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto
   return (
     <div
       className={cn(
-        'bg-card border rounded-[12px] p-[18px] px-4 flex flex-col gap-2 cursor-pointer transition-[border-color,transform] duration-200',
+        'chunk-card bg-card border rounded-[12px] p-[18px] px-4 flex flex-col gap-2 cursor-pointer transition-[border-color,transform] duration-200',
         locked ? 'opacity-50 cursor-default saturate-[0.4] border-border' : 'border-border hover:-translate-y-0.5',
       )}
       style={!locked ? { ['--hover-border' as string]: accent } : undefined}
@@ -124,7 +125,14 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto
       {done && (
         <div className="flex items-center gap-2 mt-0.5">
           <div className="flex-1 h-[3px] bg-border rounded-full overflow-hidden">
-            <div className={cn('h-full rounded-full', MEM_COLORS[ch.healthColor ?? 'GREEN'] ?? 'bg-teal')} style={{ width: `${pct}%` }} />
+            <div
+              className={cn(
+                'h-full rounded-full strength-bar-fill',
+                ch.healthColor === 'GREEN'  ? 'strength-green bg-teal'   :
+                ch.healthColor === 'YELLOW' ? 'strength-yellow bg-orange' : 'strength-red bg-red',
+              )}
+              style={{ width: `${pct}%` }}
+            />
           </div>
           <span className="text-[10px] text-muted flex-shrink-0">{pct}% mem</span>
         </div>
@@ -137,6 +145,7 @@ export default function TopicPage() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { theme } = useTheme()
   const [dashboard, setDashboard] = useState<DashboardDto | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -231,14 +240,72 @@ export default function TopicPage() {
           return acc
         }, {})
         const activeTiers = TIER_ORDER.filter(t => (byTier[t]?.length ?? 0) > 0)
+        const isBlizzard = theme === 'blizzard'
         return activeTiers.map(tier => {
           const chunks = byTier[tier]
           const tierComplete = chunks.every(ch => ch.status === 'COMPLETE')
           const tierStarted  = chunks.some(ch => ch.status !== 'LOCKED')
           const placedHere   = dashboard.currentPath === tier
+          const donePct      = Math.round((chunks.filter(ch => ch.status === 'COMPLETE').length / chunks.length) * 100)
+
+          if (isBlizzard) {
+            return (
+              <div key={tier} className="bz-tier mb-8">
+                <div className="bz-tier-header">
+                  <div className="bz-tier-glyph">
+                    <TierIcon tier={tier} size={22} />
+                  </div>
+                  <div className="bz-tier-meta">
+                    <div className="bz-tier-label">
+                      {TIER_LABELS[tier]}
+                      {placedHere && <span className="bz-badge-placed"> · Placed here</span>}
+                      {tierComplete && <span className="bz-badge-done"> · Complete</span>}
+                      {!tierStarted && !tierComplete && <span className="bz-badge-locked"> · Locked</span>}
+                    </div>
+                    <div className="bz-tier-desc">{TIER_DESC[tier]}</div>
+                  </div>
+                  <div className="bz-tier-prog">{donePct}%</div>
+                </div>
+                <div className="bz-chunk-grid">
+                  {chunks.map(ch => {
+                    const locked = ch.status === 'LOCKED'
+                    const done   = ch.status === 'COMPLETE'
+                    const warn   = done && ch.memoryStrength < 0.4
+                    const pct    = Math.round(ch.memoryStrength * 100)
+                    return (
+                      <div
+                        key={ch.chunkId}
+                        className={cn('bz-chunk-card', locked && 'bz-locked', done && !warn && 'bz-done', warn && 'bz-warn')}
+                        onClick={() => !locked && navigate(`/chunk/${ch.chunkId}`)}
+                      >
+                        <div className="bz-chunk-glyph">{locked ? '🔒' : ch.glyph}</div>
+                        <div className="bz-chunk-title">{ch.title}</div>
+                        <div className="bz-chunk-prog">{ch.completedSubChunks}/{ch.totalSubChunks} concepts</div>
+                        {!locked && (
+                          <>
+                            <div className="bz-strength-bar">
+                              <div
+                                className="bz-strength-fill"
+                                style={{
+                                  width: `${pct}%`,
+                                  background: pct > 70 ? 'var(--success)' : pct > 40 ? 'var(--warning)' : 'var(--danger)',
+                                }}
+                              />
+                            </div>
+                            <div className="bz-strength-lbl">Strength {pct}%</div>
+                          </>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          }
+
           return (
             <div key={tier} className="mb-8">
-              <div className="flex items-center gap-3 mb-3.5 flex-wrap">
+              <div className="tier-header flex items-center gap-3 mb-3.5 flex-wrap">
                 <TierIcon tier={tier} size={20} />
                 <div className="flex flex-col gap-0.5 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -270,7 +337,7 @@ export default function TopicPage() {
                   Retake Diagnostic
                 </button>
               </div>
-              <div className="grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+              <div className="chunk-grid grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
                 {chunks.map(ch => (
                   <ChunkCard
                     key={ch.chunkId}
