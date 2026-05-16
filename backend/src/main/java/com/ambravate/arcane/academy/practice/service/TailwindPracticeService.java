@@ -9,9 +9,10 @@ import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
-import com.ambravate.arcane.academy.gamification.service.BadgeService;
-import com.ambravate.arcane.academy.gamification.service.StreakService;
+import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.context.ApplicationEventPublisher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +49,8 @@ public class TailwindPracticeService {
   private final SubChunkRepository subChunkRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
-  private final BadgeService badgeService;
-  private final StreakService streakService;
+  private final GamificationFacade gamification;
+  private final ApplicationEventPublisher eventPublisher;
   private final ObjectMapper objectMapper;
 
   @Transactional
@@ -101,7 +102,7 @@ public class TailwindPracticeService {
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
       xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
-      newBadges = badgeService.evaluateAndAward(userId);
+      newBadges = gamification.evaluateAndAwardBadges(userId);
       log.info(
           "[Tailwind] All tests passed | user={} subChunk={} xp={}",
           userId,
@@ -139,7 +140,7 @@ public class TailwindPracticeService {
       return 0;
     }
 
-    streakService.updateStreak(userId);
+    eventPublisher.publishEvent(new UserEngagedEvent(userId));
     User user = userRepository.findById(userId).orElseThrow();
     user.setTotalXp(user.getTotalXp() + xp);
     user.setRank(EncodingService.calculateRank(user.getTotalXp()));

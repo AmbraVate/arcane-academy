@@ -6,7 +6,12 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "user_chunk_progress",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "sub_chunk_id"}))
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "sub_chunk_id"}),
+    indexes = {
+        @Index(name = "idx_ucp_user_status",   columnList = "user_id, status"),
+        @Index(name = "idx_ucp_next_review",   columnList = "next_review_at"),
+        @Index(name = "idx_ucp_user_subchunk", columnList = "user_id, sub_chunk_id"),
+    })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class UserChunkProgress {
 
@@ -54,6 +59,10 @@ public class UserChunkProgress {
     /** Set to true once solo practice has been submitted with a passing result. */
     @Builder.Default
     private boolean soloPracticePassed = false;
+
+    /** Set to true once the retrieval check has been submitted (regardless of score). */
+    @Builder.Default
+    private boolean retrievalCheckSubmitted = false;
 
     @Builder.Default
     private boolean feynmanCompleted = false;

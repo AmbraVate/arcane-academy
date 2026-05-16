@@ -40,6 +40,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     try {
       String token = header.substring(7);
       Claims claims = jwtService.validateAndParse(token);
+
+      Boolean blocked = claims.get("blocked", Boolean.class);
+      if (Boolean.TRUE.equals(blocked)) {
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Account blocked");
+        return;
+      }
+
       String userId = claims.getSubject();
       String username = claims.get("username", String.class);
       String role = claims.get("role", String.class);

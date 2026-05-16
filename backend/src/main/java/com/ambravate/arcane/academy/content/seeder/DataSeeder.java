@@ -1,6 +1,5 @@
 package com.ambravate.arcane.academy.content.seeder;
 
-import com.ambravate.arcane.academy.admin.service.AdminUserPromoter;
 import com.ambravate.arcane.academy.common.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.CuriosityQueueItemRepository;
 import com.ambravate.arcane.academy.common.repository.QuestionRepository;
@@ -30,7 +29,6 @@ public class DataSeeder {
     // ── Seeders ────────────────────────────────────────────────────────────
     private final JsonContentSeeder jsonContentSeeder;
     private final TestUserSeeder testUserSeeder;
-    private final AdminUserPromoter adminUserPromoter;
     private final TopicSeeder topicSeeder;
 
     @Bean
@@ -43,7 +41,6 @@ public class DataSeeder {
 
             topicSeeder.seed();
             testUserSeeder.seed();
-            adminUserPromoter.promote();
         };
     }
 }

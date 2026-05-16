@@ -42,7 +42,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         log.info("[OAuth2] Google login success | email={} name={}", email, name);
 
         User user = authService.processOAuth2Login(email, name, googleId, AuthProvider.GOOGLE);
-        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), user.isBlocked());
 
         String redirectUrl = UriComponentsBuilder.fromUriString(frontendRedirectUri)
                 .queryParam("token", token)

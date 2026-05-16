@@ -1,7 +1,7 @@
-package com.ambravate.arcane.academy.gamification.controller;
+package com.ambravate.arcane.academy.profile.controller;
 
-import com.ambravate.arcane.academy.gamification.dto.ChunkHealthDto;
-import com.ambravate.arcane.academy.gamification.dto.DashboardDto;
+import com.ambravate.arcane.academy.profile.dto.ChunkHealthDto;
+import com.ambravate.arcane.academy.profile.dto.DashboardDto;
 import com.ambravate.arcane.academy.common.domain.DashboardData;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.profile.service.DashboardService;

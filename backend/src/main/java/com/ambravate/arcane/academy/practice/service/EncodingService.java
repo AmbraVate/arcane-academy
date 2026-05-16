@@ -22,10 +22,10 @@ import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepositor
 import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.ai.service.AiMentorService;
-import com.ambravate.arcane.academy.gamification.service.BadgeService;
+import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
 import com.ambravate.arcane.academy.ai.service.SpacingService;
-import com.ambravate.arcane.academy.gamification.service.StreakService;
 
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
@@ -36,6 +36,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,8 +60,8 @@ public class EncodingService {
     private final AiMentorService aiMentorService;
     private final RetrievalService retrievalService;
     private final SpacingService spacingService;
-    private final StreakService streakService;
-    private final BadgeService badgeService;
+    private final GamificationFacade gamification;
+    private final ApplicationEventPublisher eventPublisher;
     private final TelemetryService telemetry;
     private final ObjectMapper objectMapper;
 
@@ -179,10 +180,10 @@ public class EncodingService {
                     "Submit solo practice and pass all tests before advancing.");
         }
 
-        // Guard: block advancing past RETRIEVAL_CHECK unless there are no questions
-        // (sub-chunks with no questions can freely advance; ones with questions must use submitRetrievalCheck)
+        // Guard: block advancing past RETRIEVAL_CHECK if the check hasn't been submitted yet
         if (progress.getCurrentPhase() == EncodingPhase.RETRIEVAL_CHECK
-                && progress.getStatus() != SubChunkStatus.COMPLETE) {
+                && progress.getStatus() != SubChunkStatus.COMPLETE
+                && !progress.isRetrievalCheckSubmitted()) {
             boolean hasQuestions = !retrievalService.generateRetrievalCheck(userId, subChunkId).isEmpty();
             if (hasQuestions) {
                 throw new ResponseStatusException(
@@ -355,7 +356,7 @@ public class EncodingService {
 
         if (allPassed) {
             xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
-            newBadges = badgeService.evaluateAndAward(userId);
+            newBadges = gamification.evaluateAndAwardBadges(userId);
             // Mark guided practice as passed so advancePhase() allows progression
             progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).ifPresent(p -> {
                 p.setGuidedPracticePassed(true);
@@ -455,13 +456,15 @@ public class EncodingService {
         // Update SM-2 spacing
         spacingService.updateSpacing(userId, subChunkId, graded.score());
 
-        // If score >= 60%, mark retrieval as passed and advance to COMPLETE
+        // Mark retrieval as submitted regardless of score so advancePhase() allows progression
+        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).orElseThrow();
+        progress.setRetrievalCheckSubmitted(true);
+
         boolean passed = graded.score() >= 0.6;
         int xpEarned = 0;
         List<BadgeDto> newBadges = List.of();
 
         if (passed) {
-            UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).orElseThrow();
             boolean firstCompletion = progress.getStatus() != SubChunkStatus.COMPLETE;
             progress.setCurrentPhase(EncodingPhase.COMPLETE);
             progress.setStatus(SubChunkStatus.COMPLETE);
@@ -469,7 +472,7 @@ public class EncodingService {
             progressRepository.save(progress);
 
             xpEarned = awardXp(userId, subChunkId + "-retrieval", 25);
-            newBadges = badgeService.evaluateAndAward(userId);
+            newBadges = gamification.evaluateAndAwardBadges(userId);
 
             if (firstCompletion) {
                 SubChunk sc = subChunkRepository.findById(subChunkId).orElse(null);
@@ -479,6 +482,8 @@ public class EncodingService {
                     advanceLearnerPathIfTierComplete(userId, sc);
                 }
             }
+        } else {
+            progressRepository.save(progress);
         }
 
         return new RetrievalCheckResult(graded.score(), graded.correct(), graded.total(),
@@ -487,7 +492,7 @@ public class EncodingService {
     }
 
     private int awardXp(String userId, String itemId, int xp) {
-        streakService.updateStreak(userId);
+        eventPublisher.publishEvent(new UserEngagedEvent(userId));
         User user = userRepository.findById(userId).orElseThrow();
         int newXp = user.getTotalXp() + xp;
         user.setTotalXp(newXp);
@@ -582,7 +587,7 @@ public class EncodingService {
 
         if (allPassed && !solo) {
             xpEarned = awardXp(userId, subChunk.getId(), subChunk.getXpReward());
-            newBadges = badgeService.evaluateAndAward(userId);
+            newBadges = gamification.evaluateAndAwardBadges(userId);
         } else if (!allPassed) {
             mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
                     + "and explain why the ideas matter. "

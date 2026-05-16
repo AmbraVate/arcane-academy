@@ -4,12 +4,19 @@ import com.ambravate.arcane.academy.common.domain.UserRole;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AdminUserPromoter {
+public class AdminUserPromoter implements ApplicationRunner {
+
+    @Override
+    public void run(ApplicationArguments args) {
+        promote();
+    }
 
     private static final String ADMIN_EMAIL = "archergilly84@gmail.com";
 

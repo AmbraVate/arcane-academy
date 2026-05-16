@@ -2,6 +2,7 @@ package com.ambravate.arcane.academy.gamification.service;
 
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.common.domain.BadgeDefinition;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BadgeService {
+public class BadgeService implements GamificationFacade {
 
   private final UserBadgeRepository badgeRepository;
   private final UserRepository userRepository;
@@ -37,6 +38,7 @@ public class BadgeService {
   private final SubChunkRepository subChunkRepository;
   private final UserLearnerProfileRepository profileRepository;
   private final ReviewSessionRepository reviewSessionRepository;
+  private final StreakService streakService;
   private final TelemetryService telemetry;
 
   public List<BadgeDto> getAllForUser(String userId) {
@@ -63,6 +65,17 @@ public class BadgeService {
         .stream()
         .filter(BadgeDto::isEarned)
         .collect(Collectors.toList());
+  }
+
+  @Transactional
+  @Override
+  public List<BadgeDto> evaluateAndAwardBadges(String userId) {
+    return evaluateAndAward(userId);
+  }
+
+  @Override
+  public boolean isStreakAtRisk(String userId) {
+    return streakService.isStreakAtRisk(userId);
   }
 
   @Transactional

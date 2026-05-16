@@ -1,10 +1,12 @@
 package com.ambravate.arcane.academy.gamification.service;
 
 import com.ambravate.arcane.academy.common.domain.User;
+import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,13 @@ public class StreakService {
 
     private final UserRepository userRepository;
     private final TelemetryService telemetry;
+
+    /** Receives UserEngagedEvent published by other modules (e.g. practice on XP award). */
+    @EventListener
+    @Transactional
+    public void onUserEngaged(UserEngagedEvent event) {
+        updateStreak(event.userId());
+    }
 
     /**
      * Called on login and on quest/boss completion.

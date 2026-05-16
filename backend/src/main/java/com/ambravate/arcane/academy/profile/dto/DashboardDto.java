@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.gamification.dto;
+package com.ambravate.arcane.academy.profile.dto;
 
 import lombok.*;
 import java.time.Instant;

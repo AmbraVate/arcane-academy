@@ -10,10 +10,10 @@ import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
-import com.ambravate.arcane.academy.gamification.service.BadgeService;
-import com.ambravate.arcane.academy.gamification.service.StreakService;
-
+import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +45,8 @@ public class SqlPracticeService {
   private final SubChunkRepository subChunkRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
-  private final BadgeService badgeService;
-  private final StreakService streakService;
+  private final GamificationFacade gamification;
+  private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
   public SubmitResponse submit(String userId, String subChunkId, SqlSubmitRequest request) {
@@ -96,7 +96,7 @@ public class SqlPracticeService {
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
       xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
-      newBadges = badgeService.evaluateAndAward(userId);
+      newBadges = gamification.evaluateAndAwardBadges(userId);
       log.info("[SQL] All tests passed | user={} subChunk={} xp={}", userId, subChunkId, xpEarned);
     } else {
       log.info(
@@ -140,7 +140,7 @@ public class SqlPracticeService {
       return 0;
     }
 
-    streakService.updateStreak(userId);
+    eventPublisher.publishEvent(new UserEngagedEvent(userId));
     User user = userRepository.findById(userId).orElseThrow();
     user.setTotalXp(user.getTotalXp() + xp);
     user.setRank(EncodingService.calculateRank(user.getTotalXp()));

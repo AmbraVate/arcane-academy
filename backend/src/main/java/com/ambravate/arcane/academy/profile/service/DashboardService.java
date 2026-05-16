@@ -17,7 +17,7 @@ import com.ambravate.arcane.academy.common.repository.UserLearnerProfileReposito
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.common.repository.UserTopicProfileRepository;
 import com.ambravate.arcane.academy.ai.service.SpacingService;
-import com.ambravate.arcane.academy.gamification.service.StreakService;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class DashboardService {
   private final UserLearnerProfileRepository profileRepository;
   private final UserTopicProfileRepository topicProfileRepository;
   private final SpacingService spacingService;
-  private final StreakService streakService;
+  private final GamificationFacade gamification;
 
   /** Java-topic dashboard (backwards-compatible). */
   public DashboardData getDashboard(String userId) {
@@ -71,7 +71,7 @@ public class DashboardService {
 
     List<ChunkHealth> chunkHealth = getMemoryHealth(userId, topicId);
     int reviewsDue = spacingService.getDueReviews(userId).size();
-    boolean streakAtRisk = streakService.isStreakAtRisk(userId);
+    boolean streakAtRisk = gamification.isStreakAtRisk(userId);
 
     // Overall progress scoped to this topic's sub-chunks
     List<Chunk> topicChunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);

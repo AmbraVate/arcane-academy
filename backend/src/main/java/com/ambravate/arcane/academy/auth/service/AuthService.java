@@ -5,12 +5,12 @@ import com.ambravate.arcane.academy.auth.dto.AuthResponse;
 import com.ambravate.arcane.academy.auth.dto.LoginRequest;
 import com.ambravate.arcane.academy.auth.dto.RegisterRequest;
 import com.ambravate.arcane.academy.common.domain.User;
+import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.JwtService;
-import com.ambravate.arcane.academy.gamification.service.BadgeService;
-import com.ambravate.arcane.academy.gamification.service.StreakService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,8 +23,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final StreakService streakService;
-    private final BadgeService badgeService;
+    private final ApplicationEventPublisher eventPublisher;
 
     public AuthResponse register(RegisterRequest request) {
         log.info("[Auth] Register attempt | username={} email={}",
@@ -46,7 +45,7 @@ public class AuthService {
 
         userRepository.save(user);
         log.info("[Auth] Registered new user | userId={} username={}", user.getId(), user.getUsername());
-        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
         return buildResponse(user, token);
     }
 
@@ -68,12 +67,16 @@ public class AuthService {
             throw new BadCredentialsException("Invalid credentials.");
         }
 
-        streakService.updateStreak(user.getId());
-        badgeService.evaluateAndAward(user.getId());
+        if (user.isBlocked()) {
+            log.warn("[Auth] Login rejected — account blocked | userId={}", user.getId());
+            throw new IllegalStateException("Account is blocked. Please contact support.");
+        }
+
+        eventPublisher.publishEvent(new UserEngagedEvent(user.getId()));
 
         log.info("[Auth] Login success | userId={} username={} streak={} totalXp={}",
                 user.getId(), user.getUsername(), user.getStreakDays(), user.getTotalXp());
-        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
         return buildResponse(user, token);
     }
 
@@ -87,8 +90,11 @@ public class AuthService {
         var existing = userRepository.findByAuthProviderAndProviderId(provider, providerId);
         if (existing.isPresent()) {
             User user = existing.get();
-            streakService.updateStreak(user.getId());
-            badgeService.evaluateAndAward(user.getId());
+            if (user.isBlocked()) {
+                log.warn("[Auth] OAuth2 rejected — account blocked | userId={}", user.getId());
+                throw new IllegalStateException("Account is blocked. Please contact support.");
+            }
+            eventPublisher.publishEvent(new UserEngagedEvent(user.getId()));
             log.info("[Auth] OAuth2 returning user | userId={} provider={}", user.getId(), provider);
             return userRepository.findById(user.getId()).orElse(user);
         }
@@ -97,11 +103,14 @@ public class AuthService {
         var byEmail = userRepository.findByEmail(email);
         if (byEmail.isPresent()) {
             User user = byEmail.get();
+            if (user.isBlocked()) {
+                log.warn("[Auth] OAuth2 rejected — account blocked (email match) | userId={}", user.getId());
+                throw new IllegalStateException("Account is blocked. Please contact support.");
+            }
             user.setAuthProvider(provider);
             user.setProviderId(providerId);
             userRepository.save(user);
-            streakService.updateStreak(user.getId());
-            badgeService.evaluateAndAward(user.getId());
+            eventPublisher.publishEvent(new UserEngagedEvent(user.getId()));
             log.info("[Auth] OAuth2 linked existing account | userId={} provider={}", user.getId(), provider);
             return userRepository.findById(user.getId()).orElse(user);
         }

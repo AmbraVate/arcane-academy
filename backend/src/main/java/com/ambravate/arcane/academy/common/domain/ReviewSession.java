@@ -5,7 +5,10 @@ import lombok.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "review_sessions")
+@Table(name = "review_sessions",
+    indexes = {
+        @Index(name = "idx_review_user_type", columnList = "user_id, session_type"),
+    })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ReviewSession {
 

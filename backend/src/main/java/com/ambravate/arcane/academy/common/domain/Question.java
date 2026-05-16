@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "questions",
+    indexes = {
+        @Index(name = "idx_question_subchunk_tier", columnList = "sub_chunk_id, tier"),
+    })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Question {
 
