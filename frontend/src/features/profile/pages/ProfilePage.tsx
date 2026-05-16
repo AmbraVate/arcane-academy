@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { badgeApi, profileApi } from '@/shared/api/services'
-import type { Badge } from '@/shared/types'
+import { badgeApi, profileApi, dashboardApi, rabbitHoleTermApi } from '@/shared/api/services'
+import type { Badge, DashboardDto, RabbitHoleTerm } from '@/shared/types'
+import { useTheme } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 
-type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes'
+type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'preferences'
 
 const BADGE_CATEGORIES = ['LEARNING', 'MASTERY', 'FEYNMAN', 'PATH', 'EXPLORATION', 'XP', 'STREAK']
 const CATEGORY_LABELS: Record<string, string> = {
@@ -15,6 +17,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function ProfilePage() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const { theme, toggleTheme } = useTheme()
   const [tab, setTab] = useState<Tab>('overview')
 
   const [badges, setBadges] = useState<Badge[]>([])
@@ -50,7 +53,7 @@ export default function ProfilePage() {
       setRhLoading(true)
       rabbitHoleTermApi.getAll().then(setRabbitHoles).finally(() => setRhLoading(false))
     }
-  }, [tab]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tab]) // intentionally omitting rabbitHoles/rhLoading to avoid re-fetching on every render
 
   async function toggleVisibility() {
     if (publicEnabled === null || savingVisibility) return
@@ -81,6 +84,7 @@ export default function ProfilePage() {
     { id: 'topics', label: 'Topics' },
     { id: 'badges', label: `Badges${earned.length ? ` (${earned.length})` : ''}` },
     { id: 'rabbit-holes', label: `Rabbit Holes${rabbitHoles.length ? ` (${rabbitHoles.length})` : ''}` },
+    { id: 'preferences', label: 'Preferences' },
   ]
 
   return (
@@ -278,6 +282,42 @@ export default function ProfilePage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Tab: Preferences */}
+        {tab === 'preferences' && (
+          <div className="flex flex-col gap-4">
+            {/* Theme */}
+            <div className="bg-card border border-border rounded-[12px] px-5 py-4">
+              <div className="font-cinzel text-[14px] text-gold mb-3 tracking-wide">Appearance</div>
+              <div className="flex items-center justify-between gap-4 max-[480px]:flex-col max-[480px]:items-start">
+                <div>
+                  <div className="font-cinzel text-[13px] text-text mb-0.5">
+                    Theme{' '}
+                    <span className="text-muted normal-case font-normal">
+                      · {theme === 'blizzard' ? 'Blizzard' : 'Default (Dark)'}
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-muted leading-snug">
+                    {theme === 'blizzard'
+                      ? 'Blizzard: cool icy blues and deep navy tones.'
+                      : 'Default: arcane purples, golds, and dark backgrounds.'}
+                  </div>
+                </div>
+                <button
+                  onClick={toggleTheme}
+                  className={cn(
+                    'flex-shrink-0 px-4 py-1.5 rounded-[7px] text-[12px] font-cinzel tracking-wide border transition-[background,border-color] duration-150',
+                    theme === 'blizzard'
+                      ? 'bg-purple-dim border-purple text-purple-light'
+                      : 'bg-card border-border text-muted hover:border-purple-dim'
+                  )}
+                >
+                  {theme === 'blizzard' ? 'Switch to Default' : 'Switch to Blizzard'}
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
