@@ -307,6 +307,18 @@ export interface PublicProfile {
   badges: PublicProfileBadge[]
 }
 
+export const stuckReportApi = {
+  submit: async (payload: {
+    topicId?: string
+    subChunkId?: string
+    currentPhase?: string
+    currentUrl: string
+    userMessage?: string
+  }): Promise<void> => {
+    await api.post('/api/stuck-reports', payload)
+  },
+}
+
 export const profileApi = {
   getPublic: async (username: string): Promise<PublicProfile | null> => {
     try {

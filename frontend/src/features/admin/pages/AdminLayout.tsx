@@ -1,13 +1,14 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { LayoutDashboard, Library, BookMarked, Users, ArrowUpDown, ChevronLeft, LogOut } from 'lucide-react'
+import { LayoutDashboard, Library, BookMarked, Users, ArrowUpDown, ChevronLeft, LogOut, Flag } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { path: '/admin',               label: 'Dashboard',      Icon: LayoutDashboard, exact: true },
-  { path: '/admin/topics',        label: 'Topics',         Icon: BookMarked },
-  { path: '/admin/chunks',        label: 'Content',        Icon: Library },
-  { path: '/admin/users',         label: 'Users',          Icon: Users },
-  { path: '/admin/import-export', label: 'Import / Export',Icon: ArrowUpDown },
+  { path: '/admin',                label: 'Dashboard',      Icon: LayoutDashboard, exact: true },
+  { path: '/admin/topics',         label: 'Topics',         Icon: BookMarked },
+  { path: '/admin/chunks',         label: 'Content',        Icon: Library },
+  { path: '/admin/users',          label: 'Users',          Icon: Users },
+  { path: '/admin/stuck-reports',  label: 'Stuck Reports',  Icon: Flag },
+  { path: '/admin/import-export',  label: 'Import / Export',Icon: ArrowUpDown },
 ]
 
 export default function AdminLayout() {

@@ -189,6 +189,36 @@ export const adminUserApi = {
   },
 }
 
+// ── Stuck Reports ─────────────────────────────────────────────────────────────
+
+export interface StuckReport {
+  id: string
+  userId: string
+  username: string
+  email: string
+  topicId: string | null
+  subChunkId: string | null
+  currentPhase: string | null
+  currentUrl: string | null
+  userMessage: string | null
+  userAgent: string | null
+  status: 'NEW' | 'REVIEWED' | 'RESOLVED'
+  adminNotes: string | null
+  createdAt: string
+  updatedAt: string | null
+}
+
+export const adminStuckReportApi = {
+  list: async (page = 0, size = 25): Promise<PagedResponse<StuckReport>> => {
+    const { data } = await api.get('/api/admin/stuck-reports', { params: { page, size } })
+    return data
+  },
+  updateStatus: async (id: string, status: StuckReport['status'], adminNotes?: string): Promise<StuckReport> => {
+    const { data } = await api.patch(`/api/admin/stuck-reports/${id}`, { status, adminNotes })
+    return data
+  },
+}
+
 // ── Import / Export ───────────────────────────────────────────────────────────
 
 export const adminContentApi = {

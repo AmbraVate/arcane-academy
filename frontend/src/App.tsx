@@ -6,6 +6,7 @@ import { useReviewsDue } from './hooks/queries'
 import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
 import { BlizzardBackground } from './components/layout/BlizzardScene'
+import StuckButton from './components/StuckButton'
 
 const TopicsPage           = lazy(() => import('./features/topics/pages/TopicsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
@@ -35,7 +36,8 @@ const AdminSubChunkEditorPage = lazy(() => import('./features/admin/pages/AdminS
 const AdminQuestionsPage   = lazy(() => import('./features/admin/pages/AdminQuestionsPage'))
 const AdminUsersPage       = lazy(() => import('./features/admin/pages/AdminUsersPage'))
 const AdminImportExportPage = lazy(() => import('./features/admin/pages/AdminImportExportPage'))
-const AdminTopicsPage      = lazy(() => import('./features/admin/pages/AdminTopicsPage'))
+const AdminTopicsPage       = lazy(() => import('./features/admin/pages/AdminTopicsPage'))
+const AdminStuckReportsPage = lazy(() => import('./features/admin/pages/AdminStuckReportsPage'))
 
 function PageFallback() {
   return (
@@ -170,6 +172,7 @@ function AppRoutes() {
             <Route path="subchunks/:subChunkId/questions" element={<AdminQuestionsPage />} />
             <Route path="users" element={<AdminUsersPage />} />
             <Route path="import-export" element={<AdminImportExportPage />} />
+            <Route path="stuck-reports" element={<AdminStuckReportsPage />} />
           </Route>
         </Route>
 
@@ -210,6 +213,7 @@ export default function App() {
             <AppRoutes />
           </div>
         </div>
+        {user && !location.pathname.startsWith('/admin') && <StuckButton />}
       </div>
     )
   }
@@ -220,6 +224,7 @@ export default function App() {
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
         <AppRoutes />
       </div>
+      {user && !location.pathname.startsWith('/admin') && <StuckButton />}
     </div>
   )
 }
