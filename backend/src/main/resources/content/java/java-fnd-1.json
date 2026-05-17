@@ -36,7 +36,14 @@
         {"label": "Prints MAX_VALUE", "input": "null", "expected": "2147483647"}
       ],
       "feynmanPrompt": "Explain the difference between Java's eight primitive types and their wrapper classes. Why do wrapper classes exist, and when would you use Integer instead of int?",
-      "soloPracticeHtml": "<p>Without looking at your guided practice, rebuild the student intake profile from scratch — no starter code this time. Declare all five variables for a wizard named <code>\"Lyria\"</code> at level <code>1</code>, with <code>100.5</code> mana reserve, <code>true</code> for enrolled, and an <code>Integer</code> wrapper for spells learned starting at <code>0</code>. Print each variable on its own line, then print the maximum possible <code>int</code> value.</p>",
+      "rabbitHoleTerms": [
+        {"term": "autoboxing", "description": "Java automatically converts a primitive (e.g. int) to its wrapper class (e.g. Integer) when needed — and unboxes back the other way."},
+        {"term": "variables", "description": "Named containers in memory that hold a value of a declared type. In Java every variable must be typed before use."},
+        {"term": "primitive", "description": "One of Java's 8 built-in value types: byte, short, int, long, float, double, boolean, char. Stored directly on the stack, not as heap objects."},
+        {"term": "wrapper", "description": "Object versions of Java primitives (Integer, Double, Boolean, etc.) that allow primitives to be used in APIs requiring objects, such as collections."},
+        {"term": "statically typed", "description": "A language property where every variable's type is known and checked at compile time, preventing type mismatches before the program runs."}
+      ],
+      "soloPracticeHtml": "<p>The enrollment scroll is waiting — and this time there's no template to copy from. Declare Lyria's student profile entirely from memory: the five variables (<code>wizardName</code>, <code>level</code>, <code>manaReserve</code>, <code>enrolled</code>, and the <code>Integer</code> wrapper <code>spellsLearned</code>), print each on its own line, then print <code>Integer.MAX_VALUE</code>. No starter code, no hints — only what you've internalised.</p>",
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

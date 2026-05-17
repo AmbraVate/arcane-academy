@@ -190,6 +190,8 @@ public class JsonContentSeeder {
                 ? SubChunkPracticeType.valueOf(sc.practiceType)
                 : SubChunkPracticeType.JAVA;
 
+        String rhTermsJson = toJson(sc.rabbitHoleTerms);
+
         subChunkRepository.save(SubChunk.builder()
                 .id(sc.id)
                 .chunkId(chunkId)
@@ -206,6 +208,7 @@ public class JsonContentSeeder {
                 .soloPracticeHtml(sc.soloPracticeHtml)
                 .feynmanPrompt(sc.feynmanPrompt)
                 .practiceType(practiceType)
+                .rabbitHoleTermsJson(rhTermsJson)
                 .build());
 
         if (sc.questions != null) {

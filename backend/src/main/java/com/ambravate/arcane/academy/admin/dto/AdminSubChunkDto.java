@@ -22,6 +22,7 @@ public class AdminSubChunkDto {
     private List<Map<String, Object>> guidedPracticeTests;
     private String soloPracticeHtml;
     private String feynmanPrompt;
+    private List<Map<String, Object>> rabbitHoleTerms;
 
     private long questionCount;
 }

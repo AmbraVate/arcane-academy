@@ -8,7 +8,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdminSubChunkAssembler {
 
   private final ObjectMapper objectMapper;
@@ -30,6 +32,7 @@ public class AdminSubChunkAssembler {
         .guidedPracticeTests(parseJsonList(sc.getGuidedPracticeTestsJson()))
         .soloPracticeHtml(sc.getSoloPracticeHtml())
         .feynmanPrompt(sc.getFeynmanPrompt())
+        .rabbitHoleTerms(parseJsonList(sc.getRabbitHoleTermsJson()))
         .questionCount(qCount)
         .build();
   }
@@ -51,6 +54,7 @@ public class AdminSubChunkAssembler {
         .guidedPracticeTestsJson(toJson(dto.getGuidedPracticeTests()))
         .soloPracticeHtml(dto.getSoloPracticeHtml())
         .feynmanPrompt(dto.getFeynmanPrompt())
+        .rabbitHoleTermsJson(toJson(dto.getRabbitHoleTerms()))
         .build();
   }
 

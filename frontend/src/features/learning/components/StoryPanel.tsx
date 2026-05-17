@@ -1,80 +1,96 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
+import type { StoryBeat, StoryRabbitHoleTerm } from '@/shared/types'
 import { rabbitHoleTermApi } from '@/shared/api/services'
-import type { StoryBeat } from '@/shared/types'
 
-export default function StoryPanel({
-  beats,
-  fullPage = false,
-  subChunkId,
-  topicId,
-  rabbitHoleTerms,
-}: {
+interface Popover { term: string; description: string; x: number; y: number }
+
+interface StoryPanelProps {
   beats: StoryBeat[]
   fullPage?: boolean
   subChunkId?: string
   topicId?: string
-  rabbitHoleTerms?: Record<string, string> | null
-}) {
+  rabbitHoleTerms?: StoryRabbitHoleTerm[] | null
+}
+
+function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): string {
+  if (!terms.length) return html
+  // Split on HTML tags so we only replace inside text nodes, not attribute values
+  const parts = html.split(/(<[^>]+>)/)
+  return parts.map((part, i) => {
+    if (i % 2 === 1) return part // it's a tag, skip
+    let text = part
+    for (const { term, description } of terms) {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const re = new RegExp(`\\b(${escaped})\\b`, 'gi')
+      const safeDesc = description.replace(/"/g, '&quot;')
+      text = text.replace(re, `<span data-rh="${term}" data-rh-desc="${safeDesc}">$1</span>`)
+    }
+    return text
+  }).join('')
+}
+
+export default function StoryPanel({ beats, fullPage = false, subChunkId, topicId, rabbitHoleTerms }: StoryPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [popover, setPopover] = useState<{ x: number; y: number; term: string; description: string } | null>(null)
+  const [popover, setPopover] = useState<Popover | null>(null)
   const [savedTerms, setSavedTerms] = useState<Set<string>>(new Set())
   const [saving, setSaving] = useState(false)
 
-  useEffect(() => {
-    rabbitHoleTermApi.getAll().then(terms => {
-      setSavedTerms(new Set(terms.map(t => t.term)))
-    }).catch(() => {})
+  const terms = useMemo(() => rabbitHoleTerms ?? [], [rabbitHoleTerms])
+  const annotatedBeats = useMemo(() =>
+    terms.length ? beats.map(b => ({ ...b, text: annotateTerms(b.text ?? '', terms) })) : beats,
+    [beats, terms]
+  )
+
+  const handleClick = useCallback((e: MouseEvent) => {
+    const target = (e.target as HTMLElement).closest('[data-rh]') as HTMLElement | null
+    if (!target) { setPopover(null); return }
+    const term = target.dataset.rh ?? ''
+    const description = target.dataset.rhDesc ?? ''
+    const rect = target.getBoundingClientRect()
+    setPopover({ term, description, x: rect.left + rect.width / 2, y: rect.bottom + 6 })
+    e.stopPropagation()
   }, [])
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container || !rabbitHoleTerms) return
-    const handleClick = (e: MouseEvent) => {
-      const el = (e.target as Element).closest('[data-rh]')
-      if (!el) { setPopover(null); return }
-      const term = el.getAttribute('data-rh') ?? ''
-      const description = rabbitHoleTerms[term] ?? ''
-      const rect = el.getBoundingClientRect()
-      setPopover({ x: rect.left, y: rect.bottom + 6, term, description })
-    }
-    container.addEventListener('click', handleClick)
-    return () => container.removeEventListener('click', handleClick)
-  }, [rabbitHoleTerms])
+    const el = containerRef.current
+    if (!el) return
+    el.addEventListener('click', handleClick)
+    return () => el.removeEventListener('click', handleClick)
+  }, [handleClick])
 
   useEffect(() => {
-    if (!popover) return
-    const dismiss = () => setPopover(null)
-    document.addEventListener('click', dismiss)
-    return () => document.removeEventListener('click', dismiss)
-  }, [popover])
+    const close = () => setPopover(null)
+    document.addEventListener('click', close)
+    return () => document.removeEventListener('click', close)
+  }, [])
 
-  const handleSave = useCallback(async () => {
-    if (!popover || !subChunkId || !topicId) return
+  async function handleSave() {
+    if (!popover || saving) return
     setSaving(true)
     try {
-      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId, topicId)
-      setSavedTerms(prev => new Set([...prev, popover.term]))
-    } finally {
+      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId ?? '', topicId ?? '')
+      setSavedTerms(prev => new Set(prev).add(popover.term))
+    } catch { /* ignore */ } finally {
       setSaving(false)
     }
-  }, [popover, subChunkId, topicId])
+  }
 
-  const handleUnsave = useCallback(async () => {
-    if (!popover) return
+  async function handleUnsave() {
+    if (!popover || saving) return
     setSaving(true)
     try {
       await rabbitHoleTermApi.remove(popover.term)
       setSavedTerms(prev => { const s = new Set(prev); s.delete(popover.term); return s })
-    } finally {
+    } catch { /* ignore */ } finally {
       setSaving(false)
     }
-  }, [popover])
+  }
 
   return (
     <>
       <div ref={containerRef} className="flex flex-col gap-3">
-        {beats.map((beat, i) => {
+        {annotatedBeats.map((beat, i) => {
           if (beat.type === 'narration') return <Narration key={i} text={beat.text} fullPage={fullPage} />
           if (beat.type === 'example')  return <Example key={i} beat={beat} fullPage={fullPage} />
           return <Dialogue key={i} beat={beat} fullPage={fullPage} />

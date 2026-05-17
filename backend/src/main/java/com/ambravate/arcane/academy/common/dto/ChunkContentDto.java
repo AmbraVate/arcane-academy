@@ -91,6 +91,12 @@ public class ChunkContentDto {
         public List<QuestionDto> questions;
 
         /**
+         * Terms to highlight as rabbit-hole anchors in story beats.
+         * Each entry: { "term": "autoboxing", "description": "Java automatically converts..." }
+         */
+        public List<Map<String, Object>> rabbitHoleTerms;
+
+        /**
          * Accepts the nested "guidedPractice" object used in legacy JSON files:
          * { "problemHtml": "...", "hint": "...", "starterCode": "...", "tests": [...] }
          * Maps into the flat guidedPractice* fields if they haven't been set directly.

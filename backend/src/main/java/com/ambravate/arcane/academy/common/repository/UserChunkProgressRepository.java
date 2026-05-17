@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserChunkProgressRepository extends JpaRepository<UserChunkProgress, String> {
     List<UserChunkProgress> findByUserId(String userId);
     Optional<UserChunkProgress> findByUserIdAndSubChunkId(String userId, String subChunkId);

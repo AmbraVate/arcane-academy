@@ -5,7 +5,9 @@ import com.ambravate.arcane.academy.admin.dto.AdminChunkDto;
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ChunkAssembler {
 
   private final ObjectMapper objectMapper;

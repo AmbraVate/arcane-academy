@@ -2,6 +2,7 @@ import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import type { QuestionDto, QuestionResultDto } from '@/shared/types'
+import { Check, X } from 'lucide-react'
 
 const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E']
 

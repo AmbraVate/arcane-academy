@@ -27,4 +27,7 @@ public class SubChunkEncodingDto {
     private int xpReward;
     /** "JAVA" | "TAILWIND" | "NONE" */
     private String practiceType;
+
+    /** Terms to highlight as rabbit-hole anchors in story beats: [{ term, description }] */
+    private Object rabbitHoleTerms;
 }

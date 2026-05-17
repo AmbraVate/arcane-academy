@@ -52,4 +52,8 @@ public class SubChunk {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private SubChunkPracticeType practiceType = SubChunkPracticeType.JAVA;
+
+    /** JSON array of { term, description } objects highlighted in story beats as rabbit-hole terms. */
+    @Column(columnDefinition = "TEXT")
+    private String rabbitHoleTermsJson;
 }

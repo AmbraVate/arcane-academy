@@ -35,6 +35,8 @@ export interface ChunkDetail {
 // ── Encoding ─────────────────────────────────────────────────────────────────
 export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'SOLO_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
 
+export interface StoryRabbitHoleTerm { term: string; description: string }
+
 export interface SubChunkEncoding {
   subChunkId: string; chunkId: string; topicId: string; title: string
   phase: EncodingPhase; status: string
@@ -47,7 +49,7 @@ export interface SubChunkEncoding {
   feynmanPrompt: string | null; xpReward: number
   /** "JAVA" | "TAILWIND" | "NONE" */
   practiceType: string
-  rabbitHoleTerms: Record<string, string> | null
+  rabbitHoleTerms: StoryRabbitHoleTerm[] | null
 }
 
 export interface PracticeResult {

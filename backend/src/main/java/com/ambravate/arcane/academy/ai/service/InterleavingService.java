@@ -17,7 +17,7 @@ import com.ambravate.arcane.academy.common.repository.QuestionRepository;
 import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
-import com.ambravate.arcane.academy.gamification.service.BadgeService;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.ai.service.SpacingService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class InterleavingService {
     private final SubChunkRepository subChunkRepository;
     private final RetrievalService retrievalService;
     private final SpacingService spacingService;
-    private final BadgeService badgeService;
+    private final GamificationFacade gamification;
 
     /**
      * Generate an interleaved review after completing a sub-chunk.
@@ -155,7 +155,7 @@ public class InterleavingService {
             spacingService.updateSpacing(userId, entry.getKey(), subScore);
         }
 
-        List<BadgeDto> newBadges = badgeService.evaluateAndAward(userId);
+        List<BadgeDto> newBadges = gamification.evaluateAndAwardBadges(userId);
 
         log.info("[Review] Submitted | user={} session={} score={} correct={}/{}",
                 userId, sessionId, graded.score(), graded.correct(), graded.total());

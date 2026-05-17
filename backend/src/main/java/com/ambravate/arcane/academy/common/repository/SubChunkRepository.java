@@ -4,7 +4,9 @@ import com.ambravate.arcane.academy.common.domain.SubChunk;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SubChunkRepository extends JpaRepository<SubChunk, String> {
     List<SubChunk> findByChunkIdOrderBySortOrderAsc(String chunkId);
     List<SubChunk> findByChunkIdIn(List<String> chunkIds);

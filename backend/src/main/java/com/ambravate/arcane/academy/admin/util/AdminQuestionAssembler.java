@@ -8,7 +8,9 @@ import com.ambravate.arcane.academy.common.domain.QuestionTier;
 import com.ambravate.arcane.academy.common.domain.QuestionType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdminQuestionAssembler {
 
   private final ObjectMapper objectMapper;

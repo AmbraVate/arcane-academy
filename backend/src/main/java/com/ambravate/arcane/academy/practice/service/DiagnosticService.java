@@ -62,9 +62,7 @@ public class DiagnosticService {
      * Generate entry diagnostic: 2 RECALL questions per chunk for the given topic.
      */
     public DiagnosticSession startEntryDiagnostic(String userId, String topicId) {
-        List<Chunk> chunks = "java".equals(topicId)
-            ? chunkRepository.findAllByOrderBySortOrderAsc()
-            : chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
+        List<Chunk> chunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
 
         List<Question> diagnosticQuestions = new ArrayList<>();
         for (Chunk chunk : chunks) {
@@ -115,9 +113,7 @@ public class DiagnosticService {
             chunkRecommendations.put(entry.getKey(), correct >= 2 ? "SKIP" : correct == 1 ? "COMPRESS" : "FULL");
         }
 
-        List<Chunk> topicChunks = "java".equals(topicId)
-            ? chunkRepository.findAllByOrderBySortOrderAsc()
-            : chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
+        List<Chunk> topicChunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
         topicChunks.forEach(c -> chunkRecommendations.putIfAbsent(c.getId(), "FULL"));
 
         // Determine path: FOUNDATION → ADVANCED → PRACTITIONER → EXPERT

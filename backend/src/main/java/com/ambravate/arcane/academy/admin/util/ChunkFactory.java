@@ -6,7 +6,9 @@ import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ChunkFactory {
 
   private final ObjectMapper objectMapper;

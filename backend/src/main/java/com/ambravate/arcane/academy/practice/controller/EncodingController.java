@@ -52,7 +52,15 @@ public class EncodingController {
             @PathVariable String subChunkId,
             @AuthenticationPrincipal UserPrincipal user) {
         SubChunkSession session = encodingService.startSubChunk(user.getId(), subChunkId);
-        return ResponseEntity.ok(toDto(session));
+        SubChunkEncodingDto dto = toDto(session);
+
+        // If resuming a RETRIEVAL_CHECK that hasn't been submitted yet, regenerate questions
+        if ("RETRIEVAL_CHECK".equals(dto.getPhase()) && !session.progress().isRetrievalCheckSubmitted()) {
+            List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), subChunkId);
+            dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
+        }
+
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/{subChunkId}/advance")
@@ -177,6 +185,7 @@ public class EncodingController {
                 .phase(p.getCurrentPhase().name()).status(p.getStatus().name())
                 .xpReward(sc.getXpReward()).filename(sc.getFilename())
                 .practiceType(sc.getPracticeType() != null ? sc.getPracticeType().name() : "JAVA")
+                .rabbitHoleTerms(parseJson(sc.getRabbitHoleTermsJson()))
                 .build();
 
         // Populate phase-specific content
