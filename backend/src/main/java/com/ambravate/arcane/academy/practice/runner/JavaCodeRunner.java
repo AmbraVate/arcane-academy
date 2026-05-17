@@ -172,12 +172,29 @@ public class JavaCodeRunner {
             // Rename the first public class to StudentSolution so classloader finds it.
             String renamed = studentCode.replaceFirst(
                     "public\\s+class\\s+\\w+", "public class StudentSolution");
-            // Only if there was no public class, rename the first class declaration instead.
-            // (Do NOT chain — doing both would rename an auxiliary class to StudentSolution too,
-            //  producing duplicate-class compile errors in multi-class files like Polymorphism.)
+
+            // If no public class existed, fall back to renaming the first non-public class.
+            // Also rename its constructor declarations so the constructor name stays in sync
+            // with the new class name — otherwise the compiler sees a method with no return type.
+            // (Do NOT chain both replacements — that would rename auxiliary classes too,
+            //  producing duplicate-class compile errors in multi-class files.)
             if (renamed.equals(studentCode)) {
-                renamed = studentCode.replaceFirst(
-                        "\\bclass\\s+\\w+\\s*\\{", "public class StudentSolution {");
+                java.util.regex.Matcher classMatcher = java.util.regex.Pattern
+                        .compile("\\bclass\\s+(\\w+)\\s*\\{")
+                        .matcher(studentCode);
+                if (classMatcher.find()) {
+                    String oldName = classMatcher.group(1);
+                    renamed = classMatcher.replaceFirst("public class StudentSolution {");
+                    // Rename constructor declarations that carry the old class name.
+                    // Match access modifier + old name + '(' to avoid touching 'new OldName()' calls.
+                    for (String mod : new String[]{"public ", "private ", "protected "}) {
+                        renamed = renamed.replace(mod + oldName + "(", mod + "StudentSolution(");
+                    }
+                    // Also handle package-private constructors (indented, at start of line)
+                    renamed = renamed.replaceAll(
+                            "(?m)^([ \\t]+)" + java.util.regex.Pattern.quote(oldName) + "\\s*\\(",
+                            "$1StudentSolution(");
+                }
             }
             return renamed;
         }
