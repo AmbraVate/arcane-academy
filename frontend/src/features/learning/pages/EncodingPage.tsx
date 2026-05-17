@@ -653,8 +653,16 @@ export default function EncodingPage() {
             )}
           </div>
 
-          {/* Right panel — editor */}
-          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+          {/* Right panel — editor (copy blocked: prevents carrying code into Solo) */}
+          <div
+            className="flex-1 flex flex-col overflow-hidden min-w-0"
+            onCopy={e => {
+              if ((e.target as HTMLElement).closest('textarea')) {
+                e.preventDefault()
+                showToast('🔒 Copying code is disabled — carry it in your head into Solo!')
+              }
+            }}
+          >
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
                 <span className="text-[12px] text-muted truncate font-medium">{encoding.title}</span>
@@ -840,8 +848,16 @@ export default function EncodingPage() {
             )}
           </div>
 
-          {/* Right panel — editor */}
-          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+          {/* Right panel — editor (paste blocked: Solo is write-from-memory) */}
+          <div
+            className="flex-1 flex flex-col overflow-hidden min-w-0"
+            onPaste={e => {
+              if ((e.target as HTMLElement).closest('textarea')) {
+                e.preventDefault()
+                showToast('🔒 Pasting is disabled — write it from memory!')
+              }
+            }}
+          >
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
                 <span className="text-[12px] text-muted truncate font-medium">{encoding.title}</span>
