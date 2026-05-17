@@ -47,6 +47,7 @@ export interface SubChunkEncoding {
   feynmanPrompt: string | null; xpReward: number
   /** "JAVA" | "TAILWIND" | "NONE" */
   practiceType: string
+  rabbitHoleTerms: Record<string, string> | null
 }
 
 export interface PracticeResult {

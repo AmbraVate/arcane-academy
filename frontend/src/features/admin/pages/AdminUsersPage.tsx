@@ -1,4 +1,5 @@
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
+import { BarChart2, ChevronLeft, ChevronRight, Loader2, Search, Shield, ShieldOff, X } from 'lucide-react'
 import { adminUserApi, type AdminUser } from '@/shared/api/adminServices'
 
 export default function AdminUsersPage() {
@@ -190,6 +191,84 @@ export default function AdminUsersPage() {
             onUpdate={handleUpdate}
           />
         )}
+      </div>
+    </div>
+  )
+}
+
+const ROLE_COLOR: Record<string, string> = { ADMIN: '#c9a227', USER: '#8b7fa0' }
+
+const inputStyle: React.CSSProperties = {
+  background: '#16132b', border: '1px solid #2e2850', borderRadius: 6,
+  color: '#e8e0f0', fontSize: 13, padding: '7px 10px', outline: 'none',
+}
+
+const s = {
+  card: { background: '#16132b', border: '1px solid #2e2850', borderRadius: 10 } as React.CSSProperties,
+}
+
+function UserDetailPanel({ user, onClose, onUpdate }: { user: AdminUser; onClose: () => void; onUpdate: (u: AdminUser) => void }) {
+  const [acting, setActing] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const act = async (fn: () => Promise<AdminUser>) => {
+    setActing(true); setError(null)
+    try { onUpdate(await fn()) } catch { setError('Action failed') } finally { setActing(false) }
+  }
+
+  const actVoid = async (fn: () => Promise<void>) => {
+    setActing(true); setError(null)
+    try { await fn(); onClose() } catch { setError('Action failed') } finally { setActing(false) }
+  }
+
+  return (
+    <div style={{ width: 260, flexShrink: 0, ...s.card, padding: 20, alignSelf: 'flex-start' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 14, color: '#c4b5fd', margin: 0 }}>User Detail</h3>
+        <button style={{ background: 'transparent', border: 'none', color: '#8b7fa0', cursor: 'pointer' }} onClick={onClose}><X size={14} /></button>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {([
+          ['Username',   user.username],
+          ['Email',      user.email],
+          ['Role',       user.role],
+          ['Auth',       user.authProvider],
+          ['Rank',       user.rank],
+          ['XP',         user.totalXp.toLocaleString()],
+          ['Streak',     `${user.streakDays}d`],
+          ['Completed',  `${user.completedSubChunks} sub-chunks`],
+          ['Joined',     new Date(user.createdAt).toLocaleDateString()],
+          ['Last login', user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Never'],
+        ] as [string, string][]).map(([label, val]) => (
+          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+            <span style={{ fontSize: 11, color: '#8b7fa0', fontFamily: 'Cinzel, serif' }}>{label}</span>
+            <span style={{ fontSize: 12, color: '#e8e0f0', textAlign: 'right' }}>{val}</span>
+          </div>
+        ))}
+      </div>
+      {error && <div style={{ color: '#f87171', fontSize: 11, marginTop: 10 }}>{error}</div>}
+      <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #2e2850', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <button
+          className="btn btn-ghost" disabled={acting}
+          style={{ fontSize: 11, padding: '6px 14px', width: '100%', justifyContent: 'center' }}
+          onClick={() => act(() => adminUserApi.setBlocked(user.id, !user.blocked))}
+        >
+          {user.blocked ? 'Unblock User' : 'Block User'}
+        </button>
+        <button
+          className="btn btn-ghost" disabled={acting}
+          style={{ fontSize: 11, padding: '6px 14px', width: '100%', justifyContent: 'center' }}
+          onClick={() => act(() => adminUserApi.setRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN'))}
+        >
+          {user.role === 'ADMIN' ? 'Demote to User' : 'Promote to Admin'}
+        </button>
+        <button
+          className="btn btn-ghost" disabled={acting}
+          style={{ fontSize: 11, padding: '6px 14px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171', width: '100%', justifyContent: 'center' }}
+          onClick={() => { if (confirm('Reset ALL progress for this user?')) actVoid(() => adminUserApi.resetProgress(user.id)) }}
+        >
+          ⚠️ Reset Progress
+        </button>
       </div>
     </div>
   )

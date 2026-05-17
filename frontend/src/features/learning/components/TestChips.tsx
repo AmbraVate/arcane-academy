@@ -1,3 +1,4 @@
+import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { TestCaseLabel } from '@/shared/types'
 

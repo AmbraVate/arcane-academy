@@ -1,5 +1,75 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { rabbitHoleTermApi } from '@/shared/api/services'
 import type { StoryBeat } from '@/shared/types'
+
+export default function StoryPanel({
+  beats,
+  fullPage = false,
+  subChunkId,
+  topicId,
+  rabbitHoleTerms,
+}: {
+  beats: StoryBeat[]
+  fullPage?: boolean
+  subChunkId?: string
+  topicId?: string
+  rabbitHoleTerms?: Record<string, string> | null
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [popover, setPopover] = useState<{ x: number; y: number; term: string; description: string } | null>(null)
+  const [savedTerms, setSavedTerms] = useState<Set<string>>(new Set())
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    rabbitHoleTermApi.getAll().then(terms => {
+      setSavedTerms(new Set(terms.map(t => t.term)))
+    }).catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container || !rabbitHoleTerms) return
+    const handleClick = (e: MouseEvent) => {
+      const el = (e.target as Element).closest('[data-rh]')
+      if (!el) { setPopover(null); return }
+      const term = el.getAttribute('data-rh') ?? ''
+      const description = rabbitHoleTerms[term] ?? ''
+      const rect = el.getBoundingClientRect()
+      setPopover({ x: rect.left, y: rect.bottom + 6, term, description })
+    }
+    container.addEventListener('click', handleClick)
+    return () => container.removeEventListener('click', handleClick)
+  }, [rabbitHoleTerms])
+
+  useEffect(() => {
+    if (!popover) return
+    const dismiss = () => setPopover(null)
+    document.addEventListener('click', dismiss)
+    return () => document.removeEventListener('click', dismiss)
+  }, [popover])
+
+  const handleSave = useCallback(async () => {
+    if (!popover || !subChunkId || !topicId) return
+    setSaving(true)
+    try {
+      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId, topicId)
+      setSavedTerms(prev => new Set([...prev, popover.term]))
+    } finally {
+      setSaving(false)
+    }
+  }, [popover, subChunkId, topicId])
+
+  const handleUnsave = useCallback(async () => {
+    if (!popover) return
+    setSaving(true)
+    try {
+      await rabbitHoleTermApi.remove(popover.term)
+      setSavedTerms(prev => { const s = new Set(prev); s.delete(popover.term); return s })
+    } finally {
+      setSaving(false)
+    }
+  }, [popover])
 
   return (
     <>

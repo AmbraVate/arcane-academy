@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AlertTriangle, CheckCircle2, CircleHelp, FileText, Flame, Map, Package, Users } from 'lucide-react'
 import { adminStatsApi, type AdminStats } from '@/shared/api/adminServices'
 
 interface StatCardProps {
