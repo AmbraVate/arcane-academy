@@ -240,54 +240,56 @@ export default function TopicPage() {
 
           if (isBlizzard) {
             return (
-              <div key={tier} className="bz-tier mb-8">
-                <div className="bz-tier-header">
-                  <div className="bz-tier-glyph">
-                    <TierIcon tier={tier} size={22} />
-                  </div>
-                  <div className="bz-tier-meta">
-                    <div className="bz-tier-label">
-                      {TIER_LABELS[tier]}
-                      {placedHere && <span className="bz-badge-placed"> · Placed here</span>}
-                      {tierComplete && <span className="bz-badge-done"> · Complete</span>}
-                      {!tierStarted && !tierComplete && <span className="bz-badge-locked"> · Locked</span>}
+              <div key={tier} className="page-wrap">
+                <div className="tier mb-8">
+                  <div className="tier-header">
+                    <div className="tier-glyph">
+                      <TierIcon tier={tier} size={22} />
                     </div>
-                    <div className="bz-tier-desc">{TIER_DESC[tier]}</div>
-                  </div>
-                  <div className="bz-tier-prog">{donePct}%</div>
-                </div>
-                <div className="bz-chunk-grid">
-                  {chunks.map(ch => {
-                    const locked = ch.status === 'LOCKED'
-                    const done   = ch.status === 'COMPLETE'
-                    const warn   = done && ch.memoryStrength < 0.4
-                    const pct    = Math.round(ch.memoryStrength * 100)
-                    return (
-                      <div
-                        key={ch.chunkId}
-                        className={cn('bz-chunk-card', locked && 'bz-locked', done && !warn && 'bz-done', warn && 'bz-warn')}
-                        onClick={() => !locked && navigate(`/chunk/${ch.chunkId}`)}
-                      >
-                        <div className="bz-chunk-glyph">{locked ? '🔒' : ch.glyph}</div>
-                        <div className="bz-chunk-title">{ch.title}</div>
-                        <div className="bz-chunk-prog">{ch.completedSubChunks}/{ch.totalSubChunks} concepts</div>
-                        {!locked && (
-                          <>
-                            <div className="bz-strength-bar">
-                              <div
-                                className="bz-strength-fill"
-                                style={{
-                                  width: `${pct}%`,
-                                  background: pct > 70 ? 'var(--success)' : pct > 40 ? 'var(--warning)' : 'var(--danger)',
-                                }}
-                              />
-                            </div>
-                            <div className="bz-strength-lbl">Strength {pct}%</div>
-                          </>
-                        )}
+                    <div className="tier-meta">
+                      <div className="tier-label">
+                        {TIER_LABELS[tier]}
+                        {placedHere && <span className="badge-placed"> · Placed here</span>}
+                        {tierComplete && <span className="badge-done"> · Complete</span>}
+                        {!tierStarted && !tierComplete && <span className="badge-locked"> · Locked</span>}
                       </div>
-                    )
-                  })}
+                      <div className="tier-desc">{TIER_DESC[tier]}</div>
+                    </div>
+                    <div className="tier-prog">{donePct}%</div>
+                  </div>
+                  <div className="chunk-grid">
+                    {chunks.map(ch => {
+                      const locked = ch.status === 'LOCKED'
+                      const done   = ch.status === 'COMPLETE'
+                      const warn   = done && ch.memoryStrength < 0.4
+                      const pct    = Math.round(ch.memoryStrength * 100)
+                      return (
+                        <div
+                          key={ch.chunkId}
+                          className={cn('chunk-card', locked && 'locked', done && !warn && 'done', warn && 'warn')}
+                          onClick={() => !locked && navigate(`/chunk/${ch.chunkId}`)}
+                        >
+                          <div className="chunk-glyph">{locked ? '🔒' : ch.glyph}</div>
+                          <div className="chunk-title">{ch.title}</div>
+                          <div className="chunk-prog">{ch.completedSubChunks}/{ch.totalSubChunks} concepts</div>
+                          {!locked && (
+                            <>
+                              <div className="strength-bar">
+                                <div
+                                  className="strength-fill"
+                                  style={{
+                                    width: `${pct}%`,
+                                    background: pct > 70 ? 'var(--success)' : pct > 40 ? 'var(--warning)' : 'var(--danger)',
+                                  }}
+                                />
+                              </div>
+                              <div className="strength-lbl">Strength {pct}%</div>
+                            </>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             )

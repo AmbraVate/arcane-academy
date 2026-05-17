@@ -1,9 +1,11 @@
 import React, { lazy, Suspense } from 'react'
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from './shared/hooks/useAuth'
 import { useTheme } from './hooks/useTheme'
+import { useReviewsDue } from './hooks/queries'
 import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
+import { BlizzardBackground } from './components/layout/BlizzardScene'
 
 const TopicsPage           = lazy(() => import('./features/topics/pages/TopicsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
@@ -55,25 +57,95 @@ function AdminRoute() {
   return <Outlet />
 }
 
-export default function App() {
-  const { user } = useAuth()
+const RANK_FLOORS = [0, 800, 2000, 4000, 6500, 8000, 11000]
+
+function BlizzardNav() {
+  const { user, logout } = useAuth()
   const { theme } = useTheme()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { data: reviewsDue = 0 } = useReviewsDue()
+
+  if (!user || theme !== 'blizzard') return null
+
+  const rankIdx = RANK_FLOORS.reduce((acc, floor, i) => user.totalXp >= floor ? i : acc, 0)
+  const isMaxRank = rankIdx === RANK_FLOORS.length - 1
+  const floor = RANK_FLOORS[rankIdx]
+  const ceiling = isMaxRank ? null : RANK_FLOORS[rankIdx + 1]
+  const xpInRank = user.totalXp - floor
+  const xpForRank = ceiling !== null ? ceiling - floor : xpInRank || 1
+  const xpPct = ceiling !== null ? Math.min(100, (xpInRank / xpForRank) * 100) : 100
+  const streak = user.streakDays ?? 0
+  const streakHot = streak >= 3
+
+  const NAV_ITEMS = [
+    { label: 'Topics',  icon: '📚', path: '/topics' },
+    { label: 'Review',  icon: '🔄', path: '/review', badge: reviewsDue > 0 ? reviewsDue : null },
+    { label: 'Ranks',   icon: '🏆', path: '/leaderboard' },
+    { label: 'Profile', icon: '👤', path: '/profile' },
+  ]
+
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {theme === 'blizzard' && <BlizzardFrame />}
-      {user && !location.pathname.startsWith('/admin') && <Nav />}
-      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-      <Suspense fallback={<PageFallback />}>
+    <nav className="topbar">
+      <div className="nav-brand" onClick={() => navigate('/topics')}>❄ Arcane Academy</div>
+      <div className="nav-spacer" />
+      <div className="nav-right">
+        {/* Streak */}
+        <div className={`streak${streakHot ? ' hot' : ''}`}>
+          <span className="flame">🔥</span>
+          <span className="num">{streak}</span>
+        </div>
+
+        {/* XP bar */}
+        <div className="xpwrap">
+          <span className="xp-lbl">XP</span>
+          <div className="xp-bar">
+            <div className="xp-fill" style={{ width: xpPct + '%' }} />
+          </div>
+          <span className="xp-num">{user.totalXp} xp</span>
+        </div>
+
+        {/* Rank */}
+        <div className="rank-pill">{user.rank}</div>
+
+        {/* Nav buttons */}
+        {NAV_ITEMS.map(({ label, icon, path, badge }) => {
+          const active = location.pathname === path || location.pathname.startsWith(path + '/')
+          return (
+            <button
+              key={path}
+              className={`nav-btn${active ? ' active' : ''}`}
+              onClick={() => navigate(path)}
+              title={label}
+            >
+              <span className="icon">{icon}</span>
+              <span className="lbl">{label}</span>
+              {badge != null && <span className="badge">{badge}</span>}
+            </button>
+          )
+        })}
+
+        {/* Logout */}
+        <button className="nav-btn" onClick={logout} title="Logout">
+          <span className="icon">🚪</span>
+          <span className="lbl">Logout</span>
+        </button>
+      </div>
+    </nav>
+  )
+}
+
+function AppRoutes() {
+  return (
+    <Suspense fallback={<PageFallback />}>
       <Routes>
-        <Route path="/login"    element={user ? <Navigate to="/topics" replace /> : <LoginPage />} />
-        <Route path="/register" element={user ? <Navigate to="/topics" replace /> : <RegisterPage />} />
+        <Route path="/login"    element={<LoginPageGuard />} />
+        <Route path="/register" element={<RegisterPageGuard />} />
         <Route path="/oauth2/callback" element={<OAuthCallbackPage />} />
         <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-        <Route path="/"         element={user ? <Navigate to="/topics" replace /> : <LandingPage />} />
-        {/* All topics (including java) go through the unified /topic/:topicId → TopicPage flow.
-            DashboardPage is reserved for an aggregate, multi-topic view — not a Java special case. */}
+        <Route path="/"         element={<HomeRedirect />} />
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />
         <Route path="/learn/:subChunkId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
@@ -88,7 +160,6 @@ export default function App() {
         <Route path="/leaderboard"   element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
         <Route path="/u/:username"   element={<PrivateRoute><PublicProfilePage /></PrivateRoute>} />
 
-        {/* Admin — completely separate layout, no learner Nav */}
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
@@ -102,9 +173,52 @@ export default function App() {
           </Route>
         </Route>
 
-        <Route path="*"         element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      </Suspense>
+    </Suspense>
+  )
+}
+
+function LoginPageGuard() {
+  const { user } = useAuth()
+  return user ? <Navigate to="/topics" replace /> : <LoginPage />
+}
+
+function RegisterPageGuard() {
+  const { user } = useAuth()
+  return user ? <Navigate to="/topics" replace /> : <RegisterPage />
+}
+
+function HomeRedirect() {
+  const { user } = useAuth()
+  return user ? <Navigate to="/topics" replace /> : <LandingPage />
+}
+
+export default function App() {
+  const { user } = useAuth()
+  const { theme, blizzardPrefs } = useTheme()
+  const location = useLocation()
+
+  if (theme === 'blizzard') {
+    return (
+      <div className="stage">
+        <BlizzardBackground scene={blizzardPrefs.scene} snow={blizzardPrefs.snow} />
+        <BlizzardFrame />
+        {user && !location.pathname.startsWith('/admin') && <BlizzardNav />}
+        <div className="viewport">
+          <div className="page">
+            <AppRoutes />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {user && !location.pathname.startsWith('/admin') && <Nav />}
+      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <AppRoutes />
       </div>
     </div>
   )

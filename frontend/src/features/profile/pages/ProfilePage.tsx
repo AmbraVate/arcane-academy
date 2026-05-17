@@ -5,9 +5,20 @@ import { badgeApi, profileApi, rabbitHoleTermApi } from '@/shared/api/services'
 import { useDashboard } from '@/hooks/queries'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
+import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 
 type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'preferences'
+
+const PALETTES = [
+  { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
+  { id: 'fel',         name: 'Fel',         swatches: ['#92ff35', '#dfffa6', '#1c4710'] },
+  { id: 'bloodelf',    name: 'Blood Elf',   swatches: ['#ff4f6a', '#ffd866', '#5e0a1c'] },
+  { id: 'arcane',      name: 'Arcane',      swatches: ['#b87bff', '#e8d6ff', '#3a1f7a'] },
+  { id: 'bronze',      name: 'Bronze',      swatches: ['#ffb849', '#ffe2a6', '#5a3608'] },
+  { id: 'shadowlands', name: 'Shadowlands', swatches: ['#c4a3ff', '#5dc6ff', '#2a1660'] },
+  { id: 'naga',        name: 'Naga',        swatches: ['#2dd4bf', '#ff8a65', '#07473d'] },
+]
 
 const BADGE_CATEGORIES = ['LEARNING', 'MASTERY', 'FEYNMAN', 'PATH', 'EXPLORATION', 'XP', 'STREAK']
 const CATEGORY_LABELS: Record<string, string> = {
@@ -18,7 +29,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function ProfilePage() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const { theme, toggleTheme } = useTheme()
+  const { theme, blizzardPrefs, toggleTheme, setBlizzardPref } = useTheme()
   const [tab, setTab] = useState<Tab>('overview')
 
   const [badges, setBadges] = useState<Badge[]>([])
@@ -284,36 +295,93 @@ export default function ProfilePage() {
         {/* Tab: Preferences */}
         {tab === 'preferences' && (
           <div className="flex flex-col gap-4">
-            {/* Theme */}
+            {/* Theme toggle */}
             <div className="bg-card border border-border rounded-[12px] px-5 py-4">
-              <div className="font-cinzel text-[14px] text-gold mb-3 tracking-wide">Appearance</div>
-              <div className="flex items-center justify-between gap-4 max-[480px]:flex-col max-[480px]:items-start">
+              <div className="font-cinzel text-[14px] text-gold mb-3 tracking-wide">Theme</div>
+              <div className="flex items-center justify-between gap-4">
                 <div>
                   <div className="font-cinzel text-[13px] text-text mb-0.5">
-                    Theme{' '}
-                    <span className="text-muted normal-case font-normal">
-                      · {theme === 'blizzard' ? 'Blizzard' : 'Default (Dark)'}
-                    </span>
+                    {theme === 'blizzard' ? '❄ Blizzard' : '✦ Default (Dark)'}
                   </div>
                   <div className="text-[11px] text-muted leading-snug">
-                    {theme === 'blizzard'
-                      ? 'Blizzard: cool icy blues and deep navy tones.'
-                      : 'Default: arcane purples, golds, and dark backgrounds.'}
+                    {theme === 'blizzard' ? 'Frostbound Academy — Lich-King dark fantasy.' : 'Arcane Academy — purples, golds, dark backgrounds.'}
                   </div>
                 </div>
-                <button
-                  onClick={toggleTheme}
-                  className={cn(
-                    'flex-shrink-0 px-4 py-1.5 rounded-[7px] text-[12px] font-cinzel tracking-wide border transition-[background,border-color] duration-150',
-                    theme === 'blizzard'
-                      ? 'bg-purple-dim border-purple text-purple-light'
-                      : 'bg-card border-border text-muted hover:border-purple-dim'
-                  )}
-                >
-                  {theme === 'blizzard' ? 'Switch to Default' : 'Switch to Blizzard'}
+                <button onClick={toggleTheme} className="btn btn-ghost flex-shrink-0 text-[12px] px-4 py-1.5">
+                  Switch to {theme === 'blizzard' ? 'Default' : 'Blizzard'}
                 </button>
               </div>
             </div>
+
+            {/* Blizzard preferences — only show when blizzard theme active */}
+            {theme === 'blizzard' && (
+              <>
+                {/* Palette picker */}
+                <div className="bg-card border border-border rounded-[12px] px-5 py-4">
+                  <div className="font-cinzel text-[14px] text-gold mb-1 tracking-wide">Magic Palette</div>
+                  <div className="text-[11px] text-muted mb-4">The colour of your spells, sconces &amp; UI accents.</div>
+                  <div className="palette-grid">
+                    {PALETTES.map(p => (
+                      <div
+                        key={p.id}
+                        className={`palette-tile ${blizzardPrefs.palette === p.id ? 'active' : ''}`}
+                        onClick={() => setBlizzardPref('palette', p.id as Palette)}
+                      >
+                        <div className="swatch-row">
+                          {p.swatches.map((c, i) => (
+                            <div key={i} className="swatch" style={{ background: c, color: c }} />
+                          ))}
+                        </div>
+                        <div className="name">{p.name}</div>
+                        {blizzardPrefs.palette === p.id && <div className="check">✓</div>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Scene, Font, Snow row */}
+                <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex flex-col gap-4">
+                  <div className="font-cinzel text-[14px] text-gold tracking-wide">Atmosphere</div>
+
+                  {/* Scene */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-cinzel text-[12px] text-text tracking-wide">Scene</div>
+                      <div className="text-[11px] text-muted">What lies beyond the frame.</div>
+                    </div>
+                    <div className="seg">
+                      <button className={blizzardPrefs.scene === 'castle' ? 'on' : ''} onClick={() => setBlizzardPref('scene', 'castle')}>Citadel</button>
+                      <button className={blizzardPrefs.scene === 'void'   ? 'on' : ''} onClick={() => setBlizzardPref('scene', 'void')}>Void</button>
+                      <button className={blizzardPrefs.scene === 'aurora' ? 'on' : ''} onClick={() => setBlizzardPref('scene', 'aurora')}>Aurora</button>
+                    </div>
+                  </div>
+
+                  {/* Font */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-cinzel text-[12px] text-text tracking-wide">Heading Font</div>
+                      <div className="text-[11px] text-muted">Cinzel — engraved. Rune — gothic blackletter.</div>
+                    </div>
+                    <div className="seg">
+                      <button className={blizzardPrefs.font === 'cinzel' ? 'on' : ''} onClick={() => setBlizzardPref('font', 'cinzel')}>Cinzel</button>
+                      <button className={blizzardPrefs.font === 'rune'   ? 'on' : ''} onClick={() => setBlizzardPref('font', 'rune')}>Rune</button>
+                    </div>
+                  </div>
+
+                  {/* Snow toggle */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-cinzel text-[12px] text-text tracking-wide">Falling Snow</div>
+                      <div className="text-[11px] text-muted">Particles drifting across the screen.</div>
+                    </div>
+                    <div
+                      className={`switch ${blizzardPrefs.snow ? 'on' : ''}`}
+                      onClick={() => setBlizzardPref('snow', !blizzardPrefs.snow)}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
 

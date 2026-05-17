@@ -590,614 +590,912 @@ button { font-family: inherit; cursor: pointer; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
 
 /* ══════════════════════════════════════════════════════════════════════════════
- * BLIZZARD THEME — [data-theme="blizzard"] on <html>
- * Implements the Frostbound Academy design system from the Blizzard.zip handoff.
- * All rules scoped to html[data-theme="blizzard"] to leave the default theme
+ * BLIZZARD THEME — full Frostbound Academy design system
+ * All rules scoped under html[data-theme="blizzard"] to leave the default theme
  * completely untouched.
  * ══════════════════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Design tokens ────────────────────────────────────────────────────────── */
+/* ── Google Fonts for Blizzard theme ─────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=UnifrakturCook:wght@700&display=swap');
+
+/* ── Keyframes (global scope, bz- prefix) ───────────────────────────────── */
+@keyframes bz-pulse-glow {
+  0%, 100% { box-shadow: 0 0 14px rgba(var(--accent-glow), .35); }
+  50%      { box-shadow: 0 0 28px rgba(var(--accent-glow), .65); }
+}
+@keyframes bz-flame-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255,122,45,.6)); }
+  50%      { transform: scale(1.15); filter: drop-shadow(0 0 12px rgba(255,122,45,.9)); }
+}
+@keyframes bz-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bz-level-bounce {
+  0%   { transform: scale(.6); opacity: 0; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  75%  { transform: scale(.95); }
+  100% { transform: scale(1); }
+}
+@keyframes bz-shimmer {
+  0%, 100% { opacity: .6; }
+  50%      { opacity: 1; }
+}
+@keyframes bz-rune-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Design tokens ───────────────────────────────────────────────────────── */
 html[data-theme="blizzard"] {
-  /* Frostmourne ink scale */
   --ink-0: #04060e;
   --ink-1: #070b1a;
   --ink-2: #0c1428;
   --ink-3: #11223f;
   --ink-4: #1a3057;
-  /* Metal chrome */
   --metal-0: #0a1224;
   --metal-1: #182a4d;
   --metal-2: #2a4274;
   --metal-3: #4e6ea8;
   --metal-edge: #9bb7e0;
-  /* Blizzard text */
-  --text-dim:  #7e95bf;
+  --text:    #d8e6ff;
+  --text-dim: #7e95bf;
   --text-mute: #4a5b80;
-  /* Accent — Frostmourne (icy blue) default */
   --accent:        #5dc6ff;
   --accent-bright: #b8eaff;
   --accent-deep:   #1a4f8f;
   --accent-glow:   93,198,255;
   --accent-2:      #c9a227;
   --accent-2-soft: #6b520f;
-  /* Semantic state */
   --danger:  #ff5a5a;
   --warning: #ffa040;
   --success: #7eff35;
   --heat:    #ff7a2d;
-  /* Typography */
-  --font-display: 'Cinzel', serif;
-  --font-body:    'Crimson Pro', serif;
+  --font-display: 'Cinzel', 'Trajan Pro', serif;
+  --font-body:    'Crimson Pro', 'Iowan Old Style', serif;
   --font-rune:    'UnifrakturCook', 'Cinzel', serif;
   --font-mono:    'Courier Prime', 'Courier New', monospace;
-  /* Derived glow helpers */
-  --glow-sm:     0 0 12px rgba(var(--accent-glow), .45);
-  --glow-md:     0 0 28px rgba(var(--accent-glow), .55);
+  --glow-sm:  0 0 12px rgba(var(--accent-glow), .45);
+  --glow-md:  0 0 28px rgba(var(--accent-glow), .55);
+  --glow-lg:  0 0 64px rgba(var(--accent-glow), .35);
   --inset-bevel: inset 0 1px 0 rgba(155,183,224,.18), inset 0 -1px 0 rgba(0,0,0,.6);
-
-  /* ── App token remaps (keep Tailwind utilities working) ── */
-  --color-bg:           #070b1a;
-  --color-surface:      #0c1428;
-  --color-card:         #11223f;
-  --color-border:       #2a4274;
-  --color-gold:         #c9a227;
-  --color-gold-dim:     #6b520f;
-  --color-purple:       #5dc6ff;
-  --color-purple-dim:   #1a4f8f;
-  --color-purple-light: #b8eaff;
-  --color-teal:         #5dc6ff;
-  --color-teal-dim:     #0c1428;
-  --color-text:         #d8e6ff;
-  --color-muted:        #7e95bf;
-  --color-red:          #ff5a5a;
-  --color-green:        #7eff35;
-  --color-orange:       #ffa040;
-
-  /* Legacy unprefixed tokens used by inline styles */
-  --bg:           #070b1a;
-  --surface:      #0c1428;
-  --card:         #11223f;
-  --border:       #2a4274;
-  --gold:         #c9a227;
-  --gold-dim:     #6b520f;
-  --gold-strong:  #8a6a10;
-  --purple:       #5dc6ff;
-  --purple-dim:   #1a4f8f;
-  --purple-light: #b8eaff;
-  --teal:         #5dc6ff;
-  --teal-dim:     #0c1428;
-  --text:         #d8e6ff;
-  --muted:        #7e95bf;
-  --red:          #ff5a5a;
-  --green:        #7eff35;
-  --orange:       #ffa040;
-  --gold-foil:        #5dc6ff;
-  --gold-foil-bright: #b8eaff;
-  --gold-foil-deep:   #1a4f8f;
 }
 
-/* ── 2. Palette swaps (accent colour variants) ───────────────────────────────── */
+/* ── Palette swaps ───────────────────────────────────────────────────────── */
 html[data-theme="blizzard"][data-palette="frostmourne"] {
   --accent: #5dc6ff; --accent-bright: #d3f0ff;
   --accent-deep: #0d3a6e; --accent-glow: 93,198,255;
   --accent-2: #c9a227; --accent-2-soft: #6b520f;
-  --color-purple: #5dc6ff; --color-teal: #5dc6ff;
-  --purple: #5dc6ff; --teal: #5dc6ff;
 }
 html[data-theme="blizzard"][data-palette="fel"] {
   --accent: #92ff35; --accent-bright: #dfffa6;
   --accent-deep: #1c4710; --accent-glow: 146,255,53;
-  --color-purple: #92ff35; --color-teal: #92ff35;
-  --purple: #92ff35; --teal: #92ff35;
+  --accent-2: #c9d629; --accent-2-soft: #4a5009;
 }
 html[data-theme="blizzard"][data-palette="bloodelf"] {
   --accent: #ff4f6a; --accent-bright: #ffc0ce;
   --accent-deep: #5e0a1c; --accent-glow: 255,79,106;
-  --color-purple: #ff4f6a; --color-teal: #ff4f6a;
-  --purple: #ff4f6a; --teal: #ff4f6a;
+  --accent-2: #ffd866; --accent-2-soft: #7a5c10;
 }
 html[data-theme="blizzard"][data-palette="arcane"] {
   --accent: #b87bff; --accent-bright: #e8d6ff;
   --accent-deep: #3a1f7a; --accent-glow: 184,123,255;
-  --color-purple: #b87bff; --color-teal: #b87bff;
-  --purple: #b87bff; --teal: #b87bff;
+  --accent-2: #c9a227; --accent-2-soft: #6b520f;
 }
 html[data-theme="blizzard"][data-palette="bronze"] {
   --accent: #ffb849; --accent-bright: #ffe2a6;
   --accent-deep: #5a3608; --accent-glow: 255,184,73;
-  --color-purple: #ffb849; --color-teal: #ffb849;
-  --purple: #ffb849; --teal: #ffb849;
+  --accent-2: #fff0b8; --accent-2-soft: #6b5314;
 }
 html[data-theme="blizzard"][data-palette="shadowlands"] {
   --accent: #c4a3ff; --accent-bright: #ecdcff;
   --accent-deep: #2a1660; --accent-glow: 196,163,255;
-  --color-purple: #c4a3ff; --color-teal: #c4a3ff;
-  --purple: #c4a3ff; --teal: #c4a3ff;
+  --accent-2: #5dc6ff; --accent-2-soft: #0d3a6e;
 }
 html[data-theme="blizzard"][data-palette="naga"] {
   --accent: #2dd4bf; --accent-bright: #aff4e7;
   --accent-deep: #07473d; --accent-glow: 45,212,191;
-  --color-purple: #2dd4bf; --color-teal: #2dd4bf;
-  --purple: #2dd4bf; --teal: #2dd4bf;
+  --accent-2: #ff8a65; --accent-2-soft: #5e1e10;
 }
 
-/* ── 3. Base & atmospheric scene ─────────────────────────────────────────────── */
-html[data-theme="blizzard"],
-html[data-theme="blizzard"] body,
-html[data-theme="blizzard"] #root {
+/* ── Font swap ───────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"][data-font="rune"] .heading,
+html[data-theme="blizzard"][data-font="rune"] .h-display,
+html[data-theme="blizzard"][data-font="rune"] .h1,
+html[data-theme="blizzard"][data-font="rune"] .h2,
+html[data-theme="blizzard"][data-font="rune"] .nav-brand,
+html[data-theme="blizzard"][data-font="rune"] .stat-val,
+html[data-theme="blizzard"][data-font="rune"] .rank-name,
+html[data-theme="blizzard"][data-font="rune"] .tier-label,
+html[data-theme="blizzard"][data-font="rune"] .modal-rank,
+html[data-theme="blizzard"][data-font="rune"] .modal-level {
+  font-family: var(--font-rune);
+  letter-spacing: 0;
+}
+html[data-theme="blizzard"][data-font="rune"] .h1 { font-size: 36px; line-height: 1; }
+html[data-theme="blizzard"][data-font="rune"] .modal-rank { font-size: 56px; }
+
+/* ── Body override ───────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] body {
   background: var(--ink-0);
   color: var(--text);
   font-family: var(--font-body);
 }
 
-html[data-theme="blizzard"] body {
+/* ── Scrollbar override ──────────────────────────────────────────────────── */
+html[data-theme="blizzard"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--metal-2), var(--metal-1));
+  border: 1px solid var(--metal-1);
+}
+
+/* ── Stage & background scene ───────────────────────────────────────────── */
+html[data-theme="blizzard"] .stage {
+  position: fixed; inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+html[data-theme="blizzard"] .scene {
+  position: absolute; inset: 0;
+  z-index: 0;
   background:
-    radial-gradient(ellipse 90% 70% at 50% 50%, transparent 50%, rgba(0,0,0,.6) 100%),
-    radial-gradient(ellipse 80% 30% at 50% 70%, rgba(80,120,180,.10), transparent 70%),
     radial-gradient(ellipse 80% 60% at 50% 100%, rgba(var(--accent-glow), .12), transparent 60%),
     radial-gradient(ellipse 60% 50% at 50% 30%, rgba(var(--accent-glow), .08), transparent 70%),
     radial-gradient(ellipse 120% 80% at 50% -10%, #0a1730 0%, #04060e 70%),
     var(--ink-0);
-  background-attachment: fixed;
-  overflow-x: hidden;
 }
-
-html[data-theme="blizzard"] ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--metal-2), var(--metal-1));
-  border-radius: 4px;
-  border: 1px solid var(--metal-1);
-}
-html[data-theme="blizzard"] ::-webkit-scrollbar-thumb:hover { background: var(--metal-3); }
-
-/* ── 4. Layout — nav offset ──────────────────────────────────────────────────── */
-html[data-theme="blizzard"] #root {
-  padding: 60px 0 0;
-  box-sizing: border-box;
-}
-
-/* ── 5. Nav — frosted glass topbar ──────────────────────────────────────────── */
-html[data-theme="blizzard"] nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 60px;
-  padding: 0 32px;
-  z-index: 100;
-  background: linear-gradient(180deg, rgba(10,18,36,.95) 0%, rgba(7,11,26,.88) 100%);
-  border-bottom: 1px solid rgba(155,183,224,.18);
-  box-shadow: 0 4px 24px rgba(0,0,0,.6), inset 0 1px 0 rgba(155,183,224,.12);
-  flex-shrink: 0;
-}
-
-/* Brand */
-html[data-theme="blizzard"] nav .text-gold {
-  font-family: var(--font-display) !important;
-  font-size: 12px !important;
-  letter-spacing: 3px !important;
-  color: var(--accent-bright) !important;
-  text-shadow: 0 0 12px rgba(var(--accent-glow), .8), 0 0 2px rgba(255,255,255,.4) !important;
-}
-
-/* XP bar fill — inline gradient uses --teal which remaps to --accent */
-html[data-theme="blizzard"] nav .bg-border { background: rgba(0,0,0,.6) !important; }
-
-/* Rank badge */
-html[data-theme="blizzard"] nav .bg-purple-dim {
-  background: linear-gradient(180deg, rgba(var(--accent-glow),.15), rgba(var(--accent-glow),.05)) !important;
-  border-color: rgba(var(--accent-glow),.5) !important;
-}
-html[data-theme="blizzard"] nav .text-purple-light { color: var(--accent-bright) !important; }
-
-/* Nav buttons */
-html[data-theme="blizzard"] nav .btn-ghost {
-  border-color: transparent !important;
-  background: transparent !important;
-  color: var(--text-dim) !important;
-  font-family: var(--font-display) !important;
-  font-size: 11px !important;
-  letter-spacing: 1.5px !important;
-  text-transform: uppercase !important;
-  border-radius: 3px !important;
-  padding: 6px 10px !important;
-}
-html[data-theme="blizzard"] nav .btn-ghost:hover {
-  color: var(--accent-bright) !important;
-  border-color: rgba(var(--accent-glow),.35) !important;
-  background: rgba(var(--accent-glow),.06) !important;
-  box-shadow: 0 0 12px rgba(var(--accent-glow),.2) !important;
-}
-
-/* Streak indicator */
-html[data-theme="blizzard"] nav .border-\[\#fb923c\] {
-  border-color: rgba(255,122,45,.4) !important;
-  background: rgba(255,122,45,.08) !important;
-}
-html[data-theme="blizzard"] nav .border-\[\#fb923c44\] {
-  border-color: rgba(255,122,45,.22) !important;
-  background: rgba(255,122,45,.05) !important;
-}
-html[data-theme="blizzard"] nav .text-orange { color: #ffb37a !important; }
-
-/* ── 6. Surface / card panels ───────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bg-surface {
-  background: linear-gradient(180deg, rgba(17,34,63,.5) 0%, rgba(7,11,26,.7) 100%);
-}
-
-html[data-theme="blizzard"] .bg-card {
-  background: linear-gradient(180deg, rgba(26,48,87,.45) 0%, rgba(7,11,26,.85) 100%);
-  border-color: rgba(var(--accent-glow),.25) !important;
-  border-radius: 8px;
-  box-shadow:
-    inset 0 1px 0 rgba(155,183,224,.18),
-    inset 0 -1px 0 rgba(0,0,0,.5),
-    0 8px 28px rgba(0,0,0,.5),
-    0 0 24px rgba(var(--accent-glow),.12);
-  position: relative;
-}
-html[data-theme="blizzard"] .bg-card::before {
-  content: '';
-  position: absolute; inset: 4px;
-  border: 1px solid rgba(155,183,224,.08);
-  border-radius: 6px;
+html[data-theme="blizzard"] .scene::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 30% at 50% 70%, rgba(80,120,180,.10), transparent 70%);
   pointer-events: none;
-  z-index: 0;
+}
+html[data-theme="blizzard"] .scene::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 90% 70% at 50% 50%, transparent 50%, rgba(0,0,0,.6) 100%);
+  pointer-events: none;
 }
 
-/* ── 7. Inputs ──────────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] input[type="email"],
-html[data-theme="blizzard"] input[type="password"],
-html[data-theme="blizzard"] input[type="text"],
-html[data-theme="blizzard"] input[type="search"],
-html[data-theme="blizzard"] textarea {
-  background: linear-gradient(180deg, #030a14 0%, #05101e 100%);
-  border-color: var(--metal-2) !important;
-  color: var(--accent-bright);
+html[data-theme="blizzard"][data-scene="aurora"] .scene {
+  background:
+    radial-gradient(ellipse 70% 40% at 30% 30%, rgba(var(--accent-glow), .18), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 70% 60%, rgba(var(--accent-glow), .12), transparent 70%),
+    radial-gradient(ellipse 100% 60% at 50% 100%, #06122a, transparent 70%),
+    var(--ink-0);
+}
+html[data-theme="blizzard"][data-scene="aurora"] .scene::before {
+  background:
+    linear-gradient(120deg, transparent 30%, rgba(var(--accent-glow), .08) 50%, transparent 70%),
+    linear-gradient(60deg, transparent 40%, rgba(var(--accent-glow), .05) 55%, transparent 75%);
+  animation: bz-shimmer 12s ease-in-out infinite;
+}
+html[data-theme="blizzard"][data-scene="void"] .scene {
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, #0a1224, var(--ink-0) 80%);
+}
+
+html[data-theme="blizzard"] .scene-castle {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  opacity: .9;
+}
+html[data-theme="blizzard"] .snow {
+  position: absolute; inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ── Ornate frame ────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .frame-layer {
+  position: absolute; inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+html[data-theme="blizzard"] .frame-layer > * { pointer-events: auto; }
+
+/* ── Viewport & topbar ───────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .viewport {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  padding: 96px 56px 88px 56px;
+}
+@media (max-width: 880px) {
+  html[data-theme="blizzard"] .viewport { padding: 80px 28px 72px 28px; }
+}
+@media (max-width: 640px) {
+  html[data-theme="blizzard"] .viewport { padding: 64px 16px 56px 16px; }
+}
+
+html[data-theme="blizzard"] .topbar {
+  position: absolute;
+  top: 18px; left: 110px; right: 110px;
+  height: 56px;
+  z-index: 7;
+  display: flex; align-items: center; gap: 18px;
+  padding: 0 24px;
+}
+@media (max-width: 880px) {
+  html[data-theme="blizzard"] .topbar { left: 72px; right: 72px; padding: 0 12px; }
+}
+@media (max-width: 640px) {
+  html[data-theme="blizzard"] .topbar { left: 56px; right: 56px; top: 12px; height: 44px; }
+}
+
+html[data-theme="blizzard"] .topbar::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,18,36,.85), rgba(10,18,36,.6));
+  border: 1px solid rgba(155,183,224,.18);
   border-radius: 4px;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,.55);
-}
-html[data-theme="blizzard"] input:focus,
-html[data-theme="blizzard"] textarea:focus {
-  border-color: var(--accent) !important;
-  outline: none;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,.55), 0 0 0 2px rgba(var(--accent-glow),.18);
+  box-shadow: inset 0 1px 0 rgba(155,183,224,.14), 0 4px 14px rgba(0,0,0,.5);
+  z-index: -1;
 }
 
-/* ── 8. Buttons ─────────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .btn-primary {
-  background: linear-gradient(180deg, rgba(var(--accent-glow),.35) 0%, rgba(var(--accent-glow),.1) 100%);
-  border-color: rgba(var(--accent-glow),.6) !important;
-  color: var(--accent-bright);
+/* ── Nav internals ───────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .nav-brand {
   font-family: var(--font-display);
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(var(--accent-glow),.9);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.4),
-    0 4px 14px rgba(0,0,0,.5),
-    0 0 18px rgba(var(--accent-glow),.35);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--accent-bright);
+  text-shadow: 0 0 12px rgba(var(--accent-glow), .8), 0 0 2px rgba(255,255,255,.4);
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
 }
-html[data-theme="blizzard"] .btn-primary:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.25),
-    0 6px 18px rgba(0,0,0,.5),
-    0 0 28px rgba(var(--accent-glow),.6);
+@media (max-width: 640px) {
+  html[data-theme="blizzard"] .nav-brand { font-size: 11px; letter-spacing: 2px; }
 }
-html[data-theme="blizzard"] .btn-primary:active:not(:disabled) { transform: scale(.98); }
 
-html[data-theme="blizzard"] .btn-ghost {
+html[data-theme="blizzard"] .nav-spacer { flex: 1; }
+html[data-theme="blizzard"] .nav-right { display: flex; align-items: center; gap: 10px; }
+
+html[data-theme="blizzard"] .streak {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,122,45,.4);
+  background: rgba(255,122,45,.08);
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: #ffb37a;
+}
+html[data-theme="blizzard"] .streak.hot {
+  border-color: var(--heat);
+  background: rgba(255,122,45,.16);
+  box-shadow: 0 0 12px rgba(255,122,45,.3);
+}
+html[data-theme="blizzard"] .streak .flame {
+  animation: bz-flame-pulse 2s ease-in-out infinite;
+  display: inline-block;
+}
+html[data-theme="blizzard"] .streak .num { font-weight: 700; }
+
+html[data-theme="blizzard"] .xpwrap {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgba(155,183,224,.2);
+  background: rgba(10,18,36,.6);
+  border-radius: 3px;
+}
+html[data-theme="blizzard"] .xp-lbl {
+  font-family: var(--font-display); font-size: 10px;
+  letter-spacing: 1.5px; color: var(--text-dim);
+}
+html[data-theme="blizzard"] .xp-bar {
+  width: 100px; height: 5px;
+  background: var(--ink-0); border-radius: 1px;
+  overflow: hidden;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.8);
+  border: 1px solid rgba(0,0,0,.5);
+}
+html[data-theme="blizzard"] .xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 0 8px rgba(var(--accent-glow), .7);
+  transition: width .5s ease;
+}
+html[data-theme="blizzard"] .xp-num {
+  font-family: var(--font-display); font-size: 11px;
+  color: var(--accent-bright); font-weight: 600;
+}
+@media (max-width: 1080px) {
+  html[data-theme="blizzard"] .xpwrap { display: none; }
+}
+
+html[data-theme="blizzard"] .rank-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  font-family: var(--font-display);
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  background: linear-gradient(180deg, rgba(var(--accent-glow), .15), rgba(var(--accent-glow), .05));
+  border: 1px solid rgba(var(--accent-glow), .5);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 14px rgba(var(--accent-glow), .25);
+}
+@media (max-width: 880px) {
+  html[data-theme="blizzard"] .rank-pill { display: none; }
+}
+
+html[data-theme="blizzard"] .nav-btn {
+  position: relative;
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
   background: transparent;
-  border-color: rgba(155,183,224,.2) !important;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-size: 11px; letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: var(--text-dim);
-  font-family: var(--font-display);
+  transition: all .2s ease;
 }
-html[data-theme="blizzard"] .btn-ghost:hover:not(:disabled) {
+html[data-theme="blizzard"] .nav-btn:hover {
   color: var(--accent-bright);
-  border-color: rgba(var(--accent-glow),.5) !important;
-  background: rgba(var(--accent-glow),.06);
+  border-color: rgba(var(--accent-glow), .35);
+  background: rgba(var(--accent-glow), .05);
 }
-
-html[data-theme="blizzard"] .btn-success {
-  border-color: rgba(var(--accent-glow),.5) !important;
+html[data-theme="blizzard"] .nav-btn.active {
   color: var(--accent-bright);
-  background: rgba(var(--accent-glow),.08);
+  border-color: rgba(var(--accent-glow), .55);
+  background: linear-gradient(180deg, rgba(var(--accent-glow), .18), rgba(var(--accent-glow), .04));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 16px rgba(var(--accent-glow), .3);
+}
+html[data-theme="blizzard"] .nav-btn .icon {
+  font-size: 14px;
+  filter: drop-shadow(0 0 4px rgba(var(--accent-glow), .5));
+}
+html[data-theme="blizzard"] .nav-btn .badge {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--danger); color: #fff;
+  font-size: 9px; font-weight: 700;
+  border-radius: 10px;
+  padding: 1px 5px; min-width: 16px; text-align: center;
+  box-shadow: 0 0 8px rgba(255,90,90,.7);
+}
+@media (max-width: 980px) {
+  html[data-theme="blizzard"] .nav-btn .lbl { display: none; }
+  html[data-theme="blizzard"] .nav-btn { padding: 6px 8px; }
 }
 
-html[data-theme="blizzard"] .btn-seal {
-  background: linear-gradient(180deg, rgba(var(--accent-glow),.5) 0%, rgba(var(--accent-glow),.15) 100%);
-  color: var(--accent-bright);
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-glow),.3),
-    0 0 0 2px rgba(var(--accent-glow),.5),
-    0 6px 20px rgba(var(--accent-glow),.35),
-    inset 0 1px 0 rgba(255,255,255,.2);
+/* ── Content scroll area ─────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .page {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 0 24px;
+  scrollbar-gutter: stable;
+}
+html[data-theme="blizzard"] .page-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  animation: bz-fade-up .5s ease both;
 }
 
-/* ── 9. Chips ───────────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .chip-purple {
-  background: rgba(var(--accent-glow),.12); border-color: rgba(var(--accent-glow),.35); color: var(--accent-bright);
-}
-html[data-theme="blizzard"] .chip-teal {
-  background: rgba(var(--accent-glow),.08); border-color: rgba(var(--accent-glow),.28); color: var(--accent);
-}
-html[data-theme="blizzard"] .chip-gold {
-  background: rgba(201,162,39,.1); border-color: rgba(201,162,39,.3); color: var(--accent-2);
-}
-html[data-theme="blizzard"] .chip-green {
-  background: rgba(126,255,53,.08); border-color: rgba(126,255,53,.22); color: var(--success);
-}
-html[data-theme="blizzard"] .chip-gray {
-  background: rgba(30,60,100,.3); border-color: rgba(78,110,168,.3); color: var(--text-dim);
-}
-
-/* ── 10. Typography ─────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .font-cinzel { font-family: var(--font-display) !important; }
-html[data-theme="blizzard"] h1, html[data-theme="blizzard"] h2, html[data-theme="blizzard"] h3 {
-  font-family: var(--font-display);
-}
-html[data-theme="blizzard"] .text-gold { color: var(--accent-2) !important; }
-
-/* ── 11. .glass — stained-glass panel ──────────────────────────────────────── */
 html[data-theme="blizzard"] .glass {
+  position: relative;
   background: linear-gradient(180deg, rgba(26,48,87,.45) 0%, rgba(7,11,26,.85) 100%);
-  border: 1px solid rgba(var(--accent-glow),.25);
+  border: 1px solid rgba(var(--accent-glow), .25);
   border-radius: 8px;
   box-shadow:
     inset 0 1px 0 rgba(155,183,224,.18),
     inset 0 -1px 0 rgba(0,0,0,.5),
     0 8px 28px rgba(0,0,0,.5),
-    0 0 24px rgba(var(--accent-glow),.12);
-  position: relative;
+    0 0 24px rgba(var(--accent-glow), .12);
 }
 html[data-theme="blizzard"] .glass::before {
-  content: '';
-  position: absolute; inset: 4px;
+  content: ''; position: absolute; inset: 4px;
   border: 1px solid rgba(155,183,224,.08);
   border-radius: 6px;
   pointer-events: none;
 }
 
-/* ── 12. Divider ────────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-divider {
-  display: flex; align-items: center; gap: 12px; margin: 18px 0; color: var(--text-mute);
+html[data-theme="blizzard"] .divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0;
+  color: var(--text-mute);
 }
-html[data-theme="blizzard"] .bz-divider::before,
-html[data-theme="blizzard"] .bz-divider::after {
+html[data-theme="blizzard"] .divider::before,
+html[data-theme="blizzard"] .divider::after {
   content: ''; flex: 1; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--accent-glow),.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-glow), .35), transparent);
+}
+html[data-theme="blizzard"] .divider .glyph {
+  font-size: 14px; color: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(var(--accent-glow), .6));
 }
 
-/* ── 13. Hero ───────────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-hero {
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .hero {
+  position: relative;
   text-align: center;
   padding: 18px 24px 28px;
   margin-bottom: 22px;
   border-radius: 10px;
-  background: radial-gradient(ellipse 60% 90% at 50% 0%, rgba(var(--accent-glow),.18), transparent 70%);
+  background: radial-gradient(ellipse 60% 90% at 50% 0%, rgba(var(--accent-glow), .18), transparent 70%);
 }
-html[data-theme="blizzard"] .bz-eyebrow {
+html[data-theme="blizzard"] .hero-eyebrow {
   font-family: var(--font-display);
-  font-size: 10px;
-  letter-spacing: 4px;
+  font-size: 10px; letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 8px;
-  text-shadow: 0 0 10px rgba(var(--accent-glow),.6);
+  text-shadow: 0 0 10px rgba(var(--accent-glow), .6);
 }
 
-/* ── 14. Section head ───────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-section-head {
-  display: flex; align-items: baseline; gap: 14px; margin: 28px 0 14px;
+/* ── Stat cards ──────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
 }
-html[data-theme="blizzard"] .bz-section-head h2 {
-  font-family: var(--font-display);
-  font-weight: 700; font-size: 18px; letter-spacing: 2px;
+@media (max-width: 720px) {
+  html[data-theme="blizzard"] .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+html[data-theme="blizzard"] .stat-card {
+  position: relative;
+  padding: 16px 14px 14px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(26,48,87,.4), rgba(10,18,36,.7));
+  border: 1px solid rgba(155,183,224,.18);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(155,183,224,.12);
+  overflow: hidden;
+}
+
+/* ── Action cards ────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .action-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px; margin-bottom: 28px;
+}
+html[data-theme="blizzard"] .action-card {
+  position: relative;
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, rgba(var(--accent-glow), .08) 0%, rgba(10,18,36,.7) 100%);
+  border: 1px solid rgba(var(--accent-glow), .3);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  overflow: hidden;
+}
+html[data-theme="blizzard"] .action-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--accent-glow), .7);
+  box-shadow: 0 8px 22px rgba(0,0,0,.5), 0 0 22px rgba(var(--accent-glow), .35);
+}
+html[data-theme="blizzard"] .action-card.primary {
+  border-color: rgba(var(--accent-glow), .55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 0 18px rgba(var(--accent-glow), .25);
+  animation: bz-pulse-glow 4s ease-in-out infinite;
+}
+html[data-theme="blizzard"] .action-icon {
+  font-size: 32px;
+  filter: drop-shadow(0 0 10px rgba(var(--accent-glow), .7));
+  flex-shrink: 0;
+}
+html[data-theme="blizzard"] .action-body { flex: 1; min-width: 0; }
+html[data-theme="blizzard"] .action-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 15px; letter-spacing: 1px;
+  color: var(--accent-bright); margin-bottom: 4px;
+}
+html[data-theme="blizzard"] .action-desc { font-size: 13px; color: var(--text-dim); line-height: 1.5; font-style: italic; }
+html[data-theme="blizzard"] .action-cta {
+  font-family: var(--font-display); font-size: 11px;
+  letter-spacing: 2px; color: var(--accent);
+  text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
+}
+
+/* ── Section head ────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .section-head {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 28px 0 14px;
+}
+html[data-theme="blizzard"] .section-head h2 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 18px; letter-spacing: 2px;
   color: var(--accent-2); text-transform: uppercase;
   text-shadow: 0 0 12px rgba(201,162,39,.4);
 }
-html[data-theme="blizzard"] .bz-section-head .bz-line {
-  flex: 1; height: 1px;
-  background: linear-gradient(90deg, rgba(201,162,39,.5), transparent);
-}
-html[data-theme="blizzard"] .bz-section-head .bz-meta {
+html[data-theme="blizzard"] .section-head .meta {
   font-family: var(--font-display); font-size: 11px;
   letter-spacing: 1.5px; color: var(--text-mute); text-transform: uppercase;
 }
+html[data-theme="blizzard"] .section-head .line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(201,162,39,.5), transparent);
+}
 
-/* ── 15. Tier sections ──────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-tier {
-  position: relative; margin-bottom: 18px; padding: 20px 22px 22px;
+/* ── Tier section ────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .tier {
+  position: relative;
+  margin-bottom: 18px;
+  padding: 20px 22px 22px;
   background: linear-gradient(180deg, rgba(17,34,63,.5), rgba(7,11,26,.6));
   border: 1px solid rgba(155,183,224,.15);
   border-radius: 8px;
   box-shadow: inset 0 1px 0 rgba(155,183,224,.1), 0 4px 14px rgba(0,0,0,.45);
 }
-html[data-theme="blizzard"] .bz-tier-header {
+html[data-theme="blizzard"] .tier-header {
   display: flex; align-items: center; gap: 14px;
-  margin-bottom: 16px; padding-bottom: 14px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
   border-bottom: 1px solid rgba(155,183,224,.1);
 }
-html[data-theme="blizzard"] .bz-tier-glyph {
+html[data-theme="blizzard"] .tier-glyph {
   width: 44px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   font-size: 22px;
-  background: radial-gradient(circle, rgba(var(--accent-glow),.25), rgba(var(--accent-glow),0) 70%);
-  border: 1px solid rgba(var(--accent-glow),.4);
+  background: radial-gradient(circle, rgba(var(--accent-glow), .25), rgba(var(--accent-glow), 0) 70%);
+  border: 1px solid rgba(var(--accent-glow), .4);
   border-radius: 50%; flex-shrink: 0;
-  box-shadow: inset 0 0 12px rgba(var(--accent-glow),.35), 0 0 14px rgba(var(--accent-glow),.25);
+  box-shadow: inset 0 0 12px rgba(var(--accent-glow), .35), 0 0 14px rgba(var(--accent-glow), .25);
 }
-html[data-theme="blizzard"] .bz-tier-meta { flex: 1; min-width: 0; }
-html[data-theme="blizzard"] .bz-tier-label {
-  font-family: var(--font-display); font-weight: 700; font-size: 14px;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--accent-bright); margin-bottom: 4px;
+html[data-theme="blizzard"] .tier-meta { flex: 1; min-width: 0; }
+html[data-theme="blizzard"] .tier-label {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 14px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--accent-bright); margin-bottom: 4px;
 }
-html[data-theme="blizzard"] .bz-tier-desc {
-  font-size: 13px; color: var(--text-dim); font-style: italic; line-height: 1.5;
-}
-html[data-theme="blizzard"] .bz-badge-placed {
-  font-size: 10px; letter-spacing: 1px; color: var(--accent-2); opacity: .85;
-}
-html[data-theme="blizzard"] .bz-badge-done {
-  font-size: 10px; letter-spacing: 1px; color: var(--success); opacity: .85;
-}
-html[data-theme="blizzard"] .bz-badge-locked {
-  font-size: 10px; letter-spacing: 1px; color: var(--text-dim); opacity: .7;
-}
-html[data-theme="blizzard"] .bz-tier-prog {
-  font-family: var(--font-display); font-size: 14px; letter-spacing: 1px;
-  color: var(--accent-2); flex-shrink: 0;
+html[data-theme="blizzard"] .tier-desc { font-size: 13px; color: var(--text-dim); font-style: italic; line-height: 1.5; }
+html[data-theme="blizzard"] .tier-prog {
+  font-family: var(--font-display); font-size: 14px;
+  letter-spacing: 1px; color: var(--accent-2); flex-shrink: 0;
   padding: 4px 12px;
-  border: 1px solid rgba(201,162,39,.3);
-  border-radius: 3px; background: rgba(201,162,39,.06);
+  border: 1px solid rgba(201,162,39,.3); border-radius: 3px;
+  background: rgba(201,162,39,.06);
 }
 
-/* ── 16. Chunk grid & cards ─────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-chunk-grid {
+/* Badge labels inside tier-label */
+html[data-theme="blizzard"] .badge-placed {
+  font-size: 11px; letter-spacing: 1px;
+  color: var(--accent); opacity: .85;
+}
+html[data-theme="blizzard"] .badge-done {
+  font-size: 11px; letter-spacing: 1px;
+  color: var(--success); opacity: .85;
+}
+html[data-theme="blizzard"] .badge-locked {
+  font-size: 11px; letter-spacing: 1px;
+  color: var(--text-mute); opacity: .7;
+}
+
+/* ── Chunk grid ──────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .chunk-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 10px;
 }
-html[data-theme="blizzard"] .bz-chunk-card {
+html[data-theme="blizzard"] .chunk-card {
+  position: relative;
   padding: 14px 14px 16px;
   background: linear-gradient(180deg, rgba(26,48,87,.4), rgba(10,18,36,.5));
   border: 1px solid rgba(155,183,224,.18);
   border-radius: 6px;
   cursor: pointer;
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition: all .2s ease;
   box-shadow: inset 0 1px 0 rgba(155,183,224,.08);
 }
-html[data-theme="blizzard"] .bz-chunk-card:hover {
+html[data-theme="blizzard"] .chunk-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(var(--accent-glow),.55);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    0 4px 12px rgba(0,0,0,.4),
-    0 0 14px rgba(var(--accent-glow),.25);
+  border-color: rgba(var(--accent-glow), .55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 4px 12px rgba(0,0,0,.4), 0 0 14px rgba(var(--accent-glow), .25);
 }
-html[data-theme="blizzard"] .bz-chunk-card.bz-locked {
-  opacity: .35; filter: grayscale(.7); cursor: not-allowed;
-}
-html[data-theme="blizzard"] .bz-chunk-card.bz-locked:hover {
-  transform: none; border-color: rgba(155,183,224,.18); box-shadow: none;
-}
-html[data-theme="blizzard"] .bz-chunk-card.bz-done { border-color: rgba(126,255,53,.25); }
-html[data-theme="blizzard"] .bz-chunk-card.bz-warn { border-color: rgba(255,160,64,.25); }
+html[data-theme="blizzard"] .chunk-card.locked { opacity: .35; filter: grayscale(.7); cursor: not-allowed; }
+html[data-theme="blizzard"] .chunk-card.locked:hover { transform: none; border-color: rgba(155,183,224,.18); box-shadow: none; }
+html[data-theme="blizzard"] .chunk-card.done { border-color: rgba(126,255,53,.25); }
+html[data-theme="blizzard"] .chunk-card.warn { border-color: rgba(255,160,64,.25); }
 
-html[data-theme="blizzard"] .bz-chunk-glyph {
-  font-size: 22px; margin-bottom: 6px; display: block;
-  filter: drop-shadow(0 0 6px rgba(var(--accent-glow),.4));
+html[data-theme="blizzard"] .chunk-glyph {
+  font-size: 22px; margin-bottom: 6px;
+  filter: drop-shadow(0 0 6px rgba(var(--accent-glow), .4));
 }
-html[data-theme="blizzard"] .bz-chunk-title {
-  font-family: var(--font-display); font-size: 12.5px; font-weight: 600;
-  color: var(--text); margin-bottom: 4px; letter-spacing: .3px; display: block;
+html[data-theme="blizzard"] .chunk-title {
+  font-family: var(--font-display); font-size: 12.5px;
+  font-weight: 600; color: var(--text); margin-bottom: 4px; letter-spacing: .3px;
 }
-html[data-theme="blizzard"] .bz-chunk-prog {
+html[data-theme="blizzard"] .chunk-prog {
   font-size: 11px; color: var(--text-mute); margin-bottom: 8px;
-  font-family: var(--font-display); letter-spacing: 1px; display: block;
+  font-family: var(--font-display); letter-spacing: 1px;
 }
-html[data-theme="blizzard"] .bz-strength-bar {
-  height: 3px; background: rgba(0,0,0,.6); border-radius: 1px; overflow: hidden;
+html[data-theme="blizzard"] .strength-bar {
+  height: 3px; background: rgba(0,0,0,.6);
+  border-radius: 1px; overflow: hidden;
 }
-html[data-theme="blizzard"] .bz-strength-fill {
-  height: 100%; transition: width .5s ease; box-shadow: 0 0 6px currentColor;
+html[data-theme="blizzard"] .strength-fill {
+  height: 100%; transition: width .5s ease;
+  box-shadow: 0 0 6px currentColor;
 }
-html[data-theme="blizzard"] .bz-strength-lbl {
+html[data-theme="blizzard"] .strength-lbl {
   margin-top: 4px; font-size: 10px; color: var(--text-mute);
-  font-family: var(--font-display); letter-spacing: 1px; display: block;
+  font-family: var(--font-display); letter-spacing: 1px;
 }
 
-/* ── 17. Stat cards ─────────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-stats-row {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px;
+/* ── Profile page ────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .profile-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 22px;
 }
-@media (max-width: 720px) { html[data-theme="blizzard"] .bz-stats-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 880px) {
+  html[data-theme="blizzard"] .profile-grid { grid-template-columns: 1fr; }
+}
+html[data-theme="blizzard"] .identity-card { padding: 26px 22px; text-align: center; }
+html[data-theme="blizzard"] .avatar-frame {
+  width: 96px; height: 96px;
+  margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-glow), .4), rgba(var(--accent-glow), 0) 70%);
+  border: 2px solid rgba(var(--accent-glow), .6);
+  box-shadow: inset 0 0 24px rgba(var(--accent-glow), .35), 0 0 24px rgba(var(--accent-glow), .35);
+  filter: drop-shadow(0 0 12px rgba(var(--accent-glow), .5));
+}
+html[data-theme="blizzard"] .user-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 22px; letter-spacing: 2px; color: var(--text);
+  text-shadow: 0 0 14px rgba(var(--accent-glow), .35); margin-bottom: 4px;
+}
+html[data-theme="blizzard"] .user-title {
+  font-family: var(--font-body); font-style: italic;
+  font-size: 14px; color: var(--text-dim); margin-bottom: 14px;
+}
+html[data-theme="blizzard"] .rank-name {
+  font-family: var(--font-display); font-size: 20px;
+  letter-spacing: 1.5px; color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(201,162,39,.5);
+}
+html[data-theme="blizzard"] .rank-glyph { font-size: 28px; margin-bottom: 4px; display: block; }
 
-html[data-theme="blizzard"] .bz-stat-card {
-  position: relative; padding: 16px 14px 14px; text-align: center;
-  background: linear-gradient(180deg, rgba(26,48,87,.4), rgba(10,18,36,.7));
-  border: 1px solid rgba(155,183,224,.18); border-radius: 6px;
-  box-shadow: inset 0 1px 0 rgba(155,183,224,.12); overflow: hidden;
+html[data-theme="blizzard"] .appearance { padding: 22px 24px; }
+html[data-theme="blizzard"] .pref-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(155,183,224,.1);
 }
-html[data-theme="blizzard"] .bz-stat-card::before {
-  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--accent-glow),.7), transparent);
+html[data-theme="blizzard"] .pref-row:first-of-type { border-top: 0; padding-top: 0; }
+html[data-theme="blizzard"] .pref-label { flex: 1; }
+html[data-theme="blizzard"] .pref-label .lbl {
+  display: block; font-family: var(--font-display);
+  font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text); margin-bottom: 2px;
 }
-html[data-theme="blizzard"] .bz-stat-val {
-  display: block; font-family: var(--font-display); font-weight: 700; font-size: 22px;
-  color: var(--accent-bright); text-shadow: 0 0 12px rgba(var(--accent-glow),.5); line-height: 1.1;
-}
-html[data-theme="blizzard"] .bz-stat-lbl {
-  display: block; margin-top: 6px; font-family: var(--font-display);
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim);
-}
+html[data-theme="blizzard"] .pref-label .hint { font-size: 12px; color: var(--text-mute); font-style: italic; }
 
-/* ── 18. Action cards ───────────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .bz-action-card {
-  position: relative; display: flex; align-items: center; gap: 16px;
-  padding: 18px 20px;
-  background: linear-gradient(180deg, rgba(var(--accent-glow),.08) 0%, rgba(10,18,36,.7) 100%);
-  border: 1px solid rgba(var(--accent-glow),.3); border-radius: 6px;
+/* ── Palette grid ────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+html[data-theme="blizzard"] .palette-tile {
+  position: relative;
+  padding: 12px 10px 10px;
+  background: linear-gradient(180deg, rgba(26,48,87,.4), rgba(10,18,36,.6));
+  border: 1px solid rgba(155,183,224,.18);
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition: all .2s ease;
+  text-align: center;
 }
-html[data-theme="blizzard"] .bz-action-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(var(--accent-glow),.7);
-  box-shadow: 0 8px 22px rgba(0,0,0,.5), 0 0 22px rgba(var(--accent-glow),.35);
+html[data-theme="blizzard"] .palette-tile:hover { transform: translateY(-2px); border-color: rgba(155,183,224,.4); }
+html[data-theme="blizzard"] .palette-tile.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(var(--accent-glow), .55), inset 0 1px 0 rgba(255,255,255,.1);
 }
-html[data-theme="blizzard"] .bz-action-card.bz-primary {
-  border-color: rgba(var(--accent-glow),.55);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 0 18px rgba(var(--accent-glow),.25);
-  animation: bz-pulse-glow 4s ease-in-out infinite;
+html[data-theme="blizzard"] .palette-tile .swatch-row {
+  display: flex; justify-content: center; gap: 4px; margin-bottom: 8px;
 }
-html[data-theme="blizzard"] .bz-action-icon {
-  font-size: 32px; filter: drop-shadow(0 0 10px rgba(var(--accent-glow),.7)); flex-shrink: 0;
+html[data-theme="blizzard"] .palette-tile .swatch {
+  width: 14px; height: 22px;
+  border-radius: 2px;
+  box-shadow: 0 0 8px currentColor;
 }
-html[data-theme="blizzard"] .bz-action-title {
-  font-family: var(--font-display); font-weight: 700; font-size: 15px;
-  letter-spacing: 1px; color: var(--accent-bright); margin-bottom: 4px;
+html[data-theme="blizzard"] .palette-tile .name {
+  font-family: var(--font-display); font-size: 10.5px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim);
 }
-html[data-theme="blizzard"] .bz-action-desc {
-  font-size: 13px; color: var(--text-dim); line-height: 1.5; font-style: italic;
-}
-html[data-theme="blizzard"] .bz-action-cta {
-  font-family: var(--font-display); font-size: 11px; letter-spacing: 2px;
-  color: var(--accent); text-transform: uppercase; flex-shrink: 0;
-}
-
-/* ── 19. Hook-card accents ──────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .hook-card::before {
-  background: linear-gradient(90deg, transparent 0%, rgba(var(--accent-glow),.4) 50%, transparent 100%);
-}
-html[data-theme="blizzard"] .hook-card::after {
-  background: linear-gradient(90deg, transparent 0%, rgba(var(--accent-glow),.5) 50%, transparent 100%);
+html[data-theme="blizzard"] .palette-tile.active .name { color: var(--accent-bright); }
+html[data-theme="blizzard"] .palette-tile .check {
+  position: absolute; top: 4px; right: 4px;
+  width: 16px; height: 16px;
+  border-radius: 50%; background: var(--accent); color: var(--ink-0);
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 10px rgba(var(--accent-glow), .8);
 }
 
-/* ── 20. Landing / foil text ────────────────────────────────────────────────── */
-html[data-theme="blizzard"] .foil-on-dark {
-  background: linear-gradient(135deg, #1a4f8f 0%, #5dc6ff 35%, #b8eaff 50%, #5dc6ff 65%, #1a4f8f 100%);
-  background-clip: text; -webkit-background-clip: text;
-  color: transparent; -webkit-text-fill-color: transparent;
+/* ── Segmented control ───────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .seg {
+  display: inline-flex;
+  background: rgba(10,18,36,.7);
+  border: 1px solid rgba(155,183,224,.2);
+  border-radius: 4px;
+  padding: 2px;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.5);
 }
-html[data-theme="blizzard"] .section-eyebrow { color: var(--accent); text-shadow: 0 0 10px rgba(var(--accent-glow),.3); }
-html[data-theme="blizzard"] .ornate-divider { color: var(--accent); text-shadow: 0 0 12px rgba(var(--accent-glow),.45); }
-html[data-theme="blizzard"] .ornate-divider::before,
-html[data-theme="blizzard"] .ornate-divider::after {
-  background: linear-gradient(90deg, transparent, rgba(var(--accent-glow),.65) 50%, transparent);
+html[data-theme="blizzard"] .seg button {
+  padding: 6px 14px;
+  font-family: var(--font-display); font-size: 11px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-mute); border-radius: 2px;
+  transition: all .2s; background: transparent;
 }
-
-/* ── 21. Animations ─────────────────────────────────────────────────────────── */
-@keyframes bz-pulse-glow {
-  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 0 14px rgba(var(--accent-glow),.25); }
-  50%       { box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 0 28px rgba(var(--accent-glow),.5); }
-}
-@keyframes bz-flame-pulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255,122,45,.6)); }
-  50%       { transform: scale(1.15); filter: drop-shadow(0 0 12px rgba(255,122,45,.9)); }
-}
-@keyframes bz-fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+html[data-theme="blizzard"] .seg button.on {
+  background: linear-gradient(180deg, rgba(var(--accent-glow), .3), rgba(var(--accent-glow), .08));
+  color: var(--accent-bright);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 10px rgba(var(--accent-glow), .25);
 }
 
-/* BlizzardFrame component — transparent scene placeholder, no decorative chrome */
+/* ── Toggle switch ───────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .switch {
+  position: relative;
+  width: 44px; height: 22px;
+  background: rgba(10,18,36,.8);
+  border: 1px solid rgba(155,183,224,.25);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.5);
+  flex-shrink: 0;
+}
+html[data-theme="blizzard"] .switch::after {
+  content: ''; position: absolute;
+  top: 1px; left: 1px;
+  width: 18px; height: 18px;
+  background: var(--metal-3);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.6);
+  transition: all .2s;
+}
+html[data-theme="blizzard"] .switch.on {
+  background: rgba(var(--accent-glow), .25);
+  border-color: rgba(var(--accent-glow), .5);
+}
+html[data-theme="blizzard"] .switch.on::after {
+  left: 23px;
+  background: var(--accent-bright);
+  box-shadow: 0 0 10px rgba(var(--accent-glow), .9);
+}
+
+/* ── Modal/overlay ───────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0,0,0,.78);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: bz-fade-up .3s ease both;
+}
+html[data-theme="blizzard"] .modal {
+  position: relative; max-width: 480px; width: 100%;
+  padding: 36px 30px 30px; text-align: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--accent-glow), .35), transparent 70%),
+    linear-gradient(180deg, rgba(26,48,87,.92), rgba(7,11,26,.98));
+  border: 1px solid rgba(var(--accent-glow), .6);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.15),
+    0 24px 60px rgba(0,0,0,.7),
+    0 0 80px rgba(var(--accent-glow), .35);
+  animation: bz-level-bounce .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+html[data-theme="blizzard"] .modal-glyph { font-size: 64px; margin-bottom: 8px; filter: drop-shadow(0 0 16px rgba(var(--accent-glow), .8)); }
+html[data-theme="blizzard"] .modal-level { font-family: var(--font-display); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+html[data-theme="blizzard"] .modal-rank { font-family: var(--font-display); font-weight: 700; font-size: 36px; letter-spacing: 2px; color: var(--accent-bright); text-shadow: 0 0 24px rgba(var(--accent-glow), .8); margin-bottom: 12px; }
+html[data-theme="blizzard"] .modal-lore { font-family: var(--font-body); font-style: italic; font-size: 16px; color: var(--text); line-height: 1.5; margin-bottom: 16px; }
+html[data-theme="blizzard"] .modal-xp { font-family: var(--font-display); font-size: 11px; letter-spacing: 2px; color: var(--accent-2); margin-bottom: 22px; }
+html[data-theme="blizzard"] .modal-btn {
+  width: 100%; padding: 14px;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink-0);
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+  border-radius: 4px; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 4px 14px rgba(0,0,0,.5), 0 0 24px rgba(var(--accent-glow), .5);
+  transition: transform .2s;
+}
+html[data-theme="blizzard"] .modal-btn:hover { transform: translateY(-1px); }
+
+/* ── Badge toast ─────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .toast {
+  position: fixed; bottom: 80px; right: 80px; z-index: 40;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  background: linear-gradient(180deg, rgba(26,48,87,.92), rgba(7,11,26,.95));
+  border: 1px solid rgba(201,162,39,.55);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.6), 0 0 24px rgba(201,162,39,.4);
+  animation: bz-fade-up .4s ease both, bz-shimmer 2s ease-in-out infinite;
+  min-width: 280px;
+}
+html[data-theme="blizzard"] .toast-glyph { font-size: 30px; filter: drop-shadow(0 0 8px rgba(201,162,39,.7)); }
+html[data-theme="blizzard"] .toast-label { font-family: var(--font-display); font-size: 10px; letter-spacing: 2px; color: var(--accent-2); margin-bottom: 2px; }
+html[data-theme="blizzard"] .toast-name  { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 2px; }
+html[data-theme="blizzard"] .toast-desc  { font-size: 12px; color: var(--text-dim); font-style: italic; }
+@media (max-width: 720px) {
+  html[data-theme="blizzard"] .toast { right: 20px; left: 20px; bottom: 70px; }
+}
+
+/* ── Review page ─────────────────────────────────────────────────────────── */
+html[data-theme="blizzard"] .review-wrap { max-width: 720px; margin: 12px auto 0; }
+html[data-theme="blizzard"] .back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-display); font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-dim); padding: 6px 10px; margin-bottom: 18px;
+  transition: color .2s;
+}
+html[data-theme="blizzard"] .back-btn:hover { color: var(--accent-bright); }
+html[data-theme="blizzard"] .review-head {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap;
+}
+html[data-theme="blizzard"] .card-stage {
+  position: relative;
+  padding: 28px 30px 26px;
+  background: linear-gradient(180deg, rgba(26,48,87,.5), rgba(7,11,26,.85));
+  border: 1px solid rgba(var(--accent-glow), .3);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 1px 0 rgba(155,183,224,.18),
+    0 12px 32px rgba(0,0,0,.6),
+    0 0 36px rgba(var(--accent-glow), .15);
+  animation: bz-fade-up .4s ease both;
+}
+html[data-theme="blizzard"] .btn-primary {
+  display: block; width: 100%;
+  padding: 14px 22px;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent-bright);
+  background: linear-gradient(180deg, rgba(var(--accent-glow), .35), rgba(var(--accent-glow), .1));
+  border: 1px solid rgba(var(--accent-glow), .6);
+  border-radius: 4px; cursor: pointer;
+  text-shadow: 0 0 10px rgba(var(--accent-glow), .9);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.4),
+    0 4px 14px rgba(0,0,0,.5),
+    0 0 18px rgba(var(--accent-glow), .35);
+  transition: all .2s ease;
+}
+html[data-theme="blizzard"] .btn-primary:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 6px 18px rgba(0,0,0,.5), 0 0 28px rgba(var(--accent-glow), .6); }
+html[data-theme="blizzard"] .grade-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+html[data-theme="blizzard"] .grade {
+  position: relative;
+  padding: 12px 8px 14px;
+  font-family: var(--font-display); font-size: 12px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-dim);
+  background: linear-gradient(180deg, rgba(26,48,87,.4), rgba(10,18,36,.6));
+  border: 1px solid rgba(155,183,224,.2);
+  border-radius: 4px; cursor: pointer; text-align: center;
+  transition: all .2s ease;
+  box-shadow: inset 0 1px 0 rgba(155,183,224,.1);
+}
+html[data-theme="blizzard"] .grade:hover { color: var(--text); border-color: rgba(var(--accent-glow), .5); box-shadow: 0 0 12px rgba(var(--accent-glow), .25); }
+html[data-theme="blizzard"] .grade.again:hover { color: #ffb0b0; border-color: rgba(255,90,90,.5); box-shadow: 0 0 12px rgba(255,90,90,.25); }
+html[data-theme="blizzard"] .grade.easy:hover  { color: #c0ffaa; border-color: rgba(126,255,53,.5); box-shadow: 0 0 12px rgba(126,255,53,.25); }
+
+/* ── Constellation / badges ──────────────────────────────────────────────── */
+html[data-theme="blizzard"] .constellation-card { padding: 22px 24px; margin-top: 22px; }
+html[data-theme="blizzard"] .badges-strip { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+html[data-theme="blizzard"] .badge-medal {
+  width: 56px; height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  background: radial-gradient(circle, rgba(201,162,39,.3), rgba(201,162,39,.05) 70%);
+  border: 1px solid rgba(201,162,39,.4);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 12px rgba(201,162,39,.3);
+}
+html[data-theme="blizzard"] .badge-medal.locked { opacity: .25; filter: grayscale(1); }
+
+/* ── 1. Design tokens ────────────────────────────────────────────────────────── */
