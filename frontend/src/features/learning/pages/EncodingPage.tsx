@@ -4,6 +4,7 @@ import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, curiosityApi } fro
 import { useAuth } from '@/shared/hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
 import StoryPanel from '@/features/learning/components/StoryPanel'
+import RabbitHoleHtml from '@/features/learning/components/RabbitHoleHtml'
 import QuestionCard from '@/features/learning/components/QuestionCard'
 import CodeEditor from '@/features/learning/components/CodeEditor'
 import TailwindEditor from '@/features/learning/components/TailwindEditor'
@@ -575,7 +576,11 @@ export default function EncodingPage() {
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           {encoding.storyBeats && <StoryPanel beats={encoding.storyBeats} fullPage subChunkId={encoding.subChunkId} topicId={encoding.topicId} rabbitHoleTerms={encoding.rabbitHoleTerms} />}
           {encoding.explanationHtml && (
-            <div
+            <RabbitHoleHtml
+              html={encoding.explanationHtml}
+              terms={encoding.rabbitHoleTerms}
+              subChunkId={encoding.subChunkId}
+              topicId={encoding.topicId}
               className={cn('text-[15px] leading-[1.8] text-text my-6',
                 '[&_p]:m-0 [&_p]:mb-4 [&_p:last-child]:mb-0',
                 '[&_strong]:text-gold [&_strong]:font-semibold [&_em]:text-purple-light [&_em]:italic',
@@ -589,7 +594,6 @@ export default function EncodingPage() {
                 '[&_pre_code]:block [&_pre_code]:px-5 [&_pre_code]:py-4 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.75] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:font-mono [&_pre_code]:overflow-x-auto [&_pre_code]:bg-transparent [&_pre_code]:border-none',
                 'max-[480px]:text-[14px] max-[480px]:[&_pre_code]:text-[12px]',
               )}
-              dangerouslySetInnerHTML={{ __html: encoding.explanationHtml }}
             />
           )}
           <button className="btn btn-primary" onClick={handleAdvance}>I understand — continue →</button>

@@ -6,6 +6,7 @@ import com.ambravate.arcane.academy.auth.dto.LoginRequest;
 import com.ambravate.arcane.academy.auth.dto.RegisterRequest;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
+import com.ambravate.arcane.academy.common.exception.UserNotFoundException;
 import com.ambravate.arcane.academy.common.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
                     log.warn("[Auth] Login failed — email not found: {}", request.getEmail());
-                    return new BadCredentialsException("Invalid credentials.");
+                    return new UserNotFoundException("No account found for that email address.");
                 });
 
         if (user.getPasswordHash() == null) {
@@ -159,6 +160,14 @@ public class AuthService {
         userRepository.save(user);
         String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
         return buildResponse(user, token);
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.existsByUsername(username);
+    }
+
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.existsByEmail(email);
     }
 
     private AuthResponse buildResponse(User user, String token) {

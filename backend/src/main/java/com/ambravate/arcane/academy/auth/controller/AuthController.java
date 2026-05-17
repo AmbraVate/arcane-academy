@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -28,8 +30,18 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
+    @GetMapping("/check-username")
+    public ResponseEntity<Map<String, Boolean>> checkUsername(@RequestParam String username) {
+        return ResponseEntity.ok(Map.of("available", authService.isUsernameAvailable(username)));
+    }
+
+    @GetMapping("/check-email")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam String email) {
+        return ResponseEntity.ok(Map.of("available", authService.isEmailAvailable(email)));
+    }
+
     @PostMapping("/refresh")
-    public ResponseEntity<AuthResponse> refresh(@RequestBody java.util.Map<String, String> body) {
+    public ResponseEntity<AuthResponse> refresh(@RequestBody Map<String, String> body) {
         String token = body.get("refreshToken");
         if (token == null || token.isBlank()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         try {

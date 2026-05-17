@@ -3,7 +3,30 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Wand2 } from 'lucide-react'
+import { Wand2, UserX, KeyRound } from 'lucide-react'
+
+type LoginError =
+  | { kind: 'no_account'; email: string }
+  | { kind: 'wrong_password' }
+  | { kind: 'oauth_account'; message: string }
+  | { kind: 'blocked' }
+  | { kind: 'generic'; message: string }
+  | null
+
+function parseError(err: unknown, submittedEmail: string): LoginError {
+  const resp = (err as { response?: { data?: { code?: string; message?: string }; status?: number } })?.response
+  const code = resp?.data?.code
+  const status = resp?.status
+
+  if (status === 404 || code === 'USER_NOT_FOUND') return { kind: 'no_account', email: submittedEmail }
+  if (status === 403) return { kind: 'blocked' }
+
+  const msg = resp?.data?.message ?? ''
+  if (msg.toLowerCase().includes('google sign-in')) return { kind: 'oauth_account', message: msg }
+  if (status === 401) return { kind: 'wrong_password' }
+
+  return { kind: 'generic', message: msg || 'Something went wrong. Please try again.' }
+}
 
 export default function LoginPage() {
   const { login } = useAuth()
@@ -12,20 +35,20 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const blockedReason = searchParams.get('reason') === 'blocked'
-  const [error, setError] = useState(blockedReason ? 'Your account has been blocked. Please contact support.' : '')
+  const [loginError, setLoginError] = useState<LoginError>(
+    blockedReason ? { kind: 'blocked' } : null
+  )
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    setError('')
+    setLoginError(null)
     setLoading(true)
     try {
       await login(email, password)
       navigate('/topics')
     } catch (err: unknown) {
-      const msg = (err as { response?: { data?: { message?: string } } })
-        ?.response?.data?.message ?? 'Invalid credentials.'
-      setError(msg)
+      setLoginError(parseError(err, email))
     } finally {
       setLoading(false)
     }
@@ -51,11 +74,9 @@ export default function LoginPage() {
             <Input type="password" value={password} onChange={e => setPassword(e.target.value)}
               placeholder="••••••••" required />
           </div>
-          {error && (
-            <div className="bg-[#2d0808] border border-red rounded-[6px] px-[13px] py-[9px] text-[13px] text-red text-center">
-              {error}
-            </div>
-          )}
+
+          {loginError && <LoginErrorBanner error={loginError} />}
+
           <Button variant="primary" type="submit" disabled={loading} className="w-full py-[10px]">
             {loading ? 'Entering...' : '✦ Enter the Academy'}
           </Button>
@@ -81,6 +102,70 @@ export default function LoginPage() {
           New apprentice? <Link to="/register" className="text-purple-light hover:underline">Register here</Link>
         </p>
       </div>
+    </div>
+  )
+}
+
+function LoginErrorBanner({ error }: { error: NonNullable<LoginError> }) {
+  if (error.kind === 'no_account') {
+    return (
+      <div className="bg-[#1a1208] border border-[rgba(234,179,8,0.4)] rounded-[8px] px-4 py-3.5 text-left">
+        <div className="flex items-center gap-2 mb-1.5">
+          <UserX size={14} className="text-gold flex-shrink-0" />
+          <span className="text-[13px] font-semibold text-gold">No account found</span>
+        </div>
+        <p className="text-[13px] text-muted leading-[1.5] mb-2.5">
+          There's no wizard registered with <span className="text-text font-mono text-[12px]">{error.email}</span>.
+        </p>
+        <Link
+          to={`/register`}
+          className="inline-flex items-center gap-1.5 text-[13px] text-purple-light hover:underline font-medium"
+        >
+          ✦ Create an account instead
+        </Link>
+      </div>
+    )
+  }
+
+  if (error.kind === 'wrong_password') {
+    return (
+      <div className="bg-[#2d0808] border border-[rgba(248,113,113,0.4)] rounded-[8px] px-4 py-3.5 text-left">
+        <div className="flex items-center gap-2 mb-1.5">
+          <KeyRound size={14} className="text-red flex-shrink-0" />
+          <span className="text-[13px] font-semibold text-red">Incorrect password</span>
+        </div>
+        <p className="text-[13px] text-muted leading-[1.5] mb-2.5">
+          The password you entered doesn't match this account.
+        </p>
+        <Link
+          to="/forgot-password"
+          className="inline-flex items-center gap-1.5 text-[13px] text-purple-light hover:underline font-medium"
+        >
+          🔑 Forgot your password?
+        </Link>
+      </div>
+    )
+  }
+
+  if (error.kind === 'blocked') {
+    return (
+      <div className="bg-[#2d0808] border border-red rounded-[6px] px-[13px] py-[9px] text-[13px] text-red text-center">
+        Your account has been blocked. Please contact support.
+      </div>
+    )
+  }
+
+  if (error.kind === 'oauth_account') {
+    return (
+      <div className="bg-[#1a1208] border border-[rgba(234,179,8,0.4)] rounded-[6px] px-[13px] py-[9px] text-[13px] text-gold text-center">
+        {error.message}
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-[#2d0808] border border-red rounded-[6px] px-[13px] py-[9px] text-[13px] text-red text-center">
+      {error.message}
     </div>
   )
 }

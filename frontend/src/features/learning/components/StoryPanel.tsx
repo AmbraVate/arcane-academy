@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import type { StoryBeat, StoryRabbitHoleTerm } from '@/shared/types'
 import { rabbitHoleTermApi } from '@/shared/api/services'
+import { annotateTerms } from './RabbitHoleHtml'
 
 interface Popover { term: string; description: string; x: number; y: number }
 
@@ -11,23 +12,6 @@ interface StoryPanelProps {
   subChunkId?: string
   topicId?: string
   rabbitHoleTerms?: StoryRabbitHoleTerm[] | null
-}
-
-function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): string {
-  if (!terms.length) return html
-  // Split on HTML tags so we only replace inside text nodes, not attribute values
-  const parts = html.split(/(<[^>]+>)/)
-  return parts.map((part, i) => {
-    if (i % 2 === 1) return part // it's a tag, skip
-    let text = part
-    for (const { term, description } of terms) {
-      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      const re = new RegExp(`\\b(${escaped})\\b`, 'gi')
-      const safeDesc = description.replace(/"/g, '&quot;')
-      text = text.replace(re, `<span data-rh="${term}" data-rh-desc="${safeDesc}">$1</span>`)
-    }
-    return text
-  }).join('')
 }
 
 export default function StoryPanel({ beats, fullPage = false, subChunkId, topicId, rabbitHoleTerms }: StoryPanelProps) {
@@ -71,9 +55,7 @@ export default function StoryPanel({ beats, fullPage = false, subChunkId, topicI
     try {
       await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId ?? '', topicId ?? '')
       setSavedTerms(prev => new Set(prev).add(popover.term))
-    } catch { /* ignore */ } finally {
-      setSaving(false)
-    }
+    } catch { /* ignore */ } finally { setSaving(false) }
   }
 
   async function handleUnsave() {
@@ -82,9 +64,7 @@ export default function StoryPanel({ beats, fullPage = false, subChunkId, topicI
     try {
       await rabbitHoleTermApi.remove(popover.term)
       setSavedTerms(prev => { const s = new Set(prev); s.delete(popover.term); return s })
-    } catch { /* ignore */ } finally {
-      setSaving(false)
-    }
+    } catch { /* ignore */ } finally { setSaving(false) }
   }
 
   return (

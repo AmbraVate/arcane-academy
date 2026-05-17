@@ -1,8 +1,55 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Check, X, Loader2 } from 'lucide-react'
+import api from '@/shared/api/client'
+
+type AvailState = 'idle' | 'checking' | 'available' | 'taken'
+
+function useAvailabilityCheck(value: string, endpoint: string, minLength = 2) {
+  const [state, setState] = useState<AvailState>('idle')
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    if (value.length < minLength) { setState('idle'); return }
+
+    setState('checking')
+    timerRef.current = setTimeout(async () => {
+      try {
+        const { data } = await api.get<{ available: boolean }>(endpoint, { params: { [endpoint.includes('username') ? 'username' : 'email']: value } })
+        setState(data.available ? 'available' : 'taken')
+      } catch {
+        setState('idle')
+      }
+    }, 400)
+
+    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+  }, [value, endpoint, minLength])
+
+  return state
+}
+
+function AvailBadge({ state, takenLabel }: { state: AvailState; takenLabel: string }) {
+  if (state === 'idle') return null
+  if (state === 'checking') return (
+    <span className="flex items-center gap-1 text-[11px] text-muted">
+      <Loader2 size={11} className="animate-spin" /> Checking…
+    </span>
+  )
+  if (state === 'available') return (
+    <span className="flex items-center gap-1 text-[11px] text-green">
+      <Check size={11} strokeWidth={2.5} /> Available
+    </span>
+  )
+  return (
+    <span className="flex items-center gap-1 text-[11px] text-red">
+      <X size={11} strokeWidth={2.5} /> {takenLabel}
+    </span>
+  )
+}
 
 export default function RegisterPage() {
   const { register } = useAuth()
@@ -13,8 +60,18 @@ export default function RegisterPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const usernameState = useAvailabilityCheck(username, '/api/auth/check-username', 3)
+  const emailState    = useAvailabilityCheck(email,    '/api/auth/check-email',    5)
+
+  const canSubmit = !loading
+    && usernameState !== 'taken'
+    && emailState    !== 'taken'
+    && usernameState !== 'checking'
+    && emailState    !== 'checking'
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (!canSubmit) return
     setError('')
     setLoading(true)
     try {
@@ -37,27 +94,72 @@ export default function RegisterPage() {
         <p className="text-[15px] text-muted italic mb-7">Create your wizard identity</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
+          {/* Username */}
           <div className="flex flex-col gap-1.5">
-            <label className="font-cinzel text-[11px] tracking-[1px] text-muted">Wizard Name</label>
-            <Input type="text" value={username} onChange={e => setUsername(e.target.value)}
-              placeholder="Aldric" required minLength={3} />
+            <div className="flex items-center justify-between">
+              <label className="font-cinzel text-[11px] tracking-[1px] text-muted">Wizard Name</label>
+              <AvailBadge state={usernameState} takenLabel="Wizard name not available" />
+            </div>
+            <Input
+              type="text"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              placeholder="Aldric"
+              required
+              minLength={3}
+              className={
+                usernameState === 'taken'     ? 'border-red   focus:border-red'   :
+                usernameState === 'available' ? 'border-green focus:border-green' : ''
+              }
+            />
           </div>
+
+          {/* Email */}
           <div className="flex flex-col gap-1.5">
-            <label className="font-cinzel text-[11px] tracking-[1px] text-muted">Email</label>
-            <Input type="email" value={email} onChange={e => setEmail(e.target.value)}
-              placeholder="wizard@academy.com" required />
+            <div className="flex items-center justify-between">
+              <label className="font-cinzel text-[11px] tracking-[1px] text-muted">Email</label>
+              <AvailBadge state={emailState} takenLabel="Email already registered" />
+            </div>
+            <Input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="wizard@academy.com"
+              required
+              className={
+                emailState === 'taken'     ? 'border-red   focus:border-red'   :
+                emailState === 'available' ? 'border-green focus:border-green' : ''
+              }
+            />
           </div>
+
+          {/* Password */}
           <div className="flex flex-col gap-1.5">
             <label className="font-cinzel text-[11px] tracking-[1px] text-muted">Password</label>
             <Input type="password" value={password} onChange={e => setPassword(e.target.value)}
               placeholder="Min. 8 characters" required minLength={8} />
           </div>
+
+          {/* Taken warnings inline — generic error fallback */}
+          {usernameState === 'taken' && (
+            <p className="text-[12px] text-red -mt-2">
+              That wizard name is already claimed. Choose another.
+            </p>
+          )}
+          {emailState === 'taken' && (
+            <p className="text-[12px] text-red -mt-2">
+              An account with this email already exists.{' '}
+              <Link to="/login" className="text-purple-light hover:underline">Login instead?</Link>
+            </p>
+          )}
+
           {error && (
             <div className="bg-[#2d0808] border border-red rounded-[6px] px-[13px] py-[9px] text-[13px] text-red text-center">
               {error}
             </div>
           )}
-          <Button variant="primary" type="submit" disabled={loading} className="w-full py-[10px]">
+
+          <Button variant="primary" type="submit" disabled={!canSubmit} className="w-full py-[10px]">
             {loading ? 'Enrolling...' : '✦ Enroll in the Academy'}
           </Button>
         </form>
