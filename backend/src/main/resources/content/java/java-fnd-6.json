@@ -33,7 +33,14 @@
         {"label": "finally always runs", "input": "null", "expected": "Division attempted"}
       ],
       "feynmanPrompt": "Explain Java's exception hierarchy to someone new to Java. What is the difference between checked and unchecked exceptions? When should you catch a specific exception vs the generic Exception class?",
-      "soloPracticeHtml": "<p>From a blank file, write a string-to-integer converter:</p><ul><li>Method <code>toInt(String s)</code>: call <code>Integer.parseInt(s)</code> inside a <code>try</code> block. Catch <code>NumberFormatException</code> and print <code>\"Invalid number: [s]\"</code>, returning <code>0</code>. Add a <code>finally</code> that prints <code>\"Parsing done\"</code>.</li><li>In main: parse <code>\"42\"</code>, <code>\"abc\"</code>, <code>\"100\"</code>, <code>\"\"</code> (empty string). Print the result for each.</li><li>After all parses, print the sum of all results.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Write a safe integer-division method:</p><ol><li>Create a method <code>safeDivide(int a, int b)</code> that returns the result of <code>a / b</code>.</li><li>Wrap the division in a <code>try/catch</code> for <code>ArithmeticException</code>. If caught, print <code>\"Cannot divide by zero\"</code> and return <code>-1</code>.</li><li>Add a <code>finally</code> block that prints <code>\"Division attempted\"</code>.</li><li>In main, call <code>safeDivide(10, 2)</code> and <code>safeDivide(10, 0)</code> and print both results.</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "10 / 2 returns 5", "input": "null", "expected": "5"},
+        {"label": "10 / 0 prints error message", "input": "null", "expected": "Cannot divide by zero"},
+        {"label": "10 / 0 returns -1", "input": "null", "expected": "-1"},
+        {"label": "finally always runs", "input": "null", "expected": "Division attempted"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -90,7 +97,12 @@
         {"label": "Invalid spell caught with message", "input": "null", "expected": "Invalid spell: DarkRitual"}
       ],
       "feynmanPrompt": "Explain the purpose of custom exceptions in Java. When should you extend RuntimeException vs Exception? Also explain why try-with-resources is preferred over try/finally for resource cleanup.",
-      "soloPracticeHtml": "<p>From a blank file, implement an age-validator system:</p><ul><li>Create a checked exception <code>InvalidAgeException</code> (extends <code>Exception</code>) whose constructor takes an <code>int age</code> and sets the message to <code>\"Age must be between 0 and 150, got: [age]\"</code>.</li><li>Write a method <code>validateAge(int age) throws InvalidAgeException</code> that throws <code>InvalidAgeException</code> if age &lt; 0 or &gt; 150. Otherwise prints <code>\"Valid age: [age]\"</code>.</li><li>In main: validate 25, -5, 200, and 100. Handle each with a try/catch, printing the exception message for invalid values.</li><li>Finally, write a custom <code>AutoCloseable</code> class <code>ManaChannel</code> with a constructor that prints <code>\"Channel open\"</code> and a <code>close()</code> that prints <code>\"Channel closed\"</code>. Use it in a try-with-resources block to prove auto-close works.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Create a custom unchecked exception <code>InvalidSpellException</code> that extends <code>RuntimeException</code>. Its constructor takes a <code>String spellName</code> and passes <code>\"Invalid spell: \" + spellName</code> to the super constructor.</p><p>Write a method <code>cast(String spell)</code> that throws <code>InvalidSpellException</code> if the spell is not in the set <code>{\"Fireball\", \"Heal\", \"Shield\"}</code>. Otherwise it prints <code>\"Casting: [spell]\"</code>.</p><p>In main: try to cast <code>\"Heal\"</code> (valid) and <code>\"DarkRitual\"</code> (invalid). Wrap both calls in one try/catch for <code>InvalidSpellException</code> that prints the exception message.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Valid spell prints casting message", "input": "null", "expected": "Casting: Heal"},
+        {"label": "Invalid spell caught with message", "input": "null", "expected": "Invalid spell: DarkRitual"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

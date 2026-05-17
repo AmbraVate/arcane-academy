@@ -91,7 +91,15 @@
           "expected": "OK: Fireball cast!\nFAIL: Not enough mana\ntrue\n50"
         }
       ],
-      "soloPracticeHtml": "<h3>Solo Challenge: Generic Stack</h3><p>Implement a <code>Stack&lt;T&gt;</code> class backed by an <code>ArrayList</code>:</p><ul><li><code>void push(T item)</code> — adds item to the top</li><li><code>T pop()</code> — removes and returns the top item; if empty, prints <code>Stack is empty</code> and returns <code>null</code></li><li><code>T peek()</code> — returns the top item without removing it; if empty, returns <code>null</code></li><li><code>boolean isEmpty()</code> — returns true if no items</li><li><code>int size()</code> — returns item count</li><li><code>toString()</code> — returns <code>[bottom, ..., top]</code> format</li></ul><p>Test with a <code>Stack&lt;String&gt;</code> pushing three spells, peeking, popping all, then attempting a pop on the empty stack.</p>",
+      "soloPracticeHtml": "<h3>Now rebuild the same solution from scratch — no starter code.</h3><p>Build a <code>Result&lt;T&gt;</code> class as described in the guided task. Fields: <code>private T value</code>, <code>private String error</code>, <code>private boolean success</code>. Two static factory methods: <code>ok(T value)</code> sets <code>success=true</code> and stores the value; <code>fail(String error)</code> sets <code>success=false</code> and stores the error message. Provide <code>isSuccess()</code>, <code>getValue()</code>, <code>getError()</code>, and a <code>toString()</code> returning <code>\"OK: \" + value</code> when successful, <code>\"FAIL: \" + error</code> when not.</p><p>In main:</p><pre><code>Result&lt;String&gt; win  = Result.ok(\"Fireball cast!\");\nResult&lt;String&gt; fail = Result.fail(\"Not enough mana\");\nResult&lt;Integer&gt; num = Result.ok(42);\n\nSystem.out.println(win);\nSystem.out.println(fail);\nSystem.out.println(num.isSuccess());\nSystem.out.println(num.getValue() + 8);</code></pre>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "ok() result prints 'OK: Fireball cast!'",
+          "input": "null",
+          "expected": "OK: Fireball cast!\nFAIL: Not enough mana\ntrue\n50"
+        }
+      ],
       "feynmanPrompt": "Explain to a non-programmer why Java generics exist. Use an analogy — perhaps a filing cabinet that only accepts specific types of documents. Why is a generic filing cabinet better than one that accepts 'anything' but loses track of what's inside?",
       "questions": [
         {
@@ -212,7 +220,15 @@
           "expected": "min=1 max=9\n1\n9\nmin=apple max=pear"
         }
       ],
-      "soloPracticeHtml": "<h3>Solo Challenge: Generic <code>Cache&lt;K, V&gt;</code></h3><p>Build a simple fixed-capacity generic cache:</p><ul><li>Constructor takes a <code>int capacity</code></li><li><code>void put(K key, V value)</code> — stores the value; if already at capacity, print <code>Cache full</code> and do nothing</li><li><code>V get(K key)</code> — returns the value for the key, or <code>null</code> if not present</li><li><code>boolean containsKey(K key)</code></li><li><code>int size()</code></li><li><code>toString()</code> — returns the underlying map's toString</li></ul><p>Backed by a <code>HashMap&lt;K, V&gt;</code> internally. Test with a <code>Cache&lt;String, Integer&gt;</code> of capacity 2.</p>",
+      "soloPracticeHtml": "<h3>Now rebuild the same solution from scratch — no starter code.</h3><p>Build a <code>MinMax&lt;T extends Comparable&lt;T&gt;&gt;</code> class that tracks the minimum and maximum values seen so far:</p><ul><li><code>void add(T value)</code> — updates min and max if needed; initialises both on the first call</li><li><code>T getMin()</code> — returns the minimum seen (or <code>null</code> if empty)</li><li><code>T getMax()</code> — returns the maximum seen (or <code>null</code> if empty)</li><li><code>toString()</code> — returns <code>\"min=X max=Y\"</code></li></ul><p>In main, test with integers (add 5, 2, 9, 1) and strings (add \"mango\", \"apple\", \"pear\") as shown in the guided task — the output must match exactly.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "MinMax tracks min and max correctly for integers and strings",
+          "input": "null",
+          "expected": "min=1 max=9\n1\n9\nmin=apple max=pear"
+        }
+      ],
       "feynmanPrompt": "Explain type erasure to someone who knows what generics are but is confused about why you cannot write 'new T()' or check 'instanceof List<String>'. Use an analogy of a shipping label that gets removed once the package is en route — the warehouse can read it, but the delivery truck cannot.",
       "questions": [
         {

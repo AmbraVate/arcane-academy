@@ -33,7 +33,14 @@
         {"label": "new String == false", "input": "null", "expected": "false"}
       ],
       "feynmanPrompt": "Explain the difference between the stack and the heap in Java as if you were teaching a junior developer. Include what types of data go where, and explain the difference between value and reference semantics with a concrete example.",
-      "soloPracticeHtml": "<p>From a blank file, write a reference-semantics investigator:</p><ul><li>Create a simple class <code>Counter</code> with a <code>public int count</code> field and a no-args constructor that sets <code>count = 0</code>.</li><li>In main: create <code>Counter c1 = new Counter()</code>. Set <code>Counter c2 = c1</code>. Increment <code>c2.count</code> three times. Print <code>c1.count</code> — it should be 3.</li><li>Now create <code>Counter c3 = new Counter()</code> (a brand-new object). Increment <code>c3.count</code> twice. Print <code>c1.count</code> again — it should still be 3.</li><li>Print a sentence explaining what you observe (just a <code>System.out.println</code> with a string literal).</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Demonstrate the difference between value and reference semantics:</p><ol><li>Declare <code>int p = 5</code> and <code>int q = p</code>. Modify <code>q</code> to <code>99</code>. Print <code>p</code> (it should still be 5).</li><li>Declare <code>int[] arr1 = {10, 20, 30}</code> and <code>int[] arr2 = arr1</code>. Set <code>arr2[1] = 999</code>. Print <code>arr1[1]</code> (it should be 999 — same array).</li><li>Print the result of <code>\"hello\" == \"hello\"</code> and of <code>new String(\"hello\") == new String(\"hello\")</code> to see string literal pooling vs heap objects.</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Primitive unchanged after copy-modify", "input": "null", "expected": "5"},
+        {"label": "Array shared via reference", "input": "null", "expected": "999"},
+        {"label": "String literal == true", "input": "null", "expected": "true"},
+        {"label": "new String == false", "input": "null", "expected": "false"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -94,7 +101,13 @@
         {"label": "Done is printed", "input": "null", "expected": "Done"}
       ],
       "feynmanPrompt": "Explain Java's garbage collection to someone coming from a C/C++ background. What does the GC do for you? What can still go wrong? Mention the concept of generational GC.",
-      "soloPracticeHtml": "<p>From a blank file, write a memory-awareness demonstration:</p><ul><li>Create a <code>Resource</code> class with a <code>String name</code>. Override <code>toString()</code> to return the name.</li><li>In main, create a <code>List&lt;Resource&gt;</code> called <code>cache</code>. Add 5 resources with names <code>\"R1\"</code> through <code>\"R5\"</code> using a for loop.</li><li>Print the list size.</li><li>Remove resources at index 0 and 2. Print the size again.</li><li>Clear the entire list. Print the size one final time (should be 0).</li><li>Print the string <code>\"Cache cleared — resources eligible for GC\"</code>.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Write a class <code>TrackedObject</code> with a <code>String label</code> field, a constructor, and a <code>close()</code> method that prints <code>\"[label] closed\"</code>. Use <code>try-with-resources</code> to ensure the object is closed automatically by implementing <code>AutoCloseable</code>.</p><p>In main: use a <code>try-with-resources</code> block to create a <code>TrackedObject</code> named <code>\"Alpha\"</code> — the close method will be called automatically. Then create <code>TrackedObject b = new TrackedObject(\"Beta\")</code> and print <code>b.label</code>. Finally, print <code>\"Done\"</code>.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Alpha closed automatically", "input": "null", "expected": "Alpha closed"},
+        {"label": "b.label still accessible", "input": "null", "expected": "Beta"},
+        {"label": "Done is printed", "input": "null", "expected": "Done"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

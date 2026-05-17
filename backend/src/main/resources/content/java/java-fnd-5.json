@@ -33,7 +33,14 @@
         {"label": "Alphabetical last (Teleport)", "input": "null", "expected": "Teleport"}
       ],
       "feynmanPrompt": "Explain what a List is in Java's Collections Framework. When would you use ArrayList vs LinkedList? What does 'program to the interface' mean, and why is it a good practice?",
-      "soloPracticeHtml": "<p>From a blank file, create a grade tracker:</p><ul><li>Create a <code>List&lt;Integer&gt;</code> called <code>grades</code> with these values: 88, 72, 95, 61, 84, 90, 77.</li><li>Print the total count.</li><li>Calculate and print the average (cast to double for precision).</li><li>Sort descending (hint: <code>Collections.sort(grades, Collections.reverseOrder())</code>).</li><li>Print the highest grade (index 0 after sort).</li><li>Remove any grade below 70 using a <code>removeIf</code> lambda: <code>grades.removeIf(g -> g &lt; 70)</code>.</li><li>Print the count of passing grades remaining.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Build a spell-inventory system:</p><ol><li>Create an <code>ArrayList&lt;String&gt;</code> and add these spells: <code>\"Meteor\"</code>, <code>\"Blizzard\"</code>, <code>\"Fireball\"</code>, <code>\"Heal\"</code>, <code>\"Teleport\"</code>.</li><li>Print the size.</li><li>Print the spell at index 2.</li><li>Remove <code>\"Blizzard\"</code> by value.</li><li>Sort the list alphabetically.</li><li>Print each spell using a for-each loop.</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Size before removal", "input": "null", "expected": "5"},
+        {"label": "Spell at index 2 (Fireball)", "input": "null", "expected": "Fireball"},
+        {"label": "Alphabetical second (Heal)", "input": "null", "expected": "Heal"},
+        {"label": "Alphabetical last (Teleport)", "input": "null", "expected": "Teleport"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -93,7 +100,13 @@
         {"label": "unique word count is 4", "input": "null", "expected": "4"}
       ],
       "feynmanPrompt": "Explain the difference between List, Set, and Map in Java. Give a concrete real-world scenario where you'd choose each one, and explain why.",
-      "soloPracticeHtml": "<p>From a blank file, build a phonebook:</p><ul><li>Create a <code>HashMap&lt;String, String&gt;</code> mapping names to phone numbers. Add at least 5 entries.</li><li>Look up two names: one that exists, one that doesn't (use <code>getOrDefault</code> to return <code>\"Not found\"</code>).</li><li>Update one existing entry's phone number.</li><li>Remove one entry.</li><li>Print all remaining entries using <code>entrySet()</code> in the format <code>\"[name]: [number]\"</code>.</li><li>Create a <code>TreeMap</code> from the HashMap and print its keys — observe they are sorted alphabetically.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Build a simple word-frequency counter:</p><ol><li>Create a <code>List&lt;String&gt;</code> of words: <code>\"the\", \"wizard\", \"cast\", \"the\", \"spell\", \"the\", \"wizard\"</code>.</li><li>Use a <code>HashMap&lt;String, Integer&gt;</code> to count how many times each word appears. Use <code>map.merge(word, 1, Integer::sum)</code> or <code>getOrDefault</code> approach.</li><li>Print each word and its count.</li><li>Use a <code>HashSet</code> to print the number of unique words.</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "the appears 3 times", "input": "null", "expected": "3"},
+        {"label": "wizard appears 2 times", "input": "null", "expected": "2"},
+        {"label": "unique word count is 4", "input": "null", "expected": "4"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

@@ -44,6 +44,15 @@
         {"term": "statically typed", "description": "A language property where every variable's type is known and checked at compile time, preventing type mismatches before the program runs."}
       ],
       "soloPracticeHtml": "<p>The enrollment scroll is waiting — and this time there's no template to copy from. Declare Lyria's student profile entirely from memory: the five variables (<code>wizardName</code>, <code>level</code>, <code>manaReserve</code>, <code>enrolled</code>, and the <code>Integer</code> wrapper <code>spellsLearned</code>), print each on its own line, then print <code>Integer.MAX_VALUE</code>. No starter code, no hints — only what you've internalised.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Prints wizardName", "input": "null", "expected": "Lyria"},
+        {"label": "Prints level", "input": "null", "expected": "1"},
+        {"label": "Prints manaReserve", "input": "null", "expected": "100.5"},
+        {"label": "Prints enrolled", "input": "null", "expected": "true"},
+        {"label": "Prints spellsLearned", "input": "null", "expected": "0"},
+        {"label": "Prints MAX_VALUE", "input": "null", "expected": "2147483647"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -157,7 +166,13 @@
         {"label": "Compound assignment result", "input": "null", "expected": "30"}
       ],
       "feynmanPrompt": "Explain Java operator precedence to a friend. Include an example where getting the order wrong produces a surprising answer, and explain how to avoid the problem.",
-      "soloPracticeHtml": "<p>An alchemist needs three quick calculations for their potion lab. Write the code from scratch — no starter this time:</p><ol><li>A basic recipe requires <code>3 * 4 - 8 / 4</code> drops of essence. Print the result — watch your precedence, both <code>*</code> and <code>/</code> bind before <code>-</code>.</li><li>The alchemist has 35 moonflower petals split evenly into bags of 6. Print the remainder left over using <code>%</code>.</li><li>Start with <code>int gold = 20</code>. Deduct 5 for ingredients (<code>gold -= 5</code>), then double the result by selling the finished potion (<code>gold *= 2</code>). Print the final amount.</li></ol>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Calculate and print the following three values:</p><ol><li>The result of <code>3 + 4 * 2 - 1</code> (follow normal precedence, no extra parentheses)</li><li>The remainder of <code>29 % 6</code></li><li>Starting with <code>int score = 10</code>, apply <code>score += 5</code> then <code>score *= 2</code> and print the final score</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Precedence result", "input": "null", "expected": "10"},
+        {"label": "Modulo result", "input": "null", "expected": "5"},
+        {"label": "Compound assignment result", "input": "null", "expected": "30"}
+      ],
       "questions": [
         {
           "type": "WHATS_THE_OUTPUT",

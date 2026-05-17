@@ -6,6 +6,7 @@ import com.ambravate.arcane.academy.ai.domain.QuestionResult;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.QuestionTier;
+import com.ambravate.arcane.academy.common.domain.QuestionType;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -84,6 +86,16 @@ public class RetrievalService {
     /**
      * Grade a list of answers against question correct answers.
      * Returns score as 0.0-1.0.
+     *
+     * <p>Grading strategy by question type:
+     * <ul>
+     *   <li>MULTIPLE_CHOICE, TRUE_FALSE — exact case-insensitive match</li>
+     *   <li>WHATS_THE_OUTPUT, FILL_BLANK — normalised line-by-line match
+     *       (handles literal \n in stored answers vs real newlines typed by learners)</li>
+     *   <li>DEBUGGING, SCENARIO, COMPARE_CONTRAST, CODE_COMPLETION — keyword overlap:
+     *       at least 50% of significant tokens from the correct answer must appear
+     *       in the learner's response (semantic equivalence rather than word-for-word)</li>
+     * </ul>
      */
     public GradeResult gradeAnswers(List<AnswerPair> answers) {
         int correct = 0;
@@ -93,7 +105,7 @@ public class RetrievalService {
             Question question = questionRepository.findById(pair.questionId()).orElse(null);
             if (question == null) continue;
 
-            boolean isCorrect = question.getCorrectAnswer().equalsIgnoreCase(pair.answer().trim());
+            boolean isCorrect = isAnswerCorrect(question, pair.answer());
             if (isCorrect) correct++;
 
             results.add(new QuestionResult(
@@ -104,6 +116,82 @@ public class RetrievalService {
 
         double score = answers.isEmpty() ? 0.0 : (double) correct / answers.size();
         return new GradeResult(score, correct, answers.size(), results);
+    }
+
+    // ── Grading helpers ───────────────────────────────────────────────────────
+
+    private boolean isAnswerCorrect(Question question, String userAnswer) {
+        String answer = userAnswer == null ? "" : userAnswer.trim();
+        String correct = question.getCorrectAnswer() == null ? "" : question.getCorrectAnswer();
+
+        return switch (question.getType()) {
+            case MULTIPLE_CHOICE, MCQ, TRUE_FALSE ->
+                    correct.equalsIgnoreCase(answer);
+
+            case WHATS_THE_OUTPUT, FILL_BLANK ->
+                    normalizedOutputMatch(correct, answer);
+
+            case DEBUGGING, SCENARIO, COMPARE_CONTRAST, CODE_COMPLETION,
+                 APPLICATION, DISCRIMINATION ->
+                    keywordOverlapScore(correct, answer) >= 0.50;
+        };
+    }
+
+    /**
+     * Compares expected vs actual output line-by-line after normalising whitespace.
+     * Handles both literal "\n" strings stored in JSON and real newlines typed by learners.
+     */
+    private boolean normalizedOutputMatch(String correct, String answer) {
+        List<String> expectedLines = splitLines(correct);
+        List<String> actualLines   = splitLines(answer);
+        if (expectedLines.size() != actualLines.size()) return false;
+        for (int i = 0; i < expectedLines.size(); i++) {
+            if (!expectedLines.get(i).equalsIgnoreCase(actualLines.get(i))) return false;
+        }
+        return true;
+    }
+
+    private List<String> splitLines(String text) {
+        // Normalise literal \n (from JSON) to real newlines, then split
+        return Arrays.stream(text.replace("\\n", "\n").split("\r?\n"))
+                .map(String::trim)
+                .filter(l -> !l.isEmpty())
+                .toList();
+    }
+
+    /**
+     * Scores the fraction of significant tokens from {@code correct} that appear
+     * anywhere in {@code answer} (case-insensitive substring match per token).
+     * Tokens shorter than 2 characters or in the stop-word list are excluded.
+     */
+    private double keywordOverlapScore(String correct, String answer) {
+        Set<String> keyTokens = extractKeyTokens(correct);
+        if (keyTokens.isEmpty()) return 1.0; // no tokens to check → give benefit of doubt
+        String lowerAnswer = answer.toLowerCase();
+        long matched = keyTokens.stream().filter(lowerAnswer::contains).count();
+        double score = (double) matched / keyTokens.size();
+        log.debug("[Grading] keyword overlap {}/{} ({}%) correct='{}' answer='{}'",
+                matched, keyTokens.size(), Math.round(score * 100), correct, answer);
+        return score;
+    }
+
+    private static final Set<String> STOP_WORDS = Set.of(
+            "the", "an", "is", "it", "in", "on", "at", "to", "for", "of", "and",
+            "or", "but", "not", "use", "uses", "should", "would", "instead", "this",
+            "that", "with", "from", "by", "be", "are", "was", "were", "will", "can",
+            "has", "have", "had", "do", "does", "did", "which", "when", "where",
+            "how", "what", "why", "if", "then", "else", "so", "than", "as", "we",
+            "you", "they", "them", "its", "our", "your", "their", "always", "never"
+    );
+
+    private Set<String> extractKeyTokens(String text) {
+        // Split on anything that isn't alphanumeric, dot, underscore, equals, angle bracket,
+        // exclamation or parenthesis — keeping code-style tokens intact (e.g. s.equals, ==)
+        return Stream.of(text.toLowerCase().split("[^a-z0-9_.=<>!()]+"))
+                .map(String::trim)
+                .filter(t -> t.length() >= 2)
+                .filter(t -> !STOP_WORDS.contains(t))
+                .collect(Collectors.toSet());
     }
 
     /**

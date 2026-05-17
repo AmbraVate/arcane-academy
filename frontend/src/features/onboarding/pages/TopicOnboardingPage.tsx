@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { diagnosticApi } from '@/shared/api/services'
 import { CSS_PREREQ_TOPICS, prereqStorageKey } from '@/features/onboarding/data/cssPrimer'
+import { useInvalidateDashboard } from '@/hooks/queries'
 
 const TOPIC_META: Record<string, { name: string; glyph: string; question: string }> = {
   java:     { name: 'Java',         glyph: '☕', question: 'Have you written Java code before?' },
@@ -16,6 +17,7 @@ export default function TopicOnboardingPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const [loading, setLoading] = useState(false)
+  const invalidateDashboard = useInvalidateDashboard()
 
   const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', question: `Have you studied ${topicId} before?` }
 
@@ -29,6 +31,8 @@ export default function TopicOnboardingPage() {
     setLoading(true)
     try {
       await diagnosticApi.skip(topicId!)
+      // Bust the cached dashboard so TopicsPage re-reads diagnosticCompleted: true
+      invalidateDashboard(topicId)
       // For CSS-dependent topics, route through the prereq check on first visit
       if (CSS_PREREQ_TOPICS.has(topicId!) && !prereqAlreadyDone()) {
         navigate(`/topic/${topicId}/prereq-check`)

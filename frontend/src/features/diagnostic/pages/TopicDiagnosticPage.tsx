@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { diagnosticApi } from '@/shared/api/services'
 import type { ReviewSessionDto, DiagnosticResultDto, AnswerEntry } from '@/shared/types'
 import QuestionCard from '@/features/learning/components/QuestionCard'
+import { useInvalidateDashboard } from '@/hooks/queries'
 
 const TOPIC_META: Record<string, { name: string; glyph: string }> = {
   java:     { name: 'Java',         glyph: '☕' },
@@ -20,6 +21,7 @@ export default function TopicDiagnosticPage() {
   const [submitting, setSubmitting] = useState(false)
 
   const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖' }
+  const invalidateDashboard = useInvalidateDashboard()
 
   async function handleStart() {
     setLoading(true)
@@ -33,6 +35,7 @@ export default function TopicDiagnosticPage() {
     try {
       const answerList: AnswerEntry[] = Object.entries(answers).map(([questionId, answer]) => ({ questionId, answer }))
       setResult(await diagnosticApi.submit(answerList, topicId!))
+      invalidateDashboard(topicId)
     } catch { /* noop */ } finally { setSubmitting(false) }
   }
 
@@ -48,7 +51,7 @@ export default function TopicDiagnosticPage() {
         </button>
         <button
           className="btn btn-ghost mt-2.5 text-[12px]"
-          onClick={async () => { await diagnosticApi.skip(topicId!); navigate(`/topic/${topicId}`) }}
+          onClick={async () => { await diagnosticApi.skip(topicId!); invalidateDashboard(topicId); navigate(`/topic/${topicId}`) }}
         >
           Skip — start from the beginning
         </button>

@@ -30,7 +30,11 @@
         {"label": "Summary line printed", "input": "Lyria\n5\n88.5", "expected": "Wizard: Lyria, Level 5, Mana 88.5"}
       ],
       "feynmanPrompt": "Explain how Java's Scanner works. What is the 'nextLine() after nextInt()' pitfall, and why does it happen? How would you explain it to a junior developer?",
-      "soloPracticeHtml": "<p>From a blank file, create an interactive quiz that accepts input from System.in. The test runner will inject the answers:</p><ul><li>Print a question: <code>\"What is 7 * 6?\"</code> and read the answer as a String.</li><li>If the answer equals <code>\"42\"</code>, print <code>\"Correct!\"</code>. Otherwise print <code>\"Wrong. The answer is 42.\"</code>.</li><li>Print a second question: <code>\"What type holds a single character in Java?\"</code> and read the answer.</li><li>If the trimmed, lowercase answer equals <code>\"char\"</code>, print <code>\"Correct!\"</code>. Otherwise print <code>\"Wrong. The answer is char.\"</code>.</li><li>Count correct answers and print: <code>\"Score: [n]/2\"</code>.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. In this exercise, the test runner injects input automatically. Write a program that:</p><ol><li>Creates a <code>Scanner</code> reading from <code>System.in</code>.</li><li>Reads a <code>String</code> for a wizard's name.</li><li>Reads an <code>int</code> for their level.</li><li>Reads a <code>double</code> for their mana reserve.</li><li>Prints: <code>\"Wizard: [name], Level [level], Mana [mana]\"</code></li></ol><p>Test input will be: <code>Lyria</code>, <code>5</code>, <code>88.5</code> (one per line).</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Summary line printed", "input": "Lyria\n5\n88.5", "expected": "Wizard: Lyria, Level 5, Mana 88.5"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -91,7 +95,14 @@
         {"label": "Line count correct", "input": "null", "expected": "Lines read: 3"}
       ],
       "feynmanPrompt": "Explain Java file I/O to a beginner. What are the key classes involved? What is the difference between the classic BufferedReader approach and the modern Files utility? Why must files always be closed?",
-      "soloPracticeHtml": "<p>From a blank file, implement a simple log system:</p><ul><li>Define a method <code>log(String filename, String message)</code> that <em>appends</em> a line to the file: <code>\"[LOG] [message]\"</code>. Use append mode (<code>new FileWriter(filename, true)</code>).</li><li>Call <code>log</code> three times with different messages: <code>\"Server started\"</code>, <code>\"User logged in\"</code>, <code>\"Spell cast: Fireball\"</code>.</li><li>Read all lines from the file using <code>Files.readAllLines()</code> and print each.</li><li>Print the total number of log entries.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Write a program that:</p><ol><li>Writes three lines to a file called <code>\"output.txt\"</code>: <code>\"Line 1: Foundation\"</code>, <code>\"Line 2: Advanced\"</code>, <code>\"Line 3: Expert\"</code></li><li>Reads the file back and prints each line.</li><li>Prints how many lines were read.</li></ol><p>Use <code>PrintWriter</code> for writing and <code>BufferedReader</code> for reading, with try-with-resources for both.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Line 1 printed", "input": "null", "expected": "Line 1: Foundation"},
+        {"label": "Line 2 printed", "input": "null", "expected": "Line 2: Advanced"},
+        {"label": "Line 3 printed", "input": "null", "expected": "Line 3: Expert"},
+        {"label": "Line count correct", "input": "null", "expected": "Lines read: 3"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",

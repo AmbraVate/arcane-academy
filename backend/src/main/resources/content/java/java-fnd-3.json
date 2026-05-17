@@ -33,7 +33,14 @@
         {"label": "cast Heal (enough mana)", "input": "null", "expected": "Heal cast! (cost: 10)"}
       ],
       "feynmanPrompt": "Explain what a class is, what an object is, and why encapsulation (private fields with public methods) is a good idea. Use a real-world analogy to make it concrete.",
-      "soloPracticeHtml": "<p>From a blank file, design a <code>Potion</code> class:</p><ul><li>Private fields: <code>String type</code>, <code>int healAmount</code>, <code>boolean used</code> (starts as <code>false</code>)</li><li>Constructor sets <code>type</code> and <code>healAmount</code>; <code>used</code> is always <code>false</code> initially</li><li>Method <code>drink()</code>: if not already used, set <code>used = true</code> and return <code>\"Drank [type] potion — healed [healAmount] HP!\"</code>; if already used, return <code>\"This potion is empty.\"</code></li><li><code>toString()</code>: <code>\"[type] Potion ([healAmount] HP) — [used ? \"used\" : \"available\"]\"</code></li></ul><p>Create a <code>HealthPotion</code> (50 HP) and a <code>MegaPotion</code> (150 HP). Print both, call <code>drink()</code> on each once, then call <code>drink()</code> on the HealthPotion again. Print all three results.</p>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Create a <code>Spell</code> class with:</p><ul><li>Two <code>private</code> fields: <code>String name</code> and <code>int manaCost</code></li><li>A constructor that sets both fields</li><li>A method <code>cast(int currentMana)</code> that returns a <code>String</code>: <code>\"[name] cast! (cost: [manaCost])\"</code> if <code>currentMana >= manaCost</code>, otherwise <code>\"Not enough mana to cast [name]\"</code></li><li>A <code>toString()</code> that returns <code>\"Spell: [name] ([manaCost] mana)\"</code></li></ul><p>In your <code>main</code> method, create two spells: <code>Fireball</code> (cost 30) and <code>Heal</code> (cost 10). Print each, then call <code>cast(25)</code> on each and print the result.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "toString Fireball", "input": "null", "expected": "Spell: Fireball (30 mana)"},
+        {"label": "toString Heal", "input": "null", "expected": "Spell: Heal (10 mana)"},
+        {"label": "cast Fireball (not enough mana)", "input": "null", "expected": "Not enough mana to cast Fireball"},
+        {"label": "cast Heal (enough mana)", "input": "null", "expected": "Heal cast! (cost: 10)"}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
@@ -92,7 +99,12 @@
         {"label": "Cat speaks", "input": "null", "expected": "Whiskers meows."}
       ],
       "feynmanPrompt": "Explain inheritance and polymorphism in Java to someone new to programming. What problem does inheritance solve? What is the difference between an abstract class and an interface?",
-      "soloPracticeHtml": "<p>From a blank file, model a payment system:</p><ul><li>Define an interface <code>Payable</code> with one method: <code>double getAmount()</code>.</li><li>Create an abstract class <code>Transaction</code> that implements <code>Payable</code> and has a <code>protected String description</code> field and a constructor.</li><li>Create two concrete classes: <code>Purchase</code> (amount decreases your balance — returns a positive double) and <code>Refund</code> (returns a positive double representing the refund).</li><li>In main, create a <code>Payable[]</code> with two Purchases and one Refund. Loop over them, printing each transaction's <code>description</code> and <code>getAmount()</code>.</li></ul>",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Create a base class <code>Animal</code> with a <code>String name</code> field and a method <code>speak()</code> that prints <code>\"[name] makes a sound.\"</code></p><p>Create two subclasses:</p><ul><li><code>Dog</code> that overrides <code>speak()</code> to print <code>\"[name] barks!\"</code></li><li><code>Cat</code> that overrides <code>speak()</code> to print <code>\"[name] meows.\"</code></li></ul><p>In main, create an <code>Animal[]</code> array holding a <code>Dog(\"Rex\")</code> and a <code>Cat(\"Whiskers\")</code>. Loop over the array and call <code>speak()</code> on each — observe polymorphism in action.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Dog speaks", "input": "null", "expected": "Rex barks!"},
+        {"label": "Cat speaks", "input": "null", "expected": "Whiskers meows."}
+      ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
