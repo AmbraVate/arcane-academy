@@ -2,10 +2,10 @@
   "id": "psy-adv-1",
   "title": "Cognitive Psychology",
   "glyph": "🧩",
-  "sortOrder": 4,
+  "sortOrder": 5,
   "tier": "ADVANCED",
   "topicId": "psychology",
-  "prerequisites": ["psy-fnd-3"],
+  "prerequisites": ["psy-prt-3"],
   "subChunks": [
     {
       "id": "psy-adv-1a",

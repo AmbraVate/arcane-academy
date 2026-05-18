@@ -4,7 +4,7 @@
   "title": "Abnormal Psychology",
   "glyph": "🧩",
   "tier": "PRACTITIONER",
-  "sortOrder": 8,
+  "sortOrder": 9,
   "prerequisiteIds": ["psy-prt-1"],
   "subChunks": [
     {

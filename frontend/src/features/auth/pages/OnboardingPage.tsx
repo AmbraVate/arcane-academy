@@ -8,11 +8,11 @@ export default function OnboardingPage() {
 
   async function handleNew() {
     setLoading(true)
-    try { await diagnosticApi.skip(); navigate('/topic/java', { replace: true }) }
+    try { await diagnosticApi.skip(); navigate('/topics', { replace: true }) }
     catch { setLoading(false) }
   }
 
-  function handleExperienced() { navigate('/diagnostic') }
+  function handleExperienced() { navigate('/topics', { replace: true }) }
 
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">
@@ -20,9 +20,10 @@ export default function OnboardingPage() {
         <div className="text-[56px] mb-4">🧙</div>
         <h1 className="text-[28px] font-bold text-gold m-0 mb-2.5">Welcome to Arcane Academy</h1>
         <p className="text-[15px] text-muted leading-[1.6] m-0 mb-8">
-          Before we chart your path through the Java Grimoire, tell us where you stand.
+          A polymath doesn't specialise in one thing — they build deep mastery across many disciplines.
+          Choose your first path and we'll guide you from there.
         </p>
-        <p className="text-[20px] font-bold text-text m-0 mb-6">Have you programmed in Java before?</p>
+        <p className="text-[20px] font-bold text-text m-0 mb-6">Have you studied here before?</p>
 
         <div className="flex gap-4 max-[520px]:flex-col">
           <button
@@ -35,9 +36,9 @@ export default function OnboardingPage() {
             disabled={loading}
           >
             <span className="text-[36px]">🌱</span>
-            <span className="text-[16px] font-bold text-teal">No, I'm completely new</span>
+            <span className="text-[16px] font-bold text-teal">No, I'm brand new</span>
             <span className="text-[13px] text-muted leading-[1.5]">
-              Start from the very beginning. We'll guide you step by step from zero to job-ready.
+              Choose a discipline and start from the very beginning — we'll guide you step by step.
             </span>
           </button>
 
@@ -51,9 +52,9 @@ export default function OnboardingPage() {
             disabled={loading}
           >
             <span className="text-[36px]">⚡</span>
-            <span className="text-[16px] font-bold text-purple-light">Yes, I have some experience</span>
+            <span className="text-[16px] font-bold text-purple-light">I have prior knowledge</span>
             <span className="text-[13px] text-muted leading-[1.5]">
-              Take a short diagnostic — we'll skip what you already know and focus on the gaps.
+              Pick a topic and take its diagnostic — we'll place you at the right level automatically.
             </span>
           </button>
         </div>

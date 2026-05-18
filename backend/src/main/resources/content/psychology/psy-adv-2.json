@@ -4,7 +4,7 @@
   "title": "Social Psychology",
   "glyph": "👥",
   "tier": "ADVANCED",
-  "sortOrder": 5,
+  "sortOrder": 6,
   "prerequisiteIds": ["psy-adv-1"],
   "subChunks": [
     {

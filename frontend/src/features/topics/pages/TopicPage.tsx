@@ -48,10 +48,10 @@ const TOPIC_META: Record<string, TopicMeta> = {
     tagline: 'Self-paced psychology: foundations first, then human behaviour, advanced understanding, and academic thinking.',
     accent: 'var(--purple)',
     studyOrder: [
-      { label: 'Foundation', detail: 'Foundations, brain and biology, cognition, and memory.', tiers: ['FOUNDATION'] },
-      { label: 'Human Behaviour', detail: 'Development, social behaviour, personality, motivation, and individual differences.', tiers: ['PRACTITIONER'] },
-      { label: 'Advanced Understanding', detail: 'Mental health, treatment models, and applied psychology in real settings.', tiers: ['PRACTITIONER'] },
-      { label: 'Academic Thinking', detail: 'Research design, statistics, paper critique, and replication-aware reading.', tiers: ['EXPERT'] },
+      { label: 'Foundation', detail: 'History of psychology, biopsychology, learning & memory, and research methods — the tools you need to evaluate everything that follows.', tiers: ['FOUNDATION'] },
+      { label: 'Core Theory', detail: 'Cognitive, social, and developmental psychology — the major theoretical frameworks of the discipline.', tiers: ['ADVANCED'] },
+      { label: 'Applied Knowledge', detail: 'Personality, individual differences, abnormal psychology, and clinical models.', tiers: ['PRACTITIONER'] },
+      { label: 'Critical Perspectives', detail: 'Applied psychology in real settings, cross-cultural issues, and the replication crisis.', tiers: ['EXPERT'] },
     ],
   },
   genealogy: {
@@ -81,9 +81,9 @@ const TIER_LABELS: Record<string, string> = {
 }
 const TIER_DESC: Record<string, string> = {
   FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
-  ADVANCED:     'Concurrency, streams, and modern Java — intermediate fluency.',
-  PRACTITIONER: 'Spring Boot, JPA, and enterprise patterns — real-world project skills.',
-  EXPERT:       'High-performance computing, cloud-native, and distributed systems.',
+  ADVANCED:     'Deeper theory and analysis — building fluency beyond the fundamentals.',
+  PRACTITIONER: 'Applied skills in real-world contexts — bringing knowledge into practice.',
+  EXPERT:       'Specialist depth, critical evaluation, and advanced synthesis.',
   CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
 }
 

@@ -6,8 +6,13 @@ import QuestionCard from '@/features/learning/components/QuestionCard'
 import { useInvalidateDashboard } from '@/hooks/queries'
 
 const TOPIC_META: Record<string, { name: string; glyph: string }> = {
-  java:     { name: 'Java',         glyph: '☕' },
-  tailwind: { name: 'Tailwind CSS', glyph: '🎨' },
+  java:       { name: 'Java',             glyph: '☕'  },
+  tailwind:   { name: 'Tailwind CSS',     glyph: '🎨' },
+  react:      { name: 'React',            glyph: '⚛️' },
+  sql:        { name: 'SQL',              glyph: '🗃️' },
+  psychology: { name: 'Psychology',       glyph: '🧠' },
+  genealogy:  { name: 'Genealogy',        glyph: '🌳' },
+  sciences:   { name: 'Natural Sciences', glyph: '🔬' },
 }
 
 export default function TopicDiagnosticPage() {

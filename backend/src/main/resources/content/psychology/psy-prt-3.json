@@ -3,9 +3,9 @@
   "topicId": "psychology",
   "title": "Research Methods in Psychology",
   "glyph": "📐",
-  "tier": "PRACTITIONER",
-  "sortOrder": 9,
-  "prerequisiteIds": ["psy-prt-2"],
+  "tier": "FOUNDATION",
+  "sortOrder": 4,
+  "prerequisiteIds": ["psy-fnd-3"],
   "subChunks": [
     {
       "id": "psy-prt-3a",
