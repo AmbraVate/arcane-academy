@@ -6,7 +6,6 @@ import { useReviewsDue } from './hooks/queries'
 import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
 import { BlizzardBackground } from './components/layout/BlizzardScene'
-import StuckButton from './components/StuckButton'
 
 const TopicsPage           = lazy(() => import('./features/topics/pages/TopicsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
@@ -213,7 +212,6 @@ export default function App() {
             <AppRoutes />
           </div>
         </div>
-        {user && !location.pathname.startsWith('/admin') && <StuckButton />}
       </div>
     )
   }
@@ -224,7 +222,6 @@ export default function App() {
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
         <AppRoutes />
       </div>
-      {user && !location.pathname.startsWith('/admin') && <StuckButton />}
     </div>
   )
 }

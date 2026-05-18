@@ -1,8 +1,9 @@
 import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, curiosityApi } from '@/shared/api/services'
+import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi } from '@/shared/api/services'
 import { useAuth } from '@/shared/hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
+import StuckButton from '@/components/StuckButton'
 import StoryPanel from '@/features/learning/components/StoryPanel'
 import RabbitHoleHtml from '@/features/learning/components/RabbitHoleHtml'
 import QuestionCard from '@/features/learning/components/QuestionCard'
@@ -17,7 +18,7 @@ import LevelUpModal from '@/shared/components/layout/LevelUpModal'
 import BadgeToast from '@/shared/components/layout/BadgeToast'
 import { cn } from '@/lib/utils'
 import {
-  ArrowLeft, Bookmark, Pin, ClipboardList, BookOpen,
+  ArrowLeft, ClipboardList, BookOpen,
   Play, Loader2, Zap, Check, Eye, EyeOff, FlaskConical,
   PenLine, Target,
 } from 'lucide-react'
@@ -54,12 +55,10 @@ type EncodingState = {
   submittingFeynman: boolean
   showHint: boolean
   storyOpen: boolean
-  isSaved: boolean
-  savingPin: boolean
 }
 
 type EncodingAction =
-  | { type: 'LOADED'; encoding: SubChunkEncoding; code: string; isSaved: boolean }
+  | { type: 'LOADED'; encoding: SubChunkEncoding; code: string }
   | { type: 'PHASE_ADVANCED'; encoding: SubChunkEncoding }
   | { type: 'PRACTICE_VIEW'; view: 'brief' | 'code' }
   | { type: 'TASK_OVERLAY'; open: boolean }
@@ -81,8 +80,6 @@ type EncodingAction =
   | { type: 'FEYNMAN_DONE'; result: FeynmanResultDto | null }
   | { type: 'HINT_TOGGLE' }
   | { type: 'STORY_OPEN'; open: boolean }
-  | { type: 'PIN_START' }
-  | { type: 'PIN_DONE'; isSaved: boolean }
 
 const INITIAL_OUTPUT: OutputLine[] = [{ text: '// Cast your spell to run the code.', type: 'system' }]
 
@@ -107,14 +104,12 @@ const initialState: EncodingState = {
   submittingFeynman: false,
   showHint: false,
   storyOpen: false,
-  isSaved: false,
-  savingPin: false,
 }
 
 function encodingReducer(state: EncodingState, action: EncodingAction): EncodingState {
   switch (action.type) {
     case 'LOADED':
-      return { ...state, loading: false, encoding: action.encoding, code: action.code, isSaved: action.isSaved }
+      return { ...state, loading: false, encoding: action.encoding, code: action.code }
     case 'PHASE_ADVANCED':
       return {
         ...state,
@@ -156,8 +151,6 @@ function encodingReducer(state: EncodingState, action: EncodingAction): Encoding
     case 'FEYNMAN_DONE':    return { ...state, submittingFeynman: false, feynmanResult: action.result }
     case 'HINT_TOGGLE':     return { ...state, showHint: !state.showHint }
     case 'STORY_OPEN':      return { ...state, storyOpen: action.open }
-    case 'PIN_START':       return { ...state, savingPin: true }
-    case 'PIN_DONE':        return { ...state, savingPin: false, isSaved: action.isSaved }
     default:                return state
   }
 }
@@ -174,7 +167,7 @@ export default function EncodingPage() {
     encoding, loading, practiceView, showTaskOverlay, code, output, testResults,
     running, mentorFeedback, mentorLoading, mentorErrorType, practiceSolved,
     answers, retrievalResult, submittingRetrieval, feynmanText, feynmanResult,
-    submittingFeynman, showHint, storyOpen, isSaved, savingPin,
+    submittingFeynman, showHint, storyOpen,
   } = state
 
   // Notification UI stays as useState — independent of the phase state machine
@@ -201,12 +194,10 @@ export default function EncodingPage() {
         if (enc.phase === 'HOOK' && !enc.hookHtml?.trim()) {
           enc = await encodingApi.advance(subChunkId)
         }
-        const savedItems = await curiosityApi.getAll().catch(() => [])
         dispatch({
           type: 'LOADED',
           encoding: enc,
           code: enc.starterCode ?? '',
-          isSaved: savedItems.some(i => i.subChunkId === subChunkId),
         })
       } catch {
         navigate('/')
@@ -221,6 +212,21 @@ export default function EncodingPage() {
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
 
+  // Block paste in Solo Practice (capture phase so it fires before the textarea's own handler)
+  useEffect(() => {
+    const isSoloCoding = encoding?.phase === 'SOLO_PRACTICE' && practiceView === 'code'
+    if (!isSoloCoding) return
+    const handler = (e: ClipboardEvent) => {
+      const target = e.target as HTMLElement
+      if (target.closest('textarea') || target.isContentEditable) {
+        e.preventDefault()
+        showToast('🔒 Pasting is disabled — write it from memory!')
+      }
+    }
+    document.addEventListener('paste', handler, true)
+    return () => document.removeEventListener('paste', handler, true)
+  }, [encoding?.phase, practiceView, showToast])
+
   function handleXpEarned(xpEarned: number, earnedBadges?: Badge[]) {
     if (xpEarned <= 0) return
     const prevRank = calculateRank(user?.totalXp ?? 0)
@@ -232,25 +238,6 @@ export default function EncodingPage() {
       setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
     }
     if (earnedBadges?.length) setNewBadges(earnedBadges)
-  }
-
-  async function handleTogglePin() {
-    if (!subChunkId || savingPin) return
-    dispatch({ type: 'PIN_START' })
-    try {
-      if (isSaved) {
-        await curiosityApi.remove(subChunkId)
-        dispatch({ type: 'PIN_DONE', isSaved: false })
-        showToast('Removed from Curiosity Queue')
-      } else {
-        await curiosityApi.save(subChunkId)
-        dispatch({ type: 'PIN_DONE', isSaved: true })
-        showToast('📌 Saved to Curiosity Queue')
-      }
-    } catch {
-      showToast('Could not update queue')
-      dispatch({ type: 'PIN_DONE', isSaved })
-    }
   }
 
   async function handleAdvance() {
@@ -521,13 +508,6 @@ export default function EncodingPage() {
             ))}
           </div>
         </div>
-        <button
-          className={cn('btn btn-ghost text-[11px] px-2.5 py-1 flex-shrink-0 opacity-70 hover:opacity-100', isSaved && 'text-gold opacity-100')}
-          onClick={handleTogglePin} disabled={savingPin}
-          title={isSaved ? 'Remove from Curiosity Queue' : 'Save for later'}
-        >
-          {isSaved ? <Pin size={13} strokeWidth={1.75} /> : <Bookmark size={13} strokeWidth={1.75} />}{isSaved ? ' Saved' : ' Save'}
-        </button>
       </div>
 
       {/* HOOK */}
@@ -606,7 +586,7 @@ export default function EncodingPage() {
           <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">
             {encoding.practiceType === 'NONE' ? 'Study Material' : '✦ Guided Practice'}
           </div>
-          <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+          <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
           {encoding.practiceType === 'NONE' && encoding.starterCode && (
             <pre className="mt-5 p-4 rounded-[10px] bg-bg border border-border text-[12px] leading-[1.55] overflow-x-auto whitespace-pre">
               <code>{encoding.starterCode}</code>
@@ -634,7 +614,7 @@ export default function EncodingPage() {
                   <span className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</span>
                   <button className="btn btn-ghost text-[12px]" onClick={() => setShowTaskOverlay(false)}>✕</button>
                 </div>
-                <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+                <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
                 {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
               </div>
             </div>
@@ -643,7 +623,7 @@ export default function EncodingPage() {
           {/* Left panel — desktop */}
           <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
             <div className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</div>
-            <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+            <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
@@ -780,7 +760,7 @@ export default function EncodingPage() {
           <p className="text-muted text-[12px] mb-4 leading-[1.6]">
             Now rebuild this from a blank slate — no starter code. If you get stuck, peek at the guided practice for a hint.
           </p>
-          <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
+          <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
           {encoding.testCaseLabels && <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>}
 
           {/* Hint toggle */}
@@ -794,7 +774,7 @@ export default function EncodingPage() {
             {showHint && (
               <div className="mt-3 p-4 rounded-[10px] border border-dashed border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.05)]">
                 <div className="text-[11px] font-semibold text-muted uppercase tracking-[0.1em] mb-2.5">Guided Practice reference</div>
-                <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+                <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
               </div>
             )}
           </div>
@@ -814,7 +794,7 @@ export default function EncodingPage() {
                   <span className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</span>
                   <button className="btn btn-ghost text-[12px]" onClick={() => setShowTaskOverlay(false)}>✕</button>
                 </div>
-                <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
+                <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
                 {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
               </div>
             </div>
@@ -824,7 +804,7 @@ export default function EncodingPage() {
           <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
             <div className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</div>
             <p className="text-muted text-[11px] leading-[1.6] mt-[-4px]">No starter code — build it from memory.</p>
-            <div className={proseHtml} dangerouslySetInnerHTML={{ __html: encoding.soloPracticeHtml ?? '' }} />
+            <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
 
             {/* Hint toggle */}
@@ -835,7 +815,7 @@ export default function EncodingPage() {
               {showHint && (
                 <div className="mt-2.5 p-3 rounded-[8px] border border-dashed border-[rgba(139,92,246,0.3)] bg-[rgba(139,92,246,0.05)]">
                   <div className="text-[10px] font-semibold text-muted uppercase tracking-[0.1em] mb-2">Guided reference</div>
-                  <div className={cn(proseHtml, 'text-[12px]')} dangerouslySetInnerHTML={{ __html: encoding.guidedPracticeHtml ?? '' }} />
+                  <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={cn(proseHtml, 'text-[12px]')} />
                 </div>
               )}
             </div>
@@ -849,15 +829,7 @@ export default function EncodingPage() {
           </div>
 
           {/* Right panel — editor (paste blocked: Solo is write-from-memory) */}
-          <div
-            className="flex-1 flex flex-col overflow-hidden min-w-0"
-            onPaste={e => {
-              if ((e.target as HTMLElement).closest('textarea')) {
-                e.preventDefault()
-                showToast('🔒 Pasting is disabled — write it from memory!')
-              }
-            }}
-          >
+          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
                 <span className="text-[12px] text-muted truncate font-medium">{encoding.title}</span>
@@ -1081,6 +1053,11 @@ export default function EncodingPage() {
           </div>
         </div>
       ) : null}
+
+      {/* StuckButton — only during active practice phases */}
+      {(phase === 'GUIDED_PRACTICE' || phase === 'SOLO_PRACTICE' || phase === 'RETRIEVAL_CHECK') && (
+        <StuckButton />
+      )}
 
       {toast && (
         <div className="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-card border border-gold rounded-lg px-4 py-2.5 text-[13px] text-gold font-cinzel shadow-[0_4px_16px_rgba(0,0,0,0.4)] pointer-events-none animate-[toast-in_0.3s_ease]">
