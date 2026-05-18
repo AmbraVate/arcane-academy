@@ -138,6 +138,110 @@
           "correctAnswer": "The effect size is trivially small despite statistical significance, suggesting limited clinical relevance"
         }
       ]
+    },
+    {
+      "id": "psy-prt-3c",
+      "title": "Descriptive Statistics in R — A First Practical",
+      "sortOrder": 3,
+      "xpReward": 90,
+      "practiceType": "R",
+      "hookHtml": "<p>Statistics is not a separate skill from psychology — it <em>is</em> psychology, as expressed in numbers. If you cannot read a result, you cannot evaluate the claim that comes with it. If you cannot compute a result, you cannot test your own hypothesis.</p><p>R is the dominant statistical language in academic psychology and clinical research. It is free, reproducible, and used in every Russell Group psychology department. This sub-chunk is your first hands-on encounter with R — running code directly in your browser via WebR (R compiled to WebAssembly). You will compute the most fundamental statistical summaries: means, medians, standard deviations.</p>",
+      "explanationHtml": "<h3>Why R, Not SPSS?</h3><p>SPSS dominated psychology for decades. R has overtaken it for three reasons: it is free (SPSS licences cost institutions thousands per year); it is reproducible (your analysis is a script, not a sequence of clicks); and it has a thriving open-source ecosystem (over 18,000 packages on CRAN as of 2023). Every major psychology journal now accepts R analyses, and many require code-sharing as a condition of publication.</p><h3>Descriptive Statistics — The Foundation</h3><p>Before any inferential test, you describe your data. Descriptive statistics fall into three families:</p><p><strong>Measures of central tendency</strong>:</p><ul><li><strong>Mean</strong> — the arithmetic average. In R: <code>mean(x)</code>. Sensitive to outliers — one extreme score pulls the mean toward it.</li><li><strong>Median</strong> — the middle value when data are ordered. In R: <code>median(x)</code>. Robust to outliers; the standard choice for skewed distributions (e.g., reaction times, income).</li><li><strong>Mode</strong> — the most frequent value. R has no built-in <code>mode()</code> for statistics (that function returns data type). Use <code>names(sort(table(x), decreasing = TRUE))[1]</code>.</li></ul><p><strong>Measures of spread</strong>:</p><ul><li><strong>Range</strong> — max minus min. In R: <code>max(x) - min(x)</code> or <code>diff(range(x))</code>.</li><li><strong>Variance</strong> — average squared deviation from the mean. In R: <code>var(x)</code>. Uses n−1 (Bessel's correction) by default, treating data as a sample.</li><li><strong>Standard deviation (SD)</strong> — square root of variance, in original units. In R: <code>sd(x)</code>. The most reported spread measure in psychology.</li><li><strong>Interquartile range (IQR)</strong> — Q3 − Q1. In R: <code>IQR(x)</code>. Robust to outliers, used alongside the median.</li></ul><p><strong>Measures of shape</strong>:</p><ul><li><strong>Skewness</strong> — asymmetry. Positive skew: tail on the right (e.g., income). Negative skew: tail on the left (e.g., exam scores in a hard test).</li><li><strong>Kurtosis</strong> — tail heaviness. High kurtosis = heavy tails (more outliers than a normal distribution).</li></ul><h3>Working with Data in R</h3><p>In R, data are stored in <strong>vectors</strong> (1-D) or <strong>data frames</strong> (2-D, like a spreadsheet). The <code>c()</code> function combines values into a vector:</p><pre><code>scores &lt;- c(72, 85, 91, 68, 77, 83, 88, 75, 79, 81)</code></pre><p>The <code>&lt;-</code> operator is R's assignment. <code>scores</code> now holds 10 numbers. Apply summary statistics directly:</p><pre><code>mean(scores)    # 79.9\nmedian(scores)  # 80.0\nsd(scores)      # 7.262</code></pre><p>For psychological research, you will almost always work with data frames loaded from a CSV file. R's <code>summary()</code> function gives a one-line overview of any vector or data frame column:</p><pre><code>summary(scores)\n#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max.\n#  68.0   75.5    80.0    79.9   84.5    91.0</code></pre><h3>Interpreting the Output</h3><p>A descriptive summary is not the end of analysis — it is the beginning. Always ask: does the mean match the median? (If not, the distribution is skewed.) Is the SD large or small relative to the mean? (Coefficient of variation = SD/mean; values above 0.3 suggest substantial variability.) Are there outliers, and how were they identified? (A common rule: values more than 1.5 × IQR beyond Q1 or Q3.)</p><h3>What's Next</h3><p>This sub-chunk is the first of a sequence that will take you from these basics through t-tests, ANOVA, regression, and multivariate methods, all in R. By the end of the Foundation tier, you will be able to run a complete one-way ANOVA with effect sizes and write up the results in APA format. By the end of the Capstone Empirical Project, you will be analysing a real anonymised psychology dataset and producing a publication-ready report.</p>",
+      "storyBeats": [
+        { "type": "narration", "text": "Dr. Chen opens RStudio's clone in the browser — a code editor on the left, an output panel on the right. 'This is your first time touching R. Every analysis you read in a journal article from now on started somewhere like this.'" },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Don't worry if you've never programmed before. R was designed for statisticians, not engineers. The syntax is gentle. Within a few sub-chunks you'll be running tests that, twenty years ago, required a specialist consultant." },
+        { "type": "narration", "text": "She types a single line: scores <- c(72, 85, 91, 68, 77, 83, 88, 75, 79, 81). 'Ten exam scores. The arrow is assignment — it points from the value to the name.'" },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Then: mean(scores). 79.9. median(scores). 80. sd(scores). 7.26. The mean and median are close, so the distribution is roughly symmetric. The SD relative to the mean tells you spread. That's it — that's a descriptive summary." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Every BSc Psychology graduate should be able to do this without thinking. After this sub-chunk, you will be that graduate." }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Your First R Code</h3><p>A small dataset of reaction times (in milliseconds) from a Stroop task is provided in the editor. Your task:</p><ol><li>Compute the <strong>mean</strong> reaction time and assign it to a variable called <code>m</code>.</li><li>Compute the <strong>standard deviation</strong> and assign it to <code>s</code>.</li><li>Print both values using <code>print(m)</code> and <code>print(s)</code>.</li></ol><p>The tests will check that <code>m</code> and <code>s</code> have the correct values (within rounding tolerance).</p><p><em>Hint: Use mean() and sd() exactly as shown in the explanation. The dataset is already loaded as the vector rt.</em></p>",
+      "starterCode": "# Reaction times (ms) are already loaded as the vector 'rt'\n# Step 1: Compute the mean — assign to 'm'\n\n\n# Step 2: Compute the standard deviation — assign to 's'\n\n\n# Step 3: Print both\n",
+      "guidedPracticeTests": [
+        {
+          "label": "Setup loads reaction times",
+          "setup": "rt <- c(485, 512, 498, 521, 467, 503, 519, 478, 491, 507, 514, 488)",
+          "expectedExpression": "exists('rt') && length(rt) == 12"
+        },
+        {
+          "label": "Mean is correct (within 0.1 ms)",
+          "expectedExpression": "abs(m - mean(rt)) < 0.1"
+        },
+        {
+          "label": "Standard deviation is correct (within 0.1 ms)",
+          "expectedExpression": "abs(s - sd(rt)) < 0.1"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Independent Practice — A Full Descriptive Summary</h3><p>A new dataset is loaded: <code>iq</code>, a vector of IQ scores from a sample of 20 university students. Without any scaffolding, write R code that:</p><ol><li>Computes the mean and assigns it to <code>iq_mean</code></li><li>Computes the median and assigns it to <code>iq_median</code></li><li>Computes the standard deviation and assigns it to <code>iq_sd</code></li><li>Computes the interquartile range (IQR) and assigns it to <code>iq_iqr</code></li></ol><p>The tests will verify each statistic is computed correctly. You should not need to look up any functions other than the ones used in the guided practice plus <code>IQR()</code>.</p>",
+      "soloPracticeTests": [
+        {
+          "label": "Setup loads IQ scores",
+          "setup": "iq <- c(112, 98, 125, 107, 119, 103, 115, 109, 128, 95, 121, 113, 100, 118, 106, 124, 110, 102, 116, 108)",
+          "expectedExpression": "exists('iq') && length(iq) == 20"
+        },
+        {
+          "label": "Mean is correct",
+          "expectedExpression": "abs(iq_mean - mean(iq)) < 0.1"
+        },
+        {
+          "label": "Median is correct",
+          "expectedExpression": "abs(iq_median - median(iq)) < 0.1"
+        },
+        {
+          "label": "SD is correct",
+          "expectedExpression": "abs(iq_sd - sd(iq)) < 0.1"
+        },
+        {
+          "label": "IQR is correct",
+          "expectedExpression": "abs(iq_iqr - IQR(iq)) < 0.1"
+        }
+      ],
+      "feynmanPrompt": "Explain to someone who has never used R what the difference is between the mean and the median, and why a psychologist studying reaction times might choose to report the median instead of the mean.",
+      "rabbitHoleTerms": [
+        { "term": "Vector (R)", "description": "A one-dimensional ordered collection of values of the same type. Created with c(); the fundamental data structure in R." },
+        { "term": "Bessel's correction", "description": "The use of n−1 (rather than n) in the variance/SD formula to give an unbiased estimate of population variance from a sample. R's var() and sd() use n−1 by default." },
+        { "term": "Coefficient of variation", "description": "SD divided by the mean. A standardised measure of dispersion useful for comparing variability across datasets with different units or scales." },
+        { "term": "CRAN", "description": "The Comprehensive R Archive Network — the official repository of R packages. Over 18,000 packages as of 2023, including all major psychology analysis tools." },
+        { "term": "Skewness", "description": "A measure of distribution asymmetry. Positive skew = right tail (mean > median); negative skew = left tail (mean < median); zero = symmetric." },
+        { "term": "WebR", "description": "R compiled to WebAssembly, allowing R code to run directly in a web browser without server-side R installation. Used by Arcane Academy to teach statistics interactively." }
+      ],
+      "questions": [
+        {
+          "id": "psy-prt-3c-q1",
+          "tier": "RECALL",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Which R function computes the standard deviation of a numeric vector using Bessel's correction (n−1) by default?</p>",
+          "codeSnippet": null,
+          "options": ["sd()", "var()", "deviation()", "stdev()"],
+          "correctAnswer": "sd()"
+        },
+        {
+          "id": "psy-prt-3c-q2",
+          "tier": "RECALL",
+          "type": "TRUE_FALSE",
+          "questionHtml": "<p>True or False: The R assignment operator <code>&lt;-</code> can also be written as <code>=</code> in most contexts, but <code>&lt;-</code> is the convention for assignment in R style guides.</p>",
+          "codeSnippet": null,
+          "options": null,
+          "correctAnswer": "True"
+        },
+        {
+          "id": "psy-prt-3c-q3",
+          "tier": "APPLICATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>A researcher reports the following reaction-time data: mean = 580 ms, median = 510 ms. What does this tell you about the distribution?</p>",
+          "codeSnippet": null,
+          "options": ["Positively skewed — a few slow responses are pulling the mean above the median", "Negatively skewed — most participants responded slowly", "Symmetric — the difference is within rounding error", "Bimodal — there are two distinct response clusters"],
+          "correctAnswer": "Positively skewed — a few slow responses are pulling the mean above the median"
+        },
+        {
+          "id": "psy-prt-3c-q4",
+          "tier": "DISCRIMINATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>For reporting the central tendency of reaction-time data containing several large outliers, which measure is most appropriate?</p>",
+          "codeSnippet": null,
+          "options": ["Median, because it is robust to outliers", "Mean, because it incorporates all data points", "Mode, because reaction times cluster around a typical value", "Range, because it shows the spread of responses"],
+          "correctAnswer": "Median, because it is robust to outliers"
+        }
+      ]
     }
   ]
 }
