@@ -45,14 +45,8 @@ const TOPIC_META: Record<string, TopicMeta> = {
   psychology: {
     name: 'Psychology',
     glyph: 'PSY',
-    tagline: 'Self-paced psychology: foundations first, then human behaviour, advanced understanding, and academic thinking.',
+    tagline: 'Self-paced psychology: foundations, human behaviour, applied knowledge, and critical perspectives.',
     accent: 'var(--purple)',
-    studyOrder: [
-      { label: 'Foundation', detail: 'History of psychology, biopsychology, learning & memory, and research methods — the tools you need to evaluate everything that follows.', tiers: ['FOUNDATION'] },
-      { label: 'Core Theory', detail: 'Cognitive, social, and developmental psychology — the major theoretical frameworks of the discipline.', tiers: ['ADVANCED'] },
-      { label: 'Applied Knowledge', detail: 'Personality, individual differences, abnormal psychology, and clinical models.', tiers: ['PRACTITIONER'] },
-      { label: 'Critical Perspectives', detail: 'Applied psychology in real settings, cross-cultural issues, and the replication crisis.', tiers: ['EXPERT'] },
-    ],
   },
   genealogy: {
     name: 'Genealogy',
