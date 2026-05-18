@@ -217,6 +217,32 @@ export const sqlApi = {
   },
 }
 
+// ── R (statistics) practice ────────────────────────────────────────────────
+export interface RClientTestResult {
+  label: string
+  passed: boolean
+  actual: string
+}
+
+export const rApi = {
+  submit: async (
+    subChunkId: string,
+    code: string,
+    clientTestResults: RClientTestResult[],
+  ): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/r/${subChunkId}/submit`, { code, clientTestResults })
+    return data
+  },
+  submitSoloPractice: async (
+    subChunkId: string,
+    code: string,
+    clientTestResults: RClientTestResult[],
+  ): Promise<PracticeResult> => {
+    const { data } = await api.post(`/api/r/${subChunkId}/solo-practice/submit`, { code, clientTestResults })
+    return data
+  },
+}
+
 // ── Code (kept) ──────────────────────────────────────────────────────────────
 export const codeApi = {
   run: async (code: string, testInput?: string): Promise<CodeRunResponse> => {

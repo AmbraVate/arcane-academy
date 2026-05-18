@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi } from '@/shared/api/services'
+import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi } from '@/shared/api/services'
 import { useAuth } from '@/shared/hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
 import StuckButton from '@/components/StuckButton'
@@ -11,6 +11,7 @@ import CodeEditor from '@/features/learning/components/CodeEditor'
 import TailwindEditor from '@/features/learning/components/TailwindEditor'
 import ReactEditor, { type ReactEditorHandle, type ReactTestSpec } from '@/features/learning/components/ReactEditor'
 import SqlEditor, { type SqlEditorHandle, type SqlTestSpec } from '@/features/learning/components/SqlEditor'
+import REditor, { type REditorHandle, type RTestSpec } from '@/features/learning/components/REditor'
 import OutputPanel from '@/features/learning/components/OutputPanel'
 import TestChips from '@/features/learning/components/TestChips'
 import AiMentorPanel from '@/features/learning/components/AiMentorPanel'
@@ -27,6 +28,13 @@ type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system
 
 /** For SQL practice: pull the seed SQL out of the first test spec's `setup` field. */
 function extractSqlSetup(specs: unknown): string | null {
+  if (!Array.isArray(specs) || specs.length === 0) return null
+  const first = specs[0] as { setup?: unknown }
+  return typeof first?.setup === 'string' ? first.setup : null
+}
+
+/** For R practice: pull the seed R code out of the first test spec's `setup` field. */
+function extractRSetup(specs: unknown): string | null {
   if (!Array.isArray(specs) || specs.length === 0) return null
   const first = specs[0] as { setup?: unknown }
   return typeof first?.setup === 'string' ? first.setup : null
@@ -178,6 +186,7 @@ export default function EncodingPage() {
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
   const reactEditorRef = useRef<ReactEditorHandle>(null)
   const sqlEditorRef = useRef<SqlEditorHandle>(null)
+  const rEditorRef = useRef<REditorHandle>(null)
 
   // Adapter wrappers so JSX that calls these directly doesn't need to change
   const setCode = (c: string) => dispatch({ type: 'CODE_CHANGED', code: c })
@@ -356,6 +365,34 @@ export default function EncodingPage() {
       const specs: SqlTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as SqlTestSpec[]) : []
       const clientResults = (await sqlEditorRef.current?.runTests(specs)) ?? []
       const submitFn = solo ? sqlApi.submitSoloPractice : sqlApi.submit
+      const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
+      const newResults = new Map<string, boolean>()
+      const lines: OutputLine[] = []
+      result.testResults.forEach(t => {
+        newResults.set(t.label, t.passed)
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+      })
+      dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
+      if (result.allPassed) {
+        lines.push({ text: '✓ All tests passed!', type: 'success' })
+        dispatch({ type: 'PRACTICE_SOLVED' })
+        handleXpEarned(result.xpEarned, result.newBadges)
+      } else {
+        lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
+        dispatch({ type: 'RUN_END' })
+      }
+    } catch {
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
+    }
+  }
+
+  async function handleSubmitR(solo: boolean) {
+    if (!subChunkId || !encoding || running) return
+    dispatch({ type: 'SUBMIT_START', message: '// Running R code and tests in the WebR sandbox…' })
+    try {
+      const specs: RTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as RTestSpec[]) : []
+      const clientResults = (await rEditorRef.current?.runTests(specs)) ?? []
+      const submitFn = solo ? rApi.submitSoloPractice : rApi.submit
       const result: PracticeResult = await submitFn(subChunkId, code, clientResults)
       const newResults = new Map<string, boolean>()
       const lines: OutputLine[] = []
@@ -671,6 +708,7 @@ export default function EncodingPage() {
                     encoding.practiceType === 'TAILWIND' ? handleSubmitTailwind
                     : encoding.practiceType === 'REACT' ? () => handleSubmitReact(false)
                     : encoding.practiceType === 'SQL' ? () => handleSubmitSql(false)
+                    : encoding.practiceType === 'R' ? () => handleSubmitR(false)
                     : handleSubmitPractice
                   }
                   disabled={running || practiceSolved}
@@ -726,6 +764,23 @@ export default function EncodingPage() {
                   value={code}
                   onChange={setCode}
                   setup={extractSqlSetup(encoding.testCaseLabels)}
+                  disabled={practiceSolved}
+                />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Practice Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : encoding.practiceType === 'R' ? (
+              <>
+                <REditor
+                  ref={rEditorRef}
+                  value={code}
+                  onChange={setCode}
+                  setup={extractRSetup(encoding.testCaseLabels)}
                   disabled={practiceSolved}
                 />
                 <OutputPanel lines={output} />
@@ -857,6 +912,7 @@ export default function EncodingPage() {
                     encoding.practiceType === 'TAILWIND' ? handleSubmitTailwindSolo
                     : encoding.practiceType === 'REACT' ? () => handleSubmitReact(true)
                     : encoding.practiceType === 'SQL' ? () => handleSubmitSql(true)
+                    : encoding.practiceType === 'R' ? () => handleSubmitR(true)
                     : handleSubmitSoloPractice
                   }
                   disabled={running || practiceSolved}
@@ -915,6 +971,23 @@ export default function EncodingPage() {
                   value={code}
                   onChange={setCode}
                   setup={extractSqlSetup(encoding.testCaseLabels)}
+                  disabled={practiceSolved}
+                />
+                <OutputPanel lines={output} />
+                {practiceSolved && (
+                  <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
+                    <span>✦ Solo Complete!</span>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
+                  </div>
+                )}
+              </>
+            ) : encoding.practiceType === 'R' ? (
+              <>
+                <REditor
+                  ref={rEditorRef}
+                  value={code}
+                  onChange={setCode}
+                  setup={extractRSetup(encoding.testCaseLabels)}
                   disabled={practiceSolved}
                 />
                 <OutputPanel lines={output} />

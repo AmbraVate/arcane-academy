@@ -45,7 +45,7 @@ class ContentFileValidationTest {
             Set.of("FOUNDATION", "ADVANCED", "PRACTITIONER", "EXPERT", "CAPSTONE");
 
     private static final Set<String> VALID_PRACTICE_TYPES =
-            Set.of("JAVA", "TAILWIND", "REACT", "SQL", "NONE");
+            Set.of("JAVA", "TAILWIND", "REACT", "SQL", "R", "NONE");
 
     private static final Set<String> VALID_QUESTION_TYPES = Set.of(
             "MULTIPLE_CHOICE", "TRUE_FALSE", "FILL_BLANK",

@@ -20,6 +20,16 @@ public enum SubChunkPracticeType {
      * to the backend for XP awarding (see SqlPracticeService).
      */
     SQL,
+    /**
+     * R editor with WebR (R compiled to WebAssembly via CDN) running in an iframe.
+     * Tests run client-side: the seed R sets up a dataset/environment,
+     * the user's R code executes, and outputs (data frames, vectors, numeric
+     * results) are compared against expected values. Results are posted back
+     * to the backend for XP awarding (see RPracticeService).
+     *
+     * <p>Used primarily for statistics teaching in the Psychology curriculum.
+     */
+    R,
     /** No coding practice — explanation and retrieval check only. */
     NONE
 }

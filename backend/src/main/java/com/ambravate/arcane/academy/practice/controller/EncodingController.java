@@ -249,14 +249,16 @@ public class EncodingController {
 
     /**
      * For JAVA/TAILWIND practice, only test labels are sent to the client (the
-     * server holds the full specs and runs them). For REACT and SQL practice,
+     * server holds the full specs and runs them). For REACT, SQL and R practice,
      * the full test specs are sent because tests run inside the iframe — see
-     * {@link ReactPracticeService} and
-     * {@link SqlPracticeService}.
+     * {@link ReactPracticeService},
+     * {@link SqlPracticeService}, and
+     * {@link com.ambravate.arcane.academy.practice.service.RPracticeService}.
      */
     private Object testCasesFor(SubChunk sc) {
         if (sc.getPracticeType() == SubChunkPracticeType.REACT
-                || sc.getPracticeType() == SubChunkPracticeType.SQL) {
+                || sc.getPracticeType() == SubChunkPracticeType.SQL
+                || sc.getPracticeType() == SubChunkPracticeType.R) {
             String json = sc.getGuidedPracticeTestsJson();
             if (json == null) return List.of();
             try {
