@@ -64,4 +64,11 @@ public class SubChunk {
      */
     @Column(columnDefinition = "TEXT")
     private String modelAnswer;
+
+    /**
+     * Optional exemplar answer revealed after guided practice is passed (NONE practice type).
+     * Gives learners a benchmark to compare their guided attempt against before moving to solo.
+     */
+    @Column(columnDefinition = "TEXT")
+    private String guidedPracticeModelAnswer;
 }

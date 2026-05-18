@@ -96,6 +96,12 @@ public class ChunkContentDto {
          */
         public String modelAnswer;
 
+        /**
+         * Optional exemplar response revealed after guided practice is passed (NONE practice type).
+         * Shown before solo practice so the student can benchmark their guided attempt.
+         */
+        public String guidedPracticeModelAnswer;
+
         public List<QuestionDto> questions;
 
         /**

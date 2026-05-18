@@ -52,6 +52,8 @@ export interface SubChunkEncoding {
   rabbitHoleTerms: StoryRabbitHoleTerm[] | null
   /** Exemplar answer revealed after solo practice is complete (written-response sub-chunks only). */
   modelAnswer: string | null
+  /** Exemplar answer revealed after guided practice is passed (written-response sub-chunks only). */
+  guidedPracticeModelAnswer: string | null
 }
 
 export interface PracticeResult {

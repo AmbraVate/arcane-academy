@@ -20,7 +20,7 @@ spring:
     enabled: ${FLYWAY_ENABLED:false}
     locations: classpath:db/migration
     baseline-on-migrate: true
-    baseline-version: 0
+    baseline-version: 7
   security:
     oauth2:
       client:

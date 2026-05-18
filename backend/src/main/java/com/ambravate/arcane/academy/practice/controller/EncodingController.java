@@ -200,6 +200,8 @@ public class EncodingController {
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setStarterCode(sc.getGuidedPracticeStarterCode());
                 dto.setTestCaseLabels(testCasesFor(sc));
+                // Revealed after passing so learner can compare their attempt before moving to solo
+                dto.setGuidedPracticeModelAnswer(sc.getGuidedPracticeModelAnswer());
             }
             case SOLO_PRACTICE -> {
                 dto.setStoryBeats(parseJson(sc.getStoryJson()));

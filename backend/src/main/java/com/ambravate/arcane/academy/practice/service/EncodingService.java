@@ -556,12 +556,27 @@ public class EncodingService {
                         : "Use more lesson vocabulary: " + matchedTerms + "/" + minTerms + " key terms found.",
                 minTerms + "+ key terms"
         ));
+        boolean hasExplanatoryConnector = lowerAnswer.contains("because")
+                || lowerAnswer.contains(" since ")
+                || lowerAnswer.contains("therefore")
+                || lowerAnswer.contains("however")
+                || lowerAnswer.contains("which means")
+                || lowerAnswer.contains("this means")
+                || lowerAnswer.contains("as a result")
+                || lowerAnswer.contains("this suggests")
+                || lowerAnswer.contains("this explains")
+                || lowerAnswer.contains("in contrast")
+                || lowerAnswer.contains("whereas")
+                || lowerAnswer.contains("while")
+                || lowerAnswer.contains("although")
+                || lowerAnswer.contains(" — ")   // em-dash used as an explanatory connector
+                || lowerAnswer.contains(" -- ");  // double-hyphen equivalent
         results.add(new TestResult(
                 "Explains rather than lists",
-                sentenceCount >= 3 && lowerAnswer.contains("because"),
-                sentenceCount >= 3 && lowerAnswer.contains("because")
+                sentenceCount >= 3 && hasExplanatoryConnector,
+                sentenceCount >= 3 && hasExplanatoryConnector
                         ? "Includes explanation and reasoning."
-                        : "Add at least three sentences and use 'because' to explain your reasoning.",
+                        : "Add more explanation: use words like 'because', 'therefore', 'however', or 'this means' to link your ideas.",
                 "3+ sentences with reasoning"
         ));
 

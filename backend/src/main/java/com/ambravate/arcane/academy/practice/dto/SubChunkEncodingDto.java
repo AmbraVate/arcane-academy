@@ -37,4 +37,11 @@ public class SubChunkEncodingDto {
      * Null for all other phases and for non-written practice types.
      */
     private String modelAnswer;
+
+    /**
+     * Exemplar answer revealed after guided practice is passed (NONE practice type only).
+     * Populated during the GUIDED_PRACTICE phase once the learner has passed.
+     * Null for all other phases and for non-written practice types.
+     */
+    private String guidedPracticeModelAnswer;
 }

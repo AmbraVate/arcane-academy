@@ -727,6 +727,9 @@ export default function EncodingPage() {
                   placeholder="Write your guided response here. Follow the steps in the task panel, explain your reasoning, and use the lesson vocabulary."
                 />
                 <OutputPanel lines={output} />
+                {practiceSolved && encoding.guidedPracticeModelAnswer && (
+                  <ModelAnswerPanel answer={encoding.guidedPracticeModelAnswer} />
+                )}
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Guided Response Complete!</span>

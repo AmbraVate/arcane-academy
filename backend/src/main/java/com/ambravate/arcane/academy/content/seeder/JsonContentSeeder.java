@@ -266,6 +266,7 @@ public class JsonContentSeeder {
                 .practiceType(practiceType)
                 .rabbitHoleTermsJson(rhTermsJson)
                 .modelAnswer(sc.modelAnswer)
+                .guidedPracticeModelAnswer(sc.guidedPracticeModelAnswer)
                 .build());
 
         if (sc.questions != null) {
