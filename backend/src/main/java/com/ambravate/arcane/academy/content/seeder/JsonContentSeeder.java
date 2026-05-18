@@ -16,6 +16,8 @@ import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +90,7 @@ public class JsonContentSeeder {
         for (Resource resource : resources) {
             log.info("Loading chunk content: {}", resource.getFilename());
             ChunkContentDto dto = objectMapper.readValue(resource.getInputStream(), ChunkContentDto.class);
+            resolveFileRefs(dto, resource);
             replaceGeneratedChildren(dto);
             seedChunk(dto);
             String key = dto.topicId + "|" + dto.tier;
@@ -135,6 +138,59 @@ public class JsonContentSeeder {
             stale.forEach(chunk -> rabbitHoleRepository.deleteByChunkId(chunk.getId()));
             chunkRepository.deleteAll(stale);
         }
+    }
+
+    // ── @file: reference resolution ───────────────────────────────────────────
+
+    /**
+     * Resolves {@code @file:relative/path} references in code fields, expanding
+     * them to the contents of the referenced file.
+     *
+     * <p>The path is resolved relative to the JSON file that contains the reference.
+     * For example, in {@code content/java/java-fnd-1.json}:
+     * <pre>
+     *   "guidedPracticeStarterCode": "@file:java-fnd-1a-starter.java"
+     * </pre>
+     * will load {@code content/java/java-fnd-1a-starter.java}.
+     *
+     * <p>Any code field that does <em>not</em> start with {@code @file:} is left
+     * unchanged, so existing inline strings continue to work without modification.
+     */
+    private void resolveFileRefs(ChunkContentDto dto, Resource jsonResource) throws IOException {
+        if (dto.subChunks != null) {
+            for (ChunkContentDto.SubChunkDto sc : dto.subChunks) {
+                sc.guidedPracticeStarterCode =
+                        resolveRef(sc.guidedPracticeStarterCode, jsonResource, sc.id);
+            }
+        }
+        if (dto.rabbitHoles != null) {
+            for (ChunkContentDto.RabbitHoleDto rh : dto.rabbitHoles) {
+                rh.starterCode = resolveRef(rh.starterCode, jsonResource, rh.id);
+            }
+        }
+    }
+
+    /**
+     * If {@code value} starts with {@code @file:}, loads and returns the
+     * contents of the referenced classpath resource.  Otherwise returns
+     * {@code value} unchanged.
+     *
+     * @param value       the field value to check
+     * @param base        the JSON resource being loaded (used to resolve sibling paths)
+     * @param ownerId     ID of the owning sub-chunk / rabbit-hole (for error messages)
+     */
+    private String resolveRef(String value, Resource base, String ownerId) throws IOException {
+        if (value == null || !value.startsWith("@file:")) return value;
+        String relativePath = value.substring("@file:".length()).strip();
+        Resource ref = base.createRelative(relativePath);
+        if (!ref.exists()) {
+            throw new IllegalArgumentException(
+                    "[@file: resolution failed] '" + relativePath + "' referenced in " +
+                    ownerId + " not found (looked next to " + base.getFilename() + ")");
+        }
+        String content = new String(ref.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        log.debug("Resolved @file:{} for {}", relativePath, ownerId);
+        return content;
     }
 
     private void replaceGeneratedChildren(ChunkContentDto dto) {

@@ -82,7 +82,7 @@
       "questions": [
         {
           "id": "rx-d1-q1",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "The nearest parent route's component",
             "The matched child route's component",
@@ -97,7 +97,7 @@
         },
         {
           "id": "rx-d1-q2",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "NavLink is faster because it skips the virtual DOM",
             "NavLink automatically applies an active CSS class when its href matches the current URL",
@@ -112,7 +112,7 @@
         },
         {
           "id": "rx-d1-q3",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Inline in each component that uses them",
             "In a dedicated src/types/index.ts file, imported wherever needed",
@@ -127,7 +127,7 @@
         },
         {
           "id": "rx-d1-q4",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "React Router requires all routes to be declared before any components render",
             "It forces you to think through navigation flows and data needs upfront, reducing later refactoring",
@@ -217,7 +217,7 @@
       "questions": [
         {
           "id": "rx-d2-q1",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "useMemo is required whenever you call array methods in React",
             "useMemo caches the filtered result and only recomputes when quests or filter changes, avoiding unnecessary work on every render",
@@ -232,7 +232,7 @@
         },
         {
           "id": "rx-d2-q2",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "It prevents duplicate API calls when React strict mode double-invokes effects",
             "It prevents setting state on an unmounted component if the response arrives after navigation away",
@@ -247,7 +247,7 @@
         },
         {
           "id": "rx-d2-q3",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "TypeScript automatically widens the union to include 'ARCHIVED'",
             "The app crashes immediately when the data loads",
@@ -262,7 +262,7 @@
         },
         {
           "id": "rx-d2-q4",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "useEffect(() => { setVisible(...) }, [quests, filter])",
             "useMemo(() => filter === 'ALL' ? quests : quests.filter(...), [quests, filter])",
@@ -348,7 +348,7 @@
       "questions": [
         {
           "id": "rx-d3-q1",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Nothing — the component is already mounted, so useEffect doesn't re-run",
             "The component unmounts and remounts, triggering the effect from scratch",
@@ -363,7 +363,7 @@
         },
         {
           "id": "rx-d3-q2",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Change Quest.id to string to match useParams",
             "Cast it with Number(id) or parseInt(id) before using it in fetch calls that expect a number",
@@ -378,7 +378,7 @@
         },
         {
           "id": "rx-d3-q3",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "When you want to skip the loading state on the destination page",
             "When you want the navigation to not create a history entry, so the back button skips past it — e.g. after a successful form submission or login",
@@ -393,7 +393,7 @@
         },
         {
           "id": "rx-d3-q4",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Link renders faster because it uses a web worker",
             "Link prevents the full-page reload that href causes, enabling client-side navigation and preserving React state",
@@ -491,7 +491,7 @@
       "questions": [
         {
           "id": "rx-d4-q1",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Zustand's set function automatically deduplicates calls with the same arguments",
             "In real apps, accept buttons may be clicked multiple times, event handlers may fire twice, or optimistic updates may re-trigger — checking before updating prevents corrupted state",
@@ -506,7 +506,7 @@
         },
         {
           "id": "rx-d4-q2",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "const store = useUserStore(); — read the whole store",
             "const { totalXp } = useUserStore(); — destructure at the call site",
@@ -521,7 +521,7 @@
         },
         {
           "id": "rx-d4-q3",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "It is synchronous and blocks the main thread, so it should be avoided in production",
             "Data survives page reloads and browser restarts without a server, but is browser-specific, has a ~5 MB limit, and is inaccessible to other browsers or devices",
@@ -536,7 +536,7 @@
         },
         {
           "id": "rx-d4-q4",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Inside the component — it needs access to the component's state",
             "Outside the component — it's a pure utility with no React dependencies; keeping it outside avoids recreating it on every render",
@@ -610,7 +610,7 @@
       "questions": [
         {
           "id": "rx-d5-q1",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Add title='Close' — tooltips make the button accessible",
             "Add aria-label='Close dialog' — this provides the accessible name to screen readers",
@@ -625,7 +625,7 @@
         },
         {
           "id": "rx-d5-q2",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "The element is removed from the DOM entirely",
             "The element is skipped in the natural tab order but can be focused programmatically via .focus()",
@@ -640,7 +640,7 @@
         },
         {
           "id": "rx-d5-q3",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Animated transitions are deprecated in modern browsers",
             "Some users experience dizziness, nausea, or seizures from motion. Disabling or reducing transitions for users who have enabled this OS-level accessibility setting is a WCAG requirement.",
@@ -655,7 +655,7 @@
         },
         {
           "id": "rx-d5-q4",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "null is better — fewer DOM nodes means faster rendering",
             "Skeleton is better — it preserves the layout shape so content appears in place rather than jumping into view, reducing cumulative layout shift (CLS) and perceived wait time",
@@ -714,7 +714,7 @@
       "questions": [
         {
           "id": "rx-d6-q1",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "The page loads correctly — Netlify serves index.html for all routes by default",
             "The page returns a 404 — Netlify looks for a file at /quests/3, finds none, and serves the default 404 page",
@@ -729,7 +729,7 @@
         },
         {
           "id": "rx-d6-q2",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "No risk — TypeScript errors are compile-time warnings and don't affect runtime behaviour",
             "The undefined value may cause a runtime crash when the component tries to access a property on it, resulting in a white screen error for users",
@@ -744,7 +744,7 @@
         },
         {
           "id": "rx-d6-q3",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Zustand stores are cleared on refresh — you need to re-fetch from the server",
             "The persist middleware was configured but the storage key changed between builds, invalidating the stored data",
@@ -759,7 +759,7 @@
         },
         {
           "id": "rx-d6-q4",
-          "type": "MCQ",
+          "type": "MULTIPLE_CHOICE",
           "options": [
             "Accessibility is required by law in most countries, so it must be done first",
             "Accessibility built in from the start costs far less than retrofitting it — semantic HTML and ARIA labels are written once at component creation; fixing a built app requires auditing and rewriting every component",

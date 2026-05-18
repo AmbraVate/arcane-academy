@@ -27,13 +27,15 @@
       "guidedPracticeHtml": "<p>In this exercise, the test runner injects input automatically. Write a program that:</p><ol><li>Creates a <code>Scanner</code> reading from <code>System.in</code>.</li><li>Reads a <code>String</code> for a wizard's name.</li><li>Reads an <code>int</code> for their level.</li><li>Reads a <code>double</code> for their mana reserve.</li><li>Prints: <code>\"Wizard: [name], Level [level], Mana [mana]\"</code></li></ol><p>Test input will be: <code>Lyria</code>, <code>5</code>, <code>88.5</code> (one per line).</p>",
       "guidedPracticeStarterCode": "import java.util.Locale;\nimport java.util.Scanner;\n\nScanner sc = new Scanner(System.in);\nsc.useLocale(Locale.US); // ensure '.' is used as the decimal separator on all locales\n\n// Read name, level, mana\n\n\n// Print the summary line\n\nsc.close();\n",
       "guidedPracticeTests": [
-        {"label": "Summary line printed", "input": "Lyria\n5\n88.5", "expected": "Wizard: Lyria, Level 5, Mana 88.5"}
+        {"label": "Summary line printed", "input": "Lyria\n5\n88.5", "expected": "Wizard: Lyria, Level 5, Mana 88.5"},
+        {"label": "Different wizard profile printed", "input": "Zara\n10\n200.0", "expected": "Wizard: Zara, Level 10, Mana 200.0"}
       ],
       "feynmanPrompt": "Explain how Java's Scanner works. What is the 'nextLine() after nextInt()' pitfall, and why does it happen? How would you explain it to a junior developer?",
       "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. In this exercise, the test runner injects input automatically. Write a program that:</p><ol><li>Creates a <code>Scanner</code> reading from <code>System.in</code>.</li><li>Reads a <code>String</code> for a wizard's name.</li><li>Reads an <code>int</code> for their level.</li><li>Reads a <code>double</code> for their mana reserve.</li><li>Prints: <code>\"Wizard: [name], Level [level], Mana [mana]\"</code></li></ol><p>Test input will be: <code>Lyria</code>, <code>5</code>, <code>88.5</code> (one per line).</p>",
       "soloPracticeStarterCode": "",
       "soloPracticeTests": [
-        {"label": "Summary line printed", "input": "Lyria\n5\n88.5", "expected": "Wizard: Lyria, Level 5, Mana 88.5"}
+        {"label": "Summary line printed", "input": "Lyria\n5\n88.5", "expected": "Wizard: Lyria, Level 5, Mana 88.5"},
+        {"label": "Different wizard profile printed", "input": "Zara\n10\n200.0", "expected": "Wizard: Zara, Level 10, Mana 200.0"}
       ],
       "questions": [
         {

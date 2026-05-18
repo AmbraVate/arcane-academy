@@ -127,7 +127,7 @@
           "explanationHtml": "<p>Tailwind classes are plain strings separated by spaces in the <code>class</code> or <code>className</code> attribute. No leading dots (those are CSS selectors, not class values), no raw CSS property names.</p>"
         },
         {
-          "type": "APPLICATION",
+          "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A developer writes <code>className={`bg-${color}-500`}</code> where <code>color</code> is a string from an API response. What problem will they encounter?</p>",
           "options": [
