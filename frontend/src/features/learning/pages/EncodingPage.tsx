@@ -875,6 +875,9 @@ export default function EncodingPage() {
                   placeholder="Write your solo response here. Use your own example or case, and explain what evidence would support your answer."
                 />
                 <OutputPanel lines={output} />
+                {practiceSolved && encoding.modelAnswer && (
+                  <ModelAnswerPanel answer={encoding.modelAnswer} />
+                )}
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Response Complete!</span>
@@ -1105,6 +1108,30 @@ function WrittenResponseEditor({
     </div>
   )
 }
+/**
+ * Reveals a model / exemplar answer after solo practice is submitted.
+ * Collapsible so students are encouraged to genuinely attempt before peeking.
+ */
+function ModelAnswerPanel({ answer }: { answer: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="border-t border-border flex-shrink-0">
+      <button
+        className="w-full flex items-center justify-between px-4 py-2.5 text-[12px] font-semibold text-gold hover:bg-[rgba(255,215,0,0.04)] transition-colors"
+        onClick={() => setOpen(v => !v)}
+      >
+        <span>📋 Model Answer</span>
+        <span className="text-muted text-[11px]">{open ? '▲ hide' : '▼ reveal'}</span>
+      </button>
+      {open && (
+        <div className="px-4 pb-4 pt-1 text-[13px] leading-[1.75] text-text font-crimson whitespace-pre-wrap border-t border-dashed border-[rgba(255,215,0,0.2)] bg-[rgba(255,215,0,0.03)]">
+          {answer}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function calculateRank(xp: number): string {
   if (xp >= 11000) return 'Lord Magus'
   if (xp >= 8000) return 'Magus'

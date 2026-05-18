@@ -56,4 +56,12 @@ public class SubChunk {
     /** JSON array of { term, description } objects highlighted in story beats as rabbit-hole terms. */
     @Column(columnDefinition = "TEXT")
     private String rabbitHoleTermsJson;
+
+    /**
+     * Optional model answer shown to the learner after solo practice is complete.
+     * Intended for written-response (NONE practice type) sub-chunks where self-assessment
+     * against an exemplar is pedagogically more useful than a pass/fail score alone.
+     */
+    @Column(columnDefinition = "TEXT")
+    private String modelAnswer;
 }

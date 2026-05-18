@@ -1,0 +1,145 @@
+{
+  "id": "psy-fnd-3",
+  "topicId": "psychology",
+  "title": "Learning & Memory",
+  "glyph": "🧠",
+  "tier": "FOUNDATION",
+  "sortOrder": 3,
+  "prerequisiteIds": ["psy-fnd-2"],
+  "subChunks": [
+    {
+      "id": "psy-fnd-3a",
+      "title": "Classical & Operant Conditioning",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>A dog salivates before food arrives. A child becomes anxious near a furry animal they have never feared before. A pigeon presses a lever thousands of times for the occasional food pellet. These behaviours — learned through experience — transformed psychology's understanding of how organisms acquire new responses to the world.</p><p>Behaviourism held that psychology should study only observable behaviour, not unobservable mental states. Pavlov, Watson, Skinner, and Bandura each contributed a layer to our understanding of how learning occurs — and their frameworks remain foundational to therapies used in clinical practice today.</p>",
+      "explanationHtml": "<h3>Classical Conditioning</h3><p>Ivan Pavlov (1897) discovered classical conditioning while studying salivation in dogs. He noticed that dogs salivated not only to food but to stimuli reliably paired with food — a bell, a light, even his laboratory assistant's footsteps. Pavlov systematically paired a neutral stimulus (NS; a bell) with an unconditioned stimulus (UCS; food) that naturally produced an unconditioned response (UCR; salivation). After repeated pairings, the bell alone — now a conditioned stimulus (CS) — elicited salivation, the conditioned response (CR).</p><p>Key principles: <strong>Acquisition</strong> — the gradual strengthening of the CS–CR association through pairings. <strong>Extinction</strong> — the weakening of the CR when the CS is presented repeatedly without the UCS. <strong>Spontaneous recovery</strong> — the return of an extinguished CR after a rest period. <strong>Generalisation</strong> — responding to stimuli similar to the CS. <strong>Discrimination</strong> — learning to respond only to the specific CS.</p><p>John Watson & Rosalie Rayner (1920) demonstrated classical conditioning in humans with the ethically controversial 'Little Albert' study. An 11-month-old infant was conditioned to fear a white rat (previously neutral) by pairing its presentation with a loud noise (UCS). Albert subsequently generalised his fear to other white, furry objects. This study — impossible to conduct today under ethical guidelines — demonstrated that emotional responses could be conditioned.</p><h3>Operant Conditioning</h3><p>B.F. Skinner (1938) extended behaviourism to show that voluntary behaviours are shaped by their consequences. In the 'Skinner box', rats and pigeons learned to press levers or peck keys to obtain food or avoid electric shocks, demonstrating that behaviour is controlled by its outcomes.</p><p><strong>Reinforcement</strong> increases the frequency of a behaviour. Positive reinforcement adds a desirable stimulus (praise, food). Negative reinforcement removes an aversive stimulus (taking an analgesic removes pain → increases tablet-taking). <strong>Punishment</strong> decreases behaviour. Positive punishment adds an aversive stimulus (a fine). Negative punishment removes a desired stimulus (confiscating a phone).</p><p><strong>Schedules of reinforcement</strong> powerfully affect behaviour. Continuous reinforcement (every response rewarded) produces rapid acquisition but rapid extinction. Partial schedules produce greater resistance to extinction. The <strong>variable ratio schedule</strong> — reward delivered after an unpredictable number of responses — produces the highest, most persistent response rates; it underlies gambling and social media notifications.</p><h3>Social Learning Theory</h3><p>Albert Bandura (1961) challenged pure behaviourism with his Bobo doll experiments. Children who observed an adult model behaving aggressively toward an inflatable doll subsequently imitated that aggression — even without direct reinforcement. Bandura proposed that learning occurs through <strong>observation</strong>, <strong>imitation</strong>, and <strong>modelling</strong>, mediated by cognitive processes of attention, retention, reproduction, and motivation.</p><p>Bandura's concept of <strong>self-efficacy</strong> — belief in one's capacity to execute a behaviour — predicts whether observed behaviours will be reproduced. Social learning theory bridges behaviourism and cognitive psychology, and underpins media effects research, therapeutic modelling, and educational practice.</p><h3>Clinical Applications</h3><p>Classical conditioning principles underpin systematic desensitisation (Wolpe, 1958), in which phobias are treated by gradually pairing the feared stimulus with relaxation, replacing the conditioned fear response. Operant principles are central to Applied Behaviour Analysis (ABA) for autism spectrum conditions, token economy systems in institutional settings, and contingency management in substance misuse treatment.</p>",
+      "storyBeats": [
+        { "type": "narration", "text": "Dr. Chen pulls up a grainy black-and-white photograph of Pavlov's laboratory in St. Petersburg — rows of caged dogs connected to tubing that measures their saliva." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Pavlov wasn't studying learning. He was studying digestion. The conditioned reflex was, in his words, a 'psychic secretion' — something he initially tried to explain away. Science often finds its most important discoveries by accident." },
+        { "type": "narration", "text": "She advances to a diagram of Skinner's operant chamber — lever, food dispenser, speaker, light." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Skinner argued that all behaviour — human and animal — could be explained by reinforcement history. No need for the concept of 'mind' at all. Bandura disagreed. He said: watch this." },
+        { "type": "narration", "text": "A video clip plays: a nursery-school child punching a Bobo doll, then looking up, then punching it again — exactly mimicking an adult model shown on film." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "The child was never reinforced. No food, no praise. They simply watched and reproduced. That single finding fractured behaviourism. Cognition matters. Observation matters. Context matters." }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Applying Conditioning Principles</h3><p><strong>Case study:</strong> Amir is a 14-year-old who was involved in a minor road traffic collision. He was unhurt, but the moment of impact was accompanied by a loud screeching noise and the smell of burning rubber. Since the accident, Amir becomes highly anxious when he hears any loud screeching sound — including brakes in car parks — and has begun avoiding shopping centres with multi-storey car parks.</p><p>Using your knowledge of classical conditioning, analyse Amir's response using the terminology: NS, UCS, UCR, CS, CR. Then explain one conditioning principle (generalisation, discrimination, or extinction) visible in this case. Finally, suggest how systematic desensitisation could be used to treat Amir's anxiety, drawing on Wolpe (1958).</p><p><em>Guidance: Define each classical conditioning term before applying it. Aim for 100–130 words. Your answer should move from stimulus–response labelling → principle identification → treatment application.</em></p>",
+      "soloPracticeHtml": "<h3>Independent Practice — Schedules of Reinforcement</h3><p>A researcher is designing a smoking cessation intervention. They plan to use a variable ratio reinforcement schedule to reward participants for going increasing periods without smoking. A colleague argues that a continuous reinforcement schedule would be more effective because it rewards every success.</p><p>Evaluate both positions using your knowledge of operant conditioning. In your answer, explain what each schedule involves, compare their effects on acquisition and extinction, and justify which schedule is more appropriate for this intervention, with reference to relevant evidence or theory.</p><p><em>Write at least 120 words in your own words. Do not use bullet points — construct a coherent argument.</em></p>",
+      "modelAnswer": "Continuous reinforcement (CR) delivers a reward after every correct response, producing rapid acquisition. However, CR schedules lead to equally rapid extinction when reinforcement ceases — participants who cannot access a reward quickly abandon the behaviour. In smoking cessation, individuals will inevitably miss rewards (social situations, resource constraints), making a highly extinction-prone schedule problematic.\n\nA variable ratio (VR) schedule delivers reinforcement after an unpredictable number of responses. VR schedules produce high, steady response rates and exceptional resistance to extinction because the organism cannot predict when the next reward will come, maintaining hope and behaviour between rewards. Skinner's (1938) Skinner-box experiments demonstrated this with pigeons maintaining lever-pressing through thousands of unrewarded trials.\n\nFor smoking cessation, the VR schedule is more appropriate. Participants will continue abstinent behaviour even when immediate rewards are absent, which more realistically mirrors the cessation journey. The unpredictability of rewards also sustains motivation across the variable timescales individuals experience when giving up smoking — some days are harder than others, and a schedule that accommodates this variability is more ecologically valid than one that demands perfect, uninterrupted success.",
+      "feynmanPrompt": "Explain the difference between classical and operant conditioning to someone who has never studied psychology. Use one everyday example for each. What does Bandura's work add that neither Pavlov nor Skinner could account for?",
+      "rabbitHoleTerms": [
+        { "term": "Unconditioned stimulus (UCS)", "description": "A stimulus that naturally and automatically triggers a response without prior learning — e.g., food triggering salivation in Pavlov's dogs." },
+        { "term": "Extinction", "description": "The gradual weakening of a conditioned response when the conditioned stimulus is repeatedly presented without the unconditioned stimulus." },
+        { "term": "Negative reinforcement", "description": "The removal of an aversive stimulus following a behaviour, which increases the likelihood of that behaviour recurring. Distinct from punishment." },
+        { "term": "Variable ratio schedule", "description": "A partial reinforcement schedule in which reward is delivered after an unpredictable number of responses. Produces the highest response rates and greatest resistance to extinction." },
+        { "term": "Self-efficacy", "description": "Bandura's concept describing an individual's belief in their capacity to execute the behaviours required to produce specific outcomes. Predicts whether observed learning translates to performance." },
+        { "term": "Systematic desensitisation", "description": "A behaviour therapy developed by Wolpe (1958) for treating phobias. The feared stimulus is gradually paired with a relaxation response until anxiety is extinguished." }
+      ],
+      "questions": [
+        {
+          "id": "psy-fnd-3a-q1",
+          "tier": "RECALL",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>In Pavlov's classical conditioning experiments, which term describes the bell <em>after</em> it has been repeatedly paired with food and now elicits salivation on its own?</p>",
+          "codeSnippet": null,
+          "options": ["Conditioned stimulus (CS)", "Unconditioned stimulus (UCS)", "Neutral stimulus (NS)", "Unconditioned response (UCR)"],
+          "correctAnswer": "Conditioned stimulus (CS)"
+        },
+        {
+          "id": "psy-fnd-3a-q2",
+          "tier": "RECALL",
+          "type": "TRUE_FALSE",
+          "questionHtml": "<p>True or False: Negative reinforcement involves adding an aversive stimulus following a behaviour in order to reduce the frequency of that behaviour.</p>",
+          "codeSnippet": null,
+          "options": null,
+          "correctAnswer": "False"
+        },
+        {
+          "id": "psy-fnd-3a-q3",
+          "tier": "APPLICATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Maya notices she feels anxious not only in the shopping centre where she was once caught in a crowd crush, but also in cinemas, concerts, and busy restaurants. Which classical conditioning principle best explains this?</p>",
+          "codeSnippet": null,
+          "options": ["Stimulus generalisation", "Stimulus discrimination", "Spontaneous recovery", "Extinction"],
+          "correctAnswer": "Stimulus generalisation"
+        },
+        {
+          "id": "psy-fnd-3a-q4",
+          "tier": "DISCRIMINATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Bandura's Bobo doll study (1961) challenged pure behaviourism primarily because:</p>",
+          "codeSnippet": null,
+          "options": ["Children reproduced aggressive behaviour without receiving direct reinforcement", "Children failed to imitate the adult model at all", "The study showed that punishment eliminated imitative behaviour entirely", "Reinforcement schedules determined which children imitated the model"],
+          "correctAnswer": "Children reproduced aggressive behaviour without receiving direct reinforcement"
+        }
+      ]
+    },
+    {
+      "id": "psy-fnd-3b",
+      "title": "Memory Models & Forgetting",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>You remember your first day at school but forget what you had for breakfast on Tuesday. You can recall the words to a song you haven't heard in twenty years but forget a phone number seconds after hearing it. Memory is not a single system: it is a collection of interacting stores and processes, each with distinct capacities, durations, and vulnerabilities.</p><p>Cognitive psychology's greatest theoretical contributions include systematic models of memory — frameworks that explain not only how we remember but why we forget, and how different kinds of knowledge are represented and retrieved.</p>",
+      "explanationHtml": "<h3>The Multi-Store Model</h3><p>Atkinson & Shiffrin (1968) proposed that memory comprises three separate stores: <strong>sensory memory</strong>, <strong>short-term memory (STM)</strong>, and <strong>long-term memory (LTM)</strong>, through which information flows sequentially via attention and rehearsal.</p><p>Sensory memory holds large amounts of raw perceptual data for very brief periods (iconic memory: ~0.5 s; echoic memory: ~2 s). Only attended information enters STM. STM has a limited capacity of approximately 7 ± 2 items (Miller, 1956) and a duration of 15–30 seconds without rehearsal. Maintenance rehearsal (repetition) keeps information in STM; elaborative rehearsal transfers it to LTM. LTM has theoretically unlimited capacity and duration, encoding information semantically.</p><p>Evidence supporting the model comes from the <strong>serial position effect</strong>: recall of items from the beginning of a list (primacy effect) reflects LTM encoding via rehearsal; recall of end items (recency effect) reflects STM. The <strong>case of H.M.</strong> (Scoville & Milner, 1957) — who, following hippocampal removal, could no longer form new LTMs but retained intact STM — provided neuropsychological support for separate stores.</p><h3>The Working Memory Model</h3><p>Baddeley & Hitch (1974) replaced the unitary STM with a multicomponent <strong>working memory</strong> (WM) system. The <strong>central executive</strong> — an attentional controller with limited capacity — oversees three slave systems: the <strong>phonological loop</strong> (verbal/phonological information), the <strong>visuospatial sketchpad</strong> (visual and spatial information), and the <strong>episodic buffer</strong> (Baddeley, 2000; integrates information across modalities and with LTM).</p><p>Evidence for separate components comes from dual-task experiments: participants can simultaneously perform a verbal task and a visuospatial task with little mutual interference, suggesting these draw on separate resources. Neuroimaging (Paulesu et al., 1993) identified distinct brain areas for the phonological loop (Broca's area, supramarginal gyrus) and visuospatial sketchpad (occipital and parietal regions).</p><h3>Levels of Processing</h3><p>Craik & Lockhart (1972) challenged the structural approach of the MSM, arguing that memory strength depends not on which store information passes through but on the <strong>depth of processing</strong> at encoding. Shallow processing (structural/phonological encoding) produces weak, transient memories. Deep, semantic processing — elaborating meaning and forming associations — produces strong, durable memories. The <strong>self-reference effect</strong> (relating information to oneself) produces the deepest encoding.</p><h3>Forgetting</h3><p>Multiple mechanisms explain forgetting. <strong>Trace decay</strong> (Hebb, 1949) proposes that memory traces fade if not rehearsed — primary evidence is STM duration. <strong>Interference</strong> is well-supported for LTM: proactive interference occurs when old memories disrupt recall of new information; retroactive interference occurs when new learning disrupts recall of earlier memories. Underwood (1957) demonstrated that participants who had learned many prior word lists showed much poorer recall of a new list — a clear proactive interference effect.</p><p><strong>Context-dependent forgetting</strong> (Godden & Baddeley, 1975) showed that divers who learned word lists underwater recalled significantly more words underwater than on land (and vice versa), demonstrating that encoding context serves as a retrieval cue. <strong>State-dependent memory</strong> (Goodwin et al., 1969) extends this to internal states: information learned in an intoxicated state is better recalled when intoxicated again. <strong>Motivated forgetting</strong> (Freud's repression) — the idea that threatening memories are actively blocked — remains controversial and lacks robust experimental support.</p>",
+      "storyBeats": [
+        { "type": "narration", "text": "Dr. Chen draws three boxes on the whiteboard: SENSORY → STM → LTM, with arrows between them and a loop on STM labelled 'rehearsal'." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Atkinson and Shiffrin gave us a clean, testable model in 1968. But Baddeley and Hitch looked at it and asked: if STM is just one thing, why can you carry on a conversation while navigating a new city? Those feel like very different resources." },
+        { "type": "narration", "text": "She erases the single STM box and replaces it with three interlocking components, a central hub surrounded by two specialised loops." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "The beauty of working memory is that it explains capacity limitations without claiming everything competes for the same resource. Verbal overload doesn't impair spatial reasoning — they're separate slave systems." },
+        { "type": "narration", "text": "She moves to forgetting. 'People assume forgetting is failure. But Godden and Baddeley showed it's context mismatch — the memory is there, it just can't be retrieved without the right cue.'" },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Think about revision. Craik and Lockhart tell you that reading your notes over and over is almost useless — shallow processing. Making connections, generating examples, teaching the material to someone else — that is deep processing. That is what the evidence supports." }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Evaluating Memory Models</h3><p><strong>Scenario:</strong> A teacher is designing a revision programme for A-level students. She asks a psychologist which revision strategies are best supported by memory research.</p><p>Using the multi-store model (Atkinson & Shiffrin, 1968), the working memory model (Baddeley & Hitch, 1974), and levels of processing (Craik & Lockhart, 1972), recommend two revision strategies and explain why each is supported by psychological evidence. Identify at least one strength and one limitation of the theoretical framework you rely on most heavily.</p><p><em>Guidance: Each recommendation should connect a strategy → underlying mechanism → evidence. Aim for 110–140 words. Avoid general advice — ground every point in named theory or research.</em></p>",
+      "soloPracticeHtml": "<h3>Independent Practice — Explaining Forgetting</h3><p>Marcus studied Spanish vocabulary intensively for three years and achieved near-fluency. He then moved to France and spent two years immersed in French. When he returns to a Spanish-speaking environment, he finds that many Spanish words he once knew fluently are no longer accessible — French words intrude when he searches for Spanish.</p><p>Using two or more theories of forgetting, explain Marcus's difficulty retrieving Spanish vocabulary. Evaluate the relative merits of these explanations and consider whether his Spanish memories are truly 'lost' or whether retrieval has been disrupted. Support your analysis with relevant research evidence.</p><p><em>Write at least 130 words. Write in paragraphs — do not use bullet points.</em></p>",
+      "modelAnswer": "Marcus's experience is most parsimoniously explained by retroactive interference: the intensive acquisition of French has disrupted retrieval of previously learned Spanish vocabulary. Underwood (1957) demonstrated that prior learning of word lists caused significant proactive interference for subsequent list recall; the reverse — new learning disrupting older memories — is retroactive interference and is equally well supported. In Marcus's case, two years of French immersion have established strong French lexical associations that compete with, and overwhelm, weaker Spanish traces during retrieval attempts.\n\nTrace decay theory — Hebb's (1949) proposal that unexercised memory traces fade — offers a complementary account. Marcus's Spanish was not actively used for two years; without rehearsal, synaptic connections supporting Spanish lexical access may have weakened. However, trace decay alone cannot explain why French words actively intrude — interference theory better accounts for the competitive, substitutive nature of his errors.\n\nContext-dependent forgetting (Godden & Baddeley, 1975) further suggests his Spanish is not 'lost' but poorly cued: Spanish was encoded in a Spanish-speaking environment, and returning to that context should partially restore retrieval. This distinction — between availability (stored) and accessibility (retrievable) — is crucial. Tulving's encoding specificity principle predicts that matching retrieval conditions to encoding conditions will reinstate access. Marcus's memories are most likely intact but temporarily inaccessible — a finding with optimistic implications for his language recovery.",
+      "feynmanPrompt": "Explain the difference between the multi-store model and the working memory model to a school student who has never studied psychology. Why did Baddeley and Hitch think a single STM 'box' was insufficient? Use a concrete example.",
+      "rabbitHoleTerms": [
+        { "term": "Serial position effect", "description": "The phenomenon whereby items at the beginning (primacy effect) and end (recency effect) of a list are recalled better than middle items, reflecting LTM and STM stores respectively." },
+        { "term": "Central executive", "description": "The attentional controller at the core of Baddeley's working memory model. It allocates resources to the phonological loop and visuospatial sketchpad and is involved in dual-task performance." },
+        { "term": "Levels of processing", "description": "Craik & Lockhart's (1972) framework proposing that memory durability depends on depth of encoding: shallow (structural/phonological) produces weaker traces than deep (semantic) processing." },
+        { "term": "Proactive interference", "description": "When previously learned information disrupts the recall of new information — e.g., old passwords interfering with a newly set one." },
+        { "term": "Retroactive interference", "description": "When newly learned information disrupts the recall of previously learned information — e.g., learning French impairing recall of Spanish." },
+        { "term": "Encoding specificity principle", "description": "Tulving's (1983) principle that memory retrieval is most effective when retrieval conditions match the context present at encoding — underpins context- and state-dependent forgetting." }
+      ],
+      "questions": [
+        {
+          "id": "psy-fnd-3b-q1",
+          "tier": "RECALL",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>According to Atkinson & Shiffrin's (1968) multi-store model, which type of rehearsal is primarily responsible for transferring information from short-term to long-term memory?</p>",
+          "codeSnippet": null,
+          "options": ["Elaborative rehearsal", "Maintenance rehearsal", "Structural rehearsal", "Phonological rehearsal"],
+          "correctAnswer": "Elaborative rehearsal"
+        },
+        {
+          "id": "psy-fnd-3b-q2",
+          "tier": "RECALL",
+          "type": "TRUE_FALSE",
+          "questionHtml": "<p>True or False: Baddeley and Hitch (1974) proposed that the phonological loop and the visuospatial sketchpad both draw on the same limited resource pool, meaning performance on verbal and spatial tasks should always interfere with each other.</p>",
+          "codeSnippet": null,
+          "options": null,
+          "correctAnswer": "False"
+        },
+        {
+          "id": "psy-fnd-3b-q3",
+          "tier": "APPLICATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Jasmine is revising for her biology exam. Which revision strategy is most strongly supported by Craik & Lockhart's levels of processing framework?</p>",
+          "codeSnippet": null,
+          "options": ["Explaining each concept aloud to a classmate in her own words", "Re-reading her lecture notes three times", "Highlighting key terms in different colours", "Writing out verbatim definitions from the textbook"],
+          "correctAnswer": "Explaining each concept aloud to a classmate in her own words"
+        },
+        {
+          "id": "psy-fnd-3b-q4",
+          "tier": "DISCRIMINATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Godden & Baddeley's (1975) diving study supports which theory of forgetting?</p>",
+          "codeSnippet": null,
+          "options": ["Context-dependent forgetting", "Retroactive interference", "Trace decay", "Motivated forgetting"],
+          "correctAnswer": "Context-dependent forgetting"
+        }
+      ]
+    }
+  ]
+}

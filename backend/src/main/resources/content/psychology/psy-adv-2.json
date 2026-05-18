@@ -1,0 +1,144 @@
+{
+  "id": "psy-adv-2",
+  "topicId": "psychology",
+  "title": "Social Psychology",
+  "glyph": "👥",
+  "tier": "ADVANCED",
+  "sortOrder": 5,
+  "prerequisiteIds": ["psy-adv-1"],
+  "subChunks": [
+    {
+      "id": "psy-adv-2a",
+      "title": "Conformity, Obedience & Minority Influence",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1961, ordinary American men arrived at a psychology laboratory at Yale University and, following instructions from a researcher in a lab coat, administered what they believed were dangerous electric shocks to a screaming stranger. Sixty-five percent delivered the maximum 450-volt shock. None were sadists. None were coerced. They simply obeyed.</p><p>Social psychology asks: to what extent does the social context — the presence of others, group norms, authority figures — shape individual behaviour? The answer, derived from decades of research, is: far more than most people believe, and far more than people believe about themselves.</p>",
+      "explanationHtml": "<h3>Conformity</h3><p>Solomon Asch (1951) demonstrated informational and normative social influence through his line-judgement paradigm. Participants were placed in groups with confederates who unanimously gave obviously wrong answers about line lengths. Despite the answer being perceptually unambiguous, 75% of participants conformed at least once, and the average conformity rate was 32%. Post-experiment interviews revealed two motives: <strong>informational social influence</strong> (believing the majority must be correct — 'they know something I don't') and <strong>normative social influence</strong> (desiring approval and fearing rejection).</p><p>Variables moderating conformity include: <strong>unanimity</strong> — a single dissenting ally reduces conformity dramatically; <strong>group size</strong> — conformity increases up to three or four members but not beyond; <strong>task difficulty</strong> — ambiguity increases informational influence; <strong>culture</strong> — Bond & Smith (1996) meta-analysis found higher conformity in collectivist cultures. Moscovici's (1980) conversion theory distinguished public compliance from private acceptance (genuine attitude change).</p><h3>Obedience to Authority</h3><p>Stanley Milgram (1963, 1974) conducted arguably the most famous and controversial experiments in psychology's history. Participants (the 'teacher') believed they were delivering electric shocks to another participant (the 'learner' — actually a confederate) each time the learner gave a wrong answer. Shocks escalated in 15-volt increments from 15V to 450V, labelled 'Slight Shock' to 'XXX Danger: Severe Shock'. The learner's protests and eventual silence were pre-recorded. When the experimenter issued four graduated prods ('Please continue', 'The experiment requires you to continue', etc.), 65% of participants went to 450V.</p><p>Milgram identified situational factors increasing obedience: <strong>prestige</strong> of Yale University (obedience dropped when relocated to a run-down office block); <strong>proximity</strong> to the learner (obedience decreased when the learner was in the same room); <strong>proximity</strong> to the experimenter (obedience decreased when instructions were given by telephone); <strong>group pressure</strong> (obedience dropped to 10% when two confederate teachers refused). Milgram proposed the concept of the <strong>agentic state</strong> — a psychological shift in which individuals see themselves as agents executing another's wishes rather than autonomous moral actors.</p><p>Ethical concerns: participants were deceived, experienced genuine distress, and were not fully free to withdraw (the prods pressure continuation). Baumrind (1964) criticised the harm caused. Milgram conducted 26 variations and argued that debriefing and follow-up interviews showed most participants valued their participation and suffered no lasting harm. The American Psychological Association subsequently tightened ethical guidelines substantially.</p><h3>Minority Influence</h3><p>Moscovici, Lage & Naffrechoux (1969) demonstrated that minorities can produce genuine attitude change (private acceptance, not merely public compliance) through <strong>consistency</strong>, <strong>commitment</strong>, and <strong>confidence</strong>. In their blue–green paradigm, a consistent minority calling slides 'green' shifted the majority's colour perception on a later colour-naming task — a conversion effect invisible in public responding. Nemeth (1986) argued that minority influence promotes <strong>divergent thinking</strong> — broader, more creative information processing — whereas majority influence encourages convergent, surface-level compliance.</p>",
+      "storyBeats": [
+        { "type": "narration", "text": "Dr. Chen projects Milgram's original obedience figure: 65%. The seminar room goes quiet." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Before the study, Milgram asked psychiatrists to predict the results. They estimated fewer than 1% would reach 450V — those being pathological individuals. They were wrong by a factor of sixty-five. The person hypothesis is seductive. The situation is more powerful." },
+        { "type": "narration", "text": "She shows Asch's line cards — the target line, the three comparison lines. One match is obvious." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "The line task isn't hard. Anyone alone gets it right every time. But add six confederates giving the wrong answer in front of you, and suddenly the 'obvious' answer feels very uncertain. Asch showed us two things: we look to others for information, and we care deeply about what others think of us." },
+        { "type": "narration", "text": "She turns to minority influence — Moscovici's green slides. Students look surprised: minorities can change majorities?" },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Consistency is the key. A minority that waivers is dismissed. One that holds its position — calmly, repeatedly, across contexts — forces the majority to take it seriously. Think of any major social movement. None began as a majority." }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Milgram and Situational Factors</h3><p><strong>Scenario:</strong> A hospital trust is investigating why nursing staff on a ward administered an incorrect medication dose after a senior consultant gave a verbal order contradicting the written prescription. No staff member challenged the order, even though three nurses privately believed it was wrong.</p><p>Using Milgram's (1963, 1974) theory of obedience, explain why the nursing staff may have complied with the consultant's instruction. In your answer, refer to the concept of the agentic state, at least two situational factors that increase obedience, and consider what systemic or procedural changes might reduce blind compliance in healthcare settings.</p><p><em>Guidance: Apply Milgram's concepts specifically to the hospital context — do not describe the study in abstract. Aim for 110–140 words.</em></p>",
+      "soloPracticeHtml": "<h3>Independent Practice — Conformity vs. Minority Influence</h3><p>A jury deliberating a criminal case contains eleven members who favour a guilty verdict and one member who maintains innocence. The dissenting juror is calm, consistent, and reasoned across all sessions. After four hours, three other jurors change their positions.</p><p>Using Moscovici's theory of minority influence (1969, 1980) and Asch's (1951) conformity research, analyse this scenario. In your answer, explain why the dissenting juror was able to produce genuine attitude change rather than mere compliance, distinguish between informational and normative social influence, and evaluate the role of consistency and commitment in minority influence processes.</p><p><em>Write at least 130 words in paragraphs. Draw on both conformity and minority influence frameworks.</em></p>",
+      "modelAnswer": "Moscovici's (1969) conversion theory proposes that minorities produce genuine private acceptance — authentic attitude change — rather than the surface-level public compliance typical of majority influence. The dissenting juror in this scenario demonstrates the three key conditions for minority influence: consistency (maintaining the same position across all deliberation sessions), commitment (persisting despite social pressure from eleven peers), and confidence (calm, reasoned argumentation that signals certainty in their position).\n\nAsch's (1951) research on conformity shows that even a single ally dramatically reduces conformity to a majority. The dissenting juror functions as this ally, creating a social permission structure in which other jurors who privately doubted the guilty verdict felt licensed to express that doubt. This reflects the dual-process mechanism Moscovici proposed: majority influence operates via normative social influence (fear of rejection), while minority influence operates via informational social influence (the minority's consistency forces genuine reconsideration of the evidence).\n\nThe outcome — three jurors changing position — illustrates conversion rather than compliance. Nemeth's (1986) research supports this: exposure to a consistent minority promotes divergent thinking, causing people to examine evidence more thoroughly from multiple angles. In a legal context, this has clear implications for jury design and the importance of protecting dissenting voices in deliberation processes, rather than treating unanimity as a procedural goal.",
+      "feynmanPrompt": "Explain to a school student what Milgram's obedience experiments found and why the results are significant. Why do psychologists argue this tells us more about situations than about individual personality?",
+      "rabbitHoleTerms": [
+        { "term": "Normative social influence", "description": "Conforming to group behaviour to gain approval and avoid rejection, without necessarily believing the group is correct. Leads to public compliance but not necessarily private acceptance." },
+        { "term": "Informational social influence", "description": "Conforming because you believe others have superior information or knowledge, especially in ambiguous situations. Can produce genuine attitude change." },
+        { "term": "Agentic state", "description": "Milgram's concept describing a psychological shift in which individuals see themselves as instruments of an authority's will, reducing personal moral responsibility for their actions." },
+        { "term": "Conversion", "description": "Moscovici's term for genuine private attitude change produced by minority influence — distinguishable from public compliance, which is mere surface-level agreement without actual belief change." },
+        { "term": "Graduated commitment", "description": "A compliance technique in which small initial requests escalate into larger ones; related to the foot-in-the-door effect and relevant to how Milgram's voltage increments maintained obedience." },
+        { "term": "Unanimous dissent", "description": "The condition in Asch's paradigm where a single confederate breaks from the group consensus. Even one dissenter dramatically reduces conformity rates in the majority." }
+      ],
+      "questions": [
+        {
+          "id": "psy-adv-2a-q1",
+          "tier": "RECALL",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>In Milgram's (1963) baseline obedience study, what percentage of participants administered the maximum 450-volt shock?</p>",
+          "codeSnippet": null,
+          "options": ["65%", "35%", "80%", "12%"],
+          "correctAnswer": "65%"
+        },
+        {
+          "id": "psy-adv-2a-q2",
+          "tier": "RECALL",
+          "type": "TRUE_FALSE",
+          "questionHtml": "<p>True or False: Moscovici's research demonstrated that minority influence typically produces public compliance — surface agreement without genuine private attitude change.</p>",
+          "codeSnippet": null,
+          "options": null,
+          "correctAnswer": "False"
+        },
+        {
+          "id": "psy-adv-2a-q3",
+          "tier": "APPLICATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Priya changes her vote in a departmental meeting after noticing that everyone else supports the proposal, even though she privately disagrees. Which concept best describes her behaviour?</p>",
+          "codeSnippet": null,
+          "options": ["Normative social influence", "Informational social influence", "Agentic state", "Minority influence"],
+          "correctAnswer": "Normative social influence"
+        },
+        {
+          "id": "psy-adv-2a-q4",
+          "tier": "DISCRIMINATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>Which of the following Milgram variations produced the greatest reduction in obedience rates?</p>",
+          "codeSnippet": null,
+          "options": ["The learner was placed in the same room as the participant", "Instructions were given by telephone rather than face-to-face", "The study was relocated from Yale to a run-down office", "Two confederate teachers refused to continue"],
+          "correctAnswer": "Two confederate teachers refused to continue"
+        }
+      ]
+    },
+    {
+      "id": "psy-adv-2b",
+      "title": "Social Identity, Prejudice & Discrimination",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1971, primary school teacher Jane Elliott divided her class by eye colour and told them that brown-eyed children were superior to blue-eyed children. Within hours, the previously friendly class had fragmented: brown-eyed children became arrogant and dismissive; blue-eyed children's academic performance dropped and they became subdued. The following day, she reversed the labels. The same effects appeared in reverse.</p><p>Elliott's exercise demonstrated what social psychologists have documented across decades of research: group membership shapes identity, cognition, and behaviour in profound ways. Prejudice — negative attitudes toward out-group members — and discrimination — differential treatment — arise from basic social categorisation processes, not from individual pathology.</p>",
+      "explanationHtml": "<h3>Social Identity Theory</h3><p>Henri Tajfel & John Turner (1979) proposed Social Identity Theory (SIT) to explain intergroup conflict and discrimination. SIT begins with <strong>social categorisation</strong>: people automatically classify themselves and others into groups (in-groups and out-groups). This categorisation produces <strong>social comparison</strong> — comparing one's in-group to relevant out-groups — driven by a motivation to maintain positive <strong>social identity</strong> (the part of self-concept derived from group membership).</p><p>To achieve a positive social identity, individuals engage in <strong>in-group favouritism</strong> and <strong>out-group derogation</strong>. Tajfel's (1970) minimal group paradigm demonstrated this with striking economy: participants arbitrarily assigned to groups based on trivial criteria (preference for Klee vs. Kandinsky paintings) showed significant in-group favouritism in resource allocation tasks — despite having no prior relationship with group members and no possibility of personal gain.</p><p>When social identity is threatened, individuals respond in three ways: <strong>individual mobility</strong> (leaving the group), <strong>social creativity</strong> (reframing the comparison dimension — 'we may earn less, but we have better values'), or <strong>social competition</strong> (direct intergroup competition to improve the in-group's standing).</p><h3>Realistic Conflict Theory</h3><p>Muzafer Sherif et al.'s (1954, 1961) Robbers Cave experiment provided field experimental evidence for realistic conflict theory: prejudice arises from competition for scarce resources. Boys at a summer camp, divided into two groups ('Eagles' and 'Rattlers'), developed strong in-group loyalty and intense out-group hostility through competitive activities. Sherif demonstrated that prejudice could subsequently be reduced through <strong>superordinate goals</strong> — shared objectives requiring intergroup cooperation.</p><h3>Stereotype Threat</h3><p>Steele & Aronson (1995) demonstrated that activating a negative stereotype about a social group impairs the academic performance of members of that group. African American students performed significantly worse than White students on a verbal test when it was framed as a measure of intellectual ability, but comparably when framed as a problem-solving exercise. This <strong>stereotype threat</strong> effect has been replicated across gender, age, and ethnicity in many domains, and operates through anxiety, self-monitoring, and cognitive load mechanisms.</p><h3>Reducing Prejudice</h3><p>Allport's (1954) <strong>contact hypothesis</strong> proposed that prejudice decreases when members of different groups interact under conditions of: equal status, common goals, intergroup cooperation, and institutional support. Pettigrew & Tropp's (2006) meta-analysis of 515 studies confirmed that contact generally reduces prejudice, but only weakly when Allport's conditions are not met. Hewstone (2003) extended the model to emphasise <strong>cross-group friendship</strong> as the most powerful contact sub-type.</p>",
+      "storyBeats": [
+        { "type": "narration", "text": "Dr. Chen shows a 1970 photograph from Tajfel's minimal group experiment — a row of students completing resource allocation booklets, each assigning points to anonymous group members they will never meet." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Tajfel's question was deceptively simple: what is the minimum condition needed to produce discrimination? His answer was disturbing — knowing which group you belong to is sufficient. The groups were meaningless. There was no history, no competition, no shared identity. Just a label. That was enough." },
+        { "type": "narration", "text": "She moves to the Robbers Cave — Sherif's boys, initially friends, becoming bitter rivals within days of competitive activities." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Sherif argued Tajfel had it partly wrong. You don't need just a label — you need competition for something real. Resources, status, territory. But here's the remarkable part: the hostility Sherif's boys developed didn't disappear with contact. It took a broken-down bus and a water supply problem — a goal that neither group could achieve alone — before cooperation began." },
+        { "type": "dialogue", "speaker": "Dr. Chen", "av": "👩‍🔬", "cls": "mentor", "sCls": "mentor", "text": "Steele and Aronson's stereotype threat research shows us that prejudice doesn't have to come from outside to damage performance. Simply reminding someone of a negative stereotype about their group is enough to impair their performance on a test — even when they know it's a stereotype and don't personally endorse it." }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Applying Social Identity Theory</h3><p><strong>Scenario:</strong> A multinational company has merged two previously rival firms. Employees from the acquired company ('Novo') are now working alongside employees from the acquiring company ('Apex'). Apex employees frequently describe Novo staff as 'less professional', and Novo employees complain of being excluded from decision-making. Productivity in cross-company project teams is significantly below targets.</p><p>Using Social Identity Theory (Tajfel & Turner, 1979) and at least one other theoretical framework, explain the intergroup conflict occurring at this company. In your answer, identify the psychological processes driving in-group favouritism and out-group derogation, and propose two evidence-based interventions that could reduce tension and improve collaboration.</p><p><em>Guidance: Name and explain SIT concepts (social categorisation, social comparison, social identity) before applying them. Aim for 120–150 words.</em></p>",
+      "soloPracticeHtml": "<h3>Independent Practice — Stereotype Threat</h3><p>A secondary school careers department is concerned that girls are significantly underrepresented in physics A-level despite performing equally to boys in GCSE physics. When the careers team observes physics lessons, they notice teachers often comment on 'how well the girls are doing for girls in physics' and that physics careers posters display almost exclusively male scientists.</p><p>Using Steele & Aronson's (1995) concept of stereotype threat and Social Identity Theory, analyse how these environmental factors may be influencing girls' subject choices and performance. Then evaluate the quality of evidence underpinning stereotype threat theory and suggest what the careers department could do to address the issue.</p><p><em>Write at least 140 words in paragraphs. Include both application and critical evaluation.</em></p>",
+      "modelAnswer": "Steele & Aronson's (1995) stereotype threat theory proposes that activating a negative group stereotype impairs performance through anxiety and cognitive load. The school environment described contains multiple cues that activate the stereotype 'girls are less capable at physics': teacher comments explicitly tie competence to gender, and the near-exclusive representation of male scientists on posters signals that physics is a male domain. According to Social Identity Theory (Tajfel & Turner, 1979), when a domain is perceived as threatening to one's social identity — here, girls' academic self-concept — individuals may disengage from that domain to protect self-esteem. This disengagement manifests as lower A-level uptake rather than lower GCSE performance, since GCSE is compulsory.\n\nThe stereotype threat evidence base is extensive: Steele & Aronson's (1995) effect has been replicated across gender, age, and ethnicity. However, critics including Stoet & Geary (2012) note that effect sizes vary considerably across replications, and that framing manipulations do not always produce the predicted pattern. The effect may be more robust under high stereotype salience and high task difficulty.\n\nFor the careers department, evidence-based interventions include: removing stereotype-activating cues (replacing male-only posters with diverse scientists); training teachers to avoid gender-referencing praise; and implementing values-affirmation interventions (Walton & Cohen, 2011), in which students write about personally important values — shown to reduce performance gaps significantly in field settings. Allport's contact hypothesis further suggests inviting female physicists into school as role models, providing girls with counter-stereotypical exemplars and changing social norms around who belongs in physics.",
+      "feynmanPrompt": "Explain Social Identity Theory to someone who has never studied psychology using a real-world example. Why does simply belonging to a group — even a trivial one — lead people to favour their own group over others?",
+      "rabbitHoleTerms": [
+        { "term": "Minimal group paradigm", "description": "Tajfel's (1970) experimental technique assigning participants to groups on trivial criteria to isolate the effect of group categorisation alone on in-group favouritism and discrimination." },
+        { "term": "Social categorisation", "description": "The automatic cognitive process of classifying people (including oneself) into social groups, which triggers in-group/out-group distinctions and subsequent social comparison." },
+        { "term": "Realistic conflict theory", "description": "Sherif's (1961) theory proposing that intergroup hostility arises from genuine competition over scarce resources, and can be reduced through superordinate goals requiring cooperation." },
+        { "term": "Stereotype threat", "description": "Steele & Aronson's (1995) phenomenon: performance is impaired when individuals are reminded of a negative stereotype about a group they belong to, due to anxiety and cognitive load." },
+        { "term": "Contact hypothesis", "description": "Allport's (1954) proposal that prejudice between groups decreases under conditions of equal status, common goals, intergroup cooperation, and institutional support." },
+        { "term": "Social creativity", "description": "A SIT strategy for improving social identity when direct competition with a higher-status group is not feasible — reframing which attributes are valued or which out-group is used for comparison." }
+      ],
+      "questions": [
+        {
+          "id": "psy-adv-2b-q1",
+          "tier": "RECALL",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>What did Tajfel's (1970) minimal group paradigm demonstrate?</p>",
+          "codeSnippet": null,
+          "options": ["Group membership based on trivial criteria is sufficient to produce in-group favouritism", "Prejudice requires competition for scarce resources to develop", "People only discriminate when they have a personal history with the out-group", "Contact between groups always reduces prejudice and discrimination"],
+          "correctAnswer": "Group membership based on trivial criteria is sufficient to produce in-group favouritism"
+        },
+        {
+          "id": "psy-adv-2b-q2",
+          "tier": "RECALL",
+          "type": "TRUE_FALSE",
+          "questionHtml": "<p>True or False: Sherif's (1961) Robbers Cave experiment found that simply bringing rival groups into contact with each other was sufficient to significantly reduce intergroup hostility.</p>",
+          "codeSnippet": null,
+          "options": null,
+          "correctAnswer": "False"
+        },
+        {
+          "id": "psy-adv-2b-q3",
+          "tier": "APPLICATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>An older adult is completing a memory test. The experimenter mentions before starting that 'memory naturally declines with age'. The participant performs significantly worse than matched controls who received no such comment. Which concept best explains this?</p>",
+          "codeSnippet": null,
+          "options": ["Stereotype threat", "Normative social influence", "Social creativity", "Realistic conflict"],
+          "correctAnswer": "Stereotype threat"
+        },
+        {
+          "id": "psy-adv-2b-q4",
+          "tier": "DISCRIMINATION",
+          "type": "MULTIPLE_CHOICE",
+          "questionHtml": "<p>According to Social Identity Theory, 'social creativity' as a strategy for managing threatened identity involves:</p>",
+          "codeSnippet": null,
+          "options": ["Reframing the comparison dimension to favour the in-group on a different attribute", "Physically leaving the lower-status group to join a higher-status one", "Competing directly with the out-group to improve the in-group's relative standing", "Reducing awareness of group membership to avoid social comparison"],
+          "correctAnswer": "Reframing the comparison dimension to favour the in-group on a different attribute"
+        }
+      ]
+    }
+  ]
+}

@@ -50,6 +50,8 @@ export interface SubChunkEncoding {
   /** "JAVA" | "TAILWIND" | "NONE" */
   practiceType: string
   rabbitHoleTerms: StoryRabbitHoleTerm[] | null
+  /** Exemplar answer revealed after solo practice is complete (written-response sub-chunks only). */
+  modelAnswer: string | null
 }
 
 export interface PracticeResult {

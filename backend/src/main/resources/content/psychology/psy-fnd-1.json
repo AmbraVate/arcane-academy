@@ -1,0 +1,295 @@
+{
+  "id": "psy-fnd-1",
+  "title": "History & Approaches",
+  "glyph": "🏛️",
+  "sortOrder": 1,
+  "tier": "FOUNDATION",
+  "topicId": "psychology",
+  "prerequisites": [],
+  "subChunks": [
+    {
+      "id": "psy-fnd-1a",
+      "title": "Origins of Psychology & Major Approaches",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1961, Stanley Milgram placed an ordinary member of the public in a room, handed them an electric shock generator, and watched as they delivered what they believed were lethal shocks to a screaming stranger — simply because a man in a white coat told them to. Over 65% of participants went all the way to 450 volts. How do we explain this? Is it a failure of individual character, the power of the situation, the unconscious pull of authority, or something wired into our evolutionary past? The answer depends entirely on which psychological approach you adopt. Before you can evaluate any psychological claim, you need to understand the historical and theoretical lenses through which psychologists view human behaviour — because the lens you choose determines what you see, what you measure, and what you conclude.</p>",
+      "explanationHtml": "<h3>The Birth of Scientific Psychology</h3>\n<p>Psychology's identity as an independent science is conventionally dated to 1879, when Wilhelm Wundt established the first formal psychological laboratory at the University of Leipzig. Wundt's primary method was <strong>introspection</strong> — trained observers systematically reporting their own conscious experiences in response to controlled stimuli. While introspection is now considered methodologically weak (it is not replicable and cannot be verified by others), Wundt's contribution was pivotal: he insisted that mental phenomena could be studied empirically, separating psychology from philosophy and physiology.</p>\n<p>Across the Atlantic, William James offered a contrasting vision in <em>Principles of Psychology</em> (1890). Where Wundt sought to break consciousness into elements, James asked what consciousness <em>does</em> — giving rise to <strong>functionalism</strong>. Influenced by Darwin's evolutionary theory, James argued that mental processes had adaptive functions, a perspective that foreshadowed modern evolutionary and cognitive psychology.</p>\n\n<h3>The Psychodynamic Approach</h3>\n<p>Sigmund Freud, working in Vienna in the late 19th and early 20th centuries, proposed a radically different framework. The <strong>psychodynamic approach</strong> holds that behaviour is driven by unconscious forces — primitive drives (the <em>id</em>), internalised moral standards (the <em>superego</em>), and the negotiating executive self (the <em>ego</em>). Freud's <strong>psychosexual stage theory</strong> proposed that personality is shaped by conflicts during five developmental stages (oral, anal, phallic, latency, genital), and that unresolved conflicts produce fixations manifesting in adult behaviour.</p>\n<p><strong>Critical evaluation:</strong> Freud's ideas generated enormous cultural influence, but they face serious scientific criticism. The concepts are largely <em>unfalsifiable</em> — because evidence against a psychodynamic claim can always be reinterpreted as 'resistance' or 'denial', the theory cannot be empirically refuted (Popper, 1963). The evidence base relied on small, unrepresentative clinical samples (wealthy Viennese women). However, the recognition that not all mental processes are conscious has been partially vindicated by modern cognitive neuroscience research on implicit processing (Kihlstrom, 1987).</p>\n\n<h3>Behaviourism</h3>\n<p>In 1913, John B. Watson published 'Psychology as the Behaviourist Views It', declaring that a truly scientific psychology must abandon the study of consciousness entirely and focus exclusively on observable behaviour. Watson's position — later elaborated by B.F. Skinner's <strong>radical behaviourism</strong> — held that all behaviour is shaped by environmental contingencies: stimulus–response associations formed through conditioning. The environment, not biology or mind, was sovereign.</p>\n<p>Watson demonstrated this with the infamous <strong>Little Albert study</strong> (Watson & Rayner, 1920), conditioning a nine-month-old infant to fear a white rat by pairing it with a loud noise. Skinner extended this to <strong>operant conditioning</strong>, showing that behaviour is governed by its consequences — reinforcement increases behaviour; punishment decreases it.</p>\n<p><strong>Critical evaluation:</strong> Behaviourism's strengths lie in its methodological rigour and practical applications (behaviour therapy, token economies). However, it is radically reductionist — it ignores cognition, biological predispositions, and subjective experience. Chomsky's (1959) devastating critique of Skinner's account of language acquisition demonstrated that conditioning alone cannot explain the rapid acquisition of grammatical rules from impoverished input (<em>the poverty of the stimulus</em>).</p>\n\n<h3>The Cognitive Revolution</h3>\n<p>By the 1950s, dissatisfaction with behaviourism's limitations fuelled a shift towards studying internal mental processes. George Miller's 'The Magical Number Seven' (1956), Noam Chomsky's (1959) review of Skinner, and Ulric Neisser's landmark text <em>Cognitive Psychology</em> (1967) collectively defined the <strong>cognitive approach</strong>. Psychologists began using the computer as a metaphor for the mind — information is encoded, stored, and retrieved; mental processes intervene between stimulus and response.</p>\n<p>The cognitive approach enabled research into memory (Atkinson & Shiffrin, 1968), attention, problem-solving, and language, and underpins <strong>cognitive behavioural therapy</strong> (CBT), one of the most empirically supported psychological treatments available.</p>\n<p><strong>Critical evaluation:</strong> The computer metaphor is powerful but potentially misleading — human cognition is embodied, emotionally modulated, and socially situated in ways that algorithms are not. The approach can also be accused of being too <em>individualistic</em>, neglecting cultural and social context.</p>\n\n<h3>Biological, Humanistic, Sociocultural & Evolutionary Approaches</h3>\n<h4>Biological Approach</h4>\n<p>The biological approach locates the causes of behaviour in genetics, brain structure, neurochemistry, and evolution. It is the most reductionist of the major approaches, explaining complex phenomena (e.g., depression) in terms of neurotransmitter deficits (e.g., low serotonin). Twin studies and neuroimaging research have provided compelling evidence for biological contributions to behaviour, though critics argue that reducing behaviour to biology ignores the role of experience and culture.</p>\n<h4>Humanistic Approach</h4>\n<p>Carl Rogers and Abraham Maslow (1950s–1960s) rejected both behaviourism and psychoanalysis, arguing that humans are fundamentally purposive, self-directed beings with an innate drive towards <strong>self-actualisation</strong>. Maslow's (1943) hierarchy of needs proposed that basic physiological and safety needs must be met before higher needs (love, esteem, self-actualisation) become motivationally salient. This approach is difficult to operationalise and test empirically, but it has profoundly influenced counselling psychology and person-centred therapy.</p>\n<h4>Sociocultural Approach</h4>\n<p>Psychology's long-standing bias towards WEIRD samples (Western, Educated, Industrialised, Rich, Democratic — Henrich et al., 2010) is challenged by the sociocultural approach, which emphasises that behaviour cannot be understood outside its cultural context. Cross-cultural studies have shown that phenomena considered universal (e.g., the Muller-Lyer illusion susceptibility, attachment patterns) vary significantly across cultures.</p>\n<h4>Evolutionary Approach</h4>\n<p>Building on Darwin, evolutionary psychologists (e.g., Buss, 1989) argue that many psychological mechanisms are adaptations shaped by natural and sexual selection. Mate preferences, kin altruism, and certain phobias (snakes, spiders) have been explained in evolutionary terms. Critics note the risk of <em>post hoc</em> ('just so story') reasoning and the difficulty of testing claims about prehistoric selection pressures.</p>\n\n<h3>Key Debates in Psychology</h3>\n<p><strong>Reductionism vs Holism:</strong> Should we explain behaviour at the level of neurons (reductionism) or as emergent properties of whole systems — social groups, cultural contexts (holism)? Both perspectives illuminate different facets of behaviour; the appropriate level of analysis depends on the research question.</p>\n<p><strong>Determinism vs Free Will:</strong> Behaviourism (environmental determinism) and the biological approach (biological determinism) both deny meaningful free will. Humanistic psychology insists on agency. Most contemporary psychologists adopt <em>soft determinism</em> — behaviour is causally influenced but not rigidly determined, and there is some meaningful sense in which persons can deliberate and choose.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "It's the first week of term. You take a seat in the lecture theatre as Dr. Miriam Chen arranges her notes at the front. A projected slide reads: 'Why does anyone do anything?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Before we get into any specific topic area, I want you to understand something fundamental: there is no single psychology. There are several psychologies, each with different assumptions about what causes behaviour and how we should study it. Your ability to evaluate any claim — in an exam, in a journal, in the media — depends on knowing these frameworks."
+        },
+        {
+          "type": "narration",
+          "text": "She clicks to a photo of a Victorian-era laboratory, men in frock coats peering at instruments."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Wundt in 1879 — that's where we usually start. He said: the mind can be studied scientifically. His method was introspection, which we'd now consider deeply unreliable. But the ambition was revolutionary. James in America asked a different question: not what is the mind made of, but what is it *for*? That functionalist question still drives evolutionary psychology today."
+        },
+        {
+          "type": "example",
+          "speaker": "Case vignette",
+          "text": "A patient arrives at a clinic struggling with compulsive handwashing. A behaviourist would look for the stimulus-response history — what triggers the behaviour, what reinforces it. A psychodynamic clinician would explore what unconscious anxiety the ritual might be managing. A cognitive therapist would examine the intrusive thoughts driving the compulsion. A biological psychiatrist would consider serotonin dysregulation and prescribe an SSRI. Same behaviour, four entirely different causal explanations."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "This is what we call the 'levels of explanation' problem. None of these explanations is wrong in principle — they simply operate at different levels of analysis. Your job as a psychologist is to know when each level is most appropriate, and to evaluate the evidence for each."
+        },
+        {
+          "type": "narration",
+          "text": "A student in the front row raises her hand. 'So which approach is right?' Dr. Chen smiles — she's been waiting for this."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "That's exactly the wrong question to start with — and exactly the right instinct. By the end of this module, you'll be able to ask something better: 'What does the evidence show, for this specific phenomenon, at this level of analysis, and what are the limitations of that evidence?' That's a psychology graduate's question."
+        }
+      ],
+      "guidedPracticeHtml": "<p><strong>Case study:</strong> A clinical psychologist is asked to explain why a 35-year-old man, Marcus, has developed a severe fear of dogs after being bitten as a child. He now avoids parks, refuses to visit friends who own dogs, and reports intrusive memories of the incident. The psychologist must write a formulation drawing on one psychological approach.</p>\n<p>Choose <strong>one</strong> psychological approach (behaviourist, psychodynamic, cognitive, or biological) and explain how it would account for Marcus's dog phobia. Make explicit reference to the theoretical concepts of that approach.</p>\n<p>In your response, address: (1) the core assumption of your chosen approach about the causes of behaviour; (2) how that approach would specifically explain how the phobia developed and is maintained; (3) one strength and one limitation of using this approach to explain Marcus's case. Aim for 120–180 words.</p>",
+      "soloPracticeHtml": "<p><strong>Scenario:</strong> A developmental psychologist studying aggression in adolescents publishes a paper arguing that aggressive behaviour is primarily explained by elevated testosterone levels and reduced activity in the prefrontal cortex. A colleague responds that this explanation ignores the role of social learning, peer norms, and economic deprivation in shaping aggressive behaviour.</p>\n<p>Using your knowledge of the major approaches in psychology, evaluate the debate between these two researchers. In your answer, identify which psychological approach each researcher represents, explain the key assumptions underlying each position, and critically assess which approach provides a more complete account of adolescent aggression. Aim for 150–200 words.</p>",
+      "modelAnswer": "The first researcher represents the biological approach, which explains behaviour by reference to physiological mechanisms — in this case elevated testosterone and reduced prefrontal cortical activity. This is a reductionist explanation, locating causality at the level of biology and largely ignoring the role of experience or context. The second researcher represents a combination of the behaviourist and sociocultural approaches, emphasising environmental contingencies (social learning, peer reinforcement) and the broader cultural context of deprivation.\n\nWhile the biological account benefits from empirical tractability — testosterone and brain activity can be measured objectively — it struggles to explain why most adolescents with similar biology do not engage in serious aggression. Bandura's (1961) Bobo doll studies demonstrated that children acquire aggressive behaviours through observation and vicarious reinforcement, independent of biological variation. A complete account of adolescent aggression almost certainly requires multiple levels of explanation — biological predisposition interacting with socialisation and opportunity. The biological approach's strength is methodological precision; its limitation is that it risks oversimplifying a behaviour shaped by many interacting causes.",
+      "feynmanPrompt": "Your younger sibling has just come home from school saying their teacher told them 'psychology isn't a real science because you can't see thoughts.' Explain to them, in plain language, why psychology is considered a science, using what you know about how the field developed from Wundt to the cognitive revolution. Also explain one reason why your sibling's teacher might have a point — and what psychologists have done to address it.",
+      "rabbitHoleTerms": [
+        {
+          "term": "introspection",
+          "description": "Wundt's method of having trained observers systematically report their conscious experiences in response to controlled stimuli. Criticised for lacking inter-rater reliability and being impossible to verify externally."
+        },
+        {
+          "term": "reductionism",
+          "description": "The practice of explaining complex phenomena by breaking them down into simpler constituent parts (e.g., explaining love as oxytocin release). Contrasted with holism, which studies emergent properties of whole systems."
+        },
+        {
+          "term": "falsifiability",
+          "description": "Popper's (1963) criterion for scientific status: a theory is scientific only if it makes predictions that could, in principle, be shown to be wrong. Freudian theory is often criticised for failing this criterion."
+        },
+        {
+          "term": "determinism",
+          "description": "The philosophical position that all events, including human behaviour, are causally determined by prior events. Both biological and environmental (behaviourist) determinism deny meaningful free will."
+        },
+        {
+          "term": "functionalism",
+          "description": "William James's approach asking what mental processes *do* (their adaptive function) rather than what they are made of. Contrasted with Wundt's structuralism and foreshadowing evolutionary psychology."
+        },
+        {
+          "term": "WEIRD bias",
+          "description": "Henrich et al.'s (2010) observation that psychology's evidence base is overwhelmingly drawn from Western, Educated, Industrialised, Rich, Democratic populations, limiting the generalisability of findings."
+        },
+        {
+          "term": "levels of explanation",
+          "description": "The idea that behaviour can be explained at multiple levels simultaneously — biological, psychological, and social — and that no single level provides a complete account."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which psychologist is credited with establishing the first formal psychological laboratory, and in which year?</p>",
+          "options": [
+            "William James, 1890",
+            "Wilhelm Wundt, 1879",
+            "Sigmund Freud, 1895",
+            "John B. Watson, 1913"
+          ],
+          "correctAnswer": "Wilhelm Wundt, 1879",
+          "explanationHtml": "<p>Wilhelm Wundt established his laboratory at the University of Leipzig in 1879, conventionally marking the beginning of psychology as an independent scientific discipline. He used introspection as his primary method. William James published <em>Principles of Psychology</em> in 1890, but this was a textbook, not a laboratory.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A therapist tells her client: 'Your anxiety about public speaking is maintained because avoiding presentations prevents you from learning that the catastrophe you expect won't actually happen.' Which psychological approach is most clearly reflected in this explanation?</p>",
+          "options": [
+            "Psychodynamic approach",
+            "Behaviourist approach",
+            "Cognitive approach",
+            "Humanistic approach"
+          ],
+          "correctAnswer": "Cognitive approach",
+          "explanationHtml": "<p>The therapist is focusing on the client's <em>expectations</em> (the anticipated catastrophe) and how avoidance behaviour maintains a maladaptive cognitive pattern. This is characteristic of the cognitive approach, which holds that thought processes mediate between stimuli and behaviour. A behaviourist would focus solely on the avoidance behaviour and its reinforcement history, without reference to expectations or beliefs.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: Watson's behaviourism held that psychology should focus primarily on studying unconscious mental processes rather than observable behaviour.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>This is false. Watson's behaviourism explicitly rejected the study of unconscious (or any) mental processes, arguing that psychology must restrict itself to observable behaviour that can be measured and replicated. It was Freud's psychodynamic approach that placed the unconscious at the centre of psychological explanation. Watson's 1913 manifesto declared consciousness an illegitimate subject of scientific study.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher argues: 'We cannot reduce depression to low serotonin levels — the lived experience of depression, the meaning a person assigns to their suffering, and the social context in which it occurs are irreducible to brain chemistry.' Which of the following best describes the methodological position this researcher is taking?</p>",
+          "options": [
+            "Biological determinism",
+            "Holism, opposing reductionism",
+            "Empiricism, opposing nativism",
+            "Soft determinism"
+          ],
+          "correctAnswer": "Holism, opposing reductionism",
+          "explanationHtml": "<p>The researcher is arguing that depression cannot be fully understood by reducing it to a lower level of analysis (brain chemistry). This is the position of <strong>holism</strong> — that complex phenomena have emergent properties that are lost when broken into constituent parts. This contrasts with the biological approach's reductionism. Soft determinism refers to the debate about free will, and empiricism/nativism concerns the source of knowledge.</p>"
+        }
+      ]
+    },
+    {
+      "id": "psy-fnd-1b",
+      "title": "Scientific Method & Research Ethics",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Between 1932 and 1972, the United States Public Health Service enrolled 399 Black men with syphilis in a study in Tuskegee, Alabama — and deliberately withheld penicillin, an effective treatment, even after it became widely available in 1947. The men were told they were being treated for 'bad blood'. Twenty-eight died directly from syphilis; 100 more died from related complications. This was not rogue science — it was federally funded, published, and peer-reviewed. How did this happen, and how do we ensure it cannot happen again? The answer lies in understanding both how psychological science generates knowledge — and the ethical framework that governs when and how that knowledge can be pursued.</p>",
+      "explanationHtml": "<h3>The Hypothetico-Deductive Method</h3>\n<p>Modern science — including psychology — is built on the <strong>hypothetico-deductive method</strong>, associated with philosopher Karl Popper (1959). The cycle proceeds as follows:</p>\n<pre><code>Theory → Hypothesis → Operationalisation → Data Collection → Analysis → Revise Theory</code></pre>\n<p>A <strong>theory</strong> is a general explanatory framework (e.g., 'frustration causes aggression'). A <strong>hypothesis</strong> is a specific, testable prediction derived from the theory (e.g., 'participants who are prevented from completing a task will show higher levels of verbal aggression than those who are not'). <strong>Operationalisation</strong> is the process of defining abstract concepts in measurable terms — 'verbal aggression' might be operationalised as the number of aggressive words used in a free-writing task.</p>\n<p>Crucially, Popper argued that science advances through <strong>falsification</strong>, not confirmation. No number of confirmatory results proves a theory — but a single well-designed disconfirmatory result can refute it. This distinguishes science from pseudoscience, where theories are immunised against evidence by post hoc reinterpretation.</p>\n\n<h3>Empiricism and Nativism</h3>\n<p><strong>Empiricism</strong> (Locke, Hume) holds that knowledge derives from sensory experience — we are born as a blank slate (<em>tabula rasa</em>) and shaped by environment. <strong>Nativism</strong> (Chomsky, Descartes) holds that some knowledge or mental structures are innate. This debate is not merely philosophical: it underpins disagreements between the behaviourist tradition (radical empiricism) and nativist accounts of language acquisition and face perception.</p>\n\n<h3>Variables in Research Design</h3>\n<p>Psychological research distinguishes between several types of variable:</p>\n<pre><code>Independent Variable (IV)   — what the researcher manipulates\nDependent Variable (DV)     — what the researcher measures\nExtraneous Variables        — variables other than the IV that might affect the DV\nConfounding Variables       — extraneous variables that vary systematically with the IV,\n                              making it impossible to determine what caused changes in the DV</code></pre>\n<p>Consider Milgram's (1963) obedience study. The IV was the authority of the experimenter; the DV was the maximum shock voltage administered. An extraneous variable might be participant anxiety; a confounding variable would be if more anxious participants were systematically assigned to one condition.</p>\n\n<h3>Reliability and Validity</h3>\n<p><strong>Reliability</strong> refers to consistency: does a measure produce the same result under the same conditions? <em>Test-retest reliability</em> asks whether a measure is stable over time; <em>inter-rater reliability</em> asks whether different observers using the same measure agree.</p>\n<p><strong>Validity</strong> refers to whether a measure actually measures what it claims to. Key forms include:</p>\n<ul>\n<li><strong>Internal validity:</strong> the extent to which changes in the DV can be attributed to the IV rather than confounds — controlled by experimental design.</li>\n<li><strong>External validity:</strong> the extent to which findings generalise beyond the specific study sample and setting.</li>\n<li><strong>Ecological validity:</strong> a specific form of external validity — whether findings reflect real-world behaviour. Laboratory experiments often sacrifice ecological validity for control.</li>\n<li><strong>Construct validity:</strong> whether the operationalisation actually measures the theoretical construct (e.g., does a memory test measure 'working memory' or 'attention'?).</li>\n</ul>\n\n<h3>BPS Code of Ethics (2021)</h3>\n<p>The British Psychological Society's Code of Ethics and Conduct (2021) is organised around four principles:</p>\n<pre><code>1. Respect         — autonomy, privacy, self-determination\n2. Competence      — professional standards, knowledge, training\n3. Responsibility  — duty of care, scientific integrity\n4. Integrity       — honesty, transparency, non-exploitation</code></pre>\n<p>In practice, these principles translate into specific procedural requirements:</p>\n<ul>\n<li><strong>Informed consent:</strong> participants must be given sufficient information about the study to make a voluntary, competent decision to participate. Special provisions apply for children, clinical populations, and covert observation.</li>\n<li><strong>Deception:</strong> acceptable only when the research question cannot be answered without it, the deception is not likely to cause distress, and full debriefing is provided afterwards.</li>\n<li><strong>Debriefing:</strong> after participation, researchers must explain the true purpose of the study, address any distress caused, and ensure participants leave in at least as good a state as they arrived.</li>\n<li><strong>Right to withdraw:</strong> participants must be free to leave the study at any time without penalty, and to withdraw their data after the fact.</li>\n<li><strong>Confidentiality and anonymity:</strong> participants' data must be stored securely and reported in a form that does not allow identification.</li>\n<li><strong>Protection from harm:</strong> researchers must protect participants from psychological, physical, and social harm. The risk of harm must be proportionate to the scientific value of the research.</li>\n</ul>\n\n<h3>Classic Ethical Controversies</h3>\n<h4>Milgram (1963): Obedience to Authority</h4>\n<p>Stanley Milgram recruited 40 male participants via newspaper advertisement, telling them they were taking part in a study of learning and memory. Participants were assigned the role of 'teacher' and instructed by an experimenter (in a grey lab coat) to administer electric shocks of increasing voltage to a 'learner' (a confederate) whenever they gave a wrong answer. Shocks ranged from 15V to 450V, labelled up to 'XXX — Danger: Severe Shock'. The learner (seated in an adjacent room) gave scripted responses including complaints of heart pain and eventual silence. Despite this, <strong>65% of participants administered the maximum 450 volts</strong>.</p>\n<p>The scientific value was enormous — Milgram demonstrated that ordinary people will inflict serious harm on others under the influence of authority, with profound implications for understanding the Holocaust and institutional abuse. However, participants were deceived about the true purpose, were pressured to continue when they wished to stop ('The experiment requires you to continue'), and many showed significant distress during and after the study. Some reported lasting psychological harm. The study could not be approved under any modern ethics framework.</p>\n<h4>The Tuskegee Syphilis Study (1932–1972)</h4>\n<p>The Tuskegee study represents a catastrophic failure of every ethical principle: participants were actively deceived (told they were being treated), autonomy was violated (meaningful informed consent was absent), and participants were caused serious and preventable harm. The study exploited racial power dynamics and institutional trust. Its exposure in 1972 led directly to the establishment of institutional review boards (IRBs) in the United States and informed the Belmont Report (1979), which codified respect for persons, beneficence, and justice as the foundational principles of research ethics.</p>\n<p>The BPS and APA codes emerged partly in response to such abuses. They represent the profession's collective commitment to ensuring that scientific knowledge is never purchased at the cost of human dignity.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen's second lecture begins with the lights dimmed and a photograph projected: a dusty rural clinic in Alabama, 1950s. A row of men sit waiting to be seen by a doctor. She says nothing for a moment."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "These men believed they were receiving treatment. They weren't. For forty years, they were observed as their syphilis progressed — untreated — so that researchers could document the disease's natural course. This is Tuskegee. I start here because I want you to understand that research ethics are not bureaucratic box-ticking. They exist because brilliant, credentialled scientists once did this."
+        },
+        {
+          "type": "narration",
+          "text": "She moves to a new slide: a flow chart showing the hypothetico-deductive method. The room feels different now — more alert."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Science generates knowledge through a cycle — theory, hypothesis, operationalisation, test, revise. The critical constraint is falsifiability. If your theory can accommodate any possible finding — if no evidence could ever count against it — it isn't science. Popper's insight is still the sharpest tool we have for separating genuine knowledge from sophisticated storytelling."
+        },
+        {
+          "type": "example",
+          "speaker": "Case vignette",
+          "text": "A researcher wants to test whether sleep deprivation impairs decision-making. She operationalises 'decision-making quality' as the percentage of correct choices on a validated gambling task. She operationalises 'sleep deprivation' as fewer than five hours of sleep in the preceding 24 hours, verified by actigraphy. Potential confounds she must control: pre-existing differences in cognitive ability (use random assignment), time of day the task is administered (standardise across participants), caffeine intake (prohibit for four hours before testing)."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Notice what she did there: she made abstract concepts measurable and controllable. That's operationalisation. And every decision she made — how to define sleep deprivation, which task to use — involves trade-offs between internal and ecological validity. High control gives you confidence in causation. But the question is always: does this reflect how people actually make decisions in the real world?"
+        },
+        {
+          "type": "narration",
+          "text": "A student asks whether Milgram could be run today. Dr. Chen pauses before answering."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "No — not in its original form. And this is one of the genuinely hard problems in research ethics: Milgram's findings were extraordinarily valuable. They changed how we understand human behaviour under authority. But the cost — participants who were deceived, pressured, and left distressed — was real. The BPS code gives us a framework for navigating these tensions, but it doesn't make them disappear. That's why ethical reasoning is a skill, not a checklist."
+        }
+      ],
+      "guidedPracticeHtml": "<p><strong>Case study:</strong> A researcher proposes a study examining whether social media use predicts self-esteem in teenagers aged 14–16. She plans to recruit participants through schools, measure their daily social media usage via self-report questionnaire, and assess self-esteem using the Rosenberg Self-Esteem Scale. She intends to tell participants only that the study is 'about screen time and wellbeing', without disclosing that self-esteem is being measured, because she is worried that disclosure would produce demand characteristics.</p>\n<p>Evaluate this research proposal from an ethical standpoint, using the BPS Code of Ethics (2021) as your framework.</p>\n<p>In your response, address: (1) which specific ethical principles from the BPS code are relevant to this study; (2) whether the partial deception used is justifiable, and under what conditions; (3) what additional safeguards should be put in place given the participant population. Aim for 120–180 words.</p>",
+      "soloPracticeHtml": "<p><strong>Scenario:</strong> In a well-known study on bystander intervention, researchers staged an 'emergency' (a person collapsing in a subway carriage) without passengers' knowledge or consent, and then observed whether bystanders helped. The researchers argued that informed consent was impossible without invalidating the study — if passengers knew an emergency might be staged, their behaviour would be artificial — and that the 'harm' to participants was minimal because they were in a public space where they might witness a genuine emergency at any time.</p>\n<p>Critically evaluate the ethical justification offered by the researchers. Should this study have been permitted? In your answer, apply relevant principles from the BPS Code of Ethics and consider both the scientific value of the research and the rights of participants. Aim for 150–200 words.</p>",
+      "modelAnswer": "The researchers' justification rests on two arguments: that informed consent would invalidate the research design, and that harm was minimal given the naturalistic setting. Both arguments have merit but require careful scrutiny.\n\nThe BPS Code (2021) permits deception where the research question cannot otherwise be answered, where deception is unlikely to cause distress, and where debriefing is provided. The subway study satisfies the first criterion — prior disclosure would produce demand characteristics, destroying ecological validity. However, the 'minimal harm' claim is contestable: witnessing an apparent medical emergency and being compelled to make a moral decision about helping may cause genuine distress, particularly for vulnerable individuals.\n\nThe right to withdraw is effectively violated: passengers could not leave the study once it began without abandoning their journey. The absence of any debriefing procedure — logistically impossible on a moving train — is a further shortcoming.\n\nOverall, the study represents a case where scientific value (understanding bystander apathy, with potentially life-saving applications) must be weighed against procedural ethical violations. Most contemporary ethics committees would require modifications — perhaps a confederate observer approach in a more controlled setting — before granting approval.",
+      "feynmanPrompt": "A journalist tells you that academic ethics committees are 'bureaucratic obstacles that prevent important research from being done' and cites Milgram as an example of groundbreaking work that would be blocked today. Using your knowledge of research ethics and the historical abuses that ethics frameworks were designed to prevent, explain to this journalist — without dismissing their concern — why the current BPS ethical framework represents a genuine advance rather than mere bureaucracy.",
+      "rabbitHoleTerms": [
+        {
+          "term": "operationalisation",
+          "description": "The process of defining an abstract theoretical concept in concrete, measurable terms. For example, operationalising 'stress' as salivary cortisol concentration. Operationalisation decisions affect construct validity."
+        },
+        {
+          "term": "ecological validity",
+          "description": "The extent to which research findings can be generalised to real-world settings outside the laboratory. Studies with high experimental control often sacrifice ecological validity — the artificial conditions may not reflect how behaviour occurs naturally."
+        },
+        {
+          "term": "demand characteristics",
+          "description": "Cues within a research setting that inform participants about the study's purpose, leading them to alter their behaviour accordingly (Orne, 1962). A key threat to internal validity in psychological research."
+        },
+        {
+          "term": "confounding variable",
+          "description": "A variable that varies systematically with the independent variable and also affects the dependent variable, making it impossible to attribute observed changes in the DV solely to the IV."
+        },
+        {
+          "term": "falsifiability",
+          "description": "Popper's (1959) criterion that a scientific claim must make predictions specific enough that they could, in principle, be shown to be false. Theories that can accommodate any possible result are not genuinely scientific."
+        },
+        {
+          "term": "informed consent",
+          "description": "An ethical requirement that participants be given sufficient, accurate information about a study to make a voluntary and competent decision to participate. Requires capacity, disclosure, understanding, and voluntariness."
+        },
+        {
+          "term": "debriefing",
+          "description": "The post-participation procedure in which researchers explain the true nature of the study, address any deception, and ensure participants leave in at least as good a state as when they arrived. Particularly important in studies involving deception."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which of the following correctly identifies the four core principles of the BPS Code of Ethics and Conduct (2021)?</p>",
+          "options": [
+            "Autonomy, Beneficence, Non-maleficence, Justice",
+            "Respect, Competence, Responsibility, Integrity",
+            "Consent, Deception, Debriefing, Confidentiality",
+            "Empiricism, Falsifiability, Replication, Peer Review"
+          ],
+          "correctAnswer": "Respect, Competence, Responsibility, Integrity",
+          "explanationHtml": "<p>The BPS Code of Ethics and Conduct (2021) is organised around four overarching principles: <strong>Respect</strong> (autonomy, privacy), <strong>Competence</strong> (professional standards), <strong>Responsibility</strong> (duty of care, scientific integrity), and <strong>Integrity</strong> (honesty, non-exploitation). The first option describes the Belmont Report's principles (autonomy, beneficence, non-maleficence, justice), which are important but refer to US medical research ethics specifically.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher measures anxiety using a questionnaire, then administers the same questionnaire six months later to the same participants. She finds that scores are highly similar across both time points. This finding speaks to which aspect of the measure's psychometric properties?</p>",
+          "options": [
+            "Construct validity",
+            "Ecological validity",
+            "Test-retest reliability",
+            "Internal validity"
+          ],
+          "correctAnswer": "Test-retest reliability",
+          "explanationHtml": "<p><strong>Test-retest reliability</strong> refers to the consistency of a measure across time — whether it produces similar scores when administered to the same participants on two occasions (assuming the underlying construct has not changed). This is different from <em>validity</em>, which concerns whether the measure actually measures what it claims to. A measure can be highly reliable without being valid (e.g., a ruler consistently measuring the wrong length).</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: In Milgram's (1963) obedience study, all participants refused to administer shocks beyond 300 volts once they heard the learner complain of heart pain.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>This is false. In Milgram's baseline study, <strong>65% of participants</strong> (26 out of 40) administered the maximum shock of 450 volts, despite hearing the learner's protests and eventual silence. While many participants showed visible distress — trembling, sweating, and laughing nervously — the majority continued under the experimenter's prompts. Only 12.5% refused to continue at the 300V level. These findings were shocking precisely because they demonstrated the power of situational authority over individual moral judgement.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher studying the effects of caffeine on concentration randomly assigns participants to receive either a caffeinated drink or a placebo, but fails to control for how much sleep participants had the previous night. Sleep duration turns out to differ systematically between the two groups. In this scenario, sleep duration is best described as:</p>",
+          "options": [
+            "The dependent variable",
+            "An extraneous variable that has become a confounding variable",
+            "A moderating variable that improves internal validity",
+            "An operationalised measure of concentration"
+          ],
+          "correctAnswer": "An extraneous variable that has become a confounding variable",
+          "explanationHtml": "<p>Sleep duration is an <strong>extraneous variable</strong> — something other than the IV (caffeine) that might affect the DV (concentration). Because it varies <em>systematically</em> between conditions (one group consistently slept less), it has become a <strong>confounding variable</strong>: we can no longer be certain whether any observed differences in concentration are due to caffeine or to differential sleep deprivation. This is why random assignment alone is not sufficient — researchers must also check that randomisation has produced equivalent groups on key variables.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "id": "psy-adv-1",
+  "title": "Cognitive Psychology",
+  "glyph": "🧩",
+  "sortOrder": 4,
+  "tier": "ADVANCED",
+  "topicId": "psychology",
+  "prerequisites": ["psy-fnd-3"],
+  "subChunks": [
+    {
+      "id": "psy-adv-1a",
+      "title": "Attention & Cognitive Load",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>You are in a crowded lecture theatre, following the speaker, when across the room someone mentions your name in a whisper. Instantly, your attention snaps toward that conversation — even though you were not consciously monitoring it. This is the cocktail party effect, and it has been a battleground for cognitive psychologists since the 1950s. How can the brain selectively process one stream of auditory information while simultaneously screening thousands of others for personally relevant signals? The answer forced researchers to redesign their entire model of how attention works, and the debate has never been fully resolved.</p>",
+      "explanationHtml": "<h3>Broadbent's Filter Model (1958)</h3>\n<p>Donald Broadbent proposed the first systematic information-processing account of selective attention in his landmark book <em>Perception and Communication</em> (1958). Drawing on dichotic listening experiments — in which participants receive different messages to each ear simultaneously and are asked to shadow (repeat aloud) one message — Broadbent observed that people found it straightforward to attend to one ear and near-impossible to report the content of the ignored ear.</p>\n<p>His model proposed a limited-capacity channel at the centre of cognitive processing, protected by an <strong>early selection filter</strong> that operates on the physical characteristics of the input (pitch, loudness, spatial location) <em>before</em> semantic analysis. Messages not matching the attended channel are held briefly in a pre-attentive sensory buffer and then decay unless the filter permits them through. This became known as the <strong>bottleneck model</strong>: only one message can pass through the filter at any given moment.</p>\n<h4>Critical Evaluation of Broadbent</h4>\n<p>The filter model offered elegant parsimony and was well-supported by Cherry's (1953) earlier shadowing studies. However, it could not account for the cocktail party effect (Cherry, 1953): participants who failed to report the content of the unattended channel nonetheless noticed when their own name appeared in it. If filtering occurs on purely physical grounds before semantic analysis, how can a personally meaningful word in the rejected channel trigger conscious awareness? This finding directly challenged the early-selection assumption.</p>\n\n<h3>Treisman's Attenuation Model (1964)</h3>\n<p>Anne Treisman proposed a modification that preserved the bottleneck structure while accommodating the cocktail party phenomenon. Rather than a binary filter that fully blocks the unattended channel, Treisman posited an <strong>attenuator</strong>: the unattended channel is not rejected but processed at a reduced signal strength. Semantic analysis then proceeds through a dictionary of words and concepts, each with a <strong>threshold</strong> for activation. High-salience items — one's own name, the word \"fire,\" familiar phrases — have permanently low thresholds and can be activated even by attenuated signals.</p>\n<p>This accounts for the cocktail party effect: one's name crosses its low threshold even in the unattended, attenuated stream. Treisman's model thus represents a compromise between full early selection and the alternative model that would emerge from Deutsch and Deutsch.</p>\n\n<h3>Deutsch & Deutsch's Late Selection Model (1963)</h3>\n<p>Norman Deutsch and Diana Deutsch proposed a radically different account. They argued that <em>all</em> stimuli in all sensory channels are processed to a full semantic level <em>before</em> any selection occurs. Selection happens late — at the stage of response or conscious awareness — based on the <strong>pertinence</strong> or relevance of the processed meaning to current goals. Unattended stimuli that are semantically processed but not selected for response are simply not remembered.</p>\n<p>This late-selection position implies that the cognitive system is far less efficient than Broadbent supposed: enormous processing capacity is expended on input that never reaches awareness. Some later research (Lavie, 1995) found evidence for both early and late selection depending on perceptual load: with high load, early selection dominates; with low load, late selection occurs — suggesting these are not mutually exclusive models but reflect different operating conditions.</p>\n\n<h3>Kahneman's Capacity Model (1973)</h3>\n<p>Daniel Kahneman's influential model reconceptualised attention as a pool of <strong>limited mental energy</strong> (or capacity) rather than a structural filter. In his 1973 book <em>Attention and Effort</em>, Kahneman argued that performance deteriorates when total task demands exceed available capacity — regardless of whether the tasks share modalities or involve the same structural channel.</p>\n<p>The model includes an <strong>allocation policy</strong> governing how capacity is distributed across competing tasks, influenced by: (1) arousal — higher arousal increases the total pool of available capacity; (2) enduring dispositions — reflexive priority given to novel or threatening stimuli; (3) momentary intentions — voluntary focus on a task; and (4) evaluation of the demands of current activities — continuous monitoring of whether tasks are competing for resources.</p>\n<h4>Critical Evaluation of Kahneman</h4>\n<p>The capacity model is flexible and accommodates the data that defeated filter models. However, the concept of a unitary capacity pool has been contested: Wickens' (1984) multiple-resource theory argued that resources are compartmentalised by processing stage, modality, and input code, not pooled together. The capacity model also lacks precise predictive power — it is difficult to specify in advance how much capacity any given task will require.</p>\n\n<h3>Cognitive Load Theory (Sweller, 1988)</h3>\n<p>John Sweller developed cognitive load theory (CLT) specifically in the context of educational psychology, applying Kahneman's capacity notion to instructional design. Sweller proposed three distinct types of load on working memory:</p>\n<ul>\n  <li><strong>Intrinsic load</strong> — the inherent complexity of the material being learned, determined by the number of interacting elements and the learner's prior knowledge. Intrinsic load cannot easily be altered without changing the content itself.</li>\n  <li><strong>Extraneous load</strong> — load imposed by the design of the learning environment rather than the material itself. Poorly organised instructions, redundant information, or a split-attention effect (where related text and diagrams are spatially separated) all create extraneous load. This is the primary target for instructional designers.</li>\n  <li><strong>Germane load</strong> — mental effort devoted to schema formation and automation — the productive processing that actually produces learning. CLT recommends minimising extraneous load to free capacity for germane load.</li>\n</ul>\n<p>Sweller's worked-example effect (1985) demonstrated that novice learners perform and learn better from fully worked examples than from problem-solving practice, because problem-solving at the novice stage creates overwhelming extraneous load through means-ends analysis. As expertise develops, the expertise reversal effect (Kalyuga et al., 2003) means that worked examples become less efficient than problem-solving — further evidence that optimal instruction depends on managing cognitive load relative to the learner's existing schemas.</p>\n\n<h3>Feature Integration Theory (Treisman & Gelade, 1980)</h3>\n<p>Treisman and Gelade proposed that visual attention operates in two distinct stages. In the first stage — <strong>pre-attentive processing</strong> — basic features such as colour, orientation, and spatial frequency are analysed in parallel across the visual field, automatically and without focal attention. This accounts for the phenomenon of pop-out: a red item among green distractors is detected immediately regardless of the number of distractors, because the colour feature is processed in parallel.</p>\n<p>In the second stage — <strong>focused attention</strong> — features must be <em>conjoined</em> to form coherent objects (e.g., a red vertical bar). This conjunction requires serial focal attention, scanning each location in turn. Conjunction searches (find the red circle among red squares and blue circles) therefore show response times that increase linearly with set size, whereas feature searches show flat response time functions. Illusory conjunctions (Treisman & Schmidt, 1982) — where participants incorrectly report feature combinations not present in the display — provide further evidence that feature binding requires attention.</p>\n<h4>Critical Evaluation</h4>\n<p>Feature integration theory has been highly influential, but subsequent research has complicated the simple serial/parallel dichotomy. Guided search models (Wolfe, 1994) proposed that top-down knowledge can guide what would otherwise be exhaustive serial searches, dramatically narrowing the set of locations scanned. The ecological validity of laboratory visual search tasks has also been questioned: real-world visual attention occurs in rich, structured scenes with semantic expectations that strongly influence where we look.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The research methods seminar room is smaller than you expected. A whiteboard at the front is covered in overlapping box-and-arrow diagrams — each crossed out and redrawn. Dr. Miriam Chen is mid-sentence as you take your seat, pointing at a pair of headphones hanging from the corner of the board."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Good — you're here. I want you to think about what happened when you heard your name just now across the corridor. You weren't listening to that conversation. And yet something in your auditory system caught it. Broadbent's 1958 model says that should be impossible. His filter only lets one channel through, based on physical properties — before the brain even knows what the words mean. So how did your name get through?"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Treisman's answer in 1964 was elegant: the unattended channel isn't blocked, it's attenuated — turned down, not switched off. And some words — your name, the word 'fire', 'danger' — have such low activation thresholds that even a whisper gets through. That's the attenuation model. It saves Broadbent's basic architecture while accounting for the cocktail party effect. But Deutsch and Deutsch said something more radical: everything is processed to full semantic depth first, and selection happens at the end, not the beginning."
+        },
+        {
+          "type": "example",
+          "speaker": "Cognitive architecture — three positions",
+          "text": "Broadbent (1958):  [Input] → [Physical filter] → [Semantic analysis] → [Response]\n                              ↑ Selection occurs HERE (early)\n\nTreisman (1964):  [Input] → [Attenuator] → [Threshold dictionary] → [Response]\n                              ↑ Reduced, not blocked\n\nDeutsch & Deutsch (1963): [Input] → [Full semantic analysis] → [Selection by pertinence] → [Response]\n                                                                  ↑ Selection occurs HERE (late)"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Kahneman shifted the whole framing in 1973. He said: forget the structural bottleneck. Think of attention as a pool of mental energy. Tasks compete for that energy. When total demand exceeds capacity, performance suffers — not because of a filter, but because the tank runs dry. That's what makes dual-task performance interesting. And it's what Sweller applied to learning in 1988 with cognitive load theory — if your instructional design burns up that capacity on irrelevant processing, there's nothing left for actual learning."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "And then there's Treisman again — this time with Gelade in 1980 — applying the same logic to vision. Pop-out searches are parallel: colour, orientation, those basic features are processed everywhere at once. But find me the red vertical bar among red horizontals and blue verticals? That's a conjunction search. Your attention has to visit each location serially to bind those features together. Illusory conjunctions — where participants see combinations that weren't there — are the smoking gun: binding requires focal attention, and without it, features float free."
+        },
+        {
+          "type": "narration",
+          "text": "Dr. Chen turns back to the whiteboard and circles one of the old diagrams — not the most recent one. 'The models keep accumulating,' she says, 'because the problem is genuinely hard. Don't let any textbook tell you this is settled.'"
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Applying Attention Models to an Educational Scenario</h3>\n<p>A secondary school teacher has redesigned a history worksheet. The original version placed a complex diagram of trench warfare on the left page and detailed explanatory text on the right page. The new version interleaves labelled annotations directly onto the diagram.</p>\n<p>Using <strong>at least two</strong> of the attention and cognitive load theories covered in this subchunk, explain why the redesigned worksheet is likely to produce better learning outcomes than the original.</p>\n<p>In your response, address: (1) which specific type of cognitive load is reduced by the redesign, and how; (2) the cognitive mechanism (from either Kahneman's or Sweller's framework) that explains why this matters for learning; (3) one limitation of applying laboratory-based attention research to classroom settings. Aim for 120–180 words.</p>",
+      "soloPracticeHtml": "<p>A trainee air traffic controller is simultaneously monitoring two radar screens displaying aircraft positions, listening to radio communications from pilots, and entering data into a keyboard. Performance begins to deteriorate after 45 minutes of continuous work. A colleague suggests the deterioration is due to 'running out of attention'. Using cognitive load theory and Kahneman's capacity model, evaluate this explanation. Consider whether the dual-task structure, the nature of the errors observed, and the time course of deterioration support or complicate the 'limited capacity' account. Aim for 150–200 words.</p>",
+      "modelAnswer": "The colleague's explanation is broadly consistent with Kahneman's (1973) capacity model, which proposes that attention constitutes a finite pool of mental energy distributed across concurrent tasks. When combined task demands exceed available capacity — as in simultaneous radar monitoring, radio shadowing, and keyboard input — performance degradation is predicted. The time course is relevant: sustained vigilance tasks show characteristic performance declines after approximately 30 minutes (the vigilance decrement), which Kahneman's model can explain through reduced arousal lowering the total capacity pool over time.\n\nSweller's (1988) cognitive load theory refines this account. The controller's task involves high intrinsic load (complex aircraft trajectories with multiple interacting elements) alongside the extraneous load of switching between two screens and encoding across modalities. If the interface design imposes unnecessary extraneous load — for example, by displaying related information on spatially separated screens — this compounds the intrinsic difficulty.\n\nHowever, Wickens' (1984) multiple-resource theory complicates the 'single pool' assumption: auditory-verbal and visual-spatial tasks may draw on partially separate resource pools, meaning deterioration may reflect competition within specific modalities rather than global capacity exhaustion. The pattern of errors (auditory versus visual) would be diagnostic.",
+      "feynmanPrompt": "Explain the difference between Broadbent's filter model and Kahneman's capacity model to a friend who studies architecture and has never taken a psychology course. Use an analogy from their field — for example, the flow of people through a building — to make the distinction concrete. Then identify one thing your analogy gets wrong.",
+      "rabbitHoleTerms": [
+        {
+          "term": "dichotic listening",
+          "description": "An experimental paradigm in which different auditory messages are presented simultaneously to each ear, typically via headphones; used extensively by Cherry (1953) and Broadbent (1958) to investigate selective attention."
+        },
+        {
+          "term": "shadowing",
+          "description": "A technique used in dichotic listening experiments in which participants are required to repeat aloud, in real time, the message presented to one designated ear, thereby ensuring focused attention on that channel."
+        },
+        {
+          "term": "cognitive load",
+          "description": "The total amount of mental effort imposed on working memory at any given moment; Sweller (1988) distinguished intrinsic, extraneous, and germane load as three components with distinct instructional implications."
+        },
+        {
+          "term": "pre-attentive processing",
+          "description": "Automatic, parallel analysis of basic visual features (colour, orientation, size) across the entire visual field that occurs without the need for focal attention, as proposed by Treisman and Gelade (1980) in feature integration theory."
+        },
+        {
+          "term": "conjunction search",
+          "description": "A visual search task requiring the detection of a target defined by a combination of two or more features (e.g., a red vertical bar); response time increases linearly with set size because serial, attention-demanding feature binding is required."
+        },
+        {
+          "term": "attenuator",
+          "description": "In Treisman's (1964) model, the mechanism that reduces (rather than completely blocks) the signal strength of the unattended channel, allowing items with low activation thresholds — such as one's own name — to reach conscious awareness."
+        },
+        {
+          "term": "vigilance decrement",
+          "description": "The systematic decline in sustained attention performance — typically measured as reduced detection of infrequent target signals — that occurs after approximately 20–30 minutes of continuous monitoring of a monotonous task."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Broadbent's (1958) filter model, on what basis does the selective filter exclude messages from the unattended channel?</p>",
+          "options": [
+            "Physical characteristics such as pitch, loudness, and spatial location",
+            "The semantic relevance of the message to the listener's current goals",
+            "The emotional salience of the content",
+            "The frequency with which the listener has previously encountered the message"
+          ],
+          "correctAnswer": "Physical characteristics such as pitch, loudness, and spatial location",
+          "explanationHtml": "<p>Broadbent's early selection filter operates <em>before</em> semantic analysis and therefore uses only physical stimulus properties — such as which ear a message arrives at, its pitch, or its loudness — to decide what passes through to conscious processing. This is why the model is called an 'early selection' account.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A student tries to revise for an exam while simultaneously listening to a podcast in a foreign language they are learning. After 20 minutes, comprehension of both the revision material and the podcast has deteriorated markedly. Which theoretical account best explains this pattern?</p>",
+          "options": [
+            "Kahneman's (1973) capacity model: both tasks compete for a shared pool of limited mental resources, and combined demands exceed available capacity",
+            "Broadbent's (1958) filter model: the structural filter can only admit one channel at a time, so the podcast is entirely blocked",
+            "Deutsch & Deutsch's (1963) late selection model: all input is processed fully but pertinence selection favours whichever task is intrinsically more interesting",
+            "Treisman's (1964) attenuation model: the foreign language podcast is attenuated because it lacks personally relevant words"
+          ],
+          "correctAnswer": "Kahneman's (1973) capacity model: both tasks compete for a shared pool of limited mental resources, and combined demands exceed available capacity",
+          "explanationHtml": "<p>The deterioration of <em>both</em> tasks simultaneously, particularly under high-demand conditions, is characteristic of a capacity-limited system. Kahneman's model predicts that when two cognitively demanding tasks are performed concurrently and their combined load exceeds the available capacity pool, performance on both suffers — regardless of whether they share the same modality or structural channel.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: In feature integration theory (Treisman & Gelade, 1980), detecting a target defined by a single feature (e.g., a uniquely coloured item among distractors) requires serial, attention-demanding processing.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Feature searches are handled by parallel, <em>pre-attentive</em> processing that operates automatically across the entire visual field without the need for focal attention. Response time in feature searches is therefore independent of the number of distractors. It is <em>conjunction</em> searches — requiring the binding of two or more features — that demand serial attentional scanning.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A lecturer presents slides in which every diagram is on a separate slide from its accompanying explanatory text, requiring students to scroll back and forth between the two. According to Sweller's (1988) cognitive load theory, what is the primary problem with this design?</p>",
+          "options": [
+            "It creates a split-attention effect that increases extraneous cognitive load, leaving less working memory capacity for schema formation",
+            "It increases intrinsic load by making the content itself more complex than it needs to be",
+            "It reduces germane load by preventing students from actively constructing meaning from the material",
+            "It violates Broadbent's filter model by presenting information through two separate channels simultaneously"
+          ],
+          "correctAnswer": "It creates a split-attention effect that increases extraneous cognitive load, leaving less working memory capacity for schema formation",
+          "explanationHtml": "<p>When related information is physically or temporally separated, learners must mentally integrate the two sources while simultaneously processing the content — the split-attention effect. This additional integration effort constitutes extraneous load: it is imposed by the instructional design rather than by the inherent difficulty of the material, and it crowds out capacity that would otherwise support germane (schema-building) processing.</p>"
+        }
+      ]
+    },
+    {
+      "id": "psy-adv-1b",
+      "title": "Reasoning, Judgement & Decision-Making",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1974, Amos Tversky and Daniel Kahneman published a paper in <em>Science</em> that would eventually reshape economics, medicine, law, and public policy. They showed that human judgement — even among intelligent, educated people — is systematically biased in predictable directions, and that these biases are not random noise but the by-products of cognitive shortcuts that usually serve us well. Four decades later, Kahneman won the Nobel Prize for this work. The question it raises is deeply uncomfortable: if the very mechanisms we use to reason are prone to reliable errors, what does that imply for how much we can trust our own conclusions?</p>",
+      "explanationHtml": "<h3>Dual-Process Theory (Kahneman, 2011)</h3>\n<p>Daniel Kahneman's <em>Thinking, Fast and Slow</em> (2011) synthesised decades of research into a two-system framework for cognition, though the conceptual architecture had been developed earlier by Stanovich and West (2000) and others. The model distinguishes:</p>\n<ul>\n  <li><strong>System 1</strong> — fast, automatic, associative, effortless, and largely unconscious. System 1 generates impressions, intuitions, and feelings. It operates continuously and cannot be switched off. It is also the source of most cognitive biases: it substitutes easier questions for harder ones, relies on heuristics, and is insensitive to statistical information.</li>\n  <li><strong>System 2</strong> — slow, deliberate, rule-governed, effortful, and associated with subjective experience of agency. System 2 monitors and can override System 1, but it is lazy — it endorses System 1 outputs without checking them unless effort is specifically motivated.</li>\n</ul>\n<p>The interaction between systems explains many judgement paradoxes: System 1 generates an answer, System 2 rarely interrogates it rigorously, and the result feels like careful reasoning even when it is not. A key implication is that logical training alone is insufficient to prevent biases — the training must be applied at the right moment, and that requires recognising when System 1 is driving the bus.</p>\n<h4>Critical Evaluation</h4>\n<p>The dual-process framework has been enormously influential but is not without critics. Keren and Schul (2009) argued that the two-system distinction is an oversimplification — a range of continuous parameters may vary independently rather than clustering into two discrete systems. Evans (2008) similarly distinguished between the phenomenology of fast/slow processing and the underlying computational architecture, noting that calling both 'System 1' processes conflates very different mechanisms (reflexive responses, overlearned skills, and associative memory retrieval). Replication difficulties for some priming studies that underpinned the framework have also prompted reassessment.</p>\n\n<h3>Heuristics and Biases (Tversky & Kahneman, 1974)</h3>\n<p>Tversky and Kahneman (1974) identified three foundational heuristics in their seminal <em>Science</em> paper:</p>\n<h4>Availability Heuristic</h4>\n<p>People estimate the frequency or probability of an event by the ease with which instances come to mind. Dramatic, recent, or emotionally salient events are retrieved easily, causing their frequency to be overestimated. Classic demonstration: participants judged death by accident more frequent than death by stroke, when strokes kill far more people — but accidents are more vivid and media-salient. This heuristic explains the disproportionate fear of dramatic but rare causes of death (terrorism, plane crashes) relative to mundane but more probable ones (heart disease, diabetes).</p>\n<h4>Representativeness Heuristic</h4>\n<p>People judge the probability that an object belongs to a category by how well it resembles the prototype of that category — ignoring base rates. The classic Linda problem (Kahneman & Tversky, 1983): participants rated \"Linda is a bank teller and active in the feminist movement\" as more probable than \"Linda is a bank teller\" — a direct violation of the conjunction rule in probability theory. The conjunction fallacy arises because the feminist bank teller description better matches the personality sketch of Linda.</p>\n<h4>Anchoring and Adjustment</h4>\n<p>When making quantitative estimates, people start from an initial value (anchor) and adjust insufficiently toward the final answer. Tversky and Kahneman (1974) demonstrated this with a spinning wheel rigged to land on either 10 or 65. Participants who saw 65 estimated higher values for African nations' representation in the UN than those who saw 10 — even though the wheel was obviously arbitrary. Anchoring occurs even when people know the anchor is uninformative.</p>\n\n<h3>Wason Selection Task (1966): Confirmation Bias</h3>\n<p>Peter Wason's (1966) selection task presented participants with four cards showing letters and numbers (e.g., E, K, 4, 7) and the rule \"If a card has a vowel on one side, it has an even number on the other side.\" Participants must select all and only the cards necessary to test the rule. The logically correct answer is E and 7 — the vowel (which must have an even number on the reverse) and the odd number (which must not have a vowel on the reverse).</p>\n<p>Only approximately 10% of participants select this combination. The majority select E and 4 — confirming the rule rather than testing it. Selecting 4 can never falsify the rule (a consonant on the reverse is consistent with the rule), while selecting 7 can (a vowel on the reverse would falsify it). Wason interpreted this as <strong>confirmation bias</strong>: a systematic tendency to seek confirming rather than disconfirming evidence. Notably, performance improves dramatically when the task is reframed in a concrete, socially meaningful context (Griggs & Cox, 1982) — for example, checking that under-18 drinkers are not consuming alcohol — suggesting that abstract logical reasoning is separate from evolved social contract reasoning.</p>\n\n<h3>Prospect Theory (Kahneman & Tversky, 1979)</h3>\n<p>Expected utility theory in economics predicted that rational agents should evaluate outcomes based on their absolute value, weighted by probability. Kahneman and Tversky's prospect theory challenged this on empirical grounds. Two key findings:</p>\n<ul>\n  <li><strong>Loss aversion</strong>: losses loom approximately twice as large as equivalent gains. People prefer a certain £50 over a 50% chance of £100 — but they also prefer a 50% chance of losing £100 over a certain loss of £50. The value function is concave for gains (diminishing marginal utility) and convex for losses (diminishing marginal disutility), and is steeper in the loss domain.</li>\n  <li><strong>Framing effects</strong>: logically equivalent choices framed in terms of losses versus gains produce different decisions. The Asian disease problem (Tversky & Kahneman, 1981): a programme saving 200 lives (gain frame) is preferred over one with a 1/3 chance of saving 600 (risk-seeking in gains); but a programme where 400 die (loss frame) is rejected in favour of a 2/3 chance of 600 dying (risk-seeking in losses). The identical expected outcomes produce systematically different choices depending on reference point framing.</li>\n</ul>\n\n<h3>Bounded Rationality (Simon, 1955)</h3>\n<p>Herbert Simon (1955) argued that classical economic rationality was descriptively false: real decision-makers face computational limits, information deficits, and time constraints that prevent optimal calculation. His alternative was <strong>bounded rationality</strong> — agents satisfice rather than maximise, accepting the first option that exceeds a threshold of acceptability rather than searching exhaustively for the optimal solution. Simon's concept anticipated much of the heuristics-and-biases programme, though his view of heuristics was more positive: bounded rationality is often adaptive given real-world constraints.</p>\n\n<h3>Naturalistic Decision-Making (Klein, 1993)</h3>\n<p>Gary Klein's research on expert decision-making in real-world settings (firefighters, chess players, military commanders) led to the recognition-primed decision (RPD) model. Contrary to the analytic comparison of alternatives implied by classical decision theory, experts under time pressure seldom compare options. Instead, they recognise the current situation as an instance of a familiar category and mentally simulate whether the associated standard action would work. If it would, they implement it; if not, they modify it. This approach is fast, effective under pressure, and largely unconscious — System 1 in Kahneman's terms, but highly skilled rather than bias-prone.</p>\n<h4>Critical Evaluation of the Field</h4>\n<p>A significant limitation of the heuristics-and-biases programme is the ecological validity of its methods. Many classic demonstrations used artificial, laboratory-constructed problems with no real consequences. Gigerenzen and colleagues (Gigerenzen & Goldstein, 1996; Gigerenzen, Todd & the ABC Research Group, 1999) argued that simple heuristics are ecologically rational — they outperform complex optimising strategies in real-world environments with sparse, noisy data. From this perspective, what Tversky and Kahneman called 'biases' are often adaptive strategies misfiring in an unusual context. Cultural variation in reasoning styles (Nisbett et al., 2001) further complicates universalist claims: collectivist-culture participants show more contextual, holistic reasoning patterns compared with the analytic individualism characteristic of WEIRD (Western, Educated, Industrialised, Rich, Democratic) samples.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The department's case conference room has a glass whiteboard across one wall. Someone has written a probability puzzle on it from a previous session. Dr. Miriam Chen is handing around printed copies of a classic paper — Tversky and Kahneman's 1974 article in <em>Science</em>. The abstract alone looks like it should be straightforward."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Before we start: a quick question. You spin a wheel that stops on 65. Then I ask you: what percentage of African countries are members of the United Nations? Take five seconds and write a number down. Don't think too hard. Just write."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Now — did the number on the wheel influence your estimate? If I'd shown you 10 instead of 65, your estimate would have been significantly lower, on average. That's anchoring. The wheel is entirely arbitrary. You knew that. And yet. Tversky and Kahneman demonstrated this in 1974, and it has replicated hundreds of times. The initial value contaminates the estimate even when everyone knows it's worthless."
+        },
+        {
+          "type": "example",
+          "speaker": "Three heuristics and their characteristic errors",
+          "text": "AVAILABILITY: Deaths by accident vs stroke.\n  Perceived: accidents > strokes (vivid, media-salient)\n  Actual: strokes kill ~4x more people annually in the UK\n\nREPRESENTATIVENESS: The Linda problem.\n  'feminist bank teller' rated MORE probable than 'bank teller'\n  → direct violation of conjunction rule (P(A&B) ≤ P(A))\n\nANCHORING: UN membership estimate after wheel shows 65 vs 10\n  High anchor group: median estimate ~45%\n  Low anchor group:  median estimate ~25%\n  Correct answer: ~54%"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Kahneman's 2011 framework calls this a System 1 problem. System 1 runs constantly — fast, automatic, producing impressions and intuitions. System 2 is the effortful, deliberate analyst. The trouble is that System 2 is lazy. It tends to endorse System 1's output without interrogating it. So when System 1 anchors on 65 and adjusts upward a bit, System 2 doesn't push back hard enough. Knowing about the bias doesn't fully protect you from it — that's what makes this genuinely difficult."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "But here's the counterweight — and Gigerenzen has been making this argument for thirty years. These heuristics are not stupid. In real environments, with real time pressure and sparse information, simple rules often outperform elaborate analysis. The availability heuristic works most of the time because recent events often are relevant to current probabilities. The bias shows up when the environment and the heuristic are mismatched — which happens more in laboratories than in the field."
+        },
+        {
+          "type": "narration",
+          "text": "Dr. Chen puts down the paper and turns to the Wason selection task still written on the board from the previous session. 'Four cards,' she says. 'E, K, 4, 7. The rule is: if vowel, then even number. Which cards do you turn over?' Most of the room chooses E and 4. She waits."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Applying Dual-Process Theory to a Clinical Scenario</h3>\n<p>A junior doctor is reviewing a patient presenting with chest pain, breathlessness, and fatigue. The patient is a 35-year-old female marathon runner with no family history of cardiac disease. The doctor quickly concludes the symptoms are likely anxiety-related and prescribes rest.</p>\n<p>Using dual-process theory and at least one heuristic from Tversky and Kahneman (1974), explain how cognitive processes may have contributed to this diagnostic reasoning. In your response, address: (1) which system is most likely driving the initial diagnosis and why; (2) which specific heuristic or bias best accounts for the error; (3) one strategy, grounded in cognitive psychology, that could reduce this type of error in clinical settings. Aim for 120–180 words.</p>",
+      "soloPracticeHtml": "<p>A jury has been told that a defendant's DNA matches a sample found at the crime scene, with a false positive rate of 1 in 10,000 for the test. Several jurors argue that this is overwhelming evidence of guilt. However, the defence barrister points out that the city has a population of 800,000. Using Kahneman and Tversky's work on probability judgement and the representativeness heuristic, evaluate the jurors' reasoning. Consider what additional information is required for a rational assessment and how framing might affect the jury's interpretation of the statistic. Aim for 150–200 words.</p>",
+      "modelAnswer": "The jurors appear to be committing the prosecutor's fallacy — confusing the probability of a DNA match given innocence (1 in 10,000) with the probability of innocence given a DNA match. This error is consistent with the representativeness heuristic (Tversky & Kahneman, 1974): the match makes the defendant seem representative of the category 'guilty person', and the statistical rarity of the match is taken as near-certain proof of guilt without regard to base rates.\n\nA Bayesian analysis would begin with the prior probability: in a population of 800,000, we would statistically expect approximately 80 people to produce a false positive match by chance. If the crime had no other suspects, the prior probability that any given individual committed it is very low, which substantially reduces the posterior probability of guilt even given a match.\n\nFraming matters additionally here: presenting the statistic as '1 in 10,000 chance of error' triggers loss aversion around wrongful acquittal, whereas presenting it as 'approximately 80 people in this city would match by chance' supports a more calibrated reading. Kahneman's (2011) dual-process theory suggests that jurors need to be actively prompted to engage System 2 deliberate reasoning rather than relying on the System 1 intuition that a rare match constitutes proof.",
+      "feynmanPrompt": "Explain confirmation bias to a friend who is convinced they are psychic because they correctly predicted three things last week. Walk them through why their reasoning process — starting from Wason's (1966) selection task findings — is likely to produce this kind of false belief even without any psychic ability. Be specific about what evidence they are not looking for.",
+      "rabbitHoleTerms": [
+        {
+          "term": "loss aversion",
+          "description": "The empirical finding, central to Kahneman and Tversky's (1979) prospect theory, that losses are weighted approximately twice as heavily as equivalent gains in human decision-making, producing asymmetric risk preferences across the gain and loss domains."
+        },
+        {
+          "term": "conjunction fallacy",
+          "description": "The error of judging a conjunction of two events (A and B) as more probable than one of its constituents (B alone), demonstrated by Kahneman and Tversky (1983) in the Linda problem; arises from the representativeness heuristic overriding probability rules."
+        },
+        {
+          "term": "framing effect",
+          "description": "The phenomenon whereby logically equivalent choices or information presented in different ways (e.g., gain frame versus loss frame) produce systematically different preferences or judgements, violating the classical economic assumption of descriptive invariance."
+        },
+        {
+          "term": "satisficing",
+          "description": "Simon's (1955) concept describing the decision strategy of selecting the first option that meets a pre-specified acceptability threshold, rather than exhaustively searching for the optimal solution; a rational response to bounded cognitive resources and incomplete information."
+        },
+        {
+          "term": "ecological rationality",
+          "description": "Gigerenzen and colleagues' (1999) concept that simple heuristics are rational relative to the structure of the environment in which they operate; challenges the heuristics-and-biases programme's characterisation of cognitive shortcuts as inherently error-prone."
+        },
+        {
+          "term": "confirmation bias",
+          "description": "The tendency to seek, interpret, and recall information in ways that confirm pre-existing beliefs or hypotheses, while failing to seek or weight disconfirming evidence; demonstrated experimentally by Wason's (1966) selection task."
+        },
+        {
+          "term": "recognition-primed decision",
+          "description": "Klein's (1993) model of expert decision-making under time pressure, in which experts recognise a situation as familiar, retrieve the associated standard action from memory, and mentally simulate its application rather than analytically comparing alternatives."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>According to Kahneman's (2011) dual-process theory, which of the following best characterises System 1 processing?</p>",
+          "options": [
+            "Automatic, fast, associative, and effortless; operating largely below conscious awareness",
+            "Slow, deliberate, rule-governed, and effortful; associated with conscious agency",
+            "Logical, sequential, and activated specifically when System 2 is overloaded",
+            "Emotional and motivational, responsible for regulating System 2's outputs"
+          ],
+          "correctAnswer": "Automatic, fast, associative, and effortless; operating largely below conscious awareness",
+          "explanationHtml": "<p>System 1 is characterised by automaticity, speed, and minimal cognitive effort. It generates intuitions, impressions, and heuristic shortcuts continuously and without conscious instigation. It is contrasted with System 2, which is slow, deliberate, and effortful — though System 2 tends to endorse System 1 outputs rather than checking them rigorously.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A surgeon estimates that a post-operative complication is unlikely because the patient is young and fit — without explicitly considering base rates for that procedure. Which heuristic from Tversky and Kahneman (1974) best explains this reasoning?</p>",
+          "options": [
+            "Representativeness: the patient doesn't resemble the prototype of someone who develops complications",
+            "Availability: complications are not memorable from the surgeon's recent cases",
+            "Anchoring: the initial assessment of 'fit' acts as an anchor that is insufficiently adjusted",
+            "Satisficing: the surgeon accepts the first adequate explanation rather than maximising diagnostic accuracy"
+          ],
+          "correctAnswer": "Representativeness: the patient doesn't resemble the prototype of someone who develops complications",
+          "explanationHtml": "<p>The representativeness heuristic operates by assessing category membership based on similarity to a prototype. A young, fit patient does not resemble the typical profile of someone who develops complications, so the probability is judged as low — regardless of what the actual base rate of complications for that specific procedure may be. This is base rate neglect driven by representativeness.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: In Kahneman and Tversky's (1979) prospect theory, people are generally risk-seeking in the domain of gains and risk-averse in the domain of losses.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Prospect theory shows the opposite pattern: people are typically <em>risk-averse</em> in the domain of gains (preferring a certain smaller gain over a risky larger one) and <em>risk-seeking</em> in the domain of losses (preferring a gamble over a certain loss of equivalent expected value). This asymmetry — combined with the steeper slope of the value function in the loss domain (loss aversion) — is central to the theory.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>In Wason's (1966) selection task, most participants select cards E and 4 when given the rule 'If a vowel, then an even number'. Why is selecting card 4 a logical error?</p>",
+          "options": [
+            "Turning over 4 can only confirm the rule, not falsify it; a consonant on the reverse is consistent with the rule regardless",
+            "Card 4 is irrelevant because the rule says nothing about even numbers on the even-number side",
+            "Selecting 4 violates the conjunction rule because it involves two features simultaneously",
+            "Card 4 should only be selected if card 7 has already been eliminated as a candidate"
+          ],
+          "correctAnswer": "Turning over 4 can only confirm the rule, not falsify it; a consonant on the reverse is consistent with the rule regardless",
+          "explanationHtml": "<p>The rule states 'if vowel then even number' — not 'if even number then vowel'. Card 4 with a consonant on the reverse is perfectly consistent with the rule (which makes no claim about what lies behind even numbers). Only a vowel on the back of card 7 would falsify the rule. Selecting 4 instead of 7 reflects confirmation bias: participants seek evidence that would confirm the rule rather than evidence that could refute it.</p>"
+        }
+      ]
+    }
+  ]
+}

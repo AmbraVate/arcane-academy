@@ -207,6 +207,9 @@ public class EncodingController {
                 // Guided practice HTML doubles as the "peek" hint — no starter code
                 dto.setGuidedPracticeHtml(sc.getGuidedPracticeHtml());
                 dto.setTestCaseLabels(testCasesFor(sc));
+                // Model answer is revealed only in this phase so learners can self-assess
+                // after their independent attempt without seeing it beforehand.
+                dto.setModelAnswer(sc.getModelAnswer());
             }
             case RETRIEVAL_CHECK -> dto.setFeynmanPrompt(sc.getFeynmanPrompt());
             // COMPLETE: send story beats so the frontend can offer a "Re-read Story" option.

@@ -30,4 +30,11 @@ public class SubChunkEncodingDto {
 
     /** Terms to highlight as rabbit-hole anchors in story beats: [{ term, description }] */
     private Object rabbitHoleTerms;
+
+    /**
+     * Exemplar answer revealed after solo practice is complete (NONE practice type only).
+     * Only populated during the SOLO_PRACTICE phase once the learner has submitted.
+     * Null for all other phases and for non-written practice types.
+     */
+    private String modelAnswer;
 }

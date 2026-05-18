@@ -88,6 +88,14 @@ public class ChunkContentDto {
         /** Optional Feynman-technique prompt shown on the COMPLETE phase. */
         public String feynmanPrompt;
 
+        /**
+         * Optional model answer / exemplar response revealed after solo practice is complete.
+         * Use for written-response (practiceType: NONE) sub-chunks to give the learner a
+         * benchmark after their independent attempt. Should be concise (150–300 words) and
+         * demonstrate the vocabulary, structure, and critical evaluation expected at this tier.
+         */
+        public String modelAnswer;
+
         public List<QuestionDto> questions;
 
         /**

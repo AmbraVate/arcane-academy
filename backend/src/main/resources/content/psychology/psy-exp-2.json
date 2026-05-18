@@ -1,0 +1,301 @@
+{
+  "id": "psy-exp-2",
+  "title": "Critical Perspectives in Psychology",
+  "glyph": "🔍",
+  "sortOrder": 11,
+  "tier": "EXPERT",
+  "topicId": "psychology",
+  "prerequisites": ["psy-exp-1"],
+  "subChunks": [
+    {
+      "id": "psy-exp-2a",
+      "title": "Cross-Cultural Psychology & Ethics",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "NONE",
+      "hookHtml": "<p>When Paul Ekman claimed to have identified six universal basic emotions expressed through facial configurations recognised across cultures — including isolated preliterate societies in Papua New Guinea — it seemed like a triumph for the universalist project in psychology. But Lisa Feldman Barrett's (2017) challenge, drawing on constructionist neuroscience and cross-cultural linguistics, has reopened the question with uncomfortable force: are the categories we use to carve up human experience genuinely universal, or are they artefacts of the conceptual frameworks Western-trained researchers bring to their data? This question is not merely academic — it determines whether psychological theories developed on WEIRD samples can legitimately inform clinical practice, policy, and forensic decisions for the majority of the world's population.</p>",
+      "explanationHtml": "<h3>WEIRD Samples and the Generalisability Problem</h3>\n<p>Henrich, Heine, and Norenzayan's (2010) landmark paper 'The Weirdest People in the World' demonstrated with systematic evidence that the participants on whom most psychological research is based are not merely unrepresentative but are, on many psychological dimensions, statistical outliers relative to global humanity. Analysing data across 12 domains — visual perception, fairness, cooperation, spatial reasoning, moral reasoning, and more — they found that samples from Western, Educated, Industrialised, Rich, Democratic (WEIRD) societies consistently occupied the extreme end of distributions. For example, the Müller-Lyer illusion, long treated as a demonstration of universal perceptual processes, shows dramatically attenuated effects in non-industrialised populations who lack extensive experience with carpentered environments and 2D perspective representations.</p>\n<p>The implications for psychological science are profound. At the time of Henrich et al.'s publication, approximately 96% of participants in leading psychology journals came from Western nations — and 68% from the United States alone — despite representing only 12% of the world's population. The problem is structural: most research is conducted at universities in high-income countries with student convenience samples, and publication incentives favour novel findings over replication in diverse samples. The growing <strong>indigenous psychologies</strong> movement argues that this is not merely a sampling problem amenable to technical fixes but reflects an epistemological imperialism — the imposition of Western ontological categories on non-Western psychological realities.</p>\n<h3>Cultural Dimensions and Self-Concept</h3>\n<p>Hofstede's (1980) analysis of IBM employee surveys across 40 nations generated four cultural dimensions — <em>individualism-collectivism</em>, <em>power distance</em>, <em>uncertainty avoidance</em>, and <em>masculinity-femininity</em> — that became enormously influential in cross-cultural psychology. The individualism-collectivism dimension in particular has shaped decades of research on self-concept, motivation, and social behaviour. However, Hofstede's methodology has attracted sustained criticism: the original sample comprised IBM employees specifically (not nationally representative), and the dimensions were derived from factor analysis of aggregated national means — a level of analysis that cannot straightforwardly be applied to individuals without committing the ecological fallacy.</p>\n<p>Markus and Kitayama's (1991) distinction between <strong>independent</strong> and <strong>interdependent self-construal</strong> proposed that individuals in Western individualistic cultures typically develop a self-concept defined by unique internal attributes, relatively stable across contexts, whereas those in East Asian collectivistic cultures develop a self defined through relationships and contextual roles. This framework generated substantial research on cognition, motivation, and emotion across cultures. Critics including Oyserman et al. (2002), in a meta-analysis of 83 studies, found that the patterns were more complex and context-dependent than the binary framework implies — within-country variation often exceeded between-country variation — and that priming studies could shift self-construal, suggesting it is a situationally activated cognitive orientation rather than a fixed cultural trait.</p>\n<h3>Emotion: Universalism vs Constructionism</h3>\n<p>Ekman's (1969) claim for universal basic emotions, based on cross-cultural recognition studies including those with the Fore people of Papua New Guinea, appeared to settle the nature-nurture debate in favour of biologically pre-programmed affect programmes. The methodology, however, has been critiqued: participants were typically given forced-choice emotion labels from a restricted set rather than freely generating their own descriptions — a procedure that significantly inflates apparent recognition rates (Russell, 1994). When methodologies allow free description, cross-cultural agreement drops substantially.</p>\n<p>Barrett's (2017) <strong>theory of constructed emotion</strong>, drawing on predictive processing neuroscience, proposes that emotions are not hardwired affect programmes but are actively constructed from interoceptive signals (bodily sensations) in combination with culturally acquired conceptual knowledge about emotion categories. On this account, individuals who lack a concept for an emotion — as some cultures lack equivalents for 'sadness' or 'anger' as discrete categories — will genuinely experience that emotion differently, because the conceptual scaffolding that constructs the experience is absent. The debate between universalist and constructionist accounts is not purely empirical: it intersects with fundamental questions about the relationship between language, culture, and subjective experience.</p>\n<h3>Developmental Universals and Cultural Specificity</h3>\n<p>Piaget's stages of cognitive development were proposed as universal, biologically maturationally governed sequences. Dasen's (1994) cross-cultural review of Piagetian tasks found that while the sequence of stages appeared consistent across cultures, the <em>rate</em> of progression varied substantially — with concrete operational thinking appearing earlier in cultures where children engage in activities directly exercising those skills (e.g., conservation reasoning in cultures involving trading or measuring). This suggests the stages are not culturally independent: the content and timing of formal educational experience, task-relevant practice, and cultural value placed on abstract reasoning all modulate developmental trajectory. This is consistent with Vygotsky's sociocultural theory, which gives cultural tools and the zone of proximal development a constitutive — not merely facilitative — role in cognitive development.</p>\n<h3>Research Ethics: Historical Abuses and Contemporary Challenges</h3>\n<h4>Historical Context</h4>\n<p>The ethical framework governing contemporary psychological research emerged partly in response to documented abuses. The <strong>Nuremberg Code</strong> (1947), formulated in response to Nazi medical experiments conducted without consent, established informed voluntary consent as a non-negotiable prerequisite for human participant research. The <strong>Tuskegee Syphilis Study</strong> (1932–1972) enrolled 399 Black American men with latent syphilis and withheld effective treatment (penicillin) even after it became available, in order to observe the natural progression of the disease — an egregious exploitation of a historically marginalised population that shaped lasting distrust of medical institutions in Black communities. The <strong>Willowbrook hepatitis study</strong> (1956–1970) deliberately infected intellectually disabled children with hepatitis, with parental 'consent' obtained under coercive conditions. These cases established the ethical requirement that vulnerability creates heightened, not reduced, protections.</p>\n<h4>The Milgram Studies</h4>\n<p>Milgram's (1963) obedience studies demonstrated that 65% of ordinary American participants would deliver apparently lethal electric shocks to a confederate under the instruction of an authoritative experimenter — a finding of extraordinary social significance. Baumrind's (1964) critique argued that Milgram had violated the duty of care by exposing participants to severe psychological distress without their genuine informed consent, and that the right to withdraw was compromised by the experimenter's prods. Milgram's defence — that participants showed no long-term harm and reported feeling the experience was valuable — was partially supported by Ring et al.'s (1970) follow-up, which found no evidence of lasting psychological damage. The contemporary ethical consensus, however, does not accept outcome-based justification alone: the cost-benefit analysis must be prospective, and informed consent cannot be waived simply because harm does not materialise.</p>\n<h4>Contemporary Ethical Challenges</h4>\n<p>Internet research has introduced ethical complexities the traditional framework was not designed to address. <strong>Social media data mining</strong> — analysing publicly posted content for psychological research — challenges the distinction between public and private: individuals posting to a small friend network may not reasonably anticipate their data being analysed by researchers. The Facebook emotional contagion study (Kramer et al., 2014), which manipulated newsfeed content for 689,003 users without explicit consent, generated widespread outrage precisely because users had not meaningfully consented to experimental manipulation, despite technically agreeing to terms of service. The dual-role problem — when a researcher is also a practitioner working with therapy clients — creates conflicts of interest, power imbalances, and confidentiality tensions that require explicit attention in ethical planning.</p>\n<h3>Reflexivity, Positionality, and Intersectionality</h3>\n<p>Feminist psychology's contribution to research methodology extends beyond advocacy for gender equality to a fundamental epistemological challenge: the positivist ideal of the detached, objective researcher is itself a cultural construction that obscures how the researcher's social position — their gender, race, class, sexuality — shapes what questions they ask, what they see in data, and how they interpret findings. Harding's (1987) <strong>standpoint epistemology</strong> argues that marginalised social positions can generate epistemic advantages — outsider perspectives reveal assumptions that insider positions take for granted — though critics note this risks romanticising subordination and attributing a false unity to the standpoints of heterogeneous groups.</p>\n<p>Crenshaw's (1989) concept of <strong>intersectionality</strong> — developed in the context of Black feminist legal theory — argues that the experiences of individuals who occupy multiple marginalised identities cannot be understood by simply adding together the effects of each dimension: race, gender, class, sexuality, and disability interact in ways that produce qualitatively distinct experiences of oppression. Applied to psychological research, intersectionality challenges designs that treat 'women' or 'Black people' as homogeneous categories and demands attention to the specific situated experiences of, for example, Black women — whose experiences are not captured by research on White women or on Black men. The <strong>decolonisation of psychology</strong> extends this critique to the knowledge-production infrastructure itself: whose questions are funded, whose theories are cited, and whose ways of knowing are treated as legitimate science.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Miriam Chen opens with a provocation: she has projected a world map showing the geographic distribution of participants in the top psychology journals over the past decade. The vast majority of pins cluster in North America and Western Europe."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Henrich and colleagues called their 2010 paper 'The Weirdest People in the World.' Not because Western psychology is strange, but because WEIRD samples are statistical outliers on most dimensions they measured. If that's true, what exactly has the last century of psychological research established?"
+        },
+        {
+          "type": "narration",
+          "text": "A student argues that the basic mechanisms of perception, cognition, and emotion should be universal given a shared human nervous system. Dr. Chen challenges this directly."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Barrett's theory of constructed emotion would say the nervous system provides the raw material — interoceptive signals — but culture provides the conceptual categories that shape what we actually experience. If you don't have the concept of 'anger' as a discrete category, do you experience 'anger' in the way a Western participant does? That is not a rhetorical question — there is genuine empirical disagreement."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Now on ethics. The Facebook emotional contagion study was conducted on nearly 700,000 users. The researchers argued it was covered by terms of service consent. What is the difference between legally valid consent and ethically meaningful consent? And who bears the burden of that distinction?"
+        },
+        {
+          "type": "narration",
+          "text": "The group debates the limits of terms-of-service as an ethical instrument. One student invokes Crenshaw's intersectionality framework to note that the populations most likely to be unaware of, or unable to negotiate, such terms are also those most likely to bear disproportionate research risk."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Standpoint epistemology raises a question I want you to sit with: if the researcher's social position shapes what they see, is complete objectivity possible, or is the goal instead radical transparency about positionality? And does acknowledging positionality strengthen or undermine the scientific claim?"
+        },
+        {
+          "type": "narration",
+          "text": "The seminar closes with a commitment from Dr. Chen: every piece of research the group encounters for the remainder of the course will be examined for who is in the sample, who conducted the research, and whose knowledge framework structures the questions being asked."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A research team from a UK university wishes to study the relationship between social media use and depression in young adults. They propose to recruit participants via Twitter and analyse their public posts alongside a standardised depression questionnaire. The sample will be self-selecting and predominantly English-speaking.</p><p>In your response: (1) apply the WEIRD critique (Henrich et al., 2010) to evaluate the representativeness of this sampling strategy; (2) evaluate the ethical challenges posed by social media data analysis, drawing on the distinction between legally valid and ethically meaningful consent; (3) consider one way in which an intersectionality framework would strengthen the study design.</p><p>Aim for 180–250 words. Write in formal academic prose.</p>",
+      "soloPracticeHtml": "<p>A feminist psychologist argues that Ekman's research on universal basic emotions is not merely methodologically flawed but ideologically suspect — that the very project of identifying universal psychological laws reflects a Western Enlightenment framework that privileges particular ways of knowing and serves particular political interests. Drawing on specific methodological critiques of Ekman's work, Barrett's constructionist alternative, and the epistemological arguments of standpoint theory and the indigenous psychologies movement, evaluate this claim. Identify the strongest empirical evidence for and against the universalist position, and consider what it would take to resolve the debate.</p><p>Aim for 200–280 words. No scaffolding is provided.</p>",
+      "feynmanPrompt": "What would a feminist psychologist challenge about a large-scale cross-cultural study that used the Hofstede individualism-collectivism dimension to explain differences in depression rates across 30 countries? Identify at least three distinct levels of critique — methodological, conceptual, and epistemological — and explain what an improved study design might look like.",
+      "modelAnswer": "The feminist psychologist's critique has genuine empirical purchase but also risks overreach. At the methodological level, Russell's (1994) reanalysis of cross-cultural emotion recognition studies demonstrated that when forced-choice paradigms are replaced with free-description methodologies, cross-cultural agreement rates drop substantially — a finding that undermines Ekman's universalist claims without requiring the abandonment of all biological substrate. Ekman's Fore participants were, moreover, not fully culturally isolated — they had contact with Western missionaries and media prior to testing, compromising the 'untouched by Western influence' framing. Barrett's (2017) constructionist account is theoretically compelling: if emotions are predictions generated by the brain using culturally acquired conceptual categories, then cross-cultural variation in emotional experience is not merely expressive but constitutive. Supporting this, Lindquist et al.'s (2011) neuroimaging meta-analysis found no consistent evidence for discrete emotion-specific neural circuits, consistent with a constructionist view. However, the universalist position retains empirical support that the ideological critique alone cannot dissolve: Ekman's cross-cultural findings, even with methodological limitations, show above-chance recognition across cultures; facial Action Coding System studies show consistent emotion-expression mappings even in blind individuals (Matsumoto and Willingham, 2009), suggesting some non-culturally-learned component. The indigenous psychologies critique usefully highlights that the very category system Ekman used — six discrete basic emotions — reflects Western folk psychological ontology. Resolving the debate would require paradigms developed collaboratively with non-Western researchers, using emic category systems generated by participants rather than imposed by investigators — a methodological standard the field has not yet systematically adopted.",
+      "rabbitHoleTerms": [
+        {
+          "term": "WEIRD Samples",
+          "definition": "Henrich, Heine, and Norenzayan's (2010) acronym for Western, Educated, Industrialised, Rich, Democratic — characterising the unrepresentative populations on which the majority of psychological research is based, and who are statistical outliers on many psychological dimensions relative to global humanity."
+        },
+        {
+          "term": "Theory of Constructed Emotion",
+          "definition": "Barrett's (2017) constructionist account proposing that emotions are not hardwired affect programmes but are actively constructed from interoceptive signals and culturally acquired conceptual knowledge, such that emotion experience is partly constituted by the conceptual categories available in a person's cultural and linguistic environment."
+        },
+        {
+          "term": "Standpoint Epistemology",
+          "definition": "Harding's (1987) feminist epistemological position arguing that knowledge is always situated — produced from a particular social location — and that marginalised standpoints can generate epistemic advantages by making visible the assumptions that dominant perspectives naturalise and render invisible."
+        },
+        {
+          "term": "Intersectionality",
+          "definition": "Crenshaw's (1989) concept, originating in Black feminist legal theory, that multiple social identities (race, gender, class, sexuality) do not add linearly but interact to produce qualitatively distinct experiences of privilege and oppression that single-axis frameworks cannot capture."
+        },
+        {
+          "term": "Emic vs Etic",
+          "definition": "The methodological distinction, derived from linguistics, between research using categories generated from within a culture (emic — culturally specific, insider-generated) versus categories imposed from outside for cross-cultural comparison (etic — potentially culture-bound despite universalist aspirations)."
+        },
+        {
+          "term": "Ecological Fallacy",
+          "definition": "The error of inferring individual-level relationships from group-level or aggregate data — a significant limitation of Hofstede's cultural dimensions research, which derived national-level scores and then applied them to explain individual behaviour."
+        },
+        {
+          "term": "Decolonising Psychology",
+          "definition": "A critical movement challenging the Eurocentric assumptions embedded in mainstream psychological theory, research infrastructure, and epistemology, and advocating for the inclusion of non-Western knowledge systems, indigenous psychologies, and researchers from the Global South as legitimate contributors to psychological knowledge production."
+        },
+        {
+          "term": "Independent vs Interdependent Self-Construal",
+          "definition": "Markus and Kitayama's (1991) distinction between a self-concept defined by unique internal attributes relatively stable across contexts (independent, associated with Western individualistic cultures) and one defined through relationships and contextual roles (interdependent, associated with East Asian collectivistic cultures), later critiqued for oversimplifying within-culture variation."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What specific methodological flaw did Russell (1994) identify in Ekman's cross-cultural emotion recognition studies that inflated apparent universality of facial emotion recognition?</p>",
+          "options": [
+            "Ekman used non-representative Western samples in the cross-cultural comparisons",
+            "Forced-choice paradigms artificially inflated recognition rates by limiting participants to pre-specified emotion labels",
+            "Ekman failed to control for cultural exposure to Western media in his non-Western samples",
+            "Recognition rates were only measured at the group level, masking substantial individual variation"
+          ],
+          "correctAnswer": "Forced-choice paradigms artificially inflated recognition rates by limiting participants to pre-specified emotion labels",
+          "explanationHtml": "<p>Russell (1994) demonstrated that when Ekman's forced-choice methodology — which asked participants to select from a closed set of emotion labels — was replaced with free-description paradigms, cross-cultural agreement dropped substantially. The forced-choice format inflates apparent recognition by eliminating responses that fall outside the experimenter's predetermined category system, potentially imposing Western emotional categories on non-Western participants.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A developmental psychologist studies whether Piaget's concrete operational stage emerges at the same age across three culturally different communities. She finds that children in a trading community show conservation reasoning significantly earlier than children in communities without trading practices. What is the most theoretically appropriate interpretation of this finding?</p>",
+          "options": [
+            "The stage sequence is culturally variable, suggesting Piaget's theory should be abandoned",
+            "The result confirms Piaget's theory because conservation reasoning does eventually emerge in all groups",
+            "Cultural practices and task-relevant experience modulate the rate of stage progression without necessarily altering the sequence, consistent with sociocultural accounts",
+            "The finding is a methodological artefact because conservation tasks are not culturally equivalent across communities"
+          ],
+          "correctAnswer": "Cultural practices and task-relevant experience modulate the rate of stage progression without necessarily altering the sequence, consistent with sociocultural accounts",
+          "explanationHtml": "<p>Dasen's (1994) cross-cultural review found that while the sequence of Piagetian stages appeared consistent, the rate of progression varied with relevant cultural practice and experience — consistent with Vygotskian sociocultural theory, which assigns cultural tools and social interaction a constitutive role in cognitive development. This interpretation preserves the universal sequence finding while accommodating cultural modulation of timing, a more nuanced position than either pure universalism or wholesale rejection of Piagetian theory.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher argues that Milgram's obedience studies were ethically justified because follow-up data (Ring et al., 1970) showed participants reported no lasting harm and found the experience valuable. A bioethicist challenges this position. Which argument most fundamentally undermines the researcher's justification?</p>",
+          "options": [
+            "Ring et al.'s follow-up used self-report measures that are vulnerable to social desirability bias",
+            "Ethical evaluation of research must be prospective: outcome-based justification cannot retroactively validate procedures that violated the principle of informed consent at the time they were conducted",
+            "The original study was conducted on a non-representative sample of American men, limiting its generalisability",
+            "Milgram's findings have never been fully replicated, so the scientific value does not justify the risk"
+          ],
+          "correctAnswer": "Ethical evaluation of research must be prospective: outcome-based justification cannot retroactively validate procedures that violated the principle of informed consent at the time they were conducted",
+          "explanationHtml": "<p>The contemporary ethical consensus, reflected in codes such as the APA Ethics Code and the Declaration of Helsinki, requires prospective cost-benefit analysis — the ethical evaluation must be made before the research on the basis of anticipated risks and benefits. Retroactive justification based on the absence of observed harm does not validate procedures that violated consent principles at the time. Moreover, absence of reported harm is not equivalent to absence of harm — participants may lack insight into or willingness to report psychological effects.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: Oyserman et al.'s (2002) meta-analysis of the individualism-collectivism dimension found that between-country differences in self-construal consistently exceeded within-country variation, confirming Markus and Kitayama's framework.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Oyserman et al.'s (2002) meta-analysis found that patterns were more complex and context-dependent than the binary independent/interdependent framework implies — within-country variation frequently exceeded between-country variation. They also found that priming studies could shift self-construal, suggesting it functions as a situationally activated cognitive orientation rather than a stable fixed cultural trait, which substantially complicates the original Markus and Kitayama model.</p>"
+        }
+      ]
+    },
+    {
+      "id": "psy-exp-2b",
+      "title": "The Replication Crisis & Future Directions",
+      "sortOrder": 2,
+      "xpReward": 100,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 2015, the Open Science Collaboration published a systematic attempt to replicate 100 published psychology studies. Only 36% produced results that met the original paper's criteria for significance. Social psychology fared particularly badly. The response from the field has ranged from soul-searching reform to defensive reassertion of psychology's scientific credentials — and the debate reveals deep disagreements about what psychological science is for, how certainty should be communicated, and whether the problems are fixable within the current institutional structure or require more fundamental change. The replication crisis is not merely a methodological inconvenience: it is a crisis of credibility that forces psychology to confront the gap between the confidence with which its findings are communicated and the evidential basis for that confidence.</p>",
+      "explanationHtml": "<h3>The Scale of the Problem</h3>\n<p>The Open Science Collaboration (2015), coordinating 270 researchers across 60 laboratories worldwide, attempted to replicate 100 studies from three high-impact psychology journals published in 2008. The results were striking: only 36% of replications produced a statistically significant effect in the same direction as the original. Mean effect sizes in replications were approximately half those in original studies. Social psychology replicated at approximately 25%, compared with cognitive psychology at approximately 50% — a differential that has been attributed to social psychological phenomena being more context-dependent, more susceptible to demand characteristics, and more frequently studied with smaller, less powerful samples.</p>\n<p>The replication rate itself requires careful interpretation: a failed replication does not necessarily indicate a false original finding — it may reflect genuine contextual moderation, a true moderator variable that distinguishes the replication context from the original, or sampling variability in both the original and the replication. Gilbert et al. (2016) raised precisely these concerns, arguing that the OSC's estimated replication rate was a lower bound inflated by methodological differences between original and replication studies. Etz and Vandekerckhove's (2016) Bayesian reanalysis of OSC data found that many 'failed' replications were in fact inconclusive rather than contradictory — a methodologically important distinction that binary significance testing obscures.</p>\n<h3>Questionable Research Practices</h3>\n<h4>P-Hacking and HARKing</h4>\n<p><strong>P-hacking</strong> refers to the suite of analytic decisions — sometimes made consciously, often not — that inflate the probability of obtaining a p-value below 0.05: collecting data until significance is reached, selectively reporting dependent variables that 'worked,' excluding outliers post-hoc, trying multiple statistical tests and reporting only the significant one, or including covariates that happen to push p below threshold. Simmons, Nelson, and Simonsohn (2011) demonstrated through simulation that these 'researcher degrees of freedom' could inflate false positive rates to over 60% while maintaining the technical appearance of standard practice. Critically, none of these practices requires conscious intent to deceive — they can emerge organically from confirmation bias and the pressure to produce publishable results.</p>\n<p><strong>HARKing</strong> — Hypothesising After Results are Known (Kerr, 1998) — is the practice of presenting post-hoc exploratory findings as if they were predicted a priori. It is epistemologically pernicious because it bypasses the error-correction function of the hypothesis-testing framework: predictions derived from data cannot be falsified by that same data. Rosenthal's (1979) <strong>file drawer problem</strong> identified publication bias as a structural contributor: if journals preferentially publish significant positive findings, the published literature systematically overestimates effect sizes, and null results that might challenge dominant theories remain unpublished in researchers' file drawers. Rosenthal estimated that for many published effects, the number of unpublished null studies required to reduce the mean effect to non-significance (the 'fail-safe N') was implausibly large — or implausibly small, indicating fragile effects.</p>\n<h4>High-Profile Failures</h4>\n<p><strong>Ego depletion</strong> — the hypothesis that self-control draws on a limited glucose-based resource that depletes with use (Baumeister et al., 1998) — was one of social psychology's most cited and applied findings. Hagger et al.'s (2016) pre-registered, multi-site replication (N=2,141; 24 laboratories) found no evidence of the ego depletion effect, producing a standardised effect size near zero. The original effect (d ≈ 0.62) had been constructed from underpowered studies susceptible to p-hacking, and subsequent evidence suggested the glucose mechanism was physiologically implausible (Kurzban et al., 2013). <strong>Power posing</strong> — the claim that adopting expansive body postures for two minutes increases testosterone, decreases cortisol, and increases risk tolerance (Carney et al., 2010) — similarly failed to replicate in a larger pre-registered study (Ranehill et al., 2015, N=200): the behavioural effects on risk-taking did not replicate, and the hormonal effects were not confirmed. Dana Carney, the original study's first author, subsequently publicly stated she no longer believed the original finding. The <strong>facial feedback hypothesis</strong> — that moving facial muscles into emotion-consistent configurations (e.g., holding a pen between the teeth to induce a smile) produces corresponding subjective emotion — similarly showed equivocal replication results in the Registered Replication Report (Wagenmakers et al., 2016), though debate continues about moderating conditions.</p>\n<h3>Statistical Reform</h3>\n<p>Cohen's (1962) seminal power analysis survey of the Journal of Abnormal and Social Psychology found that the median statistical power to detect a medium effect was 0.46 — meaning published studies had roughly a coin-flip chance of detecting real effects of moderate magnitude. This finding was largely ignored for decades. The replication crisis reignited it. <strong>Pre-registration</strong> — publicly committing hypotheses, design, and analysis plan before data collection — is the most structurally impactful reform because it distinguishes confirmatory from exploratory research and prevents HARKing. <strong>Registered Reports</strong> go further: journals commit to publication based on the quality of the introduction and method, before data are collected, making publication independent of results and eliminating outcome reporting bias.</p>\n<p><strong>Bayesian statistics</strong> offer an alternative inferential framework that avoids the binary threshold problem: rather than asking 'Is p below 0.05?', Bayesian analysis quantifies the relative evidence for the null versus the alternative hypothesis via the Bayes factor, and naturally incorporates prior information and uncertainty. Open data and open materials mandates — now adopted by several journals — allow independent verification of analyses and facilitate replication attempts. The movement toward <strong>effect size reporting</strong> rather than sole reliance on null hypothesis significance testing (NHST) — Cohen's d, eta-squared, odds ratios — provides more information about the practical magnitude of findings than p-values alone.</p>\n<h3>The 'Jingle-Jangle' Fallacies</h3>\n<p>Block (1995) identified two complementary conceptual problems that compound the replication issue. The <strong>jingle fallacy</strong> involves using the same label for genuinely different constructs — 'intelligence' measured by IQ tests, Sternberg's triarchic abilities, and Gardner's multiple intelligences are sufficiently distinct that treating them as the same thing distorts comparisons across studies. The <strong>jangle fallacy</strong> involves using different labels for the same underlying construct — 'ego depletion,' 'regulatory resource depletion,' and 'willpower fatigue' may all be names for what is, or was hypothesised to be, the same mechanism. These fallacies mean that apparent replication failures may sometimes reflect genuine construct non-equivalence rather than an unstable underlying effect — and that meta-analyses aggregating across jingle-jangle fallacy-affected studies will produce misleading conclusions.</p>\n<h3>Emerging Directions</h3>\n<h4>Network Approaches and Computational Psychiatry</h4>\n<p>Borsboom and Cramer's (2013) <strong>network approach to psychopathology</strong> proposes a fundamental reconceptualisation of mental disorders: rather than treating depression, anxiety, or schizophrenia as latent disease entities that cause symptoms, the network model treats symptoms as nodes in a causal network, with edges representing direct causal relationships between symptoms. On this account, 'depression' is not a thing that causes insomnia and low mood — rather, insomnia causally promotes low mood, low mood causally promotes social withdrawal, and so on, with disorder emerging from the system dynamics of the network. This has clinical implications: interventions should target the most central symptoms (highest 'bridge centrality') rather than the diagnostic category as a whole.</p>\n<p><strong>Computational psychiatry</strong> applies formal computational models — drawing on Bayesian brain theory, reinforcement learning, and signal detection theory — to understand the information-processing mechanisms underlying psychiatric symptoms. This precision medicine approach aims to move beyond symptom-cluster diagnoses toward mechanistically defined subtypes that predict differential treatment response.</p>\n<h4>Ecological Momentary Assessment and Big Data</h4>\n<p><strong>Ecological Momentary Assessment</strong> (EMA) uses smartphones to collect real-time self-reports of mood, behaviour, and context in participants' natural environments, multiple times daily over weeks or months. This addresses a fundamental limitation of retrospective questionnaire research — recall bias and the aggregation of moment-to-moment variation into a single endpoint — while producing N-of-1 datasets that can characterise within-person dynamics, not just between-person differences.</p>\n<p>Seligman and Csikszentmihalyi's (2000) <strong>positive psychology</strong> movement proposed redirecting psychological science from pathology toward human flourishing, with the PERMA model (Positive emotion, Engagement, Relationships, Meaning, Achievement) as a framework for wellbeing. The evidence base for positive psychology interventions is growing, though early effect sizes have been subject to replication concerns and meta-analytic heterogeneity. Stroebe and Strack (2014) offered a partial defence of the pre-crisis field, arguing that many 'failed' replications reflect contextual moderators rather than false originals — though this defence risks becoming unfalsifiable if any failed replication can be attributed to an unspecified moderator.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Miriam Chen has projected the Open Science Collaboration's 2015 findings on the screen: 36% replication rate for social psychology. The room is quiet. These are students who have spent two years learning the canonical findings — ego depletion, power posing, facial feedback — that are now in serious doubt."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Before you conclude that psychology is broken, I want you to consider what a 64% non-replication rate actually tells us. A failed replication is not definitively a false positive. What are three distinct explanations for a failed replication that do not require concluding the original finding was false?"
+        },
+        {
+          "type": "narration",
+          "text": "The students work through contextual moderation, sampling variability, and Etz and Vandekerckhove's point about inconclusive versus contradictory results. Dr. Chen then shifts to the structural causes."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Simmons and colleagues showed that standard, technically legitimate analytic practices — decisions that researchers make routinely without ill intent — can produce a false positive rate over 60%. If that's right, the problem is not individual researchers behaving badly. It's a system that creates perverse incentives. What would you change about academic publishing to fix the incentive structure?"
+        },
+        {
+          "type": "narration",
+          "text": "The group discusses Registered Reports, pre-registration, open data, and Bayesian methods. One student raises the concern that pre-registration constrains exploratory science — that serendipitous discoveries require the freedom to follow unexpected results."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "That's an important point, and it reflects a genuine tension. Pre-registration doesn't prohibit exploration — it requires that you label exploratory findings as exploratory rather than presenting them as confirmatory. The problem is not exploration. The problem is presenting exploratory findings as if they had the evidential weight of confirmatory hypothesis tests."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Now consider Borsboom's network model. If mental disorders are not latent disease entities but emergent properties of symptom networks, what does that imply for how we should design diagnostic systems like DSM? And what does it imply for how we evaluate the effectiveness of treatments?"
+        },
+        {
+          "type": "narration",
+          "text": "As the seminar draws to a close, Dr. Chen poses a final question that will not be resolved today: Is the replication crisis a sign that psychology is broken, or a sign that its self-correction mechanisms are finally working? The students leave with considerably more uncertainty — and considerably more sophistication — than they arrived with."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A research team publishes a study showing that a brief 'growth mindset' intervention (a single 45-minute session) significantly improves academic achievement in a sample of 60 undergraduate students (p = 0.04, d = 0.31). The study was not pre-registered. Two years later, a pre-registered multi-site replication with 800 participants finds no significant effect (p = 0.43, d = 0.04).</p><p>In your response: (1) apply your understanding of questionable research practices (p-hacking, HARKing, publication bias) to explain why the original finding may be unreliable, without assuming the authors committed deliberate fraud; (2) evaluate what the failed replication does and does not establish — drawing on the distinction between a contradictory and an inconclusive replication; (3) consider one design feature of the replication that would strengthen your confidence in its null result.</p><p>Aim for 180–250 words. Write in formal academic prose.</p>",
+      "soloPracticeHtml": "<p>The network approach to psychopathology (Borsboom & Cramer, 2013) has been proposed as a theoretical alternative to the latent disease model underlying DSM diagnoses. Critically evaluate this claim by considering: what empirical evidence supports the network model over the latent disease model; what methodological challenges face network research in psychopathology; and whether the two approaches are genuinely competing theories or whether they make different but potentially complementary claims. Consider also what the network model implies for how clinical trials of psychotherapies should be designed and reported.</p><p>Aim for 200–280 words. No scaffolding is provided.</p>",
+      "feynmanPrompt": "A science journalist is writing an article arguing that the replication crisis proves psychology is not a real science. You have five minutes to explain why this conclusion is too simple. Use at least three specific pieces of evidence or argument — one defending the field, one conceding a genuine problem, and one redirecting attention to the structural rather than individual causes. Avoid jargon.",
+      "modelAnswer": "Borsboom and Cramer's (2013) network model challenges the foundational assumption of DSM-style nosology: that diagnostic categories correspond to latent disease entities that causally generate symptom profiles. Instead, symptoms are conceptualised as causally interconnected nodes, with disorder emerging from the dynamics of the network rather than from an underlying pathological state. Empirical support comes from time-series EMA studies demonstrating that symptom networks in individuals show predictable transitional dynamics before depressive episodes (van de Leemput et al., 2014), and from cross-sectional network analyses showing that 'comorbidity' between disorders may reflect direct symptom-to-symptom causal pathways rather than shared latent causes — parsimoniously explaining the high comorbidity rates that challenge the latent disease model. However, significant methodological challenges remain. Network structures estimated from cross-sectional data are highly sample-dependent and may not generalise; the same symptom data can produce substantially different network structures depending on analytic choices (Forbes et al., 2017). The distinction between cross-sectional 'association networks' and genuinely causal networks has not been adequately addressed — correlation between symptoms does not establish directionality. Furthermore, the latent disease model and the network model may not be as incompatible as the theoretical framing implies: a latent biological factor (e.g., HPA dysregulation) could simultaneously cause multiple symptoms that then develop causal inter-relationships — a hybrid model consistent with both frameworks. For clinical trial design, the network model implies that trials should report symptom-level outcomes and their inter-relationships rather than aggregate scale scores, and should specifically test whether interventions change network connectivity rather than simply symptom means — a methodological standard that current RCT reporting does not meet.",
+      "rabbitHoleTerms": [
+        {
+          "term": "P-Hacking",
+          "definition": "The suite of analytic decisions — selective outcome reporting, optional stopping, covariate inclusion, outlier exclusion — that inflate the probability of obtaining p < 0.05 without technically violating statistical assumptions, documented by Simmons et al. (2011) to produce false positive rates exceeding 60% through standard practices alone."
+        },
+        {
+          "term": "HARKing",
+          "definition": "Hypothesising After Results are Known (Kerr, 1998): the practice of presenting post-hoc findings as a priori predictions, which circumvents the error-correction function of hypothesis testing by making it impossible for the same data to falsify the hypothesis that was derived from them."
+        },
+        {
+          "term": "Registered Reports",
+          "definition": "A publication format in which journals commit to publish the research based on the quality of the introduction and method, reviewed and accepted before data collection, thereby making publication independent of results and eliminating outcome reporting bias at the structural level."
+        },
+        {
+          "term": "Bayes Factor",
+          "definition": "A statistic quantifying the relative evidence provided by data for the alternative hypothesis compared to the null hypothesis — providing a continuous measure of evidential weight rather than a binary accept/reject decision, and capable of quantifying evidence for the null as well as against it."
+        },
+        {
+          "term": "Network Approach to Psychopathology",
+          "definition": "Borsboom and Cramer's (2013) reconceptualisation of mental disorders as emergent properties of causal symptom networks — where symptoms are nodes connected by edges representing direct causal relationships — rather than as latent disease entities that cause symptom clusters."
+        },
+        {
+          "term": "Ecological Momentary Assessment",
+          "definition": "A data collection methodology using repeated real-time self-reports via smartphones in participants' natural environments, multiple times daily, enabling the study of within-person dynamics, context-dependency, and temporal fluctuations that retrospective questionnaires cannot capture."
+        },
+        {
+          "term": "File Drawer Problem",
+          "definition": "Rosenthal's (1979) term for the publication bias problem: null results and non-significant findings remain unpublished in researchers' file drawers, meaning the published literature systematically overestimates effect sizes by excluding disconfirmatory evidence."
+        },
+        {
+          "term": "Jingle-Jangle Fallacies",
+          "definition": "Block's (1995) term for two complementary conceptual errors: the jingle fallacy (using the same construct label for genuinely different constructs) and the jangle fallacy (using different labels for the same underlying construct), both of which distort meta-analytic aggregation and obscure genuine replication failures or successes."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What was the approximate overall replication rate found by the Open Science Collaboration (2015) across 100 psychology studies, and which subdiscipline showed the lowest replication rate?</p>",
+          "options": [
+            "Approximately 70% overall; cognitive psychology showed the lowest rate",
+            "Approximately 36% overall; social psychology showed the lowest rate",
+            "Approximately 50% overall; developmental psychology showed the lowest rate",
+            "Approximately 25% overall; clinical psychology showed the lowest rate"
+          ],
+          "correctAnswer": "Approximately 36% overall; social psychology showed the lowest rate",
+          "explanationHtml": "<p>The Open Science Collaboration (2015) found that approximately 36% of replications produced results meeting the original study's significance criteria. Social psychology replicated at approximately 25%, compared with cognitive psychology at approximately 50%, a differential attributed to greater context-dependency of social psychological phenomena, smaller original sample sizes, and greater susceptibility to demand characteristics.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher pre-registers a study testing whether a mindfulness intervention reduces anxiety in a student sample. After data collection, she notes that the primary outcome (self-reported anxiety) did not significantly change, but a secondary measure (cortisol) showed a significant reduction. She writes up the cortisol finding as her primary result. Which questionable research practice does this most clearly exemplify?</p>",
+          "options": [
+            "P-hacking via optional stopping rules",
+            "HARKing — presenting an unregistered post-hoc finding as a pre-specified primary outcome",
+            "The file drawer problem — suppressing the negative primary outcome",
+            "The jingle fallacy — conflating cortisol and anxiety as equivalent measures of stress"
+          ],
+          "correctAnswer": "HARKing — presenting an unregistered post-hoc finding as a pre-specified primary outcome",
+          "explanationHtml": "<p>The researcher has Hypothesised After Results are Known (HARKing; Kerr, 1998) by presenting the cortisol finding — which was a secondary, unregistered measure — as if it were the primary pre-specified hypothesis. Even though she conducted a pre-registered study, she violates the principle of confirmatory hypothesis testing by switching to reporting a different outcome that happened to reach significance. This inflates the probability of false positives because the researcher is implicitly conducting multiple comparisons without adjustment.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A psychologist argues that the ego depletion effect has not truly been falsified because the large-scale replication by Hagger et al. (2016) used different tasks from the original studies, and the replication failure may reflect a genuine moderator variable. A methodologist challenges this defence. Which response most directly identifies the epistemological problem with the psychologist's position?</p>",
+          "options": [
+            "Task differences between original and replication studies are a legitimate methodological concern that should have been addressed in the replication design",
+            "If any task difference can be invoked post-hoc to explain a replication failure, the theory becomes unfalsifiable — the moderator defence must specify in advance which task features are theoretically necessary",
+            "Hagger et al.'s pre-registered design means the replication is definitionally superior to the original studies regardless of task differences",
+            "The psychologist is correct that failed replications cannot falsify theories, because psychology's subject matter is inherently context-dependent"
+          ],
+          "correctAnswer": "If any task difference can be invoked post-hoc to explain a replication failure, the theory becomes unfalsifiable — the moderator defence must specify in advance which task features are theoretically necessary",
+          "explanationHtml": "<p>The epistemological problem is not that moderator variables don't exist — they do — but that invoking unspecified moderators post-hoc to explain any failed replication is a form of ad hoc immunisation that renders the theory unfalsifiable. A theoretically adequate moderator defence must be pre-specified: the theory should predict which conditions are necessary for the effect before replication, not after. Without this constraint, the moderator defence can always be constructed to protect the theory from any disconfirming evidence.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: Cohen's (1962) power analysis survey found that the median statistical power to detect a medium effect size in studies published in a major psychology journal was approximately 0.80 — the threshold conventionally considered adequate.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Cohen (1962) found that the median statistical power to detect a medium effect size in studies published in the Journal of Abnormal and Social Psychology was approximately 0.46 — meaning published studies had roughly a coin-flip chance of detecting real effects of moderate magnitude. This was substantially below the 0.80 threshold Cohen himself recommended, and the finding — largely ignored for decades — has been central to understanding why the literature is dominated by underpowered studies that overestimate effect sizes when they do achieve significance.</p>"
+        }
+      ]
+    }
+  ]
+}

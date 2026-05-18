@@ -265,6 +265,7 @@ public class JsonContentSeeder {
                 .feynmanPrompt(sc.feynmanPrompt)
                 .practiceType(practiceType)
                 .rabbitHoleTermsJson(rhTermsJson)
+                .modelAnswer(sc.modelAnswer)
                 .build());
 
         if (sc.questions != null) {
