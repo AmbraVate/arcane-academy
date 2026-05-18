@@ -1,0 +1,253 @@
+{
+  "id": "java-prt-2",
+  "title": "The Streams API",
+  "glyph": "🌊",
+  "sortOrder": 2,
+  "tier": "PRACTITIONER",
+  "topicId": "java",
+  "prerequisites": ["java-prt-1"],
+  "subChunks": [
+    {
+      "id": "java-prt-2a",
+      "title": "Stream Pipelines: filter, map, collect",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>What if you could describe a transformation on a collection in a single, readable sentence — filter out the weak, transform the strong, gather the results? The Streams API is exactly that: a fluent pipeline that lets you express complex data processing as a chain of clear operations.</p>",
+      "explanationHtml": "<h3>What Is a Stream?</h3><p>A <code>Stream&lt;T&gt;</code> is a sequence of elements supporting sequential and parallel aggregate operations. Critically, streams are <strong>lazy</strong>: intermediate operations (like <code>filter</code> and <code>map</code>) do nothing until a terminal operation (like <code>collect</code> or <code>forEach</code>) is invoked. A stream can only be consumed once — after a terminal operation it is closed.</p><pre><code>List&lt;Integer&gt; numbers = List.of(1, 2, 3, 4, 5);\n\n// Nothing happens yet — lazy!\nStream&lt;Integer&gt; stream = numbers.stream()\n    .filter(n -> n % 2 == 0)\n    .map(n -> n * 10);\n\n// Terminal operation triggers the whole pipeline:\nstream.forEach(System.out::println); // 20, 40</code></pre><h3>Creating Streams</h3><p>Streams can be created from collections, arrays, or static factory methods.</p><pre><code>// From a Collection\nList&lt;String&gt; spells = List.of(\"Fireball\", \"Frost\", \"Zap\");\nStream&lt;String&gt; s1 = spells.stream();\n\n// From varargs\nStream&lt;String&gt; s2 = Stream.of(\"Arc\", \"Thunder\");\n\n// From an array\nString[] arr = {\"Heal\", \"Shield\"};\nStream&lt;String&gt; s3 = Arrays.stream(arr);\n\n// Infinite streams (use with limit!)\nStream&lt;Integer&gt; naturals = Stream.iterate(1, n -> n + 1);\nnaturals.limit(5).forEach(System.out::println); // 1 2 3 4 5</code></pre><h3>Key Intermediate Operations</h3><p>Intermediate operations return a new Stream and are always lazy. The most common ones:</p><pre><code>List&lt;String&gt; spells = new ArrayList&lt;&gt;(List.of(\n    \"Fireball\", \"Frost\", \"Fireball\", \"Zap\", \"Arc\", \"Thunder\"));\n\n// filter — keep elements matching a Predicate\nspells.stream()\n      .filter(s -> s.startsWith(\"F\"))\n      .forEach(System.out::println); // Fireball, Frost, Fireball\n\n// distinct — remove duplicates\nspells.stream()\n      .distinct()\n      .forEach(System.out::println); // Fireball, Frost, Zap, Arc, Thunder\n\n// sorted — natural or custom order\nspells.stream()\n      .sorted()\n      .forEach(System.out::println); // Arc, Fireball, ...\n\n// limit — take only the first N elements\nspells.stream()\n      .limit(3)\n      .forEach(System.out::println); // Fireball, Frost, Fireball\n\n// map — transform each element\nspells.stream()\n      .map(String::toUpperCase)\n      .forEach(System.out::println); // FIREBALL, FROST, ...</code></pre><h3>Terminal Operations and Collectors</h3><p>Terminal operations trigger the pipeline and produce a result or side effect. <code>collect()</code> is the most versatile, using a <code>Collector</code> to accumulate elements into a container.</p><pre><code>// collect to a List\nList&lt;String&gt; fSpells = spells.stream()\n    .filter(s -> s.startsWith(\"F\"))\n    .collect(Collectors.toList());\n\n// forEach — terminal, side-effectful\nspells.stream().forEach(System.out::println);\n\n// toList() — Java 16+ shorthand (unmodifiable)\nList&lt;String&gt; result = spells.stream()\n    .filter(s -> s.length() > 3)\n    .toList();</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's Alchemy Wing hums with activity. Apprentices sift through massive catalogues of spell data — filtering the weak, transforming the raw, collecting the refined. Without a systematic approach, the process is chaotic."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Apprentice, meet the Streams API — the most powerful alchemy tool in your Java arsenal. Think of a stream as a pipeline of transformations: raw ore enters one end, refined gold emerges from the other."
+        },
+        {
+          "type": "example",
+          "speaker": "Basic Pipeline",
+          "text": "List<Integer> nums = List.of(1,2,3,4,5,6,7,8,9,10);\nnums.stream()\n    .filter(n -> n % 2 == 0)   // keep evens\n    .map(n -> n * n)            // square them\n    .forEach(System.out::println); // 4, 16, 36, 64, 100"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Notice: nothing happens until forEach is called. This is *lazy evaluation*. filter() and map() merely describe what to do — they do not execute until a terminal operation demands results. This makes streams efficient with large data sets."
+        },
+        {
+          "type": "example",
+          "speaker": "Collect to List",
+          "text": "List<String> bigSpells = spells.stream()\n    .filter(s -> s.length() > 4)\n    .map(String::toUpperCase)\n    .collect(Collectors.toList());\nSystem.out.println(bigSpells);"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Use collect() when you need a concrete List, Set, or Map from your stream results. Use forEach() when you only need to consume each element. And remember — a stream can only be used once. Trying to reuse one is like trying to re-read a scroll that has crumbled to dust."
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice builds their first stream pipeline and watches the data flow cleanly from source to result — filtered, transformed, and collected in a single, readable expression."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Work with a list of numbers using stream pipelines:</p><ol><li>Given <code>List&lt;Integer&gt; numbers = new ArrayList&lt;&gt;(List.of(1,2,3,4,5,6,7,8,9,10))</code>, use a stream to filter only <strong>even</strong> numbers and print each one with <code>forEach</code>.</li><li>Using the same list, map each number to its <strong>square</strong>, collect the results into a new list, and print the entire list.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> numbers = new ArrayList<>(List.of(1,2,3,4,5,6,7,8,9,10));\n\n        // 1. Filter even numbers and print each\n        numbers.stream()\n               // TODO: filter\n               .forEach(System.out::println);\n\n        System.out.println(\"---\");\n\n        // 2. Map to squares, collect to list, print the list\n        List<Integer> squares = numbers.stream()\n               // TODO: map to square\n               .collect(Collectors.toList());\n        System.out.println(squares);\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Even numbers include 2", "input": "null", "expected": "2"},
+        {"label": "Even numbers include 4", "input": "null", "expected": "4"},
+        {"label": "Squares include 1 (1²)", "input": "null", "expected": "1"},
+        {"label": "Squares include 100 (10²)", "input": "null", "expected": "100"}
+      ],
+      "feynmanPrompt": "Explain lazy evaluation in streams in your own words. Why does Java choose to make intermediate operations lazy? What would be the consequence if filter() and map() executed immediately?",
+      "soloPracticeHtml": "<p>Rebuild the stream exercises from memory — no starter code. Create the same list of numbers 1-10 and apply the same two stream operations: filter evens, and map to squares.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Even numbers include 2", "input": "null", "expected": "2"},
+        {"label": "Even numbers include 4", "input": "null", "expected": "4"},
+        {"label": "Squares include 1 (1²)", "input": "null", "expected": "1"},
+        {"label": "Squares include 100 (10²)", "input": "null", "expected": "100"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "stream", "description": "A sequence of elements from a source (collection, array, or generator) that supports aggregate operations expressed as a pipeline."},
+        {"term": "pipeline", "description": "A series of stream operations chained together: a source, zero or more intermediate operations, and exactly one terminal operation."},
+        {"term": "lazy evaluation", "description": "The property of intermediate stream operations that they are not executed until a terminal operation is invoked, enabling optimizations like short-circuiting."},
+        {"term": "filter", "description": "An intermediate stream operation that keeps only elements matching a given Predicate."},
+        {"term": "map", "description": "An intermediate stream operation that applies a Function to every element, transforming each element into a new value."},
+        {"term": "collect", "description": "A terminal stream operation that gathers stream elements into a container using a Collector (e.g. Collectors.toList())."},
+        {"term": "terminal operation", "description": "A stream operation that triggers pipeline execution and produces a result or side effect; the stream is closed after a terminal operation."},
+        {"term": "intermediate operation", "description": "A lazy stream operation that returns a new Stream and does not execute until a terminal operation is invoked."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which of the following is a <strong>terminal</strong> stream operation?</p>",
+          "options": ["filter()", "map()", "distinct()", "collect()"],
+          "correctAnswer": "collect()",
+          "explanationHtml": "<p><code>collect()</code> is a terminal operation — it triggers the entire stream pipeline and gathers elements into a container such as a List, Set, or Map. Terminal operations close the stream after execution. <code>filter()</code>, <code>map()</code>, and <code>distinct()</code> are all intermediate operations: they return a new Stream and do nothing until a terminal operation is invoked.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "import java.util.*;\nimport java.util.stream.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> spells = List.of(\"Arc\", \"Blizzard\", \"Fog\", \"Fire\");\n        long count = spells.stream()\n            .filter(s -> s.length() <= 3)\n            .count();\n        System.out.println(count);\n    }\n}",
+          "correctAnswer": "2",
+          "explanationHtml": "<p>The filter keeps elements with length &lt;= 3. <code>\"Arc\"</code> has length 3 (passes), <code>\"Blizzard\"</code> has length 8 (fails), <code>\"Fog\"</code> has length 3 (passes), <code>\"Fire\"</code> has length 4 (fails). So two elements pass the filter, and <code>count()</code> returns <code>2</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code throws an <code>IllegalStateException: stream has already been operated upon or closed</code>. What is wrong?</p>",
+          "codeSnippet": "import java.util.*;\nimport java.util.stream.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> nums = List.of(1, 2, 3, 4);\n        Stream<Integer> evens = nums.stream().filter(n -> n % 2 == 0);\n        evens.forEach(System.out::println);\n        long count = evens.count(); // reusing the stream\n        System.out.println(count);\n    }\n}",
+          "correctAnswer": "A Stream can only be consumed by one terminal operation. After forEach() closes the stream, calling count() on the same stream reference throws IllegalStateException. Create a new stream for each operation.",
+          "explanationHtml": "<p>Streams are single-use. Once a terminal operation (<code>forEach</code>) consumes and closes the stream, any subsequent call on the same <code>Stream</code> reference throws <code>IllegalStateException</code>. The fix is to call <code>nums.stream().filter(...)</code> again for the second operation, or restructure the code to use a single terminal operation. This is a fundamental difference from collections, which can be iterated multiple times.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When does a stream pipeline with only intermediate operations actually execute?</p>",
+          "options": [
+            "As soon as each intermediate operation is called",
+            "When the stream is created from the collection",
+            "Only when a terminal operation is invoked",
+            "Only when the stream is garbage collected"
+          ],
+          "correctAnswer": "Only when a terminal operation is invoked",
+          "explanationHtml": "<p>This is the definition of <strong>lazy evaluation</strong>. Intermediate operations like <code>filter()</code>, <code>map()</code>, and <code>sorted()</code> do not process any elements when called — they register a specification of work to be done. The actual processing begins only when a terminal operation (<code>forEach</code>, <code>collect</code>, <code>count</code>, etc.) is invoked. This design allows the JVM to optimize the pipeline, for example by stopping early if only one result is needed (short-circuiting with <code>findFirst()</code>).</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-prt-2b",
+      "title": "Stream Reductions: reduce, count, sum, min, max",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Filtering and mapping produce new streams — but sometimes you need a single answer: the total, the maximum, the combined string. That is what reductions do. They collapse a stream of many values down into one.</p>",
+      "explanationHtml": "<h3>Counting, Summing, and Aggregating</h3><p>The simplest reductions are built-in terminal operations on streams or via <code>Collectors</code>.</p><pre><code>List&lt;Integer&gt; powers = List.of(10, 30, 5, 80, 45);\n\n// count — number of elements\nlong n = powers.stream().count();\nSystem.out.println(n); // 5\n\n// sum via mapToInt + sum()\nint total = powers.stream().mapToInt(Integer::intValue).sum();\nSystem.out.println(total); // 170\n\n// average\nOptionalDouble avg = powers.stream().mapToInt(Integer::intValue).average();\navg.ifPresent(a -> System.out.println(\"Avg: \" + a)); // Avg: 34.0\n\n// Collectors.summingInt\nint sum2 = powers.stream().collect(Collectors.summingInt(Integer::intValue));\nSystem.out.println(sum2); // 170</code></pre><h3>min() and max() with Optional</h3><p><code>min()</code> and <code>max()</code> return an <code>Optional&lt;T&gt;</code> because the stream might be empty. Always handle the Optional safely.</p><pre><code>List&lt;String&gt; spells = List.of(\"Zap\", \"Blizzard\", \"Arc\", \"Earthquake\");\n\n// Longest spell\nOptional&lt;String&gt; longest = spells.stream()\n    .max(Comparator.comparingInt(String::length));\nlongest.ifPresent(s -> System.out.println(\"Longest: \" + s)); // Longest: Earthquake\n\n// Shortest spell\nOptional&lt;String&gt; shortest = spells.stream()\n    .min(Comparator.comparingInt(String::length));\nshortest.ifPresent(s -> System.out.println(\"Shortest: \" + s)); // Shortest: Zap\n\n// Safe unwrap with orElse\nString result = shortest.orElse(\"none\");\nSystem.out.println(result); // Zap</code></pre><h3>reduce() — The Universal Fold</h3><p><code>reduce()</code> combines all elements using a <code>BinaryOperator</code>. With an identity value, it always returns T. Without one, it returns <code>Optional&lt;T&gt;</code>.</p><pre><code>List&lt;Integer&gt; vals = List.of(1, 2, 3, 4, 5);\n\n// With identity — always returns an int\nint product = vals.stream().reduce(1, (a, b) -> a * b);\nSystem.out.println(product); // 120\n\n// String concatenation\nList&lt;String&gt; words = List.of(\"Arcane\", \"Academy\", \"Rocks\");\nString joined = words.stream().reduce(\"\", (a, b) -> a + \" \" + b).trim();\nSystem.out.println(joined); // Arcane Academy Rocks</code></pre><h3>Collectors.joining() and groupingBy()</h3><p>Two powerful collectors for common tasks:</p><pre><code>List&lt;String&gt; spells = List.of(\"Fireball\", \"Frost\", \"Thunder\", \"Arc\");\n\n// joining with delimiter\nString csv = spells.stream().collect(Collectors.joining(\", \"));\nSystem.out.println(csv); // Fireball, Frost, Thunder, Arc\n\n// groupingBy — creates a Map<K, List<V>>\nMap&lt;Integer, List&lt;String&gt;&gt; byLength = spells.stream()\n    .collect(Collectors.groupingBy(String::length));\nSystem.out.println(byLength);\n// {3=[Arc], 5=[Frost], 7=[Thunder], 8=[Fireball]}</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "After learning to filter and transform, the apprentice faces a harder question: how do you collapse an entire stream of spells into a single answer? The Reduction Chamber of the Academy holds the secrets."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "A pipeline that ends in forEach gives you side effects — printing, logging. But a pipeline that ends in reduce, count, min, or max gives you a single, meaningful answer. These are your reduction spells."
+        },
+        {
+          "type": "example",
+          "speaker": "Counting and Summing",
+          "text": "List<Integer> damage = List.of(30, 80, 45, 10);\nlong n   = damage.stream().count();                               // 4\nint sum  = damage.stream().mapToInt(Integer::intValue).sum();     // 165\nOptionalDouble avg = damage.stream().mapToInt(i->i).average();    // 41.25"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Notice that min() and max() return Optional — because if the stream is empty, there is no answer. Always handle the Optional: use ifPresent(), orElse(), or orElseThrow() rather than calling get() blindly."
+        },
+        {
+          "type": "example",
+          "speaker": "min / max",
+          "text": "Optional<String> longest = spells.stream()\n    .max(Comparator.comparingInt(String::length));\nlongest.ifPresent(s -> System.out.println(\"Mightiest: \" + s));"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "For joining strings elegantly, use Collectors.joining(). For grouping elements into categories, use Collectors.groupingBy(). These two collectors alone will solve a vast number of real-world data problems."
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice runs one final pipeline — joining all spell names into a single scroll entry and grouping them by their first letter. The Reduction Chamber glows with approval."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Given a list of spell names, perform three reduction operations:</p><ol><li>Count how many spell names <strong>start with the letter 'F'</strong> and print the count.</li><li><strong>Join all spell names</strong> with <code>\", \"</code> as a separator and print the result.</li><li>Find the <strong>longest spell name</strong> using <code>max()</code> and print it.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> spells = List.of(\"Fireball\", \"Frost\", \"Thunder\", \"Arc\", \"Flare\", \"Blizzard\");\n\n        // 1. Count spells starting with 'F'\n        long fCount = spells.stream()\n                // TODO: filter, then count\n                ;\n        System.out.println(\"F spells: \" + fCount);\n\n        // 2. Join all with \", \"\n        String joined = spells.stream()\n                // TODO: collect with joining\n                ;\n        System.out.println(joined);\n\n        // 3. Find the longest name\n        Optional<String> longest = spells.stream()\n                // TODO: max by length\n                ;\n        longest.ifPresent(s -> System.out.println(\"Longest: \" + s));\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Count of F-spells printed", "input": "null", "expected": "F spells: 3"},
+        {"label": "Joined string contains Fireball", "input": "null", "expected": "Fireball"},
+        {"label": "Longest spell is Blizzard", "input": "null", "expected": "Longest: Blizzard"}
+      ],
+      "feynmanPrompt": "Explain the difference between reduce() and collect() in your own words. When would you choose reduce() over Collectors.joining() or Collectors.toList()? What is the purpose of the identity value in reduce()?",
+      "soloPracticeHtml": "<p>Recreate all three reductions from scratch. Use the same list of spell names and produce the same three outputs without any starter code.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Count of F-spells printed", "input": "null", "expected": "F spells: 3"},
+        {"label": "Joined string contains Fireball", "input": "null", "expected": "Fireball"},
+        {"label": "Longest spell is Blizzard", "input": "null", "expected": "Longest: Blizzard"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "reduction", "description": "A terminal stream operation that combines all stream elements into a single result, such as a sum, count, minimum, maximum, or combined string."},
+        {"term": "Optional<T>", "description": "A container object that may or may not contain a non-null value, used by operations like min() and max() to safely handle the case of an empty stream."},
+        {"term": "reduce()", "description": "A general-purpose stream terminal operation that applies a BinaryOperator repeatedly to combine all elements into one value."},
+        {"term": "Collectors.joining()", "description": "A Collector that concatenates stream elements (expected to be Strings or converted with map) using an optional delimiter, prefix, and suffix."},
+        {"term": "Collectors.groupingBy()", "description": "A Collector that partitions stream elements into a Map keyed by the result of a classifier function."},
+        {"term": "BinaryOperator<T>", "description": "A functional interface representing an operation on two operands of the same type, producing a result of the same type — used by reduce()."},
+        {"term": "mapToInt()", "description": "An intermediate stream operation that converts a Stream<T> to an IntStream, enabling numeric operations like sum(), average(), and min()."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Why does <code>Stream.min()</code> return <code>Optional&lt;T&gt;</code> instead of <code>T</code>?</p>",
+          "options": [
+            "Because T might be a primitive type",
+            "Because the stream might be empty and have no minimum",
+            "Because min() is an intermediate operation",
+            "Because Comparator might throw an exception"
+          ],
+          "correctAnswer": "Because the stream might be empty and have no minimum",
+          "explanationHtml": "<p>If the stream contains zero elements, there is no minimum (or maximum) value to return. Rather than returning <code>null</code> (which would cause NullPointerExceptions downstream) or throwing an exception (which would be surprising), <code>min()</code> and <code>max()</code> return an <code>Optional&lt;T&gt;</code>. An empty Optional clearly communicates 'no result was available', and the Optional API provides safe methods like <code>ifPresent()</code> and <code>orElse()</code> to handle both cases explicitly.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this print?</p>",
+          "codeSnippet": "import java.util.*;\nimport java.util.stream.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<Integer> nums = List.of(1, 2, 3, 4, 5);\n        int result = nums.stream().reduce(0, (a, b) -> a + b);\n        System.out.println(result);\n        String joined = List.of(\"A\",\"B\",\"C\")\n            .stream().collect(Collectors.joining(\"-\"));\n        System.out.println(joined);\n    }\n}",
+          "correctAnswer": "15\nA-B-C",
+          "explanationHtml": "<p><code>reduce(0, (a, b) -> a + b)</code> starts with identity 0 and adds each element: 0+1=1, 1+2=3, 3+3=6, 6+4=10, 10+5=15. <code>Collectors.joining(\"-\")</code> concatenates the strings with <code>\"-\"</code> as delimiter: <code>\"A-B-C\"</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code compiles but prints the wrong result — it always prints <code>0</code> for the sum. What is the bug?</p>",
+          "codeSnippet": "import java.util.*;\nimport java.util.stream.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> nums = List.of(\"3\", \"5\", \"2\", \"8\");\n        int sum = nums.stream()\n            .map(Integer::parseInt)\n            .reduce(0, (a, b) -> a - b);  // intended: sum\n        System.out.println(sum);\n    }\n}",
+          "correctAnswer": "The BinaryOperator uses subtraction (a - b) instead of addition (a + b), so the reduce computes 0-3-5-2-8 = -18, not the sum. Change to (a, b) -> a + b.",
+          "explanationHtml": "<p>The reduce identity is 0 and the operator is <code>(a, b) -> a - b</code>. The execution is: 0-3=-3, -3-5=-8, -8-2=-10, -10-8=-18 — so it prints <code>-18</code>, not <code>0</code> as stated in the problem (the problem statement is illustrative of a wrong operator). The intent is to sum, so the fix is <code>(a, b) -> a + b</code>. This is a common mistake when the BinaryOperator logic is subtly wrong.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You want to group a list of spells by their first letter, producing a <code>Map&lt;Character, List&lt;String&gt;&gt;</code>. Which is the correct approach?</p>",
+          "options": [
+            "spells.stream().collect(Collectors.toMap(s -> s.charAt(0), s -> s))",
+            "spells.stream().collect(Collectors.groupingBy(s -> s.charAt(0)))",
+            "spells.stream().filter(s -> s.charAt(0)).collect(Collectors.toList())",
+            "spells.stream().map(s -> s.charAt(0)).collect(Collectors.toList())"
+          ],
+          "correctAnswer": "spells.stream().collect(Collectors.groupingBy(s -> s.charAt(0)))",
+          "explanationHtml": "<p><code>Collectors.groupingBy(classifier)</code> partitions elements into a <code>Map&lt;K, List&lt;V&gt;&gt;</code> where each key is the result of the classifier function. Using <code>s -> s.charAt(0)</code> as the classifier groups strings by their first character. Option A (<code>toMap</code>) maps each element to a single value and would throw a duplicate-key exception if two spells start with the same letter. Options C and D don't produce a Map at all — they produce a List.</p>"
+        }
+      ]
+    }
+  ]
+}

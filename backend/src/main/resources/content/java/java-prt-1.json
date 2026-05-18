@@ -1,0 +1,240 @@
+{
+  "id": "java-prt-1",
+  "title": "Lambdas & Functional Interfaces",
+  "glyph": "λ",
+  "sortOrder": 1,
+  "tier": "PRACTITIONER",
+  "topicId": "java",
+  "prerequisites": ["java-fnd-8"],
+  "subChunks": [
+    {
+      "id": "java-prt-1a",
+      "title": "Functional Interfaces & Lambda Syntax",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Imagine if you could hand a <em>behaviour</em> to a method — not just data, but a tiny piece of logic wrapped up and passed like a scroll. That is exactly what lambdas give you: concise, powerful expressions of behaviour that treat code as a first-class citizen.</p>",
+      "explanationHtml": "<h3>What Is a Functional Interface?</h3><p>A <strong>functional interface</strong> is any interface that declares exactly one abstract method. That single contract is what makes it compatible with a lambda expression. The <code>@FunctionalInterface</code> annotation is optional but recommended — it causes the compiler to enforce the one-abstract-method rule.</p><pre><code>@FunctionalInterface\ninterface Greet {\n    String greetings(String name); // only one abstract method\n}\n\n// Using a lambda instead of an anonymous class:\nGreet g = name -> \"Hello, \" + name + \"!\";\nSystem.out.println(g.greetings(\"Eldrin\")); // Hello, Eldrin!</code></pre><h3>The Four Built-In Functional Interfaces</h3><p>Java's <code>java.util.function</code> package ships four core interfaces that cover almost every situation:</p><pre><code>// Predicate<T>  — takes T, returns boolean\nPredicate&lt;Integer&gt; isAdult = age -> age >= 18;\nSystem.out.println(isAdult.test(21)); // true\nSystem.out.println(isAdult.test(14)); // false\n\n// Function<T,R>  — takes T, returns R\nFunction&lt;String, Integer&gt; strLen = s -> s.length();\nSystem.out.println(strLen.apply(\"Fireball\")); // 8\n\n// Consumer<T>  — takes T, returns nothing (side-effect only)\nConsumer&lt;String&gt; printer = s -> System.out.println(\">> \" + s);\nprinter.accept(\"Casting Frost Nova\"); // >> Casting Frost Nova\n\n// Supplier<T>  — takes nothing, returns T\nSupplier&lt;String&gt; randomSpell = () -> \"Blizzard\";\nSystem.out.println(randomSpell.get()); // Blizzard</code></pre><h3>Lambda Syntax and Capturing Variables</h3><p>Lambda syntax is flexible. Parentheses around the parameter are optional when there is exactly one parameter; curly braces and <code>return</code> are optional when the body is a single expression. Lambdas may capture variables from their enclosing scope only if those variables are <em>effectively final</em> (never reassigned after their first assignment).</p><pre><code>// Various valid lambda forms:\nPredicate&lt;String&gt; isEmpty = s -> s.isEmpty();      // one param, no parens needed\nFunction&lt;Integer,Integer&gt; square = (n) -> n * n;    // one param with parens\nBiFunction&lt;Integer,Integer,Integer&gt; add = (a, b) -> a + b; // two params\n\n// Multi-statement body needs braces + return:\nFunction&lt;String, String&gt; shout = s -> {\n    String upper = s.toUpperCase();\n    return upper + \"!!!\";\n};\n\n// Capturing an effectively-final variable:\nString prefix = \"Spell: \";                   // effectively final\nConsumer&lt;String&gt; tag = s -> System.out.println(prefix + s);\ntag.accept(\"Arcane Bolt\"); // Spell: Arcane Bolt</code></pre><h3>Method References (::)</h3><p>When a lambda does nothing but forward its argument(s) to an existing method, a <em>method reference</em> is cleaner.</p><pre><code>// Static method reference\nFunction&lt;String, Integer&gt; parse = Integer::parseInt;\nSystem.out.println(parse.apply(\"42\")); // 42\n\n// Instance method reference on a particular object\nString greeting = \"Arcane Academy\";\nSupplier&lt;Integer&gt; len = greeting::length;\nSystem.out.println(len.get()); // 14\n\n// Instance method reference on an arbitrary instance of a type\nFunction&lt;String, String&gt; upper = String::toUpperCase;\nSystem.out.println(upper.apply(\"fireball\")); // FIREBALL\n\n// Constructor reference\nSupplier&lt;StringBuilder&gt; sbFactory = StringBuilder::new;\nStringBuilder sb = sbFactory.get();</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Deep in the Arcane Academy's Lambdarium, rows of crystalline scrolls glow with distilled logic — each one a tiny spell of behaviour, waiting to be passed to whatever ritual requires it."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Welcome, apprentice. Until now you have passed *data* to your methods — integers, strings, objects. But true mastery begins when you pass *behaviour* itself. That is the gift of functional interfaces and lambdas."
+        },
+        {
+          "type": "example",
+          "speaker": "Functional Interface",
+          "text": "@FunctionalInterface\ninterface Spell {\n    void cast(String target);\n}\n\nSpell fireball = target -> System.out.println(\"Fireball hits \" + target);\nfireball.cast(\"Dragon\"); // Fireball hits Dragon"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Notice how the lambda replaces an entire anonymous class. Java's standard library provides four essential functional interfaces: Predicate, Function, Consumer, and Supplier. Learn these four and you can express almost any transformation."
+        },
+        {
+          "type": "example",
+          "speaker": "The Four Core Interfaces",
+          "text": "Predicate<Integer> isPositive = n -> n > 0;     // test\nFunction<String,String> shout = s -> s + \"!\";    // transform\nConsumer<String> log = s -> System.out.println(s); // consume\nSupplier<Integer> roll = () -> 42;                // produce"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "And when your lambda merely calls a single existing method, use a method reference — the :: notation. It reads like a citation in a tome: 'use *this* method from *this* class.'"
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice studies the glowing scrolls, realising that lambdas are not just syntax sugar — they are a new way of thinking about code: behaviour as data, logic as values."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Cast three functional spells in a single <code>Main</code> class:</p><ol><li>Create a <code>Predicate&lt;Integer&gt;</code> named <code>isGreaterThanTen</code> that returns <code>true</code> if the number is greater than 10. Test it on <code>15</code> and <code>5</code>, printing each result.</li><li>Create a <code>Function&lt;String, String&gt;</code> named <code>shout</code> that converts a string to uppercase and appends <code>\"!\"</code>. Apply it to <code>\"arcane\"</code> and print the result.</li><li>Create a <code>Consumer&lt;String&gt;</code> named <code>castingAnnouncer</code> that prints <code>\"Casting: \"</code> followed by the string. Use it with <code>\"Fireball\"</code>.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        // 1. Predicate: true if n > 10\n        Predicate<Integer> isGreaterThanTen = // TODO\n        System.out.println(isGreaterThanTen.test(15));\n        System.out.println(isGreaterThanTen.test(5));\n\n        // 2. Function: uppercase + \"!\"\n        Function<String, String> shout = // TODO\n        System.out.println(shout.apply(\"arcane\"));\n\n        // 3. Consumer: prints \"Casting: \" + s\n        Consumer<String> castingAnnouncer = // TODO\n        castingAnnouncer.accept(\"Fireball\");\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Predicate returns true for 15", "input": "null", "expected": "true"},
+        {"label": "Predicate returns false for 5", "input": "null", "expected": "false"},
+        {"label": "Function produces ARCANE!", "input": "null", "expected": "ARCANE!"},
+        {"label": "Consumer prints Casting: Fireball", "input": "null", "expected": "Casting: Fireball"}
+      ],
+      "feynmanPrompt": "Explain the difference between Predicate, Function, Consumer, and Supplier in your own words. Include: why would you choose one over another, and what does 'effectively final' mean when capturing a variable in a lambda?",
+      "soloPracticeHtml": "<p>From a blank slate, write a <code>Main</code> class that does all three tasks without any starter code:</p><ol><li>A <code>Predicate&lt;Integer&gt;</code> testing whether a number is greater than 10 — test on 15 and 5.</li><li>A <code>Function&lt;String,String&gt;</code> that uppercases and appends <code>!</code> — apply to <code>\"arcane\"</code>.</li><li>A <code>Consumer&lt;String&gt;</code> that prints <code>\"Casting: \"</code> + the value — use with <code>\"Fireball\"</code>.</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Predicate returns true for 15", "input": "null", "expected": "true"},
+        {"label": "Predicate returns false for 5", "input": "null", "expected": "false"},
+        {"label": "Function produces ARCANE!", "input": "null", "expected": "ARCANE!"},
+        {"label": "Consumer prints Casting: Fireball", "input": "null", "expected": "Casting: Fireball"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "lambda", "description": "An anonymous function expressed inline, using the -> arrow syntax, that can be treated as an object implementing a functional interface."},
+        {"term": "functional interface", "description": "An interface with exactly one abstract method, enabling lambda expressions and method references to be used wherever it is expected."},
+        {"term": "Predicate<T>", "description": "A functional interface whose test(T t) method returns a boolean — used for filtering and condition checks."},
+        {"term": "Consumer<T>", "description": "A functional interface whose accept(T t) method returns void — used for operations with side effects such as printing."},
+        {"term": "Function<T,R>", "description": "A functional interface whose apply(T t) method returns R — used for transforming a value from one type to another."},
+        {"term": "Supplier<T>", "description": "A functional interface whose get() method takes no arguments and returns T — used for lazy value production."},
+        {"term": "method reference", "description": "A shorthand for a lambda that simply calls an existing method, using the :: operator (e.g. String::toUpperCase)."},
+        {"term": "effectively final", "description": "A local variable that is never reassigned after its initial assignment; lambdas can capture effectively-final variables from their enclosing scope."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which built-in functional interface takes a value and returns <code>void</code>?</p>",
+          "options": ["Predicate<T>", "Function<T,R>", "Consumer<T>", "Supplier<T>"],
+          "correctAnswer": "Consumer<T>",
+          "explanationHtml": "<p><code>Consumer&lt;T&gt;</code> is designed for operations that consume a value and produce no result — its single abstract method is <code>void accept(T t)</code>. This makes it ideal for side-effectful actions like printing or logging. <code>Predicate</code> returns a boolean, <code>Function</code> returns a value of type R, and <code>Supplier</code> produces a value without consuming one.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "import java.util.function.*;\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, String> f = s -> s.toUpperCase() + \"!\";\n        Predicate<String> p = s -> s.length() > 5;\n        String word = \"magic\";\n        System.out.println(f.apply(word));\n        System.out.println(p.test(word));\n    }\n}",
+          "correctAnswer": "MAGIC!\nfalse",
+          "explanationHtml": "<p><code>f.apply(\"magic\")</code> calls <code>toUpperCase()</code> on <code>\"magic\"</code> producing <code>\"MAGIC\"</code>, then appends <code>\"!\"</code> to get <code>\"MAGIC!\"</code>. <code>p.test(\"magic\")</code> checks whether the length (5) is greater than 5 — it is not, so it prints <code>false</code>. Note the boundary: greater-than (strict), not greater-than-or-equal.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code fails to compile. What is the bug?</p>",
+          "codeSnippet": "import java.util.function.*;\npublic class Main {\n    public static void main(String[] args) {\n        String prefix = \"Result: \";\n        prefix = \"Answer: \";  // reassigned\n        Consumer<String> printer = s -> System.out.println(prefix + s);\n        printer.accept(\"42\");\n    }\n}",
+          "correctAnswer": "The variable 'prefix' is reassigned after its first assignment, so it is not effectively final and cannot be captured by the lambda.",
+          "explanationHtml": "<p>Java lambdas can only capture local variables from the enclosing scope if they are <strong>effectively final</strong> — meaning they are never reassigned after their first assignment. Here, <code>prefix</code> is assigned twice (<code>\"Result: \"</code> then <code>\"Answer: \"</code>), so the compiler rejects the lambda. The fix is to remove the second assignment, or copy the value into a new final variable: <code>String p = prefix;</code> and capture <code>p</code> instead.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Which of the following is the correct method reference equivalent of <code>s -> s.toUpperCase()</code>?</p>",
+          "options": ["String::new", "String::toUpperCase", "System.out::println", "String::valueOf"],
+          "correctAnswer": "String::toUpperCase",
+          "explanationHtml": "<p><code>String::toUpperCase</code> is an instance method reference on an arbitrary instance of <code>String</code>. When used as a <code>Function&lt;String,String&gt;</code>, Java understands it as: for a given <code>String s</code>, call <code>s.toUpperCase()</code>. <code>String::new</code> is a constructor reference, <code>System.out::println</code> is a bound instance method reference on a specific object (<code>System.out</code>), and <code>String::valueOf</code> is a static method reference.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-prt-1b",
+      "title": "Comparator and Sorting with Lambdas",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A Comparator is the arcane sorting rune of Java. With lambdas, writing custom sort orders becomes elegant — no more verbose anonymous classes, just clear, composable comparison logic that sorts your collections exactly the way you need.</p>",
+      "explanationHtml": "<h3>Comparator Basics</h3><p>The <code>Comparator&lt;T&gt;</code> interface has one abstract method: <code>int compare(T o1, T o2)</code>. It returns negative if o1 should come first, zero if equal, positive if o2 should come first. Before Java 8, you'd write an anonymous class; now a lambda does the same job in one line.</p><pre><code>List&lt;String&gt; spells = new ArrayList&lt;&gt;(List.of(\"Blizzard\", \"Fireball\", \"Arc\"));\n\n// Anonymous class style (old)\nspells.sort(new Comparator&lt;String&gt;() {\n    public int compare(String a, String b) { return a.compareTo(b); }\n});\n\n// Lambda style (modern)\nspells.sort((a, b) -> a.compareTo(b));\n\n// Method reference style (most concise)\nspells.sort(String::compareTo);</code></pre><h3>Comparator.comparing() and Chaining</h3><p><code>Comparator.comparing()</code> accepts a key-extractor function and builds a Comparator from it. You can chain multiple sort criteria with <code>thenComparing()</code>, and reverse any Comparator with <code>reversed()</code>.</p><pre><code>// Sort by string length\nspells.sort(Comparator.comparingInt(String::length));\n\n// Sort by length, then alphabetically for ties\nspells.sort(Comparator.comparingInt(String::length)\n            .thenComparing(Comparator.naturalOrder()));\n\n// Reverse alphabetical\nspells.sort(Comparator.naturalOrder().reversed());\n\n// Using Comparator.comparing with a lambda key extractor:\nspells.sort(Comparator.comparing(s -> s.substring(0, 1))); // first letter</code></pre><h3>Sorting Arrays and Custom Objects</h3><p><code>Arrays.sort()</code> also accepts a Comparator. When sorting custom objects, extract a field with a getter and pass it to <code>Comparator.comparing()</code>.</p><pre><code>String[] arr = {\"Zap\", \"Arc\", \"Blizzard\"};\nArrays.sort(arr); // natural order (alphabetical)\nArrays.sort(arr, Comparator.comparingInt(String::length)); // by length\n\n// Custom object example:\nrecord Spell(String name, int damage) {}\nList&lt;Spell&gt; spellList = new ArrayList&lt;&gt;(List.of(\n    new Spell(\"Fireball\", 80),\n    new Spell(\"Frost\", 60),\n    new Spell(\"Thunder\", 90)\n));\nspellList.sort(Comparator.comparingInt(Spell::damage).reversed());\n// Now: Thunder(90), Fireball(80), Frost(60)</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's Grand Sorting Hall is where apprentices learn to arrange their knowledge — spells catalogued by name, power, rarity. Without a Comparator, chaos reigns."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Every collection must eventually be ordered. The Comparator is your sorting rune. In the old days, you'd write entire anonymous classes for a single comparison. Lambdas reduce that ceremony to a single expressive line."
+        },
+        {
+          "type": "example",
+          "speaker": "Lambda Sort",
+          "text": "List<String> spells = new ArrayList<>(List.of(\"Blizzard\",\"Arc\",\"Zap\"));\nspells.sort((a, b) -> a.compareTo(b));\nspells.forEach(System.out::println); // Arc, Blizzard, Zap"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "But the real power comes from Comparator.comparing() — it lets you extract a sort key cleanly. Chain thenComparing() for secondary sorts, and reversed() to flip the order entirely."
+        },
+        {
+          "type": "example",
+          "speaker": "Chained Comparator",
+          "text": "spells.sort(Comparator.comparingInt(String::length)\n            .thenComparing(Comparator.naturalOrder()));\n// Shortest first; ties broken alphabetically"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Remember: Comparator is a functional interface. Any lambda with the signature (T, T) -> int is a valid Comparator. The standard library methods like comparing() are just convenient factory methods that build Comparators for you."
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice sorts the Academy's spell registry in seconds — alphabetically, by power, by rarity — all with crisp, readable lambda expressions."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Sort the Academy spell registry two different ways:</p><ol><li>Create <code>ArrayList&lt;String&gt; spells = new ArrayList&lt;&gt;(List.of(\"Blizzard\",\"Fireball\",\"Arc\",\"Zap\",\"Earthquake\"))</code>. Sort <strong>alphabetically</strong> and print each spell on its own line.</li><li>Sort the same list by <strong>length ascending</strong> (shortest first) and print each spell on its own line.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> spells = new ArrayList<>(List.of(\"Blizzard\",\"Fireball\",\"Arc\",\"Zap\",\"Earthquake\"));\n\n        // 1. Sort alphabetically and print\n        spells.sort(/* TODO */);\n        spells.forEach(System.out::println);\n\n        System.out.println(\"---\");\n\n        // 2. Sort by length ascending and print\n        spells.sort(/* TODO */);\n        spells.forEach(System.out::println);\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Arc appears first in alphabetical sort", "input": "null", "expected": "Arc"},
+        {"label": "Zap appears as a short spell in length sort", "input": "null", "expected": "Zap"}
+      ],
+      "feynmanPrompt": "Explain how Comparator.comparing() works in your own words. What does it mean to chain comparators with thenComparing(), and how is that different from writing a single complex lambda?",
+      "soloPracticeHtml": "<p>Recreate the sorting exercise from scratch — no starter code. Create the same list of 5 spells and sort it both alphabetically and by length, printing after each sort.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Arc appears first in alphabetical sort", "input": "null", "expected": "Arc"},
+        {"label": "Zap appears as a short spell in length sort", "input": "null", "expected": "Zap"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "Comparator<T>", "description": "A functional interface for defining custom ordering; its compare(T o1, T o2) method returns negative, zero, or positive to indicate order."},
+        {"term": "Comparator.comparing()", "description": "A static factory method that creates a Comparator from a key-extraction function, making it easy to sort by a specific field."},
+        {"term": "thenComparing()", "description": "A Comparator method that adds a secondary sort criterion, applied when the primary comparator considers two elements equal."},
+        {"term": "reversed()", "description": "A Comparator method that returns a new Comparator with the ordering flipped."},
+        {"term": "natural order", "description": "The default sort order for Comparable objects (e.g. alphabetical for Strings, numeric for Integers), accessible via Comparator.naturalOrder()."},
+        {"term": "Comparable<T>", "description": "An interface a class implements to define its natural ordering via the compareTo() method; distinct from Comparator which is an external ordering strategy."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>Comparator.reversed()</code> return?</p>",
+          "options": ["A new List in reverse order", "A Comparator with the ordering flipped", "The same Comparator mutated in-place", "A Comparator that sorts by length descending"],
+          "correctAnswer": "A Comparator with the ordering flipped",
+          "explanationHtml": "<p><code>reversed()</code> is a default method on the <code>Comparator</code> interface that returns a <em>new</em> Comparator wrapping the original, with the comparison result negated. The original Comparator is unchanged (Comparators are typically immutable). It does not sort by any particular field — it simply mirrors whatever ordering the original Comparator defined.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is printed?</p>",
+          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> words = new ArrayList<>(List.of(\"Cat\",\"Elephant\",\"Ox\",\"Dog\"));\n        words.sort(Comparator.comparingInt(String::length));\n        System.out.println(words.get(0));\n        System.out.println(words.get(words.size() - 1));\n    }\n}",
+          "correctAnswer": "Ox\nElephant",
+          "explanationHtml": "<p>Sorting by length ascending: <code>Ox</code> (2) &lt; <code>Cat</code> (3) = <code>Dog</code> (3) &lt; <code>Elephant</code> (8). So <code>words.get(0)</code> is <code>\"Ox\"</code> and <code>words.get(words.size()-1)</code> is <code>\"Elephant\"</code>. The tie between Cat and Dog is resolved by the sort algorithm's stability (their relative order is preserved from the original list).</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code throws an <code>UnsupportedOperationException</code> at runtime. Why?</p>",
+          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> spells = List.of(\"Blizzard\", \"Arc\", \"Zap\");\n        spells.sort(Comparator.naturalOrder());\n        spells.forEach(System.out::println);\n    }\n}",
+          "correctAnswer": "List.of() returns an unmodifiable list, so calling sort() on it throws UnsupportedOperationException. Wrap it in new ArrayList<>() to get a mutable copy.",
+          "explanationHtml": "<p><code>List.of()</code> creates an <strong>immutable</strong> list. Calling any mutating method on it — including <code>sort()</code>, <code>add()</code>, or <code>remove()</code> — throws <code>UnsupportedOperationException</code>. The fix is to wrap the list: <code>new ArrayList&lt;&gt;(List.of(...))</code>, which creates a mutable <code>ArrayList</code> initialised with those elements. This is a very common pitfall when using the factory methods introduced in Java 9.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You want to sort a list of spells first by damage descending, then alphabetically for ties. Which is correct?</p>",
+          "options": [
+            "Comparator.comparingInt(Spell::damage).thenComparing(Spell::name)",
+            "Comparator.comparingInt(Spell::damage).reversed().thenComparing(Spell::name)",
+            "Comparator.comparingInt(Spell::damage).thenComparing(Spell::name).reversed()",
+            "Comparator.reversed(Spell::damage).thenComparing(Spell::name)"
+          ],
+          "correctAnswer": "Comparator.comparingInt(Spell::damage).reversed().thenComparing(Spell::name)",
+          "explanationHtml": "<p>The key insight is that <code>reversed()</code> reverses the <em>entire</em> comparator chain built so far, not just the next step. By calling <code>.reversed()</code> right after <code>comparingInt(Spell::damage)</code> (and before <code>thenComparing</code>), only the damage ordering is reversed. Then <code>thenComparing(Spell::name)</code> adds alphabetical as a secondary criterion in its natural (ascending) order. Option C reverses the whole final comparator — flipping both damage AND name order, which is wrong. Option D is not a valid API call.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "id": "java-prt-8",
+  "title": "Modern Java Features",
+  "glyph": "✨",
+  "sortOrder": 8,
+  "tier": "PRACTITIONER",
+  "topicId": "java",
+  "prerequisites": ["java-prt-7"],
+  "subChunks": [
+    {
+      "id": "java-prt-8a",
+      "title": "var, Text Blocks & Pattern Matching instanceof",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Java has shed its verbose reputation. Since Java 10 and 15, three quality-of-life features — local variable type inference with <code>var</code>, multi-line text blocks, and pattern matching <code>instanceof</code> — make code cleaner without sacrificing type safety.</p>",
+      "explanationHtml": "<h3>var — Local Variable Type Inference</h3><p>Introduced in Java 10, <code>var</code> lets the compiler infer the type of a local variable from its initialiser. The type is still static and fixed at compile time — it just doesn't need to be written twice.</p><pre><code>// Without var\nArrayList&lt;String&gt; spells = new ArrayList&lt;&gt;();\n\n// With var — same type, less repetition\nvar spells = new ArrayList&lt;String&gt;();\nvar count = spells.size(); // inferred as int</code></pre><p><strong>var limitations</strong> — you cannot use var for:</p><ul><li>Fields</li><li>Method parameters</li><li>Return types</li><li>Variables without an initialiser</li><li>Lambda parameters (well, you can in Java 11+ but it's unusual)</li></ul><h3>Text Blocks</h3><p>Text blocks (Java 15+) let you write multi-line strings naturally with <code>\"\"\"</code> delimiters. Leading indentation is stripped automatically based on the closing delimiter's position.</p><pre><code>String spellDescription = \"\"\"\n        Name: Arcane Surge\n        Power: 95\n        Element: Arcane\n        Effect: Unstoppable magical force\n        \"\"\";\nSystem.out.println(spellDescription);</code></pre><p>The content between the opening <code>\"\"\"</code> and closing <code>\"\"\"</code> is the string. Escape sequences still work. Trailing newlines are included.</p><h3>Pattern Matching instanceof</h3><p>Before Java 16, you needed to cast explicitly after an instanceof check:</p><pre><code>// Old way\nif (obj instanceof String) {\n    String s = (String) obj; // redundant cast\n    System.out.println(s.length());\n}</code></pre><p>Pattern matching combines the check and binding into one expression:</p><pre><code>// Modern way — Java 16+\nif (obj instanceof String s) {\n    System.out.println(s.length()); // s is already a String here\n}\n\n// Works in a method:\nstatic void classify(Object obj) {\n    if (obj instanceof String s) {\n        System.out.println(\"It's a String: \" + s);\n    } else if (obj instanceof Integer n) {\n        System.out.println(\"It's an Integer: \" + n);\n    } else {\n        System.out.println(\"Unknown type\");\n    }\n}</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's ancient scribes had copied the same type twice on every scroll — once on the left, once on the right, an exhausting ritual. A young reformist mage had petitioned for change for decades. Java finally listened."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "When the type is obvious from the right side, var spares you the redundancy. But do not abuse it — if var hides intent, write the type. Clarity beats brevity."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "var spells = new ArrayList<String>(); // obvious from right\nvar count  = spells.size();            // inferred: int\n// var x;  <- ERROR: needs an initialiser"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Text blocks end the era of concatenated strings. A spell description belongs on multiple lines — let it breathe. The compiler strips the leading indentation so your code can be properly indented."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "String desc = \"\"\"\n        Name: Arcane Surge\n        Power: 95\n        Element: Arcane\n        \"\"\";\nSystem.out.println(desc);"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "And pattern matching instanceof eliminates the dance of check-then-cast. One line, one step, the variable is bound and typed immediately."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "static void classify(Object obj) {\n    if (obj instanceof String s) {\n        System.out.println(\"It's a String: \" + s);\n    } else if (obj instanceof Integer n) {\n        System.out.println(\"It's an Integer: \" + n);\n    } else {\n        System.out.println(\"Unknown type\");\n    }\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Three tasks in <code>main</code>:</p><ol><li><strong>var</strong>: Declare three variables using <code>var</code>: a <code>List&lt;String&gt;</code> with <code>Arrays.asList(\"Fire\", \"Ice\")</code>, an <code>int</code> as the list's size, and a <code>String</code> via <code>String.join(\", \", list)</code>. Print each.</li><li><strong>Text block</strong>: Create a text block with at least two named lines (e.g., <code>Name: Arcane Surge</code> and <code>Element: Arcane</code>) and print it.</li><li><strong>Pattern matching</strong>: Write a static method <code>classify(Object obj)</code> that prints <code>\"It's a String: \"</code> + s if the obj is a String, or <code>\"It's an Integer: \"</code> + n if Integer. Call it from main with a String and an Integer argument.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.Arrays;\nimport java.util.List;\n\npublic class Main {\n\n    static void classify(Object obj) {\n        // TODO: pattern matching instanceof — String and Integer branches\n    }\n\n    public static void main(String[] args) {\n        // Task 1: var declarations\n        // var list = ...\n        // var size = ...\n        // var joined = ...\n        // print each\n\n        // Task 2: text block\n        // var desc = \"\"\" ... \"\"\"\n        // print it\n\n        // Task 3: call classify with a String, then an Integer\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Prints text block content containing Arcane Surge",
+          "input": "null",
+          "expected": "Arcane Surge"
+        },
+        {
+          "label": "Prints It's a String for String argument",
+          "input": "null",
+          "expected": "It's a String"
+        },
+        {
+          "label": "Prints It's an Integer for Integer argument",
+          "input": "null",
+          "expected": "It's an Integer"
+        }
+      ],
+      "feynmanPrompt": "Explain what 'type inference' means for var — Java is still statically typed, so what exactly does the compiler do? Then explain why var cannot be used for method parameters, and what would go wrong if it could.",
+      "soloPracticeHtml": "<p>From memory: use <code>var</code> to declare a list of potion names and print its size. Write a text block with a potion label and effect on separate lines and print it. Write <code>identify(Object obj)</code> that prints <code>\"String detected: \"</code> + the value if String, or <code>\"Number detected: \"</code> + the value if Integer. Call it with both types.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "Prints text block content",
+          "input": "null",
+          "expected": "detected"
+        },
+        {
+          "label": "Prints String detected for a String argument",
+          "input": "null",
+          "expected": "String detected"
+        },
+        {
+          "label": "Prints Number detected for an Integer argument",
+          "input": "null",
+          "expected": "Number detected"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Type inference",
+          "description": "The compiler's ability to deduce a type automatically from context. var uses this for local variables; generics also rely on type inference."
+        },
+        {
+          "term": "var limitations",
+          "description": "var cannot be used for fields, method parameters, return types, or variables without initialisers. It is strictly a local variable feature."
+        },
+        {
+          "term": "Text block incidental whitespace",
+          "description": "Java strips indentation from text blocks based on the least-indented line (or the closing delimiter), so you can indent the block with your code."
+        },
+        {
+          "term": "Pattern matching instanceof",
+          "description": "A Java 16 feature where instanceof both checks and casts in one expression: if (obj instanceof String s) gives you s as a String directly."
+        },
+        {
+          "term": "Binding variable",
+          "description": "The new variable introduced by a pattern match (the s in 'instanceof String s'). It is in scope within the true branch of the if statement."
+        },
+        {
+          "term": "Guarded patterns",
+          "description": "Java 21 allows patterns with a 'when' guard: case String s when s.length() > 5 — combining pattern binding with a condition."
+        },
+        {
+          "term": "JEP (JDK Enhancement Proposal)",
+          "description": "The formal process by which Java features are proposed, refined, and delivered. var was JEP 286, text blocks JEP 378, pattern matching instanceof JEP 394."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which of these is a valid use of <code>var</code>?</p>",
+          "options": [
+            "var result; result = compute();",
+            "public var getName() { return name; }",
+            "var items = new ArrayList<String>();",
+            "private var count = 0;"
+          ],
+          "correctAnswer": "var items = new ArrayList<String>();",
+          "explanationHtml": "<p><code>var</code> requires an initialiser on the same line so the compiler can infer the type. It cannot be used for fields (<code>private var</code>), return types, or without an initialiser. <code>var items = new ArrayList&lt;String&gt;();</code> is valid — the type is inferred as <code>ArrayList&lt;String&gt;</code>.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "public class Main {\n    static void check(Object obj) {\n        if (obj instanceof String s) {\n            System.out.println(\"String length: \" + s.length());\n        } else if (obj instanceof Integer n) {\n            System.out.println(\"Integer doubled: \" + (n * 2));\n        }\n    }\n    public static void main(String[] args) {\n        check(\"Hello\");\n        check(7);\n    }\n}",
+          "correctAnswer": "String length: 5\nInteger doubled: 14",
+          "explanationHtml": "<p>\"Hello\" matches <code>instanceof String s</code>, and <code>\"Hello\".length()</code> is 5. The integer 7 matches <code>instanceof Integer n</code>, and 7 * 2 = 14.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is wrong with this code?</p>",
+          "codeSnippet": "public class Main {\n    public static void main(String[] args) {\n        var message;\n        message = \"Hello, Academy!\";\n        System.out.println(message);\n    }\n}",
+          "correctAnswer": "var requires an initialiser on the same declaration line so the compiler can infer the type. Split declaration and assignment is not allowed. Fix: var message = \"Hello, Academy!\";",
+          "explanationHtml": "<p><code>var</code> uses the initialiser expression to determine the type at compile time. If no initialiser is present on the declaration line, there is nothing to infer from, and the code fails to compile. Combine the declaration and assignment: <code>var message = \"Hello, Academy!\";</code></p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When should you prefer writing the explicit type instead of <code>var</code>?</p>",
+          "options": [
+            "Always — var reduces readability in all cases",
+            "When the right-hand side clearly shows the type (e.g., new ArrayList<>())",
+            "When the type is not obvious from the initialiser and a reader needs to know it",
+            "Only for primitive types"
+          ],
+          "correctAnswer": "When the type is not obvious from the initialiser and a reader needs to know it",
+          "explanationHtml": "<p><code>var</code> works best when the type is evident from context. When a method returns an opaque type (e.g., <code>var result = processSpells(data)</code>), the reader loses information. In that case, writing the explicit type aids comprehension. The guiding question is: does hiding the type hurt the reader?</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-prt-8b",
+      "title": "Sealed Classes & Switch Pattern Matching",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>What if the compiler could guarantee you've handled every possible subtype of an interface — the same way it guarantees you've handled every enum constant? Sealed classes make that possible, and pattern matching instanceof ties the pieces together.</p>",
+      "explanationHtml": "<h3>Sealed Interfaces and Classes</h3><p>A sealed interface (Java 17) restricts which classes may implement it. The <code>permits</code> clause lists every allowed implementor — no others are possible.</p><pre><code>sealed interface Shape permits Circle, Square, Triangle {}\n\nrecord Circle(double radius) implements Shape {}\nrecord Square(double side) implements Shape {}\nrecord Triangle(double base, double height) implements Shape {}</code></pre><p>Because the compiler knows the exact set of subtypes, it can verify exhaustive handling — just like enums in a switch.</p><h3>Pattern Matching with if-instanceof (Java 17 Compatible)</h3><p>In Java 17, you can use chained instanceof pattern matching to dispatch on sealed subtypes:</p><pre><code>static String describe(Shape s) {\n    if (s instanceof Circle c) {\n        return \"Circle with radius: \" + c.radius();\n    } else if (s instanceof Square sq) {\n        return \"Square with side: \" + sq.side();\n    } else if (s instanceof Triangle t) {\n        return \"Triangle base: \" + t.base();\n    } else {\n        throw new IllegalStateException(\"Unknown shape\");\n    }\n}</code></pre><h3>Switch Expressions with Pattern Matching (Java 21)</h3><p>Java 21 (and Java 17 with --enable-preview) allows switch expressions over sealed types with pattern cases. The compiler enforces exhaustiveness.</p><pre><code>// Java 21 style — shown for reference\nString result = switch (s) {\n    case Circle c    -> \"Circle radius: \" + c.radius();\n    case Square sq   -> \"Square side: \" + sq.side();\n    case Triangle t  -> \"Triangle base: \" + t.base();\n}; // no default needed — sealed is exhaustive</code></pre><p>Since the sandbox runs Java 17, use the if-instanceof style shown above for exercises.</p><h3>Why Sealed Classes?</h3><ul><li>Express domain hierarchies that are intentionally closed</li><li>Enable exhaustive analysis by the compiler (and IDEs)</li><li>Pair naturally with records for algebraic data types</li><li>Prevent accidental extension from unrelated code</li></ul><h3>Sealed Hierarchy Rules</h3><ul><li>Every permitted subtype must be in the same package (or module)</li><li>Subtypes must be <code>final</code>, <code>sealed</code>, or <code>non-sealed</code></li><li>Records are implicitly final, so they work perfectly as permitted types</li></ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's Shape Taxonomy had grown unruly — foreign scholars kept adding new shapes that the Core Spells weren't prepared to handle. Eldrin sealed the hierarchy, granting the compiler the authority to enforce it."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "A sealed interface is a closed contract. You declare exactly which forms it may take. No outsider can slip in an unlisted subtype and break your handling code."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "sealed interface Shape permits Circle, Square {}\nrecord Circle(double radius) implements Shape {}\nrecord Square(double side) implements Shape {}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "In Java 17, chain your instanceof pattern matches. The sealed contract is your promise that no else branch will ever be reached for a well-formed Shape."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "static String describe(Shape s) {\n    if (s instanceof Circle c) {\n        return \"Circle with radius: \" + c.radius();\n    } else if (s instanceof Square sq) {\n        return \"Square with side: \" + sq.side();\n    }\n    throw new IllegalStateException(\"Unhandled shape\");\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "In Java 21, the switch expression elevates this further — the compiler itself verifies exhaustiveness over sealed types, and the else is gone. Your code reads like the algebra it models."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "// Java 21 style — for reference\nString result = switch (s) {\n    case Circle c  -> \"radius: \" + c.radius();\n    case Square sq -> \"side: \"   + sq.side();\n};"
+        }
+      ],
+      "guidedPracticeHtml": "<p>At the top of your file (outside <code>Main</code>), define:</p><pre><code>sealed interface Shape permits Circle, Square {}\nrecord Circle(double radius) implements Shape {}\nrecord Square(double side) implements Shape {}</code></pre><p>Inside <code>Main</code>, write a static method <code>describe(Shape s)</code> that uses chained <code>instanceof</code> pattern matching:</p><ul><li>If Circle: return or print <code>\"Circle with radius: \"</code> + the radius</li><li>If Square: return or print <code>\"Square with side: \"</code> + the side</li></ul><p>In <code>main</code>, call <code>describe(new Circle(5.0))</code> and <code>describe(new Square(3.0))</code> and print the results.</p>",
+      "guidedPracticeStarterCode": "sealed interface Shape permits Circle, Square {}\nrecord Circle(double radius) implements Shape {}\nrecord Square(double side) implements Shape {}\n\npublic class Main {\n\n    static String describe(Shape s) {\n        // TODO: instanceof pattern match for Circle and Square\n        // Circle: return \"Circle with radius: \" + c.radius()\n        // Square: return \"Square with side: \" + sq.side()\n        throw new IllegalStateException(\"Unhandled shape: \" + s);\n    }\n\n    public static void main(String[] args) {\n        // TODO: print describe(new Circle(5.0))\n        // TODO: print describe(new Square(3.0))\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Prints radius 5.0 for Circle",
+          "input": "null",
+          "expected": "radius: 5.0"
+        },
+        {
+          "label": "Prints side 3.0 for Square",
+          "input": "null",
+          "expected": "side: 3.0"
+        },
+        {
+          "label": "Output contains Circle",
+          "input": "null",
+          "expected": "Circle"
+        }
+      ],
+      "feynmanPrompt": "Explain what 'sealed' means in Java and why it is valuable beyond just good documentation. How does sealing a hierarchy change what the compiler can verify? Contrast with a regular interface that anyone can implement.",
+      "soloPracticeHtml": "<p>From memory: define a sealed interface <code>Spell permits Offensive, Defensive</code> with record <code>Offensive(String name, int power)</code> and record <code>Defensive(String name, int shield)</code>. Write a <code>cast(Spell s)</code> method using instanceof pattern matching that prints <code>\"Attacking with [name] power [power]\"</code> for Offensive and <code>\"Defending with [name] shield [shield]\"</code> for Defensive. Call it with both types.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "Prints Attacking for Offensive spell",
+          "input": "null",
+          "expected": "Attacking"
+        },
+        {
+          "label": "Prints Defending for Defensive spell",
+          "input": "null",
+          "expected": "Defending"
+        },
+        {
+          "label": "Output includes power value",
+          "input": "null",
+          "expected": "power"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Sealed class / interface",
+          "description": "A Java 17 feature where a class or interface restricts which types may extend or implement it using the 'permits' clause."
+        },
+        {
+          "term": "Algebraic Data Type (ADT)",
+          "description": "A type defined as one of a fixed set of variants, common in functional languages. Sealed interfaces + records approximate ADTs in Java."
+        },
+        {
+          "term": "Exhaustive switch",
+          "description": "A switch expression where the compiler verifies that all possible values are handled — required for enums and (in Java 21) sealed hierarchies."
+        },
+        {
+          "term": "non-sealed",
+          "description": "A modifier for a permitted subtype that reopens it for arbitrary extension, creating a mixed hierarchy of sealed and open branches."
+        },
+        {
+          "term": "Pattern matching switch (Java 21)",
+          "description": "A switch expression that can match on types and destructure records directly, with compiler-enforced exhaustiveness over sealed types."
+        },
+        {
+          "term": "Record patterns",
+          "description": "Java 21 allows destructuring a record directly in a pattern: case Circle(double r) instead of case Circle c — then using c.radius()."
+        },
+        {
+          "term": "Deconstructing switch",
+          "description": "The idea of using a switch to simultaneously check a type AND extract its components, enabled by combining sealed classes with record patterns."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does the <code>permits</code> clause in a sealed interface declaration specify?</p>",
+          "options": [
+            "The methods the interface requires",
+            "The exact set of classes allowed to implement the interface",
+            "The module the interface belongs to",
+            "The classes the interface extends"
+          ],
+          "correctAnswer": "The exact set of classes allowed to implement the interface",
+          "explanationHtml": "<p><code>permits</code> lists every class (or interface) that is allowed to implement (or extend) the sealed type. No other class may implement it — the compiler enforces this at compile time.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "sealed interface Animal permits Dog, Cat {}\nrecord Dog(String name) implements Animal {}\nrecord Cat(String name) implements Animal {}\npublic class Main {\n    static String greet(Animal a) {\n        if (a instanceof Dog d) return \"Woof from \" + d.name();\n        else if (a instanceof Cat c) return \"Meow from \" + c.name();\n        throw new IllegalStateException();\n    }\n    public static void main(String[] args) {\n        System.out.println(greet(new Dog(\"Rex\")));\n        System.out.println(greet(new Cat(\"Luna\")));\n    }\n}",
+          "correctAnswer": "Woof from Rex\nMeow from Luna",
+          "explanationHtml": "<p>greet(new Dog(\"Rex\")) matches the first instanceof branch, returning \"Woof from Rex\". greet(new Cat(\"Luna\")) matches the second, returning \"Meow from Luna\".</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is wrong with this sealed hierarchy?</p>",
+          "codeSnippet": "sealed interface Shape permits Circle {}\nrecord Circle(double radius) implements Shape {}\nrecord Square(double side) implements Shape {} // in same package",
+          "correctAnswer": "Square is not listed in the permits clause of Shape, so it is not allowed to implement Shape. Add Square to the permits list: sealed interface Shape permits Circle, Square {}",
+          "explanationHtml": "<p>Every implementor of a sealed interface must appear in the <code>permits</code> clause. <code>Square implements Shape</code> is a compile error because <code>Square</code> is not permitted. Fix: <code>sealed interface Shape permits Circle, Square {}</code></p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You are modelling JSON values: a value is either a JsonString, JsonNumber, JsonBoolean, JsonNull, JsonArray, or JsonObject — nothing else. Which design is most appropriate?</p>",
+          "options": [
+            "A regular interface that any class can implement",
+            "An abstract class with six concrete subclasses",
+            "A sealed interface with six permitted record implementations",
+            "An enum with six constants"
+          ],
+          "correctAnswer": "A sealed interface with six permitted record implementations",
+          "explanationHtml": "<p>The set of JSON value types is fixed and closed — exactly the use case for a sealed interface. Each variant is a data carrier (ideal for records). The sealed hierarchy enables exhaustive handling in switch expressions and documents clearly that no other variants exist.</p>"
+        }
+      ]
+    }
+  ]
+}

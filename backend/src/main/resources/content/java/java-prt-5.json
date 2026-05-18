@@ -1,0 +1,332 @@
+{
+  "id": "java-prt-5",
+  "title": "Enums & Records",
+  "glyph": "📦",
+  "sortOrder": 5,
+  "tier": "PRACTITIONER",
+  "topicId": "java",
+  "prerequisites": ["java-prt-4"],
+  "subChunks": [
+    {
+      "id": "java-prt-5a",
+      "title": "Enums: Beyond Simple Constants",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>You've seen enums used as simple named constants — but in Java, enums are full-blown classes. They can carry state, define methods, and even behave differently per constant. It's time to unlock their true power.</p>",
+      "explanationHtml": "<h3>Basic Enums</h3><p>An enum defines a fixed set of named constants. Each constant is a singleton instance of the enum type.</p><pre><code>enum Direction { NORTH, SOUTH, EAST, WEST }</code></pre><p>You can use them in switch statements, compare with ==, and iterate with <code>values()</code>.</p><h3>Enums with State (Constructor + Fields)</h3><p>Enums can have fields and constructors. Each constant passes arguments to the constructor.</p><pre><code>enum Spell {\n    FIREBALL(80), FROST(60), THUNDER(90), HEAL(0);\n\n    private final int damage;\n\n    Spell(int damage) {\n        this.damage = damage;\n    }\n\n    public int getDamage() {\n        return damage;\n    }\n}</code></pre><p>Note: enum constructors are implicitly <code>private</code>. You cannot call <code>new Spell(...)</code> from outside.</p><h3>Enum Methods and Built-ins</h3><p>Every enum automatically gets these methods:</p><ul><li><code>values()</code> — returns all constants as an array</li><li><code>valueOf(String)</code> — returns the constant matching the name</li><li><code>ordinal()</code> — zero-based index of the constant</li><li><code>name()</code> — the constant's name as a String</li></ul><pre><code>for (Spell s : Spell.values()) {\n    System.out.println(s.name() + \" deals \" + s.getDamage());\n}\n\nSpell s = Spell.valueOf(\"FROST\"); // returns FROST\nSystem.out.println(s.ordinal()); // prints 1</code></pre><h3>Enums in Switch Expressions</h3><p>Switch expressions (Java 14+) work beautifully with enums. The compiler enforces exhaustiveness when all constants are covered.</p><pre><code>Spell chosen = Spell.THUNDER;\nString school = switch (chosen) {\n    case FIREBALL -> \"Fire\";\n    case FROST    -> \"Ice\";\n    case THUNDER  -> \"Storm\";\n    case HEAL     -> \"Holy\";\n};\nSystem.out.println(school); // Storm</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Hall of Elemental Catalogues stretched endlessly — row upon row of glowing spell crystals, each labelled with its school and potency. Eldrin gestured at the display."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Apprentice, a novice treats enum constants as mere labels. A practitioner gives them memory — fields that record the truth of each spell."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "enum Spell {\n    FIREBALL(80), FROST(60), THUNDER(90), HEAL(0);\n    private final int damage;\n    Spell(int d) { this.damage = d; }\n    public int getDamage() { return damage; }\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Now iterate the registry with values() and you'll see every spell's true cost."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "for (Spell s : Spell.values()) {\n    System.out.println(s.name() + \": \" + s.getDamage());\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "And when routing by school, trust the switch expression. It will force you to handle every possibility — no constants left in the dark."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "String school = switch (Spell.THUNDER) {\n    case FIREBALL -> \"Fire\";\n    case FROST    -> \"Ice\";\n    case THUNDER  -> \"Storm\";\n    case HEAL     -> \"Holy\";\n};\nSystem.out.println(school); // Storm"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Inside <code>public class Main</code>, define a <strong>static</strong> enum <code>Spell</code> with four constants: <code>FIREBALL(80)</code>, <code>FROST(60)</code>, <code>THUNDER(90)</code>, <code>HEAL(0)</code>. Each constant stores its damage value via a private field and a constructor. Add a <code>getDamage()</code> method.</p><p>In <code>main</code>:</p><ol><li>Loop over <code>Spell.values()</code> and print each as <code>NAME: damage</code> (e.g. <code>THUNDER: 90</code>).</li><li>Use a switch-expression on <code>Spell.THUNDER</code> to determine its school: FIREBALL→Fire, FROST→Ice, THUNDER→Storm, HEAL→Holy. Print the school.</li></ol>",
+      "guidedPracticeStarterCode": "public class Main {\n\n    enum Spell {\n        // TODO: add FIREBALL(80), FROST(60), THUNDER(90), HEAL(0)\n        ;\n\n        private final int damage;\n\n        Spell(int damage) {\n            // TODO: assign field\n        }\n\n        public int getDamage() {\n            // TODO: return damage\n            return 0;\n        }\n    }\n\n    public static void main(String[] args) {\n        // TODO: loop Spell.values() and print each name + damage\n\n        // TODO: switch on Spell.THUNDER to get its school, print it\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Prints THUNDER: 90",
+          "input": "null",
+          "expected": "THUNDER: 90"
+        },
+        {
+          "label": "Prints the school Storm for THUNDER",
+          "input": "null",
+          "expected": "Storm"
+        },
+        {
+          "label": "Prints FIREBALL: 80",
+          "input": "null",
+          "expected": "FIREBALL: 80"
+        }
+      ],
+      "feynmanPrompt": "Explain why Java enums are more powerful than simple integer constants, and describe a scenario where adding fields and methods to an enum is clearly the right design choice — rather than using a separate class.",
+      "soloPracticeHtml": "<p>From memory, create an enum <code>Potion</code> with three constants: <code>HEALTH(50)</code>, <code>MANA(40)</code>, <code>ELIXIR(100)</code>. Each stores its restore value. Loop all potions and print <code>NAME: value</code>. Then use a switch-expression on <code>Potion.ELIXIR</code> to print its rarity: HEALTH→Common, MANA→Common, ELIXIR→Legendary.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "Prints ELIXIR: 100",
+          "input": "null",
+          "expected": "ELIXIR: 100"
+        },
+        {
+          "label": "Prints Legendary for ELIXIR",
+          "input": "null",
+          "expected": "Legendary"
+        },
+        {
+          "label": "Prints HEALTH: 50",
+          "input": "null",
+          "expected": "HEALTH: 50"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "EnumSet",
+          "description": "A high-performance Set implementation designed exclusively for enum types, backed by a bit vector."
+        },
+        {
+          "term": "EnumMap",
+          "description": "A Map implementation optimised for enum keys, using an array internally for O(1) operations."
+        },
+        {
+          "term": "Ordinal",
+          "description": "The zero-based position of an enum constant as declared in the source. Avoid persisting ordinals — insertions can shift them."
+        },
+        {
+          "term": "Abstract enum method",
+          "description": "An enum can declare an abstract method that each constant overrides individually, giving per-constant behaviour."
+        },
+        {
+          "term": "Switch expression exhaustiveness",
+          "description": "When switching on an enum, the compiler can verify all constants are handled, eliminating the need for a default branch."
+        },
+        {
+          "term": "Singleton guarantee",
+          "description": "Each enum constant is a single JVM instance. This makes enums a thread-safe Singleton implementation by design."
+        },
+        {
+          "term": "valueOf vs name",
+          "description": "Spell.valueOf(\"FROST\") returns the constant; s.name() returns the constant's name as a String. They are inverses of each other."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which built-in enum method returns an array of all constants in declaration order?</p>",
+          "options": ["ordinal()", "name()", "values()", "valueOf()"],
+          "correctAnswer": "values()",
+          "explanationHtml": "<p><code>values()</code> is a compiler-generated static method that returns all enum constants as an array in the order they were declared. <code>valueOf(String)</code> looks up a single constant by name, while <code>ordinal()</code> and <code>name()</code> are instance methods.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "enum Rank { BRONZE, SILVER, GOLD }\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Rank.SILVER.ordinal());\n        System.out.println(Rank.GOLD.name());\n    }\n}",
+          "correctAnswer": "1\nGOLD",
+          "explanationHtml": "<p>SILVER is the second constant (zero-based index 1), so <code>ordinal()</code> returns 1. <code>name()</code> returns the constant's identifier exactly as declared: <code>GOLD</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This enum code fails to compile. What is wrong and how do you fix it?</p>",
+          "codeSnippet": "enum Spell {\n    FIREBALL(80), FROST(60);\n\n    public final int damage;\n\n    public Spell(int damage) {\n        this.damage = damage;\n    }\n}",
+          "correctAnswer": "Enum constructors cannot be public. Remove the public modifier from the constructor — it must be private (or package-private).",
+          "explanationHtml": "<p>Enum constructors are implicitly <code>private</code>. Marking one <code>public</code> is a compile error because the Java specification forbids it — the language must prevent external instantiation of enum types. Remove <code>public</code> from the constructor declaration.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When is it better to use an enum with fields rather than a plain class with public static final constants?</p>",
+          "options": [
+            "When the set of values is open-ended and may grow at runtime",
+            "When you need a fixed, closed set of named instances each carrying related data",
+            "When you need inheritance from another class",
+            "When you need to create many instances with varying state"
+          ],
+          "correctAnswer": "When you need a fixed, closed set of named instances each carrying related data",
+          "explanationHtml": "<p>Enums are ideal when the full set of valid values is known at compile time and each value may carry associated state. They provide type-safety, exhaustive switch checking, and built-in iteration. If the set is open-ended, or you need inheritance, a regular class is more appropriate.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-prt-5b",
+      "title": "Records: Immutable Data Carriers",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>How many times have you written a class with fields, a constructor, getters, <code>equals</code>, <code>hashCode</code>, and <code>toString</code> — all for a simple data container? Java 16 introduced records to end that boilerplate forever.</p>",
+      "explanationHtml": "<h3>What Is a Record?</h3><p>A record is a special kind of class designed to be a transparent, immutable data carrier. You declare the components and Java generates everything else.</p><pre><code>record Point(int x, int y) {}</code></pre><p>This single line gives you: a canonical constructor, accessor methods <code>x()</code> and <code>y()</code>, <code>equals()</code>, <code>hashCode()</code>, and <code>toString()</code>.</p><h3>Auto-generated Members</h3><p>Given <code>record Spell(String name, int power)</code>, the compiler generates:</p><pre><code>// Constructor\nnew Spell(\"Fireball\", 80)\n\n// Accessors (NOT getName — just name())\nspell.name()   // \"Fireball\"\nspell.power()  // 80\n\n// Meaningful toString\nspell.toString() // Spell[name=Fireball, power=80]\n\n// Structural equality\nnew Spell(\"A\", 1).equals(new Spell(\"A\", 1)) // true</code></pre><h3>Compact Constructors for Validation</h3><p>A compact constructor lets you validate or normalise inputs without repeating the parameter list. The assignment to fields happens automatically after the body runs.</p><pre><code>record Spell(String name, int power) {\n    Spell {\n        if (power < 0) throw new IllegalArgumentException(\"Power cannot be negative\");\n        name = name.trim(); // you can reassign components here\n    }\n}</code></pre><h3>Records Implementing Interfaces</h3><p>Records can implement interfaces, making them useful as typed data objects in functional pipelines.</p><pre><code>interface Describable { String describe(); }\n\nrecord Spell(String name, int power) implements Describable {\n    public String describe() {\n        return name + \" (power: \" + power + \")\";\n    }\n}</code></pre><h3>When Records vs Classes</h3><ul><li>Use a <strong>record</strong> when the type is purely a data carrier, immutability is desired, and equality is structural.</li><li>Use a <strong>class</strong> when you need mutable state, inheritance, or complex lifecycle management.</li></ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Scriptorium was buried in boilerplate scrolls — every spell tome required pages of constructor incantations, getter sigils, and equality runes before a single useful word appeared."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Enough! The Academy adopted records precisely to banish this tedium. Declare what a spell is — its name and power — and the language provides the rest."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "record Spell(String name, int power) {}\n\nSpell bolt = new Spell(\"Arcane Bolt\", 75);\nSystem.out.println(bolt);         // Spell[name=Arcane Bolt, power=75]\nSystem.out.println(bolt.power()); // 75"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Equality is structural — two spells with the same name and power are equal. No manual equals() needed. And compact constructors let you enforce the laws of magic: no negative power."
+        },
+        {
+          "type": "example",
+          "speaker": "Code",
+          "text": "record Spell(String name, int power) {\n    Spell {\n        if (power < 0) throw new IllegalArgumentException();\n    }\n}\n\nSpell a = new Spell(\"Frost\", 60);\nSpell b = new Spell(\"Frost\", 60);\nSystem.out.println(a.equals(b)); // true"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Records can even implement interfaces. Make them Describable, Comparable — whatever the domain demands. They are fully first-class citizens, just immutable."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Define two records at the top of your file (outside <code>Main</code> or as static members):</p><ul><li><code>record Spell(String name, int power)</code></li><li><code>record Wizard(String name, Spell signature)</code></li></ul><p>In <code>main</code>:</p><ol><li>Create <code>Wizard wizard = new Wizard(\"Eldrin\", new Spell(\"Arcane Bolt\", 75))</code>.</li><li>Print <code>wizard.toString()</code> (or just <code>wizard</code>).</li><li>Print the signature spell's power.</li><li>Create two identical <code>Spell(\"Arcane Bolt\", 75)</code> instances and compare them with <code>equals()</code>. Print the result.</li></ol>",
+      "guidedPracticeStarterCode": "record Spell(String name, int power) {}\nrecord Wizard(String name, Spell signature) {}\n\npublic class Main {\n    public static void main(String[] args) {\n        // TODO: create a Wizard named \"Eldrin\" with Spell(\"Arcane Bolt\", 75)\n\n        // TODO: print the wizard (toString)\n\n        // TODO: print the spell's power\n\n        // TODO: compare two identical Spell instances and print the boolean result\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Wizard toString contains Eldrin",
+          "input": "null",
+          "expected": "Eldrin"
+        },
+        {
+          "label": "Prints the spell power 75",
+          "input": "null",
+          "expected": "75"
+        },
+        {
+          "label": "Prints true for equal records",
+          "input": "null",
+          "expected": "true"
+        }
+      ],
+      "feynmanPrompt": "Explain what Java records generate automatically, why they enforce immutability, and describe a case where using a record would be wrong — and what you'd use instead.",
+      "soloPracticeHtml": "<p>From memory: define a record <code>Artifact(String name, int rarity)</code> and a record <code>Hero(String name, Artifact equipped)</code>. Create a Hero named <code>\"Kael\"</code> equipped with <code>Artifact(\"Shadowblade\", 5)</code>. Print the hero, print the artifact's rarity, and verify two identical Artifact instances are equal.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "Prints Kael",
+          "input": "null",
+          "expected": "Kael"
+        },
+        {
+          "label": "Prints artifact rarity 5",
+          "input": "null",
+          "expected": "5"
+        },
+        {
+          "label": "Prints true for equal artifacts",
+          "input": "null",
+          "expected": "true"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Canonical constructor",
+          "description": "The implicitly generated record constructor that accepts all components and assigns them to the final fields."
+        },
+        {
+          "term": "Compact constructor",
+          "description": "A record constructor with no parameter list. The compiler appends field assignments automatically after the body, letting you focus on validation."
+        },
+        {
+          "term": "Structural equality",
+          "description": "Two objects are equal if their components are equal, regardless of identity. Records implement this by default."
+        },
+        {
+          "term": "Value-based class",
+          "description": "A class whose instances are considered equal purely by their state. Records are an explicit value-based construct in Java."
+        },
+        {
+          "term": "Immutability",
+          "description": "Record fields are implicitly final — they cannot be reassigned after construction, making records safe to share across threads."
+        },
+        {
+          "term": "Record accessor",
+          "description": "Accessors for record components use the component name directly (e.g., name()) rather than the JavaBean convention (getName())."
+        },
+        {
+          "term": "withers / copy methods",
+          "description": "Java records don't generate wither methods automatically, but you can write them manually: return new Spell(newName, this.power())."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>For <code>record Wizard(String name, int level)</code>, what is the correct accessor call for the name?</p>",
+          "options": ["wizard.getName()", "wizard.name()", "wizard.get(\"name\")", "Wizard.name"],
+          "correctAnswer": "wizard.name()",
+          "explanationHtml": "<p>Record accessors use the component name directly as a method — <code>wizard.name()</code>. Records do not follow the JavaBean <code>getName()</code> convention.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "record Point(int x, int y) {}\npublic class Main {\n    public static void main(String[] args) {\n        Point a = new Point(3, 4);\n        Point b = new Point(3, 4);\n        System.out.println(a.equals(b));\n        System.out.println(a == b);\n    }\n}",
+          "correctAnswer": "true\nfalse",
+          "explanationHtml": "<p><code>equals()</code> on records compares components structurally, so <code>a.equals(b)</code> is <code>true</code>. But <code>a == b</code> checks reference identity — they are two distinct objects — so it is <code>false</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is wrong with this record definition?</p>",
+          "codeSnippet": "record Spell(String name, int power) {\n    private int power; // extra field\n}",
+          "correctAnswer": "Records cannot declare instance fields beyond their components. The power field is already generated from the component list. Remove the extra field declaration.",
+          "explanationHtml": "<p>Record bodies may only contain static fields, methods, constructors, and nested types. Instance fields are exclusively those declared in the component list. Declaring <code>private int power</code> inside the body is a compile error.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>In which scenario should you use a regular class instead of a record?</p>",
+          "options": [
+            "A DTO that carries name and age from an API response",
+            "A coordinate with x and y that needs structural equality",
+            "A shopping cart that adds, removes, and modifies items over time",
+            "A key in a HashMap that should compare by value"
+          ],
+          "correctAnswer": "A shopping cart that adds, removes, and modifies items over time",
+          "explanationHtml": "<p>Records are immutable — you cannot change their components after construction. A shopping cart requires mutable state (adding/removing items), so a regular class with mutable fields is the right tool. All other options describe immutable value objects that are ideal candidates for records.</p>"
+        }
+      ]
+    }
+  ]
+}

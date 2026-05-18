@@ -1,0 +1,345 @@
+{
+  "id": "java-exp-2",
+  "title": "CompletableFuture & Async",
+  "glyph": "🔮",
+  "sortOrder": 2,
+  "tier": "EXPERT",
+  "topicId": "java",
+  "prerequisites": [
+    "java-exp-1"
+  ],
+  "subChunks": [
+    {
+      "id": "java-exp-2a",
+      "title": "CompletableFuture Basics",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Raw <code>Future.get()</code> blocks your thread like a stone wall. <code>CompletableFuture</code> lets you chain transformations, attach callbacks, and compose async pipelines — all without blocking a single thread.</p>",
+      "explanationHtml": "<h3>Creating a CompletableFuture</h3><p><code>CompletableFuture.supplyAsync()</code> runs a <code>Supplier</code> on the common ForkJoin pool (or a provided executor) and returns a <code>CompletableFuture&lt;T&gt;</code> you can chain. <code>CompletableFuture.runAsync()</code> does the same for <code>Runnable</code> (returns <code>CompletableFuture&lt;Void&gt;</code>).</p><pre><code>CompletableFuture&lt;String&gt; cf = CompletableFuture.supplyAsync(() -> {\n    // runs on ForkJoinPool.commonPool()\n    return \"Arcane\";\n});</code></pre><h3>Transforming Results: thenApply, thenAccept, thenRun</h3><p>These methods attach callbacks that execute when the future completes. They form a <em>pipeline</em> — each receives the previous stage's result.</p><pre><code>CompletableFuture.supplyAsync(() -> \"Arcane\")\n    .thenApply(s -> s + \" Surge\")          // transforms: String -> String\n    .thenApply(String::toUpperCase)          // transforms: \"ARCANE SURGE\"\n    .thenAccept(s -> System.out.println(\"Result: \" + s)) // consumes, returns Void\n    .thenRun(() -> System.out.println(\"Pipeline complete\")); // no input, no output</code></pre><h3>join() vs get()</h3><p>Both block the calling thread until the result is available. The difference: <code>get()</code> throws checked exceptions (<code>InterruptedException</code>, <code>ExecutionException</code>), forcing you to handle them. <code>join()</code> wraps exceptions in unchecked <code>CompletionException</code> — cleaner in lambda chains.</p><pre><code>String result = cf.join(); // unchecked — cleaner in pipelines\n// vs\nString result2 = cf.get(); // throws InterruptedException, ExecutionException</code></pre><h3>Error Handling: exceptionally & whenComplete</h3><p><code>exceptionally()</code> catches any exception in the pipeline and returns a fallback value — like a catch block for async code. <code>whenComplete()</code> runs a callback with either the result OR the exception (similar to finally).</p><pre><code>CompletableFuture&lt;String&gt; safe = CompletableFuture\n    .supplyAsync(() -> { throw new RuntimeException(\"Spell fizzled!\"); })\n    .exceptionally(ex -> \"Default Spell\"); // fallback value on error\n\nsafe.thenAccept(System.out::println); // prints \"Default Spell\"\nsafe.join();</code></pre><h3>completeExceptionally & Manual Completion</h3><p>You can manually complete a <code>CompletableFuture</code> with <code>complete(value)</code> or fail it with <code>completeExceptionally(throwable)</code>. This is useful when bridging callback-based APIs into the CompletableFuture world.</p><pre><code>CompletableFuture&lt;String&gt; manual = new CompletableFuture&lt;&gt;();\n// somewhere later, after async work finishes:\nmanual.complete(\"Result ready\");\n// or on failure:\nmanual.completeExceptionally(new RuntimeException(\"Failed\"));</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's ancient scrying orbs could only show one vision at a time — each mage had to wait, blocking the chamber, until the orb went dark before the next could look. A new invention changed everything."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "CompletableFuture is the modern crystal ball. Instead of staring into it until an answer appears — blocking all else — you attach instructions for what to do when the vision arrives, then walk away."
+        },
+        {
+          "type": "example",
+          "speaker": "Async Pipeline",
+          "text": "CompletableFuture.supplyAsync(() -> \"Arcane\")\n    .thenApply(s -> s + \" Surge\")\n    .thenApply(String::toUpperCase)\n    .thenAccept(System.out::println)\n    .join();"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "thenApply transforms the result — like an alchemist changing lead to gold. thenAccept consumes it — like delivering the gold to the vault. thenRun fires afterward with no regard for the result."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "And when a spell goes wrong, exceptionally() catches the disaster and returns a safe fallback. Never let an unhandled exception shatter your pipeline."
+        },
+        {
+          "type": "example",
+          "speaker": "Error Handling",
+          "text": "CompletableFuture.supplyAsync(() -> { throw new RuntimeException(); })\n    .exceptionally(ex -> \"Default Spell\")\n    .thenAccept(System.out::println)\n    .join(); // prints \"Default Spell\""
+        },
+        {
+          "type": "narration",
+          "text": "With CompletableFuture, the scrying chamber handles dozens of visions simultaneously — no mage standing idle, each vision feeding the next step of the arcane pipeline automatically."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a CompletableFuture pipeline: use <code>supplyAsync</code> to supply the string <code>\"Arcane\"</code>. Chain <code>thenApply</code> to append <code>\" Surge\"</code>. Chain another <code>thenApply</code> to convert to uppercase. Chain <code>thenAccept</code> to print <code>\"Final spell: \"</code> + the result. Chain <code>thenRun</code> to print <code>\"Pipeline complete\"</code>. Call <code>.join()</code> at the end of the chain to block until done.</p><p>Also demonstrate <code>exceptionally</code>: create a separate future that throws a RuntimeException, use <code>.exceptionally(e -&gt; \"Spell fizzled\")</code>, join it, and print the result.</p>",
+      "guidedPracticeStarterCode": "import java.util.concurrent.CompletableFuture;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Pipeline 1: supply -> append -> uppercase -> print -> notify\n        CompletableFuture.supplyAsync(() -> \"Arcane\")\n            // TODO: thenApply to append \" Surge\"\n            // TODO: thenApply to convert to uppercase\n            // TODO: thenAccept to print \"Final spell: \" + result\n            // TODO: thenRun to print \"Pipeline complete\"\n            .join();\n\n        // Pipeline 2: error handling with exceptionally\n        String result = CompletableFuture.<String>supplyAsync(() -> {\n            throw new RuntimeException(\"out of mana\");\n        }).exceptionally(e -> \"Spell fizzled\").join();\n        System.out.println(result);\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Final spell printed correctly",
+          "input": "null",
+          "expected": "Final spell: ARCANE SURGE"
+        },
+        {
+          "label": "Pipeline completion message",
+          "input": "null",
+          "expected": "Pipeline complete"
+        },
+        {
+          "label": "exceptionally fallback printed",
+          "input": "null",
+          "expected": "Spell fizzled"
+        }
+      ],
+      "feynmanPrompt": "Explain the difference between thenApply, thenAccept, and thenRun. When would you use exceptionally() versus whenComplete()? And explain why join() is often preferred over get() inside lambda chains.",
+      "soloPracticeHtml": "<p>From memory, build a CompletableFuture pipeline: <code>supplyAsync(\"Arcane\")</code>, append <code>\" Surge\"</code>, uppercase, print <code>\"Final spell: ARCANE SURGE\"</code>, then print <code>\"Pipeline complete\"</code>. Also create a second future that throws an exception, handle it with <code>exceptionally</code> to return <code>\"Spell fizzled\"</code>, and print that result.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "Final spell printed correctly",
+          "input": "null",
+          "expected": "Final spell: ARCANE SURGE"
+        },
+        {
+          "label": "Pipeline completion message",
+          "input": "null",
+          "expected": "Pipeline complete"
+        },
+        {
+          "label": "exceptionally fallback printed",
+          "input": "null",
+          "expected": "Spell fizzled"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "ForkJoinPool.commonPool()",
+          "description": "The default thread pool used by supplyAsync() and runAsync() when no executor is provided. Shared JVM-wide; fine for CPU tasks but avoid for blocking I/O (use a dedicated pool instead)."
+        },
+        {
+          "term": "CompletionStage",
+          "description": "The interface CompletableFuture implements, defining the chainable methods (thenApply, thenAccept, etc.). Allows swapping implementations without changing pipeline code."
+        },
+        {
+          "term": "thenApplyAsync()",
+          "description": "Like thenApply() but executes the transformation on a separate thread from the pool, rather than on the thread that completed the previous stage."
+        },
+        {
+          "term": "handle()",
+          "description": "A two-argument callback receiving both the result and the exception (one will be null). Unlike exceptionally(), handle() runs regardless of success or failure and can transform both cases."
+        },
+        {
+          "term": "CompletionException",
+          "description": "The unchecked exception join() throws (wrapping the original cause) when the CompletableFuture completed exceptionally. Access the real cause via getCause()."
+        },
+        {
+          "term": "Backpressure",
+          "description": "The challenge of slowing a producer when consumers can't keep up. CompletableFuture has no built-in backpressure — for that, explore reactive libraries like Project Reactor or RxJava."
+        },
+        {
+          "term": "Structured Concurrency",
+          "description": "A modern approach (previewed in Java 21+) where async tasks have a clear scope and lifetime tied to a parent task. Aims to make concurrent code safer and easier to reason about than raw futures."
+        },
+        {
+          "term": "Virtual Threads",
+          "description": "Java 21 feature (Project Loom) — lightweight threads managed by the JVM. Blocking virtual threads is cheap, reducing the need for async pipelines for I/O-bound work."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which CompletableFuture method consumes the result (returns <code>CompletableFuture&lt;Void&gt;</code>) without transforming it?</p>",
+          "options": [
+            "thenApply()",
+            "thenAccept()",
+            "thenRun()",
+            "thenCompose()"
+          ],
+          "correctAnswer": "thenAccept()",
+          "explanationHtml": "<p><code>thenAccept(Consumer)</code> receives the result and performs a side effect, returning <code>CompletableFuture&lt;Void&gt;</code>. <code>thenApply(Function)</code> transforms the result. <code>thenRun(Runnable)</code> ignores the result entirely.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this pipeline print?</p>",
+          "codeSnippet": "import java.util.concurrent.CompletableFuture;\npublic class Main {\n    public static void main(String[] args) {\n        CompletableFuture.supplyAsync(() -> 10)\n            .thenApply(n -> n * 3)\n            .thenApply(n -> n + 5)\n            .thenAccept(n -> System.out.println(\"Value: \" + n))\n            .join();\n    }\n}",
+          "correctAnswer": "Value: 35",
+          "explanationHtml": "<p>Start with 10, multiply by 3 → 30, add 5 → 35. The thenAccept prints \"Value: 35\".</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code should print a fallback when an exception occurs, but it throws instead. What is wrong?</p>",
+          "codeSnippet": "import java.util.concurrent.CompletableFuture;\npublic class Main {\n    public static void main(String[] args) {\n        CompletableFuture<String> cf = CompletableFuture\n            .supplyAsync(() -> { throw new RuntimeException(\"Boom\"); });\n        System.out.println(cf.join()); // throws here\n    }\n}",
+          "correctAnswer": "exceptionally() is missing — add .exceptionally(ex -> \"Fallback\") before join()",
+          "explanationHtml": "<p><code>join()</code> rethrows the exception as a <code>CompletionException</code> if the future completed exceptionally. Add <code>.exceptionally(ex -&gt; \"Fallback\")</code> before <code>join()</code> to catch the error and return a default value.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When should you provide a custom <code>Executor</code> to <code>supplyAsync(supplier, executor)</code> instead of using the default common pool?</p>",
+          "options": [
+            "When the task is CPU-bound and fast",
+            "When the task performs blocking I/O such as database or network calls",
+            "When you want the task to run on the main thread",
+            "When using thenApply() chains"
+          ],
+          "correctAnswer": "When the task performs blocking I/O such as database or network calls",
+          "explanationHtml": "<p>The common ForkJoinPool is sized for CPU-bound work. Blocking I/O tasks submitted there can starve other async tasks. Use a dedicated <code>ExecutorService</code> for I/O-bound work so blocking threads don't clog the shared pool.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-exp-2b",
+      "title": "Combining & Composing Futures",
+      "sortOrder": 2,
+      "xpReward": 100,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>One arcane calculation at a time is never enough. Real spells combine multiple async results — weaving damage rolls, defence checks, and element lookups into a single decisive outcome.</p>",
+      "explanationHtml": "<h3>thenCompose — Chaining Dependent Futures</h3><p><code>thenCompose()</code> is the <em>flatMap</em> of CompletableFuture. Use it when the next step itself returns a <code>CompletableFuture</code> — otherwise you'd get <code>CompletableFuture&lt;CompletableFuture&lt;T&gt;&gt;</code> with <code>thenApply</code>.</p><pre><code>CompletableFuture&lt;String&gt; spellName = CompletableFuture.supplyAsync(() -> \"Fire\");\nCompletableFuture&lt;String&gt; fullSpell = spellName.thenCompose(name ->\n    CompletableFuture.supplyAsync(() -> name + \"ball\") // another async step\n);\nSystem.out.println(fullSpell.join()); // \"Fireball\"</code></pre><h3>thenCombine — Zipping Two Independent Futures</h3><p><code>thenCombine(other, BiFunction)</code> waits for both futures to complete independently, then combines their results. The two futures run in parallel.</p><pre><code>CompletableFuture&lt;Integer&gt; damage  = CompletableFuture.supplyAsync(() -> 70);\nCompletableFuture&lt;Integer&gt; defense = CompletableFuture.supplyAsync(() -> 30);\n\nCompletableFuture&lt;Integer&gt; netDamage = damage.thenCombine(defense,\n    (dmg, def) -> dmg - def\n);\nSystem.out.println(\"Net damage: \" + netDamage.join()); // \"Net damage: 40\"</code></pre><h3>allOf — Wait for Everything</h3><p><code>CompletableFuture.allOf(cf1, cf2, ...)</code> returns a <code>CompletableFuture&lt;Void&gt;</code> that completes when ALL supplied futures complete. Useful for fan-out then collect patterns.</p><pre><code>CompletableFuture&lt;String&gt; f1 = CompletableFuture.supplyAsync(() -> \"A\");\nCompletableFuture&lt;String&gt; f2 = CompletableFuture.supplyAsync(() -> \"B\");\nCompletableFuture&lt;String&gt; f3 = CompletableFuture.supplyAsync(() -> \"C\");\n\nCompletableFuture.allOf(f1, f2, f3).join(); // wait for all\nSystem.out.println(f1.join() + f2.join() + f3.join()); // \"ABC\" (order guaranteed now)</code></pre><h3>anyOf — First to Complete Wins</h3><p><code>CompletableFuture.anyOf(cf1, cf2, ...)</code> returns a <code>CompletableFuture&lt;Object&gt;</code> that completes as soon as the <em>first</em> of the supplied futures completes. Useful for racing redundant requests.</p><pre><code>CompletableFuture&lt;Object&gt; fastest = CompletableFuture.anyOf(\n    CompletableFuture.supplyAsync(() -> \"Slow spell\"),\n    CompletableFuture.supplyAsync(() -> \"Fast spell\")\n);\nSystem.out.println(fastest.join()); // whichever finishes first</code></pre><h3>whenComplete — Cleanup Callback</h3><p><code>whenComplete(BiConsumer&lt;T, Throwable&gt;)</code> runs a callback with either the result or exception (one is null), without transforming the value. It's always executed, like a finally block, making it ideal for logging or releasing resources.</p><pre><code>CompletableFuture.supplyAsync(() -> \"Spell cast\")\n    .whenComplete((result, ex) -> {\n        if (ex != null) System.out.println(\"Failed: \" + ex.getMessage());\n        else System.out.println(\"Success: \" + result);\n    })\n    .join();</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Grand Duel required three simultaneous calculations — damage roll, defense roll, and elemental affinity — each drawn from a different arcane register. No single oracle could provide all three."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "thenCombine is your spell for zipping two independent futures. Both oracles consult simultaneously, and when both reply, you merge their answers into a single truth."
+        },
+        {
+          "type": "example",
+          "speaker": "thenCombine",
+          "text": "futureA.thenCombine(futureB, (a, b) -> a - b)\n       .thenAccept(net -> System.out.println(\"Net damage: \" + net))\n       .join();"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "allOf waits for every oracle to report. anyOf names the winner of a race. Choose wisely — waiting for all is thorough; racing to the first is fast but unpredictable."
+        },
+        {
+          "type": "example",
+          "speaker": "allOf Pattern",
+          "text": "CompletableFuture.allOf(f1, f2, f3).join();\nSystem.out.println(\"All spells resolved\");"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "thenCompose is flatMap — use it when your next step itself returns a future. Without it, you'd have a future inside a future, like a scroll sealed inside another scroll."
+        },
+        {
+          "type": "narration",
+          "text": "The Grand Duel resolved cleanly: damage and defense calculated in parallel, combined in milliseconds, the net damage printed to the scoreboard before the dust settled."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Part 1: Create <code>futureA = CompletableFuture.supplyAsync(() -> 70)</code> (damage) and <code>futureB = CompletableFuture.supplyAsync(() -> 30)</code> (defense). Use <code>thenCombine</code> to compute <code>damage - defense</code> and print <code>\"Net damage: \"</code> + the result. Call <code>join()</code>.</p><p>Part 2: Create 3 separate futures using <code>supplyAsync</code>. Use <code>CompletableFuture.allOf()</code> to wait for all three. After <code>allOf().join()</code>, print <code>\"All spells resolved\"</code>.</p>",
+      "guidedPracticeStarterCode": "import java.util.concurrent.CompletableFuture;\n\npublic class Main {\n    public static void main(String[] args) {\n        // Part 1: thenCombine\n        CompletableFuture<Integer> futureA = CompletableFuture.supplyAsync(() -> 70);\n        CompletableFuture<Integer> futureB = CompletableFuture.supplyAsync(() -> 30);\n\n        // TODO: use thenCombine to subtract defense from damage\n        // TODO: thenAccept to print \"Net damage: \" + result\n        // TODO: join()\n\n        // Part 2: allOf\n        CompletableFuture<String> s1 = CompletableFuture.supplyAsync(() -> \"Fireball\");\n        CompletableFuture<String> s2 = CompletableFuture.supplyAsync(() -> \"Frost\");\n        CompletableFuture<String> s3 = CompletableFuture.supplyAsync(() -> \"Thunder\");\n\n        // TODO: use CompletableFuture.allOf(s1, s2, s3).join() then print \"All spells resolved\"\n    }\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Net damage calculation correct",
+          "input": "null",
+          "expected": "Net damage: 40"
+        },
+        {
+          "label": "allOf completion message printed",
+          "input": "null",
+          "expected": "All spells resolved"
+        }
+      ],
+      "feynmanPrompt": "Explain the difference between thenApply and thenCompose with a concrete example. When would combining two futures with thenCombine be better than running them sequentially? What does allOf return and why can't you get the individual results from it directly?",
+      "soloPracticeHtml": "<p>From memory, create two CompletableFutures: one supplying 70 (damage) and one supplying 30 (defense). Combine them with thenCombine to compute damage minus defense, then print \"Net damage: \" + result. Also create 3 futures and use allOf to wait for all, then print \"All spells resolved\".</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {
+          "label": "Net damage calculation correct",
+          "input": "null",
+          "expected": "Net damage: 40"
+        },
+        {
+          "label": "allOf completion message printed",
+          "input": "null",
+          "expected": "All spells resolved"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "thenCompose vs thenApply",
+          "description": "thenApply wraps the returned value in a new future (use for synchronous transforms). thenCompose flattens a returned future — use when your callback itself returns a CompletableFuture, avoiding nested CompletableFuture<CompletableFuture<T>>."
+        },
+        {
+          "term": "allOf Return Type",
+          "description": "allOf() returns CompletableFuture<Void> — you can't get results from it directly. Pattern: after allOf.join(), call join() on each individual future (they're all done at that point)."
+        },
+        {
+          "term": "anyOf Race Condition",
+          "description": "anyOf() returns the result of the first completing future but does not cancel the others — they continue running. Use carefully if tasks have side effects."
+        },
+        {
+          "term": "thenCombineAsync",
+          "description": "Like thenCombine but runs the BiFunction on a thread from the pool instead of the completing thread. Prefer when the combining logic is heavy."
+        },
+        {
+          "term": "Project Loom",
+          "description": "Java 21 introduced virtual threads that make blocking I/O cheap. Much async code written with CompletableFuture could be simplified to straightforward blocking code on virtual threads."
+        },
+        {
+          "term": "Reactive Streams",
+          "description": "A specification (implemented by Project Reactor, RxJava) for async stream processing with backpressure. CompletableFuture handles single-value async; reactive handles streams of values."
+        },
+        {
+          "term": "Executor Propagation",
+          "description": "Non-async thenApply/thenAccept run on the thread that completed the previous stage. Async variants (thenApplyAsync) run on the pool. Mixing these can cause subtle ordering issues."
+        },
+        {
+          "term": "orTimeout()",
+          "description": "Java 9+ method on CompletableFuture that completes the future exceptionally with TimeoutException after a given duration — cleaner than manually scheduling cancellation."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does <code>CompletableFuture.allOf(f1, f2, f3)</code> return?</p>",
+          "options": [
+            "CompletableFuture<List<Object>> containing all results",
+            "CompletableFuture<Void> that completes when all futures complete",
+            "CompletableFuture<Object> containing the first result",
+            "void — it blocks until all futures complete"
+          ],
+          "correctAnswer": "CompletableFuture<Void> that completes when all futures complete",
+          "explanationHtml": "<p><code>allOf()</code> returns <code>CompletableFuture&lt;Void&gt;</code>. It doesn't aggregate results. After calling <code>allOf(...).join()</code>, you retrieve individual results by calling <code>join()</code> on each original future.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this print?</p>",
+          "codeSnippet": "import java.util.concurrent.CompletableFuture;\npublic class Main {\n    public static void main(String[] args) {\n        CompletableFuture<Integer> a = CompletableFuture.supplyAsync(() -> 100);\n        CompletableFuture<Integer> b = CompletableFuture.supplyAsync(() -> 25);\n        a.thenCombine(b, (x, y) -> x - y)\n         .thenAccept(n -> System.out.println(\"Result: \" + n))\n         .join();\n    }\n}",
+          "correctAnswer": "Result: 75",
+          "explanationHtml": "<p>futureA completes with 100, futureB with 25. thenCombine subtracts: 100 - 25 = 75. Prints \"Result: 75\".</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code tries to chain two async operations but ends up with a nested future. What is wrong and how do you fix it?</p>",
+          "codeSnippet": "CompletableFuture<CompletableFuture<String>> nested =\n    CompletableFuture.supplyAsync(() -> \"Fire\")\n        .thenApply(name -> CompletableFuture.supplyAsync(() -> name + \"ball\"));\n\n// nested.join().join() is awkward!\nSystem.out.println(nested.join().join());",
+          "correctAnswer": "Replace thenApply with thenCompose to flatten the nested future",
+          "explanationHtml": "<p>When the mapper in <code>thenApply</code> itself returns a <code>CompletableFuture</code>, you get <code>CompletableFuture&lt;CompletableFuture&lt;T&gt;&gt;</code>. Use <code>thenCompose</code> instead — it flattens the result to <code>CompletableFuture&lt;T&gt;</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You need to call two independent services and combine their results. Which approach is most efficient?</p>",
+          "options": [
+            "Call service A with supplyAsync, join(), then call service B with supplyAsync, join(), then combine",
+            "Use thenCombine with two supplyAsync calls so both run in parallel",
+            "Use thenCompose to chain service A then service B sequentially",
+            "Create a single supplyAsync that calls both services sequentially"
+          ],
+          "correctAnswer": "Use thenCombine with two supplyAsync calls so both run in parallel",
+          "explanationHtml": "<p><code>thenCombine</code> with two independent <code>supplyAsync</code> calls runs both in parallel, halving the total wait time compared to sequential calls. Calling <code>join()</code> between calls forces sequential execution, losing the parallelism benefit.</p>"
+        }
+      ]
+    }
+  ]
+}

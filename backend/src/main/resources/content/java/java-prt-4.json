@@ -1,0 +1,253 @@
+{
+  "id": "java-prt-4",
+  "title": "Interfaces & Abstract Classes",
+  "glyph": "🔌",
+  "sortOrder": 4,
+  "tier": "PRACTITIONER",
+  "topicId": "java",
+  "prerequisites": ["java-prt-3"],
+  "subChunks": [
+    {
+      "id": "java-prt-4a",
+      "title": "Interface default & static methods",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Before Java 8, interfaces were purely abstract — a contract of methods with no implementation. That changed dramatically: interfaces can now carry concrete behaviour through default and static methods, enabling powerful design patterns and backward-compatible API evolution.</p>",
+      "explanationHtml": "<h3>Interface Fundamentals</h3><p>An interface defines a contract: any class implementing the interface must provide all abstract method implementations. Fields in interfaces are implicitly <code>public static final</code>. Methods are implicitly <code>public abstract</code> unless marked otherwise.</p><pre><code>interface Castable {\n    String name();            // abstract — must be implemented\n    int manaCost();           // abstract — must be implemented\n    int MANA_LIMIT = 100;     // implicitly public static final\n}\n\nclass Fireball implements Castable {\n    public String name()    { return \"Fireball\"; }\n    public int manaCost()   { return 40; }\n}\n\nclass Frost implements Castable {\n    public String name()    { return \"Frost\"; }\n    public int manaCost()   { return 25; }\n}</code></pre><h3>default Methods: Concrete Behaviour in Interfaces</h3><p>A <code>default</code> method provides a concrete implementation inside an interface. Implementing classes inherit it automatically and may override it if needed. This enables backward-compatible API evolution — adding a default method to an existing interface doesn't break existing implementations.</p><pre><code>interface Castable {\n    String name();\n    int manaCost();\n\n    // Concrete method with default implementation\n    default void announce() {\n        System.out.println(\"Preparing: \" + name() + \" (cost: \" + manaCost() + \" mana)\");\n    }\n\n    default boolean isAffordable(int availableMana) {\n        return availableMana >= manaCost();\n    }\n}\n\nclass Fireball implements Castable {\n    public String name()  { return \"Fireball\"; }\n    public int manaCost() { return 40; }\n    // announce() and isAffordable() inherited for free\n}\n\nFireball fb = new Fireball();\nfb.announce(); // Preparing: Fireball (cost: 40 mana)\nSystem.out.println(fb.isAffordable(50)); // true</code></pre><h3>static Methods on Interfaces</h3><p>Interfaces may also contain <code>static</code> methods with full implementations. Unlike default methods, static interface methods are NOT inherited by implementing classes — they must be called via the interface name directly.</p><pre><code>interface Castable {\n    String name();\n\n    static Castable ofName(String n) {\n        // Factory method living on the interface\n        return () -> n;  // lambda implementing single-method interface\n    }\n\n    static int maxPossibleDamage() {\n        return 999;\n    }\n}\n\nCastable mystery = Castable.ofName(\"Mystery Spell\");\nSystem.out.println(mystery.name());             // Mystery Spell\nSystem.out.println(Castable.maxPossibleDamage()); // 999</code></pre><h3>Implementing Multiple Interfaces</h3><p>A class can implement multiple interfaces — Java's answer to multiple inheritance of type. When two interfaces provide default methods with the same signature, the implementing class must override to resolve the conflict.</p><pre><code>interface Castable  { default void describe() { System.out.println(\"A spell\"); } }\ninterface Tradeable { default void describe() { System.out.println(\"An item\"); } }\n\n// Must override to resolve ambiguity:\nclass MagicScroll implements Castable, Tradeable {\n    public void describe() { Castable.super.describe(); } // choose one\n}</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's Binding Chamber is where arcane contracts are forged. Every spell in the Academy must pass through an interface — a binding promise of what it can do. But some interfaces carry more than promises; they carry ancient, inherited wisdom."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "An interface is a contract, apprentice. Any class that signs it must honour every abstract method. But since Java 8, interfaces may also bestow default methods — concrete gifts of behaviour that implementing classes receive automatically."
+        },
+        {
+          "type": "example",
+          "speaker": "Interface with default method",
+          "text": "interface Castable {\n    String name();  // abstract — must implement\n\n    default void announce() {\n        System.out.println(\"Preparing: \" + name());\n    }\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Notice: the default method calls name() — an abstract method. It does not know which spell it is announcing, yet it works correctly because the implementing class provides name(). This is polymorphism in action within the interface itself."
+        },
+        {
+          "type": "example",
+          "speaker": "Using the default method",
+          "text": "class Fireball implements Castable {\n    public String name() { return \"Fireball\"; }\n    // announce() inherited from interface\n}\n\nnew Fireball().announce(); // Preparing: Fireball"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Static methods on interfaces are different: they belong to the interface itself, not to instances. You cannot call them via a variable — only via the interface name: Castable.maxDamage(). Think of them as utility methods grouped with the interface."
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice defines their first interface with a default method, watches it flow into an implementing class without a single extra line, and understands: interfaces are no longer just contracts — they are frameworks."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Implement a spell using the pre-defined <code>Castable</code> interface:</p><ol><li>The <code>Castable</code> interface is already defined in the starter code. It has an abstract <code>String name()</code> method, an abstract <code>void cast()</code> method, and a <code>default void announce()</code> method that prints <code>\"Preparing: \"</code> followed by the spell name.</li><li>Implement a class <code>Fireball</code> that implements <code>Castable</code>. Its <code>name()</code> returns <code>\"Fireball\"</code>, and its <code>cast()</code> prints <code>\"BOOM!\"</code>.</li><li>In <code>main()</code>: create a <code>Fireball</code>, call <code>announce()</code>, then call <code>cast()</code>.</li></ol>",
+      "guidedPracticeStarterCode": "public class Main {\n\n    interface Castable {\n        String name();\n        void cast();\n\n        default void announce() {\n            System.out.println(\"Preparing: \" + name());\n        }\n    }\n\n    // TODO: implement Fireball here (package-private, not public)\n    static class Fireball implements Castable {\n        // TODO: implement name() and cast()\n    }\n\n    public static void main(String[] args) {\n        Castable spell = new Fireball();\n        spell.announce();\n        spell.cast();\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "announce() prints Preparing: Fireball", "input": "null", "expected": "Preparing: Fireball"},
+        {"label": "cast() prints BOOM!", "input": "null", "expected": "BOOM!"}
+      ],
+      "feynmanPrompt": "Explain the difference between a default method and a static method on an interface. Include: why can a default method call an abstract method, and why can't you call a static interface method via an instance variable?",
+      "soloPracticeHtml": "<p>From a blank slate, define the <code>Castable</code> interface (with abstract <code>name()</code>, abstract <code>cast()</code>, and a default <code>announce()</code>), implement it with a <code>Fireball</code> inner class, and call both <code>announce()</code> and <code>cast()</code> in <code>main()</code>.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "announce() prints Preparing: Fireball", "input": "null", "expected": "Preparing: Fireball"},
+        {"label": "cast() prints BOOM!", "input": "null", "expected": "BOOM!"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "interface", "description": "A Java type that defines a contract of abstract methods (and optionally default/static methods); a class can implement multiple interfaces."},
+        {"term": "default method", "description": "A concrete method in an interface marked with the 'default' keyword; implementing classes inherit it automatically and may override it."},
+        {"term": "static interface method", "description": "A method with a full implementation that belongs to the interface itself (not instances); called via InterfaceName.method(), not via instances."},
+        {"term": "abstract method", "description": "A method declaration with no body; implementing classes must provide a concrete implementation."},
+        {"term": "multiple interface implementation", "description": "Java allows a class to implement any number of interfaces simultaneously, combining multiple contracts — the mechanism Java uses instead of multiple inheritance."},
+        {"term": "diamond problem", "description": "The ambiguity that arises when two interfaces provide default methods with the same signature; the implementing class must explicitly override to resolve it."},
+        {"term": "marker interface", "description": "An interface with no methods (e.g. Serializable, Cloneable) used purely to mark classes with a type for runtime checks — often replaced by annotations today."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>How do you call a <code>static</code> method defined on an interface called <code>Castable</code>?</p>",
+          "options": [
+            "Via any instance variable that implements Castable",
+            "Via Castable.methodName()",
+            "Via super.methodName() from an implementing class",
+            "It cannot be called from outside the interface"
+          ],
+          "correctAnswer": "Via Castable.methodName()",
+          "explanationHtml": "<p>Static methods on interfaces are tied to the interface type itself, not to any instance. You must call them using the interface name: <code>Castable.methodName()</code>. Unlike default methods, they are <em>not</em> inherited by implementing classes, so you cannot call them via an instance variable or via <code>super</code>. This design prevents confusion about which interface's static method is being invoked when a class implements multiple interfaces.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "public class Main {\n    interface Spell {\n        String name();\n        default String describe() {\n            return \"Spell: \" + name();\n        }\n    }\n    static class IceShot implements Spell {\n        public String name() { return \"IceShot\"; }\n        public String describe() { return \"Ice: \" + name(); }\n    }\n    static class Arc implements Spell {\n        public String name() { return \"Arc\"; }\n    }\n    public static void main(String[] args) {\n        System.out.println(new IceShot().describe());\n        System.out.println(new Arc().describe());\n    }\n}",
+          "correctAnswer": "Ice: IceShot\nSpell: Arc",
+          "explanationHtml": "<p><code>IceShot</code> overrides <code>describe()</code>, so its version (<code>\"Ice: \" + name()</code>) is called — printing <code>Ice: IceShot</code>. <code>Arc</code> does not override <code>describe()</code>, so it inherits the default implementation from the interface, which calls <code>name()</code> on the current instance — printing <code>Spell: Arc</code>. This demonstrates both overriding a default method and inheriting it.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code fails to compile. What is the problem?</p>",
+          "codeSnippet": "public class Main {\n    interface Greetable {\n        default String greet() { return \"Hello!\"; }\n    }\n    interface Farewell {\n        default String greet() { return \"Goodbye!\"; }\n    }\n    static class Wizard implements Greetable, Farewell {\n        // no override\n    }\n    public static void main(String[] args) {\n        System.out.println(new Wizard().greet());\n    }\n}",
+          "correctAnswer": "Wizard implements two interfaces that both provide a default method named greet(). The compiler cannot choose which to use and requires Wizard to override greet() to resolve the ambiguity.",
+          "explanationHtml": "<p>When two interfaces define a <code>default</code> method with the same signature, any class implementing both must override that method — otherwise the compiler raises an error because it cannot determine which default to inherit. The fix is to add <code>public String greet() { return Greetable.super.greet(); }</code> (or <code>Farewell.super.greet()</code>) inside <code>Wizard</code>, explicitly delegating to one interface's default. This is known as the diamond problem resolution.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Which statement best describes when to prefer an interface (with default methods) over an abstract class?</p>",
+          "options": [
+            "When you need to share state (instance fields) across implementations",
+            "When you need constructor logic to enforce invariants at creation time",
+            "When you want a type that multiple unrelated classes can implement without forcing a single inheritance hierarchy",
+            "When you need to restrict access with protected or package-private members"
+          ],
+          "correctAnswer": "When you want a type that multiple unrelated classes can implement without forcing a single inheritance hierarchy",
+          "explanationHtml": "<p>Interfaces shine when the behaviour is a <em>capability</em> that many unrelated classes might share — for example, <code>Comparable</code>, <code>Serializable</code>, or a custom <code>Castable</code>. Because Java allows implementing multiple interfaces but only extending one class, interfaces provide flexibility without coupling. Abstract classes are better when you need to share instance state, enforce constructor logic, or provide non-public members — none of which interfaces support. The key question is: 'Is this a contract of capability, or a template of structure?'</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-prt-4b",
+      "title": "Abstract Classes & Template Method Pattern",
+      "sortOrder": 2,
+      "xpReward": 80,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Some algorithms share the same skeleton — the same sequence of steps — but differ in the details of each step. The Template Method pattern captures that skeleton in an abstract class and delegates the varying steps to subclasses. One of the most elegant applications of inheritance in all of object-oriented design.</p>",
+      "explanationHtml": "<h3>Abstract Classes: Partial Implementation</h3><p>An abstract class is a class that cannot be instantiated directly. It may contain abstract methods (which subclasses must implement), concrete methods (fully implemented), and instance fields — distinguishing it from interfaces, which cannot hold instance state.</p><pre><code>abstract class Spell {\n    private final String name;          // instance field — interfaces can't have this\n\n    Spell(String name) {                // constructor — interfaces can't have this\n        this.name = name;\n    }\n\n    String getName() { return name; }  // concrete method\n\n    abstract int damage();             // subclasses must implement\n    abstract String element();         // subclasses must implement\n}\n\nclass Fireball extends Spell {\n    Fireball() { super(\"Fireball\"); }\n    public int damage()    { return 80; }\n    public String element() { return \"Fire\"; }\n}\n\nSpell s = new Fireball(); // OK — Fireball is concrete\n// Spell s = new Spell(); // Error — cannot instantiate abstract class</code></pre><h3>The Template Method Pattern</h3><p>Template Method defines an algorithm's skeleton in a <code>final</code> method of an abstract class. The skeleton calls abstract 'step' methods that subclasses override to provide specific behaviour. The <code>final</code> keyword ensures the overall structure cannot be altered.</p><pre><code>abstract class Ritual {\n    // Template method — final to lock the sequence\n    final void perform() {\n        prepare();\n        execute();\n        cleanup();\n    }\n\n    abstract void prepare();    // subclass fills in details\n    abstract void execute();    // subclass fills in details\n\n    void cleanup() {            // optional hook with default behaviour\n        System.out.println(\"Ritual complete.\");\n    }\n}\n\nclass SummoningRitual extends Ritual {\n    void prepare() {\n        System.out.println(\"Drawing summoning circle...\");\n    }\n    void execute() {\n        System.out.println(\"Summoning ancient guardian!\");\n    }\n    // cleanup() inherited — prints \"Ritual complete.\"\n}\n\nnew SummoningRitual().perform();\n// Drawing summoning circle...\n// Summoning ancient guardian!\n// Ritual complete.</code></pre><h3>Interface vs Abstract Class: The Decision</h3><p>Use this guide to choose between them:</p><pre><code>// Use INTERFACE when:\n// - Multiple unrelated classes should share a type\n// - You want to combine multiple capabilities (multiple implements)\n// - No shared state is needed\n// - You're defining a pure capability/contract\n\n// Use ABSTRACT CLASS when:\n// - You want to share instance fields or constructor logic\n// - A base implementation exists that most subclasses will reuse\n// - You want to enforce an algorithm skeleton (Template Method)\n// - You need protected or package-private access\n\n// Java tip: prefer interfaces for types; use abstract classes\n// for shared implementation details.</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Academy's Grand Ritual Chamber holds procedures going back centuries. Every ritual has the same structure: prepare, execute, clean up. But the specific actions within each step differ for every school of magic. The Template Method pattern encodes this ancient wisdom."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "An abstract class is a class that admits it is incomplete. It may hold fields and constructors — real state — but it reserves some methods for its descendants to define. It says: 'I know the shape of what I do, but not all the details.'"
+        },
+        {
+          "type": "example",
+          "speaker": "Abstract Class",
+          "text": "abstract class Spell {\n    private final String name;\n    Spell(String name) { this.name = name; }\n    String getName() { return name; }\n    abstract int damage(); // subclasses must define\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "The Template Method pattern takes this further. The abstract class defines a *final* method — the ritual skeleton — which calls abstract steps. Subclasses fill in the steps, but cannot reorder or skip them. The algorithm's integrity is guaranteed."
+        },
+        {
+          "type": "example",
+          "speaker": "Template Method Pattern",
+          "text": "abstract class Ritual {\n    final void perform() {  // the template — cannot be overridden\n        prepare();\n        execute();\n        cleanup();\n    }\n    abstract void prepare();\n    abstract void execute();\n    void cleanup() { System.out.println(\"Ritual complete.\"); }\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Compare with interfaces: an abstract class can have constructors and instance fields — it holds real state. An interface cannot. If your abstraction needs to carry data from creation onward, lean toward an abstract class. If it is a pure contract of capability, use an interface."
+        },
+        {
+          "type": "narration",
+          "text": "The apprentice extends the Ritual and implements their own SummoningRitual. They call perform() and watch the steps execute in exactly the right order — the ancient structure upheld, the specific actions their own."
+        }
+      ],
+      "guidedPracticeHtml": "<p>The <code>Ritual</code> abstract class is already defined in the starter code with the Template Method pattern. Your task:</p><ol><li>Implement a <strong>static nested class</strong> called <code>SummoningRitual</code> that extends <code>Ritual</code>.</li><li>Its <code>prepare()</code> should print <code>\"Drawing summoning circle...\"</code>.</li><li>Its <code>execute()</code> should print <code>\"Summoning ancient guardian!\"</code>.</li><li>In <code>main()</code>, create a <code>SummoningRitual</code> and call <code>perform()</code>. The inherited <code>cleanup()</code> will automatically print <code>\"Ritual complete.\"</code>.</li></ol>",
+      "guidedPracticeStarterCode": "public class Main {\n\n    abstract static class Ritual {\n        final void perform() {\n            prepare();\n            execute();\n            cleanup();\n        }\n\n        abstract void prepare();\n        abstract void execute();\n\n        void cleanup() {\n            System.out.println(\"Ritual complete.\");\n        }\n    }\n\n    // TODO: implement SummoningRitual extending Ritual\n    static class SummoningRitual extends Ritual {\n        // TODO: implement prepare() and execute()\n    }\n\n    public static void main(String[] args) {\n        Ritual ritual = new SummoningRitual();\n        ritual.perform();\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "prepare() prints Drawing summoning circle...", "input": "null", "expected": "Drawing summoning circle..."},
+        {"label": "execute() prints Summoning ancient guardian!", "input": "null", "expected": "Summoning ancient guardian!"},
+        {"label": "cleanup() prints Ritual complete.", "input": "null", "expected": "Ritual complete."}
+      ],
+      "feynmanPrompt": "Explain the Template Method pattern in your own words. Why is the template method marked final? What is the difference between an abstract method and the cleanup() hook method in the Ritual class, and when would a subclass override cleanup()?",
+      "soloPracticeHtml": "<p>Recreate everything from scratch. Define the <code>Ritual</code> abstract class with the Template Method, implement <code>SummoningRitual</code>, and call <code>perform()</code> in <code>main()</code> — no starter code.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "prepare() prints Drawing summoning circle...", "input": "null", "expected": "Drawing summoning circle..."},
+        {"label": "execute() prints Summoning ancient guardian!", "input": "null", "expected": "Summoning ancient guardian!"},
+        {"label": "cleanup() prints Ritual complete.", "input": "null", "expected": "Ritual complete."}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "abstract class", "description": "A class that cannot be instantiated directly; it may contain abstract methods (no body, must be overridden) and concrete methods (with body), as well as instance fields and constructors."},
+        {"term": "abstract method", "description": "A method declared with no body in an abstract class; every non-abstract subclass must provide a concrete implementation."},
+        {"term": "Template Method pattern", "description": "A behavioral design pattern where an abstract class defines a final algorithm skeleton that calls abstract or hook methods, leaving the specifics to subclasses."},
+        {"term": "final method", "description": "A method that cannot be overridden by subclasses; used in Template Method to guarantee the algorithm's structure is preserved."},
+        {"term": "hook method", "description": "A method in an abstract class that has a default (often empty) implementation but can be optionally overridden by subclasses to inject custom behaviour at a specific point in the algorithm."},
+        {"term": "extends", "description": "The Java keyword used to create a subclass; a class can extend exactly one other class (single inheritance), inheriting its fields and methods."},
+        {"term": "super()", "description": "A call to the parent class constructor, which must be the first statement in a subclass constructor; ensures parent-class state is properly initialized."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Why is the template method in the Template Method pattern typically marked <code>final</code>?</p>",
+          "options": [
+            "To prevent the method from being called by external code",
+            "To ensure subclasses cannot change the algorithm's overall structure",
+            "To make the method run faster at runtime",
+            "To prevent the method from calling abstract methods"
+          ],
+          "correctAnswer": "To ensure subclasses cannot change the algorithm's overall structure",
+          "explanationHtml": "<p>The entire purpose of the Template Method pattern is that the abstract class controls the algorithm's structure — which steps run, in what order. If subclasses could override the template method itself, they could reorder, skip, or add steps, defeating the pattern's intent. <code>final</code> seals that method, guaranteeing the skeleton is respected while still allowing subclasses to customise individual steps via abstract or hook methods.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "public class Main {\n    abstract static class Quest {\n        final void begin() {\n            start();\n            fight();\n            end();\n        }\n        abstract void start();\n        abstract void fight();\n        void end() { System.out.println(\"Quest ended.\"); }\n    }\n    static class DragonQuest extends Quest {\n        void start() { System.out.println(\"Entering dragon lair.\"); }\n        void fight() { System.out.println(\"Fighting dragon!\"); }\n        void end()   { System.out.println(\"Dragon slain!\"); }\n    }\n    public static void main(String[] args) {\n        new DragonQuest().begin();\n    }\n}",
+          "correctAnswer": "Entering dragon lair.\nFighting dragon!\nDragon slain!",
+          "explanationHtml": "<p><code>begin()</code> calls <code>start()</code>, <code>fight()</code>, and <code>end()</code> in order. <code>DragonQuest</code> provides its own implementation of all three, including <code>end()</code> which overrides the default. So: <code>start()</code> prints 'Entering dragon lair.', <code>fight()</code> prints 'Fighting dragon!', and the overridden <code>end()</code> prints 'Dragon slain!' instead of 'Quest ended.'.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code fails to compile. What is the error?</p>",
+          "codeSnippet": "public class Main {\n    abstract static class Spell {\n        abstract int damage();\n        abstract String element();\n    }\n    static class Blizzard extends Spell {\n        int damage() { return 70; }\n        // element() not implemented\n    }\n    public static void main(String[] args) {\n        System.out.println(new Blizzard().damage());\n    }\n}",
+          "correctAnswer": "Blizzard does not implement the abstract method element() inherited from Spell. Either implement element() in Blizzard, or declare Blizzard as abstract too.",
+          "explanationHtml": "<p>Any non-abstract class that extends an abstract class must provide implementations for <em>all</em> inherited abstract methods. <code>Blizzard</code> implements <code>damage()</code> but leaves <code>element()</code> unimplemented. The compiler rejects this because <code>Blizzard</code> is not declared <code>abstract</code>. The two fixes are: (1) add <code>String element() { return \"Ice\"; }</code> to <code>Blizzard</code>, or (2) declare <code>Blizzard</code> as <code>abstract static class Blizzard extends Spell</code> — though then you couldn't instantiate it with <code>new Blizzard()</code> either.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A spell system needs a base <code>Spell</code> type that stores a name and mana cost (as fields), enforces these via a constructor, and leaves <code>damage()</code> and <code>element()</code> for subclasses to define. Which is the correct design?</p>",
+          "options": [
+            "An interface with default methods for damage() and element()",
+            "An abstract class with instance fields, a constructor, and abstract methods for damage() and element()",
+            "A concrete class with damage() and element() throwing UnsupportedOperationException",
+            "An interface with static fields for name and manaCost"
+          ],
+          "correctAnswer": "An abstract class with instance fields, a constructor, and abstract methods for damage() and element()",
+          "explanationHtml": "<p>Interfaces cannot hold instance fields (only <code>public static final</code> constants) and cannot have constructors. Since the requirement is to store per-instance state (name, mana cost) and enforce it at construction time, an abstract class is the correct tool. It can declare <code>private final String name</code> and <code>private final int manaCost</code>, initialize them in a constructor (<code>Spell(String name, int manaCost)</code>), and declare <code>abstract int damage()</code> and <code>abstract String element()</code> for subclasses to implement. A concrete class with exceptions is an anti-pattern — it delays errors to runtime instead of enforcing them at compile time.</p>"
+        }
+      ]
+    }
+  ]
+}

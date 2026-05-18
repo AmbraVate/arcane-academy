@@ -1,0 +1,182 @@
+{
+  "id": "java-exp-1",
+  "title": "Concurrency Fundamentals",
+  "glyph": "⚡",
+  "sortOrder": 1,
+  "tier": "EXPERT",
+  "topicId": "java",
+  "prerequisites": ["java-prt-8"],
+  "subChunks": [
+    {
+      "id": "java-exp-1a",
+      "title": "Threads & Runnable",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Two apprentices trying to cast spells simultaneously — but they keep interrupting each other, corrupting the arcane weave. Welcome to the world of <strong>concurrency</strong>, where mastering threads means mastering chaos itself.</p>",
+      "explanationHtml": "<h3>Creating Threads</h3><p>Java represents a thread of execution with the <code>Thread</code> class. You can create one by subclassing it or — more commonly — by passing a <code>Runnable</code> to its constructor.</p><pre><code>// Subclassing Thread (less preferred)\nclass SpellThread extends Thread {\n    public void run() {\n        System.out.println(\"Spell cast from thread: \" + Thread.currentThread().getName());\n    }\n}\n\n// Starting it\nSpellThread t = new SpellThread();\nt.start(); // Do NOT call run() directly — that executes on the current thread!</code></pre><h3>Runnable vs Thread Subclass</h3><p>Prefer <code>Runnable</code> because Java has single inheritance — subclassing <code>Thread</code> prevents you from extending another class. <code>Runnable</code> is a functional interface, so lambdas work perfectly.</p><pre><code>Runnable spellTask = () -> {\n    for (int i = 0; i < 3; i++) {\n        System.out.println(\"Casting from: \" + Thread.currentThread().getName());\n    }\n};\n\nThread t = new Thread(spellTask, \"SpellThread-1\");\nt.start();\nt.join(); // Wait for t to finish before continuing</code></pre><h3>Thread Lifecycle</h3><p>A thread moves through these states: <strong>NEW</strong> (created but not started), <strong>RUNNABLE</strong> (executing or ready to execute), <strong>BLOCKED</strong> (waiting for a monitor lock), <strong>WAITING</strong> (waiting indefinitely for another thread), <strong>TIMED_WAITING</strong> (waiting for a specified time — e.g. <code>Thread.sleep(100)</code>), and <strong>TERMINATED</strong> (finished).</p><pre><code>Thread t = new Thread(() -> {\n    try {\n        Thread.sleep(50); // TIMED_WAITING state\n    } catch (InterruptedException e) {\n        Thread.currentThread().interrupt();\n    }\n});\nSystem.out.println(t.getState()); // NEW\nt.start();\nSystem.out.println(t.getState()); // RUNNABLE or TIMED_WAITING\nt.join();\nSystem.out.println(t.getState()); // TERMINATED</code></pre><h3>Race Conditions</h3><p>When two threads read and write a shared variable without coordination, results become unpredictable. This is a <strong>race condition</strong>.</p><pre><code>class Counter {\n    int count = 0; // shared, unprotected!\n    void increment() { count++; } // NOT atomic: read, add, write = 3 steps\n}\n\nCounter c = new Counter();\nThread t1 = new Thread(() -> { for (int i=0;i<500;i++) c.increment(); });\nThread t2 = new Thread(() -> { for (int i=0;i<500;i++) c.increment(); });\nt1.start(); t2.start();\nt1.join();  t2.join();\nSystem.out.println(c.count); // Could be anything from 500 to 1000!</code></pre><h3>The synchronized Keyword</h3><p><code>synchronized</code> ensures only one thread executes a block at a time by acquiring a monitor lock. You can apply it to methods or explicit blocks.</p><pre><code>class SafeCounter {\n    private int count = 0;\n\n    // Synchronized method — lock is the SafeCounter instance\n    synchronized void increment() {\n        count++;\n    }\n\n    // Synchronized block — more granular, better for performance\n    void incrementBlock() {\n        synchronized (this) {\n            count++;\n        }\n    }\n\n    int getCount() { return count; }\n}\n\n// volatile: guarantees visibility across threads (reads/writes go to main memory)\n// Use when one thread writes, others only read — NOT for compound operations\nprivate volatile boolean running = true;</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Deep in the Academy's twin spell-chambers, two apprentices attempt to cast simultaneously. The arcane weave flickers and stutters — their incantations are colliding."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Every great mage eventually faces the challenge of wielding two spells at once. In the arcane arts — and in Java — we call this concurrency."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "A Thread is an independent path of execution. Like two apprentices casting in separate chambers — they run concurrently, but must not interfere with each other's materials."},
+        {"type": "example", "speaker": "Thread Creation", "text": "Thread t = new Thread(() -> System.out.println(\"Casting!\"), \"SpellThread\");\nt.start(); // Launches the thread\nt.join();  // Wait for it to complete"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "But beware — when two threads reach for the same magical artifact simultaneously, chaos erupts. We call this a race condition."},
+        {"type": "example", "speaker": "The Fix: synchronized", "text": "synchronized void increment() {\n    count++; // Now only one thread at a time\n}"},
+        {"type": "narration", "text": "With synchronization woven into the spell, the two apprentices take turns touching the arcane counter — no collision, no corruption, a perfect 1000."}
+      ],
+      "guidedPracticeHtml": "<p>First, create two threads: <strong>Thread A</strong> prints <code>\"Spell A casting...\"</code> 3 times and <strong>Thread B</strong> prints <code>\"Spell B casting...\"</code> 3 times. Start both threads, then call <code>join()</code> on each to wait for completion.</p><p>Then demonstrate safe synchronization: create a static inner class <code>SpellCounter</code> with a <code>synchronized void increment()</code> method and an <code>int count</code> field. Launch two threads that each call <code>increment()</code> 500 times, join both, and print <code>counter.count</code>. The result must be exactly <code>1000</code>.</p>",
+      "guidedPracticeStarterCode": "public class Main {\n\n    static class SpellCounter {\n        int count = 0;\n\n        // TODO: add synchronized modifier\n        void increment() {\n            count++;\n        }\n    }\n\n    public static void main(String[] args) throws InterruptedException {\n        // Part 1: Two threads printing spell names\n        Thread threadA = new Thread(() -> {\n            for (int i = 0; i < 3; i++) {\n                System.out.println(\"Spell A casting...\");\n            }\n        });\n\n        Thread threadB = new Thread(() -> {\n            // TODO: print \"Spell B casting...\" 3 times\n        });\n\n        threadA.start();\n        threadB.start();\n        // TODO: join both threads\n\n        // Part 2: Synchronized counter\n        SpellCounter counter = new SpellCounter();\n        Thread t1 = new Thread(() -> {\n            for (int i = 0; i < 500; i++) counter.increment();\n        });\n        Thread t2 = new Thread(() -> {\n            // TODO: call counter.increment() 500 times\n        });\n\n        t1.start();\n        t2.start();\n        // TODO: join t1 and t2\n\n        System.out.println(counter.count);\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Thread A output present", "input": "null", "expected": "Spell A casting..."},
+        {"label": "Thread B output present", "input": "null", "expected": "Spell B casting..."},
+        {"label": "Synchronized counter equals 1000", "input": "null", "expected": "1000"}
+      ],
+      "feynmanPrompt": "Explain what a race condition is and why simply making a method 'synchronized' prevents it. What exactly does 'acquiring the monitor lock' mean, and what happens to other threads that try to enter a synchronized block while the lock is held?",
+      "soloPracticeHtml": "<p>From memory, write a program with a static inner class <code>SpellCounter</code> that has a <code>synchronized void increment()</code> method. Create two threads that each increment the counter 500 times. Join both threads and print the final count. Also create a thread using a lambda <code>Runnable</code> that prints <code>\"Spell A casting...\"</code> three times and another that prints <code>\"Spell B casting...\"</code> three times, starting and joining both.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Thread A output present", "input": "null", "expected": "Spell A casting..."},
+        {"label": "Thread B output present", "input": "null", "expected": "Spell B casting..."},
+        {"label": "Counter result is 1000", "input": "null", "expected": "1000"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "Monitor Lock", "description": "Every Java object has an intrinsic lock (monitor). The synchronized keyword acquires this lock, guaranteeing mutual exclusion for threads."},
+        {"term": "Volatile", "description": "A keyword that ensures a variable's value is always read from and written to main memory, preventing threads from caching stale values — but does NOT ensure atomicity for compound operations."},
+        {"term": "Thread.join()", "description": "Blocks the calling thread until the target thread terminates. Essential for coordinating results from background threads."},
+        {"term": "Deadlock", "description": "A situation where two or more threads each hold a lock the other needs, and neither can proceed. Avoided by always acquiring locks in the same order."},
+        {"term": "Thread State", "description": "Java threads move through NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, and TERMINATED states, queryable via Thread.getState()."},
+        {"term": "InterruptedException", "description": "Thrown when a thread is waiting or sleeping and another thread calls interrupt() on it. Always restore the interrupt flag with Thread.currentThread().interrupt() in catch blocks."},
+        {"term": "Happens-Before", "description": "A JVM memory model guarantee: actions in one thread that 'happen-before' another are visible to that thread. synchronized and volatile both establish happens-before relationships."},
+        {"term": "Livelock", "description": "Similar to deadlock but threads keep changing state in response to each other without making progress — like two people in a hallway each stepping aside in the same direction indefinitely."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which method actually starts a new OS-level thread in Java?</p>",
+          "options": ["Thread.run()", "Thread.start()", "Thread.execute()", "Thread.launch()"],
+          "correctAnswer": "Thread.start()",
+          "explanationHtml": "<p><code>start()</code> creates a new thread and invokes <code>run()</code> on it. Calling <code>run()</code> directly executes it on the <em>current</em> thread — no new thread is created.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is the guaranteed output of this code (ignoring thread scheduling order)?</p>",
+          "codeSnippet": "public class Main {\n    static class Counter {\n        int n = 0;\n        synchronized void inc() { n++; }\n    }\n    public static void main(String[] args) throws InterruptedException {\n        Counter c = new Counter();\n        Thread t1 = new Thread(() -> { for(int i=0;i<3;i++) c.inc(); });\n        Thread t2 = new Thread(() -> { for(int i=0;i<3;i++) c.inc(); });\n        t1.start(); t2.start();\n        t1.join(); t2.join();\n        System.out.println(c.n);\n    }\n}",
+          "correctAnswer": "6",
+          "explanationHtml": "<p>The <code>synchronized</code> keyword ensures <code>inc()</code> is atomic. Both threads each call it 3 times, guaranteeing a final count of 6.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code is supposed to print the counter result after both threads finish, but it sometimes prints 0 or an intermediate value. What is wrong?</p>",
+          "codeSnippet": "public class Main {\n    static int count = 0;\n    public static void main(String[] args) {\n        Thread t1 = new Thread(() -> { for(int i=0;i<500;i++) count++; });\n        Thread t2 = new Thread(() -> { for(int i=0;i<500;i++) count++; });\n        t1.start();\n        t2.start();\n        System.out.println(count); // printed too early!\n    }\n}",
+          "correctAnswer": "join() is never called, so the main thread prints count before t1 and t2 finish",
+          "explanationHtml": "<p>The main thread prints <code>count</code> immediately after calling <code>start()</code>, without waiting for threads to finish. Fix: call <code>t1.join(); t2.join();</code> before the print. Additionally, <code>count++</code> is not atomic, so <code>synchronized</code> or <code>AtomicInteger</code> is also needed.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When should you prefer <code>volatile</code> over <code>synchronized</code>?</p>",
+          "options": [
+            "When multiple threads perform compound operations like check-then-act on the variable",
+            "When one thread writes a boolean flag and other threads only read it",
+            "When you need to ensure only one thread executes a critical section at a time",
+            "When incrementing a counter from multiple threads"
+          ],
+          "correctAnswer": "When one thread writes a boolean flag and other threads only read it",
+          "explanationHtml": "<p><code>volatile</code> guarantees visibility (no stale caches) but NOT atomicity. It's perfect for a simple flag one thread flips and others read. For compound operations like <code>count++</code>, use <code>synchronized</code> or <code>AtomicInteger</code>.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-exp-1b",
+      "title": "ExecutorService & Thread Pools",
+      "sortOrder": 2,
+      "xpReward": 100,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Creating a new thread for every task is like hiring a new apprentice for every single spell — exhausting and wasteful. Thread pools let you reuse a fixed team of workers efficiently.</p>",
+      "explanationHtml": "<h3>Why Thread Pools?</h3><p>Creating and destroying threads is expensive. A <strong>thread pool</strong> maintains a set of pre-created threads. Tasks are submitted to a queue; idle threads pick them up. This caps resource usage and eliminates thread-creation overhead.</p><pre><code>// Bad: new thread per task\nfor (int i = 0; i < 100; i++) {\n    new Thread(task).start(); // 100 threads created and destroyed!\n}\n\n// Good: reuse a pool of 4 threads\nExecutorService pool = Executors.newFixedThreadPool(4);\nfor (int i = 0; i < 100; i++) {\n    pool.submit(task); // queued and picked up by idle threads\n}\npool.shutdown();</code></pre><h3>Callable vs Runnable</h3><p><code>Runnable.run()</code> returns void and cannot throw checked exceptions. <code>Callable&lt;V&gt;.call()</code> returns a value and can throw any exception — making it the right choice when you need a result.</p><pre><code>Callable&lt;String&gt; spellTask = () -> {\n    // do work...\n    return \"Fireball complete\";\n};\n\nFuture&lt;String&gt; future = pool.submit(spellTask);\nString result = future.get(); // blocks until result available\nSystem.out.println(result); // \"Fireball complete\"</code></pre><h3>Future & Blocking</h3><p><code>Future.get()</code> blocks the calling thread until the task completes. You can also provide a timeout: <code>future.get(5, TimeUnit.SECONDS)</code> to avoid waiting forever. <code>future.isDone()</code> checks without blocking.</p><pre><code>Future&lt;Integer&gt; f = pool.submit(() -> 42);\nSystem.out.println(f.isDone()); // might be false\nint val = f.get();              // blocks, then returns 42\nSystem.out.println(f.isDone()); // true</code></pre><h3>Shutdown Lifecycle</h3><p>Always shut down your executor. <code>shutdown()</code> stops accepting new tasks but lets queued tasks finish. <code>shutdownNow()</code> attempts to cancel running tasks. <code>awaitTermination()</code> blocks until all tasks complete or timeout occurs.</p><pre><code>pool.shutdown();\ntry {\n    if (!pool.awaitTermination(10, TimeUnit.SECONDS)) {\n        pool.shutdownNow(); // force if still running after 10s\n    }\n} catch (InterruptedException e) {\n    pool.shutdownNow();\n    Thread.currentThread().interrupt();\n}</code></pre><h3>Other Executor Flavors</h3><p><code>Executors.newSingleThreadExecutor()</code> — one thread, tasks run sequentially in submission order. <code>Executors.newCachedThreadPool()</code> — creates new threads as needed, reuses idle ones (unbounded — use with caution). <code>Executors.newScheduledThreadPool(n)</code> — for delayed or periodic tasks.</p><pre><code>// Single-threaded: guaranteed sequential execution\nExecutorService single = Executors.newSingleThreadExecutor();\nsingle.submit(() -> System.out.println(\"Task 1\"));\nsingle.submit(() -> System.out.println(\"Task 2\")); // always after Task 1\nsingle.shutdown();</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's arcane factory hums with activity. Rather than summoning new apprentices for every minor enchantment, the Archmage has established a permanent team of skilled spell-workers."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Raw thread creation is like hiring a fresh apprentice, training them, and then dismissing them after one spell. Ruinously inefficient. A thread pool keeps trained workers ready at all times."},
+        {"type": "example", "speaker": "Creating a Pool", "text": "ExecutorService pool = Executors.newFixedThreadPool(3);\nFuture<String> result = pool.submit(() -> \"Spell completed\");\nSystem.out.println(result.get());\npool.shutdown();"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "A Callable is like a Runnable that returns a receipt — a Future — proving the spell was cast and recording the outcome. Call get() on that Future when you need the result."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "And always, always shut down the pool when work is done. An executor left running is like leaving cauldrons boiling unattended — a disaster waiting to happen."},
+        {"type": "example", "speaker": "Proper Shutdown", "text": "pool.shutdown();\npool.awaitTermination(10, TimeUnit.SECONDS);"},
+        {"type": "narration", "text": "With the thread pool established, the Academy dispatches five enchantment tasks. Three workers grab the first three immediately; the remaining two wait their turn in the queue — orderly, efficient, and safe."}
+      ],
+      "guidedPracticeHtml": "<p>Create a <code>newFixedThreadPool(3)</code>. Submit 5 <code>Callable&lt;String&gt;</code> tasks — each returns <code>\"Spell-N completed\"</code> where N is 1 through 5. Collect all 5 <code>Future&lt;String&gt;</code> objects into a list, then call <code>get()</code> on each and print the result. Finally call <code>shutdown()</code> and <code>awaitTermination(10, TimeUnit.SECONDS)</code>.</p>",
+      "guidedPracticeStarterCode": "import java.util.ArrayList;\nimport java.util.List;\nimport java.util.concurrent.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService pool = Executors.newFixedThreadPool(3);\n        List<Future<String>> futures = new ArrayList<>();\n\n        for (int i = 1; i <= 5; i++) {\n            final int taskNum = i;\n            // TODO: create a Callable<String> that returns \"Spell-\" + taskNum + \" completed\"\n            // TODO: submit it to pool and add the Future to futures\n        }\n\n        for (Future<String> future : futures) {\n            // TODO: call future.get() and print the result\n        }\n\n        pool.shutdown();\n        pool.awaitTermination(10, TimeUnit.SECONDS);\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Spell-1 result printed", "input": "null", "expected": "Spell-1 completed"},
+        {"label": "Spell-3 result printed", "input": "null", "expected": "Spell-3 completed"},
+        {"label": "Spell-5 result printed", "input": "null", "expected": "Spell-5 completed"}
+      ],
+      "feynmanPrompt": "Explain the difference between Callable and Runnable, and why Future.get() can be dangerous if called without a timeout. What is the difference between shutdown() and shutdownNow(), and when would you use each?",
+      "soloPracticeHtml": "<p>From memory, create a fixed thread pool of 3 threads, submit 5 Callable tasks returning \"Spell-N completed\" (N = 1-5), collect all Futures, print each result via get(), then properly shut down the pool with shutdown() and awaitTermination().</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Spell-1 result printed", "input": "null", "expected": "Spell-1 completed"},
+        {"label": "Spell-3 result printed", "input": "null", "expected": "Spell-3 completed"},
+        {"label": "Spell-5 result printed", "input": "null", "expected": "Spell-5 completed"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "ExecutorService", "description": "An interface extending Executor that manages a pool of threads. Provides submit(), invokeAll(), invokeAny(), shutdown(), and awaitTermination() among others."},
+        {"term": "Future<V>", "description": "Represents the result of an asynchronous computation. get() blocks until the result is available; cancel() attempts to cancel the task."},
+        {"term": "Callable<V>", "description": "Like Runnable but its call() method returns a value of type V and can throw checked exceptions. Used with ExecutorService.submit()."},
+        {"term": "Thread Pool Sizing", "description": "CPU-bound tasks: pool size = number of CPU cores. I/O-bound tasks: pool size can be larger since threads spend time waiting. Rule of thumb: measure under realistic load."},
+        {"term": "RejectedExecutionException", "description": "Thrown when a task is submitted to a pool after shutdown() has been called or the queue is full."},
+        {"term": "Work-Stealing Pool", "description": "Executors.newWorkStealingPool() uses a ForkJoinPool where idle threads steal tasks from busy threads' queues — useful for uneven workloads."},
+        {"term": "invokeAll()", "description": "Submits a collection of Callables and blocks until all complete, returning a list of Futures. Unlike submitting individually, it waits for ALL tasks."},
+        {"term": "awaitTermination()", "description": "After calling shutdown(), this blocks the calling thread until all tasks finish, a timeout elapses, or the thread is interrupted. Essential for clean shutdown."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the key difference between <code>Callable</code> and <code>Runnable</code>?</p>",
+          "options": [
+            "Callable can be submitted to an ExecutorService; Runnable cannot",
+            "Callable's call() method returns a value and can throw checked exceptions",
+            "Runnable is faster because it uses less memory",
+            "Callable requires a thread pool; Runnable can run on any thread"
+          ],
+          "correctAnswer": "Callable's call() method returns a value and can throw checked exceptions",
+          "explanationHtml": "<p><code>Callable&lt;V&gt;.call()</code> returns V and can throw any exception. <code>Runnable.run()</code> returns void and cannot throw checked exceptions. Both can be submitted to an <code>ExecutorService</code>.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "import java.util.concurrent.*;\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        ExecutorService pool = Executors.newSingleThreadExecutor();\n        Future<String> f1 = pool.submit(() -> \"Alpha\");\n        Future<String> f2 = pool.submit(() -> \"Beta\");\n        pool.shutdown();\n        System.out.println(f1.get());\n        System.out.println(f2.get());\n    }\n}",
+          "correctAnswer": "Alpha\nBeta",
+          "explanationHtml": "<p>A single-thread executor runs tasks sequentially in submission order. <code>f1</code> completes before <code>f2</code>. Both <code>get()</code> calls block briefly then return the results in order: Alpha, then Beta.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is wrong with this shutdown code?</p>",
+          "codeSnippet": "ExecutorService pool = Executors.newFixedThreadPool(4);\nfor (int i = 0; i < 10; i++) {\n    pool.submit(() -> System.out.println(\"Task done\"));\n}\npool.shutdownNow(); // immediately force-stop\nSystem.out.println(\"All done\");",
+          "correctAnswer": "shutdownNow() cancels running tasks; use shutdown() then awaitTermination() to let tasks complete gracefully",
+          "explanationHtml": "<p><code>shutdownNow()</code> attempts to interrupt running tasks immediately — some tasks may never complete. The correct approach: <code>pool.shutdown()</code> (stop accepting new tasks) followed by <code>pool.awaitTermination(timeout, unit)</code> (wait for remaining tasks to finish).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You have a task that calls an external web service (blocking I/O) and you expect 100 concurrent calls. Which pool configuration is most appropriate?</p>",
+          "options": [
+            "Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())",
+            "Executors.newFixedThreadPool(50) or higher, tuned to expected concurrency",
+            "Executors.newSingleThreadExecutor()",
+            "new Thread() per request"
+          ],
+          "correctAnswer": "Executors.newFixedThreadPool(50) or higher, tuned to expected concurrency",
+          "explanationHtml": "<p>CPU-bound tasks: pool size ≈ CPU cores (threads would just context-switch otherwise). I/O-bound tasks: threads spend most time waiting, so a larger pool is warranted — often 2–10× core count, tuned by measurement. A single-thread executor would serialize all 100 calls.</p>"
+        }
+      ]
+    }
+  ]
+}
