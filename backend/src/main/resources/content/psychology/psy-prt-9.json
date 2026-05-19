@@ -5,7 +5,9 @@
   "glyph": "🏅",
   "tier": "PRACTITIONER",
   "sortOrder": 15,
-  "prerequisiteIds": ["psy-prt-2"],
+  "prerequisiteIds": [
+    "psy-prt-2"
+  ],
   "subChunks": [
     {
       "id": "psy-prt-9a",
@@ -60,12 +62,30 @@
       "modelAnswer": "Traditional psychological skills training, as systematised by Vealey (2007) and reviewed by Birrer and Morgan (2010), targets the cognitive, somatic, and confidence components of state anxiety (Martens et al., 1990) using imagery, self-talk, goal-setting, and relaxation. Meta-analytic evidence supports each component — for example, Hatzigeorgiadis et al. (2011) reported reliable effects for instructional self-talk on precision tasks. PST aligns well with the Jones and Swain (1992) emphasis on perceived facilitative direction: cognitive restructuring teaches the athlete to reinterpret somatic activation as readiness rather than threat.\n\nThe mindfulness-acceptance-commitment framework (Gardner & Moore, 2012) rejects the control assumption underlying PST. Rather than restructuring anxious cognitions, MAC trains present-moment awareness and acceptance of internal states, on the rationale that suppression efforts produce paradoxical rebound and disrupt automatic motor execution — consistent with the explicit monitoring account of choking (Beilock & Carr, 2001). Bühlmayer et al.'s (2017) systematic review identified meaningful performance gains from mindfulness training across multiple elite samples.\n\nFor a heterogeneous national squad I would recommend an integrated programme: PST as the foundation, with MAC components added for athletes whose profile (high cognitive anxiety, proceduralised motor skills, history of choking) suggests vulnerability to explicit monitoring. This hybrid approach respects individual variation in optimal functioning (Hanin, 1980) and avoids forcing a single philosophy onto a population whose mechanisms of anxiety differ substantially.",
       "feynmanPrompt": "Imagine your friend, a club tennis player, says she 'plays her best when she's relaxed' and asks why coaches keep telling her to 'get fired up' before matches. Using the inverted-U hypothesis, Hanin's individual zones of optimal functioning, and the idea of facilitative versus debilitative anxiety, explain in plain language why one-size-fits-all arousal advice is unlikely to work.",
       "rabbitHoleTerms": [
-        {"term": "inverted-U hypothesis", "description": "An applied extension of Yerkes and Dodson (1908) proposing that performance rises with arousal to an optimum and then declines symmetrically; criticised for treating arousal as unidimensional and assuming a common optimum across individuals."},
-        {"term": "catastrophe theory (Hardy, 1990)", "description": "A cusp model in which high cognitive anxiety transforms the smooth arousal–performance curve into one with a sudden, discontinuous collapse beyond the optimum, with hysteresis on recovery."},
-        {"term": "IZOF (Individual Zones of Optimal Functioning)", "description": "Hanin's (1980) idiographic model identifying each athlete's characteristic range of pre-competition emotion associated with best performance, rejecting nomothetic curves."},
-        {"term": "cognitive vs somatic anxiety", "description": "The multidimensional anxiety distinction (Martens et al., 1990) between worry and intrusive thoughts about failure (cognitive) and perceived physiological symptoms such as racing heart and butterflies (somatic), measured by the CSAI-2."},
-        {"term": "explicit monitoring hypothesis", "description": "Beilock and Carr's (2001) account of choking: pressure shifts attention to step-by-step monitoring of skills that should run automatically, disrupting expert motor execution."},
-        {"term": "self-efficacy (sport)", "description": "Bandura's (1997) situation-specific judgement of one's capability to execute a particular task under particular conditions, built from mastery, modelling, persuasion, and physiological state, and meta-analytically linked to sport performance (Moritz et al., 2000)."}
+        {
+          "term": "inverted-U hypothesis",
+          "description": "An applied extension of Yerkes and Dodson (1908) proposing that performance rises with arousal to an optimum and then declines symmetrically; criticised for treating arousal as unidimensional and assuming a common optimum across individuals."
+        },
+        {
+          "term": "catastrophe theory (Hardy, 1990)",
+          "description": "A cusp model in which high cognitive anxiety transforms the smooth arousal–performance curve into one with a sudden, discontinuous collapse beyond the optimum, with hysteresis on recovery."
+        },
+        {
+          "term": "IZOF (Individual Zones of Optimal Functioning)",
+          "description": "Hanin's (1980) idiographic model identifying each athlete's characteristic range of pre-competition emotion associated with best performance, rejecting nomothetic curves."
+        },
+        {
+          "term": "cognitive vs somatic anxiety",
+          "description": "The multidimensional anxiety distinction (Martens et al., 1990) between worry and intrusive thoughts about failure (cognitive) and perceived physiological symptoms such as racing heart and butterflies (somatic), measured by the CSAI-2."
+        },
+        {
+          "term": "explicit monitoring hypothesis",
+          "description": "Beilock and Carr's (2001) account of choking: pressure shifts attention to step-by-step monitoring of skills that should run automatically, disrupting expert motor execution."
+        },
+        {
+          "term": "self-efficacy (sport)",
+          "description": "Bandura's (1997) situation-specific judgement of one's capability to execute a particular task under particular conditions, built from mastery, modelling, persuasion, and physiological state, and meta-analytically linked to sport performance (Moritz et al., 2000)."
+        }
       ],
       "questions": [
         {
@@ -118,7 +138,8 @@
           "correctAnswer": "PST treats anxiety as something to be restructured or controlled (e.g., reframing somatic arousal as facilitative), whereas MAC trains present-moment acceptance of internal states without attempting to change them",
           "explanationHtml": "<p>The core philosophical distinction concerns the relationship between the athlete and internal states. PST (Vealey, 2007; Birrer &amp; Morgan, 2010) uses cognitive restructuring, self-talk, imagery, and relaxation to alter or regulate anxiety, often by reframing arousal as facilitative (Jones &amp; Swain, 1992). MAC (Gardner &amp; Moore, 2012) rejects the control assumption, training present-moment awareness and acceptance on the grounds that suppression produces paradoxical rebound and may exacerbate explicit monitoring. Both have empirical support — Bühlmayer et al. (2017) reviewed evidence for MAC — so the final option is incorrect, as are the claims about measurement and about the cognitive/somatic distinction.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "Applying multidimensional anxiety theory (Martens et al., 1990), high cognitive anxiety (negative thoughts, predictions of failure) and high somatic anxiety (physiological arousal), combined with low self-confidence, characterise a pattern that specifically predicts competitive underperformance. Somatic anxiety responds rapidly to arousal regulation techniques — diaphragmatic breathing and progressive muscle relaxation — while cognitive anxiety requires imagery and cognitive restructuring to challenge performance-related automatic thoughts.\n\nThe beam errors may also reflect reinvestment — explicit, conscious monitoring of automated motor skills under pressure (Masters, 1992). Competition increases self-focus, disrupting movement patterns that are otherwise automatic in training. Pre-performance routines are evidence-based for this: they narrow attentional focus, reduce reinvestment, and regulate arousal. Imagery rehearsal of error-free beam routines under simulated competitive pressure consolidates automaticity. Self-confidence is the key mediator — interventions should also target attributional style and goal orientation."
     },
     {
       "id": "psy-prt-9b",
@@ -173,12 +194,30 @@
       "modelAnswer": "Transformational leadership (Charbonneau, Barling, &amp; Kelloway, 2001) offers a behaviourally specified model — inspiring vision, individualised consideration, intellectual stimulation — that has been longitudinally linked to performance through the mediator of intrinsic motivation. Subsequent elite-sport work (Arthur et al., 2011) extends the model and identifies the fostering of acceptance of group goals as particularly potent. As the centrepiece of a coach education curriculum it has the advantage of being trainable and observable.\n\nAutonomy-supportive coaching (Mageau &amp; Vallerand, 2003) provides the motivational mechanism. By satisfying the basic needs of autonomy, competence, and relatedness, it produces intrinsic and identified motivation, predicts wellbeing, and protects against burnout and dropout. Controlling coaching, by contrast, thwarts these needs and is associated with worse psychological outcomes — an evidence base relevant after a safeguarding inquiry, because the controlling style is often correlated with the wider power-concentration dynamics that Lang, Hartill, and Rulofs (2018) identify as systemic enablers of abuse.\n\nIntegrating safeguarding training (Lang et al., 2018) as the third pillar acknowledges that performance and welfare are not in tension — they share underlying determinants. Mandatory training, clear reporting pathways, and athlete-centred governance complement rather than dilute a performance-oriented coaching philosophy. The principal residual tension is short-term: autocratic, controlling coaching can produce rapid compliance and acute performance gains, particularly in highly structured tasks (Chelladurai, 1990). A first-class programme accepts this trade-off and orients itself to sustained performance, athlete wellbeing, and ethical practice across the career, rather than to short-term results.",
       "feynmanPrompt": "Imagine you are explaining to a Sunday-league football coach why being 'really friendly' with the team is not the same as building a cohesive squad — and why being demanding does not have to mean being controlling. Use Carron's distinction between task and social cohesion, and Mageau and Vallerand's idea of autonomy-supportive coaching, to make your point in plain language.",
       "rabbitHoleTerms": [
-        {"term": "task vs social cohesion", "description": "Carron, Widmeyer, and Brawley's (1985) distinction within the GEQ between cohesion oriented to instrumental group goals (task) and cohesion grounded in interpersonal attraction (social); task cohesion shows a stronger meta-analytic association with performance (Carron et al., 2002)."},
-        {"term": "Multidimensional Model of Leadership", "description": "Chelladurai's (1990) framework in which athlete performance and satisfaction depend on the congruence among required, preferred, and actual coach behaviour, measured via the Leadership Scale for Sports."},
-        {"term": "transformational leadership in sport", "description": "Bass's leadership model (applied by Charbonneau et al., 2001) describing inspiring vision, intellectual stimulation, individualised consideration, and modelling values, linked longitudinally to performance through intrinsic motivation."},
-        {"term": "3+1Cs (Jowett, 2005)", "description": "A relational framework for the coach–athlete relationship: closeness (emotional bond), commitment (intention to maintain), complementarity (cooperative coordination), and co-orientation (shared perceptions); operationalised in the CART-Q."},
-        {"term": "autonomy-supportive coaching", "description": "Mageau and Vallerand's (2003) SDT-based model of coaching behaviours — choice, rationale, acknowledgement of perspective, minimal controlling pressure — that satisfy basic psychological needs and predict intrinsic motivation and wellbeing."},
-        {"term": "role ambiguity", "description": "Beauchamp, Bray, Eys, and Carron's (2002) four-dimensional construct describing uncertainty about scope of responsibilities, required behaviours, evaluation criteria, and consequences; ambiguity in any dimension predicts lower performance and higher anxiety."}
+        {
+          "term": "task vs social cohesion",
+          "description": "Carron, Widmeyer, and Brawley's (1985) distinction within the GEQ between cohesion oriented to instrumental group goals (task) and cohesion grounded in interpersonal attraction (social); task cohesion shows a stronger meta-analytic association with performance (Carron et al., 2002)."
+        },
+        {
+          "term": "Multidimensional Model of Leadership",
+          "description": "Chelladurai's (1990) framework in which athlete performance and satisfaction depend on the congruence among required, preferred, and actual coach behaviour, measured via the Leadership Scale for Sports."
+        },
+        {
+          "term": "transformational leadership in sport",
+          "description": "Bass's leadership model (applied by Charbonneau et al., 2001) describing inspiring vision, intellectual stimulation, individualised consideration, and modelling values, linked longitudinally to performance through intrinsic motivation."
+        },
+        {
+          "term": "3+1Cs (Jowett, 2005)",
+          "description": "A relational framework for the coach–athlete relationship: closeness (emotional bond), commitment (intention to maintain), complementarity (cooperative coordination), and co-orientation (shared perceptions); operationalised in the CART-Q."
+        },
+        {
+          "term": "autonomy-supportive coaching",
+          "description": "Mageau and Vallerand's (2003) SDT-based model of coaching behaviours — choice, rationale, acknowledgement of perspective, minimal controlling pressure — that satisfy basic psychological needs and predict intrinsic motivation and wellbeing."
+        },
+        {
+          "term": "role ambiguity",
+          "description": "Beauchamp, Bray, Eys, and Carron's (2002) four-dimensional construct describing uncertainty about scope of responsibilities, required behaviours, evaluation criteria, and consequences; ambiguity in any dimension predicts lower performance and higher anxiety."
+        }
       ],
       "questions": [
         {
@@ -231,7 +270,8 @@
           "correctAnswer": "Chelladurai's model emphasises congruence among required, preferred, and actual coach behaviour as the determinant of performance and satisfaction; transformational theory specifies a set of inspirational behaviours that operate through intrinsic motivation",
           "explanationHtml": "<p>Chelladurai's (1990) Multidimensional Model is fundamentally a congruence framework — performance and satisfaction depend on alignment between what the situation requires, what athletes prefer, and what the coach actually does — operationalised via the Leadership Scale for Sports. Transformational leadership (Charbonneau et al., 2001; Arthur et al., 2011) specifies a particular constellation of behaviours (inspiring vision, individualised consideration, intellectual stimulation) and identifies intrinsic motivation as the principal mediator linking these behaviours to performance. The other options are factually incorrect: Chelladurai's model is not autocratic, transformational leadership has been studied extensively in sport, and both have empirical support.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The GEQ profile shows the squad socialises well but lacks task cohesion — shared commitment to collective performance goals. Carron et al.'s (1985) framework distinguishes social from task cohesion; only task cohesion consistently predicts athletic performance outcomes. High Individual Attractions to Group–Social with low Group Integration–Task indicates social bonds without performance orientation.\n\nInterventions should target task cohesion directly: (1) establish clear, measurable shared goals using Locke and Latham's (1990) goal-setting principles — specific, challenging, collectively owned; (2) develop team performance norms through facilitated discussion of standards and mutual expectations; (3) post-match review sessions focused on collective execution rather than individual statistics; (4) role clarity and collective efficacy building through success mastery experiences. The coaching style should shift toward transformational leadership (Bass, 1985) — articulating a compelling vision, building individual commitment to collective goals, and providing authentic recognition."
     },
     {
       "id": "psy-prt-9c",
@@ -286,12 +326,30 @@
       "modelAnswer": "Meta-analytic evidence provides the clinical case for exercise as a mental-health intervention. Craft and Perna (2004) reported large effect sizes for exercise compared with no-treatment controls for depression, and Cooney et al.'s (2013) more conservative Cochrane review confirmed small-to-moderate effects when methodological standards were tightened. Stockwell et al.'s (2021) systematic review of 66 lockdown studies showed substantial physical-activity decline with parallel mental-health deterioration, and the activity decline statistically mediated part of the depressive symptom increase. Together, these findings justify reactivating physical activity as a population-level mental-health strategy.\n\nSelf-Determination Theory (Ryan et al., 1997) shapes the motivational content of intervention. Programmes that satisfy autonomy, competence, and relatedness produce intrinsic and identified motivation, which in turn predict long-term adherence — the central failure point of most exercise interventions. Conn et al.'s (2011) meta-analysis indicates that behavioural strategies (self-monitoring, goal-setting, action planning) outperform educational content alone, and SDT-informed delivery enhances those strategies' effects.\n\nThe 24-hour movement guidelines framework (Tremblay et al., 2017) reframes the unit of intervention from moderate-to-vigorous exercise alone to the daily composition of physical activity, sedentary behaviour, and sleep. This is consequential after a pandemic that disrupted all three. The framework legitimates targeting reductions in sedentary time and improvements in sleep alongside increases in active minutes, offering a more achievable change profile for sedentary adults than a pure exercise-intensification model.\n\nIndividual-level interventions are necessary but insufficient. Stockwell et al.'s findings highlight that the determinants of physical activity are structural — active-travel infrastructure, school physical-education provision, the design of public space, workplace policies. A first-class public-health response will combine SDT-informed individual delivery with the kind of environmental and policy reform that the pandemic experience made unavoidable.",
       "feynmanPrompt": "Imagine a relative who has just been told by their GP that exercise might help their low mood. Using the meta-analytic evidence (Craft &amp; Perna, 2004; Cooney et al., 2013) and the Self-Determination Theory account of motivation (Ryan et al., 1997), explain in plain language both why exercise is genuinely worth trying and why it tends not to stick when people pick activities they hate.",
       "rabbitHoleTerms": [
-        {"term": "Cochrane systematic review", "description": "A standardised, methodologically rigorous form of systematic review prioritising allocation concealment, intention-to-treat analysis, and blinded outcome assessment; Cooney et al.'s (2013) Cochrane review of exercise for depression illustrates the shrinkage of effect sizes as quality standards tighten."},
-        {"term": "BDNF hypothesis", "description": "The proposal that aerobic exercise upregulates brain-derived neurotrophic factor, particularly in the hippocampus, mediating effects on mood, learning, and resilience to stress; supported by hippocampal-volume findings (Erickson et al., 2011)."},
-        {"term": "Transtheoretical Model (Prochaska &amp; DiClemente, 1983)", "description": "A behaviour-change framework proposing five stages — precontemplation, contemplation, preparation, action, maintenance — used in exercise contexts (Marcus &amp; Simkin, 1994) to time stage-matched intervention components."},
-        {"term": "exercise dependence", "description": "A syndrome (Hausenblas &amp; Symons Downs, 2002) characterised by tolerance, withdrawal, loss of control, and continued exercise despite injury or life-domain interference; primary forms occur in their own right, secondary forms operate in service of eating disorders."},
-        {"term": "green exercise", "description": "Physical activity undertaken in natural environments, shown by Pretty et al. (2005) and Barton &amp; Pretty (2010) to produce larger improvements in self-esteem and mood than equivalent indoor or built-environment activity, via attention-restoration and stress-recovery mechanisms."},
-        {"term": "24-hour movement guidelines", "description": "Integrated public-health guidance (Tremblay et al., 2017) treating physical activity, sedentary behaviour, and sleep as interdependent components of a daily behavioural composition, with trade-offs across the full 24 hours."}
+        {
+          "term": "Cochrane systematic review",
+          "description": "A standardised, methodologically rigorous form of systematic review prioritising allocation concealment, intention-to-treat analysis, and blinded outcome assessment; Cooney et al.'s (2013) Cochrane review of exercise for depression illustrates the shrinkage of effect sizes as quality standards tighten."
+        },
+        {
+          "term": "BDNF hypothesis",
+          "description": "The proposal that aerobic exercise upregulates brain-derived neurotrophic factor, particularly in the hippocampus, mediating effects on mood, learning, and resilience to stress; supported by hippocampal-volume findings (Erickson et al., 2011)."
+        },
+        {
+          "term": "Transtheoretical Model (Prochaska &amp; DiClemente, 1983)",
+          "description": "A behaviour-change framework proposing five stages — precontemplation, contemplation, preparation, action, maintenance — used in exercise contexts (Marcus &amp; Simkin, 1994) to time stage-matched intervention components."
+        },
+        {
+          "term": "exercise dependence",
+          "description": "A syndrome (Hausenblas &amp; Symons Downs, 2002) characterised by tolerance, withdrawal, loss of control, and continued exercise despite injury or life-domain interference; primary forms occur in their own right, secondary forms operate in service of eating disorders."
+        },
+        {
+          "term": "green exercise",
+          "description": "Physical activity undertaken in natural environments, shown by Pretty et al. (2005) and Barton &amp; Pretty (2010) to produce larger improvements in self-esteem and mood than equivalent indoor or built-environment activity, via attention-restoration and stress-recovery mechanisms."
+        },
+        {
+          "term": "24-hour movement guidelines",
+          "description": "Integrated public-health guidance (Tremblay et al., 2017) treating physical activity, sedentary behaviour, and sleep as interdependent components of a daily behavioural composition, with trade-offs across the full 24 hours."
+        }
       ],
       "questions": [
         {
@@ -344,7 +402,8 @@
           "correctAnswer": "The TPB proposes that behaviour is determined by attitudes, subjective norms, and perceived behavioural control via intention; the TTM proposes that change progresses through discrete stages and that interventions should be matched to the individual's current stage",
           "explanationHtml": "<p>The TPB (Ajzen, 1991) is an intention-mediation model — attitudes, subjective norms, and perceived behavioural control predict intention, which in turn predicts behaviour. Meta-analytic evidence (Hagger, Chatzisarantis, &amp; Biddle, 2002) supports the model in exercise contexts, with perceived behavioural control showing the strongest path to behaviour. The TTM (Prochaska &amp; DiClemente, 1983; applied to exercise by Marcus &amp; Simkin, 1994) is a stage model — change progresses through precontemplation, contemplation, preparation, action, and maintenance, and interventions are most effective when matched to the individual's current stage. The first option inverts the descriptions, and the remaining options misrepresent both models.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The Transtheoretical Model offers a useful heuristic for tailoring messages to readiness stage, but its empirical evidence base for physical activity interventions is mixed: stage boundaries are contested, movement between stages is not reliably sequential, and RCT evidence for stage-matched interventions does not consistently outperform non-stage-matched approaches (Sutton, 2001).\n\nSDT-based interventions (Ryan & Deci, 2000) show stronger consistent evidence for long-term adherence, the priority in this age group and cardiovascular risk context. Needs-supportive exercise counselling — offering choice, rationale, and acknowledgment of ambivalence (autonomy); graduated challenges with honest feedback (competence); group activities (relatedness) — produces autonomous motivation, which predicts sustained behaviour change beyond intervention withdrawal.\n\nRecommendation: use TTM for initial stage assessment and message tailoring, embed SDT principles in delivery to build internalised motivation. Evaluate with accelerometry at 12 months, not just end-of-intervention self-report."
     }
   ]
 }

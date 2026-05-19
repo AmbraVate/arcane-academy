@@ -5,7 +5,9 @@
   "sortOrder": 11,
   "tier": "PRACTITIONER",
   "topicId": "psychology",
-  "prerequisiteIds": ["psy-prt-2"],
+  "prerequisiteIds": [
+    "psy-prt-2"
+  ],
   "subChunks": [
     {
       "id": "psy-prt-5a",
@@ -64,12 +66,30 @@
       "modelAnswer": "A coherent youth-crime strategy cannot rest on any single causal account. The brain-based approach, drawing on Raine's (1997) PET findings of reduced prefrontal activity in murderers and Glenn and Raine's (2014) consolidating review, has the merit of identifying probabilistic neurobiological risk markers. Its grave weakness is the temptation to translate population statistics into individual predictions: pre-emptive screening risks stigmatising children whose neurobiology may never be expressed criminally, and confuses risk elevation with determinism — a confusion vividly illustrated by Caspi et al. (2002), whose gene–environment interaction shows that MAOA-L confers risk only in combination with maltreatment.\n\nThe social-learning emphasis is supported by Bandura's (1973) work on observational acquisition of aggression and by the intergenerational continuity evident in longitudinal cohort studies. Interventions that disrupt deviant modelling — family therapy, prosocial mentoring, school engagement — have a stronger evidence base than punitive responses and offer scope for change at the developmental period when offending peaks.\n\nThe sociological emphasis — Merton's (1938) strain theory, Agnew's (1992) general strain extension, and Becker's (1963) labelling account — directs policy attention to opportunity structures, inequality, and the iatrogenic effects of criminal justice contact. Moffitt's (1993) taxonomy is relevant here, distinguishing adolescent-limited offenders for whom labelling consequences may be especially harmful from life-course-persistent offenders whose problems begin earlier and run deeper.\n\nA defensible strategy is therefore pluralistic: investing in early-years family support and education, designing criminal justice responses that minimise unnecessary labelling for adolescent-limited offenders, and reserving intensive interventions for the persistent minority identified through behaviour rather than biology. Single-cause strategies will fail because crime itself is not a single phenomenon.",
       "feynmanPrompt": "A friend reads a headline claiming that scientists have found the 'gene for crime' and that this proves criminals are 'born bad'. Using Caspi et al.'s (2002) MAOA findings and the concept of gene–environment interaction, explain in plain language why this headline is misleading and what the research actually shows.",
       "rabbitHoleTerms": [
-        {"term": "atavism (Lombroso)", "description": "Lombroso's (1876) hypothesis that criminals are evolutionary throwbacks identifiable by physical stigmata; empirically discredited by Goring (1913) but historically important as an early empirical criminology."},
-        {"term": "psychoticism (P)", "description": "The third dimension of Eysenck's PEN model, capturing aggressive, impulsive, callous tendencies; meta-analytically the most reliable personality correlate of offending, though with modest effect sizes."},
-        {"term": "maternal deprivation hypothesis", "description": "Bowlby's (1944) claim, from the 44 Thieves study, that prolonged separation from the mother before age five produces affectionless psychopathy; later refined by Rutter (1981) into privation/deprivation."},
-        {"term": "vicarious reinforcement", "description": "A central concept in Bandura's social learning theory: observing a model receive a reward (or punishment) for a behaviour increases (or decreases) the observer's likelihood of imitating that behaviour."},
-        {"term": "differential association", "description": "Sutherland's (1939) thesis that criminal behaviour is learned in intimate personal groups through exposure to definitions favourable to law-breaking; a precursor to social learning accounts."},
-        {"term": "MAOA-L × maltreatment interaction", "description": "Caspi et al.'s (2002) finding from the Dunedin cohort that the low-activity variant of the MAOA gene elevates risk of antisocial behaviour only in individuals who experienced childhood maltreatment — the canonical gene–environment interaction in criminology."}
+        {
+          "term": "atavism (Lombroso)",
+          "description": "Lombroso's (1876) hypothesis that criminals are evolutionary throwbacks identifiable by physical stigmata; empirically discredited by Goring (1913) but historically important as an early empirical criminology."
+        },
+        {
+          "term": "psychoticism (P)",
+          "description": "The third dimension of Eysenck's PEN model, capturing aggressive, impulsive, callous tendencies; meta-analytically the most reliable personality correlate of offending, though with modest effect sizes."
+        },
+        {
+          "term": "maternal deprivation hypothesis",
+          "description": "Bowlby's (1944) claim, from the 44 Thieves study, that prolonged separation from the mother before age five produces affectionless psychopathy; later refined by Rutter (1981) into privation/deprivation."
+        },
+        {
+          "term": "vicarious reinforcement",
+          "description": "A central concept in Bandura's social learning theory: observing a model receive a reward (or punishment) for a behaviour increases (or decreases) the observer's likelihood of imitating that behaviour."
+        },
+        {
+          "term": "differential association",
+          "description": "Sutherland's (1939) thesis that criminal behaviour is learned in intimate personal groups through exposure to definitions favourable to law-breaking; a precursor to social learning accounts."
+        },
+        {
+          "term": "MAOA-L × maltreatment interaction",
+          "description": "Caspi et al.'s (2002) finding from the Dunedin cohort that the low-activity variant of the MAOA gene elevates risk of antisocial behaviour only in individuals who experienced childhood maltreatment — the canonical gene–environment interaction in criminology."
+        }
       ],
       "questions": [
         {
@@ -122,7 +142,8 @@
           "correctAnswer": "Merton restricted strain to the gap between culturally prescribed goals and legitimate means; Agnew broadened strain to include any aversive stimulus or loss of valued goal, with negative affect as the mediating mechanism",
           "explanationHtml": "<p>Merton (1938) located strain in the structural mismatch between culturally promoted goals (e.g., material success) and the institutional means available to achieve them, generating adaptations including innovation and retreatism. Agnew's (1992) general strain theory extended the concept by recognising that strain can arise from <em>any</em> noxious stimulus or loss of a valued goal — bereavement, victimisation, school failure — and that <strong>negative affect</strong>, particularly anger, is the proximal mediator of offending. The other options are incorrect: both theorists are sociological, both address individual and aggregate levels, and Agnew refined rather than rejected strain.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The claim that MAOA-L produces biological determinism misunderstands behavioural genetics. The MAOA-L variant is associated with increased aggression only in the presence of childhood maltreatment — a gene-environment interaction (Caspi et al., 2002). Without the environmental trigger, genotype confers minimal increased risk. Even with both, the association is probabilistic not deterministic: most MAOA-L carriers who experience adversity do not offend.\n\nSentencing on the basis of genetic predisposition raises fundamental legal and ethical problems. Criminal culpability is assessed at the level of individual acts and mental states, not statistical risk categories. Predictive sentencing would punish individuals for possibilities rather than actions, violating proportionality principles. Furthermore, such an approach would disproportionately affect defendants who experienced childhood abuse — the very victims of circumstances beyond their control.\n\nThe magistrate should be advised to disregard the genetic evidence as a sentencing factor. A diathesis-stress framework correctly represents the science without endorsing determinism."
     },
     {
       "id": "psy-prt-5b",
@@ -181,12 +202,30 @@
       "modelAnswer": "Multiple converging lines of evidence raise serious concerns about the reliability of the identification in question. First, Loftus and Palmer (1974) demonstrated that post-event information is integrated into the memory representation and can shift both estimates and reported detail — the misinformation effect — and Loftus and Pickrell (1995) extended this to whole-episode false memories implanted through suggestive procedures. The specific circumstances here exacerbate these vulnerabilities.\n\nSecond, Meissner and Brigham's (2001) meta-analysis of 39 studies confirmed the <strong>own-race bias</strong>: identification accuracy is approximately 1.4 times higher for own-race faces than other-race faces, with the effect large enough to be forensically significant in cross-racial identification cases.\n\nThird, the presence of a weapon during a violent armed robbery is likely to have triggered <strong>weapon focus</strong> (Loftus, Loftus &amp; Messo, 1987; Steblay's 1992 meta-analysis), narrowing the witness's attention onto the weapon and away from the perpetrator's face. The combination of high arousal and weapon focus reliably degrades face encoding.\n\nFourth, the procedure itself — a single-suspect photo line-up shown shortly after the offence — departs from best-practice recommendations. Wells et al. (1998) and the subsequent American Psychology-Law Society white paper recommend double-blind administration, sequential rather than simultaneous presentation, and inclusion of fillers matched to the witness's description, none of which are evident here. Garrett's (2011) analysis of the first 250 DNA exonerations identified eyewitness misidentification as a contributing factor in around 70% of cases — a sobering empirical anchor for the defence's concerns. The identification's superficial confidence is, paradoxically, weak evidence of accuracy: the confidence-accuracy relationship is modest and is itself susceptible to post-identification feedback inflation.",
       "feynmanPrompt": "A friend says, 'If a witness is absolutely certain about who they saw, that's good enough for a conviction.' Using the Loftus and Palmer (1974) study, the Innocence Project DNA exoneration data, and the concept of weapon focus, explain in plain language why confidence is not a good guide to accuracy.",
       "rabbitHoleTerms": [
-        {"term": "misinformation effect", "description": "The finding (Loftus &amp; Palmer, 1974) that post-event information — including the wording of a question — can become integrated into the memory representation and distort subsequent recall."},
-        {"term": "weapon focus", "description": "The phenomenon (Loftus, Loftus &amp; Messo, 1987; Steblay, 1992) in which the presence of a weapon during a crime narrows the witness's attention onto the weapon, impairing later identification of the perpetrator."},
-        {"term": "own-race bias", "description": "The robust finding (Meissner &amp; Brigham, 2001) that identification accuracy is substantially higher for own-race than other-race faces; an important consideration in cross-racial identification cases."},
-        {"term": "Cognitive Interview", "description": "An evidence-based interviewing protocol (Fisher &amp; Geiselman, 1992) using context reinstatement, report everything, change perspective, and change order, shown meta-analytically to elicit substantially more correct information than standard interviewing."},
-        {"term": "PEACE model", "description": "The UK Home Office (1992) investigative interviewing framework — Planning, Engage, Account, Closure, Evaluation — emphasising information-gathering and open questioning over accusatorial tactics."},
-        {"term": "internalised false confession", "description": "One of Kassin's (2008) three categories of false confession, in which a vulnerable suspect comes to believe themselves guilty under prolonged interrogation, fabricated evidence, and suggestive questioning."}
+        {
+          "term": "misinformation effect",
+          "description": "The finding (Loftus &amp; Palmer, 1974) that post-event information — including the wording of a question — can become integrated into the memory representation and distort subsequent recall."
+        },
+        {
+          "term": "weapon focus",
+          "description": "The phenomenon (Loftus, Loftus &amp; Messo, 1987; Steblay, 1992) in which the presence of a weapon during a crime narrows the witness's attention onto the weapon, impairing later identification of the perpetrator."
+        },
+        {
+          "term": "own-race bias",
+          "description": "The robust finding (Meissner &amp; Brigham, 2001) that identification accuracy is substantially higher for own-race than other-race faces; an important consideration in cross-racial identification cases."
+        },
+        {
+          "term": "Cognitive Interview",
+          "description": "An evidence-based interviewing protocol (Fisher &amp; Geiselman, 1992) using context reinstatement, report everything, change perspective, and change order, shown meta-analytically to elicit substantially more correct information than standard interviewing."
+        },
+        {
+          "term": "PEACE model",
+          "description": "The UK Home Office (1992) investigative interviewing framework — Planning, Engage, Account, Closure, Evaluation — emphasising information-gathering and open questioning over accusatorial tactics."
+        },
+        {
+          "term": "internalised false confession",
+          "description": "One of Kassin's (2008) three categories of false confession, in which a vulnerable suspect comes to believe themselves guilty under prolonged interrogation, fabricated evidence, and suggestive questioning."
+        }
       ],
       "questions": [
         {
@@ -239,7 +278,8 @@
           "correctAnswer": "Canter uses statistical analysis of large databases of solved cases to identify empirical offence–offender associations, whereas the FBI's organised/disorganised typology was derived from interviews with a small unrepresentative sample of serial murderers",
           "explanationHtml": "<p>The core distinction is methodological. Canter's investigative psychology applies statistical techniques (notably smallest space analysis) to large solved-case databases to identify empirically grounded, probabilistic associations between offence behaviours and offender characteristics. The FBI's organised/disorganised typology (Douglas et al., 1986) was derived primarily from interviews with 36 incarcerated serial murderers — a small and highly unrepresentative sample — and has been criticised for its weak empirical base. Snook et al.'s (2008) meta-analysis found that professional profilers performed only marginally better than non-profilers at deducing offender characteristics, undermining the fourth option.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "Research strongly favours replacing the accusatorial approach with the Cognitive Interview (CI) or Enhanced Cognitive Interview (ECI; Geiselman et al., 1984; Fisher & Geiselman, 1992). The accusatorial (Reid) technique is premised on detecting deception, which police officers perform at near-chance levels; it also increases psychological pressure, which raises the risk of false confessions and contaminates witness memory through leading questions and suggestion.\n\nThe CI applies four evidence-based mnemonics: mental reinstatement of context, report everything, change temporal order, and change perspective. ECI adds rapport building and communication adjustments. Meta-analyses consistently show CI produces substantially more accurate information than standard interview, with no increase in confabulation (Memon et al., 2010).\n\nRecommendation: adopt the ECI as standard practice. Train all interview officers to PEACE (Preparation, Engage, Account, Closure, Evaluation) framework, which is already best practice in UK policing and evidence-based. Review interview recordings for quality monitoring."
     },
     {
       "id": "psy-prt-5c",
@@ -298,12 +338,30 @@
       "modelAnswer": "Three developments should anchor the next decade of forensic-psychology strategy: the maturation of structured risk assessment, the SOTP-era reckoning with intervention effectiveness, and the convergence of restorative and trauma-informed practice.\n\nFirst, structured risk assessment is now embedded across HMPPS through OASys and specialist instruments such as the HCR-20 (Webster et al., 1997), PCL-R (Hare, 1991), and Static-99 (Hanson &amp; Thornton, 2000). The shift from unstructured clinical judgement to structured professional judgement and actuarial methods reflects Grove et al.'s (2000) meta-analytic finding that statistical prediction modestly outperforms clinical prediction. The strategic priority should be transparent governance: which instruments, applied to whom, with what error rates, and with what procedural safeguards. Crewe's (2011) work on the contemporary prison usefully cautions that risk assessment, once embedded in progression decisions, alters the therapeutic relationship and may compromise voluntariness.\n\nSecond, Mews, Di Bella and Purver's (2017) evaluation of the UK Sex Offender Treatment Programme — finding modestly elevated sexual reconviction in treated offenders — was a watershed. The methodological debate is unresolved, but the strategy must institutionalise high-quality, pre-registered evaluation of all major programmes, not merely those for which optimism runs high. Andrews and Bonta's (2010) Risk-Need-Responsivity model, with the meta-analytic support of Andrews et al. (1990), should remain the framework against which programmes are designed and audited, complemented where appropriate by the Good Lives Model's (Ward &amp; Stewart, 2003) strengths orientation.\n\nThird, the strategy should expand restorative justice — Sherman and Strang's (2007) review reports consistent reoffending reductions and substantial victim PTSD reductions in adult violent cases — and accelerate the adoption of trauma-informed practice. Sweeney et al.'s (2018) review identifies the principles (safety, choice, collaboration, trust, empowerment) but also the risk that the term becomes a slogan. A serious strategy will fund evaluation, supervision, and workforce development to make the principles real in practice.",
       "feynmanPrompt": "A relative reads in the news that a treatment programme for sex offenders was found to make reoffending slightly more likely, not less. Using the Mews et al. (2017) findings and the Risk-Need-Responsivity model (Andrews &amp; Bonta, 2010), explain in plain language why this happened and what lesson forensic psychology has learned from it.",
       "rabbitHoleTerms": [
-        {"term": "HCPC registration", "description": "Mandatory regulation by the Health and Care Professions Council for use of the protected title 'forensic psychologist' in the UK; sets standards of proficiency, conduct, and continuing professional development."},
-        {"term": "HCR-20", "description": "A structured professional judgement instrument (Webster et al., 1997) for violence risk assessment, organised around 10 Historical, 5 Clinical, and 5 Risk-Management factors; now in its v3 edition."},
-        {"term": "Risk-Need-Responsivity (RNR)", "description": "Andrews and Bonta's (2010) evidence-based framework for offender rehabilitation: match intensity to risk, target dynamic criminogenic needs, and deliver in ways matched to the offender's learning style and motivation."},
-        {"term": "Good Lives Model (GLM)", "description": "Ward and Stewart's (2003) strengths-based rehabilitation framework holding that offending is a maladaptive attempt to secure primary human goods, and that intervention should equip the offender to pursue these goods prosocially."},
-        {"term": "M'Naghten Rules", "description": "The 1843 English-law criteria for the insanity defence: at the time of the act the defendant must have suffered from a defect of reason from disease of the mind such that they did not know the nature and quality of the act, or did not know it was wrong."},
-        {"term": "trauma-informed practice", "description": "A framework for service design that recognises the high prevalence of trauma among offenders, prioritises safety, choice, collaboration, trust, and empowerment, and aims to avoid re-traumatisation; reviewed by Sweeney et al. (2018)."}
+        {
+          "term": "HCPC registration",
+          "description": "Mandatory regulation by the Health and Care Professions Council for use of the protected title 'forensic psychologist' in the UK; sets standards of proficiency, conduct, and continuing professional development."
+        },
+        {
+          "term": "HCR-20",
+          "description": "A structured professional judgement instrument (Webster et al., 1997) for violence risk assessment, organised around 10 Historical, 5 Clinical, and 5 Risk-Management factors; now in its v3 edition."
+        },
+        {
+          "term": "Risk-Need-Responsivity (RNR)",
+          "description": "Andrews and Bonta's (2010) evidence-based framework for offender rehabilitation: match intensity to risk, target dynamic criminogenic needs, and deliver in ways matched to the offender's learning style and motivation."
+        },
+        {
+          "term": "Good Lives Model (GLM)",
+          "description": "Ward and Stewart's (2003) strengths-based rehabilitation framework holding that offending is a maladaptive attempt to secure primary human goods, and that intervention should equip the offender to pursue these goods prosocially."
+        },
+        {
+          "term": "M'Naghten Rules",
+          "description": "The 1843 English-law criteria for the insanity defence: at the time of the act the defendant must have suffered from a defect of reason from disease of the mind such that they did not know the nature and quality of the act, or did not know it was wrong."
+        },
+        {
+          "term": "trauma-informed practice",
+          "description": "A framework for service design that recognises the high prevalence of trauma among offenders, prioritises safety, choice, collaboration, trust, and empowerment, and aims to avoid re-traumatisation; reviewed by Sweeney et al. (2018)."
+        }
       ],
       "questions": [
         {
@@ -356,7 +414,8 @@
           "correctAnswer": "GLM frames offending as a maladaptive attempt to pursue universal primary human goods and emphasises strengths-based, motivational rehabilitation; RNR is risk-focused and prioritises matching intensity of intervention to dynamic criminogenic need",
           "explanationHtml": "<p>The substantive distinction is conceptual. Ward and Stewart's (2003) Good Lives Model is explicitly <strong>strengths-based</strong>: offending is reframed as a maladaptive route to legitimate primary human goods (life, knowledge, relatedness, agency, inner peace), and rehabilitation aims to equip the offender to pursue those goods prosocially. Andrews and Bonta's (2010) RNR is risk-focused — matching intervention intensity to assessed risk, targeting dynamic criminogenic needs, and delivering content in a responsivity-matched way. RNR has the stronger formal evidence base (Andrews et al., 1990 meta-analysis), though GLM has been highly influential clinically. Neither is legally mandated; both are used in research and practice.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The Risk-Need-Responsivity model (Andrews & Bonta, 2010) has a strong empirical base: targeting criminogenic needs (antisocial attitudes, substance misuse, poor self-regulation) using cognitive-behavioural methods for medium-to-high risk offenders consistently reduces reconviction rates in meta-analyses. Its limitation is deficit-focused — it identifies what needs removing but not what motivates desistance.\n\nThe Good Lives Model (Ward & Brown, 2004) argues that offending typically represents a maladaptive attempt to achieve universal human goods (intimacy, autonomy, achievement). GLM-based treatment builds a positive life plan that meets these needs prosocially, providing internal motivation for change absent from RNR. It shows particular promise for improving engagement with treatment-resistant populations.\n\nRecommendation: integrate both frameworks. Use RNR principles to identify risk level and criminogenic targets; embed GLM principles to build intrinsic motivation and a positive future identity. NOMS and HMPPS-approved programmes (e.g., Building Better Relationships) increasingly reflect this integrated philosophy."
     }
   ]
 }

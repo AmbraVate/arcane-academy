@@ -5,7 +5,9 @@
   "sortOrder": 16,
   "tier": "PRACTITIONER",
   "topicId": "psychology",
-  "prerequisiteIds": ["psy-prt-2"],
+  "prerequisiteIds": [
+    "psy-prt-2"
+  ],
   "subChunks": [
     {
       "id": "psy-prt-10a",
@@ -64,12 +66,30 @@
       "modelAnswer": "Lyubomirsky's (2007) 50-10-40 pie chart purported to allocate the variance in human happiness across genetic set point, life circumstances, and intentional activity. The model derived its 50% figure from Lykken and Tellegen's (1996) twin-study estimate of subjective well-being heritability and inferred the 10% circumstance contribution from cross-sectional correlations between income or status and SWB. The residual 40% was attributed, by elimination, to 'intentional activity'. The framework proved enormously appealing because it appeared to authorise effortful self-help while accommodating genetic influence.\n\nBrown and Rohrer (2020), writing in the Journal of Happiness Studies, demonstrated that the 50-10-40 figures rest on serious methodological confusions. Heritability is a variance proportion within a population, not a proportion of any individual's happiness; conflating it with a controllable magnitude is a category error. Diener et al. (2006) further showed that long-term SWB trajectories exhibit substantial within-person variation and that life events such as disability, unemployment, and bereavement produce lasting departures from baseline, contradicting the strong set-point implication.\n\nA more defensible framework abandons fixed proportions and treats genetic influence, circumstance, and intentional activity as interdependent contributors whose relative impact varies by person and context. Methodologically, the episode illustrates the risk that positive psychology, in its zeal for accessible application, can replicate the very pop-science overclaim it sought to displace — a tension Held (2004) and Pérez-Álvarez (2016) had already identified at the conceptual level. Rigorous translation between behavioural-genetic statistics and practical advice for individuals requires a discipline that the early formulations of the model conspicuously lacked.",
       "feynmanPrompt": "Explain to a sceptical friend why psychologists think happiness can be studied scientifically. They retort: 'But happiness is just personal — how could it possibly be measured?' Use Diener's three-component model of SWB, and at least one named study, to make a clear, accessible case — and acknowledge one genuine limitation of the approach.",
       "rabbitHoleTerms": [
-        {"term": "positive psychology", "description": "The scientific study of positive subjective experience, positive individual traits, and positive institutions, formalised by Seligman and Csikszentmihalyi (2000) as a counterbalance to psychology's traditional focus on pathology."},
-        {"term": "PERMA model", "description": "Seligman's (2011) five-element framework of well-being — Positive emotion, Engagement, Relationships, Meaning, and Accomplishment — each pursued for its own sake and measured independently."},
-        {"term": "subjective well-being (SWB)", "description": "Diener's (1984) tripartite construct comprising high positive affect, low negative affect, and high cognitive life satisfaction; the dominant operationalisation of happiness in empirical positive psychology."},
-        {"term": "hedonic adaptation", "description": "The well-documented tendency for individuals to return to a baseline level of well-being following positive or negative life changes; popularised by Brickman and Campbell (1971) as the 'hedonic treadmill'."},
-        {"term": "eudaimonic well-being", "description": "An Aristotelian conception of well-being centred on the realisation of one's true nature, virtue, and meaningful engagement — distinguished by Ryan and Deci (2001) from hedonic pleasure-based accounts."},
-        {"term": "WEIRD samples", "description": "Western, Educated, Industrialised, Rich and Democratic populations (Henrich, Heine & Norenzayan, 2010), which disproportionately constitute psychology's empirical base and limit the generalisability of well-being constructs across cultures."}
+        {
+          "term": "positive psychology",
+          "description": "The scientific study of positive subjective experience, positive individual traits, and positive institutions, formalised by Seligman and Csikszentmihalyi (2000) as a counterbalance to psychology's traditional focus on pathology."
+        },
+        {
+          "term": "PERMA model",
+          "description": "Seligman's (2011) five-element framework of well-being — Positive emotion, Engagement, Relationships, Meaning, and Accomplishment — each pursued for its own sake and measured independently."
+        },
+        {
+          "term": "subjective well-being (SWB)",
+          "description": "Diener's (1984) tripartite construct comprising high positive affect, low negative affect, and high cognitive life satisfaction; the dominant operationalisation of happiness in empirical positive psychology."
+        },
+        {
+          "term": "hedonic adaptation",
+          "description": "The well-documented tendency for individuals to return to a baseline level of well-being following positive or negative life changes; popularised by Brickman and Campbell (1971) as the 'hedonic treadmill'."
+        },
+        {
+          "term": "eudaimonic well-being",
+          "description": "An Aristotelian conception of well-being centred on the realisation of one's true nature, virtue, and meaningful engagement — distinguished by Ryan and Deci (2001) from hedonic pleasure-based accounts."
+        },
+        {
+          "term": "WEIRD samples",
+          "description": "Western, Educated, Industrialised, Rich and Democratic populations (Henrich, Heine & Norenzayan, 2010), which disproportionately constitute psychology's empirical base and limit the generalisability of well-being constructs across cultures."
+        }
       ],
       "questions": [
         {
@@ -118,7 +138,8 @@
           "correctAnswer": "Hedonic well-being concerns pleasure and life satisfaction, whereas eudaimonic well-being concerns purpose, growth, and realisation of one's true nature",
           "explanationHtml": "<p>Ryan and Deci (2001) drew the distinction from ancient Greek philosophy. The hedonic tradition (Aristippus, Epicurus) equates well-being with pleasure and the absence of pain — operationalised in Diener's (1984) SWB model. The eudaimonic tradition (Aristotle) equates well-being with the realisation of one's true nature, virtue, and meaningful engagement — operationalised in Ryff's (1989) six dimensions of psychological well-being. Both traditions use self-report measures, both have heritable components, and neither is exclusively Western — so the other options are incorrect.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The SWLS (Diener et al., 1985) is a well-validated 5-item measure of life satisfaction — the cognitive evaluation of one's life as a whole. However, it captures only one component of well-being. A comprehensive national programme requires measurement of hedonic well-being (positive affect, negative affect balance) alongside eudaimonic well-being — purposeful living, growth, autonomy, and relatedness (Ryff, 1989).\n\nThe SWLS also shows cultural variation: in collectivist societies, relationship harmony may dominate individual life-satisfaction judgements, creating cross-cultural non-equivalence that undermines international comparisons. Life satisfaction is also substantially influenced by current mood at the time of measurement, reducing reliability.\n\nRecommendation: supplement the SWLS with a validated affect balance measure (PANAS) and a eudaimonic measure (e.g., Ryff's Scales of Psychological Well-being or the WEMWBS). The ONS National Well-being Framework uses multiple domains for precisely this reason — no single scale captures the construct's multi-dimensional nature."
     },
     {
       "id": "psy-prt-10b",
@@ -178,12 +199,30 @@
       "modelAnswer": "George Bonanno's (2004) review of prospective bereavement, disaster and trauma studies established that resilience — defined as relatively stable functioning following adverse exposure — is typically the modal trajectory, accounting for a substantially larger proportion of survivors than chronic dysfunction or delayed reactions. This was a methodologically robust finding because it relied on prospective rather than retrospective designs, avoiding the selection bias of treatment-seeking samples that had previously inflated estimates of post-trauma psychopathology. Ann Masten's (2001) framing of 'ordinary magic' provided the theoretical complement: resilience emerges from basic human adaptive systems — attachment, self-regulation, problem-solving, meaning — rather than from rare individual traits.\n\nThe COVID-19 pandemic offered an unprecedented test. Vinkers et al. (2020), in European Neuropsychopharmacology, synthesised early evidence and confirmed that resilience remained the modal trajectory across diverse populations and outcome measures, even under sustained collective stress. They identified flexible coping, social connection, perceived control, and adaptive cognitive appraisal as the most consistent protective factors. Subsequent longitudinal data across multiple countries broadly supported this conclusion while highlighting heterogeneity by subgroup.\n\nCritically, the pandemic literature reinforced the importance of structural factors. Economic security, prior mental health, family situation, and frontline occupational exposure substantially modified the prevalence of resilient versus dysfunctional trajectories. This qualifies earlier emphases on individual psychological traits and supports an ecological-systems framing in which resilience is co-produced by the person and their context.\n\nFor clinical practice, the implication is that universal psychological intervention following mass adverse events is empirically unjustified and may even iatrogenically interfere with natural recovery (see also Bonanno, 2004 on the 'resilience as default' framing). For policy, the implication is that the most effective resilience-promoting investments target the structural conditions in which ordinary adaptive systems can operate.",
       "feynmanPrompt": "Explain to a friend, who has been told by a self-help book that 'grit is the single biggest predictor of success', why psychologists are now more cautious about that claim. Refer to at least one meta-analysis and one alternative explanation, in plain language.",
       "rabbitHoleTerms": [
-        {"term": "resilience", "description": "The capacity to maintain or recover psychological functioning following adverse events; understood in developmental psychopathology not as a rare trait but as a process shaped by risk and protective factors (Garmezy, 1991; Masten, 2001)."},
-        {"term": "post-traumatic growth (PTG)", "description": "Positive psychological change reported as a result of struggling with highly challenging life events; operationalised by Tedeschi and Calhoun's (1996) PTGI but contested by prospective evidence (Frazier et al., 2009) on retrospective bias."},
-        {"term": "broaden-and-build theory", "description": "Fredrickson's (1998, 2001) account that positive emotions broaden thought-action repertoires and over time build enduring personal resources, in contrast to the narrowing function of negative emotions."},
-        {"term": "flow", "description": "Csikszentmihalyi's (1990) state of complete absorption in an activity, characterised by a match between challenge and skill, clear goals, immediate feedback, and intrinsic enjoyment; central to the 'engagement' element of PERMA."},
-        {"term": "grit", "description": "Duckworth et al.'s (2007) construct of perseverance and passion for long-term goals; subsequently shown by Credé et al.'s (2017) meta-analysis to have modest predictive validity and to be largely indistinguishable from Big Five conscientiousness."},
-        {"term": "growth mindset", "description": "Dweck's (2006) framework distinguishing incremental from entity theorists of ability; subjected to meta-analytic scrutiny by Sisk et al. (2018), who found only modest overall effects concentrated in high-risk samples."}
+        {
+          "term": "resilience",
+          "description": "The capacity to maintain or recover psychological functioning following adverse events; understood in developmental psychopathology not as a rare trait but as a process shaped by risk and protective factors (Garmezy, 1991; Masten, 2001)."
+        },
+        {
+          "term": "post-traumatic growth (PTG)",
+          "description": "Positive psychological change reported as a result of struggling with highly challenging life events; operationalised by Tedeschi and Calhoun's (1996) PTGI but contested by prospective evidence (Frazier et al., 2009) on retrospective bias."
+        },
+        {
+          "term": "broaden-and-build theory",
+          "description": "Fredrickson's (1998, 2001) account that positive emotions broaden thought-action repertoires and over time build enduring personal resources, in contrast to the narrowing function of negative emotions."
+        },
+        {
+          "term": "flow",
+          "description": "Csikszentmihalyi's (1990) state of complete absorption in an activity, characterised by a match between challenge and skill, clear goals, immediate feedback, and intrinsic enjoyment; central to the 'engagement' element of PERMA."
+        },
+        {
+          "term": "grit",
+          "description": "Duckworth et al.'s (2007) construct of perseverance and passion for long-term goals; subsequently shown by Credé et al.'s (2017) meta-analysis to have modest predictive validity and to be largely indistinguishable from Big Five conscientiousness."
+        },
+        {
+          "term": "growth mindset",
+          "description": "Dweck's (2006) framework distinguishing incremental from entity theorists of ability; subjected to meta-analytic scrutiny by Sisk et al. (2018), who found only modest overall effects concentrated in high-risk samples."
+        }
       ],
       "questions": [
         {
@@ -232,7 +271,8 @@
           "correctAnswer": "Resilience refers to relatively stable functioning despite adversity, whereas PTG refers to positive psychological change that exceeds pre-trauma functioning as a result of struggling with the event",
           "explanationHtml": "<p>The conceptual distinction is important. Resilience (Bonanno, 2004; Masten, 2001) denotes the maintenance — or rapid recovery — of pre-trauma functioning following adverse exposure. Post-traumatic growth (Tedeschi & Calhoun, 1996), by contrast, denotes positive psychological change that <em>exceeds</em> pre-trauma functioning as a result of struggling with the event, across domains such as appreciation of life, relating to others, new possibilities, personal strength, and spiritual change. The other options misdescribe the methodology, social context, or cultural distribution of the constructs.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "Commercial resilience programmes focusing on individual mindset, grit, and positive thinking have a weak evidence base when implemented as universal school curricula. Two concerns. First, resilience is predominantly contextual and relational: Ungar's (2012) social-ecological model demonstrates that positive outcomes following adversity depend primarily on access to resources — stable caregiving, supportive schools, safety, economic security — not individual trait grit. Programmes attributing outcomes to mindset risk obscuring structural causes and implying that children who struggle lack sufficient positivity.\n\nSecond, suppressing or bypassing negative affect can be iatrogenic: distress serves adaptive functions, and positivity-focused interventions that discourage its expression may impair help-seeking. Recommend: evaluate the programme's specific evidence base (RCT studies, standardised outcomes), ensure it incorporates relational and environmental components alongside individual skills training, and monitor both resilience and well-being indicators including anxiety and depression to detect unintended effects."
     },
     {
       "id": "psy-prt-10c",
@@ -291,12 +331,30 @@
       "modelAnswer": "The meta-analytic evidence base for positive psychology interventions has evolved substantially. Sin and Lyubomirsky (2009), synthesising 51 trials with 4,266 participants, reported moderate effects on well-being (r = 0.29) and depressive symptoms (r = 0.31). Bolier et al. (2013), with a broader and slightly stricter inclusion frame, reported small but reliable effects (subjective well-being g = 0.34; depression g = 0.23). White, Uttl and Holder (2019), reanalysing the prior datasets with corrections for small-study effects and publication bias, found effects shrank to approximately g = 0.10 for well-being and g = 0.18 for depression. The contemporary honest verdict is that PPIs probably do produce small genuine effects but that earlier estimates were inflated.\n\nThe methodological critique centres on two issues. First, publication bias: small trials with positive results have been disproportionately published, distorting the meta-analytic record. Second, inadequate active control conditions: many PPI trials have compared the intervention to waiting list rather than to a credible alternative activity, leaving the door open to demand characteristics, expectancy effects, and Hawthorne-type confounds. White et al.'s (2019) corrections address the first of these but cannot fully remedy the second.\n\nCultural generalisation is a further constraint. The vast majority of PPI evidence comes from WEIRD samples (Henrich, Heine & Norenzayan, 2010). Layous and Lyubomirsky have argued that cultural fit is a moderator of efficacy: gratitude interventions framed in individualist registers may be powerful in Western samples but face-threatening or obligation-creating in collectivist East Asian contexts. The contemporary research agenda is cultural adaptation, not uniform export of Western protocols.\n\nAn evidence-based recommendation to a national health system would therefore propose PPIs as a useful low-cost adjunct to standard psychological care for sub-clinical and mild-to-moderate populations, with active control conditions in all evaluation work, cultural adaptation built in from the design phase, and explicit rejection of any claim that PPIs are a substitute for evidence-based treatment of severe psychopathology.",
       "feynmanPrompt": "Explain to a non-specialist friend why psychologists are now more cautious about claims that a simple gratitude exercise will substantially improve someone's well-being. Refer to at least one meta-analysis and one source of bias in plain language, and conclude with a balanced verdict.",
       "rabbitHoleTerms": [
-        {"term": "positive psychology intervention (PPI)", "description": "A brief, intentional activity designed to cultivate positive feelings, behaviours, or cognitions; meta-analytic evidence (Bolier et al., 2013; White et al., 2019) suggests small but reliable effects on well-being and depression."},
-        {"term": "three good things", "description": "Seligman et al.'s (2005) evidence-based PPI in which participants record three positive events and their causes each evening for one week; one of the interventions producing sustained gains at six-month follow-up in the original trial."},
-        {"term": "gratitude visit", "description": "An exercise in which a participant writes and personally delivers a letter of thanks to someone who has not been adequately thanked; produces large short-term effects on well-being but with shorter durability than 'three good things' (Seligman et al., 2005)."},
-        {"term": "publication bias", "description": "The systematic over-representation of studies with positive or significant results in the published literature, leading to inflated meta-analytic estimates; addressed in PPI research most directly by White et al.'s (2019) corrected reanalysis."},
-        {"term": "positive psychotherapy (PPT)", "description": "Rashid's (2015) structured 14-session therapeutic protocol integrating strengths assessment, gratitude, savouring, hope, meaning and forgiveness work; shown to be non-inferior to standard CBT for mild-to-moderate depression in RCT evidence."},
-        {"term": "cultural fit (PPI)", "description": "The degree of compatibility between an intervention's underlying assumptions and the participant's cultural context; theorised by Layous and Lyubomirsky as a moderator of PPI efficacy, with gratitude interventions operating differently in individualist versus collectivist cultures."}
+        {
+          "term": "positive psychology intervention (PPI)",
+          "description": "A brief, intentional activity designed to cultivate positive feelings, behaviours, or cognitions; meta-analytic evidence (Bolier et al., 2013; White et al., 2019) suggests small but reliable effects on well-being and depression."
+        },
+        {
+          "term": "three good things",
+          "description": "Seligman et al.'s (2005) evidence-based PPI in which participants record three positive events and their causes each evening for one week; one of the interventions producing sustained gains at six-month follow-up in the original trial."
+        },
+        {
+          "term": "gratitude visit",
+          "description": "An exercise in which a participant writes and personally delivers a letter of thanks to someone who has not been adequately thanked; produces large short-term effects on well-being but with shorter durability than 'three good things' (Seligman et al., 2005)."
+        },
+        {
+          "term": "publication bias",
+          "description": "The systematic over-representation of studies with positive or significant results in the published literature, leading to inflated meta-analytic estimates; addressed in PPI research most directly by White et al.'s (2019) corrected reanalysis."
+        },
+        {
+          "term": "positive psychotherapy (PPT)",
+          "description": "Rashid's (2015) structured 14-session therapeutic protocol integrating strengths assessment, gratitude, savouring, hope, meaning and forgiveness work; shown to be non-inferior to standard CBT for mild-to-moderate depression in RCT evidence."
+        },
+        {
+          "term": "cultural fit (PPI)",
+          "description": "The degree of compatibility between an intervention's underlying assumptions and the participant's cultural context; theorised by Layous and Lyubomirsky as a moderator of PPI efficacy, with gratitude interventions operating differently in individualist versus collectivist cultures."
+        }
       ],
       "questions": [
         {
@@ -345,7 +403,8 @@
           "correctAnswer": "PPT is a structured 14-session therapeutic protocol integrating strengths assessment, gratitude, savouring, hope, meaning and forgiveness work, whereas a brief PPI is a single targeted exercise designed to cultivate a specific positive state",
           "explanationHtml": "<p>Rashid (2015) outlined PPT as a structured therapeutic protocol — typically 14 sessions — that integrates a range of positive psychology constructs and exercises (strengths assessment, gratitude, savouring, hope and meaning work, forgiveness) within a clinical framework, with RCT evidence supporting non-inferiority to standard CBT for mild-to-moderate depression. A brief PPI, by contrast, is a single targeted exercise such as 'three good things' (Seligman et al., 2005). The other options misstate delivery mode, indication, and evidence base for both interventions.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The Seligman et al. (2005) study is influential but methodologically limited: self-selected web-based sample, no active control, reliance on self-report, short follow-up. Smartphone-delivered interventions introduce additional questions about user engagement, adherence, and meaningful clinical benefit specifically in depressed populations — who may experience greater barriers to engagement.\n\nThe evidence base for digital behavioural activation as a CBT adjunct for mild-to-moderate depression is stronger than for positive psychology exercises specifically. If cost-effectiveness and long-term symptom reduction are primary outcomes, this may be a more defensible investment.\n\nA positive psychology adjunct could be appropriate for patients who are already stabilising through CBT and targeting flourishing rather than symptom relief — consistent with the well-being therapy literature (Fava & Tomba, 2009). The CCG should commission an updated systematic review (Sin & Lyubomirsky, 2009 requires updating), specify primary outcomes in WELLBY terms, and consider a small-scale RCT before wider rollout."
     }
   ]
 }

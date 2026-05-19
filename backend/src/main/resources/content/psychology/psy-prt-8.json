@@ -5,7 +5,9 @@
   "glyph": "🪷",
   "tier": "PRACTITIONER",
   "sortOrder": 14,
-  "prerequisiteIds": ["psy-prt-2"],
+  "prerequisiteIds": [
+    "psy-prt-2"
+  ],
   "subChunks": [
     {
       "id": "psy-prt-8a",
@@ -64,12 +66,30 @@
       "modelAnswer": "The equivalence finding — that bona fide psychotherapies produce broadly comparable aggregate outcomes (Wampold &amp; Imel, 2015) — does not entail that specific training is unnecessary. Three counter-arguments are central. First, the finding is an aggregate one; at the individual level, aptitude-by-treatment interactions mean some clients respond preferentially to particular orientations, and the clinician's ability to recognise and offer a fitting approach depends on genuine specialist training. Second, the contextual model itself identifies <em>allegiance</em> — the clinician's credible belief in the rationale being offered — as a core common factor. A trainee who has not internalised any coherent theoretical framework cannot offer the credible rationale on which the placebo-like expectancy effects of psychotherapy partly depend.\n\nThird, the apparent equivalence conceals real qualitative differences in what each orientation prioritises. Rogers' (1957) six conditions cultivate a relational stance that is itself an effective intervention; Shedler's (2010) meta-analytic review documents specific psychodynamic procedures (working with affect, identifying recurrent themes) that produce sustained, post-termination 'sleeper effects'; Yalom's (1980) four ultimate concerns offer a vocabulary for confronting existential material that other orientations may bracket. Training in a specific orientation is therefore not a route to therapeutic superiority but a route to professional competence: it equips the clinician with a coherent rationale, a defined skill set, and the disciplined reflective practice from which the common factors are actually delivered. The first-class counselling psychologist holds technical competence and common-factors humility together.",
       "feynmanPrompt": "Imagine a friend tells you they're confused because their GP recommended CBT, their sister recommended psychodynamic therapy, and a book they read recommends person-centred counselling. In plain language — no jargon — explain what counselling psychologists currently believe about whether the type of therapy actually matters, and what they should look for instead.",
       "rabbitHoleTerms": [
-        {"term": "unconditional positive regard", "description": "A core therapist attitude in Rogers' (1957) person-centred therapy, defined as the non-judgemental acceptance and prizing of the client as a person, independent of approval of any particular behaviour or attitude."},
-        {"term": "congruence", "description": "The Rogerian condition in which the therapist's inner experiencing, awareness, and outward communication are aligned; sometimes glossed as 'genuineness' or 'transparency'. Distinguished from spontaneous self-disclosure."},
-        {"term": "cognitive triad", "description": "Beck's (1976) account of the negative cognitive schema in depression, comprising distorted appraisals of (a) the self, (b) the world or current experience, and (c) the future. Targeted in classical cognitive therapy."},
-        {"term": "common factors", "description": "Elements shared across bona fide psychotherapies — including the therapeutic alliance, allegiance, a credible rationale, and the cultivation of expectancy — argued by the contextual model (Wampold &amp; Imel, 2015) to account for most psychotherapy outcome variance."},
-        {"term": "four ultimate concerns", "description": "Yalom's (1980) existential framework identifying death, freedom, isolation, and meaning as the dynamic conflicts arising from confrontation with the conditions of human existence."},
-        {"term": "pluralism (Cooper &amp; McLeod)", "description": "A meta-theoretical position holding that no single therapy is best for all clients, and that goals, tasks, and methods should be negotiated collaboratively with each client; central to contemporary UK counselling psychology training."}
+        {
+          "term": "unconditional positive regard",
+          "description": "A core therapist attitude in Rogers' (1957) person-centred therapy, defined as the non-judgemental acceptance and prizing of the client as a person, independent of approval of any particular behaviour or attitude."
+        },
+        {
+          "term": "congruence",
+          "description": "The Rogerian condition in which the therapist's inner experiencing, awareness, and outward communication are aligned; sometimes glossed as 'genuineness' or 'transparency'. Distinguished from spontaneous self-disclosure."
+        },
+        {
+          "term": "cognitive triad",
+          "description": "Beck's (1976) account of the negative cognitive schema in depression, comprising distorted appraisals of (a) the self, (b) the world or current experience, and (c) the future. Targeted in classical cognitive therapy."
+        },
+        {
+          "term": "common factors",
+          "description": "Elements shared across bona fide psychotherapies — including the therapeutic alliance, allegiance, a credible rationale, and the cultivation of expectancy — argued by the contextual model (Wampold &amp; Imel, 2015) to account for most psychotherapy outcome variance."
+        },
+        {
+          "term": "four ultimate concerns",
+          "description": "Yalom's (1980) existential framework identifying death, freedom, isolation, and meaning as the dynamic conflicts arising from confrontation with the conditions of human existence."
+        },
+        {
+          "term": "pluralism (Cooper &amp; McLeod)",
+          "description": "A meta-theoretical position holding that no single therapy is best for all clients, and that goals, tasks, and methods should be negotiated collaboratively with each client; central to contemporary UK counselling psychology training."
+        }
       ],
       "questions": [
         {
@@ -122,7 +142,8 @@
           "correctAnswer": "Existential therapy treats symptoms as confrontations with death, freedom, isolation, or meaning that warrant exploration; SFBT brackets aetiology and focuses on exceptions to the problem and small workable steps toward a hypothesised future",
           "explanationHtml": "<p>The core distinction is in how each approach treats the question of cause. Yalom (1980) reframes symptoms as defences against awareness of one of the four ultimate concerns and works with the client to confront these concerns more authentically. de Shazer (1985) deliberately brackets aetiology — Solution-Focused therapists do not ask why the problem arose — and instead attend to exceptions, scaling questions, and the 'miracle question'. Option A reverses the directions of brevity; B reverses the techniques; D misrepresents the evidence base (SFBT has substantial outcome evidence and is widely practised, including within NHS contexts).</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "This presentation warrants both diagnostic and formulation attention. The persistent low mood, pervasive worthlessness, and recurrent thought content suggest an activated core schema — \"I am fundamentally unlovable\" — consistent with Beck's (1976) cognitive model of depression. The relationship breakdown likely served as a triggering event reactivating a pre-existing conditional belief.\n\nA CBT formulation would map: early experience (possibly rejection or abandonment) → core belief (\"I am unlovable\") → dysfunctional assumptions (\"If a relationship ends, it proves my worthlessness\") → automatic thoughts → emotional and behavioural consequences. Schema therapy (Young et al., 2003) targets core beliefs more directly, using techniques such as limited reparenting and mode work.\n\nA person-centred orientation would offer unconditional positive regard as the corrective emotional experience. A pluralistic, collaboratively agreed formulation drawing on multiple models — with explicit client agency in goal-setting — would be most responsive."
     },
     {
       "id": "psy-prt-8b",
@@ -181,12 +202,30 @@
       "modelAnswer": "The claim that video-delivered therapy produces a fundamentally weaker alliance is not supported by the post-COVID empirical literature. Markowitz et al. (2021), in a <em>JAMA Psychiatry</em> review of pandemic-era evidence, reported broadly comparable alliance ratings between in-person and video-delivered interpersonal psychotherapy. Subsequent meta-analytic work has reached similar conclusions: synchronous video therapy produces equivalent alliance and outcome to in-person work for most presentations and for most client groups. This finding is consistent with the broader alliance literature: Horvath et al.'s (2011) meta-analysis of 201 studies, and Flückiger et al.'s (2018) update to 295 studies, found the alliance-outcome correlation (r ≈ .275–.28) to be robust across orientations and modalities.\n\nBordin's (1979) tripartite framework helps explain this medium-robustness. The bond, agreement on goals, and agreement on tasks can be cultivated in any modality that permits sustained communication and reciprocal attention; the alliance is not, in Bordin's view, contingent on physical co-presence. The medium changes the texture of relational contact but does not necessarily compromise its three structural components.\n\nThe equivalence finding should not, however, be over-generalised. Clients with limited digital access, those whose presentations involve significant dissociation or psychosis, those in unsafe home environments, and those for whom embodied presence is therapeutically central (e.g. somatic and body-based work) may be disadvantaged by remote delivery. The first-class clinical position is not to retain or abandon hybrid working as a blanket policy, but to make modality decisions collaboratively, informed by the evidence base, attentive to differential aptitude-by-treatment interactions, and responsive to ongoing alliance feedback within each case (Cooper &amp; McLeod, 2011).",
       "feynmanPrompt": "Imagine a friend says: 'My therapist seems nice but I don't see how just talking can really help — surely the technique matters more than the relationship.' Without using jargon, explain what counselling psychologists currently believe about the importance of the therapeutic relationship, including the evidence that comes from studying thousands of therapy cases.",
       "rabbitHoleTerms": [
-        {"term": "working alliance", "description": "Bordin's (1979) pan-theoretical construct comprising the bond between client and therapist, agreement on therapeutic goals, and agreement on therapeutic tasks. Operationalised in the Working Alliance Inventory."},
-        {"term": "rupture and repair", "description": "Safran and Muran's (2000) account of breakdowns in the therapeutic alliance — categorised as withdrawal or confrontation ruptures — and the metacommunicative process by which clinician and client identify, name, and work through them."},
-        {"term": "immediacy", "description": "A counselling skill involving the clinician's explicit commentary on the here-and-now of the therapeutic relationship; meta-analytically associated with improved outcome (Hill et al., 2018) when used judiciously."},
-        {"term": "Dodo bird verdict", "description": "The empirical finding, originating with Rosenzweig (1936) and defended by Wampold (2001), that bona fide psychotherapies produce broadly equivalent outcomes when compared head-to-head — though with important exceptions for specific presentations."},
-        {"term": "Integrated Developmental Model", "description": "Stoltenberg and McNeill's three-level model of supervisee development — high-anxiety dependence, dependence-autonomy conflict, integrated independent practice — described in Bernard and Goodyear (2014) and widely used in counselling psychology supervision."},
-        {"term": "microcounselling skills", "description": "Ivey's (1971) operationalisation of foundational relational skills — attending, paraphrasing, reflection of feeling, summarising, questioning — that underpins almost all contemporary introductory counselling training."}
+        {
+          "term": "working alliance",
+          "description": "Bordin's (1979) pan-theoretical construct comprising the bond between client and therapist, agreement on therapeutic goals, and agreement on therapeutic tasks. Operationalised in the Working Alliance Inventory."
+        },
+        {
+          "term": "rupture and repair",
+          "description": "Safran and Muran's (2000) account of breakdowns in the therapeutic alliance — categorised as withdrawal or confrontation ruptures — and the metacommunicative process by which clinician and client identify, name, and work through them."
+        },
+        {
+          "term": "immediacy",
+          "description": "A counselling skill involving the clinician's explicit commentary on the here-and-now of the therapeutic relationship; meta-analytically associated with improved outcome (Hill et al., 2018) when used judiciously."
+        },
+        {
+          "term": "Dodo bird verdict",
+          "description": "The empirical finding, originating with Rosenzweig (1936) and defended by Wampold (2001), that bona fide psychotherapies produce broadly equivalent outcomes when compared head-to-head — though with important exceptions for specific presentations."
+        },
+        {
+          "term": "Integrated Developmental Model",
+          "description": "Stoltenberg and McNeill's three-level model of supervisee development — high-anxiety dependence, dependence-autonomy conflict, integrated independent practice — described in Bernard and Goodyear (2014) and widely used in counselling psychology supervision."
+        },
+        {
+          "term": "microcounselling skills",
+          "description": "Ivey's (1971) operationalisation of foundational relational skills — attending, paraphrasing, reflection of feeling, summarising, questioning — that underpins almost all contemporary introductory counselling training."
+        }
       ],
       "questions": [
         {
@@ -239,7 +278,8 @@
           "correctAnswer": "The contextual model holds that common factors (alliance, allegiance, credible rationale, expectancy) account for most outcome variance, while specific techniques contribute a smaller increment; the medical model holds that the active ingredients of therapy reside in the specific techniques targeted to specific presentations",
           "explanationHtml": "<p>Wampold's (2001) contextual model maintains that the bulk of psychotherapy outcome is delivered by common factors — alliance, allegiance, credibility of rationale, expectancy of benefit — with specific techniques contributing a smaller additional increment. The medical model, in contrast, treats therapies as analogous to drug treatments in which active 'ingredients' (specific procedures) produce specific effects on specific disorders. Option A inverts the two; C and D misrepresent both models.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The supervisory concern is a withdrawal rupture (Safran & Muran, 2000) — a reduction in client involvement characterised by passive compliance or disengagement. Withdrawal ruptures differ from confrontation ruptures (overt disagreement) and are harder to detect because the client appears cooperative while emotionally withdrawing.\n\nThe therapeutic alliance is the most robust predictor of outcome across all modalities (Norcross & Lambert, 2011). Ruptures can paradoxically be therapeutic when detected and resolved — the resolution process itself models interpersonal repair. The trainee's discomfort with the silence is a countertransference response that, managed reflectively, provides diagnostic information.\n\nSupervision guidance: the trainee should raise the shift metacommunicatively — \"I've noticed our conversations have felt a bit quieter lately. I wonder if something has shifted between us.\" This tentative, non-blaming enquiry opens space without accusation. Maintain curiosity over anxiety. Review the session recording to identify when the shift began."
     },
     {
       "id": "psy-prt-8c",
@@ -298,12 +338,30 @@
       "modelAnswer": "The advice to 'push through' is empirically and ethically inadequate. Skovholt and Trotter-Mathison's (2016) <em>The Resilient Practitioner</em> identifies the cluster of symptoms described — sleep disturbance, anticipatory dread, emotional numbing — as recognisable markers of incipient burnout, driven by cumulative emotional demand, chronic giving of self, and inadequate restorative practice. Simionato and Simpson's (2018) meta-analysis reported substantial rates of burnout, secondary traumatic stress, and compassion fatigue among psychological therapists, with caseload size, lack of perceived autonomy, and inadequate supervision all functioning as risk factors. Post-COVID surveys have reported deteriorations in these rates. 'Pushing through' a recognised burnout profile in the hope it will spontaneously resolve is contrary to the evidence base.\n\nThe ethical framework reinforces the empirical case. The BACP Ethical Framework's principle of <em>self-respect</em> codifies the practitioner's duty of appropriate self-care, explicitly recognising that a depleted clinician cannot reliably enact beneficence and non-maleficence with clients. The professional and ethical case for action is therefore convergent: continuing to practise at full capacity while emotionally numbed creates foreseeable risk to client outcomes and, in a worst case, to client safety.\n\nThe ethically appropriate response involves transparent disclosure to supervision; renegotiation of caseload with line management on the basis of clinical safety; review of personal supports including, if indicated, personal therapy; and structured restoration of self-care practices (Skovholt &amp; Trotter-Mathison, 2016). The framing 'everyone feels this in IAPT', while empirically often accurate, is not an argument for individual inaction — it is an argument for organisational change. The first-class counselling psychologist treats sustained burnout as a clinical and ethical signal warranting structured response, not a personal failing to be silently absorbed.",
       "feynmanPrompt": "Explain to a friend who is thinking about becoming a counselling psychologist what the main ethical rules of the profession are, why confidentiality has limits, and why looking after the therapist's own wellbeing is treated as a professional duty rather than a personal preference.",
       "rabbitHoleTerms": [
-        {"term": "BACP ethical principles", "description": "The five principles articulated in the BACP Ethical Framework for the Counselling Professions: autonomy (respect for self-determination), beneficence (promoting wellbeing), non-maleficence (avoiding harm), justice (fair and equitable treatment), and self-respect (appropriate self-care)."},
-        {"term": "Caldicott principles", "description": "A framework, originally 1997 and updated as Caldicott 3 in 2020, governing the handling of patient-identifiable information in UK health and social care. Articulates eight principles including justification of purpose, minimum necessary information, and need-to-know access."},
-        {"term": "Gillick competence", "description": "The UK legal test, established in <em>Gillick v West Norfolk and Wisbech AHA</em> [1986], by which a child under 16 may be judged sufficiently mature and informed to consent to medical or psychological treatment without parental knowledge."},
-        {"term": "microaggressions", "description": "Subtle verbal, behavioural, or environmental indignities — categorised by Sue et al. (2007) as microassaults, microinsults, and microinvalidations — that communicate hostile or derogatory messages to members of marginalised groups. In therapy, such enactments by clinicians rupture the alliance and predict premature termination."},
-        {"term": "trauma-informed practice", "description": "An organisational and relational orientation, articulated by SAMHSA (2014), centred on six principles: safety, trustworthiness and transparency, peer support, collaboration and mutuality, empowerment voice and choice, and attention to cultural, historical, and gender issues. Distinguished from trauma-specific treatment."},
-        {"term": "Memorandum of Understanding on Conversion Therapy", "description": "A UK professional consensus statement, first signed in 2017, by which the principal psychological-therapies bodies (including BPS, BACP, UKCP) commit to opposing any therapeutic intervention that seeks to change a client's sexual orientation or gender identity, on grounds of ineffectiveness, potential harm, and incompatibility with the client's autonomy and dignity."}
+        {
+          "term": "BACP ethical principles",
+          "description": "The five principles articulated in the BACP Ethical Framework for the Counselling Professions: autonomy (respect for self-determination), beneficence (promoting wellbeing), non-maleficence (avoiding harm), justice (fair and equitable treatment), and self-respect (appropriate self-care)."
+        },
+        {
+          "term": "Caldicott principles",
+          "description": "A framework, originally 1997 and updated as Caldicott 3 in 2020, governing the handling of patient-identifiable information in UK health and social care. Articulates eight principles including justification of purpose, minimum necessary information, and need-to-know access."
+        },
+        {
+          "term": "Gillick competence",
+          "description": "The UK legal test, established in <em>Gillick v West Norfolk and Wisbech AHA</em> [1986], by which a child under 16 may be judged sufficiently mature and informed to consent to medical or psychological treatment without parental knowledge."
+        },
+        {
+          "term": "microaggressions",
+          "description": "Subtle verbal, behavioural, or environmental indignities — categorised by Sue et al. (2007) as microassaults, microinsults, and microinvalidations — that communicate hostile or derogatory messages to members of marginalised groups. In therapy, such enactments by clinicians rupture the alliance and predict premature termination."
+        },
+        {
+          "term": "trauma-informed practice",
+          "description": "An organisational and relational orientation, articulated by SAMHSA (2014), centred on six principles: safety, trustworthiness and transparency, peer support, collaboration and mutuality, empowerment voice and choice, and attention to cultural, historical, and gender issues. Distinguished from trauma-specific treatment."
+        },
+        {
+          "term": "Memorandum of Understanding on Conversion Therapy",
+          "description": "A UK professional consensus statement, first signed in 2017, by which the principal psychological-therapies bodies (including BPS, BACP, UKCP) commit to opposing any therapeutic intervention that seeks to change a client's sexual orientation or gender identity, on grounds of ineffectiveness, potential harm, and incompatibility with the client's autonomy and dignity."
+        }
       ],
       "questions": [
         {
@@ -356,7 +414,8 @@
           "correctAnswer": "Microassaults are explicit derogations (e.g. slurs, deliberate discriminatory acts); microinvalidations are communications that exclude, negate, or nullify the experiential reality of a person of colour (e.g. denying that racism occurred when the client describes it)",
           "explanationHtml": "<p>Sue et al. (2007) defined microassaults as explicit, conscious derogations — slurs, deliberate discriminatory behaviour, displays of discriminatory symbols. Microinvalidations, in contrast, are typically unintentional communications that exclude, negate, or nullify the experiential reality of a person of colour — for example, denying that racism occurred when a client describes it, or reframing a discrimination experience as oversensitivity. Microinsults occupy a third intermediate category. Option A inverts the intentionality; C introduces an irrelevant verbal/non-verbal distinction; D misattributes the source of the aggression.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The psychologist cannot promise blanket confidentiality — this would be ethically problematic and clinically unworkable. Confidentiality limits must have been discussed in the initial informed consent, including the conditions under which confidentiality may be broken (risk of serious harm to self or identifiable others).\n\nThe presenting disclosure requires careful risk assessment, not automatic action. Cocaine use per se does not trigger automatic breach. Assessment should explore: frequency and quantity, mixing with other substances, evidence of dependence, whether she drives or cares for children, and trajectory of use.\n\nTherapeutically, the disclosure is an opportunity. Motivational interviewing — exploring ambivalence without confrontation, developing discrepancy between values and behaviour — is evidence-based for substance misuse and preserves the therapeutic relationship. Document clinical reasoning and decisions thoroughly in case records."
     }
   ]
 }

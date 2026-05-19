@@ -5,7 +5,9 @@
   "sortOrder": 13,
   "tier": "PRACTITIONER",
   "topicId": "psychology",
-  "prerequisiteIds": ["psy-prt-2"],
+  "prerequisiteIds": [
+    "psy-prt-2"
+  ],
   "subChunks": [
     {
       "id": "psy-prt-7a",
@@ -64,12 +66,30 @@
       "modelAnswer": "The proposed adoption raises serious concerns across scientific, ethical, and legal dimensions. Scientifically, Schmidt and Hunter (1998) established that the most valid selection methods are work samples (r = .54), GMA tests (r = .51), and structured interviews (r = .51) — all of which rely on standardised, content-related tasks. Video AI analysis of facial expressions and vocal tone has no comparable established validity base; constructs such as 'leadership potential' inferred from non-verbal behaviour lack the construct validity Fleishman-style job analysis would require. The vendor's refusal to share algorithm or training data violates the BPS occupational testing standards' transparency requirements and prevents the firm from establishing criterion-related validity for its specific job context.\n\nEthically and legally, Raghavan et al. (2020) documented systematic problems with such platforms: training data encoding historical hiring biases produce discriminatory outputs even when protected characteristics are not explicit inputs, and opacity prevents fairness auditing. The Amazon recruiting tool's withdrawal after it was found to penalise CVs mentioning 'women's' illustrates the concrete risks. Under the Equality Act 2010, indirect discrimination from algorithmic screening would expose the firm to substantial liability.\n\nMy recommendation is that the firm should not adopt the tool on the current terms. If adoption is reconsidered, it should be contingent on: (1) independent local validation against criterion measures specific to the accountancy role; (2) full disclosure of training data composition and a fairness audit across protected groups; (3) clear governance ensuring the AI output is decision-support rather than decision-maker; (4) candidate transparency consistent with GDPR Article 22 on automated decision-making. Without these safeguards, the firm should retain proven structured methods.",
       "feynmanPrompt": "Imagine your friend is launching a small business and asks how to hire their first three employees. Explain to them in plain language what selection methods work best, why the chatty 'gut feel' interview they were planning is one of the worst options, and what they should do instead.",
       "rabbitHoleTerms": [
-        {"term": "job analysis", "description": "The systematic process of identifying the tasks, behaviours, and human attributes required for effective job performance; underpins defensible selection, training design, and performance management."},
-        {"term": "competency framework", "description": "An organisationally specific description of the knowledge, skills, abilities, and other characteristics that distinguish effective from average performers in particular roles; used to integrate HR systems but varies widely in psychometric rigour."},
-        {"term": "general mental ability (GMA)", "description": "The latent cognitive capacity measured by tests of reasoning, problem solving, and verbal-numerical ability; consistently among the strongest predictors of job performance across occupations (Schmidt & Hunter, 1998)."},
-        {"term": "structured interview", "description": "An employment interview using predetermined questions, behaviourally anchored rating scales, and standardised administration across candidates; substantially more valid than unstructured equivalents (McDaniel et al., 1994)."},
-        {"term": "assessment centre", "description": "A multi-method, multi-assessor evaluation in which candidates complete simulations such as in-tray exercises, group discussions, and role-plays observed against pre-specified dimensions."},
-        {"term": "construct validity paradox", "description": "Lievens' (1998) observation that assessment centre ratings cluster more strongly by exercise than by the trans-situational dimension supposedly measured, despite ACs' overall criterion validity."}
+        {
+          "term": "job analysis",
+          "description": "The systematic process of identifying the tasks, behaviours, and human attributes required for effective job performance; underpins defensible selection, training design, and performance management."
+        },
+        {
+          "term": "competency framework",
+          "description": "An organisationally specific description of the knowledge, skills, abilities, and other characteristics that distinguish effective from average performers in particular roles; used to integrate HR systems but varies widely in psychometric rigour."
+        },
+        {
+          "term": "general mental ability (GMA)",
+          "description": "The latent cognitive capacity measured by tests of reasoning, problem solving, and verbal-numerical ability; consistently among the strongest predictors of job performance across occupations (Schmidt & Hunter, 1998)."
+        },
+        {
+          "term": "structured interview",
+          "description": "An employment interview using predetermined questions, behaviourally anchored rating scales, and standardised administration across candidates; substantially more valid than unstructured equivalents (McDaniel et al., 1994)."
+        },
+        {
+          "term": "assessment centre",
+          "description": "A multi-method, multi-assessor evaluation in which candidates complete simulations such as in-tray exercises, group discussions, and role-plays observed against pre-specified dimensions."
+        },
+        {
+          "term": "construct validity paradox",
+          "description": "Lievens' (1998) observation that assessment centre ratings cluster more strongly by exercise than by the trans-situational dimension supposedly measured, despite ACs' overall criterion validity."
+        }
       ],
       "questions": [
         {
@@ -122,7 +142,8 @@
           "correctAnswer": "Both use standardised stimuli; structured interviews involve live oral interaction with predetermined questions and anchored ratings, while SJTs present written or video scenarios with response options the candidate evaluates",
           "explanationHtml": "<p>The core distinction is modality and scoring, not construct. Structured interviews retain the live oral interaction format but constrain it with predetermined questions and behaviourally anchored rating scales (McDaniel et al., 1994). SJTs externalise the situation into written or video form, present multiple response options, and score candidate evaluations against expert keys (McDaniel et al., 2007). Both can tap similar constructs (judgement, interpersonal effectiveness) and both show incremental validity over GMA, but SJTs are typically less susceptible to faking than self-report personality, easier to administer at scale, and tend to show lower adverse impact than pure cognitive tests.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The current procedure's critical weakness is the unstructured panel interview, which has predictive validity of around r = .38 at best — lower in practice due to interviewers' inconsistent question coverage and susceptibility to first-impression bias, halo effects, and similarity bias. CV screening alone cannot assess job-relevant skills and is confounded by credential privilege.\n\nRecommendations based on Schmidt and Hunter's (1998) meta-analytic review: (1) replace unstructured with structured behavioural interviews (BEI) using STAR-format questions with anchored scoring — incremental validity r = .51; (2) add a cognitive ability test or work-sample exercise relevant to consultancy tasks (analytical case study) — work samples have validity r = .54; (3) ensure assessment centre exercises are scored by trained, diverse assessors using behavioural observation scales.\n\nThe group exercise is retained only if it maps onto job-relevant team behaviour. Document all scores to enable audit for adverse impact on protected characteristics."
     },
     {
       "id": "psy-prt-7b",
@@ -181,12 +202,30 @@
       "modelAnswer": "Each option reshapes the demands-resources balance differently and has distinct implications for the basic psychological needs identified by Deci and Ryan (2008). A full return to office would restore informal interaction and relatedness, reducing the social-isolation demand identified in remote-work research, but at the cost of autonomy (a major resource according to the JD-R model) and would re-impose commuting demands that pre-pandemic research linked to strain. Full remote working preserves autonomy and removes commuting, but Carillo et al. (2021) showed that maladjustment trajectories in their French sample were associated with insufficient organisational support and weak boundary management — both implicated in the firm's current symptoms. The exit-interview themes — isolation, blurred boundaries, Zoom fatigue — map onto unmet relatedness needs (Deci & Ryan, 2008) and new technostress demands not present in pre-2020 office work.\n\nA structured hybrid model, with anchor days for in-person collaboration and protected remote days for focused work, offers the strongest evidence-based fit. It retains autonomy (a critical resource), restores relatedness through scheduled co-presence, and allows boundary management to be reasserted. Bakker and Demerouti's (2017) reformulation of JD-R emphasises that job crafting and personal resources moderate outcomes, so the hybrid arrangement should be paired with manager training in supporting autonomy and explicit norms around digital availability to manage technostress.\n\nMy recommendation is a structured hybrid arrangement of two to three anchor in-office days per week, accompanied by explicit boundary norms (no expectation of out-of-hours response), investment in line-manager development to support psychological needs (Deci & Ryan, 2008), and longitudinal monitoring of engagement and burnout using UWES (Schaufeli et al., 2002) and MBI (Maslach & Jackson, 1981) so that the policy can be adjusted based on evidence rather than executive preference.",
       "feynmanPrompt": "A friend running a small team says employee engagement is just about paying people well and giving them free snacks. Using ideas from self-determination theory and the Job Demands-Resources model, explain in plain language why that view misses what really drives engagement at work, and what the friend should focus on instead.",
       "rabbitHoleTerms": [
-        {"term": "Hawthorne effect", "description": "The phenomenon, derived from Mayo's (1933) studies at Western Electric, in which workers alter behaviour because they know they are being observed; later reanalyses suggest the original effect sizes were smaller than reported."},
-        {"term": "expectancy theory", "description": "Vroom's (1964) account of work motivation as the multiplicative product of expectancy (effort produces performance), instrumentality (performance produces outcomes), and valence (outcomes are valued)."},
-        {"term": "self-determination theory", "description": "Deci and Ryan's (2008) framework proposing that sustained motivation and well-being require satisfaction of three basic psychological needs: autonomy, competence, and relatedness."},
-        {"term": "Job Demands-Resources model", "description": "Bakker and Demerouti's (2007, 2017) framework in which job demands drive a health-impairment process leading to burnout, while job resources drive a motivational process leading to engagement, with resources buffering the impact of demands."},
-        {"term": "work engagement", "description": "A positive, fulfilling work-related state characterised by vigour, dedication, and absorption (Schaufeli et al., 2002); measured by the Utrecht Work Engagement Scale (UWES)."},
-        {"term": "psychological safety", "description": "Edmondson's (1999) construct describing the shared belief that a team is safe for interpersonal risk-taking; a strong predictor of team learning, voice, and effectiveness."}
+        {
+          "term": "Hawthorne effect",
+          "description": "The phenomenon, derived from Mayo's (1933) studies at Western Electric, in which workers alter behaviour because they know they are being observed; later reanalyses suggest the original effect sizes were smaller than reported."
+        },
+        {
+          "term": "expectancy theory",
+          "description": "Vroom's (1964) account of work motivation as the multiplicative product of expectancy (effort produces performance), instrumentality (performance produces outcomes), and valence (outcomes are valued)."
+        },
+        {
+          "term": "self-determination theory",
+          "description": "Deci and Ryan's (2008) framework proposing that sustained motivation and well-being require satisfaction of three basic psychological needs: autonomy, competence, and relatedness."
+        },
+        {
+          "term": "Job Demands-Resources model",
+          "description": "Bakker and Demerouti's (2007, 2017) framework in which job demands drive a health-impairment process leading to burnout, while job resources drive a motivational process leading to engagement, with resources buffering the impact of demands."
+        },
+        {
+          "term": "work engagement",
+          "description": "A positive, fulfilling work-related state characterised by vigour, dedication, and absorption (Schaufeli et al., 2002); measured by the Utrecht Work Engagement Scale (UWES)."
+        },
+        {
+          "term": "psychological safety",
+          "description": "Edmondson's (1999) construct describing the shared belief that a team is safe for interpersonal risk-taking; a strong predictor of team learning, voice, and effectiveness."
+        }
       ],
       "questions": [
         {
@@ -239,7 +278,8 @@
           "correctAnswer": "Herzberg distinguishes hygiene factors that prevent dissatisfaction from motivators that produce satisfaction, while SDT proposes three universal psychological needs — autonomy, competence, and relatedness — whose satisfaction underlies intrinsic motivation and well-being",
           "explanationHtml": "<p>Herzberg's (1959) two-factor framework distinguishes hygiene factors (pay, supervision, conditions) whose absence causes dissatisfaction but whose presence does not motivate, from motivators (achievement, recognition, the work itself) whose presence produces satisfaction. SDT (Deci & Ryan, 2008) is a needs-based theory grounded in social-psychological research proposing three innate, universal needs whose satisfaction supports intrinsic motivation, sustained engagement, and well-being. Herzberg's methodology used critical-incident interviews (and has been criticised for attributional artefact), while SDT rests on a large experimental and field literature. Pay is not the strongest predictor in either framework.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The presentation aligns with two complementary frameworks. The Job Demands-Resources model (Bakker & Demerouti, 2007) identifies the imbalance: high demands (uncapped workload) with depleted resources (inconsistent supervision, low autonomy, rare feedback). JD-R research shows this combination predicts burnout, disengagement, and voluntary exit — exactly the pattern reported.\n\nSelf-Determination Theory (Ryan & Deci, 2000) deepens the analysis: basic needs for autonomy, competence, and relatedness are systematically thwarted. Junior doctors lack control over their conditions, insufficient feedback to develop clinical confidence, and weak relationships with senior colleagues.\n\nRecommendations: (1) structured weekly clinical supervision — relational contact and developmental feedback; (2) protected professional development time with role clarity; (3) job crafting within existing roles where protocols permit; (4) workload audit with caps per European Working Time Regulations. Address systemic drivers, not only individual resilience."
     },
     {
       "id": "psy-prt-7c",
@@ -298,12 +338,30 @@
       "modelAnswer": "The pattern described — parity at intake, attrition at mid-career, and exit themes of exclusion — is well-documented in DEI research and reflects what Nishii et al. (2018) call the gap between diversity (representation) and inclusion (the simultaneous experience of belongingness and uniqueness). Recruitment policies alone shift the demographic composition but do not alter the day-to-day leadership behaviours and climate that determine whether under-represented employees can both feel they belong and express their distinctive identity. The firm's existing diversity statements operate at Schein's (1985) espoused-values layer, while exclusion from informal networks and implicit 'fit' criteria reflect the basic underlying assumptions that actually drive promotion decisions.\n\nThree evidence-based priorities follow. First, develop inclusive leadership capability across the partner cadre. Carmeli et al. (2010) and Nishii et al. (2018) link openness, accessibility, and availability — the behavioural markers of inclusive leadership — to psychological safety, voice, and innovation in diverse teams. Targeted development and behavioural feedback for partners, not generic unconscious-bias training, are required. Second, strengthen psychological safety in client-facing teams: Edmondson's (1999) research shows that without it, women and minority members underuse voice, which has knock-on consequences for client visibility and promotion candidacy. Third, redesign the promotion process to dismantle implicit 'fit' criteria. Transformational leadership (Bass, 1985) — particularly individualised consideration — should be operationalised in promotion competencies, with sponsorship (active advocacy by senior partners), not merely mentoring, structurally embedded.\n\nFinally, monitor outcomes longitudinally — promotion velocity, retention curves, and inclusion-climate measures by demographic group — so the strategy is evaluated on impact, not activity. Without behavioural and structural change at the partner level, the new strategy will replicate the limitations of its predecessors.",
       "feynmanPrompt": "A friend has just been promoted to lead a team for the first time and has been told to 'be a transformational leader'. Explain to them in plain English what that actually means in practice, how it differs from just being charismatic, and what concrete behaviours they should start practising.",
       "rabbitHoleTerms": [
-        {"term": "transformational leadership", "description": "Bass's (1985) leadership model in which leaders elevate followers' aspirations and values through idealised influence, inspirational motivation, intellectual stimulation, and individualised consideration; measured by the Multifactor Leadership Questionnaire."},
-        {"term": "Fiedler's contingency model", "description": "Fiedler's (1967) framework proposing that leader effectiveness depends on the match between leadership style (task- vs relationship-oriented) and situational favourability — leader-member relations, task structure, and position power."},
-        {"term": "Tuckman's stage model", "description": "Tuckman's (1965) developmental model of teams progressing through forming, storming, norming, and performing stages, with adjourning added in 1977; widely taught but with limited evidence for strict sequentiality."},
-        {"term": "organisational culture (Schein)", "description": "Schein's (1985) model distinguishing three levels of culture: visible artefacts, espoused values, and basic underlying assumptions; the deepest layer drives behaviour and is the hardest to change."},
-        {"term": "psychological contract", "description": "Rousseau's (1989) construct describing the subjective, implicit set of mutual obligations between employer and employee; breach predicts reduced commitment, citizenship, and performance."},
-        {"term": "inclusive leadership", "description": "Leadership behaviours, including openness, accessibility, and availability (Carmeli et al., 2010), that foster belongingness and uniqueness (Nishii et al., 2018) and support psychological safety in diverse teams."}
+        {
+          "term": "transformational leadership",
+          "description": "Bass's (1985) leadership model in which leaders elevate followers' aspirations and values through idealised influence, inspirational motivation, intellectual stimulation, and individualised consideration; measured by the Multifactor Leadership Questionnaire."
+        },
+        {
+          "term": "Fiedler's contingency model",
+          "description": "Fiedler's (1967) framework proposing that leader effectiveness depends on the match between leadership style (task- vs relationship-oriented) and situational favourability — leader-member relations, task structure, and position power."
+        },
+        {
+          "term": "Tuckman's stage model",
+          "description": "Tuckman's (1965) developmental model of teams progressing through forming, storming, norming, and performing stages, with adjourning added in 1977; widely taught but with limited evidence for strict sequentiality."
+        },
+        {
+          "term": "organisational culture (Schein)",
+          "description": "Schein's (1985) model distinguishing three levels of culture: visible artefacts, espoused values, and basic underlying assumptions; the deepest layer drives behaviour and is the hardest to change."
+        },
+        {
+          "term": "psychological contract",
+          "description": "Rousseau's (1989) construct describing the subjective, implicit set of mutual obligations between employer and employee; breach predicts reduced commitment, citizenship, and performance."
+        },
+        {
+          "term": "inclusive leadership",
+          "description": "Leadership behaviours, including openness, accessibility, and availability (Carmeli et al., 2010), that foster belongingness and uniqueness (Nishii et al., 2018) and support psychological safety in diverse teams."
+        }
       ],
       "questions": [
         {
@@ -356,7 +414,8 @@
           "correctAnswer": "Lewin's model is a parsimonious social-psychological framework emphasising disconfirmation and stabilisation, while Kotter's model is a more elaborate, prescriptively sequenced practitioner playbook with weaker direct empirical support",
           "explanationHtml": "<p>Lewin's (1947) model — unfreezing, changing, refreezing — is a parsimonious social-psychological account emphasising that change requires both motivational disconfirmation of existing patterns and structural reinforcement of new ones. Kotter's (1996) eight-step model is more elaborate and prescriptively sequenced (urgency, guiding coalition, vision, communication, empowerment, short-term wins, consolidation, anchoring in culture) and is widely used in practice, but its evidence base is largely practitioner and case-study rather than experimental or meta-analytic. Both have been criticised for implying linearity in change processes that are increasingly continuous, and Kotter does include urgency-creating steps that broadly map to Lewin's unfreezing.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "Kotter's (1996) model prescribes eight steps; the organisation has executed the early steps well but stalled at step 5: empowering employees to act on the vision. Middle managers resist because they have been informed rather than involved. Change theory distinguishes between compliance — behavioural adoption under direction — and commitment — genuine endorsement driving proactive implementation.\n\nOrganisational change research (Armenakis & Bedeian, 1999) identifies readiness as comprising belief in the need for change, appropriateness of the specific change, principal support, efficacy, and valence. Middle managers lacking these conditions will engage in passive resistance or active undermining.\n\nInterventions: (1) create middle-management working groups with genuine co-design authority over implementation — not consultation, but decision-making power within defined parameters; (2) individual change conversations to surface and address specific concerns; (3) identify change champions within the middle-management cohort; (4) reduce cynicism by acknowledging previous failed restructures and differentiating the current change explicitly."
     }
   ]
 }

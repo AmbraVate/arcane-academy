@@ -5,7 +5,9 @@
   "sortOrder": 10,
   "tier": "EXPERT",
   "topicId": "psychology",
-  "prerequisites": ["psy-prt-3"],
+  "prerequisites": [
+    "psy-prt-3"
+  ],
   "subChunks": [
     {
       "id": "psy-exp-1a",
@@ -296,6 +298,381 @@
           "questionHtml": "<p>True or False: Kirsch et al.'s (2008) meta-analysis of antidepressant trials found that drug-placebo differences were clinically meaningful for patients with severe depression, even though the overall average difference fell below NICE's clinical significance threshold.</p>",
           "correctAnswer": "True",
           "explanationHtml": "<p>Kirsch et al. (2008) found a mean drug-placebo difference of 1.8 HDRS points — below the 3-point NICE threshold for clinical significance. However, for patients with severe depression, the difference exceeded this threshold, largely because placebo response declined at higher severity levels rather than because drug response increased. This nuance is critical for appropriate clinical application of the findings.</p>"
+        }
+      ]
+    },
+    {
+      "id": "psy-exp-1c",
+      "title": "Psychological Assessment, Diagnosis & the Nosology Debate",
+      "sortOrder": 3,
+      "xpReward": 175,
+      "practiceType": "NONE",
+      "hookHtml": "<p>The Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition (DSM-5), is used to diagnose hundreds of millions of people worldwide. The International Classification of Diseases (ICD-11) covers the same territory. Yet a 2013 editorial in <em>Lancet</em> by the directors of the National Institute of Mental Health questioned whether DSM-5 categories had any validity — and announced that NIMH would move research away from DSM categories toward Research Domain Criteria (RDoC) based on neural circuits. The classificatory foundations of clinical psychology are actively disputed at the highest level of the discipline.</p>",
+      "explanationHtml": "<h3>The Validity Problem in Psychiatric Classification</h3>\n<p>Diagnostic categories have two distinct reliability-validity dimensions. <strong>Reliability</strong> — inter-rater agreement that a patient meets criteria for a given diagnosis — has improved dramatically since DSM-III (1980) introduced operationalised criteria. <strong>Validity</strong> — whether the diagnosis carves nature at its joints — is far more contested.</p>\n<p>Kendell and Jablensky (2003) distinguished descriptive validity (consistent symptom patterns), predictive validity (prognosis, treatment response), and aetiological validity (shared causal mechanisms). Most psychiatric diagnoses have adequate descriptive validity but poor aetiological validity: the same symptom profile (e.g., depression) arises from heterogeneous causes. This heterogeneity explains why treatment response is inconsistent within diagnostic categories.</p>\n<p>The Hierarchical Taxonomy of Psychopathology (HiTOP; Kotov et al., 2017) proposes a dimensional alternative: instead of categorical diagnoses, psychopathology is represented as continuous dimensions (internalising, externalising, thought disorder, detachment, somatoform), reflecting their observed covariation in the population. HiTOP accommodates comorbidity more naturally than categorical diagnosis — comorbid depression and anxiety are high loadings on an internalising dimension, not two separate diseases.</p>\n<h3>Psychological Assessment</h3>\n<p><strong>Intelligence testing</strong>: The Wechsler scales (WAIS-IV for adults, WISC-V for children) remain the standard for assessing cognitive ability in clinical, forensic, and educational contexts. They produce a Full Scale IQ but are most informative at the index score level (Verbal Comprehension, Perceptual Reasoning, Working Memory, Processing Speed). Discrepancies between indices inform diagnosis (dyslexia, ADHD, traumatic brain injury). The Flynn effect — the 20th-century rise in IQ scores (approximately 3 points per decade) — requires test norms to be updated, as outdated norms overestimate ability.</p>\n<p><strong>Neuropsychological assessment</strong>: Tests of memory (WMS-IV), executive function (BADS), language, visuospatial processing, and attention are combined into batteries to profile cognitive strengths and weaknesses following brain injury, dementia, or developmental conditions. Lezak's <em>Neuropsychological Assessment</em> (5th ed.) remains the definitive reference. Malingering must be assessed in forensic contexts; validity indicators (TOMM, SVT) assess whether effort is genuine.</p>\n<p><strong>Personality assessment</strong>: The MMPI-2/MMPI-3 is the most researched clinical personality inventory, providing validity scales alongside clinical and content scales. The PAI (Personality Assessment Inventory) is preferred in forensic contexts. Projective measures (Rorschach, TAT) have contested reliability and validity; the Rorschach Comprehensive System has been criticised for norming and validity issues, though the RCPAS (Rorschach Performance Assessment System) addresses some concerns.</p>\n<h3>NICE, Evidence Hierarchies & Clinical Practice Guidelines</h3>\n<p>NICE (National Institute for Health and Care Excellence) produces clinical guidelines for major mental health conditions in the UK, based on systematic reviews of RCT evidence. The NICE hierarchy privileges RCTs and meta-analyses over case studies and expert opinion. Critics argue that RCT evidence (testing specific manualised treatments in controlled populations) has limited external validity for the heterogeneous patients encountered in clinical practice (Wampold & Imel, 2015). The \"empirically supported treatment\" (EST) movement in the US similarly privileges specific techniques over common factors (alliance, empathy, congruence) that may account for a larger share of outcome variance.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen projects the 2013 NIMH announcement: the institute would move research away from DSM categories. The room falls quiet. Someone asks: 'If the US national mental health institute doesn't believe in DSM diagnoses, what are we actually doing when we diagnose people?'"
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "We are assigning people to categories that are reliable but have contested validity. DSM-III was a revolutionary achievement in reliability — it gave clinicians a common language and eliminated the worst of interpretive chaos. But reliability is not the same as validity. We know that major depressive disorder is a reliable category. We do not know that it is a natural kind — a real division in the biological substrate of psychopathology."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "The HiTOP model is a serious scientific proposal: that psychopathology varies continuously along a small number of correlated dimensions rather than falling into discrete categorical bins. If correct, it explains why comorbidity rates are so high — depression and anxiety aren't two diseases co-occurring, they are two high loadings on a single internalising dimension. The category boundaries are artifacts of the diagnostic system, not features of the disorder."
+        },
+        {
+          "type": "example",
+          "speaker": "The validity problem illustrated",
+          "text": "Two patients both meet DSM-5 criteria for Major Depressive Disorder.\n\nPatient A: Chronic low mood since adolescence, family history of depression, responds to SSRIs, cognitive profile showing stable negative attributions.\n\nPatient B: Acute low mood following bereavement, no family history, does not respond to SSRIs, prominent grief phenomenology, remits spontaneously over 6 months.\n\nSame category. Different aetiology. Different prognosis. Different optimal treatment.\n\nThis is the validity problem: the category contains more heterogeneity than it resolves."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Clinical assessment serves a different purpose from research classification. The Wechsler scales, neuropsychological batteries, and the MMPI are valuable not because they map perfectly onto diagnostic categories — they don't — but because they describe the profile of strengths, weaknesses, and psychological characteristics that inform intervention and support planning. A profile is clinically useful even when the DSM category it nominally belongs to is contested."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Evaluating a Diagnostic Category</h3><p><strong>Scenario:</strong> A final-year psychology student is preparing a critical commentary on whether Major Depressive Disorder (MDD) as defined in DSM-5 constitutes a valid diagnostic category. She has been told to address Kendell and Jablensky's (2003) validity criteria, explain what the HiTOP model proposes as an alternative, and reach a reasoned evaluative conclusion.</p><p>Write a response (115–140 words) that identifies the specific type of validity that MDD has and lacks, explains the empirical basis for the HiTOP dimensional alternative, and reaches a conclusion about whether abandoning categorical diagnosis would be a practical or scientific advance.</p>",
+      "guidedPracticeModelAnswer": "MDD satisfies Kendell and Jablensky's (2003) criterion of descriptive validity — clinicians reliably agree on who meets criteria — but fails the stronger criterion of aetiological validity: the category encompasses heterogeneous causes (chronic trait negativity, acute reaction to adversity, bipolar prodrome) that respond differently to treatment. High comorbidity rates further challenge categorical validity; if MDD and GAD were natural kinds, we would not expect them to co-occur at rates exceeding independent probability.\n\nThe HiTOP model (Kotov et al., 2017) proposes that these patterns reflect genuine co-variation along continuous internalising dimensions rather than discrete disease boundaries. HiTOP accounts for comorbidity structurally rather than treating it as a clinical complication.\n\nAbandoning categorical diagnosis is not yet practically viable — treatment guidelines, insurance systems, and clinical communication all require categories. But dimensional measurement alongside categorical diagnosis represents a scientifically coherent direction, already reflected in the DSM-5's introduction of severity specifiers.",
+      "soloPracticeHtml": "<h3>Independent Practice — The Case For and Against DSM</h3><p>The DSM-5 remains the dominant diagnostic framework in Anglophone clinical practice despite ongoing validity critiques. Critics argue it reifies diagnostic categories that lack aetiological validity, produces high comorbidity rates that reflect classification artefacts rather than clinical reality, and has been shaped by pharmaceutical industry interests. Defenders argue it enables reliable communication, grounds NICE-approved treatment guidelines, and has been iteratively improved across editions.</p><p>Drawing on Kendell and Jablensky's (2003) validity framework, the HiTOP model, the RDoC initiative, and at least one empirical study, write a balanced critical evaluation of the DSM-5 as a diagnostic framework. Consider what 'validity' means in this context, what the empirical evidence shows, and what practical constraints limit alternative approaches. Reach a reasoned, evidenced conclusion. Minimum 150 words.</p>",
+      "modelAnswer": "The DSM-5 represents a mature elaboration of the categorical tradition established by DSM-III. Its primary achievement — and primary limitation — is reliability. By operationalising diagnostic criteria with explicit symptom counts, duration requirements, and functional impairment thresholds, it enables clinicians worldwide to agree on who qualifies for a diagnosis. This has enabled large-scale epidemiological research and randomised controlled trials that would be impossible without a common diagnostic language.\n\nThe validity critique, however, is not adequately answered by reliability. Kendell and Jablensky (2003) distinguish descriptive, predictive, and aetiological validity. DSM diagnoses have adequate descriptive validity (symptom patterns are consistent) and moderate predictive validity (similar prognosis and treatment response within categories, on average). Aetiological validity is where the system most clearly fails: conditions like MDD and schizophrenia almost certainly encompass heterogeneous aetiological pathways that share surface symptom presentation without sharing causal mechanisms.\n\nThe consequences are empirically documented. Comorbidity rates within the DSM system are implausibly high — approximately 50% of patients with one DSM diagnosis meet criteria for a second — which the HiTOP model explains as the expected result of measuring continuous dimensions with categorical cut-points (Kotov et al., 2017). Treatment heterogeneity within categories — two patients with identical MDD diagnoses responding differently to the same SSRI — reflects this aetiological heterogeneity. The NIMH's 2013 decision to redirect research toward Research Domain Criteria (RDoC), linking symptoms to neural circuits rather than diagnostic categories, reflects institutional recognition of the validity problem.\n\nPractical constraints, however, prevent abandonment of categorical diagnosis in the short term. Treatment guidelines, prescribing regulations, insurance reimbursement, and cross-disciplinary communication all require categorical labels. The appropriate response is pluralism: use DSM categories for communication and guideline adherence, supplement with dimensional severity measurement, and invest research resources in transdiagnostic mechanisms (RDoC, HiTOP) that may eventually yield more valid classification systems. The DSM-5 is not wrong; it is incomplete — and awareness of its incompleteness is itself clinically important.",
+      "feynmanPrompt": "Explain to someone unfamiliar with psychology why a diagnosis of 'Major Depressive Disorder' might be less scientifically precise than a diagnosis of, say, 'Type 2 Diabetes' — even though both are recognised medical categories. What does validity mean here, and why does it matter clinically?",
+      "questions": [
+        {
+          "id": "psy-exp-1cq1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Kendell and Jablensky (2003) identified three criteria for diagnostic validity. Which type of validity refers to whether a diagnostic category reflects a shared causal mechanism?",
+          "options": [
+            "Aetiological validity",
+            "Descriptive validity",
+            "Predictive validity",
+            "Concurrent validity"
+          ],
+          "correctAnswer": "Aetiological validity",
+          "explanationHtml": "Aetiological validity requires that cases within a diagnostic category share common causal mechanisms (genetic, neural, or environmental). Most DSM diagnoses have adequate descriptive validity (consistent symptom presentation) but poor aetiological validity — the same symptom profile can arise from heterogeneous causes."
+        },
+        {
+          "id": "psy-exp-1cq2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "The HiTOP (Hierarchical Taxonomy of Psychopathology) model proposes which of the following?",
+          "options": [
+            "Psychopathology varies along continuous dimensions rather than falling into discrete diagnostic categories",
+            "DSM-5 categories should be replaced by a smaller set of umbrella diagnoses",
+            "Neuroimaging should be the primary basis for psychiatric diagnosis",
+            "ICD-11 is more valid than DSM-5 because it uses fewer specifiers"
+          ],
+          "correctAnswer": "Psychopathology varies along continuous dimensions rather than falling into discrete diagnostic categories",
+          "explanationHtml": "HiTOP (Kotov et al., 2017) proposes a hierarchical dimensional model in which psychopathology is organised along a small number of correlated dimensions (internalising, externalising, thought disorder, detachment, somatoform). High comorbidity rates in the current system are explained as the expected result of imposing categorical cut-points on continuous dimensional variation."
+        },
+        {
+          "id": "psy-exp-1cq3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "The Flynn effect has direct implications for clinical psychological testing. What is the Flynn effect and why does it matter?",
+          "options": [
+            "The 20th-century generational rise in IQ test scores (~3 points/decade), meaning outdated norms may overestimate a client's true ability",
+            "The tendency for intelligence test scores to decline with age, requiring age-normed comparison groups",
+            "Cultural variation in cognitive test performance requiring country-specific norms",
+            "The observation that verbal IQ is rising faster than performance IQ due to increased literacy rates"
+          ],
+          "correctAnswer": "The 20th-century generational rise in IQ test scores (~3 points/decade), meaning outdated norms may overestimate a client's true ability",
+          "explanationHtml": "The Flynn effect refers to the well-documented secular rise in raw IQ test scores over the 20th century, at approximately 3 IQ points per decade. If test norms were established decades ago, a contemporary client's raw score will be compared to outdated norms — inflating the apparent IQ. Clinical and forensic psychologists must use current norm editions and be aware of norming date when interpreting scores."
+        },
+        {
+          "id": "psy-exp-1cq4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A clinical psychologist is assessing a client involved in a personal injury claim for chronic pain following a road traffic accident. She is concerned the client may be exaggerating symptoms for financial gain. Which assessment consideration is most relevant?",
+          "options": [
+            "Performance validity testing (e.g., TOMM) should be included to assess effort and detect potential malingering",
+            "The Rorschach should be administered as it is less susceptible to deliberate manipulation than self-report measures",
+            "Self-report pain questionnaires are the most reliable indicators of genuine chronic pain regardless of context",
+            "Neuroimaging should be used to objectively verify the degree of injury independently of psychological testing"
+          ],
+          "correctAnswer": "Performance validity testing (e.g., TOMM) should be included to assess effort and detect potential malingering",
+          "explanationHtml": "In forensic and medicolegal contexts, response validity must always be assessed. Performance Validity Tests (PVTs) such as the Test of Memory Malingering (TOMM) or Word Memory Test (WMT) assess whether the client is giving genuine effort. Self-report measures are easily faked; neuroimaging does not reliably distinguish injury severity from symptom severity. Including PVTs is standard practice in medico-legal assessment and is ethically required to ensure reports accurately reflect genuine impairment."
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "HiTOP",
+          "description": "Hierarchical Taxonomy of Psychopathology (Kotov et al., 2017) — a dimensional model of psychopathology proposing that mental health problems vary along a small number of continuous dimensions rather than falling into discrete diagnostic categories."
+        },
+        {
+          "term": "RDoC",
+          "description": "Research Domain Criteria (NIMH) — an alternative research framework that maps symptoms to underlying neural circuits, intended to complement or eventually replace diagnostic categories with transdiagnostic neurobiological constructs."
+        },
+        {
+          "term": "Flynn effect",
+          "description": "The secular rise in raw IQ scores across the 20th century (approximately 3 points per decade), likely reflecting improved nutrition, education, and test familiarity — requiring regular norm updates for clinical intelligence tests."
+        },
+        {
+          "term": "Performance validity testing",
+          "description": "Assessment methods (e.g., TOMM, WMT) that detect insufficient effort or deliberate exaggeration in neuropsychological testing — essential in forensic, medicolegal, and disability assessment contexts."
+        }
+      ]
+    },
+    {
+      "id": "psy-exp-1d",
+      "title": "Psychopharmacology: Mechanisms, Evidence & the Prescribing Debate",
+      "sortOrder": 4,
+      "xpReward": 175,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 2019, the first large pre-registered global study of antidepressant efficacy — Cipriani et al.'s network meta-analysis of 522 trials and 116,000 patients — confirmed that all 21 antidepressants were more effective than placebo. Media headlines declared antidepressants vindicated. Yet the effect sizes were modest (NNT ≈ 9), the analysis was conducted at the group level, and individual variation in response remained enormous. The same year, Irving Kirsch's work on publication bias in antidepressant trials continued to attract attention. Applied psychologists must understand pharmacological treatments — their mechanisms, their evidence, and the debates that surround them — whether or not they prescribe.</p>",
+      "explanationHtml": "<h3>Pharmacological Mechanisms in Mental Health Treatment</h3>\n<p><strong>Antidepressants</strong>: Selective serotonin reuptake inhibitors (SSRIs — fluoxetine, sertraline, escitalopram) and serotonin-noradrenaline reuptake inhibitors (SNRIs — venlafaxine, duloxetine) are first-line pharmacological treatments for depression, anxiety disorders, OCD, and PTSD. They block the reuptake transporter, increasing synaptic serotonin (and noradrenaline for SNRIs) availability. Tricyclic antidepressants (TCAs — amitriptyline, clomipramine) have equivalent efficacy but greater side-effect burden. MAO inhibitors (phenelzine) are reserved for treatment-resistant cases due to dietary interactions.</p>\n<p>The monoamine deficiency hypothesis — that depression results from insufficient serotonin/noradrenaline — is no longer considered an adequate explanation. Evidence against it includes: antidepressants take 2–4 weeks to produce clinical effects despite immediate neurochemical action; tryptophan depletion does not reliably produce depression in non-depressed individuals; and the hypothesis was generated from drug mechanisms backward, not from evidence of neurochemical deficit. Current models emphasise neuroplasticity (antidepressants may promote hippocampal neurogenesis) and network-level regulation rather than simple neurotransmitter levels.</p>\n<p><strong>Antipsychotics</strong>: First-generation (typical) antipsychotics (haloperidol, chlorpromazine) are D2 dopamine receptor antagonists. They reduce positive symptoms (hallucinations, delusions) but produce extrapyramidal side effects (tardive dyskinesia, akathisia). Second-generation (atypical) antipsychotics (clozapine, olanzapine, quetiapine, risperidone) have more complex pharmacology — D2 plus serotonin 5-HT2A antagonism — with lower extrapyramidal risk but higher metabolic risks (weight gain, diabetes, dyslipidaemia).</p>\n<p><strong>Mood stabilisers</strong>: Lithium remains the most effective mood stabiliser for bipolar disorder and is associated with anti-suicidal properties (Cipriani et al., 2013 meta-analysis). Its mechanism is not fully understood — it modulates second messenger systems (inositol phosphatase inhibition) and has neuroprotective effects. Anticonvulsants (valproate, lamotrigine) are used as alternatives, particularly where lithium is contraindicated.</p>\n<p><strong>Anxiolytics</strong>: Benzodiazepines (diazepam, lorazepam) act on GABA-A receptors, producing rapid anxiolysis. They are effective short-term but carry risks of tolerance, dependence, and cognitive impairment with longer-term use. BPS guidelines recommend benzodiazepines for no more than 2–4 weeks. Beta-blockers (propranolol) address somatic manifestations of anxiety (tremor, palpitations) without central effects — useful for performance anxiety.</p>\n<h3>Evidence & Debates</h3>\n<p><strong>The Kirsch debate</strong>: Kirsch et al. (2008) reanalysed FDA-submitted (including unpublished) antidepressant trial data and found mean effect size over placebo of d = 0.32, below the NICE threshold of clinical significance. They argued that the drug-placebo difference was clinically negligible and that the apparent effect might reflect enhanced placebo response from drug side effects (proving the pill is 'real'). Critics noted that the analysis treated all severity levels equally — subsequent analyses showed larger effects in severely depressed patients (Fournier et al., 2010). The debate illustrates the importance of publication bias, effect size interpretation, and the clinical significance threshold.</p>\n<p><strong>Prescribing by psychologists</strong>: In the US, prescriptive authority has been granted to psychologists in several states (following specialised pharmacology training). In the UK, clinical psychologists currently do not prescribe, but debates continue — proponents argue it would improve access to integrated psychological and pharmacological treatment; opponents argue it inappropriately medicalises psychological distress and blurs professional boundaries.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen projects the headline from the 2019 Cipriani et al. paper: '21 antidepressants all more effective than placebo'. Then she projects Kirsch's 2008 counter-analysis: 'drug-placebo difference clinically negligible for mild-to-moderate depression'. The same data, almost opposite headlines."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Both papers are right, and that tells you something important about clinical trials and how we read them. Cipriani et al. confirmed that antidepressants beat placebo — that is real. Kirsch confirmed that the margin is modest in mild-to-moderate cases and disappears if you only count published trials. Publication bias is not a conspiracy — it is a structural feature of a system that rewards positive findings. Understanding pharmacology means understanding the trials that produced the evidence, not just the molecules."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "The monoamine deficiency hypothesis — the low serotonin theory of depression — is taught as established fact in too many places. It is not. It was a hypothesis generated from the mechanism of the drugs, not from evidence of a serotonin deficit in depressed patients. Kirsch was right to challenge it. But 'the chemical imbalance theory is wrong' does not mean 'antidepressants don't work'. They work by mechanisms we do not fully understand."
+        },
+        {
+          "type": "example",
+          "speaker": "Number Needed to Treat — interpreting antidepressant efficacy",
+          "text": "Cipriani et al. (2019): 21 antidepressants vs placebo\n\nEffect size over placebo: d ≈ 0.30 (small by Cohen's conventions)\nNNT (Number Needed to Treat): approximately 9\n\nInterpretation: for every 9 patients treated with an antidepressant instead of placebo, approximately 1 achieves a response who would not have done so on placebo.\n\nFor severe depression: NNT ≈ 4-5 (clinically meaningful)\nFor mild depression: effect approaches zero (consider psychological alternatives first)\n\nConclusion: the drug works; the size of benefit depends heavily on severity."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "As psychologists, whether or not we will ever prescribe, we sit with patients who are taking medication every session. We need to know what the drugs do, what the side effects are, what the evidence says. A psychologist who tells a patient 'I don't know anything about medication, that's the psychiatrist's territory' is failing their patient. Integrated knowledge is not optional at expert level."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — The Antidepressant Efficacy Debate</h3><p><strong>Scenario:</strong> A consultant psychiatrist asks a clinical psychology trainee to present a 5-minute summary to junior doctors on the current state of the antidepressant efficacy debate — specifically, how to reconcile the Cipriani et al. (2019) network meta-analysis findings with the Kirsch et al. (2008) analysis, and what the implications are for prescribing practice.</p><p>Write a 120–140-word response that explains both analyses, identifies the key methodological difference (publication bias, severity stratification), and reaches a practical conclusion about when pharmacological and psychological treatments are indicated.</p>",
+      "guidedPracticeModelAnswer": "Cipriani et al.'s (2019) network meta-analysis of 522 trials confirmed that all 21 antidepressants outperformed placebo, with small-to-moderate effect sizes (d ≈ 0.30). Kirsch et al.'s (2008) earlier analysis of FDA-submitted data (including unpublished trials) found the drug-placebo difference was clinically negligible for mild-to-moderate depression, though it remained meaningful for severe cases (Fournier et al., 2010).\n\nThe key reconciliation: both analyses are correct at different levels of severity. Publication bias inflated apparent efficacy in the published literature; when unpublished null results are included, the benefit shrinks substantially for milder presentations. For severe depression, antidepressants have a meaningful NNT of approximately 4–5.\n\nPractical implication: NICE guidance recommending antidepressants for moderate-to-severe depression is empirically defensible. For mild depression, evidence-based psychological therapies (CBT, behavioural activation) should be offered first, with pharmacological treatment reserved for those who do not respond or who prefer it.",
+      "soloPracticeHtml": "<h3>Independent Practice — Should Psychologists Prescribe?</h3><p>Several US states have granted prescriptive authority to specially trained psychologists. The UK Royal College of Psychiatrists and BPS have periodically debated whether UK clinical psychologists should follow. Proponents argue that prescribing authority would improve access to integrated treatment, reduce delays in pharmacological intervention, and leverage psychologists' expertise in behaviour change and adherence. Opponents argue it would inappropriately medicalise psychological distress, confuse professional identity, and require training that diminishes time for developing psychological skills.</p><p>Drawing on the pharmacological evidence reviewed in this subchunk, your understanding of the scientist-practitioner model, and at least one specific empirical finding about antidepressant efficacy, write a critical evaluation of whether UK clinical psychologists should be granted prescriptive authority. Reach an evidenced, nuanced conclusion. Minimum 150 words.</p>",
+      "modelAnswer": "The case for psychologist prescribing rests on a genuine access problem: in the UK, patients requiring combined psychological and pharmacological treatment often see two separate practitioners, with associated delays, communication gaps, and patient burden. If a clinical psychologist could assess, treat psychologically, and initiate pharmacological treatment within a single therapeutic relationship, this could meaningfully reduce barriers to care — particularly in IAPT and community mental health settings where psychiatrist access is limited.\n\nHowever, the evidence base for this argument is weaker than its advocates suggest. The US states that have granted prescriptive authority (New Mexico, Louisiana, Illinois) have produced limited outcome data comparing prescribing psychologists with non-prescribing alternatives. The training required — typically a postdoctoral master's degree in clinical psychopharmacology — is substantial, and there is genuine risk that psychologists acquiring prescribing skills devote correspondingly less time to developing psychological therapy expertise. This is not a trivial trade-off: the therapeutic alliance and specific psychological techniques account for a substantial share of treatment outcome variance (Wampold & Imel, 2015).\n\nThe pharmacological evidence itself counsels caution about extending prescribing. Antidepressants have modest NNTs for mild-to-moderate depression, and CBT produces comparable outcomes with longer-lasting effects and lower relapse rates (Hollon et al., 2005). If the strongest justification for prescribing authority is that some patients need antidepressants alongside therapy, the evidence suggests that psychological therapy is often the intervention whose adequacy most needs protecting — not one that should be traded against prescribing training.\n\nA more defensible intermediate position is enhanced prescribing knowledge without prescribing authority: mandatory pharmacology training in clinical psychology curricula, formal consultation structures with psychiatry, and psychologist-led medication adherence and side-effect monitoring. This captures the integration benefit without the professional boundary risks. The prescribing debate is ultimately as much about professional identity and NHS workforce structure as it is about patient outcomes — both dimensions deserve explicit acknowledgment.",
+      "feynmanPrompt": "Explain to someone without a pharmacology background why antidepressants taking 2–4 weeks to work undermines the 'low serotonin' theory of depression, even though SSRIs increase synaptic serotonin almost immediately.",
+      "questions": [
+        {
+          "id": "psy-exp-1dq1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Which of the following accurately describes the mechanism of action of SSRIs?",
+          "options": [
+            "They block the serotonin reuptake transporter, increasing synaptic serotonin availability",
+            "They stimulate serotonin synthesis in the dorsal raphe nucleus",
+            "They block serotonin receptors, reducing the amplitude of serotonin signalling",
+            "They inhibit MAO-A enzymes, preventing serotonin degradation"
+          ],
+          "correctAnswer": "They block the serotonin reuptake transporter, increasing synaptic serotonin availability",
+          "explanationHtml": "SSRIs selectively inhibit the serotonin transporter (SERT), which normally removes serotonin from the synapse back into the presynaptic neuron. By blocking SERT, SSRIs leave serotonin in the synapse longer, enhancing postsynaptic receptor activation. This neurochemical effect is rapid, but clinical benefits take 2–4 weeks, suggesting that downstream neuroplasticity (rather than simple serotonin elevation) is the therapeutic mechanism."
+        },
+        {
+          "id": "psy-exp-1dq2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "Kirsch et al.'s (2008) reanalysis of FDA antidepressant data included unpublished negative trials. What is the primary methodological principle this addressed?",
+          "options": [
+            "Publication bias — the tendency for positive results to be published and negative results to remain in file drawers, inflating apparent efficacy in the published literature",
+            "Selection bias — the FDA submitted only the most favourable trials for regulatory approval",
+            "The placebo effect — the positive-only dataset overestimated the placebo response rate",
+            "Researcher degrees of freedom — the FDA-approved trials allowed multiple analysis strategies"
+          ],
+          "correctAnswer": "Publication bias — the tendency for positive results to be published and negative results to remain in file drawers, inflating apparent efficacy in the published literature",
+          "explanationHtml": "Kirsch et al. accessed the FDA's full dataset, which included unpublished negative trials not available in the public literature. Including these trials substantially reduced the apparent drug-placebo difference, illustrating publication bias: the published literature systematically over-represents positive findings, leading meta-analyses based only on published studies to overestimate treatment effects."
+        },
+        {
+          "id": "psy-exp-1dq3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A patient with bipolar I disorder asks their psychologist about the anti-suicidal properties of lithium they have read about online. What is the evidence-based response?",
+          "options": [
+            "Lithium has meta-analytic evidence for reducing suicidality in bipolar disorder beyond its mood-stabilising effects, making it a first-line recommendation in high-risk presentations",
+            "Lithium reduces suicidality only in patients with MDD, not bipolar disorder, so the evidence does not apply to this patient",
+            "The evidence for lithium's anti-suicidal properties is anecdotal only and should not influence treatment decisions",
+            "Lithium increases suicidality risk due to its narrow therapeutic window and neurotoxic effects at therapeutic doses"
+          ],
+          "correctAnswer": "Lithium has meta-analytic evidence for reducing suicidality in bipolar disorder beyond its mood-stabilising effects, making it a first-line recommendation in high-risk presentations",
+          "explanationHtml": "Cipriani et al.'s (2013) meta-analysis confirmed that lithium significantly reduces suicidality in both bipolar disorder and recurrent depression, and that this effect appears to be partially independent of its mood-stabilising properties. The mechanism may involve serotonergic effects and/or reduced impulsivity. This makes lithium a particularly important consideration for high-risk patients, and psychologists working with bipolar patients should be aware of this evidence when discussing medication with clients and communicating with prescribers."
+        },
+        {
+          "id": "psy-exp-1dq4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A GP asks for a clinical psychologist's view on whether to prescribe a benzodiazepine for a patient with generalised anxiety disorder who has not responded to CBT after 16 sessions. What is the most evidence-based recommendation?",
+          "options": [
+            "Benzodiazepines can provide short-term symptom relief but should be limited to 2–4 weeks due to tolerance and dependence risks; longer-term pharmacological options (SSRIs/SNRIs) should be considered if pharmacotherapy is warranted",
+            "Benzodiazepines are first-line pharmacological treatment for GAD and can be used long-term when psychological treatment has failed",
+            "No pharmacological treatment is indicated for GAD that has not responded to CBT; the CBT course should be extended or intensified instead",
+            "Propranolol is preferred over benzodiazepines for GAD because it has equivalent efficacy without dependence risk"
+          ],
+          "correctAnswer": "Benzodiazepines can provide short-term symptom relief but should be limited to 2–4 weeks due to tolerance and dependence risks; longer-term pharmacological options (SSRIs/SNRIs) should be considered if pharmacotherapy is warranted",
+          "explanationHtml": "NICE guidelines for GAD recommend SSRIs or SNRIs (rather than benzodiazepines) as first-line pharmacological treatment due to their more favourable long-term profile. Benzodiazepines are effective acutely but cause tolerance rapidly and carry significant dependence risk with chronic use. If pharmacotherapy is warranted after failed CBT, an SSRI or SNRI (sertraline, escitalopram, duloxetine) would be recommended. Propranolol manages somatic anxiety symptoms (tremor, palpitations) but does not address cognitive or avoidance components of GAD."
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Number Needed to Treat (NNT)",
+          "description": "The number of patients who must be treated to produce one additional treatment responder compared to placebo. For antidepressants in mild-to-moderate depression, NNT ≈ 9; for severe depression, NNT ≈ 4–5."
+        },
+        {
+          "term": "Publication bias",
+          "description": "The tendency for studies with positive (significant) results to be published while null results remain unpublished ('file drawer problem'), causing the published literature to systematically overestimate treatment effect sizes."
+        },
+        {
+          "term": "Monoamine deficiency hypothesis",
+          "description": "The now largely discredited hypothesis that depression results from insufficient levels of serotonin, noradrenaline, or dopamine — inferred backwards from the mechanism of antidepressant drugs rather than from direct evidence of neurochemical deficit in depressed patients."
+        },
+        {
+          "term": "Tardive dyskinesia",
+          "description": "Involuntary, repetitive movements (often orofacial — lip smacking, tongue protrusion) produced by long-term dopamine antagonist (typical antipsychotic) treatment, resulting from D2 receptor upregulation. Can be irreversible."
+        }
+      ]
+    },
+    {
+      "id": "psy-exp-1e",
+      "title": "Systemic, Preventative & Community Psychology",
+      "sortOrder": 5,
+      "xpReward": 175,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Rose's Prevention Paradox (1981) remains one of the most counterintuitive and important ideas in public health psychology: a prevention strategy aimed at the whole population, producing only a small reduction in risk for each individual, may prevent more cases than a high-risk strategy targeting a small group — even when the high-risk group has much greater individual risk. This challenges the clinical psychologist's instinctive orientation toward the individual. Most psychological morbidity in the population occurs in people with moderate, not extreme, risk levels — because there are so many more of them.</p>",
+      "explanationHtml": "<h3>Levels of Prevention</h3>\n<p>The public health framework distinguishes three levels of prevention. <strong>Primary prevention</strong> targets the general population before disorder onset — reducing exposure to risk factors (e.g., anti-bullying programmes, poverty reduction, parenting support). <strong>Secondary prevention</strong> targets early intervention in those showing signs of emerging disorder — screening programmes, early identification, and low-intensity interventions (e.g., IAPT's stepped care model, universal mental health screening in primary care). <strong>Tertiary prevention</strong> targets people with established disorders to prevent relapse and maximise functioning — long-term psychological therapy, rehabilitation, supported employment.</p>\n<p>The distinction between high-risk and whole-population strategies is central to prevention science. High-risk strategies (e.g., targeting people with multiple ACEs for intensive family support) achieve large individual benefit but reach few people — and the individuals reached often carry stigma. Population strategies (e.g., improving school environments, reducing income inequality) produce small average individual benefit but affect everyone, potentially preventing more total morbidity due to population size.</p>\n<h3>Systemic Approaches</h3>\n<p>Systemic psychology challenges the individualist model of psychological distress. Rather than locating disorder within the person, systemic approaches conceptualise problems as emerging from relational contexts — family systems, organisational systems, cultural systems. <strong>Family systems therapy</strong> (Minuchin, Haley, Bateson) attends to communication patterns, triangulation, enmeshment, and disengagement within family structures. <strong>Milan systemic therapy</strong> and its successors use circular questioning and hypothesising to perturb stuck systemic patterns. Contemporary systemic practice integrates attachment theory, narrative approaches, and social justice concerns.</p>\n<p>The <strong>social determinants of health framework</strong> (Marmot Review, 2010) documents that health outcomes — including mental health — are powerfully shaped by social gradient: income, education, housing, employment conditions, and neighbourhood characteristics. The Marmot Review found a clear social gradient in psychological well-being, with those at the bottom of the socioeconomic hierarchy substantially worse off, independent of absolute poverty. Individual-level clinical intervention cannot fully address population-level morbidity rooted in structural inequality.</p>\n<h3>Community Psychology</h3>\n<p>Community psychology, developed through the work of Seymour Sarason and Julian Rappaport, emphasises <strong>empowerment</strong> — the process by which communities develop capacity for self-determination and collective action — rather than expert-delivered treatment. Key principles include sense of community, prevention, diversity, social justice, and ecological perspective (attending to the environment, not just the individual).</p>\n<p><strong>Social prescribing</strong> — connecting people to community resources (arts, nature, volunteering, peer support) rather than pharmacological or psychological intervention — has grown substantially in the UK NHS. Evidence for social prescribing is promising but methodologically variable; much research lacks control conditions. Qualitative evidence consistently shows acceptability and subjective benefit; longer-term outcome data are emerging.</p>\n<p><strong>Participatory action research (PAR)</strong> involves communities as co-researchers in identifying and addressing their own mental health needs, rather than as subjects of expert investigation. PAR is consistent with social justice values but challenges traditional research hierarchies.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen draws a population risk distribution on the board — a bell curve. She marks the far right tail as 'high-risk individuals targeted by clinical services'. She marks the broad middle as 'moderate risk — where most cases actually come from'."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Rose's prevention paradox. The tail is where individual risk is highest. But most depression in the population comes from the middle of the curve — because there are vastly more people there. If you only treat high-risk individuals, you miss the bulk of the burden. This is why population-level interventions — improving schools, reducing poverty, building social capital — potentially do more for population mental health than any clinical programme targeting identified individuals."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "The Marmot Review showed that the social gradient in health is not a cliff edge between poor and not-poor. It is a continuous gradient from top to bottom of the socioeconomic hierarchy. The professional with a good salary and job security is measurably healthier, on average, than the professional above them in the hierarchy. Inequality itself — the steepness of the gradient — appears to cause harm, not just absolute poverty. This is a radical finding for clinical psychology, because it means that individual-level treatment, however effective, cannot address the upstream causes."
+        },
+        {
+          "type": "example",
+          "speaker": "The stepped care model: secondary prevention in practice",
+          "text": "IAPT (Improving Access to Psychological Therapies) stepped care:\n\nStep 1: Watchful waiting / guided self-help (low intensity)\nStep 2: Low-intensity CBT, computerised therapy, group programmes\nStep 3: High-intensity individual CBT or IPT\nStep 4: Complex cases, specialist services, medication\n\nPrinciple: offer least intensive effective intervention first; step up if insufficient response.\n\nReach: IAPT treated >1.7 million patients in 2022-23 across England.\nLimitation: still predominantly individual treatment; does not address social determinants."
+        },
+        {
+          "type": "dialogue",
+          "speaker": "Dr. Chen",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Community psychology's challenge to clinical psychology is not that individual treatment is wrong — it is that it is insufficient and, without critical awareness, it can become complicit in the structures that produce distress. If a psychologist sees fifty patients with depression related to poverty, unemployment, and housing insecurity, and treats them all individually without ever addressing the structural conditions, they are providing symptom management without prevention. Expert-level practice means holding both levels simultaneously."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Applying the Prevention Framework</h3><p><strong>Scenario:</strong> A local authority mental health commissioner is planning services for an area with high deprivation, high rates of childhood adversity, and above-average prevalence of anxiety and depression. She has a fixed budget and is deciding between two options: (A) expanding IAPT (Improving Access to Psychological Therapies) to increase individual therapy access, or (B) investing in a community mental health social prescribing programme, including peer support networks and community activities.</p><p>Using Rose's (1981) prevention paradox, the Marmot Review's social determinants framework, and the levels of prevention model, write an advisory response (120–140 words) that explains the trade-offs involved and recommends how the commissioner should think about allocating the budget.</p>",
+      "guidedPracticeModelAnswer": "Rose's (1981) prevention paradox predicts that even a modest reduction in depression risk across the whole population may prevent more cases than an intensive high-risk strategy — because most depression occurs in the broad middle of the risk distribution, not only in identifiable high-risk individuals.\n\nIAPT (option A) is tertiary prevention: effective for individuals with established disorder but unable to address the population risk pool. The Marmot Review (2010) demonstrates that mental health follows a social gradient shaped by deprivation, adverse childhood experiences, and structural inequality — factors that clinical therapy cannot modify.\n\nSocial prescribing (option B) operates at the primary and secondary prevention levels, potentially reducing the incidence rate rather than only treating prevalent cases. Evidence is growing but methodologically heterogeneous.\n\nRecommendation: neither-or but both-and, weighted toward prevention. Maintain adequate IAPT access for established disorder while investing meaningfully in community-based primary prevention — particularly early years and ACE-reduction programmes — and evaluate outcomes rigorously.",
+      "soloPracticeHtml": "<h3>Independent Practice — Social Determinants vs. Individual Treatment</h3><p>The Marmot Review (2010) documented a clear social gradient in both physical and mental health — health outcomes worsen progressively down the socioeconomic hierarchy, not just at the poverty threshold. The review recommended action on the social determinants of health: early childhood development, education, employment conditions, income equity, healthy communities, and prevention in illness. A subsequent Marmot report (2020) found that health improvements seen through the 2000s had stalled and that inequalities had widened, in part due to cuts to public services.</p><p>Drawing on the prevention framework, community psychology principles, and the social determinants evidence, critically evaluate the claim that clinical psychology's focus on individual treatment is insufficient — and possibly complicit in maintaining the structures that generate psychological distress. Consider what responsibilities expert practitioners have beyond their clinical caseload. Minimum 150 words.</p>",
+      "modelAnswer": "The claim has substantial empirical and philosophical support but requires careful qualification to avoid reducing clinical psychology to a political practice. At the empirical level, the Marmot Review's finding that mental health follows a continuous social gradient — not a threshold at poverty — implies that the population distribution of psychological distress is substantially shaped by structural factors (income inequality, childhood adversity, working conditions, housing security) that lie outside the reach of any individual clinician's work. If depression prevalence in deprived areas is elevated by structural causes, then successfully treating each case individually leaves the causal structure intact — and the next cohort of cases is produced at the same rate.\n\nRose's (1981) prevention paradox formalises this logic: small reductions in population risk levels prevent more cases than intensive high-risk treatment, because most morbidity occurs in the large moderate-risk population, not the small identifiable high-risk tail. Individual therapy, however effective, operates on the tail.\n\nCritical psychology and community psychology have made the stronger version of this argument: that clinical practice can be complicit in individualising structurally produced distress — framing poverty, unemployment, and discrimination as personal psychological problems requiring individual treatment, rather than as collective problems requiring collective action. There is something to this critique. A psychologist who treats fifty patients for work-related depression without ever questioning the working conditions producing that depression is, at minimum, providing inadequate systemic analysis.\n\nHowever, the claim that individual treatment is therefore unjustified or complicit goes too far. People with depression suffer now, regardless of structural causes, and they deserve effective individual treatment now. The tension between individual care and collective prevention is not resolved by abandoning either. Expert practice requires both: skilled individual treatment, systemic awareness in case formulation (locating the individual in their social context), advocacy for structural conditions that produce less distress, and engagement with public health and policy processes where psychologists' expertise is relevant. The British Psychological Society's statement on mental health and inequality (2018) articulates this dual responsibility. Holding it requires not comfort but sustained intellectual and moral engagement with both levels of the problem.",
+      "feynmanPrompt": "Explain Rose's prevention paradox to a GP who has never encountered it. Why might a programme that reduces everyone's risk by just a little bit prevent more total cases of depression than an intensive programme targeting the 5% of people with highest risk?",
+      "questions": [
+        {
+          "id": "psy-exp-1eq1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Rose's (1981) prevention paradox states that:",
+          "options": [
+            "A population-level intervention producing small average individual benefit may prevent more total cases than a high-risk strategy, because the majority of cases occur in the large moderate-risk group",
+            "High-risk individuals benefit proportionally more from prevention than the general population, making targeted intervention always more efficient",
+            "Prevention programmes must achieve clinically significant individual risk reduction to produce population-level benefit",
+            "The benefits of prevention are paradoxically greater for individuals who are already well, not those who are unwell"
+          ],
+          "correctAnswer": "A population-level intervention producing small average individual benefit may prevent more total cases than a high-risk strategy, because the majority of cases occur in the large moderate-risk group",
+          "explanationHtml": "Rose's prevention paradox (1981) challenges the clinical intuition that resources should be concentrated on the highest-risk individuals. Because most of the population falls in the moderate-risk range — and there are vastly more people there than in the high-risk tail — even a small proportional reduction in the moderate-risk group's risk can prevent more total cases than a large reduction in the small high-risk group."
+        },
+        {
+          "id": "psy-exp-1eq2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "The Marmot Review (2010) found that the social gradient in health was:",
+          "options": [
+            "A continuous gradient across the socioeconomic hierarchy, not just a cliff edge at the poverty threshold",
+            "Primarily explained by differential access to healthcare services rather than underlying socioeconomic factors",
+            "Evident only in physical health, with mental health showing no consistent socioeconomic patterning",
+            "Reversing in high-income countries as economic development proceeds"
+          ],
+          "correctAnswer": "A continuous gradient across the socioeconomic hierarchy, not just a cliff edge at the poverty threshold",
+          "explanationHtml": "The Marmot Review found that health outcomes — including mental health — deteriorate progressively down the socioeconomic hierarchy, forming a continuous gradient rather than a binary distinction between poor and not-poor. This means that addressing absolute poverty is insufficient; inequality itself (the steepness of the gradient) appears causally relevant. This has major implications for public health strategy — the goal must be to 'flatten' the social gradient, not only to eliminate extreme poverty."
+        },
+        {
+          "id": "psy-exp-1eq3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "IAPT (Improving Access to Psychological Therapies) operates primarily at which level of prevention?",
+          "options": [
+            "Tertiary prevention — treating established disorders to prevent relapse and maximise functioning",
+            "Primary prevention — reducing the incidence of new cases in the general population",
+            "Secondary prevention — early identification and intervention with at-risk populations",
+            "Quaternary prevention — avoiding unnecessary medical over-treatment in vulnerable populations"
+          ],
+          "correctAnswer": "Tertiary prevention — treating established disorders to prevent relapse and maximise functioning",
+          "explanationHtml": "IAPT provides psychological therapies to people who already meet criteria for an anxiety disorder or depression — this is tertiary prevention. It reduces symptom burden and improves functioning in people with established disorder. IAPT's stepped care model (from low-intensity guided self-help to high-intensity CBT) improves access within tertiary prevention but does not prevent the incidence of new cases."
+        },
+        {
+          "id": "psy-exp-1eq4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A community psychologist argues that providing individual CBT to unemployed people with depression, without addressing unemployment itself, is 'complicit in structural inequality'. Which response best engages with this critique?",
+          "options": [
+            "The critique identifies a genuine tension, but individual treatment remains ethically required for people who are suffering now; the professional responsibility is to provide effective treatment AND advocate for structural conditions that reduce distress",
+            "The critique is misplaced because CBT addresses the internal cognitive factors that maintain depression, regardless of its social origins",
+            "The critique is correct: individual CBT should be withheld until structural causes of depression are addressed at policy level",
+            "The critique applies only to cases where depression is caused by unemployment, not to cases where social circumstances are a maintaining factor"
+          ],
+          "correctAnswer": "The critique identifies a genuine tension, but individual treatment remains ethically required for people who are suffering now; the professional responsibility is to provide effective treatment AND advocate for structural conditions that reduce distress",
+          "explanationHtml": "The community psychology critique of individualising structurally produced distress is empirically and philosophically serious. However, the correct response is not to withhold individual treatment — people suffering from depression deserve effective care now, regardless of upstream causes. Expert practice integrates both: providing skilled individual treatment, locating individuals' difficulties in their social context, and engaging with systemic and public health advocacy beyond the consulting room. The BPS statement on mental health and inequality (2018) reflects this dual responsibility."
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Rose's prevention paradox",
+          "description": "The observation (Rose, 1981) that a whole-population preventive strategy producing small average individual benefit may prevent more total cases than a high-risk strategy targeting few individuals, because most morbidity occurs in the large moderate-risk majority."
+        },
+        {
+          "term": "Social determinants of health",
+          "description": "The social and economic conditions (income, education, employment, housing, neighbourhood) that shape health outcomes — documented in the Marmot Review (2010) to produce a continuous health gradient across the socioeconomic hierarchy."
+        },
+        {
+          "term": "Empowerment (community psychology)",
+          "description": "The process by which individuals and communities develop capacity for self-determination, collective action, and control over conditions affecting their well-being — a core principle distinguishing community psychology from expert-delivered clinical treatment."
+        },
+        {
+          "term": "Social prescribing",
+          "description": "Connecting patients to community-based resources (arts, volunteering, peer support, nature activities) rather than, or alongside, clinical treatment — now supported in the NHS Long Term Plan as a complement to primary care."
         }
       ]
     }

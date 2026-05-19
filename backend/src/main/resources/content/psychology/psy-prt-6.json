@@ -5,7 +5,9 @@
   "sortOrder": 12,
   "tier": "PRACTITIONER",
   "topicId": "psychology",
-  "prerequisites": ["psy-prt-2"],
+  "prerequisites": [
+    "psy-prt-2"
+  ],
   "subChunks": [
     {
       "id": "psy-prt-6a",
@@ -64,12 +66,30 @@
       "modelAnswer": "Digital health interventions for smoking cessation are theoretically attractive because they offer scalability and the potential to deliver evidence-based behaviour change techniques (Michie et al., 2013), including self-monitoring, goal setting, and feedback — all of which raise self-efficacy (Bandura, 1997), itself a robust predictor of cessation success. Implementation intentions (Gollwitzer, 1999) can be embedded as automated prompts linking situational cues (e.g., morning coffee) to alternative responses, addressing the intention-behaviour gap directly. Meta-analytic evidence (Free et al., 2013) supports small-to-moderate effects.\n\nHowever, the high attrition rate exposes the limitations of cognition-based approaches. Sniehotta et al. (2014) argued that targeting reflective constructs neglects the automatic, habitual nature of addictive behaviour and the environmental cues that maintain it. An app cannot easily address the social network in which smoking is embedded, the affordability of cigarettes, or the stress of socioeconomic disadvantage that drives consumption.\n\nThe COM-B model (Michie et al., 2011) clarifies the issue: digital interventions can build Capability and aspects of Motivation but typically fail to alter Opportunity. Population-level measures — minimum unit pricing, plain packaging, smoke-free environments — produce larger effects on prevalence than any individual-level intervention. The strongest evidence-based public health approach combines digital tools (for those who engage) with structural policy. Investing further in the app alone is unlikely to justify the cost; a combined strategy that addresses both individual cognition and the environmental drivers of smoking is theoretically and empirically more defensible.",
       "feynmanPrompt": "Imagine your friend has been told by their GP to lose weight to reduce their risk of type 2 diabetes. They've read the leaflets and they want to change — but six months later, nothing has shifted. Using ideas from health psychology, explain to them why information and intention alone often fail, and what kinds of strategies actually help people change their behaviour.",
       "rabbitHoleTerms": [
-        {"term": "biopsychosocial model", "description": "Engel's (1977) framework proposing that health and illness must be understood as the product of interacting biological, psychological, and social systems, each operating at hierarchically nested levels."},
-        {"term": "perceived behavioural control", "description": "A construct in Ajzen's (1991) Theory of Planned Behaviour referring to an individual's belief about the ease or difficulty of performing a behaviour; it predicts both intention and behaviour directly."},
-        {"term": "intention-behaviour gap", "description": "The frequently observed discrepancy between stated intentions to perform a health behaviour and actual subsequent performance; estimated to account for around half of behavioural variance in meta-analyses (Sheeran, 2002)."},
-        {"term": "implementation intentions", "description": "Gollwitzer's (1999) concept of specific if-then plans that link a situational cue to a behavioural response, transferring action control to environmental triggers and bridging the intention-behaviour gap."},
-        {"term": "COM-B model", "description": "Michie et al.'s (2011) framework proposing that behaviour results from the interaction of Capability, Opportunity, and Motivation; the centre of the Behaviour Change Wheel used in intervention design."},
-        {"term": "choice architecture", "description": "Thaler and Sunstein's (2008) term for the design of the environment in which decisions are made; nudge interventions modify choice architecture to promote healthier defaults without restricting freedom."}
+        {
+          "term": "biopsychosocial model",
+          "description": "Engel's (1977) framework proposing that health and illness must be understood as the product of interacting biological, psychological, and social systems, each operating at hierarchically nested levels."
+        },
+        {
+          "term": "perceived behavioural control",
+          "description": "A construct in Ajzen's (1991) Theory of Planned Behaviour referring to an individual's belief about the ease or difficulty of performing a behaviour; it predicts both intention and behaviour directly."
+        },
+        {
+          "term": "intention-behaviour gap",
+          "description": "The frequently observed discrepancy between stated intentions to perform a health behaviour and actual subsequent performance; estimated to account for around half of behavioural variance in meta-analyses (Sheeran, 2002)."
+        },
+        {
+          "term": "implementation intentions",
+          "description": "Gollwitzer's (1999) concept of specific if-then plans that link a situational cue to a behavioural response, transferring action control to environmental triggers and bridging the intention-behaviour gap."
+        },
+        {
+          "term": "COM-B model",
+          "description": "Michie et al.'s (2011) framework proposing that behaviour results from the interaction of Capability, Opportunity, and Motivation; the centre of the Behaviour Change Wheel used in intervention design."
+        },
+        {
+          "term": "choice architecture",
+          "description": "Thaler and Sunstein's (2008) term for the design of the environment in which decisions are made; nudge interventions modify choice architecture to promote healthier defaults without restricting freedom."
+        }
       ],
       "questions": [
         {
@@ -122,7 +142,8 @@
           "correctAnswer": "COM-B explicitly includes environmental Opportunity as a necessary condition for behaviour, whereas the TPB focuses on individual cognitions about behaviour",
           "explanationHtml": "<p>COM-B (Michie et al., 2011) was designed in part to address the neglect of environmental and contextual factors in earlier social cognition models. It proposes that behaviour results from the interaction of Capability, Opportunity, and Motivation, with Opportunity covering both physical (resources, time, infrastructure) and social environmental factors. The TPB focuses on individual cognitions — attitude, subjective norm, perceived behavioural control — with environment entering only indirectly. The other options are factually incorrect: both models apply across health domains; COM-B retains motivation as a central component; and neither was developed exclusively from longitudinal data.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "Leaflets provide information only — addressing knowledge but not the capability, opportunity, and motivation required for sustained behaviour change. The COM-B model (Michie et al., 2011) predicts that intervention components must target all three sources of behaviour.\n\nFor pre-diabetes patients who are aware of risk but not active, the deficit is likely in motivation (low self-efficacy, low action self-efficacy) and physical opportunity (sedentary environments, time constraints). Recommended components: motivational interviewing to resolve ambivalence and elicit change talk; implementation intentions ('if-then' plans: 'When I finish work on Monday, I will walk for 20 minutes') to bridge intention-action gap; pedometer-based goals with graduated targets; and structural opportunity — workplace walking routes, social prescribing to local exercise groups. Evaluate with objective activity monitoring (accelerometry) at 3 and 6 months, not self-report alone, to prevent social desirability bias."
     },
     {
       "id": "psy-prt-6b",
@@ -181,12 +202,30 @@
       "modelAnswer": "Restricting a deprived-area health strategy to individual behaviour-change interventions ignores the most powerful determinant of cardiovascular morbidity identified in British research: the psychosocial gradient. The Whitehall II study (Marmot et al., 1991) followed over 10,000 civil servants and demonstrated that lower employment grade predicted higher cardiovascular risk independently of smoking, cholesterol, and blood pressure. The active ingredient was low job control — chronic stress in the absence of compensating autonomy. Individual smoking cessation programmes will not address the structural exposure to chronic stress that drives this gradient.\n\nCohen and Wills's (1985) buffering hypothesis demonstrates that social support attenuates the physiological impact of stress, with mechanisms including emotional support, instrumental aid, and informational guidance. Holt-Lunstad et al.'s (2010) meta-analysis found social integration predicts mortality with an effect size comparable to smoking. Deprived communities frequently have eroded social capital — addressing this requires community-level investment, not individual counselling.\n\nMost provocatively, Slavich and Irwin (2014) demonstrate that social-evaluative threat — humiliation, status loss, exclusion — directly activates pro-inflammatory pathways (NF-κB, IL-6, TNF-α), providing a mechanistic account of how social adversity becomes embodied as disease. This implies that policies reducing humiliation and exclusion (e.g., reform of benefit systems, secure housing) may have measurable inflammatory and cardiovascular consequences.\n\nAn evidence-based strategy would combine individual interventions for those motivated to engage with structural changes addressing job control, social capital, and economic security. Dismissing psychosocial interventions as 'soft' contradicts decades of rigorous epidemiological evidence and would predictably fail to close the inequality gap.",
       "feynmanPrompt": "A friend insists that 'stress is all in the mind' and cannot really cause heart attacks or other physical illness. Using ideas from psychoneuroimmunology, the Whitehall II study, and Cohen and Wills's buffering hypothesis, explain to them how psychological and social processes produce biological disease — and why this matters for public health.",
       "rabbitHoleTerms": [
-        {"term": "General Adaptation Syndrome", "description": "Selye's (1956) three-stage model of the body's response to sustained stress — alarm, resistance, exhaustion — centred on the HPA axis and cortisol release; foundational but criticised for treating all stressors as functionally equivalent."},
-        {"term": "primary appraisal", "description": "In Lazarus and Folkman's (1984) transactional model, the cognitive evaluation of an event as threatening, challenging, harmful, or benign; one of the two appraisal processes that determine stress response."},
-        {"term": "psychoneuroimmunology", "description": "The interdisciplinary study of bidirectional interactions between psychological processes, the nervous system, and the immune system; founded by Ader and Cohen's (1975) conditioned immunosuppression experiment."},
-        {"term": "buffering hypothesis", "description": "Cohen and Wills's (1985) proposal that social support protects health primarily by attenuating the impact of stressful events; effects are strongest under high-stress conditions and depend on perceived availability of support that matches the stressor."},
-        {"term": "Type A behaviour pattern", "description": "Friedman and Rosenman's (1959) constellation of competitiveness, time urgency, and hostility, originally proposed as a coronary risk factor; subsequent research has identified cynical hostility specifically as the toxic component."},
-        {"term": "illness perceptions", "description": "Leventhal's Common-Sense Model construct comprising beliefs about an illness's identity, cause, timeline, consequences, and controllability; central to Moss-Morris's (2013) self-regulation model of chronic illness adjustment."}
+        {
+          "term": "General Adaptation Syndrome",
+          "description": "Selye's (1956) three-stage model of the body's response to sustained stress — alarm, resistance, exhaustion — centred on the HPA axis and cortisol release; foundational but criticised for treating all stressors as functionally equivalent."
+        },
+        {
+          "term": "primary appraisal",
+          "description": "In Lazarus and Folkman's (1984) transactional model, the cognitive evaluation of an event as threatening, challenging, harmful, or benign; one of the two appraisal processes that determine stress response."
+        },
+        {
+          "term": "psychoneuroimmunology",
+          "description": "The interdisciplinary study of bidirectional interactions between psychological processes, the nervous system, and the immune system; founded by Ader and Cohen's (1975) conditioned immunosuppression experiment."
+        },
+        {
+          "term": "buffering hypothesis",
+          "description": "Cohen and Wills's (1985) proposal that social support protects health primarily by attenuating the impact of stressful events; effects are strongest under high-stress conditions and depend on perceived availability of support that matches the stressor."
+        },
+        {
+          "term": "Type A behaviour pattern",
+          "description": "Friedman and Rosenman's (1959) constellation of competitiveness, time urgency, and hostility, originally proposed as a coronary risk factor; subsequent research has identified cynical hostility specifically as the toxic component."
+        },
+        {
+          "term": "illness perceptions",
+          "description": "Leventhal's Common-Sense Model construct comprising beliefs about an illness's identity, cause, timeline, consequences, and controllability; central to Moss-Morris's (2013) self-regulation model of chronic illness adjustment."
+        }
       ],
       "questions": [
         {
@@ -239,7 +278,8 @@
           "correctAnswer": "Selye's model is fundamentally physiological and treats stressors as functionally equivalent; Lazarus and Folkman's model centres on cognitive appraisal and proposes that stress is produced by the gap between perceived demand and perceived coping resources",
           "explanationHtml": "<p>The core distinction is the role of cognition. Selye's GAS (1956) is a physiological model — alarm, resistance, exhaustion — that treats stressors as broadly equivalent insofar as they elicit the same HPA-axis response. Lazarus and Folkman (1984) made the cognitive turn: stress depends not on the objective stressor but on primary appraisal (Is this threatening?) and secondary appraisal (Can I cope?), with stress arising specifically when perceived demand exceeds perceived resources. The other options contain factual errors: Selye's model was developed from both animal and human work, both models propose specific stages (three for Selye; two appraisal levels for Lazarus and Folkman, not five), and neither model originally featured social support as a central component (this was developed later by Cohen and others).</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "This presentation maps closely onto the Karasek and Theorell (1990) demand-control-support model: high job demands, low control, and limited social support create a high-strain work situation associated with elevated cortisol, cardiovascular risk, and poor glycaemic regulation. Lazarus and Folkman's (1984) transactional stress model identifies his dispositional negativity as a primary appraisal risk factor — 'worriers' chronically appraise ambiguous situations as threatening, maintaining HPA activation.\n\nThe biopsychosocial formulation should address: (1) emotion-focused coping deficits — he may be using maladaptive coping (rumination, avoidance) that maintains stress arousal; (2) the physiological pathway — chronic stress-induced cortisol elevation directly impairs insulin sensitivity, linking psychological state to HbA1c; (3) social isolation as a buffer deficit — social support is a well-established moderator of stress-illness relationships.\n\nRecommendation: MBSR (mindfulness-based stress reduction) has evidence for both psychological distress and HbA1c in type 2 diabetes. Combine with problem-focused coping coaching for job conditions where modifiable."
     },
     {
       "id": "psy-prt-6c",
@@ -298,12 +338,30 @@
       "modelAnswer": "A monthly text reminder, in isolation, is unlikely to produce a clinically meaningful improvement in adherence. The WHO report (Sabaté, 2003) concluded that adherence in chronic disease averages around 50% and is a multidimensional phenomenon shaped by patient-related, condition-related, therapy-related, socioeconomic, and healthcare system factors. Treating adherence as a memory problem solvable by reminders misdiagnoses the issue.\n\nHorne and Weinman's Necessity-Concerns Framework (1999) identifies the central cognitive determinant: patients adhere when they believe the medication is necessary and when their concerns about it (side effects, dependency, cost) are low. Necessity-concerns has been validated across conditions including hypertension, asthma, and depression. A reminder does not address either component. A patient who doubts the necessity of statins or fears their side effects will simply ignore the message.\n\nLeventhal's Common-Sense Model (1980) further specifies that adherence depends on the patient's illness perceptions across identity, cause, timeline, consequences, and controllability. Petrie et al.'s (2002) RCT showed that briefly modifying maladaptive illness perceptions after myocardial infarction produced measurable behavioural and symptomatic benefit. Reminders bypass these representations entirely.\n\nNieuwlaat et al.'s (2014) Cochrane review of 182 RCTs concluded that no single intervention reliably improves adherence and that effective interventions are typically complex, individualised, and ongoing — combining education, behavioural strategies (e.g., MEMS feedback), simplification of regimens, motivational interviewing, and integration with clinical care. An evidence-based adherence strategy would assess each patient's necessity-concerns balance and illness perceptions, simplify regimens where possible, and deploy reminders only as one component of a broader package. The proposed text-message intervention is the kind of cheap, scalable, ineffective intervention the literature has repeatedly warned against.",
       "feynmanPrompt": "Imagine a relative tells you their chronic back pain is 'not in their head', and they refuse to consider any psychological treatment. Using ideas from gate control theory and the fear-avoidance model, explain to them how psychological factors can really change the experience of pain — without dismissing the reality of what they feel.",
       "rabbitHoleTerms": [
-        {"term": "gate control theory", "description": "Melzack and Wall's (1965) theory that the dorsal horn of the spinal cord contains a gating mechanism that modulates pain transmission, influenced by descending input from the brain (attention, emotion) and competing peripheral input."},
-        {"term": "pain catastrophising", "description": "The tendency to magnify the threat value of pain, ruminate about it, and feel helpless in the face of it; measured by the Pain Catastrophising Scale (Sullivan et al., 1995) and a robust predictor of pain outcomes independent of nociception."},
-        {"term": "fear-avoidance model", "description": "Vlaeyen and Linton's (2000) model of chronic pain in which catastrophic interpretation of pain produces fear and avoidance, leading to deconditioning, withdrawal, depression, and intensified pain; recovery requires graded exposure to feared activity."},
-        {"term": "Necessity-Concerns Framework", "description": "Horne and Weinman's (1999) framework proposing that medication adherence depends on the balance between perceived necessity of the medication and concerns about it (e.g., side effects, dependency)."},
-        {"term": "Common-Sense Model", "description": "Leventhal's (1980) self-regulation model in which patients construct illness perceptions across five dimensions — identity, cause, timeline, consequences, controllability — that guide their coping behaviour and predict clinical outcomes."},
-        {"term": "self-management programme", "description": "A structured intervention (e.g., Lorig & Holman, 2003 Chronic Disease Self-Management Program) that teaches generic skills — problem-solving, goal setting, action planning, self-efficacy enhancement — applicable across chronic conditions."}
+        {
+          "term": "gate control theory",
+          "description": "Melzack and Wall's (1965) theory that the dorsal horn of the spinal cord contains a gating mechanism that modulates pain transmission, influenced by descending input from the brain (attention, emotion) and competing peripheral input."
+        },
+        {
+          "term": "pain catastrophising",
+          "description": "The tendency to magnify the threat value of pain, ruminate about it, and feel helpless in the face of it; measured by the Pain Catastrophising Scale (Sullivan et al., 1995) and a robust predictor of pain outcomes independent of nociception."
+        },
+        {
+          "term": "fear-avoidance model",
+          "description": "Vlaeyen and Linton's (2000) model of chronic pain in which catastrophic interpretation of pain produces fear and avoidance, leading to deconditioning, withdrawal, depression, and intensified pain; recovery requires graded exposure to feared activity."
+        },
+        {
+          "term": "Necessity-Concerns Framework",
+          "description": "Horne and Weinman's (1999) framework proposing that medication adherence depends on the balance between perceived necessity of the medication and concerns about it (e.g., side effects, dependency)."
+        },
+        {
+          "term": "Common-Sense Model",
+          "description": "Leventhal's (1980) self-regulation model in which patients construct illness perceptions across five dimensions — identity, cause, timeline, consequences, controllability — that guide their coping behaviour and predict clinical outcomes."
+        },
+        {
+          "term": "self-management programme",
+          "description": "A structured intervention (e.g., Lorig & Holman, 2003 Chronic Disease Self-Management Program) that teaches generic skills — problem-solving, goal setting, action planning, self-efficacy enhancement — applicable across chronic conditions."
+        }
       ],
       "questions": [
         {
@@ -356,7 +414,8 @@
           "correctAnswer": "The Common-Sense Model centres on the patient's own mental representations of the illness (identity, cause, timeline, consequences, controllability) and iterative coping evaluation, whereas the TPB centres on intention as predicted by attitude, subjective norm, and perceived behavioural control",
           "explanationHtml": "<p>The two frameworks have distinct focal constructs. Leventhal's Common-Sense Model is fundamentally about how patients understand the illness itself — their representations across identity, cause, timeline, consequences, and controllability — and how these representations guide coping behaviour through an iterative self-regulatory cycle. The TPB (Ajzen, 1991) focuses on the determinants of behavioural intention through attitude, subjective norm, and perceived behavioural control, applied to any specified behaviour. Both are cognitive models, but the Common-Sense Model is specifically a model of illness self-regulation, whereas the TPB is a general model of intentional behaviour. The other options contain factual errors.</p>"
         }
-      ]
+      ],
+      "guidedPracticeModelAnswer": "The fear-avoidance model (Vlaeyen & Linton, 2000) explains this presentation precisely: pain catastrophising ('I'll cause permanent damage') generates fear of movement (kinesiophobia), which drives avoidance, which produces deconditioning and disuse, which maintains and amplifies pain — a self-perpetuating cycle disconnected from tissue pathology.\n\nHigh catastrophising is the most robust predictor of disability and treatment non-response in chronic pain, and this patient's score should prompt the psychologist to recommend a graded-exposure approach rather than standard CBT, which may not adequately target avoidance behaviour.\n\nGraded exposure in vivo (Vlaeyen et al., 2012) involves collaborative identification of feared activities, a graded hierarchy, and systematic exposure to feared movements to disconfirm catastrophic predictions. ACT-based approaches (accepting pain without struggling against it, committing to values-consistent behaviour despite pain) show comparable evidence and may be more acceptable to patients who resist the 'psychological' framing. Either way, physiotherapy should be integrated to address deconditioning alongside psychological treatment."
     }
   ]
 }
