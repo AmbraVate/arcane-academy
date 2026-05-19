@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.common.repository;
+package com.ambravate.arcane.academy.admin.repository;
 
 import com.ambravate.arcane.academy.common.domain.StuckReport;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.common.repository;
+package com.ambravate.arcane.academy.practice.repository;
 
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;

@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.ai.service;
 
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

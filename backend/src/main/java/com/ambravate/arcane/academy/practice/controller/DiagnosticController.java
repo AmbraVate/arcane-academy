@@ -8,7 +8,7 @@ import com.ambravate.arcane.academy.ai.dto.ReviewSessionDto;
 import com.ambravate.arcane.academy.practice.domain.DiagnosticResult;
 import com.ambravate.arcane.academy.practice.domain.DiagnosticSession;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
-import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
+import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.practice.service.DiagnosticService;
 import com.fasterxml.jackson.databind.ObjectMapper;

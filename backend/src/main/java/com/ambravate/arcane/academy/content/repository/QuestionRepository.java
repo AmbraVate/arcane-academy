@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.common.repository;
+package com.ambravate.arcane.academy.content.repository;
 
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.Question;

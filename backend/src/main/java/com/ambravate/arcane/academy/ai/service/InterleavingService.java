@@ -13,10 +13,10 @@ import com.ambravate.arcane.academy.common.domain.SessionType;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
-import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.ai.service.SpacingService;
 

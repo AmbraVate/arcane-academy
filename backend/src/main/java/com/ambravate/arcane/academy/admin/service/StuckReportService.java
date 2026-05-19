@@ -3,7 +3,7 @@ package com.ambravate.arcane.academy.admin.service;
 import com.ambravate.arcane.academy.admin.dto.StuckReportDto;
 import com.ambravate.arcane.academy.common.domain.StuckReport;
 import com.ambravate.arcane.academy.common.domain.StuckReportStatus;
-import com.ambravate.arcane.academy.common.repository.StuckReportRepository;
+import com.ambravate.arcane.academy.admin.repository.StuckReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

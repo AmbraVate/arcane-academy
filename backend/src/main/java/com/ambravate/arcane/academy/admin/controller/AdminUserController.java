@@ -6,8 +6,8 @@ import com.ambravate.arcane.academy.admin.service.AdminStatsService;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserRole;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
-import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
 import lombok.RequiredArgsConstructor;

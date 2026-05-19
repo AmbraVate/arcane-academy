@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.ai.service;
 
 import com.ambravate.arcane.academy.common.domain.UserRabbitHoleTerm;
-import com.ambravate.arcane.academy.common.repository.UserRabbitHoleTermRepository;
+import com.ambravate.arcane.academy.content.repository.UserRabbitHoleTermRepository;
 import com.ambravate.arcane.academy.practice.dto.RabbitHoleTermDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

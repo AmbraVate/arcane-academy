@@ -726,6 +726,162 @@
           "explanationHtml": "<p>Both results reach p < .05, but r = −0.12 (n = 280) is a trivially small effect (r² = 1.4% of variance explained) that only reaches significance because large samples have high power to detect even negligible effects. r = −0.38 (n = 30) is a small-to-medium effect (r² = 14.4% of variance explained) — substantially more meaningful even though the p-values are similar. This illustrates why effect sizes are more informative than p-values alone: the p-value conflates effect size and sample size, while r directly quantifies the relationship strength.</p>"
         }
       ]
+    },
+    {
+      "id": "psy-prt-3f",
+      "title": "One-Way ANOVA in R",
+      "sortOrder": 6,
+      "xpReward": 100,
+      "practiceType": "R",
+      "hookHtml": "<p>Suppose you're comparing three therapy conditions — CBT, mindfulness, and a waitlist control — on anxiety outcomes. You could run three separate t-tests (CBT vs. mindfulness, CBT vs. control, mindfulness vs. control). But conducting three t-tests inflates your Type I error rate: if each test has a 5% false positive risk, the probability of at least one false positive across three tests is nearly 15%. Analysis of Variance (ANOVA) solves this by testing whether any group means differ in a single omnibus F-test, preserving the alpha level. When ANOVA is significant, post-hoc tests identify which specific groups differ — with the alpha controlled for multiple comparisons. This is the standard approach when comparing three or more groups on a continuous outcome, and it is omnipresent in clinical, experimental, and educational psychology research.</p>",
+      "explanationHtml": "<h3>The F-Statistic: Signal-to-Noise</h3>\n<p>ANOVA partitions the total variability in the outcome into two sources:</p>\n<ul>\n  <li><strong>Between-group variance</strong> (signal): how much the group means differ from the grand mean. Large between-group variance = the groups are genuinely different.</li>\n  <li><strong>Within-group variance</strong> (noise): how much individual scores scatter around their own group mean. This is the natural variability that would exist even if groups were identical.</li>\n</ul>\n<p>The <strong>F-statistic</strong> is the ratio of mean between-group variance (MS_between) to mean within-group variance (MS_within):</p>\n<p><em>F = MS_between / MS_within</em></p>\n<p>If the null hypothesis is true (all group means are equal), F ≈ 1 on average, because between-group differences reflect only sampling error — the same source as within-group noise. An F well above 1 suggests the between-group variation is too large to attribute to chance alone. The F-statistic is referred to an F-distribution with df₁ = k − 1 (where k = number of groups) and df₂ = N − k (where N = total sample size) to obtain the p-value.</p>\n<h3>One-Way ANOVA in R</h3>\n<pre><code># Requires a data frame with outcome and group columns\nmodel &lt;- aov(score ~ condition, data = therapy_data)\nsummary(model)</code></pre>\n<p>The <code>summary()</code> output for a one-way ANOVA:</p>\n<pre><code>            Df Sum Sq Mean Sq F value   Pr(>F)\ncondition    2  341.6  170.8   89.94 1.2e-13 ***\nResiduals   27   57.1    2.11</code></pre>\n<ul>\n  <li><em>Df</em>: degrees of freedom — k − 1 = 2 for condition (3 groups); N − k = 27 for residuals.</li>\n  <li><em>Sum Sq</em>: SS_between (341.6) and SS_within (57.1). SS_total = 398.7.</li>\n  <li><em>Mean Sq</em>: SS / Df — the variance estimates divided by their df.</li>\n  <li><em>F value</em>: 170.8 / 2.11 = 80.9. Extremely large — the between-group signal greatly exceeds the noise.</li>\n  <li><em>Pr(>F)</em>: the p-value for H₀ that all three group means are equal.</li>\n</ul>\n<h3>Effect Size: Eta-Squared (η²)</h3>\n<p><strong>Eta-squared</strong> (η²) is the ANOVA analogue of r²: the proportion of total variance in the outcome explained by the group factor.</p>\n<p><em>η² = SS_between / SS_total</em></p>\n<pre><code># Extract from summary output\nss &lt;- summary(model)[[1]]$'Sum Sq'\neta_sq &lt;- ss[1] / sum(ss)</code></pre>\n<p>By convention (Cohen, 1988): η² = .01 (small), .06 (medium), .14 (large). Partial eta-squared (η²ₚ) is reported in repeated-measures and factorial designs; in one-way ANOVA, η² and η²ₚ are identical. <strong>Omega-squared</strong> (ω²) is a less biased alternative to η², particularly in small samples: ω² = (SS_between − df_between × MS_within) / (SS_total + MS_within). R does not have a built-in ω² function but the <code>effectsize</code> package provides one.</p>\n<h3>Post-Hoc Tests: Tukey HSD</h3>\n<p>A significant omnibus F tells you that <em>at least one</em> group mean differs — it does not tell you which pairs differ. Post-hoc tests make all pairwise comparisons while controlling the family-wise error rate. <strong>Tukey's Honestly Significant Difference (HSD)</strong> is the standard choice when group sizes are equal and homoscedasticity holds:</p>\n<pre><code>tukey &lt;- TukeyHSD(model)\nprint(tukey)</code></pre>\n<p>Output example:</p>\n<pre><code>  Tukey multiple comparisons of means\n                          diff    lwr    upr  p adj\nMindfulness-CBT          3.2   2.01   4.39  0.0000\nControl-CBT              8.2   7.01   9.39  0.0000\nControl-Mindfulness      5.0   3.81   6.19  0.0000</code></pre>\n<p><em>diff</em> = mean difference; <em>lwr/upr</em> = 95% simultaneous confidence intervals; <em>p adj</em> = p-value adjusted for multiple comparisons. All three pairs differ significantly here. The Bonferroni correction is a more conservative alternative (<code>pairwise.t.test(score, condition, p.adjust.method = \"bonferroni\")</code>) appropriate when group sizes are unequal or you have specific a priori hypotheses.</p>\n<h3>Assumptions</h3>\n<p>One-way ANOVA assumes: (1) <strong>normality</strong> of residuals within each group — check with <code>shapiro.test(residuals(model))</code> or Q-Q plots; (2) <strong>homogeneity of variance</strong> (homoscedasticity) — check with Levene's test (<code>car::leveneTest(score ~ condition, data = df)</code>) or Bartlett's test (<code>bartlett.test(score ~ condition, data = df)</code>); (3) <strong>independence</strong> of observations. When homoscedasticity is violated, <strong>Welch's ANOVA</strong> is the appropriate alternative: <code>oneway.test(score ~ condition, data = df, var.equal = FALSE)</code>, followed by Games-Howell post-hoc tests.</p>\n<h3>APA Reporting Format</h3>\n<p><em>A one-way ANOVA revealed a significant effect of therapy condition on anxiety, F(2, 27) = 80.9, p &lt; .001, η² = .86. Tukey post-hoc tests indicated that CBT (M = 8.3, SD = 1.49) produced significantly lower anxiety than both mindfulness (M = 11.5, SD = 1.43), p &lt; .001, and waitlist control (M = 16.5, SD = 1.43), p &lt; .001. Mindfulness also differed significantly from the control condition, p &lt; .001.</em></p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen has a dataset from a randomised controlled trial: 30 participants randomly assigned to CBT (n = 10), mindfulness (n = 10), or a waitlist control (n = 10). Post-treatment GAD-7 scores are the outcome."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Chen",
+          "sCls": "mentor",
+          "text": "Three groups. You might think: run three t-tests. CBT vs. mindfulness, CBT vs. control, mindfulness vs. control. What is the problem with that?"
+        },
+        {
+          "type": "narration",
+          "text": "A student answers: multiple comparisons inflate the Type I error rate. Dr. Chen nods."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Chen",
+          "sCls": "mentor",
+          "text": "Exactly. If each test has a 5% false positive rate, three tests give you nearly a 15% chance of at least one spurious significant result. ANOVA tests the omnibus question first — do any groups differ? — in a single test at alpha = .05. Then post-hoc tests identify which pairs differ, with the error rate controlled across all comparisons."
+        },
+        {
+          "type": "narration",
+          "text": "She types: model <- aov(score ~ condition, data = therapy_data). summary(model). F(2, 27) = 80.9, p < .001. Then: eta_sq <- ss[1] / sum(ss). 0.857."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Chen",
+          "sCls": "mentor",
+          "text": "Eta-squared of 0.86. The therapy condition explains 86% of the variance in post-treatment anxiety. For a clinical trial with tight randomisation and clean operationalisation, that is exceptional — and it should make you suspicious in the real world. An effect this large almost never replicates at scale. Here it is partly an artefact of very small within-group variance in our simulation."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Chen",
+          "sCls": "mentor",
+          "text": "TukeyHSD(model). All three pairwise comparisons are significant. CBT outperforms mindfulness, mindfulness outperforms control, CBT substantially outperforms control. In a real paper you'd report the F statistic, df, p, and η², then report each Tukey comparison with mean differences and adjusted p-values. One ANOVA, one table. No inflation."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>Guided Practice — Three Therapy Conditions</h3>\n<p>A randomised trial assigned 30 participants to CBT, mindfulness, or waitlist control (n = 10 each). Post-treatment anxiety is measured on the GAD-7 (0–21). The dataset is pre-loaded as <code>therapy_data</code> — a data frame with columns <code>score</code> (GAD-7) and <code>condition</code> (factor: \"CBT\", \"Mindfulness\", \"Control\").</p>\n<ol>\n  <li>Fit a <strong>one-way ANOVA</strong> predicting <code>score</code> from <code>condition</code>. Assign to <code>model</code>.</li>\n  <li>Print <code>summary(model)</code>.</li>\n  <li>Run <strong>Tukey HSD post-hoc tests</strong>. Assign to <code>tukey</code> and print it.</li>\n  <li>Calculate <strong>eta-squared</strong> using <code>summary(model)[[1]]$'Sum Sq'</code>. Assign to <code>eta_sq</code>.</li>\n</ol>\n<p><em>Hints: <code>aov(score ~ condition, data = therapy_data)</code> · <code>TukeyHSD(model)</code> · <code>eta_sq &lt;- ss[1] / sum(ss)</code> where <code>ss &lt;- summary(model)[[1]]$'Sum Sq'</code></em></p>",
+      "starterCode": "# therapy_data is pre-loaded: 30 rows, columns 'score' (GAD-7) and 'condition'\n\n# Step 1: One-way ANOVA — assign to 'model'\n\n\n# Step 2: Print the model summary\n\n\n# Step 3: Tukey HSD post-hoc tests — assign to 'tukey'\n\n\n# Step 4: Print tukey\n\n\n# Step 5: Calculate eta-squared\n#         ss <- summary(model)[[1]]$'Sum Sq'\n#         eta_sq <- ss[1] / sum(ss)\n\n",
+      "guidedPracticeTests": [
+        {
+          "label": "therapy_data is loaded correctly (30 rows)",
+          "setup": "cbt <- c(7, 8, 9, 8, 10, 6, 9, 7, 11, 8); mindful <- c(11, 12, 10, 11, 13, 9, 12, 11, 14, 12); ctrl <- c(17, 15, 18, 16, 17, 16, 14, 19, 16, 17); therapy_data <- data.frame(score = c(cbt, mindful, ctrl), condition = factor(rep(c(\"CBT\", \"Mindfulness\", \"Control\"), each = 10)))",
+          "expectedExpression": "exists(\"therapy_data\") && nrow(therapy_data) == 30"
+        },
+        {
+          "label": "model is an ANOVA object",
+          "expectedExpression": "inherits(model, \"aov\")"
+        },
+        {
+          "label": "ANOVA is highly significant (p < .001)",
+          "expectedExpression": "summary(model)[[1]]$\"Pr(>F)\"[1] < 0.001"
+        },
+        {
+          "label": "Tukey HSD completed successfully",
+          "expectedExpression": "!is.null(tukey) && is.list(tukey)"
+        },
+        {
+          "label": "Eta-squared calculated correctly (> 0.7)",
+          "expectedExpression": "is.numeric(eta_sq) && eta_sq > 0.7 && eta_sq < 1.0"
+        }
+      ],
+      "soloPracticeHtml": "<h3>Independent Practice — Write It From Scratch</h3>\n<p>The same <code>therapy_data</code> data frame is loaded. Without the starter code, write R from scratch that:</p>\n<ol>\n  <li>Fits a one-way ANOVA predicting <code>score</code> from <code>condition</code> and assigns to <code>model</code></li>\n  <li>Runs Tukey HSD post-hoc tests and assigns to <code>tukey</code></li>\n  <li>Calculates eta-squared and assigns to <code>eta_sq</code></li>\n</ol>\n<p>All five test cases must pass.</p>",
+      "feynmanPrompt": "Explain to a first-year student why running three separate t-tests to compare three groups is problematic, and how ANOVA and Tukey post-hoc tests solve the problem. Why do we need post-hoc tests after a significant ANOVA?",
+      "rabbitHoleTerms": [
+        {
+          "term": "F-Statistic",
+          "definition": "The test statistic for ANOVA: the ratio of mean between-group variance (MS_between) to mean within-group variance (MS_within). Under the null hypothesis (all means equal), F ≈ 1; substantially larger values indicate the group differences are unlikely to arise from chance alone."
+        },
+        {
+          "term": "Eta-Squared (η²)",
+          "definition": "An effect size measure for ANOVA: SS_between / SS_total. Represents the proportion of total outcome variance explained by the group factor. Cohen (1988) conventions: .01 small, .06 medium, .14 large. Mathematically equivalent to R² in the regression formulation of ANOVA."
+        },
+        {
+          "term": "Tukey HSD",
+          "definition": "Tukey's Honestly Significant Difference post-hoc test: makes all pairwise group comparisons while controlling the family-wise error rate at alpha = .05. Appropriate when group sizes are equal and homoscedasticity is met. More conservative than LSD but less conservative than Bonferroni."
+        },
+        {
+          "term": "Family-Wise Error Rate",
+          "definition": "The probability of committing at least one Type I error (false positive) across a family of related hypothesis tests. Running k comparisons each at alpha = .05 inflates the family-wise error rate toward 1 − (0.95)^k. ANOVA and post-hoc corrections control this rate."
+        },
+        {
+          "term": "Welch's ANOVA",
+          "definition": "An alternative to standard one-way ANOVA robust to violations of homoscedasticity (unequal group variances). In R: oneway.test(outcome ~ group, data = df, var.equal = FALSE). Followed by Games-Howell post-hoc tests rather than Tukey HSD."
+        },
+        {
+          "term": "Omega-Squared (ω²)",
+          "definition": "A less biased alternative to eta-squared as an ANOVA effect size, particularly in small samples: ω² = (SS_between − df_between × MS_within) / (SS_total + MS_within). Corrects for the positive bias in η² when sample size is small relative to effect size."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>A one-way ANOVA comparing four groups (k = 4) with N = 60 total participants produces F(3, 56). What do the numbers in parentheses represent?</p>",
+          "options": [
+            "df_between = k − 1 = 3; df_within = N − k = 56",
+            "df_between = k = 4; df_within = N − 1 = 59",
+            "df_between = 3 groups compared; df_within = 56 pairwise comparisons",
+            "MS_between = 3; MS_within = 56"
+          ],
+          "correctAnswer": "df_between = k − 1 = 3; df_within = N − k = 56",
+          "explanationHtml": "<p>The F-statistic is reported as F(df_between, df_within). For a one-way ANOVA: df_between = k − 1 = 4 − 1 = 3 (degrees of freedom for the group factor); df_within = N − k = 60 − 4 = 56 (degrees of freedom for the residuals, also called the error term). These match the rows in the ANOVA summary table.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A one-way ANOVA comparing three stress interventions yields F(2, 57) = 4.12, p = .021, η² = .13. Tukey HSD post-hoc tests show: intervention A vs. B: p = .019; A vs. C: p = .643; B vs. C: p = .082. What is the most accurate summary of these findings?</p>",
+          "options": [
+            "All three interventions differ significantly from each other",
+            "There is a significant overall effect; intervention A produces significantly lower stress than B, but neither differs significantly from C",
+            "There is no significant overall effect because not all pairwise comparisons are significant",
+            "The ANOVA is significant but Tukey post-hoc tests show the overall effect is a Type I error"
+          ],
+          "correctAnswer": "There is a significant overall effect; intervention A produces significantly lower stress than B, but neither differs significantly from C",
+          "explanationHtml": "<p>The omnibus F is significant (p = .021), confirming that at least one group mean differs. Tukey post-hoc tests identify which specific pairs differ while controlling family-wise error. Only A vs. B reaches the adjusted significance threshold (p = .019). A vs. C (p = .643) and B vs. C (p = .082) do not. The conclusion is that the overall effect is significant but driven primarily by the A-B difference; the pattern of pairwise results is not sufficient grounds to dismiss the omnibus finding as a false positive.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher compares cognitive scores across three educational levels (school, college, university). Levene's test returns p = .003, indicating significant heterogeneity of variance. Which is the most appropriate analysis?</p>",
+          "options": [
+            "Proceed with standard one-way ANOVA — ANOVA is robust to violations of homoscedasticity with equal group sizes",
+            "Use Welch's ANOVA (oneway.test with var.equal = FALSE) and Games-Howell post-hoc tests",
+            "Use a non-parametric Kruskal-Wallis test, which has no variance assumption",
+            "Run three separate t-tests with Bonferroni correction instead of ANOVA"
+          ],
+          "correctAnswer": "Use Welch's ANOVA (oneway.test with var.equal = FALSE) and Games-Howell post-hoc tests",
+          "explanationHtml": "<p>When Levene's test indicates significant heteroscedasticity (p = .003), the homoscedasticity assumption is violated and standard one-way ANOVA may produce inflated Type I error rates. Welch's ANOVA (oneway.test with var.equal = FALSE) adjusts degrees of freedom to account for unequal variances — analogous to Welch's t-test. Games-Howell post-hoc tests (rather than Tukey HSD) are used in conjunction because they do not assume equal variances. The Kruskal-Wallis test is an alternative but sacrifices power and shifts to testing distributions rather than means.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: A significant one-way ANOVA result (p &lt; .05) establishes that all group means differ significantly from each other.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>A significant omnibus F-test only establishes that at least one group mean differs from at least one other — it specifies nothing about which pairs differ. It is possible that only two of three groups differ significantly from each other, with the third showing no significant difference from either. Post-hoc tests (Tukey HSD, Games-Howell, Bonferroni) are required to identify which specific pairwise comparisons reach significance while controlling the family-wise error rate.</p>"
+        }
+      ]
     }
   ]
 }

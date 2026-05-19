@@ -7,7 +7,7 @@ import com.ambravate.arcane.academy.auth.dto.RegisterRequest;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
 import com.ambravate.arcane.academy.common.exception.UserNotFoundException;
-import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

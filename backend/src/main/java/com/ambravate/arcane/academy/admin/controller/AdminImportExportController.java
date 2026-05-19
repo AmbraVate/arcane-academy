@@ -5,10 +5,10 @@ import com.ambravate.arcane.academy.content.seeder.JsonContentSeeder;
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.repository.ChunkRepository;
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

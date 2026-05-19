@@ -17,12 +17,12 @@ import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
 import com.ambravate.arcane.academy.common.domain.UserTopicProfile;
-import com.ambravate.arcane.academy.common.repository.ChunkRepository;
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
-import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
-import com.ambravate.arcane.academy.common.repository.UserTopicProfileRepository;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
+import com.ambravate.arcane.academy.auth.repository.UserTopicProfileRepository;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
 

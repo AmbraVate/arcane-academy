@@ -9,8 +9,8 @@ import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.content.domain.ChunkWithStatus;
 
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.content.service.ChunkGraphService;
 import com.ambravate.arcane.academy.ai.service.SpacingService;

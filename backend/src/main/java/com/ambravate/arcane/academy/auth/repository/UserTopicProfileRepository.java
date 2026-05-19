@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.common.repository;
+package com.ambravate.arcane.academy.auth.repository;
 
 import com.ambravate.arcane.academy.common.domain.UserTopicProfile;
 import org.springframework.data.jpa.repository.JpaRepository;

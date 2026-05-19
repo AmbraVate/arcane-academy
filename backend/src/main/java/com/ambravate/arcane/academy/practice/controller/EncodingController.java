@@ -24,7 +24,7 @@ import com.ambravate.arcane.academy.practice.service.ReactPracticeService;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
 import com.ambravate.arcane.academy.practice.service.SqlPracticeService;
 
-import com.ambravate.arcane.academy.common.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

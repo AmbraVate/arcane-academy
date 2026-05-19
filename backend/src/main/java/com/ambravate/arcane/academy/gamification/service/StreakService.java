@@ -2,7 +2,7 @@ package com.ambravate.arcane.academy.gamification.service;
 
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
-import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

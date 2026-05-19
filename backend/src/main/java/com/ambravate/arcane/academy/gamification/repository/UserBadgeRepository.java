@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.common.repository;
+package com.ambravate.arcane.academy.gamification.repository;
 
 import com.ambravate.arcane.academy.common.domain.UserBadge;
 import org.springframework.data.jpa.repository.JpaRepository;

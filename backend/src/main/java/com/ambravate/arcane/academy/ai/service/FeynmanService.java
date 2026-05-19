@@ -4,8 +4,8 @@ import com.ambravate.arcane.academy.ai.domain.FeynmanResult;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.content.seeder;
 
 import com.ambravate.arcane.academy.common.domain.Topic;
-import com.ambravate.arcane.academy.common.repository.TopicRepository;
+import com.ambravate.arcane.academy.content.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

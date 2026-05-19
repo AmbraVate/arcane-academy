@@ -1,8 +1,8 @@
 package com.ambravate.arcane.academy.admin.controller;
 
 import com.ambravate.arcane.academy.common.domain.Topic;
-import com.ambravate.arcane.academy.common.repository.ChunkRepository;
-import com.ambravate.arcane.academy.common.repository.TopicRepository;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

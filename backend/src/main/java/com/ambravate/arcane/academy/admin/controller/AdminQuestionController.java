@@ -4,7 +4,7 @@ import com.ambravate.arcane.academy.admin.dto.AdminQuestionDto;
 import com.ambravate.arcane.academy.admin.util.AdminQuestionAssembler;
 import com.ambravate.arcane.academy.common.domain.Question;
 
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

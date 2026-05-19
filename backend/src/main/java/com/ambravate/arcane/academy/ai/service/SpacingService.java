@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.ai.service;
 
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

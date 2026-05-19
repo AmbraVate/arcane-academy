@@ -4,7 +4,7 @@ import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.profile.domain.VisibilityRequest;
 import com.ambravate.arcane.academy.profile.service.PublicProfileService;
 import com.ambravate.arcane.academy.profile.domain.PublicProfile;
-import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

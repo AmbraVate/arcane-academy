@@ -5,7 +5,7 @@ import com.ambravate.arcane.academy.admin.service.StuckReportService;
 import com.ambravate.arcane.academy.common.domain.StuckReport;
 import com.ambravate.arcane.academy.common.domain.StuckReportStatus;
 import com.ambravate.arcane.academy.common.domain.User;
-import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

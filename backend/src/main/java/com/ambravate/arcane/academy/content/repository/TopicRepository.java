@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.common.repository;
+package com.ambravate.arcane.academy.content.repository;
 
 import com.ambravate.arcane.academy.common.domain.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;

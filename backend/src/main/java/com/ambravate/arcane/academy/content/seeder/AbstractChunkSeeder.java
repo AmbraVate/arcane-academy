@@ -8,10 +8,10 @@ import com.ambravate.arcane.academy.common.domain.QuestionType;
 import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
-import com.ambravate.arcane.academy.common.repository.ChunkRepository;
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 
 
 public abstract class AbstractChunkSeeder {

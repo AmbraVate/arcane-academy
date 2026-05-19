@@ -10,9 +10,9 @@ import com.ambravate.arcane.academy.common.domain.QuestionType;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
-import com.ambravate.arcane.academy.common.repository.ReviewSessionRepository;
-import com.ambravate.arcane.academy.common.repository.UserLearnerProfileRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
+import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
+import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 
 import lombok.RequiredArgsConstructor;

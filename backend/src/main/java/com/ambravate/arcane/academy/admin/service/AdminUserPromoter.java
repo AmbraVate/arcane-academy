@@ -1,7 +1,7 @@
 package com.ambravate.arcane.academy.admin.service;
 
 import com.ambravate.arcane.academy.common.domain.UserRole;
-import com.ambravate.arcane.academy.common.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

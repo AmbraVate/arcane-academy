@@ -1,11 +1,11 @@
 package com.ambravate.arcane.academy.content.seeder;
 
-import com.ambravate.arcane.academy.common.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.CuriosityQueueItemRepository;
-import com.ambravate.arcane.academy.common.repository.QuestionRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
-import com.ambravate.arcane.academy.common.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.common.repository.UserChunkProgressRepository;
+import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
