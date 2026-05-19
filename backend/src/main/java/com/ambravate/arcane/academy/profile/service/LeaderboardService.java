@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.gamification.service;
+package com.ambravate.arcane.academy.profile.service;
 
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
@@ -7,11 +7,10 @@ import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.gamification.repository.UserBadgeRepository;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
-
-import com.ambravate.arcane.academy.gamification.domain.LeaderboardEntry;
+import com.ambravate.arcane.academy.profile.domain.LeaderboardEntry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,17 +22,8 @@ import java.util.stream.Collectors;
 /**
  * Computes per-topic + polymath leaderboards on demand.
  *
- * <p><b>Privacy.</b> Only users with {@code publicProfileEnabled=true} appear here.
- * Anyone can opt in/out from the profile page.
- *
- * <p><b>XP source.</b> XP "earned in window" is the sum of {@link SubChunk#getXpReward()}
- * for sub-chunks the user marked COMPLETE within the window. We do NOT use
- * {@link User#getTotalXp()} for windowed numbers because that ledger is global
- * and includes review XP that we don't want to attribute to a topic.
- *
- * <p><b>Performance.</b> v1 does in-memory aggregation over the full progress
- * table once per request. Acceptable up to ~10k completed sub-chunks; switch
- * to a native SQL aggregation if the table grows past that.
+ * <p>Moved from the gamification module to profile so that leaderboard's
+ * read access to practice repositories does not create a module-level cycle.
  */
 @Service
 @RequiredArgsConstructor
@@ -46,28 +36,21 @@ public class LeaderboardService {
     private final UserChunkProgressRepository progressRepository;
     private final SubChunkRepository subChunkRepository;
     private final ChunkRepository chunkRepository;
-    private final UserBadgeRepository badgeRepository;
+    private final GamificationFacade gamificationFacade;
 
-    /** Top users by XP earned in {@code topicId} since the start of the current ISO-week (Mon 00:00 UTC). */
     public List<LeaderboardEntry> topicWeekly(String topicId, int limit) {
         return topicLeaderboard(topicId, currentWeekStart(), limit);
     }
 
-    /** Top users by total XP earned in {@code topicId} since account creation. */
     public List<LeaderboardEntry> topicAllTime(String topicId, int limit) {
         return topicLeaderboard(topicId, Instant.EPOCH, limit);
     }
 
-    /**
-     * Polymath ranking — number of distinct topics where the user has earned ≥1 sub-chunk XP,
-     * tie-broken by total XP across all topics.
-     */
     public List<LeaderboardEntry> polymath(int limit) {
         Map<String, Integer> xpBySubChunk = xpBySubChunk();
         Map<String, String> topicBySubChunk = topicBySubChunk();
         Map<String, User> users = optedInUsers();
 
-        // user → set of topics they've earned in, plus total XP
         Map<String, Set<String>> topicsByUser = new HashMap<>();
         Map<String, Integer> totalXpByUser = new HashMap<>();
 
@@ -86,8 +69,7 @@ public class LeaderboardService {
             if (byTopics != 0) return byTopics;
             return Integer.compare(
                 totalXpByUser.getOrDefault(b.getKey(), 0),
-                totalXpByUser.getOrDefault(a.getKey(), 0)
-            );
+                totalXpByUser.getOrDefault(a.getKey(), 0));
         });
 
         List<LeaderboardEntry> out = new ArrayList<>();
@@ -96,20 +78,14 @@ public class LeaderboardService {
             if (out.size() >= limit) break;
             User u = users.get(entry.getKey());
             out.add(new LeaderboardEntry(
-                rank++,
-                u.getUsername(),
+                rank++, u.getUsername(),
                 totalXpByUser.getOrDefault(u.getId(), 0),
-                u.getTotalXp(),
-                u.getStreakDays(),
-                u.getRank(),
+                u.getTotalXp(), u.getStreakDays(), u.getRank(),
                 entry.getValue().size(),
-                badgeCount(u.getId())
-            ));
+                gamificationFacade.getBadgeCount(u.getId())));
         }
         return out;
     }
-
-    // ── Internals ──────────────────────────────────────────────────────────────
 
     private List<LeaderboardEntry> topicLeaderboard(String topicId, Instant since, int limit) {
         Set<String> topicSubChunkIds = topicSubChunkIds(topicId);
@@ -118,7 +94,6 @@ public class LeaderboardService {
         Map<String, Integer> xpBySubChunk = xpBySubChunk();
         Map<String, User> users = optedInUsers();
 
-        // Aggregate XP per user with one pass over progress table.
         Map<String, Integer> xpByUser = new HashMap<>();
         for (UserChunkProgress p : progressRepository.findAll()) {
             if (!users.containsKey(p.getUserId())) continue;
@@ -130,23 +105,16 @@ public class LeaderboardService {
 
         List<Map.Entry<String, Integer>> sorted = xpByUser.entrySet().stream()
             .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-            .limit(limit)
-            .toList();
+            .limit(limit).toList();
 
         List<LeaderboardEntry> out = new ArrayList<>(sorted.size());
         int rank = 1;
         for (var e : sorted) {
             User u = users.get(e.getKey());
             out.add(new LeaderboardEntry(
-                rank++,
-                u.getUsername(),
-                e.getValue(),
-                u.getTotalXp(),
-                u.getStreakDays(),
-                u.getRank(),
-                -1,                         // topicCount only meaningful for polymath
-                badgeCount(u.getId())
-            ));
+                rank++, u.getUsername(), e.getValue(),
+                u.getTotalXp(), u.getStreakDays(), u.getRank(),
+                -1, gamificationFacade.getBadgeCount(u.getId())));
         }
         return out;
     }
@@ -161,7 +129,6 @@ public class LeaderboardService {
             .collect(Collectors.toMap(SubChunk::getId, SubChunk::getXpReward, (a, b) -> a));
     }
 
-    /** Map of subChunkId → topicId (e.g. "java", "tailwind"). */
     private Map<String, String> topicBySubChunk() {
         Map<String, String> chunkTopic = chunkRepository.findAll().stream()
             .collect(Collectors.toMap(Chunk::getId, Chunk::getTopicId, (a, b) -> a));
@@ -178,15 +145,9 @@ public class LeaderboardService {
             .stream().map(Chunk::getId).toList();
         if (chunkIds.isEmpty()) return Set.of();
         return subChunkRepository.findByChunkIdIn(chunkIds).stream()
-            .map(SubChunk::getId)
-            .collect(Collectors.toSet());
+            .map(SubChunk::getId).collect(Collectors.toSet());
     }
 
-    private int badgeCount(String userId) {
-        return badgeRepository.findByUserId(userId).size();
-    }
-
-    /** Monday 00:00 UTC of the current ISO week. */
     static Instant currentWeekStart() {
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
         LocalDate monday = today.minusDays(today.getDayOfWeek().getValue() - 1);
@@ -199,5 +160,4 @@ public class LeaderboardService {
     }
 
     public int defaultLimit() { return DEFAULT_LIMIT; }
-
 }

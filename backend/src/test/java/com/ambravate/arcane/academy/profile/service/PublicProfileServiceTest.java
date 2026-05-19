@@ -6,12 +6,12 @@ import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.Topic;
 import com.ambravate.arcane.academy.common.domain.User;
-import com.ambravate.arcane.academy.common.domain.UserBadge;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
+import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.content.repository.TopicRepository;
-import com.ambravate.arcane.academy.gamification.repository.UserBadgeRepository;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.profile.domain.PublicProfile;
@@ -45,7 +45,7 @@ class PublicProfileServiceTest {
 
     @Mock private UserRepository userRepository;
     @Mock private UserChunkProgressRepository progressRepository;
-    @Mock private UserBadgeRepository badgeRepository;
+    @Mock private GamificationFacade gamificationFacade;
     @Mock private ChunkRepository chunkRepository;
     @Mock private SubChunkRepository subChunkRepository;
     @Mock private TopicRepository topicRepository;
@@ -113,7 +113,7 @@ class PublicProfileServiceTest {
             Topic.builder().id("java").name("Java").glyph("☕").accentColor("#f00").sortOrder(1).build(),
             Topic.builder().id("tailwind").name("Tailwind").glyph("🎨").accentColor("#0f0").sortOrder(2).build()
         ));
-        when(badgeRepository.findByUserId("u-alice")).thenReturn(List.of());
+        when(gamificationFacade.getEarnedBadges("u-alice")).thenReturn(List.of());
 
         Optional<PublicProfile> result = service.findByUsername("alice");
         assertThat(result).isPresent();
@@ -149,9 +149,17 @@ class PublicProfileServiceTest {
 
         Instant older = Instant.parse("2025-01-01T00:00:00Z");
         Instant newer = Instant.parse("2025-04-01T00:00:00Z");
-        when(badgeRepository.findByUserId("u-alice")).thenReturn(List.of(
-            UserBadge.builder().userId("u-alice").badgeId("FIRST_CONCEPT").earnedAt(older).build(),
-            UserBadge.builder().userId("u-alice").badgeId("STREAK_7").earnedAt(newer).build()
+        when(gamificationFacade.getEarnedBadges("u-alice")).thenReturn(List.of(
+            BadgeDto.aBadgeDto().withId("FIRST_CONCEPT")
+                .withDisplayName(BadgeDefinition.FIRST_CONCEPT.getDisplayName())
+                .withGlyph(BadgeDefinition.FIRST_CONCEPT.getGlyph())
+                .withCategory(BadgeDefinition.FIRST_CONCEPT.getCategory().name())
+                .withEarned(true).withEarnedAt(older).build(),
+            BadgeDto.aBadgeDto().withId("STREAK_7")
+                .withDisplayName(BadgeDefinition.STREAK_7.getDisplayName())
+                .withGlyph(BadgeDefinition.STREAK_7.getGlyph())
+                .withCategory(BadgeDefinition.STREAK_7.getCategory().name())
+                .withEarned(true).withEarnedAt(newer).build()
         ));
 
         PublicProfile profile = service.findByUsername("alice").orElseThrow();
@@ -173,9 +181,12 @@ class PublicProfileServiceTest {
         lenient().when(subChunkRepository.findAll()).thenReturn(List.of());
         lenient().when(topicRepository.findAll()).thenReturn(List.of());
 
-        when(badgeRepository.findByUserId("u-alice")).thenReturn(List.of(
-            UserBadge.builder().userId("u-alice").badgeId("LEGACY_BADGE_NO_LONGER_DEFINED")
-                .earnedAt(Instant.now()).build()
+        when(gamificationFacade.getEarnedBadges("u-alice")).thenReturn(List.of(
+            BadgeDto.aBadgeDto().withId("LEGACY_BADGE_NO_LONGER_DEFINED")
+                .withDisplayName("LEGACY_BADGE_NO_LONGER_DEFINED")
+                .withGlyph("🏅")
+                .withCategory("OTHER")
+                .withEarned(true).withEarnedAt(Instant.now()).build()
         ));
 
         PublicProfile profile = service.findByUsername("alice").orElseThrow();

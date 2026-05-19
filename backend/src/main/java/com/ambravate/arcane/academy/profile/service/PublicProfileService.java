@@ -1,16 +1,16 @@
 package com.ambravate.arcane.academy.profile.service;
 
-import com.ambravate.arcane.academy.common.domain.BadgeDefinition;
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
 import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.Topic;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
+import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.content.repository.TopicRepository;
-import com.ambravate.arcane.academy.gamification.repository.UserBadgeRepository;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.profile.domain.EarnedBadge;
@@ -46,7 +46,7 @@ public class PublicProfileService {
 
     private final UserRepository userRepository;
     private final UserChunkProgressRepository progressRepository;
-    private final UserBadgeRepository badgeRepository;
+    private final GamificationFacade gamificationFacade;
     private final ChunkRepository chunkRepository;
     private final SubChunkRepository subChunkRepository;
     private final TopicRepository topicRepository;
@@ -97,22 +97,9 @@ public class PublicProfileService {
             .toList();
 
 
-        List<EarnedBadge> badges = badgeRepository.findByUserId(user.getId())
+        List<EarnedBadge> badges = gamificationFacade.getEarnedBadges(user.getId())
             .stream()
-            .map(b -> {
-                String display = b.getBadgeId();
-                String glyph = "🏅";
-                String category = "OTHER";
-                try {
-                    BadgeDefinition def = BadgeDefinition.valueOf(b.getBadgeId());
-                    display = def.getDisplayName();
-                    glyph = def.getGlyph();
-                    category = def.getCategory().name();
-                } catch (IllegalArgumentException ignored) {
-
-                }
-                return new EarnedBadge(b.getBadgeId(), display, glyph, category, b.getEarnedAt());
-            })
+            .map(b -> new EarnedBadge(b.getId(), b.getDisplayName(), b.getGlyph(), b.getCategory(), b.getEarnedAt()))
             .sorted(Comparator.comparing(EarnedBadge::earnedAt).reversed())
             .toList();
 

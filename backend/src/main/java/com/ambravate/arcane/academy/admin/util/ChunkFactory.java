@@ -4,33 +4,32 @@ package com.ambravate.arcane.academy.admin.util;
 import com.ambravate.arcane.academy.admin.dto.AdminChunkDto;
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChunkFactory {
 
-  private final ObjectMapper objectMapper;
+  private final ChunkRepository chunkRepository;
 
-  public ChunkFactory(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
+  public ChunkFactory(ChunkRepository chunkRepository) {
+    this.chunkRepository = chunkRepository;
   }
 
-
   public Chunk buildChunk(AdminChunkDto req) {
+    List<Chunk> prereqChunks = req.getPrerequisiteIds() == null ? List.of() :
+        req.getPrerequisiteIds().stream()
+            .map(pId -> chunkRepository.findById(pId)
+                .orElseThrow(() -> new IllegalArgumentException("Prerequisite chunk not found: " + pId)))
+            .toList();
     return Chunk.builder()
         .id(req.getId()).title(req.getTitle()).glyph(req.getGlyph())
         .sortOrder(req.getSortOrder())
         .tier(req.getTier() != null ? LearnerPath.valueOf(req.getTier()) : LearnerPath.FOUNDATION)
         .topicId(req.getTopicId() != null ? req.getTopicId() : "java")
-        .prerequisiteIds(toJson(req.getPrerequisiteIds()))
+        .prerequisites(prereqChunks)
         .build();
-  }
-
-  private String toJson(List<String> list) {
-    if (list == null || list.isEmpty()) return "[]";
-    try { return objectMapper.writeValueAsString(list); } catch (Exception e) { return "[]"; }
   }
 
 }

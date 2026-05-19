@@ -14,8 +14,6 @@ import com.ambravate.arcane.academy.practice.repository.UserChunkProgressReposit
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.content.service.ChunkGraphService;
 import com.ambravate.arcane.academy.ai.service.SpacingService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +31,6 @@ public class ChunkController {
     private final SubChunkRepository subChunkRepository;
     private final UserChunkProgressRepository progressRepository;
     private final SpacingService spacingService;
-    private final ObjectMapper objectMapper;
 
     @GetMapping
     public ResponseEntity<List<ChunkSummaryDto>> getAllChunks(
@@ -63,7 +60,7 @@ public class ChunkController {
                     .status(cws.status())
                     .totalSubChunks(subs.size()).completedSubChunks(completed)
                     .memoryStrength(avgStrength).healthColor(health)
-                    .prerequisiteIds(parsePrereqs(c.getPrerequisiteIds()))
+                    .prerequisiteIds(c.getPrerequisites().stream().map(Chunk::getId).toList())
                     .build();
         }).collect(Collectors.toList());
 
@@ -131,8 +128,4 @@ public class ChunkController {
                 .subChunks(subDtos).build());
     }
 
-    private List<String> parsePrereqs(String json) {
-        if (json == null || json.isBlank()) return List.of();
-        try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
-    }
 }

@@ -1,4 +1,4 @@
-package com.ambravate.arcane.academy.gamification.service;
+package com.ambravate.arcane.academy.profile.service;
 
 import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.SubChunk;
@@ -7,9 +7,10 @@ import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.gamification.repository.UserBadgeRepository;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
+import com.ambravate.arcane.academy.profile.domain.LeaderboardEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -47,7 +48,7 @@ class LeaderboardServiceTest {
     @Mock private UserChunkProgressRepository progressRepository;
     @Mock private SubChunkRepository subChunkRepository;
     @Mock private ChunkRepository chunkRepository;
-    @Mock private UserBadgeRepository badgeRepository;
+    @Mock private GamificationFacade gamificationFacade;
 
     @InjectMocks private LeaderboardService leaderboardService;
 
@@ -77,8 +78,8 @@ class LeaderboardServiceTest {
 
     @BeforeEach
     void wireDefaults() {
-        // Default to no badges so badgeCount() returns 0 unless overridden by a test
-        lenient().when(badgeRepository.findByUserId(anyString())).thenReturn(List.of());
+        // Default to 0 badges so badgeCount() returns 0 unless overridden by a test
+        lenient().when(gamificationFacade.getBadgeCount(anyString())).thenReturn(0);
     }
 
     // ── Topic weekly ────────────────────────────────────────────────────────────

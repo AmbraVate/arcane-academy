@@ -15,6 +15,7 @@ import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
@@ -37,6 +38,7 @@ public class InterleavingService {
 
     private final QuestionRepository questionRepository;
     private final UserChunkProgressRepository progressRepository;
+    private final ReviewSessionRepository reviewSessionRepository;
     private final UserLearnerProfileRepository profileRepository;
     private final SubChunkRepository subChunkRepository;
     private final RetrievalService retrievalService;
@@ -155,7 +157,9 @@ public class InterleavingService {
             spacingService.updateSpacing(userId, entry.getKey(), subScore);
         }
 
-        List<BadgeDto> newBadges = gamification.evaluateAndAwardBadges(userId);
+        List<BadgeDto> newBadges = gamification.evaluateAndAwardBadges(userId,
+                progressRepository.findByUserId(userId),
+                reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
 
         log.info("[Review] Submitted | user={} session={} score={} correct={}/{}",
                 userId, sessionId, graded.score(), graded.correct(), graded.total());

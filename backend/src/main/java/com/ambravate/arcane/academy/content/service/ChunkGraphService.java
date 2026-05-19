@@ -8,8 +8,6 @@ import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.content.domain.ChunkWithStatus;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,6 @@ public class ChunkGraphService {
     private final ChunkRepository chunkRepository;
     private final SubChunkRepository subChunkRepository;
     private final UserChunkProgressRepository progressRepository;
-    private final ObjectMapper objectMapper;
 
     /**
      * Get all chunks with their status for a given user.
@@ -79,7 +76,7 @@ public class ChunkGraphService {
     }
 
     private boolean isChunkUnlocked(Chunk chunk, Set<String> completedChunkIds) {
-        List<String> prereqs = parsePrerequisites(chunk.getPrerequisiteIds());
+        List<String> prereqs = chunk.getPrerequisites().stream().map(Chunk::getId).toList();
         if (prereqs.isEmpty()) return true;
         return completedChunkIds.containsAll(prereqs);
     }
@@ -113,16 +110,6 @@ public class ChunkGraphService {
             }
         }
         return completed;
-    }
-
-    private List<String> parsePrerequisites(String json) {
-        if (json == null || json.isBlank()) return List.of();
-        try {
-            return objectMapper.readValue(json, new TypeReference<>() {});
-        } catch (Exception e) {
-            log.warn("Failed to parse prerequisiteIds: {}", json);
-            return List.of();
-        }
     }
 
 }

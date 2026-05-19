@@ -154,7 +154,7 @@ public class DashboardService {
       })) {
         status = "IN_PROGRESS";
       } else {
-        List<String> prereqs = parsePrereqs(chunk.getPrerequisiteIds());
+        List<String> prereqs = chunk.getPrerequisites().stream().map(Chunk::getId).toList();
         status = prereqs.isEmpty() || completedChunks.containsAll(prereqs) ? "UNLOCKED" : "LOCKED";
       }
 
@@ -168,13 +168,4 @@ public class DashboardService {
     return result;
   }
 
-  private List<String> parsePrereqs(String json) {
-    if (json == null || json.isBlank()) return List.of();
-    try {
-      return new com.fasterxml.jackson.databind.ObjectMapper().readValue(
-          json, new com.fasterxml.jackson.core.type.TypeReference<>() {});
-    } catch (Exception e) {
-      return List.of();
-    }
-  }
 }

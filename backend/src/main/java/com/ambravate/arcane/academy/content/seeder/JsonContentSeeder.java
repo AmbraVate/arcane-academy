@@ -208,9 +208,12 @@ public class JsonContentSeeder {
     // ── Chunk ─────────────────────────────────────────────────────────────────
 
     private void seedChunk(ChunkContentDto dto) throws Exception {
-        String prereqJson = (dto.prerequisites == null || dto.prerequisites.isEmpty())
-                ? "[]"
-                : objectMapper.writeValueAsString(dto.prerequisites);
+        List<Chunk> prereqChunks = (dto.prerequisites == null || dto.prerequisites.isEmpty())
+                ? List.of()
+                : dto.prerequisites.stream()
+                        .map(pId -> chunkRepository.findById(pId)
+                                .orElseThrow(() -> new IllegalStateException("Prereq chunk not found: " + pId)))
+                        .toList();
 
         Chunk chunk = Chunk.builder()
                 .id(dto.id)
@@ -219,7 +222,7 @@ public class JsonContentSeeder {
                 .sortOrder(dto.sortOrder)
                 .tier(LearnerPath.valueOf(dto.tier))
                 .topicId(dto.topicId)
-                .prerequisiteIds(prereqJson)
+                .prerequisites(prereqChunks)
                 .build();
         chunkRepository.save(chunk);
 

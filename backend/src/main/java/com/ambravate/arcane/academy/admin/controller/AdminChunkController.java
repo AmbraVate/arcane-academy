@@ -7,7 +7,6 @@ import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,6 @@ public class AdminChunkController {
 
     private final ChunkRepository chunkRepository;
     private final SubChunkRepository subChunkRepository;
-    private final ObjectMapper objectMapper;
     private final ChunkFactory chunkFactory;
     private final ChunkAssembler chunkAssembler;
 
@@ -63,7 +61,12 @@ public class AdminChunkController {
         chunk.setSortOrder(req.getSortOrder());
         chunk.setTier(LearnerPath.valueOf(req.getTier()));
         chunk.setTopicId(req.getTopicId());
-        chunk.setPrerequisiteIds(toJson(req.getPrerequisiteIds()));
+        List<Chunk> prereqChunks = req.getPrerequisiteIds() == null ? List.of() :
+                req.getPrerequisiteIds().stream()
+                        .map(pId -> chunkRepository.findById(pId)
+                                .orElseThrow(() -> new IllegalArgumentException("Prerequisite not found: " + pId)))
+                        .toList();
+        chunk.setPrerequisites(prereqChunks);
         return ResponseEntity.ok(chunkAssembler.toDto(chunkRepository.save(chunk), subChunkRepository.findByChunkIdOrderBySortOrderAsc(chunk.getId()).size()));
     }
 
@@ -77,8 +80,4 @@ public class AdminChunkController {
         return ResponseEntity.noContent().build();
     }
 
-  private String toJson(List<String> list) {
-        if (list == null || list.isEmpty()) return "[]";
-        try { return objectMapper.writeValueAsString(list); } catch (Exception e) { return "[]"; }
-    }
 }

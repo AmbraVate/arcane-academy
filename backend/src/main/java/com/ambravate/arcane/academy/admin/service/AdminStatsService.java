@@ -16,7 +16,7 @@ import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.content.repository.TopicRepository;
-import com.ambravate.arcane.academy.gamification.repository.UserBadgeRepository;
+import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 
@@ -41,7 +41,7 @@ public class AdminStatsService {
     private final SubChunkRepository subChunkRepository;
     private final QuestionRepository questionRepository;
     private final UserChunkProgressRepository progressRepository;
-    private final UserBadgeRepository badgeRepository;
+    private final GamificationFacade gamificationFacade;
     private final ReviewSessionRepository reviewSessionRepository;
 
     public AdminStatsDto getStats() {
@@ -122,7 +122,7 @@ public class AdminStatsService {
                                 subs.stream().map(SubChunk::getId).toList()))
                 .count();
 
-        long badgesEarned = badgeRepository.findByUserId(u.getId()).size();
+        long badgesEarned = gamificationFacade.getBadgeCount(u.getId());
         long reviewSessionsCompleted = reviewSessionRepository.countByUserIdAndCompletedAtIsNotNull(u.getId());
 
         return new UserStatsDto(

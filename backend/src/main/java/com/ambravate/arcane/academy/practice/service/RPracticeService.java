@@ -8,6 +8,7 @@ import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
@@ -47,6 +48,7 @@ public class RPracticeService {
   private final SubChunkRepository subChunkRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
+  private final ReviewSessionRepository reviewSessionRepository;
   private final GamificationFacade gamification;
   private final ApplicationEventPublisher eventPublisher;
 
@@ -98,7 +100,9 @@ public class RPracticeService {
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
       xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
-      newBadges = gamification.evaluateAndAwardBadges(userId);
+      newBadges = gamification.evaluateAndAwardBadges(userId,
+              progressRepository.findByUserId(userId),
+              reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
       log.info("[R] All tests passed | user={} subChunk={} xp={}", userId, subChunkId, xpEarned);
     } else {
       log.info(

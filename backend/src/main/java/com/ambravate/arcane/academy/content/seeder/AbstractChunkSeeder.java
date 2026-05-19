@@ -40,10 +40,12 @@ public abstract class AbstractChunkSeeder {
     }
 
     protected Chunk chunk(String id, String title, String glyph, int order, LearnerPath tier, String... prereqs) {
-        String prereqJson = prereqs.length == 0 ? "[]" :
-                "[" + String.join(",", java.util.Arrays.stream(prereqs).map(p -> "\"" + p + "\"").toArray(String[]::new)) + "]";
+        java.util.List<Chunk> prereqChunks = java.util.Arrays.stream(prereqs)
+                .map(pId -> chunkRepository.findById(pId)
+                        .orElseThrow(() -> new IllegalStateException("Prerequisite chunk not found: " + pId)))
+                .collect(java.util.stream.Collectors.toList());
         Chunk c = Chunk.builder().id(id).title(title).glyph(glyph)
-                .sortOrder(order).prerequisiteIds(prereqJson).tier(tier).build();
+                .sortOrder(order).tier(tier).prerequisites(prereqChunks).build();
         return chunkRepository.save(c);
     }
 

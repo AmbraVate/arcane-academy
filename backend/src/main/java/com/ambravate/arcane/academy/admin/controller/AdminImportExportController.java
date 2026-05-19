@@ -70,7 +70,6 @@ public class AdminImportExportController {
 
     // ── Export helper ──────────────────────────────────────────────────────────
 
-    @SuppressWarnings("unchecked")
     private ChunkContentDto buildExportDto(Chunk chunk) throws Exception {
         ChunkContentDto dto = new ChunkContentDto();
         dto.id = chunk.getId();
@@ -79,9 +78,7 @@ public class AdminImportExportController {
         dto.sortOrder = chunk.getSortOrder();
         dto.tier = chunk.getTier().name();
         dto.topicId = chunk.getTopicId();
-        if (chunk.getPrerequisiteIds() != null && !chunk.getPrerequisiteIds().isBlank()) {
-            dto.prerequisites = objectMapper.readValue(chunk.getPrerequisiteIds(), List.class);
-        }
+        dto.prerequisites = chunk.getPrerequisites().stream().map(Chunk::getId).toList();
 
         List<SubChunk> subChunks = subChunkRepository.findByChunkIdOrderBySortOrderAsc(chunk.getId());
         dto.subChunks = subChunks.stream().map(sc -> {
