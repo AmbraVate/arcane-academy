@@ -36,7 +36,7 @@ jobs:
       # is in progress; remove -DskipTests once the suite is stable.
       - name: Maven verify
         working-directory: backend
-        run: mvn -B -DskipTests verify
+        run: mvn -B verify
 
       # Flyway dry-run gate referenced in CLAUDE.md §13. Currently a no-op
       # because we use `ddl-auto: update` in dev — wire this once Flyway
