@@ -1,0 +1,39 @@
+[build]
+base    = "frontend"
+publish = "dist"
+command = "npm install && npm run build"
+
+[build.environment]
+NODE_VERSION = "20"
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options        = "DENY"
+Referrer-Policy        = "strict-origin-when-cross-origin"
+
+# API proxy — routes /api/*, /oauth2/*, /login/oauth2/* to the Koyeb backend
+[[redirects]]
+from  = "/api/*"
+to    = "https://REPLACE-WITH-KOYEB-URL/api/:splat"
+status = 200
+force  = true
+
+[[redirects]]
+from  = "/oauth2/*"
+to    = "https://REPLACE-WITH-KOYEB-URL/oauth2/:splat"
+status = 200
+force  = true
+
+[[redirects]]
+from  = "/login/oauth2/*"
+to    = "https://REPLACE-WITH-KOYEB-URL/login/oauth2/:splat"
+status = 200
+force  = true
+
+# SPA fallback — must be last
+[[redirects]]
+from  = "/*"
+to    = "/index.html"
+status = 200
