@@ -16,19 +16,19 @@ Referrer-Policy        = "strict-origin-when-cross-origin"
 # API proxy — routes /api/*, /oauth2/*, /login/oauth2/* to the Koyeb backend
 [[redirects]]
 from  = "/api/*"
-to    = "https://REPLACE-WITH-KOYEB-URL/api/:splat"
+to    = "https://arcane-academy-api-270707674521.europe-west2.run.app/api/:splat"
 status = 200
 force  = true
 
 [[redirects]]
 from  = "/oauth2/*"
-to    = "https://REPLACE-WITH-KOYEB-URL/oauth2/:splat"
+to    = " https://arcane-academy-api-270707674521.europe-west2.run.app/oauth2/:splat"
 status = 200
 force  = true
 
 [[redirects]]
 from  = "/login/oauth2/*"
-to    = "https://REPLACE-WITH-KOYEB-URL/login/oauth2/:splat"
+to    = " https://arcane-academy-api-270707674521.europe-west2.run.app/login/oauth2/:splat"
 status = 200
 force  = true
 
