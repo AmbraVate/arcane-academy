@@ -5,6 +5,7 @@
 .env
 *.env.local
 out/*
+backend/cloud-run.env.yaml
 
 # Java/Maven
 backend/target/
@@ -32,3 +33,4 @@ pg_data/
 
 # AI
 .claude
+
