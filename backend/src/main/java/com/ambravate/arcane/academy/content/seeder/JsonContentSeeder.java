@@ -81,7 +81,9 @@ public class JsonContentSeeder {
     @Transactional
     public int seed() throws Exception {
         Resource[] resources = applicationContext.getResources("classpath:content/**/*.json");
-        Arrays.sort(resources, Comparator.comparing(r -> r.getFilename() == null ? "" : r.getFilename()));
+        Arrays.sort(resources, (a, b) -> naturalOrder(
+                a.getFilename() == null ? "" : a.getFilename(),
+                b.getFilename() == null ? "" : b.getFilename()));
 
         // Track topic+tier → set of chunk IDs loaded from JSON, for stale-chunk pruning
         Map<String, Set<String>> jsonIdsByTopicTier = new HashMap<>();
@@ -351,6 +353,25 @@ public class JsonContentSeeder {
 
     private String toJson(List<?> list) throws Exception {
         return (list == null || list.isEmpty()) ? null : objectMapper.writeValueAsString(list);
+    }
+
+    /** Compares filenames treating embedded digit runs as integers: "prt-9" &lt; "prt-10". */
+    private static int naturalOrder(String a, String b) {
+        int i = 0, j = 0;
+        while (i < a.length() && j < b.length()) {
+            if (Character.isDigit(a.charAt(i)) && Character.isDigit(b.charAt(j))) {
+                int si = i, sj = j;
+                while (i < a.length() && Character.isDigit(a.charAt(i))) i++;
+                while (j < b.length() && Character.isDigit(b.charAt(j))) j++;
+                int diff = Integer.compare(Integer.parseInt(a.substring(si, i)),
+                                           Integer.parseInt(b.substring(sj, j)));
+                if (diff != 0) return diff;
+            } else {
+                int diff = Character.compare(a.charAt(i++), b.charAt(j++));
+                if (diff != 0) return diff;
+            }
+        }
+        return Integer.compare(a.length() - i, b.length() - j);
     }
 
     /**
