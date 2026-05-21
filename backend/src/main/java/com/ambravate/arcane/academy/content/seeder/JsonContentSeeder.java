@@ -71,6 +71,7 @@ public class JsonContentSeeder {
     public void upsertChunk(ChunkContentDto dto) throws Exception {
         replaceGeneratedChildren(dto);
         seedChunk(dto);
+        wirePrerequisites(dto);
     }
 
     /**
@@ -88,16 +89,25 @@ public class JsonContentSeeder {
         // Track topic+tier → set of chunk IDs loaded from JSON, for stale-chunk pruning
         Map<String, Set<String>> jsonIdsByTopicTier = new HashMap<>();
 
+        List<ChunkContentDto> allDtos = new ArrayList<>();
         int count = 0;
         for (Resource resource : resources) {
             log.info("Loading chunk content: {}", resource.getFilename());
             ChunkContentDto dto = objectMapper.readValue(resource.getInputStream(), ChunkContentDto.class);
             resolveFileRefs(dto, resource);
             replaceGeneratedChildren(dto);
-            seedChunk(dto);
+            seedChunk(dto);  // saves chunk without prerequisites
             String key = dto.topicId + "|" + dto.tier;
             jsonIdsByTopicTier.computeIfAbsent(key, k -> new HashSet<>()).add(dto.id);
+            allDtos.add(dto);
             count++;
+        }
+
+        // Second pass: wire prerequisites now that every chunk exists in the DB.
+        // Doing this in a separate pass makes seeding order-independent — expert chunks
+        // referencing practitioner prerequisites no longer need to be processed last.
+        for (ChunkContentDto dto : allDtos) {
+            wirePrerequisites(dto);
         }
 
         // Prune stale DB chunks: for each (topicId, tier) that has JSON content, remove any
@@ -209,14 +219,9 @@ public class JsonContentSeeder {
 
     // ── Chunk ─────────────────────────────────────────────────────────────────
 
+    /** Saves a chunk and its sub-chunks/rabbit-holes. Prerequisites are NOT set here —
+     *  call {@link #wirePrerequisites} in a second pass after all chunks are saved. */
     private void seedChunk(ChunkContentDto dto) throws Exception {
-        List<Chunk> prereqChunks = (dto.prerequisites == null || dto.prerequisites.isEmpty())
-                ? List.of()
-                : dto.prerequisites.stream()
-                        .map(pId -> chunkRepository.findById(pId)
-                                .orElseThrow(() -> new IllegalStateException("Prereq chunk not found: " + pId)))
-                        .toList();
-
         Chunk chunk = Chunk.builder()
                 .id(dto.id)
                 .title(dto.title)
@@ -224,8 +229,7 @@ public class JsonContentSeeder {
                 .sortOrder(dto.sortOrder)
                 .tier(LearnerPath.valueOf(dto.tier))
                 .topicId(dto.topicId)
-                .prerequisites(prereqChunks)
-                .build();
+                .build();  // prerequisites defaults to empty ArrayList via @Builder.Default
         chunkRepository.save(chunk);
 
         if (dto.subChunks != null) {
@@ -353,6 +357,19 @@ public class JsonContentSeeder {
 
     private String toJson(List<?> list) throws Exception {
         return (list == null || list.isEmpty()) ? null : objectMapper.writeValueAsString(list);
+    }
+
+    /** Sets prerequisites on an already-saved chunk. Must be called after all chunks in the
+     *  batch have been saved, so cross-tier and cross-topic lookups always succeed. */
+    private void wirePrerequisites(ChunkContentDto dto) {
+        if (dto.prerequisites == null || dto.prerequisites.isEmpty()) return;
+        List<Chunk> prereqChunks = dto.prerequisites.stream()
+                .map(pId -> chunkRepository.findById(pId)
+                        .orElseThrow(() -> new IllegalStateException("Prereq chunk not found: " + pId)))
+                .toList();
+        Chunk chunk = chunkRepository.findById(dto.id).orElseThrow();
+        chunk.setPrerequisites(prereqChunks);
+        chunkRepository.save(chunk);
     }
 
     /** Compares filenames treating embedded digit runs as integers: "prt-9" &lt; "prt-10". */
