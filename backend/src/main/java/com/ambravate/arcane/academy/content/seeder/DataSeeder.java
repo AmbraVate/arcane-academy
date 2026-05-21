@@ -35,10 +35,18 @@ public class DataSeeder {
     public ApplicationRunner seedData() {
         return args -> {
             long currentCount = chunkRepository.count();
-            log.info("[DataSeeder] Syncing JSON content ({} chunks currently present)...", currentCount);
-            int loaded = jsonContentSeeder.seed();
-            log.info("[DataSeeder] Synced {} JSON chunk files; database now has {} chunks.", loaded, chunkRepository.count());
 
+            if (currentCount > 0) {
+                // Content already seeded — skip the expensive JSON sync on cold starts.
+                // To reseed from scratch: clear the chunks table and redeploy.
+                log.info("[DataSeeder] {} chunks already present — skipping JSON seed.", currentCount);
+            } else {
+                log.info("[DataSeeder] No chunks found — running initial seed...");
+                int loaded = jsonContentSeeder.seed();
+                log.info("[DataSeeder] Seeded {} JSON chunk files; database now has {} chunks.", loaded, chunkRepository.count());
+            }
+
+            // Always run these — they are fast and idempotent
             topicSeeder.seed();
             testUserSeeder.seed();
         };
