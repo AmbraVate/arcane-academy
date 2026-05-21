@@ -42,8 +42,24 @@ public class DataSeeder {
                 log.info("[DataSeeder] {} chunks already present — skipping JSON seed.", currentCount);
             } else {
                 log.info("[DataSeeder] No chunks found — running initial seed...");
-                int loaded = jsonContentSeeder.seed();
-                log.info("[DataSeeder] Seeded {} JSON chunk files; database now has {} chunks.", loaded, chunkRepository.count());
+                int maxAttempts = 5;
+                for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+                    try {
+                        int loaded = jsonContentSeeder.seed();
+                        log.info("[DataSeeder] Seeded {} JSON chunk files; database now has {} chunks.",
+                                loaded, chunkRepository.count());
+                        break;
+                    } catch (Exception e) {
+                        log.warn("[DataSeeder] Seed attempt {}/{} failed: {}", attempt, maxAttempts, e.getMessage());
+                        if (attempt == maxAttempts) {
+                            log.error("[DataSeeder] All {} seed attempts failed. App will start with no content.", maxAttempts, e);
+                        } else {
+                            long delay = 5000L * attempt; // 5 s, 10 s, 15 s, 20 s
+                            log.info("[DataSeeder] Retrying in {} ms (fresh DB connection will be used)...", delay);
+                            Thread.sleep(delay);
+                        }
+                    }
+                }
             }
 
             // Always run these — they are fast and idempotent
