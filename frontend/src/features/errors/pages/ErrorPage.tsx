@@ -9,18 +9,14 @@ const STYLES = `
   50%     { box-shadow: 0 0 40px #c4b5fd, 0 0 80px #8b5cf660, 0 0 120px #8b5cf630; }
 }
 @keyframes runeActivate {
-  0%   { transform: scale(1);    box-shadow: 0 0 0px transparent; }
+  0%   { transform: scale(1); }
   40%  { transform: scale(1.18); }
-  100% { transform: scale(1);    box-shadow: 0 0 0px transparent; }
+  100% { transform: scale(1); }
 }
 @keyframes wrongShake {
   0%,100% { transform: translateX(0); }
   20%,60% { transform: translateX(-5px); }
   40%,80% { transform: translateX(5px); }
-}
-@keyframes correctFlash {
-  0%,100% { background: var(--card); }
-  50%     { background: #4ade8020; }
 }
 @keyframes matrixDrift {
   0%   { opacity: 0; transform: translateY(-4px); }
@@ -51,22 +47,20 @@ function RuneGame() {
   const [bestScore, setBestScore]     = useState(0)
   const timeouts = useRef<ReturnType<typeof setTimeout>[]>([])
 
-  function clearTimeouts() {
+  // playSequence only touches refs and state setters (both stable), so the
+  // empty dependency array is intentional and correct.
+  const playSequence = useCallback((seq: number[]) => {
     timeouts.current.forEach(clearTimeout)
     timeouts.current = []
-  }
-
-  const schedule = (fn: () => void, ms: number) => {
-    const t = setTimeout(fn, ms)
-    timeouts.current.push(t)
-    return t
-  }
-
-  const playSequence = useCallback((seq: number[]) => {
-    clearTimeouts()
     setStatus('showing')
     setPlayerInput([])
     setActiveRune(null)
+
+    // schedule is scoped here so it can push to the same timeouts ref
+    const schedule = (fn: () => void, ms: number) => {
+      const t = setTimeout(fn, ms)
+      timeouts.current.push(t)
+    }
 
     let delay = 500
     seq.forEach((runeIdx) => {
@@ -75,7 +69,7 @@ function RuneGame() {
       delay += 900
     })
     schedule(() => setStatus('input'), delay + 100)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // state setters and refs are guaranteed stable by React
 
   const start = useCallback(() => {
     const firstRune = Math.floor(Math.random() * RUNES.length)
@@ -92,33 +86,32 @@ function RuneGame() {
     const pos = newInput.length - 1
 
     if (idx !== sequence[pos]) {
-      // Wrong rune — game over
-      clearTimeouts()
+      timeouts.current.forEach(clearTimeout)
+      timeouts.current = []
       setStatus('gameover')
       setBestScore(prev => Math.max(prev, score))
       return
     }
 
     if (newInput.length === sequence.length) {
-      // Completed this round
       const newScore = score + 1
       setScore(newScore)
       setStatus('correct')
-      schedule(() => {
+      const t = setTimeout(() => {
         const newSeq = [...sequence, Math.floor(Math.random() * RUNES.length)]
         setSequence(newSeq)
         playSequence(newSeq)
       }, 700)
+      timeouts.current.push(t)
     } else {
       setPlayerInput(newInput)
     }
-  }, [status, playerInput, sequence, score, playSequence]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [status, playerInput, sequence, score, playSequence])
 
   const isClickable = status === 'input'
 
   return (
     <div>
-      {/* Status text */}
       <p style={{
         fontFamily: 'var(--font-cinzel)',
         fontSize: 12,
@@ -132,11 +125,10 @@ function RuneGame() {
         {status === 'idle'     && 'REPEAT THE ANCIENT SEQUENCE'}
         {status === 'showing'  && 'OBSERVE THE RUNES CAREFULLY…'}
         {status === 'input'    && 'NOW REPEAT THE SEQUENCE'}
-        {status === 'correct'  && '✦ SEQUENCE COMPLETE — NEXT RUNE ADDED'}
+        {status === 'correct'  && '❆ SEQUENCE COMPLETE — NEXT RUNE ADDED'}
         {status === 'gameover' && `SEQUENCE BROKEN · YOU REACHED LEVEL ${sequence.length}`}
       </p>
 
-      {/* Rune stones */}
       <div style={{
         display: 'flex',
         gap: 12,
@@ -179,7 +171,6 @@ function RuneGame() {
         })}
       </div>
 
-      {/* Score row */}
       <div style={{
         display: 'flex',
         justifyContent: 'center',
@@ -190,23 +181,16 @@ function RuneGame() {
         letterSpacing: '0.1em',
       }}>
         {status !== 'idle' && (
-          <span style={{ color: 'var(--gold)' }}>
-            LEVEL {sequence.length}
-          </span>
+          <span style={{ color: 'var(--gold)' }}>LEVEL {sequence.length}</span>
         )}
         {status !== 'idle' && (
-          <span style={{ color: 'var(--purple-light)' }}>
-            SCORE {score}
-          </span>
+          <span style={{ color: 'var(--purple-light)' }}>SCORE {score}</span>
         )}
         {bestScore > 0 && (
-          <span style={{ color: 'var(--muted)' }}>
-            BEST {bestScore}
-          </span>
+          <span style={{ color: 'var(--muted)' }}>BEST {bestScore}</span>
         )}
       </div>
 
-      {/* CTA */}
       {(status === 'idle' || status === 'gameover') && (
         <div style={{ textAlign: 'center' }}>
           <button
@@ -231,17 +215,17 @@ interface ErrorPageProps {
 
 const CONFIG = {
   crash: {
-    orb:      '💥',
-    title:    'An Arcane Anomaly Occurred',
-    subtitle: 'An unexpected rupture in the arcane substrate has been detected.',
-    detail:   'Our scribes have been notified. You may attempt to reseal the rift or return to the Academy.',
+    orb:        '💥',
+    title:      'An Arcane Anomaly Occurred',
+    subtitle:   'An unexpected rupture in the arcane substrate has been detected.',
+    detail:     'Our scribes have been notified. You may attempt to reseal the rift or return to the Academy.',
     retryLabel: '⟳ Reseal the Rift',
   },
   server: {
-    orb:      '🔮',
-    title:    'The Crystal Servers Are Meditating',
-    subtitle: 'The arcane systems are temporarily lost in deep contemplation.',
-    detail:   'This usually resolves within moments. While they gather their power, you can practise the Ancient Rune Sequence below.',
+    orb:        '🔮',
+    title:      'The Crystal Servers Are Meditating',
+    subtitle:   'The arcane systems are temporarily lost in deep contemplation.',
+    detail:     'This usually resolves within moments. While they gather their power, practise the Ancient Rune Sequence below.',
     retryLabel: '⟳ Retry Connection',
   },
 }
@@ -249,22 +233,7 @@ const CONFIG = {
 const MATRIX_RUNES = ['ᚱ', 'ᚢ', 'ᚾ', 'ᛖ', 'ᛋ', 'ᚦ', 'ᚨ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᛁ', 'ᛃ']
 
 export default function ErrorPage({ type = 'server', onRetry }: ErrorPageProps) {
-  // When rendered inside an ErrorBoundary, useNavigate might not be available
-  // (the router may have crashed). Fall back to window.location.
-  let navigate: ((path: string) => void) | null = null
-  try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const nav = useNavigate()
-    navigate = nav
-  } catch {
-    navigate = null
-  }
-
-  const goHome = () => {
-    if (navigate) navigate('/')
-    else window.location.href = '/'
-  }
-
+  const navigate = useNavigate()
   const cfg = CONFIG[type]
 
   return (
@@ -281,7 +250,6 @@ export default function ErrorPage({ type = 'server', onRetry }: ErrorPageProps) 
     }}>
       <style>{STYLES}</style>
 
-      {/* Drifting rune matrix in background */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -302,7 +270,6 @@ export default function ErrorPage({ type = 'server', onRetry }: ErrorPageProps) 
         ))}
       </div>
 
-      {/* Orb */}
       <div style={{
         width: 120,
         height: 120,
@@ -320,7 +287,6 @@ export default function ErrorPage({ type = 'server', onRetry }: ErrorPageProps) 
         {cfg.orb}
       </div>
 
-      {/* Heading */}
       <h1 style={{
         fontFamily: 'var(--font-cinzel)',
         fontSize: 'clamp(18px, 4vw, 26px)',
@@ -355,19 +321,17 @@ export default function ErrorPage({ type = 'server', onRetry }: ErrorPageProps) 
         {cfg.detail}
       </p>
 
-      {/* Actions */}
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 48 }}>
         {onRetry && (
           <button className="btn btn-primary" onClick={onRetry} style={{ padding: '11px 28px' }}>
             {cfg.retryLabel}
           </button>
         )}
-        <button className="btn btn-ghost" onClick={goHome} style={{ padding: '11px 24px' }}>
+        <button className="btn btn-ghost" onClick={() => navigate('/')} style={{ padding: '11px 24px' }}>
           ✦ Return to the Academy
         </button>
       </div>
 
-      {/* Divider */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -400,7 +364,6 @@ export default function ErrorPage({ type = 'server', onRetry }: ErrorPageProps) 
         ᚱ Ancient Rune Sequence ᚱ
       </p>
 
-      {/* The game */}
       <div style={{
         background: 'var(--card)',
         border: '1px solid var(--border)',
