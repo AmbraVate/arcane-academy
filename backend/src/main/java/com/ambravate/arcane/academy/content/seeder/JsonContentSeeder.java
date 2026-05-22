@@ -15,6 +15,7 @@ import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepositor
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,6 +65,7 @@ public class JsonContentSeeder {
     private final UserChunkProgressRepository userChunkProgressRepository;
     private final ObjectMapper objectMapper;
     private final ApplicationContext applicationContext;
+    private final PlatformTransactionManager transactionManager;
 
     /**
      * Upserts a single chunk from a DTO — used by the admin import endpoint.
@@ -76,49 +80,84 @@ public class JsonContentSeeder {
     }
 
     /**
-     * Seeds all chunks found in classpath:content/**&#47;*.json.
+     * Seeds chunk content from the JSON files under {@code classpath:content/}.
      *
-     * @return the number of chunk files loaded.
+     * <p>Resilient by design, and safe to run on every startup:
+     * <ul>
+     *   <li><b>Per-file transactions</b> — each chunk file commits in its own
+     *       transaction, so a dropped connection mid-seed loses at most one file
+     *       and a re-run resumes cleanly; no transaction is held open across the
+     *       whole load.</li>
+     *   <li><b>Idempotent</b> — chunks and sub-chunks upsert by ID; questions and
+     *       rabbit holes are replaced, so re-running converges on the JSON content.</li>
+     *   <li><b>Gated</b> — the destructive child-replacement pass is skipped when
+     *       every JSON chunk already exists, so rows keyed off generated content
+     *       are not churned on routine restarts.</li>
+     * </ul>
+     *
+     * @return the number of chunk files found
      */
-    @Transactional
     public int seed() throws Exception {
+        List<LoadedChunk> loaded = loadAll();
+        List<String> jsonChunkIds = loaded.stream().map(lc -> lc.dto().id).toList();
+
+        TransactionTemplate tx = new TransactionTemplate(transactionManager);
+
+        if (allChunksPresent(jsonChunkIds)) {
+            log.info("[JsonContentSeeder] All {} chunk(s) already present — skipping content seed.",
+                    jsonChunkIds.size());
+        } else {
+            // Track topic+tier -> set of chunk IDs loaded from JSON, for stale-chunk pruning.
+            Map<String, Set<String>> jsonIdsByTopicTier = new HashMap<>();
+            for (LoadedChunk lc : loaded) {
+                ChunkContentDto dto = lc.dto();
+                log.info("Loading chunk content: {}", lc.resource().getFilename());
+                resolveFileRefs(dto, lc.resource());     // file I/O — kept outside the transaction
+                tx.executeWithoutResult(status -> {      // one transaction per chunk file
+                    replaceGeneratedChildren(dto);
+                    seedChunk(dto);                      // saves the chunk without prerequisites
+                });
+                jsonIdsByTopicTier
+                        .computeIfAbsent(dto.topicId + "|" + dto.tier, k -> new HashSet<>())
+                        .add(dto.id);
+            }
+            tx.executeWithoutResult(status -> pruneStaleChunks(jsonIdsByTopicTier));
+        }
+
+        // Prerequisite wiring always runs: it is cheap, idempotent and non-destructive,
+        // and running it unconditionally self-heals a prior run that saved chunks but
+        // died before wiring finished. A separate pass keeps seeding order-independent —
+        // cross-tier and cross-topic prerequisite lookups always resolve.
+        tx.executeWithoutResult(status -> loaded.forEach(lc -> wirePrerequisites(lc.dto())));
+
+        return jsonChunkIds.size();
+    }
+
+    /** Reads and parses every JSON content file. Performs no database access. */
+    private List<LoadedChunk> loadAll() throws IOException {
         Resource[] resources = applicationContext.getResources("classpath:content/**/*.json");
         Arrays.sort(resources, (a, b) -> naturalOrder(
                 a.getFilename() == null ? "" : a.getFilename(),
                 b.getFilename() == null ? "" : b.getFilename()));
 
-        // Track topic+tier → set of chunk IDs loaded from JSON, for stale-chunk pruning
-        Map<String, Set<String>> jsonIdsByTopicTier = new HashMap<>();
-
-        List<ChunkContentDto> allDtos = new ArrayList<>();
-        int count = 0;
+        List<LoadedChunk> loaded = new ArrayList<>(resources.length);
         for (Resource resource : resources) {
-            log.info("Loading chunk content: {}", resource.getFilename());
             ChunkContentDto dto = objectMapper.readValue(resource.getInputStream(), ChunkContentDto.class);
-            resolveFileRefs(dto, resource);
-            replaceGeneratedChildren(dto);
-            seedChunk(dto);  // saves chunk without prerequisites
-            String key = dto.topicId + "|" + dto.tier;
-            jsonIdsByTopicTier.computeIfAbsent(key, k -> new HashSet<>()).add(dto.id);
-            allDtos.add(dto);
-            count++;
+            loaded.add(new LoadedChunk(resource, dto));
         }
-
-        // Second pass: wire prerequisites now that every chunk exists in the DB.
-        // Doing this in a separate pass makes seeding order-independent — expert chunks
-        // referencing practitioner prerequisites no longer need to be processed last.
-        for (ChunkContentDto dto : allDtos) {
-            wirePrerequisites(dto);
-        }
-
-        // Prune stale DB chunks: for each (topicId, tier) that has JSON content, remove any
-        // DB chunk in that same (topicId, tier) whose ID wasn't in the JSON files.
-        // This cleans up old seeder-based chunks superseded by JSON content without touching
-        // tiers that have no JSON replacement yet (e.g. Practitioner/Expert if not yet migrated).
-        pruneStaleChunks(jsonIdsByTopicTier);
-
-        return count;
+        return loaded;
     }
+
+    /** True when every supplied chunk ID already exists in the database. */
+    private boolean allChunksPresent(List<String> jsonChunkIds) {
+        if (jsonChunkIds.isEmpty()) {
+            return true;
+        }
+        return chunkRepository.findAllById(jsonChunkIds).size() == jsonChunkIds.size();
+    }
+
+    /** A content file paired with its parsed DTO. */
+    private record LoadedChunk(Resource resource, ChunkContentDto dto) {}
 
     private void pruneStaleChunks(Map<String, Set<String>> jsonIdsByTopicTier) {
         for (Map.Entry<String, Set<String>> entry : jsonIdsByTopicTier.entrySet()) {
@@ -222,7 +261,7 @@ public class JsonContentSeeder {
 
     /** Saves a chunk and its sub-chunks/rabbit-holes. Prerequisites are NOT set here —
      *  call {@link #wirePrerequisites} in a second pass after all chunks are saved. */
-    private void seedChunk(ChunkContentDto dto) throws Exception {
+    private void seedChunk(ChunkContentDto dto) {
         Chunk chunk = Chunk.builder()
                 .id(dto.id)
                 .title(dto.title)
@@ -248,7 +287,7 @@ public class JsonContentSeeder {
 
     // ── SubChunk ──────────────────────────────────────────────────────────────
 
-    private void seedSubChunk(String chunkId, ChunkContentDto.SubChunkDto sc) throws Exception {
+    private void seedSubChunk(String chunkId, ChunkContentDto.SubChunkDto sc) {
         String storyJson  = toJson(normaliseBeats(sc.storyBeats));
         String testsJson  = toJson(sc.guidedPracticeTests);
 
@@ -288,19 +327,19 @@ public class JsonContentSeeder {
 
     // ── Question ──────────────────────────────────────────────────────────────
 
-    private void seedQuestion(String subChunkId, ChunkContentDto.QuestionDto q) throws Exception {
+    private void seedQuestion(String subChunkId, ChunkContentDto.QuestionDto q) {
         // TRUE_FALSE always gets the canonical two options
         String optionsJson;
         if ("TRUE_FALSE".equals(q.type)) {
             optionsJson = "[\"True\",\"False\"]";
         } else if (q.options != null && !q.options.isEmpty()) {
-            optionsJson = objectMapper.writeValueAsString(q.options);
+            optionsJson = writeJson(q.options);
         } else {
             optionsJson = null;
         }
 
         String crossChunkJson = (q.crossChunkIds != null && !q.crossChunkIds.isEmpty())
-                ? objectMapper.writeValueAsString(q.crossChunkIds)
+                ? writeJson(q.crossChunkIds)
                 : null;
 
         // Resolve correctAnswer: prefer explicit text, fall back to options[correctIndex]
@@ -340,7 +379,7 @@ public class JsonContentSeeder {
 
     // ── Rabbit hole ───────────────────────────────────────────────────────────
 
-    private void seedRabbitHole(String chunkId, ChunkContentDto.RabbitHoleDto rh) throws Exception {
+    private void seedRabbitHole(String chunkId, ChunkContentDto.RabbitHoleDto rh) {
         rabbitHoleRepository.save(RabbitHoleModule.builder()
                 .id(rh.id)
                 .chunkId(chunkId)
@@ -356,8 +395,18 @@ public class JsonContentSeeder {
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
-    private String toJson(List<?> list) throws Exception {
-        return (list == null || list.isEmpty()) ? null : objectMapper.writeValueAsString(list);
+    private String toJson(List<?> list) {
+        return (list == null || list.isEmpty()) ? null : writeJson(list);
+    }
+
+    /** Serialises a value to JSON, wrapping Jackson's checked exception so the
+     *  transaction lambdas in {@link #seed()} stay free of checked exceptions. */
+    private String writeJson(Object value) {
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Failed to serialise seed content to JSON", e);
+        }
     }
 
     /** Sets prerequisites on an already-saved chunk. Must be called after all chunks in the

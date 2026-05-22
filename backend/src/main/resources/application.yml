@@ -4,6 +4,16 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME:polymath}
     password: ${SPRING_DATASOURCE_PASSWORD:polymath_secret}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      # Tuned for serverless Postgres (Neon): recycle connections well before any
+      # upstream idle cap, and keep them warm with a periodic keepalive ping.
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+      validation-timeout: 5000
+      keepalive-time: 60000      # must be >= 30000 or HikariCP disables it
+      idle-timeout: 60000        # must be < max-lifetime or HikariCP disables it
+      max-lifetime: 180000
   jpa:
     hibernate:
       # 'update' in dev so Hibernate still auto-creates tables during local iteration.
