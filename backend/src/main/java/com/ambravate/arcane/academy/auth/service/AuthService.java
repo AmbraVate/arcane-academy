@@ -180,6 +180,7 @@ public class AuthService {
                 .withRank(user.getRank())
                 .withStreakDays(user.getStreakDays())
                 .withRole(user.getRole().name())
+                .withBypassPaywall(user.isBypassPaywall())
                 .build();
     }
 }

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTopicsDashboard } from '@/hooks/queries'
+import { useAuth } from '@/shared/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { TopicIcon } from '@/components/icons/TopicIcon'
-import { Sparkles, RefreshCcw, Check } from 'lucide-react'
+import { Sparkles, RefreshCcw, Check, Lock } from 'lucide-react'
 
 type Genre = 'all' | 'tech' | 'science' | 'history'
 
@@ -43,10 +44,10 @@ const TOPICS: Topic[] = [
 ]
 
 const GENRES: { id: Genre; label: string; glyph: string }[] = [
-  { id: 'all',     label: 'All',             glyph: '✦'  },
-  { id: 'tech',    label: 'Technology',      glyph: '💻' },
-  { id: 'science', label: 'Science',         glyph: '🔬' },
-  { id: 'history', label: 'History',         glyph: '📜' },
+  { id: 'all',     label: 'All',        glyph: '✦'  },
+  { id: 'tech',    label: 'Technology', glyph: '💻' },
+  { id: 'science', label: 'Science',    glyph: '🔬' },
+  { id: 'history', label: 'History',    glyph: '📜' },
 ]
 
 const ACTIVE_TOPICS = TOPICS.filter(t => t.status === 'active').map(t => t.id)
@@ -82,6 +83,7 @@ function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; s
 
 export default function TopicsPage() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [activeGenre, setActiveGenre] = useState<Genre>('all')
   const rawTopicData = useTopicsDashboard(ACTIVE_TOPICS)
 
@@ -97,6 +99,23 @@ export default function TopicsPage() {
       }])
   )
 
+  // ── Enrollment & paywall logic ────────────────────────────────────────────
+  //
+  // A topic is "enrolled" once the user has any engagement: started a
+  // diagnostic OR has learning progress. We derive this from the dashboard
+  // data so no extra API is needed.
+  //
+  // Users may freely enrol in one topic. Additional topics are behind a
+  // paywall (coming soon). Admins and admin-designated users bypass it.
+  const enrolledTopicIds = new Set(
+    ACTIVE_TOPICS.filter(id => {
+      const d = topicData[id]
+      return d != null && (d.progress > 0 || d.diagnosticCompleted)
+    })
+  )
+  const hasActiveEnrollment = enrolledTopicIds.size > 0
+  const canBypassPaywall = user?.role === 'ADMIN' || user?.bypassPaywall === true
+
   // Filter by genre, then sort: active first, coming_soon after
   const visibleTopics = TOPICS
     .filter(t => activeGenre === 'all' || t.genre === activeGenre)
@@ -108,13 +127,8 @@ export default function TopicsPage() {
   function handleTopicClick(topic: Topic) {
     if (topic.status !== 'active') return
     const data = topicData[topic.id]
-    // Intercept on first visit or when diagnostic has expired — show onboarding prompt
     const needsOnboarding = !data || !data.diagnosticCompleted || diagnosticExpired(data.diagnosticCompletedAt)
-    if (needsOnboarding) {
-      navigate(`/topic/${topic.id}/onboarding`)
-    } else {
-      navigate(`/topic/${topic.id}`)
-    }
+    navigate(needsOnboarding ? `/topic/${topic.id}/onboarding` : `/topic/${topic.id}`)
   }
 
   function handleDiagnosticClick(e: React.MouseEvent, topicId: string) {
@@ -124,7 +138,7 @@ export default function TopicsPage() {
 
   function renderDiagnosticRow(topic: Topic) {
     const data = topicData[topic.id]
-    if (!data) return null // still loading — render nothing so layout doesn't jump
+    if (!data) return null
 
     const { diagnosticCompleted, diagnosticCompletedAt } = data
     const expired = diagnosticExpired(diagnosticCompletedAt)
@@ -161,7 +175,6 @@ export default function TopicsPage() {
       )
     }
 
-    // Completed, not yet expired — show static badge with completion date
     const completedDate = diagnosticCompletedAt
       ? new Date(diagnosticCompletedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
       : null
@@ -183,10 +196,15 @@ export default function TopicsPage() {
 
   return (
     <div className="max-w-[960px] mx-auto px-5 py-8 pb-[72px] overflow-y-auto max-[600px]:px-3 max-[600px]:py-5">
+
       <div className="text-center mb-8">
-        <h1 className="font-cinzel text-[32px] font-bold text-gold m-0 mb-3 max-[600px]:text-[24px]">Choose Your Path</h1>
+        <h1 className="font-cinzel text-[32px] font-bold text-gold m-0 mb-3 max-[600px]:text-[24px]">
+          Choose Your Path
+        </h1>
         <p className="text-[16px] text-muted leading-[1.7] max-w-[560px] mx-auto">
-          Every polymath starts somewhere. Select a discipline to begin mastering it — or continue where you left off.
+          {hasActiveEnrollment && !canBypassPaywall
+            ? 'Continue mastering your chosen discipline — or unlock more paths when you\'re ready.'
+            : 'Enrol in a discipline and begin your journey. Master it deeply before expanding your path.'}
         </p>
       </div>
 
@@ -212,43 +230,75 @@ export default function TopicsPage() {
         })}
       </div>
 
-      <div className="grid gap-4 mb-12 max-[600px]:gap-2.5 max-[480px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+      <div
+        className="grid gap-4 mb-12 max-[600px]:gap-2.5 max-[480px]:grid-cols-1"
+        style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}
+      >
         {visibleTopics.map(topic => {
-          const active = topic.status === 'active'
-          const progress = topicData[topic.id]?.progress ?? 0
+          const active    = topic.status === 'active'
+          const isEnrolled  = enrolledTopicIds.has(topic.id)
+          // Lock active-but-unenrolled topics when the user already has an enrolment
+          // and cannot bypass the paywall. Coming-soon topics stay in their own state.
+          const isPaywalled = active && !isEnrolled && hasActiveEnrollment && !canBypassPaywall
+          const progress  = topicData[topic.id]?.progress ?? 0
+
           return (
             <div
               key={topic.id}
               className={cn(
                 'bg-card border border-border rounded-[14px] px-5 py-6 pb-5 flex flex-col gap-2.5',
                 'max-[480px]:px-3.5 max-[480px]:py-4',
-                'relative overflow-hidden transition-[border-color,transform,box-shadow] duration-200',
-                active
+                'relative overflow-hidden transition-[border-color,transform,box-shadow,opacity] duration-200',
+                active && !isPaywalled
                   ? 'cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+                  : isPaywalled
+                  ? 'cursor-pointer opacity-60'
                   : 'cursor-default opacity-55 saturate-50',
               )}
-              style={active ? {
+              style={active && !isPaywalled ? {
                 borderTopColor: `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)`,
                 borderTopWidth: 2,
               } : undefined}
-              onMouseEnter={e => { if (active) (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${topic.accentStroke} 50%, transparent)` }}
-              onMouseLeave={e => { if (active) { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)'; (e.currentTarget as HTMLDivElement).style.borderTopColor = `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)` } }}
-              onClick={() => handleTopicClick(topic)}
+              onMouseEnter={e => {
+                if (active && !isPaywalled) (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${topic.accentStroke} 50%, transparent)`
+              }}
+              onMouseLeave={e => {
+                if (active && !isPaywalled) {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = 'var(--border)'
+                  el.style.borderTopColor = `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)`
+                }
+              }}
+              onClick={() => { if (!isPaywalled) handleTopicClick(topic) }}
             >
               <div className="flex items-start justify-between mb-1">
                 <div className="opacity-90">
                   <TopicIcon topicId={topic.id} size={active ? 34 : 30} />
                 </div>
                 <div className="flex flex-col items-end gap-1.5">
-                  <ProgressRing pct={progress} active={active} stroke={topic.accentStroke} />
-                  <Badge variant={active ? 'active' : 'soon'}>{active ? 'Active' : 'Coming Soon'}</Badge>
+                  {isPaywalled ? (
+                    // Lock icon replacing progress ring for paywalled topics
+                    <div className="w-[56px] h-[56px] flex items-center justify-center
+                      rounded-full border border-[rgba(201,162,39,0.2)]
+                      bg-[rgba(201,162,39,0.05)]">
+                      <Lock size={20} className="text-gold opacity-60" strokeWidth={1.5} />
+                    </div>
+                  ) : (
+                    <ProgressRing pct={progress} active={active} stroke={topic.accentStroke} />
+                  )}
+                  <Badge variant={!active ? 'soon' : isPaywalled ? 'locked' : 'active'}>
+                    {!active ? 'Coming Soon' : isPaywalled ? '🔒 Premium' : 'Active'}
+                  </Badge>
                 </div>
               </div>
 
-              <div className="font-cinzel text-[20px] font-bold text-text max-[600px]:text-[16px]">{topic.name}</div>
+              <div className="font-cinzel text-[20px] font-bold text-text max-[600px]:text-[16px]">
+                {topic.name}
+              </div>
               <div className="text-[13px] text-muted leading-[1.6] flex-1">{topic.tagline}</div>
 
-              {active && renderDiagnosticRow(topic)}
+              {/* Diagnostic row — only shown for enrolled topics */}
+              {active && isEnrolled && renderDiagnosticRow(topic)}
 
               <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
                 <span className="text-[11px] text-muted font-cinzel leading-[1.4]">
@@ -256,19 +306,44 @@ export default function TopicsPage() {
                     ? <>{topicData[topic.id].totalChunks} modules · {topicData[topic.id].totalLessons} lessons</>
                     : <>{topic.chunks} modules</>}
                 </span>
-                {active && <span className="text-[13px] text-teal font-semibold flex-shrink-0">Continue →</span>}
+
+                {/* Action label — three states */}
+                {active && (
+                  <span className={cn(
+                    'text-[13px] font-semibold flex-shrink-0 flex items-center gap-1',
+                    isPaywalled ? 'text-gold opacity-70' :
+                    isEnrolled  ? 'text-teal' :
+                    'text-gold'
+                  )}>
+                    {isPaywalled ? (
+                      <><Lock size={12} strokeWidth={2} /> Unlock</>
+                    ) : isEnrolled ? (
+                      'Continue →'
+                    ) : (
+                      'Enrol →'
+                    )}
+                  </span>
+                )}
               </div>
             </div>
           )
         })}
       </div>
 
+      {/* Contextual bottom note */}
       <div className="flex items-start gap-4 bg-card border border-border border-l-[3px] border-l-gold rounded-[10px] px-6 py-5">
         <span className="text-[20px] text-gold flex-shrink-0 mt-0.5">✦</span>
-        <p className="text-[14px] text-muted leading-[1.7] m-0">
-          A polymath doesn't specialise in one thing — they build deep mastery across many disciplines.
-          Each topic you complete expands your ability to connect ideas across domains.
-        </p>
+        {hasActiveEnrollment && !canBypassPaywall ? (
+          <p className="text-[14px] text-muted leading-[1.7] m-0">
+            You have an active enrolment. Complete modules and build deep mastery in your chosen
+            discipline — unlock additional paths when you're ready to expand.
+          </p>
+        ) : (
+          <p className="text-[14px] text-muted leading-[1.7] m-0">
+            A polymath builds mastery one discipline at a time. Choose your first path wisely —
+            depth before breadth is the mark of a true scholar.
+          </p>
+        )}
       </div>
     </div>
   )

@@ -53,6 +53,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 .queryParam("rank", user.getRank())
                 .queryParam("streakDays", user.getStreakDays())
                 .queryParam("role", user.getRole().name())
+                .queryParam("bypassPaywall", user.isBypassPaywall())
                 .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);

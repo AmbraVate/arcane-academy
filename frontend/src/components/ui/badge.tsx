@@ -18,8 +18,9 @@ const badgeVariants = cva(
         application:    'bg-[rgba(139,92,246,0.15)] text-purple-light border border-[rgba(139,92,246,0.3)]',
         discrimination: 'bg-[rgba(201,162,39,0.15)] text-gold border border-[rgba(201,162,39,0.3)]',
         // Topic status
-        active: 'bg-[rgba(45,212,191,0.15)] text-teal border border-[rgba(45,212,191,0.3)]',
-        soon:   'bg-border text-muted border border-border',
+        active:  'bg-[rgba(45,212,191,0.15)] text-teal border border-[rgba(45,212,191,0.3)]',
+        soon:    'bg-border text-muted border border-border',
+        locked:  'bg-[rgba(201,162,39,0.08)] text-gold border border-[rgba(201,162,39,0.25)]',
       },
     },
     defaultVariants: { variant: 'purple' },

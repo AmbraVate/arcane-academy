@@ -67,6 +67,13 @@ public class User {
     @Builder.Default
     private boolean blocked = false;
 
+    /**
+     * Admin-controlled paywall bypass. When true the user can enrol in any number of
+     * topics without a subscription. Admins always bypass the paywall implicitly.
+     */
+    @Builder.Default
+    private boolean bypassPaywall = false;
+
     private String refreshToken;
 
     @Enumerated(EnumType.STRING)

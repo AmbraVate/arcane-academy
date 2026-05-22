@@ -18,4 +18,5 @@ public class AuthResponse {
     private String rank;
     private int streakDays;
     private String role;
+    private boolean bypassPaywall;
 }

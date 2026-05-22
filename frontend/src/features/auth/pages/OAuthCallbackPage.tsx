@@ -17,10 +17,11 @@ export default function OAuthCallbackPage() {
     const rank = params.get('rank') ?? 'Novice'
     const streakDays = parseInt(params.get('streakDays') ?? '0', 10)
     const role = (params.get('role') as 'USER' | 'ADMIN') ?? 'USER'
+    const bypassPaywall = params.get('bypassPaywall') === 'true'
 
     if (token && userId && username) {
       if (refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
-      loginWithToken({ token, userId, username, totalXp, rank, streakDays, role })
+      loginWithToken({ token, userId, username, totalXp, rank, streakDays, role, bypassPaywall })
       navigate('/topics', { replace: true })
     } else {
       navigate('/login', { replace: true })

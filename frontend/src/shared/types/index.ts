@@ -2,6 +2,8 @@
 export interface User {
   userId: string; username: string; totalXp: number; rank: string; streakDays: number; token: string
   role?: 'USER' | 'ADMIN'
+  /** Admin-granted flag allowing enrolment in multiple topics without a subscription. */
+  bypassPaywall?: boolean
 }
 
 // ── Shared (kept from old system) ────────────────────────────────────────────
