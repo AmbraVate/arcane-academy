@@ -2,6 +2,8 @@ package com.ambravate.arcane.academy.content.seeder;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -19,7 +21,7 @@ class DataSeederTest {
         when(jsonContentSeeder.seed()).thenReturn(0);
         doThrow(new RuntimeException("database unavailable")).when(topicSeeder).seed();
 
-        DataSeeder dataSeeder = new DataSeeder(jsonContentSeeder, testUserSeeder, topicSeeder);
+        DataSeeder dataSeeder = new DataSeeder(jsonContentSeeder, Optional.of(testUserSeeder), topicSeeder);
 
         // A failing seeding step must never propagate out of the ApplicationRunner.
         assertThatCode(() -> dataSeeder.seedData().run(null))

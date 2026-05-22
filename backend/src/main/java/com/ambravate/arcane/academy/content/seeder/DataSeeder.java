@@ -6,6 +6,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Optional;
+
 /**
  * Runs the data seeders once, as an {@link ApplicationRunner}, after the
  * application context has started.
@@ -21,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 public class DataSeeder {
 
     private final JsonContentSeeder jsonContentSeeder;
-    private final TestUserSeeder testUserSeeder;
+    private final Optional<TestUserSeeder> testUserSeeder;   // absent in prod (@Profile("!prod"))
     private final TopicSeeder topicSeeder;
 
     @Bean
@@ -29,7 +31,7 @@ public class DataSeeder {
         return args -> {
             seedQuietly("JSON content", this::seedJsonContent);
             seedQuietly("topics",       topicSeeder::seed);
-            seedQuietly("test users",   testUserSeeder::seed);
+            testUserSeeder.ifPresent(s -> seedQuietly("test users", s::seed));
         };
     }
 

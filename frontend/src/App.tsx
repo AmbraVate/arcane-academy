@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import ErrorBoundary from './features/errors/components/ErrorBoundary'
 import { useAuth } from './shared/hooks/useAuth'
 import { useTheme } from './hooks/useTheme'
 import { useReviewsDue } from './hooks/queries'
@@ -37,6 +38,8 @@ const AdminUsersPage       = lazy(() => import('./features/admin/pages/AdminUser
 const AdminImportExportPage = lazy(() => import('./features/admin/pages/AdminImportExportPage'))
 const AdminTopicsPage       = lazy(() => import('./features/admin/pages/AdminTopicsPage'))
 const AdminStuckReportsPage = lazy(() => import('./features/admin/pages/AdminStuckReportsPage'))
+const NotFoundPage          = lazy(() => import('./features/errors/pages/NotFoundPage'))
+const ErrorPage             = lazy(() => import('./features/errors/pages/ErrorPage'))
 
 function PageFallback() {
   return (
@@ -175,7 +178,8 @@ function AppRoutes() {
           </Route>
         </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/error" element={<ErrorPage type="server" />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   )
@@ -203,25 +207,29 @@ export default function App() {
 
   if (theme === 'blizzard') {
     return (
-      <div className="stage">
-        <BlizzardBackground scene={blizzardPrefs.scene} snow={blizzardPrefs.snow} />
-        <BlizzardFrame />
-        {user && !location.pathname.startsWith('/admin') && <BlizzardNav />}
-        <div className="viewport">
-          <div className="page">
-            <AppRoutes />
+      <ErrorBoundary>
+        <div className="stage">
+          <BlizzardBackground scene={blizzardPrefs.scene} snow={blizzardPrefs.snow} />
+          <BlizzardFrame />
+          {user && !location.pathname.startsWith('/admin') && <BlizzardNav />}
+          <div className="viewport">
+            <div className="page">
+              <AppRoutes />
+            </div>
           </div>
         </div>
-      </div>
+      </ErrorBoundary>
     )
   }
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {user && !location.pathname.startsWith('/admin') && <Nav />}
-      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-        <AppRoutes />
+    <ErrorBoundary>
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        {user && !location.pathname.startsWith('/admin') && <Nav />}
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <AppRoutes />
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   )
 }

@@ -11,6 +11,7 @@ import com.ambravate.arcane.academy.auth.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Component
+@Profile("!prod")   // never create test accounts in production
 @RequiredArgsConstructor
 @Slf4j
 public class TestUserSeeder {
