@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { useTopicsDashboard } from '@/hooks/queries'
 import { TopicIcon } from '@/components/icons/TopicIcon'
 import { Badge } from '@/components/ui/badge'
-import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight } from 'lucide-react'
+import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight, RotateCcw, LifeBuoy, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ACTIVE_TOPICS, ACTIVE_TOPIC_IDS, COMING_SOON_TOPICS, type Topic } from '@/features/topics/data/topics'
 
@@ -56,13 +57,31 @@ const HOW_IT_WORKS = [
     desc: 'Face boss challenges at each tier. One wrong answer sends you back — mastery is earned, not given.',
   },
   {
+    icon: RotateCcw,
+    color: '#60a5fa',
+    bg: 'rgba(96,165,250,0.08)',
+    border: 'rgba(96,165,250,0.2)',
+    step: '04',
+    title: 'Review',
+    desc: 'The academy schedules spaced-repetition reviews at the exact moment before you forget. Revisit your Review queue daily to lock in long-term memory.',
+  },
+  {
     icon: Trophy,
     color: 'var(--gold)',
     bg: 'rgba(201,162,39,0.08)',
     border: 'rgba(201,162,39,0.2)',
-    step: '04',
+    step: '05',
     title: 'Rise',
     desc: 'Earn XP and ranks from Novice to Lord Magus. Build deep expertise that lasts a lifetime.',
+  },
+  {
+    icon: LifeBuoy,
+    color: '#f87171',
+    bg: 'rgba(248,113,113,0.08)',
+    border: 'rgba(248,113,113,0.2)',
+    step: '✦',
+    title: 'I\'m Stuck',
+    desc: 'Hit a wall? Tap "I\'m stuck" at any point during a lesson. The academy flags it and can offer a re-explanation, a different angle, or a hint — no scholar is left behind.',
   },
 ]
 
@@ -421,7 +440,83 @@ export default function HomePage() {
         )}
       </section>
 
+      <ScrollHint />
+
     </div>
+  )
+}
+
+/* ── Scroll hint ─────────────────────────────────────────────────────────── */
+
+/**
+ * Floats a subtle "more below" indicator over the bottom of the viewport.
+ * Finds its own scroll container by walking up the DOM, then hides itself
+ * once the user has scrolled down ~80px or the page fits in the viewport.
+ */
+function ScrollHint() {
+  const [visible, setVisible]   = useState(false)
+  const [leaving, setLeaving]   = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Walk up to find the nearest scrollable ancestor
+    let el: HTMLElement | null = sentinelRef.current?.parentElement ?? null
+    while (el) {
+      const { overflowY } = window.getComputedStyle(el)
+      if ((overflowY === 'auto' || overflowY === 'scroll') && el !== document.body) break
+      el = el.parentElement
+    }
+    const scroller = el ?? document.documentElement
+
+    const checkAndShow = () => {
+      if (scroller.scrollHeight - scroller.scrollTop > scroller.clientHeight + 100) {
+        setVisible(true)
+      }
+    }
+
+    // Slight delay so the page has settled before we measure
+    const timer = setTimeout(checkAndShow, 700)
+
+    const onScroll = () => {
+      if (scroller.scrollTop > 80) {
+        setLeaving(true)
+        setTimeout(() => setVisible(false), 380)
+        scroller.removeEventListener('scroll', onScroll)
+      }
+    }
+    scroller.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      clearTimeout(timer)
+      scroller.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
+  return (
+    <>
+      <div ref={sentinelRef} />
+      <div
+        className="pointer-events-none fixed bottom-0 left-0 right-0 flex flex-col items-center justify-end pb-6 pt-20"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(14,12,26,0.7) 50%, rgba(14,12,26,0.96) 100%)',
+          opacity: visible && !leaving ? 1 : 0,
+          transition: 'opacity 0.5s ease',
+          zIndex: 10,
+        }}
+      >
+        <span
+          className="font-cinzel text-[9px] tracking-[0.3em] mb-2"
+          style={{ color: 'var(--gold)', opacity: 0.55 }}
+        >
+          MORE AWAITS BELOW
+        </span>
+        <ChevronDown
+          size={18} strokeWidth={1.5}
+          className="animate-bounce"
+          style={{ color: 'var(--gold)', opacity: 0.45 }}
+        />
+      </div>
+    </>
   )
 }
 

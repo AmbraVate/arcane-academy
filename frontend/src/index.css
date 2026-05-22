@@ -81,6 +81,16 @@
   }
 }
 
+/* ── Hide scrollbars (keep scroll behaviour) ─────────────────────────────── */
+
+* {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge legacy */
+}
+*::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari / Chromium Edge */
+}
+
 /* ── Reset + base ─────────────────────────────────────────────────────────── */
 
 html, body, #root {
