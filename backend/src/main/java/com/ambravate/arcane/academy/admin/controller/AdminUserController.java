@@ -134,6 +134,34 @@ public class AdminUserController {
     }
 
     /**
+     * Grant or revoke the paywall bypass for a user.
+     * Admins cannot modify their own bypass flag (they bypass implicitly).
+     */
+    @PatchMapping("/{userId}/bypass-paywall")
+    public ResponseEntity<AdminUserDto> setBypassPaywall(
+            @PathVariable String userId,
+            @RequestBody Map<String, Boolean> body,
+            @AuthenticationPrincipal UserPrincipal caller) {
+
+        if (caller.getId().equals(userId)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Boolean bypass = body.get("bypassPaywall");
+        if (bypass == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
+        user.setBypassPaywall(bypass);
+        userRepository.save(user);
+
+        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        return ResponseEntity.ok(statsService.toUserDto(user, completed));
+    }
+
+    /**
      * Detailed stats for a single user — for the admin user-detail panel.
      */
     @GetMapping("/{userId}/stats")

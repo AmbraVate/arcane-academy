@@ -47,7 +47,7 @@ export interface AdminQuestion {
 export interface AdminUser {
   id: string; username: string; email: string; rank: string
   totalXp: number; streakDays: number; authProvider: string; role: string
-  blocked: boolean
+  blocked: boolean; bypassPaywall: boolean
   createdAt: string; lastLoginAt: string | null; completedSubChunks: number
 }
 
@@ -185,6 +185,10 @@ export const adminUserApi = {
   },
   setRole: async (id: string, role: string): Promise<AdminUser> => {
     const { data } = await api.put(`/api/admin/users/${id}/role`, { role })
+    return data
+  },
+  setBypassPaywall: async (id: string, bypassPaywall: boolean): Promise<AdminUser> => {
+    const { data } = await api.patch(`/api/admin/users/${id}/bypass-paywall`, { bypassPaywall })
     return data
   },
 }

@@ -154,6 +154,7 @@ public class AdminStatsService {
                 .authProvider(u.getAuthProvider().name())
                 .role(u.getRole().name())
                 .blocked(u.isBlocked())
+                .bypassPaywall(u.isBypassPaywall())
                 .createdAt(u.getCreatedAt())
                 .lastLoginAt(u.getLastLoginAt())
                 .completedSubChunks(completedCount)

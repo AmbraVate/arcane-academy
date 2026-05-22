@@ -4,7 +4,7 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import {
   Search, X, ChevronLeft, ChevronRight, Shield, ShieldOff,
   UserCheck, UserX, RotateCcw, BarChart2, Loader2,
-  Star, Zap, Flame, BookOpen, Trophy, Calendar, Clock,
+  Star, Zap, Flame, BookOpen, Trophy, Calendar, Clock, Unlock, Lock,
 } from 'lucide-react'
 import React from 'react'
 
@@ -46,6 +46,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
   const [blocking, setBlocking] = useState(false)
   const [roleSaving, setRoleSaving] = useState(false)
   const [resetting, setResetting] = useState(false)
+  const [bypassSaving, setBypassSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const isSelf = caller?.userId === user.id
 
@@ -85,6 +86,18 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
     }
   }
 
+  const handleBypassPaywall = async () => {
+    setBypassSaving(true)
+    try {
+      const updated = await adminUserApi.setBypassPaywall(user.id, !user.bypassPaywall)
+      onUpdate(updated)
+    } catch {
+      setError('Failed to update paywall bypass')
+    } finally {
+      setBypassSaving(false)
+    }
+  }
+
   const handleReset = async () => {
     if (!confirm(`Reset ALL learning progress for ${user.username}? This cannot be undone.`)) return
     setResetting(true)
@@ -112,6 +125,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
       <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' }}>
         <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', padding: '3px 8px', borderRadius: 5, background: ROLE_COLOR[user.role] + '22', border: `1px solid ${ROLE_COLOR[user.role]}44`, color: ROLE_COLOR[user.role] }}>{user.role}</span>
         {user.blocked && <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', padding: '3px 8px', borderRadius: 5, background: 'rgba(248,113,113,.12)', border: '1px solid rgba(248,113,113,.3)', color: '#f87171' }}>BLOCKED</span>}
+        {user.bypassPaywall && <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', padding: '3px 8px', borderRadius: 5, background: 'rgba(201,162,39,.12)', border: '1px solid rgba(201,162,39,.3)', color: '#c9a227' }}>BYPASS</span>}
         <span style={{ fontSize: 10, padding: '3px 8px', borderRadius: 5, background: 'rgba(139,92,246,.1)', border: '1px solid rgba(139,92,246,.25)', color: '#c4b5fd' }}>{user.authProvider}</span>
       </div>
       {statsLoading ? (
@@ -155,6 +169,11 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: isSelf ? 'not-allowed' : 'pointer', background: user.blocked ? 'rgba(74,222,128,.08)' : 'rgba(248,113,113,.08)', border: `1px solid ${user.blocked ? 'rgba(74,222,128,.3)' : 'rgba(248,113,113,.3)'}`, color: user.blocked ? '#4ade80' : '#f87171', transition: 'all .15s', opacity: isSelf ? 0.5 : 1 }}>
           {blocking ? <Loader2 size={13} className="animate-spin" /> : user.blocked ? <UserCheck size={13} /> : <UserX size={13} />}
           {user.blocked ? 'Unblock User' : 'Block User'}
+        </button>
+        <button disabled={bypassSaving} onClick={handleBypassPaywall}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: user.bypassPaywall ? 'rgba(201,162,39,.08)' : 'rgba(201,162,39,.04)', border: `1px solid ${user.bypassPaywall ? 'rgba(201,162,39,.4)' : 'rgba(201,162,39,.2)'}`, color: '#c9a227', transition: 'all .15s' }}>
+          {bypassSaving ? <Loader2 size={13} className="animate-spin" /> : user.bypassPaywall ? <Unlock size={13} /> : <Lock size={13} />}
+          {user.bypassPaywall ? 'Revoke Paywall Bypass' : 'Grant Paywall Bypass'}
         </button>
         <button disabled={resetting} onClick={handleReset}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(248,113,113,.2)', color: '#f87171', transition: 'all .15s' }}>
@@ -309,6 +328,7 @@ export default function AdminUsersPage() {
                       <span style={{ display: 'flex', alignItems: 'center', gap: 6, overflow: 'hidden' }}>
                         {u.blocked && <ShieldOff size={11} color="#f87171" />}
                         {u.role === 'ADMIN' && !u.blocked && <Shield size={11} color="#c9a227" />}
+                        {u.bypassPaywall && !u.blocked && u.role !== 'ADMIN' && <span title="Paywall bypassed"><Unlock size={11} color="#c9a227" /></span>}
                         <span style={{ color: '#e8e0f0', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 13 }}>
                           {u.username}
                         </span>

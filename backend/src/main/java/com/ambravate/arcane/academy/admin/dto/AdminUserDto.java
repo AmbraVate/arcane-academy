@@ -14,6 +14,7 @@ public class AdminUserDto {
     private String authProvider;
     private String role;
     private boolean blocked;
+    private boolean bypassPaywall;
     private Instant createdAt;
     private Instant lastLoginAt;
     private long completedSubChunks;
