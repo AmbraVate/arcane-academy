@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/polymath_academy}
-    username: ${SPRING_DATASOURCE_USERNAME:polymath}
-    password: ${SPRING_DATASOURCE_PASSWORD:polymath_secret}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/arcane_academy}
+    username: ${SPRING_DATASOURCE_USERNAME:arcane}
+    password: ${SPRING_DATASOURCE_PASSWORD:arcane_secret}
     driver-class-name: org.postgresql.Driver
     hikari:
       # Tuned for serverless Postgres (Neon): recycle connections well before any
@@ -76,7 +76,7 @@ management:
       show-details: never
   metrics:
     tags:
-      application: polymath-academy
+      application: arcane-academy
   prometheus:
     metrics:
       export:
@@ -100,7 +100,7 @@ sentry:
   traces-sample-rate: ${SENTRY_TRACES_SAMPLE_RATE:0.0}
   send-default-pii: false
   in-app-includes:
-    - com.ambravate.polymath.academy
+    - com.ambravate.arcane.academy
   exception-resolver-order: -2147483647   # before Spring's default handler
   logging:
     minimum-event-level: error
@@ -128,12 +128,12 @@ logging:
   level:
     root: INFO
     com.arcane.academy: DEBUG
-    com.arcane.academy.runner.com.ambravate.polymath.academy.runner.JavaCodeRunner: DEBUG
-    com.arcane.academy.service.com.ambravate.polymath.academy.service.QuestService: DEBUG
-    com.arcane.academy.service.com.ambravate.polymath.academy.service.BossService: DEBUG
-    com.arcane.academy.service.com.ambravate.polymath.academy.service.AuthService: DEBUG
-    com.arcane.academy.service.com.ambravate.polymath.academy.service.StreakService: DEBUG
-    com.arcane.academy.service.com.ambravate.polymath.academy.service.AiMentorService: DEBUG
+    com.arcane.academy.runner.com.ambravate.arcane.academy.runner.JavaCodeRunner: DEBUG
+    com.arcane.academy.service.com.ambravate.arcane.academy.service.QuestService: DEBUG
+    com.arcane.academy.service.com.ambravate.arcane.academy.service.BossService: DEBUG
+    com.arcane.academy.service.com.ambravate.arcane.academy.service.AuthService: DEBUG
+    com.arcane.academy.service.com.ambravate.arcane.academy.service.StreakService: DEBUG
+    com.arcane.academy.service.com.ambravate.arcane.academy.service.AiMentorService: DEBUG
     org.springframework.security: INFO
     org.springframework.web: INFO
     org.hibernate.SQL: WARN
@@ -141,12 +141,12 @@ logging:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
   file:
-    name: logs/polymath-academy.log
+    name: logs/arcane-academy.log
   logback:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 7
-      file-name-pattern: logs/polymath-academy.%d{yyyy-MM-dd}.%i.log
+      file-name-pattern: logs/arcane-academy.%d{yyyy-MM-dd}.%i.log
 
 groq:
   api:
