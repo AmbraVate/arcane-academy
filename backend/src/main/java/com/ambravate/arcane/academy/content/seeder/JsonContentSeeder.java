@@ -413,10 +413,13 @@ public class JsonContentSeeder {
      *  batch have been saved, so cross-tier and cross-topic lookups always succeed. */
     private void wirePrerequisites(ChunkContentDto dto) {
         if (dto.prerequisites == null || dto.prerequisites.isEmpty()) return;
-        List<Chunk> prereqChunks = dto.prerequisites.stream()
+        // A mutable list is required: Hibernate manages this as the chunk's @ManyToMany
+        // collection and calls clear() on it during the merge inside save() — an immutable
+        // Stream.toList() result would throw UnsupportedOperationException.
+        List<Chunk> prereqChunks = new ArrayList<>(dto.prerequisites.stream()
                 .map(pId -> chunkRepository.findById(pId)
                         .orElseThrow(() -> new IllegalStateException("Prereq chunk not found: " + pId)))
-                .toList();
+                .toList());
         Chunk chunk = chunkRepository.findById(dto.id).orElseThrow();
         chunk.setPrerequisites(prereqChunks);
         chunkRepository.save(chunk);
