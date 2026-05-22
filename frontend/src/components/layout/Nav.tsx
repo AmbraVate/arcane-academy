@@ -43,7 +43,7 @@ export default function Nav() {
           'font-cinzel text-[15px] max-[480px]:text-[13px] max-[480px]:tracking-[1px] text-gold tracking-[2px] cursor-pointer select-none shrink-0',
           theme === 'blizzard' && 'blizzard-rune-glow'
         )}
-        onClick={() => navigate('/topics')}
+        onClick={() => navigate('/')}
       >
         {theme === 'blizzard' ? '❄ Arcane Academy' : '✦ Arcane Academy'}
       </div>

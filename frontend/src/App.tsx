@@ -28,6 +28,7 @@ const CssPrimerPage        = lazy(() => import('./features/onboarding/pages/CssP
 const LeaderboardPage      = lazy(() => import('./features/leaderboard/pages/LeaderboardPage'))
 const PublicProfilePage    = lazy(() => import('./features/profile/pages/PublicProfilePage'))
 const LandingPage          = lazy(() => import('./features/auth/pages/LandingPage'))
+const HomePage             = lazy(() => import('./features/home/pages/HomePage'))
 const AdminLayout          = lazy(() => import('./features/admin/pages/AdminLayout'))
 const AdminDashboardPage   = lazy(() => import('./features/admin/pages/AdminDashboardPage'))
 const AdminChunksPage      = lazy(() => import('./features/admin/pages/AdminChunksPage'))
@@ -91,7 +92,7 @@ function BlizzardNav() {
 
   return (
     <nav className="topbar">
-      <div className="nav-brand" onClick={() => navigate('/topics')}>❄ Arcane Academy</div>
+      <div className="nav-brand" onClick={() => navigate('/')}>❄ Arcane Academy</div>
       <div className="nav-spacer" />
       <div className="nav-right">
         {/* Streak */}
@@ -187,17 +188,17 @@ function AppRoutes() {
 
 function LoginPageGuard() {
   const { user } = useAuth()
-  return user ? <Navigate to="/topics" replace /> : <LoginPage />
+  return user ? <Navigate to="/" replace /> : <LoginPage />
 }
 
 function RegisterPageGuard() {
   const { user } = useAuth()
-  return user ? <Navigate to="/topics" replace /> : <RegisterPage />
+  return user ? <Navigate to="/" replace /> : <RegisterPage />
 }
 
 function HomeRedirect() {
   const { user } = useAuth()
-  return user ? <Navigate to="/topics" replace /> : <LandingPage />
+  return user ? <HomePage /> : <LandingPage />
 }
 
 export default function App() {

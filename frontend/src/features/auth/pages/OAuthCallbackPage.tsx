@@ -22,7 +22,7 @@ export default function OAuthCallbackPage() {
     if (token && userId && username) {
       if (refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
       loginWithToken({ token, userId, username, totalXp, rank, streakDays, role, bypassPaywall })
-      navigate('/topics', { replace: true })
+      navigate('/', { replace: true })
     } else {
       navigate('/login', { replace: true })
     }
