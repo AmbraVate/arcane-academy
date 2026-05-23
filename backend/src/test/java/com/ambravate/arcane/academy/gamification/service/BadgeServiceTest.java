@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.Instant;
 import java.util.List;
@@ -43,6 +44,7 @@ class BadgeServiceTest {
     @Mock private UserLearnerProfileRepository profileRepository;
     @Mock private StreakService streakService;
     @Mock private TelemetryService telemetry;
+    @Mock private JdbcTemplate jdbc;
 
     @InjectMocks private BadgeService service;
 
@@ -81,6 +83,8 @@ class BadgeServiceTest {
         lenient().when(badgeRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         lenient().when(profileRepository.findByUserId(USER_ID)).thenReturn(Optional.empty());
         lenient().doNothing().when(telemetry).badgeEarned(anyString(), anyString(), anyString());
+        // Default: user has no notes saved yet
+        lenient().when(jdbc.queryForObject(anyString(), eq(Long.class), anyString())).thenReturn(0L);
     }
 
     // ── getEarnedBadges / getAllForUser ─────────────────────────────────────────

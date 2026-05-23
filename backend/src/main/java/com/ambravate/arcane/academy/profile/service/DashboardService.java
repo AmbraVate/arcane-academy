@@ -162,7 +162,7 @@ public class DashboardService {
           chunk.getId(), chunk.getTitle(), chunk.getGlyph(),
           status, avgStrength, healthColor,
           subs.size(), count,
-          chunk.getTier() != null ? chunk.getTier().name() : "FOUNDATION"
+          chunk.getTier() != null ? chunk.getTier().name() : "APPRENTICE"
       ));
     }
     return result;

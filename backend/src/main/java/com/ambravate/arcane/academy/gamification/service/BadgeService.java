@@ -18,6 +18,7 @@ import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,7 @@ public class BadgeService implements GamificationFacade {
   private final UserLearnerProfileRepository profileRepository;
   private final StreakService streakService;
   private final TelemetryService telemetry;
+  private final JdbcTemplate jdbc;
 
   public List<BadgeDto> getAllForUser(String userId) {
     Map<String, UserBadge> earned = badgeRepository.findByUserId(userId)
@@ -117,12 +119,16 @@ public class BadgeService implements GamificationFacade {
 
     UserLearnerProfile profile = profileRepository.findByUserId(userId).orElse(null);
 
+    Long noteCount = jdbc.queryForObject(
+        "SELECT COUNT(*) FROM user_notes WHERE user_id = ?", Long.class, userId);
+    long userNoteCount = noteCount != null ? noteCount : 0L;
+
     List<BadgeDto> newBadges = new ArrayList<>();
 
     for (BadgeDefinition def : BadgeDefinition.values()) {
       if (alreadyEarned.contains(def.name())) continue;
       if (!checkCondition(def, user, completedSubChunks, completedChunks, hasPerfectReview,
-          feynmanCompleted, feynmanHighScore, profile)) continue;
+          feynmanCompleted, feynmanHighScore, profile, userNoteCount)) continue;
 
       badgeRepository.save(UserBadge.builder()
           .userId(userId).badgeId(def.name()).earnedAt(Instant.now()).build());
@@ -147,7 +153,7 @@ public class BadgeService implements GamificationFacade {
   private boolean checkCondition(BadgeDefinition def, User user,
       long completedSubChunks, Set<String> completedChunks,
       boolean hasPerfectReview, long feynmanCompleted,
-      long feynmanHighScore, UserLearnerProfile profile) {
+      long feynmanHighScore, UserLearnerProfile profile, long noteCount) {
     return switch (def) {
       case FIRST_CONCEPT -> completedSubChunks >= 1;
 
@@ -206,9 +212,8 @@ public class BadgeService implements GamificationFacade {
       case LEAD_CAPSTONE       -> completedChunks.contains("java-lea-17");
 
       // ── Note-taking milestones ──────────────────────────────────────────
-      // noteCount injected in a future sprint (Sprint 8) — always false until then.
-      case FIRST_NOTE    -> false;
-      case AVID_SCHOLAR  -> false;
+      case FIRST_NOTE   -> noteCount >= 1;
+      case AVID_SCHOLAR -> noteCount >= 50;
 
       // ── Legacy path badges ───────────────────────────────────────────────
       case PATH_PRACTITIONER -> profile != null && (

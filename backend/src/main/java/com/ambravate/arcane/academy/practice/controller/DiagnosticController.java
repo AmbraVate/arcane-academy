@@ -87,7 +87,7 @@ public class DiagnosticController {
         UserLearnerProfile profile = profileRepository.findByUserId(user.getId()).orElse(null);
         if (profile == null || !profile.isDiagnosticCompleted()) {
             return ResponseEntity.ok(DiagnosticResultDto.builder()
-                    .recommendedPath("FOUNDATION")
+                    .recommendedPath("APPRENTICE")
                     .chunkRecommendations(Map.of())
                     .overallScore(0.0).build());
         }
