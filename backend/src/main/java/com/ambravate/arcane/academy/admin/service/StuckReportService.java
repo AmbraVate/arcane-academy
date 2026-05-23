@@ -32,6 +32,28 @@ public class StuckReportService {
                 .map(this::toDto);
     }
 
+    /** Learner-facing: returns all reports for a given user, without screenshotData. */
+    @Transactional(readOnly = true)
+    public java.util.List<StuckReportDto> listForUser(String userId) {
+        return repository.findByUserIdOrderByCreatedAtDesc(userId)
+                .stream()
+                .map(r -> StuckReportDto.builder()
+                        .id(r.getId())
+                        .userId(r.getUserId())
+                        .topicId(r.getTopicId())
+                        .subChunkId(r.getSubChunkId())
+                        .currentPhase(r.getCurrentPhase())
+                        .currentUrl(r.getCurrentUrl())
+                        .userMessage(r.getUserMessage())
+                        .status(r.getStatus().name())
+                        .adminNotes(r.getAdminNotes())
+                        // screenshotData deliberately omitted — admin only
+                        .createdAt(r.getCreatedAt())
+                        .updatedAt(r.getUpdatedAt())
+                        .build())
+                .toList();
+    }
+
     @Transactional
     public StuckReportDto updateStatus(String id, StuckReportStatus status, String adminNotes) {
         StuckReport report = repository.findById(id)

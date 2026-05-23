@@ -19,6 +19,7 @@ import com.ambravate.arcane.academy.content.repository.TopicRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class AdminStatsService {
     private final UserChunkProgressRepository progressRepository;
     private final GamificationFacade gamificationFacade;
     private final ReviewSessionRepository reviewSessionRepository;
+    private final JdbcTemplate jdbc;
 
     public AdminStatsDto getStats() {
         Instant sevenDaysAgo = Instant.now().minusSeconds(7L * 86400);
@@ -93,6 +95,8 @@ public class AdminStatsService {
                 .totalChunks(chunkRepository.count())
                 .totalSubChunks(subChunkRepository.count())
                 .totalQuestions(questionRepository.count())
+                .totalNotes(jdbc.queryForObject("SELECT COUNT(*) FROM user_notes", Long.class))
+                .totalCapstones(jdbc.queryForObject("SELECT COUNT(*) FROM user_capstones", Long.class))
                 .recentSignups(recentDtos)
                 .contentHealth(health)
                 .build();

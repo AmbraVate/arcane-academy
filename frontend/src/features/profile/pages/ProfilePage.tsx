@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi } from '@/shared/api/services'
-import type { UserCapstone, UserNote } from '@/shared/api/services'
+import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi } from '@/shared/api/services'
+import type { UserCapstone, UserNote, MyStuckReport } from '@/shared/api/services'
 import { useDashboard } from '@/hooks/queries'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
@@ -10,7 +10,7 @@ import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 import { Trash2, ExternalLink, Download } from 'lucide-react'
 
-type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'preferences'
+type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'preferences'
 
 const PALETTES = [
   { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
@@ -56,6 +56,9 @@ export default function ProfilePage() {
   const [capstonesLoading, setCapstonesLoading] = useState(false)
   const [editingCapstone, setEditingCapstone] = useState<UserCapstone | null>(null)
 
+  const [reports, setReports] = useState<MyStuckReport[]>([])
+  const [reportsLoading, setReportsLoading] = useState(false)
+
   // Load visibility + overview data on mount
   useEffect(() => {
     profileApi.getVisibility().then(setPublicEnabled).catch(() => setPublicEnabled(false))
@@ -78,6 +81,10 @@ export default function ProfilePage() {
     if (tab === 'projects' && capstones.length === 0 && !capstonesLoading) {
       setCapstonesLoading(true)
       capstoneApi.list().then(setCapstones).finally(() => setCapstonesLoading(false))
+    }
+    if (tab === 'reports' && reports.length === 0 && !reportsLoading) {
+      setReportsLoading(true)
+      stuckReportApi.mine().then(setReports).finally(() => setReportsLoading(false))
     }
   }, [tab]) // intentionally omitting derived state to avoid re-fetching on every render
 
@@ -157,6 +164,7 @@ export default function ProfilePage() {
     { id: 'rabbit-holes', label: `Rabbit Holes${rabbitHoles.length ? ` (${rabbitHoles.length})` : ''}` },
     { id: 'notes', label: `Notes${notes.length ? ` (${notes.length})` : ''}` },
     { id: 'projects', label: `Projects${capstones.length ? ` (${capstones.length})` : ''}` },
+    { id: 'reports', label: `Reports${reports.length ? ` (${reports.length})` : ''}` },
     { id: 'preferences', label: 'Preferences' },
   ]
 
@@ -478,6 +486,28 @@ export default function ProfilePage() {
           </div>
         )}
 
+        {/* Tab: Reports (Stuck Reports history) */}
+        {tab === 'reports' && (
+          <div>
+            {reportsLoading && <p className="text-muted italic text-center py-8">Loading reports…</p>}
+            {!reportsLoading && reports.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-[48px] mb-4">🚩</div>
+                <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
+                  No reports yet. Use the "I'm stuck" button during a lesson to get help from the team.
+                </p>
+              </div>
+            )}
+            {!reportsLoading && reports.length > 0 && (
+              <div className="flex flex-col gap-3">
+                {reports.map(report => (
+                  <ReportCard key={report.id} report={report} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Tab: Preferences */}
         {tab === 'preferences' && (
           <div className="flex flex-col gap-4">
@@ -705,6 +735,48 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
           </button>
         )}
       </div>
+    </div>
+  )
+}
+
+const REPORT_STATUS_META: Record<string, { label: string; color: string; bg: string; border: string }> = {
+  NEW:      { label: 'Submitted', color: '#f87171', bg: 'rgba(248,113,113,.08)',  border: 'rgba(248,113,113,.25)' },
+  REVIEWED: { label: 'In Review', color: '#c9a227', bg: 'rgba(201,162,39,.08)', border: 'rgba(201,162,39,.25)' },
+  RESOLVED: { label: 'Resolved',  color: '#4ade80', bg: 'rgba(74,222,128,.06)', border: 'rgba(74,222,128,.2)' },
+}
+
+function ReportCard({ report }: { report: MyStuckReport }) {
+  const meta = REPORT_STATUS_META[report.status] ?? REPORT_STATUS_META.NEW
+  return (
+    <div className="bg-card border border-border rounded-[12px] px-5 py-4">
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span
+              className="text-[10px] font-cinzel px-2 py-0.5 rounded"
+              style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}
+            >
+              {meta.label}
+            </span>
+            {report.currentPhase && (
+              <span className="text-[10px] text-muted font-cinzel uppercase tracking-wide">{report.currentPhase}</span>
+            )}
+            <span className="text-[10px] text-muted">{new Date(report.createdAt).toLocaleDateString()}</span>
+          </div>
+        </div>
+      </div>
+      {report.subChunkId && (
+        <div className="text-[11px] text-muted mb-1.5">Lesson: {report.subChunkId}</div>
+      )}
+      {report.userMessage && (
+        <p className="text-[13px] text-text leading-[1.6] mb-2">{report.userMessage}</p>
+      )}
+      {report.adminNotes && (
+        <div className="mt-2 p-3 rounded-[8px] bg-purple-dim border border-purple">
+          <div className="text-[10px] font-cinzel text-purple uppercase tracking-[0.08em] mb-1">Team Response</div>
+          <p className="text-[12px] text-purple-light leading-[1.6]">{report.adminNotes}</p>
+        </div>
+      )}
     </div>
   )
 }

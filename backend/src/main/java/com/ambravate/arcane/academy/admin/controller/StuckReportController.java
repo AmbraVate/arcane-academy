@@ -53,6 +53,13 @@ public class StuckReportController {
         return ResponseEntity.ok(Map.of("message", "Report received — we'll look into it."));
     }
 
+    /** Learner: list their own stuck reports (no screenshot). */
+    @GetMapping("/api/stuck-reports/mine")
+    public ResponseEntity<java.util.List<StuckReportDto>> listMine(
+            @AuthenticationPrincipal UserPrincipal principal) {
+        return ResponseEntity.ok(stuckReportService.listForUser(principal.getId()));
+    }
+
     /** Admin: list all stuck reports, paginated, newest first. */
     @GetMapping("/api/admin/stuck-reports")
     public ResponseEntity<Page<StuckReportDto>> list(

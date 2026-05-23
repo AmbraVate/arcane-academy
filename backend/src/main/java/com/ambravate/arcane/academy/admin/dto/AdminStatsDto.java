@@ -11,7 +11,8 @@ public class AdminStatsDto {
     private long totalChunks;
     private long totalSubChunks;
     private long totalQuestions;
+    private long totalNotes;
+    private long totalCapstones;
     private List<AdminUserDto> recentSignups;
     private List<ContentHealthDto> contentHealth;
-
 }

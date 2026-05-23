@@ -256,6 +256,11 @@ export default function EncodingPage() {
 
   async function handleAdvance() {
     if (!subChunkId) return
+    // Auto-save any pending note when leaving a notes-eligible phase
+    if (noteContent.trim() && notePhaseVisible) {
+      clearTimeout(noteSaveTimer.current)
+      saveNoteNow() // fire-and-forget — don't block phase advance
+    }
     const enc = await encodingApi.advance(subChunkId)
     dispatch({ type: 'PHASE_ADVANCED', encoding: enc })
   }

@@ -5,6 +5,7 @@ import api from './client'
 export interface AdminStats {
   totalUsers: number; activeUsers7d: number; totalTopics: number
   totalChunks: number; totalSubChunks: number; totalQuestions: number
+  totalNotes: number; totalCapstones: number
   recentSignups: AdminUser[]; contentHealth: ContentHealthItem[]
 }
 export interface ContentHealthItem { subChunkId: string; title: string; chunkTitle: string; topicId?: string; tier?: string; issues: string[] }

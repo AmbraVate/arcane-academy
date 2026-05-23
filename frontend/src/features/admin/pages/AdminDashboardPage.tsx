@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AlertTriangle, CheckCircle2, CircleHelp, FileText, Flame, Map, Package, Users } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, CircleHelp, FileText, Flame, Map, Package, Users, StickyNote, Trophy } from 'lucide-react'
 import { adminStatsApi, type AdminStats } from '@/shared/api/adminServices'
 import React from 'react'
 
@@ -64,9 +64,11 @@ export default function AdminDashboardPage() {
         <StatCard label="Total Users"    value={stats.totalUsers}     Icon={Users}        color="#8b5cf6" />
         <StatCard label="Active (7d)"    value={stats.activeUsers7d}  Icon={Flame}        color="#fb923c" />
         <StatCard label="Topics"         value={stats.totalTopics}    Icon={Map}          color="#2dd4bf" />
-        <StatCard label="Modules"         value={stats.totalChunks}    Icon={Package}      color="#c9a227" />
+        <StatCard label="Modules"        value={stats.totalChunks}    Icon={Package}      color="#c9a227" />
         <StatCard label="Lessons"        value={stats.totalSubChunks} Icon={FileText}     color="#8b5cf6" />
         <StatCard label="Questions"      value={stats.totalQuestions} Icon={CircleHelp}   color="#4ade80" />
+        <StatCard label="Notes"          value={stats.totalNotes ?? 0}      Icon={StickyNote}   color="#2dd4bf" />
+        <StatCard label="Capstones"      value={stats.totalCapstones ?? 0}  Icon={Trophy}       color="#c9a227" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

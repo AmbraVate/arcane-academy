@@ -333,6 +333,19 @@ export interface PublicProfile {
   badges: PublicProfileBadge[]
 }
 
+export interface MyStuckReport {
+  id: string
+  topicId: string | null
+  subChunkId: string | null
+  currentPhase: string | null
+  currentUrl: string | null
+  userMessage: string | null
+  status: 'NEW' | 'REVIEWED' | 'RESOLVED'
+  adminNotes: string | null
+  createdAt: string
+  updatedAt: string | null
+}
+
 export const stuckReportApi = {
   submit: async (payload: {
     topicId?: string
@@ -343,6 +356,10 @@ export const stuckReportApi = {
     screenshotData?: string
   }): Promise<void> => {
     await api.post('/api/stuck-reports', payload)
+  },
+  mine: async (): Promise<MyStuckReport[]> => {
+    const { data } = await api.get('/api/stuck-reports/mine')
+    return data
   },
 }
 
