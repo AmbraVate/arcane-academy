@@ -3,7 +3,7 @@
   "title": "Forensic Psychology",
   "glyph": "⚖️",
   "sortOrder": 11,
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "topicId": "psychology",
   "prerequisiteIds": [
     "psy-prt-2"

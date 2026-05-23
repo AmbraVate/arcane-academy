@@ -3,7 +3,7 @@
   "title": "Biopsychology",
   "glyph": "🧬",
   "sortOrder": 2,
-  "tier": "FOUNDATION",
+  "tier": "APPRENTICE",
   "topicId": "psychology",
   "prerequisites": ["psy-fnd-1"],
   "subChunks": [

@@ -3,7 +3,7 @@
   "title": "Inscribing Changes — INSERT, UPDATE, DELETE, Transactions",
   "glyph": "✍️",
   "sortOrder": 6,
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "topicId": "sql",
   "prerequisites": ["sql-e"],
   "rabbitHoles": [],

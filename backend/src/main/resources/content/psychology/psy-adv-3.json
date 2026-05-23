@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Developmental Psychology",
   "glyph": "🌱",
-  "tier": "ADVANCED",
+  "tier": "SENIOR",
   "sortOrder": 7,
   "prerequisiteIds": ["psy-adv-2"],
   "subChunks": [

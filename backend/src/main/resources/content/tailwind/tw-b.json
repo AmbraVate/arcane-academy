@@ -3,7 +3,7 @@
   "title": "Practitioner Tailwind",
   "glyph": "⚗️",
   "sortOrder": 2,
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "topicId": "tailwind",
   "prerequisites": ["tw-a"],
   "rabbitHoles": [],

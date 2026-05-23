@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Research Methods in Psychology",
   "glyph": "📐",
-  "tier": "FOUNDATION",
+  "tier": "APPRENTICE",
   "sortOrder": 4,
   "prerequisiteIds": [
     "psy-fnd-3"

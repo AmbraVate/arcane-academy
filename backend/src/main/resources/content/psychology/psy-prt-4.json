@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Educational Psychology",
   "glyph": "🎓",
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "sortOrder": 10,
   "prerequisiteIds": [
     "psy-prt-2"

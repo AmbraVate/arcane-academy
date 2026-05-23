@@ -42,7 +42,7 @@ class ContentFileValidationTest {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final Set<String> VALID_TIERS =
-            Set.of("FOUNDATION", "ADVANCED", "PRACTITIONER", "EXPERT", "CAPSTONE");
+            Set.of("APPRENTICE", "JUNIOR", "SENIOR", "LEAD");
 
     private static final Set<String> VALID_PRACTICE_TYPES =
             Set.of("JAVA", "TAILWIND", "REACT", "SQL", "R", "NONE");

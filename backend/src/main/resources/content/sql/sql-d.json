@@ -3,7 +3,7 @@
   "title": "Joining Ledgers — JOINs",
   "glyph": "🔗",
   "sortOrder": 4,
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "topicId": "sql",
   "prerequisites": ["sql-c"],
   "rabbitHoles": [],

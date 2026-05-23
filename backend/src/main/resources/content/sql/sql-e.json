@@ -3,7 +3,7 @@
   "title": "Asking About Asks — Subqueries & CTEs",
   "glyph": "🔮",
   "sortOrder": 5,
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "topicId": "sql",
   "prerequisites": ["sql-d"],
   "rabbitHoles": [],

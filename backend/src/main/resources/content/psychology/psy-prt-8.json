@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Counselling Psychology",
   "glyph": "🪷",
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "sortOrder": 14,
   "prerequisiteIds": [
     "psy-prt-2"

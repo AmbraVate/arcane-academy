@@ -3,7 +3,7 @@
   "title": "Counting and Summarising — Aggregation",
   "glyph": "∑",
   "sortOrder": 3,
-  "tier": "FOUNDATION",
+  "tier": "APPRENTICE",
   "topicId": "sql",
   "prerequisites": ["sql-b"],
   "rabbitHoles": [],

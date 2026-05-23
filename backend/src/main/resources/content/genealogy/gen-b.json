@@ -3,7 +3,7 @@
   "title": "Research Methodology",
   "glyph": "🔍",
   "sortOrder": 2,
-  "tier": "FOUNDATION",
+  "tier": "APPRENTICE",
   "topicId": "genealogy",
   "prerequisites": ["gen-a"],
   "rabbitHoles": [],

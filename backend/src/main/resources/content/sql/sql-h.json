@@ -3,7 +3,7 @@
   "title": "Window Magic — Window Functions & Recursive CTEs",
   "glyph": "🪟",
   "sortOrder": 8,
-  "tier": "EXPERT",
+  "tier": "SENIOR",
   "topicId": "sql",
   "prerequisites": ["sql-g"],
   "rabbitHoles": [],

@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Learning & Memory",
   "glyph": "🧠",
-  "tier": "FOUNDATION",
+  "tier": "APPRENTICE",
   "sortOrder": 3,
   "prerequisiteIds": ["psy-fnd-2"],
   "subChunks": [

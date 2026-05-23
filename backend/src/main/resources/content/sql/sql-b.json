@@ -3,7 +3,7 @@
   "title": "Refining the Question — Filtering",
   "glyph": "🔍",
   "sortOrder": 2,
-  "tier": "FOUNDATION",
+  "tier": "APPRENTICE",
   "topicId": "sql",
   "prerequisites": ["sql-a"],
   "rabbitHoles": [],

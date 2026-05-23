@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Abnormal Psychology",
   "glyph": "🧩",
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "sortOrder": 9,
   "prerequisiteIds": ["psy-prt-1"],
   "subChunks": [

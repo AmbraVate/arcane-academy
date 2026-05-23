@@ -3,7 +3,7 @@
   "title": "Occupational Psychology",
   "glyph": "💼",
   "sortOrder": 13,
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "topicId": "psychology",
   "prerequisiteIds": [
     "psy-prt-2"

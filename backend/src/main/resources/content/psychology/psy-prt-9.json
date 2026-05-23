@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Sport & Exercise Psychology",
   "glyph": "🏅",
-  "tier": "PRACTITIONER",
+  "tier": "JUNIOR",
   "sortOrder": 15,
   "prerequisiteIds": [
     "psy-prt-2"

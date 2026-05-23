@@ -3,7 +3,7 @@
   "topicId": "psychology",
   "title": "Social Psychology",
   "glyph": "👥",
-  "tier": "ADVANCED",
+  "tier": "SENIOR",
   "sortOrder": 6,
   "prerequisiteIds": ["psy-adv-1"],
   "subChunks": [
