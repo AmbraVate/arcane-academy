@@ -1,0 +1,144 @@
+{
+  "id": "java-app-8",
+  "title": "Object-Oriented Programming",
+  "glyph": "🏛️",
+  "sortOrder": 8,
+  "tier": "APPRENTICE",
+  "topicId": "java",
+  "prerequisites": ["java-app-5"],
+  "subChunks": [
+    {
+      "id": "java-app-8a",
+      "title": "Classes, Objects & Encapsulation",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "filename": "OopBasics.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Every wizard is unique — a name, a rank, a mana reserve, a set of spells. Object-Oriented Programming lets you create a <strong>blueprint</strong> for a wizard and then stamp out as many wizards as you need.</p>",
+      "explanationHtml": "<h3>Classes and Objects</h3><p>A <strong>class</strong> is a blueprint. An <strong>object</strong> is a specific instance created from that blueprint.</p><pre><code>public class Wizard {\n    // Fields — the object's state\n    private String name;\n    private int mana;\n\n    // Constructor — called when creating an object\n    public Wizard(String name, int mana) {\n        this.name = name;  // 'this' refers to the current object\n        this.mana = mana;\n    }\n\n    // Method — the object's behaviour\n    public void castSpell() {\n        if (mana >= 10) {\n            mana -= 10;\n            System.out.println(name + \" casts a spell!\");\n        } else {\n            System.out.println(name + \" is out of mana.\");\n        }\n    }\n\n    // Getters — controlled read access\n    public String getName() { return name; }\n    public int getMana()    { return mana; }\n}</code></pre><p>Creating objects:</p><pre><code>Wizard w1 = new Wizard(\"Lyria\", 100);\nWizard w2 = new Wizard(\"Drake\", 50);\nw1.castSpell(); // Lyria casts a spell!\nw2.castSpell(); // Drake casts a spell!</code></pre><h3>Encapsulation</h3><p>Encapsulation means keeping fields <code>private</code> and exposing controlled access through <code>public</code> methods. This prevents outside code from putting a Wizard's mana into an invalid state (like -999).</p><h3>The this keyword</h3><p><code>this.name = name</code> disambiguates between the field (<code>this.name</code>) and the constructor parameter (<code>name</code>).</p><h3>toString()</h3><p>Override <code>toString()</code> to give your objects a readable description:</p><pre><code>@Override\npublic String toString() {\n    return name + \" (mana: \" + mana + \")\";\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Eldrin escorts you to a vast workshop filled with hundreds of identical bronze wizard figurines — each one unique only in the inscription on its base."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Observe. One mould. Hundreds of wizards — each with its own name and mana. That mould is a <strong>class</strong>. Each figurine is an <strong>object</strong>. This is the heart of Object-Oriented Programming."},
+        {"type": "example", "speaker": "The Wizard blueprint", "text": "public class Wizard {\n    private String name;\n    private int mana;\n\n    public Wizard(String name, int mana) {\n        this.name = name;\n        this.mana = mana;\n    }\n\n    public void castSpell() {\n        mana -= 10;\n        System.out.println(name + \" casts!\");\n    }\n}"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Notice the word <code>private</code> before the fields. That is <strong>encapsulation</strong> — the mana is locked inside the Wizard. No outside code can scribble in an invalid value. Access is through <em>getter</em> methods only."},
+        {"type": "example", "speaker": "Creating and using objects", "text": "Wizard lyria = new Wizard(\"Lyria\", 100);\nWizard drake = new Wizard(\"Drake\", 50);\nlyria.castSpell(); // Lyria casts!\nSystem.out.println(lyria.getMana()); // 90"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "And one more craft: override <code>toString()</code> so that when you print a Wizard object, you get useful information instead of a memory address. The <code>@Override</code> annotation tells the compiler you are intentionally replacing a method from the parent class."}
+      ],
+      "guidedPracticeHtml": "<p>Create a <code>Spell</code> class with:</p><ul><li>Two <code>private</code> fields: <code>String name</code> and <code>int manaCost</code></li><li>A constructor that sets both fields</li><li>A method <code>cast(int currentMana)</code> that returns a <code>String</code>: <code>\"[name] cast! (cost: [manaCost])\"</code> if <code>currentMana >= manaCost</code>, otherwise <code>\"Not enough mana to cast [name]\"</code></li><li>A <code>toString()</code> that returns <code>\"Spell: [name] ([manaCost] mana)\"</code></li></ul><p>In the <code>public class Main</code> entry point, create two spells: <code>Fireball</code> (cost 30) and <code>Heal</code> (cost 10). Print each, then call <code>cast(25)</code> on each and print the result.</p>",
+      "guidedPracticeStarterCode": "class Spell {\n    // fields\n\n    // constructor\n\n    // cast method\n    public String cast(int currentMana) {\n\n    }\n\n    // toString\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Spell fireball = new Spell(\"Fireball\", 30);\n        Spell heal    = new Spell(\"Heal\", 10);\n        System.out.println(fireball);\n        System.out.println(fireball.cast(25));\n        System.out.println(heal);\n        System.out.println(heal.cast(25));\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "toString Fireball", "input": "null", "expected": "Spell: Fireball (30 mana)"},
+        {"label": "toString Heal", "input": "null", "expected": "Spell: Heal (10 mana)"},
+        {"label": "cast Fireball (not enough mana)", "input": "null", "expected": "Not enough mana to cast Fireball"},
+        {"label": "cast Heal (enough mana)", "input": "null", "expected": "Heal cast! (cost: 10)"}
+      ],
+      "feynmanPrompt": "Explain what a class is, what an object is, and why encapsulation (private fields with public methods) is a good idea. Use a real-world analogy to make it concrete.",
+      "soloPracticeHtml": "<p>Rebuild the same solution from memory. Write a <code>class Spell</code> with:</p><ul><li>Two <code>private</code> fields: <code>String name</code> and <code>int manaCost</code></li><li>A constructor that sets both fields</li><li>A method <code>cast(int currentMana)</code> that returns a <code>String</code>: <code>\"[name] cast! (cost: [manaCost])\"</code> if <code>currentMana >= manaCost</code>, otherwise <code>\"Not enough mana to cast [name]\"</code></li><li>A <code>toString()</code> that returns <code>\"Spell: [name] ([manaCost] mana)\"</code></li></ul><p>Then write a <code>public class Main</code> with a <code>main</code> method that creates <code>Fireball</code> (cost 30) and <code>Heal</code> (cost 10), prints each, then calls <code>cast(25)</code> on each and prints the result.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "toString Fireball", "input": "null", "expected": "Spell: Fireball (30 mana)"},
+        {"label": "toString Heal", "input": "null", "expected": "Spell: Heal (10 mana)"},
+        {"label": "cast Fireball (not enough mana)", "input": "null", "expected": "Not enough mana to cast Fireball"},
+        {"label": "cast Heal (enough mana)", "input": "null", "expected": "Heal cast! (cost: 10)"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What keyword creates a new object in Java?</p>",
+          "options": ["create", "new", "object", "instance"],
+          "correctAnswer": "new",
+          "explanationHtml": "<p>The <code>new</code> keyword allocates memory on the heap and calls the constructor: <code>Wizard w = new Wizard(\"Lyria\", 100);</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Encapsulation means making all fields <code>public</code> so other classes can access them freely.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Encapsulation means making fields <code>private</code> and providing controlled access through public getter and setter methods. This protects the object's internal state from invalid modifications.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "public class Box {\n    private int value = 10;\n    public int getValue() { return value; }\n    public void doubleIt() { value *= 2; }\n}\n// in main:\nBox b = new Box();\nb.doubleIt();\nb.doubleIt();\nSystem.out.println(b.getValue());",
+          "correctAnswer": "40",
+          "explanationHtml": "<p>Initial value = 10. After first <code>doubleIt()</code>: 20. After second: 40.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>What is the primary purpose of the <code>this</code> keyword in a constructor?</p>",
+          "options": ["It calls the parent class constructor", "It disambiguates between a field and a parameter with the same name", "It creates a new copy of the object", "It prevents the object from being garbage-collected"],
+          "correctAnswer": "It disambiguates between a field and a parameter with the same name",
+          "explanationHtml": "<p><code>this.name</code> refers to the instance field; <code>name</code> alone in a constructor parameter shadows the field. <code>this.name = name</code> correctly assigns the parameter to the field. Without <code>this</code>, you'd be assigning the parameter to itself.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-app-8b",
+      "title": "Inheritance, Interfaces & Polymorphism",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "filename": "Inheritance.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A FireWizard is a Wizard. A HealerWizard is a Wizard. Both share a common core but have distinct abilities. Java's <strong>inheritance</strong> and <strong>interfaces</strong> let you model this naturally.</p>",
+      "explanationHtml": "<h3>Inheritance — extends</h3><pre><code>public class Wizard {\n    protected String name;\n    protected int mana;\n\n    public Wizard(String name, int mana) {\n        this.name = name;\n        this.mana = mana;\n    }\n\n    public void castSpell() {\n        System.out.println(name + \" casts a basic spell.\");\n    }\n}\n\npublic class FireWizard extends Wizard {\n    private int firePower;\n\n    public FireWizard(String name, int mana, int firePower) {\n        super(name, mana);  // calls parent constructor\n        this.firePower = firePower;\n    }\n\n    @Override\n    public void castSpell() {\n        System.out.println(name + \" casts Fireball — power: \" + firePower);\n    }\n}</code></pre><h3>Polymorphism</h3><p>A parent-type variable can hold any subclass object. Method calls resolve to the actual object's implementation at runtime (dynamic dispatch):</p><pre><code>Wizard w = new FireWizard(\"Ignis\", 100, 80);\nw.castSpell(); // prints FireWizard's version!</code></pre><h3>Interfaces — contracts without implementation</h3><pre><code>public interface Healable {\n    int heal();      // abstract by default\n    default void reportHeal() {\n        System.out.println(\"Healed \" + heal() + \" HP\");\n    }\n}\n\npublic class Cleric extends Wizard implements Healable {\n    @Override\n    public int heal() { return 50; }\n}</code></pre><p>Interfaces define a <em>contract</em>. Any class that implements the interface promises to provide those methods. Unlike abstract classes, a class can implement <em>multiple</em> interfaces.</p><h3>abstract classes</h3><pre><code>public abstract class MagicUser {\n    public abstract void castSpell(); // subclass must implement\n    public void rest() { System.out.println(\"Resting...\"); }\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy courtyard is full of specialised wizards — fire-wielders, healers, illusionists. Eldrin gestures at the crowd."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "They are all wizards. They all have names and mana. Yet each has a special ability. Rather than writing a completely new class for each type, we build on a <em>base class</em>. The child class <em>inherits</em> everything from the parent and adds its own twist."},
+        {"type": "example", "speaker": "FireWizard extends Wizard", "text": "public class FireWizard extends Wizard {\n    private int firePower;\n\n    public FireWizard(String name, int mana, int firePower) {\n        super(name, mana); // call parent constructor\n        this.firePower = firePower;\n    }\n\n    @Override\n    public void castSpell() {\n        System.out.println(name + \" Fireball! Power: \" + firePower);\n    }\n}"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "This leads to <strong>polymorphism</strong> — many forms. A single <code>Wizard</code> reference can point to any subclass. When you call <code>castSpell()</code> on it, Java calls the subclass version at runtime. This is <em>dynamic dispatch</em>, and it is extraordinarily powerful for writing flexible code."},
+        {"type": "example", "speaker": "Polymorphism", "text": "Wizard w = new FireWizard(\"Ignis\", 100, 80);\nw.castSpell(); // calls FireWizard's version"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Interfaces are <em>contracts</em>. They say: any class that implements me <em>must</em> provide these methods. Unlike classes, a single class can implement multiple interfaces — a wizard can be both <code>Healable</code> and <code>Combatant</code> simultaneously."}
+      ],
+      "guidedPracticeHtml": "<p>Create a base class <code>Animal</code> with a <code>String name</code> field and a method <code>speak()</code> that prints <code>\"[name] makes a sound.\"</code></p><p>Create two subclasses:</p><ul><li><code>Dog</code> that overrides <code>speak()</code> to print <code>\"[name] barks!\"</code></li><li><code>Cat</code> that overrides <code>speak()</code> to print <code>\"[name] meows.\"</code></li></ul><p>Then write a <code>public class Main</code> with a <code>main</code> method that creates an <code>Animal[]</code> array holding a <code>Dog(\"Rex\")</code> and a <code>Cat(\"Whiskers\")</code>. Loop over the array and call <code>speak()</code> on each — observe polymorphism in action.</p>",
+      "guidedPracticeStarterCode": "class Animal {\n    protected String name;\n\n    public Animal(String name) {\n        this.name = name;\n    }\n\n    public void speak() {\n        System.out.println(name + \" makes a sound.\");\n    }\n}\n\n// Dog — override speak() to print \"[name] barks!\"\n\n// Cat — override speak() to print \"[name] meows.\"\n\npublic class Main {\n    public static void main(String[] args) {\n        Animal[] animals = { new Dog(\"Rex\"), new Cat(\"Whiskers\") };\n        for (Animal a : animals) a.speak();\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "Dog speaks", "input": "null", "expected": "Rex barks!"},
+        {"label": "Cat speaks", "input": "null", "expected": "Whiskers meows."}
+      ],
+      "feynmanPrompt": "Explain inheritance and polymorphism in Java to someone new to programming. What problem does inheritance solve? What is the difference between an abstract class and an interface?",
+      "soloPracticeHtml": "<p>Rebuild the same solution from memory. Write three classes in one file:</p><ul><li>A base class <code>Animal</code> with a <code>String name</code> field and a <code>speak()</code> method that prints <code>\"[name] makes a sound.\"</code></li><li><code>Dog</code> that overrides <code>speak()</code> to print <code>\"[name] barks!\"</code></li><li><code>Cat</code> that overrides <code>speak()</code> to print <code>\"[name] meows.\"</code></li></ul><p>Then write a <code>public class Main</code> with a <code>main</code> method that creates an <code>Animal[]</code> array holding a <code>Dog(\"Rex\")</code> and a <code>Cat(\"Whiskers\")</code> and calls <code>speak()</code> on each.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Dog speaks", "input": "null", "expected": "Rex barks!"},
+        {"label": "Cat speaks", "input": "null", "expected": "Whiskers meows."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What keyword does a subclass use to call its parent's constructor?</p>",
+          "options": ["parent()", "super()", "base()", "this()"],
+          "correctAnswer": "super()",
+          "explanationHtml": "<p><code>super()</code> calls the parent class constructor and must be the first statement in the subclass constructor. <code>this()</code> calls another constructor in the <em>same</em> class.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>How many interfaces can a Java class implement?</p>",
+          "options": ["Only one", "Up to two", "Up to four", "Any number"],
+          "correctAnswer": "Any number",
+          "explanationHtml": "<p>A Java class can implement any number of interfaces (separated by commas). This is one advantage over abstract classes, of which a class can extend only one.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "class A { public void greet() { System.out.println(\"A\"); } }\nclass B extends A {\n    @Override public void greet() { System.out.println(\"B\"); }\n}\n// in main:\nA obj = new B();\nobj.greet();",
+          "correctAnswer": "B",
+          "explanationHtml": "<p>Even though the variable type is <code>A</code>, the actual object is a <code>B</code>. Java uses the overriding method in the actual object's class — this is polymorphism / dynamic dispatch.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When should you use an <em>interface</em> rather than an <em>abstract class</em>?</p>",
+          "options": ["When you want to share implementation logic between related classes", "When you need multiple inheritance — a class must fulfil several unrelated contracts", "When all methods should be final", "When you need constructor code to run at instantiation"],
+          "correctAnswer": "When you need multiple inheritance — a class must fulfil several unrelated contracts",
+          "explanationHtml": "<p>Use an <strong>interface</strong> when you want to define a <em>contract</em> that unrelated classes can fulfil (e.g., <code>Comparable</code>, <code>Runnable</code>). Use an <strong>abstract class</strong> when you want to share code among closely related classes in a hierarchy. A class can extend only one abstract class but implement many interfaces.</p>"
+        }
+      ]
+    }
+  ]
+}

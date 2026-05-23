@@ -38,6 +38,10 @@ public enum BadgeDefinition {
     GEN_FOUNDATION_COMPLETE("Lineage Scholar", "Master the Foundation tier of Genealogy \u2014 gen-a, gen-b, gen-c", "\uD83C\uDF33", Category.LEARNING),
     SCI_FOUNDATION_COMPLETE("Natural Philosopher", "Master the Foundation tier of Natural Sciences \u2014 sci-a, sci-b, sci-c", "\uD83D\uDD2C", Category.LEARNING),
 
+    // \u2500\u2500 Note-taking \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    FIRST_NOTE("First Inscription", "Save your first lesson note", "\uD83D\uDCDD", Category.LEARNING),
+    AVID_SCHOLAR("Avid Scholar", "Save 50 lesson notes", "\uD83D\uDCDA", Category.LEARNING),
+
     // Review & mastery
     PERFECT_REVIEW("Flawless Recall", "Score 100% on a review session", "\uD83C\uDFAF", Category.MASTERY),
     MEMORY_MASTER("Eternal Memory", "All chunks at green memory health", "\uD83E\uDDE0", Category.MASTERY),
@@ -47,8 +51,22 @@ public enum BadgeDefinition {
     FEYNMAN_FIRST("First Teaching", "Complete your first Feynman explanation", "\uD83C\uDF93", Category.FEYNMAN),
     FEYNMAN_MASTER("Master Teacher", "Score >80% on 10 Feynman explanations", "\uD83D\uDCDD", Category.FEYNMAN),
 
-    // Path advancement
+    // \u2500\u2500 Tier completion (new four-tier structure) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    APPRENTICE_COMPLETE("Apprentice Graduate", "Complete all topics in the Apprentice tier", "\uD83C\uDF31", Category.PATH),
+    JUNIOR_COMPLETE("Junior Engineer", "Complete all topics in the Junior tier", "\uD83D\uDD28", Category.PATH),
+    SENIOR_COMPLETE("Senior Engineer", "Complete all topics in the Senior tier", "\u26A1", Category.PATH),
+    LEAD_COMPLETE("Lead Engineer", "Complete all topics in the Lead tier", "\uD83D\uDC51", Category.PATH),
+
+    // \u2500\u2500 Capstone completion (one per tier) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    APPRENTICE_CAPSTONE("First Creation", "Submit your Apprentice capstone project", "\uD83C\uDFD7\uFE0F", Category.PATH),
+    JUNIOR_CAPSTONE("Production Ready", "Submit your Junior capstone project", "\uD83D\uDE80", Category.PATH),
+    SENIOR_CAPSTONE("Systems Architect", "Submit your Senior capstone project", "\uD83C\uDF10", Category.PATH),
+    LEAD_CAPSTONE("Engineering Leader", "Submit your Lead capstone project", "\uD83C\uDFC6", Category.PATH),
+
+    // \u2500\u2500 Legacy path badges (kept for historical awarded badges) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /** @deprecated Use APPRENTICE_COMPLETE / JUNIOR_COMPLETE */
     PATH_PRACTITIONER("Practitioner Ascension", "Advance to Practitioner path", "\u2B50", Category.PATH),
+    /** @deprecated Use SENIOR_COMPLETE */
     PATH_EXPERT("Expert Ascension", "Advance to Expert path", "\uD83C\uDF1F", Category.PATH),
 
     // Rabbit holes

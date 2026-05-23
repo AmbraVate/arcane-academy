@@ -187,8 +187,36 @@ public class BadgeService implements GamificationFacade {
       case FEYNMAN_FIRST -> feynmanCompleted >= 1;
       case FEYNMAN_MASTER -> feynmanHighScore >= 10;
 
-      case PATH_PRACTITIONER -> profile != null && profile.getCurrentPath() == LearnerPath.PRACTITIONER;
-      case PATH_EXPERT -> profile != null && profile.getCurrentPath() == LearnerPath.EXPERT;
+      // ── Tier completion (new four-tier structure) ─────────────────────────
+      // Conditions fire when all chunks in the respective tier are completed.
+      // java-app-1..15, java-jun-1..20, etc. — checked by tier prefix in chunk ID.
+      case APPRENTICE_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-app-")) &&
+          isAllTierChunksComplete(completedChunks, "java-app-", 15);
+      case JUNIOR_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-jun-")) &&
+          isAllTierChunksComplete(completedChunks, "java-jun-", 20);
+      case SENIOR_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-sen-")) &&
+          isAllTierChunksComplete(completedChunks, "java-sen-", 19);
+      case LEAD_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-lea-")) &&
+          isAllTierChunksComplete(completedChunks, "java-lea-", 17);
+
+      // ── Capstone submissions ─────────────────────────────────────────────
+      case APPRENTICE_CAPSTONE -> completedChunks.contains("java-app-15");
+      case JUNIOR_CAPSTONE     -> completedChunks.contains("java-jun-20");
+      case SENIOR_CAPSTONE     -> completedChunks.contains("java-sen-19");
+      case LEAD_CAPSTONE       -> completedChunks.contains("java-lea-17");
+
+      // ── Note-taking milestones ──────────────────────────────────────────
+      // noteCount injected in a future sprint (Sprint 8) — always false until then.
+      case FIRST_NOTE    -> false;
+      case AVID_SCHOLAR  -> false;
+
+      // ── Legacy path badges ───────────────────────────────────────────────
+      case PATH_PRACTITIONER -> profile != null && (
+          profile.getCurrentPath() == LearnerPath.PRACTITIONER ||
+          profile.getCurrentPath() == LearnerPath.JUNIOR);
+      case PATH_EXPERT -> profile != null && (
+          profile.getCurrentPath() == LearnerPath.EXPERT ||
+          profile.getCurrentPath() == LearnerPath.SENIOR);
 
       case RABBIT_HOLE_FIRST -> false;
 
@@ -202,6 +230,13 @@ public class BadgeService implements GamificationFacade {
       case STREAK_7 -> user.getStreakDays() >= 7;
       case STREAK_30 -> user.getStreakDays() >= 30;
     };
+  }
+
+  private boolean isAllTierChunksComplete(Set<String> completedChunks, String prefix, int expectedCount) {
+    long matchingCompleted = completedChunks.stream()
+        .filter(id -> id.startsWith(prefix))
+        .count();
+    return matchingCompleted >= expectedCount;
   }
 
   private Set<String> getCompletedChunkIds(List<UserChunkProgress> allProgress) {

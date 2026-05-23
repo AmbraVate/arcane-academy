@@ -65,8 +65,13 @@ const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-teal', YELLOW: 'bg-orange', RED: 'bg-red',
 }
 
-const TIER_ORDER = ['FOUNDATION', 'ADVANCED', 'PRACTITIONER', 'EXPERT', 'CAPSTONE']
+const TIER_ORDER = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
 const TIER_LABELS: Record<string, string> = {
+  APPRENTICE: 'Apprentice',
+  JUNIOR:     'Junior',
+  SENIOR:     'Senior',
+  LEAD:       'Lead',
+  // Legacy fallbacks during migration
   FOUNDATION:   'Foundation',
   ADVANCED:     'Advanced',
   PRACTITIONER: 'Practitioner',
@@ -74,6 +79,11 @@ const TIER_LABELS: Record<string, string> = {
   CAPSTONE:     'Capstone',
 }
 const TIER_DESC: Record<string, string> = {
+  APPRENTICE: 'Learn programming fundamentals — variables, control flow, OOP, and writing your first programs.',
+  JUNIOR:     'Become a production engineer — collections, streams, databases, REST APIs, and testing.',
+  SENIOR:     'Own systems and technical delivery — JVM internals, concurrency, distributed systems, and architecture.',
+  LEAD:       'Operate as a Lead Software Engineer — strategy, governance, mentoring, and organisational impact.',
+  // Legacy fallbacks
   FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
   ADVANCED:     'Deeper theory and analysis — building fluency beyond the fundamentals.',
   PRACTITIONER: 'Applied skills in real-world contexts — bringing knowledge into practice.',

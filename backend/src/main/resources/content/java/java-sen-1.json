@@ -1,0 +1,310 @@
+{
+  "id": "java-sen-1",
+  "title": "JVM Internals",
+  "glyph": "🧠",
+  "sortOrder": 1,
+  "tier": "SENIOR",
+  "topicId": "java",
+  "prerequisites": ["java-jun-20"],
+  "subChunks": [
+    {
+      "id": "java-sen-1a",
+      "title": "Stack vs Heap Memory",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "StackAndHeap.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Why does calling a method not corrupt your variables? Why does creating a thousand objects not run out of memory immediately? The answer lies in how Java divides and manages its two main memory regions: the <strong>stack</strong> and the <strong>heap</strong>.</p>",
+      "explanationHtml": "<h3>Stack Memory</h3><p>The stack is a LIFO (Last-In, First-Out) structure. It holds:</p><ul><li>Local primitive variables (<code>int x = 5</code>)</li><li>Local reference variables (the pointer to an object, not the object itself)</li><li>Method call frames — when a method is called, a new frame is pushed; when it returns, the frame is popped</li></ul><p>Stack access is <strong>fast</strong> and <strong>automatic</strong> — the frame disappears when the method ends. Stack memory is limited (typically 512KB–1MB). A very deep recursion causes a <code>StackOverflowError</code>.</p><h3>Heap Memory</h3><p>The heap is a larger, unordered region that holds:</p><ul><li>All objects created with <code>new</code></li><li>Arrays</li><li>String objects (though string <em>literals</em> go in the string pool, a special region of the heap)</li></ul><p>Objects on the heap persist until the <strong>Garbage Collector</strong> reclaims them.</p><h3>Primitives vs References</h3><pre><code>int x = 42;               // primitive — value lives on the stack\nString s = \"hello\";       // reference on stack; object on heap\nint[] arr = {1, 2, 3};   // reference on stack; array on heap\n\nint a = 10;\nint b = a;  // b gets a COPY of 10 — changing b does not affect a\nb = 99;\nSystem.out.println(a); // still 10\n\nint[] arr1 = {1, 2, 3};\nint[] arr2 = arr1; // arr2 points to the SAME array!\narr2[0] = 99;\nSystem.out.println(arr1[0]); // 99 — arr1 also changed!</code></pre><p>This distinction — value semantics for primitives, reference semantics for objects — is one of the most important concepts in Java.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "Eldrin takes you to the Academy's magical library — two wings, divided by a glass wall. The left wing is tiny but blazingly fast; the right wing is vast but takes a moment to navigate."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "The left wing is the <strong>stack</strong> — small, ordered, lightning-fast. Every time you call a method, a new shelf appears at the top. Local variables are placed on that shelf. When the method returns, the entire shelf vanishes — no cleanup needed."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "The right wing is the <strong>heap</strong> — vast, unordered, holding every object you create with <code>new</code>. The stack holds only a <em>reference</em> — a magical pointer — to the heap object. The object itself lives on the heap until the garbage collector claims it."},
+        {"type": "example", "speaker": "Stack vs heap", "text": "// Primitive: value lives entirely on the stack\nint x = 42;\n\n// Object: reference on stack, object on heap\nWizard w = new Wizard(\"Lyria\", 100);"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "This creates the most important distinction in Java: <em>value semantics</em> versus <em>reference semantics</em>. Copying a primitive gives you an independent duplicate. Copying a reference gives you a second pointer to the <em>same</em> object."},
+        {"type": "example", "speaker": "The reference trap", "text": "int a = 10;\nint b = a;  // independent copy\nb = 99;\nSystem.out.println(a); // 10 — unaffected\n\nint[] arr1 = {1, 2, 3};\nint[] arr2 = arr1; // both point to the same array!\narr2[0] = 99;\nSystem.out.println(arr1[0]); // 99 — arr1 also changed!"}
+      ],
+      "guidedPracticeHtml": "<p>Demonstrate the difference between value and reference semantics:</p><ol><li>Declare <code>int p = 5</code> and <code>int q = p</code>. Modify <code>q</code> to <code>99</code>. Print <code>p</code> (it should still be 5).</li><li>Declare <code>int[] arr1 = {10, 20, 30}</code> and <code>int[] arr2 = arr1</code>. Set <code>arr2[1] = 999</code>. Print <code>arr1[1]</code> (it should be 999 — same array).</li><li>Print the result of <code>\"hello\" == \"hello\"</code> and of <code>new String(\"hello\") == new String(\"hello\")</code> to see string literal pooling vs heap objects.</li></ol>",
+      "guidedPracticeStarterCode": "// 1. Primitive copy (value semantics)\nint p = 5;\nint q = p;\nq = 99;\nSystem.out.println(p); // should be 5\n\n// 2. Array alias (reference semantics)\nint[] arr1 = {10, 20, 30};\nint[] arr2 = arr1;\narr2[1] = 999;\nSystem.out.println(arr1[1]); // should be 999\n\n// 3. String == comparison\n",
+      "guidedPracticeTests": [
+        {"label": "Primitive unchanged after copy-modify", "input": "null", "expected": "5"},
+        {"label": "Array shared via reference", "input": "null", "expected": "999"},
+        {"label": "String literal == true", "input": "null", "expected": "true"},
+        {"label": "new String == false", "input": "null", "expected": "false"}
+      ],
+      "feynmanPrompt": "Explain the difference between the stack and the heap in Java as if you were teaching a junior developer. Include what types of data go where, and explain the difference between value and reference semantics with a concrete example.",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Demonstrate the difference between value and reference semantics:</p><ol><li>Declare <code>int p = 5</code> and <code>int q = p</code>. Modify <code>q</code> to <code>99</code>. Print <code>p</code> (it should still be 5).</li><li>Declare <code>int[] arr1 = {10, 20, 30}</code> and <code>int[] arr2 = arr1</code>. Set <code>arr2[1] = 999</code>. Print <code>arr1[1]</code> (it should be 999 — same array).</li><li>Print the result of <code>\"hello\" == \"hello\"</code> and of <code>new String(\"hello\") == new String(\"hello\")</code> to see string literal pooling vs heap objects.</li></ol>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Primitive unchanged after copy-modify", "input": "null", "expected": "5"},
+        {"label": "Array shared via reference", "input": "null", "expected": "999"},
+        {"label": "String literal == true", "input": "null", "expected": "true"},
+        {"label": "new String == false", "input": "null", "expected": "false"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Where are objects created with <code>new</code> stored?</p>",
+          "options": ["Stack", "Heap", "String pool", "Register"],
+          "correctAnswer": "Heap",
+          "explanationHtml": "<p>Objects created with <code>new</code> are allocated on the heap. The <em>reference</em> to the object (the variable) lives on the stack, but the actual object data is on the heap.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "int x = 10;\nint y = x;\ny = 50;\nSystem.out.println(x);",
+          "correctAnswer": "10",
+          "explanationHtml": "<p>Primitives use value semantics — <code>y</code> gets a copy of <code>x</code>'s value. Changing <code>y</code> does not affect <code>x</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Two variables reference the same array. If you modify the array through one variable, what happens when you read via the other?</p>",
+          "options": ["The other variable still has the old values", "The other variable sees the updated values", "A ConcurrentModificationException is thrown", "The array is copied automatically"],
+          "correctAnswer": "The other variable sees the updated values",
+          "explanationHtml": "<p>Arrays are objects stored on the heap. Both variables hold references (pointers) to the same memory. Modifying the array through one reference is immediately visible through the other.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer sees this and is confused that the value is unchanged. What is the bug?</p>",
+          "codeSnippet": "static void addFive(int n) { n += 5; }\n// in main:\nint value = 10;\naddFive(value);\nSystem.out.println(value); // still 10",
+          "correctAnswer": "Java passes primitives by value. addFive gets a copy of n; changing that copy does not affect the caller's variable. To return a modified value, the method should return int and the caller should reassign: value = addFive(value);",
+          "explanationHtml": "<p>Java is always <em>pass-by-value</em>. For primitives, the method receives a copy of the value. Modifications inside the method do not affect the original variable. For objects, the method receives a copy of the <em>reference</em> — you can mutate the object through it, but reassigning the reference variable inside the method does not affect the caller's reference.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-sen-1b",
+      "title": "Garbage Collection Concepts",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "GarbageCollection.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>In C, programmers manually free memory. Forgetting causes <em>memory leaks</em>. In Java, an automated system called the <strong>Garbage Collector</strong> handles cleanup — but understanding it prevents subtle performance bugs.</p>",
+      "explanationHtml": "<h3>What is Garbage Collection?</h3><p>The Garbage Collector (GC) automatically reclaims memory occupied by objects that are no longer reachable from any live reference. You never call <code>free()</code> in Java — the JVM handles it.</p><h3>When is an object eligible for GC?</h3><pre><code>Wizard w = new Wizard(\"Lyria\", 100); // object on heap, w references it\nw = null;                            // w no longer references the object\n// the Wizard object is now eligible for GC\n\n// OR: reference goes out of scope\nvoid createWizard() {\n    Wizard temp = new Wizard(\"Temp\", 10);\n    // temp goes out of scope when method ends — object eligible for GC\n}</code></pre><h3>GC Roots</h3><p>An object is <em>reachable</em> if there is a chain of references from a GC root to it. GC roots include: local variables on the stack, static fields, and JNI references. Everything else is collectible.</p><h3>Generational GC</h3><p>Modern JVMs divide the heap into generations:</p><ul><li><strong>Young generation</strong> — newly created objects (Eden space + Survivor spaces). Most objects die young — GC here is fast.</li><li><strong>Old generation (Tenured)</strong> — objects that survived several young-GC cycles. Collected less frequently.</li></ul><p>This matches the observation that most objects are short-lived (e.g., a loop variable, a temporary result).</p><h3>Avoiding memory leaks in Java</h3><p>Java can still leak memory if you hold unintended references:</p><pre><code>// A growing static list holds references forever\nstatic List&lt;byte[]&gt; held = new ArrayList&lt;&gt;();\nfor (int i = 0; i &lt; 1000; i++) {\n    held.add(new byte[1_000_000]); // 1 MB each — never collected!\n}</code></pre><p>Always remove references you no longer need: clear collections, close resources with <code>try-with-resources</code>.</p><p><strong>Note on finalize():</strong> <code>finalize()</code> is deprecated for removal in Java 21 and must not be used in new code. For deterministic cleanup, implement <code>AutoCloseable</code> and use <code>try-with-resources</code>. For GC-triggered cleanup when try-with-resources is not applicable (e.g. wrapping a native resource), register a <code>java.lang.ref.Cleaner</code> action:</p><pre><code>// finalize() is deprecated for removal — use Cleaner instead\nprivate static final java.lang.ref.Cleaner CLEANER = java.lang.ref.Cleaner.create();\nprivate final java.lang.ref.Cleaner.Cleanable cleanable;\n\nMyResource() {\n    cleanable = CLEANER.register(this, () -&gt; System.out.println(\"Resource cleaned up\"));\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "Deep below the Academy, enchanted automata silently patrol the vaults, dissolving conjurations that no wizard is still holding."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Unlike the old days when wizards had to dissolve their own constructs — and some forgot, causing catastrophic overloads — Java employs <strong>Garbage Collectors</strong>. Any object that no wizard is still pointing to is dissolved automatically."},
+        {"type": "example", "speaker": "Making an object eligible", "text": "Wizard w = new Wizard(\"Lyria\", 100);\n// w is the only reference to this Wizard\nw = null;\n// Now the Wizard object has no references — eligible for GC"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "The GC finds collectible objects by walking from <em>roots</em> — the live variables on the stack and static fields. Anything reachable is safe. Everything else is claimed."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Java's GC is <em>generational</em>. Most objects are short-lived — a loop counter, a builder, a temporary result. These live in the <em>young generation</em> and are cleared rapidly. Objects that survive long enough are promoted to the <em>old generation</em>, collected less frequently but more thoroughly."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "But never be complacent. Even in Java, you can leak memory by holding references you no longer need — a static collection that grows forever, an event listener never deregistered. The GC cannot collect what is still referenced."}
+      ],
+      "guidedPracticeHtml": "<p>This exercise is observational — we'll demonstrate reachability with a simulation using a simple tracking class.</p><p>Write a class <code>TrackedObject</code> with a <code>String label</code> field, a constructor, and a <code>close()</code> method that prints <code>\"[label] closed\"</code>. Use <code>try-with-resources</code> to ensure the object is closed automatically by implementing <code>AutoCloseable</code>.</p><p><strong>Note:</strong> <code>finalize()</code> is deprecated for removal in Java 21. The modern approach for cleanup actions is to implement <code>AutoCloseable</code> and use <code>try-with-resources</code>, or to register a <code>java.lang.ref.Cleaner</code> action for cases where try-with-resources is not applicable.</p><p>In main: use a <code>try-with-resources</code> block to create a <code>TrackedObject</code> named <code>\"Alpha\"</code> — the close method will be called automatically. Then create <code>TrackedObject b = new TrackedObject(\"Beta\")</code> and print <code>b.label</code>. Finally, print <code>\"Done\"</code>.</p>",
+      "guidedPracticeStarterCode": "class TrackedObject implements AutoCloseable {\n    public String label;\n\n    public TrackedObject(String label) {\n        this.label = label;\n    }\n\n    @Override\n    public void close() {\n        System.out.println(label + \" closed\");\n    }\n}\n\n// In main:\ntry (TrackedObject a = new TrackedObject(\"Alpha\")) {\n    // Alpha will be closed automatically when this block ends\n}\nTrackedObject b = new TrackedObject(\"Beta\");\nSystem.out.println(b.label); // Beta must still be accessible\nSystem.out.println(\"Done\");\n",
+      "guidedPracticeTests": [
+        {"label": "Alpha closed automatically", "input": "null", "expected": "Alpha closed"},
+        {"label": "b.label still accessible", "input": "null", "expected": "Beta"},
+        {"label": "Done is printed", "input": "null", "expected": "Done"}
+      ],
+      "feynmanPrompt": "Explain Java's garbage collection to someone coming from a C/C++ background. What does the GC do for you? What can still go wrong? Mention the concept of generational GC.",
+      "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Write a class <code>TrackedObject</code> with a <code>String label</code> field, a constructor, and a <code>close()</code> method that prints <code>\"[label] closed\"</code>. Use <code>try-with-resources</code> to ensure the object is closed automatically by implementing <code>AutoCloseable</code>.</p><p>In main: use a <code>try-with-resources</code> block to create a <code>TrackedObject</code> named <code>\"Alpha\"</code> — the close method will be called automatically. Then create <code>TrackedObject b = new TrackedObject(\"Beta\")</code> and print <code>b.label</code>. Finally, print <code>\"Done\"</code>.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Alpha closed automatically", "input": "null", "expected": "Alpha closed"},
+        {"label": "b.label still accessible", "input": "null", "expected": "Beta"},
+        {"label": "Done is printed", "input": "null", "expected": "Done"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>When does an object become eligible for garbage collection?</p>",
+          "options": ["When the programmer calls System.gc()", "When no live references point to it", "When the JVM runs out of heap space", "After 30 seconds of inactivity"],
+          "correctAnswer": "When no live references point to it",
+          "explanationHtml": "<p>An object is eligible for GC when it is no longer reachable — no chain of references from any GC root leads to it. <code>System.gc()</code> is only a hint, not a guarantee.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Java's garbage collector guarantees that memory will be freed at a predictable point in time.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>The GC runs at its own discretion, not on a predictable schedule. <code>System.gc()</code> is a hint that may be ignored. You cannot rely on <code>finalize()</code> being called at a specific time.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Which of the following can cause a memory leak in Java despite the GC?</p>",
+          "options": ["Using local variables inside a method", "Adding objects to a static List and never removing them", "Creating objects inside a loop that terminates", "Passing objects to methods as arguments"],
+          "correctAnswer": "Adding objects to a static List and never removing them",
+          "explanationHtml": "<p>A static field is a GC root. Objects held in a static collection remain reachable forever — the GC cannot collect them even if your code never uses them again. This is the most common source of memory leaks in Java applications.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Why does Java's GC use generational collection (young + old generation) rather than a single scan of the whole heap?</p>",
+          "options": ["To support multiple threads", "Because most objects die young — frequent short scans of the young generation are cheaper than scanning everything", "To support both stack and heap", "Java's GC is not generational"],
+          "correctAnswer": "Because most objects die young — frequent short scans of the young generation are cheaper than scanning everything",
+          "explanationHtml": "<p>Empirical data shows most objects are short-lived (temporary variables, builders, DTOs). Collecting only the young generation frequently is cheap and reclaims the vast majority of garbage. Long-lived objects are promoted to the old generation and collected less frequently, avoiding the cost of scanning stable objects over and over.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-sen-1c",
+      "title": "Reflection API",
+      "sortOrder": 3,
+      "xpReward": 100,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Every Java class carries a blueprint of itself — fields, methods, constructors — locked inside a <code>Class</code> object. Reflection is the key that opens it, letting frameworks inspect and manipulate code they've never seen at compile time.</p>",
+      "explanationHtml": "<h3>Obtaining a Class Object</h3><p>There are three ways to get a <code>Class&lt;T&gt;</code> object — the entry point for all reflection.</p><pre><code>// 1. Class literal — compile-time, type-safe, no exception\nClass&lt;String&gt; c1 = String.class;\n\n// 2. Instance method — from a live object\nString s = \"hello\";\nClass&lt;?&gt; c2 = s.getClass();\n\n// 3. Class.forName() — runtime lookup by fully qualified name\n//    Throws ClassNotFoundException if not found\nClass&lt;?&gt; c3 = Class.forName(\"java.lang.String\");\n\nSystem.out.println(c1.getSimpleName()); // \"String\"\nSystem.out.println(c1 == c2);          // true — same Class object</code></pre><h3>Inspecting Fields and Methods</h3><p><code>getDeclaredFields()</code> returns all fields declared in the class (including private ones). <code>getFields()</code> returns only public fields, including inherited ones. The same distinction applies to <code>getDeclaredMethods()</code> vs <code>getMethods()</code>.</p><pre><code>class Spell {\n    private String name;\n    private int power;\n    Spell(String name, int power) { this.name = name; this.power = power; }\n}\n\nClass&lt;?&gt; clazz = Spell.class;\n\n// Print all declared field names\nfor (Field field : clazz.getDeclaredFields()) {\n    System.out.println(\"Field: \" + field.getName() + \" (\" + field.getType().getSimpleName() + \")\");\n}\n\n// Print all declared method names\nfor (Method method : clazz.getDeclaredMethods()) {\n    System.out.println(\"Method: \" + method.getName());\n}</code></pre><h3>Accessing Private Fields with setAccessible</h3><p>Private fields normally block reflective access. <code>field.setAccessible(true)</code> bypasses the access check — powerful but use with care. This is how many serialisation frameworks and ORMs read private fields.</p><pre><code>Spell spell = new Spell(\"Fireball\", 90);\nField nameField = Spell.class.getDeclaredField(\"name\");\nnameField.setAccessible(true); // bypass private access check\nString value = (String) nameField.get(spell); // read the private field\nSystem.out.println(value); // \"Fireball\"\n\n// Writing to a private field:\nnameField.set(spell, \"Blizzard\");\nSystem.out.println((String) nameField.get(spell)); // \"Blizzard\"</code></pre><h3>Invoking Methods and Creating Instances</h3><p>Reflection can also call methods and construct objects dynamically — critical for dependency injection frameworks.</p><pre><code>// Creating an instance via Constructor\nConstructor&lt;?&gt; ctor = Spell.class.getDeclaredConstructor(String.class, int.class);\nctor.setAccessible(true);\nSpell newSpell = (Spell) ctor.newInstance(\"Thunder\", 75);\n\n// Invoking a method dynamically\nMethod method = String.class.getMethod(\"toUpperCase\");\nString result = (String) method.invoke(\"fireball\"); // \"FIREBALL\"\nSystem.out.println(result);</code></pre><h3>Costs and Risks of Reflection</h3><p>Reflection is powerful but carries real costs: <strong>Performance</strong> — reflective calls bypass JIT optimisations, roughly 10-100x slower than direct calls. <strong>Type safety</strong> — errors appear at runtime, not compile time. <strong>Encapsulation</strong> — bypasses access modifiers, violating information hiding. <strong>Security</strong> — restricted by SecurityManager in some environments. Use reflection sparingly and only where it provides irreplaceable value (frameworks, testing, serialisation).</p><pre><code>// Prefer direct access when possible:\nspell.getName(); // fast, type-safe, clear\n\n// Use reflection only when the type is unknown at compile time:\nvoid inspect(Object obj) {\n    for (Field f : obj.getClass().getDeclaredFields()) {\n        f.setAccessible(true);\n        System.out.println(f.getName() + \" = \" + f.get(obj));\n    }\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's ancient Registry claimed it could tell you everything about any scroll, any artifact, any spell — without ever having opened them before. The secret was the Reflection Codex: a mirror that showed a class's own blueprint."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Every Java class carries a Class object — a runtime descriptor of its own structure. With reflection, you can read that descriptor to discover fields, methods, and constructors you never knew existed at compile time."},
+        {"type": "example", "speaker": "Getting a Class Object", "text": "Class<?> clazz = Spell.class; // or spell.getClass()\nSystem.out.println(clazz.getSimpleName()); // \"Spell\""},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "getDeclaredFields reveals every field — even the private ones. But touching them requires setAccessible(true), a powerful incantation that bypasses the normal wards of encapsulation. Use it only when the need is genuine."},
+        {"type": "example", "speaker": "Reading a Private Field", "text": "Field f = Spell.class.getDeclaredField(\"name\");\nf.setAccessible(true);\nSystem.out.println(f.get(spell)); // \"Fireball\""},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Spring, Hibernate, Jackson — these mighty frameworks use reflection at their core. They never know your class names at compile time. At runtime, they peer into your classes and wire everything together."},
+        {"type": "narration", "text": "The Registry hummed with power. Given any artifact — a Spell, a Record, a config class — it could print every field name and value, construct new instances, and call methods by name. The mirror of code had revealed all secrets."}
+      ],
+      "guidedPracticeHtml": "<p>Define a <code>Spell</code> record or class (static inner class in Main) with fields <code>String name</code> and <code>int power</code>. Create an instance with name <code>\"Fireball\"</code> and power <code>90</code>. Then use reflection to:</p><ol><li>Get the <code>Class</code> object and print its simple name.</li><li>Iterate <code>getDeclaredFields()</code> and print each field's name.</li><li>Get the <code>name</code> field specifically, call <code>setAccessible(true)</code>, and print its value from the instance.</li></ol>",
+      "guidedPracticeStarterCode": "import java.lang.reflect.Field;\n\npublic class Main {\n\n    // Define a Spell record or class with name and power fields\n    record Spell(String name, int power) {}\n\n    public static void main(String[] args) throws Exception {\n        Spell spell = new Spell(\"Fireball\", 90);\n\n        // Step 1: Get the Class object and print its simple name\n        Class<?> clazz = spell.getClass();\n        System.out.println(clazz.getSimpleName());\n\n        // Step 2: Print all declared field names\n        for (Field field : clazz.getDeclaredFields()) {\n            // TODO: print field.getName()\n        }\n\n        // Step 3: Get the 'name' field, set accessible, print its value\n        Field nameField = clazz.getDeclaredField(\"name\");\n        // TODO: nameField.setAccessible(true)\n        // TODO: print nameField.get(spell)\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "Class simple name printed", "input": "null", "expected": "Spell"},
+        {"label": "Field names printed", "input": "null", "expected": "name"},
+        {"label": "Field value Fireball printed", "input": "null", "expected": "Fireball"}
+      ],
+      "feynmanPrompt": "Explain what a Class object is in Java and why every class has exactly one. What is setAccessible(true) really doing — what check does it bypass — and why is this dangerous? Describe one legitimate framework use case for reflection and why that use case cannot be done without it.",
+      "soloPracticeHtml": "<p>From memory, define a Spell record with name and power fields. Create an instance with name \"Fireball\" and power 90. Use reflection to: print the class's simple name, print all declared field names, then get the name field, set it accessible, and print its value from the instance.</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "Class simple name printed", "input": "null", "expected": "Spell"},
+        {"label": "Field name printed", "input": "null", "expected": "name"},
+        {"label": "Field value Fireball printed", "input": "null", "expected": "Fireball"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "Class<T> Object", "description": "Every type in Java has exactly one Class object per classloader, representing its runtime type descriptor. It's the entry point for all reflection operations."},
+        {"term": "getDeclaredFields vs getFields", "description": "getDeclaredFields() returns all fields of THIS class (including private) but not inherited ones. getFields() returns all public fields including inherited ones from superclasses."},
+        {"term": "setAccessible(true)", "description": "Bypasses Java's access control check for the specific Field/Method/Constructor. On Java 9+, module boundaries may still restrict this — modules must explicitly open packages for deep reflection."},
+        {"term": "Module System & Reflection", "description": "Java 9 modules restrict reflective access to private members across module boundaries. Libraries like Hibernate must explicitly open their modules or be placed in unnamed modules."},
+        {"term": "Method Handles", "description": "java.lang.invoke.MethodHandle (Java 7+) provides faster, type-safe reflective access than the traditional Field/Method API. Used internally by the JVM for lambda implementation and invokedynamic."},
+        {"term": "Proxy (Dynamic)", "description": "java.lang.reflect.Proxy creates implementations of interfaces at runtime using reflection. Spring's AOP and many mocking frameworks use dynamic proxies to intercept method calls."},
+        {"term": "Jackson & Reflection", "description": "Jackson serialises/deserialises JSON using reflection to discover fields and their types at runtime. It reads @JsonProperty annotations to map JSON keys to field names without compile-time knowledge of your class."},
+        {"term": "ClassLoader", "description": "The mechanism that loads class bytecode into the JVM. Each Class object is associated with the ClassLoader that loaded it. Custom ClassLoaders enable hot-reloading and plugin systems."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which method returns ALL fields of a class including private ones, but excludes inherited fields?</p>",
+          "options": ["getFields()", "getDeclaredFields()", "getAllFields()", "getPrivateFields()"],
+          "correctAnswer": "getDeclaredFields()",
+          "explanationHtml": "<p><code>getDeclaredFields()</code> returns every field declared in <em>this</em> class (public, protected, package, private) but not fields from superclasses. <code>getFields()</code> returns only public fields, including inherited ones.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "import java.lang.reflect.Field;\npublic class Main {\n    record Potion(String type, int potency) {}\n    public static void main(String[] args) throws Exception {\n        Potion p = new Potion(\"Mana\", 75);\n        System.out.println(p.getClass().getSimpleName());\n        Field f = p.getClass().getDeclaredField(\"potency\");\n        f.setAccessible(true);\n        System.out.println(f.get(p));\n    }\n}",
+          "correctAnswer": "Potion\n75",
+          "explanationHtml": "<p>getSimpleName() returns \"Potion\". getDeclaredField(\"potency\") gets the potency field; setAccessible(true) allows reading; f.get(p) returns 75.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This reflection code throws an exception. What is wrong and how do you fix it?</p>",
+          "codeSnippet": "public class Main {\n    static class Spell {\n        private String name = \"Frost\";\n    }\n    public static void main(String[] args) throws Exception {\n        Spell spell = new Spell();\n        Field f = Spell.class.getDeclaredField(\"name\");\n        // setAccessible not called!\n        System.out.println(f.get(spell)); // throws IllegalAccessException\n    }\n}",
+          "correctAnswer": "Add f.setAccessible(true) before calling f.get(spell) to bypass the private access check",
+          "explanationHtml": "<p>Accessing a private field via reflection without calling <code>setAccessible(true)</code> throws <code>IllegalAccessException</code>. Add <code>f.setAccessible(true);</code> after getting the field and before calling <code>f.get(spell)</code>.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>When is using reflection justified over direct code?</p>",
+          "options": [
+            "Whenever you want to avoid writing boilerplate getter methods",
+            "When the class name or field name is not known at compile time, such as in a generic serialisation framework",
+            "When performance is critical — reflection is faster than direct method calls",
+            "When you want to access static fields only"
+          ],
+          "correctAnswer": "When the class name or field name is not known at compile time, such as in a generic serialisation framework",
+          "explanationHtml": "<p>Reflection's only legitimate advantage is handling <em>unknown types at compile time</em>. For known types, direct access is always preferable: it's faster, type-safe, and clear. Reflection is slower than direct calls, not faster — it bypasses JIT optimisations.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-sen-1d",
+      "title": "Custom Annotations",
+      "sortOrder": 4,
+      "xpReward": 100,
+      "filename": "Main.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Annotations are metadata woven into the fabric of your code — invisible at runtime unless you read them with reflection. They power Spring's component scanning, JUnit's test discovery, and Jackson's JSON mapping.</p>",
+      "explanationHtml": "<h3>Defining a Custom Annotation</h3><p>Annotations are defined with <code>@interface</code>. Elements are declared like methods; provide default values with <code>default</code>. Elements without defaults must be provided at the use site.</p><pre><code>@interface SpellMeta {\n    String school() default \"Unknown\";\n    int tier() default 1;\n    boolean experimental() default false;\n}\n\n// Usage:\n@SpellMeta(school = \"Fire\", tier = 3)\nclass Inferno {\n    // class body\n}</code></pre><h3>Retention Policies</h3><p><code>@Retention</code> controls when the annotation is available. This is critical — choose the wrong policy and you won't be able to read it at the time you need it.</p><pre><code>@Retention(RetentionPolicy.SOURCE)  // only in source; discarded by compiler\n@Retention(RetentionPolicy.CLASS)   // kept in .class file; not at runtime (default)\n@Retention(RetentionPolicy.RUNTIME) // available at runtime via reflection ← use this!\n\n// Example:\nimport java.lang.annotation.Retention;\nimport java.lang.annotation.RetentionPolicy;\n\n@Retention(RetentionPolicy.RUNTIME) // MUST be RUNTIME to read via reflection\n@interface SpellMeta {\n    String school() default \"Unknown\";\n    int tier() default 1;\n}</code></pre><h3>Target — Where the Annotation Can Be Applied</h3><p><code>@Target</code> restricts which code elements the annotation may appear on. Omitting @Target means it can go anywhere.</p><pre><code>import java.lang.annotation.ElementType;\nimport java.lang.annotation.Target;\n\n@Target({ElementType.TYPE, ElementType.METHOD})\n@interface SpellMeta {\n    // This annotation is only valid on types or methods\n    // Applying it to a field causes a compile error\n    String school() default \"Unknown\";\n    int tier() default 1;\n}\n\n// ElementType options:\n// TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR,\n// LOCAL_VARIABLE, ANNOTATION_TYPE, PACKAGE, MODULE</code></pre><h3>Reading Annotations at Runtime via Reflection</h3><p>With <code>@Retention(RUNTIME)</code>, you can read annotations at runtime using <code>getAnnotation()</code> or <code>isAnnotationPresent()</code>.</p><pre><code>@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface SpellMeta {\n    String school() default \"Unknown\";\n    int tier() default 1;\n}\n\n@SpellMeta(school = \"Fire\", tier = 3)\nclass Inferno {}\n\n// Reading it:\nClass&lt;?&gt; clazz = Inferno.class;\nif (clazz.isAnnotationPresent(SpellMeta.class)) {\n    SpellMeta meta = clazz.getAnnotation(SpellMeta.class);\n    System.out.println(\"School: \" + meta.school()); // \"School: Fire\"\n    System.out.println(\"Tier: \"   + meta.tier());   // \"Tier: 3\"\n}</code></pre><h3>Real-World Annotation Use Cases</h3><p>Annotations are used everywhere in modern Java: <code>@SpringBootApplication</code> triggers component scanning; <code>@Test</code> marks JUnit test methods; <code>@JsonProperty</code> renames JSON fields; <code>@Column</code> maps fields to DB columns; <code>@Validated</code> triggers Bean Validation. Behind each one is reflection code reading the annotation and acting on it at runtime (or compile time for SOURCE-retained ones like <code>@Override</code> and Lombok annotations).</p><pre><code>// @Override is SOURCE-retained — compiler checks, then discards\n@Override\npublic String toString() { return \"Spell\"; }\n\n// @NonNull in Lombok is also SOURCE — generates null checks at compile time\n// @Entity in JPA is CLASS or RUNTIME — Hibernate reads it to map tables</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy needed a way to mark every spell with its school and power tier — metadata that frameworks could read automatically without requiring every mage to write inspection code by hand. The answer lay in the art of annotation."},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "An annotation is a label stitched into the very fabric of a class. It carries no logic itself — but frameworks that find it can read its values and act accordingly."},
+        {"type": "example", "speaker": "Defining an Annotation", "text": "@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.TYPE)\n@interface SpellMeta {\n    String school() default \"Unknown\";\n    int tier() default 1;\n}"},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Retention is everything. SOURCE annotations dissolve after compilation. CLASS annotations persist in the bytecode but remain invisible to running programs. Only RUNTIME annotations can be read by the reflection spells we mastered in the last lesson."},
+        {"type": "example", "speaker": "Reading an Annotation", "text": "SpellMeta meta = Inferno.class.getAnnotation(SpellMeta.class);\nSystem.out.println(\"School: \" + meta.school()); // \"School: Fire\"\nSystem.out.println(\"Tier: \" + meta.tier());     // \"Tier: 3\""},
+        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Spring, JUnit, Jackson — their magic is largely annotations read at runtime. You write @Component, Spring reads it. You write @Test, JUnit reads it. Now you know how they perform that feat."},
+        {"type": "narration", "text": "The Registry now catalogued itself. Each spell class bore its @SpellMeta label, and the framework read every label at startup — building the entire school hierarchy automatically without a single line of explicit registration code."}
+      ],
+      "guidedPracticeHtml": "<p>Define a <code>@SpellMeta</code> annotation with elements <code>String school() default \"Unknown\"</code> and <code>int tier() default 1</code>. Add <code>@Retention(RetentionPolicy.RUNTIME)</code> and <code>@Target(ElementType.TYPE)</code>. Apply it to an inner class: <code>@SpellMeta(school=\"Fire\", tier=3) static class Inferno {}</code>. Use reflection to read the annotation and print <code>\"School: Fire\"</code> and <code>\"Tier: 3\"</code>.</p>",
+      "guidedPracticeStarterCode": "import java.lang.annotation.*;\n\npublic class Main {\n\n    // TODO: add @Retention(RetentionPolicy.RUNTIME)\n    // TODO: add @Target(ElementType.TYPE)\n    @interface SpellMeta {\n        String school() default \"Unknown\";\n        int tier() default 1;\n    }\n\n    // TODO: annotate with @SpellMeta(school=\"Fire\", tier=3)\n    static class Inferno {}\n\n    public static void main(String[] args) {\n        Class<?> clazz = Inferno.class;\n\n        if (clazz.isAnnotationPresent(SpellMeta.class)) {\n            SpellMeta meta = clazz.getAnnotation(SpellMeta.class);\n            // TODO: print \"School: \" + meta.school()\n            // TODO: print \"Tier: \" + meta.tier()\n        }\n    }\n}",
+      "guidedPracticeTests": [
+        {"label": "School value printed correctly", "input": "null", "expected": "School: Fire"},
+        {"label": "Tier value printed correctly", "input": "null", "expected": "Tier: 3"}
+      ],
+      "feynmanPrompt": "Explain the three retention policies and when you would choose each. Why is @Retention(RetentionPolicy.RUNTIME) essential for framework-driven annotation processing, and what happens if you forget it? Also explain what @Target does and why restricting annotation targets is good practice.",
+      "soloPracticeHtml": "<p>From memory, define a @SpellMeta annotation with school() and tier() elements and appropriate defaults. Apply the correct @Retention and @Target meta-annotations. Create an annotated class Inferno with school=\"Fire\" and tier=3. Use reflection to read and print \"School: Fire\" and \"Tier: 3\".</p>",
+      "soloPracticeStarterCode": "",
+      "soloPracticeTests": [
+        {"label": "School value printed correctly", "input": "null", "expected": "School: Fire"},
+        {"label": "Tier value printed correctly", "input": "null", "expected": "Tier: 3"}
+      ],
+      "rabbitHoleTerms": [
+        {"term": "@Retention", "description": "A meta-annotation controlling annotation lifetime. SOURCE: compile-time only. CLASS: in bytecode but not runtime. RUNTIME: readable via reflection. Always use RUNTIME for framework processing."},
+        {"term": "@Target", "description": "A meta-annotation restricting which code elements an annotation may appear on: TYPE, METHOD, FIELD, PARAMETER, CONSTRUCTOR, etc. Omitting @Target means the annotation is unrestricted."},
+        {"term": "Meta-Annotations", "description": "Annotations that annotate other annotations. @Retention, @Target, @Documented, @Inherited, and @Repeatable are the standard meta-annotations defined in java.lang.annotation."},
+        {"term": "@Repeatable", "description": "Allows the same annotation to be applied multiple times to the same element. Requires a container annotation type that holds an array of the repeatable annotation."},
+        {"term": "Annotation Processor (APT)", "description": "A compile-time tool (javax.annotation.processing.Processor) that reads SOURCE or CLASS-retained annotations and generates code or validates constraints. Used by Lombok, MapStruct, and Dagger."},
+        {"term": "Bean Validation (JSR-380)", "description": "A standard annotation-based validation framework. @NotNull, @Size, @Min, @Email — each is a RUNTIME-retained annotation read by a validator (like Hibernate Validator) to enforce constraints."},
+        {"term": "@Documented", "description": "A meta-annotation indicating the annotated annotation should appear in Javadoc. Annotations are excluded from Javadoc by default unless @Documented is present."},
+        {"term": "@Inherited", "description": "When present, a class-level annotation is automatically inherited by subclasses. Only works for class annotations — method and field annotations are never inherited."}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which retention policy must you use for an annotation that should be readable at runtime via reflection?</p>",
+          "options": ["RetentionPolicy.SOURCE", "RetentionPolicy.CLASS", "RetentionPolicy.RUNTIME", "RetentionPolicy.REFLECT"],
+          "correctAnswer": "RetentionPolicy.RUNTIME",
+          "explanationHtml": "<p><code>RetentionPolicy.RUNTIME</code> keeps the annotation in the bytecode AND makes it accessible via the reflection API. SOURCE annotations are discarded by the compiler; CLASS annotations are in bytecode but not accessible at runtime.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this print?</p>",
+          "codeSnippet": "import java.lang.annotation.*;\npublic class Main {\n    @Retention(RetentionPolicy.RUNTIME)\n    @interface Tag { String value() default \"none\"; }\n\n    @Tag(\"arcane\")\n    static class Widget {}\n\n    public static void main(String[] args) {\n        Tag t = Widget.class.getAnnotation(Tag.class);\n        System.out.println(t != null ? t.value() : \"missing\");\n    }\n}",
+          "correctAnswer": "arcane",
+          "explanationHtml": "<p>The @Tag annotation has RUNTIME retention, so getAnnotation() returns it. t.value() returns \"arcane\" as specified at the use site.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code always prints \"missing\" even though the annotation is applied. What is wrong?</p>",
+          "codeSnippet": "import java.lang.annotation.*;\npublic class Main {\n    // Missing @Retention!\n    @interface SpellMeta { String school() default \"Fire\"; }\n\n    @SpellMeta(school = \"Ice\")\n    static class FrostSpell {}\n\n    public static void main(String[] args) {\n        SpellMeta meta = FrostSpell.class.getAnnotation(SpellMeta.class);\n        System.out.println(meta != null ? meta.school() : \"missing\");\n    }\n}",
+          "correctAnswer": "Add @Retention(RetentionPolicy.RUNTIME) to @interface SpellMeta — without it, the annotation is not available at runtime",
+          "explanationHtml": "<p>Without <code>@Retention</code>, the default policy is <code>CLASS</code> — the annotation exists in bytecode but is NOT accessible via reflection at runtime. <code>getAnnotation()</code> returns null. Add <code>@Retention(RetentionPolicy.RUNTIME)</code> to fix it.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You are writing a validation annotation like @NotBlank that should be checked at compile time AND at runtime. Which approach is correct?</p>",
+          "options": [
+            "Use RetentionPolicy.SOURCE only — compile-time tools handle it all",
+            "Use RetentionPolicy.RUNTIME only — it's accessible at both compile and runtime",
+            "Use RetentionPolicy.CLASS — this is the broadest policy",
+            "Use RetentionPolicy.RUNTIME for runtime validation and also write an annotation processor for compile-time checks"
+          ],
+          "correctAnswer": "Use RetentionPolicy.RUNTIME for runtime validation and also write an annotation processor for compile-time checks",
+          "explanationHtml": "<p>RUNTIME retention is needed for runtime validators (e.g., Hibernate Validator calling validate()). For compile-time checks (IDE warnings, static analysis), you'd additionally write an annotation processor. SOURCE-only annotations like @Override are fully discarded after compilation and never available at runtime.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -33,8 +33,9 @@ public class JavaCodeRunner {
 
             String wrappedCode = wrapCode(studentCode, testInput);
             boolean hasClass = studentCode != null && studentCode.matches("(?s).*\\bclass\\s+\\w+\\s*\\{.*");
-            log.debug("[CodeRunner] Code wrapping | hasClassDeclaration={} wrappedLength={}",
-                    hasClass, wrappedCode.length());
+            int lineOffset = computeLineOffset(hasClass, testInput);
+            log.debug("[CodeRunner] Code wrapping | hasClassDeclaration={} wrappedLength={} lineOffset={}",
+                    hasClass, wrappedCode.length(), lineOffset);
 
             Path sourceFile = tempDir.resolve("StudentSolution.java");
             Files.writeString(sourceFile, wrappedCode);
@@ -56,8 +57,8 @@ public class JavaCodeRunner {
                     StringBuilder errors = new StringBuilder();
                     for (Diagnostic<?> d : diagnostics.getDiagnostics()) {
                         if (d.getKind() == Diagnostic.Kind.ERROR) {
-                            long line = d.getLineNumber() - 5;
-                            String friendly = friendlyError(d.getMessage(null), Math.max(1, line));
+                            long line = Math.max(1, d.getLineNumber() - lineOffset);
+                            String friendly = friendlyError(d.getMessage(null), line);
                             errors.append(friendly).append("\n");
                         }
                     }
@@ -152,6 +153,31 @@ public class JavaCodeRunner {
             System.setOut(originalOut);
             System.setErr(originalErr);
         }
+    }
+
+    /**
+     * Returns how many compiler lines precede the first line of student code
+     * in the wrapped source file, so error line numbers can be mapped back to
+     * what the student sees in the editor.
+     *
+     * <p>When we wrap code we always emit:
+     * <ol>
+     *   <li>{@code public class StudentSolution {}}</li>
+     *   <li>{@code public static void main(String[] args) {}}</li>
+     *   <li>The injected-vars placeholder line (blank when there are no test vars)</li>
+     * </ol>
+     * That's 3 fixed preamble lines.  Each newline in the injected test-input
+     * string adds one additional line before the student code begins.
+     * When the student supplies a full class declaration we do not wrap at all
+     * and the offset is zero.
+     */
+    private int computeLineOffset(boolean studentHasClass, String testInput) {
+        if (studentHasClass) return 0;
+        if (testInput == null || testInput.isBlank() || "null".equalsIgnoreCase(testInput)) {
+            return 3;
+        }
+        long injectedNewlines = (testInput + "\n").chars().filter(c -> c == '\n').count();
+        return (int) (3 + injectedNewlines);
     }
 
     /**

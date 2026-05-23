@@ -44,6 +44,10 @@ public class StuckReport {
     @Column(length = 2048)
     private String adminNotes;
 
+    /** Base64-encoded PNG screenshot captured at the moment the stuck report was submitted. */
+    @Column(columnDefinition = "TEXT")
+    private String screenshotData;
+
     @Builder.Default
     private Instant createdAt = Instant.now();
 

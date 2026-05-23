@@ -1,0 +1,91 @@
+{
+  "id": "java-jun-6",
+  "title": "Lambdas in Depth",
+  "glyph": "λ",
+  "sortOrder": 6,
+  "tier": "JUNIOR",
+  "topicId": "java",
+  "prerequisites": ["java-jun-4"],
+  "subChunks": [
+    {
+      "id": "java-jun-6a",
+      "title": "Comparator, Method References & Functional Composition",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "filename": "LambdaDepth.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>You have used lambdas to write predicates and map functions. Now you will wield them as first-class values — passing Comparators into sorts, composing multiple functions into pipelines, and eliminating boilerplate with method references.</p>",
+      "explanationHtml": "<h3>Comparator with Lambdas</h3><p><code>Comparator.comparing()</code> and chained comparators replace verbose anonymous classes:</p><pre><code>List&lt;String&gt; spells = Arrays.asList(\"Fireball\", \"Ice\", \"Thunder\", \"Arc\");\n\n// Sort by length\nspells.sort(Comparator.comparingInt(String::length));\n\n// Sort by length, then alphabetically\nspells.sort(Comparator.comparingInt(String::length)\n                      .thenComparing(Comparator.naturalOrder()));\n\n// Reverse\nspells.sort(Comparator.comparingInt(String::length).reversed());</code></pre><h3>Method References</h3><p>Method references are shorthand for lambdas that do nothing but call a method:</p><pre><code>// Lambda                         Method reference\nstr -> str.toUpperCase()          String::toUpperCase\nn   -> Math.abs(n)                Math::abs\ns   -> System.out.println(s)      System.out::println\n() -> new ArrayList&lt;&gt;()          ArrayList::new\n\nList&lt;String&gt; names = List.of(\"lyria\", \"kira\", \"vey\");\nnames.stream()\n     .map(String::toUpperCase)       // instance method ref\n     .forEach(System.out::println);  // instance method ref on object</code></pre><p>Four kinds: <code>ClassName::staticMethod</code>, <code>ClassName::instanceMethod</code> (called on the argument), <code>object::instanceMethod</code> (called on a specific object), <code>ClassName::new</code> (constructor).</p><h3>Functional Composition</h3><p><code>Function&lt;T,R&gt;</code> has <code>andThen()</code> and <code>compose()</code> to chain transformations:</p><pre><code>Function&lt;String, String&gt; trim   = String::trim;\nFunction&lt;String, String&gt; upper  = String::toUpperCase;\nFunction&lt;String, Integer&gt; len   = String::length;\n\nFunction&lt;String, String&gt; clean = trim.andThen(upper);\nSystem.out.println(clean.apply(\"  fireball  \")); // FIREBALL\n\nFunction&lt;String, Integer&gt; cleanLen = trim.andThen(upper).andThen(len);\nSystem.out.println(cleanLen.apply(\"  hi  \")); // 2</code></pre><h3>Predicate Composition</h3><pre><code>Predicate&lt;Integer&gt; positive  = n -&gt; n &gt; 0;\nPredicate&lt;Integer&gt; even      = n -&gt; n % 2 == 0;\nPredicate&lt;Integer&gt; posEven   = positive.and(even);\nPredicate&lt;Integer&gt; posOrEven = positive.or(even);\nPredicate&lt;Integer&gt; negative  = positive.negate();\n\nposEven.test(4);   // true\nposEven.test(-4);  // false</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's spell library has thousands of entries. An apprentice attempts to sort them — by power, then by name, then in reverse. Three separate sort calls, each with a different anonymous class. The senior enchanter watching shakes her head slowly."},
+        {"type": "dialogue", "av": "λ", "cls": "mentor", "speaker": "Enchantress Vera", "sCls": "mentor", "text": "You have learned lambdas. Now use them properly. <code>Comparator.comparing()</code> chains. Method references eliminate the noise. Functional composition builds pipelines. One line does the work of twenty."},
+        {"type": "example", "speaker": "Chained Comparator", "text": "List<Spell> spells = ...;\nspells.sort(\n    Comparator.comparingInt(Spell::getPower)\n              .reversed()\n              .thenComparing(Spell::getName)\n);"},
+        {"type": "dialogue", "av": "λ", "cls": "mentor", "speaker": "Enchantress Vera", "sCls": "mentor", "text": "Method references are lambdas with the noise stripped. If your lambda does nothing but call one method, write the method reference instead. <code>String::toUpperCase</code> instead of <code>s -> s.toUpperCase()</code>. Four forms — static, instance-on-argument, instance-on-specific-object, constructor."},
+        {"type": "example", "speaker": "Function composition pipeline", "text": "Function<String, Integer> pipeline =\n    ((Function<String, String>) String::trim)\n    .andThen(String::toUpperCase)\n    .andThen(String::length);\n\nSystem.out.println(pipeline.apply(\"  Arcane  \")); // 6"}
+      ],
+      "learningObjectives": [
+        "Use Comparator.comparingInt(), thenComparing(), and reversed() to compose sort orders",
+        "Write method references for all four forms: static, unbound instance, bound instance, constructor",
+        "Compose two Function instances with andThen() to build a transformation pipeline",
+        "Combine Predicates with and(), or(), and negate()"
+      ],
+      "commonMistakes": [
+        "Using object::method when you want ClassName::method — the former captures a specific object, the latter is called on each stream element",
+        "Forgetting that andThen(f).andThen(g) applies f first, then g — compose() is the reverse order",
+        "Trying to use method references for methods that take multiple parameters — the functional interface must match the arity",
+        "Ignoring the type inference — sometimes a cast or explicit type is needed for method reference chains"
+      ],
+      "assessmentCriteria": [
+        "Can sort a List<T> by multiple fields using a chained Comparator without anonymous classes",
+        "Can identify which of the four method reference forms applies to a given lambda",
+        "Can build a multi-step Function pipeline and predict its output",
+        "Can compose two Predicates with and() and explain the difference from writing a single combined lambda"
+      ],
+      "feynmanPrompt": "Explain method references — what they are, the four forms, and when to use each. Then explain functional composition with andThen() — what problem does it solve compared to just nesting method calls?",
+      "guidedPracticeHtml": "<p>Given a list of spells (represented as Strings), perform the following operations:</p><ol><li>Sort by length ascending, then alphabetically for equal lengths. Print the sorted list.</li><li>Using a <code>Function</code> pipeline: trim, upper-case, and take the length of each spell name. Print the result for <code>\"  frostbolt  \"</code>.</li><li>Compose a <code>Predicate</code> that is true when a spell name has length > 4 AND starts with 'F'. Filter the list and print matches.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.*;\nimport java.util.function.*;\nimport java.util.stream.*;\n\npublic class LambdaDepth {\n    public static void main(String[] args) {\n        List<String> spells = new ArrayList<>(Arrays.asList(\n            \"Fire\", \"Frostbolt\", \"Arc\", \"Flamestrike\", \"Ice\", \"Flash\"\n        ));\n\n        // 1. Sort by length, then alphabetically\n\n\n        System.out.println(spells);\n\n        // 2. Function pipeline: trim → toUpperCase → length\n        Function<String, String> trim  = String::trim;\n        Function<String, String> upper = String::toUpperCase;\n        Function<String, Integer> len  = String::length;\n\n\n        // 3. Predicate: length > 4 AND starts with 'F'\n        Predicate<String> longEnough = s -> s.length() > 4;\n        Predicate<String> startsF    = s -> s.startsWith(\"F\");\n\n\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "Sorted list correct", "input": "null", "expected": "[Arc, Ice, Fire, Flash, Frostbolt, Flamestrike]"},
+        {"label": "Pipeline result for '  frostbolt  '", "input": "null", "expected": "9"},
+        {"label": "Filtered spells (length>4 and starts with F)", "input": "null", "expected": "[Frostbolt, Flamestrike, Flash]"}
+      ],
+      "soloPracticeHtml": "<p>From scratch. Given <code>List&lt;Integer&gt; nums = Arrays.asList(3, -1, 8, -4, 2, 7, -3, 6)</code>:</p><ul><li>Use a composed Predicate (positive AND even) to filter and print matching elements</li><li>Sort the list in descending order using a lambda Comparator</li><li>Create a <code>Function&lt;Integer, String&gt;</code> pipeline that converts a number to its absolute value then to a String with suffix <code>\"pts\"</code>. Apply it to each element of the original list and collect to a new list, then print it.</li></ul>",
+      "soloPracticeTests": [
+        {"label": "Positive and even elements", "input": "null", "expected": "[8, 2, 6]"},
+        {"label": "Descending sort", "input": "null", "expected": "[8, 7, 6, 3, 2, -1, -3, -4]"},
+        {"label": "Pipeline applied to all elements", "input": "null", "expected": "[3pts, 1pts, 8pts, 4pts, 2pts, 7pts, 3pts, 6pts]"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which method reference form does <code>String::toUpperCase</code> represent?</p>",
+          "options": ["Static method reference", "Unbound instance method reference", "Bound instance method reference", "Constructor reference"],
+          "correctAnswer": "Unbound instance method reference",
+          "explanationHtml": "<p><code>String::toUpperCase</code> is an <em>unbound</em> instance method reference — the method is called on whichever String is provided as the argument. Contrast with <code>someString::toUpperCase</code> (bound — always called on <code>someString</code>).</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this print?</p>",
+          "codeSnippet": "Function<Integer, Integer> times2 = x -> x * 2;\nFunction<Integer, Integer> plus3  = x -> x + 3;\nSystem.out.println(times2.andThen(plus3).apply(5));",
+          "correctAnswer": "13",
+          "explanationHtml": "<p><code>andThen</code> applies <code>times2</code> first: 5 × 2 = 10. Then applies <code>plus3</code>: 10 + 3 = 13.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>What is the key difference between <code>f.andThen(g)</code> and <code>f.compose(g)</code>?</p>",
+          "options": [
+            "andThen applies f first then g; compose applies g first then f",
+            "compose applies f first then g; andThen applies g first then f",
+            "They are identical — both apply f then g",
+            "compose only works on Predicate, andThen only works on Function"
+          ],
+          "correctAnswer": "andThen applies f first then g; compose applies g first then f",
+          "explanationHtml": "<p><code>f.andThen(g)</code> = g(f(x)). <code>f.compose(g)</code> = f(g(x)). So <code>trim.andThen(upper)</code> trims then uppercases, while <code>trim.compose(upper)</code> uppercases first then trims.</p>"
+        }
+      ]
+    }
+  ]
+}

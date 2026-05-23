@@ -25,4 +25,15 @@ public class AdminSubChunkDto {
     private List<Map<String, Object>> rabbitHoleTerms;
 
     private long questionCount;
+
+    // Sprint 1 — structured lesson metadata
+    private List<String> learningObjectives;
+    private Map<String, Object> challenge;  // { html, starterCode, tests }
+    private String miniProject;
+    private List<String> commonMistakes;
+    private List<String> assessmentCriteria;
+
+    // Sprint 7 — downloadable resources
+    /** Each entry: { title, type, url } */
+    private List<Map<String, Object>> downloadables;
 }

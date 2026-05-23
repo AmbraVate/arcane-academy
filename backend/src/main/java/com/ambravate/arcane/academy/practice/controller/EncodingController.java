@@ -34,7 +34,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @RestController
 @RequestMapping("/api/encoding")
@@ -186,6 +188,12 @@ public class EncodingController {
                 .xpReward(sc.getXpReward()).filename(sc.getFilename())
                 .practiceType(sc.getPracticeType() != null ? sc.getPracticeType().name() : "JAVA")
                 .rabbitHoleTerms(parseJson(sc.getRabbitHoleTermsJson()))
+                .learningObjectives(parseStringList(sc.getLearningObjectivesJson()))
+                .challenge(buildChallengeMap(sc))
+                .miniProject(sc.getMiniProjectHtml())
+                .commonMistakes(parseStringList(sc.getCommonMistakesJson()))
+                .assessmentCriteria(parseStringList(sc.getAssessmentCriteriaJson()))
+                .downloadables(parseJson(sc.getDownloadablesJson()))
                 .build();
 
         // Populate phase-specific content
@@ -236,6 +244,24 @@ public class EncodingController {
     private Object parseJson(String json) {
         if (json == null) return List.of();
         try { return objectMapper.readValue(json, Object.class); } catch (Exception e) { return List.of(); }
+    }
+
+    private List<String> parseStringList(String json) {
+        if (json == null || json.isBlank()) return List.of();
+        try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
+    }
+
+    private Map<String, Object> buildChallengeMap(SubChunk sc) {
+        if (sc.getChallengeHtml() == null || sc.getChallengeHtml().isBlank()) return null;
+        List<Object> tests = List.of();
+        if (sc.getChallengeTestsJson() != null && !sc.getChallengeTestsJson().isBlank()) {
+            try { tests = objectMapper.readValue(sc.getChallengeTestsJson(), new TypeReference<>() {}); } catch (Exception ignored) {}
+        }
+        return Map.of(
+            "html", sc.getChallengeHtml(),
+            "starterCode", sc.getChallengeStarterCode() != null ? sc.getChallengeStarterCode() : "",
+            "tests", tests
+        );
     }
 
     private Object extractTestLabels(String json) {

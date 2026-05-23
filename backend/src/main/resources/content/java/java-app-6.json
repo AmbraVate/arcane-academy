@@ -1,0 +1,168 @@
+{
+  "id": "java-app-6",
+  "title": "Arrays",
+  "glyph": "📦",
+  "sortOrder": 6,
+  "tier": "APPRENTICE",
+  "topicId": "java",
+  "prerequisites": ["java-app-5"],
+  "subChunks": [
+    {
+      "id": "java-app-6a",
+      "title": "1D Arrays: Declaration, Access & Iteration",
+      "sortOrder": 1,
+      "xpReward": 65,
+      "filename": "RuneArray.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A single rune is powerful. A sequence of runes, each precisely positioned, is a <em>spell</em>. Arrays are Java's way of storing ordered collections of values under a single name.</p>",
+      "explanationHtml": "<h3>Declaring and Creating Arrays</h3><p>An array holds a fixed number of elements of the same type. You declare and create it in one step:</p><pre><code>int[] scores = new int[5];        // 5 ints, all initialised to 0\nString[] names = new String[3];   // 3 Strings, all null\ndouble[] prices = {9.99, 14.50, 3.25}; // array literal — size inferred</code></pre><p>The size is fixed at creation time and cannot be changed later.</p><h3>Accessing Elements</h3><p>Array indices start at <strong>0</strong>. The last valid index is <code>length - 1</code>:</p><pre><code>int[] mana = {40, 80, 120};\nSystem.out.println(mana[0]);  // 40 — first element\nSystem.out.println(mana[2]);  // 120 — last element\n// mana[3] would throw ArrayIndexOutOfBoundsException</code></pre><h3>Array Length</h3><p><code>array.length</code> (not a method call — no parentheses) gives the number of elements:</p><pre><code>System.out.println(mana.length);  // 3</code></pre><h3>Iterating Over Arrays</h3><p>The classic for loop uses an index counter:</p><pre><code>for (int i = 0; i < mana.length; i++) {\n    System.out.println(mana[i]);\n}</code></pre><p>The enhanced for loop (for-each) is simpler when you don't need the index:</p><pre><code>for (int value : mana) {\n    System.out.println(value);\n}</code></pre><h3>Common Array Operations</h3><pre><code>// Sum all elements\nint total = 0;\nfor (int v : mana) total += v;\n\n// Find maximum\nint max = mana[0];\nfor (int v : mana) {\n    if (v > max) max = v;\n}\n\n// Check if an element exists\nboolean found = false;\nfor (int v : mana) {\n    if (v == 80) { found = true; break; }\n}</code></pre><h3>Default Values</h3><p>When you create an array with <code>new</code>, elements are set to type defaults: <code>0</code> for numeric types, <code>false</code> for <code>boolean</code>, and <code>null</code> for reference types (including <code>String</code>).</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's potion lab has rows of numbered vials, each labelled and arranged in a precise sequence. The head alchemist reaches for vial seven without looking. He knows exactly where it is."},
+        {"type": "dialogue", "av": "🧪", "cls": "mentor", "speaker": "Head Alchemist Corda", "sCls": "mentor", "text": "An array is a rack of numbered vials. You ask for vial zero, you get the first one. Ask for vial four, you get the fifth. The first slot is always zero — programmers count from zero, not one. Get used to it now; the alternative is a lifetime of off-by-one errors."},
+        {"type": "example", "speaker": "Declaring and using an array", "text": "int[] potions = {5, 12, 8, 20, 3};\nSystem.out.println(potions[0]);  // 5\nSystem.out.println(potions[4]);  // 3\nSystem.out.println(potions.length); // 5"},
+        {"type": "dialogue", "av": "🧪", "cls": "mentor", "speaker": "Head Alchemist Corda", "sCls": "mentor", "text": "The rack has a fixed number of slots. You cannot add a sixth slot without building a new rack. Arrays are immutable in size. If you ask for slot five on a five-element array, Java throws an ArrayIndexOutOfBoundsException. It is one of the most common runtime errors you will encounter."},
+        {"type": "dialogue", "av": "🧪", "cls": "mentor", "speaker": "Head Alchemist Corda", "sCls": "mentor", "text": "To inspect every vial in sequence, you iterate. Two ways: the indexed for loop (when you need the slot number) and the enhanced for-each loop (when you only care about the contents). Both are correct. Choose based on whether you need the index."},
+        {"type": "example", "speaker": "Sum of all potion strengths", "text": "int total = 0;\nfor (int strength : potions) {\n    total += strength;\n}\nSystem.out.println(\"Total: \" + total);  // Total: 48"},
+        {"type": "narration", "text": "Corda pours every vial into a single flask, counts them without hesitation, and seals it. 'Iterate, accumulate, verify. That is the array mindset.'"}
+      ],
+      "learningObjectives": [
+        "Declare and initialise a 1D array using both new[] and an array literal",
+        "Access array elements by index and explain zero-based indexing",
+        "Use array.length to iterate safely without going out of bounds",
+        "Implement common array operations: sum, maximum, element search"
+      ],
+      "commonMistakes": [
+        "Using array.length as the last valid index — the last index is length-1",
+        "Writing array.length() with parentheses — length is a field, not a method",
+        "Forgetting that int[] defaults to 0 and String[] defaults to null after new[]",
+        "Modifying the loop variable in a for-each — it is a copy, not a reference to the slot"
+      ],
+      "assessmentCriteria": [
+        "Can declare, initialise, and iterate over a 1D array without going out of bounds",
+        "Can compute the sum and maximum value of an integer array",
+        "Can explain what ArrayIndexOutOfBoundsException means and how to prevent it",
+        "Can choose correctly between an indexed for loop and a for-each loop"
+      ],
+      "feynmanPrompt": "Explain what a Java array is, why indices start at 0, and what happens if you access index array.length instead of array.length-1. Use a physical analogy to make it memorable.",
+      "guidedPracticeHtml": "<p>The Academy's mana monitoring system reads six sensor readings into an array. Your task:</p><ol><li>Declare and initialise: <code>int[] readings = {42, 75, 13, 88, 56, 31}</code></li><li>Print the first and last element</li><li>Compute and print the sum of all elements</li><li>Find and print the maximum value</li></ol>",
+      "guidedPracticeStarterCode": "public class RuneArray {\n    public static void main(String[] args) {\n        int[] readings = {42, 75, 13, 88, 56, 31};\n\n        // 1. Print first and last element\n\n\n        // 2. Compute and print sum\n\n\n        // 3. Find and print max\n\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "Prints first element: 42", "input": "null", "expected": "42"},
+        {"label": "Prints last element: 31", "input": "null", "expected": "31"},
+        {"label": "Sum = 305", "input": "null", "expected": "305"},
+        {"label": "Max = 88", "input": "null", "expected": "88"}
+      ],
+      "soloPracticeHtml": "<p>From scratch: declare <code>int[] spellPowers = {10, 45, 23, 67, 34, 89, 12}</code>. Then:</p><ul><li>Print the element at index 3</li><li>Print the total sum</li><li>Print the minimum value (smallest element)</li><li>Print the number of elements greater than 30</li></ul>",
+      "soloPracticeTests": [
+        {"label": "Element at index 3 = 67", "input": "null", "expected": "67"},
+        {"label": "Sum = 280", "input": "null", "expected": "280"},
+        {"label": "Min = 10", "input": "null", "expected": "10"},
+        {"label": "Count > 30 = 4", "input": "null", "expected": "4"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the index of the <strong>last</strong> element in an array with 6 elements?</p>",
+          "options": ["6", "5", "4", "-1"],
+          "correctAnswer": "5",
+          "explanationHtml": "<p>Arrays use zero-based indexing. A 6-element array has valid indices 0 through 5. Index 6 does not exist and would throw <code>ArrayIndexOutOfBoundsException</code>.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is printed?</p>",
+          "codeSnippet": "int[] nums = {3, 7, 2, 9, 4};\nint count = 0;\nfor (int n : nums) {\n    if (n > 4) count++;\n}\nSystem.out.println(count);",
+          "correctAnswer": "2",
+          "explanationHtml": "<p>Elements greater than 4: 7 and 9. Count = 2.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>This code throws an exception at runtime. Why?</p>",
+          "codeSnippet": "int[] arr = new int[4];\nfor (int i = 0; i <= arr.length; i++) {\n    System.out.println(arr[i]);\n}",
+          "correctAnswer": "The loop condition should be i < arr.length, not i <= arr.length — the last iteration accesses arr[4] which does not exist",
+          "explanationHtml": "<p>A 4-element array has indices 0–3. Using <code>i <= arr.length</code> includes <code>i = 4</code>, which causes <code>ArrayIndexOutOfBoundsException</code>. Always use <code>i < arr.length</code>.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p><code>array.length</code> is called with parentheses, like a method.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p><code>length</code> is a public final field on arrays, not a method. You access it as <code>array.length</code> with no parentheses. (Contrast with <code>String.length()</code> which IS a method.)</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-app-6b",
+      "title": "2D Arrays & Array Utilities",
+      "sortOrder": 2,
+      "xpReward": 60,
+      "filename": "GridArray.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>The magical ward grid covers a fortress in a five-by-five pattern. Each cell holds a power level. To traverse it systematically — row by row, column by column — you need a two-dimensional array.</p>",
+      "explanationHtml": "<h3>2D Arrays</h3><p>A 2D array is an array of arrays. You think of it as a grid with rows and columns:</p><pre><code>int[][] grid = new int[3][4];  // 3 rows, 4 columns\n// Or with a literal:\nint[][] matrix = {\n    {1, 2, 3},\n    {4, 5, 6},\n    {7, 8, 9}\n};</code></pre><p>Access with two indices — <code>matrix[row][col]</code>:</p><pre><code>System.out.println(matrix[1][2]);  // 6 (row 1, col 2)</code></pre><h3>Iterating Over a 2D Array</h3><pre><code>for (int row = 0; row < matrix.length; row++) {\n    for (int col = 0; col < matrix[row].length; col++) {\n        System.out.print(matrix[row][col] + \" \");\n    }\n    System.out.println();\n}</code></pre><h3>Arrays Utility Class</h3><p><code>java.util.Arrays</code> provides helpful static methods:</p><pre><code>import java.util.Arrays;\n\nint[] nums = {5, 3, 8, 1, 9};\nArrays.sort(nums);                   // sorts in place: [1,3,5,8,9]\nSystem.out.println(Arrays.toString(nums)); // prints: [1, 3, 5, 8, 9]\nint[] copy = Arrays.copyOf(nums, 3); // first 3 elements: [1,3,5]</code></pre><p><code>Arrays.toString()</code> is especially handy — printing an array directly gives a useless memory address (<code>[I@3764951d</code>), but <code>Arrays.toString()</code> gives a readable format.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's ward-mapping chamber displays a glowing grid on the stone floor. Each square cell pulses with a different intensity. A junior ward-keeper is trying to inspect every cell by walking in a random pattern and losing count."},
+        {"type": "dialogue", "av": "🗺️", "cls": "mentor", "speaker": "Ward-Keeper Mira", "sCls": "mentor", "text": "A two-dimensional array is exactly what it sounds like: rows and columns. You access a cell with two indices — row first, then column. <code>grid[2][3]</code> is row two, column three."},
+        {"type": "example", "speaker": "Ward grid declaration and access", "text": "int[][] wards = {\n    {10, 20, 30},\n    {40, 50, 60},\n    {70, 80, 90}\n};\nSystem.out.println(wards[1][2]);  // 60\nSystem.out.println(wards[2][0]);  // 70"},
+        {"type": "dialogue", "av": "🗺️", "cls": "mentor", "speaker": "Ward-Keeper Mira", "sCls": "mentor", "text": "To inspect every cell, nest two loops: an outer loop over rows, an inner loop over columns. The outer loop uses <code>grid.length</code> for the row count. The inner loop uses <code>grid[row].length</code> for the column count — because in Java, each row is its own array, and rows can theoretically have different lengths."},
+        {"type": "dialogue", "av": "🗺️", "cls": "mentor", "speaker": "Ward-Keeper Mira", "sCls": "mentor", "text": "One more essential tool: <code>Arrays.toString()</code>. If you print an array directly, Java gives you a useless memory address. Import <code>java.util.Arrays</code> and use <code>Arrays.toString()</code> to see the actual values. And <code>Arrays.sort()</code> to sort in place — no extra code needed."},
+        {"type": "example", "speaker": "Arrays utility methods", "text": "int[] runes = {7, 2, 9, 4, 6};\nArrays.sort(runes);\nSystem.out.println(Arrays.toString(runes)); // [2, 4, 6, 7, 9]"}
+      ],
+      "learningObjectives": [
+        "Declare and initialise a 2D array using both new[][] and a nested literal",
+        "Access elements using [row][col] indexing",
+        "Iterate over a 2D array using nested for loops",
+        "Use Arrays.sort() and Arrays.toString() from java.util.Arrays"
+      ],
+      "commonMistakes": [
+        "Reversing row and column when accessing 2D array elements",
+        "Printing an array directly — always use Arrays.toString() or iterate",
+        "Forgetting to import java.util.Arrays before using Arrays.sort() or Arrays.toString()",
+        "Using matrix.length for both loops — the inner loop should use matrix[row].length"
+      ],
+      "assessmentCriteria": [
+        "Can declare, populate, and print all elements of a 2D array using nested loops",
+        "Can access a specific cell by row and column index",
+        "Can sort a 1D array and print it in readable form using java.util.Arrays",
+        "Can explain why printing an array directly does not show its contents"
+      ],
+      "feynmanPrompt": "Explain 2D arrays using a grid analogy. How do you declare one, access a specific cell, and iterate over all cells? Why does Java require nested loops?",
+      "guidedPracticeHtml": "<p>You have a 3×3 magic square grid. Your tasks:</p><ol><li>Declare <code>int[][] grid = {{2,7,6},{9,5,1},{4,3,8}}</code></li><li>Print the element at row 1, col 2 (should be 1)</li><li>Use nested loops to compute and print the sum of all elements</li><li>Declare <code>int[] powers = {15, 3, 42, 8, 27}</code>, sort it, and print it using <code>Arrays.toString()</code></li></ol>",
+      "guidedPracticeStarterCode": "import java.util.Arrays;\n\npublic class GridArray {\n    public static void main(String[] args) {\n        int[][] grid = {{2,7,6},{9,5,1},{4,3,8}};\n\n        // 1. Print element at row 1, col 2\n\n\n        // 2. Sum all elements\n\n\n        // 3. Sort and print powers array\n        int[] powers = {15, 3, 42, 8, 27};\n\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "grid[1][2] = 1", "input": "null", "expected": "1"},
+        {"label": "Sum of magic square = 45", "input": "null", "expected": "45"},
+        {"label": "Sorted powers array", "input": "null", "expected": "[3, 8, 15, 27, 42]"}
+      ],
+      "soloPracticeHtml": "<p>From scratch: declare a 2×4 integer grid with any values. Print each row on its own line (space-separated). Then print the largest value in the entire grid. Finally create and sort <code>int[] vals = {88, 12, 45, 67, 3, 99}</code> and print it with <code>Arrays.toString()</code>.</p>",
+      "soloPracticeTests": [
+        {"label": "Sorted vals correct", "input": "null", "expected": "[3, 12, 45, 67, 88, 99]"}
+      ],
+      "questions": [
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this print?</p>",
+          "codeSnippet": "int[][] m = {{1,2},{3,4},{5,6}};\nSystem.out.println(m[2][1]);",
+          "correctAnswer": "6",
+          "explanationHtml": "<p><code>m[2]</code> is the third row <code>{5,6}</code>. <code>m[2][1]</code> is the second element of that row: 6.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A developer writes <code>System.out.println(myArray);</code>. What will likely be printed?</p>",
+          "options": [
+            "The contents of the array, comma-separated",
+            "A memory address like [I@6d06d69c",
+            "null",
+            "A compile error"
+          ],
+          "correctAnswer": "A memory address like [I@6d06d69c",
+          "explanationHtml": "<p>Arrays don't override <code>toString()</code>, so printing one directly shows the type prefix (<code>[I</code> for int array) followed by the object's hashcode. Use <code>Arrays.toString(myArray)</code> to see the actual values.</p>"
+        }
+      ]
+    }
+  ]
+}

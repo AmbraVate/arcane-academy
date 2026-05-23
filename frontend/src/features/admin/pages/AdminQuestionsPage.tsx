@@ -3,10 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { adminQuestionApi, adminSubChunkApi, type AdminQuestion, type AdminSubChunk } from '@/shared/api/adminServices'
 
 const Q_TYPES = ['MULTIPLE_CHOICE', 'TRUE_FALSE', 'SHORT_ANSWER', 'CODE_OUTPUT']
-const TIERS = ['FOUNDATION', 'PRACTITIONER', 'EXPERT']
+/** Question difficulty tiers (QuestionTier enum values) */
+const TIERS = ['RECALL', 'APPLICATION', 'DISCRIMINATION']
 
 const BLANK: Partial<AdminQuestion> = {
-  type: 'MULTIPLE_CHOICE', tier: 'FOUNDATION',
+  type: 'MULTIPLE_CHOICE', tier: 'RECALL',
   questionHtml: '', codeSnippet: null, options: ['', '', '', ''], correctAnswer: '', explanationHtml: '',
 }
 
@@ -34,7 +35,7 @@ function QuestionForm({
 
   return (
     <div style={{ background: '#1e1a35', border: '1px solid #2e2850', borderRadius: 10, padding: 20, marginBottom: 16 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
         <label style={labelStyle}>
           Type
           <select style={inputStyle} value={form.type ?? 'MULTIPLE_CHOICE'} onChange={e => set('type', e.target.value)}>
@@ -43,7 +44,7 @@ function QuestionForm({
         </label>
         <label style={labelStyle}>
           Tier
-          <select style={inputStyle} value={form.tier ?? 'FOUNDATION'} onChange={e => set('tier', e.target.value)}>
+          <select style={inputStyle} value={form.tier ?? 'RECALL'} onChange={e => set('tier', e.target.value)}>
             {TIERS.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </label>
@@ -100,7 +101,7 @@ function QuestionForm({
 }
 
 const TIER_COLOR: Record<string, string> = {
-  FOUNDATION: '#4ade80', PRACTITIONER: '#c9a227', EXPERT: '#8b5cf6',
+  RECALL: '#4ade80', APPLICATION: '#c9a227', DISCRIMINATION: '#8b5cf6',
 }
 
 export default function AdminQuestionsPage() {

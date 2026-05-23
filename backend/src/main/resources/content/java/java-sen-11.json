@@ -1,0 +1,96 @@
+{
+  "id": "java-sen-11",
+  "title": "Observability",
+  "glyph": "📡",
+  "sortOrder": 11,
+  "tier": "SENIOR",
+  "topicId": "java",
+  "prerequisites": ["java-sen-10"],
+  "subChunks": [
+    {
+      "id": "java-sen-11a",
+      "title": "Structured Logging, Metrics & Distributed Tracing",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "filename": "ObservabilityDemo.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>You cannot fix what you cannot see. Observability is the property of a system that lets you understand its internal state from external signals. Logging, metrics, and tracing are the three pillars — and a production system without all three is flying blind.</p>",
+      "explanationHtml": "<h3>The Three Pillars of Observability</h3><ul><li><strong>Logs</strong>: structured records of discrete events. Used for debugging specific incidents. High cardinality. Queryable.</li><li><strong>Metrics</strong>: numeric measurements aggregated over time. Used for alerting and dashboards. Low cardinality. Time-series queries. Examples: request rate, error rate, latency percentiles (p50, p99), queue depth, heap usage.</li><li><strong>Traces</strong>: end-to-end record of a request as it flows through multiple services. Used for latency analysis and service dependency mapping.</li></ul><h3>Structured Logging</h3><p>Logs as JSON (or key=value pairs) rather than free text. Enables machine parsing, aggregation, and querying in log management tools (Grafana Loki, Elasticsearch, CloudWatch Logs Insights).</p><pre><code>// BAD — unstructured\nlog.info(\"Spell Fireball processed in 143ms for user lyria\");\n\n// GOOD — structured (SLF4J with Logback JSON layout)\nlog.info(\"Spell processed\",\n    kv(\"spellName\", \"Fireball\"),\n    kv(\"durationMs\", 143),\n    kv(\"userId\", \"lyria\"));\n// JSON output: {\"level\":\"INFO\",\"message\":\"Spell processed\",\n//               \"spellName\":\"Fireball\",\"durationMs\":143,\"userId\":\"lyria\"}\n</code></pre><h3>MDC for Correlation</h3><p>MDC (Mapped Diagnostic Context) adds key-value context to every log line in the current thread — requestId, userId, traceId. Essential for correlating logs across a single request in busy systems.</p><pre><code>MDC.put(\"requestId\", UUID.randomUUID().toString());\nMDC.put(\"userId\",    currentUser.getId());\ntry {\n    log.info(\"Processing spell\"); // includes requestId + userId automatically\n    spellService.cast(spellId);\n} finally {\n    MDC.clear();\n}</code></pre><h3>Metrics with Micrometer</h3><p>Micrometer is the standard metrics facade for Spring Boot applications. Collects metrics and exports to Prometheus, Datadog, CloudWatch, etc.</p><pre><code>// Counter — counts occurrences\nCounter spellsCast = Counter.builder(\"spells.cast\")\n    .tag(\"tier\", spell.getTier())\n    .register(registry);\nspellsCast.increment();\n\n// Timer — measures duration and count\nTimer.Sample sample = Timer.start();\n// ... do work ...\nsample.stop(Timer.builder(\"spell.processing.time\")\n    .register(registry));\n\n// Gauge — tracks current value\nGauge.builder(\"queue.depth\", queue, Queue::size).register(registry);</code></pre><h3>Distributed Tracing</h3><p>A trace represents the full journey of one request through all services. Each service creates a <em>span</em> — a timed operation within the trace. Spans are linked by a shared <em>traceId</em> and parent-child <em>spanId</em>. Visualised as a waterfall or flame chart showing service call latency breakdown.</p><p>Standards: OpenTelemetry (OTEL) — the converged standard for traces, metrics, and logs. Spring Boot 3+ auto-configures OTEL with Micrometer Tracing. Backends: Jaeger, Zipkin, Grafana Tempo, AWS X-Ray.</p><h3>The USE and RED Methods</h3><p><strong>USE</strong> (for resources): Utilisation, Saturation, Errors — for CPU, memory, disk, network.</p><p><strong>RED</strong> (for services): Rate (requests/second), Errors (error rate), Duration (latency percentiles) — for every service endpoint. These are the golden signals for alerting.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "Two teams had incidents. Team A's logs were unstructured text: 'Spell Fireball processed 143ms user lyria'. Searching for all slow spells by tier required grep and awk and two hours. Team B's logs were structured JSON. One query: SELECT * WHERE durationMs > 500 AND tier = 'SENIOR'. They found the pattern in five minutes."},
+        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Observability Lead Paz", "sCls": "mentor", "text": "The three pillars answer three different questions. Logs: 'what happened in this specific request?' Metrics: 'is the system healthy overall — right now?' Traces: 'where is the latency coming from across all the services this request touched?' You need all three because each answers something the others cannot."},
+        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Observability Lead Paz", "sCls": "mentor", "text": "Unstructured logs are a trap. They look readable but they do not scale. When you have 10 billion log lines across 50 services, you need to query them. Grepping is not querying. Structured logs with consistent field names let you aggregate, filter, and correlate across the entire system in seconds."},
+        {"type": "example", "speaker": "RED method metrics — alert thresholds", "text": "# For every API endpoint:\nRate:     alert if request rate drops > 20% suddenly (possible upstream failure)\nErrors:   alert if error rate > 1% for 5 minutes (SLO breach)\nDuration: alert if p99 latency > 2× baseline for 10 minutes\n\n# Dashboard queries (Prometheus/PromQL):\nrate(http_requests_total{status=~\"5..\"}[5m]) /\nrate(http_requests_total[5m])\n# = error rate — alert if > 0.01"},
+        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Observability Lead Paz", "sCls": "mentor", "text": "Distributed tracing solves the problem that logs cannot: 'this request was slow — which service caused it?' A trace shows you the waterfall. You see immediately: the spell service spent 20ms, the rune-lookup service spent 890ms. The rune-lookup service is the problem. Without a trace you are guessing which service to look at first."}
+      ],
+      "learningObjectives": [
+        "Describe the three pillars of observability (logs, metrics, traces) and the question each answers",
+        "Implement structured logging with MDC correlation using SLF4J",
+        "Describe the RED method (Rate, Errors, Duration) as a framework for service health metrics",
+        "Explain what a distributed trace is and how traceId and spanId link spans across services"
+      ],
+      "commonMistakes": [
+        "Using unstructured logs in production — makes aggregation and querying across many lines impractical",
+        "Alerting only on errors, not on latency — p99 latency degradation often precedes an error spike by minutes",
+        "Forgetting MDC.clear() at the end of a request — context from one request leaks into the next",
+        "Not including the traceId in logs — makes it impossible to correlate log lines with trace spans"
+      ],
+      "assessmentCriteria": [
+        "Can explain the difference between a log, a metric, and a trace with a concrete example of each",
+        "Can write a structured log line using MDC to add requestId and userId context",
+        "Can describe what a p99 latency metric means and how it differs from average latency",
+        "Can explain what a traceId is and why it must be propagated across service boundaries"
+      ],
+      "feynmanPrompt": "Explain observability to a developer who only looks at logs. Why are logs alone not enough? What do metrics tell you that logs cannot? What does a distributed trace show that neither logs nor metrics can reveal?",
+      "guidedPracticeHtml": "<p>Write an <code>ObservabilityDemo</code> class that simulates all three observability pillars using in-memory implementations:</p><ol><li><strong>Structured logging with MDC</strong>: a method <code>void processSpell(String requestId, String spellName)</code> that puts requestId into MDC, logs INFO 'Processing spell' (the MDC value will appear automatically in production Logback output — here just print it manually), clears MDC in finally. Print: 'requestId='+requestId+' Processing spell: '+spellName</li><li><strong>Metrics counter</strong>: a <code>Map&lt;String, Long&gt; counters</code> field. Method <code>void increment(String metric)</code>. Call <code>increment(\"spells.cast\")</code> three times. Print the counter value.</li><li><strong>Timer</strong>: method <code>long timeMs(Runnable task)</code> that measures the task's execution time in ms. Measure a <code>Thread.sleep(50)</code> task and print 'duration: Nms'.</li></ol>",
+      "guidedPracticeStarterCode": "import org.slf4j.MDC;\nimport org.slf4j.Logger;\nimport org.slf4j.LoggerFactory;\nimport java.util.*;\n\npublic class ObservabilityDemo {\n    private static final Logger log = LoggerFactory.getLogger(ObservabilityDemo.class);\n    private static final Map<String, Long> counters = new HashMap<>();\n\n    static void processSpell(String requestId, String spellName) {\n        // TODO: MDC.put requestId, log info, MDC.clear in finally\n    }\n\n    static void increment(String metric) {\n        // TODO: increment counter in map\n    }\n\n    static long timeMs(Runnable task) {\n        // TODO: measure execution time in ms\n        return 0;\n    }\n\n    public static void main(String[] args) throws InterruptedException {\n        processSpell(\"req-001\", \"Fireball\");\n        increment(\"spells.cast\");\n        increment(\"spells.cast\");\n        increment(\"spells.cast\");\n        System.out.println(\"spells.cast = \" + counters.get(\"spells.cast\"));\n        long ms = timeMs(() -> { try { Thread.sleep(50); } catch (InterruptedException e) {} });\n        System.out.println(\"duration: \" + ms + \"ms\");\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "MDC requestId printed", "input": "null", "expected": "req-001"},
+        {"label": "Counter correct", "input": "null", "expected": "spells.cast = 3"},
+        {"label": "Timer output printed", "input": "null", "expected": "duration:"}
+      ],
+      "guidedPracticeModelAnswer": "import org.slf4j.MDC;\nimport org.slf4j.Logger;\nimport org.slf4j.LoggerFactory;\nimport java.util.*;\n\npublic class ObservabilityDemo {\n    private static final Logger log = LoggerFactory.getLogger(ObservabilityDemo.class);\n    private static final Map<String, Long> counters = new HashMap<>();\n\n    static void processSpell(String requestId, String spellName) {\n        MDC.put(\"requestId\", requestId);\n        try {\n            log.info(\"Processing spell: {}\", spellName);\n            System.out.println(\"requestId=\" + requestId + \" Processing spell: \" + spellName);\n        } finally {\n            MDC.clear();\n        }\n    }\n\n    static void increment(String metric) {\n        counters.merge(metric, 1L, Long::sum);\n    }\n\n    static long timeMs(Runnable task) {\n        long start = System.currentTimeMillis();\n        task.run();\n        return System.currentTimeMillis() - start;\n    }\n\n    public static void main(String[] args) {\n        processSpell(\"req-001\", \"Fireball\");\n        increment(\"spells.cast\");\n        increment(\"spells.cast\");\n        increment(\"spells.cast\");\n        System.out.println(\"spells.cast = \" + counters.get(\"spells.cast\"));\n        long ms = timeMs(() -> { try { Thread.sleep(50); } catch (InterruptedException e) {} });\n        System.out.println(\"duration: \" + ms + \"ms\");\n    }\n}",
+      "soloPracticeHtml": "<p>Write a class <code>MetricsDashboard</code> that tracks RED metrics for a simulated API:</p><ul><li>Fields: <code>long totalRequests</code>, <code>long errorRequests</code>, <code>List&lt;Long&gt; latenciesMs</code></li><li>Method <code>void recordRequest(long latencyMs, boolean error)</code></li><li>Method <code>double errorRate()</code> — percentage 0–100</li><li>Method <code>long p99LatencyMs()</code> — sort the list, take the 99th percentile index</li><li>In main: simulate 100 requests where 5 are errors and latencies are random 10–200ms (plus 3 very slow requests at 900ms). Print rate (count), error rate, p99.</li></ul>",
+      "soloPracticeTests": [
+        {"label": "Error rate 5%", "input": "null", "expected": "5.0"},
+        {"label": "p99 includes slow outliers", "input": "null", "expected": "p99"}
+      ],
+      "modelAnswer": "import java.util.*;\n\npublic class MetricsDashboard {\n    long totalRequests = 0;\n    long errorRequests = 0;\n    List<Long> latenciesMs = new ArrayList<>();\n\n    void recordRequest(long latencyMs, boolean error) {\n        totalRequests++;\n        if (error) errorRequests++;\n        latenciesMs.add(latencyMs);\n    }\n\n    double errorRate() {\n        if (totalRequests == 0) return 0;\n        return (double) errorRequests / totalRequests * 100;\n    }\n\n    long p99LatencyMs() {\n        List<Long> sorted = new ArrayList<>(latenciesMs);\n        Collections.sort(sorted);\n        int idx = (int) Math.ceil(sorted.size() * 0.99) - 1;\n        return sorted.get(Math.max(0, idx));\n    }\n\n    public static void main(String[] args) {\n        MetricsDashboard d = new MetricsDashboard();\n        Random rng = new Random(42);\n        for (int i = 0; i < 97; i++) d.recordRequest(10 + rng.nextInt(190), i < 5);\n        d.recordRequest(900, false); d.recordRequest(900, false); d.recordRequest(900, false);\n        System.out.println(\"Rate: \" + d.totalRequests + \" requests\");\n        System.out.printf(\"Error rate: %.1f%%%n\", d.errorRate());\n        System.out.println(\"p99 latency: \" + d.p99LatencyMs() + \"ms\");\n    }\n}",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In the RED method for service observability, what do R, E, and D stand for?</p>",
+          "options": [
+            "Requests, Errors, Datapoints",
+            "Rate, Errors, Duration",
+            "Replicas, Events, Dependencies",
+            "Response, Exceptions, Duration"
+          ],
+          "correctAnswer": "Rate, Errors, Duration",
+          "explanationHtml": "<p>The RED method defines three golden signals for every service: Rate (how many requests per second), Errors (what fraction of those requests fail), and Duration (latency — how long requests take, typically measured as p50, p95, p99). These three metrics give a complete health picture of a service and drive SLO-based alerting.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A request arrives at your API, calls the spell service, which calls the rune-lookup service. The full request takes 1200ms. Logs show 'Processed in 1200ms' but don't indicate which service was slow. What would tell you which service contributed the most latency?</p>",
+          "options": [
+            "Increasing the log level to DEBUG",
+            "A distributed trace showing the waterfall of spans across all three services",
+            "A metric counter on each service",
+            "Increasing the heap size of the slowest suspected service"
+          ],
+          "correctAnswer": "A distributed trace showing the waterfall of spans across all three services",
+          "explanationHtml": "<p>A distributed trace propagates a traceId across all services. Each service creates a span recording its own start and end time. The trace visualisation shows the waterfall — you immediately see: API span 1200ms total → spell service span 300ms → rune-lookup span 890ms. The rune-lookup service is clearly the bottleneck. Logs alone cannot tell you this without manually correlating timestamps across services.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>p99 latency is the maximum latency across all requests in a measurement window.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>p99 is the 99th percentile — 99% of requests are faster than this value, and 1% are slower. It is not the maximum (which would be p100). p99 is more useful than maximum because a single extreme outlier (e.g. a GC pause) can make the maximum unrepresentative. p99 shows what 1 in 100 users actually experiences, which is a more meaningful SLO target.</p>"
+        }
+      ]
+    }
+  ]
+}

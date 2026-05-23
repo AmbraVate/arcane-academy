@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils'
 import {
   ArrowLeft, ClipboardList, BookOpen,
   Play, Loader2, Zap, Check, Eye, EyeOff, FlaskConical,
-  PenLine, Target,
+  PenLine, Target, Download, FileText,
 } from 'lucide-react'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
@@ -221,20 +221,6 @@ export default function EncodingPage() {
     toastTimer.current = setTimeout(() => setToast(null), 2600)
   }, [])
 
-  // Block paste in Solo Practice (capture phase so it fires before the textarea's own handler)
-  useEffect(() => {
-    const isSoloCoding = encoding?.phase === 'SOLO_PRACTICE' && practiceView === 'code'
-    if (!isSoloCoding) return
-    const handler = (e: ClipboardEvent) => {
-      const target = e.target as HTMLElement
-      if (target.closest('textarea') || target.isContentEditable) {
-        e.preventDefault()
-        showToast('🔒 Pasting is disabled — write it from memory!')
-      }
-    }
-    document.addEventListener('paste', handler, true)
-    return () => document.removeEventListener('paste', handler, true)
-  }, [encoding?.phase, practiceView, showToast])
 
   function handleXpEarned(xpEarned: number, earnedBadges?: Badge[]) {
     if (xpEarned <= 0) return
@@ -591,6 +577,46 @@ export default function EncodingPage() {
       {/* EXPLANATION */}
       {phase === 'EXPLANATION' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
+          {/* Downloadable resources — shown at the very top of EXPLANATION if present */}
+          {encoding.downloadables && encoding.downloadables.length > 0 && (
+            <div className="mb-5 p-3 rounded-[10px] border border-[rgba(255,193,7,0.2)] bg-[rgba(255,193,7,0.04)]">
+              <div className="text-[11px] font-bold text-gold uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5">
+                <Download size={11} strokeWidth={2.5} /> Resources
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {encoding.downloadables.map((dl, i) => (
+                  <a
+                    key={i}
+                    href={dl.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12px] font-medium
+                      bg-[rgba(255,193,7,0.1)] border border-[rgba(255,193,7,0.25)] text-gold
+                      hover:bg-[rgba(255,193,7,0.18)] hover:border-[rgba(255,193,7,0.45)] transition-colors no-underline"
+                  >
+                    <FileText size={11} strokeWidth={2} />
+                    {dl.title}
+                    <span className="text-[10px] uppercase opacity-60 font-bold">{dl.type}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Learning objectives — shown before story if present */}
+          {encoding.learningObjectives && encoding.learningObjectives.length > 0 && (
+            <div className="mb-6 p-4 rounded-[10px] border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.05)]">
+              <div className="text-[12px] font-bold text-teal uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5">
+                <Target size={12} strokeWidth={2} /> Learning Objectives
+              </div>
+              <ul className="m-0 pl-4 space-y-1.5">
+                {encoding.learningObjectives.map((obj, i) => (
+                  <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-teal">{obj}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           {encoding.storyBeats && <StoryPanel beats={encoding.storyBeats} fullPage subChunkId={encoding.subChunkId} topicId={encoding.topicId} rabbitHoleTerms={encoding.rabbitHoleTerms} />}
           {encoding.explanationHtml && (
             <RabbitHoleHtml
@@ -670,15 +696,9 @@ export default function EncodingPage() {
             )}
           </div>
 
-          {/* Right panel — editor (copy blocked: prevents carrying code into Solo) */}
+          {/* Right panel — editor */}
           <div
             className="flex-1 flex flex-col overflow-hidden min-w-0"
-            onCopy={e => {
-              if ((e.target as HTMLElement).closest('textarea')) {
-                e.preventDefault()
-                showToast('🔒 Copying code is disabled — carry it in your head into Solo!')
-              }
-            }}
           >
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
@@ -1062,51 +1082,115 @@ export default function EncodingPage() {
       {/* COMPLETE */}
       {phase === 'COMPLETE' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-center">
+          <div className="text-center mb-6">
             <div className="text-[48px] text-gold mb-3">✦</div>
             <h2 className="text-[24px] font-bold text-gold m-0 mb-2">Concept Mastered!</h2>
-            <p className="text-muted text-[14px] mb-6">You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
+            <p className="text-muted text-[14px]">You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
+          </div>
 
-            {encoding.feynmanPrompt && !feynmanResult && (
-              <div className="text-left mt-6 p-[18px] bg-card border border-border rounded-[10px]">
-                <div className="text-[16px] font-bold text-purple mb-1.5 flex items-center gap-1.5"><FlaskConical size={15} strokeWidth={1.75} /> Feynman Challenge (Optional)</div>
-                <p className="text-[13px] text-muted mb-3 italic">{encoding.feynmanPrompt}</p>
-                <textarea
-                  className="w-full bg-surface border border-border rounded-md px-3 py-3 text-[14px] text-text font-crimson resize-y mb-2.5 box-border focus:outline-none focus:border-purple"
-                  placeholder="Explain this concept in your own words..."
-                  value={feynmanText} onChange={e => setFeynmanText(e.target.value)} rows={6}
-                />
-                <button className="btn btn-primary flex items-center gap-1.5" onClick={handleSubmitFeynman} disabled={submittingFeynman || !feynmanText.trim()}>
-                  {submittingFeynman ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Evaluating...</> : <><PenLine size={13} strokeWidth={1.75} /> Submit Explanation</>}
-                </button>
+          {/* ── Feynman — prominent card ──────────────────────────────────── */}
+          {encoding.feynmanPrompt && !feynmanResult && (
+            <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(139,92,246,0.45)] bg-[rgba(139,92,246,0.07)] shadow-[0_0_24px_rgba(139,92,246,0.12)]">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[20px]">✨</span>
+                <span className="text-[17px] font-bold text-purple-light">Teach It Back</span>
+                <span className="ml-auto text-[11px] text-muted font-cinzel uppercase tracking-[0.06em]">Optional · Earns XP</span>
               </div>
-            )}
-
-            {feynmanResult && (
-              <div className="text-left mt-4 p-[18px] bg-card border border-teal rounded-[10px]">
-                <div className="text-[18px] font-bold text-teal mb-2">Feynman Score: {Math.round(feynmanResult.overallScore * 100)}%</div>
-                <div className="flex gap-3 flex-wrap text-[12px] text-muted mb-2 max-[480px]:gap-2">
-                  <span>Accuracy: {Math.round(feynmanResult.accuracy * 100)}%</span>
-                  <span>Completeness: {Math.round(feynmanResult.completeness * 100)}%</span>
-                  <span>Simplicity: {Math.round(feynmanResult.simplicity * 100)}%</span>
-                  <span>Connection: {Math.round(feynmanResult.connection * 100)}%</span>
-                </div>
-                <p className="text-[13px] text-text leading-[1.5]">{feynmanResult.feedback}</p>
-              </div>
-            )}
-
-            <div className="flex gap-2.5 justify-center mt-5 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
-              <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>Return to Chunk →</button>
-              <button className="btn btn-ghost" onClick={() => navigate(`/topic/${encoding.topicId ?? 'java'}`)}>
-                Dashboard
+              <p className="text-[12px] text-muted mb-3 leading-[1.6]">
+                The best way to confirm you understand — explain it as if teaching someone from scratch. No jargon, just clarity.
+              </p>
+              <p className="text-[14px] text-text italic mb-3 leading-[1.65] p-3 bg-[rgba(0,0,0,0.2)] rounded-[8px] border border-[rgba(139,92,246,0.2)]">
+                "{encoding.feynmanPrompt}"
+              </p>
+              <textarea
+                className="w-full bg-surface border border-[rgba(139,92,246,0.3)] rounded-md px-3 py-3 text-[14px] text-text font-crimson resize-y mb-3 box-border focus:outline-none focus:border-purple"
+                placeholder="Write your explanation here. Imagine your reader has never heard of this concept before..."
+                value={feynmanText} onChange={e => setFeynmanText(e.target.value)} rows={7}
+              />
+              <button
+                className="btn btn-primary w-full flex items-center justify-center gap-2 text-[14px] py-2.5"
+                onClick={handleSubmitFeynman}
+                disabled={submittingFeynman || !feynmanText.trim()}
+              >
+                {submittingFeynman
+                  ? <><Loader2 size={14} strokeWidth={1.75} className="animate-spin" /> Evaluating your explanation…</>
+                  : <><PenLine size={14} strokeWidth={1.75} /> Submit Explanation &amp; Earn XP</>}
               </button>
-              {encoding.storyBeats?.length ? (
-                <button className="btn btn-ghost flex items-center gap-1.5" onClick={() => setStoryOpen(true)}>
-                  <BookOpen size={14} strokeWidth={1.75} />
-                  Re-read Story
-                </button>
-              ) : null}
             </div>
+          )}
+
+          {feynmanResult && (
+            <div className="mb-5 p-5 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)]">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-[20px]">✨</span>
+                <span className="text-[17px] font-bold text-teal">Feynman Result</span>
+                <span className="ml-auto text-[20px] font-bold text-teal">{Math.round(feynmanResult.overallScore * 100)}%</span>
+              </div>
+              {/* Score breakdown bars */}
+              <div className="grid grid-cols-2 gap-2 mb-3 max-[480px]:grid-cols-1">
+                {([
+                  ['Accuracy',     feynmanResult.accuracy],
+                  ['Completeness', feynmanResult.completeness],
+                  ['Simplicity',   feynmanResult.simplicity],
+                  ['Connection',   feynmanResult.connection],
+                ] as [string, number][]).map(([label, val]) => (
+                  <div key={label} className="flex flex-col gap-1">
+                    <div className="flex justify-between text-[11px] text-muted">
+                      <span>{label}</span><span className="text-teal font-semibold">{Math.round(val * 100)}%</span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-[rgba(45,212,191,0.15)] overflow-hidden">
+                      <div className="h-full rounded-full bg-teal" style={{ width: `${Math.round(val * 100)}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[13px] text-text leading-[1.6] italic">{feynmanResult.feedback}</p>
+              {feynmanResult.xpEarned > 0 && (
+                <div className="mt-2.5 text-[12px] text-gold font-semibold">✦ +{feynmanResult.xpEarned} XP earned</div>
+              )}
+            </div>
+          )}
+
+          {/* ── Common Mistakes ───────────────────────────────────────────── */}
+          {encoding.commonMistakes && encoding.commonMistakes.length > 0 && (
+            <div className="mb-5 p-4 rounded-[10px] border border-[rgba(248,113,113,0.25)] bg-[rgba(248,113,113,0.05)]">
+              <div className="text-[12px] font-bold uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5" style={{ color: '#f87171' }}>
+                ⚠ Common Mistakes
+              </div>
+              <ul className="m-0 pl-4 space-y-1.5">
+                {encoding.commonMistakes.map((m, i) => (
+                  <li key={i} className="text-[13px] text-text leading-[1.6]" style={{ listStyleType: '"→ "' }}>{m}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* ── Assessment Criteria ───────────────────────────────────────── */}
+          {encoding.assessmentCriteria && encoding.assessmentCriteria.length > 0 && (
+            <div className="mb-5 p-4 rounded-[10px] border border-[rgba(201,162,39,0.25)] bg-[rgba(201,162,39,0.05)]">
+              <div className="text-[12px] font-bold text-gold uppercase tracking-[0.08em] mb-2.5">
+                ✦ You know this when you can…
+              </div>
+              <ul className="m-0 pl-4 space-y-1.5">
+                {encoding.assessmentCriteria.map((c, i) => (
+                  <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-gold">{c}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* ── Navigation ───────────────────────────────────────────────── */}
+          <div className="flex gap-2.5 justify-center mt-4 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
+            <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>Return to Chunk →</button>
+            <button className="btn btn-ghost" onClick={() => navigate(`/topic/${encoding.topicId ?? 'java'}`)}>
+              Dashboard
+            </button>
+            {encoding.storyBeats?.length ? (
+              <button className="btn btn-ghost flex items-center gap-1.5" onClick={() => setStoryOpen(true)}>
+                <BookOpen size={14} strokeWidth={1.75} />
+                Re-read Story
+              </button>
+            ) : null}
           </div>
         </div>
       )}

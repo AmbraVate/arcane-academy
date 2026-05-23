@@ -1,0 +1,204 @@
+{
+  "id": "java-app-14",
+  "title": "Basic Algorithms",
+  "glyph": "⚡",
+  "sortOrder": 14,
+  "tier": "APPRENTICE",
+  "topicId": "java",
+  "prerequisites": ["java-app-13"],
+  "subChunks": [
+    {
+      "id": "java-app-14a",
+      "title": "Linear & Binary Search",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "filename": "SearchAlgo.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>The Academy's library holds ten thousand scrolls. Finding the right one by checking each one in turn works — eventually. But a librarian who knows the scrolls are alphabetically ordered can find any one in seventeen checks regardless of the collection size. That is the difference between linear and binary search.</p>",
+      "explanationHtml": "<h3>Linear Search</h3><p>Check every element from the start until you find the target or exhaust the array. Simple but slow for large data:</p><pre><code>public static int linearSearch(int[] arr, int target) {\n    for (int i = 0; i < arr.length; i++) {\n        if (arr[i] == target) return i;  // found: return index\n    }\n    return -1;  // not found\n}</code></pre><p>Returns the index if found, -1 if not. Works on any array — unsorted or sorted. Time: O(n) — in the worst case you check every element.</p><h3>Binary Search</h3><p>Requires a <em>sorted</em> array. Repeatedly halves the search space by comparing the target with the middle element:</p><pre><code>public static int binarySearch(int[] sortedArr, int target) {\n    int low = 0, high = sortedArr.length - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;  // avoids integer overflow\n        if (sortedArr[mid] == target) return mid;\n        if (sortedArr[mid] < target)  low = mid + 1;\n        else                          high = mid - 1;\n    }\n    return -1;\n}</code></pre><p>Time: O(log n) — each step eliminates half the remaining elements. For 1,024 elements: at most 10 comparisons. For 1,048,576 elements: at most 20.</p><h3>Big-O Intuition</h3><p>Big-O notation describes how an algorithm's runtime grows as input size (n) grows:</p><ul><li><strong>O(1)</strong> — constant: <code>arr[5]</code> — same speed regardless of array size</li><li><strong>O(log n)</strong> — logarithmic: binary search — doubles the work for every doubling of input</li><li><strong>O(n)</strong> — linear: linear search — work grows proportionally with input size</li><li><strong>O(n²)</strong> — quadratic: bubble sort — work grows with the square of input size</li></ul><p>These are rough measures of <em>rate of growth</em>, not absolute speed. O(1) is better than O(n) for large n, regardless of the constant factor.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's library wing stretches further than the eye can see. Two apprentices have been tasked with finding Scroll 7,342. One starts at the first shelf and checks each scroll in order. The other walks to the middle, checks the number, then walks to a quarter or three-quarters, and repeats. Three hours later, only one apprentice has returned."},
+        {"type": "dialogue", "av": "📚", "cls": "mentor", "speaker": "Head Librarian Sora", "sCls": "mentor", "text": "Linear search is brute force. You check every element until you find the answer or exhaust the collection. It works on anything — sorted or unsorted — and it is never wrong. But for ten thousand scrolls, at worst you make ten thousand comparisons."},
+        {"type": "example", "speaker": "Linear search", "text": "public static int linearSearch(int[] arr, int target) {\n    for (int i = 0; i < arr.length; i++) {\n        if (arr[i] == target) return i;\n    }\n    return -1;  // -1 means not found\n}\n// Worst case: O(n) — checks every element"},
+        {"type": "dialogue", "av": "📚", "cls": "mentor", "speaker": "Head Librarian Sora", "sCls": "mentor", "text": "Binary search requires the collection to be sorted. But given that constraint, it is extraordinarily efficient. Compare with the middle element. If too high, discard the upper half. If too low, discard the lower half. Repeat. Every step eliminates half the remaining options."},
+        {"type": "example", "speaker": "Binary search — O(log n)", "text": "// Searching for 42 in [3,7,12,24,42,57,68,85]:\n// Step 1: mid = index 3 (value 24). 42 > 24 → search right half\n// Step 2: mid = index 5 (value 57). 42 < 57 → search left half\n// Step 3: mid = index 4 (value 42). Found! Return 4.\n// 3 steps for 8 elements. 20 steps for 1,048,576 elements."},
+        {"type": "dialogue", "av": "📚", "cls": "mentor", "speaker": "Head Librarian Sora", "sCls": "mentor", "text": "This is what Big-O notation captures. O(n) means runtime grows proportionally with the collection size. O(log n) means every doubling of the collection adds just one more step. O(1) means it takes the same time regardless of size — like looking up an element by index."}
+      ],
+      "learningObjectives": [
+        "Implement linear search and return the index of a target element, or -1 if not found",
+        "Implement binary search on a sorted array using the low/mid/high pointer pattern",
+        "Explain the Big-O complexity of O(1), O(log n), O(n), and O(n²) in plain terms",
+        "Know when to use linear vs binary search based on whether the data is sorted"
+      ],
+      "commonMistakes": [
+        "Applying binary search to an unsorted array — the result will be wrong, not an error",
+        "Calculating mid as (low + high) / 2 — this can overflow for large int values; use low + (high - low) / 2",
+        "Forgetting to return -1 (not found) and leaving a missing return path — compile error",
+        "Confusing O(log n) with 'fast' — it is fast relative to O(n) for large n, but context always matters"
+      ],
+      "assessmentCriteria": [
+        "Can implement both linear and binary search from memory without reference",
+        "Can explain why binary search requires a sorted array and what happens if the array is unsorted",
+        "Can state the Big-O complexity of linear search and binary search and explain the difference intuitively",
+        "Can trace a binary search step-by-step for a given array and target value"
+      ],
+      "feynmanPrompt": "Explain linear search and binary search to a complete beginner using a physical analogy — perhaps finding a name in a phone book. Why does binary search require the data to be sorted? What does O(log n) mean in plain English?",
+      "guidedPracticeHtml": "<p>Implement both search algorithms and test them:</p><ol><li>Implement <code>int linearSearch(int[] arr, int target)</code> — return index or -1</li><li>Implement <code>int binarySearch(int[] arr, int target)</code> — sorted array assumed, return index or -1</li><li>In main: <br>- Create <code>int[] data = {3, 7, 12, 24, 42, 57, 68, 85}</code><br>- Linear search for 42 and print the result<br>- Binary search for 42 and print the result<br>- Binary search for 99 and print the result</li></ol>",
+      "guidedPracticeStarterCode": "public class SearchAlgo {\n\n    public static int linearSearch(int[] arr, int target) {\n        \n    }\n\n    public static int binarySearch(int[] arr, int target) {\n        \n    }\n\n    public static void main(String[] args) {\n        int[] data = {3, 7, 12, 24, 42, 57, 68, 85};\n\n        System.out.println(linearSearch(data, 42));  // 4\n        System.out.println(binarySearch(data, 42));  // 4\n        System.out.println(binarySearch(data, 99));  // -1\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "linearSearch finds 42 at index 4", "input": "null", "expected": "4"},
+        {"label": "binarySearch finds 42 at index 4", "input": "null", "expected": "4"},
+        {"label": "binarySearch returns -1 for 99", "input": "null", "expected": "-1"}
+      ],
+      "soloPracticeHtml": "<p>From scratch. Implement <code>int linearSearchString(String[] arr, String target)</code> that finds the index of a string (case-insensitive) in an unsorted array, or -1 if not found. Also implement <code>int countOccurrences(int[] arr, int target)</code> that counts how many times target appears in the array. In main: search for <code>\"fire\"</code> in <code>{\"Ice\", \"FIRE\", \"Thunder\", \"Earth\"}</code> (should return 1), and count how many times 7 appears in <code>{7, 3, 7, 1, 7, 4, 2, 7}</code> (should return 4).</p>",
+      "soloPracticeTests": [
+        {"label": "linearSearchString case-insensitive = 1", "input": "null", "expected": "1"},
+        {"label": "countOccurrences of 7 = 4", "input": "null", "expected": "4"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What must be true about an array before you can use binary search?</p>",
+          "options": [
+            "It must contain no duplicates",
+            "It must be sorted",
+            "It must have an odd number of elements",
+            "All elements must be positive"
+          ],
+          "correctAnswer": "It must be sorted",
+          "explanationHtml": "<p>Binary search relies on the sorted order to eliminate half the search space at each step. On an unsorted array, the algorithm will produce incorrect results (not an error — it silently returns wrong answers).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>An algorithm is described as O(log n). What happens to its runtime when the input size doubles?</p>",
+          "options": [
+            "It doubles",
+            "It quadruples",
+            "It increases by one step",
+            "It stays the same"
+          ],
+          "correctAnswer": "It increases by one step",
+          "explanationHtml": "<p>O(log n) grows by one step for each doubling of input. Binary search on 1,000 elements takes ~10 steps; on 2,000 elements it takes ~11 steps. This is why binary search remains practical even for enormous datasets.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>Trace binary search for target 15 in [2, 5, 8, 12, 15, 23, 38, 56]. How many comparisons are needed, and what is the return value?</p>",
+          "options": [
+            "2 comparisons, returns 4",
+            "3 comparisons, returns 4",
+            "4 comparisons, returns 4",
+            "1 comparison, returns 4"
+          ],
+          "correctAnswer": "3 comparisons, returns 4",
+          "explanationHtml": "<p>low=0, high=7. Step 1: mid=3, arr[3]=12 &lt; 15 → low=4. Step 2: mid=5, arr[5]=23 &gt; 15 → high=4. Step 3: mid=4, arr[4]=15 == 15 → return 4. Three comparisons.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Why should you calculate <code>mid</code> as <code>low + (high - low) / 2</code> rather than <code>(low + high) / 2</code>?</p>",
+          "options": [
+            "The two expressions give different mathematical results",
+            "(low + high) can overflow int range when both values are large",
+            "The first form is required by Java syntax",
+            "The second form only works with even-length arrays"
+          ],
+          "correctAnswer": "(low + high) can overflow int range when both values are large",
+          "explanationHtml": "<p>If both <code>low</code> and <code>high</code> are close to <code>Integer.MAX_VALUE</code>, their sum overflows to a negative number, giving an incorrect mid index. <code>low + (high - low) / 2</code> avoids this by computing the offset first and staying within safe range throughout.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-app-14b",
+      "title": "Bubble & Insertion Sort",
+      "sortOrder": 2,
+      "xpReward": 65,
+      "filename": "SortAlgo.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Before you can use binary search, someone has to sort the library. Sorting algorithms are among the most studied algorithms in computer science — not because the simple ones are practical in production, but because understanding them builds the intuition for thinking about algorithmic efficiency.</p>",
+      "explanationHtml": "<h3>Bubble Sort</h3><p>Repeatedly walks through the array, comparing adjacent elements and swapping them if they are in the wrong order. The largest unsorted element 'bubbles' to its correct position each pass:</p><pre><code>public static void bubbleSort(int[] arr) {\n    int n = arr.length;\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - 1 - i; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}</code></pre><p>Time: O(n²) — for n elements, roughly n² comparisons in the worst case. Practical only for small arrays (under ~20 elements).</p><h3>Insertion Sort</h3><p>Builds the sorted portion from left to right. For each element, it finds the correct position in the sorted section and inserts it there:</p><pre><code>public static void insertionSort(int[] arr) {\n    for (int i = 1; i < arr.length; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n}</code></pre><p>Time: O(n²) worst case, but O(n) for nearly-sorted data — practically faster than bubble sort. Used internally by Java's <code>Arrays.sort()</code> for small sub-arrays.</p><h3>Why Learn Slow Sorts?</h3><p>Bubble and insertion sort illustrate core algorithmic ideas: the swap, the inner loop invariant, and the relationship between comparisons and time complexity. Production code uses <code>Arrays.sort()</code> (which is O(n log n)) — but understanding why it is faster requires first understanding why O(n²) is slow.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "In the sorting scriptorium, stacks of unsorted scrolls tower over two apprentices. One picks up each scroll, checks if the one next to it is out of order, and swaps them — over and over until nothing is out of place. The other tucks each new scroll into the correct position in an already-ordered pile."},
+        {"type": "dialogue", "av": "🔄", "cls": "mentor", "speaker": "Sorting Master Varr", "sCls": "mentor", "text": "Bubble sort is intuitive but wasteful. For every pass through n scrolls, you at most correct one pair. For n scrolls, you need n passes. That is n² comparisons in the worst case — the very definition of quadratic growth."},
+        {"type": "example", "speaker": "Bubble sort trace on [5, 2, 8, 1]", "text": "Pass 1: [2,5,8,1] → [2,5,1,8]  (8 bubbles to end)\nPass 2: [2,1,5,8]              (5 moves right)\nPass 3: [1,2,5,8]              (2 moves right)\nSorted! 3 passes, 6 comparisons for 4 elements"},
+        {"type": "dialogue", "av": "🔄", "cls": "mentor", "speaker": "Sorting Master Varr", "sCls": "mentor", "text": "Insertion sort is smarter. It maintains a sorted section on the left. Each new element is inserted into its correct position by shifting elements right. For nearly-sorted data, almost no shifting is needed — it approaches O(n). For randomly ordered data, it is still O(n²), but with a smaller constant than bubble sort."},
+        {"type": "example", "speaker": "Insertion sort trace on [5, 2, 8, 1]", "text": "Start:   [5 | 2, 8, 1]   (sorted section: just 5)\nInsert 2: [2, 5 | 8, 1]   (2 shifts left of 5)\nInsert 8: [2, 5, 8 | 1]   (8 is already in place)\nInsert 1: [1, 2, 5, 8]   (1 shifts to front)\nSorted!"},
+        {"type": "dialogue", "av": "🔄", "cls": "mentor", "speaker": "Sorting Master Varr", "sCls": "mentor", "text": "In production you use <code>Arrays.sort()</code>, which is O(n log n). But you will interview for jobs, and interviewers ask about these algorithms because they test whether you understand what efficiency means — not just whether you can call a library method."}
+      ],
+      "learningObjectives": [
+        "Implement bubble sort using nested loops and an element swap",
+        "Implement insertion sort using a key element and a shift-left loop",
+        "Explain why both algorithms are O(n²) in the worst case",
+        "Articulate why production code uses Arrays.sort() instead of these implementations"
+      ],
+      "commonMistakes": [
+        "Forgetting the temp variable when swapping — direct assignment overwrites one value before it can be saved",
+        "Bubble sort: inner loop should go to n-1-i, not n-1 — without this optimisation the outer loop is still correct but does redundant comparisons on already-sorted elements",
+        "Insertion sort: starting the outer loop at i=0 — the first element is already 'sorted' and should not be compared against itself",
+        "Confusing O(n log n) with O(log n) — Arrays.sort() is faster than O(n²) but not as fast as a lookup"
+      ],
+      "assessmentCriteria": [
+        "Can write bubble sort from memory including the correct swap pattern",
+        "Can write insertion sort from memory and trace its execution on a small array",
+        "Can explain O(n²) behaviour and give a concrete example of how comparison count grows",
+        "Knows that Arrays.sort() is the production choice and can explain why"
+      ],
+      "feynmanPrompt": "Explain bubble sort and insertion sort using a physical analogy — like sorting a hand of playing cards. Why are both O(n²)? Why would you use Arrays.sort() in real code instead of these algorithms?",
+      "guidedPracticeHtml": "<p>Implement both sorting algorithms and verify them:</p><ol><li>Implement <code>void bubbleSort(int[] arr)</code> — sorts the array in-place</li><li>Implement <code>void insertionSort(int[] arr)</code> — sorts the array in-place</li><li>In main:<br>- Sort <code>{64, 34, 25, 12, 22, 11, 90}</code> with bubble sort and print using <code>Arrays.toString()</code><br>- Sort <code>{12, 11, 13, 5, 6}</code> with insertion sort and print</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.Arrays;\n\npublic class SortAlgo {\n\n    public static void bubbleSort(int[] arr) {\n        \n    }\n\n    public static void insertionSort(int[] arr) {\n        \n    }\n\n    public static void main(String[] args) {\n        int[] a = {64, 34, 25, 12, 22, 11, 90};\n        bubbleSort(a);\n        System.out.println(Arrays.toString(a));\n\n        int[] b = {12, 11, 13, 5, 6};\n        insertionSort(b);\n        System.out.println(Arrays.toString(b));\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "bubbleSort result", "input": "null", "expected": "[11, 12, 22, 25, 34, 64, 90]"},
+        {"label": "insertionSort result", "input": "null", "expected": "[5, 6, 11, 12, 13]"}
+      ],
+      "soloPracticeHtml": "<p>From scratch. Implement <code>void selectionSort(int[] arr)</code> — a third classic algorithm. For each position i, find the minimum element in the sub-array from i to the end, then swap it into position i. This is O(n²) like the others. Then sort <code>{29, 10, 14, 37, 13}</code> and print the result.</p>",
+      "soloPracticeTests": [
+        {"label": "selectionSort result", "input": "null", "expected": "[10, 13, 14, 29, 37]"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the time complexity of bubble sort and insertion sort in the <strong>worst case</strong>?</p>",
+          "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+          "correctAnswer": "O(n²)",
+          "explanationHtml": "<p>Both algorithms use nested loops where the inner loop potentially runs n times for each outer iteration — giving n × n = n² comparisons in the worst case (reverse-sorted input).</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is the correct way to swap two elements in an array?</p>",
+          "options": [
+            "arr[i] = arr[j]; arr[j] = arr[i];",
+            "int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;",
+            "arr[i] ^= arr[j]; arr[j] ^= arr[i];",
+            "arr.swap(i, j);"
+          ],
+          "correctAnswer": "int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;",
+          "explanationHtml": "<p>You need a temporary variable to hold one value while you overwrite it. Without <code>temp</code>, the first assignment (<code>arr[i] = arr[j]</code>) destroys the original value of <code>arr[i]</code> before you can copy it to <code>arr[j]</code>. The XOR trick works but is unreadable and not recommended.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Java's <code>Arrays.sort()</code> uses bubble sort internally for all array sizes.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Java's <code>Arrays.sort()</code> uses a dual-pivot Quicksort for primitive arrays (O(n log n) average), and TimSort (a merge/insertion hybrid) for object arrays. It only uses insertion sort for very small sub-arrays (typically fewer than 7 elements) where its low overhead outweighs the O(n²) cost.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You receive an array of 10 elements that is 'almost sorted' (at most 2 elements out of place). Which algorithm is most appropriate?</p>",
+          "options": [
+            "Bubble sort — it is simple and the array is small",
+            "Insertion sort — it runs in near-O(n) on nearly-sorted data",
+            "Arrays.sort() — always prefer the standard library",
+            "Binary search — it is faster than sorting"
+          ],
+          "correctAnswer": "Arrays.sort() — always prefer the standard library",
+          "explanationHtml": "<p>While insertion sort is theoretically advantageous on nearly-sorted data, in practice <code>Arrays.sort()</code> is the professional choice — it is correct, well-tested, and uses insertion sort internally for small inputs anyway. Unless you have a compelling performance measurement that proves otherwise, always use the standard library. (Binary search is a <em>search</em> algorithm, not a sorting algorithm.)</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "id": "java-app-5",
+  "title": "Methods & Functions",
+  "glyph": "⚗️",
+  "sortOrder": 5,
+  "tier": "APPRENTICE",
+  "topicId": "java",
+  "prerequisites": ["java-app-4"],
+  "subChunks": [
+    {
+      "id": "java-app-5a",
+      "title": "Parameters, Return Types & Scope",
+      "sortOrder": 1,
+      "xpReward": 60,
+      "filename": "SpellForge.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A wizard who recites the same incantation word-for-word every time will never rise above apprentice rank. Real mastery means encapsulating power into a <em>reusable formula</em> — something you invoke by name, with different ingredients, each time.</p>",
+      "explanationHtml": "<h3>What is a Method?</h3><p>A method is a named block of code that performs a task. Once defined, it can be called (invoked) any number of times from anywhere in your program. Methods are how Java avoids repetition and organises logic.</p><pre><code>public static int add(int a, int b) {\n    return a + b;\n}</code></pre><p>Reading from left to right: <code>public static</code> are access/scope modifiers (covered with classes). <code>int</code> is the <strong>return type</strong> — the type of value this method hands back to the caller. <code>add</code> is the method name. <code>(int a, int b)</code> are the <strong>parameters</strong> — values the caller must provide.</p><h3>Void Methods</h3><p>Not every method needs to return a value. Use <code>void</code> to indicate the method does its work and hands nothing back:</p><pre><code>public static void greet(String name) {\n    System.out.println(\"Hello, \" + name + \"!\");\n}</code></pre><h3>Calling Methods</h3><pre><code>int result = add(3, 7);  // result = 10\ngreet(\"Lyria\");          // prints: Hello, Lyria!</code></pre><h3>The Call Stack</h3><p>Every method call pushes a <em>frame</em> onto the call stack — a record of where execution is and what local variables exist. When the method returns, its frame is popped. Variables in a method are <strong>local</strong> — they vanish when the method ends. Trying to read a local variable from outside the method is a compile error.</p><h3>Scope</h3><p>Scope is the region of code where a variable is visible and usable:</p><ul><li><strong>Local scope</strong>: variables declared inside a method — live only while the method runs</li><li><strong>Block scope</strong>: variables declared inside an <code>if</code>, <code>for</code>, or <code>while</code> block — live only inside that block</li></ul><pre><code>public static int square(int n) {\n    int result = n * n;  // local — only visible here\n    return result;\n}\n// result is not accessible here — compile error</code></pre><h3>The return Statement</h3><p>A method with a non-void return type <em>must</em> return a value on every possible code path. The compiler enforces this:</p><pre><code>// Compile error: missing return on else branch\npublic static int abs(int n) {\n    if (n >= 0) return n;\n    // compiler says: this method might not return a value\n}\n\n// Correct:\npublic static int abs(int n) {\n    if (n >= 0) return n;\n    return -n;\n}</code></pre>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's lower workshops smell of sulphur and pine resin. Senior apprentices are chanting spells with dozens of steps, repeating entire passages verbatim. A red-robed wizard leans in the doorway, watching with visible frustration."},
+        {"type": "dialogue", "av": "🔴", "cls": "mentor", "speaker": "Master Rhea", "sCls": "mentor", "text": "Look at them. Thirty steps of incantation to light a single candle. If they had to light fifty candles, they'd be here until dawn. This is why we invented <strong>methods</strong> — named, reusable formulas you invoke once, then call by name forever after."},
+        {"type": "example", "speaker": "A method that calculates spell power", "text": "public static int calcPower(int baseDamage, int multiplier) {\n    return baseDamage * multiplier;\n}\n\n// Called like this:\nint firePower = calcPower(10, 3);  // 30\nint icePower  = calcPower(8, 2);   // 16"},
+        {"type": "dialogue", "av": "🔴", "cls": "mentor", "speaker": "Master Rhea", "sCls": "mentor", "text": "The method signature tells you everything: what type of value comes back (the <strong>return type</strong>), what name to call it by, and what ingredients it needs (the <strong>parameters</strong>). The compiler enforces this contract. Try to pass a String where an int is expected and it will refuse to compile."},
+        {"type": "dialogue", "av": "🔴", "cls": "mentor", "speaker": "Master Rhea", "sCls": "mentor", "text": "Some methods do work but hand nothing back — they are declared <code>void</code>. Others must always produce a value. If your return type is <code>int</code>, the compiler checks that every possible code path through that method contains a <code>return</code> statement. No exceptions."},
+        {"type": "example", "speaker": "Void method and scope", "text": "public static void announceSpell(String spellName) {\n    String message = \"Casting: \" + spellName;  // local variable\n    System.out.println(message);\n}\n// 'message' does not exist here — it belonged to announceSpell"},
+        {"type": "dialogue", "av": "🔴", "cls": "mentor", "speaker": "Master Rhea", "sCls": "mentor", "text": "Variables declared inside a method are <strong>local</strong>. They are born when the method is called and die when it returns. This is called scope. Variables in an <code>if</code> block die at the closing brace of that block. A tighter cage than you might expect — but it prevents variables from leaking across the program and causing chaos."},
+        {"type": "narration", "text": "She flicks her wrist. One of the chanting apprentices blinks, then whispers a single word. The candle lights. 'Thirty steps,' she says, 'collapsed into one call. That is the power of a well-written method.'"}
+      ],
+      "learningObjectives": [
+        "Define a method with correct return type, name, and parameter list",
+        "Distinguish between void methods and value-returning methods",
+        "Explain local scope and why variables declared inside a method are not accessible outside it",
+        "Ensure every code path in a non-void method has a return statement"
+      ],
+      "commonMistakes": [
+        "Forgetting the return type — the compiler requires it even for void methods",
+        "Missing a return statement on a branch — the compiler will catch it, but the error message can be confusing",
+        "Trying to access a local variable outside its scope — leads to 'cannot find symbol' compile errors",
+        "Confusing parameters (what the method accepts) with arguments (what the caller passes)"
+      ],
+      "assessmentCriteria": [
+        "Can write a method with one or more parameters and a non-void return type",
+        "Can write a void method and explain why it does not use return (or uses return; to exit early)",
+        "Can predict compile errors when a local variable is used outside its declaring block",
+        "Can identify missing return paths by tracing control flow through if/else branches"
+      ],
+      "feynmanPrompt": "Explain what a method is, why we use them, and what 'scope' means for variables inside a method. Use an analogy — perhaps a recipe or a vending machine — to make the concept concrete for a complete beginner.",
+      "guidedPracticeHtml": "<p>The Academy's spell forge needs three utility methods. Implement each one and call them in <code>main</code>:</p><ol><li><code>calcMana(int spellLevel, int duration)</code> — returns <code>int</code>: <code>spellLevel * duration * 5</code></li><li><code>isAffordable(int manaCost, int manaReserve)</code> — returns <code>boolean</code>: <code>true</code> if manaCost is less than or equal to manaReserve</li><li><code>announce(String spellName, int power)</code> — <code>void</code>: prints <code>\"Casting [spellName] — power: [power]\"</code></li></ol><p>In main: calculate mana for spellLevel=3, duration=4. Print whether it is affordable given manaReserve=80. Then announce spell name <code>\"Frostbolt\"</code> with that power value.</p>",
+      "guidedPracticeStarterCode": "public class SpellForge {\n\n    // 1. Returns spellLevel * duration * 5\n    public static int calcMana(int spellLevel, int duration) {\n        \n    }\n\n    // 2. Returns true if manaCost <= manaReserve\n    public static boolean isAffordable(int manaCost, int manaReserve) {\n        \n    }\n\n    // 3. Prints: Casting [spellName] — power: [power]\n    public static void announce(String spellName, int power) {\n        \n    }\n\n    public static void main(String[] args) {\n        int mana = calcMana(3, 4);\n        System.out.println(isAffordable(mana, 80));\n        announce(\"Frostbolt\", mana);\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "calcMana(3,4) = 60", "input": "null", "expected": "60"},
+        {"label": "isAffordable(60,80) = true", "input": "null", "expected": "true"},
+        {"label": "announce prints correct line", "input": "null", "expected": "Casting Frostbolt — power: 60"}
+      ],
+      "soloPracticeHtml": "<p>Rebuild from scratch — no starter code. Write a class called <code>SpellForge</code> with three methods:</p><ul><li><code>public static double powerRatio(int attack, int defence)</code> — returns the ratio as a double: <code>(double) attack / defence</code></li><li><code>public static boolean isCritical(double ratio)</code> — returns <code>true</code> if ratio is greater than <code>2.0</code></li><li><code>public static void report(String target, double ratio, boolean critical)</code> — prints: <code>\"[target]: ratio=[ratio], critical=[critical]\"</code></li></ul><p>In main: call powerRatio(15, 5), pass the result to isCritical, then call report with target <code>\"Dragon\"</code>, the ratio, and the critical boolean.</p>",
+      "soloPracticeTests": [
+        {"label": "powerRatio(15,5) = 3.0", "input": "null", "expected": "3.0"},
+        {"label": "isCritical(3.0) = true", "input": "null", "expected": "true"},
+        {"label": "report prints correct line", "input": "null", "expected": "Dragon: ratio=3.0, critical=true"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does a <code>void</code> return type indicate?</p>",
+          "options": [
+            "The method returns null",
+            "The method returns 0",
+            "The method does not return a value",
+            "The method is empty"
+          ],
+          "correctAnswer": "The method does not return a value",
+          "explanationHtml": "<p><code>void</code> means the method performs work but does not hand a value back to the caller. You cannot assign the result of a void method to a variable.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>A local variable declared inside a method can be used anywhere else in the same class.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Local variables are scoped to the method (or block) in which they are declared. They cease to exist when the method returns. Accessing them from outside causes a compile-time 'cannot find symbol' error.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which part of a method signature specifies what type of value the method sends back to the caller?</p>",
+          "options": ["Method name", "Parameter list", "Return type", "Access modifier"],
+          "correctAnswer": "Return type",
+          "explanationHtml": "<p>The return type (e.g. <code>int</code>, <code>String</code>, <code>void</code>) is written immediately before the method name and declares what type of value the method will produce.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "public static int doubleIt(int n) {\n    return n * 2;\n}\npublic static void main(String[] args) {\n    int x = doubleIt(5);\n    System.out.println(x + doubleIt(3));\n}",
+          "correctAnswer": "16",
+          "explanationHtml": "<p><code>doubleIt(5)</code> returns 10, stored in <code>x</code>. <code>doubleIt(3)</code> returns 6. <code>10 + 6 = 16</code>.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What is wrong with this method?</p>",
+          "codeSnippet": "public static int sign(int n) {\n    if (n > 0) return 1;\n    if (n < 0) return -1;\n}",
+          "correctAnswer": "Missing return statement — the compiler cannot guarantee a value is returned when n == 0",
+          "explanationHtml": "<p>The compiler traces all possible paths: n > 0, n < 0, and n == 0. The last path has no <code>return</code> statement, so the compiler refuses to compile. Fix: add <code>return 0;</code> after the two if-blocks.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer writes a method that takes two ints and should give back the larger. Which is the best implementation?</p>",
+          "options": [
+            "public static int max(int a, int b) { if (a > b) return a; return b; }",
+            "public static void max(int a, int b) { System.out.println(a > b ? a : b); }",
+            "public static int max(int a, int b) { int result; if (a > b) result = a; else result = b; }",
+            "public static int max(int a, int b) { return a; }"
+          ],
+          "correctAnswer": "public static int max(int a, int b) { if (a > b) return a; return b; }",
+          "explanationHtml": "<p>Option 1 returns the value — making it composable and testable. Option 2 prints instead of returning — useless if you need the result in a calculation. Option 3 doesn't compile (missing <code>return result;</code>). Option 4 always returns a regardless of b.</p>"
+        }
+      ]
+    },
+    {
+      "id": "java-app-5b",
+      "title": "Method Overloading & Early Return",
+      "sortOrder": 2,
+      "xpReward": 55,
+      "filename": "OverloadDemo.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>A skilled enchanter doesn't have to choose between a ring of fire and a ring of frost — they carry both, and the academy's catalogue decides which to invoke based on what you hand them. In Java, a single method name can accept many different argument types. This is called <em>overloading</em>.</p>",
+      "explanationHtml": "<h3>Method Overloading</h3><p>Two or more methods in the same class can share the same name as long as their <strong>parameter lists differ</strong> (different types, different counts, or different order). The compiler selects the right version based on what you pass:</p><pre><code>public static int area(int side) {\n    return side * side;             // square\n}\npublic static int area(int width, int height) {\n    return width * height;          // rectangle\n}\npublic static double area(double radius) {\n    return Math.PI * radius * radius; // circle\n}\n\narea(5);         // calls int, int version → 25\narea(4, 6);      // calls int, int version → 24\narea(3.0);       // calls double version  → ~28.27</code></pre><p>The key constraint: the return type alone is <em>not</em> enough to distinguish overloads. Two methods with the same name and same parameters but different return types will cause a compile error — the compiler cannot decide which to call.</p><h3>Why Overloading?</h3><p>Overloading keeps your API clean. You write one verb (<code>area</code>, <code>print</code>, <code>parse</code>) instead of <code>areaOfSquare</code>, <code>areaOfRectangle</code>, <code>areaOfCircle</code>. The Java standard library uses this extensively — <code>System.out.println</code> has ten overloads.</p><h3>Early Return</h3><p>A <code>return</code> statement in a void method exits immediately — even if there is more code below. This is called an <em>early return</em> (or guard clause) and is a powerful tool for removing deep nesting:</p><pre><code>// Without guard clause — deeply nested\npublic static void process(String input) {\n    if (input != null) {\n        if (!input.isEmpty()) {\n            System.out.println(input.toUpperCase());\n        }\n    }\n}\n\n// With guard clauses — flat and readable\npublic static void process(String input) {\n    if (input == null) return;\n    if (input.isEmpty()) return;\n    System.out.println(input.toUpperCase());\n}</code></pre><p>Guard clauses are preferred in modern Java style. They reduce nesting and make the <em>happy path</em> (normal execution) easier to read.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "The enchantment catalogue at the Academy's library displays thousands of items — but every ring, amulet, and talisman is catalogued under a single verb: <em>enchant</em>. The archivist explains that context determines which formula is applied."},
+        {"type": "dialogue", "av": "📚", "cls": "mentor", "speaker": "Archivist Solen", "sCls": "mentor", "text": "Overloading allows a single name to handle multiple argument shapes. You write <code>enchant(int power)</code> for a basic charm and <code>enchant(int power, String element)</code> for an elemental one. The compiler reads what you pass in and picks the right formula. Elegant."},
+        {"type": "example", "speaker": "Overloaded enchant methods", "text": "public static String enchant(int power) {\n    return \"Generic enchantment: \" + power;\n}\npublic static String enchant(int power, String element) {\n    return element + \" enchantment: \" + power;\n}\n// enchant(5)           → \"Generic enchantment: 5\"\n// enchant(5, \"Fire\")   → \"Fire enchantment: 5\""},
+        {"type": "dialogue", "av": "📚", "cls": "mentor", "speaker": "Archivist Solen", "sCls": "mentor", "text": "The catch: overloads must differ in their parameters — count, types, or both. You cannot overload on return type alone. If two methods have identical parameter lists, they conflict regardless of what they return."},
+        {"type": "dialogue", "av": "📚", "cls": "mentor", "speaker": "Archivist Solen", "sCls": "mentor", "text": "Now — early returns. A method that validates before it acts should not pyramid its logic inside nested ifs. Use a guard clause: check for the invalid case and return immediately. The rest of the method can be written flat, as if the invalid case never existed."},
+        {"type": "example", "speaker": "Guard clauses flatten nesting", "text": "// Deep nesting — hard to read\npublic static void castSpell(String name, int mana) {\n    if (name != null) {\n        if (mana > 0) {\n            System.out.println(\"Casting \" + name);\n        }\n    }\n}\n// Guard clauses — clean\npublic static void castSpell(String name, int mana) {\n    if (name == null) return;\n    if (mana <= 0) return;\n    System.out.println(\"Casting \" + name);\n}"}
+      ],
+      "learningObjectives": [
+        "Define method overloading and explain what makes two overloads distinct",
+        "Write two or more overloaded methods with the same name but different parameter lists",
+        "Explain why overloading on return type alone causes a compile error",
+        "Use early return (guard clauses) to remove unnecessary nesting"
+      ],
+      "commonMistakes": [
+        "Thinking return type alone distinguishes overloads — it does not; parameters must differ",
+        "Over-overloading: if methods do genuinely different things, give them different names",
+        "Forgetting that calling an overloaded method with no arguments causes a 'no suitable method' error if no no-arg overload exists",
+        "Avoiding early returns and building deeply nested pyramids — this is a style smell"
+      ],
+      "assessmentCriteria": [
+        "Can write two overloaded methods that differ in parameter count or type",
+        "Can explain why two methods with the same name and same parameters but different return types will not compile",
+        "Can refactor a doubly-nested if block into a flat method using guard clauses"
+      ],
+      "feynmanPrompt": "Explain method overloading — what it is, why it exists, and what the rules are. Then explain guard clauses (early return) and when you would choose them over nested if-statements.",
+      "guidedPracticeHtml": "<p>Implement two overloads of a method called <code>describe</code>:</p><ul><li><code>describe(String name)</code> — returns <code>\"Spell: [name]\"</code></li><li><code>describe(String name, int power)</code> — returns <code>\"Spell: [name], Power: [power]\"</code></li></ul><p>Also implement <code>safeGreet(String name)</code> (void) using a guard clause: if name is null or empty, return immediately without printing. Otherwise print <code>\"Greetings, [name]!\"</code>.</p><p>In main: call both <code>describe</code> overloads and print their results. Call <code>safeGreet(null)</code> then <code>safeGreet(\"Lyria\")</code>.</p>",
+      "guidedPracticeStarterCode": "public class OverloadDemo {\n\n    public static String describe(String name) {\n        \n    }\n\n    public static String describe(String name, int power) {\n        \n    }\n\n    public static void safeGreet(String name) {\n        // guard clause: if null or empty, return early\n        \n    }\n\n    public static void main(String[] args) {\n        System.out.println(describe(\"Frostbolt\"));\n        System.out.println(describe(\"Frostbolt\", 40));\n        safeGreet(null);\n        safeGreet(\"Lyria\");\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "describe(name) correct", "input": "null", "expected": "Spell: Frostbolt"},
+        {"label": "describe(name, power) correct", "input": "null", "expected": "Spell: Frostbolt, Power: 40"},
+        {"label": "safeGreet(null) prints nothing", "input": "null", "expected": "Greetings, Lyria!"}
+      ],
+      "soloPracticeHtml": "<p>From scratch, write a class <code>OverloadDemo</code> with:</p><ul><li><code>power(int base)</code> — returns <code>base * base</code></li><li><code>power(int base, int exponent)</code> — returns base raised to exponent (use a loop, not <code>Math.pow</code>)</li><li><code>printIfPositive(int value)</code> — void, guard clause: if value <= 0, return early. Otherwise print <code>\"Positive: [value]\"</code></li></ul><p>In main: print power(4), print power(2, 8), call printIfPositive(-3) then printIfPositive(7).</p>",
+      "soloPracticeTests": [
+        {"label": "power(4) = 16", "input": "null", "expected": "16"},
+        {"label": "power(2,8) = 256", "input": "null", "expected": "256"},
+        {"label": "printIfPositive(7) correct", "input": "null", "expected": "Positive: 7"}
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What determines whether two methods with the same name are valid overloads?</p>",
+          "options": [
+            "They must have different return types",
+            "They must have different parameter lists (types, count, or both)",
+            "They must be in different classes",
+            "They must have different access modifiers"
+          ],
+          "correctAnswer": "They must have different parameter lists (types, count, or both)",
+          "explanationHtml": "<p>Overloading is resolved by the compiler based on the argument types provided at the call site. Return type is not part of this resolution — two methods that differ only in return type will cause a compile error.</p>"
+        },
+        {
+          "type": "WHATS_THE_OUTPUT",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>What does this code print?</p>",
+          "codeSnippet": "public static String label(int n) { return \"int:\" + n; }\npublic static String label(double d) { return \"double:\" + d; }\npublic static void main(String[] args) {\n    System.out.println(label(5));\n    System.out.println(label(5.0));\n}",
+          "correctAnswer": "int:5\ndouble:5.0",
+          "explanationHtml": "<p><code>label(5)</code> matches the <code>int</code> overload; <code>label(5.0)</code> matches the <code>double</code> overload. Each prints the type prefix followed by the value.</p>"
+        },
+        {
+          "type": "DEBUGGING",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A developer adds this method to a class that already has <code>public static int compute(int a)</code>. Will this compile?</p>",
+          "codeSnippet": "public static double compute(int a) {\n    return a * 1.5;\n}",
+          "correctAnswer": "No — two methods with identical parameter lists differ only by return type, which is not a valid overload",
+          "explanationHtml": "<p>Overloads must differ in parameters, not return type. Both methods accept a single <code>int</code> — the compiler cannot tell which to call at a call site like <code>compute(3)</code>. This is a compile error.</p>"
+        }
+      ]
+    }
+  ]
+}

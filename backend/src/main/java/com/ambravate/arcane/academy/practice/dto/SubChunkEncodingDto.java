@@ -44,4 +44,17 @@ public class SubChunkEncodingDto {
      * Null for all other phases and for non-written practice types.
      */
     private String guidedPracticeModelAnswer;
+
+    // Sprint 1 — structured lesson metadata (always present when populated)
+    private List<String> learningObjectives;
+    private Object challenge;          // { html, starterCode, tests }
+    private String miniProject;
+    private List<String> commonMistakes;
+    private List<String> assessmentCriteria;
+
+    /**
+     * Downloadable resources shown as chips at the start of the EXPLANATION phase.
+     * Each entry: { title, type, url }
+     */
+    private Object downloadables;
 }

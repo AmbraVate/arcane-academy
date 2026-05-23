@@ -1,0 +1,80 @@
+{
+  "id": "java-jun-18",
+  "title": "Git Workflows",
+  "glyph": "🌿",
+  "sortOrder": 18,
+  "tier": "JUNIOR",
+  "topicId": "java",
+  "prerequisites": ["java-jun-17"],
+  "subChunks": [
+    {
+      "id": "java-jun-18a",
+      "title": "Feature Branches, Pull Requests & Commit Discipline",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In a professional team, nobody commits directly to main. Work flows through branches, pull requests, and code review. Understanding these workflows is not just a tool skill — it shapes how your team builds software safely.</p>",
+      "explanationHtml": "<h3>The Feature Branch Workflow</h3><ol><li>Create a branch from main: <code>git checkout -b feature/spell-search</code></li><li>Commit work incrementally as you build</li><li>Push to remote: <code>git push -u origin feature/spell-search</code></li><li>Open a Pull Request (PR) for review</li><li>Address review comments, push more commits</li><li>Merge to main when approved and CI passes</li><li>Delete the branch</li></ol><h3>Commit Message Discipline — Conventional Commits</h3><p>A widely adopted standard for commit messages:</p><pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;short description&gt;\n\n[optional body]\n[optional footer]\n\nExamples:\nfeat(spells): add binary search to spell registry\nfix(auth): prevent token expiry on concurrent requests\nrefactor(mage): extract validation into MageValidator\ndocs(api): update spell endpoint documentation\ntest(encoding): add edge-case tests for null feynmanPrompt\nchore(deps): upgrade Jackson to 2.16.1</code></pre><p>Types: <code>feat</code> (new feature), <code>fix</code> (bug fix), <code>refactor</code>, <code>test</code>, <code>docs</code>, <code>chore</code> (maintenance), <code>perf</code> (performance), <code>ci</code>.</p><h3>Rebase vs Merge</h3><ul><li><strong>Merge</strong>: creates a merge commit preserving the full branch history. Keeps context; main history has multiple lines.</li><li><strong>Rebase</strong>: replays your commits on top of the target branch. Produces a linear history; each commit appears as if written directly after the latest main commit.</li></ul><pre><code># Merge\ngit checkout main\ngit merge feature/spell-search\n\n# Rebase (on your feature branch)\ngit rebase main\n# Resolves conflicts per-commit; then:\ngit checkout main\ngit merge --ff-only feature/spell-search</code></pre><p>Golden rule: <strong>never rebase commits that have been pushed to a shared branch</strong> — rewriting shared history causes divergence for all other developers.</p><h3>Small, Atomic Commits</h3><p>Each commit should represent one logical change. If the commit message needs the word 'and', it probably contains two commits. Atomic commits make <code>git bisect</code>, code review, and revert far easier.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's collaborative spellbook has one catastrophic rule: never write directly on the master page. Every enchanter works on a personal draft — a branch — until their changes are reviewed and approved."},
+        {"type": "dialogue", "av": "🌿", "cls": "mentor", "speaker": "Arcane SCM Lead Finn", "sCls": "mentor", "text": "Feature branches are the fundamental unit of collaborative development. One task, one branch, one pull request. Never commit directly to main. The pull request is not just a review mechanism — it is the record of why a change was made, who approved it, and what the CI said."},
+        {"type": "dialogue", "av": "🌿", "cls": "mentor", "speaker": "Arcane SCM Lead Finn", "sCls": "mentor", "text": "Conventional commits are a naming standard for commit messages. Type first: feat, fix, refactor, test, docs, chore. Then scope in parentheses. Then a short description. The result is a machine-readable history that can generate changelogs automatically and make searching history practical."},
+        {"type": "example", "speaker": "Good vs bad commit messages", "text": "# BAD\ngit commit -m \"stuff\"\ngit commit -m \"wip\"\ngit commit -m \"fixed it\"\ngit commit -m \"changes\"\n\n# GOOD (conventional commits)\ngit commit -m \"feat(spells): add pagination to spell list endpoint\"\ngit commit -m \"fix(auth): handle expired JWT in refresh endpoint\"\ngit commit -m \"test(mage): cover null name in registration flow\""},
+        {"type": "dialogue", "av": "🌿", "cls": "mentor", "speaker": "Arcane SCM Lead Finn", "sCls": "mentor", "text": "Rebase vs merge is a team preference, but understand what each does. Merge preserves the full branching story. Rebase creates a clean linear history as if you'd written everything on top of the latest main — easier to read, but rewrites commit hashes. Never rebase shared branches — only private ones."}
+      ],
+      "learningObjectives": [
+        "Execute the full feature branch workflow: branch, commit, push, PR, merge, delete",
+        "Write conventional commit messages with the correct type, scope, and description",
+        "Explain the difference between git merge and git rebase and when to use each",
+        "Define an atomic commit and explain why small commits improve code review and debugging"
+      ],
+      "commonMistakes": [
+        "Committing directly to main instead of a feature branch",
+        "Writing vague commit messages ('fix', 'wip', 'stuff') — future-you will hate present-you for this",
+        "Rebasing a branch that has been pushed and shared with other developers",
+        "Making large commits with unrelated changes — makes code review painful and revert risky"
+      ],
+      "assessmentCriteria": [
+        "Can describe the full feature branch workflow including when to open a PR and what happens after merge",
+        "Can write five conventional commit messages for hypothetical changes (one feat, one fix, one refactor, one test, one chore)",
+        "Can explain what git rebase does to commit history and when it is unsafe",
+        "Can explain what 'atomic commit' means and give an example of a commit that should be split into two"
+      ],
+      "feynmanPrompt": "Explain the feature branch workflow to a developer who has only ever committed directly to main. Why are branches important? What does a pull request add? What is the difference between merge and rebase?",
+      "guidedPracticeHtml": "<p>Answer the following scenarios in writing:</p><ol><li>You are about to add a new REST endpoint for creating mages. Write the git branch name and three commit messages (using conventional commits) you might make during development.</li><li>Your feature branch has diverged from main while you were working. Should you rebase or merge? State your reasoning and write the commands.</li><li>A colleague suggests squashing all 12 commits on a feature branch before merging to keep main history clean. What are the trade-offs?</li><li>You accidentally commit a password to main. What are the two most important immediate actions?</li></ol>",
+      "guidedPracticeModelAnswer": "1. Branch: git checkout -b feature/create-mage-endpoint\n   Commits:\n   feat(mage): add POST /api/mages endpoint with validation\n   test(mage): cover missing name and invalid tier in creation\n   docs(api): document mage creation request/response shape\n\n2. Rebase preferred here (private feature branch, not shared):\n   git checkout feature/my-branch\n   git rebase main\n   # Resolve any conflicts per-commit\n   # Then merge:\n   git checkout main\n   git merge --ff-only feature/my-branch\n   Reason: Produces linear history; the feature appears as if written after the latest main changes.\n\n3. Trade-offs of squashing:\n   Pros: main history is clean — one meaningful commit per feature, easy to read\n   Cons: fine-grained history (individual fixup commits) is lost — harder to bisect if the problem was introduced mid-feature\n   Compromise: squash trivial fixup/wip commits but keep meaningful logical commits separate.\n\n4. Immediate actions:\n   1. Rotate the credential immediately — assume it has been seen\n   2. Use git filter-branch or git-filter-repo to rewrite history and remove the secret, then force-push\n   (Never just 'delete the file in a new commit' — the secret is still in git history)",
+      "soloPracticeHtml": "<p>A colleague sends you a PR with the following commit history. Review it and suggest improvements:</p><pre><code>abc1234 stuff\ndef5678 more changes\n789abcd fixed the bug from yesterday\ndef0123 wip\n456789a final version!!!\n</code></pre><p>For each commit: identify what's wrong with the message and propose a conventional commit replacement. Then suggest whether these should be squashed, kept separate, or reorganised, and why.</p>",
+      "modelAnswer": "Reviewing the commits:\n1. 'stuff' — completely uninformative. No way to know what changed or why.\n   Replacement: feat(spells): add mana cost field to spell creation form\n\n2. 'more changes' — same problem. One word, no context.\n   Replacement: refactor(spells): extract validation into SpellValidator class\n\n3. 'fixed the bug from yesterday' — references external context ('yesterday') that won't make sense in 6 months. Which bug?\n   Replacement: fix(mage): prevent NPE when mage has no assigned school\n\n4. 'wip' — never commit WIP to a PR. Either squash it into the related commit or finish the work first.\n   Should be squashed into the commit it relates to.\n\n5. 'final version!!!' — enthusiasm doesn't belong in commit messages, and 'final' is never true.\n   Replacement: chore(cleanup): remove debug log statements and TODO comments\n\nRecommendation: squash commits 1, 2, 4, 5 if they all relate to one feature; keep commit 3 separate as it's a distinct bug fix. Rewrite all messages using conventional commits.",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the correct conventional commit type for adding a new API endpoint?</p>",
+          "options": ["fix", "chore", "feat", "docs"],
+          "correctAnswer": "feat",
+          "explanationHtml": "<p><code>feat</code> is for new features — functionality that did not previously exist. <code>fix</code> is for bug corrections. <code>chore</code> is for maintenance tasks (dependency updates, build config). <code>docs</code> is for documentation changes.</p>"
+        },
+        {
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>It is safe to rebase a feature branch after it has been pushed to remote and other developers are building on it.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Rebasing rewrites commit SHAs. If others have based work on the original SHAs, rewriting them creates a divergent history that is very painful to reconcile. Only rebase branches you own exclusively and haven't shared with others.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A commit message says: 'feat(checkout): add promo code validation and fix null pointer in payment service and update checkout README'. What is wrong?</p>",
+          "options": [
+            "The scope is wrong — it should be empty",
+            "The commit contains multiple unrelated changes — should be split into at least 2 commits",
+            "feat is the wrong type",
+            "Nothing — this is a thorough commit message"
+          ],
+          "correctAnswer": "The commit contains multiple unrelated changes — should be split into at least 2 commits",
+          "explanationHtml": "<p>A commit should be atomic — one logical change. This message describes three separate changes: a feature (promo validation), a bug fix (NPE), and documentation. Split into: <code>feat(checkout): add promo code validation</code>, <code>fix(payment): prevent NPE in payment service</code>, <code>docs(checkout): update checkout README</code>.</p>"
+        }
+      ]
+    }
+  ]
+}

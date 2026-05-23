@@ -48,8 +48,9 @@ export default function DiagnosticPage() {
 
   if (result) {
     const pathColor =
-      result.recommendedPath === 'EXPERT' ? 'text-gold' :
-      result.recommendedPath === 'PRACTITIONER' ? 'text-purple-light' : 'text-teal'
+      result.recommendedPath === 'LEAD'   ? 'text-purple-light' :
+      result.recommendedPath === 'SENIOR' ? 'text-gold' :
+      result.recommendedPath === 'JUNIOR' ? 'text-accent' : 'text-teal'
     return (
       <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3">
         <div className="text-center px-6 py-9 bg-card border border-border rounded-[14px] max-[600px]:px-4 max-[600px]:py-7">

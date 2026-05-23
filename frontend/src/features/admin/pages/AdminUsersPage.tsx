@@ -290,7 +290,8 @@ export default function AdminUsersPage() {
             </div>
           ) : (
             <>
-              <div style={{ ...s.card, overflow: 'hidden' }}>
+              {/* overflow-x-auto makes the table horizontally scrollable on small screens */}
+              <div style={{ ...s.card, overflow: 'hidden' }} className="overflow-x-auto">
                 {/* Table header */}
                 <div style={{
                   display: 'grid', gridTemplateColumns: '2fr 2fr 80px 80px 90px 28px',

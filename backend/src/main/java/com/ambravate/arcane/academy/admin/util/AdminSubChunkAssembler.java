@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,6 +35,12 @@ public class AdminSubChunkAssembler {
         .feynmanPrompt(sc.getFeynmanPrompt())
         .rabbitHoleTerms(parseJsonList(sc.getRabbitHoleTermsJson()))
         .questionCount(qCount)
+        .learningObjectives(parseStringList(sc.getLearningObjectivesJson()))
+        .challenge(parseJsonMap(sc.getChallengeHtml(), sc.getChallengeStarterCode(), sc.getChallengeTestsJson()))
+        .miniProject(sc.getMiniProjectHtml())
+        .commonMistakes(parseStringList(sc.getCommonMistakesJson()))
+        .assessmentCriteria(parseStringList(sc.getAssessmentCriteriaJson()))
+        .downloadables(parseJsonList(sc.getDownloadablesJson()))
         .build();
   }
 
@@ -61,6 +68,21 @@ public class AdminSubChunkAssembler {
   private List<Map<String, Object>> parseJsonList(String json) {
     if (json == null || json.isBlank()) return List.of();
     try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
+  }
+
+  private List<String> parseStringList(String json) {
+    if (json == null || json.isBlank()) return Collections.emptyList();
+    try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return Collections.emptyList(); }
+  }
+
+  /** Build the challenge map { html, starterCode, tests } only when challengeHtml is set. */
+  private Map<String, Object> parseJsonMap(String challengeHtml, String starterCode, String testsJson) {
+    if (challengeHtml == null || challengeHtml.isBlank()) return null;
+    List<Map<String, Object>> tests = List.of();
+    if (testsJson != null && !testsJson.isBlank()) {
+      try { tests = objectMapper.readValue(testsJson, new TypeReference<>() {}); } catch (Exception ignored) {}
+    }
+    return Map.of("html", challengeHtml, "starterCode", starterCode != null ? starterCode : "", "tests", tests);
   }
 
   private String toJson(List<?> list) {

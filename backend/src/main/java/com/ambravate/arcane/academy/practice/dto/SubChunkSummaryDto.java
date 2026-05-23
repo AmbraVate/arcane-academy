@@ -13,4 +13,9 @@ public class SubChunkSummaryDto {
     private String healthColor;
     private boolean feynmanCompleted;
     private int xpReward;
+    // Sprint 1 — chip metadata
+    private String practiceType;
+    private int learningObjectiveCount;
+    private boolean hasChallenge;
+    private boolean hasMiniProject;
 }

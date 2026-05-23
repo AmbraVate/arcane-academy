@@ -3,18 +3,20 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { stuckReportApi } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
 
-type Stage = 'idle' | 'open' | 'submitting' | 'done'
+type Stage = 'idle' | 'capturing' | 'open' | 'submitting' | 'done'
 
 /**
  * Floating "I'm Stuck" help button — shown globally for logged-in learners.
- * Captures the current URL and any context visible in the URL params, plus
- * an optional free-text description from the user, then returns them to /topics.
+ * Captures a viewport screenshot (html2canvas), the current URL, and context
+ * from URL params, plus an optional free-text description, then sends the
+ * report and returns the learner to /topics.
  */
 export default function StuckButton() {
   const navigate = useNavigate()
   const location = useLocation()
   const [stage, setStage] = useState<Stage>('idle')
   const [message, setMessage] = useState('')
+  const [screenshotData, setScreenshotData] = useState<string | undefined>(undefined)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Parse context clues from the current URL
@@ -23,9 +25,25 @@ export default function StuckButton() {
     const match = location.pathname.match(/\/topic\/([^/]+)(?:\/.*\/([^/]+))?/)
     return {
       topicId: match?.[1] ?? undefined,
-      subChunkId: undefined as string | undefined, // not in URL but passed in if needed
+      subChunkId: undefined as string | undefined,
       currentPhase: undefined as string | undefined,
       currentUrl: url,
+    }
+  }
+
+  /** Capture a screenshot of the current viewport via html2canvas (lazy-loaded). */
+  async function captureScreenshot(): Promise<string | undefined> {
+    try {
+      const html2canvas = (await import('html2canvas')).default
+      const canvas = await html2canvas(document.body, {
+        useCORS: true,
+        scale: 0.6,        // downsample to keep payload small
+        logging: false,
+        allowTaint: true,
+      })
+      return canvas.toDataURL('image/jpeg', 0.7)
+    } catch {
+      return undefined    // non-fatal — report still submits without screenshot
     }
   }
 
@@ -42,6 +60,13 @@ export default function StuckButton() {
     return () => document.removeEventListener('keydown', handler)
   }, [stage])
 
+  async function handleOpen() {
+    setStage('capturing')
+    const screenshot = await captureScreenshot()
+    setScreenshotData(screenshot)
+    setStage('open')
+  }
+
   async function handleSubmit() {
     setStage('submitting')
     try {
@@ -49,9 +74,9 @@ export default function StuckButton() {
       await stuckReportApi.submit({
         ...ctx,
         userMessage: message.trim() || undefined,
+        screenshotData,
       })
       setStage('done')
-      // Give them a moment to read the confirmation, then send home
       setTimeout(() => navigate('/topics', { replace: true }), 2000)
     } catch {
       // Even if the request fails, don't strand the user — send them home
@@ -64,7 +89,7 @@ export default function StuckButton() {
     <>
       {/* ── Floating trigger button ── */}
       <button
-        onClick={() => setStage('open')}
+        onClick={handleOpen}
         className={cn(
           'fixed bottom-6 right-5 z-[300]',
           'flex items-center gap-2 px-3.5 py-2 rounded-full',
@@ -73,16 +98,18 @@ export default function StuckButton() {
           'shadow-[0_4px_20px_rgba(0,0,0,0.4)]',
           'transition-[border-color,box-shadow,transform] duration-200',
           'hover:border-[rgba(248,113,113,0.7)] hover:shadow-[0_4px_24px_rgba(248,113,113,0.15)] hover:-translate-y-[2px]',
-          stage !== 'idle' && 'invisible pointer-events-none',
+          stage === 'capturing' && 'opacity-60 cursor-wait',
+          (stage === 'open' || stage === 'submitting' || stage === 'done') && 'invisible pointer-events-none',
         )}
+        disabled={stage === 'capturing'}
         aria-label="I'm stuck — get help"
       >
         <span className="text-[14px]">🚩</span>
-        I'm Stuck
+        {stage === 'capturing' ? 'Capturing…' : "I'm Stuck"}
       </button>
 
       {/* ── Backdrop ── */}
-      {(stage === 'open' || stage === 'submitting') && (
+      {(stage === 'open' || stage === 'submitting' || stage === 'done') && (
         <div
           className="fixed inset-0 z-[350] bg-black/60 backdrop-blur-sm"
           onClick={() => stage === 'open' && setStage('idle')}

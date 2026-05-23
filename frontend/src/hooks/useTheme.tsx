@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useIsMobile } from './useIsMobile'
 
 export type Theme = 'default' | 'blizzard'
 export type Palette = 'frostmourne' | 'fel' | 'bloodelf' | 'arcane' | 'bronze' | 'shadowlands' | 'naga'
@@ -15,6 +16,8 @@ export interface BlizzardPrefs {
 interface ThemeContextValue {
   theme: Theme
   blizzardPrefs: BlizzardPrefs
+  /** True when Blizzard theme is available (false on mobile — heavy canvas/SVG effects are unusable). */
+  blizzardAvailable: boolean
   toggleTheme: () => void
   setBlizzardPref: <K extends keyof BlizzardPrefs>(key: K, value: BlizzardPrefs[K]) => void
 }
@@ -22,19 +25,25 @@ interface ThemeContextValue {
 const DEFAULT_PREFS: BlizzardPrefs = { palette: 'frostmourne', scene: 'castle', font: 'cinzel', snow: true }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: 'default', blizzardPrefs: DEFAULT_PREFS, toggleTheme: () => {}, setBlizzardPref: () => {},
+  theme: 'default', blizzardPrefs: DEFAULT_PREFS, blizzardAvailable: true,
+  toggleTheme: () => {}, setBlizzardPref: () => {},
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobile()
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem('arcane-theme') as Theme) || 'default')
   const [blizzardPrefs, setPrefs] = useState<BlizzardPrefs>(() => {
     try { return { ...DEFAULT_PREFS, ...JSON.parse(localStorage.getItem('arcane-blizzard-prefs') || '{}') } }
     catch { return DEFAULT_PREFS }
   })
 
+  // Blizzard theme is not available on mobile — suppress it without wiping localStorage
+  // so it restores automatically when the user returns to a desktop viewport.
+  const effectiveTheme: Theme = isMobile && theme === 'blizzard' ? 'default' : theme
+
   useEffect(() => {
     const html = document.documentElement
-    if (theme === 'blizzard') {
+    if (effectiveTheme === 'blizzard') {
       html.setAttribute('data-theme', 'blizzard')
       html.setAttribute('data-palette', blizzardPrefs.palette)
       html.setAttribute('data-scene', blizzardPrefs.scene)
@@ -45,8 +54,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       html.removeAttribute('data-scene')
       html.removeAttribute('data-font')
     }
-    localStorage.setItem('arcane-theme', theme)
-  }, [theme, blizzardPrefs])
+    localStorage.setItem('arcane-theme', theme) // always persist the user's preference, not the override
+  }, [effectiveTheme, theme, blizzardPrefs])
 
   const toggleTheme = () => setTheme(t => t === 'default' ? 'blizzard' : 'default')
   const setBlizzardPref = <K extends keyof BlizzardPrefs>(key: K, value: BlizzardPrefs[K]) => {
@@ -57,7 +66,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
-  return <ThemeContext.Provider value={{ theme, blizzardPrefs, toggleTheme, setBlizzardPref }}>{children}</ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={{
+      theme: effectiveTheme,
+      blizzardPrefs,
+      blizzardAvailable: !isMobile,
+      toggleTheme,
+      setBlizzardPref,
+    }}>
+      {children}
+    </ThemeContext.Provider>
+  )
 }
 
 export function useTheme() { return useContext(ThemeContext) }

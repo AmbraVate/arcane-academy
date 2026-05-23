@@ -28,6 +28,14 @@ export interface AdminSubChunk {
   guidedPracticeTests: TestCase[] | null
   soloPracticeHtml: string | null; feynmanPrompt: string | null
   questionCount: number
+  // Structured lesson metadata (Sprint 1)
+  learningObjectives: string[] | null
+  challenge: { html: string; starterCode: string | null; tests: Record<string, unknown>[] | null } | null
+  miniProject: string | null
+  commonMistakes: string[] | null
+  assessmentCriteria: string[] | null
+  // Sprint 7 — downloadable resources
+  downloadables: { title: string; type: string; url: string }[] | null
 }
 
 export interface StoryBeat {
@@ -208,6 +216,7 @@ export interface StuckReport {
   userAgent: string | null
   status: 'NEW' | 'REVIEWED' | 'RESOLVED'
   adminNotes: string | null
+  screenshotData: string | null
   createdAt: string
   updatedAt: string | null
 }

@@ -111,6 +111,9 @@ public class ChunkController {
                 effectiveStatus = p != null ? p.getStatus().name() : "NOT_STARTED";
             }
 
+            // Count learning objectives from JSON (fast path: count "," occurrences + 1 in a non-empty array)
+            int objCount = countJsonArraySize(sc.getLearningObjectivesJson());
+
             return SubChunkSummaryDto.builder()
                     .id(sc.getId()).title(sc.getTitle()).sortOrder(sc.getSortOrder())
                     .status(effectiveStatus)
@@ -118,6 +121,10 @@ public class ChunkController {
                     .memoryStrength(strength).healthColor(health)
                     .feynmanCompleted(p != null && p.isFeynmanCompleted())
                     .xpReward(sc.getXpReward())
+                    .practiceType(sc.getPracticeType() != null ? sc.getPracticeType().name() : "JAVA")
+                    .learningObjectiveCount(objCount)
+                    .hasChallenge(sc.getChallengeHtml() != null && !sc.getChallengeHtml().isBlank())
+                    .hasMiniProject(sc.getMiniProjectHtml() != null && !sc.getMiniProjectHtml().isBlank())
                     .build();
         }).collect(Collectors.toList());
 
@@ -126,6 +133,21 @@ public class ChunkController {
                 .title(cws.chunk().getTitle())
                 .glyph(cws.chunk().getGlyph()).status(cws.status())
                 .subChunks(subDtos).build());
+    }
+
+    /** Fast estimate of a JSON array's length without full parsing. Returns 0 for null/blank/empty. */
+    private int countJsonArraySize(String json) {
+        if (json == null || json.isBlank() || json.equals("[]")) return 0;
+        String trimmed = json.trim();
+        if (!trimmed.startsWith("[")) return 0;
+        // Count commas at depth-1 (simple heuristic, accurate for flat string arrays)
+        int depth = 0, count = 1;
+        for (char c : trimmed.toCharArray()) {
+            if (c == '[' || c == '{') depth++;
+            else if (c == ']' || c == '}') depth--;
+            else if (c == ',' && depth == 1) count++;
+        }
+        return count;
     }
 
 }

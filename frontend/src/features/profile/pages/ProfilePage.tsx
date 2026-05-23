@@ -29,7 +29,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function ProfilePage() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const { theme, blizzardPrefs, toggleTheme, setBlizzardPref } = useTheme()
+  const { theme, blizzardPrefs, blizzardAvailable, toggleTheme, setBlizzardPref } = useTheme()
   const [tab, setTab] = useState<Tab>('overview')
 
   const [badges, setBadges] = useState<Badge[]>([])
@@ -298,23 +298,33 @@ export default function ProfilePage() {
             {/* Theme toggle */}
             <div className="bg-card border border-border rounded-[12px] px-5 py-4">
               <div className="font-cinzel text-[14px] text-gold mb-3 tracking-wide">Theme</div>
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <div className="font-cinzel text-[13px] text-text mb-0.5">
-                    {theme === 'blizzard' ? '❄ Blizzard' : '✦ Default (Dark)'}
+              {blizzardAvailable ? (
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <div className="font-cinzel text-[13px] text-text mb-0.5">
+                      {theme === 'blizzard' ? '❄ Blizzard' : '✦ Default (Dark)'}
+                    </div>
+                    <div className="text-[11px] text-muted leading-snug">
+                      {theme === 'blizzard' ? 'Frostbound Academy — Lich-King dark fantasy.' : 'Arcane Academy — purples, golds, dark backgrounds.'}
+                    </div>
                   </div>
-                  <div className="text-[11px] text-muted leading-snug">
-                    {theme === 'blizzard' ? 'Frostbound Academy — Lich-King dark fantasy.' : 'Arcane Academy — purples, golds, dark backgrounds.'}
-                  </div>
+                  <button onClick={toggleTheme} className="btn btn-ghost flex-shrink-0 text-[12px] px-4 py-1.5">
+                    Switch to {theme === 'blizzard' ? 'Default' : 'Blizzard'}
+                  </button>
                 </div>
-                <button onClick={toggleTheme} className="btn btn-ghost flex-shrink-0 text-[12px] px-4 py-1.5">
-                  Switch to {theme === 'blizzard' ? 'Default' : 'Blizzard'}
-                </button>
-              </div>
+              ) : (
+                <div className="flex items-center gap-3 text-muted text-[12px] leading-snug">
+                  <span className="text-[20px]">❄</span>
+                  <span>
+                    <strong className="text-text">Blizzard theme is not available on mobile.</strong>
+                    <br />Switch to a larger screen to unlock it.
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Blizzard preferences — only show when blizzard theme active */}
-            {theme === 'blizzard' && (
+            {/* Blizzard preferences — only show when blizzard theme active and available */}
+            {blizzardAvailable && theme === 'blizzard' && (
               <>
                 {/* Palette picker */}
                 <div className="bg-card border border-border rounded-[12px] px-5 py-4">
@@ -402,6 +412,8 @@ function TopicCard({
 }) {
   const pct = totalSubChunks > 0 ? Math.round((completedSubChunks / totalSubChunks) * 100) : 0
   const TIER_LABELS: Record<string, string> = {
+    APPRENTICE: 'Apprentice', JUNIOR: 'Junior', SENIOR: 'Senior', LEAD: 'Lead',
+    // Legacy fallbacks during migration
     FOUNDATION: 'Foundation', ADVANCED: 'Advanced',
     PRACTITIONER: 'Practitioner', EXPERT: 'Expert', CAPSTONE: 'Capstone',
   }

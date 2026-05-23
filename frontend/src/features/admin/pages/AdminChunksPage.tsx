@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { adminChunkApi, adminTopicApi, type AdminChunk, type AdminTopic } from '@/shared/api/adminServices'
 
-const TIERS = ['FOUNDATION', 'PRACTITIONER', 'EXPERT']
+const TIERS = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
 
 const BLANK_CHUNK: Partial<AdminChunk> = {
-  title: '', glyph: '📦', sortOrder: 0, tier: 'FOUNDATION', topicId: '', prerequisiteIds: [],
+  title: '', glyph: '📦', sortOrder: 0, tier: 'APPRENTICE', topicId: '', prerequisiteIds: [],
 }
 
 function ChunkForm({
@@ -21,7 +21,7 @@ function ChunkForm({
 
   return (
     <div style={{ background: '#1e1a35', border: '1px solid #2e2850', borderRadius: 10, padding: 20, marginBottom: 20 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label style={labelStyle}>
           Title
           <input style={inputStyle} value={form.title ?? ''} onChange={e => set('title', e.target.value)} />
@@ -39,7 +39,7 @@ function ChunkForm({
         </label>
         <label style={labelStyle}>
           Tier
-          <select style={inputStyle} value={form.tier ?? 'FOUNDATION'} onChange={e => set('tier', e.target.value)}>
+          <select style={inputStyle} value={form.tier ?? 'APPRENTICE'} onChange={e => set('tier', e.target.value)}>
             {TIERS.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
         </label>
@@ -115,6 +115,8 @@ export default function AdminChunksPage() {
   }
 
   const tierColor: Record<string, string> = {
+    APPRENTICE: '#4ade80', JUNIOR: '#38bdf8', SENIOR: '#c9a227', LEAD: '#8b5cf6',
+    // Legacy fallbacks
     FOUNDATION: '#4ade80', PRACTITIONER: '#c9a227', EXPERT: '#8b5cf6',
   }
   const topicName = (id: string) => topics.find(t => t.id === id)?.name ?? id

@@ -203,10 +203,12 @@ function HomeRedirect() {
 
 export default function App() {
   const { user } = useAuth()
-  const { theme, blizzardPrefs } = useTheme()
+  const { theme, blizzardPrefs, blizzardAvailable } = useTheme()
   const location = useLocation()
 
-  if (theme === 'blizzard') {
+  // Blizzard theme is only rendered when it is both selected and available (not on mobile).
+  // blizzardAvailable = false on mobile, so the default layout renders instead.
+  if (theme === 'blizzard' && blizzardAvailable) {
     return (
       <ErrorBoundary>
         <div className="stage">

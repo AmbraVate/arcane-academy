@@ -18,6 +18,7 @@ public record StuckReportDto(
         String userAgent,
         String status,
         String adminNotes,
+        String screenshotData,
         Instant createdAt,
         Instant updatedAt
 ) {}

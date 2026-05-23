@@ -69,7 +69,7 @@ export default function AdminDashboardPage() {
         <StatCard label="Questions"      value={stats.totalQuestions} Icon={CircleHelp}   color="#4ade80" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* Recent signups */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 20 }}>

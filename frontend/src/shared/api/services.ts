@@ -340,6 +340,7 @@ export const stuckReportApi = {
     currentPhase?: string
     currentUrl: string
     userMessage?: string
+    screenshotData?: string
   }): Promise<void> => {
     await api.post('/api/stuck-reports', payload)
   },

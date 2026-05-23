@@ -213,6 +213,10 @@ public class JsonContentSeeder {
             for (ChunkContentDto.SubChunkDto sc : dto.subChunks) {
                 sc.guidedPracticeStarterCode =
                         resolveRef(sc.guidedPracticeStarterCode, jsonResource, sc.id);
+                if (sc.challenge != null) {
+                    sc.challenge.starterCode =
+                            resolveRef(sc.challenge.starterCode, jsonResource, sc.id + ".challenge");
+                }
             }
         }
         if (dto.rabbitHoles != null) {
@@ -297,6 +301,14 @@ public class JsonContentSeeder {
 
         String rhTermsJson = toJson(sc.rabbitHoleTerms);
 
+        // New V15 structured lesson metadata fields
+        String learningObjectivesJson = toJson(sc.learningObjectives);
+        String challengeTestsJson     = sc.challenge != null ? toJson(sc.challenge.tests) : null;
+        String commonMistakesJson     = toJson(sc.commonMistakes);
+        String assessmentCriteriaJson = toJson(sc.assessmentCriteria);
+        // V17 — downloadable resources
+        String downloadablesJson      = toJson(sc.downloadables);
+
         subChunkRepository.save(SubChunk.builder()
                 .id(sc.id)
                 .chunkId(chunkId)
@@ -316,6 +328,15 @@ public class JsonContentSeeder {
                 .rabbitHoleTermsJson(rhTermsJson)
                 .modelAnswer(sc.modelAnswer)
                 .guidedPracticeModelAnswer(sc.guidedPracticeModelAnswer)
+                // V15 structured metadata
+                .learningObjectivesJson(learningObjectivesJson)
+                .challengeHtml(sc.challenge != null ? sc.challenge.html : null)
+                .challengeStarterCode(sc.challenge != null ? sc.challenge.starterCode : null)
+                .challengeTestsJson(challengeTestsJson)
+                .miniProjectHtml(sc.miniProject)
+                .commonMistakesJson(commonMistakesJson)
+                .assessmentCriteriaJson(assessmentCriteriaJson)
+                .downloadablesJson(downloadablesJson)
                 .build());
 
         if (sc.questions != null) {
@@ -357,11 +378,11 @@ public class JsonContentSeeder {
             }
         }
 
-        // DISCRIMINATION questions are practitioner-level minimum
+        // DISCRIMINATION questions require JUNIOR tier minimum; all others are visible from APPRENTICE
         QuestionTier questionTier = q.tier != null ? QuestionTier.valueOf(q.tier) : QuestionTier.RECALL;
         LearnerPath minPath = questionTier == QuestionTier.DISCRIMINATION
-                ? LearnerPath.PRACTITIONER
-                : LearnerPath.FOUNDATION;
+                ? LearnerPath.JUNIOR
+                : LearnerPath.APPRENTICE;
 
         questionRepository.save(Question.builder()
                 .subChunkId(subChunkId)

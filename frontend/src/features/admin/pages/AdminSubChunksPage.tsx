@@ -35,12 +35,29 @@ function SubChunkRow({
       <span style={{ fontFamily: 'Cinzel, serif', fontSize: 12, color: '#8b7fa0', minWidth: 26 }}>#{sc.sortOrder}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontWeight: 600, fontSize: 14, color: '#e8e0f0' }}>{sc.title}</div>
-        <div style={{ fontSize: 11, color: '#8b7fa0', marginTop: 2, display: 'flex', gap: 12 }}>
+        <div style={{ fontSize: 11, color: '#8b7fa0', marginTop: 2, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           <span>{sc.xpReward} XP</span>
           <span>{sc.practiceType}</span>
           <span>{sc.questionCount} questions</span>
-          {sc.soloPracticeHtml ? <span style={{ color: '#4ade80' }}>✓ Solo</span> : <span style={{ color: '#8b7fa0' }}>— Solo</span>}
-          {sc.feynmanPrompt ? <span style={{ color: '#4ade80' }}>✓ Feynman</span> : <span style={{ color: '#8b7fa0' }}>— Feynman</span>}
+          {sc.soloPracticeHtml ? <span style={{ color: '#4ade80' }}>✓ Solo</span> : <span>— Solo</span>}
+          {sc.feynmanPrompt ? <span style={{ color: '#4ade80' }}>✓ Feynman</span> : <span>— Feynman</span>}
+        </div>
+        <div style={{ fontSize: 10, marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          {sc.learningObjectives?.length ? (
+            <span style={metaBadge('#2dd4bf')}>{sc.learningObjectives.length} objectives</span>
+          ) : null}
+          {sc.challenge ? (
+            <span style={metaBadge('#fb923c')}>⚡ challenge</span>
+          ) : null}
+          {sc.miniProject ? (
+            <span style={metaBadge('#8b5cf6')}>🏗 mini project</span>
+          ) : null}
+          {sc.commonMistakes?.length ? (
+            <span style={metaBadge('#f87171')}>{sc.commonMistakes.length} mistakes</span>
+          ) : null}
+          {sc.assessmentCriteria?.length ? (
+            <span style={metaBadge('#c9a227')}>{sc.assessmentCriteria.length} criteria</span>
+          ) : null}
         </div>
       </div>
       <div style={{ display: 'flex', gap: 6 }}>
@@ -221,3 +238,10 @@ const inputStyle: React.CSSProperties = {
   background: '#16132b', border: '1px solid #2e2850', borderRadius: 6,
   color: '#e8e0f0', fontSize: 13, padding: '7px 10px', outline: 'none', width: '100%',
 }
+
+const metaBadge = (color: string): React.CSSProperties => ({
+  padding: '1px 6px', borderRadius: 4,
+  border: `1px solid ${color}55`,
+  color, background: `${color}18`,
+  fontFamily: 'Cinzel, serif',
+})

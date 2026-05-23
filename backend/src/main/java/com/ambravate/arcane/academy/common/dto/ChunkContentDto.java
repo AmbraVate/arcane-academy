@@ -110,6 +110,54 @@ public class ChunkContentDto {
          */
         public List<Map<String, Object>> rabbitHoleTerms;
 
+        // ── Structured lesson metadata (V15) ─────────────────────────────────
+
+        /**
+         * Learning objectives shown before story beats begin.
+         * Plain-text strings: "Understand X", "Apply Y correctly".
+         */
+        public List<String> learningObjectives;
+
+        /**
+         * A harder challenge exercise available after solo practice.
+         * Uses the same sandbox (practiceType) as the guided/solo exercises.
+         */
+        public ChallengeDto challenge;
+
+        /**
+         * HTML description of an open-ended mini project.
+         * No sandbox — conceptual/design prompt. Shown after the challenge.
+         */
+        public String miniProject;
+
+        /**
+         * Common pitfalls and misconceptions about this topic.
+         * Plain-text strings shown at the end of the sub-chunk.
+         */
+        public List<String> commonMistakes;
+
+        /**
+         * Assessment criteria ("Can X", "Writes Y correctly").
+         * Plain-text checklist shown at the end of the sub-chunk.
+         */
+        public List<String> assessmentCriteria;
+
+        /**
+         * Downloadable resources shown as chips at the start of the EXPLANATION phase.
+         * Each entry: { "title": "...", "type": "pdf", "url": "/downloads/filename.pdf" }
+         */
+        public List<Map<String, Object>> downloadables;
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class ChallengeDto {
+            /** Task description. HTML string. */
+            public String html;
+            /** Starter code placed in the editor. */
+            public String starterCode;
+            /** Same shape as guidedPracticeTests. */
+            public List<Map<String, Object>> tests;
+        }
+
         /**
          * Accepts the nested "guidedPractice" object used in legacy JSON files:
          * { "problemHtml": "...", "hint": "...", "starterCode": "...", "tests": [...] }

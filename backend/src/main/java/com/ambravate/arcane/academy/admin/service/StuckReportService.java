@@ -56,6 +56,7 @@ public class StuckReportService {
                 .userAgent(r.getUserAgent())
                 .status(r.getStatus().name())
                 .adminNotes(r.getAdminNotes())
+                .screenshotData(r.getScreenshotData())
                 .createdAt(r.getCreatedAt())
                 .updatedAt(r.getUpdatedAt())
                 .build();

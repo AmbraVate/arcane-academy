@@ -45,6 +45,7 @@ public class StuckReportController {
                 .currentUrl(body.get("currentUrl"))
                 .userMessage(body.get("userMessage"))
                 .userAgent(userAgent)
+                .screenshotData(body.get("screenshotData"))
                 .createdAt(Instant.now())
                 .build();
 

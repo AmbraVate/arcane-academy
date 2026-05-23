@@ -150,6 +150,23 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
             </div>
           )}
 
+          {/* Screenshot */}
+          {report.screenshotData && (
+            <div style={{ marginTop: 14 }}>
+              <div style={{ fontSize: 10, color: '#8b7fa0', fontFamily: 'Cinzel, serif', marginBottom: 6 }}>SCREENSHOT AT TIME OF REPORT</div>
+              <div style={{
+                border: '1px solid #2e2850', borderRadius: 8, overflow: 'hidden',
+                background: '#0e0c1e', maxHeight: 360,
+              }}>
+                <img
+                  src={report.screenshotData}
+                  alt="Screenshot captured when learner was stuck"
+                  style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Admin notes */}
           <div style={{ marginTop: 14 }}>
             <div style={{ fontSize: 10, color: '#8b7fa0', fontFamily: 'Cinzel, serif', marginBottom: 4 }}>ADMIN NOTES</div>

@@ -1,0 +1,101 @@
+{
+  "id": "java-sen-16",
+  "title": "Security Engineering",
+  "glyph": "🔐",
+  "sortOrder": 16,
+  "tier": "SENIOR",
+  "topicId": "java",
+  "prerequisites": ["java-sen-15"],
+  "subChunks": [
+    {
+      "id": "java-sen-16a",
+      "title": "Auth & AuthZ Patterns, JWT & OAuth2",
+      "sortOrder": 1,
+      "xpReward": 95,
+      "filename": "JwtDemo.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Security is not a layer you add at the end — it is a concern that must be designed in from the beginning. At the senior level, understanding the correct authentication and authorisation patterns is not optional. A misimplemented auth system is a breach waiting to happen.</p>",
+      "explanationHtml": "<h3>Authentication vs Authorisation</h3><p><strong>Authentication (AuthN)</strong>: who are you? Verifying identity — username/password, OAuth token, certificate. You get back a principal (who is authenticated).</p><p><strong>Authorisation (AuthZ)</strong>: what are you allowed to do? Checking permissions — roles, scopes, policies. Applied after authentication.</p><h3>JSON Web Tokens (JWT)</h3><p>A JWT is a self-contained token encoding claims about the user. Structure: <code>header.payload.signature</code> — three Base64URL-encoded parts joined by dots.</p><pre><code>// Header\n{\"alg\":\"HS256\",\"typ\":\"JWT\"}\n\n// Payload (claims)\n{\"sub\":\"user-123\",\"name\":\"Lyria\",\"roles\":[\"MAGE\"],\"exp\":1735689600,\"iat\":1735686000}\n\n// Signature\nHMACSHA256(base64UrlEncode(header) + \".\" + base64UrlEncode(payload), secret)\n</code></pre><p>The server verifies the signature — if the payload is tampered with, the signature is invalid. The claims are readable by anyone (not encrypted) — never put sensitive data in JWT payload.</p><p><strong>Stateless verification</strong>: the server does not need to look up the token in a database — it verifies the signature with the secret key. This enables horizontal scaling (any server can verify any token).</p><p><strong>Token expiry</strong>: JWT must have an <code>exp</code> claim. Short-lived access tokens (15 min) + longer-lived refresh tokens (7 days) is the standard pattern. On expiry, the client uses the refresh token to get a new access token.</p><h3>OAuth 2.0 Flow (Authorization Code)</h3><pre><code>1. User clicks 'Login with Google'\n2. Client redirects to Google auth endpoint with:\n   client_id, redirect_uri, scope, state (CSRF prevention), code_challenge (PKCE)\n3. User authenticates with Google and approves scopes\n4. Google redirects back to redirect_uri with authorization_code\n5. Client backend exchanges code for tokens:\n   POST /token { code, client_secret, code_verifier }\n6. Google returns: access_token (JWT), refresh_token, id_token\n7. Client uses access_token to call Google APIs on behalf of the user\n</code></pre><p>PKCE (Proof Key for Code Exchange) prevents code interception attacks — essential for public clients (SPAs, mobile apps) that cannot safely store a client_secret.</p><h3>Common Auth Vulnerabilities</h3><ul><li><strong>JWT algorithm confusion</strong>: accepting <code>alg:none</code> (no signature) or RS256 tokens verified as HS256. Always explicitly specify the expected algorithm.</li><li><strong>Missing expiry</strong>: tokens that never expire cannot be revoked if compromised.</li><li><strong>Storing JWTs in localStorage</strong>: vulnerable to XSS — any JS on the page can read it. Store in httpOnly cookies instead (inaccessible to JS).</li><li><strong>CSRF on cookie-based auth</strong>: cross-site requests include cookies automatically. Mitigate with SameSite=Strict/Lax cookie attribute or CSRF token.</li><li><strong>Insufficient authorisation checks</strong>: checking authentication but not whether the authenticated user has permission to access the specific resource (IDOR — Insecure Direct Object Reference).</li></ul><h3>Role-Based Access Control (RBAC) vs Attribute-Based (ABAC)</h3><p><strong>RBAC</strong>: access based on role (ADMIN, MAGE, STUDENT). Simple; coarse-grained. Good for most applications.</p><p><strong>ABAC</strong>: access based on attributes of the user, resource, and context (e.g. 'MAGE can edit spells they created'). Fine-grained; flexible; more complex to implement.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "An Academy apprentice discovered that changing the spell ID in the URL from /api/spells/123 to /api/spells/124 showed another mage's private spell notes. The endpoint checked authentication (was the user logged in?) but never checked authorisation (did this user own spell 124?). The vulnerability was IDOR — Insecure Direct Object Reference. It had been in production for six months."},
+        {"type": "dialogue", "av": "🔐", "cls": "mentor", "speaker": "Security Architect Nim", "sCls": "mentor", "text": "Authentication tells you who someone is. Authorisation tells you what they can do. These are separate concerns and both must be checked. I have seen systems that authenticate perfectly and authorise nothing — you log in and then have access to every record in the database by guessing IDs. Authentication without authorisation is security theatre."},
+        {"type": "dialogue", "av": "🔐", "cls": "mentor", "speaker": "Security Architect Nim", "sCls": "mentor", "text": "JWT is not encryption. The payload is Base64-encoded — it is as readable as plain text to anyone who has the token. Do not put passwords, private keys, sensitive PII, or anything you would not put in a public URL into a JWT payload. The signature only guarantees integrity — that the payload has not been tampered with. It does not guarantee secrecy."},
+        {"type": "example", "speaker": "IDOR vulnerability and fix", "text": "// VULNERABLE — checks auth but not ownership\n@GetMapping(\"/api/spells/{id}\")\npublic Spell getSpell(@PathVariable String id, Principal principal) {\n    return spellRepository.findById(id).orElseThrow(); // returns ANY spell\n}\n\n// FIXED — checks ownership\n@GetMapping(\"/api/spells/{id}\")\npublic Spell getSpell(@PathVariable String id, Principal principal) {\n    Spell spell = spellRepository.findById(id).orElseThrow();\n    if (!spell.getCreatorId().equals(principal.getName())) {\n        throw new ForbiddenException(\"Not your spell\");\n    }\n    return spell;\n}"},
+        {"type": "dialogue", "av": "🔐", "cls": "mentor", "speaker": "Security Architect Nim", "sCls": "mentor", "text": "Store JWTs in httpOnly cookies, not localStorage. A stored XSS vulnerability on any page of your app can steal localStorage contents silently. httpOnly cookies are inaccessible to JavaScript. The cookie is still sent with every request, so your auth still works — but a script injected by an attacker cannot read it. This single change eliminates an entire class of token theft attacks."}
+      ],
+      "learningObjectives": [
+        "Distinguish authentication (who you are) from authorisation (what you can do) and explain why both must be checked",
+        "Describe the structure of a JWT and explain what the signature guarantees — and what it does not",
+        "Explain the OAuth 2.0 Authorization Code flow with PKCE and the role of each step",
+        "Identify at least three common JWT/auth vulnerabilities (IDOR, algorithm confusion, localStorage storage)"
+      ],
+      "commonMistakes": [
+        "Checking authentication but not per-resource authorisation — IDOR vulnerability allows access to any record by ID",
+        "Storing JWTs in localStorage — accessible to XSS; use httpOnly cookies",
+        "Using long expiry times on access tokens without refresh token rotation — compromised tokens remain valid for too long",
+        "Putting sensitive data in JWT payload — Base64-encoded, not encrypted; readable by anyone with the token"
+      ],
+      "assessmentCriteria": [
+        "Can decode a JWT and explain what each section contains and what the signature guarantees",
+        "Can identify an IDOR vulnerability in a code snippet and write the corrected version with ownership check",
+        "Can describe the OAuth 2.0 Authorization Code + PKCE flow in 4–6 steps",
+        "Can explain why httpOnly cookies are more secure than localStorage for JWT storage"
+      ],
+      "feynmanPrompt": "Explain JWT authentication to a developer who only knows session cookies. What is a JWT? What does the signature prove? Why is it stateless? What does it not protect against? When would you choose cookies over JWTs?",
+      "guidedPracticeHtml": "<p>Write a <code>JwtDemo</code> class that simulates JWT creation and verification using HMAC-SHA256. Use the standard Java <code>javax.crypto.Mac</code> API (no JWT library — understand the mechanics):</p><ol><li>Write method <code>String sign(String payload, String secret)</code> that returns <code>Base64URL(header) + '.' + Base64URL(payload) + '.' + HMAC-SHA256-signature</code></li><li>Write method <code>boolean verify(String token, String secret)</code> that splits the token, recomputes the signature, and returns whether it matches</li><li>In main: create a token with payload <code>{\"sub\":\"user-1\",\"role\":\"MAGE\"}</code>, verify it (should be true), tamper with the payload, verify again (should be false)</li><li>Print all results with clear labels</li></ol>",
+      "guidedPracticeStarterCode": "import javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.util.Base64;\n\npublic class JwtDemo {\n\n    static final String HEADER = Base64.getUrlEncoder().withoutPadding()\n        .encodeToString(\"{\\\"alg\\\":\\\"HS256\\\",\\\"typ\\\":\\\"JWT\\\"}\".getBytes());\n\n    static String base64url(String s) {\n        return Base64.getUrlEncoder().withoutPadding().encodeToString(s.getBytes());\n    }\n\n    static String hmac(String data, String secret) throws Exception {\n        Mac mac = Mac.getInstance(\"HmacSHA256\");\n        mac.init(new SecretKeySpec(secret.getBytes(), \"HmacSHA256\"));\n        return Base64.getUrlEncoder().withoutPadding().encodeToString(mac.doFinal(data.getBytes()));\n    }\n\n    static String sign(String payload, String secret) throws Exception {\n        // TODO: return HEADER + '.' + base64url(payload) + '.' + hmac signature\n        return null;\n    }\n\n    static boolean verify(String token, String secret) throws Exception {\n        // TODO: split token, recompute signature, compare\n        return false;\n    }\n\n    public static void main(String[] args) throws Exception {\n        String secret = \"my-super-secret-key\";\n        String payload = \"{\\\"sub\\\":\\\"user-1\\\",\\\"role\\\":\\\"MAGE\\\"}\";\n\n        String token = sign(payload, secret);\n        System.out.println(\"Token: \" + token);\n        System.out.println(\"Valid: \" + verify(token, secret));\n\n        // Tamper\n        String tampered = token.split(\"\\\\.\")[0] + \".\" +\n            base64url(\"{\\\"sub\\\":\\\"user-1\\\",\\\"role\\\":\\\"ADMIN\\\"}\") + \".\" +\n            token.split(\"\\\\.\")[2];\n        System.out.println(\"Tampered valid: \" + verify(tampered, secret));\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "Valid token returns true", "input": "null", "expected": "Valid: true"},
+        {"label": "Tampered token returns false", "input": "null", "expected": "Tampered valid: false"}
+      ],
+      "guidedPracticeModelAnswer": "import javax.crypto.Mac;\nimport javax.crypto.spec.SecretKeySpec;\nimport java.util.Base64;\n\npublic class JwtDemo {\n    static final String HEADER = Base64.getUrlEncoder().withoutPadding()\n        .encodeToString(\"{\\\"alg\\\":\\\"HS256\\\",\\\"typ\\\":\\\"JWT\\\"}\".getBytes());\n\n    static String base64url(String s) {\n        return Base64.getUrlEncoder().withoutPadding().encodeToString(s.getBytes());\n    }\n\n    static String hmac(String data, String secret) throws Exception {\n        Mac mac = Mac.getInstance(\"HmacSHA256\");\n        mac.init(new SecretKeySpec(secret.getBytes(), \"HmacSHA256\"));\n        return Base64.getUrlEncoder().withoutPadding().encodeToString(mac.doFinal(data.getBytes()));\n    }\n\n    static String sign(String payload, String secret) throws Exception {\n        String headerAndPayload = HEADER + \".\" + base64url(payload);\n        return headerAndPayload + \".\" + hmac(headerAndPayload, secret);\n    }\n\n    static boolean verify(String token, String secret) throws Exception {\n        String[] parts = token.split(\"\\\\.\");\n        if (parts.length != 3) return false;\n        String expected = hmac(parts[0] + \".\" + parts[1], secret);\n        return expected.equals(parts[2]);\n    }\n\n    public static void main(String[] args) throws Exception {\n        String secret = \"my-super-secret-key\";\n        String payload = \"{\\\"sub\\\":\\\"user-1\\\",\\\"role\\\":\\\"MAGE\\\"}\";\n        String token = sign(payload, secret);\n        System.out.println(\"Token: \" + token);\n        System.out.println(\"Valid: \" + verify(token, secret));\n        String tampered = token.split(\"\\\\.\")[0] + \".\" +\n            base64url(\"{\\\"sub\\\":\\\"user-1\\\",\\\"role\\\":\\\"ADMIN\\\"}\") + \".\" +\n            token.split(\"\\\\.\")[2];\n        System.out.println(\"Tampered valid: \" + verify(tampered, secret));\n    }\n}",
+      "soloPracticeHtml": "<p>Write a class <code>AuthZDemo</code> that demonstrates RBAC and IDOR prevention. Define a record <code>Resource(String id, String ownerId, String content)</code>. Write a class <code>ResourceService</code> with: a <code>Map&lt;String, Resource&gt; store</code>, method <code>void add(Resource r)</code>, and method <code>Resource getSecure(String resourceId, String requestingUserId)</code> that throws <code>SecurityException(\"Forbidden\")</code> if the requesting user is not the owner. Also write <code>Resource getInsecure(String resourceId)</code> (no ownership check). In main: add resources owned by 'alice' and 'bob'. Show that getInsecure lets 'charlie' access alice's resource. Show that getSecure throws for charlie attempting the same.</p>",
+      "soloPracticeTests": [
+        {"label": "getInsecure allows access", "input": "null", "expected": "insecure: alice-data"},
+        {"label": "getSecure throws for unauthorised user", "input": "null", "expected": "Forbidden"}
+      ],
+      "modelAnswer": "import java.util.*;\n\npublic class AuthZDemo {\n    record Resource(String id, String ownerId, String content) {}\n\n    static class ResourceService {\n        Map<String, Resource> store = new HashMap<>();\n        void add(Resource r) { store.put(r.id(), r); }\n\n        Resource getInsecure(String id) {\n            return store.get(id);\n        }\n\n        Resource getSecure(String id, String requestingUserId) {\n            Resource r = store.get(id);\n            if (r == null) throw new NoSuchElementException(\"Not found\");\n            if (!r.ownerId().equals(requestingUserId)) {\n                throw new SecurityException(\"Forbidden\");\n            }\n            return r;\n        }\n    }\n\n    public static void main(String[] args) {\n        ResourceService svc = new ResourceService();\n        svc.add(new Resource(\"res-1\", \"alice\", \"alice-data\"));\n        svc.add(new Resource(\"res-2\", \"bob\", \"bob-data\"));\n\n        // IDOR — charlie accesses alice's data\n        Resource r = svc.getInsecure(\"res-1\");\n        System.out.println(\"insecure: \" + r.content());\n\n        // Secure — ownership enforced\n        try {\n            svc.getSecure(\"res-1\", \"charlie\");\n        } catch (SecurityException e) {\n            System.out.println(\"getSecure threw: \" + e.getMessage());\n        }\n\n        // Alice can access her own resource\n        System.out.println(\"alice getSecure: \" + svc.getSecure(\"res-1\", \"alice\").content());\n    }\n}",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does the signature in a JWT guarantee?</p>",
+          "options": [
+            "That the payload is encrypted and cannot be read",
+            "That the payload has not been tampered with since it was signed by the holder of the secret key",
+            "That the user is authenticated",
+            "That the token has not expired"
+          ],
+          "correctAnswer": "That the payload has not been tampered with since it was signed by the holder of the secret key",
+          "explanationHtml": "<p>The JWT signature is a cryptographic hash of the header and payload. If anyone changes even one character of the payload, the signature is invalid. The payload is Base64-encoded (not encrypted) — anyone can read it. The signature only proves integrity — that it came from the signer and wasn't changed. Expiry is checked separately against the 'exp' claim.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>An API endpoint <code>GET /api/documents/{id}</code> checks that the user is authenticated. A user discovers they can access other users' documents by changing the ID. What vulnerability is this and what is the fix?</p>",
+          "options": [
+            "SQL injection — sanitise the ID parameter",
+            "IDOR (Insecure Direct Object Reference) — add an ownership check: verify the authenticated user owns document with that ID",
+            "CSRF — add a CSRF token to GET requests",
+            "JWT algorithm confusion — verify the JWT algorithm explicitly"
+          ],
+          "correctAnswer": "IDOR (Insecure Direct Object Reference) — add an ownership check: verify the authenticated user owns document with that ID",
+          "explanationHtml": "<p>IDOR is one of the most common and costly web vulnerabilities. The API checks authentication (is the user logged in?) but not authorisation (does this user own this specific document?). Fix: after retrieving the document, verify <code>document.getOwnerId().equals(currentUser.getId())</code> before returning it. Return 403 Forbidden (not 404) if the user is authenticated but not authorised.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Why is storing a JWT in <code>localStorage</code> considered less secure than storing it in an <code>httpOnly</code> cookie?</p>",
+          "options": [
+            "localStorage has a smaller size limit than cookies",
+            "localStorage values are sent with every HTTP request, exposing them to man-in-the-middle attacks",
+            "Any JavaScript on the page — including malicious scripts injected via XSS — can read localStorage values",
+            "localStorage is cleared when the browser closes, causing unexpected logouts"
+          ],
+          "correctAnswer": "Any JavaScript on the page — including malicious scripts injected via XSS — can read localStorage values",
+          "explanationHtml": "<p>localStorage is accessible to any JavaScript running on the page. If an attacker injects a malicious script (XSS), it can silently read the JWT and exfiltrate it. httpOnly cookies are inaccessible to JavaScript — the browser attaches them to requests automatically, but no script can read their value. This eliminates the most common JWT theft vector. Note: httpOnly cookies introduce CSRF risk, mitigated with SameSite=Strict or a CSRF token.</p>"
+        }
+      ]
+    }
+  ]
+}

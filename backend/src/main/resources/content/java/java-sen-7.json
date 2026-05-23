@@ -1,0 +1,101 @@
+{
+  "id": "java-sen-7",
+  "title": "Messaging & Queues",
+  "glyph": "📨",
+  "sortOrder": 7,
+  "tier": "SENIOR",
+  "topicId": "java",
+  "prerequisites": ["java-sen-6"],
+  "subChunks": [
+    {
+      "id": "java-sen-7a",
+      "title": "Pub/Sub, Point-to-Point, Dead Letters & Idempotency",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "filename": "MessageQueue.java",
+      "practiceType": "JAVA",
+      "hookHtml": "<p>Queues are the glue of distributed systems — they decouple producers from consumers, buffer spikes in load, and enable retry logic for failures. Understanding messaging patterns is essential for any senior engineer building services that communicate asynchronously.</p>",
+      "explanationHtml": "<h3>Point-to-Point (Queue)</h3><p>A message is produced to a queue and consumed by exactly one consumer. Used for task distribution — work items, job queues, command processing. Each message is processed once. Technologies: RabbitMQ (basic queue), AWS SQS, Kafka (with consumer group of one).</p><h3>Publish-Subscribe (Pub/Sub)</h3><p>A message is published to a topic and delivered to all subscribers. Used for broadcasting events — 'order placed' notifies inventory, shipping, and billing simultaneously. Each subscriber gets its own copy. Technologies: Kafka topics, Google Pub/Sub, SNS, RabbitMQ fanout exchange.</p><pre><code>// Simulating pub/sub with a topic and multiple subscribers\nMap&lt;String, List&lt;Consumer&lt;String&gt;&gt;&gt; subscribers = new HashMap&lt;&gt;();\n\nvoid subscribe(String topic, Consumer&lt;String&gt; handler) {\n    subscribers.computeIfAbsent(topic, k -&gt; new ArrayList&lt;&gt;()).add(handler);\n}\n\nvoid publish(String topic, String message) {\n    subscribers.getOrDefault(topic, List.of())\n               .forEach(h -&gt; h.accept(message));\n}\n\n// Subscribe\nsubscribe(\"order.placed\", msg -&gt; System.out.println(\"Inventory: \" + msg));\nsubscribe(\"order.placed\", msg -&gt; System.out.println(\"Billing:   \" + msg));\n// Publish\npublish(\"order.placed\", \"order-123 qty=5\");</code></pre><h3>Dead Letter Queue (DLQ)</h3><p>When a message fails processing repeatedly (maxDeliveryAttempts exceeded), it is moved to the Dead Letter Queue rather than being discarded or blocking the main queue. The DLQ allows:</p><ul><li>Alerting on persistent failures</li><li>Manual inspection and replay after fixing the bug</li><li>Preventing a single bad message from blocking all other processing</li></ul><h3>Message Acknowledgement</h3><p><strong>At-most-once</strong>: message acknowledged before processing. May be lost if consumer crashes. Use for metrics/telemetry where loss is acceptable.</p><p><strong>At-least-once</strong>: message acknowledged after processing succeeds. May be redelivered if consumer crashes after processing but before ack. Requires idempotent consumers.</p><p><strong>Exactly-once</strong>: message processed exactly once. Very expensive to guarantee — requires coordination. Kafka transactions and distributed two-phase commit.</p><h3>Consumer Groups & Scaling</h3><p>Multiple consumer instances in a consumer group share the partition/queue work. Kafka assigns partitions to consumers in a group — scaling consumers scales throughput horizontally up to the number of partitions.</p><h3>Backpressure</h3><p>If consumers are slower than producers, the queue grows unboundedly. Solutions: cap queue depth (reject or block producers), scale consumers, or use bounded queues with drop/block/retry policies.</p>",
+      "storyBeats": [
+        {"type": "narration", "text": "The Academy's spell dispatch system used to process every spell synchronously. When the enchantment server was slow, the whole Academy waited. Then the architects added a queue between requests and processing. Load spikes buffered gracefully. Processing scaled independently. And dead letters caught the malformed spells that would have previously crashed the dispatcher silently."},
+        {"type": "dialogue", "av": "📨", "cls": "mentor", "speaker": "Queue Architect Bren", "sCls": "mentor", "text": "Point-to-point vs pub/sub is the first decision. Point-to-point: one message, one processor — task queues, job distribution. Pub/sub: one event, many reactions — order placed triggers inventory, shipping, billing simultaneously. These are fundamentally different communication patterns and each maps to a different technology."},
+        {"type": "dialogue", "av": "📨", "cls": "mentor", "speaker": "Queue Architect Bren", "sCls": "mentor", "text": "Dead letter queues are not an afterthought. They are infrastructure. A message that fails three times has something wrong with it — bad data, a bug in the consumer, or an incompatible schema change. Without a DLQ, it either blocks the queue forever or is silently dropped. The DLQ lets you inspect it, fix the consumer, and replay."},
+        {"type": "example", "speaker": "At-least-once delivery — why idempotency matters", "text": "// Consumer acknowledges AFTER processing:\n1. Consumer receives message\n2. Consumer processes message (e.g. sends email)\n3. Consumer sends ACK to broker\n\n// If the process crashes at step 2.5 (after email, before ACK):\n4. Broker re-delivers message\n5. Consumer sends email AGAIN\n\n// Solution: store a processed message ID before sending\nif (processedIds.contains(message.id)) return; // already done\nsendEmail(message);\nprocessedIds.add(message.id);\nsendAck();"},
+        {"type": "dialogue", "av": "📨", "cls": "mentor", "speaker": "Queue Architect Bren", "sCls": "mentor", "text": "Exactly-once delivery is the most expensive guarantee. In most systems you should aim for at-least-once with idempotent consumers instead — it is cheaper and almost always sufficient. Reserve exactly-once for financial systems where even a duplicate processed idempotently might have tax or regulatory implications."}
+      ],
+      "learningObjectives": [
+        "Distinguish point-to-point (queue) and publish-subscribe (topic) messaging patterns and name a use case for each",
+        "Explain the purpose of a Dead Letter Queue and what triggers messages to be sent there",
+        "Compare at-most-once, at-least-once, and exactly-once delivery semantics and their trade-offs",
+        "Implement a simple in-memory pub/sub dispatcher in Java using a Map of topic to List<Consumer>"
+      ],
+      "commonMistakes": [
+        "Using pub/sub when only one consumer should process each message — use a queue with consumer group instead",
+        "Not handling DLQ alerts — a growing DLQ means silent processing failures accumulating",
+        "Assuming at-least-once delivery without making consumers idempotent — duplicate processing causes data corruption",
+        "Unbounded queues in production — a slow consumer will eventually cause an OOM if the queue has no depth limit"
+      ],
+      "assessmentCriteria": [
+        "Can explain when to use pub/sub vs point-to-point with a concrete example for each",
+        "Can describe the DLQ pattern and explain what conditions trigger a message to be dead-lettered",
+        "Can explain why at-least-once delivery requires idempotent consumers with a concrete failure scenario",
+        "Can implement an in-memory pub/sub system demonstrating multi-subscriber fan-out"
+      ],
+      "feynmanPrompt": "Explain messaging queues to a developer who currently uses direct REST API calls between services. What problems does a queue solve? What new problems does it introduce? When would you choose pub/sub vs point-to-point?",
+      "guidedPracticeHtml": "<p>Write a <code>MessageQueue</code> class that simulates a pub/sub broker in memory:</p><ol><li>Fields: <code>Map&lt;String, List&lt;Consumer&lt;String&gt;&gt;&gt; subscribers</code> and <code>Map&lt;String, List&lt;String&gt;&gt; deadLetterQueue</code></li><li>Method <code>subscribe(String topic, Consumer&lt;String&gt; handler)</code></li><li>Method <code>publish(String topic, String message)</code> that calls each subscriber's handler; if the handler throws any exception, add the message to the DLQ for that topic (use computeIfAbsent)</li><li>Method <code>getDlq(String topic)</code> returning the dead letter list for a topic</li><li>In main: subscribe two handlers to 'spell.cast'; one prints the message, one throws RuntimeException for any message containing 'bad'. Publish 'Fireball' and 'bad-spell'. Print DLQ contents.</li></ol>",
+      "guidedPracticeStarterCode": "import java.util.*;\nimport java.util.function.Consumer;\n\npublic class MessageQueue {\n    private final Map<String, List<Consumer<String>>> subscribers = new HashMap<>();\n    private final Map<String, List<String>> deadLetterQueue = new HashMap<>();\n\n    public void subscribe(String topic, Consumer<String> handler) {\n        // TODO: add handler to subscribers map for topic\n    }\n\n    public void publish(String topic, String message) {\n        // TODO: call each subscriber; catch exceptions and send to DLQ\n    }\n\n    public List<String> getDlq(String topic) {\n        return deadLetterQueue.getOrDefault(topic, List.of());\n    }\n\n    public static void main(String[] args) {\n        MessageQueue mq = new MessageQueue();\n\n        mq.subscribe(\"spell.cast\", msg -> System.out.println(\"Handler1: \" + msg));\n        mq.subscribe(\"spell.cast\", msg -> {\n            if (msg.contains(\"bad\")) throw new RuntimeException(\"Rejected: \" + msg);\n            System.out.println(\"Handler2: \" + msg);\n        });\n\n        mq.publish(\"spell.cast\", \"Fireball\");\n        mq.publish(\"spell.cast\", \"bad-spell\");\n\n        System.out.println(\"DLQ: \" + mq.getDlq(\"spell.cast\"));\n    }\n}\n",
+      "guidedPracticeTests": [
+        {"label": "Fireball handled by both handlers", "input": "null", "expected": "Handler1: Fireball"},
+        {"label": "bad-spell sent to DLQ", "input": "null", "expected": "DLQ: [bad-spell]"}
+      ],
+      "guidedPracticeModelAnswer": "import java.util.*;\nimport java.util.function.Consumer;\n\npublic class MessageQueue {\n    private final Map<String, List<Consumer<String>>> subscribers = new HashMap<>();\n    private final Map<String, List<String>> deadLetterQueue = new HashMap<>();\n\n    public void subscribe(String topic, Consumer<String> handler) {\n        subscribers.computeIfAbsent(topic, k -> new ArrayList<>()).add(handler);\n    }\n\n    public void publish(String topic, String message) {\n        for (Consumer<String> handler : subscribers.getOrDefault(topic, List.of())) {\n            try {\n                handler.accept(message);\n            } catch (Exception e) {\n                deadLetterQueue.computeIfAbsent(topic, k -> new ArrayList<>()).add(message);\n            }\n        }\n    }\n\n    public List<String> getDlq(String topic) {\n        return deadLetterQueue.getOrDefault(topic, List.of());\n    }\n\n    public static void main(String[] args) {\n        MessageQueue mq = new MessageQueue();\n        mq.subscribe(\"spell.cast\", msg -> System.out.println(\"Handler1: \" + msg));\n        mq.subscribe(\"spell.cast\", msg -> {\n            if (msg.contains(\"bad\")) throw new RuntimeException(\"Rejected: \" + msg);\n            System.out.println(\"Handler2: \" + msg);\n        });\n        mq.publish(\"spell.cast\", \"Fireball\");\n        mq.publish(\"spell.cast\", \"bad-spell\");\n        System.out.println(\"DLQ: \" + mq.getDlq(\"spell.cast\"));\n    }\n}",
+      "soloPracticeHtml": "<p>Extend <code>MessageQueue</code> into a class <code>ReliableQueue</code> that supports <strong>max retry with DLQ</strong> for point-to-point delivery:</p><ul><li>Field: <code>Map&lt;String, Integer&gt; retryCount</code> tracking attempts per message ID</li><li>Method <code>enqueue(String msgId, String payload)</code></li><li>Method <code>process(String msgId, Consumer&lt;String&gt; handler)</code> that attempts to process the message; if it throws, increments the retry count; if retries &gt;= 3, moves to DLQ and prints 'Dead lettered: msgId'</li><li>In main: enqueue 'msg-1' with payload 'good', enqueue 'msg-2' with payload 'fail'. Handler throws for 'fail'. Call process 4 times for msg-2. Print final DLQ.</li></ul>",
+      "soloPracticeTests": [
+        {"label": "Good message processes successfully", "input": "null", "expected": "processed: good"},
+        {"label": "Bad message dead lettered after 3 retries", "input": "null", "expected": "Dead lettered: msg-2"}
+      ],
+      "modelAnswer": "import java.util.*;\nimport java.util.function.Consumer;\n\npublic class ReliableQueue {\n    private final Map<String, String> queue = new HashMap<>();\n    private final Map<String, Integer> retryCount = new HashMap<>();\n    private final List<String> dlq = new ArrayList<>();\n\n    public void enqueue(String msgId, String payload) { queue.put(msgId, payload); }\n\n    public void process(String msgId, Consumer<String> handler) {\n        String payload = queue.get(msgId);\n        if (payload == null) { System.out.println(\"Not found: \" + msgId); return; }\n        try {\n            handler.accept(payload);\n            System.out.println(\"processed: \" + payload);\n        } catch (Exception e) {\n            int attempts = retryCount.merge(msgId, 1, Integer::sum);\n            if (attempts >= 3) {\n                dlq.add(msgId);\n                queue.remove(msgId);\n                System.out.println(\"Dead lettered: \" + msgId);\n            } else {\n                System.out.println(\"Retry \" + attempts + \" for \" + msgId);\n            }\n        }\n    }\n\n    public static void main(String[] args) {\n        ReliableQueue rq = new ReliableQueue();\n        rq.enqueue(\"msg-1\", \"good\");\n        rq.enqueue(\"msg-2\", \"fail\");\n        rq.process(\"msg-1\", p -> System.out.println(\"ok: \" + p));\n        Consumer<String> badHandler = p -> { throw new RuntimeException(\"cannot process: \" + p); };\n        rq.process(\"msg-2\", badHandler);\n        rq.process(\"msg-2\", badHandler);\n        rq.process(\"msg-2\", badHandler);\n        rq.process(\"msg-2\", badHandler); // already DLQ'd\n        System.out.println(\"DLQ: \" + rq.dlq);\n    }\n}",
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In messaging systems, what is the purpose of a Dead Letter Queue (DLQ)?</p>",
+          "options": [
+            "To store messages that were delivered successfully",
+            "To capture messages that failed processing after maximum retries so they can be inspected and replayed",
+            "To hold messages that arrived before consumers were ready",
+            "To archive all messages for audit purposes"
+          ],
+          "correctAnswer": "To capture messages that failed processing after maximum retries so they can be inspected and replayed",
+          "explanationHtml": "<p>A DLQ captures messages that have exceeded their retry limit. This prevents a single bad message from blocking the main queue indefinitely. Operations teams can inspect DLQ contents, identify the root cause, fix the consumer or data, and replay the messages. Without a DLQ, bad messages either cause infinite retries or are silently dropped.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A payment processing consumer uses at-least-once delivery. The service processes a payment successfully and then crashes before sending the acknowledgement. What happens and what prevents a double charge?</p>",
+          "options": [
+            "The payment is lost permanently",
+            "The broker re-delivers the message; an idempotency check detects the duplicate and skips reprocessing",
+            "The broker automatically rolls back the payment",
+            "The consumer restarts and the payment is processed again, causing a double charge"
+          ],
+          "correctAnswer": "The broker re-delivers the message; an idempotency check detects the duplicate and skips reprocessing",
+          "explanationHtml": "<p>With at-least-once delivery, re-delivery after a crash is guaranteed. Without idempotency, the payment would be charged twice. The correct pattern: before processing, check if a payment with this message ID was already processed (stored in a DB). If yes, return the previous result. If no, process and store the record. This makes the consumer safe for at-least-once delivery.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You need to notify three different services (inventory, shipping, billing) every time an order is placed. Which messaging pattern is most appropriate?</p>",
+          "options": [
+            "Point-to-point queue — send three separate messages, one to each service queue",
+            "Pub/sub topic — publish one 'order.placed' event; all three services subscribe independently",
+            "Request/response REST API — call each service in sequence",
+            "Shared database polling — all services poll the orders table for new rows"
+          ],
+          "correctAnswer": "Pub/sub topic — publish one 'order.placed' event; all three services subscribe independently",
+          "explanationHtml": "<p>Pub/sub is designed exactly for this: one producer, many consumers each receiving their own copy of the event. Point-to-point with three queues works but requires the producer to know about all downstream consumers — tight coupling. Pub/sub decouples producers from consumers: adding a fourth subscriber requires no changes to the order service.</p>"
+        }
+      ]
+    }
+  ]
+}
