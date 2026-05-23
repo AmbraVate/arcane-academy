@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { LayoutDashboard, Library, BookMarked, Users, ArrowUpDown, ChevronLeft, LogOut, Flag, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Library, BookMarked, Users, ArrowUpDown, ChevronLeft, LogOut, Flag, Menu, X, Trophy } from 'lucide-react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
 const NAV_ITEMS = [
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { path: '/admin/chunks',         label: 'Content',        Icon: Library },
   { path: '/admin/users',          label: 'Users',          Icon: Users },
   { path: '/admin/stuck-reports',  label: 'Stuck Reports',  Icon: Flag },
+  { path: '/admin/capstones',      label: 'Capstones',      Icon: Trophy },
   { path: '/admin/import-export',  label: 'Import / Export',Icon: ArrowUpDown },
 ]
 

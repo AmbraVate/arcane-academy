@@ -1,6 +1,10 @@
 import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi } from '@/shared/api/services'
+import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi, notesApi, capstoneApi } from '@/shared/api/services'
+import type { UserNote } from '@/shared/api/services'
+
+/** Chunk IDs that are capstone lessons — show the project save form on COMPLETE. */
+const CAPSTONE_CHUNK_IDS = new Set(['java-app-15', 'java-jun-20', 'java-sen-19', 'java-lea-17'])
 import { useAuth } from '@/shared/hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
 import StuckButton from '@/components/StuckButton'
@@ -21,7 +25,7 @@ import { cn } from '@/lib/utils'
 import {
   ArrowLeft, ClipboardList, BookOpen,
   Play, Loader2, Zap, Check, Eye, EyeOff, FlaskConical,
-  PenLine, Target, Download, FileText,
+  PenLine, Target, Download, FileText, StickyNote, X, CheckCircle2,
 } from 'lucide-react'
 
 type OutputLine = { text: string; type: 'normal' | 'success' | 'error' | 'system' }
@@ -182,6 +186,21 @@ export default function EncodingPage() {
   const [toast, setToast] = useState<string | null>(null)
   const [levelUpInfo, setLevelUpInfo] = useState<{ level: number; rank: string } | null>(null)
   const [newBadges, setNewBadges] = useState<Badge[]>([])
+
+  // Notes panel
+  const [notePanelOpen, setNotePanelOpen] = useState(false)
+  const [noteContent, setNoteContent] = useState('')
+  const [noteSaved, setNoteSaved] = useState<UserNote | null>(null)
+  const [noteSaving, setNoteSaving] = useState(false)
+  const noteSaveTimer = useRef<ReturnType<typeof setTimeout>>()
+
+  // Capstone save form (shown in COMPLETE phase for capstone sub-chunks)
+  const [capstoneTitle, setCapstoneTitle] = useState('')
+  const [capstoneDesc, setCapstoneDesc] = useState('')
+  const [capstoneCode, setCapstoneCode] = useState('')
+  const [capstoneGithub, setCapstoneGithub] = useState('')
+  const [capstoneSaving, setCapstoneSaving] = useState(false)
+  const [capstoneSavedId, setCapstoneSavedId] = useState<string | null>(null)
 
   const toastTimer = useRef<ReturnType<typeof setTimeout>>()
   const reactEditorRef = useRef<ReactEditorHandle>(null)
@@ -489,6 +508,54 @@ export default function EncodingPage() {
     } catch {
       showToast('Error submitting explanation')
       dispatch({ type: 'FEYNMAN_DONE', result: null })
+    }
+  }
+
+  const noteTitle = encoding
+    ? `${encoding.chunkId ?? 'Lesson'} — ${encoding.title}`
+    : 'Note'
+
+  const notePhaseVisible = encoding
+    ? ['EXPLANATION', 'GUIDED_PRACTICE', 'SOLO_PRACTICE'].includes(encoding.phase)
+    : false
+
+  async function saveNoteNow() {
+    if (!encoding || !subChunkId || !noteContent.trim()) return
+    setNoteSaving(true)
+    try {
+      const saved = await notesApi.save({
+        subChunkId,
+        chunkId: encoding.chunkId ?? subChunkId,
+        title: noteTitle,
+        content: noteContent,
+      })
+      setNoteSaved(saved)
+    } catch { /* ignore */ } finally {
+      setNoteSaving(false)
+    }
+  }
+
+  function scheduleAutoSave() {
+    clearTimeout(noteSaveTimer.current)
+    noteSaveTimer.current = setTimeout(saveNoteNow, 2000)
+  }
+
+  const isCapstoneLesson = encoding ? CAPSTONE_CHUNK_IDS.has(encoding.chunkId) : false
+
+  async function saveCapstone() {
+    if (!encoding || !capstoneTitle.trim()) return
+    setCapstoneSaving(true)
+    try {
+      const saved = await capstoneApi.create({
+        chunkId: encoding.chunkId,
+        title: capstoneTitle,
+        description: capstoneDesc || undefined,
+        codeContent: capstoneCode || undefined,
+        githubUrl: capstoneGithub || undefined,
+      })
+      setCapstoneSavedId(saved.id)
+    } catch { /* ignore */ } finally {
+      setCapstoneSaving(false)
     }
   }
 
@@ -1179,6 +1246,65 @@ export default function EncodingPage() {
             </div>
           )}
 
+          {/* ── Capstone save form ───────────────────────────────────────── */}
+          {isCapstoneLesson && !capstoneSavedId && (
+            <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(201,162,39,0.35)] bg-[rgba(201,162,39,0.05)]">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[20px]">🏗️</span>
+                <span className="text-[17px] font-bold text-gold">Save Your Project</span>
+              </div>
+              <p className="text-[12px] text-muted mb-4 leading-[1.6]">
+                Document what you built for your portfolio. Your project will appear on your Profile → Projects tab.
+              </p>
+              <div className="flex flex-col gap-3">
+                <input
+                  type="text"
+                  placeholder="Project title *"
+                  value={capstoneTitle}
+                  onChange={e => setCapstoneTitle(e.target.value)}
+                  className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-gold transition-[border-color]"
+                />
+                <textarea
+                  placeholder="Brief description of what you built…"
+                  value={capstoneDesc}
+                  onChange={e => setCapstoneDesc(e.target.value)}
+                  rows={3}
+                  className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-gold transition-[border-color] resize-y"
+                />
+                <textarea
+                  placeholder="Paste your code here (optional)…"
+                  value={capstoneCode}
+                  onChange={e => setCapstoneCode(e.target.value)}
+                  rows={5}
+                  className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[12px] text-text font-mono placeholder:text-muted outline-none focus:border-gold transition-[border-color] resize-y"
+                />
+                <input
+                  type="url"
+                  placeholder="GitHub repository URL (optional)"
+                  value={capstoneGithub}
+                  onChange={e => setCapstoneGithub(e.target.value)}
+                  className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-gold transition-[border-color]"
+                />
+                <button
+                  className="btn btn-primary flex items-center justify-center gap-2"
+                  onClick={saveCapstone}
+                  disabled={capstoneSaving || !capstoneTitle.trim()}
+                >
+                  {capstoneSaving
+                    ? <><Loader2 size={14} className="animate-spin" /> Saving…</>
+                    : '💾 Save Project to Profile'}
+                </button>
+              </div>
+            </div>
+          )}
+          {isCapstoneLesson && capstoneSavedId && (
+            <div className="mb-5 p-4 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)] text-center">
+              <div className="text-[24px] mb-2">✓</div>
+              <div className="font-cinzel text-[14px] text-teal mb-1">Project Saved!</div>
+              <p className="text-[12px] text-muted">Find it in Profile → Projects. An instructor may leave feedback there.</p>
+            </div>
+          )}
+
           {/* ── Navigation ───────────────────────────────────────────────── */}
           <div className="flex gap-2.5 justify-center mt-4 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
             <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.chunkId}`)}>Return to Chunk →</button>
@@ -1220,6 +1346,63 @@ export default function EncodingPage() {
       {/* StuckButton — only during active practice phases */}
       {(phase === 'GUIDED_PRACTICE' || phase === 'SOLO_PRACTICE' || phase === 'RETRIEVAL_CHECK') && (
         <StuckButton />
+      )}
+
+      {/* Notes floating button — visible during EXPLANATION, GUIDED_PRACTICE, SOLO_PRACTICE */}
+      {notePhaseVisible && (
+        <button
+          onClick={() => setNotePanelOpen(v => !v)}
+          className={cn(
+            'fixed bottom-6 right-6 z-[150] flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-cinzel tracking-wide shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-200',
+            notePanelOpen
+              ? 'bg-purple text-white border border-purple'
+              : 'bg-card border border-border text-muted hover:border-purple-dim hover:text-text',
+          )}
+        >
+          <StickyNote size={13} strokeWidth={2} />
+          {notePanelOpen ? 'Close Notes' : 'Notes'}
+          {noteSaved && !notePanelOpen && (
+            <CheckCircle2 size={12} className="text-teal" />
+          )}
+        </button>
+      )}
+
+      {/* Notes panel — slides up from bottom-right */}
+      {notePhaseVisible && notePanelOpen && (
+        <div className="fixed bottom-[72px] right-6 z-[140] w-[380px] max-w-[calc(100vw-48px)] bg-card border border-purple-dim rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden animate-[toast-in_0.2s_ease]">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+            <div className="flex items-center gap-2">
+              <StickyNote size={13} className="text-purple" />
+              <span className="font-cinzel text-[12px] text-text tracking-wide">My Notes</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {noteSaving && <Loader2 size={11} className="animate-spin text-muted" />}
+              {noteSaved && !noteSaving && <span className="text-[10px] text-teal font-cinzel">Saved ✓</span>}
+              <button
+                onClick={saveNoteNow}
+                disabled={noteSaving || !noteContent.trim()}
+                className="text-[10px] font-cinzel px-2.5 py-1 rounded-[6px] bg-purple-dim text-purple-light border border-purple disabled:opacity-40 transition-colors hover:bg-purple hover:text-white"
+              >
+                Save
+              </button>
+              <button onClick={() => setNotePanelOpen(false)} className="text-muted hover:text-text transition-colors p-0.5">
+                <X size={13} />
+              </button>
+            </div>
+          </div>
+          <div className="px-4 py-2 border-b border-border">
+            <div className="text-[10px] text-muted font-cinzel truncate">{noteTitle}</div>
+          </div>
+          <textarea
+            className="flex-1 bg-transparent px-4 py-3 text-[12px] text-text leading-[1.7] placeholder:text-muted outline-none resize-none min-h-[220px] max-h-[40vh]"
+            placeholder="Write your notes here… they auto-save after you stop typing."
+            value={noteContent}
+            onChange={e => {
+              setNoteContent(e.target.value)
+              scheduleAutoSave()
+            }}
+          />
+        </div>
       )}
 
       {toast && (

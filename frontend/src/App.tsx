@@ -39,6 +39,7 @@ const AdminUsersPage       = lazy(() => import('./features/admin/pages/AdminUser
 const AdminImportExportPage = lazy(() => import('./features/admin/pages/AdminImportExportPage'))
 const AdminTopicsPage       = lazy(() => import('./features/admin/pages/AdminTopicsPage'))
 const AdminStuckReportsPage = lazy(() => import('./features/admin/pages/AdminStuckReportsPage'))
+const AdminCapstonesPage    = lazy(() => import('./features/admin/pages/AdminCapstonesPage'))
 const NotFoundPage          = lazy(() => import('./features/errors/pages/NotFoundPage'))
 const ErrorPage             = lazy(() => import('./features/errors/pages/ErrorPage'))
 
@@ -176,6 +177,7 @@ function AppRoutes() {
             <Route path="users" element={<AdminUsersPage />} />
             <Route path="import-export" element={<AdminImportExportPage />} />
             <Route path="stuck-reports" element={<AdminStuckReportsPage />} />
+            <Route path="capstones" element={<AdminCapstonesPage />} />
           </Route>
         </Route>
 

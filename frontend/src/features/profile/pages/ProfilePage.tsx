@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { badgeApi, profileApi, rabbitHoleTermApi } from '@/shared/api/services'
+import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi } from '@/shared/api/services'
+import type { UserCapstone, UserNote } from '@/shared/api/services'
 import { useDashboard } from '@/hooks/queries'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
+import { Trash2, ExternalLink, Download } from 'lucide-react'
 
-type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'preferences'
+type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'preferences'
 
 const PALETTES = [
   { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
@@ -45,6 +47,15 @@ export default function ProfilePage() {
   const [publicEnabled, setPublicEnabled] = useState<boolean | null>(null)
   const [savingVisibility, setSavingVisibility] = useState(false)
 
+  const [notes, setNotes] = useState<UserNote[]>([])
+  const [notesLoading, setNotesLoading] = useState(false)
+  const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null)
+  const [noteSearch, setNoteSearch] = useState('')
+
+  const [capstones, setCapstones] = useState<UserCapstone[]>([])
+  const [capstonesLoading, setCapstonesLoading] = useState(false)
+  const [editingCapstone, setEditingCapstone] = useState<UserCapstone | null>(null)
+
   // Load visibility + overview data on mount
   useEffect(() => {
     profileApi.getVisibility().then(setPublicEnabled).catch(() => setPublicEnabled(false))
@@ -60,7 +71,15 @@ export default function ProfilePage() {
       setRhLoading(true)
       rabbitHoleTermApi.getAll().then(setRabbitHoles).finally(() => setRhLoading(false))
     }
-  }, [tab]) // intentionally omitting rabbitHoles/rhLoading to avoid re-fetching on every render
+    if (tab === 'notes' && notes.length === 0 && !notesLoading) {
+      setNotesLoading(true)
+      notesApi.list().then(setNotes).finally(() => setNotesLoading(false))
+    }
+    if (tab === 'projects' && capstones.length === 0 && !capstonesLoading) {
+      setCapstonesLoading(true)
+      capstoneApi.list().then(setCapstones).finally(() => setCapstonesLoading(false))
+    }
+  }, [tab]) // intentionally omitting derived state to avoid re-fetching on every render
 
   async function toggleVisibility() {
     if (publicEnabled === null || savingVisibility) return
@@ -79,6 +98,47 @@ export default function ProfilePage() {
     } catch { /* ignore */ } finally { setRemovingTerm(null) }
   }
 
+  async function deleteNote(noteId: string) {
+    setDeletingNoteId(noteId)
+    try {
+      await notesApi.delete(noteId)
+      setNotes(prev => prev.filter(n => n.id !== noteId))
+    } catch { /* ignore */ } finally { setDeletingNoteId(null) }
+  }
+
+  async function deleteCapstone(capstoneId: string) {
+    try {
+      await capstoneApi.delete(capstoneId)
+      setCapstones(prev => prev.filter(c => c.id !== capstoneId))
+    } catch { /* ignore */ }
+  }
+
+  function downloadCapstoneZip(capstone: UserCapstone) {
+    // Build a simple ZIP manually (two-file: README.md + Main.java)
+    // For simplicity without jszip dependency, offer files as a download link
+    const readme = `# ${capstone.title}\n\n${capstone.description ?? ''}\n\n${capstone.githubUrl ? `GitHub: ${capstone.githubUrl}` : ''}`
+    const code = capstone.codeContent ?? ''
+
+    // Create a blob for README
+    const readmeBlob = new Blob([readme], { type: 'text/markdown' })
+    const readmeUrl = URL.createObjectURL(readmeBlob)
+    const a = document.createElement('a')
+    a.href = readmeUrl
+    a.download = `${capstone.title.replace(/[^a-z0-9]/gi, '-')}-README.md`
+    a.click()
+    URL.revokeObjectURL(readmeUrl)
+
+    if (code) {
+      const codeBlob = new Blob([code], { type: 'text/plain' })
+      const codeUrl = URL.createObjectURL(codeBlob)
+      const b = document.createElement('a')
+      b.href = codeUrl
+      b.download = `${capstone.title.replace(/[^a-z0-9]/gi, '-')}-Main.java`
+      b.click()
+      URL.revokeObjectURL(codeUrl)
+    }
+  }
+
   if (!user) return null
 
   const earned = badges.filter(b => b.earned)
@@ -86,11 +146,17 @@ export default function ProfilePage() {
   const earnedFiltered = filteredBadges.filter(b => b.earned)
   const availableFiltered = filteredBadges.filter(b => !b.earned)
 
+  const filteredNotes = notes.filter(n =>
+    !noteSearch || n.title.toLowerCase().includes(noteSearch.toLowerCase()) || n.content.toLowerCase().includes(noteSearch.toLowerCase())
+  )
+
   const tabs: { id: Tab; label: string }[] = [
     { id: 'overview', label: 'Overview' },
     { id: 'topics', label: 'Topics' },
     { id: 'badges', label: `Badges${earned.length ? ` (${earned.length})` : ''}` },
     { id: 'rabbit-holes', label: `Rabbit Holes${rabbitHoles.length ? ` (${rabbitHoles.length})` : ''}` },
+    { id: 'notes', label: `Notes${notes.length ? ` (${notes.length})` : ''}` },
+    { id: 'projects', label: `Projects${capstones.length ? ` (${capstones.length})` : ''}` },
     { id: 'preferences', label: 'Preferences' },
   ]
 
@@ -169,11 +235,13 @@ export default function ProfilePage() {
             </div>
 
             {/* Quick nav cards */}
-            <div className="grid grid-cols-3 gap-3 max-[480px]:grid-cols-1">
+            <div className="grid grid-cols-3 gap-3 max-[480px]:grid-cols-2 max-[360px]:grid-cols-1">
               {[
                 { label: 'Topics & Progress', glyph: '📚', tab: 'topics' as Tab },
                 { label: 'Badges', glyph: '🏅', tab: 'badges' as Tab },
                 { label: 'Rabbit Holes', glyph: '🐇', tab: 'rabbit-holes' as Tab },
+                { label: 'Notes', glyph: '📝', tab: 'notes' as Tab },
+                { label: 'Projects', glyph: '🏗️', tab: 'projects' as Tab },
               ].map(({ label, glyph, tab: t }) => (
                 <button
                   key={t}
@@ -286,6 +354,124 @@ export default function ProfilePage() {
                     removing={removingTerm === rh.term}
                     onRemove={() => removeRabbitHoleTerm(rh.term)}
                   />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tab: Notes */}
+        {tab === 'notes' && (
+          <div>
+            {notesLoading && <p className="text-muted italic text-center py-8">Loading notes…</p>}
+            {!notesLoading && (
+              <>
+                {notes.length > 0 && (
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      placeholder="Search notes…"
+                      value={noteSearch}
+                      onChange={e => setNoteSearch(e.target.value)}
+                      className="w-full bg-card border border-border rounded-[10px] px-4 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-purple-dim transition-[border-color] duration-150"
+                    />
+                  </div>
+                )}
+                {filteredNotes.length === 0 && (
+                  <div className="text-center py-12">
+                    <div className="text-[48px] mb-4">📝</div>
+                    <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
+                      {noteSearch
+                        ? 'No notes match your search.'
+                        : 'No notes yet. Notes you take during lessons will appear here.'}
+                    </p>
+                  </div>
+                )}
+                {filteredNotes.length > 0 && (
+                  <div className="flex flex-col gap-3">
+                    {filteredNotes.map(note => (
+                      <div key={note.id} className="bg-card border border-border rounded-[12px] px-5 py-4">
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <div className="font-cinzel text-[13px] text-gold leading-snug">{note.title}</div>
+                          <button
+                            onClick={() => deleteNote(note.id)}
+                            disabled={deletingNoteId === note.id}
+                            className="flex-shrink-0 p-1.5 rounded-[6px] text-muted hover:text-red hover:bg-red/10 transition-colors duration-150 disabled:opacity-40"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                        <p className="text-[12px] text-muted leading-[1.6] whitespace-pre-wrap line-clamp-4">{note.content}</p>
+                        <div className="text-[10px] text-muted mt-2">
+                          {new Date(note.updatedAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Tab: Projects (Capstones) */}
+        {tab === 'projects' && (
+          <div>
+            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projects…</p>}
+            {!capstonesLoading && capstones.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-[48px] mb-4">🏗️</div>
+                <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
+                  No saved projects yet. Complete a capstone lesson to save your project here.
+                </p>
+              </div>
+            )}
+            {!capstonesLoading && capstones.length > 0 && (
+              <div className="flex flex-col gap-4">
+                {capstones.map(capstone => (
+                  <div key={capstone.id} className="bg-card border border-border rounded-[12px] px-5 py-5">
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <div className="font-cinzel text-[15px] text-gold">{capstone.title}</div>
+                      <button
+                        onClick={() => deleteCapstone(capstone.id)}
+                        className="flex-shrink-0 p-1.5 rounded-[6px] text-muted hover:text-red hover:bg-red/10 transition-colors duration-150"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                    {capstone.description && (
+                      <p className="text-[12px] text-muted leading-[1.6] mb-3">{capstone.description}</p>
+                    )}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {capstone.githubUrl && (
+                        <a
+                          href={capstone.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] bg-card border border-border text-muted hover:border-purple-dim hover:text-text transition-colors duration-150"
+                        >
+                          <ExternalLink size={10} /> GitHub
+                        </a>
+                      )}
+                      {capstone.codeContent && (
+                        <button
+                          onClick={() => downloadCapstoneZip(capstone)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] bg-[rgba(255,193,7,0.08)] border border-[rgba(255,193,7,0.2)] text-gold hover:border-gold transition-colors duration-150"
+                        >
+                          <Download size={10} /> Download ZIP
+                        </button>
+                      )}
+                    </div>
+                    {capstone.adminFeedback && (
+                      <div className="mt-2 p-3 rounded-[8px] bg-purple-dim border border-purple text-[12px] text-purple-light leading-[1.6]">
+                        <span className="font-cinzel text-[10px] text-purple uppercase tracking-[0.08em] block mb-1">Instructor Feedback</span>
+                        {capstone.adminFeedback}
+                      </div>
+                    )}
+                    <div className="text-[10px] text-muted mt-2">
+                      Saved {new Date(capstone.createdAt).toLocaleDateString()}
+                    </div>
+                  </div>
                 ))}
               </div>
             )}

@@ -367,3 +367,79 @@ export const profileApi = {
     return Boolean(data?.enabled)
   },
 }
+
+// ── Notes ────────────────────────────────────────────────────────────────────
+
+export interface UserNote {
+  id: string
+  subChunkId: string
+  chunkId: string
+  title: string
+  content: string
+  createdAt: string
+  updatedAt: string
+}
+
+export const notesApi = {
+  list: async (): Promise<UserNote[]> => {
+    const { data } = await api.get('/api/notes')
+    return data
+  },
+  save: async (payload: {
+    subChunkId: string
+    chunkId: string
+    title: string
+    content: string
+  }): Promise<UserNote> => {
+    const { data } = await api.post('/api/notes', payload)
+    return data
+  },
+  delete: async (noteId: string): Promise<void> => {
+    await api.delete(`/api/notes/${noteId}`)
+  },
+}
+
+// ── Capstones ────────────────────────────────────────────────────────────────
+
+export interface UserCapstone {
+  id: string
+  chunkId: string
+  title: string
+  description: string | null
+  codeContent: string | null
+  githubUrl: string | null
+  adminFeedback: string | null
+  reviewedAt: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export const capstoneApi = {
+  list: async (): Promise<UserCapstone[]> => {
+    const { data } = await api.get('/api/capstones')
+    return data
+  },
+  create: async (payload: {
+    chunkId: string
+    title: string
+    description?: string
+    codeContent?: string
+    githubUrl?: string
+  }): Promise<UserCapstone> => {
+    const { data } = await api.post('/api/capstones', payload)
+    return data
+  },
+  update: async (capstoneId: string, payload: {
+    chunkId: string
+    title: string
+    description?: string
+    codeContent?: string
+    githubUrl?: string
+  }): Promise<UserCapstone> => {
+    const { data } = await api.put(`/api/capstones/${capstoneId}`, payload)
+    return data
+  },
+  delete: async (capstoneId: string): Promise<void> => {
+    await api.delete(`/api/capstones/${capstoneId}`)
+  },
+}

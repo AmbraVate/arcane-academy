@@ -232,6 +232,33 @@ export const adminStuckReportApi = {
   },
 }
 
+// ── Admin Capstones ───────────────────────────────────────────────────────────
+
+export interface AdminCapstone {
+  id: string
+  userId: string
+  chunkId: string
+  title: string
+  description: string | null
+  codeContent: string | null
+  githubUrl: string | null
+  adminFeedback: string | null
+  reviewedAt: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export const adminCapstoneApi = {
+  list: async (page = 0, size = 25): Promise<PagedResponse<AdminCapstone>> => {
+    const { data } = await api.get('/api/admin/capstones', { params: { page, size } })
+    return data
+  },
+  addFeedback: async (id: string, adminFeedback: string): Promise<AdminCapstone> => {
+    const { data } = await api.put(`/api/admin/capstones/${id}/feedback`, { adminFeedback })
+    return data
+  },
+}
+
 // ── Import / Export ───────────────────────────────────────────────────────────
 
 export const adminContentApi = {
