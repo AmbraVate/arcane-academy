@@ -1,0 +1,108 @@
+{
+  "id": "psy-jun-15",
+  "title": "Neuropsychological Assessment",
+  "glyph": "🧠",
+  "sortOrder": 15,
+  "tier": "JUNIOR",
+  "topicId": "psychology",
+  "prerequisites": ["psy-jun-11"],
+  "subChunks": [
+    {
+      "id": "psy-jun-15a",
+      "title": "Neuropsychology: Brain, Behaviour & Assessment",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In September 1848, a 25-year-old railway foreman named Phineas Gage was tamping explosive powder with a metre-long iron rod when a premature explosion drove the rod through his left cheek, behind his left eye, and out through the top of his skull — leaving him, extraordinarily, alive. His physical recovery was rapid, but those who knew him were stunned: 'Gage was no longer Gage.' A man previously described as well-balanced, shrewd, and capable had become fitful, irreverent, and unable to follow through on plans. His personality had transformed. His intellect, his memories, his language — all apparently intact. But the social and moral regulatory functions of his personality had been destroyed with his frontal lobes. Gage's case established, for the first time, that personality and moral behaviour had a neural substrate. Neuropsychology — the study of brain-behaviour relationships — has used cases like Gage's, and the systematic methods that followed, to map how different brain regions and circuits support different cognitive, emotional, and behavioural functions.</p>",
+      "explanationHtml": "<h3>Brain Structure and Function: Key Regions</h3>\n<p>Understanding brain structure is foundational to neuropsychological reasoning. Key regions relevant to clinical neuropsychology:</p>\n<pre><code>Frontal lobes      — Executive function: planning, inhibition, working memory,\n                    cognitive flexibility, decision-making. Social behaviour,\n                    personality, emotional regulation (PFC). Motor control\n                    (primary motor cortex). Language production (Broca's area,\n                    left inferior frontal gyrus).\n\nTemporal lobes     — Memory consolidation (hippocampus — medial temporal lobe).\n                    Language comprehension (Wernicke's area, left superior\n                    temporal gyrus). Face recognition, object recognition\n                    (temporal-occipital junction). Emotional memory (amygdala).\n\nParietal lobes     — Spatial processing, visuospatial integration, attention.\n                    Body schema, arithmetic. Language (angular gyrus).\n\nOccipital lobes    — Primary visual processing; visual recognition.\n\nCingulate cortex   — Error monitoring, conflict detection, pain, emotion\n                    regulation.\n\nCerebellum         — Procedural motor learning, timing, balance.\n                    Emerging role in cognitive function and emotion.\n\nBasal ganglia      — Procedural learning, habit formation. Parkinson's,\n                    Huntington's, OCD.\n</code></pre>\n\n<h3>Major Neuropsychological Syndromes</h3>\n<p><strong>Aphasia:</strong> Acquired language disorder following brain injury, most commonly left hemisphere.</p>\n<pre><code>Broca's aphasia    — Lesion: left inferior frontal gyrus. Non-fluent speech,\n                    effortful output, relatively preserved comprehension.\n                    'Telegraphic' speech ('want... coffee... please').\n\nWernicke's aphasia — Lesion: left superior temporal gyrus. Fluent but\n                    paraphasic speech (substituting sounds or words);\n                    severely impaired comprehension.\n                    ('The boy went to the... mumbly... you know, the table thing.')\n</code></pre>\n<p><strong>Amnesia:</strong> Selective memory impairment. Anterograde amnesia — inability to form new memories after brain injury (hippocampal damage: Clive Wearing, patient H.M.). Retrograde amnesia — loss of memories formed before injury. Dissociation between implicit (procedural) and explicit (declarative) memory is preserved in many amnesic syndromes — H.M. could learn new motor skills despite being unable to recall having practised them.</p>\n<p><strong>Executive dysfunction:</strong> Impairment in planning, initiation, inhibition, cognitive flexibility. Common after frontal lobe damage. Dysexecutive syndrome (Baddeley) — may leave basic intelligence intact while severely impairing real-world functioning.</p>\n<p><strong>Neglect:</strong> Failure to attend to or report stimuli in the contralateral (usually left) side of space, following right parietal damage. Patients may eat only the right half of a plate or shave only the right half of their face.</p>\n\n<h3>Common Neurological Conditions</h3>\n<p><strong>Dementia:</strong> Progressive cognitive decline beyond normal ageing. Alzheimer's disease (most common — amyloid plaques, tau tangles, medial temporal onset); vascular dementia (stepped decline, cardiovascular risk factors); Lewy body dementia (fluctuating cognition, visual hallucinations, Parkinsonism); frontotemporal dementia (personality/behaviour change, frontal onset).</p>\n<p><strong>Traumatic Brain Injury (TBI):</strong> From mild concussion (temporary cognitive/affective symptoms) to severe (coma, permanent neurological damage). Long-term cognitive sequelae of mild TBI (including sport-related concussion) are an area of active research and clinical concern.</p>\n<p><strong>Stroke:</strong> Sudden neurological deficit due to cerebrovascular event (ischaemic — blood clot; or haemorrhagic — bleeding). Rapid assessment (FAST protocol), thrombolysis within 4.5 hours for ischaemic stroke, followed by neuropsychological rehabilitation.</p>\n\n<h3>Neuropsychological Assessment Battery</h3>\n<p>Standardised assessment of multiple cognitive domains:</p>\n<pre><code>General intelligence    — WAIS-IV (IQ, index scores)\nMemory                  — WMS-IV (verbal/visual, immediate/delayed recall)\nExecutive function      — Trail Making Test, Wisconsin Card Sorting,\n                          Stroop, verbal fluency\nLanguage                — Boston Naming Test, Token Test\nVisuospatial            — Rey Complex Figure, Clock Drawing Test\nAttention/processing    — PASAT, SDMT, Digit Span\nPremorbid estimate      — NART (reading irregular words to estimate\n                          pre-injury IQ)\n</code></pre>\n<p>The neuropsychological report integrates test results with medical history, functional observations, and collateral information to provide a profile of cognitive strengths and weaknesses, a diagnosis or differential diagnosis, and recommendations for intervention and accommodation.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen shows a brain scan: a large region of damage to the medial temporal lobes. 'This patient can name every president of the United States. Can have an intelligent conversation about the news. Knows all the words to every Beatles song from the 1960s. But cannot tell you what he had for breakfast, cannot recognise his nurse from yesterday, and cannot form a single new memory.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Patient H.M. — Henry Molaison — gave us the greatest gift in memory science. He had bilateral hippocampectomy for epilepsy in 1953, and for the next 55 years, he woke up every morning believing it was 1953. His intelligence was intact. His long-term memories from before surgery were largely intact. But the mechanism for transferring new information to long-term memory was gone. We learned from him that memory is not a single system — it is at least two, operating largely independently."
+        },
+        {
+          "type": "example",
+          "speaker": "Neglect in practice",
+          "text": "A patient with right parietal damage following a stroke is asked to draw a clock face. She draws a complete circle, then fills in the numbers 12, 1, 2, 3, 4, 5, 6 — all on the right side of the circle, crowded together. The left half of the clock is empty. When shown the drawing and asked if anything is missing, she says 'No, it looks fine.' This is hemispatial neglect — not a visual field defect (she can see the left side if attention is directly cued to it) but a failure of spatial attention to orient automatically to the contralesional side."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Neuropsychological assessment is about understanding a person's cognitive profile — not just what's impaired, but what's preserved, and how the preserved abilities can support rehabilitation and daily functioning. The test scores are only meaningful in the context of the person's premorbid functioning, their cultural and educational background, and what they need to do in their actual life. A score doesn't rehabilitate anyone."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A 68-year-old woman, Helen, is referred for neuropsychological assessment following a left hemisphere ischaemic stroke six weeks ago. She presents with effortful, non-fluent speech, producing short phrases with difficulty ('I want... coffee... please... yes'). Her comprehension of simple commands appears intact. She becomes frustrated when unable to produce words and sometimes cries during the assessment. Her husband reports that before the stroke, Helen was a retired English teacher, avid reader, and 'could talk the hind legs off a donkey'.</p><ol><li>Identify the most likely neuropsychological syndrome affecting Helen's language, explaining what has been damaged and what has been preserved.</li><li>What is the clinical and assessment significance of knowing Helen's premorbid level of language ability?</li><li>Describe two adjustments the neuropsychologist should make to the assessment process to accommodate Helen's current communication difficulties.</li></ol>",
+      "guidedPracticeModelAnswer": "1. Helen is most likely presenting with Broca's aphasia (non-fluent aphasia). The characteristic features are: effortful, non-fluent speech with short, telegraphic phrases ('I want... coffee... please... yes'); preserved comprehension (she responds appropriately to commands); and the emotional response (frustration, crying) which is consistent with preserved insight into her communication difficulties. Broca's aphasia is associated with damage to the left inferior frontal gyrus (Broca's area, BA44/45) and surrounding cortex, typically following left MCA territory stroke. The preserved comprehension distinguishes this from Wernicke's aphasia, where comprehension is severely impaired. Helen's speech production mechanism has been damaged, but her language comprehension and awareness of her difficulties remain largely intact.\n\n2. Knowing Helen's premorbid level of language ability (a retired English teacher, avid reader, high verbal intelligence) is clinically significant in two ways. First, for interpreting assessment scores: standardised neuropsychological tests compare her current performance against age-group norms, but Helen's premorbid verbal ability was substantially above average. A score in the 'average' range on a language test represents significant decline for her — what would appear normal compared to peers is actually severe impairment relative to her baseline. Premorbid estimates (e.g., using her educational background and occupational history) should anchor the interpretation of post-stroke scores. Second, for understanding functional impact: Helen's professional identity and daily life were built around high-level language function. The psychological impact of this aphasia — on identity, self-esteem, and quality of life — is therefore likely to be profound and should be explicitly assessed and addressed in rehabilitation planning.\n\n3. Two assessment adjustments: (a) Use response formats that minimise expressive language demands — for example, using pointing or yes/no responses where possible, multiple-choice rather than open-ended questions, and non-verbal response options (pictures, gesture, writing if preserved). Allow substantially more time for each response and never rush or complete Helen's sentences for her. (b) Conduct a careful informed consent discussion before beginning — explaining procedures in clear, simple sentences, confirming understanding through non-verbal means (e.g., nodding, pointing), and ensuring Helen understands her right to decline or stop at any time. Given her frustration and emotional responses, the psychologist should also build in frequent breaks and monitor fatigue and distress throughout.",
+      "soloPracticeHtml": "<p>The discovery of functional specialisation in the brain — the idea that different brain regions support different psychological functions — has been among neuroscience's most productive research programmes. But critics argue that this approach has led to over-simplified 'brain map' accounts of psychology and that psychological functions are more distributed and context-dependent than modular accounts suggest. Evaluate this tension with reference to neuropsychological evidence. Aim for 180–220 words.</p>",
+      "modelAnswer": "Functional specialisation — the finding that damage to specific brain regions produces predictable, selective impairments — has been neuroscience's most productive investigative framework. Double dissociations have been particularly powerful: Broca's aphasia (preserved comprehension, impaired production) versus Wernicke's aphasia (preserved fluency, impaired comprehension) demonstrates that language production and comprehension depend on separable systems. The hippocampal amnesic syndrome (preserved intelligence and skill learning, impaired episodic memory) demonstrates that memory is not a unitary system. These findings have driven fundamental advances in understanding cognition.\n\nHowever, critics including Anderson (2014) and van Overwalle (2011) argue that over-localisation — the 'brain map' tendency to assign each cognitive function to a single region — misrepresents the distributed, dynamic nature of neural computation. Modern neuroimaging reveals extensive cortical and subcortical networks activated by complex cognition; damage to a 'hub' region impairs the network rather than abolishing a function localised there. Neuroplasticity — the brain's capacity to reorganise after injury — further complicates static localisation: stroke patients recover language functions through right hemisphere and perilesional reorganisation, demonstrating that functions are not immutably localised.\n\nThe most defensible position is modular network theory: certain regions are indeed disproportionately important for specific functions ('lesion-critical' nodes in distributed networks), while the networks themselves involve extensive and dynamic coordination across regions. Both localisation and distributed processing perspectives capture important aspects of brain organisation.",
+      "feynmanPrompt": "Explain to a 16-year-old what neuropsychology is, using the case of Phineas Gage to show why psychologists study the relationship between the brain and behaviour. What did Gage's case prove that wasn't known before?",
+      "rabbitHoleTerms": [
+        {
+          "term": "double dissociation",
+          "description": "The finding that two conditions produce opposite patterns of impairment — condition A impairs function X but not Y, while condition B impairs Y but not X — providing evidence that X and Y are supported by separable neural systems."
+        },
+        {
+          "term": "dysexecutive syndrome",
+          "description": "Baddeley's term for the pattern of impairment following frontal lobe damage that selectively affects executive functions (planning, flexibility, inhibition) while leaving basic intelligence largely intact — producing real-world functional impairment out of proportion to IQ scores."
+        },
+        {
+          "term": "procedural vs. declarative memory",
+          "description": "Declarative memory (explicit): conscious recall of facts (semantic) and events (episodic) — hippocampus-dependent. Procedural memory (implicit): unconscious memory for skills and habits — basal ganglia and cerebellum-dependent. Dissociated in many amnesic syndromes."
+        },
+        {
+          "term": "hemispatial neglect",
+          "description": "Failure to attend to stimuli in the contralesional half of space, typically following right parietal damage. Not a visual field defect — attention can be directed to the neglected side but fails to orient there spontaneously."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-jun-15a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Patient H.M. had his hippocampus removed bilaterally to treat epilepsy. What specific memory impairment resulted, and what was preserved?</p>",
+          "options": [
+            "Impaired long-term semantic memory; preserved short-term memory",
+            "Impaired anterograde episodic memory (unable to form new long-term memories); preserved procedural (implicit) memory and pre-surgical long-term memories",
+            "Total amnesia — all memory systems abolished",
+            "Impaired working memory; preserved long-term storage"
+          ],
+          "correctAnswer": "Impaired anterograde episodic memory (unable to form new long-term memories); preserved procedural (implicit) memory and pre-surgical long-term memories",
+          "explanationHtml": "<p>H.M.'s case demonstrated that the hippocampus is essential for <strong>anterograde explicit memory</strong> — the ability to form new conscious memories of events and facts. Following surgery, he could not recall anything that happened after the procedure. However, his <strong>procedural (implicit) memory</strong> was intact — he could learn new motor skills (e.g., mirror drawing) through practice, even though he had no conscious recall of having practised. His pre-surgical long-term memories were largely preserved (though remote memories were better preserved than more recent ones). This demonstrated that explicit and implicit memory systems are neurologically separable.</p>"
+        },
+        {
+          "id": "psy-jun-15a-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: Hemispatial neglect after right parietal stroke means that the patient is blind in the left half of their visual field.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. Hemispatial neglect is an <em>attentional</em> deficit, not a <em>visual</em> one. Patients with neglect can see stimuli in the contralesional (left) hemispace when their attention is directly cued to that side — they are not blind to it. The problem is that spatial attention fails to orient automatically to the neglected side. This is why patients may eat only the right half of their food, draw only the right half of a clock face, or fail to detect left-side objects in a free exploration context, while being able to detect the same stimuli when explicitly asked to 'look to the left'. Visual field defects (hemianopia) are a separate condition with a different neural basis (optic tract/occipital cortex damage).</p>"
+        },
+        {
+          "id": "psy-jun-15a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A neuropsychologist assesses a 55-year-old lawyer following a traumatic brain injury. His WAIS-IV Full Scale IQ is 112 (84th percentile). She concludes he has no significant cognitive impairment. Which error is most likely in her reasoning?</p>",
+          "options": [
+            "She should have used the WMS-IV instead of WAIS-IV",
+            "She failed to compare his current IQ to a premorbid estimate — an IQ of 112 may represent substantial decline from a premorbid level consistent with a 25-year legal career",
+            "IQ tests are not valid for adults over 50",
+            "The WAIS-IV cannot detect executive function deficits"
+          ],
+          "correctAnswer": "She failed to compare his current IQ to a premorbid estimate — an IQ of 112 may represent substantial decline from a premorbid level consistent with a 25-year legal career",
+          "explanationHtml": "<p>A senior lawyer with 25 years of practice would be expected to have premorbid intelligence substantially above average — likely in the 120–135 range or higher. An IQ of 112, while above population average, may therefore represent significant decline relative to his premorbid baseline. Neuropsychological interpretation must always be anchored to premorbid estimates (using education level, occupational history, and word-reading tasks like the NART). Interpreting an IQ score against population norms alone, without considering the individual's expected baseline, will systematically underdetect cognitive decline in high-functioning individuals — a critical error in post-injury medico-legal and clinical assessments.</p>"
+        }
+      ]
+    }
+  ]
+}

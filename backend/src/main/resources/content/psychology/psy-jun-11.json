@@ -1,0 +1,108 @@
+{
+  "id": "psy-jun-11",
+  "title": "Clinical Interviewing & Case Formulation",
+  "glyph": "🗣️",
+  "sortOrder": 11,
+  "tier": "JUNIOR",
+  "topicId": "psychology",
+  "prerequisites": ["psy-jun-10"],
+  "subChunks": [
+    {
+      "id": "psy-jun-11a",
+      "title": "The Clinical Interview: Structure, Technique & Principles",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>The clinical interview is the most powerful diagnostic and therapeutic tool in a psychologist's repertoire. Unlike blood tests or brain scans, it can simultaneously gather information, build therapeutic alliance, assess risk, and begin the process of change — all in the same conversation. But it is also the most skill-dependent tool: poorly conducted, it can miss critical information, damage the therapeutic relationship, reinforce unhelpful patterns, and lead to misdiagnosis. The interview is not simply asking questions and recording answers. It is a sophisticated interpersonal process that requires the psychologist to simultaneously maintain technical rigour and genuine human presence — to be both scientist and healer in the same hour.</p>",
+      "explanationHtml": "<h3>Types of Clinical Interview</h3>\n<p><strong>Unstructured interviews</strong> allow the clinician to follow the client's narrative flexibly, exploring themes that emerge. High ecological validity; strong for alliance-building; poor reliability (different clinicians elicit different information).</p>\n<p><strong>Structured interviews</strong> (e.g., SCID-5 for DSM-5 disorders; MINI International Neuropsychiatric Interview) provide standardised questions asked in a fixed sequence. High reliability and validity; lower flexibility; can feel mechanical and impair alliance.</p>\n<p><strong>Semi-structured interviews</strong> provide a framework of core domains with flexible follow-up — the dominant format in contemporary clinical practice. Balances reliability with therapeutic responsiveness.</p>\n\n<h3>Core Domains of Clinical Assessment</h3>\n<p>A comprehensive initial assessment covers:</p>\n<pre><code>Presenting concerns      — What brings the client now? What is most\n                          distressing? Why seek help at this point?\n\nCurrent functioning      — Daily life, sleep, appetite, work/study,\n                          relationships, self-care.\n\nSymptomatic picture      — Specific symptoms, their onset, duration,\n                          severity, frequency, precipitants, maintaining\n                          factors. Use of standardised measures.\n\nDevelopmental history    — Early experiences, family of origin, attachment,\n                          schooling, significant relationships.\n\nPsychiatric history      — Prior episodes, diagnoses, treatments and their\n                          outcomes, hospitalisations.\n\nFamily psychiatric history — Genetic loading for psychiatric conditions.\n\nSubstance use            — Current and historical alcohol, drugs, prescribed\n                          medications, patterns and function.\n\nRisk assessment          — Suicidal ideation, self-harm, risk to others,\n                          safeguarding concerns.\n\nStrengths and resources  — Social support, prior resilience, values,\n                          meaning and purpose.\n</code></pre>\n\n<h3>Interviewing Techniques</h3>\n<p><strong>Open questions</strong> ('Tell me about your week') invite narrative and reduce constraint. <strong>Closed questions</strong> ('Have you had any thoughts of harming yourself?') confirm specific information. Effective clinical interviews use both, with open questions generating the substance and closed questions clarifying and confirming.</p>\n<p><strong>Reflective listening</strong> (Rogers, 1951): paraphrasing and reflecting the client's content and affect communicates understanding, builds alliance, and invites elaboration. Example: 'It sounds like the panic attacks have become unpredictable, and that unpredictability itself has become something you're now afraid of.'</p>\n<p><strong>Scaling questions</strong> (motivational interviewing): 'On a scale of 0–10, how much does this problem affect your daily life?' Provides quantified data and can be used to assess readiness for change and track progress.</p>\n<p><strong>Empathic confrontation</strong>: acknowledging the client's difficulty while gently drawing attention to discrepancies between what they say and what they do ('You say the drinking isn't a problem, but I'm noticing that in three of the four things you've described as distressing, alcohol appears as a factor — what do you make of that?').</p>\n\n<h3>Risk Assessment</h3>\n<p>All clinical interviews should include systematic risk assessment. The key dimensions:</p>\n<pre><code>Suicidal ideation   — Passive ideation ('I wish I were dead') vs.\n                      active ideation ('I have a plan')\nIntent              — Does the client intend to act on ideation?\nPlan                — Has a specific plan been identified?\nMeans               — Does the client have access to means?\nHistory             — Prior attempts; lethality of prior attempts\nProtective factors  — Reasons for living; social support; future orientation\n</code></pre>\n<p>Risk is not static — it should be reassessed throughout treatment. High acute risk warrants a structured safety plan (Stanley & Brown, 2012) and possible referral for more intensive support.</p>\n\n<h3>Cultural Competence in Interviewing</h3>\n<p>Assessment frameworks developed primarily within Western, Anglo-American clinical traditions may not transfer without modification to clients from different cultural backgrounds. Key considerations: the culturally variable meaning of psychological distress (somatic presentation of depression is common in many cultures; 'hearing voices' may be normative spiritual experience in some traditions); family and collective values vs. individualist assumptions embedded in most assessment tools; language barriers and the use of interpreters (which fundamentally alter the interview relationship); and the potential for structural racism and clinician bias to systematically affect assessment outcomes for racially minoritised clients.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The seminar room feels smaller than usual today. Dr. Chen has rearranged the chairs into pairs, facing each other. 'Today you're going to practice,' she says. 'One of you is the clinician. One of you is the client. Use the case vignette I'm about to give you. You have twenty minutes.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "What you'll notice in about three minutes is that the technical stuff — the questions, the domains — is actually the easy part. The hard part is being with someone who is suffering, genuinely curious about their experience, not rushing to fill silences, not assuming you know what they're about to say. The interview is not a checklist. It's a relationship."
+        },
+        {
+          "type": "example",
+          "speaker": "Risk assessment in practice",
+          "text": "A student asks: 'How do I bring up suicide without making it worse — won't asking the question give them the idea?' This is a common concern, and research is unambiguous: asking about suicidal ideation does not increase risk. Multiple studies (e.g., Dazzi et al., 2014) have found that direct, compassionate questioning reduces distress and increases the likelihood of disclosure. The fear of 'putting ideas in their head' is clinician anxiety, not an evidence-based concern."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Cultural competence in interviewing is not a list of facts about different cultures — it's a stance. It's curiosity. 'Help me understand what this experience means in your community.' 'Is there a way you or your family would talk about this that fits better than the language I've been using?' Those questions are the practice."
+        }
+      ],
+      "guidedPracticeHtml": "<p>You are conducting an initial clinical interview with a 28-year-old woman, Leila, who has been referred by her GP following three months of low mood, disrupted sleep, and increasing social withdrawal. She has a 3-year-old daughter. She describes her mood as 'just flat — like there's no colour'. She has made no mention of risk factors so far.</p><p><strong>Questions:</strong></p><ol><li>Write three open questions you would use to explore the nature and impact of Leila's mood difficulties in more depth.</li><li>Write the exact words you would use to introduce and ask about suicidal ideation compassionately and directly.</li><li>Identify three additional domains you would want to explore beyond Leila's mood, and explain why each is clinically relevant to her presentation.</li><li>Leila says she has been 'crying all the time but I don't know why — it's embarrassing.' Write a reflective listening response.</li></ol>",
+      "guidedPracticeModelAnswer": "1. Three open questions to explore Leila's mood: (a) 'Can you tell me more about what 'flat' feels like for you — when during the day or week is it most noticeable, and what does it stop you doing?' (b) 'You mentioned things changed about three months ago — what was happening in your life around that time?' (c) 'What does a typical day look like for you at the moment — can you walk me through yesterday from morning to bedtime?'\n\n2. Introducing suicidal ideation: 'Leila, I want to ask you something directly — it's something I ask everyone I see, so please don't be alarmed by the question. When people are feeling this way — low, flat, like the colour has gone — some people have thoughts about not wanting to be here anymore, or even thoughts about ending their life. Have you had any thoughts like that?' [Pause and wait.]\n\n3. Three additional domains: (a) Postnatal context — Leila has a 3-year-old, and the onset of her difficulties warrants exploration of whether these are postnatal depression (postpartum) symptoms that began but were not recognised earlier, or whether they relate to stressors associated with early parenthood. (b) Sleep and physical health — sleep disruption (mentioned in referral) has complex bidirectional relationships with mood; exploring sleep pattern, any physical health changes, and ruling out thyroid dysfunction (which can mimic depression) is clinically important. (c) Social and practical support — social withdrawal alongside sole or primary caregiving of a young child raises safeguarding considerations and warrants understanding of Leila's support network, any partner or co-parent involvement, and financial situation.\n\n4. Reflective response: 'So the crying comes, and it seems to arrive without an obvious trigger — which makes it feel mysterious and out of control. And on top of the distress itself, you're also carrying a feeling of embarrassment about it, as if you shouldn't be crying without a clear reason. That sounds exhausting — managing both the emotion and the judgment about having it.'",
+      "soloPracticeHtml": "<p>A clinical psychology trainee suggests that structured diagnostic interviews should replace unstructured clinical interviews entirely, arguing that structured interviews are more reliable and reduce clinician bias. Critically evaluate this position, drawing on the evidence for different interview formats and addressing both the benefits and limitations of standardisation. Aim for 200–250 words.</p>",
+      "modelAnswer": "The trainee's position has merit but overreaches. Structured interviews do improve reliability significantly. The SCID-5, for example, has demonstrated inter-rater reliabilities (κ) of 0.70–0.90 for major diagnostic categories — substantially higher than unstructured clinical judgement. By fixing questions and decision rules, structured formats reduce the well-documented effects of clinician anchoring, representativeness biases, and differential inquiry (asking different questions based on early impressions).\n\nHowever, complete replacement of unstructured with structured interviews would sacrifice important clinical functions. Alliance-building — one of the most robust predictors of therapeutic outcome — is substantially harder in a structured format that can feel mechanical. Unstructured interviews allow skilled clinicians to follow the client's narrative, notice what is not said, and attend to affect and non-verbal communication in ways that structured formats constrain. They are also better suited to capturing idiosyncratic presentations that fall between diagnostic categories.\n\nStructured interviews also have validity limitations: they map diagnostic criteria faithfully but diagnostic criteria themselves have contested validity, and forcing assessment into DSM/ICD categories may miss clinically meaningful presentations that are trans-diagnostic or dimensional. Cultural applicability is also a concern — many structured interviews were developed and normed with Western populations.\n\nThe evidence supports a semi-structured approach as the optimal clinical standard: a framework of core domains and key questions, delivered with relational warmth and clinical flexibility. This preserves the reliability advantages of structure while maintaining the richness and responsiveness of genuinely clinical interviewing.",
+      "feynmanPrompt": "Explain to a 16-year-old what a clinical psychologist actually does in the first session with a new client — what questions they ask, why, and what they're trying to understand. What makes a good first session different from just 'having a conversation'?",
+      "rabbitHoleTerms": [
+        {
+          "term": "therapeutic alliance",
+          "description": "The quality of the collaborative, affective relationship between therapist and client. One of the most robust predictors of psychotherapy outcome across modalities. Comprises agreement on goals, agreement on tasks, and the relational bond."
+        },
+        {
+          "term": "structured clinical interview (SCID-5)",
+          "description": "A semi-structured diagnostic interview for DSM-5 disorders, used in research and clinical settings to provide reliable, standardised psychiatric diagnoses. Requires specific training to administer."
+        },
+        {
+          "term": "safety planning",
+          "description": "A collaborative intervention for suicidal clients (Stanley & Brown, 2012) that identifies warning signs, internal coping strategies, social contacts, and professional resources in a personalised written plan. Evidence-based alternative to no-harm contracts."
+        },
+        {
+          "term": "motivational interviewing",
+          "description": "Miller & Rollnick's (1991) client-centred, directive method for enhancing intrinsic motivation for behaviour change by exploring and resolving ambivalence. Widely used in addictions, health behaviour change, and preparatory phases of therapy."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-jun-11a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which type of clinical interview is most commonly used in contemporary clinical practice, as it balances reliability with clinical flexibility?</p>",
+          "options": [
+            "Fully unstructured interview",
+            "Fully structured interview (e.g., SCID-5)",
+            "Semi-structured interview",
+            "Psychometric battery with no interview"
+          ],
+          "correctAnswer": "Semi-structured interview",
+          "explanationHtml": "<p>Semi-structured interviews provide a framework of core domains and key questions, allowing the clinician to follow-up flexibly while ensuring essential areas are systematically covered. This balances the reliability advantage of structured approaches with the relational warmth, flexibility, and narrative richness of unstructured interviewing. Fully structured interviews improve diagnostic reliability but reduce clinical flexibility; fully unstructured interviews maximise flexibility but have poor reliability.</p>"
+        },
+        {
+          "id": "psy-jun-11a-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: Research evidence shows that directly asking a client about suicidal ideation increases the risk that they will act on suicidal thoughts.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. This is a widespread clinical misconception not supported by research evidence. Dazzi et al.'s (2014) systematic review found that asking about suicidal ideation does not increase suicidal ideation, intent, or behaviour — and that for many clients, direct inquiry reduces distress and increases likelihood of disclosure. The fear of 'putting ideas in their head' reflects clinician anxiety rather than evidence-based concern and can lead to dangerous avoidance of necessary risk assessment.</p>"
+        },
+        {
+          "id": "psy-jun-11a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A psychologist notes that a West African client presents with physical symptoms (fatigue, headaches, heaviness in the chest) without mentioning emotional distress, when assessed for depression. The psychologist concludes there is no depression. Which error has the psychologist most likely made?</p>",
+          "options": [
+            "Confirmation bias — seeking evidence that supports their initial hypothesis",
+            "Failure to consider that depression often presents somatically in many non-Western cultural contexts, meaning the clinical interview needs cultural adaptation",
+            "Over-reliance on structured interviews",
+            "Failure to conduct a risk assessment"
+          ],
+          "correctAnswer": "Failure to consider that depression often presents somatically in many non-Western cultural contexts, meaning the clinical interview needs cultural adaptation",
+          "explanationHtml": "<p>Somatic presentation of depression — in which psychological distress is expressed through physical complaints (fatigue, bodily pain, headaches, heaviness) rather than explicit emotional language — is well-documented as more common in many non-Western cultural contexts, including many African, South Asian, East Asian, and Middle Eastern communities. A psychologist who expects emotional language to signal depression and uses a standard Western-normed assessment will systematically miss depression in clients from these backgrounds. This is a failure of cultural competence in assessment, not confirmation bias (which would involve preferentially attending to confirming evidence for an existing hypothesis).</p>"
+        }
+      ]
+    }
+  ]
+}
