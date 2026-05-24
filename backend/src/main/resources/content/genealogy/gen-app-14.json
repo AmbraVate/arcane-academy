@@ -1,0 +1,131 @@
+{
+  "id": "gen-app-14",
+  "title": "Building a Coherent Family Tree",
+  "glyph": "🌳",
+  "sortOrder": 14,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-13"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-14a",
+      "title": "Pedigree Charts, Family Group Sheets & Relationship Terminology",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>A family tree that is internally inconsistent — where a father is younger than his child, or a great-grandmother dies a decade before her grandchild is born — is not a tree. It is a collection of errors waiting to be discovered. Building a coherent tree means understanding the formats used to display and check family connections, the terminology for describing relationships accurately, and the arithmetic of generations. These are the basic quality controls that prevent small errors from becoming structural problems that corrupt everything built on top of them.</p>",
+      "explanationHtml": "<h3>The two fundamental documents</h3>\n<p>Two standard forms serve as the core display format for genealogical research:</p>\n<ul>\n  <li><strong>Pedigree chart (ancestor chart):</strong> shows a single person (yourself, or your starting-point person) and their direct ancestors — parents, grandparents, great-grandparents — expanding outward to the left (in the US convention) or to the right (in some European conventions). Each individual has a number: the subject is 1, their father is 2, mother is 3, paternal grandfather is 4, paternal grandmother is 5, maternal grandfather is 6, maternal grandmother is 7, and so on. This doubling pattern (father = 2n, mother = 2n+1) is called the Ahnentafel numbering system and allows any ancestor's number to be calculated. Pedigree charts show only direct-line ancestors — no siblings, no cousins.</li>\n  <li><strong>Family group sheet:</strong> shows one couple and all their children, with sources. The couple's marriage information is given; each child is listed with birth, marriage, and death information and their own sources. Family group sheets are the building block of a complete family tree — you need one for every couple in the pedigree. They are where collateral lines (siblings, cousins) are captured.</li>\n</ul>\n\n<h3>Relationship terminology — exact language matters</h3>\n<p>Genealogical relationship terms are used precisely; careless use is a research hazard. Key terms:</p>\n<table>\n  <tr><th>Term</th><th>Exact meaning</th></tr>\n  <tr><td><strong>Ancestor</strong></td><td>A person from whom you are directly descended — parent, grandparent, great-grandparent, etc. Siblings and cousins are not ancestors.</td></tr>\n  <tr><td><strong>Descendant</strong></td><td>A person who is directly descended from you (or your target person) — child, grandchild, etc.</td></tr>\n  <tr><td><strong>Collateral relative</strong></td><td>A relative who shares a common ancestor with you but is not your direct ancestor — siblings, aunts, uncles, cousins.</td></tr>\n  <tr><td><strong>1st cousin</strong></td><td>You and a first cousin share a common grandparent. Your parent and their parent are siblings.</td></tr>\n  <tr><td><strong>2nd cousin</strong></td><td>You share a common great-grandparent. Your grandparent and their grandparent are siblings.</td></tr>\n  <tr><td><strong>1st cousin once removed</strong></td><td>You are first cousins with someone in one generation, and the other person is one generation different — e.g. your first cousin's child is your first cousin once removed.</td></tr>\n  <tr><td><strong>Half-sibling</strong></td><td>You share one parent but not both. Common in eras of high adult mortality and remarriage.</td></tr>\n  <tr><td><strong>Step-sibling</strong></td><td>No biological connection — your parent married their parent. No shared DNA.</td></tr>\n  <tr><td><strong>Great-uncle/great-aunt</strong></td><td>Your grandparent's sibling. Note: many people incorrectly say \"grand uncle\" — the genealogically correct term is \"great-uncle.\"</td></tr>\n</table>\n\n<h3>The Ahnentafel numbering system</h3>\n<p>The Ahnentafel (German: \"ancestor table\") system assigns a unique number to every ancestor. The rules:</p>\n<ul>\n  <li>Subject person = <strong>1</strong></li>\n  <li>Any person's father = <strong>2n</strong> (twice the person's number)</li>\n  <li>Any person's mother = <strong>2n + 1</strong></li>\n  <li>Even numbers are always male; odd numbers are always female (except 1)</li>\n</ul>\n<p>So: you are 1; father is 2; mother is 3; paternal grandfather is 4 (2×2); paternal grandmother is 5 (2×2+1); maternal grandfather is 6 (2×3); maternal grandmother is 7 (2×3+1); paternal great-grandfather (father's father's father) is 8 (2×4); and so on.</p>\n<p>This system allows shorthand in genealogical writing: \"Ahnentafel #16 was born in Cork circa 1750\" unambiguously identifies the paternal great-great-grandfather of person #1 without a lengthy textual description. Most genealogy software supports Ahnentafel numbering.</p>\n\n<h3>Coherence checks — catching errors before they compound</h3>\n<p>A coherent family tree has internal consistency. Key arithmetic checks you should run regularly:</p>\n<ul>\n  <li><strong>Parent-child age gap:</strong> a parent must be old enough to have had the child. Minimum plausible female childbearing age is roughly 13–14 (historical sources do record marriages and first births at 14–15, especially among the upper classes). Maximum plausible maternal age is roughly 47–50. A father listed as younger than his child, or a mother listed as giving birth at age 4 or age 60, is an error.</li>\n  <li><strong>Marriage-to-first-child interval:</strong> a couple should not have a child more than 9 months before their marriage in most cases (though premarital births do occur and are not necessarily an error — they just require documentation). A child born 15 years after the marriage without any documented siblings is also worth questioning.</li>\n  <li><strong>Sibling age spacing:</strong> children cannot be born less than about 9 months apart from the same mother (twins and multiple births excepted). If two siblings are listed with birth years that are the same or consecutive by a few months, check whether one is from a previous or subsequent marriage.</li>\n  <li><strong>Death before descendant's birth:</strong> a grandparent listed as dying in 1840 cannot be the grandparent of a child born in 1880 — unless you have the timeline wrong. Check whether the claimed relationship is actually a great-grandparent or a generation further back.</li>\n  <li><strong>Geographic consistency:</strong> a family living in County Clare in 1841 and apparently living in County Antrim in 1845 has made a significant move. This is not impossible, but it requires explanation — migration records, a reason for the move, or at least an acknowledgment of the gap.</li>\n</ul>\n\n<h3>Working with genealogy software</h3>\n<p>When entering data into genealogy software (Family Tree Maker, Legacy, Gramps, or any equivalent), three habits protect coherence:</p>\n<ol>\n  <li><strong>Source every fact:</strong> attach a source citation to every date, place, and relationship. A fact without a source is a rumour masquerading as data.</li>\n  <li><strong>Use confidence flags or notes:</strong> most software allows you to flag data as verified, probable, or speculative. Use them. A fact marked \"speculative\" should not silently propagate into your tree as if it were proved.</li>\n  <li><strong>Run the software's consistency checker:</strong> most genealogy software has a built-in relationship and date consistency checker. Run it periodically. An alert about a mother who was 4 years old at a child's birth is always wrong — the question is whether you entered the wrong person or the wrong date.</li>\n</ol>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora lays two forms on the table. One is fan-shaped, branching outward like a tree. The other is rectangular, listing a couple and their children in rows. She hands you both."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Two forms. Every researcher uses them. The pedigree chart — sometimes called an ancestor chart — shows you and your direct ancestors radiating outward. It is visually satisfying and immediately communicates your direct line. But it shows only your direct ancestors: no siblings, no cousins, no aunts. The family group sheet is where the actual work lives — one couple, all their children, all sources. You need one for every couple in your pedigree. The two forms together hold your entire tree."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The numbering system on the pedigree chart is called the Ahnentafel — German for 'ancestor table'. You are number one. Your father is twice your number — two. Your mother is twice-plus-one — three. Your paternal grandfather is four, grandmother five, maternal grandfather six, grandmother seven. Every even number is male; every odd number is female — except one, which is yourself. With this system, any ancestor in any generation has a unique number, and you can calculate it without looking at the chart."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now about coherence — because this is where I have seen beautiful trees collapse. A tree is not coherent if a father is younger than his child. A tree is not coherent if a woman gives birth at age eight. A tree is not coherent if a grandparent dies in 1840 and a grandchild is born in 1885. These errors compound: one wrong person in generation three pushes every generation below it into fantasy. Run the arithmetic. Check the dates. Let the software's consistency checker find the impossible parent-child age combinations before you publish anything."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And be precise about relationship terms. A 'collateral relative' is not an ancestor — they share a common ancestor with you but are not in your direct line. Siblings, aunts, uncles, cousins are all collateral. Many beginners say 'grand-uncle' — the correct genealogical term is 'great-uncle.' A first cousin shares a grandparent with you. A second cousin shares a great-grandparent. A first cousin once removed is your first cousin's child — or your parent's first cousin. Precision is not pedantry. Calling someone a first cousin when they are a second cousin once removed is the kind of error that, when propagated into a tree, creates branches that belong to a different family entirely."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor tree structure</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is the difference between a <strong>pedigree chart</strong> and a <strong>family group sheet</strong>?</li>\n  <li>In the Ahnentafel system, what are the numbers for your father, mother, and paternal grandfather?</li>\n  <li>What is the difference between a <strong>collateral relative</strong> and an <strong>ancestor</strong>?</li>\n  <li>Describe one <strong>coherence check</strong> that catches errors in parent-child age relationships.</li>\n  <li>What does <strong>\"first cousin once removed\"</strong> mean?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A pedigree chart (ancestor chart) shows one person and their direct ancestors radiating outward — parents, grandparents, great-grandparents — but no collateral relatives. A family group sheet shows one couple and all their children, with sources for all events — it is the detailed building block for every couple in the pedigree and captures siblings and collateral lines.\n\nAhnentafel numbers: subject = 1; father = 2 (2×1); mother = 3 (2×1+1); paternal grandfather = 4 (2×2). All even numbers are male; all odd numbers (except 1) are female.\n\nA collateral relative shares a common ancestor with you but is not your direct ancestor — siblings, aunts, uncles, and cousins are collateral. An ancestor is someone from whom you are directly descended: parent, grandparent, great-grandparent, etc.\n\nOne coherence check: verify that all parent-child age gaps are biologically plausible — a mother must be at least roughly 13 and no more than roughly 50 at the birth of each child. A father listed as younger than his child, or a mother listed as having a child at age 4, is an error requiring investigation.\n\nFirst cousin once removed: your first cousin's child is your first cousin once removed; alternatively, your parent's first cousin is also your first cousin once removed. The 'once removed' means one generation of difference from the base first-cousin relationship.",
+      "soloPracticeHtml": "<h3>Coherence audit exercise</h3>\n<p>Review the following tree data and identify every coherence problem you find. For each problem, state what is wrong and suggest what may have caused the error.</p>\n<ul>\n  <li>Thomas Walsh, born 1 March 1820, died 14 October 1890</li>\n  <li>Mary Walsh (née Riordan), born 5 July 1822, died 3 March 1865</li>\n  <li>Thomas and Mary married: 20 December 1840</li>\n  <li>Children of Thomas and Mary:\n    <ul>\n      <li>Patrick Walsh, born 14 September 1839</li>\n      <li>Bridget Walsh, born 1 April 1842</li>\n      <li>James Walsh, born 3 October 1842</li>\n      <li>Ellen Walsh, born 15 June 1860</li>\n      <li>Thomas Walsh Jr., born 2 November 1862</li>\n    </ul>\n  </li>\n  <li>Grandchild: Patrick Walsh (son of Patrick Walsh above) married Ann Kelly 1855</li>\n  <li>Great-grandchild: Michael Walsh (son of Patrick Walsh and Ann Kelly), born 1857</li>\n</ul>",
+      "modelAnswer": "Coherence problems identified:\n\n1. Patrick Walsh (born 1839) is born BEFORE his parents married (20 December 1840). This is an error — either the birth date, the marriage date, or the parentage is wrong. Possible causes: the marriage date may be recorded incorrectly; Patrick may have been born before the formal marriage (a premarital birth, which should be documented); or Patrick may be a child from Thomas's previous relationship, not Mary's child.\n\n2. Bridget Walsh (born 1 April 1842) and James Walsh (born 3 October 1842) are listed as siblings born to the same mother in the same calendar year, only six months apart. This is biologically impossible (barring twins). One of: (a) they are twins and the records differ on birth dates; (b) one date is wrong; (c) one of them is from a different relationship (a step-sibling or half-sibling from a different mother). The records for both need to be checked against primary sources.\n\n3. Grandchild Patrick Walsh (son of Patrick Walsh b.1839) married in 1855 when his father would be approximately 16 — making the grandfather Patrick a father at 16. This is unusual but not impossible; however, the great-grandchild Michael (born 1857) would have been born when Patrick Sr. was 18. These dates are tight but not impossible — however, they should be noted as requiring independent verification of the elder Patrick's age.\n\n4. Thomas Walsh Jr. (born 1862) is listed as a child of Mary Walsh, who died 3 March 1865 and was born in 1822. Mary would have been about 40 at Thomas Jr.'s birth — unusual but within biological range. No coherence error here, but worth noting.\n\n5. Ellen Walsh (born 1860) is born 20 years after her parents' marriage — a 20-year gap in the children's births (last sibling James, 1842; then Ellen, 1860) is unusual and should be questioned. Possible explanations: additional children between 1842 and 1860 who died young (search burial records); or Ellen may be from a different family merged in error.",
+      "feynmanPrompt": "Explain to a friend what the Ahnentafel numbering system is, demonstrate how to calculate the number for your maternal grandfather, and explain why systematic numbering matters for a large family tree.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Ahnentafel",
+          "description": "German for 'ancestor table' — the standard genealogical numbering system assigning unique numbers to every direct ancestor (subject = 1, father = 2n, mother = 2n+1)."
+        },
+        {
+          "term": "pedigree chart",
+          "description": "A tree diagram showing one person's direct ancestors (parents, grandparents, etc.) in a branching format; does not show collateral relatives."
+        },
+        {
+          "term": "family group sheet",
+          "description": "A standardised form documenting one couple and all their children, with sources — the core building block of a complete family tree."
+        },
+        {
+          "term": "collateral relative",
+          "description": "A relative who shares a common ancestor with you but is not in your direct line of descent — siblings, aunts, uncles, and cousins."
+        },
+        {
+          "term": "first cousin once removed",
+          "description": "A relative who is your first cousin's child, or your parent's first cousin — one generation removed from a standard first-cousin relationship."
+        },
+        {
+          "term": "GEDCOM export",
+          "description": "The standard data-exchange format for genealogy software, allowing a complete tree to be transferred between programs without data loss."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In the <strong>Ahnentafel numbering system</strong>, if you are number 1, what numbers are your <strong>maternal grandfather</strong> and <strong>maternal grandmother</strong>?</p>",
+          "options": [
+            "Maternal grandfather = 6; maternal grandmother = 7",
+            "Maternal grandfather = 4; maternal grandmother = 5",
+            "Maternal grandfather = 6; maternal grandmother = 5",
+            "Maternal grandfather = 3; maternal grandmother = 4"
+          ],
+          "correctAnswer": "Maternal grandfather = 6; maternal grandmother = 7",
+          "explanationHtml": "<p>Ahnentafel: you = 1; father = 2; mother = 3; paternal grandfather = 4 (2×2); paternal grandmother = 5; maternal grandfather = 6 (2×3); maternal grandmother = 7 (2×3+1). All even numbers are male; all odd numbers (except 1) are female. To calculate any ancestor's number: father = 2n, mother = 2n+1.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are reviewing a tree and find that a woman (born 1850, died 1920) is listed as the mother of a child born in 1910. She would have been 60 at the birth. What should you do?</p>",
+          "options": [
+            "Flag this as a coherence error requiring investigation — a 60-year-old mother is biologically implausible; likely the child belongs to a different generation (perhaps the grandchild relationship is being confused with child) or the birth year of one party is wrong",
+            "Accept it — historical records sometimes show unusual ages",
+            "Conclude the child must have been adopted, which resolves the issue",
+            "Delete the child from the tree — if the age doesn't work, the relationship cannot exist"
+          ],
+          "correctAnswer": "Flag this as a coherence error requiring investigation — a 60-year-old mother is biologically implausible; likely the child belongs to a different generation (perhaps the grandchild relationship is being confused with child) or the birth year of one party is wrong",
+          "explanationHtml": "<p>Maximum plausible maternal age is roughly 47–50 in historical populations. A 60-year-old mother is biologically implausible and signals a likely error: the child may actually be a grandchild (the relationship level is wrong), one of the dates may have been entered incorrectly, or two different people with the same name have been merged. The correct response is to flag the inconsistency, identify the specific records that established both the birth year and the parent-child relationship, and resolve the contradiction before proceeding. Deleting the child without investigation could lose a real relationship; accepting without question propagates an error.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher describes a relationship as: \"My grandmother's sister's daughter is my first cousin.\" Is this correct?</p>",
+          "options": [
+            "No — the grandmother's sister is a great-aunt; her daughter is the researcher's first cousin once removed (sharing a great-grandparent, not a grandparent)",
+            "Yes — any child of a grandparent's sibling is a first cousin",
+            "No — the grandmother's sister's daughter is a second cousin",
+            "Yes — if they grew up in the same household, the relationship is treated as first cousin"
+          ],
+          "correctAnswer": "No — the grandmother's sister is a great-aunt; her daughter is the researcher's first cousin once removed (sharing a great-grandparent, not a grandparent)",
+          "explanationHtml": "<p>A first cousin shares a grandparent with you. Your grandmother's sister's child — i.e. your parent's first cousin — shares a great-grandparent with you, which makes them your first cousin once removed (one generation different from the standard first-cousin relationship). Your grandmother's sister is your great-aunt. Her children are your first cousins once removed; her grandchildren are your second cousins. The terminology is precise and genealogically important — using 'first cousin' for someone who is actually a first cousin once removed can misrepresent DNA match expectations and relationship distances.</p>"
+        }
+      ]
+    }
+  ]
+}

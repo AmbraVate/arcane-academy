@@ -1,0 +1,136 @@
+{
+  "id": "gen-app-9",
+  "title": "Palaeography & Handwriting",
+  "glyph": "✍️",
+  "sortOrder": 9,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-8"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-9a",
+      "title": "Reading Historical Documents — Scripts, Abbreviations & Contractions",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>You found the record. It is right there, on screen or on microfilm, and you cannot read it. The letters loop and slash in a hand you have never been taught. This is the moment that turns many beginners away — and it should not. Old handwriting is learnable. The scripts had conventions; the conventions can be studied; and every hour spent reading a difficult document pays compound interest for the rest of your research life.</p>",
+      "explanationHtml": "<h3>Why old handwriting looks different</h3>\n<p>The fundamental reason historical documents look unreadable to modern eyes is that the dominant scripts used for English legal and administrative records before about 1800 were specifically <em>designed</em> for professional scribes writing at speed with a quill pen. They developed over centuries and were entirely standard within their time and context — but they share very few letterforms with the italic or print hands taught today.</p>\n<p>The main historical scripts you will encounter, in rough chronological order:</p>\n<ul>\n  <li><strong>Secretary hand (c.1550–c.1700):</strong> the dominant English legal and administrative script from the Tudor period. Its letterforms are the furthest from modern expectations. The <em>e</em> looks like a curved <em>c</em> without a tail. The <em>r</em> looks like a modern <em>v</em>. The long <em>s</em> (used at the beginning and middle of words, not at the end) looks like a modern <em>f</em> without the crossbar. The letter <em>c</em> and the letter <em>t</em> are nearly identical. The letter <em>h</em> looks like a Greek <em>eta</em>. Parish registers, wills, and court records from the Tudor and Stuart periods are in secretary hand.</li>\n  <li><strong>Mixed hand (c.1650–c.1750):</strong> a transitional period during which secretary-hand letterforms gradually gave way to the more rounded forms of the next century. You will see mixtures of both styles in the same document, often within the same word.</li>\n  <li><strong>English round hand / copperplate (c.1700–c.1850):</strong> the elegant, flowing hand trained by writing masters in the 18th century. More legible than secretary, but with its own conventions: the connecting loops, the embellished capitals, the fine upstrokes and thick downstrokes produced by a flexible quill or steel nib. Census enumerators, registrars, and clerks of the early Victorian period used round hand. Legibility increases dramatically once you reach this era.</li>\n  <li><strong>Spencerian hand (US, c.1850–c.1920):</strong> an American variant of round hand, taught systematically in 19th-century US schools via the Spencerian Penmanship series. US census and vital records of the late 19th century are in Spencerian or a loose variant.</li>\n  <li><strong>Scots court hand:</strong> a distinct Scottish legal hand, used in Scottish legal documents and registers into the 17th century. More angular than English secretary. Scottish researchers working pre-1700 records need a specific introduction to this hand.</li>\n</ul>\n\n<h3>The five most commonly misread letterforms (secretary hand)</h3>\n<table>\n  <tr><th>Secretary letterform</th><th>Looks like (modern eyes)</th><th>Actually is</th></tr>\n  <tr><td>Long <em>s</em></td><td><em>f</em> (without the crossbar)</td><td><em>s</em> at the start or middle of a word</td></tr>\n  <tr><td>Secretary <em>e</em></td><td>A curved <em>c</em> or <em>o</em></td><td><em>e</em></td></tr>\n  <tr><td>Secretary <em>r</em></td><td><em>v</em> or <em>u</em></td><td><em>r</em></td></tr>\n  <tr><td>Secretary <em>c</em></td><td>A tall <em>t</em></td><td><em>c</em></td></tr>\n  <tr><td>Secretary <em>h</em></td><td>Greek <em>eta (η)</em> or a squashed <em>y</em></td><td><em>h</em></td></tr>\n</table>\n\n<h3>Abbreviations and contractions</h3>\n<p>Scribes writing at speed abbreviate constantly. Recognising the most common abbreviations is essential:</p>\n<table>\n  <tr><th>Abbreviation</th><th>Full form</th><th>Notes</th></tr>\n  <tr><td>ye</td><td>the</td><td>The <em>y</em> here is actually the letter thorn (þ) — it is pronounced \"the\", never \"ye\"</td></tr>\n  <tr><td>yt</td><td>that</td><td>Same — thorn + t = \"that\"</td></tr>\n  <tr><td>wch / wh<sup>ch</sup></td><td>which</td><td>Very common in 17th-century English documents</td></tr>\n  <tr><td>w<sup>t</sup></td><td>with</td><td>Superscript t above the <em>w</em></td></tr>\n  <tr><td>p̄ / pr / per</td><td>per, pre-, pro-</td><td>The overlined p appears in many words: p̄son (person), p̄ish (parish)</td></tr>\n  <tr><td>Xp / Xian</td><td>Christ / Christian</td><td>From the Greek Chi-Rho symbol</td></tr>\n  <tr><td>inst.</td><td>instant (of this month)</td><td>\"the 14th inst.\" = the 14th of this month</td></tr>\n  <tr><td>ult.</td><td>ultimo (of last month)</td><td>\"the 3rd ult.\" = the 3rd of last month</td></tr>\n  <tr><td>prox.</td><td>proximo (of next month)</td><td>Uncommon but appears in correspondence</td></tr>\n  <tr><td>do. / ditto</td><td>Same as above</td><td>Used vertically down a column to repeat a value</td></tr>\n</table>\n\n<h3>Practical strategies for reading a difficult document</h3>\n<ol>\n  <li><strong>Read around the difficult word first.</strong> The document will repeat many words. Find a word you can read, then find another instance of the same letterform elsewhere and build a table of that scribe's specific letterforms.</li>\n  <li><strong>Build an alphabet for each document.</strong> Each scribe had their own hand. Identify the scribe's <em>a</em>, <em>e</em>, <em>o</em> from known words (\"the\", \"and\", \"in\"), then use those forms to decode unknown words.</li>\n  <li><strong>Use context.</strong> A parish baptism register entry will say: \"Name of child, father's name, mother's name, date.\" If you can read the father's name, you are looking for the mother's name next. The formulaic structure of legal documents means you often know what the text <em>should</em> say — use that to decode what you cannot read.</li>\n  <li><strong>Transcribe what you see, not what you expect.</strong> Write a question mark for letters you cannot resolve. Return later. Often a word you cannot read on first view becomes clear when you have trained your eye on the scribe's other letterforms.</li>\n  <li><strong>Online resources:</strong> The National Archives' <em>Palaeography Tutorial</em> (free, online) teaches English secretary hand through graduated exercises. Scottish Archive Network (SCAN) has its own palaeography resources for Scots court hand. Both are essential free tools for any serious researcher.</li>\n</ol>\n\n<h3>Dates and the calendar change</h3>\n<p>England and Wales switched from the Julian calendar to the Gregorian calendar on <strong>14 September 1752</strong> (the day after 2 September 1752 became 14 September — eleven days were \"lost\"). Before this date, the legal year in England began on <strong>25 March</strong> (Lady Day), not 1 January. This creates a double-dating problem for events in the period January–March before 1752:</p>\n<p>A document dated \"10 February 1720\" under the old calendar style is the same event as \"10 February 1721\" under the new calendar. Genealogists conventionally write this as <strong>10 February 1720/21</strong> — the old style year / the new style year. Scotland changed its year start to 1 January in 1600, so Scottish documents don't have the January–March double-dating problem from 1600 onward, though the calendar change of 1752 still applied.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora sets a microfilm reader humming and threads a reel through it. On the screen appears a page of closely written text — loops and slashes, thick strokes and hairlines, flowing across the page in a hand that bears almost no resemblance to any modern writing you know. She sits back and watches your face."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This is a parish baptism register from 1620. It is written in secretary hand. You cannot read it — yet. But look closer. Do you see this letter, repeated throughout? The one that looks like a curved <em>c</em> without a tail? That is an <em>e</em>. Do you see this one that looks like a modern <em>v</em>? That is an <em>r</em>. And this one — this one that resembles an <em>f</em> without a crossbar — that is an <em>s</em>, specifically the \"long s\", used at the beginning or middle of a word. Once you have those three, the page opens."
+        },
+        {
+          "type": "example",
+          "speaker": "Secretary hand letterforms to memorise",
+          "text": "Long s → looks like f (without crossbar)\nSecretary e → looks like a curved c\nSecretary r → looks like v\nSecretary h → looks like Greek eta (η)\n\n'parish' in secretary hand:\n— p (recognisable) + a + r (=v shape) + i + long-s (=f-shape) + h (=η-shape)\n= p-a-v-i-f-η → PARISH"
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The first strategy is to build your alphabet <em>for this specific scribe</em>. Every scribe was different. Find the word 'the' — every document has dozens — and examine the <em>e</em>. Find 'and'. Find 'in'. Use known words to decode unknown ones. Build a table: this is how this scribe writes <em>a</em>, this is how they write <em>e</em>, this is their <em>o</em>. Then apply that table to the words you cannot read. You are not guessing. You are systematic."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And never write out what you think the word should say. Write what you see. If there is a letter you cannot resolve, write a question mark and come back. The document is not going anywhere. Your first transcription is a hypothesis. Your twentieth look is closer to the truth."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "A word of warning about dates. England changed calendars in September 1752 — eleven days vanished, and the legal year was moved from 25 March to 1 January. Before 1752, the English legal year began on Lady Day, the 25th of March. So a document dated <em>10 February 1720</em> in old style is, by our modern reckoning, 10 February 1721 — because the year had not yet turned at the start of March. We write this as 1720/21 to make it unambiguous. Miss this, and a generation will shift a year in your tree without your noticing."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor palaeography essentials</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What does the <strong>long s</strong> look like in secretary hand, and where is it used in a word?</li>\n  <li>What does secretary hand's <strong>e</strong> look like? The <strong>r</strong>?</li>\n  <li>What does the abbreviation <strong>ye</strong> actually mean, and what letter is the <em>y</em> really?</li>\n  <li>What is the <strong>double-dating</strong> problem (e.g. 1720/21), and what caused it in England?</li>\n  <li>Name one free online resource for learning to read English secretary hand.</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The long s looks like an f without the crossbar; it is used at the beginning or middle of a word, never at the end (where a regular round s appears). Secretary hand's e looks like a curved c without a tail — very different from a modern e. Secretary hand's r looks like a modern v or u.\n\nThe abbreviation 'ye' means 'the' — the y is actually the letter thorn (þ), a medieval letter representing the 'th' sound. The combination þ+e was abbreviated as 'ye' but was never pronounced 'ye'; it was always 'the.'\n\nThe double-dating problem (e.g. 1720/21) arises because England's legal year began on 25 March (Lady Day) before the calendar reform of 1752. Any event occurring between 1 January and 24 March has two possible year numbers: the old style year (which had not yet ended on 25 March) and the new style year (in which January 1 is the start). Genealogists write both separated by a slash: 1720/21 means old style 1720 / new style 1721. The National Archives' free online Palaeography Tutorial is one good resource for secretary hand.",
+      "soloPracticeHtml": "<h3>Transcription exercise</h3>\n<p>The following text is a partial transcription attempt of a 1642 will in secretary hand, with some letters misread. Read the likely meaning based on the formulaic legal structure of a will and the knowledge of secretary hand letterforms, then write the corrected transcription and explain each correction.</p>\n<p><em>Partially misread transcription:</em> \"I, Thomas Valfh, ov the parifh ov St Mary Magdalene, peying ov fovnd mvnd, do make thvf my laff vill and teftament...\"</p>",
+      "modelAnswer": "Corrected transcription: \"I, Thomas Walsh, of the parish of St Mary Magdalene, being of sound mind, do make this my last will and testament...\"\n\nExplanations:\n- 'Valfh' → 'Walsh': The 'V' is a secretary-hand W (capital W in this hand often looks like VV). The 'f' within the name is the long s (looks like f without crossbar). So V-a-l-f-h → W-a-l-s-h.\n- 'ov' → 'of': The secretary-hand f here is actually long-s at end of 'of' — but 'of' ends in a short s; the 'v' is a secretary-hand f used for the preposition. Reading 'ov' as 'of'.\n- 'parifh' → 'parish': p-a-r-i-f-h → the 'f' is long-s, the 'h' is secretary eta shape. So p-a-r-i-s-h = parish.\n- 'peying' → 'being': The 'p' with an overstrike or curl can be secretary 'b'. 'eying' = eing. So b-e-i-n-g = being.\n- 'fovnd' → 'sound': 'f' = long-s; 'v' = secretary 'u'. So s-o-u-n-d = sound.\n- 'thvf' → 'this': 'v' = secretary 'i'; 'f' = long-s. So t-h-i-s = this.\n- 'laff' → 'last': The double-ff at the end represents long-s followed by short-t in some hands. So l-a-s-t = last.\n- 'vill' → 'will': 'v' in secretary = w. w-i-l-l = will.\n- 'teftament' → 'testament': te-f-ta-ment → t-e-s-t-a-m-e-n-t.",
+      "feynmanPrompt": "Explain to a friend who has never tried to read a historical document why the long s in secretary hand is the single most confusing letterform for modern readers — and what strategy you would use to decode a word you cannot immediately read.",
+      "rabbitHoleTerms": [
+        {
+          "term": "secretary hand",
+          "description": "The dominant English legal and administrative script from roughly 1550 to 1700, whose letterforms differ radically from modern expectations and require specific training to read."
+        },
+        {
+          "term": "long s",
+          "description": "A variant of the letter s used at the beginning or middle of a word in old scripts; it resembles the letter f without a crossbar and is one of the most commonly misread letterforms."
+        },
+        {
+          "term": "thorn",
+          "description": "The Old English letter (þ) representing the 'th' sound; often written as a y-like shape in late medieval and early modern manuscripts, giving rise to the abbreviation 'ye' for 'the.'"
+        },
+        {
+          "term": "double-dating (Old Style / New Style)",
+          "description": "The convention of writing a date as 1720/21 for events between 1 January and 24 March before England's 1752 calendar reform, reflecting the difference between the Julian (Old Style) and Gregorian (New Style) year starts."
+        },
+        {
+          "term": "TNA Palaeography Tutorial",
+          "description": "A free online tutorial from The National Archives (UK) teaching English secretary hand through graduated exercises with historical documents."
+        },
+        {
+          "term": "copperplate / round hand",
+          "description": "The elegant, flowing script dominant in English records from roughly 1700 to 1850, named after the copper-plate engraving used to produce writing-master copybooks."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>The <strong>long s</strong> in secretary hand most closely resembles which modern letter?</p>",
+          "options": [
+            "A lowercase f without the crossbar",
+            "A lowercase p",
+            "A capital S",
+            "A lowercase z"
+          ],
+          "correctAnswer": "A lowercase f without the crossbar",
+          "explanationHtml": "<p>The long s is one of the most commonly misread letters in historical documents. It looks like a lowercase f with a half-crossbar or no crossbar at all, and it appears at the beginning or middle of a word (never at the end, where a normal round s appears). Anyone who reads 'parifh' instead of 'parish' has been tripped by the long s.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are transcribing an English will dated \"4 February 1700.\" Given the calendar conventions of the time, how should you render this date in your research notes?</p>",
+          "options": [
+            "4 February 1700/01 — because England's legal year began on 25 March before 1752, so this date falls in what we now call 1701",
+            "4 February 1700 — the date is clear and needs no adjustment",
+            "4 February 1699 — because the old style year had already ended",
+            "4 February 1752 — because all pre-1752 dates must be corrected to the Gregorian calendar"
+          ],
+          "correctAnswer": "4 February 1700/01 — because England's legal year began on 25 March before 1752, so this date falls in what we now call 1701",
+          "explanationHtml": "<p>Before the 1752 calendar reform, England's legal year began on 25 March (Lady Day). Therefore, the period 1 January to 24 March was in the old-style year that would end on 25 March — but in our modern (new-style) reckoning, it belongs to the following year. A document dated '4 February 1700' in old style is, by modern reckoning, 4 February 1701. The genealogical convention is to write both: 4 February 1700/01. Missing this will shift events in January-March by a year in your tree.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher encounters the word written as \"parifh\" in a 1650 English register and concludes it is a personal name they have never seen before. Theodora corrects them. What does the word actually say?</p>",
+          "options": [
+            "\"Parish\" — the f-like character is the long s (used in the middle of words in secretary hand) and the final h is the secretary-hand eta shape",
+            "\"Parfih\" — the register clerk reversed two letters",
+            "\"Parvis\" — a legal term for a church porch",
+            "\"Pariah\" — a social status term used in 17th-century records"
+          ],
+          "correctAnswer": "\"Parish\" — the f-like character is the long s (used in the middle of words in secretary hand) and the final h is the secretary-hand eta shape",
+          "explanationHtml": "<p>'parifh' in secretary hand reads as: p-a-r-i-[long s]-[secretary h] = 'parish'. The long s in the middle of the word looks like f, and the secretary-hand h looks like the Greek letter eta (η) — both major traps for modern readers. 'Parish' is one of the most common words in genealogical registers (every entry is in a parish), so learning to recognise it is high-priority. This is the single most instructive word for demonstrating how secretary hand differs from modern expectations.</p>"
+        }
+      ]
+    }
+  ]
+}

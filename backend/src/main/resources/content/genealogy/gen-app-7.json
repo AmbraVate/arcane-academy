@@ -1,0 +1,136 @@
+{
+  "id": "gen-app-7",
+  "title": "Probate Records & Wills",
+  "glyph": "⚖️",
+  "sortOrder": 7,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-6"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-7a",
+      "title": "Reading Wills & Administrations",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>A will is a person speaking from beyond death — naming their children, their spouses, sometimes their parents, their neighbours, their godchildren, their creditors. No other single document so reliably lists an entire family in one place. The estate inventory that follows lists every stick of furniture, every cow, every debt owed and owing. Probate records are the genealogist's time machine, and learning to read them is one of the most rewarding skills in the field.</p>",
+      "explanationHtml": "<h3>What probate is and why it exists</h3>\n<p><strong>Probate</strong> is the legal process by which a deceased person's estate is administered — debts paid and assets distributed according to either a will (if there is one) or the laws of intestacy (if there is not). Because courts oversee this process, probate creates a paper trail: a will is filed, witnesses are examined, an inventory of the estate is compiled, bonds are posted, and accounts of the administration are kept. All of this paperwork is genealogically rich.</p>\n<p>Understanding which court handled probate in a given place and time is the first step:</p>\n<ul>\n  <li><strong>England and Wales, before 1858:</strong> Probate was a church function — administered by the Bishop's (or Archbishop's) Prerogative Court. The two main superior courts were the <em>Prerogative Court of Canterbury (PCC)</em>, which handled wills where property crossed diocesan boundaries or where the deceased was notable, and the <em>Prerogative Court of York (PCY)</em> for northern England. Wills of the wealthier classes may appear in PCC regardless of where they lived. From <strong>1858</strong>, probate transferred to civil Principal Probate Registry (from 1882, a single national probate calendar is searchable on gov.uk).</li>\n  <li><strong>Scotland:</strong> The <em>Commissary Courts</em> handled probate until 1823; thereafter the Sheriff Courts. Scottish probate documents are called <em>Confirmation of Executors</em> and <em>Inventories</em>. Pre-1901 records are digitised on ScotlandsPeople.</li>\n  <li><strong>Ireland:</strong> Prerogative Court (for wealthier estates) and Diocesan Consistorial Courts before 1858; after that, the Principal Probate Registry in Dublin. Catastrophically, almost all Irish wills proved before 1922 were destroyed in the Four Courts fire. Published abstracts (especially Betham's genealogical abstracts) and surviving testamentary copies may fill some gaps.</li>\n  <li><strong>United States:</strong> Probate is handled by county courts — Orphan's Court, Surrogate's Court, Probate Court, or County Court, depending on state. Will books and administration bonds are in county courthouses; many are microfilmed at FHL or available on Ancestry.</li>\n</ul>\n\n<h3>Testate vs intestate — two different paper trails</h3>\n<p>If a person dies <strong>testate</strong> (having made a will), the will is presented to the court, proved (verified), and filed. You get the will itself, plus potentially a probate bond and accounts of distribution.</p>\n<p>If a person dies <strong>intestate</strong> (without a will), the court appoints an administrator — usually the widow/er or eldest son — and an <em>administration bond</em> is filed. The bond names the administrator and may name heirs. The <em>letters of administration</em> and the subsequent <em>inventory</em> and <em>account</em> are the core documents.</p>\n<p>Don't skip intestate records. The administration of an intestate estate can be as genealogically rich as any will — the inventory lists every item of personal property, and the accounts list every payment made and received (often naming heirs by name as they receive their share).</p>\n\n<h3>What wills typically contain</h3>\n<p>Even a short will can give you extraordinary genealogical content:</p>\n<ul>\n  <li><strong>The testator's full name, residence, and date of the will</strong> (the date of probate is usually different from the date of writing)</li>\n  <li><strong>The spouse's name</strong> — often given as \"my beloved wife Mary\" or with her maiden name if they were recently married</li>\n  <li><strong>Children's names</strong> — ideally all children, including married daughters by their married names (which is why a will often gives you a daughter's married surname)</li>\n  <li><strong>Grandchildren, nieces, nephews</strong> — and often which parent of theirs is the testator's child</li>\n  <li><strong>The names of witnesses</strong> — who were often neighbours, in-laws, or distant relatives</li>\n  <li><strong>Executor names</strong> — who might be a trusted friend, a son, or a son-in-law</li>\n</ul>\n\n<h3>The estate inventory</h3>\n<p>Following a death, court-appointed appraisers walked through the deceased's home and recorded every item of personal property with its estimated value. Reading an 18th or 19th-century inventory is a form of social history:</p>\n<ul>\n  <li>Livestock (cattle, horses, pigs, sheep) show agricultural status</li>\n  <li>Books listed by title reveal education and religion</li>\n  <li>Debts owed to the estate (the \"book of accounts\" or \"notes receivable\") often name neighbours who borrowed money — a network of kinship and community</li>\n  <li>Occupation-specific tools (loom, anvil, leather-working tools) reveal trade</li>\n</ul>\n<p>Inventories are especially useful before 1850 in the US because they give you a picture of the deceased's world — and sometimes their neighbours appear in the accounts, suggesting relationships to trace.</p>\n\n<h3>The National Probate Calendar (England and Wales, 1858 onward)</h3>\n<p>From 1858, all English and Welsh probate was centralised and an annual <strong>National Probate Calendar</strong> compiled. Each entry gives the deceased's name, date and place of death, date of probate, the executors' or administrators' names, and the gross value of the estate. The calendars from 1858 to (currently) 1995 are searchable and downloadable free on the gov.uk probate search service. This is one of the most overlooked free genealogical resources in the UK — it is comprehensive, indexed, and instantly accessible.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora reaches into a wooden box and produces a handwritten document — a will from 1803, its ink brown with age, the copperplate script tight and precise. She reads the first line aloud."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "A will is a person speaking from beyond death. Listen. <em>I, Patrick Walsh, of the Parish of St Mary Magdalene in the County of Cork, being of sound and disposing mind and memory, do make this my last will and testament.</em> He was in Cork. He was alive when this was written. He was married — the next line gives his wife's name. Then his children — four of them, including two daughters, whose married surnames now appear for the first time. Then his grandchildren, each named, each linked to a parent. Twelve people on one page, their relationships set down by the man himself. No other single document will ever do this for you as completely."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And when there is no will, do not despair. The intestate administration is nearly as good. When a person dies without a will, the court appoints an administrator — usually the widow, or the eldest son — and they post a bond. The bond names them. Then an inventory is taken: two court-appointed appraisers walk through the deceased's home with pen and paper. Every cow, every chair, every debt outstanding. The accounts list everyone who receives money from the estate — and heirs receiving their shares are named by name."
+        },
+        {
+          "type": "example",
+          "speaker": "A will clause naming daughters by married names",
+          "text": "\"I give and bequeath to my daughter Mary Crawford, wife of Thomas Crawford of Jefferson County, Virginia, the sum of fifty dollars. I give to my daughter Eliza Murphy, wife of James Murphy of the same county, my spinning wheel and all household linens. To my son John Walsh, all my farming tools and the use of the west field during his natural life...\""
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "There is one gift that wills give you that no other record does: the married names of daughters. Daughters who married disappear from the family surname. In a census, you find only Walshes. In the will, you suddenly learn that Mary Walsh married a Crawford and Eliza Walsh married a Murphy. Two branches of the tree, opened in a single sentence. That is why I search every will for every person of the right generation in the right county, regardless of whether I already know the testator's name."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "In England and Wales, before 1858, probate was administered by the church — the Bishop's courts, the Archbishop's Prerogative Court. After 1858, the civil Principal Probate Registry took over, and from that year there is a <em>National Probate Calendar</em> — one annual index covering every probate in England and Wales. It is free, it is online at gov.uk, it runs from 1858 to 1995. Most researchers don't know it exists. Now you do."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor probate record types</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is the difference between dying <strong>testate</strong> and <strong>intestate</strong>?</li>\n  <li>Name two genealogical benefits of reading an <strong>estate inventory</strong>.</li>\n  <li>Why are daughters of a testator particularly important to identify in a will?</li>\n  <li>Which English court handled wills before 1858 for wealthier testators with property in multiple dioceses?</li>\n  <li>What is the <strong>National Probate Calendar</strong> and from what year does it begin?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "Dying testate means leaving a valid will; dying intestate means dying without one. In the testate case, the will is proved by a court; in the intestate case, an administrator (usually next of kin) is appointed and must post a bond. Both leave court records.\n\nTwo genealogical benefits of estate inventories: (1) They list every item of personal property, revealing the deceased's occupation, wealth, and social status; (2) the accounts listing debts and payments often name neighbours and family members who owed money or received a share — a community network recorded in a single document.\n\nDaughters are particularly important in wills because daughters who married left the family surname. A census shows only the maiden surname; the will, by identifying married daughters, reveals the surnames they married into — opening new branches of the family tree that would otherwise be invisible.\n\nThe Prerogative Court of Canterbury (PCC) handled wills before 1858 for wealthier English testators with property in multiple dioceses (and the corresponding Prerogative Court of York for northern England).\n\nThe National Probate Calendar is a national annual index of all English and Welsh probate from 1858 onward, administered by the civil Principal Probate Registry; it is free to search and download on the gov.uk probate search service and runs from 1858 to approximately 1995.",
+      "soloPracticeHtml": "<h3>Extracting genealogical data from a will</h3>\n<p>Read the following abbreviated will and list all genealogical facts it contains, noting which are direct relationships and which require inference. Then assess what further records you would seek to corroborate the information.</p>\n<blockquote><p>\"I, Thomas Walsh, of Burlington County, New Jersey, farmer, being of sound mind, do hereby give and bequeath: to my beloved wife Margaret, all household goods and the use of the homestead farm during her natural life. To my son Patrick Walsh, the homestead farm after his mother's death, and my farming implements. To my son James Walsh, the sum of one hundred dollars. To my daughter Bridget Murphy, wife of Michael Murphy, my silver tea service. To my daughter Ellen Crawford, wife of George Crawford of Chester County, Pennsylvania, fifty dollars. To my grandchildren Thomas and Mary Murphy, children of my daughter Bridget, twenty dollars each. I appoint my son Patrick Walsh and my neighbour John Kelly executors. Signed this 3rd day of September 1864. Witnesses: Henry Riordan, Robert Bell.\"</p></blockquote>",
+      "modelAnswer": "Genealogical facts directly stated:\n- Thomas Walsh: farmer, Burlington County, New Jersey. Living on 3 September 1864.\n- Margaret Walsh: Thomas's wife. First name given; surname not stated (she is the wife at time of will).\n- Patrick Walsh: son of Thomas. Appointed executor. Will inherit the homestead farm.\n- James Walsh: son of Thomas. Receives $100.\n- Bridget Murphy: daughter of Thomas. Married to Michael Murphy. Their children Thomas Murphy and Mary Murphy are named as Thomas's grandchildren — confirming the Murphy family connection.\n- Ellen Crawford: daughter of Thomas. Married to George Crawford of Chester County, Pennsylvania — opens a Pennsylvania branch of the family.\n- John Kelly: neighbour. Appointed co-executor. His surname matches no family member in the will (suggesting non-kin relationship, though not certain).\n- Henry Riordan, Robert Bell: witnesses.\n\nRelationships requiring inference: John Kelly is described as a neighbour, not a relative, but the surname Riordan (witness) matches the feme covert acknowledgment in the land deed we read earlier — possibly a family connection worth investigating.\n\nFurther records to seek: Margaret Walsh's maiden name (not given here — search a marriage record or her own death certificate for maiden name). George Crawford's Chester County, Pennsylvania records to confirm the Crawford family. Michael Murphy's identity via Burlington County deeds or church records. An estate inventory to value the property and look for additional named creditors.",
+      "feynmanPrompt": "Explain to a friend why reading a will is often the single most efficient genealogical step you can take for a 19th-century family — and what specific information it provides that no census or vital record gives you.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Prerogative Court of Canterbury (PCC)",
+          "description": "The highest English church probate court before 1858, handling wills of testators with property in multiple dioceses; PCC wills are fully digitised and searchable on the National Archives website."
+        },
+        {
+          "term": "National Probate Calendar",
+          "description": "A free annual index of all English and Welsh probate from 1858, searchable at gov.uk; gives names, death dates, executors, and estate values."
+        },
+        {
+          "term": "administration bond",
+          "description": "A legal bond posted by the administrator of an intestate estate, naming the administrator (usually next of kin) and sometimes the heirs — a key document when no will exists."
+        },
+        {
+          "term": "estate inventory",
+          "description": "A court-ordered list of every item of personal property of a deceased person, compiled by appraisers; invaluable for social history and for identifying community networks through debts and payments."
+        },
+        {
+          "term": "Betham's abstracts",
+          "description": "Genealogical abstracts of Irish wills made by Sir William Betham before the 1922 Four Courts fire; one of the few surviving references to the content of Irish wills destroyed in the disaster."
+        },
+        {
+          "term": "Commissary Courts",
+          "description": "Scottish church courts that handled probate until 1823, producing Confirmation of Executors and Inventories; pre-1901 records are on ScotlandsPeople."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In England and Wales, when did civil authorities take over probate from the church courts?</p>",
+          "options": [
+            "1858",
+            "1837",
+            "1875",
+            "1900"
+          ],
+          "correctAnswer": "1858",
+          "explanationHtml": "<p>The Court of Probate Act 1857 transferred probate jurisdiction from the ecclesiastical courts to a new civil Principal Probate Registry, effective from 1858. Before 1858, probate was handled by the Prerogative Court of Canterbury, Prerogative Court of York, and various diocesan courts. From 1858 onward, the National Probate Calendar provides a single annual index of all English and Welsh probate.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching a Walsh family in Burlington County, New Jersey, in the 1860s. You know the patriarch Thomas Walsh died around 1865 but left no civil death record. What is your most productive single next step?</p>",
+          "options": [
+            "Search Burlington County probate records for a will or administration bond for Thomas Walsh, circa 1865–1870",
+            "Accept that without a civil death record, the date and family details cannot be recovered",
+            "Search the 1870 US census only — census records are the only reliable source for 1860s New Jersey",
+            "Write to the GRO in London for a death certificate"
+          ],
+          "correctAnswer": "Search Burlington County probate records for a will or administration bond for Thomas Walsh, circa 1865–1870",
+          "explanationHtml": "<p>New Jersey began vital registration in 1848 but compliance was patchy until the 1880s. The county probate court — in this case Burlington County's surrogate's court — would have probated Thomas's estate after death. A will (if he was testate) would name his wife, children (including daughters with their married surnames), and possibly grandchildren. An administration bond (if intestate) would name the administrator. Both are incomparably more useful than hoping for a sparse civil death entry. US genealogy before the 20th century runs through county courthouses.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds no will for an Irish ancestor who died in 1890 in County Cork, and concludes that no probate record exists. Theodora sighs. What should the researcher have done?</p>",
+          "options": [
+            "Search the Irish Principal Probate Registry calendar (1858 onward) for an administration — an intestate estate still generates court documents; also check published Betham abstracts and diocesan consistorial court records for wills proved before 1858",
+            "Conclude that Irish people did not make wills before 1900",
+            "Search English PCC records instead, since Ireland was under British jurisdiction",
+            "The 1922 Four Courts fire destroyed all Irish wills so no search is possible"
+          ],
+          "correctAnswer": "Search the Irish Principal Probate Registry calendar (1858 onward) for an administration — an intestate estate still generates court documents; also check published Betham abstracts and diocesan consistorial court records for wills proved before 1858",
+          "explanationHtml": "<p>A person who dies intestate still leaves probate records — the administrator's bond, letters of administration, and account. The Irish Principal Probate Registry (from 1858) has a calendar searchable online. The 1922 Four Courts fire destroyed the original wills but not the calendars, not all testamentary copies, and not the Betham abstracts (which summarised many pre-1922 wills). The diocesan consistorial courts handled Irish probate before 1858 and some records survive. 'No will found' does not mean 'no probate records exist' — the two are different searches.</p>"
+        }
+      ]
+    }
+  ]
+}

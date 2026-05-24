@@ -1,0 +1,136 @@
+{
+  "id": "gen-app-6",
+  "title": "Land Records & Property Documents",
+  "glyph": "🗺️",
+  "sortOrder": 6,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-5"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-6a",
+      "title": "Deeds, Tax Lists & the Language of Land",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Land is the oldest paper trail in most countries. Before vital registration, before the census, before church registers, there were deeds. An ancestor who never appeared in a church register — who was never baptised, never married in a church, never appeared in a census — still had to pay taxes and still had to buy or sell land. Land records reach further back, and survive more reliably, than almost any other class of genealogical document.</p>",
+      "explanationHtml": "<h3>What a deed contains — and the genealogical gold within</h3>\n<p>A <strong>deed</strong> is a legal document transferring ownership of land (or other real property). In its simplest form it names a <em>grantor</em> (seller) and a <em>grantee</em> (buyer), states a price or consideration, describes the land, and is witnessed and signed. Genealogically, deeds are valuable for several reasons beyond the obvious:</p>\n<ul>\n  <li><strong>Ages and relationships.</strong> Deeds often state the parties' ages, occupations, and sometimes relationships. An heir selling land from an estate might appear as \"John Walsh, yeoman, and Mary his wife, and Thomas Walsh, son of the late Patrick Walsh\" — three people, two relationships, one document.</li>\n  <li><strong>Neighbours.</strong> Boundary descriptions almost always name adjacent landowners. If your ancestor bought a farm and the neighbouring farm is owned by someone of the same surname, they may be siblings or cousins.</li>\n  <li><strong>Women's legal identity.</strong> Under English common law before the Married Women's Property Acts (UK 1870/1882; US state by state), married women could not own property in their own name. A deed involving a married woman will typically include a separate <em>feme covert</em> acknowledgment where the wife confirms the sale is voluntary — a record of her existence, her name at marriage, and sometimes her maiden name.</li>\n  <li><strong>Pre-immigration traces.</strong> Power of attorney documents filed in US counties sometimes record an immigrant authorising a relative still in Ireland, Germany, or England to sell their homeland property. These transatlantic documents are genealogical gold: they often name the homeland county, parish, and other family members.</li>\n</ul>\n\n<h3>The grantor-grantee index — how to search</h3>\n<p>Deed books in most US counties are indexed by both grantor (seller) and grantee (buyer) — two separate alphabetical indexes for each time period. The grantor index shows you everyone who <em>sold</em> land in the county during that period; the grantee index shows everyone who <em>bought</em>. To trace a family:</p>\n<ol>\n  <li>Search the <em>grantee</em> index for the surname to find when the family <em>arrived</em> in the county (first purchase).</li>\n  <li>Search the <em>grantor</em> index to find when they <em>left</em> or what they sold during their time there.</li>\n  <li>Cross-reference adjacent transactions — property neighbours are often relatives.</li>\n</ol>\n<p>Most US county deed books from the 19th century are microfilmed and available through FamilySearch (free, by FHL film number). Many are now fully digitised on Ancestry or local archive portals.</p>\n\n<h3>State land vs federal land — a critical US distinction</h3>\n<p>In the US, there are two fundamentally different land systems:</p>\n<table>\n  <tr><th>System</th><th>States</th><th>Key feature</th><th>Where records are</th></tr>\n  <tr><td><strong>State land states</strong></td><td>The original 13 colonies + Maine, Vermont, Kentucky, Tennessee, West Virginia, Hawaii</td><td>Land was granted by the colonial or state government — metes and bounds surveys, idiosyncratic boundaries, often irregular shapes</td><td>County deed books; state land offices; secretary of state archives</td></tr>\n  <tr><td><strong>Federal land states</strong></td><td>Most states west of Ohio (the Public Land Survey System or PLSS)</td><td>Land was originally federal public domain, surveyed in a rigid grid of townships and ranges, then transferred to private ownership</td><td>BLM General Land Office (GLO) records — free at glorecords.blm.gov; land entry files at NARA</td></tr>\n</table>\n<p>In <strong>federal land states</strong>, the <em>land entry file</em> for a homestead or pre-emption claim at NARA is often remarkably rich — listing age, physical description, country of birth, and the names of witnesses (who were often neighbours or relatives). The original patent (the first federal-to-private transfer) is recorded at the GLO and is free to search online.</p>\n\n<h3>UK land records — tithe maps, enclosure awards, Valuation Office</h3>\n<p>British land records differ entirely from the US model. Key sources:</p>\n<ul>\n  <li><strong>Tithe Apportionment and Maps (1836–c.1851)</strong>: following the Tithe Commutation Act 1836, every English and Welsh parish that still paid tithe in kind was surveyed and a tithe map produced. The map shows every field; the apportionment schedule names the landowner, occupier, acreage, and land use for every plot. Free to search and view at the National Archives (England/Wales) and on county record office portals.</li>\n  <li><strong>Enclosure awards (17th–19th century)</strong>: enclosures consolidated open-field strips into private farms, with legal awards defining the new ownership. The award documents — often with attached maps — name the landholders who received allotments and sometimes those displaced. Held at county record offices.</li>\n  <li><strong>1910 Valuation Office Survey (Lloyd George Domesday)</strong>: a field-by-field survey of every piece of land and property in England and Wales, conducted 1910–1915. The survey books and accompanying maps give ownership, occupancy, and annual value — a near-complete national snapshot of who owned what at the eve of WWI. Held partly at TNA, partly at county record offices.</li>\n</ul>\n\n<h3>Tax lists — the census substitute</h3>\n<p>Before the first US census in 1790 (and in many states between censuses), <em>tax lists</em> are the nearest substitute. State and county tax lists typically name every white male over a certain age (sometimes 16, sometimes 21) who owned taxable property. They don't give ages or family structure, but they establish presence in a county year by year, and they track the appearance of a new family name. Many have been transcribed and published in county genealogical journals. Virginia's county-level tithe lists survive from the 1780s and are an invaluable pre-census source.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora unrolls a large piece of paper — a facsimile of an 1847 tithe map from a Welsh parish. Every field is numbered; the adjacent schedule names the owner and occupier of each. She hands you a magnifying glass."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Land is the oldest paper trail in most countries — older than vital registration, older than census, older than most church records. An ancestor who left no baptism, no marriage, no grave — if they lived and paid taxes and bought or sold land, they left a paper trail. In England, Wales, and the American states, land records reach back to the 1600s and often earlier. Begin here when everything else has failed."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "A deed names a grantor and a grantee — seller and buyer. But genealogists read it for more than the transaction. It names neighbours in the boundary description. Often it names a relationship: <em>son of the late Patrick Walsh, widow of Thomas Crawford</em>. It reveals a married woman's identity — under old common law she could not own property in her own name, so when she signed away her rights to a family farm, the deed records her acknowledgment separately. Her maiden name, if the clerk was careful, appears. Three people. Two relationships. One document."
+        },
+        {
+          "type": "example",
+          "speaker": "A deed clause naming relationships and neighbours",
+          "text": "\"...bounded on the north by the lands of James Walsh (brother of the said Thomas Walsh), on the east by the creek, and on the south by the lands of Michael Murphy... to which conveyance Mary Walsh, wife of the said Thomas Walsh, formerly Mary Holloway, has this day made her separate and voluntary acknowledgment before me...\""
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "In the United States there are two land systems and you must know which applies. The original thirteen colonies used <em>metes and bounds</em> — irregular surveys, often quirky shapes, recorded in county deed books. Almost everything west of Ohio used the federal Public Land Survey System — a grid of townships and ranges, with land originally transferred from the federal government. Those original federal-to-private transfers are on the Bureau of Land Management's General Land Office records website, free to search. The land entry files at NARA for homestead claims can be extraordinary — age, birthplace, physical description, witnesses — often the richest immigrant document that exists for that family."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And in England and Wales, two resources that most beginners never find: the <em>tithe maps</em> of the 1840s — this one here, naming every field's owner and occupier, covering every parish that still paid tithes — and the <em>Lloyd George Domesday Survey</em> of 1910, field by field, ownership and rental value, for every piece of land in England and Wales. If your ancestor rented a cottage in 1910, their landlord's name and the property's annual value are recorded. These are at the National Archives and are increasingly online. Use them."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor land record types</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is a <strong>grantor-grantee index</strong>, and how do you use the two halves to trace a family's arrival and departure from a county?</li>\n  <li>What is the difference between a <strong>state land state</strong> and a <strong>federal land state</strong> in the US?</li>\n  <li>What are the <strong>tithe maps</strong> and when were they produced in England and Wales?</li>\n  <li>Why might a deed's boundary description reveal a family relationship?</li>\n  <li>What is the <strong>feme covert</strong> acknowledgment, and why does it matter genealogically?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A grantor-grantee index has two parts: the grantor (seller) index and the grantee (buyer) index, both alphabetical. To trace a family, search the grantee index to find when they first bought land in the county (arrival) and the grantor index to find when they sold and may have moved on. The two halves together bracket the family's presence in a county.\n\nState land states are the original 13 colonies and a few others — land was granted by colonial or state governments using metes and bounds surveys, held in county deed books. Federal land states are most territories west of Ohio, where land was first federal public domain, surveyed in a grid system, then transferred to private citizens — original transfers are on the BLM GLO Records website; entry files at NARA may include biographical detail.\n\nTithe maps were produced following the Tithe Commutation Act 1836 in England and Wales (1836–c.1851) and named the owner and occupier of every tithe-paying field in every covered parish, alongside a survey map. They are at the National Archives and county record offices.\n\nA deed's boundary description typically names the adjacent landowners. If a neighbour shares the same surname as the grantor, the two may be siblings, cousins, or otherwise related — and tracing that neighbour may open a new branch of the family.\n\nThe feme covert acknowledgment is a separate legal statement in a deed where a married woman confirms that she voluntarily agrees to the sale of property — required under old common law because a wife could not independently own or convey property. The acknowledgment records her legal name (married), and sometimes her maiden name, providing evidence of her identity that might not appear elsewhere.",
+      "soloPracticeHtml": "<h3>Reading a deed for genealogical evidence</h3>\n<p>Read the following deed extract and list every piece of genealogical information it contains. Then assess which information is most reliable and which might require corroboration.</p>\n<blockquote><p>\"Know all men by these presents that I, Patrick Walsh, farmer, of the County of Tipperary, Ireland, now residing in Philadelphia County, Pennsylvania, being of lawful age and sound mind, do hereby grant and convey unto my brother Thomas Walsh, shoemaker, of the same county and state, a certain tract of land containing 48 acres more or less, bounded on the north by the lands of Michael Murphy, on the east by the road, on the south by the creek, and on the west by the lands of James Kelly... To have and to hold the same unto the said Thomas Walsh and his heirs and assigns forever, in consideration of the sum of $140... To which deed I, Mary Walsh, wife of the said Thomas Walsh, formerly Mary Riordan, do make my separate and voluntary acknowledgment... Signed this 14th day of March 1851 in the presence of: John Walsh, Patrick Kelly.\"</p></blockquote>",
+      "modelAnswer": "Genealogical information contained in this deed:\n- Patrick Walsh: described as 'farmer', from County Tipperary, Ireland; now residing in Philadelphia County, Pennsylvania. He is selling the land.\n- Thomas Walsh: described as 'shoemaker'; also in Philadelphia County. Identified as Patrick's brother — a direct kinship statement.\n- Mary Walsh: wife of Thomas; formerly Mary Riordan — her maiden name is given in the feme covert acknowledgment.\n- Michael Murphy: owner of land to the north — may be related to the family (Murphy is a common Tipperary surname).\n- James Kelly: owner of land to the west — same consideration.\n- John Walsh: a witness — possibly another brother or relative.\n- Patrick Kelly: second witness — surname matches James Kelly, the western neighbour.\n- Date: 14 March 1851.\n- Amount: $140.\n\nMost reliable: Patrick and Thomas Walsh's sibling relationship (directly stated); Mary's maiden name Riordan (part of a formal legal acknowledgment); Patrick's birthplace in County Tipperary (stated in the deed).\n\nRequires corroboration: The exact relationship to witnesses (John Walsh — another brother? Patrick Kelly — relative of James Kelly?); whether Michael Murphy and James Kelly are kin (same-surname neighbours are suggestive but not definitive). The stated County Tipperary origin should be followed up in Irish parish registers for the Walsh family in that county.",
+      "feynmanPrompt": "Explain to a friend what a grantor-grantee index is, and how searching both halves of it can reveal a family's movement into and out of a US county — even before the census begins.",
+      "rabbitHoleTerms": [
+        {
+          "term": "metes and bounds",
+          "description": "A surveying method using compass bearings and physical landmarks to describe irregular land parcel boundaries, used in state land states and England."
+        },
+        {
+          "term": "Public Land Survey System (PLSS)",
+          "description": "The federal grid survey dividing most land west of Ohio into townships (6x6 miles) and sections (640 acres), used in federal land states."
+        },
+        {
+          "term": "GLO Records (glorecords.blm.gov)",
+          "description": "The Bureau of Land Management's free online database of federal land patents — the original government-to-private ownership transfer documents."
+        },
+        {
+          "term": "tithe apportionment",
+          "description": "The schedule accompanying a tithe map, listing owner, occupier, land use, and acreage for every plot in a parish — produced under the Tithe Commutation Act 1836."
+        },
+        {
+          "term": "feme covert",
+          "description": "The common law doctrine that a married woman's legal identity was subsumed into her husband's; the separate 'feme covert acknowledgment' in a deed recorded her voluntary consent to a property transaction."
+        },
+        {
+          "term": "power of attorney",
+          "description": "A legal document authorising one person to act on another's behalf; in genealogy, transatlantic powers of attorney sometimes name family members in both the sending and receiving country."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>The original thirteen US colonies, plus states like Kentucky and Tennessee, used which land surveying system?</p>",
+          "options": [
+            "Metes and bounds — irregular surveys described by compass bearings and physical landmarks",
+            "The Public Land Survey System — a federal grid of townships and sections",
+            "The Ordnance Survey system, imported from Britain",
+            "The Homestead Act grid, introduced in 1862"
+          ],
+          "correctAnswer": "Metes and bounds — irregular surveys described by compass bearings and physical landmarks",
+          "explanationHtml": "<p>State land states (the original 13 colonies and a few others) used metes and bounds, where parcel boundaries are described by compass bearings, distances, and landmarks. Federal land states (most of the territory acquired after the Revolution) used the Public Land Survey System — a rigid grid of townships and sections introduced by the Land Ordinance of 1785. The system in use determines which archive holds the records and what format the descriptions take.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are searching for a Welsh ancestor who rented a cottage in the parish of Llanfair, Denbighshire, around 1847. Which record type would most likely list him as an occupier of specific fields or property in that year?</p>",
+          "options": [
+            "The tithe apportionment schedule for Llanfair parish, produced under the Tithe Commutation Act 1836",
+            "The 1841 civil registration index",
+            "The English and Welsh poor rate book series",
+            "The county quarter session order book"
+          ],
+          "correctAnswer": "The tithe apportionment schedule for Llanfair parish, produced under the Tithe Commutation Act 1836",
+          "explanationHtml": "<p>Tithe apportionment schedules, produced 1836–c.1851, named the owner AND occupier of every tithe-paying plot in every covered parish. A tenant renting a cottage and land would appear as occupier. The 1841 civil registration index records births, marriages, and deaths — not property. Parish rate books (not a national series) sometimes exist but are less comprehensive. Quarter session records deal with crime and administration. The tithe map and apportionment is the targeted tool for 1840s rural Welsh property occupancy.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher assumes that the western neighbour named in every deed boundary description for their Walsh ancestor must be a relative because the name is also Walsh. Theodora cautions them. What is the correct assessment?</p>",
+          "options": [
+            "A same-surname neighbour is suggestive of a possible relationship and worth pursuing, but the boundary description is not itself evidence of kinship — the inference must be tested against other records such as wills, church registers, and deeds naming the neighbour explicitly",
+            "Same-surname neighbours in deed boundaries are always siblings",
+            "Boundary neighbours are listed for legal reasons only and have no genealogical significance",
+            "The same-surname neighbour is conclusive evidence of a relationship because deeds were legally precise documents"
+          ],
+          "correctAnswer": "A same-surname neighbour is suggestive of a possible relationship and worth pursuing, but the boundary description is not itself evidence of kinship — the inference must be tested against other records such as wills, church registers, and deeds naming the neighbour explicitly",
+          "explanationHtml": "<p>A same-surname neighbour in a deed boundary description is a clue worth pursuing — families often settled near each other, and siblings sometimes divided a parent's farm — but it is not proof of kinship. Common surnames (Walsh, Murphy, Kelly, Smith) will appear as neighbours without family connection. The correct response is to treat it as a working hypothesis and test it: search for a will by a parent-generation Walsh that names both families; look for a church register entry connecting them; search other deeds where both Walshs appear together. Clustering is evidence of possibility; it is not evidence of relationship.</p>"
+        }
+      ]
+    }
+  ]
+}

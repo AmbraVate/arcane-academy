@@ -1,0 +1,132 @@
+{
+  "id": "gen-app-12",
+  "title": "Organising & Managing a Research Project",
+  "glyph": "📁",
+  "sortOrder": 12,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-11"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-12a",
+      "title": "Research Plans, Research Logs & the Genealogical Proof Standard",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Every genealogist begins by collecting names. The great majority never progress beyond collecting names. What separates an evidence-based researcher from a name-collector is not access to better records — it is discipline about what they write down, how they organise it, and how they reason from evidence to conclusion. The tools of professional genealogy — the research plan, the research log, the Genealogical Proof Standard — are not bureaucratic overhead. They are what allows you to solve cases that would otherwise remain permanently stuck.</p>",
+      "explanationHtml": "<h3>The research question — the foundation of everything</h3>\n<p>Before you search a single record, you need a research question. Not a vague aspiration (\"learn about my Walsh ancestors\"), but a specific, answerable question:</p>\n<ul>\n  <li>\"Who were the parents of Patrick Walsh, born circa 1820, likely in County Cork, Ireland?\"</li>\n  <li>\"Did Thomas Crawford (b. c.1790, d. c.1845, Botetourt County, Virginia) have a sibling named James Crawford who remained in Virginia?\"</li>\n  <li>\"Where in Ireland was Bridget Murphy (b. c.1850, emigrated c.1870, arrived New York) born?\"</li>\n</ul>\n<p>A well-formed research question has three components: a <em>person</em> (specifically identified), a <em>fact</em> you want to establish, and a <em>context</em> (time, place, or relationship). Without this specificity, you will search randomly, accumulate evidence without evaluating it, and never achieve a conclusion you can defend.</p>\n\n<h3>The research plan</h3>\n<p>A research plan sets out, in writing, before you begin searching:</p>\n<ol>\n  <li><strong>What you already know</strong> (with citations — do not include information you cannot source)</li>\n  <li><strong>What you want to find out</strong> (the research question)</li>\n  <li><strong>What records you plan to search</strong>, in priority order, with reasons why each record might answer the question</li>\n  <li><strong>What you expect to find</strong> (your hypothesis — so you can notice when the evidence contradicts your expectation)</li>\n</ol>\n<p>The research plan is not a commitment to search every record listed. It is a structured way of thinking about the evidence landscape before you begin, so you search in priority order rather than at random.</p>\n\n<h3>The research log</h3>\n<p>A research log records every search you conduct, in order, as you conduct it — whether or not you found anything. Each entry should record:</p>\n<ul>\n  <li><strong>Date</strong> of the search</li>\n  <li><strong>Repository or database</strong> searched (with URL if online)</li>\n  <li><strong>Record type and time period</strong> covered</li>\n  <li><strong>Search terms</strong> used (exact names, variant spellings, date ranges)</li>\n  <li><strong>Results</strong> found — positive (what you found, with full citation) and negative (\"no entry found for Walsh, Patrick, in the 1851 census for Aston registration district\")</li>\n</ul>\n<p>The research log serves three functions: it prevents you from searching the same source twice; it records negative evidence (the exhaustive absence of an expected record); and it makes your work auditable — another researcher can review your log and see exactly what you searched and what you found.</p>\n\n<h3>The Genealogical Proof Standard (GPS)</h3>\n<p>The Genealogical Proof Standard is a five-element framework developed by the Board for Certification of Genealogists (BCG) to define what constitutes a <em>proved</em> genealogical conclusion. A research conclusion meets the GPS when:</p>\n<ol>\n  <li><strong>Reasonably exhaustive search:</strong> you have searched all sources that might reasonably contain information on the research question — not just the easy ones, not just the ones available online.</li>\n  <li><strong>Complete and accurate citations:</strong> every source used is cited precisely enough to be found and checked by another researcher.</li>\n  <li><strong>Analysis and correlation of the evidence:</strong> you have analysed each piece of evidence for its type (direct, indirect, negative) and compared the pieces against each other for consistency and contradiction.</li>\n  <li><strong>Resolution of conflicting evidence:</strong> any contradiction between sources has been identified and explained — not glossed over.</li>\n  <li><strong>A soundly reasoned, coherently written conclusion:</strong> the conclusion follows from the evidence, and the reasoning from evidence to conclusion is explicit and can be followed by someone else.</li>\n</ol>\n<p>You do not need to produce a formal written proof argument for every fact in your tree. But you should apply the GPS mentally to every conclusion you state as established — and be honest with yourself about which conclusions are proven, which are probable hypotheses, and which are guesses.</p>\n\n<h3>File management — digital and physical</h3>\n<p>A research project generates documents: downloaded images, transcriptions, notes, purchased certificates, correspondence, and DNA results. Without a system, these accumulate into chaos. A workable digital system:</p>\n<ul>\n  <li><strong>Folder structure by surname or family unit:</strong> a top-level folder per surname, sub-folders for each individual or couple, sub-folders for each record type.</li>\n  <li><strong>File naming convention:</strong> SURNAME_Firstname_Birthyear_RecordType (e.g. WALSH_Patrick_c1820_IrishCatholicBaptism). Including the birth year prevents confusion between same-name individuals. Never name a file \"scan001\" or \"IMG_4827.jpg\".</li>\n  <li><strong>Citation notes:</strong> every downloaded image should have a companion text file (or a notation in your genealogy software) with the full source citation.</li>\n  <li><strong>Cloud backup:</strong> always. Research is years of work. A single hard-drive failure without a backup destroys it. Use a cloud service (Google Drive, Dropbox, OneDrive) plus a periodic external drive backup.</li>\n</ul>\n\n<h3>Genealogy software</h3>\n<p>Purpose-built genealogy software (Family Tree Maker, Legacy Family Tree, Gramps — open source) allows you to maintain a structured database of individuals, events, and sources, and to produce pedigree charts and family group sheets. The software's value is in its citation management — attaching a source record to each event — not in its tree-drawing. Any software you use should be able to export in GEDCOM format, the universal genealogical data exchange standard, so your data is not locked into a proprietary system.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora places an open notebook on the table. Its pages are dense with handwritten entries, each dated, each listing a repository, a record type, and a result. Some entries say 'Found: see scan attached.' Others say 'Not found.' She taps it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Every search I have ever done is in a notebook like this one. Every search — including the ones that found nothing. Especially the ones that found nothing. A careful, exhaustive search that finds nothing is evidence. A careless search that finds nothing is noise. The difference between the two is the research log."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Before I search a single record, I write a research question. Not 'find out about the Walshs'. A specific question. <em>Who were the parents of Patrick Walsh, born circa 1820, County Cork, Ireland?</em> That question tells me what I am looking for, where to look, and when I have found it. Without the question, I am a tourist. With it, I am a researcher."
+        },
+        {
+          "type": "example",
+          "speaker": "A research log entry",
+          "text": "Date: 12 May 2024\nRepository: FamilySearch (familysearch.org)\nRecord set: Ireland Catholic Parish Registers, Diocese of Cork, Kilmihil Parish, Baptisms\nSearch terms: Walsh, Patrick; Walch, Patrick; Walsh, Pat; dates 1815-1825\nResult: No entry found for Patrick Walsh born in Kilmihil Parish in the date range searched. Six Patrick Walsh entries found in adjacent parishes (Kilrush, Kilmeen). See attached image of Kilmihil register pages 1815-1825 confirming complete coverage."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And notice: I recorded what I did <em>not</em> find. That 'not found' entry is evidence. It tells the next researcher — myself in six months, or someone reviewing my work — that I looked in Kilmihil and Patrick was not there. It means we do not search Kilmihil again. It narrows the search. Negative evidence, carefully recorded, is real evidence."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The Genealogical Proof Standard is five elements. I want you to know them not as a checklist but as a habit of mind. <em>Have I searched everything that might reasonably exist? Have I cited everything I found? Have I analysed each piece of evidence? Have I explained any contradictions? And can I state my conclusion in a form that another researcher could follow and check?</em> Five questions. They should run through your head at the end of every research session."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor research organisation</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What are the three components of a <strong>well-formed research question</strong>?</li>\n  <li>Why should you record searches that found <strong>nothing</strong> in the research log?</li>\n  <li>Name the five elements of the <strong>Genealogical Proof Standard</strong>.</li>\n  <li>What does a good <strong>file naming convention</strong> for downloaded images include?</li>\n  <li>What is <strong>GEDCOM</strong> and why does it matter?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A well-formed research question has three components: a specifically identified person, a specific fact to be established, and a context (time, place, or relationship). Example: 'Who were the parents of Patrick Walsh, born circa 1820, County Cork, Ireland?' not 'find out about the Walshs.'\n\nSearches that found nothing should be recorded because negative evidence is real evidence within the Genealogical Proof Standard. A carefully documented 'not found' entry shows that the source was searched and tells future researchers (and yourself) not to search it again. It also documents that the absence of a record in a given source is part of the evidence base, not just a failure to find something.\n\nThe five GPS elements: (1) Reasonably exhaustive search; (2) Complete and accurate citations; (3) Analysis and correlation of evidence; (4) Resolution of conflicting evidence; (5) A soundly reasoned, coherently written conclusion.\n\nA good file naming convention includes: surname, first name, approximate birth year, and record type. Example: WALSH_Patrick_c1820_IrishCatholicBaptism. This prevents confusion between same-name individuals and makes files self-describing.\n\nGEDCOM (Genealogical Data Communication) is the universal data exchange format for genealogy software. Any genealogy software you use should be able to export your data in GEDCOM format so that your research can be moved to a different software system or shared with other researchers without losing data.",
+      "soloPracticeHtml": "<h3>Writing a research plan</h3>\n<p>Write a research plan for the following question (400–500 words):</p>\n<p><strong>Research question:</strong> \"Where in Ireland was Patrick Walsh (b. circa 1820, emigrated to the US circa 1845, settled in Philadelphia, Pennsylvania) born?\"</p>\n<p>Your plan should include:</p>\n<ul>\n  <li>What is already known (state it clearly and cite the hypothetical source)</li>\n  <li>The research question (stated precisely)</li>\n  <li>At least five record types or specific sources you plan to search, in priority order, with a reason for each</li>\n  <li>Your working hypothesis about where he was born (based on context — Famine emigration, Philadelphia Irish community patterns, etc.)</li>\n</ul>",
+      "modelAnswer": "Research Plan: Origin of Patrick Walsh\n\nWhat is already known:\n- Patrick Walsh was born circa 1820 in Ireland (source: 1850 US census, Philadelphia County, Pennsylvania, image on Ancestry, lists birthplace as Ireland, age 30).\n- He is listed as a labourer in the 1850 census with wife Mary (also Ireland-born, age 25) and two children born in Pennsylvania.\n- Emigration circa 1845 inferred from eldest child's Pennsylvania birth date of c.1847 and the absence of his name in earlier US records (negative evidence: searched 1840 US census — not found in Pennsylvania).\n\nResearch question: Where specifically in Ireland was Patrick Walsh born circa 1820?\n\nPriority search plan:\n\n1. Philadelphia naturalisation records (priority 1): A Declaration of Intention or Petition for Naturalisation filed in Philadelphia County after 1848 may give Patrick's county of origin and port/date of arrival. Post-1906 petitions are especially rich. Source: NARA / Ancestry Naturalization Records, Pennsylvania.\n\n2. US passenger arrival manifests (priority 2): Search Philadelphia, New York, and Boston port manifests 1845–1848 for Patrick Walsh from Ireland. A pre-1893 manifest will likely give only name, age, sex, and country; a later one might give county. Source: Ancestry / FamilySearch passenger lists.\n\n3. Philadelphia city directories and church records (priority 3): Patrick's Catholic parish in Philadelphia may hold baptism records for his children that list his county of origin. Philadelphia Irish Catholic parishes (St Patrick's, St Michael's) held registers from the 1840s. Source: Philadelphia Archdiocesan Archives / FamilySearch parish registers.\n\n4. Pennsylvania and Philadelphia census records 1860–1880 (priority 4): Later censuses may refine his stated birthplace; the 1880 census lists parents' birthplaces. Source: FamilySearch / Ancestry.\n\n5. Mary Walsh's death certificate (priority 5): If Mary Walsh (wife) died after 1906 in Pennsylvania, her death certificate will name her parents and may name Patrick's origin if the informant knew it. Source: Pennsylvania Vital Records / Ancestry.\n\nWorking hypothesis: Given the timing of emigration (c.1845) and the concentration of Philadelphia Irish immigrant settlement in communities from Munster and Connacht, Patrick was likely from the western or southern provinces of Ireland — Connacht or Munster — the regions most affected by the Famine. This is a broad hypothesis to be narrowed by the naturalisation record if it survives.",
+      "feynmanPrompt": "Explain to a friend why writing down every search — including the ones that found nothing — makes you a better genealogist, not just a more organised one.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Genealogical Proof Standard (GPS)",
+          "description": "A five-element framework from the Board for Certification of Genealogists defining what constitutes a proved genealogical conclusion: exhaustive search, accurate citations, evidence analysis, conflict resolution, and soundly reasoned written conclusion."
+        },
+        {
+          "term": "GEDCOM",
+          "description": "Genealogical Data Communication — the universal file format for exchanging genealogy data between software programs, ensuring data portability and interoperability."
+        },
+        {
+          "term": "research log",
+          "description": "A dated record of every search conducted in a research project, including both positive and negative results; essential for avoiding duplicate searches and documenting negative evidence."
+        },
+        {
+          "term": "research plan",
+          "description": "A written document setting out the research question, known evidence, planned searches in priority order, and working hypotheses — the structured thinking that precedes a search session."
+        },
+        {
+          "term": "Gramps",
+          "description": "An open-source, free genealogy software program supporting GEDCOM export and full source citation management — a capable alternative to commercial genealogy software."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>The Genealogical Proof Standard (GPS) was developed by which professional body?</p>",
+          "options": [
+            "The Board for Certification of Genealogists (BCG)",
+            "The Association of Professional Genealogists (APG)",
+            "The Society of Genealogists (SoG)",
+            "The National Genealogical Society (NGS)"
+          ],
+          "correctAnswer": "The Board for Certification of Genealogists (BCG)",
+          "explanationHtml": "<p>The Genealogical Proof Standard was developed by the Board for Certification of Genealogists (BCG), the US-based organisation that credentials professional genealogists. The GPS is described in BCG's publication 'Genealogy Standards' and is the widely accepted framework for what constitutes a provable genealogical conclusion. APG, SoG (UK), and NGS are also respected professional bodies but did not originate the GPS.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You searched the 1851 England and Wales census for your ancestor Thomas Walsh in Aston, Birmingham, and found nothing. Which is the correct way to record this in your research log?</p>",
+          "options": [
+            "\"Searched 1851 England/Wales census on Ancestry, Aston registration district, for Walsh, Thomas; also searched variants Walsh, Walshe, Walch, Welsh; no entry found — see attached image of Aston district pages confirming search coverage\"",
+            "\"Thomas Walsh not in 1851 census — he must have died before 1851\"",
+            "\"Searched Ancestry — negative\" (brief note is sufficient)",
+            "Negative searches need not be recorded — only positive results go in the log"
+          ],
+          "correctAnswer": "\"Searched 1851 England/Wales census on Ancestry, Aston registration district, for Walsh, Thomas; also searched variants Walsh, Walshe, Walch, Welsh; no entry found — see attached image of Aston district pages confirming search coverage\"",
+          "explanationHtml": "<p>A research log entry should be specific enough that another researcher can evaluate your search: which platform, which record set, which geographic area, which name variants were searched, and what was found (including nothing). Attaching or referencing evidence that the district was fully covered makes the negative result meaningful rather than just 'I looked and didn't find it.' 'Negative' without detail is useless. Concluding he died before 1851 is an unjustified inference — he may have been elsewhere, been transcribed under a variant, or simply not yet returned from a trip on census night.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher has spent six months building an extensive tree and states confidently: \"I have proved my Walsh ancestor was born in County Cork in 1820.\" Their research log shows that they found this information in an Ancestry tree built by another user, confirmed it against a 1901 census entry (which lists birthplace as 'County Cork'), and found no contradicting evidence. Does this meet the Genealogical Proof Standard? Why or why not?</p>",
+          "options": [
+            "No — the search is not reasonably exhaustive (a single census entry and an authored tree are not sufficient), the Ancestry tree is not a citable source, and the 1901 census gives only county-level birthplace with secondary-information reliability — a birth/baptism record or at least corroborating primary sources are needed",
+            "Yes — two sources (an Ancestry tree and a census entry) confirming the same birthplace satisfy the GPS correlation requirement",
+            "Yes — no contradicting evidence was found, which satisfies the GPS conflict-resolution standard",
+            "No — the GPS requires a minimum of ten different sources to prove any fact"
+          ],
+          "correctAnswer": "No — the search is not reasonably exhaustive (a single census entry and an authored tree are not sufficient), the Ancestry tree is not a citable source, and the 1901 census gives only county-level birthplace with secondary-information reliability — a birth/baptism record or at least corroborating primary sources are needed",
+          "explanationHtml": "<p>The GPS requires a 'reasonably exhaustive search' — not just the easy sources. An Ancestry family tree is an authored work (not a source) and cannot be cited as evidence. A 1901 census birthplace is secondary information (reported from the individual's memory, 80 years after the fact) and gives only county-level precision. A proved conclusion requires searching Catholic parish registers for County Cork, checking naturalisation records (which might give townland-level origin), and looking for other corroborating records (confirmation, confirmation, corroboration). The research here has produced a plausible hypothesis — not a proved conclusion.</p>"
+        }
+      ]
+    }
+  ]
+}

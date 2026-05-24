@@ -1,0 +1,131 @@
+{
+  "id": "gen-app-11",
+  "title": "Digital Tools, Databases & Archives Online",
+  "glyph": "💻",
+  "sortOrder": 11,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-10"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-11a",
+      "title": "Navigating the Major Platforms & Archive Portals",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>The digitisation of genealogical records over the past twenty years has been extraordinary — records that once required a transatlantic journey to consult are now accessible in an evening from your kitchen table. But more data does not mean better research. The major platforms are aggregators, not archives; their transcriptions are derivatives, not originals; and their family trees are authored works, not evidence. Knowing what each platform holds, what it costs, and how to use it critically is as important as knowing how to read a death certificate.</p>",
+      "explanationHtml": "<h3>The major platforms — what they hold</h3>\n<p>Several commercial platforms now hold billions of digitised genealogical records. Each has different geographic and record-type strengths:</p>\n<table>\n  <tr><th>Platform</th><th>Key strengths</th><th>Cost model</th></tr>\n  <tr><td><strong>Ancestry.com</strong></td><td>US census (all years); UK census (1841–1921); England/Wales BMD indexes and images; passenger lists; military records; newspaper archives; the largest family tree database</td><td>Subscription (UK and World); US access separate</td></tr>\n  <tr><td><strong>FamilySearch.org</strong></td><td>Free. US census; English/Welsh/Scottish parish registers (FHL microfilm catalogue); worldwide records including Latin America, Germany, Scandinavia; US state vital records; large military collection</td><td>Free to search and view most records</td></tr>\n  <tr><td><strong>FindMyPast</strong></td><td>Ireland (including Catholic parish registers via NLI partnership); UK military records (WW1 especially); British newspapers; Irish, Scottish, and Australian records; partnerships with county archives</td><td>Subscription (UK/Ireland/World)</td></tr>\n  <tr><td><strong>ScotlandsPeople</strong></td><td>Scottish statutory registers, OPRs, census (1841–1911), valuation rolls, church records — the official Scottish government genealogy website</td><td>Per-page-view credits</td></tr>\n  <tr><td><strong>TheGenealogist</strong></td><td>England/Wales; specialises in maps, tithe records, electoral registers; good for 18th–19th-century British records</td><td>Subscription</td></tr>\n  <tr><td><strong>Fold3</strong></td><td>US military records (all wars); pension files; draft cards; court martial records; owned by Ancestry</td><td>Separate subscription or included in Ancestry World plan</td></tr>\n  <tr><td><strong>MyHeritage</strong></td><td>European records (especially Eastern Europe, Israel, Scandinavian); DNA matching; global scope</td><td>Subscription</td></tr>\n</table>\n\n<h3>Archive portals — the official sources</h3>\n<p>Behind the commercial platforms sit the actual archives. Knowing these portals means you can search the original catalogue even when a commercial platform does not hold the image:</p>\n<ul>\n  <tr></tr>\n  <li><strong>The National Archives (TNA) — nationalarchives.gov.uk</strong>: the central archive for England, Wales, and UK government records. The <em>Discovery</em> catalogue indexes millions of records held at TNA and elsewhere in the UK. TNA holds Prerogative Court of Canterbury (PCC) wills (fully digitised), military service records, and thousands of other series.</li>\n  <li><strong>SCAN — Scottish Archive Network (scan.org.uk)</strong>: indexes Scottish archives and holds the Catalogue of the Scottish Archives Network — a gateway to holdings across Scotland's regional archives.</li>\n  <li><strong>National Records of Scotland (NRS) / ScotlandsPeople</strong>: official home of Scottish statutory registers, OPRs, and census records.</li>\n  <li><strong>irishgenealogy.ie</strong>: free Irish civil registration indexes and Catholic parish registers, hosted by the Irish government's genealogy portal.</li>\n  <li><strong>census.nationalarchives.ie</strong>: free Irish census (1901 and 1911) — fully digitised household schedules.</li>\n  <li><strong>National Archives and Records Administration (NARA) — archives.gov</strong>: US federal records including census (to 1950), military, immigration, and land. The <em>Access to Archival Databases (AAD)</em> and various Ancestry/FamilySearch partnerships provide online access.</li>\n  <li><strong>FHL (Family History Library) Catalogue — familysearch.org/catalog</strong>: indexes all FHL microfilm holdings — 2.4 million microfilm reels. Even if the images are not yet online, knowing a record was filmed tells you FamilySearch will digitise it eventually, or that you can request it from an FHC.</li>\n</ul>\n\n<h3>What transcriptions can and cannot do</h3>\n<p>Every platform offers searchable transcriptions — indexed, typed text derived from the original record image. Transcriptions are invaluable for searching; they are unreliable as a source of facts. The process of transcription introduces errors at several stages:</p>\n<ol>\n  <li>The original handwriting is read by a human transcriber or optical character recognition (OCR) software — both make mistakes.</li>\n  <li>The transcription is reviewed by another person (or not), with a second opportunity for error.</li>\n  <li>The transcription is ingested into the platform's database with further normalisation (name standardisation, date formatting) — which can change a clearly illegible entry into a confident-looking wrong one.</li>\n</ol>\n<p>The consequences for research: searching for \"Walsh\" will miss all instances transcribed as \"Walshe,\" \"Walch,\" \"Wash,\" or \"Welch\" — and there will be many. Good practice: (a) search by phonetic variants; (b) always find and examine the image behind the transcription; (c) never cite the transcription in your notes — cite the specific original record.</p>\n\n<h3>DNA testing platforms</h3>\n<p>Three major consumer DNA testing companies provide both genetic results and family tree matching:</p>\n<table>\n  <tr><th>Company</th><th>Database size (approx. 2025)</th><th>Strength</th></tr>\n  <tr><td>AncestryDNA</td><td>~25 million tested</td><td>Largest database; best for US and UK; tight integration with Ancestry tree</td></tr>\n  <tr><td>23andMe</td><td>~14 million tested</td><td>Health + ancestry; good chromosome browser; often more scientifically detailed</td></tr>\n  <tr><td>MyHeritage DNA</td><td>~7 million tested</td><td>Strong European database; chromosome browser; free upload from other companies</td></tr>\n  <tr><td>FamilyTreeDNA</td><td>~3 million autosomal; largest Y-DNA and mtDNA database</td><td>Best for Y-DNA surname and haplogroup projects; pioneer of genetic genealogy</td></tr>\n  <tr><td>LivingDNA</td><td>~1 million</td><td>British Isles regional breakdowns; partnerships with UK academic datasets</td></tr>\n</table>\n<p>All major companies allow free upload of raw DNA data from other companies (except 23andMe). Uploading to multiple databases maximises your match pool — a strategy called <em>triangulation</em> (see gen-app-3 and gen-jun-17).</p>\n\n<h3>Newspapers — an underused genealogical resource</h3>\n<p>Digitised historical newspapers contain a wealth of genealogical information outside vital records: obituaries (often detailed family histories), court reports (names parties in civil and criminal cases), social notices (engagements, weddings, funerals), and passenger lists (some newspapers published ship manifests verbatim). Key newspaper archives:</p>\n<ul>\n  <li><strong>British Newspaper Archive (britishnewspaperarchive.co.uk)</strong> — subscription; largest UK newspaper digitisation project; covers 18th–20th centuries</li>\n  <li><strong>Chronicling America (chroniclingamerica.loc.gov)</strong> — free; Library of Congress collection; US newspapers 1770–1963</li>\n  <li><strong>Papers Past (paperspast.natlib.govt.nz)</strong> — free; New Zealand and Pacific newspapers</li>\n  <li><strong>Trove (trove.nla.gov.au)</strong> — free; Australian newspapers, books, and manuscripts</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora gestures toward a large screen on the wall displaying a dozen browser tabs, each a different genealogical platform. She turns to face you."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Twenty years ago, researching an Irish emigrant ancestor meant booking flights to Dublin and Belfast, writing letters to county libraries, and queuing at microfilm readers. Today, most of those records are on your screen within thirty seconds. This is a miracle. Do not let it make you lazy. Because every single one of these platforms is a delivery channel for derivatives — transcriptions of records, images of images, indexes of indexes. The original document is still in a county record office or a national archive somewhere. The platform is a faster path to it. It is not a substitute for it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Three things every researcher must know about the major platforms. FamilySearch is free — and I do not mean free-ish, or free-with-limits. It is genuinely free. The Church of Jesus Christ of Latter-day Saints has spent decades and enormous resources digitising the world's genealogical records. A huge proportion of English and Welsh parish registers, US census records, worldwide vital records — free. If you are paying for something on a commercial platform, check whether FamilySearch has it first. It often does."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Second: the transcription is not the record. It is a typed copy of what someone thought the handwriting said. Every common name is misspelled in thousands of index entries. 'Walsh' appears as 'Walshe', 'Walch', 'Welch', 'Wash'. If you search only for 'Walsh', you will miss all of those. Search phonetically. Search by initials. Browse the image of the register page itself, not the index. The image is what was actually written. The transcription is what someone guessed was written."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Third: the family trees on commercial platforms are not records. They are authored works — sometimes careful, often careless, frequently copied from other careless trees without checking any source at all. They will give you hypotheses. They will sometimes save you hours of searching. They will never, ever constitute evidence. Use them to generate a lead. Then prove the lead from the primary records. The person who built that tree you are copying may have got it from someone who got it from someone who guessed. Your job is to find the document that none of them bothered to look at."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor the platform landscape</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>Name three major genealogical platforms and give one key record strength for each.</li>\n  <li>What is <strong>FamilySearch</strong> and what makes it different from the commercial platforms?</li>\n  <li>Why must you always view the <strong>record image</strong> rather than relying on the transcription?</li>\n  <li>What category of source is a published family tree on Ancestry — and what discipline does that imply?</li>\n  <li>Name one free US newspaper archive and one free Australian one.</li>\n</ul>",
+      "guidedPracticeModelAnswer": "Three major platforms and strengths: Ancestry (US census, UK census, England/Wales BMD, passenger lists); FamilySearch (free, worldwide records including parish registers, US census, military); FindMyPast (Irish Catholic parish registers, UK military records especially WW1, British newspapers).\n\nFamilySearch is the genealogy website of the Church of Jesus Christ of Latter-day Saints, providing free access to a vast global collection of digitised records including US censuses, worldwide parish registers, and the FHL microfilm catalogue. Unlike commercial platforms, it does not charge subscriptions — the records are genuinely free to search and view.\n\nYou must always view the record image because transcriptions are typed copies made by human indexers or OCR software, and both introduce errors. Common names are misspelled in thousands of entries; the image shows what was actually written in the original document. A transcription is a finding aid; the image is the source.\n\nA published family tree on Ancestry is an authored work — compiled by another researcher from sources they may or may not have checked, often copied from other trees without verification. It is a hypothesis generator, not evidence. The discipline it implies is: find the underlying primary records the tree should have been based on, and verify each fact from those records independently.\n\nFree US newspaper archive: Chronicling America (chroniclingamerica.loc.gov) by the Library of Congress. Free Australian: Trove (trove.nla.gov.au) by the National Library of Australia.",
+      "soloPracticeHtml": "<h3>Planning a digital search strategy</h3>\n<p>You are researching Bridget Murphy, believed to have been born in County Galway, Ireland, around 1850. She emigrated to the US (probably to New York or Boston) around 1870. You know she married a Patrick Kelly and died in Massachusetts around 1920.</p>\n<p>Write a digital search strategy (300–400 words) identifying:</p>\n<ul>\n  <li>Which platforms or archive portals you would search for her Irish baptism, and why</li>\n  <li>Which platforms or portals you would search for her US arrival and naturalisation records</li>\n  <li>Which databases you would search for her in the US census</li>\n  <li>How you would search for her death record in Massachusetts</li>\n  <li>One critical caution about using commercial platform transcriptions</li>\n</ul>",
+      "modelAnswer": "Irish baptism: I would begin with irishgenealogy.ie, the free Irish government portal, which hosts civil birth registrations (from 1864) and Catholic parish registers. Since Bridget was born around 1850, civil registration may not capture her birth (it began 1864), so Catholic parish registers are essential — the National Library of Ireland's Catholic Parish Registers database (free on registers.nli.ie) is the primary source for pre-1864 Galway Catholic baptisms. I would search County Galway parishes for Murphy families.\n\nArrival and naturalisation: For an 1870 arrival at New York or Boston, I would search the port manifests on Ancestry or FamilySearch (both hold US passenger lists). Because the records are thin for pre-1893 arrivals, she may appear only with name, age, sex, and country of origin. If she or Patrick Kelly naturalised, the Petition for Naturalisation (post-1906) would be on Ancestry's Naturalization Records database or NARA microfilm at FamilySearch. Pre-1906 naturalisations are held at Massachusetts county courts and may be on Ancestry or FHL microfilm.\n\nUS census: I would search the US census on Ancestry or FamilySearch for Bridget Kelly (or Murphy) in Massachusetts, covering 1880, 1900, 1910, and 1920. The 1880 census (free on FamilySearch) would catch her shortly after arrival; 1900 gives her birth year and immigration year in month/year precision; 1920 shows the household shortly before her death.\n\nDeath record: Massachusetts vital registration began in 1841. Bridget's 1920 death should have a Massachusetts death certificate. I would search Ancestry's Massachusetts Death Index or FamilySearch's Massachusetts death records for a Kelly in the right county around 1920.\n\nCritical caution: Transcriptions frequently misspell Irish surnames and given names. 'Murphy' may appear as 'Murphey', 'Morphy', 'Murfey', or 'Morphey'. 'Bridget' may appear as 'Bridgett', 'Brigid', or 'Bridie'. I must search phonetic variants, browse register images directly, and always cite the original record image, not the transcription.",
+      "feynmanPrompt": "Explain to a friend why FamilySearch is both one of the best genealogical resources in the world and potentially misleading — and why viewing an image is always more reliable than reading the transcription beside it.",
+      "rabbitHoleTerms": [
+        {
+          "term": "FHL (Family History Library)",
+          "description": "The world's largest genealogical library, in Salt Lake City, operated by the Church of Jesus Christ of Latter-day Saints; holds 2.4 million microfilm reels now being progressively digitised on FamilySearch."
+        },
+        {
+          "term": "Chronicling America",
+          "description": "A free Library of Congress digital archive of US historical newspapers from 1770 to 1963, searchable by keyword and fully text-searchable."
+        },
+        {
+          "term": "British Newspaper Archive",
+          "description": "The largest UK newspaper digitisation project, holding hundreds of millions of pages from 18th–20th-century British regional and national papers, available by subscription at britishnewspaperarchive.co.uk."
+        },
+        {
+          "term": "Soundex coding",
+          "description": "A phonetic algorithm grouping surnames by sound to allow searches across spelling variants; used in US census indexes and many genealogical platforms."
+        },
+        {
+          "term": "Discovery catalogue",
+          "description": "The National Archives' (UK) online archive catalogue, indexing millions of record series held at TNA and other UK archives — the starting point for any search of England/Wales government records."
+        },
+        {
+          "term": "raw DNA upload",
+          "description": "The practice of downloading raw genetic data from one testing company and uploading it to another's database (e.g. from AncestryDNA to MyHeritage), expanding the pool of potential matches without further testing."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which major genealogical platform is completely free to use for searching and viewing most records?</p>",
+          "options": [
+            "FamilySearch (familysearch.org)",
+            "Ancestry.com",
+            "FindMyPast",
+            "ScotlandsPeople"
+          ],
+          "correctAnswer": "FamilySearch (familysearch.org)",
+          "explanationHtml": "<p>FamilySearch is operated by the Church of Jesus Christ of Latter-day Saints and provides free access to a vast global collection of genealogical records including US census, worldwide parish registers, military records, and the FHL microfilm catalogue. Ancestry, FindMyPast, and most other commercial platforms charge subscriptions. ScotlandsPeople charges per-page-view credits. FamilySearch is the first search destination for budget-conscious researchers.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You search Ancestry for your ancestor's name — \"Brigid O'Neill\" — but find no results in the 1901 Irish census. You know she should be there. What is the most likely explanation and the best next step?</p>",
+          "options": [
+            "The transcription may have rendered her name as 'Bridget', 'Bridie', 'Brida', 'O'Neil', or 'Neil' — view the image of the 1901 census household page directly on census.nationalarchives.ie, browsing the relevant county and townland",
+            "The 1901 Irish census does not include women",
+            "Ancestry holds only Northern Ireland records; Republic of Ireland census is unavailable online",
+            "The census.nationalarchives.ie site has permanently deleted 1901 records for privacy reasons"
+          ],
+          "correctAnswer": "The transcription may have rendered her name as 'Bridget', 'Bridie', 'Brida', 'O'Neil', or 'Neil' — view the image of the 1901 census household page directly on census.nationalarchives.ie, browsing the relevant county and townland",
+          "explanationHtml": "<p>Transcription errors are the most common reason for 'not found' results on commercial platforms. Irish given names and surnames have multiple English spellings; the census-taker's handwriting and the transcriber's reading compound the variants. The 1901 and 1911 Irish census household schedules are freely available in full image form at census.nationalarchives.ie — browsing directly to the relevant county, district, and townland allows you to read the actual household schedule and find the entry that was missed by the index.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds a published family tree on Ancestry that gives their great-great-grandmother's maiden name as 'Holloway' and her birthplace as 'Wiltshire, England.' They immediately add this to their own tree and cite the source as 'Ancestry family tree.' Theodora is dismayed. Why?</p>",
+          "options": [
+            "An Ancestry family tree is an authored work, not a primary source — the researcher must trace the underlying records (a birth certificate, marriage certificate, or census entry) to verify the maiden name and birthplace; citing 'Ancestry family tree' is an untraceable citation that could propagate an unverified error",
+            "Ancestry family trees are always correct because they are moderated by genealogists",
+            "The researcher should have used FindMyPast instead of Ancestry",
+            "The maiden name 'Holloway' cannot be verified from any source — all such information is unrecoverable"
+          ],
+          "correctAnswer": "An Ancestry family tree is an authored work, not a primary source — the researcher must trace the underlying records (a birth certificate, marriage certificate, or census entry) to verify the maiden name and birthplace; citing 'Ancestry family tree' is an untraceable citation that could propagate an unverified error",
+          "explanationHtml": "<p>A published family tree, whether on Ancestry, FamilySearch, or any other platform, is an authored work. The person who built it may have got the maiden name from another tree, which got it from another tree, which guessed. The citation 'Ancestry family tree' is not verifiable by anyone trying to check the work. The correct procedure is to use the tree as a lead — then find the underlying records: the marriage certificate (which lists maiden name), the census (which confirms birthplace), or the birth certificate. Those records, cited precisely, are the evidence. The tree is the hypothesis.</p>"
+        }
+      ]
+    }
+  ]
+}

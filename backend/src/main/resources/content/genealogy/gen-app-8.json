@@ -1,0 +1,132 @@
+{
+  "id": "gen-app-8",
+  "title": "Naming Conventions & Family Patterns",
+  "glyph": "📛",
+  "sortOrder": 8,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-7"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-8a",
+      "title": "Naming Patterns, Patronymics & the Art of the Alias",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Why does a man appear as \"Patrick\" in the baptism register, \"Padraig\" in the will, \"Peter\" in the census, and \"Pat\" in the deed? Why does your Scottish ancestor's name change every generation? Understanding naming conventions — how cultures named their children, how names transformed between languages and continents, and how families repeated names across generations — cuts through one of the most common sources of confusion in genealogical research.</p>",
+      "explanationHtml": "<h3>The English and Irish naming tradition</h3>\n<p>In 18th and 19th-century England and Ireland, it was common to name children after grandparents and other relatives in a recognisable pattern. The \"classic\" English/Irish naming convention (followed by many, though not all, families) ran:</p>\n<ul>\n  <li>Eldest son named after the <strong>paternal grandfather</strong></li>\n  <li>Second son named after the <strong>maternal grandfather</strong></li>\n  <li>Third son named after the <strong>father</strong></li>\n  <li>Eldest daughter named after the <strong>maternal grandmother</strong></li>\n  <li>Second daughter named after the <strong>paternal grandmother</strong></li>\n  <li>Third daughter named after the <strong>mother</strong></li>\n</ul>\n<p>This pattern is not universal — some families followed it religiously, others never did — but when it holds, it is a hypothesis generator of extraordinary power. If you can identify the names of the first two or three children in a family, you may have indirect evidence of both grandparents' names, enabling a search for the parents' own parents that would otherwise require documentary proof.</p>\n<p>A corollary: <strong>reuse of a name</strong> in a family often indicates the death of an earlier child with that name. Two \"Mary\" children born to the same parents — the first Mary almost certainly died before the second was baptised.</p>\n\n<h3>Scottish naming conventions</h3>\n<p>Scotland had a similar but distinct naming tradition, often described as the \"Scottish naming pattern\":</p>\n<ul>\n  <li>Eldest son: <strong>paternal grandfather</strong></li>\n  <li>Second son: <strong>maternal grandfather</strong></li>\n  <li>Third son: <strong>father himself</strong></li>\n  <li>Eldest daughter: <strong>maternal grandmother</strong></li>\n  <li>Second daughter: <strong>paternal grandmother</strong></li>\n  <li>Third daughter: <strong>mother herself</strong></li>\n</ul>\n<p>The Scottish version places the maternal grandmother before the paternal grandmother for daughters — the reverse of the most common English version. This pattern was widely followed in 18th and 19th-century Scotland and its diaspora. When a Scottish family appears in Nova Scotia or New Zealand, the naming pattern often persists, helping researchers identify grandparents' names from overseas records.</p>\n\n<h3>Welsh patronymics</h3>\n<p>Wales used a <strong>patronymic</strong> naming system until surprisingly late — some rural families in Wales were still using patronymics in the early 19th century, and a few areas into the 1850s. In a patronymic system, a person takes their father's given name as their surname:</p>\n<ul>\n  <li>William, son of John, is <strong>William Jones</strong> (\"ap John\" → \"Jones\")</li>\n  <li>David, son of William, is <strong>David Williams</strong></li>\n  <li>Mary, daughter of David, is <strong>Mary Davies</strong></li>\n</ul>\n<p>Each generation has a different surname — which means that genealogical research in Wales before the fixed-surname era requires tracking given names, not family surnames, and using \"alias\" entries in records carefully. The most common Welsh surnames (Jones, Williams, Davies, Evans, Roberts, Edwards, Lewis, Thomas, Hughes) all derive from patronymic forms of common Welsh given names.</p>\n\n<h3>Irish Gaelic names and anglicisation</h3>\n<p>Irish names were anglicised — sometimes consistently, sometimes idiosyncratically — as the English administrative system imposed its language on Irish-language communities. The result is that one ancestor may appear under multiple forms:</p>\n<table>\n  <tr><th>Irish form</th><th>Anglicised form(s)</th><th>Notes</th></tr>\n  <tr><td>Séamus</td><td>James, Hamish</td><td>Via Latin Jacobus</td></tr>\n  <tr><td>Pádraig</td><td>Patrick, Peter</td><td>Sometimes \"Pat\" or \"Paddy\" in census</td></tr>\n  <tr><td>Eithne</td><td>Annie, Ena, Edna, Ethna</td><td>Highly variable anglicisation</td></tr>\n  <tr><td>Tadhg</td><td>Timothy, Thaddeus, Tim, Teague</td><td>Pronounced roughly \"Tige\"</td></tr>\n  <tr><td>Máire</td><td>Mary, Maria, Marie</td><td>Almost universal substitution</td></tr>\n  <tr><td>Brighid</td><td>Bridget, Bridie, Brid</td><td>After Saint Brigid</td></tr>\n  <tr><td>Caitlín</td><td>Kathleen, Catherine, Kate</td><td>Via Latin Catharina</td></tr>\n</table>\n<p>Additionally, Irish <strong>Ó</strong> (grandson of) and <strong>Mac</strong> (son of) prefixes were frequently dropped during the 17th–19th century Penal era and then sometimes reinstated in the 20th. A family that appears as \"Walsh\" in 1850 and \"O'Walsh\" in 1920 has not changed its ancestry; the prefix has been restored. Similarly, \"Mac\" names (MacDermott, MacCarthy) often appear without the prefix in mid-19th-century records.</p>\n\n<h3>Junior, Senior, and the same-name trap</h3>\n<p>Until the early 20th century, \"<strong>Junior</strong>\" in English-language records did not exclusively mean \"son of.\" It commonly meant \"the younger of two men of the same name in the same community\" — often a nephew and uncle, or two unrelated neighbours. When you see \"John Walsh Jr.\" in an 1820 county deed book, this does not automatically mean his father is \"John Walsh Sr.\" It means he is the younger of two John Walshs active in the county at that time. The deeds immediately surrounding his transactions may reveal the actual relationship.</p>\n\n<h3>Variant spellings — expect them, embrace them</h3>\n<p>Surnames in historical records were not standardised. An enumerator, registrar, or clerk wrote what they heard, phonetically, in their own spelling tradition. A family whose name was pronounced \"Fitz-gerald\" might appear as:</p>\n<p>Fitzgerald / Fitzjeral / Fitsjarald / Fitzjarrold / Fitgerald / Fitz Gerard</p>\n<p>This is not an error to be corrected — it is evidence of the name's pronunciation and the clerk's own spelling background. Search by Soundex code (which groups phonetically similar surnames), by phonetic variants, and by initial letter. Never assume the spelling you know is the only spelling that existed.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora hands you a sheet of paper with four columns: a father's name, a mother's name, and the names of their first four children. The children's names seem to echo something. She taps the page."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Look at this family. Patrick and Bridget Walsh, married 1845. Their children: Thomas (born 1846), James (born 1848), Mary (born 1850), Catherine (born 1852). Now — I claim I can make a reasonable guess at the names of both sets of grandparents without seeing any other record. Watch."
+        },
+        {
+          "type": "example",
+          "speaker": "Applying the naming convention",
+          "text": "Eldest son Thomas = likely named after the paternal grandfather.\nSecond son James = likely named after the maternal grandfather.\nEldest daughter Mary = likely named after the maternal grandmother.\nSecond daughter Catherine = likely named after the paternal grandmother.\n\nHypothesis: Patrick Walsh's father was Thomas Walsh.\nHypothesis: Bridget (née ?) 's father was James [maiden-surname unknown].\nHypothesis: Bridget's mother was Mary [maiden-surname unknown].\nHypothesis: Patrick's mother was Catherine [maiden-surname unknown].\n\nThese are working hypotheses — not proofs. But they narrow the search by four names."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This is a hypothesis, not a proof. The family may not have followed the convention. But when you have nothing else, and you must search a county register for a Patrick Walsh's parents, these four names are your compass. Go and find them. If you find a Thomas Walsh whose son was Patrick, born around 1820, you may have your man. You test the hypothesis; you do not accept it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now Wales. Imagine you are tracking a family in 18th-century Gwynedd. The grandfather is Rhys. His son is William <em>ap Rhys</em> — William, son of Rhys — which becomes, in English records, William <em>Price</em>. William's own son David is <em>David Williams</em>. David's daughter Mary is <em>Mary Davies</em>. Grandfather, father, son, granddaughter — four different surnames, one family. This is patronymics in practice. You are not tracking a surname. You are tracking a chain of given names."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And in Ireland — the anglicisation of Irish given names is one of genealogy's most treacherous waters. Séamus becomes James. Pádraig becomes Patrick, but also sometimes Peter. Tadhg — pronounced roughly as Tiger without the r — becomes Timothy, or Thaddeus, or just Teague. Eithne can become Annie, or Ena, or Edna. The same person may appear under three different anglicised names across three different records in three different decades. You are not dealing with three different people. You are dealing with one person and three clerks."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor naming conventions</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>In the classic English/Irish naming pattern, after whom are the <strong>eldest son</strong> and <strong>eldest daughter</strong> typically named?</li>\n  <li>What does it usually indicate when a family gives two children the <strong>same given name</strong>?</li>\n  <li>Explain Welsh <strong>patronymics</strong> with a two-generation example.</li>\n  <li>Give two different English forms of the Irish name <strong>Tadhg</strong>.</li>\n  <li>In 19th-century records, does \"Junior\" always mean \"son of\"? Explain.</li>\n</ul>",
+      "guidedPracticeModelAnswer": "In the classic English/Irish naming pattern, the eldest son is typically named after the paternal grandfather, and the eldest daughter after the maternal grandmother.\n\nWhen a family gives two children the same given name, this almost always indicates the death of the first child before the second was baptised — the name is being reused to honour the lost child or the person they were named after.\n\nWelsh patronymics example: Rhys is the grandfather. His son is William ap Rhys (William son of Rhys), anglicised as William Price. William's son David is David Williams (David son of William). Each generation takes the father's given name as the family surname — so the surname changes each generation.\n\nTwo English forms of Tadhg: Timothy and Thaddeus (also Teague or Tim are informal versions).\n\nNo — in 19th-century records, 'Junior' did not exclusively mean 'son of.' It commonly meant 'the younger of two men of the same name active in the same community.' The younger man might be a nephew, a cousin, or an unrelated neighbour. The deeds surrounding the transaction must be examined to determine the actual relationship.",
+      "soloPracticeHtml": "<h3>Applying naming convention analysis</h3>\n<p>The following children have been identified in a single family from County Mayo, Ireland, emigrating to New York around 1850:</p>\n<ol>\n  <li>Michael Walsh (b. 1832)</li>\n  <li>John Walsh (b. 1835)</li>\n  <li>Bridget Walsh (b. 1837)</li>\n  <li>Mary Walsh (b. 1840)</li>\n  <li>Thomas Walsh (b. 1843)</li>\n</ol>\n<p>The parents are known to be Patrick Walsh and his wife, whose first name is not yet identified.</p>\n<p>Apply the classic Irish naming pattern to generate working hypotheses about the grandparents' names. Then write a short paragraph (150–200 words) explaining what cautions apply to these hypotheses and how you would test them.</p>",
+      "modelAnswer": "Applying the classic Irish naming pattern:\n- Michael (eldest son) = likely named after the paternal grandfather. Hypothesis: Patrick Walsh's father was Michael Walsh.\n- John (second son) = likely named after the maternal grandfather. Hypothesis: Patrick's wife's father was John [wife's maiden surname unknown].\n- Bridget (eldest daughter) = likely named after the maternal grandmother. Hypothesis: Patrick's wife's mother was Bridget [maiden surname unknown].\n- Mary (second daughter) = likely named after the paternal grandmother. Hypothesis: Patrick Walsh's mother was Mary [maiden surname unknown].\n- Thomas (fifth child, third son) = likely named after the father himself. This is unusual — normally the third son is named after the father, but Thomas and Patrick are different names, which suggests the convention may not be followed here, OR that Thomas was named after another relative (an uncle, godfather, etc.).\n\nCautions and testing: These are working hypotheses, not proofs. The family may not have followed the convention strictly. To test them, I would search County Mayo Catholic parish baptism registers for a Michael Walsh whose son Patrick was born around 1800–1810. If I find a Michael Walsh of the right generation in the right parish with a wife named Mary, the hypothesis gains support. I would also look for a will or administration bond for Michael Walsh that names a son Patrick, and for any deeds listing both Michael and Patrick Walsh as related parties.",
+      "feynmanPrompt": "Explain to a friend with no genealogy background why the same Irish ancestor might appear under four different spellings and two different given names in different records — and why this is not evidence of four different people.",
+      "rabbitHoleTerms": [
+        {
+          "term": "patronymic system",
+          "description": "A naming convention in which a person's surname is derived from the father's given name, changing each generation; used in Wales, parts of Ireland, Scandinavia, and other cultures."
+        },
+        {
+          "term": "Soundex",
+          "description": "A phonetic encoding system used in US census and genealogical indexes that groups surnames by their sound, allowing searches to find variant spellings of the same name."
+        },
+        {
+          "term": "anglicisation",
+          "description": "The process of converting Irish or other non-English names into English forms, often with multiple possible equivalents for a single original name."
+        },
+        {
+          "term": "naming convention hypothesis",
+          "description": "The use of children's given names to infer grandparents' names, based on the cultural practice of naming children after specific relatives; a working hypothesis, not a proof."
+        },
+        {
+          "term": "Junior/Senior confusion",
+          "description": "The historical use of Jr/Sr to distinguish two men of the same name in a community, not necessarily father and son — a common genealogical misreading."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In the classic English/Irish naming convention, after whom is the <strong>second son</strong> typically named?</p>",
+          "options": [
+            "The maternal grandfather",
+            "The paternal grandfather",
+            "The father himself",
+            "The eldest paternal uncle"
+          ],
+          "correctAnswer": "The maternal grandfather",
+          "explanationHtml": "<p>In the classic English/Irish naming pattern: eldest son = paternal grandfather; second son = maternal grandfather; third son = the father. Eldest daughter = maternal grandmother; second daughter = paternal grandmother; third daughter = the mother. This pattern is a hypothesis generator — it is not universal, but when it holds it can suggest grandparents' names from children's names alone.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are tracing a Welsh family in 18th-century records. The father is listed as Evan ap David; his son appears in later records as William Evans. What naming system explains this?</p>",
+          "options": [
+            "Welsh patronymics — the son takes his father's given name (Evan) as his surname, anglicised to Evans",
+            "A clerical error — the names should be identical across records",
+            "The family emigrated and changed their name at the border",
+            "Evans is the anglicised form of the mother's maiden name in Welsh custom"
+          ],
+          "correctAnswer": "Welsh patronymics — the son takes his father's given name (Evan) as his surname, anglicised to Evans",
+          "explanationHtml": "<p>In Welsh patronymics, a person's surname derives from the father's given name. Evan ap David's son William takes Evan's given name as his surname: William ap Evan, anglicised to William Evans. This means Welsh family surnames changed every generation until fixed surnames became standard (mostly by the mid-19th century in Wales). The researcher must track given names, not surnames, when working in pre-fixed-surname Welsh records.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds an 1840 deed for \"Thomas Walsh Jr.\" and concludes that his father must be \"Thomas Walsh Sr.\" listed on the same page. Theodora cautions against this. Why?</p>",
+          "options": [
+            "\"Jr.\" in 19th-century records commonly meant the younger of two men of the same name in the same community — not necessarily father and son; the two Thomases might be uncle and nephew, cousins, or unrelated neighbours; the relationship must be established from other records",
+            "Deeds never used Jr./Sr. designations, so one of the names is a transcription error",
+            "Jr. always means second generation — Theodora is wrong to caution",
+            "The two men cannot both be on the same deed, so the document must be a forgery"
+          ],
+          "correctAnswer": "\"Jr.\" in 19th-century records commonly meant the younger of two men of the same name in the same community — not necessarily father and son; the two Thomases might be uncle and nephew, cousins, or unrelated neighbours; the relationship must be established from other records",
+          "explanationHtml": "<p>In 18th and 19th-century US (and British) records, Junior/Senior was used to distinguish two men of the same name living in the same community — and that community might include a nephew/uncle, two cousins, or two unrelated men who happened to share a name. The designations disappear when one of the men dies or moves away, confirming they were situational identifiers, not permanent family titles. The relationship between Thomas Walsh Sr. and Thomas Walsh Jr. on this deed is unproven; it must be established from wills, church records, or other deeds naming the relationship explicitly.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "gen-app-4",
+  "title": "British & Irish Civil Records",
+  "glyph": "🏛️",
+  "sortOrder": 4,
+  "tier": "APPRENTICE",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-app-3"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-app-4a",
+      "title": "Navigating the GRO, ScotlandsPeople & Irish Registers",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Civil registration began at different times across Britain and Ireland — and each jurisdiction kept its own registers, built its own indexes, and digitised its records at its own pace. Before you search, you must know <em>which office holds what</em>, and <em>how its reference system works</em>. A researcher who sends for an England and Wales certificate citing a Scottish reference number will wait in vain.</p>",
+      "explanationHtml": "<h3>England and Wales — the General Register Office</h3>\n<p>Civil registration in England and Wales began on <strong>1 July 1837</strong>, administered by the <strong>General Register Office (GRO)</strong>. Births, marriages, and deaths were registered locally by Superintendent Registrars within registration districts — administrative units that roughly followed Poor Law union boundaries, not county lines. The GRO compiled quarterly national indexes from the local registers.</p>\n<p>The reference system that matters for ordering certificates:</p>\n<ul>\n  <li><strong>Quarter:</strong> March (Jan–Mar), June (Apr–Jun), September (Jul–Sep), December (Oct–Dec)</li>\n  <li><strong>Registration district name</strong></li>\n  <li><strong>Volume number</strong> (a Roman numeral in earlier years, then Arabic)</li>\n  <li><strong>Page number</strong></li>\n</ul>\n<p>Example: \"WALSH, Bridget — born Jun quarter 1841, St Pancras, vol. I, p. 247.\" With this reference you can order a copy of the original certificate from the GRO or view the index image. The major free online index is the <strong>FreeBMD</strong> project, which transcribed the paper GRO indexes voluntarily; <strong>FindMyPast</strong> and <strong>Ancestry</strong> hold linked images. From 2021 the GRO's own online service (gro.gov.uk) allows ordering directly, and from the same year mother's details were added to marriage indexes.</p>\n<p><strong>Mothers' maiden names</strong> were added to the birth index from September 1911 onward — a crucial upgrade because it allows disambiguation of common surnames. Before 1911, an index entry \"Smith, John, Jun 1874, Manchester, vol. 8d, p. 221\" tells you little; after 1911, the mother's maiden name beside the child's entry lets you verify you have the right family.</p>\n\n<h3>Scotland — ScotlandsPeople</h3>\n<p>Scotland's civil registration began on <strong>1 January 1855</strong> and is widely regarded as the most detailed BMD system in the British Isles, especially in its first year. The 1855 birth register, for instance, asked for both the child's parents' ages, their marriage date and place, and the number of previous children — detail not matched in England and Wales for decades. The statutory registers are held at <strong>New Register House in Edinburgh</strong> and are accessible online through <strong>ScotlandsPeople</strong> (scotlandspeople.gov.uk), which charges per-page view. The Old Parochial Registers (OPRs) — Scotland's equivalent of English parish registers, from roughly 1553 — are also on ScotlandsPeople.</p>\n<p>Scotland's reference system uses the <strong>GROS district number</strong> (Statutory Numbering of Registration Districts), entry number, and year. Scottish death records include the informant's relationship to the deceased, the names of both parents of the deceased (including mothers' maiden names), and the deceased's marital status — often giving you two generations of a family from a single death entry.</p>\n\n<h3>Ireland — before and after partition</h3>\n<p>Ireland's situation is complicated by the partition of 1922 into the Irish Free State (later Republic) and Northern Ireland. Civil registration began in <strong>1864</strong> for all BMD, though non-Catholic marriages were registered from 1845. Key repositories:</p>\n<table>\n  <tr><th>Jurisdiction</th><th>Period</th><th>Repository</th><th>Online access</th></tr>\n  <tr><td>All Ireland</td><td>1864–1921</td><td>General Register Office of Ireland (Dublin)</td><td>irishgenealogy.ie — free</td></tr>\n  <tr><td>Republic of Ireland</td><td>1922–present</td><td>GRO, Dublin</td><td>irishgenealogy.ie</td></tr>\n  <tr><td>Northern Ireland</td><td>1922–present</td><td>GRONI (General Register Office NI, Belfast)</td><td>nidirect.gov.uk (paid certificates)</td></tr>\n</table>\n<p>Irish genealogy faces unique challenges. The 1922 Four Courts fire destroyed most of the Public Record Office of Ireland, including many pre-1900 wills, census returns, and estate records. The 1901 and 1911 census returns (the earliest surviving national enumerations for Ireland) are therefore the critical census baseline; earlier Irish census returns were largely destroyed. <strong>Griffith's Primary Valuation</strong> (1847–1864) — a land and property survey — partly substitutes for census data in the mid-19th century because it is comprehensive and names the occupiers of every piece of land and property in Ireland.</p>\n\n<h3>Registration districts vs counties — why they differ</h3>\n<p>Registration districts were drawn for administrative convenience and almost never align with county boundaries. A family living three streets from a county border might appear in a registration district whose name suggests the next county entirely. The registrar's geographic area, not the county, is what matters when searching. Free tools such as the Registration District Finder on the GRO website allow you to look up which district covered a given parish.</p>\n\n<h3>Indexes vs images vs certificates — what you actually see</h3>\n<p>At every stage of searching, be clear about what you are looking at:</p>\n<ul>\n  <li><strong>Index only:</strong> a name, a date period, a district, a volume and page reference. No detail. Enough to order or to confirm the record exists. May have transcription errors.</li>\n  <li><strong>Digitised image of the original register:</strong> the actual handwritten entry as the registrar entered it. Rich. May reveal marginal notes, alterations, or neighbouring entries.</li>\n  <li><strong>Certified copy (certificate):</strong> a modern transcript on official paper, issued by the relevant GRO. Admissible as legal evidence. Costs money. Useful if you need the record for a legal purpose; not usually necessary for genealogical research where the image is available.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora spreads three long-form printed pages across the table — each a different shade of cream, each marked in a different hand. \"England and Wales,\" she says, tapping the first. \"Scotland.\" The second. \"Ireland.\" She pauses. \"One island. Three record systems. And one of them lost most of its archive in a single morning in 1922.\""
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Civil registration in England and Wales runs from 1 July 1837. The reference system that will follow you for the rest of your career has three moving parts: the <em>quarter</em> — March, June, September, December — the <em>registration district</em> — which follows Poor Law boundaries, not county lines — and the <em>volume and page number</em> in the GRO index. With those three things you can order or locate any BMD certificate recorded in England and Wales after 1837. Before 1911 you will have only the name, quarter, district, and reference. From September 1911, the birth index adds the mother's maiden name — and suddenly, common surnames become traceable again."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Scotland is the jewel. Civil registration began 1 January 1855 — eighteen years later than England — but when Scotland began, it did so with extraordinary care. The 1855 birth register asked for the parents' ages, their marriage date, their marriage place, and the number of previous children. Scotland's death registers routinely record both parents of the deceased, including the mother's maiden name. One Scottish death certificate can give you two generations of family. The records are at ScotlandsPeople, behind a per-view paywall, but they are worth every penny."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Ireland is where hearts break. Registration began 1864 — full BMD, non-Catholic marriages from 1845. Two repositories now exist: Dublin for the Republic, Belfast for the North, dividing the island at 1922. And behind both lies the catastrophe of the Four Courts fire — June 1922, in the opening weeks of the Irish Civil War. Most of the Public Record Office of Ireland went up in flames. Wills. Census returns. Estate papers. Gone. The 1901 and 1911 censuses are the earliest surviving national counts for Ireland. And before those, for the mid-nineteenth century, Griffith's Primary Valuation is what survives: a land survey that names the occupier of every patch of Irish soil. It is not a census. But it is, for many families, all we have."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And always keep this distinction in your mind: you are looking at an <em>index</em>, or an <em>image</em>, or a <em>certificate</em>. Three different things. The index names the record and gives you the reference. The image shows you the handwritten register entry itself. The certificate is a modern transcript — useful for legal proceedings, unnecessary for research if you have the image. Spend your money on images, not certificates, unless a court demands it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor the registration landscape</h3>\n<p>Without scrolling back, retrieve:</p>\n<ul>\n  <li>What are the four GRO quarters, and what months do they cover?</li>\n  <li>What year did civil registration begin in Scotland, and what made its 1855 birth register unusually detailed?</li>\n  <li>Why does Irish genealogy before 1901 face particularly severe record losses?</li>\n  <li>What is <strong>Griffith's Primary Valuation</strong>, and why does it matter for Irish research?</li>\n  <li>What is the difference between viewing an <strong>index</strong>, an <strong>image</strong>, and ordering a <strong>certificate</strong>?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The four GRO quarters are: March (January–March), June (April–June), September (July–September), and December (October–December). Scotland's civil registration began on 1 January 1855; the 1855 birth register was unusually detailed because it asked for the parents' ages, their marriage date and place, and the number of previous children. Irish genealogy before 1901 faces severe record losses primarily because of the 1922 Four Courts fire, which destroyed most of the Public Record Office of Ireland, including census returns and wills. Griffith's Primary Valuation (1847–1864) was a land and property survey that named the occupier of every piece of land in Ireland; because earlier census returns were destroyed, it functions as a substitute census for many families. An index entry gives only name, date, district, and GRO reference — enough to locate the record but no detail; an image is a scan of the original handwritten register entry; a certificate is a modern official transcript, admissible for legal purposes but not usually needed if the image is available.",
+      "soloPracticeHtml": "<h3>Scenario: navigating across jurisdictions</h3>\n<p>You are researching the Kelly family. Your starting point is a marriage certificate for Patrick Kelly and Bridget O'Brien, married in Birmingham, England, in the June quarter of 1872, in the Aston registration district. From family papers you learn that Patrick was born in County Roscommon, Ireland, around 1845, and emigrated to England around 1865.</p>\n<p>Write a brief research plan (300–400 words) that:</p>\n<ul>\n  <li>States which repositories and record sets you would search first for Patrick's English records, and the reference format you would need</li>\n  <li>States which repositories and record sets you would search for Patrick's Irish birth records</li>\n  <li>Explains the specific record loss issue that may limit your Irish searching</li>\n  <li>Names one Irish record substitute that might compensate for missing earlier records</li>\n</ul>",
+      "modelAnswer": "For Patrick Kelly's English records: I would begin with the civil registration indexes for England and Wales at the GRO (searchable via FreeBMD, FindMyPast, and Ancestry). His marriage is already documented (Birmingham, Aston, June 1872). I would search for his death registration in the GRO quarterly indexes (reference format: surname, given name, quarter, registration district, volume, page) and for any children's births in the same district. The Aston registration district records are held by the GRO and are accessible via online images.\n\nFor Patrick's Irish birth records: He was born around 1845 in County Roscommon, before Irish civil registration began in 1864. This means no civil birth record exists. I would search the Roman Catholic baptism registers for Roscommon parishes on irishgenealogy.ie and on the National Library of Ireland's Catholic Parish Registers database (free online access). I would also search the 1901 and 1911 Irish censuses (available free on census.nationalarchives.ie) for any surviving relatives who might confirm family details.\n\nThe specific record loss issue is the 1922 Four Courts fire, which destroyed most of the Public Record Office of Ireland. Census returns from 1821, 1831, 1841, and 1851 were largely destroyed (some 1851 fragments survive). Wills and estate papers were also affected. This means I cannot use pre-1901 census records to find Patrick's family in Roscommon.\n\nAs a substitute, Griffith's Primary Valuation (1847–1864) covers County Roscommon and names occupiers of land and property. Searching the Valuation Office records (available via askaboutireland.ie) for Kelly households in the relevant parishes might identify Patrick's family and confirm townland of origin, which would then guide my search of local Catholic registers.",
+      "feynmanPrompt": "Explain to a friend the difference between GRO registration districts and counties — and why an Irish family researcher faces a fundamentally different challenge from an English one when tracing ancestors before 1900.",
+      "rabbitHoleTerms": [
+        {
+          "term": "FreeBMD",
+          "description": "A volunteer transcription project that digitised the GRO's paper BMD indexes for England and Wales; searchable free at freebmd.org.uk."
+        },
+        {
+          "term": "Griffith's Primary Valuation",
+          "description": "An Irish land survey conducted 1847–1864 that named every occupier of land and property in Ireland — the closest surviving substitute for lost pre-1901 census data."
+        },
+        {
+          "term": "ScotlandsPeople",
+          "description": "The official Scottish government genealogy website holding statutory registers, Old Parochial Registers, and census records, accessible on a per-image-view pricing model."
+        },
+        {
+          "term": "Four Courts fire",
+          "description": "A fire at the Public Record Office of Ireland during the 1922 Civil War that destroyed most Irish census returns, wills, and estate papers before 1900."
+        },
+        {
+          "term": "GRONI",
+          "description": "General Register Office for Northern Ireland; holds BMD records for Northern Ireland from 1922 onward, accessible via nidirect.gov.uk."
+        },
+        {
+          "term": "irishgenealogy.ie",
+          "description": "The free Irish government genealogy portal hosting civil registration records and Catholic parish registers for the Republic of Ireland."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In what year did civil registration of births, marriages, and deaths begin in <strong>Scotland</strong>?</p>",
+          "options": [
+            "1855",
+            "1837",
+            "1864",
+            "1898"
+          ],
+          "correctAnswer": "1855",
+          "explanationHtml": "<p>Scotland's statutory civil registration began on 1 January 1855, eighteen years after England and Wales (1837) and nine years before Ireland (1864). Scotland's registers, especially the 1855 birth registers, are considered the most detailed BMD records in the British Isles for their period.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are looking for the baptism of an Irish ancestor born in County Roscommon around 1845. Which of the following is the most realistic primary source to search?</p>",
+          "options": [
+            "Roman Catholic parish baptism registers on irishgenealogy.ie or the NLI Catholic Parish Registers database",
+            "Irish civil birth registration indexes from 1845",
+            "The 1841 Irish census household schedule",
+            "The General Register Office for Northern Ireland"
+          ],
+          "correctAnswer": "Roman Catholic parish baptism registers on irishgenealogy.ie or the NLI Catholic Parish Registers database",
+          "explanationHtml": "<p>Irish civil registration began only in 1864 (full BMD), so a birth in 1845 cannot appear in civil records. The 1841 Irish census was largely destroyed in 1922. Northern Ireland records only cover post-1922 Northern Ireland, not County Roscommon (which is in the Republic). Catholic parish registers — most now digitised and freely available — are the best source for pre-1864 Irish baptisms.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher says: \"I have the GRO index entry for my ancestor's 1902 birth in Manchester — that is all I need.\" Theodora shakes her head. Why?</p>",
+          "options": [
+            "The index entry gives only the name, quarter, district, and GRO reference — viewing the image of the actual register entry, or ordering the certificate, is necessary to obtain the parents' names, the mother's maiden name (added to indexes only from September 1911), informant, and exact date",
+            "The GRO does not hold Manchester records — these are at the Manchester city archive",
+            "Index entries for pre-1911 births are considered legally inadmissible",
+            "The researcher must first obtain a Scottish equivalent to confirm English records"
+          ],
+          "correctAnswer": "The index entry gives only the name, quarter, district, and GRO reference — viewing the image of the actual register entry, or ordering the certificate, is necessary to obtain the parents' names, the mother's maiden name (added to indexes only from September 1911), informant, and exact date",
+          "explanationHtml": "<p>The GRO quarterly index is a finding aid, not a full record. It tells you where the record is; it does not tell you the content. For a 1902 birth, the mother's maiden name does not appear in the birth index (that was added only from September 1911). The full register entry — accessible via image on FindMyPast or Ancestry, or via a certified copy from the GRO — contains the father's and mother's names, mother's maiden name, address, informant, and exact date. The index is the beginning of the research, not the end.</p>"
+        }
+      ]
+    }
+  ]
+}
