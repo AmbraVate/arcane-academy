@@ -1,0 +1,143 @@
+{
+  "id": "psy-lea-2",
+  "title": "Decolonising Psychology",
+  "glyph": "🌍",
+  "sortOrder": 2,
+  "tier": "LEAD",
+  "topicId": "psychology",
+  "prerequisites": [
+    "psy-lea-1"
+  ],
+  "subChunks": [
+    {
+      "id": "psy-lea-2a",
+      "title": "Psychology's Colonial Legacy and the Project of Decolonisation",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Psychology presents itself as a universal science of the mind. Its theories — Maslow's hierarchy of needs, Kohlberg's stages of moral development, the Big Five personality traits, attachment theory — are taught in universities worldwide as if they capture something fundamental about human psychology everywhere and always. But this universalism rests on a foundational assumption that deserves critical scrutiny: that the psychological science developed primarily by Western, educated, industrialised researchers, studying predominantly Western, educated, industrialised, rich, democratic (WEIRD) populations, describes human psychology as such — not just one historically specific, culturally embedded instantiation of it. The project of decolonising psychology asks a harder question than 'are our samples WEIRD?' It asks: what forms of knowledge, whose experiences, and which ways of understanding the mind were excluded, subordinated, or pathologised in the construction of mainstream psychological science? And what would psychology look like if it were built differently?</p>",
+      "explanationHtml": "<h3>What Does 'Colonial' Mean in This Context?</h3>\n<p>Colonialism was a historical political and economic system in which European powers conquered, administered, and extracted resources from territories across Africa, Asia, the Americas, and Oceania. Its effects on psychology are multiple and layered. First, colonial regimes actively produced psychological knowledge in service of administration: theories of racial hierarchy, studies of 'primitive' cognition, psychological justifications for the incapacity of colonised peoples for self-governance. This knowledge has been largely excised from mainstream psychology's official history but shaped the discipline's early development. Second, colonialism created the institutional conditions for a science produced almost exclusively by and about a particular slice of humanity — Western European and North American researchers and their students — to claim universal validity. Third, it created ongoing material inequalities that continue to shape who produces psychological knowledge, whose psychological wellbeing is researched and resourced, and whose knowledge systems are recognised as legitimate.</p>\n<p>Decolonising psychology is not a single unified project — it encompasses multiple overlapping critiques and agendas: the WEIRD populations critique (methodological), Afrocentric and Indigenous psychologies (alternative theoretical frameworks), postcolonial psychology (attention to colonial legacies in theory and practice), and critical race theory applications to psychology (attention to racism as a psychological stressor and to racialised dynamics in psychological research and practice).</p>\n\n<h3>The WEIRD Problem Revisited</h3>\n<p>Henrich, Heine, and Norenzayan (2010) — a paper that has been cited over 10,000 times — documented that psychology's published research was overwhelmingly conducted on WEIRD samples: Western, Educated, Industrialised, Rich, Democratic. Their analysis of major journals found that Americans alone constituted 68% of study participants. More troublingly, WEIRD populations were outliers on many psychological dimensions: visual perception (Müller-Lyer illusion), fairness judgments (ultimatum game), individualism, moral reasoning, and theory of mind. The implicit assumption that findings from WEIRD samples are universal defaults — and that non-WEIRD findings require explanation as 'cultural variations' — reflects a Eurocentric epistemology in which the Western subject is the psychological norm.</p>\n<p>Addressing the WEIRD problem is necessary but not sufficient for decolonising psychology. Increasing sampling diversity while retaining Western theoretical frameworks, measurement tools, and research questions produces what some critics call 'extractive' research — collecting data from diverse populations without genuine partnership, reciprocity, or attention to locally relevant questions. The Kenyan or Brazilian research participant remains an object of study rather than a co-producer of knowledge.</p>\n\n<h3>Alternative Psychological Traditions</h3>\n<p><strong>African psychology (Ubuntu psychology):</strong> The Ubuntu philosophy — often rendered as 'I am because we are' — articulates a fundamentally relational conception of personhood that challenges the individualist assumptions of mainstream Western psychology. For Mbiti, Shutte, and other African philosophers, the self is constituted through relationships and communal belonging rather than being a pre-social individual who then enters relationships. Applied to psychology, Ubuntu frameworks generate different models of mental health (relational wellbeing rather than individual functioning), different understandings of healing (community-based, involving ancestors and spiritual dimensions), and different conceptions of what it means to flourish.</p>\n<p><strong>Indigenous psychologies:</strong> Indigenous communities worldwide have developed sophisticated psychological knowledge systems — about child development, grief, trauma, healing, and the relationship between person and land — that are rarely represented in mainstream psychological science. Indigenous healing practices often integrate spiritual, ecological, and social dimensions that Western psychology separates and largely excludes. Indigenous methodologies in research (e.g., kaupapa Māori research principles) insist on community ownership, reciprocal benefit, and the validity of non-Western epistemologies.</p>\n<p><strong>Liberation psychology (Martín-Baró):</strong> Ignacio Martín-Baró, a Jesuit psychologist murdered by the Salvadoran military in 1989, argued that psychology had aligned itself with the interests of the powerful rather than the marginalised. His liberation psychology reoriented the discipline toward the psychological dimensions of oppression, structural violence, and social suffering — asking not 'how do we help individuals adapt to their circumstances?' but 'how do we understand and transform the circumstances that produce psychological distress?' Fanon's psychiatric work in Algeria made a parallel argument: that the pathologies of colonial subjects could not be understood apart from the violence and dehumanisation of colonial systems.</p>\n\n<h3>Practical Implications</h3>\n<p>Decolonising psychology in practice involves multiple levels: <strong>curriculum</strong> — including non-Western thinkers, critical histories of the discipline, and diverse theoretical frameworks rather than presenting a single Western canon as 'psychology'; <strong>research</strong> — moving toward genuine partnership with communities, locally derived research questions, and Indigenous or community-based methodologies; <strong>clinical practice</strong> — developing culturally competent and culturally humble approaches that do not pathologise cultural difference or impose Western psychiatric categories on non-Western distress presentations; and <strong>institutions</strong> — addressing the underrepresentation of Black, Asian, Indigenous, and Global South psychologists in academic and clinical hierarchies.</p>\n<p>These agendas generate genuine tensions. Some critics worry that emphasising cultural specificity undermines the possibility of a universal science of human psychology. Others argue that 'cultural competence' can become tokenistic — adding 'cultural considerations' to fundamentally unchanged Western frameworks rather than genuinely transforming them. The deepest debates concern epistemology: whether there can be a single psychological science that incorporates diverse perspectives, or whether genuine pluralism requires acknowledging that different communities may need fundamentally different psychologies.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen begins with a provocation: 'Tell me — in your textbook, how many of the theorists whose work you've studied are from the Global South? How many are African? Indigenous? How many studied participants who weren't university students in North America or Western Europe?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Psychology tells a story about itself as a universal science. But the 'universal human mind' it studied was, for most of the twentieth century, a white, Western, educated, usually male one. This isn't an accident — it's a consequence of who built the institutions, who had access to universities, and whose knowledge systems were treated as science versus superstition. Decolonising psychology isn't about replacing one set of assumptions with another. It's about being honest about the assumptions we've always had."
+        },
+        {
+          "type": "narration",
+          "text": "A student asks whether the Ubuntu concept of relational selfhood can be reconciled with individual-level psychological measurement. Dr. Chen finds the question delightful. 'That tension is the point. If your measurement tool presupposes an individualist self, you can't measure something that challenges individualism. You don't find what you don't look for — and your instruments define what you can see.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Martín-Baró asked: 'Who does psychology serve?' That's a question the profession needs to answer honestly. A psychology that helps individuals 'cope' with structural racism, poverty, or displacement — without asking whether those structures should exist — is not a politically neutral science. It's a science that serves the status quo by helping people adjust to injustice."
+        }
+      ],
+      "feynmanPrompt": "Explain to a 16-year-old what it means to say that psychology has a 'colonial legacy' and why this matters for how psychological research is done today.",
+      "learningObjectives": [
+        "Explain the multiple ways in which colonialism has shaped the development of psychological science, distinguishing historical, epistemological, and institutional dimensions",
+        "Critically evaluate the WEIRD populations critique, distinguishing what it does and does not establish about the universality of psychological findings",
+        "Describe at least two alternative psychological traditions (e.g., Ubuntu psychology, liberation psychology, Indigenous psychologies) and their implications for mainstream psychological frameworks",
+        "Assess practical strategies for decolonising psychology at the level of curriculum, research practice, clinical practice, and institutional structures"
+      ],
+      "commonMistakes": [
+        "Treating decolonising psychology as equivalent to 'using more diverse samples' — this addresses the WEIRD problem but not the deeper epistemological critiques",
+        "Assuming that decolonisation necessarily entails abandoning all Western psychological knowledge — many critics argue for pluralism and dialogue rather than replacement",
+        "Conflating cultural competence with decolonisation — tokenistic additions of cultural considerations to unchanged frameworks do not address structural power inequalities",
+        "Treating non-Western psychologies as uniform — African, Indigenous, South Asian, and East Asian psychological traditions are enormously diverse and should not be collapsed into a single 'alternative'"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates understanding of colonialism as a structural historical process, not merely a matter of sampling bias or cultural insensitivity",
+        "Engages substantively with alternative theoretical frameworks (Ubuntu, liberation psychology, Indigenous psychologies) rather than dismissing or trivialising them",
+        "Shows critical awareness of tensions within the decolonisation project, including debates about epistemological pluralism vs. universal science",
+        "Connects theoretical critique to practical implications for research design, clinical practice, and institutional change"
+      ],
+      "guidedPracticeHtml": "<p>A psychology department proposes to 'internationalise' its curriculum by adding one lecture on 'psychology across cultures' to an otherwise unchanged programme. Drawing on decolonisation critiques, evaluate whether this represents a meaningful reform, explaining what a more substantive decolonising curriculum might look like.</p>",
+      "guidedPracticeModelAnswer": "<p><strong>Why the proposed reform is insufficient:</strong> Adding a single lecture on 'psychology across cultures' to an otherwise unchanged curriculum exemplifies what critics call <em>additive</em> rather than <em>transformative</em> reform. The core curriculum continues to present Western psychological frameworks — behaviourism, cognitive psychology, attachment theory, the Big Five, DSM classification — as universal foundations of the discipline, with cultural psychology treated as an interesting appendix. This structure implicitly encodes the Eurocentric epistemology that decolonisation critiques: the Western framework is 'psychology'; everything else is 'culture'. The student emerges believing that Maslow or Bandura describes universal human psychology, while Ubuntu or collectivist selfhood concepts are cultural variations on the norm.</p><p><strong>What substantive reform would require:</strong> A genuinely decolonising curriculum would: (a) integrate the critical history of psychology — including its use in colonial administration, racial science, and the pathologisation of non-normative identities — throughout the programme rather than quarantining it in one lecture; (b) present non-Western thinkers (Fanon, Martín-Baró, Azi Kwesi Armah's work on African psychology, Indigenous researchers) as theoretical equals rather than exotic additions; (c) explicitly examine WEIRD sampling problems across all research being taught, asking students to consider whose minds the research describes; (d) include research methods modules on community-based participatory research, Indigenous methodologies, and decolonial approaches to knowledge production; (e) address institutional dimensions — the underrepresentation of Black and minority ethnic psychologists, barriers to Global South research, and the political economy of psychological knowledge production. Such reforms require sustained institutional commitment, not a single added lecture.</p>",
+      "soloPracticeHtml": "<p>'Decolonising psychology risks abandoning the scientific rigour that makes psychology valuable as a discipline.' Critically evaluate this claim (600–800 words), drawing on specific examples from decolonisation debates to support your argument.</p>",
+      "modelAnswer": "<p>The claim that decolonising psychology threatens scientific rigour conflates two distinct concerns: (a) methodological quality and (b) theoretical monoculture. Decolonisation critiques target the latter without necessarily undermining the former — and in several respects, decolonising reforms actually enhance scientific rigour rather than compromise it.</p><p>The WEIRD sampling critique (Henrich et al., 2010) is fundamentally a critique of scientific generalisability, not rigour per se. A study that uses appropriate randomisation, controls, and statistical analysis on a WEIRD sample is methodologically sound — it just doesn't establish what its authors claim when they generalise to 'human psychology'. Expanding sampling diversity is a straightforward extension of scientific generalisability standards, not a relaxation of them. Similarly, the critique of researcher degrees of freedom and the importance of open science are entirely consistent with decolonisation concerns: pre-registered, transparent research on diverse populations is more scientifically rigorous, not less.</p><p>The deeper decolonisation critique — that mainstream psychology embodies culturally specific epistemological assumptions — does raise genuine challenges for a universal science. Ubuntu psychology's relational conception of the self, or Indigenous healing practices that integrate spiritual dimensions, cannot easily be incorporated into a paradigm that assumes methodological individualism and psychological reductionism. If psychology insists that all valid knowledge must conform to Western scientific method, it will systematically exclude knowledge forms that do not. But this is not the only available response: scientific pluralism — acknowledging that different methodologies illuminate different aspects of psychological reality — is a sophisticated epistemological position, not an abandonment of rigour.</p><p>The strongest version of the claim might point to cases where decolonisation arguments have been used to resist empirical evaluation of harmful traditional practices — female genital mutilation, conversion therapy — on grounds of cultural relativism. This is a real risk that decolonisation advocates themselves typically acknowledge: cultural specificity does not place practices beyond ethical critique. But this risk does not undermine the core decolonisation project; it represents a principled limit on cultural relativism that most critics accept. In sum, the claim presents a false dilemma: decolonisation and rigour are not opposites. A genuinely decolonised psychology would be more rigorous in its claims about universality, more diverse in its theoretical resources, and more honest about its historical and epistemological assumptions.</p>",
+      "questions": [
+        {
+          "id": "psy-lea-2a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>The Ubuntu philosophical principle 'I am because we are' challenges which foundational assumption of mainstream Western psychology?</p>",
+          "options": [
+            "The primacy of unconscious processes",
+            "Methodological individualism and the pre-social self",
+            "The universality of classical conditioning",
+            "The role of genetic factors in personality"
+          ],
+          "correctAnswer": "Methodological individualism and the pre-social self",
+          "explanationHtml": "<p>Ubuntu posits that the self is constituted through relationships and communal belonging rather than being a pre-social individual who then enters relationships. This fundamentally challenges the methodological individualism of mainstream Western psychology, which treats the individual as the primary unit of analysis and understands social relationships as something individuals engage in.</p>"
+        },
+        {
+          "id": "psy-lea-2a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher collects data from communities in rural Kenya using psychological scales developed and validated on American university students, without involving community members in research design or sharing findings back with the community. This practice most closely exemplifies:</p>",
+          "options": [
+            "Cultural competence",
+            "Extractive research",
+            "Epistemological pluralism",
+            "Liberation psychology"
+          ],
+          "correctAnswer": "Extractive research",
+          "explanationHtml": "<p>Extractive research describes the practice of collecting data from diverse populations without genuine partnership, reciprocity, or attention to locally relevant questions. Using Western instruments without local validation, not involving communities in design, and not sharing findings back exemplifies this pattern. It addresses the WEIRD sampling problem superficially while leaving the colonial power dynamic of researcher-as-outside-expert intact.</p>"
+        },
+        {
+          "id": "psy-lea-2a-q3",
+          "type": "TRUE_FALSE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>True or False: Decolonising psychology necessarily requires rejecting all knowledge produced by Western psychological research traditions.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. Most decolonisation advocates call for pluralism and critical dialogue rather than wholesale rejection of Western psychology. The goal is to: (a) accurately characterise the scope and limits of Western research, (b) include non-Western theoretical frameworks and knowledge systems as legitimate, (c) address structural inequalities in knowledge production, and (d) transform the implied universalism of Western psychology's claims. Rejecting all Western research would be an equally monolithic response to the monolithism being criticised.</p>"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Ubuntu philosophy",
+          "description": "An African philosophical concept often rendered as 'I am because we are', articulating a relational conception of personhood that challenges Western methodological individualism."
+        },
+        {
+          "term": "Liberation psychology (Martín-Baró)",
+          "description": "An important concept in Decolonising Psychology — explore further through the rabbit hole terms."
+        },
+        {
+          "term": "kaupapa Māori research",
+          "description": "An important concept in Decolonising Psychology — explore further through the rabbit hole terms."
+        },
+        {
+          "term": "Frantz Fanon",
+          "description": "A Martiniquais psychiatrist and anti-colonial theorist whose work examined the psychological effects of colonialism and racism on colonised peoples."
+        },
+        {
+          "term": "postcolonial theory",
+          "description": "A body of critical theory examining the cultural, political, and psychological legacies of colonialism; influential in postcolonial psychology and decolonisation."
+        },
+        {
+          "term": "category fallacy (Kleinman)",
+          "description": "The error of applying a diagnostic category valid in one cultural context to individuals in a different cultural setting without establishing that the construct applies."
+        },
+        {
+          "term": "community-based participatory research",
+          "description": "A research approach involving community members as partners in all phases of research for reciprocal benefit and community empowerment."
+        },
+        {
+          "term": "epistemological pluralism",
+          "description": "The position that multiple knowledge systems and epistemological frameworks can legitimately coexist rather than one system having universal dominance."
+        }
+      ]
+    }
+  ]
+}

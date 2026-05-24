@@ -1,0 +1,153 @@
+{
+  "id": "psy-lea-15",
+  "title": "Psychology & the Law (Critical Perspectives)",
+  "glyph": "⚖️",
+  "sortOrder": 15,
+  "tier": "LEAD",
+  "topicId": "psychology",
+  "prerequisites": [
+    "psy-lea-14"
+  ],
+  "subChunks": [
+    {
+      "id": "psy-lea-15a",
+      "title": "Where Psychology Meets Justice: Evidence, Expertise, and the Limits of Psychological Knowledge in Legal Contexts",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1992, Steven Titus was convicted of rape in Washington State, USA, on the basis of an eyewitness identification by the victim. She had selected his photograph from a lineup after initially being uncertain, told by a detective that they had 'good news' before viewing the lineup. Titus was innocent. He was exonerated only after years of legal struggle, by which time he had lost his job, his fiancée, and his health. His is not a unique story: the Innocence Project has used DNA evidence to exonerate over 375 wrongfully convicted people in the USA since 1989; eyewitness misidentification is the single most common factor in wrongful convictions, present in approximately 69% of cases. Psychology has had the knowledge to prevent many of these tragedies for decades — research on eyewitness testimony going back to Loftus and colleagues in the 1970s established with scientific rigour that eyewitness memory is malleable, that confidence does not equal accuracy, and that lineup procedures can dramatically increase false identification rates. The tragedy is not scientific ignorance but translational failure: the gap between what psychological science knows and what legal practice does. This gap — and the question of how psychological expertise can, should, and should not be used in legal contexts — is the central concern of the psychology-law interface.</p>",
+      "explanationHtml": "<h3>Eyewitness Testimony: From Research to Reform</h3>\n<p>The psychological science of eyewitness testimony is one of the most policy-relevant bodies of knowledge in applied psychology. Key established findings include: post-event misinformation effect (Loftus and Palmer, 1974 — leading questions alter memory for events); the confidence-accuracy dissociation (witnesses can be highly confident while being wrong; confidence inflates during trial preparation); weapon focus effect (presence of a weapon narrows attention and impairs identification); cross-race effect (own-race faces are identified more accurately than other-race faces); and unconscious transference (a face seen in one context is sometimes misidentified in another). These effects are robust, replicated, and of direct legal relevance.</p>\n<p>Reforming lineup procedures to reduce false identification rates has been directly informed by this research. Sequential lineups (viewing lineup members one at a time, making a decision before seeing the next) reduce false identifications compared to simultaneous lineups. Double-blind administration (where the official running the lineup does not know who the suspect is) prevents unconscious cuing to the witness. Prelineup instructions warning that the perpetrator may not be present reduce the pressure to choose. Confidence statements taken immediately after identification (before any feedback) better predict accuracy than confidence assessed at trial. These reforms have been adopted in some jurisdictions but remain inconsistently applied.</p>\n\n<h3>Risk Assessment in Legal Contexts</h3>\n<p>Psychologists and psychiatrists are frequently asked to assess the risk of future violence or sexual reoffending for courts and parole boards. This creates high-stakes professional responsibility and significant scientific challenge. Three generations of risk assessment tools exist: (1) unstructured clinical judgment (simply asking clinicians to estimate risk — poor predictive validity, high variability); (2) actuarial risk instruments (PCL-R, VRAG, Static-99 — structured statistical tools using known risk factors, better predictive validity but limited to group-level probability estimates); (3) structured professional judgment (HCR-20, SARA — using research-derived risk factors as a framework for clinical judgment rather than a formula). The evidence consistently shows actuarial and SPJ tools outperform unstructured clinical judgment.</p>\n<p>Critical limitations are significant: risk assessment tools provide probabilistic statements about groups (individuals with this profile re-offend at rate X%), not reliable predictions for individuals. They have documented demographic disparities — some tools show higher risk scores for Black and minority ethnic defendants when compared to white defendants with equivalent actual recidivism rates, raising fundamental fairness concerns. The COMPAS algorithm, used in some US jurisdictions for sentencing and parole decisions, was shown by ProPublica to be twice as likely to falsely flag Black defendants as high risk compared to white defendants. Using probabilistic group risk estimates to make consequential decisions about individual liberty is a profound ethical and legal problem that the field has not resolved.</p>\n\n<h3>Expert Testimony and Its Limits</h3>\n<p>Psychologists and psychiatrists give expert testimony in many legal contexts: capacity assessments (does this person have capacity to make decisions about medical treatment or financial affairs?), mental state at the time of offence (diminished responsibility, insanity defences), fitness to plead, child custody assessments, and personal injury claims. Responsible expert testimony requires: appropriate training in forensic assessment; adherence to the specific legal question asked (not the clinical question); acknowledgment of the limits of psychological knowledge; and presentation of findings in ways that courts and juries can understand without distorting them.</p>\n<p>Expert psychology evidence is vulnerable to misuse: confirmation bias in assessment (finding what the referrer wants to find); overconfidence in clinical judgment; lack of transparency about methodology; and advocacy bias (shifting from objectivity to advocacy for the instructing side). The base rate neglect problem is particularly acute in legal contexts — when base rates of a condition or behaviour are very low, even a diagnostic tool with impressive sensitivity will produce predominantly false positives in the population being assessed. Courts and juries systematically underweight base rates when evaluating expert evidence.</p>\n\n<h3>Psychology and Miscarriages of Justice</h3>\n<p>Psychology has contributed both to miscarriages of justice (through unreliable expert evidence about recovered memory, Satanic ritual abuse, shaken baby syndrome, and other claims that have been subsequently undermined) and to their correction (through research on false confessions, eyewitness memory, and investigative procedures). The recovered memory debate of the 1990s — in which therapists claimed to be 'recovering' repressed memories of childhood sexual abuse through suggestive techniques — resulted in criminal prosecutions, family destruction, and therapeutic harm before the evidence base established that suggested false memories could be implanted and that there was no scientific basis for complete memory repression of extended trauma. This episode illustrates the critical importance of maintaining the distinction between therapeutic practice (where belief in the client's subjective experience is central) and forensic practice (where evidence standards apply).</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen presents data: 69% of wrongful convictions in the Innocence Project sample involved eyewitness misidentification. She pairs this with the basic Loftus findings from the 1970s — research that could have prevented many of these convictions. 'What does this gap tell us,' she asks, 'about the relationship between psychological knowledge and legal practice?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Psychology is one of the few sciences where the research has clear, actionable implications for preventing specific human tragedies — wrongful convictions, harmful assessments, false confessions — and where institutions have nevertheless been slow to implement reforms. The lineups reform story is particularly instructive: we've known the design flaws since the 1970s, the reforms are simple and cheap, and yet many jurisdictions still run simultaneous, non-blind lineups. Knowledge alone is insufficient. Implementation requires political will."
+        },
+        {
+          "type": "narration",
+          "text": "The COMPAS algorithm discussion produces significant unease. 'Is it better,' a student asks, 'to use a biased algorithm or biased human judgment?' Dr. Chen doesn't let the false dichotomy stand: 'That is precisely the wrong question. The right question is: under what conditions is any probabilistic risk estimate — algorithmic or clinical — appropriate for determining individual liberty? And I think the answer may be: much more limited conditions than we currently use them.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "When a psychologist provides expert testimony, they are doing something qualitatively different from clinical work. The client is not the person being assessed — the client is the court. This requires a completely different orientation: to the specific legal question being asked, to the evidence standards appropriate to that question, and to the limits of your knowledge. A therapist who imports their therapeutic empathy into a forensic assessment — believing what the client says rather than evaluating the evidence — is doing both disciplines a disservice."
+        }
+      ],
+      "feynmanPrompt": "Explain to a 16-year-old why psychological research on eyewitness memory matters so much for whether innocent people go to prison.",
+      "learningObjectives": [
+        "Describe the key findings from eyewitness testimony research and explain how they translate into lineup reform recommendations",
+        "Evaluate the three generations of forensic risk assessment tools and their limitations, including demographic disparities in algorithmic risk assessment",
+        "Explain the distinctive ethical and methodological standards required for forensic psychological assessment compared to clinical assessment",
+        "Critically assess the role of psychological expert testimony in contributing to and correcting miscarriages of justice"
+      ],
+      "commonMistakes": [
+        "Assuming high confidence in an eyewitness indicates high accuracy — the confidence-accuracy dissociation is one of the most robust and policy-relevant findings in applied psychology",
+        "Treating actuarial risk tools as providing individual predictions — they provide probabilistic group estimates that cannot reliably predict individual behaviour and should not be misrepresented as doing so",
+        "Conflating therapeutic and forensic roles — the standards, methods, and orientation of forensic assessment are fundamentally different from clinical practice; importing clinical assumptions into forensic work is a common source of error",
+        "Ignoring demographic disparities in risk assessment — the documented racial bias in tools like COMPAS raises fundamental fairness concerns that cannot be dismissed by citing the tool's overall predictive validity"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates understanding of the translational gap — why psychological knowledge about eyewitness memory has been slow to influence legal practice",
+        "Evaluates risk assessment tools critically — acknowledging both their superiority over unstructured judgment and their fundamental limitations for individual-level decisions",
+        "Shows awareness of the specific ethical standards required in forensic psychology — role clarity, evidence standards, acknowledgment of limits",
+        "Engages with the demographic fairness critique of algorithmic risk assessment — not dismissing it as a political rather than scientific concern"
+      ],
+      "guidedPracticeHtml": "<p>A prosecution barrister asks you to appear as an expert witness to testify that, based on your assessment, a defendant is 'highly likely' to commit sexual violence in the future. Based on your knowledge of forensic risk assessment, how should you respond to this request? What could you appropriately say, and what could you not say?</p>",
+      "guidedPracticeModelAnswer": "<p><strong>What I could appropriately do:</strong> I could agree to conduct a structured risk assessment using a validated SPJ tool (e.g., SVR-20 for sexual violence risk) or actuarial instrument (e.g., Static-99R) and testify about the results of that assessment in ways that accurately represent what the tools establish. This would include: describing the risk factors identified during assessment; indicating where the individual falls on the risk categorisation of the specific instrument (e.g., 'in the low/moderate/high risk category according to Static-99R'); explaining what 'high risk' means in terms of the population base rate of reoffending for this category (e.g., 'research shows that individuals in this category have a X% recidivism rate over Y years'); and discussing dynamic risk factors (changeable risk factors that might be addressed through intervention).</p><p><strong>What I could not appropriately say:</strong> I could not state that the defendant is 'highly likely' to commit sexual violence in the future as if this were a confident individual-level prediction. Risk assessment tools establish probabilistic group-level estimates — they cannot reliably predict what an individual will or will not do. Presenting group probability as individual prediction misrepresents the evidence base, oversteps my expertise, and could contribute to an unjust outcome. Even if the research shows a 60% base rate of reoffending for the highest-risk category, this means 40% of people in that category will not reoffend — using 'highly likely' for an individual without qualification is misleading.</p><p><strong>How I would respond to the barrister:</strong> I would explain these limitations clearly and offer what I can appropriately provide: a properly conducted, structured risk assessment with testimony that accurately conveys both the findings and the limits of those findings. If the barrister requires stronger predictive language than the evidence supports, I should decline to provide testimony that would misrepresent the science. My duty as an expert witness is to the court, not to the instructing party — providing inflated certainty to support a prosecution case is an advocacy role incompatible with objective expert evidence.</p>",
+      "soloPracticeHtml": "<p>The use of algorithmic risk assessment tools (such as COMPAS) in criminal justice decision-making has been defended as more objective and consistent than human judgment, and criticised as encoding and automating racial bias. Write a critical evaluation of this debate (600–800 words), addressing: (a) what the evidence shows about the predictive validity and fairness of algorithmic tools; (b) whether the comparison to human judgment is the right benchmark; and (c) what principled limits on algorithmic risk assessment in criminal justice should look like.</p>",
+      "modelAnswer": "<p><strong>Predictive validity and fairness evidence:</strong> Actuarial and algorithmic risk tools do show better predictive validity than unstructured clinical judgment in prospective studies — they predict recidivism with AUC values typically in the 0.65–0.75 range (modest but meaningful above chance). However, the ProPublica investigation of COMPAS (Angwin et al., 2016) found that the tool generated false positives (predicting reoffending among those who would not reoffend) at approximately twice the rate for Black defendants compared to white defendants, while generating false negatives (failing to predict reoffending among those who would) at a higher rate for white defendants. This differential error rate pattern is directly relevant to justice: it means that Black defendants who will not reoffend are more likely to be incorrectly classified as high-risk, potentially affecting bail, sentencing, and parole decisions. Northpointe (COMPAS's developer) disputed the ProPublica analysis, arguing that the tool is equally accurate across racial groups in terms of calibration (the proportion who reoffend within each risk category is similar across race). Researchers (Chouldechova; Kleinberg et al.) subsequently demonstrated mathematically that, when base rates differ across groups, perfect calibration and equal false positive/negative rates across groups cannot simultaneously be achieved. This is not a bug in COMPAS — it is a fundamental mathematical constraint. Algorithmic 'fairness' requires choosing which notion of fairness to prioritise.</p><p><strong>The right benchmark:</strong> The argument that algorithmic tools are less biased than human judgment is frequently made but rarely tested with appropriate rigour. Unstructured clinical judgment has documented racial disparities — studies show Black defendants receive harsher assessments than white defendants with equivalent records in some contexts. If the comparison is between a racially biased algorithm and racially biased human judgment, the algorithm may not represent an improvement, merely a different error distribution. More importantly, automating bias has different implications than individual bias: algorithmic decisions are applied at scale, with apparent objectivity that makes their assumptions harder to challenge, and with the authority of mathematical legitimacy that can suppress critical scrutiny.</p><p><strong>Principled limits on algorithmic risk assessment:</strong> Given these considerations, principled use of algorithmic risk assessment in criminal justice should require: (a) full transparency — algorithms used for consequential decisions should be auditable by defendants and their counsel, not black boxes; (b) explicit specification of which fairness criterion the algorithm is calibrated for, and by whom, acknowledging that this involves value judgments rather than purely technical decisions; (c) restriction to structured decision-support rather than determinative use — risk scores should inform, not determine, individual liberty decisions, with human judgment required to contextualise group probabilities for individual cases; (d) regular external audit for differential accuracy across demographic groups; (e) meaningful right to challenge — defendants should be able to contest their risk scores and the assumptions underlying them; and (f) recognition that the question of when probabilistic group estimates should influence individual liberty decisions is a normative, constitutional question, not a technical one, that democracies must answer through deliberative processes rather than by defaulting to whatever tools happen to be available.</p>",
+      "questions": [
+        {
+          "id": "psy-lea-15a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>The 'confidence-accuracy dissociation' in eyewitness testimony research refers to the finding that:</p>",
+          "options": [
+            "Eyewitness confidence and accuracy are highly correlated and both reliable indicators of identification validity",
+            "Eyewitness confidence can be high while accuracy is low — confidence does not reliably predict whether an identification is correct",
+            "Only high-confidence identifications should be admitted as evidence in court",
+            "Accuracy of eyewitness identification improves when witnesses are encouraged to be confident"
+          ],
+          "correctAnswer": "Eyewitness confidence can be high while accuracy is low — confidence does not reliably predict whether an identification is correct",
+          "explanationHtml": "<p>The confidence-accuracy dissociation describes the finding that an eyewitness's confidence in their identification is a poor predictor of whether that identification is correct. Confidence can be high while accuracy is low (particularly after feedback or suggestion; confidence inflates during trial preparation). This dissociation is highly relevant to criminal justice: juries give significant weight to confident eyewitness testimony, but this confidence does not reliably indicate accuracy.</p>"
+        },
+        {
+          "id": "psy-lea-15a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A structured professional judgment (SPJ) tool like the HCR-20 differs from actuarial risk assessment tools in that it:</p>",
+          "options": [
+            "Relies entirely on unstructured clinical intuition without any research-based framework",
+            "Uses research-derived risk factors as a framework to structure clinical judgment rather than to produce a fixed numerical score",
+            "Is specifically designed for use in civil rather than criminal court proceedings",
+            "Provides more accurate individual-level predictions than actuarial tools"
+          ],
+          "correctAnswer": "Uses research-derived risk factors as a framework to structure clinical judgment rather than to produce a fixed numerical score",
+          "explanationHtml": "<p>SPJ tools like the HCR-20 provide a set of empirically validated risk factors (historical, clinical, risk management) that the assessor evaluates for each case, then makes a structured professional judgment about overall risk level. Unlike actuarial tools (which sum scores to produce a statistical risk category), SPJ allows clinical judgment to integrate the specific configuration of factors for the individual. SPJ tools have comparable predictive validity to actuarial tools and may better accommodate the individual and dynamic dimensions of risk.</p>"
+        },
+        {
+          "id": "psy-lea-15a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Northpointe demonstrated that COMPAS was equally accurate (calibrated) across racial groups, yet ProPublica showed it generated differential false positive rates by race. Which of the following BEST explains why both claims can be simultaneously true?</p>",
+          "options": [
+            "One of the two analyses must have used incorrect methodology",
+            "When base rates of reoffending differ across groups, perfect calibration and equal false positive/negative rates across groups cannot simultaneously be achieved — a mathematical impossibility proven by Chouldechova",
+            "ProPublica's definition of false positives was not a meaningful measure of fairness",
+            "The differential false positive rates only appear when base rates are equal across groups"
+          ],
+          "correctAnswer": "When base rates of reoffending differ across groups, perfect calibration and equal false positive/negative rates across groups cannot simultaneously be achieved — a mathematical impossibility proven by Chouldechova",
+          "explanationHtml": "<p>Chouldechova's mathematical proof demonstrates that when base rates of the outcome (here, recidivism) differ across groups, achieving both perfect calibration (proportionate accuracy across risk categories for each group) and equal false positive and false negative rates across groups is mathematically impossible. The choice between different fairness criteria involves normative value judgments that cannot be resolved by technical means alone. This means the dispute between Northpointe and ProPublica reflects different, equally coherent definitions of fairness — both analyses can be correct on their own terms.</p>"
+        }
+      ],
+      "rabbitHoleTerms": [
+        {
+          "term": "Innocence Project",
+          "description": "A US non-profit using DNA evidence to exonerate wrongfully convicted people; eyewitness misidentification is the most common factor (~69%) in wrongful convictions."
+        },
+        {
+          "term": "post-event misinformation effect (Loftus)",
+          "description": "Loftus and Palmer's (1974) demonstration that post-event information can alter eyewitness memory; foundational to forensic psychology."
+        },
+        {
+          "term": "sequential vs. simultaneous lineups",
+          "description": "Evidence-based reform: sequential lineups (one at a time) produce fewer false identifications than simultaneous lineups while maintaining correct identification rates."
+        },
+        {
+          "term": "double-blind lineup administration",
+          "description": "A procedure where the administering official does not know who the suspect is, preventing unconscious cuing; a key eyewitness reform."
+        },
+        {
+          "term": "COMPAS algorithm",
+          "description": "A proprietary recidivism risk assessment algorithm used in US criminal justice; subject to fairness critique showing differential false positive rates by race."
+        },
+        {
+          "term": "actuarial vs. SPJ risk assessment",
+          "description": "Actuarial tools produce numerical risk scores from statistical weights; Structured Professional Judgment tools use research-derived factors as a framework for expert judgment."
+        },
+        {
+          "term": "HCR-20",
+          "description": "The Historical Clinical Risk Management-20 — a widely used SPJ tool for violence risk assessment covering historical, clinical, and risk management factors."
+        },
+        {
+          "term": "recovered memory debate",
+          "description": "A 1990s controversy where therapists claimed to recover repressed abuse memories through suggestion; subsequent research established that suggestion can implant false memories."
+        },
+        {
+          "term": "algorithmic fairness impossibility theorem",
+          "description": "Chouldechova's proof that when base rates differ across groups, equal calibration and equal false positive/negative rates cannot simultaneously be achieved."
+        }
+      ]
+    }
+  ]
+}
