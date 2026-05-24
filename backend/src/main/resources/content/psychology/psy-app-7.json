@@ -1,0 +1,223 @@
+{
+  "id": "psy-app-7",
+  "title": "Developmental Psychology — Childhood",
+  "glyph": "👶",
+  "sortOrder": 7,
+  "tier": "APPRENTICE",
+  "topicId": "psychology",
+  "prerequisites": ["psy-app-4"],
+  "subChunks": [
+    {
+      "id": "psy-app-7a",
+      "title": "Cognitive Development in Childhood",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Take a lump of clay in front of a four-year-old and a seven-year-old. Roll it into a long sausage shape. Ask them both: 'Is there more clay now, or the same amount?' The four-year-old will almost certainly say 'more' — because it's longer. The seven-year-old will say 'the same' without hesitation. What happened in those three years? Not simply that the older child memorised the fact about clay. Something fundamentally different happened in the architecture of their thinking. Jean Piaget called this 'conservation' — the understanding that quantity remains constant despite changes in appearance. His broader theory, that children's cognitive development passes through qualitatively distinct stages driven by their active exploration of the world, transformed developmental psychology and still shapes educational practice, child welfare assessment, and our understanding of what children are — and are not — cognitively capable of at different ages.</p>",
+      "explanationHtml": "<h3>Piaget's Stage Theory of Cognitive Development</h3>\n<p>Jean Piaget (1896–1980) proposed that children are not simply 'little adults' with less knowledge — their thinking is qualitatively different from adult thinking, and it develops through four invariant, universal stages driven by two complementary processes:</p>\n<ul>\n<li><strong>Assimilation:</strong> incorporating new information into existing schemas (mental frameworks).</li>\n<li><strong>Accommodation:</strong> modifying existing schemas, or creating new ones, when new information cannot be assimilated.</li>\n</ul>\n<p>These processes produce <strong>equilibration</strong> — a balance between what is known and what is encountered — driving cognitive development forward.</p>\n\n<h4>Stage 1: Sensorimotor (0–2 years)</h4>\n<p>Infants explore the world through sensory experience and motor action. Key achievement: <strong>object permanence</strong> — the understanding (typically achieved around 8–9 months) that objects continue to exist even when out of sight. Before this, out of sight is out of mind. Evidence: infants will search for a hidden toy only after object permanence is established.</p>\n\n<h4>Stage 2: Preoperational (2–7 years)</h4>\n<p>Language emerges; children begin to use symbols and mental representation. Key limitations:</p>\n<ul>\n<li><strong>Egocentrism:</strong> difficulty taking others' perspectives. Piaget's 'three mountains' task — children are shown a model of three mountains from different angles; younger children describe the view from their own position when asked what a doll 'sees', not the doll's actual perspective.</li>\n<li><strong>Lack of conservation:</strong> inability to understand that quantity is unchanged by changes in appearance (the clay/water/number tasks).</li>\n<li><strong>Centration:</strong> focusing on only one aspect of a situation at a time (e.g., only length, not width, when judging volume).</li>\n<li><strong>Animism:</strong> attributing life and intentions to inanimate objects ('the sun is happy today').</li>\n</ul>\n\n<h4>Stage 3: Concrete Operational (7–11 years)</h4>\n<p>Children master conservation, reverse operations (decentration), and classify objects hierarchically. However, logical operations are tied to concrete, tangible examples — abstract reasoning remains limited. A child can understand that 5 apples > 3 apples but struggles with 'If A is greater than B, and B is greater than C, what is the relationship between A and C?' without physical objects.</p>\n\n<h4>Stage 4: Formal Operational (11+ years)</h4>\n<p>Abstract and hypothetical reasoning becomes possible. Adolescents can reason about possibilities, form and test hypotheses systematically, and think about thinking (metacognition). This stage is not universal — research suggests many adults do not consistently reason at a formal operational level.</p>\n\n<h3>Critiques and Revisions of Piaget</h3>\n<p><strong>Methodological issues:</strong> Piaget's tasks used artificial, clinical interviews that may have confused comprehension with competence. When tasks are made more child-friendly, children demonstrate abilities earlier than Piaget predicted. McGarrigle and Donaldson's 'naughty teddy' conservation study showed that when the transformation appeared accidental (rather than deliberate), four-year-olds conserved number — suggesting the original task cued children to think something had changed.</p>\n<p><strong>Underestimation of social context:</strong> Piaget's model is individual and constructivist — the child alone constructs knowledge through exploration. He underestimated the role of social interaction, language, and cultural scaffolding.</p>\n<p><strong>Underestimation of infants:</strong> Baillargeon's (1987) violation of expectation paradigm — using looking-time measures rather than manual search — suggested infants understand object permanence earlier than Piaget claimed. Infants look longer at impossible events (an object disappearing behind a screen when it should be there), suggesting some representation of hidden objects.</p>\n\n<h3>Vygotsky's Sociocultural Theory</h3>\n<p>Lev Vygotsky (1896–1934) offered a fundamentally social account of cognitive development, contrasting sharply with Piaget's individual constructivism:</p>\n<ul>\n<li><strong>Zone of Proximal Development (ZPD):</strong> The gap between what a child can do independently and what they can do with skilled guidance. Learning is most effective within this zone — too easy is boring; too hard without support leads to failure. The ZPD is the productive 'stretch' zone.</li>\n<li><strong>Scaffolding:</strong> The temporary support provided by a more knowledgeable other (parent, teacher, peer) that enables the child to complete a task they could not manage alone. As competence grows, scaffolding is withdrawn.</li>\n<li><strong>Language and thought:</strong> Vygotsky argued that inner speech (private self-talk) is internalised from social speech — children first speak aloud to themselves during problem-solving, then this becomes inner speech. Language, for Vygotsky, was the primary tool of cognitive development.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen rolls a small ball of blue putty flat on the desk in front of the lecture hall, then shapes it into a long snake. 'More clay, or the same?' she asks the 200-person lecture hall. Everyone laughs — they all know the answer. But the laughter has an edge to it."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "You laugh because it's obvious to you. But think about what 'obvious' means here — it means you have a cognitive structure, a schema, that includes the concept of conservation of matter. You didn't always have it. Piaget's point isn't that four-year-olds are stupid. It's that they have a different kind of mind — one organised around different principles. Cognitive development is not just accumulation. It's reorganisation."
+        },
+        {
+          "type": "example",
+          "speaker": "The three mountains task",
+          "text": "Piaget placed children in front of a three-dimensional model of three mountains — one with a cross on top, one with a hut, one with snow. He seated a doll on the opposite side and asked children to select a photograph showing what the doll 'sees'. Preoperational children consistently chose the photograph showing their own view. When Hughes (1975) replicated this with a more meaningful scenario — a policeman and a child — even 3-year-olds could take the other's perspective successfully. Piaget's methods confounded competence with the capacity to understand the task."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Vygotsky's key insight was that development doesn't happen inside a solitary head — it happens in the space between people. The ZPD is a relational concept. You can't measure what a child can do in isolation and think you've measured their potential. The right question is: what can they do with the right support? That's the diagnostic question for teaching, parenting, therapy."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A primary school teacher notices that one of her 6-year-old students, Anya, can correctly sort shapes by colour but cannot sort them simultaneously by colour AND size. When asked to put all the red big shapes in one group, Anya becomes confused and keeps switching between the two criteria.</p><ol><li>Using Piaget's theory, explain which stage Anya is likely in and which specific cognitive limitation this demonstrates.</li><li>Using Vygotsky's theory, explain how the teacher might help Anya develop this skill more effectively than simply waiting for Anya to 'grow into' the ability.</li><li>Evaluate one limitation of applying either Piaget's or Vygotsky's theory to this practical teaching scenario.</li></ol>",
+      "guidedPracticeModelAnswer": "1. Anya is likely in the preoperational stage (approximately 2–7 years), displaying centration — the cognitive limitation of focusing on only one dimension of a problem at a time. Piaget described this as the inability to decentre: to simultaneously hold multiple attributes in mind. The ability to sort by two criteria simultaneously requires concrete operational thinking (decentration and class inclusion), which Anya has not yet developed. Piaget would predict that this ability will emerge naturally with biological maturation around age 7.\n\n2. Vygotsky's theory suggests the teacher should work within Anya's Zone of Proximal Development — the gap between what Anya can do alone (sort by one criterion) and what she can do with support (sort by two). The teacher could scaffold Anya's learning by first verbalising the two criteria aloud ('Now we're thinking about both colour AND size at the same time — is this shape red? Yes. And is it big? Let's check...'), physically guiding Anya through the first few examples, then gradually reducing verbal support as Anya begins to internalise the two-criterion strategy through her own inner speech. Peer collaboration with a slightly more advanced child could also leverage social scaffolding.\n\n3. One limitation of applying Piaget's theory here is that it may lead the teacher to do nothing — to wait for biological maturation — when intervention could accelerate Anya's development. Piaget's model is relatively passive about the role of teaching. A limitation of applying Vygotsky's model is that it gives less guidance about when to withdraw scaffolding: withdrawing too early leads to failure; withdrawing too late prevents independent mastery. The teacher must make an ongoing clinical judgement about the right level of support, which Vygotsky's theory does not operationalise precisely.",
+      "soloPracticeHtml": "<p>Compare Piaget's and Vygotsky's accounts of cognitive development in childhood. In your answer: (1) identify the key differences in their theoretical assumptions about how children develop; (2) consider what evidence supports and challenges each theory; and (3) discuss what a teacher would do differently in their classroom based on each theory. Aim for 200–250 words.</p>",
+      "modelAnswer": "Piaget and Vygotsky offer contrasting accounts of cognitive development that share a constructivist assumption (children actively construct knowledge) but differ fundamentally in what drives development.\n\nPiaget's account is individualist and maturational: cognitive development is driven by the child's own active exploration of the physical world, progressing through universal, biologically-timed stages. The child is primarily a lone scientist. Vygotsky's account is social and cultural: cognitive development is driven by interaction with more capable others and internalisation of cultural tools, especially language. The child is primarily a social apprentice.\n\nEvidence for Piaget includes the cross-cultural replication of stage sequences and the concrete evidence that young children genuinely fail conservation tasks. However, more ecologically valid studies (McGarrigle & Donaldson; Baillargeon) suggest children's abilities emerge earlier when artificial task demands are removed, challenging Piaget's stage boundaries. Vygotsky's ZPD concept is supported by research showing that children's performance with guidance substantially exceeds what they achieve alone, and that the quality of scaffolding predicts later independent ability. The universality of Piaget's stages is challenged by cultural variation in stage attainment.\n\nA Piagetian teacher would provide rich exploratory materials appropriate to the child's current stage, avoiding teaching above the child's developmental level. A Vygotskian teacher would actively scaffold, work within each child's ZPD, and use peer collaboration and verbal instruction as primary tools. The Vygotskian model is more consistent with evidence that high-quality teaching accelerates development.",
+      "feynmanPrompt": "Explain to a 16-year-old what 'object permanence' is, why babies don't have it, and what this tells us about the remarkable things that happen inside a developing brain. Use Piaget's theory to structure your explanation.",
+      "rabbitHoleTerms": [
+        {
+          "term": "object permanence",
+          "description": "The understanding that objects continue to exist even when they cannot be seen, heard, or otherwise sensed. Piaget believed this emerged around 8–9 months; Baillargeon's research suggests earlier implicit understanding."
+        },
+        {
+          "term": "conservation",
+          "description": "The understanding that quantity (number, mass, volume) remains constant despite changes in appearance. Achieved in the concrete operational stage (around 7 years). Classic tasks use clay, liquid, and counters."
+        },
+        {
+          "term": "scaffolding",
+          "description": "Vygotsky-derived concept: temporary, adjustable support provided by a more knowledgeable other that enables a learner to accomplish tasks beyond their independent capability. Wood, Bruner & Ross (1976) formalised the concept."
+        },
+        {
+          "term": "theory of mind",
+          "description": "The ability to attribute mental states (beliefs, desires, intentions) to oneself and others, and to understand that others' beliefs may differ from one's own and from reality. Typically tested with false-belief tasks; emerges around age 4."
+        },
+        {
+          "term": "violation of expectation paradigm",
+          "description": "A research method used with pre-verbal infants: if they look longer at an 'impossible' event than a possible one, they must have expected the possible outcome, implying some understanding of physical and social rules."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-7a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>According to Piaget, during which stage does a child develop the ability to conserve — understanding that quantity remains constant despite changes in appearance?</p>",
+          "options": [
+            "Sensorimotor",
+            "Preoperational",
+            "Concrete operational",
+            "Formal operational"
+          ],
+          "correctAnswer": "Concrete operational",
+          "explanationHtml": "<p>Conservation is the hallmark achievement of the <strong>concrete operational stage</strong> (approximately 7–11 years). In the preoperational stage, children lack this ability and are misled by changes in appearance (e.g., claiming a tall thin glass has more water than a short wide one, despite the same amount being poured). The concrete operational child understands that pouring water back would restore the original appearance — a logical operation called reversibility.</p>"
+        },
+        {
+          "id": "psy-app-7a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A 5-year-old is shown two identical glasses of orange juice, confirms they have the same amount, then watches as the juice from one glass is poured into a tall, narrow glass. She says the tall glass has 'more' juice. Which of Piaget's preoperational limitations does this best demonstrate?</p>",
+          "options": [
+            "Egocentrism — she can only see her own perspective",
+            "Lack of conservation and centration — she focuses only on the height of the liquid",
+            "Lack of object permanence — she forgot the original volume",
+            "Animism — she believes the glass has feelings"
+          ],
+          "correctAnswer": "Lack of conservation and centration — she focuses only on the height of the liquid",
+          "explanationHtml": "<p>This is the classic liquid conservation task. The 5-year-old's error demonstrates <strong>lack of conservation</strong> (the understanding that quantity is unchanged by changes in appearance) and <strong>centration</strong> (focusing on a single salient feature — the height of the liquid in the tall glass — while ignoring the compensating change in width). Object permanence (a sensorimotor achievement) is not relevant here. Egocentrism refers to difficulty taking others' visual perspectives, not errors in quantity judgement.</p>"
+        },
+        {
+          "id": "psy-app-7a-q3",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: Vygotsky's Zone of Proximal Development refers to the tasks a child can currently complete independently, without any assistance.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. The Zone of Proximal Development (ZPD) is specifically the gap between what a child can do <em>independently</em> and what they can do <em>with appropriate support</em> from a more knowledgeable other. It is the 'stretch zone' that defines productive learning opportunities. Tasks that a child can already do independently are below the ZPD; tasks too difficult even with support are above it. Teaching is most effective when targeted within the ZPD.</p>"
+        },
+        {
+          "id": "psy-app-7a-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>McGarrigle and Donaldson's 'naughty teddy' study found that pre-operational children could conserve number when the transformation appeared accidental. This finding is best used to argue that:</p>",
+          "options": [
+            "Piaget was entirely wrong about cognitive development",
+            "Piaget's stage theory is valid but his task methods may have underestimated children's competence",
+            "Vygotsky's ZPD explains why conservation develops earlier with social support",
+            "Conservation is a culturally specific achievement, not universal"
+          ],
+          "correctAnswer": "Piaget's stage theory is valid but his task methods may have underestimated children's competence",
+          "explanationHtml": "<p>The 'naughty teddy' study suggests that Piaget's conservation tasks may have confused <em>task comprehension</em> with <em>cognitive competence</em>. When children thought the transformation was accidental, they no longer inferred that the transformation was meant to change the quantity — and correctly conserved. This implies children may have the underlying cognitive capacity for conservation earlier than Piaget's standard tasks suggested, but that his methods systematically elicited errors. It does not invalidate the stage model entirely, nor is it directly about social scaffolding (Vygotsky) or cultural variation.</p>"
+        }
+      ]
+    },
+    {
+      "id": "psy-app-7b",
+      "title": "Social & Emotional Development: Attachment",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In the 1940s and 1950s, orphanages across Europe housed thousands of children who received adequate nutrition, warmth, and medical care — but very little human contact or consistent caregiving. These children developed profound and lasting difficulties: failure to thrive physically, emotional detachment, intellectual delay, and an inability to form close relationships in adulthood. Some died. What was missing was not physical care but something less tangible and more fundamental. John Bowlby called it attachment — the deep emotional bond between an infant and their primary caregiver that he argued was as biologically primary as feeding and shelter. His theory, and the research it spawned, transformed child welfare policy, adoption practice, neonatal intensive care, and our understanding of how early relationships shape mental health across the lifespan.</p>",
+      "explanationHtml": "<h3>Bowlby's Attachment Theory</h3>\n<p>John Bowlby (1907–1990) proposed that attachment is an evolved biological system that keeps vulnerable infants close to caregivers for protection from predators and environmental hazards. Key features:</p>\n<ul>\n<li><strong>Monotropy:</strong> infants form one primary, hierarchically preferred attachment — typically the most responsive caregiver (not necessarily the biological mother, as Bowlby initially suggested).</li>\n<li><strong>Critical period:</strong> Bowlby proposed that attachment must form within approximately the first 2.5 years of life, or consequences will be severe and lasting. (Later research suggests a 'sensitive period' is more accurate — attachment formation after this period is possible but harder.)</li>\n<li><strong>Internal working model:</strong> the attachment relationship provides a template — a mental model of self, others, and relationships — that influences all future relationships. A child who experiences a responsive, consistent caregiver develops a model of themselves as loveable and others as reliable.</li>\n<li><strong>Maternal deprivation hypothesis:</strong> prolonged separation from or absence of the primary attachment figure during the critical period leads to irreversible intellectual and emotional damage. Bowlby's 44 thieves study found that 86% of affectionless psychopaths in his sample had experienced early separation.</li>\n</ul>\n\n<h3>Ainsworth's Strange Situation</h3>\n<p>Mary Ainsworth's (1969) Strange Situation — a structured laboratory observation — identified qualitatively different styles of attachment in infants through a standardised sequence of separations and reunions with the caregiver. Three primary attachment types were identified:</p>\n<pre><code>Type B — Secure (≈ 66% in Western samples)\n  Explores with caregiver present; distressed by separation;\n  seeks and is comforted by caregiver on reunion.\n  Caregiver: consistently responsive.\n\nType A — Insecure-Avoidant (≈ 20%)\n  Shows little distress at separation; ignores caregiver on reunion.\n  Caregiver: consistently unresponsive or rejecting.\n\nType C — Insecure-Resistant/Ambivalent (≈ 12%)\n  Very distressed by separation; resistant to comfort on reunion —\n  seeks closeness but angrily rejects it.\n  Caregiver: inconsistently responsive.\n</code></pre>\n<p>Mary Main and Judith Solomon (1990) added a fourth type:</p>\n<pre><code>Type D — Disorganised\n  No consistent strategy; contradictory behaviours (e.g., approaching caregiver\n  then freezing, looking fearful). Associated with abusive or frightening caregiving.\n  Strongest predictor of later psychopathology.\n</code></pre>\n\n<h3>Evaluating Attachment Theory</h3>\n<p><strong>Supporting evidence:</strong> Cross-cultural research (van IJzendoorn & Kroonenberg, 1988) found that secure attachment (Type B) is the most common type in all cultures studied, suggesting biological basis. Longitudinal studies show that insecure attachment in infancy predicts social and emotional difficulties in adolescence and adulthood. Hazan and Shaver (1987) demonstrated that attachment styles in infancy predict adult romantic attachment styles.</p>\n<p><strong>Criticisms:</strong></p>\n<ul>\n<li><strong>Monotropy:</strong> Schaffer and Emerson (1964) found that most infants form multiple attachments simultaneously, not a single hierarchical primary one.</li>\n<li><strong>Cultural validity:</strong> Rates of insecure attachment vary substantially across cultures in ways that may reflect cultural childcare norms rather than problematic caregiving (e.g., high avoidant attachment in Germany, high resistant attachment in Japan — both cultures with idealised caregiving patterns).</li>\n<li><strong>Determinism:</strong> Bowlby's original critical period concept and maternal deprivation hypothesis are now considered too deterministic — resilience is possible, and later positive relationships can partially compensate for early adversity (Rutter, 1981).</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen shows an image: Harry Harlow's infant rhesus monkey clinging to a cloth 'mother' made of terrycloth rather than to the wire 'mother' that dispensed milk. The monkey looks terrified but won't let go."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Harlow's experiments were ethically terrible — the conditions he kept these animals in caused lasting damage. But they answered a question that dominated child psychology in the 1950s: is attachment about food? Is the mother beloved because she is the source of nourishment? The answer, from the monkey that clung to cloth despite getting its milk from wire, was an unambiguous no. Attachment is about contact comfort — warmth, proximity, emotional responsiveness. Feeding is incidental."
+        },
+        {
+          "type": "example",
+          "speaker": "The internal working model in adulthood",
+          "text": "Hazan and Shaver (1987) published a 'love quiz' in a local newspaper asking adults to identify which attachment style description matched their romantic experiences. Securely attached adults described their relationships as happy and trusting. Avoidant adults were sceptical about lasting love and uncomfortable with closeness. Anxious-ambivalent adults described falling in love easily but rarely finding reciprocal depth. The distribution of styles closely matched Ainsworth's Strange Situation proportions — suggesting the internal working model set up in infancy resonates through adult intimacy decades later."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The clinical implication of Bowlby's work is profound: if we want to improve mental health outcomes across the population, the most powerful lever is not antidepressants for adults but secure early caregiving for infants. The attachment system is not sentimentality — it is biology, and it is trainable. Responsive caregiving can be taught."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A social worker is assessing two children in care: 4-year-old Marcus, whose caregiver describes as 'independent — he never cried when I dropped him off at nursery, never needs cuddles'; and 4-year-old Priya, whose caregiver describes as 'very clingy — she screams when I leave and never seems reassured when I come back.'</p><ol><li>Using Ainsworth's attachment types, identify the most likely attachment classification for Marcus and for Priya. Justify your answers.</li><li>Explain what Bowlby's internal working model theory predicts about the long-term consequences of each child's attachment pattern.</li><li>What caution should the social worker exercise before drawing firm conclusions from these descriptions alone?</li></ol>",
+      "guidedPracticeModelAnswer": "1. Marcus displays behaviour consistent with Type A (insecure-avoidant) attachment: he shows no distress at separation and does not seek comfort from the caregiver — behaviour Ainsworth associated with caregivers who are consistently unresponsive, leading the child to suppress attachment-seeking behaviour as an adaptive strategy. Priya displays behaviour consistent with Type C (insecure-resistant/ambivalent) attachment: she shows intense distress at separation and is not consoled on reunion — behaviour associated with inconsistently responsive caregivers, leading to hyperactivation of the attachment system and anxious monitoring of caregiver availability.\n\n2. Bowlby's internal working model theory predicts that Marcus, with an avoidant attachment, will develop a model of others as unresponsive and unreliable, and of himself as unworthy of care. In adulthood, this may manifest as emotional self-reliance, difficulty trusting partners, and avoidance of emotional intimacy. Priya, with an anxious-ambivalent attachment, is predicted to develop a model of others as inconsistently available and of herself as potentially unlovable. This may manifest as hypervigilance in relationships, fear of abandonment, and difficulty with emotional regulation.\n\n3. The social worker should exercise significant caution. The descriptions come from caregivers, not from standardised attachment observation — caregiver reports are subject to interpretation bias and may not accurately capture the child's behaviour. Marcus's 'independence' may be misinterpreted; avoidant attachment behaviour can appear indistinguishable from healthy independence to an observer who does not understand the distinction between suppressed and genuinely absent attachment need. A formal attachment assessment using the Strange Situation or a standardised home observation would be needed before any clinical conclusions are drawn.",
+      "soloPracticeHtml": "<p>Critically evaluate Bowlby's maternal deprivation hypothesis. In your answer: (1) summarise the hypothesis and the evidence Bowlby used to support it; (2) assess the methodological limitations of Bowlby's 44 thieves study; (3) consider what Rutter's (1981) work adds to our understanding; and (4) draw a conclusion about how far the hypothesis has withstood scientific scrutiny. Aim for 200–250 words.</p>",
+      "modelAnswer": "Bowlby's (1951) maternal deprivation hypothesis claimed that continuous deprivation of maternal care during the critical period (approximately the first 2.5 years) causes irreversible intellectual and emotional damage, including 'affectionless psychopathy' — an inability to form deep emotional relationships and lack of guilt about antisocial behaviour. Evidence came from Bowlby's 44 thieves study: 14 of the juvenile thieves were diagnosed as affectionless psychopaths, and 86% of these had experienced prolonged early separation from their primary caregiver. This compared with 17% in a control group of non-delinquent adolescents.\n\nHowever, the study has severe methodological limitations. It was retrospective — family histories were gathered after the fact, introducing recall bias. The diagnosis of 'affectionless psychopathy' was made by Bowlby himself, creating experimenter bias. Causal direction is unclear: perhaps other factors (poverty, parental mental illness) caused both family disruption and delinquency, making separation a correlate rather than a cause.\n\nRutter's (1981) critical analysis distinguished between different kinds of deprivation. He argued that it was not maternal deprivation per se that caused damage, but privation (never having formed an attachment at all) and the conditions surrounding separation (family discord, instability, poverty) that explained poor outcomes. His study of children from deprived backgrounds showed that those experiencing warm, stable subsequent caregiving showed substantial recovery.\n\nOverall, the maternal deprivation hypothesis is now considered too simplistic and deterministic. The sensitive period concept is more accurate than critical period; resilience is possible; and the specific conditions of separation matter more than separation itself.",
+      "feynmanPrompt": "Explain to a 16-year-old what attachment is, why babies need it, and what the 'Strange Situation' experiment tells us about different kinds of early relationships. Make sure to explain why this matters beyond just 'babies need hugs'.",
+      "rabbitHoleTerms": [
+        {
+          "term": "internal working model",
+          "description": "Bowlby's concept of the mental template, formed from early attachment experiences, that shapes expectations about relationships across the lifespan. Includes models of self (as loveable/unloveable) and others (as reliable/unreliable)."
+        },
+        {
+          "term": "disorganised attachment",
+          "description": "Main and Solomon's (1990) fourth attachment type, associated with frightening or abusive caregiving. Infants show no coherent strategy for managing distress. Strongest childhood predictor of later psychiatric disorder."
+        },
+        {
+          "term": "privation vs. deprivation",
+          "description": "Rutter's distinction: deprivation is the loss of an existing attachment; privation is never having formed one. Privation typically has more severe and lasting consequences than deprivation."
+        },
+        {
+          "term": "sensitive period",
+          "description": "A developmental window during which a particular kind of experience has its greatest impact. More flexible than a 'critical period' — learning outside the window is possible but harder. Attachment is now understood to have a sensitive rather than critical period."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-7b-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>In Ainsworth's Strange Situation, infants classified as Type A (insecure-avoidant) typically show which pattern of behaviour?</p>",
+          "options": [
+            "Explore freely; show strong distress at separation; easily comforted on reunion",
+            "Show little distress at separation; ignore or avoid the caregiver on reunion",
+            "Show extreme distress at separation; resist comfort on reunion",
+            "Show contradictory behaviours — approaching then freezing or looking fearful"
+          ],
+          "correctAnswer": "Show little distress at separation; ignore or avoid the caregiver on reunion",
+          "explanationHtml": "<p>Type A (insecure-avoidant) infants appear emotionally self-contained: they show little distress at separation and actively ignore or turn away from the caregiver on reunion. This is not genuine independence — physiological measures show they are stressed — but rather a learned behavioural strategy of suppressing attachment-seeking behaviour developed in response to consistently unresponsive caregiving. Option 1 describes Type B (secure); option 3 describes Type C (resistant/ambivalent); option 4 describes Type D (disorganised).</p>"
+        },
+        {
+          "id": "psy-app-7b-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: Bowlby's monotropy concept, which proposed that infants form a single primary attachment, has been fully supported by subsequent research.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. Schaffer and Emerson's (1964) Glasgow study found that while infants did form a primary attachment, most also formed multiple simultaneous attachments — to fathers, grandparents, siblings, and regular caregivers — by 18 months. The concept of a strict hierarchy of monotropy has been significantly revised. Bowlby's broader theory (that attachment is biological, that the quality of early attachment shapes later development) has stronger support than the specific monotropy claim.</p>"
+        },
+        {
+          "id": "psy-app-7b-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A longitudinal study finds that infants classified as disorganised (Type D) in the Strange Situation at 12 months are significantly more likely to develop borderline personality disorder in adulthood. Which of the following is the most serious methodological limitation of concluding that disorganised attachment causes borderline personality disorder?</p>",
+          "options": [
+            "The Strange Situation is not a valid measure of attachment",
+            "Borderline personality disorder was not measured until adulthood, creating attrition bias",
+            "Genetic factors — not shared caregiving environment — may explain both disorganised attachment and later psychopathology",
+            "The sample was probably too small"
+          ],
+          "correctAnswer": "Genetic factors — not shared caregiving environment — may explain both disorganised attachment and later psychopathology",
+          "explanationHtml": "<p>This is a fundamental challenge to all developmental research using natural variation in early experience: genetic confounding. Disorganised attachment is associated with frightening or abusive caregiving — but both the parenting and the infant's response to it may partly reflect shared genetic predispositions. Parents who engage in frightening caregiving may have heritable traits (e.g., emotional dysregulation) that they pass to their children genetically, and these same traits may predispose to borderline personality disorder, independently of the caregiving experience. Without genetically informed designs (adoption studies, twin studies), the relative contributions of gene and environment cannot be separated. Attrition is a concern in longitudinal research but not the strongest threat to the causal claim here.</p>"
+        }
+      ]
+    }
+  ]
+}

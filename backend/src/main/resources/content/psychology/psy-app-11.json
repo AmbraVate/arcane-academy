@@ -1,0 +1,108 @@
+{
+  "id": "psy-app-11",
+  "title": "Perception & Sensation",
+  "glyph": "👁️",
+  "sortOrder": 11,
+  "tier": "APPRENTICE",
+  "topicId": "psychology",
+  "prerequisites": ["psy-app-2"],
+  "subChunks": [
+    {
+      "id": "psy-app-11a",
+      "title": "How We Sense and Perceive the World",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In February 2015, a photograph of a dress divided the internet more decisively than almost any political event. Some people saw black and blue stripes; others saw white and gold. The same physical image, processed by the same type of visual system, produced radically different perceptual experiences. What makes this fascinating to psychologists is what it reveals: perception is not a passive recording of reality. It is an active construction — a best guess about what is out there in the world, made by a brain that fills in gaps, applies assumptions, and is systematically shaped by context, expectation, and prior experience. Understanding how we sense and perceive our environment is among the oldest questions in psychology, and its answers challenge some of the most basic assumptions about the relationship between mind and world.</p>",
+      "explanationHtml": "<h3>Sensation vs. Perception</h3>\n<p><strong>Sensation</strong> is the process by which sensory receptors detect physical energy from the environment and convert it into neural signals — a process called <strong>transduction</strong>. <strong>Perception</strong> is the brain's active interpretation of those signals to produce meaningful experience. The same physical stimulus can produce different perceptions depending on context, expectation, and prior knowledge.</p>\n<p><strong>Absolute threshold:</strong> The minimum stimulus intensity detectable 50% of the time under ideal conditions. <strong>Difference threshold (Just Noticeable Difference — JND):</strong> The minimum change in stimulus intensity detectable 50% of the time. Weber's Law states that the JND is a constant proportion of the original stimulus intensity — for weight, approximately 2%; for pitch, approximately 0.3%. This explains why adding 1 kg to a 10 kg bag is noticeable, but adding 1 kg to a 100 kg weight is not.</p>\n<p><strong>Signal detection theory (SDT):</strong> Challenges the notion of a fixed threshold. Whether a signal is detected depends not only on its intensity but on the observer's criterion — their willingness to say 'yes, I detected it', which depends on motivation, prior experience, and the consequences of false alarms. A radiologist looking for early-stage tumours adopts a liberal criterion (prefer false alarms to misses); a security officer screening for weapons may also adopt a liberal criterion.</p>\n\n<h3>Visual Perception</h3>\n<p>Light enters the eye through the cornea and lens, focusing on the <strong>retina</strong>, which contains photoreceptors:</p>\n<pre><code>Cones  — in the fovea (centre); colour vision and fine detail;\n          require bright light; three types (red, green, blue).\nRods   — in the periphery; monochromatic; extremely sensitive to light;\n          responsible for night vision and motion detection.\n</code></pre>\n<p>Neural signals travel from retina via the optic nerve to the thalamus and then to the primary visual cortex (V1) in the occipital lobe. Processing is hierarchical: V1 detects edges and orientations; higher areas process shape, colour, and motion. Two processing streams diverge from V1:</p>\n<ul>\n<li><strong>Dorsal stream ('where/how'):</strong> to parietal cortex; processes spatial location and guides action.</li>\n<li><strong>Ventral stream ('what'):</strong> to temporal cortex; processes object identity and recognition.</li>\n</ul>\n\n<h3>Perceptual Organisation: Gestalt Principles</h3>\n<p>Gestalt psychologists (Wertheimer, Köhler, Koffka) proposed that perception organises sensory information into meaningful wholes ('the whole is different from the sum of its parts'). Key Gestalt principles:</p>\n<pre><code>Figure-Ground   — we automatically segregate a figure from its background.\n                  Ambiguous figures (e.g., Rubin's vase/face) flip between\n                  figure and ground.\n\nProximity       — elements close together are grouped together.\nSimilarity      — similar elements are grouped together.\nContinuation    — we perceive smooth continuous lines rather than\n                  abrupt discontinuities.\nClosure         — we mentally complete incomplete figures.\nCommon fate     — elements moving in the same direction are grouped together.\n</code></pre>\n\n<h3>Depth Perception</h3>\n<p>Depth perception allows three-dimensional interpretation of two-dimensional retinal images. Cues include:</p>\n<p><strong>Binocular cues (require both eyes):</strong></p>\n<ul>\n<li><em>Retinal disparity:</em> Each eye receives a slightly different image; the brain uses this difference to compute depth (stereopsis). Exploited by 3D cinema technology.</li>\n<li><em>Convergence:</em> The degree to which the eyes rotate inward when viewing nearby objects — a muscular signal the brain uses for close-range depth.</li>\n</ul>\n<p><strong>Monocular cues (one eye sufficient):</strong></p>\n<ul>\n<li><em>Linear perspective:</em> Parallel lines appear to converge at a vanishing point.</li>\n<li><em>Relative size:</em> Smaller retinal images are perceived as farther away.</li>\n<li><em>Interposition:</em> Overlapping objects are perceived as nearer.</li>\n<li><em>Texture gradient:</em> Surfaces appear less detailed and more coarsely textured as they recede.</li>\n</ul>\n\n<h3>Top-Down vs. Bottom-Up Processing</h3>\n<p><strong>Bottom-up processing</strong> (Gibson, 1979): perception is driven directly by the features of the stimulus — it starts with raw sensory data and builds upward to perception. The environment provides rich affordances that direct perception without requiring inference. This account explains perception under clear, well-lit conditions with familiar stimuli.</p>\n<p><strong>Top-down processing</strong> (Gregory, 1970): perception is guided by existing knowledge, expectations, and context — the brain makes predictive inferences about what is out there based on prior experience. The dress illusion, visual illusions, and the effects of expectation on perception all support this account. Gregory's constructivist theory holds that perception is an active, unconscious inference process — a hypothesis about the external world, tested against incoming sensory data. When hypotheses are wrong, we experience illusions.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen projects the famous Müller-Lyer illusion — two horizontal lines of equal length, one with arrowheads pointing inward, one with arrowheads pointing outward. 'Which line is longer?' Unanimous: the one with outward-pointing arrows. She pulls up a measuring tool. Both lines are identical."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The interesting thing about visual illusions is not that they fool you. It's that they fool you even after you know you're being fooled. You can measure the lines, confirm they're the same, and still see them as different. That tells you something profound: perception is not a rational inference process that corrects itself with evidence. It runs below the level of conscious reasoning."
+        },
+        {
+          "type": "example",
+          "speaker": "The dress illusion explained",
+          "text": "The 2015 'The Dress' illusion has been studied intensively. The photograph was taken in ambiguous lighting — the colour of the illuminant is unclear. Some brains assume daylight (blue-shifted illuminant) and discount blue from the image, seeing white and gold. Others assume artificial indoor light (yellow-shifted illuminant) and discount yellow, seeing black and blue. The ambiguity forces the visual system to make a prior assumption about illumination — and different people have different priors. This is top-down processing in action: your perception is shaped by unconscious assumptions your brain brings to the sensory data."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Gibson would say that in natural, ecologically valid environments, perception is direct and does not require inference — the world provides enough information. Gregory would say that perception is always a hypothesis, always constructive. Both are probably right in different conditions. In rich, familiar environments, bottom-up information is sufficient. In impoverished, ambiguous, or novel conditions — like that dress photo — top-down processes dominate."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A cognitive psychologist is designing a study to investigate how expectations affect visual perception. She shows participants briefly (50ms) presented word fragments and asks them to identify the word. Half the participants are primed with words from a 'medical' context before the task; the other half are primed with 'legal' context words.</p><p>She predicts that participants primed with a medical context will more often report seeing 'NURSE' than 'PURSE' when presented with the fragment _URSE.</p><ol><li>Is this study investigating top-down or bottom-up processing? Explain your reasoning.</li><li>What does this experimental design tell us about the relationship between prior knowledge and perception?</li><li>Identify one potential confounding variable in this design and explain how it could affect the results.</li></ol>",
+      "guidedPracticeModelAnswer": "1. This study is investigating top-down processing. Top-down processing refers to the way in which existing knowledge, expectations, and context shape perception by providing interpretive frameworks before or during sensory processing. The priming manipulation specifically provides contextual knowledge (medical vs. legal) that would change the participant's expectations about what words might appear, demonstrating that perception of the ambiguous fragment is influenced by cognitive context rather than being determined solely by the physical stimulus properties (which are identical for both groups). If perception were purely bottom-up (stimulus-driven), the priming manipulation would have no effect.\n\n2. This experimental design demonstrates that prior knowledge and contextual expectations influence perceptual identification even at very early stages of processing. The fact that the same physical stimulus (_URSE) is perceived differently based on prior semantic priming suggests that perception is not a neutral reading of sensory data but is actively shaped by what the brain expects to encounter — what Gregory called an 'unconscious inference'. This supports constructivist accounts of perception and challenges purely bottom-up views that perception is determined solely by stimulus features.\n\n3. One potential confounding variable is word frequency: 'NURSE' and 'PURSE' may differ in how frequently they appear in everyday written language, and if participants in the medical prime condition encounter more medical words generally (and thus have a lower activation threshold for 'nurse' independent of the priming), this would conflate the effect of priming with baseline word frequency differences. The researcher should control for this by selecting target words matched for frequency (or use stimuli where frequency effects are demonstrably negligible), or by measuring baseline recognition rates for both words without priming.",
+      "soloPracticeHtml": "<p>Compare Gibson's ecological (direct) theory of perception with Gregory's constructivist (indirect) theory. In your answer: (1) explain the core claim of each theory; (2) evaluate the empirical evidence that supports and challenges each; and (3) discuss what implications each theory has for understanding visual illusions. Aim for 200–250 words.</p>",
+      "modelAnswer": "Gibson's (1979) ecological theory holds that perception is direct: the environment provides rich, structured information (optic flow, affordances, texture gradients) that specifies what is out there without requiring inference or prior knowledge. For Gibson, the question is not how we perceive the world but why our perceptions are so accurate — and the answer is that natural stimuli carry sufficient information for direct pick-up. This account explains skilled, fluent perception in natural, well-lit, familiar environments.\n\nGregory's (1970) constructivist theory holds that perception is indirect: the brain actively constructs a best guess about the world, using sensory data combined with prior knowledge, expectation, and hypothesis. Perception is an unconscious inference — a hypothesis tested against incoming data. Evidence includes the effects of expectation and context on identification (e.g., priming studies), the perception of impossible objects (Penrose triangle), and the moon illusion, where a well-lit, familiar stimulus is systematically misperceived.\n\nVisual illusions are particularly diagnostic. For Gregory, illusions arise when the brain applies inappropriate perceptual hypotheses — as when the misapplication of depth cues to flat figures (Müller-Lyer) distorts size judgements. For Gibson, natural perception is largely free from illusions because the natural environment provides disambiguating information; illusions are artefacts of the artificial stimuli psychologists use.\n\nBoth theories capture important features of different perceptual contexts. Modern accounts — particularly predictive coding frameworks (Clark, 2013) — propose that the brain continuously generates predictions (top-down) and corrects them against prediction errors (bottom-up), integrating both perspectives.",
+      "feynmanPrompt": "Explain to a 16-year-old why visual illusions work — why our brains see something that isn't there. Use at least one specific illusion as your example, and explain what this tells us about how perception actually works.",
+      "rabbitHoleTerms": [
+        {
+          "term": "transduction",
+          "description": "The conversion of physical energy (light, sound, pressure) into neural electrical signals by sensory receptor cells. The first step in all sensory processing."
+        },
+        {
+          "term": "signal detection theory",
+          "description": "A framework for understanding how observers make decisions about whether a signal is present, accounting for both sensitivity (d') and response bias (criterion). Shows that detection depends on motivation and consequences, not just stimulus intensity."
+        },
+        {
+          "term": "affordances",
+          "description": "Gibson's concept of the action possibilities offered by environmental features — a handle affords grasping, a chair affords sitting. Affordances are perceived directly without inference, according to Gibson."
+        },
+        {
+          "term": "predictive coding",
+          "description": "A modern neuroscientific framework proposing that the brain constantly generates predictions about incoming sensory data and updates these predictions based on prediction errors. Integrates top-down and bottom-up accounts of perception."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-11a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which type of photoreceptor is responsible for colour vision and fine detail perception in the centre of the visual field?</p>",
+          "options": [
+            "Rods",
+            "Cones",
+            "Ganglion cells",
+            "Bipolar cells"
+          ],
+          "correctAnswer": "Cones",
+          "explanationHtml": "<p><strong>Cones</strong> are concentrated in the fovea (the centre of the retina), are responsible for colour vision (three types: sensitive to short/blue, medium/green, and long/red wavelengths), and enable fine detail perception. They require bright light to function. <strong>Rods</strong>, by contrast, are found mainly in the periphery, are extremely sensitive to low light levels, are monochromatic, and are responsible for night vision and peripheral motion detection.</p>"
+        },
+        {
+          "id": "psy-app-11a-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: According to Gibson's ecological theory, visual illusions demonstrate that perception normally requires top-down cognitive inference to function accurately.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. Gibson's position is that visual illusions are artefacts of impoverished, artificial stimuli (such as flat drawings) that lack the rich information available in natural environments. For Gibson, natural perception is direct — driven by rich environmental information without requiring inference. He would argue that illusions demonstrate what happens when this rich information is removed, not how normal perception works. It is Gregory's constructivist theory that uses visual illusions as evidence that perception normally involves hypothesis-testing and inference.</p>"
+        },
+        {
+          "id": "psy-app-11a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A participant in a signal detection experiment frequently says 'yes, I detect the signal' even on trials where no signal is present. This behaviour suggests the participant has:</p>",
+          "options": [
+            "High sensitivity (d') to the signal",
+            "A liberal response criterion — they are willing to risk false alarms to avoid missing the signal",
+            "A conservative response criterion — they require strong evidence before saying 'yes'",
+            "Low sensitivity (d') to the signal"
+          ],
+          "correctAnswer": "A liberal response criterion — they are willing to risk false alarms to avoid missing the signal",
+          "explanationHtml": "<p>In signal detection theory, the response criterion (β) reflects the observer's willingness to say 'yes'. A participant who frequently says 'yes' even when no signal is present has a <strong>liberal criterion</strong>: they are willing to risk false alarms to ensure they don't miss real signals. This is the appropriate criterion when missing a signal has serious consequences (e.g., a radiologist preferring false alarms to missed tumours). A <strong>conservative criterion</strong> is the opposite — rarely saying 'yes', producing few false alarms but many misses. High or low sensitivity (d') refers to the perceptual discriminability of signal from noise, which is independent of criterion.</p>"
+        }
+      ]
+    }
+  ]
+}

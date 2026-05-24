@@ -1,0 +1,108 @@
+{
+  "id": "psy-app-12",
+  "title": "Motivation & Emotion",
+  "glyph": "❤️",
+  "sortOrder": 12,
+  "tier": "APPRENTICE",
+  "topicId": "psychology",
+  "prerequisites": ["psy-app-2"],
+  "subChunks": [
+    {
+      "id": "psy-app-12a",
+      "title": "Theories of Motivation",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1971, Mark Lepper and colleagues offered children who already enjoyed drawing a reward for doing so. Later, when the reward was removed, the children drew significantly less than they had before the experiment began. Rewarding them for doing something they intrinsically loved had undermined that love. This phenomenon — the <em>overjustification effect</em> — has been replicated across cultures, age groups, and activities, and it challenges one of the most influential assumptions in management, education, and parenting: that the best way to increase behaviour is to reward it. It turns out that humans are not simple stimulus-response machines. We have an inner life of goals, values, curiosity, and meaning that can be either supported or crushed by how external rewards are applied. Understanding motivation is understanding what drives human action — which is among the most practically important questions psychology can address.</p>",
+      "explanationHtml": "<h3>Instinct and Drive Theories</h3>\n<p>Early motivation theories proposed that behaviour is driven by biological forces. <strong>Instinct theory</strong> (James, McDougall) proposed that human behaviour is driven by innate, unlearned urges — but this approach became circular (explaining aggressive behaviour by an 'aggression instinct') and eventually fell out of favour.</p>\n<p><strong>Drive-reduction theory</strong> (Hull, 1943): physiological imbalances (hunger, thirst, pain) create drives that motivate behaviour aimed at restoring homeostasis. We eat because hunger creates an unpleasant tension that food relieves. This correctly identifies some motivations (hunger, thirst) but cannot explain behaviour that increases rather than reduces arousal (curiosity, sensation-seeking, exploration).</p>\n<p><strong>Arousal theory:</strong> The Yerkes-Dodson Law (1908) proposes an inverted-U relationship between arousal and performance: performance is best at intermediate arousal levels — too little arousal (sleepiness) and too much (panic) both impair performance. Optimal arousal level varies by task complexity — simple tasks benefit from higher arousal; complex tasks require lower arousal for best performance.</p>\n\n<h3>Maslow's Hierarchy of Needs</h3>\n<p>Abraham Maslow (1943) proposed that human needs are organised hierarchically, with lower-level needs taking priority over higher-level ones:</p>\n<pre><code>         Self-Actualisation\n        (realising full potential)\n      ───────────────────────────\n      Esteem Needs\n      (competence, achievement,\n       respect from others)\n    ─────────────────────────────\n    Love and Belonging Needs\n    (friendship, intimacy, family,\n     sense of connection)\n  ───────────────────────────────\n  Safety Needs\n  (security, stability, freedom from fear)\n─────────────────────────────────────────\nPhysiological Needs\n(food, water, warmth, rest)\n</code></pre>\n<p>Maslow argued that lower-order needs must be substantially satisfied before higher-order needs become motivationally salient. Self-actualisation — the drive to become the best version of oneself — can only fully emerge when basic and psychological needs are met.</p>\n<p><strong>Evaluation:</strong> The hierarchy has enormous intuitive appeal and clinical utility in understanding clients who cannot focus on therapy because of financial or safety crises. However, empirical support for the strict hierarchical ordering is weak: people in poverty can also create great art; bereaved people can maintain a sense of purpose and self-actualisation. The hierarchy is better understood as describing motivational tendencies in general than rigid sequential dependencies.</p>\n\n<h3>Self-Determination Theory (SDT)</h3>\n<p>Deci and Ryan's (1985, 2000) Self-Determination Theory is the most empirically supported contemporary motivation theory. It distinguishes:</p>\n<pre><code>Intrinsic motivation  — doing something for its own sake, because\n                        it is inherently interesting or enjoyable.\n\nExtrinsic motivation  — doing something to obtain a separable\n                        outcome (reward, avoid punishment, approval).\n</code></pre>\n<p>SDT proposes that intrinsic motivation is supported by satisfaction of three basic psychological needs:</p>\n<ul>\n<li><strong>Autonomy:</strong> The sense of being the origin of one's actions — choosing to act, rather than feeling controlled by external forces.</li>\n<li><strong>Competence:</strong> The sense of being effective — feeling capable of producing desired outcomes.</li>\n<li><strong>Relatedness:</strong> The sense of meaningful connection to others.</li>\n</ul>\n<p>The overjustification effect occurs because external rewards undermine perceived autonomy — the person's locus of causality shifts from internal ('I'm doing this because I want to') to external ('I'm doing this for the reward'). When the reward disappears, intrinsic motivation has been undermined rather than maintained.</p>\n<p><strong>Implications:</strong> Effective management, teaching, and parenting should support autonomy (offering choice), competence (calibrated challenge and informational feedback), and relatedness (genuine connection). Controlling behaviour — surveillance, directives, performance-contingent rewards — undermines intrinsic motivation.</p>\n\n<h3>Goal-Setting Theory</h3>\n<p>Locke and Latham (1990) demonstrated that specific, challenging goals produce better performance than vague ('do your best') or easy goals, as long as the person is committed to the goal and receives feedback on progress. The most effective goals are <strong>SMART</strong>: Specific, Measurable, Achievable, Relevant, and Time-bound. However, extreme goal difficulty — when the gap between current performance and goal is too large — produces demotivation, particularly for tasks requiring creative or flexible thinking where rigid goals may narrow attention.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen shows the results of a Google internal study: employees who were given 20% free time to work on whatever they wanted produced Gmail, Google News, and AdSense. She pauses to let that register."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The management of intrinsic motivation is among the most practically consequential findings in psychology. When you control, monitor, and reward people for things they already want to do, you convert willing contributors into employees doing the minimum required to get the reward. The research is consistent enough that this is not a theoretical debate — it's an empirical fact about human motivation that most organisations systematically ignore."
+        },
+        {
+          "type": "example",
+          "speaker": "Maslow in clinical practice",
+          "text": "A psychologist working with a client who is homeless and food-insecure notices that therapy progress is extremely slow. The client cannot engage meaningfully with cognitive restructuring exercises focused on self-esteem. Maslow's framework suggests the explanation: physiological and safety needs are not met, making it neurobiologically and psychologically impossible to prioritise self-esteem work. Effective intervention requires addressing basic needs first — stable housing, food security — before psychological needs can be addressed. The hierarchy, while not perfectly validated, provides a clinically useful organising framework."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The Yerkes-Dodson inverted U is one of psychology's most replicated findings. Think about your exam performance: a little anxiety sharpens focus. A lot of anxiety — 'I'm going to fail, I can't think straight, everything is blank' — tanks performance. The sweet spot is different for different tasks and different people. Good teachers engineer conditions that put students at optimal arousal — challenge without threat."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A secondary school teacher is frustrated that her students show little motivation for maths homework. She introduces a new system: students who complete all homework on time receive a gold star sticker at the end of each week, which can be redeemed for small prizes at the end of the term.</p><ol><li>Using Self-Determination Theory, predict the likely short-term and long-term effects of this reward system on students' motivation for mathematics.</li><li>What alternative approach, drawing on SDT's three basic needs, might the teacher use to sustainably increase motivation?</li><li>Identify one situation in which external rewards would be appropriate and would not undermine intrinsic motivation, according to SDT.</li></ol>",
+      "guidedPracticeModelAnswer": "1. Short-term, the reward system will likely increase homework completion rates — external rewards are effective at increasing behaviour in the short term, particularly for behaviour that is not intrinsically motivated. However, SDT predicts a concerning longer-term effect: the rewards shift students' perceived locus of causality from internal to external. Students who complete homework because they are interested in maths (even mildly) will begin to experience themselves as doing it for the stars and prizes rather than for intrinsic reasons. When the reward system is eventually withdrawn, homework completion is likely to drop to below-baseline levels — the overjustification effect. Additionally, because the reward is controlling (contingent on completing all homework 'on time'), it may undermine perceived autonomy, reducing intrinsic motivation even while behaviour is maintained by external contingency.\n\n2. An SDT-informed approach would address all three basic psychological needs. Autonomy: offer students some meaningful choice in how they demonstrate mathematical competence (different problem sets addressing the same skill, choice of applied context for problems). Competence: calibrate challenge to each student's current ability so that homework represents genuine stretch without being frustratingly difficult; provide specific, informational feedback ('Your algebraic manipulation is strong — try to show your reasoning steps more explicitly') rather than evaluative feedback ('8/10'). Relatedness: create a classroom culture where collaborative maths work is possible, where students feel genuinely known by the teacher and connected to peers working on the same challenges.\n\n3. External rewards are appropriate and less likely to undermine intrinsic motivation when used for tasks in which the person has no existing intrinsic interest — for example, providing payment for completing a tedious, repetitive data entry task that the person finds inherently meaningless. SDT also suggests that informational (rather than controlling) feedback — which conveys competence information without creating external locus of causality — can be used without undermining intrinsic motivation. For example, telling a student 'you've mastered this type of problem' conveys competence without making the student feel externally controlled.",
+      "soloPracticeHtml": "<p>Compare Maslow's hierarchy of needs and Self-Determination Theory as accounts of human motivation. Which provides a more useful framework for understanding motivation in educational settings? Aim for 180–220 words.</p>",
+      "modelAnswer": "Maslow's (1943) hierarchy proposes that needs are ordered from physiological to self-actualisation, with lower-order needs taking priority. It is appealing in its simplicity and clinically useful in contexts where basic needs are unmet (e.g., working with homeless clients, food-insecure students). However, it has weak empirical support for the strict hierarchical ordering, is difficult to operationalise, and fails to capture the complexity of motivated behaviour — people regularly pursue self-actualisation goals even when safety and belonging needs are incompletely satisfied.\n\nSelf-Determination Theory (Deci & Ryan, 1985, 2000) is more empirically robust. It distinguishes between intrinsic and extrinsic motivation, and links intrinsic motivation to three basic psychological needs: autonomy, competence, and relatedness. It has generated hundreds of empirical studies across educational, clinical, and organisational contexts, producing actionable predictions about what environmental conditions support or undermine motivation.\n\nFor educational settings, SDT is more useful. It provides specific, empirically supported guidance: choice increases autonomy (and motivation), calibrated challenge supports competence, and teacher-student relationship quality predicts engagement. Maslow's framework is less prescriptive — knowing that students have unmet belonging needs tells a teacher less about what to do than SDT's guidance on providing choice and informational feedback. SDT's account of the overjustification effect also directly challenges widespread educational practices (reward systems, grades as primary motivators) in ways Maslow's framework does not.",
+      "feynmanPrompt": "Explain to a 16-year-old why giving someone a reward for doing something they already enjoy can actually make them enjoy it less — and what this tells us about the difference between intrinsic and extrinsic motivation.",
+      "rabbitHoleTerms": [
+        {
+          "term": "overjustification effect",
+          "description": "The reduction in intrinsic motivation that occurs when an external reward is given for a task the person already found intrinsically motivating. The reward shifts perceived locus of causality from internal to external."
+        },
+        {
+          "term": "Yerkes-Dodson Law",
+          "description": "The empirical finding that performance is best at intermediate levels of arousal, with both very low and very high arousal impairing performance. The optimal arousal level varies with task complexity."
+        },
+        {
+          "term": "locus of causality",
+          "description": "SDT's concept of whether a person perceives themselves as the origin (internal locus) or pawn (external locus) of their actions. Internal locus is associated with greater intrinsic motivation and wellbeing."
+        },
+        {
+          "term": "flow",
+          "description": "Csikszentmihalyi's concept of a state of complete absorption in a challenging task — experienced when skill level matches challenge level precisely. Associated with high intrinsic motivation and wellbeing."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-12a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>According to Self-Determination Theory, which three basic psychological needs must be satisfied to support intrinsic motivation?</p>",
+          "options": [
+            "Autonomy, Competence, and Relatedness",
+            "Safety, Esteem, and Self-Actualisation",
+            "Extraversion, Conscientiousness, and Openness",
+            "Achievement, Affiliation, and Power"
+          ],
+          "correctAnswer": "Autonomy, Competence, and Relatedness",
+          "explanationHtml": "<p>Deci and Ryan's Self-Determination Theory identifies three basic psychological needs whose satisfaction supports intrinsic motivation and psychological wellbeing: <strong>Autonomy</strong> (the sense of being the origin of one's actions, not controlled by external forces), <strong>Competence</strong> (the sense of being effective — capable of producing desired outcomes), and <strong>Relatedness</strong> (meaningful connection to others). Safety, Esteem, and Self-Actualisation are from Maslow's hierarchy. The Big Five traits are personality dimensions, not motivational needs. Achievement, Affiliation, and Power are from McClelland's Needs Theory.</p>"
+        },
+        {
+          "id": "psy-app-12a-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: According to the Yerkes-Dodson Law, the highest level of arousal always produces the best performance.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. The Yerkes-Dodson Law proposes an inverted-U (curvilinear) relationship between arousal and performance: performance is best at an <em>intermediate</em> level of arousal. Too little arousal (drowsiness, boredom) and performance suffers because of insufficient engagement; too much arousal (panic, extreme stress) and performance deteriorates because anxiety interferes with cognitive processing. Optimal arousal level also varies with task difficulty — simpler tasks can tolerate higher arousal; complex tasks requiring sustained concentration and flexible thinking are best performed at lower arousal levels.</p>"
+        },
+        {
+          "id": "psy-app-12a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A company pays its engineers performance bonuses for every innovative idea they submit. After six months, the engineers submit significantly fewer ideas than before the bonus scheme was introduced, and those submitted are less creative. This outcome is best explained by:</p>",
+          "options": [
+            "The Yerkes-Dodson Law — the bonuses created too much arousal",
+            "The overjustification effect — the performance-contingent rewards shifted engineers' perceived locus of causality from internal to external, undermining intrinsic motivation",
+            "Maslow's hierarchy — engineers' safety needs were already met, making the financial reward meaningless",
+            "Drive-reduction theory — the engineers had reached homeostasis and no longer needed more income"
+          ],
+          "correctAnswer": "The overjustification effect — the performance-contingent rewards shifted engineers' perceived locus of causality from internal to external, undermining intrinsic motivation",
+          "explanationHtml": "<p>This is a classic overjustification effect: engineers who previously generated innovative ideas because of intrinsic interest in problem-solving now experience themselves as doing it for the bonus. The reward shifts their perceived locus of causality from internal to external. Creativity in particular requires an autonomy-supportive environment — performance-contingent rewards are controlling and narrow the creative search space. Meta-analyses of creativity research confirm that performance-contingent external rewards reliably reduce creative output. Arousal (option A) is not the primary mechanism here. Maslow's hierarchy (option C) and drive-reduction theory (option D) do not have strong accounts of why pre-existing motivated behaviour would decrease after reward introduction.</p>"
+        }
+      ]
+    }
+  ]
+}

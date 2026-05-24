@@ -1,0 +1,108 @@
+{
+  "id": "psy-app-13",
+  "title": "Intelligence & Psychometrics",
+  "glyph": "🧠",
+  "sortOrder": 13,
+  "tier": "APPRENTICE",
+  "topicId": "psychology",
+  "prerequisites": ["psy-app-4", "psy-app-5"],
+  "subChunks": [
+    {
+      "id": "psy-app-13a",
+      "title": "Theories of Intelligence & IQ Testing",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1994, a group of 52 prominent intelligence researchers published a statement in the Wall Street Journal titled 'Mainstream Science on Intelligence'. Its most controversial claim: that intelligence, as measured by IQ tests, is a meaningful predictor of important life outcomes — academic achievement, occupational success, health, and longevity — and that these relationships are not an artefact of social privilege alone. Also that year, Herrnstein and Murray published The Bell Curve, claiming that racial differences in average IQ scores had significant genetic components, provoking a firestorm of scientific and ethical criticism. Intelligence is among the most politically charged topics in all of psychology — a field where the science is genuinely contested, the stakes are extremely high, and the potential for misuse is enormous. Understanding intelligence requires disentangling what the evidence actually says from what advocates on all sides claim it says.</p>",
+      "explanationHtml": "<h3>Defining Intelligence</h3>\n<p>Intelligence has no universally agreed definition. Wechsler (1944) defined it as 'the aggregate or global capacity of the individual to act purposefully, to think rationally, and to deal effectively with his environment' — deliberately broad, covering reasoning, adaptation, and effectiveness. Modern cognitive psychology tends to define intelligence in terms of processing capacity: working memory, processing speed, and the ability to learn and adapt.</p>\n\n<h3>Major Theories</h3>\n<h4>Spearman's g Factor (1904)</h4>\n<p>Using factor analysis, Charles Spearman found that performance across diverse cognitive tasks was positively correlated — people who did well on verbal tests also tended to do well on numerical and spatial tests. He proposed that this positive manifold reflects a single general intelligence factor, <em>g</em>, overlaid by specific abilities (<em>s</em>) for particular tasks. The existence of <em>g</em> is one of the most robustly replicated findings in psychological measurement.</p>\n\n<h4>Cattell-Horn-Carroll (CHC) Theory</h4>\n<p>The most comprehensive modern hierarchical model, incorporating:</p>\n<pre><code>General intelligence (g)\n ├── Fluid intelligence (Gf)\n │    Raw reasoning capacity: novel problem-solving, pattern recognition\n │    Independent of prior learning; peaks in late teens/early 20s\n │\n └── Crystallised intelligence (Gc)\n      Accumulated knowledge: vocabulary, expertise, cultural knowledge\n      Continues to grow into the 60s–70s\n</code></pre>\n<p>Plus approximately 8–9 broad abilities (visual processing, auditory processing, processing speed, long-term storage, etc.) and over 70 narrow abilities below them. CHC theory provides the theoretical basis for most modern intelligence batteries.</p>\n\n<h4>Gardner's Multiple Intelligences (1983)</h4>\n<p>Howard Gardner proposed 8–9 relatively independent 'intelligences': linguistic, logical-mathematical, spatial, musical, bodily-kinaesthetic, interpersonal, intrapersonal, naturalistic, and (tentatively) existential. <strong>Appeal:</strong> Acknowledges the breadth of human abilities; resonates with educators who see gifted children who perform poorly on academic tests. <strong>Critique:</strong> 'Multiple intelligences' are not well-supported by factor-analytic data — most are highly correlated with <em>g</em>, and some (musical, bodily-kinaesthetic) may be better understood as talents rather than intelligences. The theory has not generated a coherent programme of empirical research.</p>\n\n<h4>Sternberg's Triarchic Theory (1985)</h4>\n<p>Robert Sternberg proposed three components: analytical intelligence (academic problem-solving), creative intelligence (generating novel ideas), and practical intelligence (adapting to real-world demands — 'street smarts'). This is more comprehensive than <em>g</em> theory and more empirically tractable than Gardner, but still not as well-supported psychometrically.</p>\n\n<h3>IQ Testing: History and Structure</h3>\n<p>Alfred Binet (1905) developed the first practical intelligence test to identify Parisian schoolchildren who needed educational support — a diagnostic rather than ranking purpose. The concept of <strong>Mental Age</strong> (the age at which a child performed) divided by Chronological Age, multiplied by 100, gave the original IQ formula. Modern tests use <strong>deviation IQ</strong>: an individual's performance is expressed as a standard score relative to a standardisation sample, with mean = 100 and SD = 15.</p>\n<p>Major modern batteries include the <strong>Wechsler scales</strong> (WAIS-IV for adults; WISC-V for children), which yield a Full-Scale IQ plus index scores for Verbal Comprehension, Perceptual Reasoning, Working Memory, and Processing Speed.</p>\n\n<h3>IQ, Heritability, and Group Differences</h3>\n<p>Twin studies consistently find that approximately 50–80% of the variance in IQ is heritable in adulthood (the heritability estimate increases with age as people select their own environments). However, heritability is a population-level statistic — it does not mean 80% of any individual's IQ is genetically determined, nor does it imply that group differences in average IQ are genetic in origin.</p>\n<p><strong>The Flynn Effect:</strong> Average IQ scores have risen approximately 3 points per decade across the 20th century in many countries — far too fast for genetic change. This demonstrates that IQ is substantially malleable by environmental conditions (nutrition, education, reduced infectious disease, cognitive stimulation) and undermines purely genetic accounts of intelligence.</p>\n<p><strong>Group differences:</strong> Average IQ differences between racial groups in the USA reflect the powerful influence of educational opportunity, socioeconomic conditions, stereotype threat, and test design — not inherent genetic differences. Evidence for this includes: narrowing of the Black-White gap when educational opportunity is equalised (Dickens & Flynn, 2006); the universal Flynn Effect showing environmental drivers of IQ change; and the observation that group differences between any two populations disappear or reverse when environmental conditions are sufficiently altered.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen writes two numbers on the board: 100 and 130. 'Person A has an IQ of 100. Person B has an IQ of 130. What can you predict about their lives?' The room starts guessing confidently."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "IQ is one of the most powerful single predictors in all of psychology — it predicts academic achievement, occupational performance, income, health, and longevity better than almost any other measurable variable. And yet the correlation between IQ and any of these outcomes is typically around 0.3 to 0.5 — meaning IQ explains at most 25% of the variance. The other 75% is explained by motivation, opportunity, relationships, personality, and luck. An IQ score is not a destiny."
+        },
+        {
+          "type": "example",
+          "speaker": "The Flynn Effect",
+          "text": "James Flynn documented that between 1932 and 1978, average IQ scores in the USA rose by approximately 13.8 points — nearly a full standard deviation. The same pattern appeared across 30+ countries. If we took the average 1932 American and applied today's norms, they would score around 73 — classified as 'borderline intellectual disability'. People in 1932 were not intellectually disabled — they were adapted to a world with different cognitive demands. IQ measures something real, but that something is shaped by cultural and environmental conditions, not just innate capacity."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The most dangerous misuse of intelligence research is to take a population-level statistical finding — heritability of IQ — and conclude that group differences in average IQ are therefore genetic. That reasoning is logically invalid. Heritability within a group tells you nothing about why two groups differ. The height of plants is highly heritable, but if one group of plants was watered and the other was not, the difference in average height between groups would be entirely environmental."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A school psychologist is asked to assess a 10-year-old boy, Jaden, whose teacher is concerned about his academic difficulties. Jaden scores a Full-Scale IQ of 85 on the WISC-V. He has a Verbal Comprehension score of 78 but a Processing Speed score of 105. He attends a school in an area with high poverty, attended poorly-funded nursery provision, and English is his second language.</p><ol><li>What does Jaden's IQ of 85 tell us, and what does it not tell us?</li><li>How should the psychologist interpret the discrepancy between Jaden's Verbal Comprehension score (78) and Processing Speed score (105)?</li><li>What environmental factors should be considered before concluding that Jaden has a generalised intellectual disability?</li></ol>",
+      "guidedPracticeModelAnswer": "1. Jaden's Full-Scale IQ of 85 tells us that his overall performance on the WISC-V places him at approximately the 16th percentile for his age group — below the average range (typically 90–110) but well above the threshold for intellectual disability (typically ≤70). It suggests he may be working harder than many peers to achieve comparable academic outcomes. What it does not tell us is the cause of his performance at this level, whether it reflects his true intellectual potential or is depressed by environmental factors, or whether he will perform similarly in the future. IQ is not a fixed, immutable measure of intellectual capacity.\n\n2. The 27-point discrepancy between Verbal Comprehension (78) and Processing Speed (105) is clinically significant and suggests Jaden's intellectual profile is not uniform. His Processing Speed score is solidly in the average range — suggesting his basic cognitive processing capacity is adequate. His low Verbal Comprehension score is more likely to reflect language factors (English as a second language), vocabulary deficits from limited educational enrichment, or reading difficulties, than a generalised intellectual limitation. This profile is inconsistent with a diagnosis of generalised intellectual disability and suggests specific verbal-linguistic areas of weakness that may be amenable to targeted intervention.\n\n3. Before concluding generalised intellectual disability, the psychologist should consider: (1) language background — Jaden's English as a second language status may substantially depress verbal comprehension scores; tests normed on native English speakers disadvantage bilingual or EAL children. (2) Quality of prior education — limited nursery provision and poorly-funded schooling reduce crystallised knowledge and academic skills that IQ tests partly measure. (3) Socioeconomic factors — poverty restricts cognitive stimulation, nutrition, and access to books, all of which affect IQ. (4) Anxiety or stress — assessment anxiety or negative school experiences may depress performance. These factors should be explored through interview, teacher reports, and assessment with culturally appropriate instruments before any diagnosis is made.",
+      "soloPracticeHtml": "<p>Critically evaluate the claim that intelligence is primarily determined by genes. In your answer, discuss evidence from twin studies and heritability research, the Flynn Effect, and what these together tell us about the nature-nurture relationship in intelligence. Aim for 200–250 words.</p>",
+      "modelAnswer": "The claim that intelligence is primarily determined by genes draws on twin studies and heritability research. Identical twins raised apart show IQ correlations of approximately 0.75, while fraternal twins show correlations of approximately 0.60 — consistent with substantial genetic influence. Heritability estimates in adult populations range from 50–80%, suggesting genetic factors explain a majority of variance in IQ within populations.\n\nHowever, heritability evidence must be interpreted carefully. Heritability is a population-level statistic that describes variance within a population under given environmental conditions — it does not tell us what proportion of any individual's IQ is genetic, nor what would happen to IQ if environments were radically changed. Two plants from the same seed batch may differ in height primarily due to genes when watered equally, but if one is watered and one is not, the group difference will be entirely environmental, despite high within-group heritability.\n\nThe Flynn Effect provides the most compelling counter-evidence to genetic determinism: average IQ scores have risen 3 points per decade across many countries — gains far too rapid for genetic change. This demonstrates that whatever IQ measures is substantially responsive to environmental conditions: education, nutrition, reduced childhood infectious disease, increased cognitive stimulation, and changing test-taking culture. The effect shows environments can shift IQ distributions by nearly a standard deviation within a few generations.\n\nThe weight of evidence supports an interactionist position: genetic predispositions influence intelligence, but these are substantially modulated by environmental quality. Genes and environment are not independent — gene-environment interactions and correlations mean that 'heritability' cannot be straightforwardly interpreted as fixed genetic determination.",
+      "feynmanPrompt": "Explain to a 16-year-old what an IQ score actually measures, why the Flynn Effect is surprising, and what it tells us about whether intelligence is mainly determined by our genes.",
+      "rabbitHoleTerms": [
+        {
+          "term": "g factor",
+          "description": "Spearman's (1904) concept of a single general intelligence factor reflected in the positive correlations between diverse cognitive tasks. One of the most robustly replicated findings in psychological measurement."
+        },
+        {
+          "term": "Flynn Effect",
+          "description": "The documented rise in average IQ scores of approximately 3 points per decade across the 20th century in many countries. Demonstrates that IQ is environmentally malleable — too rapid for genetic explanation."
+        },
+        {
+          "term": "heritability",
+          "description": "The proportion of variance in a trait within a specific population under specific environmental conditions that is attributable to genetic differences. Does not indicate the proportion of any individual's trait due to genes, nor what would happen under different environments."
+        },
+        {
+          "term": "stereotype threat",
+          "description": "Steele and Aronson's (1995) finding that awareness of a negative stereotype about one's group impairs performance in the stereotyped domain. Contributes to group differences in test performance independently of actual ability differences."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-13a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>On modern deviation IQ tests (e.g., WAIS, WISC), what is the mean and standard deviation of the IQ score distribution?</p>",
+          "options": [
+            "Mean = 50, SD = 10",
+            "Mean = 100, SD = 15",
+            "Mean = 100, SD = 10",
+            "Mean = 100, SD = 30"
+          ],
+          "correctAnswer": "Mean = 100, SD = 15",
+          "explanationHtml": "<p>Modern intelligence tests use <strong>deviation IQ scores</strong> standardised to a mean of 100 and standard deviation of 15. This means approximately 68% of the population scores between 85 and 115, and approximately 95% between 70 and 130. An IQ of 70 is approximately two standard deviations below the mean — traditionally a threshold for intellectual disability assessment. An IQ of 130 is two standard deviations above — the conventional threshold for 'gifted' designation in many educational systems.</p>"
+        },
+        {
+          "id": "psy-app-13a-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: The Flynn Effect — the rise in average IQ scores over the 20th century — provides evidence that genetic factors are the primary determinant of population-level IQ differences.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>False. The Flynn Effect is, if anything, strong evidence <em>against</em> genetic determinism of IQ at the population level. A rise of approximately 3 points per decade — nearly a standard deviation over 30 years — is far too rapid to be explained by genetic change in the population. It demonstrates that whatever IQ tests measure is substantially responsive to environmental conditions: educational quality, nutrition, reduced infectious disease, and increased exposure to abstract cognitive tasks. The Flynn Effect shows that genes alone cannot determine population-level IQ distributions.</p>"
+        },
+        {
+          "id": "psy-app-13a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds that the heritability of IQ is approximately 0.80 in a high-income sample and 0.30 in a low-income sample. Which interpretation of this finding is most appropriate?</p>",
+          "options": [
+            "Genes matter more for rich people's intelligence than poor people's intelligence",
+            "In low-income environments, environmental factors constrain IQ development, leaving less variance for genes to explain",
+            "The IQ tests were less reliable in the low-income sample",
+            "The low-income sample must have had different genetic backgrounds"
+          ],
+          "correctAnswer": "In low-income environments, environmental factors constrain IQ development, leaving less variance for genes to explain",
+          "explanationHtml": "<p>This finding reflects a well-documented phenomenon: heritability increases in environments where basic needs are met and educational opportunity is good. In impoverished environments, the large environmental differences between individuals (in nutrition, educational quality, stress, cognitive stimulation) explain much of the variance in IQ, leaving relatively less for genetic factors to account for. In uniformly high-quality environments, individual differences in IQ more closely reflect genetic differences. This does not mean genes 'matter more' for rich people intrinsically — it means the environment in low-income contexts is more variable and its effects larger. This has important policy implications: improving environmental conditions reduces variance explained by genes and increases average IQ.</p>"
+        }
+      ]
+    }
+  ]
+}

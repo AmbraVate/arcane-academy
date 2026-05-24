@@ -1,0 +1,243 @@
+{
+  "id": "psy-app-4",
+  "title": "Research Methods",
+  "glyph": "🔬",
+  "sortOrder": 4,
+  "tier": "APPRENTICE",
+  "topicId": "psychology",
+  "prerequisites": ["psy-app-3"],
+  "subChunks": [
+    {
+      "id": "psy-app-4a",
+      "title": "Experimental & Non-Experimental Designs",
+      "sortOrder": 1,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 1961, Albert Bandura sat children in front of a large inflatable clown called a Bobo doll and showed half of them a film of an adult punching, kicking, and hammering it. The other half saw no such film. When the children were later given access to the doll, those who had watched the aggressive film were significantly more aggressive. Bandura concluded that aggression can be learned by observation. But was this a valid conclusion? Was the laboratory setting realistic? Could the children have simply been performing for the camera? Were there other explanations? The answers to these questions depend entirely on your understanding of research design — the systematic choices psychologists make about how to collect evidence. Research methods are not bureaucratic formality; they are the machinery by which evidence is turned into knowledge, and understanding them is the difference between reading psychology critically and reading it credulously.</p>",
+      "explanationHtml": "<h3>The Logic of Experimentation</h3>\n<p>The <strong>true experiment</strong> is the gold standard for establishing causation in psychology. Its defining feature is <strong>random allocation</strong> of participants to conditions: if chance determines who receives the independent variable (IV) and who does not, then any pre-existing differences between participants are distributed randomly across conditions, allowing the experimenter to attribute differences in the dependent variable (DV) to the manipulation rather than pre-existing group differences.</p>\n<p>The structure of a classic experiment:</p>\n<pre><code>Experimental group  →  receives IV  →  DV measured\nControl group       →  no IV        →  DV measured\n\nIf DV differs between groups, and all else was held constant, the IV caused the change.</code></pre>\n<p>This logic rests on the principle of <strong>ceteris paribus</strong> (all else being equal) — the experiment must control for everything that might affect the DV other than the IV. Bandura's Bobo doll study did randomly allocate children to conditions, did manipulate the IV (exposure to aggressive model) and measure the DV (number of aggressive acts), but was criticised for low ecological validity (children may have understood that hitting an inflatable doll was acceptable in that context).</p>\n\n<h3>Types of Experiment</h3>\n<h4>Laboratory Experiments</h4>\n<p>Conducted in a controlled environment where the researcher manipulates the IV and controls extraneous variables. <strong>Strengths:</strong> high internal validity (tight control over confounds); replicable. <strong>Weaknesses:</strong> low ecological validity; demand characteristics (participants may behave differently because they know they are being studied); low mundane realism.</p>\n<h4>Field Experiments</h4>\n<p>The IV is manipulated in a natural setting. <strong>Classic example:</strong> Piliavin et al.'s (1969) New York subway study, where confederates collapsed on a train to observe helping behaviour. <strong>Strengths:</strong> high ecological validity; participants often unaware they are in a study. <strong>Weaknesses:</strong> less control over extraneous variables; ethical concerns about lack of informed consent.</p>\n<h4>Natural Experiments</h4>\n<p>The IV is not manipulated by the researcher but occurs naturally (e.g., comparing children who naturally experienced media violence to those who did not). <strong>Strengths:</strong> allows study of variables that cannot be ethically manipulated. <strong>Weaknesses:</strong> no random allocation, so causation cannot be firmly established; confounds are harder to control.</p>\n<h4>Quasi-Experiments</h4>\n<p>The researcher manipulates the IV, but participants cannot be randomly allocated (e.g., comparing two schools using different teaching methods). Similar limitations to natural experiments regarding causal inference.</p>\n\n<h3>Non-Experimental Methods</h3>\n<h4>Correlational Studies</h4>\n<p>Measure the relationship between two variables without manipulating either. Expressed as a <strong>correlation coefficient</strong> (r), ranging from −1 (perfect negative correlation) to +1 (perfect positive correlation), with 0 indicating no relationship. <strong>Critical caveat: correlation does not imply causation.</strong> A positive correlation between ice cream sales and drowning deaths does not mean ice cream causes drowning (a third variable — hot weather — causes both).</p>\n<h4>Observations</h4>\n<p><strong>Naturalistic observation:</strong> behaviour recorded in natural settings without interference (e.g., Jane Goodall's studies of chimpanzees). High ecological validity; cannot establish causation; observer effect may alter behaviour. <strong>Structured observation:</strong> behaviour recorded using a predetermined coding scheme, improving reliability at some cost to ecological validity.</p>\n<h4>Case Studies</h4>\n<p>An in-depth investigation of an individual, group, or organisation. <strong>Example:</strong> Clive Wearing, who developed severe amnesia after a viral brain infection, provided crucial evidence for the distinction between explicit and implicit memory. <strong>Strengths:</strong> rich, detailed data; can provide evidence for or against theoretical models. <strong>Weaknesses:</strong> findings may not generalise; subject to retrospective bias; the researcher may selectively emphasise data that supports their interpretation.</p>\n<h4>Surveys and Self-Report</h4>\n<p>Participants report their own behaviours, attitudes, or experiences via questionnaires or interviews. <strong>Social desirability bias</strong> is a key limitation — respondents tend to give answers they believe are socially acceptable rather than accurate. <strong>Response bias</strong> (e.g., acquiescence: agreeing with statements regardless of content) can distort results.</p>\n\n<h3>Sampling</h3>\n<p>A <strong>sample</strong> is the group of participants studied; the <strong>target population</strong> is the group to whom we wish to generalise. <strong>Sampling bias</strong> occurs when the sample is not representative of the population. Key sampling methods:</p>\n<pre><code>Random sampling          — every member of the population has an equal chance of selection\nStratified sampling      — population divided into strata; each stratum sampled proportionally\nOpportunity sampling     — whoever is available (e.g., university students); highly convenient, low representativeness\nSelf-selected (volunteer) sampling — participants volunteer; may attract particular personality types\nSnowball sampling        — participants recruit others; useful for hard-to-reach populations</code></pre>\n<p>Psychology's notorious over-reliance on WEIRD samples (Western, Educated, Industrialised, Rich, Democratic — Henrich et al., 2010) is a sampling problem at the disciplinary level.</p>\n\n<h3>Operationalisation and Measurement</h3>\n<p><strong>Operationalisation</strong> converts abstract constructs into measurable variables. 'Aggression' might be operationalised as 'number of times a participant presses a button to deliver a noise blast to a confederate'. This is measurable and replicable, but may not capture the full meaning of aggression as a psychological construct — a validity concern.\n<strong>Interval scales</strong> have equal distances between values (temperature in Celsius). <strong>Ordinal scales</strong> have ranks but unequal intervals (first, second, third). <strong>Nominal scales</strong> categorise without ordering (male/female/non-binary). The level of measurement constrains which statistical analyses are appropriate.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Week three, and Dr. Chen has moved to a side-room with whiteboards on every wall. She hands each student a print-out: a newspaper headline reading 'Social Media Use Causes Depression in Teens, Study Finds'."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "First question: what kind of study do you think this probably is? Before you answer — look at the headline again. Notice the word 'causes'."
+        },
+        {
+          "type": "narration",
+          "text": "A student offers: 'A survey? Because you can't really experiment on whether people use social media.' Dr. Chen nods."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Almost certainly a correlational survey. And what's the immediate problem with a headline that says 'causes'? Because correlation gives us co-occurrence, not causation. Maybe depressed teenagers use social media more as a coping mechanism. Maybe a third variable — loneliness, poverty, disrupted sleep — causes both. The headline is doing something research cannot support."
+        },
+        {
+          "type": "example",
+          "speaker": "Research snapshot",
+          "text": "Twenge & Campbell's (2019) large-scale analysis did find correlations between screen time and wellbeing in adolescents — but the effect sizes were modest (r ≈ 0.05–0.15), smaller than those for wearing glasses, eating potatoes, or owning a phone. The authors themselves cautioned against causal conclusions. The newspaper headline overstated the evidence by at least two logical steps."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The most important skill you'll develop in this module is not learning research methods — it's learning to read the gap between what a study shows and what people claim it shows. That gap is where bad science lives."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A researcher wants to test whether listening to classical music improves performance on a memory test. She recruits 60 university students and randomly allocates 30 to a 'music' condition (they listen to Mozart for 10 minutes before the test) and 30 to a 'silence' condition (they sit quietly for 10 minutes before the test). Both groups then complete the same 20-word recall test in identical conditions.</p><p><strong>Answer the following questions:</strong></p><ol><li>Identify the independent variable (IV) and the dependent variable (DV) in this study.</li><li>Explain why random allocation is important in this design.</li><li>Identify one potential extraneous variable and explain how it might affect the results.</li><li>Is this a laboratory or field experiment? Justify your answer and evaluate one strength and one limitation of this choice.</li></ol>",
+      "guidedPracticeModelAnswer": "1. IV: whether participants listen to classical music or sit in silence before the memory test. DV: the number of words correctly recalled on the 20-word test.\n\n2. Random allocation is important because it distributes pre-existing differences between participants (e.g., baseline memory ability, music experience, general intelligence) randomly across both conditions. Without random allocation, the two groups might differ systematically in ways that affect memory performance, making it impossible to attribute any difference in DV scores to the IV rather than these pre-existing differences.\n\n3. One potential extraneous variable is participants' prior exposure to or preference for classical music. Participants who regularly listen to classical music might find it more relaxing and beneficial, while those who dislike it might find it distracting — meaning the effect of music would differ across participants in ways unrelated to the manipulation itself. This could be controlled by measuring music preference at baseline and using it as a covariate in the analysis.\n\n4. This is a laboratory experiment, conducted in a controlled environment where the researcher manipulates the IV and measures the DV under standardised conditions. Strength: high internal validity — by controlling the setting, the researcher reduces the risk of confounds and can more confidently attribute any difference in recall to the music manipulation. Limitation: low ecological validity — students rarely sit in identical silent conditions before real-world memory tasks; the findings may not generalise to how music affects everyday memory in natural environments.",
+      "soloPracticeHtml": "<p>A psychologist is interested in whether people are more likely to help a stranger in distress when they are alone versus when other bystanders are present. She designs two studies: <strong>Study A</strong> stages a staged emergency in a university laboratory, randomly allocating participants to 'alone' or 'with others' conditions. <strong>Study B</strong> stages real-looking emergencies in a city centre shopping mall, observing naturally occurring helping behaviour without participants' knowledge.</p><p>Compare and evaluate Studies A and B in terms of their strengths and limitations regarding internal validity, ecological validity, and ethical considerations. Which design would you recommend for answering the research question, and why? Aim for 200–250 words.</p>",
+      "modelAnswer": "Study A (laboratory experiment) has high internal validity because random allocation controls for pre-existing differences between participants, and the controlled setting minimises confounds. Any difference in helping behaviour between conditions can be more confidently attributed to the presence or absence of bystanders. However, ecological validity is low: participants in a university psychology laboratory may behave differently from how they would in a real emergency, particularly because they may suspect the scenario is staged (demand characteristics).\n\nStudy B (field experiment / naturalistic observation) has high ecological validity: participants are in a genuine public setting, unaware they are being observed, and the behaviour measured — helping a real-seeming stranger — is more representative of actual helping behaviour. However, it lacks random allocation: we cannot control who happens to be alone versus surrounded by others at the moment of the emergency, meaning there may be systematic differences between the 'alone' and 'bystanders present' groups (e.g., time of day, type of crowd) that confound the results. Ethical concerns are also significant: participants did not consent, and some may have experienced genuine distress.\n\nI would recommend Study A, modified to improve ecological validity (e.g., using a more realistic emergency scenario). In bystander research, establishing causal direction is crucial — the field experiment can show correlation but not confirm that bystander presence causes reduced helping. Once a causal effect is established in the laboratory, its real-world magnitude can be assessed using naturalistic methods.",
+      "feynmanPrompt": "Explain to a sceptical 16-year-old why just because two things are correlated (e.g., countries with more chocolate consumption have more Nobel Prize winners) does not mean one causes the other. Use a clear example and explain what kind of study would actually be needed to test causation.",
+      "rabbitHoleTerms": [
+        {
+          "term": "demand characteristics",
+          "description": "Cues in a research setting that suggest to participants what the study is about and how they are expected to behave, potentially leading them to alter their behaviour. First described by Orne (1962)."
+        },
+        {
+          "term": "internal validity",
+          "description": "The extent to which an experiment demonstrates that the IV caused changes in the DV, rather than some confounding variable. High internal validity requires good experimental control."
+        },
+        {
+          "term": "ecological validity",
+          "description": "The extent to which research findings generalise to real-world settings and reflect behaviour as it occurs in everyday life. Often trades off against internal validity."
+        },
+        {
+          "term": "bystander effect",
+          "description": "The phenomenon whereby individuals are less likely to help in an emergency when other bystanders are present. First demonstrated by Darley & Latané (1968) following the murder of Kitty Genovese."
+        },
+        {
+          "term": "operationalisation",
+          "description": "The process of defining an abstract theoretical construct in terms of a specific, measurable procedure. Bridges the gap between theory and measurement but can introduce validity concerns if the measure inadequately captures the construct."
+        },
+        {
+          "term": "replication crisis",
+          "description": "The finding, beginning with Open Science Collaboration (2015), that many landmark psychology studies fail to replicate when repeated by independent laboratories — raising questions about the reliability of the published literature."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-4a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the defining feature that distinguishes a true experiment from other research designs?</p>",
+          "options": [
+            "Measuring behaviour in a natural setting",
+            "Random allocation of participants to conditions",
+            "Using standardised questionnaires",
+            "Having a large sample size"
+          ],
+          "correctAnswer": "Random allocation of participants to conditions",
+          "explanationHtml": "<p>Random allocation is the defining feature of a true experiment because it distributes pre-existing differences between participants randomly across conditions. This means any difference found in the dependent variable can be more confidently attributed to the independent variable rather than pre-existing group differences. Without random allocation, we have a quasi-experiment or natural experiment, where causal conclusions are weaker.</p>"
+        },
+        {
+          "id": "psy-app-4a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher finds that children who own more books score higher on reading tests. She concludes that owning books improves reading ability. Which of the following is the most serious flaw in this conclusion?</p>",
+          "options": [
+            "The sample size may be too small",
+            "The study did not use a standardised reading test",
+            "Correlation does not imply causation — a third variable (e.g., parental education) may explain both",
+            "The study should have been conducted in a laboratory"
+          ],
+          "correctAnswer": "Correlation does not imply causation — a third variable (e.g., parental education) may explain both",
+          "explanationHtml": "<p>This is a correlational finding. The relationship between book ownership and reading scores could be explained by a third variable — for example, highly educated parents may both buy more books <em>and</em> spend more time reading with their children, improving reading skills independent of book ownership. Without experimental manipulation (randomly giving some families more books), we cannot conclude that book ownership causes improved reading.</p>"
+        },
+        {
+          "id": "psy-app-4a-q3",
+          "type": "TRUE_FALSE",
+          "tier": "RECALL",
+          "questionHtml": "<p>True or False: A field experiment always has higher ecological validity than a laboratory experiment, and a laboratory experiment always has higher internal validity than a field experiment.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>This is a generalisation that does not always hold. While field experiments typically benefit from greater ecological validity (behaviour in natural settings), and laboratory experiments typically benefit from better control (higher internal validity), neither is an absolute rule. A very carefully designed field experiment can have good control; a highly realistic laboratory simulation can have acceptable ecological validity. The trade-off is real but not absolute.</p>"
+        },
+        {
+          "id": "psy-app-4a-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A psychologist studies prejudice by asking participants to rate their agreement with statements such as 'Most immigrants are honest and hard-working.' She finds that participants from lower-income areas score higher on her prejudice scale. Which of the following is the <em>strongest</em> methodological concern about this design?</p>",
+          "options": [
+            "The study lacks ecological validity because it was conducted in a lab",
+            "Social desirability bias — participants may give less prejudiced answers than they actually hold",
+            "The sample is too small to generalise",
+            "The IV has not been operationalised clearly"
+          ],
+          "correctAnswer": "Social desirability bias — participants may give less prejudiced answers than they actually hold",
+          "explanationHtml": "<p>Self-report measures of socially sensitive attitudes (e.g., prejudice) are particularly vulnerable to <strong>social desirability bias</strong>: participants are motivated to present themselves in a positive light, leading to systematic underreporting of prejudiced attitudes. This is not a concern about ecological validity (there is no IV being manipulated in a lab), sample size (which affects power, not bias), or operationalisation of the IV (which is not manipulated here — this is correlational). The key threat to validity is the gap between reported and actual attitudes.</p>"
+        }
+      ]
+    },
+    {
+      "id": "psy-app-4b",
+      "title": "Data, Analysis & Evaluating Evidence",
+      "sortOrder": 2,
+      "xpReward": 70,
+      "practiceType": "NONE",
+      "hookHtml": "<p>In 2005, John Ioannidis published a paper with a provocative title: 'Why Most Published Research Findings Are False.' His argument was mathematical: given the prevalence of small samples, flexible analytical choices, and publication bias (only positive results get published), the majority of statistically significant findings in the literature would not replicate. He was largely right. The Open Science Collaboration (2015) attempted to replicate 100 published psychology experiments and found that only 36–39% replicated in a statistically significant way. This is not a crisis of individual dishonesty — it is a systemic problem rooted in how psychology has collected, analysed, and reported data. Understanding data and statistics is not optional: it is what separates evidence-based psychology from sophisticated storytelling.</p>",
+      "explanationHtml": "<h3>Descriptive Statistics</h3>\n<p>Descriptive statistics summarise the characteristics of a dataset without making inferences about a wider population.</p>\n<p><strong>Measures of central tendency:</strong></p>\n<pre><code>Mean     — arithmetic average; sensitive to outliers\nMedian   — middle value when ranked; robust to outliers\nMode     — most frequent value; useful for categorical data</code></pre>\n<p><strong>Measures of dispersion:</strong></p>\n<pre><code>Range              — largest minus smallest value; sensitive to outliers\nStandard deviation — average distance of scores from the mean; most useful measure\nVariance           — squared standard deviation</code></pre>\n<p><strong>Visual representation:</strong> Bar charts (categorical data or means), histograms (continuous data distributions), scatterplots (relationships between two variables), box plots (distribution summary including median, quartiles, and outliers). The choice of visual representation should reflect the nature of the data and the research question.</p>\n\n<h3>Inferential Statistics and the p-Value</h3>\n<p>Inferential statistics allow researchers to draw conclusions about a population based on a sample. The central tool is <strong>hypothesis testing</strong>:</p>\n<pre><code>Null hypothesis (H₀):   There is no effect / no difference between groups\nAlternative hypothesis (H₁): There is an effect / a difference</code></pre>\n<p>The <strong>p-value</strong> is the probability of obtaining the observed result (or one more extreme) if the null hypothesis were true. A p-value below the conventional threshold of .05 is considered 'statistically significant' — meaning we reject H₀. But this threshold is arbitrary, and a p-value does not tell you how large or meaningful an effect is.</p>\n<p><strong>Type I error (false positive):</strong> Concluding there is an effect when there is none. The probability is equal to alpha (typically .05). <strong>Type II error (false negative):</strong> Failing to detect a real effect. The probability depends on sample size and effect size.</p>\n\n<h3>Effect Size</h3>\n<p>Statistical significance tells you whether a result is unlikely to be due to chance; <strong>effect size</strong> tells you how large the effect is. Cohen's d (for comparing means) and Pearson's r (for correlations) are common effect size measures:</p>\n<pre><code>Cohen's d:  Small = 0.2   Medium = 0.5   Large = 0.8\nPearson's r: Small = 0.1  Medium = 0.3   Large = 0.5</code></pre>\n<p>A study with a large sample can find statistically significant effects that are trivially small in practice. Reporting effect sizes alongside p-values is now standard good practice and required by APA guidelines.</p>\n\n<h3>Publication Bias and the File Drawer Problem</h3>\n<p>Scientific journals preferentially publish positive (significant) results. Studies that find no effect go unpublished — sitting in researchers' file drawers. This distorts the published literature, making effects appear larger and more consistent than they actually are. <strong>Meta-analysis</strong> — the statistical synthesis of multiple studies — attempts to correct for this by pooling results, but remains vulnerable to publication bias if the underlying studies are biased. Funnel plots can help detect publication bias in a body of research.</p>\n\n<h3>Evaluating Research: Practical Framework</h3>\n<p>When critically evaluating a psychological study, consider:</p>\n<pre><code>1. Design: Can the design support causal claims? (Experiment > correlation)\n2. Sample: Is the sample representative? What is N?\n3. Measurement: Is the DV validly and reliably operationalised?\n4. Control: Are confounds adequately controlled?\n5. Statistics: Are effect sizes reported? Is the analysis appropriate?\n6. Replication: Has the finding been independently replicated?\n7. Ethics: Were participants treated in accordance with ethical guidelines?\n</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Dr. Chen writes three numbers on the whiteboard: 7, 8, and 1,000. 'What's the mean?' she asks. A student does the mental arithmetic: 338.3. 'Now,' she says, 'does that number tell you anything useful about this dataset?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "When you have an outlier — a value far from the rest — the mean becomes misleading. The median of these three numbers is 8, which actually reflects where most of the data sits. Statistics are tools, and like all tools, they can be used well or badly. The question is not which statistic to use — it's which statistic is most honest given your data."
+        },
+        {
+          "type": "example",
+          "speaker": "The p-value problem",
+          "text": "Simmons, Nelson & Simonsohn (2011) demonstrated that by using 'researcher degrees of freedom' — flexible choices about sample size, which conditions to include, which variables to analyse — researchers could produce a statistically significant (p < .05) finding for the absurd claim that listening to 'When I'm Sixty-Four' made participants literally younger. Every analytical decision was technically defensible. The result was completely false. This problem, known as 'p-hacking', is why pre-registration (declaring your hypotheses and analysis plan before collecting data) is increasingly required."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "P less than point-zero-five does not mean your hypothesis is true. It means your result is unlikely to be due to chance — at a threshold that was chosen somewhat arbitrarily by R.A. Fisher in the 1920s. A p-value is a single piece of evidence. Effect size, replication, and theoretical coherence matter at least as much."
+        }
+      ],
+      "guidedPracticeHtml": "<p>A researcher publishes a study showing that students who eat breakfast score significantly higher on morning exams than those who don't (p = .03, d = 0.18). The headline reads: 'Eating Breakfast Boosts Exam Performance by 20%.'</p><p><strong>Critically evaluate this study and its media coverage:</strong></p><ol><li>Is the p-value alone sufficient to conclude that breakfast causes improved performance? Explain your reasoning.</li><li>The effect size is d = 0.18. What does this tell you about the practical significance of the finding?</li><li>Identify one alternative explanation for the correlation between breakfast-eating and exam performance that the study may not have controlled for.</li><li>What would you need to see before accepting the headline's causal claim?</li></ol>",
+      "guidedPracticeModelAnswer": "1. No. Statistical significance (p = .03) tells us only that the result is unlikely due to chance — but it does not establish causation. The study design matters: if this is a correlational study (observing who happens to eat breakfast), then the finding could reflect confounding variables rather than a causal effect of breakfast. A true experiment randomly allocating students to eat or skip breakfast would be needed to support causal claims.\n\n2. d = 0.18 is a small effect size by Cohen's (1988) conventions (small = 0.2). This means that while the result may be statistically significant, the practical difference in exam scores between breakfast-eaters and non-eaters is modest. The headline claiming a '20% boost' is almost certainly an overstatement — effect size and absolute score differences need to be reported to evaluate such claims.\n\n3. One alternative explanation is socioeconomic status. Students from higher-income families may be more likely to eat breakfast regularly and to perform better on exams due to better study resources, less financial stress, and higher parental educational investment. Socioeconomic status would then be a confounding variable explaining both breakfast habits and exam performance, without breakfast itself being causally important.\n\n4. To accept the causal claim, I would want to see: (1) a randomised controlled experiment where students are assigned to eat or skip breakfast; (2) replication of the finding across different samples, settings, and exam types; (3) a plausible biological mechanism (e.g., evidence that blood glucose levels affect cognitive performance in a way that explains the exam effect); and (4) controls for confounding variables such as sleep quality, study habits, and socioeconomic status.",
+      "soloPracticeHtml": "<p>You are reviewing a meta-analysis of 45 studies on the effectiveness of mindfulness-based cognitive therapy (MBCT) for preventing depression relapse. The meta-analysis reports a pooled effect size of d = 0.61 (medium-large), with a statistically significant overall effect (p < .001). However, a funnel plot shows asymmetry, and the studies included vary widely in quality.</p><p>What conclusions can and cannot be drawn from this meta-analysis? What are the key threats to the validity of the pooled finding, and what further evidence would be needed before recommending MBCT as a first-line treatment? Aim for 200–250 words.</p>",
+      "modelAnswer": "The meta-analysis provides encouraging evidence for MBCT's effectiveness: a pooled d = 0.61 is a meaningful effect size, and the statistical significance (p < .001) across 45 studies is unlikely to be a chance finding. The pooling of multiple studies also reduces the influence of any single outlier study.\n\nHowever, several threats to validity undermine confident conclusions. Funnel plot asymmetry is a key indicator of publication bias — if studies finding no effect of MBCT have gone unpublished, the pooled effect size will be inflated relative to the true effect. The wide variation in study quality is also concerning: if lower-quality studies systematically show larger effects (due to inadequate control conditions, non-random allocation, or poor outcome measurement), the pooled estimate will be upwardly biased. The variability across studies may also reflect genuine heterogeneity in populations, treatment delivery, and follow-up periods, meaning the 'average' effect may not represent any specific real-world context.\n\nBefore recommending MBCT as a first-line treatment, I would want to see: (1) well-powered randomised controlled trials with active control conditions (not just treatment-as-usual); (2) pre-registered protocols to reduce researcher degrees of freedom; (3) long-term follow-up data beyond the studies' typical short horizons; and (4) evidence of effectiveness in real clinical settings (effectiveness trials), not just research settings (efficacy trials). The meta-analysis is promising, but not sufficient on its own.",
+      "feynmanPrompt": "Your friend says 'Scientists found that people who eat more vegetables are happier, so eating vegetables must make you happy.' Explain, in plain language, two reasons why this conclusion might not be correct, and describe what kind of study would be needed to properly test whether vegetables cause happiness.",
+      "rabbitHoleTerms": [
+        {
+          "term": "p-hacking",
+          "description": "The practice of running multiple statistical tests or analyses until a significant result (p < .05) is found, then reporting only that result. Dramatically inflates Type I error rates."
+        },
+        {
+          "term": "pre-registration",
+          "description": "The practice of publicly declaring hypotheses, methods, and analysis plans before data collection begins. Reduces researcher degrees of freedom and prevents p-hacking. Now required by many journals."
+        },
+        {
+          "term": "meta-analysis",
+          "description": "A statistical technique that combines the results of multiple studies on the same question to produce a pooled estimate of the true effect size, with greater power than any individual study."
+        },
+        {
+          "term": "effect size",
+          "description": "A quantitative measure of the magnitude of an experimental effect, independent of sample size. Cohen's d and Pearson's r are the most common metrics. More informative than p-values for practical decisions."
+        },
+        {
+          "term": "open science",
+          "description": "A movement promoting transparency in scientific practice through pre-registration, open data, open materials, and open access publication. Emerged partly in response to the replication crisis."
+        }
+      ],
+      "questions": [
+        {
+          "id": "psy-app-4b-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>A researcher finds p = .03 for the effect of a new therapy on anxiety. Which of the following is the most accurate interpretation of this result?</p>",
+          "options": [
+            "There is a 3% chance the therapy has no effect",
+            "The probability of obtaining this result (or more extreme) if the null hypothesis is true is 3%",
+            "The therapy reduces anxiety by 3%",
+            "97% of participants improved with the therapy"
+          ],
+          "correctAnswer": "The probability of obtaining this result (or more extreme) if the null hypothesis is true is 3%",
+          "explanationHtml": "<p>The p-value is the probability of obtaining the observed result, or one more extreme, assuming the null hypothesis is true. It is not the probability that the null hypothesis is true, nor a percentage of improvement, nor a probability of effect presence. The common misinterpretation ('3% chance the therapy has no effect') is a classic fallacy — the p-value is conditional on H₀ being true, not a probability that H₀ is false.</p>"
+        },
+        {
+          "id": "psy-app-4b-q2",
+          "type": "TRUE_FALSE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>True or False: A statistically significant result (p &lt; .05) with a very large sample size guarantees that the finding is practically important.</p>",
+          "correctAnswer": "False",
+          "explanationHtml": "<p>Statistical significance is influenced by sample size: with a very large sample, even trivially small effects will produce p-values below .05. A result can be statistically significant but practically meaningless — for example, a new drug might significantly reduce blood pressure by 0.5 mmHg (p = .001 in a trial of 10,000 patients), but this change is clinically negligible. Effect size measures (d, r) are necessary to evaluate practical importance.</p>"
+        },
+        {
+          "id": "psy-app-4b-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A meta-analysis of 30 studies on the effect of exercise on depression reports d = 0.55. A funnel plot shows clear asymmetry. Which conclusion is most appropriate?</p>",
+          "options": [
+            "Exercise has a medium-sized causal effect on depression",
+            "The pooled effect is likely inflated due to publication bias, so caution is needed in interpreting d = 0.55",
+            "The meta-analysis is invalid because the studies are too heterogeneous",
+            "The funnel plot asymmetry means exercise has no effect on depression"
+          ],
+          "correctAnswer": "The pooled effect is likely inflated due to publication bias, so caution is needed in interpreting d = 0.55",
+          "explanationHtml": "<p>Funnel plot asymmetry is typically interpreted as evidence of publication bias — smaller studies showing no effect are missing from the literature (presumably unpublished), leaving only studies that found an effect. This means the pooled effect size of d = 0.55 is likely an overestimate. The appropriate conclusion is to interpret the finding with caution, not to dismiss it entirely (option C) or to invert it (option D). A causal claim (option A) would also require experimental designs, not just a meta-analysis that may include correlational studies.</p>"
+        }
+      ]
+    }
+  ]
+}
