@@ -182,9 +182,10 @@ public class BadgeService implements GamificationFacade {
       case REACT_STATE_WEAVER -> completedChunks.contains("rx-b");
       case REACT_CAPSTONE_COMPLETE -> completedChunks.contains("rx-d");
 
-      case PSY_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("psy-a", "psy-b", "psy-c"));
-      case GEN_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("gen-a", "gen-b", "gen-c"));
-      case SCI_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("sci-a", "sci-b", "sci-c"));
+      // Legacy foundation badges — now check new psy-app-*/gen-app-*/sci-app-* IDs
+      case PSY_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("psy-app-1", "psy-app-2", "psy-app-3"));
+      case GEN_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("gen-app-1", "gen-app-2", "gen-app-3"));
+      case SCI_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("sci-app-1", "sci-app-2", "sci-app-3"));
 
       case PERFECT_REVIEW -> hasPerfectReview;
       case MEMORY_MASTER -> false;
@@ -210,6 +211,36 @@ public class BadgeService implements GamificationFacade {
       case JUNIOR_CAPSTONE     -> completedChunks.contains("java-jun-20");
       case SENIOR_CAPSTONE     -> completedChunks.contains("java-sen-19");
       case LEAD_CAPSTONE       -> completedChunks.contains("java-lea-17");
+
+      // ── Psychology tier badges ──────────────────────────────────────────
+      case PSY_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "psy-app-", 15);
+      case PSY_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "psy-jun-", 20);
+      case PSY_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "psy-sen-", 19);
+      case PSY_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "psy-lea-", 17);
+      case PSY_APPRENTICE_CAPSTONE -> completedChunks.contains("psy-app-15");
+      case PSY_JUNIOR_CAPSTONE     -> completedChunks.contains("psy-jun-20");
+      case PSY_SENIOR_CAPSTONE     -> completedChunks.contains("psy-sen-19");
+      case PSY_LEAD_CAPSTONE       -> completedChunks.contains("psy-lea-17");
+
+      // ── Genealogy tier badges ───────────────────────────────────────────
+      case GEN_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "gen-app-", 15);
+      case GEN_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "gen-jun-", 20);
+      case GEN_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "gen-sen-", 19);
+      case GEN_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "gen-lea-", 17);
+      case GEN_APPRENTICE_CAPSTONE -> completedChunks.contains("gen-app-15");
+      case GEN_JUNIOR_CAPSTONE     -> completedChunks.contains("gen-jun-20");
+      case GEN_SENIOR_CAPSTONE     -> completedChunks.contains("gen-sen-19");
+      case GEN_LEAD_CAPSTONE       -> completedChunks.contains("gen-lea-17");
+
+      // ── Natural Sciences tier badges ────────────────────────────────────
+      case SCI_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "sci-app-", 15);
+      case SCI_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "sci-jun-", 20);
+      case SCI_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "sci-sen-", 19);
+      case SCI_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "sci-lea-", 17);
+      case SCI_APPRENTICE_CAPSTONE -> completedChunks.contains("sci-app-15");
+      case SCI_JUNIOR_CAPSTONE     -> completedChunks.contains("sci-jun-20");
+      case SCI_SENIOR_CAPSTONE     -> completedChunks.contains("sci-sen-19");
+      case SCI_LEAD_CAPSTONE       -> completedChunks.contains("sci-lea-17");
 
       // ── Note-taking milestones ──────────────────────────────────────────
       case FIRST_NOTE   -> noteCount >= 1;

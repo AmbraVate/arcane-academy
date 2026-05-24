@@ -1,5 +1,5 @@
-{
-  "id": "psy-fnd-1",
+﻿{
+  "id": "psy-app-1",
   "title": "History & Approaches",
   "glyph": "🏛️",
   "sortOrder": 1,
@@ -8,7 +8,7 @@
   "prerequisites": [],
   "subChunks": [
     {
-      "id": "psy-fnd-1a",
+      "id": "psy-app-1a",
       "title": "Origins of Psychology & Major Approaches",
       "sortOrder": 1,
       "xpReward": 70,
@@ -151,7 +151,7 @@
       ]
     },
     {
-      "id": "psy-fnd-1b",
+      "id": "psy-app-1b",
       "title": "Scientific Method & Research Ethics",
       "sortOrder": 2,
       "xpReward": 70,
@@ -294,7 +294,7 @@
       ]
     },
     {
-      "id": "psy-fnd-1c",
+      "id": "psy-app-1c",
       "title": "The Six Approaches in Psychology",
       "sortOrder": 3,
       "xpReward": 80,
@@ -381,7 +381,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-1c-q1",
+          "id": "psy-app-1c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which pair of psychologists are most closely associated with the development of the humanistic approach in the 1950s and 1960s?</p>",
@@ -396,7 +396,7 @@
           "explanationHtml": "<p>Carl Rogers (client-centred therapy, core conditions) and Abraham Maslow (hierarchy of needs, self-actualisation) are the principal architects of the humanistic 'third force' movement. Skinner and Watson are behaviourists; Freud and Jung are psychodynamic; Neisser and Miller are central figures in the cognitive revolution.</p>"
         },
         {
-          "id": "psy-fnd-1c-q2",
+          "id": "psy-app-1c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A researcher argues that humans show enhanced reasoning performance on the Wason selection task when the problem is framed as detecting cheaters in a social exchange, and that this reflects a specialised cognitive mechanism evolved to police reciprocal altruism. Which psychological approach is most clearly represented in this argument?</p>",
@@ -411,7 +411,7 @@
           "explanationHtml": "<p>This is the signature claim of Cosmides and Tooby's (1992) evolutionary psychology programme. While the methodology uses a cognitive task, the theoretical framework — domain-specific modules shaped by selection pressures faced by our ancestors (here, the need to detect free-riders in reciprocal exchange) — is distinctively evolutionary. A purely cognitive account would frame the finding in terms of general reasoning processes; an evolutionary account explains <em>why</em> a specialised mechanism for cheater detection would exist.</p>"
         },
         {
-          "id": "psy-fnd-1c-q3",
+          "id": "psy-app-1c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Moncrieff et al.'s (2023) umbrella review concluded that the serotonin hypothesis of depression is robustly supported by the empirical evidence accumulated over the past four decades.</p>",
@@ -421,7 +421,7 @@
           "explanationHtml": "<p>This is false. Moncrieff and colleagues' (2023) umbrella review of decades of evidence concluded that there is no consistent support for the hypothesis that depression is caused by lowered serotonin activity or concentrations. This finding has significantly weakened a foundational claim of the biological-psychiatric account of depression and illustrates the importance of treating biological reductionist claims with appropriate scientific scepticism.</p>"
         },
         {
-          "id": "psy-fnd-1c-q4",
+          "id": "psy-app-1c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>A clinician formulates a patient's panic disorder as follows: 'Your initial panic attack was triggered by a benign physiological sensation that you misinterpreted as evidence of an impending heart attack. The catastrophic appraisal produced further physiological arousal, which confirmed the misinterpretation, generating a self-perpetuating loop. Avoidance of exercise and social settings prevents you from learning that the feared catastrophe never occurs.' Which approach is most precisely represented in this formulation?</p>",
@@ -438,7 +438,7 @@
       ]
     },
     {
-      "id": "psy-fnd-1d",
+      "id": "psy-app-1d",
       "title": "Conceptual Issues & Debates",
       "sortOrder": 4,
       "xpReward": 80,
@@ -525,7 +525,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-1d-q1",
+          "id": "psy-app-1d-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>In Libet et al.'s (1983) study of voluntary movement, approximately how long before the movement itself did the readiness potential begin?</p>",
@@ -540,7 +540,7 @@
           "explanationHtml": "<p>The readiness potential began approximately 550 ms before the movement, with participants reporting conscious awareness of the intention only about 200 ms before movement onset — leaving a roughly 350 ms gap. This finding generated decades of debate about its implications for free will. More recent work by Schurger et al. (2012) has reinterpreted the readiness potential as the integration of spontaneous neural noise rather than a deterministic causal antecedent, substantially complicating the original interpretation.</p>"
         },
         {
-          "id": "psy-fnd-1d-q2",
+          "id": "psy-app-1d-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A behaviour-genetic study reports that the heritability of educational attainment in a particular UK sample is 0.6. A journalist reports this as showing that 'genes determine 60% of how well any individual will do at school'. Which of the following best identifies the conceptual error in the journalist's claim?</p>",
@@ -555,7 +555,7 @@
           "explanationHtml": "<p>This is the classic interpretive error that Turkheimer (2000) sought to correct. Heritability estimates the proportion of <em>population variance</em> in a trait attributable to genetic variance, within the particular environmental range sampled. It does not — and cannot — describe the genetic contribution to any single individual's outcome. Heritability of 0.6 is fully compatible with environmental interventions producing dramatic individual change (phenylketonuria, 100% heritable but managed by diet, is the standard counter-example).</p>"
         },
         {
-          "id": "psy-fnd-1d-q3",
+          "id": "psy-app-1d-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Henrich, Heine, and Norenzayan's (2010) paper 'The weirdest people in the world?' argued that approximately 96% of subjects in top psychology journals were drawn from approximately 12% of the world's population.</p>",
@@ -565,7 +565,7 @@
           "explanationHtml": "<p>This is true. Henrich, Heine, and Norenzayan (2010) reported these figures in their landmark <em>Behavioral and Brain Sciences</em> paper, demonstrating that the empirical base of behavioural science is overwhelmingly drawn from Western, Educated, Industrialised, Rich, Democratic populations. Their further analysis showed that WEIRD populations are systematic outliers on a range of measures including visual perception, fairness preferences, and self-concept structure, calling into question the universality of many findings presented as features of 'human nature'.</p>"
         },
         {
-          "id": "psy-fnd-1d-q4",
+          "id": "psy-app-1d-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>A researcher conducting a study on adolescent risk-taking recruits an all-male sample of 16-year-olds, finds elevated rates of risky decision-making relative to adults, and titles her paper 'Adolescent risk-taking: a developmental phenomenon'. A reviewer objects that this constitutes a specific form of gender bias. Which form is the reviewer most precisely identifying?</p>",

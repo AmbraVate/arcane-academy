@@ -1,5 +1,5 @@
-{
-  "id": "psy-adv-1",
+﻿{
+  "id": "psy-sen-1",
   "title": "Cognitive Psychology",
   "glyph": "🧩",
   "sortOrder": 5,
@@ -8,7 +8,7 @@
   "prerequisites": ["psy-prt-3"],
   "subChunks": [
     {
-      "id": "psy-adv-1a",
+      "id": "psy-sen-1a",
       "title": "Attention & Cognitive Load",
       "sortOrder": 1,
       "xpReward": 80,
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "id": "psy-adv-1b",
+      "id": "psy-sen-1b",
       "title": "Reasoning, Judgement & Decision-Making",
       "sortOrder": 2,
       "xpReward": 80,
@@ -286,7 +286,7 @@
       ]
     },
     {
-      "id": "psy-adv-1c",
+      "id": "psy-sen-1c",
       "title": "Perception & Visual Cognition",
       "sortOrder": 3,
       "xpReward": 90,
@@ -373,7 +373,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-1c-q1",
+          "id": "psy-sen-1c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which of the following best characterises Gibson's (1979) ecological theory of perception?</p>",
@@ -387,7 +387,7 @@
           "explanationHtml": "<p>Gibson's ecological approach insists that the structured light reaching the eye — including texture gradients, optic flow, and invariants — provides sufficient information about the environment to make inference unnecessary. This contrasts directly with Gregory's constructivism (option B), Marr's computational hierarchy (option C), and contemporary predictive coding (option D).</p>"
         },
         {
-          "id": "psy-adv-1c-q2",
+          "id": "psy-sen-1c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A graphic designer is creating a wayfinding sign in a hospital. They want viewers to perceive a continuous arrow even though the arrow is composed of evenly spaced dashes. Which Gestalt principle is most directly being exploited?</p>",
@@ -401,7 +401,7 @@
           "explanationHtml": "<p>Although similarity (same colour and size) and closure (filling in the gaps) both contribute, the defining feature is that the dashes are arranged along a directional path — and it is the continuity principle that produces the perception of a single, flowing contour rather than a collection of separate marks. Wertheimer (1923) identified this as one of the strongest organisational principles.</p>"
         },
         {
-          "id": "psy-adv-1c-q3",
+          "id": "psy-sen-1c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Segall, Campbell and Herskovits (1966) reported that Western, urban participants showed substantially stronger susceptibility to the Müller-Lyer illusion than rural African and Filipino participants, supporting the carpentered world hypothesis.</p>",
@@ -409,7 +409,7 @@
           "explanationHtml": "<p>This is one of the most cited cross-cultural findings in perception. Segall and colleagues attributed the difference to lifelong exposure to rectangular, parallel-edged environments in industrialised settings, which trains the visual system to interpret oblique lines as receding parallels — an interpretation that misfires in the two-dimensional Müller-Lyer figure. The result remains foundational to critiques of universalist claims in perception research.</p>"
         },
         {
-          "id": "psy-adv-1c-q4",
+          "id": "psy-sen-1c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Two theoretical accounts both predict that experienced radiologists detect anomalies faster than novices, but they differ in mechanism. Which pair correctly distinguishes them?</p>",
@@ -425,7 +425,7 @@
       ]
     },
     {
-      "id": "psy-adv-1d",
+      "id": "psy-sen-1d",
       "title": "Language & Psycholinguistics",
       "sortOrder": 4,
       "xpReward": 90,
@@ -512,7 +512,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-1d-q1",
+          "id": "psy-sen-1d-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>What was Chomsky's (1959) central objection to Skinner's (1957) account of language acquisition in <em>Verbal Behavior</em>?</p>",
@@ -526,7 +526,7 @@
           "explanationHtml": "<p>Chomsky's review argued that operant conditioning was descriptively inadequate: it could not account for the rapidity of acquisition from limited and noisy input (poverty of the stimulus), the systematic production of novel grammatical utterances (productivity), or the rule-governed character of those novel utterances (creativity). This critique was a foundational moment in the cognitive revolution.</p>"
         },
         {
-          "id": "psy-adv-1d-q2",
+          "id": "psy-sen-1d-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A 30-year-old British native speaker enrols in intensive Mandarin classes. After three years of study, their vocabulary is large and their grammar is largely correct, but they are still consistently identified as a non-native speaker by ear within seconds. Which theoretical account best explains this pattern?</p>",
@@ -540,7 +540,7 @@
           "explanationHtml": "<p>The dissociation between successful vocabulary and grammar (which can be acquired well into adulthood) and unsuccessful native-like phonology is exactly the pattern predicted by critical-period accounts. Hartshorne et al. (2018) refined Lenneberg's claim using a very large internet sample, showing that grammar-learning declines sharply after late adolescence; phonology is even more sharply constrained. The other options either misapply theories (Skinner, Whorf) or invoke frameworks (LASS) that do not specifically predict this dissociation.</p>"
         },
         {
-          "id": "psy-adv-1d-q3",
+          "id": "psy-sen-1d-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Paap, Johnson and Sawi's (2015) critical review concluded that the bilingual advantage in executive function tasks is large, robust, and consistently replicated across well-controlled studies.</p>",
@@ -548,7 +548,7 @@
           "explanationHtml": "<p>Paap and colleagues concluded the opposite: bilingual advantages on executive function tasks are inconsistent, often vanish in larger and better-controlled studies, and may reflect publication bias. Their review is widely cited as a sobering corrective to enthusiastic claims about bilingualism's cognitive benefits, and the debate is now a textbook case in discussions of the replication crisis in psychology.</p>"
         },
         {
-          "id": "psy-adv-1d-q4",
+          "id": "psy-sen-1d-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>A patient produces fluent, prosodically normal speech that is semantically empty and shows severely impaired comprehension. They appear largely unaware of their difficulty. Which clinical description and theoretical interpretation is most accurate?</p>",
@@ -564,7 +564,7 @@
       ]
     },
     {
-      "id": "psy-adv-1e",
+      "id": "psy-sen-1e",
       "title": "Problem-Solving, Insight & Creativity",
       "sortOrder": 5,
       "xpReward": 90,
@@ -651,7 +651,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-1e-q1",
+          "id": "psy-sen-1e-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>What did Duncker's (1945) candle problem demonstrate about problem-solving?</p>",
@@ -665,7 +665,7 @@
           "explanationHtml": "<p>The candle problem is the classic demonstration of functional fixedness — the tendency to perceive objects only in terms of their conventional uses. Participants given the tacks inside the box solved the problem significantly less often than those given the tacks separately, because the container-function perception blocked the structural-function perception. Means-ends analysis (option B) is Newell and Simon's heuristic, not Duncker's finding.</p>"
         },
         {
-          "id": "psy-adv-1e-q2",
+          "id": "psy-sen-1e-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A chess coach observes that their grandmaster student rapidly perceives the strategic structure of unfamiliar positions, while club-level players see only the surface arrangement of pieces. Which research finding best explains this difference?</p>",
@@ -679,7 +679,7 @@
           "explanationHtml": "<p>Chi et al.'s (1981) sorting study with physics problems demonstrated exactly this organisational difference — experts grouping by conservation principles, novices by surface features like inclined planes. The same pattern has been documented extensively in chess (de Groot, 1965; Chase & Simon, 1973): grandmasters perceive 'chunks' of meaningful structural relationships, dramatically increasing their effective working memory for chess-relevant information.</p>"
         },
         {
-          "id": "psy-adv-1e-q3",
+          "id": "psy-sen-1e-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Bowden and colleagues' (2005) neuroimaging research found that insight solutions to compound remote associates problems are preceded by a burst of gamma-band activity over the right anterior temporal lobe.</p>",
@@ -687,7 +687,7 @@
           "explanationHtml": "<p>Bowden et al. (2005) reported that insight solutions — but not analytic solutions — were preceded by gamma-band activity over the right anterior temporal lobe, a region implicated in integrating distantly related semantic information. This was the first persuasive neural signature of insight versus analytic problem-solving, providing the mechanistic specificity that the Gestalt tradition had lacked.</p>"
         },
         {
-          "id": "psy-adv-1e-q4",
+          "id": "psy-sen-1e-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Two participants both solve Duncker's radiation problem. One first read an analogous military story about converging armies. Which prediction follows from Gick and Holyoak's (1980) research?</p>",
@@ -703,7 +703,7 @@
       ]
     },
     {
-      "id": "psy-adv-1f",
+      "id": "psy-sen-1f",
       "title": "Executive Function & Cognitive Control",
       "sortOrder": 6,
       "xpReward": 90,
@@ -790,7 +790,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-1f-q1",
+          "id": "psy-sen-1f-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Miyake et al.'s (2000) confirmatory factor analysis, which three components best characterise the structure of executive function?</p>",
@@ -804,7 +804,7 @@
           "explanationHtml": "<p>Miyake and colleagues' (2000) confirmatory factor analysis identified inhibition, shifting (set-shifting / cognitive flexibility), and updating (of working memory contents) as three correlated-but-separable factors of executive function. The model supports a 'unity and diversity' view rather than either a single unitary capacity or three fully independent abilities. This framework remains foundational and was refined in Miyake and Friedman (2012).</p>"
         },
         {
-          "id": "psy-adv-1f-q2",
+          "id": "psy-sen-1f-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A patient with confirmed damage to the ventromedial prefrontal cortex shows preserved IQ, intact memory, and normal language — but consistently makes poor everyday decisions: financially imprudent purchases, neglected relationships, missed appointments. Which theoretical account best explains this pattern?</p>",
@@ -818,7 +818,7 @@
           "explanationHtml": "<p>This is the classic dissociation that the somatic marker hypothesis was developed to explain. Damasio's (1994) account — building on the case of Phineas Gage and contemporary patients with similar lesions — proposes that ventromedial PFC integrates affective signals with deliberative reasoning; its damage disrupts everyday adaptive decision-making while leaving abstract cognitive capacities largely intact. The Iowa Gambling Task provides an experimental demonstration of this dissociation.</p>"
         },
         {
-          "id": "psy-adv-1f-q3",
+          "id": "psy-sen-1f-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Owen et al.'s (2010) <em>Nature</em> study on online brain training with approximately 11,000 participants found substantial far-transfer effects, with participants improving on a wide range of untrained cognitive tasks after six weeks of training.</p>",
@@ -826,7 +826,7 @@
           "explanationHtml": "<p>Owen and colleagues found exactly the opposite: participants improved on the specific trained tasks but showed no meaningful transfer to untrained tasks measuring general cognitive ability. The study is widely cited as the most damaging single piece of evidence against the broad claims of the commercial brain-training industry. Subsequent meta-analytic work (Sala & Gobet, 2019; Gavelin et al., 2022) has converged on the same conclusion.</p>"
         },
         {
-          "id": "psy-adv-1f-q4",
+          "id": "psy-sen-1f-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>A 15-year-old performs at adult level on a laboratory inhibition task (Stroop) but engages in highly risky behaviour in peer-group settings. Two accounts could explain this. Which pair correctly distinguishes them?</p>",

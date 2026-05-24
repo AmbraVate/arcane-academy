@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-8",
+﻿{
+  "id": "psy-jun-8",
   "topicId": "psychology",
   "title": "Counselling Psychology",
   "glyph": "🪷",
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-8a",
+      "id": "psy-jun-8a",
       "title": "Therapeutic Orientations & Counselling Models",
       "sortOrder": 1,
       "xpReward": 90,
@@ -93,7 +93,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-8a-q1",
+          "id": "psy-jun-8a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which three therapist-offered conditions did Rogers (1957) identify as necessary and sufficient for constructive personality change in person-centred therapy?</p>",
@@ -107,7 +107,7 @@
           "explanationHtml": "<p>Rogers' (1957) paper articulated six necessary and sufficient conditions, of which three are therapist-offered: congruence (genuineness), unconditional positive regard, and empathic understanding. The other three concern psychological contact, client incongruence, and the client's perception of the therapist's attitudes. The remaining options describe behavioural/cognitive (Beck), psychodynamic, and Solution-Focused interventions respectively.</p>"
         },
         {
-          "id": "psy-prt-8a-q2",
+          "id": "psy-jun-8a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A counselling psychologist describes her practice as 'pluralistic'. A new client asks her what this means in practice. Which of the following best captures the pluralistic position articulated by Cooper and McLeod (2011)?</p>",
@@ -121,7 +121,7 @@
           "explanationHtml": "<p>Cooper and McLeod's (2011) pluralism is distinguished from eclectic integration by its foregrounding of client voice and metacommunication. The pluralist holds that different clients benefit from different approaches and that the client is a co-author of therapeutic choices. Option A describes proprietary integration; B describes evidence-based protocol-matching; D describes orthodox person-centred practice — none of which capture the pluralistic stance.</p>"
         },
         {
-          "id": "psy-prt-8a-q3",
+          "id": "psy-jun-8a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Shedler's (2010) review in <em>American Psychologist</em> concluded that the empirical effect sizes for short-term psychodynamic psychotherapy are broadly comparable to those reported for cognitive-behavioural therapies for many presentations, and frequently increase rather than decay following termination.</p>",
@@ -129,7 +129,7 @@
           "explanationHtml": "<p>Shedler (2010) synthesised meta-analytic evidence and reported termination effect sizes around d = 0.97 for short-term psychodynamic therapy, in the same range as CBT. He also documented the 'sleeper effect': continued symptomatic improvement in the months and years following the end of treatment, which has been argued to reflect the sustained internalisation of psychodynamic work on affect, defence, and relational patterns.</p>"
         },
         {
-          "id": "psy-prt-8a-q4",
+          "id": "psy-jun-8a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes Yalom's (1980) existential approach from de Shazer's (1985) Solution-Focused Brief Therapy?</p>",
@@ -146,7 +146,7 @@
       "guidedPracticeModelAnswer": "This presentation warrants both diagnostic and formulation attention. The persistent low mood, pervasive worthlessness, and recurrent thought content suggest an activated core schema — \"I am fundamentally unlovable\" — consistent with Beck's (1976) cognitive model of depression. The relationship breakdown likely served as a triggering event reactivating a pre-existing conditional belief.\n\nA CBT formulation would map: early experience (possibly rejection or abandonment) → core belief (\"I am unlovable\") → dysfunctional assumptions (\"If a relationship ends, it proves my worthlessness\") → automatic thoughts → emotional and behavioural consequences. Schema therapy (Young et al., 2003) targets core beliefs more directly, using techniques such as limited reparenting and mode work.\n\nA person-centred orientation would offer unconditional positive regard as the corrective emotional experience. A pluralistic, collaboratively agreed formulation drawing on multiple models — with explicit client agency in goal-setting — would be most responsive."
     },
     {
-      "id": "psy-prt-8b",
+      "id": "psy-jun-8b",
       "title": "The Therapeutic Relationship & Process Research",
       "sortOrder": 2,
       "xpReward": 90,
@@ -229,7 +229,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-8b-q1",
+          "id": "psy-jun-8b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Bordin (1979), the working alliance is constituted by three components. Which of the following correctly identifies all three?</p>",
@@ -243,7 +243,7 @@
           "explanationHtml": "<p>Bordin (1979) proposed that the working alliance is tripartite: the affective bond between client and therapist, shared agreement on the goals of therapy, and shared agreement on the tasks by which those goals will be pursued. He argued explicitly that this structure generalises across orientations, making the alliance a pan-theoretical construct. The other options describe psychoanalytic technique (A), Rogers' three therapist-offered conditions (B), and an ad-hoc structural list (D).</p>"
         },
         {
-          "id": "psy-prt-8b-q2",
+          "id": "psy-jun-8b-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A counselling psychology supervisee describes a client who has recently begun arriving late, declines to expand on what he says, and described the previous session as 'fine'. Drawing on Safran and Muran (2000), how should the supervisor most appropriately conceptualise these behaviours?</p>",
@@ -257,7 +257,7 @@
           "explanationHtml": "<p>Safran and Muran (2000) distinguished withdrawal ruptures (disengagement, compliance, silence, vagueness) from confrontation ruptures (direct expression of dissatisfaction, anger, or criticism). The behaviours described — lateness, brief answers, 'fine' as an evaluation — are paradigmatic withdrawal markers. The clinically indicated response is for the therapist to name what she is noticing and invite the client into metacommunication about the work itself, rather than wait passively (option D), pathologise (option C), or jump to interpretation (option A).</p>"
         },
         {
-          "id": "psy-prt-8b-q3",
+          "id": "psy-jun-8b-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Horvath, Del Re, Flückiger, and Symonds' (2011) meta-analysis of over 200 studies reported a robust alliance-outcome correlation of approximately r = .275, and this estimate has been broadly replicated in subsequent meta-analytic work using larger samples.</p>",
@@ -265,7 +265,7 @@
           "explanationHtml": "<p>Horvath et al. (2011) meta-analysed 201 studies (over 14,000 clients) and reported an aggregate alliance-outcome correlation of r ≈ .275. Flückiger et al. (2018) updated this with 295 studies and reported a near-identical estimate (r ≈ .28). The consistency of this finding across multiple meta-analyses, orientations, modalities, and presenting problems is one of the most robust results in psychotherapy process research.</p>"
         },
         {
-          "id": "psy-prt-8b-q4",
+          "id": "psy-jun-8b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes the contextual model defended by Wampold (2001) from the medical model of psychotherapy?</p>",
@@ -282,7 +282,7 @@
       "guidedPracticeModelAnswer": "The supervisory concern is a withdrawal rupture (Safran & Muran, 2000) — a reduction in client involvement characterised by passive compliance or disengagement. Withdrawal ruptures differ from confrontation ruptures (overt disagreement) and are harder to detect because the client appears cooperative while emotionally withdrawing.\n\nThe therapeutic alliance is the most robust predictor of outcome across all modalities (Norcross & Lambert, 2011). Ruptures can paradoxically be therapeutic when detected and resolved — the resolution process itself models interpersonal repair. The trainee's discomfort with the silence is a countertransference response that, managed reflectively, provides diagnostic information.\n\nSupervision guidance: the trainee should raise the shift metacommunicatively — \"I've noticed our conversations have felt a bit quieter lately. I wonder if something has shifted between us.\" This tentative, non-blaming enquiry opens space without accusation. Maintain curiosity over anxiety. Review the session recording to identify when the shift began."
     },
     {
-      "id": "psy-prt-8c",
+      "id": "psy-jun-8c",
       "title": "Ethics, Practice & the Counselling Psychologist Role",
       "sortOrder": 3,
       "xpReward": 90,
@@ -365,7 +365,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-8c-q1",
+          "id": "psy-jun-8c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>The BACP Ethical Framework for the Counselling Professions articulates five ethical principles. Which of the following lists correctly identifies all five?</p>",
@@ -379,7 +379,7 @@
           "explanationHtml": "<p>The BACP Ethical Framework articulates five principles drawn from biomedical ethics, with the addition of self-respect: autonomy (respect for self-determination), beneficence (promoting wellbeing), non-maleficence (avoiding harm), justice (fair treatment), and self-respect (appropriate self-care). Option B lists Rogers' core conditions plus integrity/fidelity; C describes ethical good-practice domains; D lists four of the six SAMHSA (2014) trauma-informed principles. Only A is correct.</p>"
         },
         {
-          "id": "psy-prt-8c-q2",
+          "id": "psy-jun-8c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A counselling psychologist receives a referral and discovers, before the first session, that the prospective client is the sister of a close friend. Drawing on Pope and Vasquez (2016), how should she best conceptualise this situation?</p>",
@@ -393,7 +393,7 @@
           "explanationHtml": "<p>Pope and Vasquez (2016) distinguish sexual from non-sexual dual relationships. The analytic question for the latter is whether the relationship would (a) impair the practitioner's judgement and effectiveness or (b) exploit or harm the client. The proximity to a close friendship satisfies the test of foreseeable impairment; the ethically appropriate response is to decline the referral with a clear explanation, signpost to another competent practitioner, and document the rationale. Option A misclassifies the situation as sexual; B understates the structural risk and removes the requirement for documented analysis; D denies the ethical structure entirely.</p>"
         },
         {
-          "id": "psy-prt-8c-q3",
+          "id": "psy-jun-8c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: SAMHSA's (2014) framework distinguishes 'trauma-informed practice' (an organisational and relational orientation centred on six principles including safety, trustworthiness, and empowerment) from 'trauma-specific treatment' (interventions such as EMDR and TF-CBT designed to treat trauma directly).</p>",
@@ -401,7 +401,7 @@
           "explanationHtml": "<p>SAMHSA's (2014) <em>Concept of Trauma and Guidance for a Trauma-Informed Approach</em> explicitly distinguishes trauma-informed practice — an organisational stance applicable across services and providers, articulated through six principles (safety; trustworthiness and transparency; peer support; collaboration and mutuality; empowerment, voice, and choice; cultural, historical, and gender issues) — from trauma-specific treatment, which refers to evidence-based clinical interventions targeting trauma sequelae directly. The two are complementary: a trauma-specific intervention should be delivered within a trauma-informed service.</p>"
         },
         {
-          "id": "psy-prt-8c-q4",
+          "id": "psy-jun-8c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes microinvalidations from microassaults in Sue et al.'s (2007) taxonomy of racial microaggressions?</p>",

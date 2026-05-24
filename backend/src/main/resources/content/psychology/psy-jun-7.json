@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-7",
+﻿{
+  "id": "psy-jun-7",
   "title": "Occupational Psychology",
   "glyph": "💼",
   "sortOrder": 13,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-7a",
+      "id": "psy-jun-7a",
       "title": "Selection, Assessment & Performance",
       "sortOrder": 1,
       "xpReward": 90,
@@ -93,7 +93,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-7a-q1",
+          "id": "psy-jun-7a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>In Schmidt and Hunter's (1998) meta-analysis, which of the following selection methods showed the highest corrected predictive validity coefficient against job performance?</p>",
@@ -107,7 +107,7 @@
           "explanationHtml": "<p>Schmidt and Hunter's (1998) landmark meta-analysis established that work sample tests achieved the highest corrected validity coefficient at r = .54, marginally above general mental ability tests and structured interviews (both around r = .51). Unstructured interviews managed only r = .20, while years of experience (r = .18) and graphology (r = .02) performed worst. Despite this evidence, unstructured interviews remain dominant in operational practice — a gap Highhouse (2008) attributed to persistent belief in subjective expertise.</p>"
         },
         {
-          "id": "psy-prt-7a-q2",
+          "id": "psy-jun-7a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A graduate scheme uses a one-hour panel interview with no pre-defined questions, allowing each interviewer to follow their own line of inquiry, and ratings are made on impression rather than behavioural anchors. Drawing on McDaniel et al. (1994), which best describes the likely validity of this process and the recommended improvement?</p>",
@@ -121,7 +121,7 @@
           "explanationHtml": "<p>This is a textbook unstructured interview: no predetermined questions, idiosyncratic interviewer behaviour, and impressionistic ratings. McDaniel et al. (1994) and Schmidt and Hunter (1998) place such methods around r = .20 — close to chance. Structuring the interview by using identical predetermined questions for every candidate, ideally behaviourally or situationally focused, and rating responses on behaviourally anchored scales typically raises corrected validity to around r = .44–.51, without changing the overall format or duration. Removing the interview entirely is not the appropriate response; the recommended action is to structure it.</p>"
         },
         {
-          "id": "psy-prt-7a-q3",
+          "id": "psy-jun-7a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Howard and Bray's (1988) Management Progress Study at AT&T demonstrated that assessment centre ratings made on young managers predicted the managerial level they achieved more than two decades later, providing strong longitudinal evidence for assessment centre validity.</p>",
@@ -129,7 +129,7 @@
           "explanationHtml": "<p>Howard and Bray (1988) assessed 422 young managers at AT&T in the late 1950s and followed their careers for over twenty years. Assessment centre ratings predicted managerial level attained two decades later, with correlations around r = .44 for middle management — a remarkably demanding longitudinal demonstration of predictive validity. The assessors were unaware of subsequent career trajectories, and AC ratings added variance beyond cognitive ability alone. This study remains foundational evidence for assessment centre methodology, though Lievens' (1998) construct validity paradox complicates interpretation of which underlying dimensions are actually being measured.</p>"
         },
         {
-          "id": "psy-prt-7a-q4",
+          "id": "psy-jun-7a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following best distinguishes a structured interview from a situational judgement test (SJT)?</p>",
@@ -146,7 +146,7 @@
       "guidedPracticeModelAnswer": "The current procedure's critical weakness is the unstructured panel interview, which has predictive validity of around r = .38 at best — lower in practice due to interviewers' inconsistent question coverage and susceptibility to first-impression bias, halo effects, and similarity bias. CV screening alone cannot assess job-relevant skills and is confounded by credential privilege.\n\nRecommendations based on Schmidt and Hunter's (1998) meta-analytic review: (1) replace unstructured with structured behavioural interviews (BEI) using STAR-format questions with anchored scoring — incremental validity r = .51; (2) add a cognitive ability test or work-sample exercise relevant to consultancy tasks (analytical case study) — work samples have validity r = .54; (3) ensure assessment centre exercises are scored by trained, diverse assessors using behavioural observation scales.\n\nThe group exercise is retained only if it maps onto job-relevant team behaviour. Document all scores to enable audit for adverse impact on protected characteristics."
     },
     {
-      "id": "psy-prt-7b",
+      "id": "psy-jun-7b",
       "title": "Work Motivation, Engagement & Well-being",
       "sortOrder": 2,
       "xpReward": 90,
@@ -229,7 +229,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-7b-q1",
+          "id": "psy-jun-7b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Maslach and Jackson's (1981) Maslach Burnout Inventory, burnout comprises which three dimensions?</p>",
@@ -243,7 +243,7 @@
           "explanationHtml": "<p>Maslach and Jackson's (1981) MBI operationalises burnout as a three-dimensional syndrome: <em>emotional exhaustion</em> (depletion of emotional resources), <em>depersonalisation</em> (cynical detachment from work or recipients), and <em>reduced personal accomplishment</em> (diminished sense of competence and achievement). Vigour, dedication, and absorption are the engagement dimensions in Schaufeli et al.'s (2002) UWES. Autonomy, competence, and relatedness are Deci and Ryan's (2008) psychological needs. Hope, self-efficacy, resilience, and optimism comprise Luthans' (2002) PsyCap HERO model.</p>"
         },
         {
-          "id": "psy-prt-7b-q2",
+          "id": "psy-jun-7b-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A call-centre operator faces high call volume, strict scripts, and detailed performance metrics, but reports a supportive supervisor, ample developmental feedback, and considerable discretion in handling difficult callers. According to the Job Demands-Resources model (Bakker & Demerouti, 2007), what is most likely her outcome profile?</p>",
@@ -257,7 +257,7 @@
           "explanationHtml": "<p>The JD-R model (Bakker & Demerouti, 2007) proposes that resources buffer the impact of demands on the health-impairment process and simultaneously drive the motivational process leading to engagement. The operator's profile — substantial demands but rich resources (supportive supervisor, feedback, discretion) — predicts that the buffering effect attenuates the strain pathway while the resources directly fuel vigour, dedication, and absorption. The 2017 reformulation adds that demands can even amplify the motivational value of resources. Outcomes are not deterministic but the most likely profile is low burnout and high engagement.</p>"
         },
         {
-          "id": "psy-prt-7b-q3",
+          "id": "psy-jun-7b-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Edmondson's (1999) research on hospital teams showed that higher-performing teams reported fewer errors, demonstrating that psychological safety reduces actual error rates.</p>",
@@ -265,7 +265,7 @@
           "explanationHtml": "<p>This statement reverses Edmondson's (1999) finding. Higher-performing teams actually reported <em>more</em> errors, not fewer. Edmondson's interpretation was that psychologically safer teams felt able to surface and discuss mistakes, which made organisational learning and correction possible. Lower-performing teams may have committed similar or more errors but failed to report them. The construct of psychological safety captures the shared belief that the team is safe for interpersonal risk-taking, including voicing errors, questions, and dissent — a mechanism for learning rather than a guarantee of fewer mistakes per se.</p>"
         },
         {
-          "id": "psy-prt-7b-q4",
+          "id": "psy-jun-7b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following best distinguishes Herzberg's (1959) two-factor theory from Deci and Ryan's (2008) self-determination theory?</p>",
@@ -282,7 +282,7 @@
       "guidedPracticeModelAnswer": "The presentation aligns with two complementary frameworks. The Job Demands-Resources model (Bakker & Demerouti, 2007) identifies the imbalance: high demands (uncapped workload) with depleted resources (inconsistent supervision, low autonomy, rare feedback). JD-R research shows this combination predicts burnout, disengagement, and voluntary exit — exactly the pattern reported.\n\nSelf-Determination Theory (Ryan & Deci, 2000) deepens the analysis: basic needs for autonomy, competence, and relatedness are systematically thwarted. Junior doctors lack control over their conditions, insufficient feedback to develop clinical confidence, and weak relationships with senior colleagues.\n\nRecommendations: (1) structured weekly clinical supervision — relational contact and developmental feedback; (2) protected professional development time with role clarity; (3) job crafting within existing roles where protocols permit; (4) workload audit with caps per European Working Time Regulations. Address systemic drivers, not only individual resilience."
     },
     {
-      "id": "psy-prt-7c",
+      "id": "psy-jun-7c",
       "title": "Leadership, Teams & Organisational Change",
       "sortOrder": 3,
       "xpReward": 90,
@@ -365,7 +365,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-7c-q1",
+          "id": "psy-jun-7c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which of the following correctly identifies the three levels of culture in Schein's (1985) model?</p>",
@@ -379,7 +379,7 @@
           "explanationHtml": "<p>Schein (1985) distinguishes three levels of organisational culture: <em>artefacts</em> (visible structures, behaviours, and rituals), <em>espoused values</em> (stated strategies, philosophies, and goals), and <em>basic underlying assumptions</em> (unconscious, taken-for-granted beliefs that ultimately drive behaviour). Cultural change is difficult precisely because it requires shifting the deepest, often invisible, layer. The other options describe Tuckman's (1965) team stages, Lewin's (1947) change model, and constructs from leadership research, respectively.</p>"
         },
         {
-          "id": "psy-prt-7c-q2",
+          "id": "psy-jun-7c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A newly appointed CEO articulates a compelling strategic vision, communicates intensively with staff, holds individual coaching conversations with high-potential employees, and challenges established assumptions about the firm's product strategy. Which leadership framework best characterises this pattern of behaviour?</p>",
@@ -393,7 +393,7 @@
           "explanationHtml": "<p>The described behaviours map directly onto Bass's (1985) four I's: a compelling strategic vision (idealised influence and inspirational motivation), challenging assumptions about product strategy (intellectual stimulation), and individual coaching conversations (individualised consideration). Transactional leadership focuses on contingent reward and management-by-exception, not vision. Fiedler's contingency model is about style-situation match rather than a behavioural prescription, and servant leadership specifically inverts the hierarchy in favour of follower growth — overlapping but distinct from the integrative transformational pattern described.</p>"
         },
         {
-          "id": "psy-prt-7c-q3",
+          "id": "psy-jun-7c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Stogdill's (1948) review of trait research definitively concluded that personality traits are unrelated to leadership emergence and effectiveness, a conclusion that has been confirmed by subsequent meta-analyses including Judge et al. (2002).</p>",
@@ -401,7 +401,7 @@
           "explanationHtml": "<p>The statement is partially correct about Stogdill (1948) but misrepresents the contemporary picture. Stogdill (1948) did conclude that no consistent set of traits reliably differentiated leaders across all situations, prompting the field to shift toward behavioural and contingency theories. However, his (1974) follow-up review identified traits with modest but consistent leadership relevance, and Judge et al.'s (2002) meta-analysis demonstrated that the Big Five — particularly Extraversion, Conscientiousness, Openness, and low Neuroticism — predict leader emergence and effectiveness. The trait approach has thus been rehabilitated, not rejected.</p>"
         },
         {
-          "id": "psy-prt-7c-q4",
+          "id": "psy-jun-7c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following best distinguishes Lewin's (1947) three-stage change model from Kotter's (1996) eight-step model?</p>",

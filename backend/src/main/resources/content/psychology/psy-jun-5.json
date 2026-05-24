@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-5",
+﻿{
+  "id": "psy-jun-5",
   "title": "Forensic Psychology",
   "glyph": "⚖️",
   "sortOrder": 11,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-5a",
+      "id": "psy-jun-5a",
       "title": "Theories of Criminal Behaviour",
       "sortOrder": 1,
       "xpReward": 90,
@@ -93,7 +93,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-5a-q1",
+          "id": "psy-jun-5a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Eysenck's (1964) personality theory of crime, why should extraverts be more likely than introverts to offend?</p>",
@@ -107,7 +107,7 @@
           "explanationHtml": "<p>Eysenck (1964) proposed that extraverts, with lower baseline cortical arousal (the same biological substrate from his personality theory), are <em>under-conditioned</em>: they learn the socialising associations of punishment and reward less efficiently than introverts, so the inhibitory associations restraining antisocial behaviour fail to form as robustly. Reduced prefrontal activity in murderers is Raine's (1997) finding, MAOA is Caspi et al.'s (2002), and atavism is Lombroso's (1876) — discredited — claim. Each is a distinct theoretical commitment.</p>"
         },
         {
-          "id": "psy-prt-5a-q2",
+          "id": "psy-jun-5a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A longitudinal study finds that boys carrying the low-activity MAOA variant show no elevation in antisocial behaviour relative to non-carriers — but among boys who experienced severe childhood maltreatment, MAOA-L carriers are three times more likely to display antisocial behaviour as adults than non-carriers. Which theoretical framework best accounts for this pattern of results?</p>",
@@ -121,7 +121,7 @@
           "explanationHtml": "<p>The described pattern — no main effect of genotype, a main effect of maltreatment only conditional on genotype, and a large interaction — is the signature of a <strong>gene–environment interaction</strong>. This is precisely what Caspi et al. (2002) reported in the Dunedin cohort: MAOA-L confers risk for antisocial behaviour <em>only</em> when paired with childhood maltreatment. Lombroso's biological determinism cannot accommodate the conditional pattern. Differential association and labelling theory address learning and social reaction respectively and do not predict the specific genotype × environment interaction observed.</p>"
         },
         {
-          "id": "psy-prt-5a-q3",
+          "id": "psy-jun-5a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Glenn and Raine's (2014) review concluded that neuroimaging differences associated with antisocial behaviour are deterministic — that is, individuals with the relevant brain abnormalities will inevitably become violent offenders.</p>",
@@ -129,7 +129,7 @@
           "explanationHtml": "<p>Glenn and Raine's (2014) <em>Nature Reviews Neuroscience</em> review consolidated evidence that prefrontal, amygdala, and striatal abnormalities are <strong>statistically</strong> associated with persistent antisocial behaviour. They were explicit that these associations are probabilistic, developmentally shaped, and modulated by environment — not deterministic. A central conclusion of contemporary neurocriminology is that biological risk markers elevate group-level probabilities of offending; they do not predict individual destiny, and treating them as such would represent a serious misuse of the evidence.</p>"
         },
         {
-          "id": "psy-prt-5a-q4",
+          "id": "psy-jun-5a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes Merton's (1938) strain theory from Agnew's (1992) general strain theory?</p>",
@@ -146,7 +146,7 @@
       "guidedPracticeModelAnswer": "The claim that MAOA-L produces biological determinism misunderstands behavioural genetics. The MAOA-L variant is associated with increased aggression only in the presence of childhood maltreatment — a gene-environment interaction (Caspi et al., 2002). Without the environmental trigger, genotype confers minimal increased risk. Even with both, the association is probabilistic not deterministic: most MAOA-L carriers who experience adversity do not offend.\n\nSentencing on the basis of genetic predisposition raises fundamental legal and ethical problems. Criminal culpability is assessed at the level of individual acts and mental states, not statistical risk categories. Predictive sentencing would punish individuals for possibilities rather than actions, violating proportionality principles. Furthermore, such an approach would disproportionately affect defendants who experienced childhood abuse — the very victims of circumstances beyond their control.\n\nThe magistrate should be advised to disregard the genetic evidence as a sentencing factor. A diathesis-stress framework correctly represents the science without endorsing determinism."
     },
     {
-      "id": "psy-prt-5b",
+      "id": "psy-jun-5b",
       "title": "Eyewitness Testimony, Interviewing & Investigative Psychology",
       "sortOrder": 2,
       "xpReward": 90,
@@ -229,7 +229,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-5b-q1",
+          "id": "psy-jun-5b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>In Loftus and Palmer's (1974) study of car-crash recall, participants who were asked how fast the cars were going when they 'smashed' into each other were later more likely to report having seen broken glass. What does this finding most directly demonstrate?</p>",
@@ -243,7 +243,7 @@
           "explanationHtml": "<p>Loftus and Palmer's (1974) classic study demonstrated the <strong>misinformation effect</strong>: the wording of a question (the verb 'smashed') altered participants' estimates and, a week later, was associated with the false recall of broken glass that had not been present in the film. Post-event information becomes integrated into the memory trace and can distort subsequent recall. The cross-race effect (Meissner &amp; Brigham, 2001), weapon focus (Loftus et al., 1987), and confidence–accuracy issues are distinct findings.</p>"
         },
         {
-          "id": "psy-prt-5b-q2",
+          "id": "psy-jun-5b-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A police officer is preparing to interview an elderly woman who witnessed a non-violent burglary in her home a week previously. She is anxious but cooperative. Which interviewing approach is most strongly supported by the empirical literature?</p>",
@@ -257,7 +257,7 @@
           "explanationHtml": "<p>The Enhanced Cognitive Interview (Fisher &amp; Geiselman, 1992) is the evidence-based protocol of choice for cooperative witnesses. Meta-analyses (Köhnken et al., 1999; Memon et al., 2010) show it elicits roughly 35% more correct information than standard interviewing, with only a modest increase in errors and no inflation of confabulation. The Reid technique is an accusatorial approach for suspects, not witnesses, and is associated with elevated false-confession rates (Kassin, 2008); closed yes/no questions restrict the witness's free recall; and repeated suggestive interviewing risks implanting false detail, as Loftus and Pickrell (1995) demonstrated.</p>"
         },
         {
-          "id": "psy-prt-5b-q3",
+          "id": "psy-jun-5b-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Garrett's (2011) analysis of the first 250 DNA exonerations secured by the Innocence Project found that eyewitness misidentification was a contributing factor in approximately 70% of cases.</p>",
@@ -265,7 +265,7 @@
           "explanationHtml": "<p>Garrett's (2011) analysis of the first 250 post-conviction DNA exonerations in the US identified <strong>eyewitness misidentification as the single leading contributing factor</strong>, present in approximately 70% of cases, followed by flawed forensic science (around 50%, often co-occurring), false confessions (around 25%), and informant testimony. These data provide the strongest possible empirical demonstration that the issues identified in laboratory studies of eyewitness memory have catastrophic real-world consequences, and they have driven evidence-based reforms in line-up procedures and interview recording.</p>"
         },
         {
-          "id": "psy-prt-5b-q4",
+          "id": "psy-jun-5b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes Canter's investigative psychology approach to offender profiling from the FBI's Behavioural Science Unit approach?</p>",
@@ -282,7 +282,7 @@
       "guidedPracticeModelAnswer": "Research strongly favours replacing the accusatorial approach with the Cognitive Interview (CI) or Enhanced Cognitive Interview (ECI; Geiselman et al., 1984; Fisher & Geiselman, 1992). The accusatorial (Reid) technique is premised on detecting deception, which police officers perform at near-chance levels; it also increases psychological pressure, which raises the risk of false confessions and contaminates witness memory through leading questions and suggestion.\n\nThe CI applies four evidence-based mnemonics: mental reinstatement of context, report everything, change temporal order, and change perspective. ECI adds rapport building and communication adjustments. Meta-analyses consistently show CI produces substantially more accurate information than standard interview, with no increase in confabulation (Memon et al., 2010).\n\nRecommendation: adopt the ECI as standard practice. Train all interview officers to PEACE (Preparation, Engage, Account, Closure, Evaluation) framework, which is already best practice in UK policing and evidence-based. Review interview recordings for quality monitoring."
     },
     {
-      "id": "psy-prt-5c",
+      "id": "psy-jun-5c",
       "title": "Psychology in the Criminal Justice System",
       "sortOrder": 3,
       "xpReward": 90,
@@ -365,7 +365,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-5c-q1",
+          "id": "psy-jun-5c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Andrews and Bonta's (2010) Risk-Need-Responsivity model, which of the following best describes the 'Need' principle?</p>",
@@ -379,7 +379,7 @@
           "explanationHtml": "<p>In the RNR model (Andrews &amp; Bonta, 2010), the <strong>Need</strong> principle holds that interventions should target <em>dynamic criminogenic needs</em> — modifiable factors that are empirically associated with reoffending, such as antisocial cognitions, antisocial peers, and substance misuse — rather than non-criminogenic concerns such as self-esteem or general distress. The first option describes the Risk principle, the third describes Responsivity, and the fourth is not part of the model. Andrews et al.'s (1990) meta-analysis showed that programmes adhering to all three principles substantially outperform those that do not.</p>"
         },
         {
-          "id": "psy-prt-5c-q2",
+          "id": "psy-jun-5c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A senior commissioner is considering whether to roll out a new sex-offender treatment programme on the basis of a small evaluation reporting positive participant feedback and self-reported attitude change. Which of the following lessons from the SOTP controversy (Mews et al., 2017) should most directly shape her decision?</p>",
@@ -393,7 +393,7 @@
           "explanationHtml": "<p>The central lesson from Mews, Di Bella and Purver's (2017) SOTP evaluation is that an intuitively reasonable, widely accredited and well-received intervention nevertheless produced a modest increase in sexual reconviction relative to matched controls. Programme acceptability and self-reported attitude change are not adequate proxies for outcome. Robust evaluation — ideally pre-registered and with credible comparison groups — is therefore an ethical obligation before scaling. The RNR model remains the best-supported framework and is not discredited by SOTP; Andrews et al.'s (1990) meta-analysis still stands.</p>"
         },
         {
-          "id": "psy-prt-5c-q3",
+          "id": "psy-jun-5c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Under the M'Naghten Rules (1843), to succeed in an insanity defence the defendant must, at the time of the offence, have been suffering from a defect of reason from disease of the mind such that they did not know the nature and quality of the act, or did not know that it was wrong.</p>",
@@ -401,7 +401,7 @@
           "explanationHtml": "<p>The M'Naghten Rules (1843), arising from the trial of Daniel M'Naghten for the murder of the Prime Minister's secretary, are the foundational English-law criteria for the insanity defence. The defendant must, at the time of the act, have been labouring under a <em>defect of reason</em>, from a <em>disease of the mind</em>, such that they did not know either the <em>nature and quality</em> of what they were doing or that it was <em>wrong</em>. The forensic psychologist's role is to provide expert opinion on the relevant psychological facts; the legal question is determined by the court.</p>"
         },
         {
-          "id": "psy-prt-5c-q4",
+          "id": "psy-jun-5c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes the Good Lives Model (Ward &amp; Stewart, 2003) from the Risk-Need-Responsivity model (Andrews &amp; Bonta, 2010)?</p>",

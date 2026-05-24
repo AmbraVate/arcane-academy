@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-10",
+﻿{
+  "id": "psy-jun-10",
   "title": "Positive Psychology",
   "glyph": "🌻",
   "sortOrder": 16,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-10a",
+      "id": "psy-jun-10a",
       "title": "Foundations of Positive Psychology",
       "sortOrder": 1,
       "xpReward": 90,
@@ -142,7 +142,7 @@
       "guidedPracticeModelAnswer": "The SWLS (Diener et al., 1985) is a well-validated 5-item measure of life satisfaction — the cognitive evaluation of one's life as a whole. However, it captures only one component of well-being. A comprehensive national programme requires measurement of hedonic well-being (positive affect, negative affect balance) alongside eudaimonic well-being — purposeful living, growth, autonomy, and relatedness (Ryff, 1989).\n\nThe SWLS also shows cultural variation: in collectivist societies, relationship harmony may dominate individual life-satisfaction judgements, creating cross-cultural non-equivalence that undermines international comparisons. Life satisfaction is also substantially influenced by current mood at the time of measurement, reducing reliability.\n\nRecommendation: supplement the SWLS with a validated affect balance measure (PANAS) and a eudaimonic measure (e.g., Ryff's Scales of Psychological Well-being or the WEMWBS). The ONS National Well-being Framework uses multiple domains for precisely this reason — no single scale captures the construct's multi-dimensional nature."
     },
     {
-      "id": "psy-prt-10b",
+      "id": "psy-jun-10b",
       "title": "Resilience, Flourishing & Growth",
       "sortOrder": 2,
       "xpReward": 90,
@@ -275,7 +275,7 @@
       "guidedPracticeModelAnswer": "Commercial resilience programmes focusing on individual mindset, grit, and positive thinking have a weak evidence base when implemented as universal school curricula. Two concerns. First, resilience is predominantly contextual and relational: Ungar's (2012) social-ecological model demonstrates that positive outcomes following adversity depend primarily on access to resources — stable caregiving, supportive schools, safety, economic security — not individual trait grit. Programmes attributing outcomes to mindset risk obscuring structural causes and implying that children who struggle lack sufficient positivity.\n\nSecond, suppressing or bypassing negative affect can be iatrogenic: distress serves adaptive functions, and positivity-focused interventions that discourage its expression may impair help-seeking. Recommend: evaluate the programme's specific evidence base (RCT studies, standardised outcomes), ensure it incorporates relational and environmental components alongside individual skills training, and monitor both resilience and well-being indicators including anxiety and depression to detect unintended effects."
     },
     {
-      "id": "psy-prt-10c",
+      "id": "psy-jun-10c",
       "title": "Positive Psychology Interventions & Applications",
       "sortOrder": 3,
       "xpReward": 90,

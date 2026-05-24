@@ -1,5 +1,5 @@
-{
-  "id": "psy-fnd-2",
+﻿{
+  "id": "psy-app-2",
   "title": "Biopsychology",
   "glyph": "🧬",
   "sortOrder": 2,
@@ -8,7 +8,7 @@
   "prerequisites": ["psy-fnd-1"],
   "subChunks": [
     {
-      "id": "psy-fnd-2a",
+      "id": "psy-app-2a",
       "title": "The Nervous System & the Brain",
       "sortOrder": 1,
       "xpReward": 70,
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "id": "psy-fnd-2b",
+      "id": "psy-app-2b",
       "title": "Neurons, Neurotransmitters & Hormones",
       "sortOrder": 2,
       "xpReward": 70,
@@ -135,7 +135,7 @@
       ]
     },
     {
-      "id": "psy-fnd-2c",
+      "id": "psy-app-2c",
       "title": "Genetics, Evolution & Behaviour",
       "sortOrder": 3,
       "xpReward": 80,
@@ -199,7 +199,7 @@
       ]
     },
     {
-      "id": "psy-fnd-2d",
+      "id": "psy-app-2d",
       "title": "Sleep, Circadian Rhythms & Biological Motivation",
       "sortOrder": 4,
       "xpReward": 80,
@@ -262,7 +262,7 @@
       ]
     },
     {
-      "id": "psy-fnd-2e",
+      "id": "psy-app-2e",
       "title": "Stress Physiology & Neuroplasticity",
       "sortOrder": 5,
       "xpReward": 80,

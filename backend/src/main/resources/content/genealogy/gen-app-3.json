@@ -1,5 +1,5 @@
-{
-  "id": "gen-c",
+﻿{
+  "id": "gen-app-3",
   "title": "DNA & Genetic Genealogy",
   "glyph": "🧬",
   "sortOrder": 3,
@@ -11,7 +11,7 @@
   "subChunks": [
 
     {
-      "id": "gen-c1",
+      "id": "gen-app-3a",
       "title": "Autosomal DNA Basics",
       "sortOrder": 1,
       "xpReward": 60,
@@ -129,7 +129,7 @@
     },
 
     {
-      "id": "gen-c2",
+      "id": "gen-app-3b",
       "title": "Mitochondrial DNA & Haplogroups",
       "sortOrder": 2,
       "xpReward": 60,
@@ -247,7 +247,7 @@
     },
 
     {
-      "id": "gen-c3",
+      "id": "gen-app-3c",
       "title": "Y-DNA Inheritance",
       "sortOrder": 3,
       "xpReward": 60,
@@ -365,7 +365,7 @@
     },
 
     {
-      "id": "gen-c4",
+      "id": "gen-app-3d",
       "title": "Centimorgans & Match Interpretation",
       "sortOrder": 4,
       "xpReward": 70,
@@ -483,7 +483,7 @@
     },
 
     {
-      "id": "gen-c5",
+      "id": "gen-app-3e",
       "title": "Triangulation & Chromosome Mapping",
       "sortOrder": 5,
       "xpReward": 70,

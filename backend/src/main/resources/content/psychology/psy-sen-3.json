@@ -1,5 +1,5 @@
-{
-  "id": "psy-adv-3",
+﻿{
+  "id": "psy-sen-3",
   "topicId": "psychology",
   "title": "Developmental Psychology",
   "glyph": "🌱",
@@ -8,7 +8,7 @@
   "prerequisiteIds": ["psy-adv-2"],
   "subChunks": [
     {
-      "id": "psy-adv-3a",
+      "id": "psy-sen-3a",
       "title": "Cognitive Development: Piaget & Vygotsky",
       "sortOrder": 1,
       "xpReward": 80,
@@ -37,7 +37,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-3a-q1",
+          "id": "psy-sen-3a-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which process, in Piaget's theory, occurs when a child modifies an existing schema to accommodate new information that cannot be assimilated?</p>",
@@ -46,7 +46,7 @@
           "correctAnswer": "Accommodation"
         },
         {
-          "id": "psy-adv-3a-q2",
+          "id": "psy-sen-3a-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Vygotsky's concept of private speech was interpreted by Piaget as evidence that children are internalising social dialogue and developing inner speech.</p>",
@@ -55,7 +55,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-3a-q3",
+          "id": "psy-sen-3a-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A teacher identifies that a student can independently solve single-digit addition problems but can solve two-digit addition when the teacher talks through each step. According to Vygotsky, two-digit addition is currently in the student's:</p>",
@@ -64,7 +64,7 @@
           "correctAnswer": "Zone of Proximal Development"
         },
         {
-          "id": "psy-adv-3a-q4",
+          "id": "psy-sen-3a-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Hughes's (1975) policeman-and-doll study challenged Piaget's conclusions about egocentrism primarily because:</p>",
@@ -75,7 +75,7 @@
       ]
     },
     {
-      "id": "psy-adv-3b",
+      "id": "psy-sen-3b",
       "title": "Attachment Theory & Social Development",
       "sortOrder": 2,
       "xpReward": 80,
@@ -104,7 +104,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-3b-q1",
+          "id": "psy-sen-3b-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Ainsworth's Strange Situation, which attachment type is characterised by minimal distress at separation and avoidance of the caregiver upon reunion?</p>",
@@ -113,7 +113,7 @@
           "correctAnswer": "Insecure-avoidant (Type A)"
         },
         {
-          "id": "psy-adv-3b-q2",
+          "id": "psy-sen-3b-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Rutter (1981) argued that it is deprivation — loss of an existing attachment bond — rather than privation — failure to form a bond at all — that causes the most severe and permanent psychological harm.</p>",
@@ -122,7 +122,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-3b-q3",
+          "id": "psy-sen-3b-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>An adult consistently avoids intimacy in romantic relationships, dismisses emotional needs, and becomes uncomfortable when partners seek closeness. Based on Hazan & Shaver's (1987) adult attachment framework, this pattern is most consistent with:</p>",
@@ -131,7 +131,7 @@
           "correctAnswer": "Insecure-avoidant attachment style"
         },
         {
-          "id": "psy-adv-3b-q4",
+          "id": "psy-sen-3b-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Van IJzendoorn & Kroonenberg's (1988) cross-cultural meta-analysis of attachment found that:</p>",
@@ -142,7 +142,7 @@
       ]
     },
     {
-      "id": "psy-adv-3c",
+      "id": "psy-sen-3c",
       "title": "Language Acquisition & Theory of Mind",
       "sortOrder": 3,
       "xpReward": 90,
@@ -172,7 +172,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-3c-q1",
+          "id": "psy-sen-3c-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best describes Chomsky's (1965) 'poverty of the stimulus' argument?</p>",
@@ -181,7 +181,7 @@
           "correctAnswer": "The linguistic input children receive is insufficient to explain the grammar they ultimately acquire, implying innate language-specific knowledge"
         },
         {
-          "id": "psy-adv-3c-q2",
+          "id": "psy-sen-3c-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Baron-Cohen, Leslie & Frith (1985) found that children with autism passed the Sally-Anne false belief task at the same rate as typically developing four-year-olds.</p>",
@@ -190,7 +190,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-3c-q3",
+          "id": "psy-sen-3c-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A research team plays 8-month-old infants two minutes of a continuous stream of nonsense syllables in which certain three-syllable sequences recur more often than chance. They then test whether infants discriminate familiar from novel sequences. This methodology most directly tests:</p>",
@@ -199,7 +199,7 @@
           "correctAnswer": "Statistical learning of transitional probabilities (Saffran, Aslin & Newport, 1996)"
         },
         {
-          "id": "psy-adv-3c-q4",
+          "id": "psy-sen-3c-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following is the most accurate contemporary interpretation of Onishi & Baillargeon's (2005) infant false belief findings?</p>",
@@ -210,7 +210,7 @@
       ]
     },
     {
-      "id": "psy-adv-3d",
+      "id": "psy-sen-3d",
       "title": "Moral Development",
       "sortOrder": 4,
       "xpReward": 90,
@@ -240,7 +240,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-3d-q1",
+          "id": "psy-sen-3d-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of Kohlberg's stages is characterised by reasoning that emphasises maintaining social order and respecting legitimate authority and the law?</p>",
@@ -249,7 +249,7 @@
           "correctAnswer": "Stage 4 (Law and order)"
         },
         {
-          "id": "psy-adv-3d-q2",
+          "id": "psy-sen-3d-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Haidt (2001) argued that moral judgements are typically the product of explicit conscious reasoning, with intuitive responses playing only a secondary role.</p>",
@@ -258,7 +258,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-3d-q3",
+          "id": "psy-sen-3d-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A participant is presented with the footbridge version of the trolley dilemma and asked whether they would push a man off the bridge to stop the runaway trolley and save five lives. According to Greene et al.'s (2001) dual-process account, refusing to push reflects:</p>",
@@ -267,7 +267,7 @@
           "correctAnswer": "A deontological response driven by emotional/intuitive processing recruiting ventromedial prefrontal regions"
         },
         {
-          "id": "psy-adv-3d-q4",
+          "id": "psy-sen-3d-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best characterises the contemporary status of Hamlin, Wynn & Bloom's (2007) infant moral evaluation findings?</p>",
@@ -278,7 +278,7 @@
       ]
     },
     {
-      "id": "psy-adv-3e",
+      "id": "psy-sen-3e",
       "title": "Adolescence, Identity & Erikson",
       "sortOrder": 5,
       "xpReward": 90,
@@ -308,7 +308,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-3e-q1",
+          "id": "psy-sen-3e-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Marcia's (1966) framework, which identity status is characterised by commitment to an identity that has been adopted from parents or authority figures without active exploration of alternatives?</p>",
@@ -317,7 +317,7 @@
           "correctAnswer": "Foreclosure"
         },
         {
-          "id": "psy-adv-3e-q2",
+          "id": "psy-sen-3e-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Orben & Przybylski's (2019) specification curve analysis found that digital technology use accounts for more than 25% of variance in adolescent wellbeing, supporting claims of catastrophic social media harm.</p>",
@@ -326,7 +326,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-3e-q3",
+          "id": "psy-sen-3e-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A 17-year-old reports that her experience of unrequited love is uniquely intense and that no-one — particularly not her parents — could possibly understand the depth of what she feels. According to Elkind (1967), this cognition most clearly exemplifies:</p>",
@@ -335,7 +335,7 @@
           "correctAnswer": "Personal fable"
         },
         {
-          "id": "psy-adv-3e-q4",
+          "id": "psy-sen-3e-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following is the most defensible contemporary interpretation of the relationship between social media use and adolescent wellbeing?</p>",
@@ -346,7 +346,7 @@
       ]
     },
     {
-      "id": "psy-adv-3f",
+      "id": "psy-sen-3f",
       "title": "Adulthood, Ageing & Lifespan Development",
       "sortOrder": 6,
       "xpReward": 90,
@@ -377,7 +377,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-3f-q1",
+          "id": "psy-sen-3f-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Cattell (1971) and Horn & Cattell (1967), which type of intelligence typically rises into the 60s or 70s and is often preserved into very old age?</p>",
@@ -386,7 +386,7 @@
           "correctAnswer": "Crystallised intelligence (Gc)"
         },
         {
-          "id": "psy-adv-3f-q2",
+          "id": "psy-sen-3f-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Wethington's (2000) survey of US adults found that the majority experienced a developmentally programmed mid-life crisis between the ages of 40 and 45, supporting Levinson's (1978) universal stage claim.</p>",
@@ -395,7 +395,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-3f-q3",
+          "id": "psy-sen-3f-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A 78-year-old former concert pianist now performs only three concertos rather than her former repertoire of fifteen, practises them with intensified daily focus, and uses subtle rubato to disguise passages her fingers no longer execute at full tempo. According to Baltes & Baltes's (1990) SOC model, the use of rubato is an example of:</p>",
@@ -404,7 +404,7 @@
           "correctAnswer": "Compensation"
         },
         {
-          "id": "psy-adv-3f-q4",
+          "id": "psy-sen-3f-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best characterises the contemporary, evidence-based view of cognitive ageing in light of the Livingston et al. (2020) Lancet Commission on dementia prevention?</p>",

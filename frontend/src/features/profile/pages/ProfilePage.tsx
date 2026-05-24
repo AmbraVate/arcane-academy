@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi } from '@/shared/api/services'
 import type { UserCapstone, UserNote, MyStuckReport } from '@/shared/api/services'
-import { useDashboard } from '@/hooks/queries'
+import { useTopicsDashboard } from '@/hooks/queries'
+import { ACTIVE_TOPICS } from '@/features/topics/data/topics'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import type { Palette } from '@/hooks/useTheme'
@@ -38,7 +39,8 @@ export default function ProfilePage() {
   const [badgesLoading, setBadgesLoading] = useState(false)
   const [badgeCategoryFilter, setBadgeCategoryFilter] = useState<string>('ALL')
 
-  const { data: javaDash, isLoading: dashLoading } = useDashboard('java')
+  const allTopicDash = useTopicsDashboard(ACTIVE_TOPICS.map(t => t.id))
+  const dashLoading = ACTIVE_TOPICS.some(t => allTopicDash[t.id] === undefined)
 
   const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleTerm[]>([])
   const [rhLoading, setRhLoading] = useState(false)
@@ -266,23 +268,28 @@ export default function ProfilePage() {
 
         {/* Tab: Topics */}
         {tab === 'topics' && (
-          <div>
+          <div className="flex flex-col gap-4">
             {dashLoading && <p className="text-muted italic text-center py-8">Loading topic data…</p>}
-            {!dashLoading && javaDash && (
-              <TopicCard
-                topicId="java"
-                glyph="☕"
-                name="Java"
-                tier={javaDash.currentPath}
-                diagnosticCompleted={javaDash.diagnosticCompleted}
-                completedSubChunks={javaDash.chunkHealth.reduce((s, c) => s + c.completedSubChunks, 0)}
-                totalSubChunks={javaDash.chunkHealth.reduce((s, c) => s + c.totalSubChunks, 0)}
-                totalXp={javaDash.totalXp}
-                onContinue={() => navigate('/topic/java')}
-                onRetakeDiagnostic={() => navigate('/topic/java/diagnostic')}
-              />
-            )}
-            {!dashLoading && !javaDash && (
+            {!dashLoading && ACTIVE_TOPICS.map(topic => {
+              const dash = allTopicDash[topic.id]
+              if (!dash) return null
+              return (
+                <TopicCard
+                  key={topic.id}
+                  topicId={topic.id}
+                  glyph={topic.glyph}
+                  name={topic.name}
+                  tier={dash.currentPath}
+                  diagnosticCompleted={dash.diagnosticCompleted}
+                  completedSubChunks={dash.chunkHealth.reduce((s, c) => s + c.completedSubChunks, 0)}
+                  totalSubChunks={dash.chunkHealth.reduce((s, c) => s + c.totalSubChunks, 0)}
+                  totalXp={dash.totalXp}
+                  onContinue={() => navigate(`/topic/${topic.id}`)}
+                  onRetakeDiagnostic={() => navigate(`/topic/${topic.id}/diagnostic`)}
+                />
+              )
+            })}
+            {!dashLoading && ACTIVE_TOPICS.every(t => !allTopicDash[t.id]) && (
               <div className="text-center py-10 text-muted italic">
                 <p>No topic data found. Start a topic to see your progress here.</p>
                 <button className="btn btn-primary mt-4" onClick={() => navigate('/topics')}>Browse Topics →</button>

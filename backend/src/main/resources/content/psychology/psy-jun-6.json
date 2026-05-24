@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-6",
+﻿{
+  "id": "psy-jun-6",
   "title": "Health Psychology",
   "glyph": "❤️‍🩹",
   "sortOrder": 12,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-6a",
+      "id": "psy-jun-6a",
       "title": "Biopsychosocial Model & Health Behaviour",
       "sortOrder": 1,
       "xpReward": 90,
@@ -95,7 +95,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "id": "psy-prt-6a-q1",
+          "id": "psy-jun-6a-q1",
           "questionHtml": "<p>According to Engel's (1977) biopsychosocial model, what was the principal limitation of the biomedical model it sought to replace?</p>",
           "options": [
             "It relied on randomised controlled trials rather than observational data",
@@ -109,7 +109,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "id": "psy-prt-6a-q2",
+          "id": "psy-jun-6a-q2",
           "questionHtml": "<p>A practice nurse is designing an intervention to improve attendance at diabetic retinopathy screening. She wants to apply Gollwitzer's (1999) concept of implementation intentions. Which of the following best instantiates this technique?</p>",
           "options": [
             "Providing patients with a leaflet describing the risks of untreated diabetic retinopathy",
@@ -123,7 +123,7 @@
         {
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "id": "psy-prt-6a-q3",
+          "id": "psy-jun-6a-q3",
           "questionHtml": "<p>True or False: Sniehotta, Presseau and Araujo-Soares (2014) argued that the Theory of Planned Behaviour should be retired because experimental tests show that targeting its constructs rarely produces behaviour change, and the model neglects automatic and habitual processes.</p>",
           "correctAnswer": "True",
           "explanationHtml": "<p>Sniehotta et al.'s (2014) critique argued precisely this: the TPB has shown moderate utility in predicting intention but poor utility in changing behaviour, and the model is silent on automatic processes, habits, and environmental influences that govern much health behaviour. Ajzen (2015) responded defending the TPB, but the critique has shifted the field towards dual-process approaches and frameworks like COM-B that integrate reflective cognition with automatic motivation and environmental opportunity.</p>"
@@ -131,7 +131,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "id": "psy-prt-6a-q4",
+          "id": "psy-jun-6a-q4",
           "questionHtml": "<p>Which of the following best distinguishes Michie et al.'s (2011) COM-B model from earlier social cognition models such as the Theory of Planned Behaviour?</p>",
           "options": [
             "COM-B was developed from longitudinal cohort data, whereas the TPB was developed from cross-sectional surveys",
@@ -146,7 +146,7 @@
       "guidedPracticeModelAnswer": "Leaflets provide information only — addressing knowledge but not the capability, opportunity, and motivation required for sustained behaviour change. The COM-B model (Michie et al., 2011) predicts that intervention components must target all three sources of behaviour.\n\nFor pre-diabetes patients who are aware of risk but not active, the deficit is likely in motivation (low self-efficacy, low action self-efficacy) and physical opportunity (sedentary environments, time constraints). Recommended components: motivational interviewing to resolve ambivalence and elicit change talk; implementation intentions ('if-then' plans: 'When I finish work on Monday, I will walk for 20 minutes') to bridge intention-action gap; pedometer-based goals with graduated targets; and structural opportunity — workplace walking routes, social prescribing to local exercise groups. Evaluate with objective activity monitoring (accelerometry) at 3 and 6 months, not self-report alone, to prevent social desirability bias."
     },
     {
-      "id": "psy-prt-6b",
+      "id": "psy-jun-6b",
       "title": "Stress, Coping & Illness",
       "sortOrder": 2,
       "xpReward": 90,
@@ -231,7 +231,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "id": "psy-prt-6b-q1",
+          "id": "psy-jun-6b-q1",
           "questionHtml": "<p>According to Lazarus and Folkman's (1984) transactional model, stress arises specifically when:</p>",
           "options": [
             "Cortisol release exceeds a clinically significant threshold during the alarm stage of the General Adaptation Syndrome",
@@ -245,7 +245,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "id": "psy-prt-6b-q2",
+          "id": "psy-jun-6b-q2",
           "questionHtml": "<p>A community psychologist is designing an intervention for older adults living alone, drawing on Cohen and Wills's (1985) buffering hypothesis. Which of the following design features is most directly justified by the buffering hypothesis (as distinct from the main effects model)?</p>",
           "options": [
             "A weekly social club that promotes general wellbeing and positive affect through group activities, regardless of individual stress levels",
@@ -259,7 +259,7 @@
         {
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "id": "psy-prt-6b-q3",
+          "id": "psy-jun-6b-q3",
           "questionHtml": "<p>True or False: Marmot et al.'s (1991) Whitehall II study found that lower employment grade predicted higher cardiovascular morbidity even after controlling for traditional risk factors such as smoking, blood pressure, and cholesterol — implicating psychosocial factors such as low job control in the social gradient of disease.</p>",
           "correctAnswer": "True",
           "explanationHtml": "<p>The Whitehall II study, which followed over 10,000 British civil servants, demonstrated a clear socioeconomic gradient in cardiovascular morbidity and mortality that persisted after statistical adjustment for traditional behavioural and biological risk factors. Marmot and colleagues argued that low job control — the inability to influence the pace, content, and circumstances of one's work — was a key psychosocial mediator, producing chronic stress in the absence of compensating autonomy. The finding established the psychosocial gradient as a fundamental determinant of cardiovascular health and remains one of the most influential epidemiological studies of the late twentieth century.</p>"
@@ -267,7 +267,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "id": "psy-prt-6b-q4",
+          "id": "psy-jun-6b-q4",
           "questionHtml": "<p>Which of the following best distinguishes Selye's (1956) General Adaptation Syndrome from Lazarus and Folkman's (1984) transactional model of stress?</p>",
           "options": [
             "Selye's model is grounded in animal research, whereas Lazarus and Folkman's is restricted to clinical populations",
@@ -282,7 +282,7 @@
       "guidedPracticeModelAnswer": "This presentation maps closely onto the Karasek and Theorell (1990) demand-control-support model: high job demands, low control, and limited social support create a high-strain work situation associated with elevated cortisol, cardiovascular risk, and poor glycaemic regulation. Lazarus and Folkman's (1984) transactional stress model identifies his dispositional negativity as a primary appraisal risk factor — 'worriers' chronically appraise ambiguous situations as threatening, maintaining HPA activation.\n\nThe biopsychosocial formulation should address: (1) emotion-focused coping deficits — he may be using maladaptive coping (rumination, avoidance) that maintains stress arousal; (2) the physiological pathway — chronic stress-induced cortisol elevation directly impairs insulin sensitivity, linking psychological state to HbA1c; (3) social isolation as a buffer deficit — social support is a well-established moderator of stress-illness relationships.\n\nRecommendation: MBSR (mindfulness-based stress reduction) has evidence for both psychological distress and HbA1c in type 2 diabetes. Combine with problem-focused coping coaching for job conditions where modifiable."
     },
     {
-      "id": "psy-prt-6c",
+      "id": "psy-jun-6c",
       "title": "Pain, Adherence & Chronic Conditions",
       "sortOrder": 3,
       "xpReward": 90,
@@ -367,7 +367,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "id": "psy-prt-6c-q1",
+          "id": "psy-jun-6c-q1",
           "questionHtml": "<p>According to Melzack and Wall's (1965) gate control theory, what is the principal mechanism by which psychological factors such as attention and emotion modulate the experience of pain?</p>",
           "options": [
             "They alter the rate of nociceptor firing at the site of tissue damage",
@@ -381,7 +381,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "id": "psy-prt-6c-q2",
+          "id": "psy-jun-6c-q2",
           "questionHtml": "<p>A clinical psychologist is assessing a patient with chronic low back pain who has been off work for over a year. The patient scores in the 95th percentile on the Pain Catastrophising Scale, avoids most physical activity, and reports believing she will reinjure herself if she returns to work. Imaging shows only minor degenerative changes. Which theoretical framework most directly explains the patient's current pattern of disability?</p>",
           "options": [
             "Selye's (1956) General Adaptation Syndrome, with chronic stress driving the pain experience through HPA-axis activation",
@@ -395,7 +395,7 @@
         {
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "id": "psy-prt-6c-q3",
+          "id": "psy-jun-6c-q3",
           "questionHtml": "<p>True or False: The WHO report on adherence (Sabaté, 2003) concluded that average adherence to long-term therapy in chronic conditions is approximately 50%, and that adherence is a multidimensional phenomenon shaped by patient, condition, therapy, socioeconomic and healthcare system factors — not primarily by failures of patient motivation or memory.</p>",
           "correctAnswer": "True",
           "explanationHtml": "<p>The WHO report (Sabaté, 2003) is a landmark document on adherence to chronic disease treatment. It concluded that average adherence is approximately 50% across chronic conditions and described adherence as a multidimensional phenomenon shaped by five interacting domains: patient-related, condition-related, therapy-related, socioeconomic, and healthcare system factors. The report explicitly cautioned against framing adherence as primarily a problem of patient motivation or forgetfulness, arguing that effective interventions require complex, individualised, ongoing engagement rather than simple reminders or educational leaflets — a conclusion subsequently reinforced by Nieuwlaat et al.'s (2014) Cochrane review of 182 RCTs.</p>"
@@ -403,7 +403,7 @@
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "id": "psy-prt-6c-q4",
+          "id": "psy-jun-6c-q4",
           "questionHtml": "<p>Which of the following best distinguishes Leventhal's (1980) Common-Sense Model from the Theory of Planned Behaviour (Ajzen, 1991) as applied to chronic illness?</p>",
           "options": [
             "The Common-Sense Model focuses on emotional regulation, whereas the TPB focuses exclusively on cognitive evaluation",

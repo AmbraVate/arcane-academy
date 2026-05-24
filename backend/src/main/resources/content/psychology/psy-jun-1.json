@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-1",
+﻿{
+  "id": "psy-jun-1",
   "title": "Personality & Individual Differences",
   "glyph": "🎭",
   "sortOrder": 8,
@@ -8,7 +8,7 @@
   "prerequisites": ["psy-adv-3"],
   "subChunks": [
     {
-      "id": "psy-prt-1a",
+      "id": "psy-jun-1a",
       "title": "Trait Theories & Psychodynamic Personality",
       "sortOrder": 1,
       "xpReward": 80,
@@ -123,7 +123,7 @@
       ]
     },
     {
-      "id": "psy-prt-1b",
+      "id": "psy-jun-1b",
       "title": "Intelligence & the IQ Controversy",
       "sortOrder": 2,
       "xpReward": 80,
@@ -238,7 +238,7 @@
       ]
     },
     {
-      "id": "psy-prt-1c",
+      "id": "psy-jun-1c",
       "title": "Psychometrics & Test Construction",
       "sortOrder": 3,
       "xpReward": 90,
@@ -304,7 +304,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-1c-q1",
+          "id": "psy-jun-1c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Cronbach and Meehl (1955), what is required to establish the construct validity of a psychological test?</p>",
@@ -318,7 +318,7 @@
           "explanationHtml": "<p>Cronbach and Meehl (1955) formalised construct validity as the extent to which a measure behaves in accordance with a theoretical nomological network — the set of expected relationships between the construct and other variables. This includes convergent validity (correlation with related measures) and discriminant validity (lack of correlation with unrelated measures). Test-retest reliability concerns consistency rather than validity; face validity is a subjective impression; the Kaiser criterion is a factor-analytic decision rule, not a validity criterion.</p>"
         },
         {
-          "id": "psy-prt-1c-q2",
+          "id": "psy-jun-1c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A researcher reports that a new 30-item anxiety scale has Cronbach's alpha of 0.96 and that this proves the scale is unidimensional. A reviewer responds that this interpretation is mistaken. Whose critique is the reviewer most directly drawing on?</p>",
@@ -332,7 +332,7 @@
           "explanationHtml": "<p>Sijtsma (2009), and subsequently McNeish (2018) and Hayes and Coutts (2020), argued that Cronbach's alpha is frequently misinterpreted. Alpha can be inflated simply by adding more items, and a multidimensional scale can still produce high alpha — particularly with 30 items. Unidimensionality is properly assessed through confirmatory factor analysis or by examining model fit using omega coefficients. The other named scholars made important contributions to psychology but to unrelated questions (cultural bias, g-theory, stereotype threat).</p>"
         },
         {
-          "id": "psy-prt-1c-q3",
+          "id": "psy-jun-1c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Item Response Theory (IRT) produces item parameters that are theoretically invariant across samples, in contrast to Classical Test Theory where item statistics depend on the sample tested.</p>",
@@ -340,7 +340,7 @@
           "explanationHtml": "<p>This is a defining advantage of IRT over CTT. In Classical Test Theory, item difficulty and discrimination are sample-dependent — the same item will appear more difficult in a less able sample. IRT (Rasch, 1960; Lord, 1980) models item parameters and person ability on a common latent scale, and the parameters are theoretically invariant across samples that share the underlying construct. This invariance underpins adaptive testing and supports the equating of scores across different test forms.</p>"
         },
         {
-          "id": "psy-prt-1c-q4",
+          "id": "psy-jun-1c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes reliability from validity in psychometric testing?</p>",
@@ -356,7 +356,7 @@
       ]
     },
     {
-      "id": "psy-prt-1d",
+      "id": "psy-jun-1d",
       "title": "Motivation & Emotion",
       "sortOrder": 4,
       "xpReward": 90,
@@ -418,7 +418,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-1d-q1",
+          "id": "psy-jun-1d-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Deci and Ryan's (2000) self-determination theory, which three universal psychological needs must be satisfied for optimal motivation and wellbeing?</p>",
@@ -432,7 +432,7 @@
           "explanationHtml": "<p>Deci and Ryan (2000) posit three universal psychological needs: autonomy (acting in accordance with one's values and interests), competence (effectively engaging with the environment), and relatedness (meaningful connection with others). Satisfaction of these needs promotes intrinsic motivation and wellbeing; thwarting them undermines both. The other options refer to McClelland's achievement motivation triad, three levels of Maslow's hierarchy, and a colloquial summary respectively.</p>"
         },
         {
-          "id": "psy-prt-1d-q2",
+          "id": "psy-jun-1d-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A manager introduces a monthly cash bonus for staff who previously volunteered for a community outreach programme out of personal commitment. Within six months, volunteer participation drops sharply when the bonus is discontinued. Which theoretical framework most directly predicts this pattern?</p>",
@@ -446,7 +446,7 @@
           "explanationHtml": "<p>The overjustification effect, established meta-analytically by Deci, Koestner, and Ryan (1999) across 128 experiments, directly predicts this outcome. Volunteers were initially intrinsically motivated by personal commitment. Introducing a tangible expected reward shifts the perceived locus of causality from internal to external, undermining intrinsic interest. When the reward is withdrawn, the behaviour collapses because the original intrinsic motivation has been eroded. Drive theory, arousal theory, and Cannon-Bard concern different domains and do not predict this specific reward-withdrawal pattern.</p>"
         },
         {
-          "id": "psy-prt-1d-q3",
+          "id": "psy-jun-1d-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Lindquist et al. (2012) provided meta-analytic neuroimaging evidence supporting Ekman's original claim that each basic emotion corresponds to a specific, discrete brain region.</p>",
@@ -454,7 +454,7 @@
           "explanationHtml": "<p>The opposite is the case. Lindquist et al. (2012) conducted a meta-analysis of neuroimaging studies of emotion and concluded that there is no consistent one-to-one mapping between specific brain regions and discrete emotion categories. Their findings provided the empirical foundation for the constructivist view (Barrett, 2017) that emotions are constructed in the moment from domain-general processes — core affect, categorisation, and concept knowledge — rather than triggered as innate, discrete neural modules. This directly challenges the strong version of Ekman's basic emotions theory.</p>"
         },
         {
-          "id": "psy-prt-1d-q4",
+          "id": "psy-jun-1d-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following best distinguishes Lazarus's (1991) cognitive appraisal theory of emotion from the Schachter-Singer (1962) two-factor theory?</p>",
@@ -470,7 +470,7 @@
       ]
     },
     {
-      "id": "psy-prt-1e",
+      "id": "psy-jun-1e",
       "title": "The Self & Identity",
       "sortOrder": 5,
       "xpReward": 90,
@@ -532,7 +532,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-1e-q1",
+          "id": "psy-jun-1e-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Markus and Kitayama (1991), the independent self-construal — most common in Western cultural contexts — is best characterised as:</p>",
@@ -546,7 +546,7 @@
           "explanationHtml": "<p>Markus and Kitayama (1991) characterised the independent self as bounded, unique, and defined by internal attributes — traits, abilities, preferences, and goals — with behaviour organised around expressing and validating these inner attributes. The interdependent self, more common in East Asian and many other contexts, is defined by relationships, roles, and social context, with behaviour organised around fitting in and maintaining harmony. Subsequent work has refined the dichotomy — most individuals possess both construals to varying degrees and activate them contextually — but the original distinction captures a robust cross-cultural difference.</p>"
         },
         {
-          "id": "psy-prt-1e-q2",
+          "id": "psy-jun-1e-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A clinical psychologist notes that her client reports persistent sadness and disappointment, frequently describing herself as failing to live up to who she wishes she could be — a creative writer, a devoted partner, an adventurous traveller. The client does not describe anxiety or guilt about social obligations. Which self-discrepancy is most consistent with this presentation?</p>",
@@ -560,7 +560,7 @@
           "explanationHtml": "<p>Higgins's (1987) self-discrepancy theory predicts that discrepancies between the actual self and the ideal self (who one or significant others wish one to be) produce dejection-related emotions — sadness, disappointment, dissatisfaction. Discrepancies between actual and ought (who one believes one should be, often tied to obligations and duties) produce agitation-related emotions — anxiety, guilt. The client's presentation — persistent sadness about not living up to wished-for attributes, without anxiety about obligations — maps directly onto an actual-ideal discrepancy. The differential diagnosis of dejection versus agitation emotions was a significant theoretical contribution of the framework.</p>"
         },
         {
-          "id": "psy-prt-1e-q3",
+          "id": "psy-jun-1e-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Orben and Przybylski (2019), publishing in Nature Human Behaviour, found that the association between adolescent technology use and wellbeing is large and unambiguous, providing strong evidence for Twenge's iGen thesis.</p>",
@@ -568,7 +568,7 @@
           "explanationHtml": "<p>Orben and Przybylski (2019) analysed three large adolescent datasets and found that the association between technology use and adolescent wellbeing is statistically small — comparable in magnitude to associations with mundane factors like wearing glasses or eating potatoes — and may be confounded by reverse causation and other unmeasured variables. Their work has been widely cited as a corrective to strong causal claims like those in Twenge's iGen thesis. The legitimate social concern about adolescent digital life is not in dispute, but the empirical base for strong causal claims is more equivocal than popular accounts suggest.</p>"
         },
         {
-          "id": "psy-prt-1e-q4",
+          "id": "psy-jun-1e-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes Bandura's (1997) concept of self-efficacy from global self-esteem?</p>",

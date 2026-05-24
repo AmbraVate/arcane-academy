@@ -33,10 +33,40 @@ public enum BadgeDefinition {
     REACT_STATE_WEAVER("State Weaver", "Master rx-b: useEffect, custom hooks, and lifting state", "\uD83E\uDDF6", Category.LEARNING),
     REACT_CAPSTONE_COMPLETE("Guild Architect", "Deliver The Guild Portal \u2014 React capstone project", "\uD83C\uDFDB\uFE0F", Category.LEARNING),
 
-    // Non-technical track Foundation milestones \u2014 one Foundation badge per new track
-    PSY_FOUNDATION_COMPLETE("Mind-Walker", "Master the Foundation tier of Psychology \u2014 psy-a, psy-b, psy-c", "\uD83E\uDDE0", Category.LEARNING),
-    GEN_FOUNDATION_COMPLETE("Lineage Scholar", "Master the Foundation tier of Genealogy \u2014 gen-a, gen-b, gen-c", "\uD83C\uDF33", Category.LEARNING),
-    SCI_FOUNDATION_COMPLETE("Natural Philosopher", "Master the Foundation tier of Natural Sciences \u2014 sci-a, sci-b, sci-c", "\uD83D\uDD2C", Category.LEARNING),
+    // Non-technical track Foundation milestones (legacy \u2014 superseded by tier badges below)
+    PSY_FOUNDATION_COMPLETE("Mind-Walker", "Complete the Apprentice tier of Psychology", "\uD83E\uDDE0", Category.LEARNING),
+    GEN_FOUNDATION_COMPLETE("Lineage Scholar", "Complete the Apprentice tier of Genealogy", "\uD83C\uDF33", Category.LEARNING),
+    SCI_FOUNDATION_COMPLETE("Natural Philosopher", "Complete the Apprentice tier of Natural Sciences", "\uD83D\uDD2C", Category.LEARNING),
+
+    // \u2500\u2500 Psychology tier badges \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    PSY_APPRENTICE_COMPLETE("Psychology Foundations", "Complete all Apprentice Psychology topics", "\uD83E\uDDE0", Category.LEARNING),
+    PSY_JUNIOR_COMPLETE("Applied Psychologist", "Complete all Junior Psychology topics", "\uD83D\uDD2C", Category.LEARNING),
+    PSY_SENIOR_COMPLETE("Advanced Psychologist", "Complete all Senior Psychology topics", "\uD83D\uDCCA", Category.LEARNING),
+    PSY_LEAD_COMPLETE("Critical Psychologist", "Complete all Lead Psychology topics", "\uD83C\uDF93", Category.PATH),
+    PSY_APPRENTICE_CAPSTONE("First Case Study", "Submit your Psychology Apprentice capstone", "\uD83D\uDCCB", Category.PATH),
+    PSY_JUNIOR_CAPSTONE("Applied Report", "Submit your Psychology Junior capstone", "\uD83D\uDCDD", Category.PATH),
+    PSY_SENIOR_CAPSTONE("Research Proposal", "Submit your Psychology Senior capstone", "\uD83D\uDD2D", Category.PATH),
+    PSY_LEAD_CAPSTONE("Dissertation Scholar", "Submit your Psychology Lead capstone", "\uD83C\uDFC6", Category.PATH),
+
+    // \u2500\u2500 Genealogy tier badges \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    GEN_APPRENTICE_COMPLETE("Record Keeper", "Complete all Apprentice Genealogy topics", "\uD83D\uDCDC", Category.LEARNING),
+    GEN_JUNIOR_COMPLETE("Archive Researcher", "Complete all Junior Genealogy topics", "\uD83D\uDDC2\uFE0F", Category.LEARNING),
+    GEN_SENIOR_COMPLETE("Evidence Analyst", "Complete all Senior Genealogy topics", "\uD83D\uDD0D", Category.LEARNING),
+    GEN_LEAD_COMPLETE("Professional Genealogist", "Complete all Lead Genealogy topics", "\uD83C\uDF33", Category.PATH),
+    GEN_APPRENTICE_CAPSTONE("Pedigree Builder", "Submit your Genealogy Apprentice capstone", "\uD83C\uDF3F", Category.PATH),
+    GEN_JUNIOR_CAPSTONE("Case Researcher", "Submit your Genealogy Junior capstone", "\uD83D\uDCC1", Category.PATH),
+    GEN_SENIOR_CAPSTONE("Proof Argument", "Submit your Genealogy Senior capstone", "\u2696\uFE0F", Category.PATH),
+    GEN_LEAD_CAPSTONE("Research Dissertation", "Submit your Genealogy Lead capstone", "\uD83C\uDFC6", Category.PATH),
+
+    // \u2500\u2500 Natural Sciences tier badges \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    SCI_APPRENTICE_COMPLETE("Science Curious", "Complete all Apprentice Natural Sciences topics", "\uD83C\uDF31", Category.LEARNING),
+    SCI_JUNIOR_COMPLETE("Experimental Scientist", "Complete all Junior Natural Sciences topics", "\u2697\uFE0F", Category.LEARNING),
+    SCI_SENIOR_COMPLETE("Research Scientist", "Complete all Senior Natural Sciences topics", "\uD83E\uDDEC", Category.LEARNING),
+    SCI_LEAD_COMPLETE("Science Leader", "Complete all Lead Natural Sciences topics", "\uD83D\uDD2D", Category.PATH),
+    SCI_APPRENTICE_CAPSTONE("First Inquiry", "Submit your Natural Sciences Apprentice capstone", "\uD83C\uDF0D", Category.PATH),
+    SCI_JUNIOR_CAPSTONE("Scientific Report", "Submit your Natural Sciences Junior capstone", "\uD83D\uDCCA", Category.PATH),
+    SCI_SENIOR_CAPSTONE("Research Design", "Submit your Natural Sciences Senior capstone", "\uD83D\uDD2C", Category.PATH),
+    SCI_LEAD_CAPSTONE("Research Programme", "Submit your Natural Sciences Lead capstone", "\uD83C\uDFC6", Category.PATH),
 
     // \u2500\u2500 Note-taking \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
     FIRST_NOTE("First Inscription", "Save your first lesson note", "\uD83D\uDCDD", Category.LEARNING),

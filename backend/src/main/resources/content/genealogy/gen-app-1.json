@@ -1,5 +1,5 @@
-{
-  "id": "gen-a",
+﻿{
+  "id": "gen-app-1",
   "title": "Records & Sources",
   "glyph": "📜",
   "sortOrder": 1,
@@ -9,14 +9,14 @@
   "rabbitHoles": [],
   "subChunks": [
     {
-      "id": "gen-a1",
+      "id": "gen-app-1a",
       "title": "Vital Records — The Big Three",
       "sortOrder": 1,
       "xpReward": 50,
       "filename": "notes.md",
       "practiceType": "NONE",
       "hookHtml": "<p>Births, marriages, and deaths — the three doors every life passes through. Most of what genealogy can prove begins on a vital certificate. But the certificate is never the whole truth: <em>what it captures, what it omits, and who said it</em> determine how far you can trust it.</p>",
-      "explanationHtml": "<h3>The big three</h3>\n<p><strong>Vital records</strong> are the official documents of birth, marriage, and death — sometimes abbreviated <strong>BMD</strong>. They are the spine of every genealogical case. Civil authorities (governments) keep them now; for centuries before, churches did the recording. The transition from church to civil registration is the single most important date in your jurisdiction's record landscape, because it changes who created the record, what they captured, and where you go to find it.</p>\n\n<h3>When civil registration begins (jurisdiction matters)</h3>\n<p>Civil registration started at very different dates depending on country, and even region within a country. A few key starting points to memorise:</p>\n<table>\n  <tr><th>Jurisdiction</th><th>Civil registration begins</th><th>Notes</th></tr>\n  <tr><td>England &amp; Wales</td><td>1 July 1837</td><td>General Register Office (GRO); enforcement weak until 1875</td></tr>\n  <tr><td>Scotland</td><td>1 January 1855</td><td>Statutory registers; the most detailed BMDs in the British Isles</td></tr>\n  <tr><td>Ireland</td><td>1 January 1864</td><td>Non-Catholic marriages from 1845; full BMD from 1864</td></tr>\n  <tr><td>United States</td><td>State by state, 1850s–1920s</td><td>Massachusetts 1841 early; many southern states not until 1910s–20s</td></tr>\n  <tr><td>Australia</td><td>State by state, 1842–1856</td><td>Tasmania 1838 earliest</td></tr>\n  <tr><td>Canada</td><td>Province by province, 1860s–1920s</td><td>Quebec began with parish-only until 1926</td></tr>\n</table>\n<p>Before these dates, you switch to <strong>parish registers</strong> (gen-a3). After them, you have civil indexes <em>plus</em> in many places continued church recording — meaning two parallel record streams exist for the same event.</p>\n\n<h3>What's typically captured (and what's frequently missing)</h3>\n<p>A <strong>birth certificate</strong> normally captures: child's name, date and place of birth, sex, parents' names, father's occupation, sometimes mother's maiden name, the informant (the person reporting the birth), and the registration date. Frequently <em>missing</em>: the father's name on illegitimate births before the late 20th century — many jurisdictions left it blank by policy, even when paternity was known. In England before 1875, the mother's maiden name on a birth certificate is sometimes only the surname she gave the registrar, which need not be her actual maiden name.</p>\n<p>A <strong>marriage certificate</strong> normally captures: names, ages (often \"of full age\" or \"21\" rather than the actual age — a polite fiction), occupations, residences at the time of marriage (which may be where the bride or groom lodged for a few weeks to qualify), fathers' names and occupations, witnesses. Frequently <em>missing</em>: mother's name (England did not require it on marriage certificates until 1837 marriage forms reformed in 2021), and a precise statement of birthplace.</p>\n<p>A <strong>death certificate</strong> captures: name, date and place of death, age at death, occupation, cause of death, informant, and (sometimes) parents' names. It's <em>two records in one</em>: information about the death itself (date, place, cause) is typically reliable because the informant — a doctor or relative present at the death — has direct knowledge. Information about the deceased's birth (date, place, parents) is reliable only as far as the informant's memory and motivation; we'll meet this distinction properly in gen-a5.</p>\n\n<h3>Indexes vs the actual record image</h3>\n<p>Most online genealogy sites first show you an <strong>index</strong> — a typed transcription summarising the record. Indexes are convenient but lossy. The original image often contains marginal notes, witness signatures, the registrar's handwriting (which may show alterations), the page header (which dates the volume), and the surrounding entries (which are often siblings or neighbours). <em>Always view the image when one exists.</em> An index error is the most common single cause of a stuck research case.</p>\n\n<h3>Common errors to expect</h3>\n<ul>\n  <li><strong>Transcription errors:</strong> \"Smith\" misread as \"Smyth\"; \"Mary\" mistaken for \"Many\"; numerical ages off by a digit.</li>\n  <li><strong>Deliberate misstatements:</strong> ages at marriage rounded down (or up to reach the age of consent); occupations elevated for social reasons; \"widower\" claimed when in fact divorced or deserted.</li>\n  <li><strong>Phonetic spelling:</strong> a registrar wrote down what they heard. \"O'Connor,\" \"Connor,\" \"Conner,\" and \"Konner\" can all refer to the same family across two generations.</li>\n  <li><strong>Estimated ages:</strong> ages on death certificates are commonly off by 2–5 years, especially in pre-1900 records, because the informant was guessing.</li>\n</ul>",
+      "explanationHtml": "<h3>The big three</h3>\n<p><strong>Vital records</strong> are the official documents of birth, marriage, and death — sometimes abbreviated <strong>BMD</strong>. They are the spine of every genealogical case. Civil authorities (governments) keep them now; for centuries before, churches did the recording. The transition from church to civil registration is the single most important date in your jurisdiction's record landscape, because it changes who created the record, what they captured, and where you go to find it.</p>\n\n<h3>When civil registration begins (jurisdiction matters)</h3>\n<p>Civil registration started at very different dates depending on country, and even region within a country. A few key starting points to memorise:</p>\n<table>\n  <tr><th>Jurisdiction</th><th>Civil registration begins</th><th>Notes</th></tr>\n  <tr><td>England &amp; Wales</td><td>1 July 1837</td><td>General Register Office (GRO); enforcement weak until 1875</td></tr>\n  <tr><td>Scotland</td><td>1 January 1855</td><td>Statutory registers; the most detailed BMDs in the British Isles</td></tr>\n  <tr><td>Ireland</td><td>1 January 1864</td><td>Non-Catholic marriages from 1845; full BMD from 1864</td></tr>\n  <tr><td>United States</td><td>State by state, 1850s–1920s</td><td>Massachusetts 1841 early; many southern states not until 1910s–20s</td></tr>\n  <tr><td>Australia</td><td>State by state, 1842–1856</td><td>Tasmania 1838 earliest</td></tr>\n  <tr><td>Canada</td><td>Province by province, 1860s–1920s</td><td>Quebec began with parish-only until 1926</td></tr>\n</table>\n<p>Before these dates, you switch to <strong>parish registers</strong> (gen-app-13). After them, you have civil indexes <em>plus</em> in many places continued church recording — meaning two parallel record streams exist for the same event.</p>\n\n<h3>What's typically captured (and what's frequently missing)</h3>\n<p>A <strong>birth certificate</strong> normally captures: child's name, date and place of birth, sex, parents' names, father's occupation, sometimes mother's maiden name, the informant (the person reporting the birth), and the registration date. Frequently <em>missing</em>: the father's name on illegitimate births before the late 20th century — many jurisdictions left it blank by policy, even when paternity was known. In England before 1875, the mother's maiden name on a birth certificate is sometimes only the surname she gave the registrar, which need not be her actual maiden name.</p>\n<p>A <strong>marriage certificate</strong> normally captures: names, ages (often \"of full age\" or \"21\" rather than the actual age — a polite fiction), occupations, residences at the time of marriage (which may be where the bride or groom lodged for a few weeks to qualify), fathers' names and occupations, witnesses. Frequently <em>missing</em>: mother's name (England did not require it on marriage certificates until 1837 marriage forms reformed in 2021), and a precise statement of birthplace.</p>\n<p>A <strong>death certificate</strong> captures: name, date and place of death, age at death, occupation, cause of death, informant, and (sometimes) parents' names. It's <em>two records in one</em>: information about the death itself (date, place, cause) is typically reliable because the informant — a doctor or relative present at the death — has direct knowledge. Information about the deceased's birth (date, place, parents) is reliable only as far as the informant's memory and motivation; we'll meet this distinction properly in gen-app-15.</p>\n\n<h3>Indexes vs the actual record image</h3>\n<p>Most online genealogy sites first show you an <strong>index</strong> — a typed transcription summarising the record. Indexes are convenient but lossy. The original image often contains marginal notes, witness signatures, the registrar's handwriting (which may show alterations), the page header (which dates the volume), and the surrounding entries (which are often siblings or neighbours). <em>Always view the image when one exists.</em> An index error is the most common single cause of a stuck research case.</p>\n\n<h3>Common errors to expect</h3>\n<ul>\n  <li><strong>Transcription errors:</strong> \"Smith\" misread as \"Smyth\"; \"Mary\" mistaken for \"Many\"; numerical ages off by a digit.</li>\n  <li><strong>Deliberate misstatements:</strong> ages at marriage rounded down (or up to reach the age of consent); occupations elevated for social reasons; \"widower\" claimed when in fact divorced or deserted.</li>\n  <li><strong>Phonetic spelling:</strong> a registrar wrote down what they heard. \"O'Connor,\" \"Connor,\" \"Conner,\" and \"Konner\" can all refer to the same family across two generations.</li>\n  <li><strong>Estimated ages:</strong> ages on death certificates are commonly off by 2–5 years, especially in pre-1900 records, because the informant was guessing.</li>\n</ul>",
       "storyBeats": [
         {
           "type": "narration",
@@ -121,12 +121,12 @@
             "Death certificates are not genealogical records — only baptism records count"
           ],
           "correctAnswer": "The death certificate's information about the death itself is usually reliable, but the deceased's birth date depends on a relative's memory and is often off by years — it is secondary information requiring corroboration",
-          "explanationHtml": "<p>A death certificate is two records in one: the death event (date, place, cause) is reported by an eyewitness — the doctor or attending relative — and is generally reliable. The deceased's birth date and parentage, by contrast, are reported from someone's recollection — often a grieving relative under pressure. Ages at death are commonly off by 2–5 years; birthplaces and parents' names are sometimes simply guessed. The case is not closed; it merely has a hypothesis that needs corroborating against an actual birth record. We'll formalise this distinction in gen-a5 (\"primary vs secondary information\").</p>"
+          "explanationHtml": "<p>A death certificate is two records in one: the death event (date, place, cause) is reported by an eyewitness — the doctor or attending relative — and is generally reliable. The deceased's birth date and parentage, by contrast, are reported from someone's recollection — often a grieving relative under pressure. Ages at death are commonly off by 2–5 years; birthplaces and parents' names are sometimes simply guessed. The case is not closed; it merely has a hypothesis that needs corroborating against an actual birth record. We'll formalise this distinction in gen-app-15 (\"primary vs secondary information\").</p>"
         }
       ]
     },
     {
-      "id": "gen-a2",
+      "id": "gen-app-1b",
       "title": "Census Records — Households at a Moment",
       "sortOrder": 2,
       "xpReward": 60,
@@ -243,7 +243,7 @@
       ]
     },
     {
-      "id": "gen-a3",
+      "id": "gen-app-1c",
       "title": "Church &amp; Parish Records — The Pre-Civil Backbone",
       "sortOrder": 3,
       "xpReward": 60,
@@ -360,7 +360,7 @@
       ]
     },
     {
-      "id": "gen-a4",
+      "id": "gen-app-1d",
       "title": "Immigration &amp; Naturalisation — Crossing Borders",
       "sortOrder": 4,
       "xpReward": 60,
@@ -477,7 +477,7 @@
       ]
     },
     {
-      "id": "gen-a5",
+      "id": "gen-app-1e",
       "title": "Source Types — Primary, Derivative, Authored",
       "sortOrder": 5,
       "xpReward": 70,

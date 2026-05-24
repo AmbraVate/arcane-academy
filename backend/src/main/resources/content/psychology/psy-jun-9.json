@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-9",
+﻿{
+  "id": "psy-jun-9",
   "topicId": "psychology",
   "title": "Sport & Exercise Psychology",
   "glyph": "🏅",
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-9a",
+      "id": "psy-jun-9a",
       "title": "Performance, Arousal & Anxiety in Sport",
       "sortOrder": 1,
       "xpReward": 90,
@@ -89,7 +89,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-9a-q1",
+          "id": "psy-jun-9a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>According to Hardy's (1990) catastrophe model of anxiety and performance, what distinguishes its predictions from those of the simple inverted-U hypothesis?</p>",
@@ -103,7 +103,7 @@
           "explanationHtml": "<p>Hardy's (1990) cusp catastrophe model treats cognitive anxiety and physiological arousal as separate dimensions. Under low cognitive anxiety, the arousal–performance surface resembles the inverted-U. Under high cognitive anxiety, however, increases in arousal beyond the optimum produce a sudden, discontinuous collapse — a catastrophe — and recovery requires arousal to drop well below the original collapse point (hysteresis). This pattern is empirically supported by Hardy and Parfitt (1991) and explains competitive 'meltdowns' that the symmetric inverted-U cannot.</p>"
         },
         {
-          "id": "psy-prt-9a-q2",
+          "id": "psy-jun-9a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>An expert darts player has thrown for many years and her release is highly automatic. In an applied study, she is instructed to monitor her grip and follow-through on each throw under a televised pressure condition. Her accuracy drops sharply. Which theoretical account most directly explains this finding?</p>",
@@ -117,7 +117,7 @@
           "explanationHtml": "<p>The scenario maps precisely onto the experimental paradigm of Beilock and Carr (2001), in which expert golfers' putting performance collapsed when they were instructed to attend to the mechanics of their stroke. The explicit monitoring hypothesis holds that pressure derails expert performance by shifting attention to step-by-step processes that should be running automatically. Distraction operates on cognitively demanding tasks where working memory is the bottleneck; here the task is proceduralised motor execution, so explicit monitoring is the more direct account. Drive theory predicts the opposite for well-learned skills, and IZOF concerns emotional zone rather than attentional mechanism.</p>"
         },
         {
-          "id": "psy-prt-9a-q3",
+          "id": "psy-jun-9a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Hanin's (1980) Individual Zones of Optimal Functioning model proposes that all elite athletes share a common optimum level of pre-competition state anxiety associated with their best performance.</p>",
@@ -125,7 +125,7 @@
           "explanationHtml": "<p>The IZOF model proposes precisely the opposite. Hanin (1980) observed that each elite athlete has a characteristic, individual band of pre-competition anxiety associated with their best performance, and that this band varies substantially between performers. Some athletes thrive at high anxiety; others perform best when relatively calm. The model is explicitly idiographic and rejects the nomothetic assumption — implicit in the simple inverted-U — that a single arousal optimum applies across individuals.</p>"
         },
         {
-          "id": "psy-prt-9a-q4",
+          "id": "psy-jun-9a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes traditional cognitive-behavioural psychological skills training (PST) from the mindfulness-acceptance-commitment (MAC) approach in sport?</p>",
@@ -142,7 +142,7 @@
       "guidedPracticeModelAnswer": "Applying multidimensional anxiety theory (Martens et al., 1990), high cognitive anxiety (negative thoughts, predictions of failure) and high somatic anxiety (physiological arousal), combined with low self-confidence, characterise a pattern that specifically predicts competitive underperformance. Somatic anxiety responds rapidly to arousal regulation techniques — diaphragmatic breathing and progressive muscle relaxation — while cognitive anxiety requires imagery and cognitive restructuring to challenge performance-related automatic thoughts.\n\nThe beam errors may also reflect reinvestment — explicit, conscious monitoring of automated motor skills under pressure (Masters, 1992). Competition increases self-focus, disrupting movement patterns that are otherwise automatic in training. Pre-performance routines are evidence-based for this: they narrow attentional focus, reduce reinvestment, and regulate arousal. Imagery rehearsal of error-free beam routines under simulated competitive pressure consolidates automaticity. Self-confidence is the key mediator — interventions should also target attributional style and goal orientation."
     },
     {
-      "id": "psy-prt-9b",
+      "id": "psy-jun-9b",
       "title": "Team Dynamics, Leadership & Coaching in Sport",
       "sortOrder": 2,
       "xpReward": 90,
@@ -221,7 +221,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-9b-q1",
+          "id": "psy-jun-9b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Carron et al.'s (2002) meta-analysis of the cohesion–performance relationship in sport reported which of the following key findings?</p>",
@@ -235,7 +235,7 @@
           "explanationHtml": "<p>Carron et al.'s (2002) meta-analysis of 46 studies reported a moderate positive relationship between cohesion and performance and demonstrated that the relationship was bidirectional — cohesion predicts subsequent performance, and successful performance enhances subsequent cohesion. Importantly, task cohesion showed a stronger and more consistent association than social cohesion, contradicting the lay assumption that interpersonal friendship is the primary driver of team success. The relationship was robust across team and individual sports, though effect sizes varied by sport type.</p>"
         },
         {
-          "id": "psy-prt-9b-q2",
+          "id": "psy-jun-9b-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A consultant uses the CART-Q to assess a coach and an elite swimmer separately. Both report high closeness and high commitment, but the swimmer believes her primary role is to focus on individual medley events, while the coach assumes she has accepted a freestyle relay-only specialism. Which of the 3+1Cs is most clearly deficient, and what is the likely consequence?</p>",
@@ -249,7 +249,7 @@
           "explanationHtml": "<p>Co-orientation refers to shared perceptions and mutual understanding within the coach–athlete dyad (Jowett, 2005). High closeness and commitment can coexist with poor co-orientation, producing the classic pattern in which both parties believe the relationship works but understand it incompatibly. When the misalignment concerns role definition — as in this scenario — it interacts with role ambiguity (Beauchamp et al., 2002), producing conflict, dissatisfaction, and underperformance. Closeness (emotional bond) and commitment (intention to remain) are explicitly described as high; complementarity concerns role coordination but does not capture the cognitive mismatch in shared perceptions as directly as co-orientation does.</p>"
         },
         {
-          "id": "psy-prt-9b-q3",
+          "id": "psy-jun-9b-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Mageau and Vallerand (2003) proposed that controlling coaching — emphasising rewards, pressure, and the suppression of athlete input — produces the highest levels of intrinsic motivation by clearly signalling expectations.</p>",
@@ -257,7 +257,7 @@
           "explanationHtml": "<p>Mageau and Vallerand (2003) proposed the opposite. Their motivational model, grounded in Self-Determination Theory, holds that <strong>autonomy-supportive</strong> coaching — providing choice, rationale, acknowledgement of the athlete's perspective, and minimising controlling pressure — satisfies the basic psychological needs of autonomy, competence, and relatedness, and consequently produces intrinsic and identified forms of motivation. Controlling coaching thwarts these needs and predicts amotivation, burnout, and dropout. Extensive correlational and experimental research has supported this position.</p>"
         },
         {
-          "id": "psy-prt-9b-q4",
+          "id": "psy-jun-9b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes Chelladurai's (1990) Multidimensional Model of Leadership from transformational leadership theory applied to sport (Charbonneau et al., 2001)?</p>",
@@ -274,7 +274,7 @@
       "guidedPracticeModelAnswer": "The GEQ profile shows the squad socialises well but lacks task cohesion — shared commitment to collective performance goals. Carron et al.'s (1985) framework distinguishes social from task cohesion; only task cohesion consistently predicts athletic performance outcomes. High Individual Attractions to Group–Social with low Group Integration–Task indicates social bonds without performance orientation.\n\nInterventions should target task cohesion directly: (1) establish clear, measurable shared goals using Locke and Latham's (1990) goal-setting principles — specific, challenging, collectively owned; (2) develop team performance norms through facilitated discussion of standards and mutual expectations; (3) post-match review sessions focused on collective execution rather than individual statistics; (4) role clarity and collective efficacy building through success mastery experiences. The coaching style should shift toward transformational leadership (Bass, 1985) — articulating a compelling vision, building individual commitment to collective goals, and providing authentic recognition."
     },
     {
-      "id": "psy-prt-9c",
+      "id": "psy-jun-9c",
       "title": "Exercise Psychology, Health & Adherence",
       "sortOrder": 3,
       "xpReward": 90,
@@ -353,7 +353,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-9c-q1",
+          "id": "psy-jun-9c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Cooney et al.'s (2013) Cochrane systematic review of exercise as a treatment for depression reported which of the following findings?</p>",
@@ -367,7 +367,7 @@
           "explanationHtml": "<p>Cooney et al.'s (2013) Cochrane review of 39 trials applied conservative methodological criteria — allocation concealment, intention-to-treat analysis, blinded outcome assessment. When the robust subset of trials was considered, the effect of exercise on depression was small to moderate and not significantly different from established psychological or pharmacological treatments. This contrasts with earlier meta-analyses (such as Craft &amp; Perna, 2004) that reported larger effects, and illustrates how methodological tightening typically shrinks apparent effect sizes — a recurring lesson in clinical-trial synthesis.</p>"
         },
         {
-          "id": "psy-prt-9c-q2",
+          "id": "psy-jun-9c-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A health psychologist is designing an intervention for sedentary adults. She wants the intervention to maximise long-term adherence. Which of the following design choices is most directly supported by Ryan et al.'s (1997) application of Self-Determination Theory to exercise?</p>",
@@ -381,7 +381,7 @@
           "explanationHtml": "<p>Ryan et al. (1997) demonstrated that intrinsic motivation — exercising for enjoyment, mastery, and the inherent satisfaction of the activity — predicts long-term adherence far more strongly than extrinsic motivation. SDT-based intervention design therefore supports autonomy (choice from a range of activities), competence (framing benefits in terms of skill and mastery), and relatedness. Financial incentives are external regulation and predict drop-off when withdrawn; mandating a single modality thwarts autonomy; and guilt-based messaging is the introjected regulation that predicts poor adherence and wellbeing outcomes.</p>"
         },
         {
-          "id": "psy-prt-9c-q3",
+          "id": "psy-jun-9c-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
           "questionHtml": "<p>True or False: Stockwell et al.'s (2021) systematic review of physical activity during COVID-19 lockdowns reported substantial declines in physical activity and increases in sedentary behaviour, with declines in physical activity statistically mediating part of the rise in depression and anxiety symptoms.</p>",
@@ -389,7 +389,7 @@
           "explanationHtml": "<p>Stockwell et al. (2021) synthesised 66 studies of physical activity during COVID-19 lockdowns and reported substantial declines in physical activity and increases in sedentary behaviour across diverse populations, with the largest effects in children, adolescents, and individuals with pre-existing chronic conditions. Mental-health outcomes deteriorated in parallel, and the decline in physical activity statistically mediated a portion of the rise in depression and anxiety symptoms. The pandemic underscored the structural — not merely individual — determinants of physical activity and has driven renewed attention to environmental policy.</p>"
         },
         {
-          "id": "psy-prt-9c-q4",
+          "id": "psy-jun-9c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Which of the following statements best distinguishes the Transtheoretical Model (Marcus &amp; Simkin, 1994) from the Theory of Planned Behaviour (Ajzen, 1991) as applied to exercise?</p>",

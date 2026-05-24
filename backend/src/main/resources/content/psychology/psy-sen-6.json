@@ -1,5 +1,5 @@
-{
-  "id": "psy-exp-2",
+﻿{
+  "id": "psy-sen-6",
   "title": "Critical Perspectives in Psychology",
   "glyph": "🔍",
   "sortOrder": 11,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-exp-2a",
+      "id": "psy-sen-6a",
       "title": "Cross-Cultural Psychology & Ethics",
       "sortOrder": 1,
       "xpReward": 100,
@@ -156,7 +156,7 @@
       ]
     },
     {
-      "id": "psy-exp-2b",
+      "id": "psy-sen-6b",
       "title": "The Replication Crisis & Future Directions",
       "sortOrder": 2,
       "xpReward": 100,
@@ -302,7 +302,7 @@
       ]
     },
     {
-      "id": "psy-exp-2c",
+      "id": "psy-sen-6c",
       "title": "Decolonising Psychology: Epistemology, Power & Indigenous Knowledges",
       "sortOrder": 3,
       "xpReward": 175,
@@ -440,7 +440,7 @@
       ]
     },
     {
-      "id": "psy-exp-2d",
+      "id": "psy-sen-6d",
       "title": "Feminist Psychology: Gender, Power & the Politics of Diagnosis",
       "sortOrder": 4,
       "xpReward": 175,
@@ -582,7 +582,7 @@
       ]
     },
     {
-      "id": "psy-exp-2e",
+      "id": "psy-sen-6e",
       "title": "Critical Psychiatry & the Politics of Mental Health",
       "sortOrder": 5,
       "xpReward": 175,

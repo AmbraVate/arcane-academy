@@ -1,5 +1,5 @@
-{
-  "id": "psy-adv-2",
+﻿{
+  "id": "psy-sen-2",
   "topicId": "psychology",
   "title": "Social Psychology",
   "glyph": "👥",
@@ -8,7 +8,7 @@
   "prerequisiteIds": ["psy-adv-1"],
   "subChunks": [
     {
-      "id": "psy-adv-2a",
+      "id": "psy-sen-2a",
       "title": "Conformity, Obedience & Minority Influence",
       "sortOrder": 1,
       "xpReward": 80,
@@ -38,7 +38,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-2a-q1",
+          "id": "psy-sen-2a-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Milgram's (1963) baseline obedience study, what percentage of participants administered the maximum 450-volt shock?</p>",
@@ -47,7 +47,7 @@
           "correctAnswer": "65%"
         },
         {
-          "id": "psy-adv-2a-q2",
+          "id": "psy-sen-2a-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Moscovici's research demonstrated that minority influence typically produces public compliance — surface agreement without genuine private attitude change.</p>",
@@ -56,7 +56,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-2a-q3",
+          "id": "psy-sen-2a-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Priya changes her vote in a departmental meeting after noticing that everyone else supports the proposal, even though she privately disagrees. Which concept best describes her behaviour?</p>",
@@ -65,7 +65,7 @@
           "correctAnswer": "Normative social influence"
         },
         {
-          "id": "psy-adv-2a-q4",
+          "id": "psy-sen-2a-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following Milgram variations produced the greatest reduction in obedience rates?</p>",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "id": "psy-adv-2b",
+      "id": "psy-sen-2b",
       "title": "Social Identity, Prejudice & Discrimination",
       "sortOrder": 2,
       "xpReward": 80,
@@ -105,7 +105,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-2b-q1",
+          "id": "psy-sen-2b-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>What did Tajfel's (1970) minimal group paradigm demonstrate?</p>",
@@ -114,7 +114,7 @@
           "correctAnswer": "Group membership based on trivial criteria is sufficient to produce in-group favouritism"
         },
         {
-          "id": "psy-adv-2b-q2",
+          "id": "psy-sen-2b-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Sherif's (1961) Robbers Cave experiment found that simply bringing rival groups into contact with each other was sufficient to significantly reduce intergroup hostility.</p>",
@@ -123,7 +123,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-2b-q3",
+          "id": "psy-sen-2b-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>An older adult is completing a memory test. The experimenter mentions before starting that 'memory naturally declines with age'. The participant performs significantly worse than matched controls who received no such comment. Which concept best explains this?</p>",
@@ -132,7 +132,7 @@
           "correctAnswer": "Stereotype threat"
         },
         {
-          "id": "psy-adv-2b-q4",
+          "id": "psy-sen-2b-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Social Identity Theory, 'social creativity' as a strategy for managing threatened identity involves:</p>",
@@ -143,7 +143,7 @@
       ]
     },
     {
-      "id": "psy-adv-2c",
+      "id": "psy-sen-2c",
       "title": "Attribution Theory & Social Cognition",
       "sortOrder": 3,
       "xpReward": 90,
@@ -174,7 +174,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-2c-q1",
+          "id": "psy-sen-2c-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which three dimensions form Kelley's (1967) covariation model of attribution?</p>",
@@ -183,7 +183,7 @@
           "correctAnswer": "Consensus, consistency, and distinctiveness"
         },
         {
-          "id": "psy-adv-2c-q2",
+          "id": "psy-sen-2c-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Miller's (1984) cross-cultural research found that the fundamental attribution error is equally strong across all cultures, supporting its claim to be a universal feature of human cognition.</p>",
@@ -192,7 +192,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-2c-q3",
+          "id": "psy-sen-2c-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A football fan attributes their team's victories to skill and tactical excellence, but attributes the rival team's victories to favourable refereeing decisions and good luck. Which concept best describes this pattern of reasoning?</p>",
@@ -201,7 +201,7 @@
           "correctAnswer": "Ultimate attribution error"
         },
         {
-          "id": "psy-adv-2c-q4",
+          "id": "psy-sen-2c-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which statement most accurately reflects current evidence on the Implicit Association Test (IAT)?</p>",
@@ -212,7 +212,7 @@
       ]
     },
     {
-      "id": "psy-adv-2d",
+      "id": "psy-sen-2d",
       "title": "Attitudes, Persuasion & Cognitive Dissonance",
       "sortOrder": 4,
       "xpReward": 90,
@@ -243,7 +243,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-2d-q1",
+          "id": "psy-sen-2d-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Festinger & Carlsmith's (1959) study, which group of participants showed the greatest positive attitude change toward the boring peg-turning task?</p>",
@@ -252,7 +252,7 @@
           "correctAnswer": "Participants paid $1 to lie about the task"
         },
         {
-          "id": "psy-adv-2d-q2",
+          "id": "psy-sen-2d-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: According to the Elaboration Likelihood Model, peripheral-route persuasion produces attitude change that is generally more enduring and behaviourally consistent than central-route persuasion.</p>",
@@ -261,7 +261,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-2d-q3",
+          "id": "psy-sen-2d-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A weight-loss study finds that participants who write 'When I finish my evening meal on Monday, Wednesday, and Friday, I will immediately put on my trainers and walk for thirty minutes' lose significantly more weight than those who write 'I intend to exercise more'. Which concept best explains the difference?</p>",
@@ -270,7 +270,7 @@
           "correctAnswer": "Implementation intentions (Gollwitzer, 1999)"
         },
         {
-          "id": "psy-adv-2d-q4",
+          "id": "psy-sen-2d-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which statement most accurately reflects current critical evaluation of nudge theory and choice-architecture interventions?</p>",
@@ -281,7 +281,7 @@
       ]
     },
     {
-      "id": "psy-adv-2e",
+      "id": "psy-sen-2e",
       "title": "Aggression & Prosocial Behaviour",
       "sortOrder": 5,
       "xpReward": 90,
@@ -312,7 +312,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-2e-q1",
+          "id": "psy-sen-2e-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Latané & Darley's (1968) seizure experiment, helping rates dropped from 85% in two-person conditions to what percentage in six-person conditions?</p>",
@@ -321,7 +321,7 @@
           "correctAnswer": "31%"
         },
         {
-          "id": "psy-adv-2e-q2",
+          "id": "psy-sen-2e-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Caspi et al.'s (2002) study found that the low-activity MAOA gene variant predicts antisocial behaviour regardless of whether the carrier experienced childhood maltreatment.</p>",
@@ -330,7 +330,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-2e-q3",
+          "id": "psy-sen-2e-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A man collapses on a crowded train platform during rush hour. Despite dozens of witnesses, no one approaches him for nearly two minutes. Which combination of mechanisms best explains the inaction?</p>",
@@ -339,7 +339,7 @@
           "correctAnswer": "Diffusion of responsibility, pluralistic ignorance, and evaluation apprehension"
         },
         {
-          "id": "psy-adv-2e-q4",
+          "id": "psy-sen-2e-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which statement most accurately reflects the current state of evidence on media violence effects?</p>",
@@ -350,7 +350,7 @@
       ]
     },
     {
-      "id": "psy-adv-2f",
+      "id": "psy-sen-2f",
       "title": "Relationships, Attraction & Group Processes",
       "sortOrder": 6,
       "xpReward": 90,
@@ -382,7 +382,7 @@
       ],
       "questions": [
         {
-          "id": "psy-adv-2f-q1",
+          "id": "psy-sen-2f-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Rusbult's (1980) investment model, commitment to a relationship is determined by three factors. Which set lists them correctly?</p>",
@@ -391,7 +391,7 @@
           "correctAnswer": "Satisfaction, perceived alternatives, and investment size"
         },
         {
-          "id": "psy-adv-2f-q2",
+          "id": "psy-sen-2f-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Bail et al.'s (2018) study found that paying Twitter users to follow accounts from the opposing political side reliably reduced political polarisation in both Republicans and Democrats.</p>",
@@ -400,7 +400,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-adv-2f-q3",
+          "id": "psy-sen-2f-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A cohesive senior leadership team, under intense time pressure, holds a closed-door meeting and unanimously approves a strategy that several members privately doubt. No external advisors are consulted. Which concept best describes this pattern?</p>",
@@ -409,7 +409,7 @@
           "correctAnswer": "Groupthink"
         },
         {
-          "id": "psy-adv-2f-q4",
+          "id": "psy-sen-2f-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Zajonc's (1965) drive theory of social facilitation, the presence of others should:</p>",

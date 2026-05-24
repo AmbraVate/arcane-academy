@@ -1,5 +1,5 @@
-{
-  "id": "psy-adv-4",
+﻿{
+  "id": "psy-sen-4",
   "title": "The Capstone Empirical Project",
   "glyph": "📊",
   "sortOrder": 8,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-adv-4a",
+      "id": "psy-sen-4a",
       "title": "Exploring the Dataset: Descriptives & Correlations",
       "sortOrder": 1,
       "xpReward": 125,
@@ -142,7 +142,7 @@
       ]
     },
     {
-      "id": "psy-adv-4b",
+      "id": "psy-sen-4b",
       "title": "Testing Hypotheses: ANOVA & Multiple Regression",
       "sortOrder": 2,
       "xpReward": 125,
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "id": "psy-adv-4c",
+      "id": "psy-sen-4c",
       "title": "Interpreting & Writing Up: The APA Results Section",
       "sortOrder": 3,
       "xpReward": 150,

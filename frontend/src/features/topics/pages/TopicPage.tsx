@@ -44,20 +44,20 @@ const TOPIC_META: Record<string, TopicMeta> = {
   },
   psychology: {
     name: 'Psychology',
-    glyph: 'PSY',
-    tagline: 'Self-paced psychology: foundations, human behaviour, applied knowledge, and critical perspectives.',
+    glyph: '🧠',
+    tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.',
     accent: 'var(--purple)',
   },
   genealogy: {
     name: 'Genealogy',
-    glyph: 'GEN',
-    tagline: 'Records, lineages, and DNA: the methods of family history.',
+    glyph: '🌳',
+    tagline: 'From vital records to professional proof — become a skilled genealogical researcher.',
     accent: 'var(--gold)',
   },
   sciences: {
     name: 'Natural Sciences',
-    glyph: 'SCI',
-    tagline: 'Scientific method, physics, biology, and the laws of the world.',
+    glyph: '🔬',
+    tagline: 'From scientific method to frontier research — physics, chemistry, biology, and earth science.',
     accent: 'var(--teal)',
   },
 }
@@ -79,10 +79,10 @@ const TIER_LABELS: Record<string, string> = {
   CAPSTONE:     'Capstone',
 }
 const TIER_DESC: Record<string, string> = {
-  APPRENTICE: 'Learn programming fundamentals — variables, control flow, OOP, and writing your first programs.',
-  JUNIOR:     'Become a production engineer — collections, streams, databases, REST APIs, and testing.',
-  SENIOR:     'Own systems and technical delivery — JVM internals, concurrency, distributed systems, and architecture.',
-  LEAD:       'Operate as a Lead Software Engineer — strategy, governance, mentoring, and organisational impact.',
+  APPRENTICE: 'Foundations — core concepts, vocabulary, and the essential knowledge every learner needs.',
+  JUNIOR:     'Applied knowledge — practical skills and techniques used in real-world contexts.',
+  SENIOR:     'Advanced depth — specialist topics, critical evaluation, and complex synthesis.',
+  LEAD:       'Mastery — professional practice, critical perspectives, and leadership in the field.',
   // Legacy fallbacks
   FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
   ADVANCED:     'Deeper theory and analysis — building fluency beyond the fundamentals.',

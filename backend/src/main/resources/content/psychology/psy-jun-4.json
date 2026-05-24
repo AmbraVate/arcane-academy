@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-4",
+﻿{
+  "id": "psy-jun-4",
   "topicId": "psychology",
   "title": "Educational Psychology",
   "glyph": "🎓",
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-4a",
+      "id": "psy-jun-4a",
       "title": "Learning Theories in Educational Contexts",
       "sortOrder": 1,
       "xpReward": 90,
@@ -93,7 +93,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-4a-q1",
+          "id": "psy-jun-4a-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Sweller's (1988, 1994) cognitive load theory, which type of load is imposed by poorly designed instructional materials, such as split-attention layouts and redundant information?</p>",
@@ -108,7 +108,7 @@
           "explanationHtml": "<p>Sweller distinguishes intrinsic load (arising from the inherent complexity of the material and the element interactivity it entails), extraneous load (imposed by the manner of instruction — including split-attention layouts, redundant information, and decorative graphics), and germane load (cognitive resources directed toward schema construction). Effective instructional design seeks to minimise extraneous load so that working memory can be allocated to germane processing.</p>"
         },
         {
-          "id": "psy-prt-4a-q2",
+          "id": "psy-jun-4a-q2",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A Year 11 student studies a biology topic for one hour the night before each weekly test and gets consistently high marks. Eight weeks later, in a cumulative end-of-term examination covering all eight topics, she performs poorly. Which combination of evidence-based principles would most directly address this pattern?</p>",
@@ -123,7 +123,7 @@
           "explanationHtml": "<p>The pattern — strong short-term performance after massed study but poor long-term retention — is the classic signature of cramming. Cepeda et al.'s (2008) meta-analysis demonstrated that spaced practice produces substantially more durable learning than massed practice, and Roediger and Karpicke (2006) showed that active retrieval outperforms restudy on delayed criterion tests. Rohrer and Taylor (2007) extended this with the interleaving effect for cumulative assessment. A motivational or behaviourist intervention may have value but does not address the cognitive mechanism producing the rapid forgetting.</p>"
         },
         {
-          "id": "psy-prt-4a-q3",
+          "id": "psy-jun-4a-q3",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Roediger and Karpicke's (2006) testing effect studies showed that students who repeatedly restudied a passage reported higher confidence than students who took recall tests, but performed worse on a delayed retention test.</p>",
@@ -133,7 +133,7 @@
           "explanationHtml": "<p>This is the central finding of Roediger and Karpicke (2006). Students in the repeated-study condition reported higher confidence in their learning, reflecting the fluency they experienced as the passage became familiar, but their delayed performance was substantially worse than that of students who had taken recall tests. The disconnect between subjective confidence and objective retention is sometimes called a fluency illusion and has important implications for how learners judge their own study effectiveness.</p>"
         },
         {
-          "id": "psy-prt-4a-q4",
+          "id": "psy-jun-4a-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following statements best distinguishes Vygotsky's social constructivism from Piaget's individual constructivism in their implications for classroom practice?</p>",
@@ -151,7 +151,7 @@
       "guidedPracticeModelAnswer": "The current revision plan violates established principles of effective learning at almost every point. Rereading notes produces the familiarity illusion — material feels known because it is recognised, but recognition does not predict test performance (Roediger & Karpicke, 2006). Students are likely overestimating retention.\n\nA redesign should apply three evidence-based principles. First, replace rereading with retrieval practice: closing notes and attempting to recall content from memory (flashcards, practice questions, blank-page recall). Testing oneself is consistently more effective than rereading, even when performance on the test is poor — the retrieval attempt itself consolidates memory (the testing effect).\n\nSecond, apply spaced practice: distribute revision across shorter daily sessions with gaps, rather than massing all biology into one day. Spacing exploits reconsolidation and prevents rapid forgetting.\n\nThird, interleave subjects within sessions rather than blocking one topic per day — counterintuitive but superior for retention and transfer (Kornell & Bjork, 2008)."
     },
     {
-      "id": "psy-prt-4b",
+      "id": "psy-jun-4b",
       "title": "Special Educational Needs & Atypical Development",
       "sortOrder": 2,
       "xpReward": 90,
@@ -234,7 +234,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-4b-q1",
+          "id": "psy-jun-4b-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to the SEND Code of Practice (2015) for England and Wales, which of the following is one of the four broad areas of need?</p>",
@@ -249,7 +249,7 @@
           "explanationHtml": "<p>The SEND Code of Practice (2015) identifies four broad areas of need: communication and interaction (including autism spectrum conditions); cognition and learning; social, emotional and mental health difficulties; and sensory and/or physical needs. The taxonomy is deliberately functional, framed around the kind of support a child requires rather than diagnostic categories. The other options describe specific cognitive constructs but are not areas of need in the Code's framework.</p>"
         },
         {
-          "id": "psy-prt-4b-q2",
+          "id": "psy-jun-4b-q2",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>An educational psychologist assesses an 8-year-old girl referred for persistent difficulty with reading. Cognitive testing on the WISC-V reveals average general cognitive ability but markedly depressed performance on phonological tasks, rapid automatised naming, and verbal short-term memory. Which formulation and intervention recommendation is most consistent with the contemporary evidence base?</p>",
@@ -264,7 +264,7 @@
           "explanationHtml": "<p>The profile — average general cognitive ability with specific impairment in phonological processing, rapid automatised naming, and verbal short-term memory — is the canonical pattern associated with dyslexia, as described by Snowling (2000) and Snowling and Hulme (2011). The Education Endowment Foundation's (2020) toolkit identifies structured, multisensory, explicitly phonics-based intervention as the most reliable evidence-based response. The other formulations do not fit the presenting cognitive profile.</p>"
         },
         {
-          "id": "psy-prt-4b-q3",
+          "id": "psy-jun-4b-q3",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Education, Health and Care Plans (EHCPs) were introduced by the Children and Families Act 2014 and replaced the previous Statement of Special Educational Needs as the statutory document setting out a child's needs, provision, and outcomes.</p>",
@@ -274,7 +274,7 @@
           "explanationHtml": "<p>The Children and Families Act 2014 introduced EHCPs as part of a wider reform of the SEN system in England, replacing the former Statement of Special Educational Needs. An EHCP is a statutory document drawn up by the local authority following an assessment process and must specify the child's needs, the provision required to meet those needs, and the outcomes sought. Educational psychologists are statutorily required to contribute psychological advice to EHCP assessments.</p>"
         },
         {
-          "id": "psy-prt-4b-q4",
+          "id": "psy-jun-4b-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following statements most accurately distinguishes Baron-Cohen's (2002) empathising–systemising theory of autism from Frith's (1989) weak central coherence account?</p>",
@@ -292,7 +292,7 @@
       "guidedPracticeModelAnswer": "A biopsychosocial formulation of this child's ADHD combined presentation should consider neurological, psychological, and environmental factors. Neurobiologically, ADHD involves underactivation of prefrontal executive systems governing sustained attention, inhibitory control, and working memory — explaining difficulties persisting on tasks without immediate reinforcement (Barkley, 1997).\n\nEnvironmentally, Year 4 demands sustained independent working that places high load on precisely these systems. The classroom seating position, teacher instruction style, and task structure are all modifiable.\n\nFor the EHCP recommendations: (1) environmental accommodations — preferential seating near the teacher, minimal distractions, tasks broken into shorter segments with frequent feedback; (2) cognitive support — written instructions, worked examples, and explicit organisational strategies to scaffold working memory; (3) behaviour support — a clear, consistent reward system exploiting ADHD's sensitivity to immediate reinforcement; (4) whole-class and staff training to reduce stigma and develop consistent approaches. Medication review by the child's paediatrician should be considered alongside environmental and psychological interventions."
     },
     {
-      "id": "psy-prt-4c",
+      "id": "psy-jun-4c",
       "title": "Educational Assessment, Intervention & Policy",
       "sortOrder": 3,
       "xpReward": 90,
@@ -375,7 +375,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-4c-q1",
+          "id": "psy-jun-4c-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best describes assessment for learning, as articulated by Black and Wiliam (1998)?</p>",
@@ -390,7 +390,7 @@
           "explanationHtml": "<p>Black and Wiliam (1998) defined assessment for learning as the formative use of assessment in the course of teaching, with the explicit purpose of shaping subsequent instruction. The other options describe summative assessment, statutory psychometric testing, and Feuerstein's dynamic assessment — each conceptually distinct from AfL, though dynamic assessment shares a Vygotskian heritage with the formative tradition.</p>"
         },
         {
-          "id": "psy-prt-4c-q2",
+          "id": "psy-jun-4c-q2",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A multi-academy trust is reviewing its use of Pupil Premium funding. Currently the funding is absorbed into general staffing costs. Drawing on the Education Endowment Foundation Toolkit and Hattie and Timperley (2007), which of the following would the evidence base most strongly support as a more effective alternative?</p>",
@@ -405,7 +405,7 @@
           "explanationHtml": "<p>The EEF Toolkit consistently identifies metacognition and self-regulation, and feedback, as among the highest-impact and most cost-effective interventions, while indicating that small class size reductions produce relatively small effects per pound spent. Hattie and Timperley (2007) provide the conceptual basis for high-quality feedback at the process and self-regulation levels. Targeted small-group tuition, when delivered by trained adults, is also well evidenced. The other options have weaker or more variable evidence bases.</p>"
         },
         {
-          "id": "psy-prt-4c-q3",
+          "id": "psy-jun-4c-q3",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Hammerstein et al.'s (2021) systematic review of pandemic-era school closures found consistent evidence of learning loss in primary mathematics and reading, with disproportionate effects on disadvantaged pupils.</p>",
@@ -415,7 +415,7 @@
           "explanationHtml": "<p>Hammerstein et al.'s (2021) review synthesised early evidence on the educational impact of pandemic school closures and concluded that primary mathematics and reading both showed consistent losses, with disproportionate effects on pupils from disadvantaged backgrounds. The review confirmed early concerns that closures would widen existing attainment gaps and has been influential in shaping post-pandemic recovery strategy across multiple jurisdictions.</p>"
         },
         {
-          "id": "psy-prt-4c-q4",
+          "id": "psy-jun-4c-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following statements most accurately distinguishes Positive Behaviour Support (Carr et al., 2002) from a traditional consequence-based behaviour management approach?</p>",

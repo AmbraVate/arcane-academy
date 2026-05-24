@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-2",
+﻿{
+  "id": "psy-jun-2",
   "topicId": "psychology",
   "title": "Abnormal Psychology",
   "glyph": "🧩",
@@ -8,7 +8,7 @@
   "prerequisiteIds": ["psy-prt-1"],
   "subChunks": [
     {
-      "id": "psy-prt-2a",
+      "id": "psy-jun-2a",
       "title": "Defining & Classifying Mental Illness",
       "sortOrder": 1,
       "xpReward": 90,
@@ -37,7 +37,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2a-q1",
+          "id": "psy-jun-2a-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Jahoda's (1958) definition of abnormality was based on:</p>",
@@ -46,7 +46,7 @@
           "correctAnswer": "Deviation from ideal mental health — positive criteria such as autonomy, self-actualisation, and reality perception"
         },
         {
-          "id": "psy-prt-2a-q2",
+          "id": "psy-jun-2a-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Thomas Szasz argued that mental illness is a biological reality equivalent to physical illness and that psychiatric classification is therefore scientifically valid.</p>",
@@ -55,7 +55,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-prt-2a-q3",
+          "id": "psy-jun-2a-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A clinician assesses a patient and notes they are experiencing significant personal distress, their social and occupational functioning has declined substantially, and their behaviour has become unpredictable. Which definition of abnormality does this assessment primarily reflect?</p>",
@@ -64,7 +64,7 @@
           "correctAnswer": "Failure to function adequately"
         },
         {
-          "id": "psy-prt-2a-q4",
+          "id": "psy-jun-2a-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which finding most directly challenges the validity of the categorical diagnostic approach used in the DSM?</p>",
@@ -75,7 +75,7 @@
       ]
     },
     {
-      "id": "psy-prt-2b",
+      "id": "psy-jun-2b",
       "title": "Anxiety, Mood & Psychotic Disorders",
       "sortOrder": 2,
       "xpReward": 90,
@@ -104,7 +104,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2b-q1",
+          "id": "psy-jun-2b-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Beck's (1967) cognitive triad, which three domains are characterised by negative automatic thoughts in depression?</p>",
@@ -113,7 +113,7 @@
           "correctAnswer": "The self, the world, and the future"
         },
         {
-          "id": "psy-prt-2b-q2",
+          "id": "psy-jun-2b-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: The original dopamine hypothesis proposes that negative symptoms of schizophrenia — such as flat affect and avolition — are caused by dopamine hyperactivity in mesolimbic pathways.</p>",
@@ -122,7 +122,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-prt-2b-q3",
+          "id": "psy-jun-2b-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A therapist helps a patient with panic disorder to identify that they are misinterpreting a racing heart as evidence of imminent heart attack, and designs exercises to induce a racing heart in a controlled setting to test this belief. This approach is primarily targeting:</p>",
@@ -131,7 +131,7 @@
           "correctAnswer": "Catastrophic misinterpretation of bodily sensations (Clark, 1986)"
         },
         {
-          "id": "psy-prt-2b-q4",
+          "id": "psy-jun-2b-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Kapur's (2003) aberrant salience model advances beyond the original dopamine hypothesis primarily by:</p>",
@@ -142,7 +142,7 @@
       ]
     },
     {
-      "id": "psy-prt-2c",
+      "id": "psy-jun-2c",
       "title": "Personality Disorders",
       "sortOrder": 3,
       "xpReward": 90,
@@ -172,7 +172,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2c-q1",
+          "id": "psy-jun-2c-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Linehan's (1993) biosocial model of borderline personality disorder, the disorder arises from:</p>",
@@ -181,7 +181,7 @@
           "correctAnswer": "The transaction between biological emotional vulnerability and an invalidating developmental environment"
         },
         {
-          "id": "psy-prt-2c-q2",
+          "id": "psy-jun-2c-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: ICD-11 has retained the categorical DSM-style cluster system for personality disorders, with the addition of a severity rating for each categorical diagnosis.</p>",
@@ -190,7 +190,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-prt-2c-q3",
+          "id": "psy-jun-2c-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A clinical psychologist is developing a treatment plan for a patient with borderline personality disorder. She designs sessions combining mindfulness skills, distress tolerance exercises, emotion regulation strategies, and interpersonal effectiveness training. This therapy is most consistent with:</p>",
@@ -199,7 +199,7 @@
           "correctAnswer": "Dialectical Behaviour Therapy (Linehan, 1993)"
         },
         {
-          "id": "psy-prt-2c-q4",
+          "id": "psy-jun-2c-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which finding most directly challenges the validity of the DSM-5 categorical model of personality disorders?</p>",
@@ -210,7 +210,7 @@
       ]
     },
     {
-      "id": "psy-prt-2d",
+      "id": "psy-jun-2d",
       "title": "Eating Disorders & Body Image",
       "sortOrder": 4,
       "xpReward": 90,
@@ -240,7 +240,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2d-q1",
+          "id": "psy-jun-2d-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Fairburn's (2008) transdiagnostic cognitive-behavioural model of eating disorders, the central maintaining cognitive distortion is:</p>",
@@ -249,7 +249,7 @@
           "correctAnswer": "Over-evaluation of weight and shape as the primary basis for self-evaluation"
         },
         {
-          "id": "psy-prt-2d-q2",
+          "id": "psy-jun-2d-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Watson et al.'s (2019) genome-wide association study for anorexia nervosa found genetic correlations not only with psychiatric traits but also with metabolic and anthropometric traits such as body mass index and insulin resistance.</p>",
@@ -258,7 +258,7 @@
           "correctAnswer": "True"
         },
         {
-          "id": "psy-prt-2d-q3",
+          "id": "psy-jun-2d-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A clinical team is treating a 15-year-old girl with anorexia nervosa whose weight has dropped significantly. Following NICE-recommended evidence, they design an intervention that empowers her parents to take primary responsibility for refeeding in the first phase of treatment, gradually returning autonomy to the adolescent as weight is restored. This approach is most consistent with:</p>",
@@ -267,7 +267,7 @@
           "correctAnswer": "Family-Based Treatment (Lock & Le Grange, 2013)"
         },
         {
-          "id": "psy-prt-2d-q4",
+          "id": "psy-jun-2d-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which finding most directly challenges a purely sociocultural account of eating disorder aetiology?</p>",
@@ -278,7 +278,7 @@
       ]
     },
     {
-      "id": "psy-prt-2e",
+      "id": "psy-jun-2e",
       "title": "Substance Use & Addictive Behaviours",
       "sortOrder": 5,
       "xpReward": 90,
@@ -308,7 +308,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2e-q1",
+          "id": "psy-jun-2e-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Robinson & Berridge's (1993) incentive sensitisation theory, repeated drug use produces:</p>",
@@ -317,7 +317,7 @@
           "correctAnswer": "Sensitisation of neural systems mediating wanting (incentive salience), dissociable from hedonic liking"
         },
         {
-          "id": "psy-prt-2e-q2",
+          "id": "psy-jun-2e-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Prochaska & DiClemente's (1983) transtheoretical model identifies the five stages of change as denial, anger, bargaining, depression, and acceptance.</p>",
@@ -326,7 +326,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-prt-2e-q3",
+          "id": "psy-jun-2e-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A clinician working with a heroin-dependent patient prescribes a daily oral medication that occupies opioid receptors, blocks the euphoric effects of additional heroin use, prevents withdrawal, and has substantial evidence for reducing overdose mortality. This is most consistent with:</p>",
@@ -335,7 +335,7 @@
           "correctAnswer": "Opioid agonist therapy with methadone or buprenorphine"
         },
         {
-          "id": "psy-prt-2e-q4",
+          "id": "psy-jun-2e-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A clinician using motivational interviewing with a patient in the contemplation stage would most appropriately:</p>",
@@ -346,7 +346,7 @@
       ]
     },
     {
-      "id": "psy-prt-2f",
+      "id": "psy-jun-2f",
       "title": "OCD, PTSD & Trauma-Related Disorders",
       "sortOrder": 6,
       "xpReward": 90,
@@ -375,7 +375,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2f-q1",
+          "id": "psy-jun-2f-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Salkovskis's (1985) cognitive model, the central distinguishing feature of clinical OCD compared with the universal experience of intrusive thoughts is:</p>",
@@ -384,7 +384,7 @@
           "correctAnswer": "The appraisal of intrusions as personally significant, threatening, or carrying moral responsibility to prevent harm"
         },
         {
-          "id": "psy-prt-2f-q2",
+          "id": "psy-jun-2f-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: ICD-11 (2018) formally recognised complex PTSD as a distinct diagnosis, introducing three symptom clusters (affect dysregulation, negative self-concept, disturbed relationships) over and above the core PTSD symptoms.</p>",
@@ -393,7 +393,7 @@
           "correctAnswer": "True"
         },
         {
-          "id": "psy-prt-2f-q3",
+          "id": "psy-jun-2f-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A clinician treating a patient with PTSD designs a structured intervention to elaborate the trauma memory, modify negative appraisals about the trauma and its sequelae, and eliminate maintaining behaviours such as rumination and safety behaviours. This is most consistent with:</p>",
@@ -402,7 +402,7 @@
           "correctAnswer": "Ehlers & Clark's (2000) cognitive model of PTSD operationalised as trauma-focused CBT"
         },
         {
-          "id": "psy-prt-2f-q4",
+          "id": "psy-jun-2f-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which finding most directly supports Salkovskis's (1985) cognitive model of OCD by undermining the alternative claim that the content of intrusive thoughts is itself pathological?</p>",
@@ -413,7 +413,7 @@
       ]
     },
     {
-      "id": "psy-prt-2g",
+      "id": "psy-jun-2g",
       "title": "Psychological Treatments & Therapeutic Approaches",
       "sortOrder": 7,
       "xpReward": 90,
@@ -444,7 +444,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-2g-q1",
+          "id": "psy-jun-2g-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Rogers's (1957) three core conditions for therapeutic personality change are:</p>",
@@ -453,7 +453,7 @@
           "correctAnswer": "Congruence, unconditional positive regard, and accurate empathic understanding"
         },
         {
-          "id": "psy-prt-2g-q2",
+          "id": "psy-jun-2g-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Cipriani et al.'s (2018) Lancet network meta-analysis concluded that antidepressants are no more effective than placebo for major depressive disorder when methodological flaws in earlier trials are accounted for.</p>",
@@ -462,7 +462,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-prt-2g-q3",
+          "id": "psy-jun-2g-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A service commissioner is designing a new adult mental health service for mild-to-moderate anxiety and depression. Drawing on Clark's (2018) description of the IAPT model, they decide to require mandatory session-by-session outcome measurement and structure provision according to a stepped-care framework. This decision is most directly justified by:</p>",
@@ -471,7 +471,7 @@
           "correctAnswer": "The evidence that systematic outcome monitoring and matching intervention intensity to presentation severity produce better population-level outcomes and accountability than unstructured provision"
         },
         {
-          "id": "psy-prt-2g-q4",
+          "id": "psy-jun-2g-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best characterises the contemporary mature position on the Dodo bird verdict and the role of specific techniques in psychotherapy?</p>",

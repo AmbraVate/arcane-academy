@@ -1,5 +1,5 @@
-{
-  "id": "psy-prt-3",
+﻿{
+  "id": "psy-jun-3",
   "topicId": "psychology",
   "title": "Research Methods in Psychology",
   "glyph": "📐",
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-prt-3a",
+      "id": "psy-jun-3a",
       "title": "Research Design, Validity & Reliability",
       "sortOrder": 1,
       "xpReward": 90,
@@ -83,7 +83,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-3a-q1",
+          "id": "psy-jun-3a-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which research design provides the strongest basis for establishing causal relationships between variables?</p>",
@@ -97,7 +97,7 @@
           "correctAnswer": "True experimental design with random allocation"
         },
         {
-          "id": "psy-prt-3a-q2",
+          "id": "psy-jun-3a-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: A correlation coefficient of r = −0.75 indicates a stronger relationship between two variables than a correlation of r = +0.60.</p>",
@@ -106,7 +106,7 @@
           "correctAnswer": "True"
         },
         {
-          "id": "psy-prt-3a-q3",
+          "id": "psy-jun-3a-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A researcher studying prejudice in school children uses a standardised questionnaire. She tests the same children three months later with the same questionnaire and finds very similar scores. She then has two colleagues independently code children's playground observations and finds their codings are highly consistent. Which two forms of reliability has she demonstrated?</p>",
@@ -120,7 +120,7 @@
           "correctAnswer": "Test-retest reliability and inter-rater reliability"
         },
         {
-          "id": "psy-prt-3a-q4",
+          "id": "psy-jun-3a-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Henrich et al.'s (2010) 'WEIRD' critique of psychological research primarily challenges which type of validity?</p>",
@@ -137,7 +137,7 @@
       "guidedPracticeModelAnswer": "The study has one clear strength: random assignment to conditions equates participant characteristics at baseline, supporting internal validity and permitting causal inference about the effect of mindfulness on anxiety (Campbell & Stanley, 1963).\n\nTwo significant limitations undermine confidence. First, advertising for volunteers introduces self-selection bias: participants who choose to enrol in a mindfulness study may already be motivated to reduce anxiety, or may hold positive expectations that inflate self-reported improvement independently of the intervention (demand characteristics). This threatens both internal and population validity.\n\nSecond, a waiting-list control does not adequately control for non-specific effects — social contact, therapist attention, and positive expectations may account for improvement rather than mindfulness per se. An active control condition (e.g., structured relaxation training) matched for time and attention would isolate the specific ingredient of mindfulness, substantially strengthening causal inference."
     },
     {
-      "id": "psy-prt-3b",
+      "id": "psy-jun-3b",
       "title": "Quantitative & Qualitative Analysis",
       "sortOrder": 2,
       "xpReward": 90,
@@ -210,7 +210,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-3b-q1",
+          "id": "psy-jun-3b-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Using Cohen's (1988) conventions, a standardised mean difference of d = 0.5 represents which effect size?</p>",
@@ -224,7 +224,7 @@
           "correctAnswer": "Medium effect size"
         },
         {
-          "id": "psy-prt-3b-q2",
+          "id": "psy-jun-3b-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: A p-value of .03 means there is a 3% probability that the null hypothesis is true given the observed data.</p>",
@@ -233,7 +233,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-prt-3b-q3",
+          "id": "psy-jun-3b-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A researcher conducts a qualitative study on the experience of anxiety in adolescents, interviewing 7 participants in depth. She shares her emerging themes with participants to check whether they feel the themes accurately reflect their experience. This process is called:</p>",
@@ -247,7 +247,7 @@
           "correctAnswer": "Member checking (respondent validation)"
         },
         {
-          "id": "psy-prt-3b-q4",
+          "id": "psy-jun-3b-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A pharmaceutical company reports that their new antidepressant is significantly more effective than placebo (p = .001, d = 0.15, N = 3,000). The most important critical evaluation of this claim is:</p>",
@@ -264,7 +264,7 @@
       "guidedPracticeModelAnswer": "Although p = .03 indicates statistical significance — the probability of obtaining this result by chance, given a true null effect, is 3% — it does not indicate practical or clinical importance. With N = 847, statistical power is very high, meaning even negligible true effects will reliably produce significant p-values.\n\nThe critical statistic is the effect size. Cohen's (1988) conventions classify d = 0.11 as negligible — well below the threshold for a small effect (d = 0.20). The 95% confidence interval [0.04, 0.18] excludes zero, but all plausible true effects remain clinically trivial. The app reduces anxiety by less than a tenth of a standard deviation.\n\nThis finding exemplifies the distinction between statistical and practical significance: the mindfulness app 'works' in a narrow statistical sense but produces no meaningful reduction in anxiety. Clinicians and commissioners must prioritise effect sizes alongside p-values when evaluating whether an intervention warrants adoption at scale."
     },
     {
-      "id": "psy-prt-3c",
+      "id": "psy-jun-3c",
       "title": "Descriptive Statistics in R — A First Practical",
       "sortOrder": 3,
       "xpReward": 90,
@@ -375,7 +375,7 @@
       ],
       "questions": [
         {
-          "id": "psy-prt-3c-q1",
+          "id": "psy-jun-3c-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which R function computes the standard deviation of a numeric vector using Bessel's correction (n−1) by default?</p>",
@@ -389,7 +389,7 @@
           "correctAnswer": "sd()"
         },
         {
-          "id": "psy-prt-3c-q2",
+          "id": "psy-jun-3c-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: The R assignment operator <code>&lt;-</code> can also be written as <code>=</code> in most contexts, but <code>&lt;-</code> is the convention for assignment in R style guides.</p>",
@@ -398,7 +398,7 @@
           "correctAnswer": "True"
         },
         {
-          "id": "psy-prt-3c-q3",
+          "id": "psy-jun-3c-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A researcher reports the following reaction-time data: mean = 580 ms, median = 510 ms. What does this tell you about the distribution?</p>",
@@ -412,7 +412,7 @@
           "correctAnswer": "Positively skewed — a few slow responses are pulling the mean above the median"
         },
         {
-          "id": "psy-prt-3c-q4",
+          "id": "psy-jun-3c-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>For reporting the central tendency of reaction-time data containing several large outliers, which measure is most appropriate?</p>",
@@ -428,7 +428,7 @@
       ]
     },
     {
-      "id": "psy-prt-3d",
+      "id": "psy-jun-3d",
       "title": "Comparing Groups in R — t-Tests",
       "sortOrder": 4,
       "xpReward": 100,
@@ -580,7 +580,7 @@
       ]
     },
     {
-      "id": "psy-prt-3e",
+      "id": "psy-jun-3e",
       "title": "Correlation & Simple Regression in R",
       "sortOrder": 5,
       "xpReward": 100,
@@ -728,7 +728,7 @@
       ]
     },
     {
-      "id": "psy-prt-3f",
+      "id": "psy-jun-3f",
       "title": "One-Way ANOVA in R",
       "sortOrder": 6,
       "xpReward": 100,

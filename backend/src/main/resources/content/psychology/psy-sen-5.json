@@ -1,5 +1,5 @@
-{
-  "id": "psy-exp-1",
+﻿{
+  "id": "psy-sen-5",
   "title": "Applied Psychology",
   "glyph": "⚕️",
   "sortOrder": 10,
@@ -10,7 +10,7 @@
   ],
   "subChunks": [
     {
-      "id": "psy-exp-1a",
+      "id": "psy-sen-5a",
       "title": "Forensic, Health & Occupational Psychology",
       "sortOrder": 1,
       "xpReward": 100,
@@ -156,7 +156,7 @@
       ]
     },
     {
-      "id": "psy-exp-1b",
+      "id": "psy-sen-5b",
       "title": "Clinical Practice & Therapeutic Evidence",
       "sortOrder": 2,
       "xpReward": 100,
@@ -302,7 +302,7 @@
       ]
     },
     {
-      "id": "psy-exp-1c",
+      "id": "psy-sen-5c",
       "title": "Psychological Assessment, Diagnosis & the Nosology Debate",
       "sortOrder": 3,
       "xpReward": 175,
@@ -351,7 +351,7 @@
       "feynmanPrompt": "Explain to someone unfamiliar with psychology why a diagnosis of 'Major Depressive Disorder' might be less scientifically precise than a diagnosis of, say, 'Type 2 Diabetes' — even though both are recognised medical categories. What does validity mean here, and why does it matter clinically?",
       "questions": [
         {
-          "id": "psy-exp-1cq1",
+          "id": "psy-sen-5cq1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "Kendell and Jablensky (2003) identified three criteria for diagnostic validity. Which type of validity refers to whether a diagnostic category reflects a shared causal mechanism?",
@@ -365,7 +365,7 @@
           "explanationHtml": "Aetiological validity requires that cases within a diagnostic category share common causal mechanisms (genetic, neural, or environmental). Most DSM diagnoses have adequate descriptive validity (consistent symptom presentation) but poor aetiological validity — the same symptom profile can arise from heterogeneous causes."
         },
         {
-          "id": "psy-exp-1cq2",
+          "id": "psy-sen-5cq2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "The HiTOP (Hierarchical Taxonomy of Psychopathology) model proposes which of the following?",
@@ -379,7 +379,7 @@
           "explanationHtml": "HiTOP (Kotov et al., 2017) proposes a hierarchical dimensional model in which psychopathology is organised along a small number of correlated dimensions (internalising, externalising, thought disorder, detachment, somatoform). High comorbidity rates in the current system are explained as the expected result of imposing categorical cut-points on continuous dimensional variation."
         },
         {
-          "id": "psy-exp-1cq3",
+          "id": "psy-sen-5cq3",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "The Flynn effect has direct implications for clinical psychological testing. What is the Flynn effect and why does it matter?",
@@ -393,7 +393,7 @@
           "explanationHtml": "The Flynn effect refers to the well-documented secular rise in raw IQ test scores over the 20th century, at approximately 3 IQ points per decade. If test norms were established decades ago, a contemporary client's raw score will be compared to outdated norms — inflating the apparent IQ. Clinical and forensic psychologists must use current norm editions and be aware of norming date when interpreting scores."
         },
         {
-          "id": "psy-exp-1cq4",
+          "id": "psy-sen-5cq4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "A clinical psychologist is assessing a client involved in a personal injury claim for chronic pain following a road traffic accident. She is concerned the client may be exaggerating symptoms for financial gain. Which assessment consideration is most relevant?",
@@ -427,7 +427,7 @@
       ]
     },
     {
-      "id": "psy-exp-1d",
+      "id": "psy-sen-5d",
       "title": "Psychopharmacology: Mechanisms, Evidence & the Prescribing Debate",
       "sortOrder": 4,
       "xpReward": 175,
@@ -476,7 +476,7 @@
       "feynmanPrompt": "Explain to someone without a pharmacology background why antidepressants taking 2–4 weeks to work undermines the 'low serotonin' theory of depression, even though SSRIs increase synaptic serotonin almost immediately.",
       "questions": [
         {
-          "id": "psy-exp-1dq1",
+          "id": "psy-sen-5dq1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "Which of the following accurately describes the mechanism of action of SSRIs?",
@@ -490,7 +490,7 @@
           "explanationHtml": "SSRIs selectively inhibit the serotonin transporter (SERT), which normally removes serotonin from the synapse back into the presynaptic neuron. By blocking SERT, SSRIs leave serotonin in the synapse longer, enhancing postsynaptic receptor activation. This neurochemical effect is rapid, but clinical benefits take 2–4 weeks, suggesting that downstream neuroplasticity (rather than simple serotonin elevation) is the therapeutic mechanism."
         },
         {
-          "id": "psy-exp-1dq2",
+          "id": "psy-sen-5dq2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "Kirsch et al.'s (2008) reanalysis of FDA antidepressant data included unpublished negative trials. What is the primary methodological principle this addressed?",
@@ -504,7 +504,7 @@
           "explanationHtml": "Kirsch et al. accessed the FDA's full dataset, which included unpublished negative trials not available in the public literature. Including these trials substantially reduced the apparent drug-placebo difference, illustrating publication bias: the published literature systematically over-represents positive findings, leading meta-analyses based only on published studies to overestimate treatment effects."
         },
         {
-          "id": "psy-exp-1dq3",
+          "id": "psy-sen-5dq3",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "A patient with bipolar I disorder asks their psychologist about the anti-suicidal properties of lithium they have read about online. What is the evidence-based response?",
@@ -518,7 +518,7 @@
           "explanationHtml": "Cipriani et al.'s (2013) meta-analysis confirmed that lithium significantly reduces suicidality in both bipolar disorder and recurrent depression, and that this effect appears to be partially independent of its mood-stabilising properties. The mechanism may involve serotonergic effects and/or reduced impulsivity. This makes lithium a particularly important consideration for high-risk patients, and psychologists working with bipolar patients should be aware of this evidence when discussing medication with clients and communicating with prescribers."
         },
         {
-          "id": "psy-exp-1dq4",
+          "id": "psy-sen-5dq4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "A GP asks for a clinical psychologist's view on whether to prescribe a benzodiazepine for a patient with generalised anxiety disorder who has not responded to CBT after 16 sessions. What is the most evidence-based recommendation?",
@@ -552,7 +552,7 @@
       ]
     },
     {
-      "id": "psy-exp-1e",
+      "id": "psy-sen-5e",
       "title": "Systemic, Preventative & Community Psychology",
       "sortOrder": 5,
       "xpReward": 175,
@@ -601,7 +601,7 @@
       "feynmanPrompt": "Explain Rose's prevention paradox to a GP who has never encountered it. Why might a programme that reduces everyone's risk by just a little bit prevent more total cases of depression than an intensive programme targeting the 5% of people with highest risk?",
       "questions": [
         {
-          "id": "psy-exp-1eq1",
+          "id": "psy-sen-5eq1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "Rose's (1981) prevention paradox states that:",
@@ -615,7 +615,7 @@
           "explanationHtml": "Rose's prevention paradox (1981) challenges the clinical intuition that resources should be concentrated on the highest-risk individuals. Because most of the population falls in the moderate-risk range — and there are vastly more people there than in the high-risk tail — even a small proportional reduction in the moderate-risk group's risk can prevent more total cases than a large reduction in the small high-risk group."
         },
         {
-          "id": "psy-exp-1eq2",
+          "id": "psy-sen-5eq2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "The Marmot Review (2010) found that the social gradient in health was:",
@@ -629,7 +629,7 @@
           "explanationHtml": "The Marmot Review found that health outcomes — including mental health — deteriorate progressively down the socioeconomic hierarchy, forming a continuous gradient rather than a binary distinction between poor and not-poor. This means that addressing absolute poverty is insufficient; inequality itself (the steepness of the gradient) appears causally relevant. This has major implications for public health strategy — the goal must be to 'flatten' the social gradient, not only to eliminate extreme poverty."
         },
         {
-          "id": "psy-exp-1eq3",
+          "id": "psy-sen-5eq3",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "IAPT (Improving Access to Psychological Therapies) operates primarily at which level of prevention?",
@@ -643,7 +643,7 @@
           "explanationHtml": "IAPT provides psychological therapies to people who already meet criteria for an anxiety disorder or depression — this is tertiary prevention. It reduces symptom burden and improves functioning in people with established disorder. IAPT's stepped care model (from low-intensity guided self-help to high-intensity CBT) improves access within tertiary prevention but does not prevent the incidence of new cases."
         },
         {
-          "id": "psy-exp-1eq4",
+          "id": "psy-sen-5eq4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "A community psychologist argues that providing individual CBT to unemployed people with depression, without addressing unemployment itself, is 'complicit in structural inequality'. Which response best engages with this critique?",

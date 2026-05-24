@@ -1,5 +1,5 @@
-{
-  "id": "sci-c",
+﻿{
+  "id": "sci-app-3",
   "title": "Biology Foundations",
   "glyph": "🌱",
   "sortOrder": 3,
@@ -11,7 +11,7 @@
   "subChunks": [
 
     {
-      "id": "sci-c1",
+      "id": "sci-app-3a",
       "title": "Cells & Cellular Processes",
       "sortOrder": 1,
       "xpReward": 60,
@@ -135,7 +135,7 @@
     },
 
     {
-      "id": "sci-c2",
+      "id": "sci-app-3b",
       "title": "Genetics & DNA",
       "sortOrder": 2,
       "xpReward": 70,
@@ -259,7 +259,7 @@
     },
 
     {
-      "id": "sci-c3",
+      "id": "sci-app-3c",
       "title": "Evolution by Natural Selection",
       "sortOrder": 3,
       "xpReward": 70,
@@ -383,7 +383,7 @@
     },
 
     {
-      "id": "sci-c4",
+      "id": "sci-app-3d",
       "title": "Ecosystems & Energy Flow",
       "sortOrder": 4,
       "xpReward": 60,
@@ -499,7 +499,7 @@
     },
 
     {
-      "id": "sci-c5",
+      "id": "sci-app-3e",
       "title": "Human Body Systems Overview",
       "sortOrder": 5,
       "xpReward": 60,

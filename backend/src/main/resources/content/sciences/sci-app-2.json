@@ -1,5 +1,5 @@
-{
-  "id": "sci-b",
+﻿{
+  "id": "sci-app-2",
   "title": "Physics Foundations",
   "glyph": "⚛️",
   "sortOrder": 2,
@@ -11,7 +11,7 @@
   "subChunks": [
 
     {
-      "id": "sci-b1",
+      "id": "sci-app-2a",
       "title": "Newton's Laws & Forces",
       "sortOrder": 1,
       "xpReward": 60,
@@ -130,7 +130,7 @@
     },
 
     {
-      "id": "sci-b2",
+      "id": "sci-app-2b",
       "title": "Energy & Conservation",
       "sortOrder": 2,
       "xpReward": 60,
@@ -249,7 +249,7 @@
     },
 
     {
-      "id": "sci-b3",
+      "id": "sci-app-2c",
       "title": "Waves & Sound",
       "sortOrder": 3,
       "xpReward": 60,
@@ -360,7 +360,7 @@
     },
 
     {
-      "id": "sci-b4",
+      "id": "sci-app-2d",
       "title": "Electromagnetism Intro",
       "sortOrder": 4,
       "xpReward": 60,
@@ -471,7 +471,7 @@
     },
 
     {
-      "id": "sci-b5",
+      "id": "sci-app-2e",
       "title": "Modern Physics Glimpse",
       "sortOrder": 5,
       "xpReward": 70,

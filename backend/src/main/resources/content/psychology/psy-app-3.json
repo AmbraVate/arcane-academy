@@ -1,5 +1,5 @@
-{
-  "id": "psy-fnd-3",
+﻿{
+  "id": "psy-app-3",
   "topicId": "psychology",
   "title": "Learning & Memory",
   "glyph": "🧠",
@@ -8,7 +8,7 @@
   "prerequisiteIds": ["psy-fnd-2"],
   "subChunks": [
     {
-      "id": "psy-fnd-3a",
+      "id": "psy-app-3a",
       "title": "Classical & Operant Conditioning",
       "sortOrder": 1,
       "xpReward": 70,
@@ -38,7 +38,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-3a-q1",
+          "id": "psy-app-3a-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Pavlov's classical conditioning experiments, which term describes the bell <em>after</em> it has been repeatedly paired with food and now elicits salivation on its own?</p>",
@@ -47,7 +47,7 @@
           "correctAnswer": "Conditioned stimulus (CS)"
         },
         {
-          "id": "psy-fnd-3a-q2",
+          "id": "psy-app-3a-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Negative reinforcement involves adding an aversive stimulus following a behaviour in order to reduce the frequency of that behaviour.</p>",
@@ -56,7 +56,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-fnd-3a-q3",
+          "id": "psy-app-3a-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Maya notices she feels anxious not only in the shopping centre where she was once caught in a crowd crush, but also in cinemas, concerts, and busy restaurants. Which classical conditioning principle best explains this?</p>",
@@ -65,7 +65,7 @@
           "correctAnswer": "Stimulus generalisation"
         },
         {
-          "id": "psy-fnd-3a-q4",
+          "id": "psy-app-3a-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Bandura's Bobo doll study (1961) challenged pure behaviourism primarily because:</p>",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "id": "psy-fnd-3b",
+      "id": "psy-app-3b",
       "title": "Memory Models & Forgetting",
       "sortOrder": 2,
       "xpReward": 70,
@@ -106,7 +106,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-3b-q1",
+          "id": "psy-app-3b-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Atkinson & Shiffrin's (1968) multi-store model, which type of rehearsal is primarily responsible for transferring information from short-term to long-term memory?</p>",
@@ -115,7 +115,7 @@
           "correctAnswer": "Elaborative rehearsal"
         },
         {
-          "id": "psy-fnd-3b-q2",
+          "id": "psy-app-3b-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Baddeley and Hitch (1974) proposed that the phonological loop and the visuospatial sketchpad both draw on the same limited resource pool, meaning performance on verbal and spatial tasks should always interfere with each other.</p>",
@@ -124,7 +124,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-fnd-3b-q3",
+          "id": "psy-app-3b-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Jasmine is revising for her biology exam. Which revision strategy is most strongly supported by Craik & Lockhart's levels of processing framework?</p>",
@@ -133,7 +133,7 @@
           "correctAnswer": "Explaining each concept aloud to a classmate in her own words"
         },
         {
-          "id": "psy-fnd-3b-q4",
+          "id": "psy-app-3b-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Godden & Baddeley's (1975) diving study supports which theory of forgetting?</p>",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "id": "psy-fnd-3c",
+      "id": "psy-app-3c",
       "title": "Encoding, Storage & Retrieval",
       "sortOrder": 3,
       "xpReward": 80,
@@ -175,7 +175,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-3c-q1",
+          "id": "psy-app-3c-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>According to Craik & Lockhart's (1972) levels of processing framework, which type of encoding produces the most durable long-term memory traces?</p>",
@@ -184,7 +184,7 @@
           "correctAnswer": "Semantic processing"
         },
         {
-          "id": "psy-fnd-3c-q2",
+          "id": "psy-app-3c-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Roediger & Karpicke (2006) found that students who repeatedly restudied a passage performed better on a one-week delayed test than students who engaged in retrieval practice.</p>",
@@ -193,7 +193,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-fnd-3c-q3",
+          "id": "psy-app-3c-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Ravi studies biology in his bedroom every evening, then sits the exam in an unfamiliar sports hall. He recalls less than he expected. Which principle best explains this gap between his revision performance and his exam performance?</p>",
@@ -202,7 +202,7 @@
           "correctAnswer": "Encoding specificity principle"
         },
         {
-          "id": "psy-fnd-3c-q4",
+          "id": "psy-app-3c-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Anderson, Bjork & Bjork's (1994) retrieval-induced forgetting research demonstrated that:</p>",
@@ -213,7 +213,7 @@
       ]
     },
     {
-      "id": "psy-fnd-3d",
+      "id": "psy-app-3d",
       "title": "Memory Systems & Cognitive Architecture",
       "sortOrder": 4,
       "xpReward": 80,
@@ -244,7 +244,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-3d-q1",
+          "id": "psy-app-3d-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Squire's (1992) taxonomy of long-term memory, which of the following is classified as a non-declarative memory system?</p>",
@@ -253,7 +253,7 @@
           "correctAnswer": "Procedural memory"
         },
         {
-          "id": "psy-fnd-3d-q2",
+          "id": "psy-app-3d-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Following his bilateral medial temporal lobectomy, patient H.M. (Scoville & Milner, 1957) was unable to acquire any new procedural skills, despite his preserved short-term memory.</p>",
@@ -262,7 +262,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-fnd-3d-q3",
+          "id": "psy-app-3d-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Mrs Ahmed remembers that her granddaughter's birthday is in June (semantic knowledge) but cannot recall whether she attended last year's party. Which memory system appears most impaired?</p>",
@@ -271,7 +271,7 @@
           "correctAnswer": "Episodic memory"
         },
         {
-          "id": "psy-fnd-3d-q4",
+          "id": "psy-app-3d-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best characterises Tulving's concept of autonoetic consciousness?</p>",
@@ -282,7 +282,7 @@
       ]
     },
     {
-      "id": "psy-fnd-3e",
+      "id": "psy-app-3e",
       "title": "Reconstructive Memory & Eyewitness Testimony",
       "sortOrder": 5,
       "xpReward": 80,
@@ -313,7 +313,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-3e-q1",
+          "id": "psy-app-3e-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>In Loftus & Palmer's (1974) classic study, which verb in the critical question produced the highest mean speed estimate from participants?</p>",
@@ -322,7 +322,7 @@
           "correctAnswer": "Smashed"
         },
         {
-          "id": "psy-fnd-3e-q2",
+          "id": "psy-app-3e-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Bartlett's (1932) \"War of the Ghosts\" study demonstrated that participants reproduced unfamiliar stories with high verbatim accuracy across repeated retellings.</p>",
@@ -331,7 +331,7 @@
           "correctAnswer": "False"
         },
         {
-          "id": "psy-fnd-3e-q3",
+          "id": "psy-app-3e-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>A police interviewer wants to maximise the accuracy and completeness of an eyewitness's account of a burglary. Based on Fisher & Geiselman's (1992) cognitive interview, which combination of techniques is most strongly evidence-based?</p>",
@@ -340,7 +340,7 @@
           "correctAnswer": "Context reinstatement, reporting everything, changing perspective, and reversing order"
         },
         {
-          "id": "psy-fnd-3e-q4",
+          "id": "psy-app-3e-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best characterises the contemporary conclusion drawn by Wixted & Wells (2017) about eyewitness confidence and accuracy?</p>",
@@ -351,7 +351,7 @@
       ]
     },
     {
-      "id": "psy-fnd-3f",
+      "id": "psy-app-3f",
       "title": "Memory Disorders & the Neuroscience of Memory",
       "sortOrder": 6,
       "xpReward": 80,
@@ -382,7 +382,7 @@
       ],
       "questions": [
         {
-          "id": "psy-fnd-3f-q1",
+          "id": "psy-app-3f-q1",
           "tier": "RECALL",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Korsakoff syndrome is most directly caused by:</p>",
@@ -391,7 +391,7 @@
           "correctAnswer": "Thiamine (vitamin B1) deficiency"
         },
         {
-          "id": "psy-fnd-3f-q2",
+          "id": "psy-app-3f-q2",
           "tier": "RECALL",
           "type": "TRUE_FALSE",
           "questionHtml": "<p>True or False: Bliss & Lømo's (1973) demonstration of long-term potentiation (LTP) requires activation of NMDA glutamate receptors, which act as coincidence detectors for presynaptic and postsynaptic activity.</p>",
@@ -400,7 +400,7 @@
           "correctAnswer": "True"
         },
         {
-          "id": "psy-fnd-3f-q3",
+          "id": "psy-app-3f-q3",
           "tier": "APPLICATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Mr Davies, aged 72, has been diagnosed with early Alzheimer's disease. He forgets conversations from earlier in the day and asks the same questions repeatedly, yet vividly recalls his school years and continues to play golf to a high standard. Which pattern best explains this profile?</p>",
@@ -409,7 +409,7 @@
           "correctAnswer": "Tau pathology has reached hippocampal regions (Braak stages III–IV) affecting episodic memory, while procedural and remote semantic memory remain relatively preserved"
         },
         {
-          "id": "psy-fnd-3f-q4",
+          "id": "psy-app-3f-q4",
           "tier": "DISCRIMINATION",
           "type": "MULTIPLE_CHOICE",
           "questionHtml": "<p>Which of the following best characterises the contribution of Maguire et al.'s (2000) study of London taxi drivers to memory neuroscience?</p>",
