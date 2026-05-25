@@ -1,0 +1,151 @@
+{
+  "id": "sci-sen-19",
+  "topicId": "sciences",
+  "tier": "SENIOR",
+  "title": "Capstone — Research Design",
+  "glyph": "🔬",
+  "sortOrder": 19,
+  "prerequisites": [
+    "sci-sen-18"
+  ],
+  "xpReward": 110,
+  "practiceType": "NONE",
+  "subChunks": [
+    {
+      "id": "sci-sen-19a",
+      "title": "Capstone — Research Design",
+      "practiceType": "NONE",
+      "xpReward": 110,
+      "hookHtml": "<p>Theodora set down her pen and looked up at the stack of files representing the eighteen topics they had traversed together. Relativity, particle physics, quantum mechanics, molecular biology, genomics, neuroscience, immunology, bioinformatics, climate science, conservation, geochemistry, exoplanet science, chaos theory, philosophy of science, computational modelling, data analysis, interdisciplinary synthesis — the breadth of advanced natural science spread across the table like a continent.</p><p>'You have seen the whole landscape now,' she said. 'The disciplines, the methods, the open questions. Senior science is not about knowing more facts than junior scientists — it is about holding uncertainty correctly. Knowing what we know, why we know it, what we do not know, and how we would go about finding out. That last part — how we would find out — is research design. It is the craft beneath all the knowledge.'</p><p>'Research design is where scientific thinking crystallises into something that can actually be done. A question that cannot be operationalised is not yet a scientific question. A hypothesis that cannot be tested — even in principle — cannot move science forward. The difference between a vague curiosity and a fundable research programme is a well-designed study with a defensible methodology, appropriate controls, and a plan for dealing with the results you do not want.'</p><p>She picked up a blank sheet of paper. 'Your capstone is to design a research programme. Not to run it — to design it. Show me you can move from question to hypothesis to methodology to analysis plan to interpretation. Show me you understand where it could go wrong, and how you would know if it did.'</p>",
+      "explanationHtml": "<h2>From Question to Hypothesis</h2><p>A research question must be specific, answerable, and significant. Broad curiosity ('How does the brain work?') must be sharpened into a testable hypothesis ('Inhibiting hippocampal serotonin 2A receptors in adult mice will impair spatial memory consolidation as measured by the Morris water maze'). The <strong>PICO framework</strong> (Population/Intervention/Comparison/Outcome) — used in clinical research — is adaptable to any empirical science: specify the system studied, the variable manipulated, the control condition, and the measured outcome.</p><p>Hypotheses should be stated with explicit directionality where possible and should identify the mechanism being tested, not just the expected outcome. 'Treatment X will reduce outcome Y' is weaker than 'Treatment X will block receptor Z, reducing downstream signalling S, thereby reducing outcome Y' — the mechanistic hypothesis specifies what to measure beyond the primary endpoint.</p><h2>Study Design</h2><p>The choice of study design determines the strength of causal inference. The <strong>hierarchy of evidence</strong>: randomised controlled trial (RCT) &gt; quasi-experimental (interrupted time series, regression discontinuity) &gt; prospective cohort &gt; case-control &gt; cross-sectional &gt; case series &gt; expert opinion. Each step down reduces internal validity but often increases feasibility, ecological validity, and scope. The appropriate design depends on the research question, ethical constraints, and available resources.</p><p>For laboratory science: controlled experiments with random assignment to conditions, blinded measurement, and appropriate controls (negative, positive, vehicle) provide internal validity. For field science: natural experiments exploit exogenous variation (geographic discontinuities, policy changes) to approximate randomisation. For epidemiology: propensity score matching and instrumental variable analysis attempt to control confounding in observational data.</p><h2>Sample Size and Statistical Power</h2><p>A priori power analysis is a non-negotiable component of serious research design. Power (1−β) is the probability of detecting a true effect of specified size. The standard convention is 80% power. Required sample size increases as: effect size decreases, variability increases, power threshold increases, and significance threshold decreases. <strong>G*Power</strong> and <strong>pwr</strong> (R package) are standard tools. Justifying sample size with a power calculation — and specifying the effect size from the literature or pilot data — is increasingly required by funders and journals.</p><p>Underpowered studies are not neutral — they produce inflated effect size estimates (winner's curse) and low positive predictive value (PPV = (1−β) × π / [(1−β)π + α(1−π)], where π is the prior probability of a true effect). For a field with many tested hypotheses and small effect sizes, PPV of a 'significant' result may be well below 50%.</p><h2>Controls and Confounds</h2><p>A controlled experiment holds all variables constant except the one being manipulated. In practice, confounds — unmeasured variables correlated with both the independent and dependent variable — threaten causal inference in any non-randomised design. <strong>Internal validity</strong> (the experiment measures what it claims) requires: random assignment, blinding where possible, pre-specified primary outcomes, and appropriate negative and positive controls. <strong>External validity</strong> (results generalise beyond the study sample) requires: representative sampling, ecological measurement conditions, and replication across contexts.</p><p>Common threats to validity: selection bias (non-random group formation), attrition bias (differential dropout), measurement bias (non-blinded assessors), and <strong>regression to the mean</strong> (extreme groups improve at follow-up regardless of intervention). In laboratory science: batch effects (all treated samples processed on one day), cage effects in animal experiments, and experimenter degrees of freedom ('researcher degrees of freedom' — flexible analysis choices that inflate false positives) are pervasive.</p><h2>Analysis Plan and Pre-Registration</h2><p>A complete analysis plan specifies: primary and secondary outcomes (ranked), statistical tests (with assumptions stated), multiple comparison corrections, planned subgroup analyses, handling of missing data, and sensitivity analyses. Pre-registering this plan — on the OSF, ClinicalTrials.gov, or AsPredicted — before data collection or access distinguishes confirmatory from exploratory analysis. Journals offering <strong>Registered Reports</strong> accept papers based on the registered design before results are known, eliminating publication bias for the registered outcomes.</p><h2>Interpretation and Dissemination</h2><p>Results are always conditional: they apply to the population studied, under the conditions measured, using the operationalisation chosen. <strong>Confidence intervals</strong> should accompany all point estimates. Effect sizes (Cohen's d, η², OR, RR) should be reported alongside p-values — statistical significance does not equal practical significance. Null results deserve as careful interpretation as positive results: a well-powered null result is informative; an underpowered null result is uninformative.</p><p>Research integrity requires: data sharing (FAIR principles — Findable, Accessible, Interoperable, Reusable), code sharing, transparent reporting (CONSORT for RCTs, ARRIVE for animal studies, STROBE for observational studies), and honest disclosure of limitations. Selective reporting of positive outcomes and failure to disclose deviations from pre-registered plans are integrity violations with real-world consequences for the cumulative knowledge base.</p><h2>Capstone Assessment Criteria</h2><p>Your research design capstone will be assessed on: (1) clarity and specificity of the research question and hypothesis; (2) appropriateness of the study design for the question, with acknowledgement of alternatives and trade-offs; (3) quality of the power analysis and justification of sample size; (4) identification and management of key confounds and threats to validity; (5) completeness of the analysis plan, including multiple comparison strategy; (6) honest evaluation of limitations; (7) appropriate consideration of ethical issues; (8) integration of knowledge from at least two scientific disciplines relevant to the question.</p>",
+      "storyBeats": [
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'A research question is not a question until you can say what data would answer it. \"How does consciousness arise?\" — not yet a question science can directly test. \"Does blocking NMDA receptors in the prefrontal cortex impair visual awareness in healthy volunteers, measured by detection thresholds in a masked priming paradigm?\" — that is a testable question. Narrow, specific, attached to a method.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'The power analysis is not bureaucracy. It is epistemics. An underpowered study is not merely uninformative — it is actively misleading. Its significant results overestimate effect sizes. Its null results are uninterpretable. It wastes resources, time, and animal lives or patient participation. Run the power calculation before you design the experiment, not to justify what you have already decided to do.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Confounds are the enemy of causal inference. Random assignment to condition is the gold standard because it distributes all confounds — known and unknown — equally across groups. When you cannot randomise, you must reason very carefully about what is systematically different between your groups and whether it could explain your results.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Pre-registration is the scientific community's best answer to the reproducibility crisis. Register your hypothesis, your design, your analysis plan, before you touch the data. Then there is a permanent record of what you predicted. Your post-hoc analyses remain valid — they are simply labelled exploratory. Transparency costs nothing and saves everything.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'A null result from a well-powered study is a gift. It tells the field: this effect, if it exists, is smaller than we thought. Stop looking there. Redirect resources. The file drawer of unpublished null results is a scientific tragedy — we keep rediscovering the same non-effects because the previous negatives were never shared.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Theodora looked at the blank page. 'Your capstone is this: design a study you could actually run. Something you care about, something testable, something that — if it succeeded — would contribute something real to the world's knowledge. Science is a collective enterprise. Your contribution to it begins with a well-formed question.'"
+        }
+      ],
+      "feynmanPrompt": "Explain to a 16-year-old why randomised controlled trials are considered stronger evidence than observational studies, using a concrete example of a health intervention.",
+      "learningObjectives": [
+        "Formulate a research question and mechanistic hypothesis from a broad area of scientific interest, using the PICO or equivalent framework",
+        "Select and justify a study design appropriate to the research question, identifying alternative designs and their trade-offs",
+        "Conduct an a priori power analysis and justify the required sample size with reference to expected effect size, variance, and power",
+        "Construct a complete pre-registered analysis plan including primary outcome, statistical tests, multiple comparison strategy, and sensitivity analyses"
+      ],
+      "commonMistakes": [
+        "Conflating a research question (what do we want to know?) with a hypothesis (what do we predict, and why?) — both are required and serve different functions",
+        "Performing a post-hoc power calculation on a completed study as a validity check — this is circular and uninformative; power analysis must be done a priori",
+        "Treating statistical significance as equivalent to practical significance — a large sample can make a trivially small effect statistically significant",
+        "Failing to distinguish between primary (pre-specified, confirmatory) and secondary/exploratory outcomes, which inflates false positive rates and undermines interpretation"
+      ],
+      "assessmentCriteria": [
+        "Research question is specific, operationalisable, and significant — identifies the system, variable, comparison, and outcome clearly",
+        "Study design is appropriate and justified — acknowledges alternatives and explains why the chosen design best balances internal validity, feasibility, and ethics",
+        "Power analysis is conducted correctly and explicitly with stated assumptions for effect size, variability, α, and power; sample size is justified",
+        "Analysis plan is pre-specified and complete — specifies primary outcome, statistical test, multiple comparison strategy, and handling of missing data; limitations are honestly acknowledged"
+      ],
+      "guidedPracticeHtml": "",
+      "guidedPracticeModelAnswer": "",
+      "soloPracticeHtml": "<p><strong>Capstone Research Design Project</strong></p><p>Design a research programme on a topic from the Natural Sciences SENIOR curriculum (or an interdisciplinary topic that draws on at least two areas covered). Your research design document should include the following sections:</p><ol><li><strong>Research Question and Hypothesis</strong> (~150 words): State a specific, testable research question. Present a mechanistic hypothesis — not just a directional prediction, but an explanation of why you predict what you predict. Identify the key variables (independent, dependent, controlled).</li><li><strong>Study Design</strong> (~200 words): Select and justify a study design (experiment, observational study, simulation study, meta-analysis, or mixed-methods). Address: (a) why this design is appropriate for the question; (b) what alternative designs you considered and why you rejected them; (c) what controls or comparison conditions you will use.</li><li><strong>Sample Size and Power</strong> (~100 words): Conduct an a priori power analysis. State your assumptions: expected effect size (with justification from the literature or pilot data), expected variability, significance threshold (α), and desired power (1−β). Specify the required sample size.</li><li><strong>Confounds and Validity</strong> (~150 words): Identify the three most significant threats to internal validity in your design. Describe how you will address each. Discuss any trade-offs between internal and external validity in your design choices.</li><li><strong>Analysis Plan</strong> (~150 words): Specify your primary statistical test and its assumptions. Identify any multiple comparison issues and how you will address them. List two planned sensitivity analyses. State how you will handle missing data.</li><li><strong>Limitations and Ethics</strong> (~100 words): Honestly state the three most significant limitations of your design. Identify any ethical issues (participant welfare, data privacy, environmental impact, dual-use risk) and how they will be addressed.</li></ol>",
+      "modelAnswer": "<p><strong>Example Research Design: Does elevated atmospheric CO₂ alter mycorrhizal fungal community composition, and does this mediate changes in plant productivity under drought stress?</strong></p><p><strong>1. Research Question and Hypothesis:</strong> Does experimentally elevated CO₂ (550 ppm, simulating 2050 levels) alter the composition of arbuscular mycorrhizal fungal (AMF) communities in grassland soil, and does any change in AMF composition mediate altered plant biomass responses to drought? Mechanistic hypothesis: Elevated CO₂ increases plant photosynthate allocation belowground, increasing carbon supply to AMF. This shifts AMF community composition toward taxa with lower carbon-to-nutrient exchange efficiencies (as found in prior pot studies). Under drought, AMF community composition determines hyphal network density and drought resistance; altered communities reduce water uptake efficiency, attenuating the drought resilience benefit typically attributed to AMF. IV: CO₂ concentration (ambient vs. elevated). DV (primary): plant aboveground biomass under drought. DV (secondary): AMF community composition (18S rRNA amplicon sequencing), hyphal length density, plant water potential. Controlled: soil type, plant species composition, temperature, precipitation timing.</p><p><strong>2. Study Design:</strong> Mesocosm experiment using open-top chambers (OTC) in a replicated split-plot design: CO₂ level (ambient, 550 ppm) as whole-plot factor (8 chambers per level = 16 total); drought/watered as subplot factor (each chamber split into two halves by root barrier). 3-year duration to allow AMF community establishment. Justification: controlled experiment allows causal inference; OTCs provide realistic weather with controllable CO₂. Alternative: Free-Air CO₂ Enrichment (FACE) provides more realistic conditions but is far more costly and has limited replication. Alternatively, observational study of natural CO₂ gradients (volcanic vents) would have lower internal validity. Controls: ambient CO₂ chambers with identical management; fumigated-but-ambient-CO₂ procedural controls for equipment effects.</p><p><strong>3. Sample Size and Power:</strong> Prior FACE studies report a mean 10% increase in plant biomass under elevated CO₂ (SD ~15% across plots). Effect size d ≈ 0.67. Power analysis for two-sample t-test at α = 0.05, power = 0.80: n = 36 plots per cell (from G*Power). With split-plot design (4 cells × 36 = 144 half-chamber subplots across 16 chambers), accounting for within-chamber correlation (ICC ≈ 0.3), effective n is reduced; 8 chambers per CO₂ level is a reasonable compromise at feasible scale. AMF community outcome (PERMANOVA): power sufficient for medium effect size (R² ≈ 0.15) with 16 chambers.</p><p><strong>4. Confounds and Validity:</strong> (i) Chamber microclimate effects: OTCs alter temperature and humidity. Addressed by monitoring chamber climate continuously and including chamber as a random effect in mixed models. (ii) Soil heterogeneity: pre-existing variation in soil AMF communities. Addressed by randomising chamber positions across the site and conducting baseline soil sampling before treatment. (iii) Plant species composition shift: elevated CO₂ may alter plant community composition, confounding the AMF response. Addressed by standardising plant seeding mixture and monitoring species composition annually. Internal-external validity trade-off: OTCs provide good internal validity but may not fully represent open field conditions with natural wind and insect pollination patterns.</p><p><strong>5. Analysis Plan:</strong> Primary test: linear mixed model for plant biomass, fixed effects CO₂ × drought, random effect chamber. AMF community: PERMANOVA (adonis2) on Bray-Curtis dissimilarity matrix, permutations within chambers for split-plot structure. Multiple comparisons: FDR correction for individual AMF OTU tests; primary community test (PERMANOVA) not adjusted (single pre-specified test). Mediation analysis: causal mediation using the mediation R package — does AMF Shannon diversity mediate the CO₂ × drought interaction on biomass? Missing data: MCAR assumed if <5% missing; multiple imputation if MAR pattern detected. Sensitivity analyses: (i) re-run excluding chambers with >10% plant mortality; (ii) bootstrap confidence intervals for mediation estimates.</p><p><strong>6. Limitations and Ethics:</strong> (i) 3-year duration may be insufficient for full AMF community re-structuring — effects may emerge on longer timescales. (ii) Single grassland site limits generalisability to other soil types, climates, and plant communities. (iii) Mechanistic pathway (AMF → water uptake) is inferred from community data, not measured directly — would require isotope tracing or additional controlled experiments. Ethics: all soil and plant collection follows site owner permissions; no vertebrate animals involved; CO₂ venting is negligible in atmospheric context; all data will be deposited in Zenodo (FAIR principles) and code shared on GitHub under CC-BY licence.</p>",
+      "rabbitHoleTerms": [
+        {
+          "term": "PICO framework",
+          "description": "A structured approach to formulating clinical and scientific research questions: Population, Intervention, Comparison, Outcome — ensuring specificity and operationalisability."
+        },
+        {
+          "term": "Positive predictive value (PPV) of research",
+          "description": "The probability that a statistically significant finding represents a true effect; depends on prior probability of the hypothesis, power, and significance threshold — often much lower than researchers assume."
+        },
+        {
+          "term": "Registered reports",
+          "description": "A journal format in which peer review occurs before data collection based on the research question and design; journals commit to publish regardless of outcome, eliminating publication bias for registered outcomes."
+        },
+        {
+          "term": "FAIR principles",
+          "description": "Data management principles for scientific data: Findable, Accessible, Interoperable, Reusable — increasingly required by funders and journals as a condition of research support."
+        },
+        {
+          "term": "Researcher degrees of freedom",
+          "description": "The many legitimate but undisclosed analytical choices researchers make (inclusion criteria, outcome selection, stopping rules) that, when exploited post-hoc, inflate false positive rates substantially."
+        },
+        {
+          "term": "Mediation analysis",
+          "description": "Statistical methods for determining whether the effect of an independent variable on an outcome is transmitted through a third (mediator) variable, testing mechanistic hypotheses."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What does an a priori power analysis determine in study design?</p>",
+          "options": [
+            "The sample size required to detect a specified effect size with a given probability, before data collection",
+            "The statistical significance of results after data collection is complete",
+            "The number of control conditions needed to eliminate all confounds",
+            "The proportion of variance explained by the primary independent variable"
+          ],
+          "correctAnswer": "The sample size required to detect a specified effect size with a given probability, before data collection",
+          "explanationHtml": "<p>An a priori power analysis is conducted before the study to determine the sample size needed to achieve a specified probability (power, typically 80%) of detecting an effect of the expected size at a given significance threshold. It requires specifying expected effect size, variability, α, and desired power. Post-hoc power analysis on completed studies is not informative and is methodologically problematic.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A researcher claims their study has 'negative results' after collecting data from 10 participants and finding p = 0.32 for the primary outcome. What is the most serious methodological problem with this interpretation?</p>",
+          "options": [
+            "The study is likely severely underpowered — with only 10 participants, it would fail to detect all but very large effects, making the null result uninformative",
+            "A p-value of 0.32 is actually close to 0.05 and should be interpreted as a trend toward significance",
+            "Negative results cannot be published, so reporting them as such is methodologically incorrect",
+            "The researcher should have used a one-tailed test, which would have given a significant result"
+          ],
+          "correctAnswer": "The study is likely severely underpowered — with only 10 participants, it would fail to detect all but very large effects, making the null result uninformative",
+          "explanationHtml": "<p>An underpowered null result is uninterpretable: it cannot distinguish between 'the effect does not exist' and 'the study was too small to detect it'. With n = 10, only very large effects (d > ~1.5) can be detected reliably at 80% power. Reporting this as 'negative results' implies evidence against the effect, which the data cannot support. The appropriate conclusion is that the study was insufficiently powered to address the question. (The other options are incorrect: p = 0.32 is not a 'trend'; null results can and should be published; one-tailed tests require a priori directional justification and do not salvage underpowered studies.)</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A clinical trial pre-registers a single primary outcome (blood pressure reduction at 6 months) but then reports 12 outcomes at various time points, selecting the three most significant for the main paper. What is this practice called and why is it problematic?</p>",
+          "options": [
+            "Outcome switching / HARKing — it exploits researcher degrees of freedom to inflate false positive rates, making results non-replicable",
+            "Secondary analysis — reporting multiple outcomes is standard practice and strengthens a trial's findings",
+            "Exploratory analysis — all outcomes are valid as long as they are labelled as exploratory",
+            "Sensitivity analysis — comparing outcomes at multiple time points validates the primary finding"
+          ],
+          "correctAnswer": "Outcome switching / HARKing — it exploits researcher degrees of freedom to inflate false positive rates, making results non-replicable",
+          "explanationHtml": "<p>Selectively reporting significant outcomes from a larger set of measured outcomes (outcome switching) is a form of p-hacking that inflates the false positive rate. If 12 outcomes are tested but only the 3 most significant are reported, the effective type I error rate is far above 5%. HARKing (Hypothesising After Results are Known) involves presenting post-hoc findings as if they were pre-specified. Pre-registration specifically prevents this by creating a public record of the primary outcome before data access. Exploratory analyses are legitimate but must be clearly labelled as such; they require replication in independent samples to be treated as confirmatory evidence.</p>"
+        }
+      ]
+    }
+  ]
+}

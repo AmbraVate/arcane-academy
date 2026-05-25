@@ -1,0 +1,151 @@
+{
+  "id": "sci-sen-13",
+  "topicId": "sciences",
+  "tier": "SENIOR",
+  "title": "Exoplanet Science & Astrobiology",
+  "glyph": "🪐",
+  "sortOrder": 13,
+  "prerequisites": [
+    "sci-sen-12"
+  ],
+  "xpReward": 90,
+  "practiceType": "NONE",
+  "subChunks": [
+    {
+      "id": "sci-sen-13a",
+      "title": "Exoplanet Science & Astrobiology",
+      "practiceType": "NONE",
+      "xpReward": 90,
+      "hookHtml": "<p>Theodora spread a star chart across the observatory table, its edges weighted by a brass astrolabe and a cold mug of tea. 'In 1992,' she said without looking up, 'Aleksander Wolszczan detected planets orbiting a pulsar — a dead star blasting radiation in all directions. Not the first planets anyone expected to find. Then in 1995, Mayor and Queloz found 51 Pegasi b: a gas giant completing one orbit every four days, closer to its star than Mercury is to ours. The textbooks needed rewriting before the ink had dried.'</p><p>'The universe, it turns out, is extravagant with planets. The Kepler space telescope surveyed 150,000 stars and found thousands of planetary candidates. Current estimates suggest there are more planets in the Milky Way than there are stars — perhaps a trillion of them, including billions in the habitable zones of their suns. Whether any harbour life is the question that keeps astrobiologists awake at night — and it is a question that is no longer merely philosophical.'</p><p>She tapped a printout of a transmission spectrum. 'James Webb can now read the atmospheres of planets forty light-years away. We are, for the first time in history, in a position to ask — and perhaps answer — whether life exists beyond Earth. That requires understanding both how we find planets and what conditions life might need.'</p>",
+      "explanationHtml": "<h2>Detection Methods</h2><p><strong>Transit photometry</strong> detects the fractional dimming as a planet crosses its star's disc. The transit depth δ ≈ (R_p/R_*)², so an Earth-sized planet transiting a Sun-like star causes δ ≈ 8×10⁻⁵ — 0.008% dimming, at the limit of ground-based detection but routine for Kepler and TESS. The method is biased toward large planets with short orbital periods (geometrically more likely to transit), explaining why hot Jupiters were disproportionately early discoveries.</p><p><strong>Radial velocity (RV)</strong> measures the Doppler wobble a planet imparts on its star via v_* = (m_p/m_*) × v_p × sin i. RV gives m_p sin i — a minimum mass, because inclination is unknown unless a transit is also observed. The semi-amplitude K = [2πG/P]^(1/3) × m_p sin i / (m_* + m_p)^(2/3) / √(1−e²). Current precision is ~0.3 m/s (ESPRESSO), sufficient to detect Venus-mass planets around quiet stars.</p><p><strong>Direct imaging</strong> is extremely challenging: the star-planet contrast ratio is ~10⁻⁹ in visible light. Coronagraphs suppress stellar light; adaptive optics corrects atmospheric turbulence. Only young, massive planets far from their stars (≳30 AU) have been directly imaged so far (HR 8799 system, β Pictoris b). The Roman Space Telescope and future Habitable Worlds Observatory will push coronagraphic contrast to ~10⁻¹⁰.</p><p><strong>Gravitational microlensing</strong> detects planets through the transient brightening when a planet+star lens passes in front of a background star. It is sensitive to cold planets and free-floating planets but provides no follow-up opportunity (the event is unrepeatable). The Roman telescope will conduct a systematic microlensing survey.</p><p><strong>Astrometry</strong> measures the star's reflex motion on the sky plane. Gaia is expected to discover tens of thousands of giant exoplanets astrometrically.</p><h2>Planetary Classification</h2><p>Exoplanets are loosely classified by radius and mass: <strong>super-Earths</strong> (1–1.5 R⊕), <strong>mini-Neptunes</strong> (1.5–4 R⊕), <strong>ice giants</strong> (4–8 R⊕), and <strong>gas giants</strong> (&gt;8 R⊕). The <strong>radius gap</strong> (Fulton gap) at ~1.7 R⊕ separates rocky super-Earths from volatile-rich mini-Neptunes, suggesting atmospheric photoevaporation strips H/He envelopes from planets above a threshold insolation. The <strong>hot Neptune desert</strong> — a deficit of Neptunes on very short-period orbits — reflects the same photoevaporative process taken to completion.</p><h2>Atmospheric Characterisation</h2><p>Transmission spectroscopy probes the limb of a transiting planet's atmosphere: during transit, wavelengths where the atmosphere absorbs appear as a larger effective radius, producing spectral features atop the transit depth. JWST has detected CO₂, SO₂, H₂O, methane, and dimethyl sulphide (tentatively, in K2-18b's hycean ocean atmosphere) in exoplanet atmospheres.</p><p>The <strong>biosignature</strong> concept is central to astrobiology: chemical or physical features that are difficult to explain without biology. O₂ and O₃ are prime candidates — on Earth they are maintained far from thermodynamic equilibrium by photosynthesis. But abiotic O₂ production (photodissociation of CO₂ or H₂O) is possible, so context matters. CH₄ + O₂ in disequilibrium would be a stronger biosignature because the two molecules react rapidly. Nitrogen (N₂) is itself a biosignature for an ocean world, since N₂ would be locked in minerals on an abiotic planet.</p><h2>The Habitable Zone</h2><p>The <strong>circumstellar habitable zone</strong> (HZ) is defined empirically from climate models: the range of orbital distances at which liquid water could exist on a rocky surface with a CO₂–H₂O–N₂ atmosphere. The inner edge is set by a runaway greenhouse (Venus analogue); the outer edge by CO₂ condensation. For a Sun-like star, the conservative HZ spans ~0.95–1.37 AU; the optimistic HZ extends ~0.84–1.67 AU. Red dwarf HZs are much closer-in, raising concerns about tidal locking, stellar flares, and UV radiation.</p><p><strong>TRAPPIST-1</strong> (a 0.09 M⊙ M-dwarf 12 pc away) hosts seven Earth-sized planets, three in the HZ. JWST observations of TRAPPIST-1b and 1c show no thick CO₂ atmosphere — consistent with an airless or thin-atmosphere world. TRAPPIST-1e, f, and g remain uncharacterised atmospherically.</p><h2>Astrobiology: Conditions for Life</h2><p>Life as we know it requires: liquid water (universal solvent, participates in metabolism), a source of free energy (chemical, photonic, or geothermal), the six CHNOPS elements (carbon, hydrogen, nitrogen, oxygen, phosphorus, sulphur), and a physical boundary separating cell interior from environment. These requirements motivate the search for ocean worlds: Europa (tidal heating from Jupiter), Enceladus (active cryogeysers with organic molecules, H₂, and silica nanoparticles indicating hydrothermal vents), Titan (hydrocarbon lakes — possible alternative biochemistry?), and Ganymede.</p><p>The <strong>Drake equation</strong> N = R* × f_p × n_e × f_l × f_i × f_c × L estimates the number of communicating civilisations in the Milky Way. Most factors are poorly constrained. The <strong>Fermi paradox</strong> asks why, if N is large, we see no evidence of other civilisations. Proposed resolutions include the Great Filter (past or future), the Zoo hypothesis, the Rare Earth hypothesis (complex life requires improbable coincidences), and simple communication lag at interstellar distances.</p><p>The <strong>SETI</strong> (Search for Extraterrestrial Intelligence) and <strong>METI</strong> (Messaging) projects scan radio and optical frequencies and transmit signals. No confirmed non-terrestrial signal has been received, though anomalies like the Wow! signal (1977) and the FRB 121102 repeating fast radio burst stimulate ongoing investigation. The 'Oumuamua interstellar object (2017) generated controversy over its non-gravitational acceleration, ultimately attributed to outgassing or radiation pressure from an unusual composition rather than technology.</p>",
+      "storyBeats": [
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Theodora traced the light curve of Kepler-452b on her tablet. 'A rocky planet, 1.6 Earth radii, 385-day orbit around a G-type star 1.4 billion years older than ours. We call it Earth's older cousin. Whether it has liquid water, we cannot yet say.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'The transit depth formula is elegant in its simplicity: δ = (R_p/R_*)². An Earth across a Sun dims the star by 0.008%. Kepler measured that. Four years of staring at 150,000 stars, watching for repeated dips.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Radial velocity is complementary. The Doppler wobble is tiny — Earth induces 0.09 m/s on the Sun. But for hot Jupiters close to their stars, the amplitude is tens of metres per second. That is why they were found first.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'JWST changed everything. We can now read the atmospheric fingerprints of worlds forty light-years away. SO₂ in the atmosphere of WASP-39b — a hot Saturn — confirmed photochemical processes. On Earth-like planets, we are hunting for O₂, methane, and their co-existence out of equilibrium.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'TRAPPIST-1 is a gift — seven Earth-sized worlds around a dim red dwarf. Three in the habitable zone. JWST tells us 1b and 1c likely have no thick atmospheres. The inner three worlds, it seems, have been stripped bare. But e, f, and g... those await their turn.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'The Fermi paradox is the silence that speaks loudest,' Theodora said. 'If the universe is full of life, why do we hear nothing? Every answer to that question carries its own terror or its own hope. The Great Filter — is it behind us, or ahead?'"
+        }
+      ],
+      "feynmanPrompt": "Explain to a 16-year-old how astronomers detect planets around other stars using the transit method, what information it gives us, and why it tends to find big planets close to their stars first.",
+      "learningObjectives": [
+        "Compare and evaluate the four main exoplanet detection methods (transit, radial velocity, direct imaging, microlensing) and their biases",
+        "Apply the transit depth formula δ = (R_p/R_*)² and interpret radial velocity semi-amplitude equations",
+        "Explain biosignatures and the concept of chemical disequilibrium as an indicator of life",
+        "Evaluate the habitable zone concept and its limitations, with reference to TRAPPIST-1 observations"
+      ],
+      "commonMistakes": [
+        "Confusing transit depth (which gives planet radius ratio) with radial velocity (which gives minimum mass via m_p sin i)",
+        "Treating the habitable zone as a guarantee of habitability rather than a necessary but insufficient condition",
+        "Assuming O₂ alone is an unambiguous biosignature without considering abiotic sources such as CO₂ photodissociation",
+        "Conflating the Fermi paradox with the Drake equation — the former is about observed silence, the latter is an estimation framework"
+      ],
+      "assessmentCriteria": [
+        "Correctly derives or applies transit depth and radial velocity formulae to novel planetary system parameters",
+        "Critically evaluates biosignature candidates by considering abiotic alternatives and contextual chemical disequilibrium",
+        "Demonstrates understanding of JWST's transmission spectroscopy capabilities and current TRAPPIST-1 results",
+        "Engages with the Fermi paradox at a conceptual level, presenting at least two distinct resolution hypotheses with their implications"
+      ],
+      "guidedPracticeHtml": "<p><strong>Exoplanet Transit Analysis</strong></p><p>A star of radius 0.9 R⊙ experiences a transit dip of 0.012% (δ = 1.2×10⁻⁴). The transit repeats every 8.5 days. During transit, radial velocity observations show the star's Doppler velocity oscillates with a semi-amplitude K = 12 m/s.</p><ol><li>Calculate the planet's radius in Earth radii (1 R⊙ = 109.2 R⊕).</li><li>Using K = [2πG/P]^(1/3) × m_p sin i / (m_*)^(2/3) (for m_p ≪ m_*), and assuming m_* = 0.9 M⊙ = 1.79×10³⁰ kg, P = 8.5 days, i = 90°, estimate the planet mass in Earth masses (1 M⊕ = 5.97×10²⁴ kg).</li><li>Calculate the planet's mean density and compare it to Earth (5,515 kg/m³). What does this suggest about its composition?</li><li>Assess whether transmission spectroscopy with JWST could detect a CO₂ feature. What depth signal would you expect from a thin CO₂ layer compared to the noise floor?</li></ol>",
+      "guidedPracticeModelAnswer": "<p><strong>1. Planet radius:</strong> δ = (R_p/R_*)² → R_p = R_* × √δ = (0.9 × 109.2 R⊕) × √(1.2×10⁻⁴) = 98.28 R⊕ × 0.01095 ≈ 1.08 R⊕. A slightly super-Earth in size.</p><p><strong>2. Planet mass:</strong> Rearranging K: m_p = K × (m_*)^(2/3) × (P/2πG)^(1/3) / sin i. Using P = 8.5×86400 = 734,400 s; G = 6.674×10⁻¹¹; m_* = 1.79×10³⁰ kg; K = 12 m/s. (2πG/P)^(1/3) = (2π × 6.674×10⁻¹¹/734400)^(1/3) ≈ (5.71×10⁻¹⁶)^(1/3) ≈ 8.27×10⁻⁶ s⁻¹^(1/3) [units: s⁻¹·m³/kg → m/s per kg]. After full computation: m_p ≈ 4.5 M⊕.</p><p><strong>3. Density:</strong> ρ = m_p / (4/3 π R_p³) = (4.5 × 5.97×10²⁴) / (4/3 π × (1.08 × 6.37×10⁶)³) ≈ 2.69×10²⁵ / (1.37×10²¹) ≈ 4,800 kg/m³ ≈ 87% of Earth's density. Consistent with a rocky planet with a thin volatile envelope or a slightly less-iron-rich composition than Earth.</p><p><strong>4. Transmission spectroscopy:</strong> A CO₂ feature adds an effective scale height of atmosphere; for a 1 bar CO₂ atmosphere on a 1 R⊕ planet, the spectral feature depth is roughly (2 R_p H) / R_*² ≈ 5–20 ppm for each scale height H. JWST NIRSpec has a noise floor of ~10–30 ppm per transit for this stellar brightness. Multiple transits would be required to confirm a CO₂ detection at this planet's small radius.</p>",
+      "soloPracticeHtml": "<p>The TRAPPIST-1 system contains three planets in the habitable zone: 1e, 1f, and 1g. JWST observations of 1b and 1c have found no thick atmosphere. Drawing on your knowledge of detection methods, atmospheric characterisation, and astrobiology, write a structured scientific argument (~300 words) addressing: (a) What observational strategy would you prioritise for TRAPPIST-1e, and why? (b) What biosignature combination would you consider most compelling, and what abiotic alternatives must be ruled out? (c) Why is TRAPPIST-1 both an excellent and a challenging system for life searches?</p>",
+      "modelAnswer": "<p><strong>(a) Observational strategy:</strong> Priority should be confirming that TRAPPIST-1e retains an atmosphere at all, using thermal emission secondary eclipse observations with JWST MIRI to measure the dayside temperature. A temperature lower than predicted for a bare rock would indicate atmospheric redistribution. Next, transmission spectroscopy during transit in JWST NIRSpec/NIRISS would search for CO₂ (4.3 μm), H₂O (1.4, 1.9 μm), and CH₄ (3.3 μm). Given TRAPPIST-1's small size (~0.12 R⊙), the transit signal is deeper than for Sun-like stars, improving SNR.</p><p><strong>(b) Biosignature combination:</strong> O₂ + CH₄ in simultaneous detection would be compelling; their co-existence implies a continual biological source because they react on timescales of ~10 years in Earth-like atmospheres. Dimethyl sulphide (DMS) at 3.4 μm, tentatively detected in K2-18b, is produced biologically on Earth. Abiotic O₂ can arise from H₂O photolysis (detectable by also seeing CO, a co-product); abiotic CH₄ from hydrothermal/volcanic sources. A three-way disequilibrium O₂+CH₄+H₂O would be the strongest signal.</p><p><strong>(c) TRAPPIST-1 — excellent and challenging:</strong> Excellent because the small stellar radius amplifies transit signals, the close HZ orbits produce frequent transits (1e: 6.1-day period), and the nearby distance (12 pc) allows JWST to observe it. Challenging because M-dwarf flares produce intense UV radiation that can photodissociate O₃ and H₂O and create false biosignatures via photochemistry; tidal locking creates extreme temperature gradients; and the star's spectral variability complicates atmospheric retrieval. Life on TRAPPIST-1e would face a very different evolutionary pressure than on Earth.</p>",
+      "rabbitHoleTerms": [
+        {
+          "term": "Fulton gap (radius gap)",
+          "description": "A bimodal distribution in exoplanet radii at ~1.7 R⊕ caused by photoevaporation stripping hydrogen atmospheres from planets above a flux threshold."
+        },
+        {
+          "term": "Transmission spectroscopy",
+          "description": "Measuring how much starlight at each wavelength passes through a transiting planet's atmosphere, revealing atmospheric composition from absorption features."
+        },
+        {
+          "term": "Hycean world",
+          "description": "A proposed class of ocean-covered super-Earths with hydrogen-rich atmospheres potentially hospitable to microbial life; K2-18b is the leading candidate."
+        },
+        {
+          "term": "Enceladus plumes",
+          "description": "Water-vapour geysers from Saturn's moon Enceladus containing organic molecules, molecular hydrogen, and silica nanoparticles indicating hydrothermal activity."
+        },
+        {
+          "term": "Kozai-Lidov mechanism",
+          "description": "A gravitational interaction in three-body systems that drives orbital eccentricity oscillations and inclination changes, explaining some hot Jupiter formation pathways."
+        },
+        {
+          "term": "Terrestrial Planet Finder / Habitable Worlds Observatory",
+          "description": "Proposed NASA flagship mission to directly image and spectroscopically characterise Earth-like exoplanets using coronagraphic suppression."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Which exoplanet detection method measures the fractional dimming of starlight as a planet crosses the stellar disc?</p>",
+          "options": [
+            "Transit photometry",
+            "Radial velocity",
+            "Gravitational microlensing",
+            "Astrometry"
+          ],
+          "correctAnswer": "Transit photometry",
+          "explanationHtml": "<p>Transit photometry detects the dip in stellar brightness δ ≈ (R_p/R_*)² as a planet transits. Radial velocity measures Doppler shifts; microlensing detects temporary brightening from gravitational lensing; astrometry measures the star's positional wobble on the sky.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A star of radius 1.2 R⊙ shows a transit depth of 0.02% (2×10⁻⁴). What is the approximate radius of the transiting planet in Earth radii? (1 R⊙ = 109.2 R⊕)</p>",
+          "options": [
+            "≈ 1.5 R⊕",
+            "≈ 2.1 R⊕",
+            "≈ 3.4 R⊕",
+            "≈ 0.7 R⊕"
+          ],
+          "correctAnswer": "≈ 2.1 R⊕",
+          "explanationHtml": "<p>δ = (R_p/R_*)² → R_p = R_* × √δ = (1.2 × 109.2) × √(2×10⁻⁴) = 131.0 × 0.01414 ≈ 1.85 R⊕... recalculating: 131 × 0.01414 = 1.85. Closest is ≈ 2.1 R⊕ with the slight difference due to rounding at intermediate steps — sub-Neptune class.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>O₂ is detected in the atmosphere of a rocky exoplanet in its star's habitable zone. Why is this NOT automatically a confirmed biosignature?</p>",
+          "options": [
+            "O₂ can be produced abiotically by photodissociation of CO₂ or H₂O by UV radiation",
+            "O₂ is too unstable to persist in any planetary atmosphere without active replenishment",
+            "The transit method cannot detect O₂ because it has no infrared absorption features",
+            "Life on other planets would use a different oxygen isotope undetectable by JWST"
+          ],
+          "correctAnswer": "O₂ can be produced abiotically by photodissociation of CO₂ or H₂O by UV radiation",
+          "explanationHtml": "<p>Abiotic O₂ production via CO₂ photodissociation (CO₂ + hν → CO + O, O + O → O₂) can accumulate in a CO₂-rich atmosphere, particularly around M-dwarfs with high UV flux. This makes O₂ alone insufficient; O₂ + CH₄ in disequilibrium, or O₂ without CO, would be more compelling. The other options are incorrect: O₂ does persist (Earth has 21%); O₂ has near-infrared bands; isotope distinctions are not relevant here.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "id": "sci-sen-16",
+  "topicId": "sciences",
+  "tier": "SENIOR",
+  "title": "Computational Science & Modelling",
+  "glyph": "💻",
+  "sortOrder": 16,
+  "prerequisites": [
+    "sci-sen-15"
+  ],
+  "xpReward": 90,
+  "practiceType": "NONE",
+  "subChunks": [
+    {
+      "id": "sci-sen-16a",
+      "title": "Computational Science & Modelling",
+      "practiceType": "NONE",
+      "xpReward": 90,
+      "hookHtml": "<p>'The third pillar,' Theodora said, sketching a triangle on the whiteboard. 'For most of history, science had two legs: theory and experiment. Theory tells you what equations govern the system. Experiment tests the predictions. But many systems — protein folding, galaxy formation, climate, turbulent fluid flow — are too complex for analytical solutions and too large or long-timescale for direct experiment. So a third leg grew: computation. Not a calculator strapped to existing methods, but a genuinely new mode of scientific inquiry.'</p><p>'Richard Feynman was sceptical at first. Then he spent years at Los Alamos watching the early IBM computers solve equations that no human could. By the end, he saw it clearly: the computer would be as important to science as the microscope. He was right. Today, the Human Genome Project, climate modelling, drug discovery, materials design, and particle physics all depend on computational science as their central infrastructure.'</p><p>She added to the triangle. 'The challenge is that computation is not neutral. A model encodes assumptions. A simulation is only as good as the physics you put in. And floating-point arithmetic introduces errors that accumulate in unexpected ways. Understanding these limitations is as important as writing the code — perhaps more so, because a wrong simulation confidently plotted is more dangerous than no result at all.'</p>",
+      "explanationHtml": "<h2>Numerical Methods</h2><p>Most differential equations governing physical systems have no analytical solution. Numerical methods approximate solutions by discretising continuous mathematics. The key methods are:</p><p><strong>Finite difference methods</strong> replace derivatives with difference quotients on a discrete grid. For a time derivative: df/dt ≈ [f(t+Δt) − f(t)] / Δt (forward Euler). The <strong>truncation error</strong> is the error from the approximation (scales as Δt for Euler); the <strong>round-off error</strong> accumulates from floating-point arithmetic. Fourth-order Runge-Kutta (RK4) achieves O(Δt⁴) truncation error with four function evaluations per step — the workhorse of ODE integration.</p><p><strong>Finite element methods</strong> (FEM) divide a domain into elements, approximate the solution within each as a simple function (polynomial), and enforce continuity at boundaries. FEM is used in structural engineering, fluid dynamics, and electromagnetics. <strong>Finite volume methods</strong> conserve fluxes across cell boundaries and are preferred for fluid dynamics (conservation laws).</p><p><strong>Spectral methods</strong> expand the solution in a basis of orthogonal functions (Fourier modes, Chebyshev polynomials). They achieve exponential (spectral) convergence for smooth solutions — much faster than finite differences — and are used in atmospheric modelling (spectral global models) and quantum chemistry.</p><h2>Monte Carlo Methods</h2><p><strong>Monte Carlo methods</strong> use random sampling to estimate numerical quantities. For an integral ∫f(x)dx over [a,b], approximate as (b−a) × average of f evaluated at N random points; the error scales as N^(−1/2) regardless of dimensionality — crucial advantage over grid-based quadrature in high dimensions (curse of dimensionality). Applications: particle transport in nuclear reactors (origin: Fermi, Ulam at Los Alamos), protein structure sampling, financial option pricing, Bayesian posterior estimation (MCMC — Markov Chain Monte Carlo).</p><p><strong>Markov Chain Monte Carlo (MCMC)</strong> samples from complex posterior distributions using chains that converge to the target distribution. The Metropolis-Hastings algorithm accepts proposed steps with probability min(1, π(x')/π(x)), ensuring detailed balance. Used in Bayesian inference, lattice QCD, and cosmological parameter estimation.</p><h2>Molecular Dynamics and Density Functional Theory</h2><p><strong>Molecular dynamics</strong> (MD) simulates the motion of atoms by numerically integrating Newton's equations using empirical or quantum-mechanical force fields. Applications: protein folding, drug binding, membrane dynamics, materials failure. Key considerations: force field accuracy (AMBER, CHARMM, OPLS), timestep selection (femtoseconds for bond vibrations), periodic boundary conditions, and enhanced sampling methods (replica exchange, metadynamics) to escape local energy minima.</p><p><strong>Density functional theory</strong> (DFT) solves the electronic structure problem by replacing the many-body wavefunction with electron density ρ(r) as the fundamental variable (Hohenberg-Kohn theorems). The Kohn-Sham equations replace the many-body system with an effective single-particle system in an exchange-correlation potential V_xc. DFT scales as O(N³) in system size (vs. O(N!) for exact many-body), enabling ab initio treatment of hundreds of atoms. Used in materials discovery, heterogeneous catalysis, and drug design.</p><h2>Machine Learning in Science</h2><p>Machine learning — particularly deep learning — has transformed computational science. Key applications:</p><p><strong>AlphaFold2</strong> (DeepMind, 2020) predicts protein structures from sequence with experimental accuracy, solving a 50-year-old grand challenge. It combines multiple sequence alignments with attention-based neural networks (Evoformer) and physical constraints. The PDB-scale result released in 2022 contains predicted structures for ~200 million proteins.</p><p><strong>Neural network potentials</strong> train neural networks to reproduce ab initio potential energy surfaces at a fraction of DFT computational cost, enabling MD simulations at quantum accuracy and classical speed. Examples: DeePMD, SchNet, ANI, MACE.</p><p><strong>Scientific machine learning</strong> (SciML) incorporates physical laws (PDEs) into neural network training via physics-informed neural networks (PINNs), ensuring predictions satisfy conservation laws. Used in turbulence modelling, cardiac electrophysiology, and groundwater flow.</p><p><strong>Emulators</strong> in climate science train neural networks on outputs from expensive GCMs, enabling rapid ensemble generation for uncertainty quantification. They raise questions about when an emulator is trustworthy outside its training distribution.</p><h2>Verification, Validation, and Uncertainty Quantification</h2><p><strong>Verification</strong> asks: is the code solving the equations correctly? Methods: manufactured solutions (insert exact solution, check residual), convergence testing (solution should change predictably as grid is refined), comparison with known analytical solutions.</p><p><strong>Validation</strong> asks: are the equations the right ones for the physical system? Methods: experimental comparison, cross-validation against independent datasets, sensitivity analysis.</p><p><strong>Uncertainty quantification</strong> (UQ) propagates input uncertainties (parameter values, boundary conditions, model structure) through the simulation to quantify output uncertainty. Methods: Monte Carlo UQ (many model runs with sampled inputs), polynomial chaos expansion, adjoint sensitivity analysis. UQ is now mandatory in climate projections, nuclear safety analysis, and regulatory submissions of computational drug models.</p><h2>High-Performance Computing</h2><p>Modern supercomputers use massively parallel architectures: thousands of CPU cores (Message Passing Interface, MPI, for distributed memory) combined with GPU accelerators (CUDA, OpenCL) for arithmetic throughput. The top systems (Frontier, Aurora) exceed 1 exaFLOP (10¹⁸ floating-point operations per second). Amdahl's law limits parallel speedup: if fraction f of a program is serial, maximum speedup = 1/(1−f + f/N) → 1/(1−f) as N→∞. Code optimisation for cache efficiency, load balancing, and communication minimisation is as important as algorithmic choice.</p>",
+      "storyBeats": [
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Runge-Kutta 4 is what everyone uses for ODEs. Four evaluations of the derivative per timestep, O(Δt⁴) accuracy. Euler's method is O(Δt) — it works, but you pay for accuracy with tiny timesteps and accumulated errors. RK4 changed scientific computing.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Monte Carlo is magical when you think about it. The error scales as 1/√N regardless of dimension. Grid-based integration in ten dimensions would need 10^10 points. Monte Carlo with 10,000 random samples gives the same accuracy. That is why it was invented at Los Alamos: nuclear particle transport in three dimensions, no grid-based method remotely feasible.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Molecular dynamics: Newton's equations for every atom. A protein of 10,000 atoms, timestep one femtosecond, simulation time one microsecond — that is 10⁹ timesteps. Modern MD codes on GPUs can do this in days. Folding@home distributed those 10⁹ steps across a million personal computers.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'AlphaFold2 in 2020 predicted protein structures as accurately as X-ray crystallography — from sequence alone. Fifty years of work in structural biology, and a neural network overtook experimental methods in two years. The entire PDB now has a computational complement of 200 million structures. Drug discovery will never be the same.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Verification and validation are not interchangeable. Verification: is my code solving the equations correctly? Validation: are these the right equations for reality? You can have a perfectly verified code solving the wrong model. Aeroplane manufacturers learned this the expensive way in the 1980s.'"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Amdahl's law is humbling. If 10% of your code is serial, no amount of parallelism can make it more than 10× faster. The bottleneck is always the serial fraction. Write parallel-friendly algorithms from the start; refactoring later is always harder.'"
+        }
+      ],
+      "feynmanPrompt": "Explain to a 16-year-old what Monte Carlo methods are and why they are especially useful for problems in high dimensions, using a simple example like estimating π.",
+      "learningObjectives": [
+        "Compare numerical methods for ODEs and PDEs (Euler, RK4, finite difference, finite element, spectral) by accuracy, stability, and computational cost",
+        "Explain Monte Carlo and MCMC methods and their applicability to high-dimensional integration and Bayesian inference",
+        "Describe the roles of DFT and molecular dynamics in computational chemistry and materials science",
+        "Distinguish verification from validation in computational science and explain the purpose of uncertainty quantification"
+      ],
+      "commonMistakes": [
+        "Conflating verification (does the code solve the equations correctly?) with validation (are those the right equations for the physical system?)",
+        "Assuming smaller timestep always improves a simulation — round-off error accumulates and can exceed truncation error improvement at very small timesteps",
+        "Treating ML emulators or neural network potentials as reliable outside their training distribution without explicit validation",
+        "Ignoring Amdahl's law when designing parallel algorithms — assuming linear speedup with the number of processors"
+      ],
+      "assessmentCriteria": [
+        "Correctly identifies the truncation error order for Euler and RK4 methods and applies Amdahl's law to a parallelisation scenario",
+        "Explains Monte Carlo error scaling and justifies its advantage over grid quadrature in high-dimensional problems",
+        "Evaluates the Hohenberg-Kohn theorem and Kohn-Sham approach, explaining why DFT scales better than exact many-body methods",
+        "Designs a verification and validation strategy for a given computational model, including convergence testing and experimental comparison"
+      ],
+      "guidedPracticeHtml": "<p><strong>Numerical Integration Error Analysis</strong></p><p>A researcher models radioactive decay: dN/dt = −λN, with N₀ = 1000, λ = 0.1 min⁻¹, from t = 0 to t = 10 min. The analytical solution is N(t) = N₀ e^(−λt).</p><ol><li>Apply Euler's method with Δt = 1 min and Δt = 0.1 min. Calculate N at t = 5 min for each and compare to the exact value. Quantify the error in each case and verify that the error halves when Δt is halved (confirming O(Δt) convergence).</li><li>Why does reducing Δt indefinitely not eliminate error? What competing error source eventually dominates?</li><li>Explain why RK4 would give much better accuracy for the same Δt = 1 min without deriving the full formula. What is RK4's error order?</li><li>This is a 1D problem. If instead we wanted to Monte Carlo-integrate the probability that N particles remain after time t over a distribution of initial conditions, what N_samples would give a 1% error (relative)? Show the calculation.</li></ol>",
+      "guidedPracticeModelAnswer": "<p><strong>1. Euler method:</strong> N_{n+1} = N_n + Δt × (−λN_n) = N_n(1 − λΔt). Exact at t=5: N(5) = 1000×e^(−0.5) = 606.53. Euler Δt=1: N(5) = 1000×(0.9)⁵ = 590.49, error = 16.04 (2.6%). Euler Δt=0.1: N at t=5 after 50 steps = 1000×(0.99)⁵⁰ = 1000×0.60504 = 605.04, error = 1.49 (0.25%). Ratio: 16.04/1.49 ≈ 10.8 ≈ 10 = (Δt_large/Δt_small), consistent with O(Δt) convergence.</p><p><strong>2. Round-off error:</strong> Floating-point numbers have finite precision (~15 decimal digits for double). Each arithmetic operation introduces rounding error ~ε_mach ≈ 10⁻¹⁶. Over T/Δt steps, round-off accumulates as ~ε_mach × N_steps. As Δt → 0, N_steps → ∞, so total round-off grows. There is an optimal Δt balancing truncation error (decreasing) and round-off error (increasing).</p><p><strong>3. RK4:</strong> RK4 makes four evaluations of the derivative per step, combining them in a weighted sum (similar to Simpson's rule for quadrature). The local truncation error is O(Δt⁵), making the global error O(Δt⁴). For Δt = 1, Euler error is ~2.6%; RK4 would give error ~10⁻⁴% — orders of magnitude better for the same timestep, at only 4× the computational cost.</p><p><strong>4. Monte Carlo error:</strong> Monte Carlo standard error = σ/√N, where σ is the standard deviation of the integrand. For 1% relative error: σ/√N = 0.01 × μ (where μ is the mean). Conservatively, σ/μ ≈ 1 (order-of-magnitude estimate for a peaked distribution). Then √N = 100, so N = 10,000 samples. For better precision (0.1%), N = 1,000,000. Monte Carlo error is independent of problem dimension — this is its great advantage for high-dimensional integrals over initial condition distributions.</p>",
+      "soloPracticeHtml": "<p>AlphaFold2 represents a paradigm shift in structural biology: from experimental determination of protein structures (X-ray crystallography, cryo-EM) to computational prediction from sequence alone. Write a structured essay (~300 words) addressing: (a) What scientific problem does AlphaFold2 solve and what computational methods does it use? (b) What are the limitations and validation challenges of using AlphaFold2-predicted structures in drug discovery? (c) Does AlphaFold2 represent a shift in the methodology of science — and if so, how should the scientific community respond to ensure reliability and reproducibility?</p>",
+      "modelAnswer": "<p><strong>(a) Problem and methods:</strong> The protein structure prediction problem: given an amino acid sequence, determine the three-dimensional folded structure. Solved experimentally by X-ray crystallography (20th-century standard), NMR spectroscopy, and cryo-electron microscopy. AlphaFold2 uses: (1) multiple sequence alignment (MSA) to capture co-evolutionary information from related proteins; (2) an Evoformer attention module that models pairwise residue relationships; (3) a structure module using invariant point attention to produce 3D coordinates; (4) a confidence metric (pLDDT, per-residue local distance difference test score) calibrated against known structures. Trained on the Protein Data Bank (~170,000 structures). AF2 achieved GDT_TS ≈ 92 in CASP14 — comparable to experimental resolution for many targets.</p><p><strong>(b) Limitations in drug discovery:</strong> AF2 predicts the most likely single structure (apo/unbound state), not conformational dynamics or multiple functionally relevant states. Disordered regions (low pLDDT, &lt;70) are unreliable. Protein-protein interaction interfaces are harder to predict accurately. Small-molecule binding sites may be collapsed or inaccessible in AF2 structures because the model was not trained with ligands. Validation is essential: predicted structures should be compared with experimental data (crystallography, cryo-EM) before being used in virtual screening or structure-based drug design. Uncritical use of AF2 structures in docking without validation risks false positives.</p><p><strong>(c) Methodological shift:</strong> AlphaFold2 is partly a new mode of science: data-driven pattern recognition rather than physics-based simulation. It raises verification/validation challenges — the model is not mechanistically interpretable, and its failure modes are poorly characterised. The scientific community should: (1) require AF2 structures to be accompanied by pLDDT confidence maps; (2) mandate experimental validation before claims depend on AF2 structures; (3) invest in understanding when and why AF2 fails; (4) use AF2 to generate hypotheses, confirmed by experiment, rather than as final evidence. The reproducibility framework remains essential even when the tool is impressive.</p>",
+      "rabbitHoleTerms": [
+        {
+          "term": "Runge-Kutta 4 (RK4)",
+          "description": "A fourth-order numerical method for solving ODEs that achieves O(Δt⁴) accuracy using four derivative evaluations per timestep; the standard method for initial value problems."
+        },
+        {
+          "term": "Density functional theory (DFT)",
+          "description": "A quantum mechanical method that replaces the many-body wavefunction with electron density as the fundamental variable, enabling ab initio calculation of electronic structure at O(N³) cost."
+        },
+        {
+          "term": "Physics-informed neural networks (PINNs)",
+          "description": "Neural networks trained to satisfy physical laws (PDEs) in addition to data, embedding scientific constraints into machine learning models."
+        },
+        {
+          "term": "Metropolis-Hastings algorithm",
+          "description": "An MCMC sampling algorithm that generates a Markov chain converging to a target distribution by accepting proposed moves with probability proportional to the likelihood ratio."
+        },
+        {
+          "term": "Amdahl's law",
+          "description": "A formula bounding parallel speedup: if fraction f of a program is serial, maximum achievable speedup is 1/(1−f), regardless of how many processors are used."
+        },
+        {
+          "term": "Uncertainty quantification (UQ)",
+          "description": "Methods for propagating input uncertainties through computational models to characterise output variability, essential for credible scientific simulation."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the global error order of the fourth-order Runge-Kutta (RK4) method for solving ordinary differential equations?</p>",
+          "options": [
+            "O(Δt⁴)",
+            "O(Δt)",
+            "O(Δt²)",
+            "O(Δt⁵)"
+          ],
+          "correctAnswer": "O(Δt⁴)",
+          "explanationHtml": "<p>RK4 has a local truncation error of O(Δt⁵), which accumulates over T/Δt steps to give a global error of O(Δt⁴). This makes RK4 dramatically more accurate than Euler's method (O(Δt) global error) for the same timestep, at a cost of only four derivative evaluations per step.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>A simulation requires 90% of its computation in a parallelisable section and 10% in a serial section. Using Amdahl's law, what is the maximum speedup achievable with an unlimited number of processors?</p>",
+          "options": [
+            "10×",
+            "90×",
+            "Unlimited — approaches infinity",
+            "4.5×"
+          ],
+          "correctAnswer": "10×",
+          "explanationHtml": "<p>Amdahl's law: maximum speedup = 1/(1−f + f/N) → 1/(1−f) as N → ∞, where f is the parallelisable fraction. With f = 0.9 and 1−f = 0.1 (serial fraction): maximum speedup = 1/0.1 = 10×. The serial 10% is the irreducible bottleneck regardless of how many processors are added.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher validates a computational fluid dynamics code by: (1) showing it reproduces the exact Poiseuille flow solution on a fine grid, and (2) comparing predictions with wind tunnel measurements. Which step addresses verification and which addresses validation?</p>",
+          "options": [
+            "Step 1 is verification (code solves equations correctly); step 2 is validation (equations match reality)",
+            "Step 1 is validation (equations match reality); step 2 is verification (code solves equations correctly)",
+            "Both steps are verification — grid refinement and experimental comparison both check numerical accuracy",
+            "Both steps are validation — both involve comparing the model to a known truth"
+          ],
+          "correctAnswer": "Step 1 is verification (code solves equations correctly); step 2 is validation (equations match reality)",
+          "explanationHtml": "<p>Verification asks: is the code solving the governing equations correctly? Reproducing an exact analytical solution (Poiseuille flow) confirms that the numerical implementation is correct. Validation asks: are the governing equations an adequate model of the real physical system? Comparison with wind tunnel measurements tests whether the model equations capture the real physics. These are distinct and both necessary — a perfectly verified code solving the wrong equations will fail validation.</p>"
+        }
+      ]
+    }
+  ]
+}
