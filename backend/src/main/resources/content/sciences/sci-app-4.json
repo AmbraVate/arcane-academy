@@ -1,0 +1,98 @@
+{
+  "id": "sci-app-4",
+  "topicId": "sciences",
+  "tier": "APPRENTICE",
+  "title": "Biology Fundamentals — The Diversity & Organisation of Life",
+  "glyph": "🌿",
+  "sortOrder": 4,
+  "prerequisites": ["sci-app-3"],
+  "subChunks": [
+    {
+      "id": "sci-app-4a",
+      "title": "Biology Fundamentals — The Diversity & Organisation of Life",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "You have looked at a single cell, Theodora said. Now zoom out. Life on Earth has been experimenting with cells for 3.5 billion years, and the results are — extraordinary. Bacteria colonising volcanic vents. Whales. Fungi dismantling fallen trees from the inside. Tardigrades surviving the vacuum of space." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "To understand that diversity without drowning in it, you need a map. Taxonomy is that map. And to understand how a collection of cells becomes a whale or a tree, you need the concept of biological organisation — how cells become tissues become organs become organisms become ecosystems." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Life is not infinitely varied. It obeys rules. Finding those rules underneath the variety is what biology is for." }
+      ],
+      "hookHtml": "<p>Life on Earth is astonishingly diverse — from single-celled bacteria to sequoia trees 115 metres tall; from creatures that live in boiling sulphuric springs to organisms that persist frozen for decades. Yet this diversity is not random. All life shares the same molecular machinery: DNA, RNA, proteins, and ATP. All life evolved from common ancestors. And all multicellular life is built on the same principle of hierarchical organisation, from molecules up to ecosystems.</p><p>Understanding how life is classified and how it organises itself from cell to organism gives you the conceptual scaffolding on which all other biology hangs.</p>",
+      "explanationHtml": "<h3>The Three Domains of Life</h3><p>Life is classified into three fundamental domains, based on molecular evidence:</p><ul><li><strong>Bacteria:</strong> Prokaryotic (no nucleus); the most abundant and metabolically diverse organisms on Earth. Some fix nitrogen; some photosynthesize; some cause disease.</li><li><strong>Archaea:</strong> Prokaryotic, but biochemically distinct from bacteria — different membrane lipids, different ribosomes. Many are extremophiles (hot springs, salt lakes, deep ocean). Archaea are more closely related to eukaryotes than to bacteria.</li><li><strong>Eukarya:</strong> Eukaryotic (nucleus and membrane-bound organelles). Includes four kingdoms: Protists (diverse single-celled and simple multicellular organisms), Fungi, Plantae, and Animalia.</li></ul><p>The tree of life is now understood through molecular phylogenetics — comparing DNA sequences (particularly ribosomal RNA genes) across organisms to reconstruct evolutionary relationships. The classification of domains replaced the older five-kingdom system in the 1990s following Carl Woese's rRNA analysis.</p><h3>Taxonomic Hierarchy</h3><p>Within domains, life is classified in a nested hierarchy invented by Carl Linnaeus in the 18th century and still in use today:</p><p><strong>Domain → Kingdom → Phylum → Class → Order → Family → Genus → Species</strong></p><p>A mnemonic: <em>Dear King Philip Came Over For Good Soup.</em></p><p>Each species has a <strong>binomial Latin name</strong> — genus capitalised, species lowercase, both italicised: <em>Homo sapiens</em>, <em>Canis lupus</em>, <em>Quercus robur</em>. This two-name system allows scientists worldwide to refer to the same organism without ambiguity across languages.</p><h3>Biological Levels of Organisation</h3><p>Multicellular life is organised in a hierarchy of increasing complexity:</p><ol><li><strong>Molecule</strong> — DNA, proteins, lipids, carbohydrates</li><li><strong>Organelle</strong> — mitochondria, nucleus, chloroplast</li><li><strong>Cell</strong> — the basic functional unit of life</li><li><strong>Tissue</strong> — groups of similar cells performing a shared function (muscle tissue, epithelial tissue)</li><li><strong>Organ</strong> — multiple tissue types working together (heart, leaf, kidney)</li><li><strong>Organ system</strong> — multiple organs working together (circulatory system, digestive system)</li><li><strong>Organism</strong> — the complete individual</li><li><strong>Population</strong> — organisms of the same species in an area</li><li><strong>Community</strong> — all populations in an area</li><li><strong>Ecosystem</strong> — community plus its physical environment</li><li><strong>Biosphere</strong> — all ecosystems on Earth</li></ol><p>Each level has emergent properties not predictable from lower levels alone. A muscle cell contracts. A muscle tissue generates force. An organ system moves a limb. The whole is more than the sum of its parts.</p><h3>Animal Tissue Types</h3><p>Animals have four fundamental tissue types:</p><ul><li><strong>Epithelial tissue:</strong> Covers surfaces, lines cavities, forms glands. Acts as barrier, absorption, and secretion surface. Skin, gut lining, lung alveoli.</li><li><strong>Connective tissue:</strong> Provides structural support and connects tissues. Includes bone, cartilage, tendons, blood, and adipose (fat) tissue.</li><li><strong>Muscle tissue:</strong> Generates force by contraction. Three types: skeletal (voluntary, striated), cardiac (involuntary, striated — heart only), smooth (involuntary, non-striated — gut walls, blood vessels).</li><li><strong>Nervous tissue:</strong> Transmits electrical signals. Neurons carry signals; glial cells support, protect, and nourish neurons.</li></ul><h3>Plant Organisation</h3><p>Plants are organised into three organ systems: <strong>roots</strong> (anchor, absorb water and minerals), <strong>stems</strong> (support, transport), and <strong>leaves</strong> (photosynthesis, gas exchange). Plants have three tissue systems: <strong>dermal</strong> (outer covering — epidermis), <strong>vascular</strong> (xylem transports water upward; phloem transports sugars), and <strong>ground tissue</strong> (parenchyma for photosynthesis and storage; collenchyma and sclerenchyma for support).</p><h3>Characteristics of Life</h3><p>Whatever the organism, life is defined by the same set of properties: organisation (cells with internal order); metabolism (chemical reactions that transform energy); homeostasis (maintaining internal conditions); growth; response to stimuli; reproduction; and adaptation through evolution. A virus satisfies some but not all of these — which is why biologists argue about whether viruses are 'alive'.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old how scientists classify all living things into groups — and why it matters that a mushroom is more closely related to you than to a plant.",
+      "guidedPracticeHtml": "<p>A biologist describes the following organism: it is multicellular, photosynthesises, has a cell wall made of cellulose, and reproduces via seeds enclosed in a fruit. (1) Identify which domain and kingdom it belongs to. (2) Name the organ system responsible for transporting water from root to leaf. (3) Identify which tissue type lines the inside of each leaf's air spaces (the mesophyll cells are surrounded by this tissue). (4) Explain what emerges at the organism level that could not be predicted from a single isolated cell.</p>",
+      "guidedPracticeModelAnswer": "<p>(1) Domain Eukarya, Kingdom Plantae. The characteristics — multicellular, photosynthetic, cellulose cell wall, seeds in fruit — all identify it as a flowering plant (angiosperm).</p><p>(2) The vascular tissue system, specifically the xylem, transports water upward from root to leaf under tension created by transpiration.</p><p>(3) The inside of leaf air spaces is lined with epithelial-equivalent tissue in plants — specifically the epidermis, which in leaves forms the inner boundary of the air spaces. However, the cells surrounding air spaces are parenchyma (mesophyll cells themselves — palisade and spongy layers), which are ground tissue. The outer surfaces of leaves are covered by the epidermal (dermal) tissue with a waxy cuticle and guard cells forming stomata.</p><p>(4) A single isolated plant cell can photosynthesize but cannot: transport water effectively over distance; provide structural support to elevate leaves into light; control water loss through stomatal opening; or reproduce via seed production. The organism-level emergent properties — regulated water transport, structural height, reproductive efficiency — arise from the integration of multiple organ systems working in coordination.</p>",
+      "soloPracticeHtml": "<p>Compare and contrast bacteria, archaea, and eukaryotes across the following dimensions: (1) cellular structure (nucleus, organelles); (2) relationship to extreme environments; (3) examples of ecological roles; and (4) evolutionary relationships as revealed by molecular evidence. Then explain why the discovery of archaea as a separate domain required rethinking the 'tree of life'.</p>",
+      "modelAnswer": "<p>(1) Cellular structure: Bacteria and archaea are both prokaryotic — no membrane-bound nucleus, no membrane-bound organelles. Eukaryotes have a membrane-bound nucleus housing chromosomal DNA, and membrane-bound organelles (mitochondria, chloroplasts, ER, Golgi). Within prokaryotes, bacteria and archaea differ in membrane lipid chemistry (bacteria use ester-linked fatty acids; archaea use ether-linked isoprenoids) and ribosome structure (different proteins in the 30S and 50S subunits).</p><p>(2) Extreme environments: Archaea dominate extreme environments — thermophiles (hot springs at 120°C+), halophiles (salt lakes), acidophiles, and methanogens (producing CH₄ in anaerobic swamps and animal guts). Some bacteria also tolerate extremes, but archaea are the record-holders. Most eukaryotes have narrower tolerance ranges, though some fungi and invertebrates tolerate remarkable extremes.</p><p>(3) Ecological roles: Bacteria — nitrogen fixation (converting N₂ to ammonia available to plants), decomposition, oxygen production (cyanobacteria), disease but also symbiosis (gut microbiome). Archaea — methane production (methanogens contribute significantly to greenhouse gas cycles), carbon cycling in deep ocean sediments. Eukaryotes — primary production (plants, algae), decomposition (fungi), herbivory, predation, pollination.</p><p>(4) Evolutionary relationships: Carl Woese's 1977 analysis of 16S ribosomal RNA sequences showed that archaea are more closely related to eukaryotes than to bacteria — the branching pattern splits bacteria early, with archaea and eukaryotes sharing a more recent common ancestor. This overturned the two-domain model (prokaryotes vs eukaryotes) and revealed that 'prokaryote' is not a natural evolutionary grouping but a grade of organisation. The tree of life now has three primary branches. Rethinking was required because all prior classification systems had grouped bacteria and archaea together as 'prokaryotes' on the basis of cell structure — but molecular evidence showed this grouping was misleading about true evolutionary relationships.</p>",
+      "practiceType": "NONE",
+      "xpReward": 70,
+      "learningObjectives": [
+        "Name the three domains of life and describe the key structural and molecular differences between them.",
+        "Apply the Linnaean taxonomic hierarchy (Domain through Species) to classify a described organism.",
+        "List the levels of biological organisation from molecule to biosphere, with an example of an emergent property at each transition.",
+        "Identify the four animal tissue types and the three plant tissue systems, with their functions."
+      ],
+      "commonMistakes": [
+        "Grouping bacteria and archaea as 'prokaryotes' and assuming they are closely related — molecular evidence shows archaea are more closely related to eukaryotes.",
+        "Confusing tissues and organs — a tissue is a group of similar cells; an organ is made of multiple tissue types working together.",
+        "Writing species names incorrectly — genus is capitalised, species epithet is lowercase, both are italicised (e.g., Homo sapiens).",
+        "Treating 'emergent properties' as a vague concept — each level of organisation has specific emergent properties not present at lower levels."
+      ],
+      "assessmentCriteria": [
+        "Correctly identifies domain and kingdom from biological characteristics of a described organism.",
+        "Accurately describes the three-domain system and the molecular evidence supporting it.",
+        "Explains the levels of biological organisation with specific examples of emergent properties.",
+        "Distinguishes bacterial from archaeal from eukaryotic cell structure with at least two specific differences per comparison."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Carl Woese", "description": "American microbiologist who, in 1977, used ribosomal RNA sequencing to establish the three-domain system, fundamentally revising the tree of life and revealing archaea as a distinct domain." },
+        { "term": "Endosymbiotic Theory", "description": "Lynn Margulis's 1967 theory that mitochondria and chloroplasts originated as free-living bacteria engulfed by a host cell — supported by their own circular DNA, double membranes, and bacterial-sized ribosomes." },
+        { "term": "Binomial Nomenclature", "description": "Linnaeus's two-part Latin naming system for species (Genus species) — universal across languages, allowing unambiguous communication among scientists worldwide." },
+        { "term": "Emergent Properties", "description": "Properties that arise at a given level of organisation and are not predictable from properties at lower levels — e.g., consciousness emerges from neurons; no individual neuron is conscious." },
+        { "term": "Molecular Phylogenetics", "description": "The use of DNA, RNA, or protein sequence comparisons to reconstruct evolutionary relationships — more objective and information-rich than morphological classification alone." }
+      ],
+      "questions": [
+        {
+          "id": "sci-app-4a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What is the correct order of the Linnaean taxonomic hierarchy, from broadest to most specific?",
+          "options": [
+            "Domain, Kingdom, Phylum, Class, Order, Family, Genus, Species",
+            "Kingdom, Domain, Phylum, Order, Class, Family, Genus, Species",
+            "Domain, Phylum, Kingdom, Class, Order, Genus, Family, Species",
+            "Kingdom, Phylum, Class, Order, Family, Genus, Species, Domain"
+          ],
+          "correctAnswer": "Domain, Kingdom, Phylum, Class, Order, Family, Genus, Species",
+          "explanationHtml": "<p>The Linnaean hierarchy runs from broadest (Domain) to most specific (Species). A useful mnemonic is 'Dear King Philip Came Over For Good Soup.' Domain is the most inclusive category, added to the traditional hierarchy after Woese's discovery of archaea as a distinct lineage.</p>"
+        },
+        {
+          "id": "sci-app-4a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "An organism is described as: multicellular, has no nucleus in its cells, can fix atmospheric nitrogen, and lives in the roots of legume plants. Which domain does it belong to?",
+          "options": [
+            "Archaea — because it lives in a specialised environment",
+            "Eukarya — because it is associated with multicellular plants",
+            "Bacteria — because it is prokaryotic (no nucleus) and carries out nitrogen fixation, a characteristically bacterial metabolic process",
+            "Fungi — because it lives in roots"
+          ],
+          "correctAnswer": "Bacteria — because it is prokaryotic (no nucleus) and carries out nitrogen fixation, a characteristically bacterial metabolic process",
+          "explanationHtml": "<p>The key identification features: no nucleus = prokaryotic (eliminates Eukarya and Fungi); nitrogen fixation is a metabolic process performed by bacteria (e.g., Rhizobium in legume root nodules). Archaea perform some nitrogen fixation but are not the primary nitrogen fixers in legume symbiosis. Bacteria is the correct domain.</p>"
+        },
+        {
+          "id": "sci-app-4a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "Why did Carl Woese's ribosomal RNA analysis in 1977 require scientists to abandon the two-domain model (prokaryotes vs eukaryotes) that had been used previously?",
+          "options": [
+            "Because rRNA analysis showed that all prokaryotes were extinct",
+            "Because molecular evidence showed that archaea and bacteria are equally distant from each other as they are from eukaryotes — 'prokaryote' is not a natural evolutionary grouping",
+            "Because rRNA sequencing proved that plants and animals shared a common ancestor",
+            "Because Woese found that archaea had a nucleus, making them technically eukaryotes"
+          ],
+          "correctAnswer": "Because molecular evidence showed that archaea and bacteria are equally distant from each other as they are from eukaryotes — 'prokaryote' is not a natural evolutionary grouping",
+          "explanationHtml": "<p>The two-domain model grouped bacteria and archaea as 'prokaryotes' based on shared morphology (no nucleus). But rRNA sequencing showed the three-way split: bacteria form one branch; archaea and eukaryotes share a more recent common ancestor and form another branch. 'Prokaryote' describes a grade of cellular organisation, not a natural evolutionary lineage — grouping bacteria and archaea together is as misleading as grouping fish and whales together because both live in water.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "sci-app-8",
+  "topicId": "sciences",
+  "tier": "APPRENTICE",
+  "title": "Waves, Sound & Light",
+  "glyph": "🌊",
+  "sortOrder": 8,
+  "prerequisites": ["sci-app-7"],
+  "subChunks": [
+    {
+      "id": "sci-app-8a",
+      "title": "Waves, Sound & Light",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "When you speak, Theodora said, you disturb the air. That disturbance propagates outward as a wave — a pattern of compressions and rarefactions that carries the shape of your voice across the room. The air does not travel. The pattern does. This is the essential insight about waves." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Light is also a wave — but a wave in a field, not in a medium. Light needs no air, no water, no substance at all. It travels through the vacuum of space and has been doing so for 13.8 billion years. The light reaching your eyes right now left the Sun eight minutes ago." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "And both sound and light obey the same mathematical framework: wavelength, frequency, wave speed, amplitude. Learn the framework once and it applies everywhere — from medical ultrasound to telescope optics to seismology." }
+      ],
+      "hookHtml": "<p>Waves are one of the most universal phenomena in nature. Sound, light, seismic tremors, ocean swells, quantum probability amplitudes — all are waves. Understanding wave properties (wavelength, frequency, amplitude, speed) and wave behaviours (reflection, refraction, diffraction, interference) provides a unified framework for understanding a remarkable range of physical phenomena.</p>",
+      "explanationHtml": "<h3>Wave Properties</h3><p>A wave is a periodic disturbance that transfers energy without transferring matter. Key properties:</p><ul><li><strong>Wavelength (λ):</strong> Distance between two adjacent peaks (or troughs), measured in metres.</li><li><strong>Frequency (f):</strong> Number of complete waves passing a point per second. Unit: hertz (Hz = s⁻¹).</li><li><strong>Amplitude:</strong> Maximum displacement from equilibrium. Related to the energy the wave carries (energy ∝ amplitude²).</li><li><strong>Wave speed (v):</strong> How fast the wave propagates. Relationship: v = fλ (wave speed = frequency × wavelength).</li><li><strong>Period (T):</strong> Time for one complete oscillation. T = 1/f.</li></ul><p>Two wave types: <strong>transverse waves</strong> — oscillations are perpendicular to the direction of propagation (e.g., light, ocean surface waves, seismic S-waves); <strong>longitudinal waves</strong> — oscillations are parallel to propagation direction (e.g., sound, seismic P-waves).</p><h3>Sound</h3><p>Sound is a longitudinal mechanical wave — a series of compressions and rarefactions propagating through a medium. Key properties:</p><ul><li><strong>Speed in air:</strong> ~340 m/s at 20°C. Sound travels faster in liquids (~1,480 m/s in water) and fastest in solids (steel: ~5,100 m/s) — denser, more rigid materials transmit sound faster.</li><li><strong>Pitch:</strong> Determined by frequency. Human hearing range: 20 Hz – 20,000 Hz. Ultrasound: >20,000 Hz (used in medical imaging). Infrasound: <20 Hz (used by elephants, produced by earthquakes).</li><li><strong>Loudness:</strong> Determined by amplitude. Measured in decibels (dB), a logarithmic scale.</li><li><strong>The Doppler effect:</strong> The perceived frequency of a wave changes if the source and observer are moving relative to each other. A source moving toward you produces higher frequency (higher pitch); moving away produces lower frequency. Police sirens, radar speed guns, and medical Doppler ultrasound all exploit this effect.</li></ul><h3>The Electromagnetic Spectrum</h3><p>Light is a transverse electromagnetic wave — oscillating electric and magnetic fields propagating through space at c = 3 × 10⁸ m/s (in vacuum). The electromagnetic spectrum encompasses:</p><table><tr><th>Type</th><th>Wavelength</th><th>Uses/Examples</th></tr><tr><td>Gamma rays</td><td>&lt;10 pm</td><td>Cancer radiotherapy, nuclear decay</td></tr><tr><td>X-rays</td><td>0.01–10 nm</td><td>Medical imaging, crystallography</td></tr><tr><td>Ultraviolet</td><td>10–400 nm</td><td>Sterilisation, vitamin D production</td></tr><tr><td>Visible light</td><td>400–700 nm</td><td>Human vision (violet to red)</td></tr><tr><td>Infrared</td><td>700 nm–1 mm</td><td>Thermal imaging, remote controls</td></tr><tr><td>Microwaves</td><td>1 mm–10 cm</td><td>Microwave ovens, 5G, radar</td></tr><tr><td>Radio waves</td><td>&gt;10 cm</td><td>Broadcasting, MRI, astronomy</td></tr></table><p>All electromagnetic waves travel at c in a vacuum; frequency and wavelength are related by c = fλ. Higher frequency = shorter wavelength = higher energy per photon (E = hf, where h is Planck's constant).</p><h3>Reflection, Refraction, and Diffraction</h3><p><strong>Reflection:</strong> Wave bounces off a surface. Law of reflection: angle of incidence = angle of reflection (measured from the normal to the surface). Applies to all waves — echoes are sound reflection; mirrors are light reflection.</p><p><strong>Refraction:</strong> Wave changes speed (and direction) when passing between media. Light slows down entering glass or water (refractive index n = c/v). Snell's Law: n₁ sin(θ₁) = n₂ sin(θ₂). Refraction explains: why a straw looks bent in water; how lenses focus light; why white light splits into a spectrum through a prism (different wavelengths refract by different amounts — dispersion).</p><p><strong>Diffraction:</strong> Wave spreads around obstacles or through gaps. Significant when the obstacle/gap size is comparable to the wavelength. This is why you can hear sound around corners (wavelengths of centimetres to metres) but light does not bend around corners (wavelengths of hundreds of nanometres).</p><p><strong>Interference:</strong> When two waves overlap, they add together. Constructive interference: peaks align → larger amplitude. Destructive interference: peak meets trough → amplitude cancelled. Noise-cancelling headphones use destructive interference. Thin-film iridescence (soap bubbles, oil slicks) and double-slit experiments both demonstrate light interference.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old why an ambulance siren sounds higher-pitched as it approaches you and lower-pitched as it drives away — even though the siren itself hasn't changed.",
+      "guidedPracticeHtml": "<p>A sound wave has a frequency of 440 Hz (the musical note A). (1) Calculate its wavelength in air, given that sound travels at 340 m/s. (2) This sound strikes a glass window at a normal incidence. Explain what happens to the frequency, wavelength, and speed as the sound enters the glass (where speed is approximately 5,000 m/s). (3) An ultrasound scanner uses frequencies of 2–15 MHz. Why are high frequencies used instead of the audible range? (4) Explain why a bat can navigate in the dark using ultrasound but cannot use infrared light to do the same task.</p>",
+      "guidedPracticeModelAnswer": "<p>(1) v = fλ → λ = v/f = 340/440 = 0.77 m. The wavelength of A-440 in air is approximately 77 cm.</p><p>(2) When the sound enters the glass: the frequency stays the same (it is set by the source and does not change at a boundary); the speed increases to 5,000 m/s; therefore the wavelength increases: λ = v/f = 5,000/440 = 11.4 m. The wave travels faster and has a longer wavelength in glass, but the same frequency.</p><p>(3) Medical ultrasound uses high frequencies because: (a) Resolution is proportional to wavelength — shorter wavelength (higher frequency) allows imaging of smaller structures. At 5 MHz in tissue (speed ~1,540 m/s), λ = 0.31 mm, allowing sub-millimetre resolution of soft tissue structures. Low-frequency audible sound would have wavelengths of tens of centimetres — useless for medical imaging. (b) High-frequency waves are more strongly absorbed, limiting penetration depth — a trade-off between resolution and depth that radiographers manage by choosing frequency for the target depth.</p><p>(4) Bat echolocation works because: bats emit ultrasound pulses (20–200 kHz) and detect the reflections; the wavelengths (1.7–8.5 mm at these frequencies) are comparable in size to insects and obstacles, so diffraction is limited and good echo definition is possible. Infrared light has much shorter wavelengths (~700 nm – 1 mm) and travels at c = 3 × 10⁸ m/s — far too fast for a bat to process echoes within the millisecond timescale of biological neural circuits. Additionally, bats' eyes and neural systems are not adapted to detect or process infrared. Echolocation evolved using sound because acoustic velocities and neural processing speeds are well-matched for short-range navigation.</p>",
+      "soloPracticeHtml": "<p>White light from the Sun enters a glass prism and emerges as a rainbow spectrum (red through violet). (1) Explain the physics of why this separation occurs, using the concepts of refraction and dispersion. (2) Red light has a wavelength of ~700 nm; violet light ~400 nm. Which colour travels slower in the glass? (3) Explain why you see different colours at different angles when looking at a soap bubble — using thin-film interference. (4) A WIFI router uses radio waves with a frequency of 2.4 GHz. Calculate the wavelength in air. Explain why this can pass through walls but visible light cannot.</p>",
+      "modelAnswer": "<p>(1) When white light enters the prism, it refracts (bends) at the air-glass interface. The amount of refraction depends on wavelength — this is dispersion. Violet light (shorter wavelength) has a higher refractive index in glass than red light (longer wavelength), so it bends more (slows down more when entering glass). As the light exits the other face of the prism, it refracts again, further separating the colours. The result is a fan of colours with violet deflected most and red least — a spectrum.</p><p>(2) A higher refractive index means the light travels slower in the glass: n = c/v, so v = c/n. Violet has a higher refractive index in glass than red; therefore violet travels slower in the glass.</p><p>(3) A soap bubble has a very thin film of water sandwiched between two soap-molecule layers. When light hits the film, some reflects from the outer surface and some passes through and reflects from the inner surface. These two reflected beams travel slightly different path lengths (the inner-surface reflection travels an extra 2t, where t is the film thickness). If this path difference equals a whole number of wavelengths for a particular colour, constructive interference occurs and that colour is bright. If the path difference equals half a wavelength, destructive interference cancels that colour. As you move your viewpoint (changing the angle), the effective path length changes, which changes which wavelengths interfere constructively — so different colours are visible at different viewing angles and different parts of the bubble (where the film is thicker or thinner).</p><p>(4) λ = v/f = 3 × 10⁸ m/s / 2.4 × 10⁹ Hz = 0.125 m = 12.5 cm. Wifi wavelength is ~12.5 cm. Brick walls and plasterboard have typical thicknesses of 10–30 cm — comparable to but not much larger than the wifi wavelength, so diffraction around the wall is significant and some signal bends around edges and through gaps. Visible light has wavelengths of 400–700 nm (nanometres) — a factor of ~300,000 smaller than wifi. Walls are vastly larger than visible wavelengths, so there is essentially no diffraction around them. The photons are also absorbed by the wall material (plaster, brick, paint are all opaque to visible light). Radio waves can also penetrate many building materials because their photon energy (E = hf) is much lower than that of visible light, making them far less likely to be absorbed by typical wall materials.</p>",
+      "practiceType": "NONE",
+      "xpReward": 70,
+      "learningObjectives": [
+        "Define wavelength, frequency, amplitude, and wave speed, and apply the relationship v = fλ to solve problems.",
+        "Describe the electromagnetic spectrum from gamma rays to radio waves, with wavelength ranges and examples of each type.",
+        "Explain reflection, refraction, diffraction, and interference, with examples of each phenomenon.",
+        "Explain the Doppler effect and describe one practical application in science or medicine."
+      ],
+      "commonMistakes": [
+        "Thinking frequency changes when light enters a different medium — frequency is determined by the source and stays constant; wavelength and speed change at boundaries.",
+        "Confusing amplitude with wavelength — amplitude is the maximum displacement from equilibrium; wavelength is the distance between repeating cycles.",
+        "Assuming sound travels faster in air than in denser materials — sound travels faster in denser, more rigid materials (steel > water > air).",
+        "Thinking diffraction only occurs with light — all waves diffract; sound diffracts around everyday obstacles because its wavelength is similar in size to those obstacles."
+      ],
+      "assessmentCriteria": [
+        "Correctly calculates wavelength or frequency using v = fλ with appropriate units and significant figures.",
+        "Accurately describes what happens to speed, frequency, and wavelength when a wave passes between two media.",
+        "Explains thin-film interference or the Doppler effect with reference to path length differences or relative motion.",
+        "Identifies the appropriate region of the EM spectrum for a described application and explains why that frequency range is suitable."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Doppler Effect", "description": "The change in observed frequency of a wave when source and observer are in relative motion — used in radar speed guns, police sirens, medical ultrasound, and astronomers' measurements of stellar recession (redshift)." },
+        { "term": "Diffraction", "description": "The spreading of waves around obstacles or through gaps — significant when the obstacle/gap size is comparable to the wavelength; explains why sound but not light bends around corners in everyday settings." },
+        { "term": "Refractive Index", "description": "A dimensionless number (n = c/v) expressing how much a medium slows light compared to vacuum — glass has n ≈ 1.5; diamond n ≈ 2.4; the higher n, the greater the refraction and the slower light travels." },
+        { "term": "Constructive vs Destructive Interference", "description": "When two waves overlap, constructive interference (peaks aligned) doubles amplitude; destructive interference (peak meets trough) cancels amplitude — the basis of noise-cancelling headphones, soap-bubble colours, and double-slit experiments." },
+        { "term": "Planck's Constant (h)", "description": "h = 6.626 × 10⁻³⁴ J·s — the fundamental constant relating a photon's energy to its frequency: E = hf. Higher-frequency radiation (X-rays, gamma rays) carries more energy per photon and is therefore more ionising and biologically damaging." }
+      ],
+      "questions": [
+        {
+          "id": "sci-app-8a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "A wave has a frequency of 200 Hz and a wavelength of 1.7 m. What is its speed?",
+          "options": [
+            "117 m/s",
+            "200 m/s",
+            "340 m/s",
+            "1,700 m/s"
+          ],
+          "correctAnswer": "340 m/s",
+          "explanationHtml": "<p>v = fλ = 200 Hz × 1.7 m = 340 m/s. This is the speed of sound in air at room temperature — a useful result to recognise. The frequency 200 Hz falls in the audible range, and the 1.7 m wavelength is consistent with a bass note (audible sound in air has wavelengths from ~17 mm at 20 kHz to ~17 m at 20 Hz).</p>"
+        },
+        {
+          "id": "sci-app-8a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "An ambulance is moving away from a stationary observer at high speed. The siren emits a constant tone at 800 Hz. What does the observer hear?",
+          "options": [
+            "A tone at exactly 800 Hz — the Doppler effect only applies to light, not sound",
+            "A tone at a frequency higher than 800 Hz, because the ambulance is moving",
+            "A tone at a frequency lower than 800 Hz, because the sound waves are stretched out behind the moving source",
+            "No sound at all, because the ambulance is moving away"
+          ],
+          "correctAnswer": "A tone at a frequency lower than 800 Hz, because the sound waves are stretched out behind the moving source",
+          "explanationHtml": "<p>The Doppler effect: when a source moves away from an observer, successive wave crests are emitted progressively further from the observer, stretching the wavelength. Longer wavelength = lower frequency. The observer hears a pitch below 800 Hz. When the ambulance moved toward the observer, the waves were compressed, giving higher frequency. This is why ambulance sirens seem to drop in pitch as they pass you.</p>"
+        },
+        {
+          "id": "sci-app-8a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "Why does violet light bend more than red light when passing through a glass prism, producing a spectrum from white light?",
+          "options": [
+            "Because violet light has higher energy and therefore more momentum to change direction",
+            "Because violet light has a shorter wavelength and higher frequency, giving it a higher refractive index in glass — it slows down more and therefore bends more",
+            "Because red light travels faster than violet light in air, so it enters the glass with more momentum",
+            "Because the glass absorbs red light and transmits only violet light"
+          ],
+          "correctAnswer": "Because violet light has a shorter wavelength and higher frequency, giving it a higher refractive index in glass — it slows down more and therefore bends more",
+          "explanationHtml": "<p>Dispersion: the refractive index of glass varies with wavelength — shorter wavelengths (violet, blue) have higher refractive indices and are slowed more than longer wavelengths (red). More slowing = greater change in direction at the boundary (Snell's Law: greater n → greater angle change). This wavelength-dependent refraction separates white light into its component colours. A prism demonstrates this; a rainbow occurs by the same mechanism in water droplets.</p>"
+        }
+      ]
+    }
+  ]
+}

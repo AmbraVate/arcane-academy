@@ -1,0 +1,98 @@
+{
+  "id": "sci-app-7",
+  "topicId": "sciences",
+  "tier": "APPRENTICE",
+  "title": "Energy, Work & Thermodynamics",
+  "glyph": "⚡",
+  "sortOrder": 7,
+  "prerequisites": ["sci-app-6"],
+  "subChunks": [
+    {
+      "id": "sci-app-7a",
+      "title": "Energy, Work & Thermodynamics",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Energy, Theodora said, is perhaps the most important concept in all of science — and it is one of the most misunderstood. People say they have energy, that food gives them energy, that a city runs on energy. All of these are approximately right. But none of them captures what energy actually is in physics." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Energy is the capacity to do work. Work is a force applied through a distance. These definitions seem cold and mechanical. But they lead you directly to the most profound generalisations we have ever achieved: the laws of thermodynamics. Particularly the second law — which tells us why time runs in one direction and not the other." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Every machine, every living thing, every star in the sky is subject to thermodynamics. Nothing escapes it. That is what makes it worth understanding." }
+      ],
+      "hookHtml": "<p>Energy is the universal currency of the physical world. Every process — a falling stone, a growing cell, a nuclear explosion, a thought — involves the transformation of energy from one form to another. The laws of thermodynamics describe how these transformations happen and, crucially, what they cannot do. Understanding energy and thermodynamics is foundational to physics, chemistry, biology, and engineering.</p>",
+      "explanationHtml": "<h3>Forms of Energy</h3><p>Energy exists in multiple interconvertible forms:</p><ul><li><strong>Kinetic energy (KE):</strong> Energy of motion. KE = ½mv². Depends on both mass and the square of velocity — doubling speed quadruples kinetic energy.</li><li><strong>Gravitational potential energy (GPE):</strong> Energy stored due to position in a gravitational field. GPE = mgh (mass × gravitational field strength × height).</li><li><strong>Elastic potential energy:</strong> Energy stored in deformed elastic materials (springs, rubber bands).</li><li><strong>Chemical energy:</strong> Energy stored in the bonds between atoms. Released in chemical reactions (combustion, metabolism). This is the energy in food, fuel, and batteries.</li><li><strong>Thermal energy (heat):</strong> The kinetic energy of randomly moving particles. Temperature measures the average kinetic energy of particles.</li><li><strong>Electromagnetic energy (light):</strong> Energy carried by electromagnetic radiation — from gamma rays through visible light to radio waves.</li><li><strong>Nuclear energy:</strong> Energy stored in atomic nuclei; released in fission or fusion.</li></ul><h3>Work and Power</h3><p><strong>Work</strong> (W) is done when a force moves an object through a distance in the direction of the force: W = F × d × cos(θ), where θ is the angle between force and displacement. Units: joules (J = N·m).</p><p><strong>Power</strong> is the rate of energy transfer or work done: P = W/t = Energy transferred/time. Units: watts (W = J/s). A 100-watt bulb transfers 100 joules of energy per second.</p><h3>Conservation of Energy — The First Law of Thermodynamics</h3><p>The First Law states: <strong>energy cannot be created or destroyed — only converted from one form to another.</strong> The total energy of a closed system is constant. When a ball falls, gravitational potential energy converts to kinetic energy. When it hits the ground, kinetic energy converts to thermal energy (heat) and sound. The total is conserved throughout.</p><p>In thermodynamics: ΔU = Q − W, where ΔU is change in internal energy of a system, Q is heat added to the system, and W is work done by the system.</p><h3>Entropy and the Second Law of Thermodynamics</h3><p>The Second Law states: <strong>in any spontaneous process, the total entropy of the universe increases.</strong> Entropy (S) is a measure of disorder or the number of microstates available to a system.</p><p>Implications of the second law:</p><ul><li>Heat flows spontaneously from hot to cold — never the reverse (without work input).</li><li>No heat engine can be 100% efficient — some energy is always lost as heat to a cold reservoir.</li><li>Disorder tends to increase over time — a broken egg does not spontaneously reassemble; a cup of coffee cools but never spontaneously heats up from room air.</li><li>The second law gives time its direction: the past had lower entropy than the present.</li></ul><p>Living organisms appear to decrease their local entropy (they build complex molecules from simple ones). This is possible because they consume energy from food or sunlight — exporting even more entropy to the environment. The overall entropy of the universe still increases.</p><h3>The Third Law and Absolute Zero</h3><p>The Third Law states that the entropy of a perfect crystal at absolute zero (0 K = −273.15°C) is zero — the only state of perfectly zero entropy. This establishes the absolute temperature scale (Kelvin) and means that absolute zero can be approached but never reached: there is always some residual thermal motion.</p><h3>Heat Transfer Mechanisms</h3><p>Heat transfers by three mechanisms:</p><ul><li><strong>Conduction:</strong> Transfer through direct contact — heat flowing through a metal rod. Efficient in dense, rigid materials with free electrons (metals conduct heat well).</li><li><strong>Convection:</strong> Transfer through fluid movement — hot air rising, ocean currents, mantle convection. Requires a fluid (liquid or gas).</li><li><strong>Radiation:</strong> Transfer by electromagnetic waves — heat from the Sun reaching Earth through the vacuum of space. All objects above 0 K radiate thermal energy (infrared radiation).</li></ul><h3>Efficiency and Energy Quality</h3><p>Energy is not all of equal quality. The efficiency of any energy conversion: η = useful energy output / total energy input. Internal combustion engines: ~25–35% efficient (most energy lost as heat). Electric motors: ~85–95% efficient. The Carnot efficiency gives the theoretical maximum for a heat engine operating between temperatures T_hot and T_cold: η_max = 1 − (T_cold/T_hot), where temperatures are in Kelvin.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old why you can't build a machine that runs forever without any fuel input — using the laws of thermodynamics.",
+      "guidedPracticeHtml": "<p>A hydroelectric dam holds water 80 metres above the turbines. Water with a mass of 1,000 kg flows through each second. (1) Calculate the gravitational potential energy of 1,000 kg of water at 80 m height (g = 9.81 m/s²). (2) If the turbines convert 85% of this energy into electrical energy, calculate the electrical power output. (3) Where does the remaining 15% of energy go, and what law of thermodynamics is relevant? (4) Explain why the overall entropy of the universe still increases even though water falling through the turbine seems to convert energy in an organised, useful way.</p>",
+      "guidedPracticeModelAnswer": "<p>(1) GPE = mgh = 1,000 × 9.81 × 80 = 784,800 J = 7.85 × 10⁵ J per second.</p><p>(2) Useful electrical energy = 85% × 784,800 = 667,080 J/s = 667 kW ≈ 667 kW. Since 1,000 kg flows per second, the electrical power output is approximately 667 kW.</p><p>(3) The remaining 15% (117,720 J/s) is dissipated as heat — in the water (turbulence, friction), in the turbine bearings, and in the electrical resistance of conductors. This is predicted by the Second Law of Thermodynamics: no energy conversion is 100% efficient; some fraction is always lost as heat to the surroundings. The First Law confirms that total energy is conserved (GPE = electrical energy + heat); the Second Law says the conversion is never complete.</p><p>(4) Although the hydroelectric plant organises energy in a useful way (converting GPE to electricity), this apparent local decrease in entropy is only possible because of a much larger increase in entropy elsewhere. Ultimately, the energy comes from the Sun evaporating ocean water, which then falls as rain to fill the reservoir. The Sun converts nuclear energy to radiation, increasing total entropy enormously. The entire cycle from evaporation to rain to turbine produces a net increase in universal entropy — which is why the Second Law is not violated, even though the local conversion looks orderly.</p>",
+      "soloPracticeHtml": "<p>A student argues: &quot;Living organisms violate the Second Law of Thermodynamics because they build highly ordered structures (proteins, DNA) from disordered raw materials.&quot; Explain why this argument is incorrect, using the concept of open systems and entropy accounting. Then explain why all organisms ultimately depend on an energy source — and trace that energy source back to nuclear reactions in the Sun.</p>",
+      "modelAnswer": "<p>The student's argument confuses a local entropy decrease with a universal one. The Second Law states that the entropy of the <em>universe</em> (or any isolated system) must increase — it says nothing about subsystems or open systems that exchange energy with their surroundings.</p><p>Living organisms are open systems: they take in low-entropy energy (food, sunlight) and export high-entropy waste (heat, CO₂, metabolic products). A plant building an ordered glucose molecule from CO₂ and H₂O using sunlight simultaneously releases heat, increasing the entropy of its surroundings by more than the entropy decreased by making the glucose. The net effect is a universal entropy increase. The organism is acting as a temporary local entropy-reduction machine by exporting disorder to its environment at a higher rate than it creates order internally.</p><p>Every organism ultimately depends on an energy source because maintaining order requires a continuous input of energy — without it, structures degrade (proteins denature, membranes dissolve, cells die). This energy input is the price of fighting local entropy.</p><p>The energy chain back to the Sun: Animals eat plants; plants photosynthesize using sunlight; sunlight is produced by the Sun's fusion of hydrogen nuclei into helium in its core. Nuclear fusion releases enormous energy because the mass of the helium product is slightly less than the combined mass of the hydrogen reactants (E = mc², Einstein's mass-energy equivalence). Each second, the Sun converts approximately 600 million tonnes of hydrogen into 596 million tonnes of helium, releasing 4 million tonnes of mass-equivalent energy as radiation. This radiation drives nearly all life on Earth — from the simplest photosynthesising bacterium to the most complex ecosystem.</p>",
+      "practiceType": "NONE",
+      "xpReward": 70,
+      "learningObjectives": [
+        "Define kinetic energy, gravitational potential energy, and work, and calculate each using the correct formula with units.",
+        "State the First and Second Laws of Thermodynamics and explain their implications for real-world energy conversions.",
+        "Explain entropy and why the Second Law does not preclude local organisation in open systems such as living organisms.",
+        "Describe the three mechanisms of heat transfer (conduction, convection, radiation) with an example of each."
+      ],
+      "commonMistakes": [
+        "Thinking the Second Law is violated by living organisms — organisms are open systems that export entropy to the environment; universal entropy always increases.",
+        "Confusing heat and temperature — temperature is average kinetic energy per particle; heat is total thermal energy transferred between objects.",
+        "Using Celsius temperatures in Carnot efficiency calculations — the formula requires absolute temperature in Kelvin (K = °C + 273.15).",
+        "Assuming 100% efficient energy conversion is theoretically possible — the Second Law makes this impossible for any real heat engine."
+      ],
+      "assessmentCriteria": [
+        "Correctly calculates GPE, KE, or work with appropriate units and significant figures.",
+        "Accurately states both First and Second Laws and applies them to explain efficiency limitations and heat dissipation.",
+        "Explains the entropy argument for why living organisms do not violate the Second Law, with reference to open systems.",
+        "Identifies and distinguishes the three heat transfer mechanisms for a given scenario."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Carnot Efficiency", "description": "The theoretical maximum efficiency of a heat engine operating between two temperature reservoirs: η = 1 − T_cold/T_hot (temperatures in Kelvin). All real engines fall short of this ideal." },
+        { "term": "Entropy", "description": "A thermodynamic quantity measuring the number of microstates available to a system (statistical mechanics) or the unavailability of energy for doing work — central to the Second Law and the direction of time." },
+        { "term": "Gibbs Free Energy", "description": "G = H − TS (enthalpy minus temperature × entropy); a thermodynamic potential measuring how much work a system can do at constant temperature and pressure — spontaneous reactions have ΔG < 0." },
+        { "term": "E = mc²", "description": "Einstein's mass-energy equivalence: energy equals mass times the speed of light squared. The Sun converts ~4 × 10⁹ kg of mass into energy per second via nuclear fusion." },
+        { "term": "Heat Engine", "description": "Any device that converts thermal energy into mechanical work — a steam engine, internal combustion engine, or steam turbine. All are subject to the Carnot efficiency limit set by the Second Law." }
+      ],
+      "questions": [
+        {
+          "id": "sci-app-7a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "A ball of mass 0.5 kg is held at a height of 10 m. What is its gravitational potential energy? (g = 10 m/s²)",
+          "options": [
+            "5 J",
+            "50 J",
+            "100 J",
+            "500 J"
+          ],
+          "correctAnswer": "50 J",
+          "explanationHtml": "<p>GPE = mgh = 0.5 kg × 10 m/s² × 10 m = 50 J. The units confirm: kg × m/s² × m = kg·m²/s² = J (joules). A common error is to use g = 9.81 instead of 10 — here we use g = 10 m/s² as specified, giving 50 J.</p>"
+        },
+        {
+          "id": "sci-app-7a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A heat engine operates between a hot reservoir at 600 K and a cold reservoir at 300 K. What is the maximum (Carnot) efficiency it can achieve?",
+          "options": [
+            "25% — because 300/600 = 0.5, so efficiency = 0.5 = 50%... wait, let me recalculate",
+            "50% — because η = 1 − (T_cold/T_hot) = 1 − (300/600) = 1 − 0.5 = 0.5 = 50%",
+            "33% — because (600 − 300)/600/3 = 33%",
+            "100% — because the temperatures are very high"
+          ],
+          "correctAnswer": "50% — because η = 1 − (T_cold/T_hot) = 1 − (300/600) = 1 − 0.5 = 0.5 = 50%",
+          "explanationHtml": "<p>Carnot efficiency: η = 1 − T_cold/T_hot = 1 − 300/600 = 1 − 0.5 = 0.50 = 50%. Temperatures must be in Kelvin (not Celsius). This means even a theoretically perfect engine operating between these temperatures can convert at most half the input heat into useful work; the other half must be rejected to the cold reservoir. No real engine can reach this theoretical maximum.</p>"
+        },
+        {
+          "id": "sci-app-7a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A student claims that a plant building glucose from CO₂ and water violates the Second Law of Thermodynamics because it creates order from disorder. Why is this claim incorrect?",
+          "options": [
+            "It is incorrect because photosynthesis does not actually create order — glucose is as disordered as CO₂",
+            "It is incorrect because plants are open systems: they absorb low-entropy solar energy and export high-entropy heat, increasing total universal entropy even as they locally decrease entropy",
+            "It is incorrect because the Second Law only applies to non-living systems",
+            "It is incorrect because glucose is less ordered than CO₂ and water combined"
+          ],
+          "correctAnswer": "It is incorrect because plants are open systems: they absorb low-entropy solar energy and export high-entropy heat, increasing total universal entropy even as they locally decrease entropy",
+          "explanationHtml": "<p>The Second Law applies to the universe (or isolated systems), not to open sub-systems that exchange energy with their surroundings. A plant locally decreases entropy by building ordered molecules, but this requires absorbing high-quality (low-entropy) solar energy and releasing heat (high-entropy waste). The net entropy change of the plant + surroundings + Sun is positive. The Second Law is not violated — it is satisfied at the universal level precisely because the plant's local ordering is paid for by a greater disorder increase elsewhere.</p>"
+        }
+      ]
+    }
+  ]
+}

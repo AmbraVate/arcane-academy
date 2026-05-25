@@ -1,0 +1,98 @@
+{
+  "id": "sci-app-5",
+  "topicId": "sciences",
+  "tier": "APPRENTICE",
+  "title": "Earth Sciences — Structure, Geology & Atmosphere",
+  "glyph": "🌍",
+  "sortOrder": 5,
+  "prerequisites": ["sci-app-4"],
+  "subChunks": [
+    {
+      "id": "sci-app-5a",
+      "title": "Earth Sciences — Structure, Geology & Atmosphere",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The ground beneath your feet, Theodora said, is not fixed. It never has been. You are standing on a thin shell of rock floating on a planet that is still partly molten inside — and that shell is moving, very slowly, in ways that have shaped every mountain, every ocean basin, and every earthquake you have ever heard of." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "And above you: a thin film of gas, held by gravity, cycling heat and water across the whole planet. The atmosphere is not a fixed backdrop. It is part of a system — the Earth system — in which rock, ocean, air, and life are all in conversation." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Understanding Earth as a system — rather than a collection of separate subjects — is what distinguishes Earth science from mere memorising of rock names." }
+      ],
+      "hookHtml": "<p>Earth is not a static rock. It is a dynamic system of interacting spheres — the lithosphere (solid rock), hydrosphere (water), atmosphere (air), and biosphere (life) — all driven by two fundamental energy sources: heat from Earth's interior and solar radiation from the Sun. Understanding the structures, processes, and interactions of these spheres is the foundation of Earth science.</p>",
+      "explanationHtml": "<h3>Earth's Internal Structure</h3><p>Earth's interior is divided into four layers, identified primarily through the analysis of seismic waves:</p><ul><li><strong>Crust:</strong> Outermost layer. Continental crust: 30–70 km thick, granite-rich, less dense. Oceanic crust: 5–10 km thick, basalt-rich, denser. The crust is composed largely of silicate minerals.</li><li><strong>Mantle:</strong> 2,900 km thick; makes up ~84% of Earth's volume. Upper mantle is semi-solid (plastic) rock — the asthenosphere, on which tectonic plates float. The mantle convects: heat from the core drives slow circulation of hot material upward and cooler material downward, driving plate movement.</li><li><strong>Outer core:</strong> Liquid iron-nickel alloy. Its convection generates Earth's magnetic field through the geodynamo effect.</li><li><strong>Inner core:</strong> Solid iron-nickel, despite high temperature (~5,000–6,000°C), because of extreme pressure. Radius ~1,220 km.</li></ul><h3>Plate Tectonics</h3><p>The lithosphere (crust + uppermost solid mantle) is broken into about 15 major tectonic plates that move at 1–15 cm per year — roughly the rate of fingernail growth. Plate interactions occur at three boundary types:</p><ul><li><strong>Divergent boundaries:</strong> Plates move apart. Magma wells up, forming new oceanic crust. Examples: Mid-Atlantic Ridge (spreading 2.5 cm/yr); East African Rift Valley.</li><li><strong>Convergent boundaries:</strong> Plates collide. If oceanic meets continental, the denser oceanic plate subducts (sinks), forming a trench and volcanic arc (e.g., Andes). If two continental plates collide, neither subducts — mountains form (e.g., Himalayas). If oceanic meets oceanic, the older/denser subducts (e.g., Japan Trench).</li><li><strong>Transform boundaries:</strong> Plates slide laterally past each other, causing earthquakes but not volcanism. San Andreas Fault (California) is a famous example.</li></ul><p>Evidence for plate tectonics: matching coastlines (Africa and South America); identical fossil flora (<em>Glossopteris</em>) across Gondwana continents; matching rock formations across oceans; seafloor spreading demonstrated by magnetic striping on either side of mid-ocean ridges; GPS measurements of actual plate movement.</p><h3>The Rock Cycle</h3><p>Rocks are not permanent — they cycle between three types driven by plate tectonics, erosion, and heat:</p><ul><li><strong>Igneous:</strong> Solidified from magma/lava. Intrusive (cooled slowly underground — large crystals, e.g., granite). Extrusive (cooled quickly at surface — small crystals or glassy, e.g., basalt, obsidian).</li><li><strong>Sedimentary:</strong> Formed from compressed sediment (fragments of other rocks, shells, organic material). Clastic (particle fragments, e.g., sandstone, shale); chemical (precipitated from solution, e.g., limestone, rock salt); organic/biological (accumulated organic matter, e.g., coal).</li><li><strong>Metamorphic:</strong> Pre-existing rocks transformed by heat and/or pressure (without melting) deep in the crust. Marble is metamorphosed limestone; slate is metamorphosed shale; quartzite is metamorphosed sandstone.</li></ul><p>Any rock type can become any other: igneous rocks erode into sediment → compacted to sedimentary → buried and pressurised to metamorphic → melted to magma → erupted as igneous again.</p><h3>Earth's Atmosphere</h3><p>The atmosphere has five layers (from surface outward):</p><ol><li><strong>Troposphere (0–12 km):</strong> Contains 75% of atmospheric mass and almost all weather. Temperature decreases with altitude (~6.5°C/km). All weather phenomena occur here.</li><li><strong>Stratosphere (12–50 km):</strong> Temperature increases with altitude (ozone absorbs UV). Contains the ozone layer (15–35 km), which shields Earth from harmful ultraviolet radiation.</li><li><strong>Mesosphere (50–80 km):</strong> Temperature decreases again; coldest region of atmosphere (~−90°C). Where meteors burn up.</li><li><strong>Thermosphere (80–700 km):</strong> Temperature rises dramatically (hundreds of degrees) due to absorption of solar radiation — but very low density means little heat in the conventional sense. Auroras occur here. Contains the ionosphere (important for radio communications).</li><li><strong>Exosphere (above ~700 km):</strong> Transitional zone between atmosphere and outer space; hydrogen and helium atoms gradually escape to space.</li></ol><p>Atmospheric composition: 78% nitrogen (N₂), 21% oxygen (O₂), 0.93% argon, 0.04% CO₂, plus trace gases and variable water vapour. The oxygen-rich atmosphere we breathe is a product of 2.4 billion years of photosynthesis by cyanobacteria and plants — the original atmosphere had no free oxygen.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old how plate tectonics works — as if you were describing a very slow-motion demolition derby between enormous slabs of rock.",
+      "guidedPracticeHtml": "<p>Japan experiences frequent earthquakes and volcanic eruptions. Using your knowledge of plate tectonics: (1) Identify what type(s) of plate boundary likely exist beneath Japan. (2) Explain why both earthquakes and volcanoes occur there. (3) Describe what happens to the rock as it sinks into the mantle at this boundary. (4) Name one mountain range on another continent that formed by a different type of convergent boundary interaction, and explain the difference.</p>",
+      "guidedPracticeModelAnswer": "<p>(1) Japan sits on a convergent boundary where the Pacific Plate and the Philippine Sea Plate subduct beneath the Eurasian Plate and the North American Plate. This is an oceanic-continental (and oceanic-oceanic) convergent boundary system.</p><p>(2) Earthquakes occur because plate movement is not smooth — friction locks the plates together until stress is released suddenly (earthquakes). Subduction of an oceanic plate generates volcanism because: as the cold, wet oceanic crust descends into the mantle, water and other volatiles from the subducting slab lower the melting point of the overlying mantle rock (flux melting), generating magma that rises to form the volcanic arc.</p><p>(3) As the subducting slab descends, it experiences increasing temperature and pressure. Metamorphic reactions occur — minerals transform. Water is released from hydrated minerals (e.g., serpentinite breaks down), contributing to flux melting above the slab. At great depths, the slab material may eventually melt or mix into the mantle.</p><p>(4) The Himalayas formed where the Indian subcontinent collided with Eurasia — a continental-continental convergent boundary. Unlike Japan's oceanic subduction, neither plate subducted because continental crust is too buoyant. Instead, the collision crumpled both plates upward, creating the world's tallest mountain range. There is no volcanic arc because no oceanic slab is subducting to generate magma.</p>",
+      "soloPracticeHtml": "<p>The atmosphere of early Earth (4.5 billion years ago) was composed primarily of nitrogen, carbon dioxide, and water vapour — with almost no free oxygen. Today's atmosphere is 21% oxygen. Explain: (1) what process gradually converted the early atmosphere; (2) what this tells us about the relationship between life and the geosphere; (3) why the appearance of free oxygen in the atmosphere approximately 2.4 billion years ago (the Great Oxidation Event) was catastrophic for most life at the time but enabled the evolution of more complex life later.</p>",
+      "modelAnswer": "<p>(1) The gradual oxygenation of the atmosphere was driven by oxygenic photosynthesis — primarily by cyanobacteria (blue-green algae), which evolved approximately 2.7 billion years ago. These prokaryotes used sunlight to split water molecules, releasing oxygen as a by-product: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. Over billions of years, this biological process accumulated oxygen in the atmosphere.</p><p>(2) This history demonstrates that life is not merely a passive occupant of Earth's physical environment — it is an active geological agent that has fundamentally transformed the atmosphere, and through it, the oceans, climate, and rock chemistry. The early oceans contain banded iron formations (BIFs) — layers of iron oxide (rust) deposited as dissolved iron reacted with the first oxygen released by cyanobacteria. The geosphere and biosphere have co-evolved and remain in continuous feedback with each other.</p><p>(3) For the anaerobic organisms (those living without oxygen) that dominated early Earth, free oxygen was toxic — it reacts with organic molecules and damages cells. The Great Oxidation Event was one of the largest mass extinctions in Earth's history, eliminating many anaerobic lineages or driving them into oxygen-poor refuges (deep sediments, hydrothermal vents) where their descendants still live today. However, oxygen also enabled a new metabolic pathway: aerobic respiration, which is far more energy-efficient than anaerobic fermentation (yielding ~30 ATP per glucose vs 2 ATP). The energy surplus from aerobic respiration ultimately enabled the evolution of large, complex, multicellular organisms — including animals. High atmospheric oxygen also enabled the formation of the ozone layer in the stratosphere, which shields the surface from UV radiation and made terrestrial colonisation by life possible.</p>",
+      "practiceType": "NONE",
+      "xpReward": 70,
+      "learningObjectives": [
+        "Describe the four layers of Earth's interior and the evidence (seismic waves) used to identify them.",
+        "Explain the three types of tectonic plate boundary and the geological features and hazards associated with each.",
+        "Describe the rock cycle, including the conditions that produce igneous, sedimentary, and metamorphic rocks.",
+        "Identify the five layers of Earth's atmosphere and the key processes and features of each layer."
+      ],
+      "commonMistakes": [
+        "Confusing the asthenosphere with the outer core — the asthenosphere is the semi-plastic upper mantle on which plates slide; the outer core is liquid iron much deeper.",
+        "Stating that continental drift is just theory — plate tectonics is supported by multiple independent lines of evidence including GPS measurements of actual plate movement.",
+        "Confusing intrusive and extrusive igneous rocks — intrusive (e.g., granite) cooled slowly underground; extrusive (e.g., basalt) cooled rapidly at the surface.",
+        "Assuming all convergent boundaries produce the same result — oceanic-oceanic, oceanic-continental, and continental-continental collisions produce very different outcomes."
+      ],
+      "assessmentCriteria": [
+        "Correctly identifies boundary type and explains associated geological processes (earthquakes, volcanism, mountain building) for a specific example.",
+        "Explains flux melting at subduction zones and why it generates volcanism above the subducting slab.",
+        "Accurately traces a rock through two complete transitions in the rock cycle with correct terminology.",
+        "Explains the relationship between life and atmospheric evolution with specific reference to the Great Oxidation Event."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Seismic Waves", "description": "P-waves (compressional) and S-waves (shear) produced by earthquakes; their behaviour as they pass through Earth reveals the planet's internal structure — S-waves cannot travel through liquid, which is how we know the outer core is molten." },
+        { "term": "Subduction Zone", "description": "A convergent plate boundary where oceanic crust sinks into the mantle — responsible for deep-focus earthquakes, deep-sea trenches (e.g., Mariana Trench), and volcanic arcs (e.g., Ring of Fire)." },
+        { "term": "Banded Iron Formations (BIFs)", "description": "Layers of iron oxide alternating with chert in Precambrian sedimentary rocks — formed as cyanobacterial oxygen reacted with dissolved iron in the early oceans; a key geological record of the Great Oxidation Event." },
+        { "term": "Ozone Layer", "description": "A region of the stratosphere (15–35 km altitude) with elevated ozone (O₃) concentration that absorbs ultraviolet radiation; the Montreal Protocol (1987) successfully reversed ozone depletion caused by CFCs." },
+        { "term": "Alfred Wegener", "description": "German geophysicist who proposed continental drift in 1912, based on matching coastlines, fossils, and rock formations across continents — dismissed in his lifetime but vindicated by plate tectonic theory in the 1960s." }
+      ],
+      "questions": [
+        {
+          "id": "sci-app-5a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Which layer of Earth's interior is responsible for generating the planet's magnetic field?",
+          "options": [
+            "The inner core, through rotation of solid iron",
+            "The outer core, through convection of liquid iron-nickel generating a geodynamo",
+            "The mantle, through convection currents of semi-solid rock",
+            "The crust, through electrical currents in granite"
+          ],
+          "correctAnswer": "The outer core, through convection of liquid iron-nickel generating a geodynamo",
+          "explanationHtml": "<p>Earth's magnetic field is generated by the geodynamo effect: convection of electrically conductive liquid iron-nickel in the outer core, combined with Earth's rotation, generates electric currents that in turn produce a magnetic field. The inner core is solid (too compressed to convect) and the mantle/crust are poor electrical conductors.</p>"
+        },
+        {
+          "id": "sci-app-5a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A geologist finds coarse-grained rock with large visible crystals of feldspar, quartz, and mica. Which type of rock is it most likely to be, and why?",
+          "options": [
+            "Extrusive igneous — it cooled quickly at the surface, forming large crystals",
+            "Metamorphic — heat and pressure aligned the minerals into large crystals",
+            "Intrusive igneous — it cooled slowly underground, giving crystals time to grow large",
+            "Sedimentary — the large grains were deposited by a fast-moving river"
+          ],
+          "correctAnswer": "Intrusive igneous — it cooled slowly underground, giving crystals time to grow large",
+          "explanationHtml": "<p>Crystal size in igneous rock reflects cooling rate. Slow cooling (deep underground, intrusive) allows crystals to grow large over thousands of years — granite is the classic example. Fast cooling (at the surface, extrusive) produces small crystals or glass. Feldspar, quartz, and mica in a coarse-grained rock with no layering indicates granite — an intrusive igneous rock.</p>"
+        },
+        {
+          "id": "sci-app-5a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "Why does the Himalayan mountain range have no associated volcanic arc, despite forming at a convergent plate boundary?",
+          "options": [
+            "Because the Himalayas are too high for magma to reach the surface",
+            "Because the convergence is oceanic-oceanic, and both plates subduct equally",
+            "Because the collision is continental-continental: neither plate is dense enough to subduct, so no oceanic slab descends to generate flux melting and volcanism",
+            "Because the Himalayan boundary is a transform fault, not convergent"
+          ],
+          "correctAnswer": "Because the collision is continental-continental: neither plate is dense enough to subduct, so no oceanic slab descends to generate flux melting and volcanism",
+          "explanationHtml": "<p>Volcanism at convergent boundaries requires a subducting oceanic slab — water released from the descending slab lowers the melting point of the overlying mantle, generating magma. Continental crust is too buoyant to subduct (lower density than oceanic crust). When two continental plates collide (India-Asia collision), the crust crumples upward into mountains but no oceanic slab subducts — so there is no flux melting and no volcanic arc.</p>"
+        }
+      ]
+    }
+  ]
+}
