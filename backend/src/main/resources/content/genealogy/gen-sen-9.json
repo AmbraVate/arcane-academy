@@ -1,0 +1,100 @@
+{
+  "id": "gen-sen-9",
+  "topicId": "genealogy",
+  "tier": "SENIOR",
+  "title": "Unknown Parentage Cases & NPE Research",
+  "glyph": "🔍",
+  "sortOrder": 9,
+  "prerequisites": ["gen-sen-8"],
+  "subChunks": [
+    {
+      "id": "gen-sen-9a",
+      "title": "Unknown Parentage Cases & NPE Research",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "People come to genealogy for many reasons, Theodora said quietly. But some arrive not with curiosity but with urgency. They need to know where they came from. Medical history. Identity. The simple, profound question: who am I?" },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Unknown parentage cases — adoptees, donor-conceived people, foundlings, those with secret non-paternity — are genealogy's most emotionally charged work. They are also, technically, some of the most demanding." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The DNA evidence is often the only evidence. There may be no documents at all, or documents that actively lie. Your skill with genetic genealogy will be tested to its limits." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "And you must carry it all alongside people whose lives may be fundamentally altered by what you find. This work requires technical mastery and human wisdom in equal measure." }
+      ],
+      "hookHtml": "<p>Before DNA testing, an adoptee searching for biological parents faced near-insurmountable obstacles: sealed records, institutional secrecy, and paper trails that deliberately obscured the truth. Today, that same searcher can upload a saliva sample to AncestryDNA and within weeks be looking at a list of DNA relatives — some of whom may be half-siblings, aunts, or uncles who hold the answer.</p><p>Unknown parentage research has been transformed by consumer DNA testing more completely than any other area of genealogy. But the transformation has also created new complexities: what happens when the search leads to a biological father who never knew he had a child? Or a family whose carefully guarded secret is suddenly visible in a database? The technical skills and ethical sensibilities required are both exceptional.</p>",
+      "explanationHtml": "<h3>Terminology</h3><p><strong>NPE</strong> stands for <em>non-paternity event</em> (sometimes <em>not parent expected</em>) — a situation where the recorded father is not the biological father. NPEs occur at historically consistent rates of approximately 1–3% per generation in most studied populations, meaning a meaningful proportion of people who test will discover an unexpected paternity discrepancy.</p><p><strong>MPE</strong> (misattributed parentage event) is a broader term covering both paternity and maternity surprises. <strong>Donor-conceived</strong> individuals were conceived using anonymous or known sperm, egg, or embryo donation. <strong>Adoptees</strong> may be formally adopted (court records exist) or informally adopted (raised by relatives without legal process, common in earlier centuries).</p><h3>The DNA-First Approach</h3><p>For unknown parentage cases, DNA testing is almost always the primary tool. The recommended approach:</p><ol><li><strong>Test on AncestryDNA</strong> (largest database, highest probability of close matches) and transfer raw data to MyHeritage, FamilyTreeDNA, and GEDmatch for additional matching.</li><li><strong>Identify the closest matches.</strong> A parent will share ~3,500 cM; a half-sibling ~1,750 cM; an aunt/uncle ~1,750 cM; a first cousin ~875 cM. The highest matches define what is knowable.</li><li><strong>Apply the Leeds Method</strong> to cluster matches into four grandparent groups. In a two-unknown-parent case, you will need to untangle two separate family networks from the match list.</li><li><strong>Build trees for the highest matches</strong>, working backwards to find the common ancestral couple, then forward to identify who in that family is the right age and geography to be a biological parent.</li></ol><h3>The Mirror Tree Method</h3><p>When no close match appears (no parent, half-sibling, or first cousin), researchers use the <em>mirror tree</em> technique: build a tree for a known second or third cousin match, identifying a target ancestral couple. Then build a second (mirror) tree for a second group of matches who share different ancestors. The unknown parent is a descendant of both couples — typically their child or grandchild.</p><h3>Search Angels and DNAAdoption</h3><p>Search Angels are volunteer genealogists who assist adoptees and unknown-parentage searchers free of charge. Networks include Search Squad (Facebook), DNA Detectives (Facebook, 170,000+ members), and the DNAAdoption organisation (dnaadoption.com), which provides structured training in autosomal DNA methodology for unknown parentage cases. The expertise available through these networks is genuinely world-class.</p><h3>Documentary Research in Parallel</h3><p>DNA research must run alongside documentary research. For adoptees: birth certificates (may show birth mother's name; father listed as 'unknown' or falsified); adoption records (sealed in many jurisdictions, but subject to legal access in some — check current law for each jurisdiction); court petitions (in the US, PACER may provide accessible federal court adoption records).</p><p>For US adoptions, state laws vary enormously. As of 2024, several states (California, Illinois, Colorado, New York) have opened original birth certificate access to adoptees as of right. Others require petition. International adoptions involve the records of both the country of birth and country of adoption.</p><p>In England and Wales, adoptees have the right to access their original birth certificate from age 18 (Adoption Act 1976; now under the Adoption and Children Act 2002). The General Register Office holds the Adopted Children Register; the original birth entry is indexed in the main birth register.</p><h3>Foundlings</h3><p>Foundlings — children abandoned without identification — are among the most challenging cases. The Foundling Hospital (London, founded 1739) has extensive records at the Foundling Museum and London Metropolitan Archives, including petitions from mothers seeking admission for their children (often rich biographical detail). Thomas Coram Foundation records are indexed online.</p><p>Most foundlings were given names by the institution, and their records are effectively a dead end for biological family research unless DNA testing connects them to living relatives.</p><h3>Ethics and Emotional Safety</h3><p>Unknown parentage research can reveal that a biological father never knew he had a child; that a family has maintained a decades-long secret; that donor-conceived half-siblings exist in large numbers (some sperm donors have 50–100+ biological children). Researchers and clients must be prepared for outcomes that are disruptive to multiple families.</p><p>Best practice includes: the client being prepared for any outcome before testing; the researcher not contacting biological relatives on the client's behalf without explicit instruction; and appropriate referral to specialist counsellors (e.g. the UK's DONOR CONCEPTION Network; the US adoptee rights organisations) when emotional support is needed beyond the researcher's role.</p><h3>The Search/Reunion Distinction</h3><p>Genealogical research ends with identification — finding who the biological parent or relative is. Reunion (actually making contact) is a separate matter, entirely within the client's control. A researcher's job is to provide accurate, documented information about identity, not to broker relationships.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old how a DNA testing website can help someone who was adopted find their biological parents, even if neither parent is in the database.",
+      "guidedPracticeHtml": "<p>A client, Susan (born 1969, adopted as an infant in England), has tested on AncestryDNA. Her highest match is a second cousin once removed (2C1R) sharing 210 cM. She has no matches above 300 cM. The 2C1R match has a public tree showing four grandparent lines. Outline the mirror tree strategy you would use to identify Susan's likely biological parent, and describe what documentary records you would seek in parallel from the GRO and adoption services.</p>",
+      "guidedPracticeModelAnswer": "<p>With a 2C1R at 210 cM as the highest match, Susan likely has no close biological relatives currently tested. The mirror tree approach proceeds as follows:</p><p>First, fully build the known 2C1R match's tree, identifying four grandparent couples. Then identify a second cluster of matches (using the Leeds Method) who share some but not all of the same ancestry. The overlapping couple between two clusters is likely an ancestor of Susan's biological parent.</p><p>From that ancestral couple, build forward — identifying all their children and grandchildren who would be approximately the right age to be Susan's biological parent (born c.1940–1969 for a parent). Cross-reference with geography (place of birth 1969 will appear on the original birth certificate) and with gender (if seeking biological mother specifically).</p><p>In parallel: apply to the GRO for Susan's original birth certificate under the Adoption and Children Act 2002 (she is entitled to this at age 18+). This will name the birth mother. Apply to the relevant local authority adoption service for non-identifying information (health history, background). If DNA work has identified a candidate, documentary verification of the candidate's identity (birth, marriage records) should confirm whether they match the information on the original certificate.</p>",
+      "soloPracticeHtml": "<p>You have helped a client identify her biological father through DNA — a man who had a brief relationship with her birth mother in 1971 and was never told about the pregnancy. He is now 78 years old and has a wife, three adult children, and grandchildren who do not know about your client's existence. Your client wants to make contact. Discuss the ethical considerations involved in how you, as her researcher, should handle the transition from identification to potential contact, and what guidance you would give her.</p>",
+      "modelAnswer": "<p>The researcher's role ends at identification — providing documented evidence of the biological relationship. The decision whether to make contact, how, and when belongs entirely to the client. However, a responsible researcher should help the client think through the implications before she acts.</p><p>Key considerations: The biological father is elderly and may have health vulnerabilities; an unexpected revelation could be a significant shock. His family has no knowledge of this situation; contact could disrupt multiple established relationships. The client's right to know her origins is genuine and important — but it exists in tension with the biological father's own right to privacy and with the potential impact on people (his wife, children) who have no agency in this situation.</p><p>Practical guidance: Do not initiate contact on the client's behalf. Recommend that the client consider an intermediary approach — a letter (not a phone call or doorstep visit) which allows the biological father to process the information privately and respond in his own time. Recommend the client engage with adoptee support organisations (NORCAP in the UK, ISRR internationally) that specialise in facilitated first contact. The client should be emotionally prepared for rejection or non-response. The researcher should not share the biological father's contact details beyond what the client needs for her own correspondence — and should ensure those details were obtained through legitimate means (public record, not private investigation).</p>",
+      "practiceType": "NONE",
+      "xpReward": 90,
+      "learningObjectives": [
+        "Define NPE, MPE, and donor-conceived, and explain why unknown parentage cases present unique research challenges.",
+        "Describe the DNA-first approach and Leeds Method clustering as applied to a two-unknown-parent case.",
+        "Explain the mirror tree technique for cases with no close DNA matches.",
+        "Identify the documentary record sources and legal frameworks relevant to adoptee birth certificate access in England and Wales."
+      ],
+      "commonMistakes": [
+        "Testing only on one platform — missing matches who have tested elsewhere. Always transfer raw DNA to MyHeritage, FTDNA, and GEDmatch.",
+        "Contacting biological relatives on the client's behalf without explicit, informed instruction — a serious ethical breach.",
+        "Treating DNA match predictions as definitive — cM ranges for relationships overlap significantly and must be interpreted with caution.",
+        "Failing to prepare clients emotionally for outcomes that may disrupt multiple families, not just their own."
+      ],
+      "assessmentCriteria": [
+        "Accurately describes the Leeds Method and mirror tree technique, demonstrating understanding of their distinct use cases.",
+        "Correctly identifies the documentary sources and legal rights available to UK adoptees seeking original birth certificates.",
+        "Demonstrates mature ethical reasoning about the search/reunion distinction and the multiple parties affected by unknown parentage discoveries.",
+        "Applies GPS-standard documentation to DNA-driven conclusions in unknown parentage cases."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "NPE (Non-Paternity Event)", "description": "A situation where the recorded or assumed father is not the biological father; occurs at roughly 1–3% per generation in most studied populations." },
+        { "term": "Mirror Tree Method", "description": "Building a tree for a known DNA match and then a separate 'mirror' tree for a second match cluster to identify the ancestral couple connecting both to an unknown biological parent." },
+        { "term": "Search Angels", "description": "Volunteer genealogists who assist adoptees and unknown-parentage searchers free of charge through networks like DNA Detectives and Search Squad." },
+        { "term": "DNAAdoption", "description": "Organisation (dnaadoption.com) providing structured training in autosomal DNA methodology specifically for unknown parentage and adoptee research." },
+        { "term": "Adoption and Children Act 2002", "description": "UK legislation under which adoptees in England and Wales aged 18+ have the right to access their original birth certificate from the General Register Office." },
+        { "term": "Foundling Hospital", "description": "London institution founded 1739 by Thomas Coram; extensive records held at the Foundling Museum and London Metropolitan Archives include mothers' petitions with biographical detail." }
+      ],
+      "questions": [
+        {
+          "id": "gen-sen-9a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What does 'NPE' stand for in genealogical research?",
+          "options": [
+            "Non-Paternity Event",
+            "New Probate Evidence",
+            "National Parishes Enumerated",
+            "No Prior Entry"
+          ],
+          "correctAnswer": "Non-Paternity Event",
+          "explanationHtml": "<p>NPE — Non-Paternity Event (also rendered as 'Not Parent Expected') — describes a situation where the recorded father is not the biological father. Rates are consistently estimated at 1–3% per generation.</p>"
+        },
+        {
+          "id": "gen-sen-9a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A client adopted in England in 1975 wants to find her biological mother. She is now 49 years old. What is the most direct legal route to obtaining her original birth certificate?",
+          "options": [
+            "Apply to the court that handled her adoption for sealed records",
+            "Contact the local authority where she was born and request access under subject access provisions",
+            "Apply to the General Register Office under the Adoption and Children Act 2002 — she is entitled to access it as of right",
+            "Submit a DNA test and use the match list to identify her birth mother's family"
+          ],
+          "correctAnswer": "Apply to the General Register Office under the Adoption and Children Act 2002 — she is entitled to access it as of right",
+          "explanationHtml": "<p>UK adoptees aged 18+ have a legal right to access their original birth certificate from the GRO under the Adoption and Children Act 2002. This is the most direct documentary route and should be pursued alongside DNA research.</p>"
+        },
+        {
+          "id": "gen-sen-9a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A client asks you to telephone her newly identified biological father and tell him she exists, before she has made any decision herself about how to approach contact. Which response best reflects professional genealogical ethics?",
+          "options": [
+            "Telephone him immediately — early contact is more likely to succeed",
+            "Decline, explaining that the researcher's role ends at identification; contact decisions belong to the client, and unsolicited contact by the researcher on her behalf is ethically inappropriate",
+            "Send him a letter on her behalf without waiting for her instructions, to give him more time to adjust",
+            "Contact him only if he is listed on a public genealogical database"
+          ],
+          "correctAnswer": "Decline, explaining that the researcher's role ends at identification; contact decisions belong to the client, and unsolicited contact by the researcher on her behalf is ethically inappropriate",
+          "explanationHtml": "<p>The search/reunion distinction is fundamental. A genealogist identifies biological relatives; the client alone decides whether, when, and how to make contact. Acting unilaterally on the client's behalf could cause serious harm to all parties and violates professional ethics.</p>"
+        }
+      ]
+    }
+  ]
+}

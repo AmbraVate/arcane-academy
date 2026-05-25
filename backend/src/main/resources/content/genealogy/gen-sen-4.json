@@ -1,0 +1,111 @@
+{
+  "id": "gen-sen-4",
+  "title": "South Asian Genealogy",
+  "glyph": "🕌",
+  "sortOrder": 4,
+  "tier": "SENIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-sen-3"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-sen-4a",
+      "title": "Records of India, Pakistan and Bangladesh — Colonial, Religious and Community Sources",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "practiceType": "NONE",
+      "hookHtml": "<p>South Asian genealogy encompasses one of the world's most diverse record landscapes: the Indian subcontinent — today's India, Pakistan, Bangladesh, Nepal, and Sri Lanka — was home to multiple empires, colonial administrations, and religious traditions, each generating its own records. The British colonial administration (the East India Company from 1600, the British Raj from 1858) produced extensive English-language records that are now at the British Library (India Office Records). Hindu, Muslim, Sikh, and Christian communities maintained separate genealogical traditions. Genealogical research for South Asian ancestors requires understanding which tradition, which colonial administrative unit, and which archive holds the relevant records.</p>",
+      "explanationHtml": "<h3>India Office Records (IOR) at the British Library</h3>\n<p>The India Office Records (IOR) at the British Library, London, are the central repository for British colonial records of India, Pakistan, Bangladesh, Burma, and related territories. Key genealogical series:</p>\n<ul>\n  <li><strong>Ecclesiastical returns (N/1 series)</strong>: baptisms, marriages, and burials of British and European civilians and military personnel in India, from the late 17th century. These are the primary source for European, Anglo-Indian, and some Christian Indian families in the colonial period. Indexed and searchable via the Families in British India Society (FIBIS) at fibis.org and on FindMyPast.</li>\n  <li><strong>Military records</strong>: records of officers and soldiers of the East India Company and Indian Army, including service records, casualty lists, and pension files. Held in IOR/L/MIL and related series; indexed on FindMyPast and fibis.org.</li>\n  <li><strong>Civil service records</strong>: records of ICS (Indian Civil Service) officers and other colonial administrators — detailed service records giving family information.</li>\n  <li><strong>Wills and inventories</strong>: probate records for Europeans and Anglo-Indians in India, in IOR/L/AG series.</li>\n</ul>\n<p>The IOR is free to access at the British Library, St Pancras, London; extensive digitisation is in progress with FIBIS and FindMyPast.</p>\n\n<h3>Hindu genealogical traditions — the panda system</h3>\n<p>Hindu genealogy is maintained through a system of hereditary priests called <em>pandas</em> (or <em>purohits</em>) at pilgrimage sites. Pilgrims who visit sacred sites (particularly Haridwar, Varanasi, Gaya, Nasik, and Pushkar) consult the panda who holds their family's genealogical register (<em>bahis</em>). These registers:</p>\n<ul>\n  <li>Record pilgrim names, home village, caste, and family relationships going back many generations — sometimes several hundred years</li>\n  <li>Are updated at each pilgrimage visit</li>\n  <li>Are privately held by the pandas at each site and accessible only through direct consultation</li>\n</ul>\n<p>The panda genealogical system is still active and is one of the oldest continuous genealogical record traditions in the world. Researchers with Hindu ancestors who participated in pilgrimage traditions may find deep genealogical records through a panda consultation at the relevant sacred site.</p>\n\n<h3>Muslim genealogical traditions</h3>\n<p>Muslim families in South Asia often maintain genealogical records through:</p>\n<ul>\n  <li><strong>Shajara (family tree)</strong>: a written genealogical tree, often tracing descent from the Prophet Muhammad or from significant Islamic figures — maintained by families and sometimes by local imams.</li>\n  <li><strong>Mosque records</strong>: birth, death, and marriage records maintained by local mosques; survival and accessibility vary enormously.</li>\n  <li><strong>Waqf (endowment) records</strong>: records of Islamic charitable endowments, which often name family members as trustees across generations — held at state waqf boards and some state archives.</li>\n</ul>\n\n<h3>Civil registration in colonial and post-colonial South Asia</h3>\n<p>Civil registration in British India was introduced piecemeal from the mid-19th century but was never comprehensive for the general population. Key points:</p>\n<ul>\n  <li>Civil registration existed for some urban areas and for specific communities (Europeans, Anglo-Indians, and some Christian converts) from the 1860s.</li>\n  <li>The <strong>1881 Indian census</strong> (and subsequent decennial censuses) are the earliest comprehensive name-level sources for much of the general population; some census records are at the relevant state archives.</li>\n  <li>Partition records (1947): the partition of British India created Pakistan (later Bangladesh) and India. Records from pre-partition Bengal, Punjab, Sindh, and the Northwest Frontier Province are now split between Pakistan and India. For research crossing the partition, both Indian state archives and the National Archives of Pakistan (Islamabad) may be relevant.</li>\n</ul>\n\n<h3>The Families in British India Society (FIBIS)</h3>\n<p>FIBIS (fibis.org) is the specialist society for genealogical research into British, European, and Anglo-Indian families in India. It maintains:</p>\n<ul>\n  <li>The FIBIS database — a searchable index of IOR ecclesiastical returns, military records, and other colonial sources</li>\n  <li>Research guides and county studies for Anglo-Indian research</li>\n  <li>A community of specialist researchers</li>\n</ul>\n\n<h3>DNA and South Asian genealogy</h3>\n<p>South Asian populations are well-represented on AncestryDNA and 23andMe reference populations. The caste system historically restricted marriage to within caste groups — meaning caste-endogamous populations may show distinctive DNA cluster patterns. Y-DNA haplogroup analysis can complement surname and panda research for Hindu families with well-defined patrilineal traditions.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a volume of the India Office Records ecclesiastical returns — handwritten entries in careful copperplate, recording baptisms in Calcutta, 1842."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The India Office Records at the British Library are one of the world's great genealogical collections — and one of the most underused. For any family with a connection to British India: a soldier, a civil servant, a merchant, an Anglo-Indian family — the IOR is essential. Ecclesiastical returns from the late 17th century. Military service records. Wills and inventories. The complete administrative record of two centuries of British presence in the subcontinent. And the Families in British India Society has indexed much of it and put it online."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "But for Hindu families — the oldest genealogical tradition I know. The pandas at Haridwar hold registers that run for centuries. A family whose ancestors made pilgrimage to the Ganges will find their genealogical record preserved there, updated with each visit, going back further than any colonial archive. The panda system is not indexed online; it requires a visit, a consultation, and an understanding of the family's pilgrimage tradition. But for those whose ancestors participated, it is genealogy that predates European record-keeping by hundreds of years."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor South Asian genealogy records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What are the <strong>India Office Records (IOR)</strong> and where are they held?</li>\n  <li>What is the <strong>panda system</strong> in Hindu genealogy?</li>\n  <li>What is <strong>FIBIS</strong> and what does its database index?</li>\n  <li>Why is civil registration for South Asian ancestors more complicated than for British ancestors?</li>\n  <li>What is a <strong>shajara</strong> in Muslim genealogical tradition?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The India Office Records (IOR) at the British Library, London, are the central repository for British colonial records of India, Pakistan, Bangladesh, and Burma — including ecclesiastical returns (baptisms, marriages, burials) of Europeans and Anglo-Indians, military service records, civil service records, and probate records. Free to access at the British Library; indexed online through FIBIS and FindMyPast.\n\nThe panda system is a Hindu genealogical tradition in which hereditary priests (pandas or purohits) at sacred pilgrimage sites maintain family genealogical registers (bahis). Pilgrims consult the panda who holds their family's register and update it with births, marriages, and deaths. The registers can trace families back centuries. Active at Haridwar, Varanasi, Gaya, and other pilgrimage sites.\n\nFIBIS (Families in British India Society, fibis.org) is a specialist genealogical society that indexes IOR ecclesiastical returns, military records, and other colonial sources in a searchable database; also provides research guides for Anglo-Indian and British India research.\n\nCivil registration in South Asia was introduced piecemeal for specific communities (Europeans, Anglo-Indians, and Christian converts) from the mid-19th century but was never comprehensive for the general Hindu or Muslim population under British rule. Post-independence registration also varies significantly by state and region. Partition (1947) split records between India and Pakistan, complicating research across the partition boundary.\n\nA shajara is a written Muslim genealogical tree, maintained by families or local imams, often tracing descent from the Prophet Muhammad or significant Islamic figures — one of the primary genealogical records for Muslim families in South Asia.",
+      "soloPracticeHtml": "<h3>Research strategy for an Anglo-Indian ancestor</h3>\n<p>Your ancestor James Sutherland was a sergeant in the Bengal Infantry, East India Company, stationed in Calcutta in the 1840s. He married a woman named Mary in Calcutta in 1843 and they had four children. James died in India in 1852. Design a research strategy (250–350 words) to establish James's full military career, his wife Mary's identity and origins, and the fate of the children.</p>",
+      "modelAnswer": "Step 1 — IOR military records: Search the India Office Records IOR/L/MIL series at the British Library for James Sutherland, Bengal Infantry, East India Company, c.1840s. His service record will give his enlistment date, regimental number, progression through ranks, conduct assessment, and date of death. It may also give his place of birth and next of kin.\n\nStep 2 — IOR ecclesiastical returns: Search IOR/N/1 ecclesiastical returns for Calcutta, c.1843, for the marriage of James Sutherland and Mary [surname]. The marriage return gives both parties' names, sometimes ages, and Mary's father's name — identifying her family. Search subsequent years for the baptisms of four children.\n\nStep 3 — FIBIS database: Search fibis.org for James Sutherland — the database indexes IOR military and ecclesiastical records and may give an immediate result linking military service to the family ecclesiastical entries.\n\nStep 4 — IOR probate: Search IOR/L/AG probate series for James Sutherland's will or administration (he died in India in 1852). The probate document names the executor, beneficiaries, and often gives Mary's maiden name and the children's names and ages — a family snapshot at James's death.\n\nStep 5 — Fate of children: After James's death in 1852, the children may have remained in India or been sent to England for schooling (a common pattern for Anglo-Indian families). Search subsequent IOR ecclesiastical returns for the children's marriages in India; search UK census records (1861, 1871) for children returning to England. If the children remained in India, search FindMyPast's British India census returns.\n\nStep 6 — Mary's origins: If Mary appears to be Anglo-Indian (mixed Indian-European heritage), the IOR ecclesiastical returns for her own baptism c.1820–1828 give her parents' identities.",
+      "feynmanPrompt": "Explain to a friend what the India Office Records are, who they document, and why the British Library in London — rather than an Indian archive — holds the most important records for tracing British and Anglo-Indian ancestors in colonial India.",
+      "rabbitHoleTerms": [
+        {
+          "term": "India Office Records (IOR)",
+          "description": "The British Library's collection of records from the East India Company and British Raj (c.1600–1947), including ecclesiastical returns, military service records, civil service files, and probate — the primary source for British, European, and Anglo-Indian ancestry in colonial India."
+        },
+        {
+          "term": "panda (genealogical)",
+          "description": "A hereditary Hindu priest at a pilgrimage site who maintains family genealogical registers (bahis) updated at each pilgrimage visit — one of the oldest continuous genealogical record traditions in the world, active at Haridwar, Varanasi, Gaya, and other sacred sites."
+        },
+        {
+          "term": "FIBIS (Families in British India Society)",
+          "description": "A specialist genealogical society (fibis.org) that indexes IOR ecclesiastical and military records in a searchable database and provides research guides for British India ancestry."
+        },
+        {
+          "term": "ecclesiastical returns (N/1)",
+          "description": "IOR series of baptism, marriage, and burial records for Europeans and Anglo-Indians in British India, from the late 17th century — the primary vital record source for colonial-era Christian families in the subcontinent."
+        },
+        {
+          "term": "shajara",
+          "description": "A written genealogical tree maintained by Muslim families in South Asia, often tracing descent from the Prophet Muhammad or significant Islamic figures — a primary genealogical source in Muslim communities where civil registration is incomplete."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the <strong>panda system</strong> in Hindu genealogy and where are its records held?</p>",
+          "options": [
+            "Hereditary Hindu priests (pandas) at sacred pilgrimage sites maintain family genealogical registers (bahis) updated at each pilgrim visit — records are privately held by the pandas at sites including Haridwar, Varanasi, and Gaya, and are accessible only through direct consultation at those sites",
+            "A government-run system of Hindu family registration maintained by the Indian civil service from 1858",
+            "A digitised index of Hindu baptismal records held at the National Archives of India in New Delhi",
+            "A caste-based record system maintained by village elders (gram panchayats) for land inheritance purposes"
+          ],
+          "correctAnswer": "Hereditary Hindu priests (pandas) at sacred pilgrimage sites maintain family genealogical registers (bahis) updated at each pilgrim visit — records are privately held by the pandas at sites including Haridwar, Varanasi, and Gaya, and are accessible only through direct consultation at those sites",
+          "explanationHtml": "<p>The panda system is one of the oldest continuous genealogical record traditions in the world. Pandas are hereditary priests who serve specific family groups or geographic communities; their family genealogical registers (bahis) are updated when members of that family visit the sacred site on pilgrimage. A family with a strong pilgrimage tradition may find records stretching back many centuries. The system is entirely privately held — not in any government or library archive — and is accessed by visiting the relevant pilgrimage site and identifying the panda who holds your family's register. The knowledge of which panda to consult is often passed down within families as part of the pilgrimage tradition itself.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching an Anglo-Indian ancestor, William D'Souza, who appears in the 1851 Indian census in Madras. You want to find his parents. Which record is most likely to give this information?</p>",
+          "options": [
+            "The India Office Records ecclesiastical returns (IOR/N/1) for Madras — William's baptism entry, typically recorded in the Roman Catholic or Anglican registers of the relevant Madras church, should give his father's name and mother's name",
+            "The 1841 census of England — all Anglo-Indians appeared in the UK census regardless of whether they were in India",
+            "The Families in British India Society database lists all Anglo-Indian parents by name",
+            "Anglo-Indian baptisms were not recorded before 1858"
+          ],
+          "correctAnswer": "The India Office Records ecclesiastical returns (IOR/N/1) for Madras — William's baptism entry, typically recorded in the Roman Catholic or Anglican registers of the relevant Madras church, should give his father's name and mother's name",
+          "explanationHtml": "<p>Anglo-Indian families were predominantly Christian (Catholic, Anglican, or sometimes other Protestant denominations) and their vital events were recorded in colonial church registers, which form the ecclesiastical returns series in the India Office Records (IOR/N/1). William D'Souza's surname suggests Catholic heritage (common among Goan Catholic families). If he was born c.1825–1835 to appear as an adult in 1851, his baptism should be in the Madras Catholic (or Anglican, if the family had converted) register for that period. The FIBIS database indexes many of these returns and may give an immediate answer before a full IOR search is needed. The IOR/N/1 series is organised by Presidency (Bengal, Madras, Bombay) and then by church.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher's ancestor's family came from Punjab. Some records are at an archive in Pakistan; others are at an archive in India. The researcher tries only the Indian archive and finds nothing. They conclude no pre-partition records exist. What has been overlooked?</p>",
+          "options": [
+            "The partition of 1947 split Punjab between India and Pakistan — records created before 1947 may be in Pakistani archives (National Archives of Pakistan, Punjab Archives in Lahore) depending on which part of Punjab the family came from; both countries must be checked for pre-partition records",
+            "Pre-partition Punjab records were destroyed in the communal violence of 1947 and do not exist",
+            "All Punjab records were centralised in New Delhi after partition and are at the National Archives of India",
+            "Pakistan does not hold any pre-1947 genealogical records"
+          ],
+          "correctAnswer": "The partition of 1947 split Punjab between India and Pakistan — records created before 1947 may be in Pakistani archives (National Archives of Pakistan, Punjab Archives in Lahore) depending on which part of Punjab the family came from; both countries must be checked for pre-partition records",
+          "explanationHtml": "<p>The 1947 partition of British India created Pakistan (which later separated into Pakistan and Bangladesh in 1971) and India. Punjab province was divided — western Punjab went to Pakistan, eastern Punjab to India. Records created before 1947 are physically located in whichever country the archive ended up in, which depends on the geographic location of the record-creating institution. A family from Lahore (now Pakistan) would have pre-partition records in the Punjab Archives in Lahore; a family from Amritsar (now India) would have records in the Punjab State Archives in Chandigarh. Researchers with pre-partition Punjab ancestry must identify which side of the partition boundary their ancestral village fell on and search the relevant archive. The National Archives of Pakistan in Islamabad holds some central colonial records; the National Archives of India in New Delhi holds others. This is a fundamental geographic and political issue that cannot be resolved by searching only one country's archives.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "gen-sen-19",
+  "topicId": "genealogy",
+  "tier": "SENIOR",
+  "title": "Capstone — Advanced Proof Argument",
+  "glyph": "🏆",
+  "sortOrder": 19,
+  "prerequisites": ["gen-sen-18"],
+  "subChunks": [
+    {
+      "id": "gen-sen-19a",
+      "title": "Capstone — Advanced Proof Argument",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "This is where everything comes together, Theodora said. Not a quiz. Not a checkbox exercise. A proof argument — a formal piece of genealogical reasoning — that demonstrates you can do what a professional genealogist does." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "You have learned to analyse evidence, resolve conflicts, navigate archives, read DNA results, and apply the Genealogical Proof Standard. Now you will use all of it at once." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Choose one of the scenarios below. Research it using what you know. Write a proof argument that meets GPS standards — complete with research question, evidence survey, analysis, and conclusion. Cite every claim. Acknowledge every conflict." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Then submit it. Your work will be assessed against four criteria that mirror professional genealogical standards. Welcome to the advanced tier." }
+      ],
+      "hookHtml": "<p>The Senior tier of this genealogy pathway has covered the most demanding areas of genealogical practice: forensic genealogy, unknown parentage research, advanced DNA analysis, evidence evaluation, proof writing, conflict resolution, historical geography, medieval records, heraldry, and archival practice. This capstone draws on all of them.</p><p>A proof argument is not a summary of what you have found. It is a formal demonstration that you have searched comprehensively, evaluated evidence critically, resolved conflicts transparently, and reached a conclusion that can be independently verified. It is the standard to which professional genealogists hold their published work.</p>",
+      "explanationHtml": "<h3>Capstone Requirements</h3><p>Choose ONE of the following scenarios. For the chosen scenario, write a full proof argument that includes all four required sections:</p><ol><li><strong>Research question:</strong> A precise statement of the genealogical question being addressed.</li><li><strong>Evidence survey:</strong> What records were consulted (or would be consulted), including records that produced no results (negative evidence documented).</li><li><strong>Evidence analysis:</strong> Each piece of evidence classified using the source/information/evidence framework; direct, indirect, and negative evidence explicitly identified; conflicts named and resolved with principled reasoning.</li><li><strong>Conclusion:</strong> A stated finding using appropriately qualified language; limitations acknowledged; any unresolved elements identified for future research.</li></ol><p>Your response should be 600–900 words. Every factual assertion requires a cited source (you may use hypothetical source references if working from the scenario materials). Acknowledge any conflict in the evidence — do not suppress it.</p><h3>Scenario A: The Missing Father (DNA & Documentary)</h3><p>Eleanor Marsh (1875–1951) appears in the 1881 and 1891 censuses as living with her widowed mother, Jane Marsh. Her birth certificate (1875) gives her father as 'Thomas Marsh, labourer' but no marriage record for Jane and Thomas can be found in any English county from 1865 to 1880. Eleanor's grandson has tested on AncestryDNA. His highest match outside the documented Marsh lines is a second cousin (220 cM) whose tree shows the surname 'Dobbs' in West Yorkshire. No Dobbs connection appears in the known Marsh tree.</p><p>Your task: Write a proof argument addressing whether Thomas Marsh was Eleanor's biological father or whether the birth certificate entry may represent a false or assumed paternity. Use the evidence as described, add hypothetical records as needed, and apply GPS standards throughout.</p><h3>Scenario B: The Copyhold Problem (Historical Records)</h3><p>You are tracing the Walker family of Ecclesfield, Yorkshire, in the 18th century. You have documentary evidence of a Thomas Walker in Ecclesfield from the 1790s. You want to establish whether this Thomas Walker is the same person as a Thomas Walker recorded in the Ecclesfield manorial court rolls in 1764 as inheriting a copyhold holding from his father, James Walker. The records show: (1) manorial court roll 1764, Thomas Walker son of James Walker, admitted to one messuage in Ecclesfield; (2) baptism register, Ecclesfield, 1738: Thomas Walker, son of James and Mary Walker; (3) marriage register, Ecclesfield, 1766: Thomas Walker and Sarah Hawley; (4) 1790s poor rate assessment, Ecclesfield: Thomas Walker, one tenement. No death record for Thomas Walker has been found in Ecclesfield before 1800.</p><p>Your task: Write a proof argument establishing whether the 1790s Thomas Walker is the same individual as the 1764 manorial court roll Thomas Walker. Classify all evidence, resolve any conflicts, and state your conclusion with appropriate qualifications.</p>",
+      "guidedPracticeHtml": "",
+      "guidedPracticeModelAnswer": "",
+      "soloPracticeHtml": "<p>Write a full proof argument for one of the two scenarios above (Scenario A or Scenario B). Your argument should meet GPS standards: precise research question; reasonably exhaustive evidence survey including negative evidence; analysis using source/information/evidence classification; explicit conflict acknowledgement and resolution; and a qualified conclusion. Aim for 600–900 words. Cite every factual assertion.</p>",
+      "modelAnswer": "<h3>Model Answer: Scenario B — The Copyhold Problem</h3><p><strong>Research question:</strong> Was the Thomas Walker assessed for poor rates in Ecclesfield in the 1790s the same person as the Thomas Walker admitted to a copyhold messuage in Ecclesfield in the manorial court roll of 1764?</p><p><strong>Evidence survey:</strong> Records consulted include: Ecclesfield manorial court rolls (held at Sheffield Archives, ref. ACM/MA); Ecclesfield parish baptism register (Sheffield Archives, PR.13/1); Ecclesfield parish marriage register (PR.13/2); Ecclesfield township poor rate assessments, 1790s (Sheffield Archives, local authority records series). A death certificate search for Thomas Walker, Ecclesfield, 1766–1800 yielded no result (civil registration did not begin until 1837; a search of the Ecclesfield burial register 1766–1800 was conducted — no Thomas Walker burial found, consistent with survival to at least the 1790s). No conflicting manorial entries for a second Thomas Walker in Ecclesfield were found during the study period.</p><p><strong>Evidence analysis:</strong></p><p>(1) Manorial court roll, 1764: Thomas Walker, son of James Walker, admitted to one messuage. Original source (the court roll itself); primary information (recorded at the time of the transaction). Direct evidence that a Thomas Walker — son of James — inherited a copyhold holding in Ecclesfield in 1764. Indirect evidence that his father James Walker died shortly before this date (admission triggers on death of previous holder).</p><p>(2) Ecclesfield baptism register, 1738: Thomas Walker, son of James and Mary Walker. Original source; primary information (recorded at baptism). Direct evidence that a Thomas Walker was born to James and Mary Walker in Ecclesfield in 1738. He would be approximately 26 years old in 1764 — an entirely plausible age for a man inheriting copyhold property.</p><p>(3) Marriage register, 1766: Thomas Walker and Sarah Hawley. Original source; primary information. Direct evidence that a Thomas Walker married at Ecclesfield in 1766 — two years after the manorial admission. Consistent with the same individual: recently inherited a property, then established a household through marriage. No other Thomas Walker marriage found in Ecclesfield in this period.</p><p>(4) Poor rate assessment, 1790s: Thomas Walker assessed for one tenement. This is a civil parish administrative document; original source; the specific tenement described is consistent (though not identical in description) with the copyhold messuage recorded in 1764. Indirect evidence that a Thomas Walker continued to hold a property in Ecclesfield into the 1790s.</p><p>(5) Absence of burial record for Thomas Walker, Ecclesfield, 1766–1800: negative evidence. The Ecclesfield burial register is complete and surviving (checked against the coverage confirmed by Sheffield Archives). No burial was found, consistent with the individual's survival into the 1790s poor rate period. This supports the continuity argument.</p><p>(6) Absence of any second Thomas Walker in contemporaneous records: negative evidence. No second Thomas Walker appears in either the court rolls or the assessment records for this period. This eliminates the most significant alternative explanation — that the 1790s assessments refer to a son or other contemporary of the same name.</p><p><strong>Resolution of potential conflict:</strong> The poor rate assessment's 'one tenement' may describe the same property as the 1764 court roll's 'one messuage' in different terms (local usage varies between the terms 'messuage' and 'tenement' without necessarily indicating different properties). This apparent discrepancy does not constitute a genuine evidential conflict: the terminology difference is consistent with normal variation in 18th-century record language, and the geographic continuity — same township, same approximate property holding, consistent timeframe — outweighs it.</p><p><strong>Conclusion:</strong> The preponderance of evidence establishes with reasonable confidence that the Thomas Walker assessed for poor rates in Ecclesfield in the 1790s is the same individual as the Thomas Walker admitted to a copyhold messuage in the manorial court roll of 1764, who in turn is very likely the Thomas Walker baptised at Ecclesfield in 1738 as the son of James and Mary Walker. The evidence chain is consistent in name, location, property holding, and timeframe; no conflicting evidence exists; and the absence of any burial record or second contemporary Thomas Walker strengthens the identification. The limitation of this conclusion is that the physical connection between the 1764 messuage and the 1790s tenement has not been confirmed through a complete manorial series for the intervening period — further examination of any surviving court rolls from 1765–1795 would consolidate the finding.</p>",
+      "practiceType": "NONE",
+      "xpReward": 110,
+      "learningObjectives": [
+        "Construct a GPS-compliant proof argument incorporating direct, indirect, and negative evidence.",
+        "Apply the source/information/evidence classification framework throughout a sustained piece of analytical writing.",
+        "Demonstrate conflict identification and principled resolution within a formal genealogical argument.",
+        "Produce a qualified, professionally framed conclusion that accurately reflects evidential strength."
+      ],
+      "commonMistakes": [
+        "Writing a narrative family history rather than a structured analytical argument — the two genres serve different purposes.",
+        "Acknowledging only positive evidence and omitting the evidence survey of negative finds.",
+        "Failing to classify evidence explicitly — the analysis section must use GPS terminology, not just describe what the records say.",
+        "Overclaiming certainty in the conclusion — qualified language is a marker of professional rigour, not weakness."
+      ],
+      "assessmentCriteria": [
+        "Structure (25%): proof argument includes all four required sections; research question is precisely stated; evidence survey documents both positive and negative results.",
+        "Evidence classification (25%): each source correctly classified as original/derivative; each piece of information as primary/secondary; each item of evidence as direct/indirect/negative.",
+        "Reasoning and conflict resolution (25%): conflicting evidence explicitly named and resolved with principled justification; alternative interpretations considered and addressed.",
+        "Conclusion and communication (25%): conclusion uses appropriate qualified language; limitations are acknowledged; argument is coherent, well-organised, and correctly cited."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "GPS Step 5 (Written Conclusion)", "description": "The fifth element of the Genealogical Proof Standard — a soundly reasoned, coherently written conclusion — the formal output that makes genealogical findings communicable and verifiable by others." },
+        { "term": "NGSQ Style Proof Argument", "description": "The model for published genealogical proof arguments, established by the National Genealogical Society Quarterly — peer-reviewed, fully footnoted, with explicit evidence classification and conflict resolution." },
+        { "term": "Preponderance Standard", "description": "The evidential standard for genealogical conclusions: more likely true than not, given all available evidence — neither certainty nor mere possibility." },
+        { "term": "BCG Skillbuilding", "description": "Board for Certification of Genealogists publication series providing model proof arguments and structured exercises for developing proof-writing skills." },
+        { "term": "Evidence Explained (3rd ed., 2015)", "description": "Elizabeth Shown Mills's standard reference for genealogical citation and evidence classification — the authoritative guide for footnoting and source analysis in proof arguments." }
+      ],
+      "questions": [
+        {
+          "id": "gen-sen-19a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Which of the following is NOT a required section of a GPS-compliant proof argument?",
+          "options": [
+            "A precise research question",
+            "An evidence survey including negative findings",
+            "A biographical narrative of the subject's life",
+            "A qualified conclusion acknowledging limitations"
+          ],
+          "correctAnswer": "A biographical narrative of the subject's life",
+          "explanationHtml": "<p>A proof argument requires a research question, evidence survey, evidence analysis, and conclusion. A biographical narrative is a different genre — valuable for family histories, but not a required element of an analytical proof argument.</p>"
+        },
+        {
+          "id": "gen-sen-19a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "In your proof argument, you state: 'Thomas Walker was born in 1738 and definitely lived until the 1790s.' What is wrong with this statement for a GPS-compliant conclusion?",
+          "options": [
+            "It should name the parents of Thomas Walker to be complete",
+            "'Definitely' overclaims certainty — GPS conclusions should use qualified language such as 'the available evidence indicates' or 'is consistent with survival to the 1790s'",
+            "The birth year should be expressed as a range, not a specific year",
+            "The statement is acceptable as written — GPS allows definitive language when evidence is strong"
+          ],
+          "correctAnswer": "'Definitely' overclaims certainty — GPS conclusions should use qualified language such as 'the available evidence indicates' or 'is consistent with survival to the 1790s'",
+          "explanationHtml": "<p>GPS conclusions are held to a preponderance standard, not certainty. Language like 'definitely', 'certainly', or 'proves' overclaims what genealogical evidence can establish. Qualified phrasing ('the available evidence indicates', 'is consistent with', 'preponderates toward') accurately represents the epistemic status of genealogical findings.</p>"
+        },
+        {
+          "id": "gen-sen-19a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "Your proof argument identifies a conflict: two sources give different birth years for the subject. You prefer one source but cannot fully explain why the other gives a different date. How should you handle this in the argument?",
+          "options": [
+            "Omit the conflicting source from the argument to keep the conclusion clean",
+            "Average the two birth years and use the result",
+            "Explicitly name both sources, explain which is preferred and why (applying the resolution hierarchy), acknowledge that the discrepancy cannot be fully explained, and note the limitation in the conclusion",
+            "Accept the source that gives the later birth year, since older sources are less reliable"
+          ],
+          "correctAnswer": "Explicitly name both sources, explain which is preferred and why (applying the resolution hierarchy), acknowledge that the discrepancy cannot be fully explained, and note the limitation in the conclusion",
+          "explanationHtml": "<p>GPS requires that all relevant evidence be acknowledged, including conflicting evidence. Suppressing a conflicting source to keep the argument tidy is a fundamental breach of GPS standards. A good proof argument names the conflict, applies the resolution hierarchy to explain the preferred source, and honestly acknowledges any residual uncertainty.</p>"
+        }
+      ]
+    }
+  ]
+}

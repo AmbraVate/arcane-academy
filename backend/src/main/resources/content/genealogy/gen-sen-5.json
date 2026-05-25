@@ -1,0 +1,111 @@
+{
+  "id": "gen-sen-5",
+  "title": "East Asian Genealogy",
+  "glyph": "🏯",
+  "sortOrder": 5,
+  "tier": "SENIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-sen-4"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-sen-5a",
+      "title": "Chinese, Japanese and Korean Genealogical Records and Clan Traditions",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "practiceType": "NONE",
+      "hookHtml": "<p>East Asian genealogy — encompassing China, Japan, Korea, and their diaspora communities — rests on some of the oldest continuous written genealogical records in the world. Chinese clan genealogies (<em>zupu</em> or <em>jiapu</em>) have been maintained for over a thousand years; Japanese household registers (<em>koseki</em>) provide comprehensive family documentation from the Meiji era; Korean clan genealogies (<em>jokbo</em>) trace lineages over many centuries. For diaspora communities — Chinese, Japanese, and Korean immigrants to the US, Canada, Australia, and Southeast Asia — a parallel set of immigration records intersects with these home-country traditions. Understanding both the domestic record landscape and the diaspora immigration record landscape is essential for East Asian genealogical research.</p>",
+      "explanationHtml": "<h3>Chinese genealogy — zupu (clan genealogies)</h3>\n<p>Chinese clan genealogies (<em>zupu</em>, also called <em>jiapu</em> or <em>zongpu</em>) are compiled by clans (groups of families sharing a common patrilineal ancestor and surname) and trace the clan's lineage, sometimes over many centuries. Features:</p>\n<ul>\n  <li>Zupu are typically written in Classical Chinese and organised by generation, listing each male in the line with his name, birth date (in traditional Chinese calendar), death date, wife's surname, and children's names.</li>\n  <li>They are revised periodically (every 30–60 years in many traditions) and reprinted.</li>\n  <li>Many zupu survive in clan halls, temple libraries, and personal family possession in China; significant collections are at the Shanghai Library, the National Central Library (Taiwan), the Family History Library (FamilySearch), and university libraries in the US and Taiwan.</li>\n  <li>The FamilySearch Catalog holds microfilmed zupu for thousands of Chinese clans — searchable by surname and county.</li>\n</ul>\n<p>Limitations: zupu traditionally recorded only males; women's birth names appear only marginally. They also reflect idealised genealogical narratives and some entries may reflect aspiration rather than documented fact. They are compiled from memory and earlier records at each revision.</p>\n\n<h3>Japanese koseki (household registers)</h3>\n<p>Japan's koseki system is the most comprehensive national household registration system in the modern world. Introduced in its modern form in 1872, the koseki records:</p>\n<ul>\n  <li>Every member of a household (ie) — their name, relationship to the head, birth date, and vital events (marriage, death, divorce, adoption)</li>\n  <li>Records are maintained at the municipal level and updated continuously</li>\n  <li>Access: a person's own koseki is obtainable from the relevant municipal office in Japan; access to koseki of deceased individuals or ancestors requires demonstration of relationship. Japanese nationals and their direct descendants (up to the degree required by each office's policies) can obtain extracts.</li>\n  <li>Pre-Meiji records: the Meiji-era koseki replaced earlier <em>shumon aratame-cho</em> (religious examination registers maintained by Buddhist temples from the 17th century) which functioned as population registers. Temple death registers (<em>kakocho</em>) record ancestors' posthumous Buddhist names and dates.</li>\n</ul>\n<p>For Japanese Americans and other diaspora, the koseki of the immigrant ancestor is the bridge to Japanese family records.</p>\n\n<h3>Korean jokbo (clan genealogies)</h3>\n<p>Korean clan genealogies (<em>jokbo</em>) are similar in concept to Chinese zupu but reflect Korea's distinctive clan system. Korea's traditional surnames are relatively few (Kim, Lee, Park, Choi, etc.) but each surname has multiple clan branches (<em>bon</em>), each tracing a different origin. The jokbo:</p>\n<ul>\n  <li>Records all male descendants of a common ancestor</li>\n  <li>Gives names, official ranks, wives' clan surnames, and death information</li>\n  <li>Is maintained by the clan association (<em>jongchin-hoe</em>) and periodically revised</li>\n  <li>Major collections at the National Library of Korea and clan association offices</li>\n</ul>\n<p>Korea also maintained a household registration system (<em>hojeok</em>) under both Joseon dynasty and Japanese colonial administration (1910–1945). Colonial-era hojeok records are at the National Archives of Korea.</p>\n\n<h3>Chinese and Japanese immigration to the US — special records</h3>\n<p>Chinese and Japanese immigrants to the US generated distinctive immigration records due to exclusion laws:</p>\n<ul>\n  <li><strong>Chinese Exclusion Act records (1882–1943)</strong>: the Chinese Exclusion Act severely restricted Chinese immigration. Those who did enter often claimed to be 'paper sons' — using purchased identity documents of Chinese Americans. NARA holds extensive files on Chinese applicants for admission; case files give photographs, family testimony, and interrogation records. Searchable on Ancestry (Chinese Exclusion Act Files).</li>\n  <li><strong>Japanese American internment records (WW2)</strong>: the Japanese American internment (Executive Order 9066, 1942) generated detailed records of over 100,000 Japanese Americans. Records are at NARA and the Japanese American National Museum (JANM) in Los Angeles.</li>\n  <li><strong>Angel Island Immigration Station records</strong>: the primary entry point for Asian immigrants on the West Coast (1910–1940). Case files at the National Archives at San Francisco (RG 85).</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora holds up a volume printed on fine paper — a Chinese zupu, its pages covered in columns of classical characters listing generations of a Chen clan from Guangdong Province."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This clan genealogy was printed in 1923 and revised in 1986. It traces the Chen clan from their ancestral home in Guangdong Province back forty-two generations — over eight hundred years of documented patrilineal descent. This is not unusual for Chinese clan genealogies. The tradition of compiling zupu goes back a thousand years; clans have maintained their records through wars, famines, and revolutions. The FamilySearch microfilm collection holds thousands of these genealogies, searchable by province and surname."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The Japanese koseki is a different kind of document — not a clan genealogy but a household registration maintained by the state. Every Japanese person's life events — births, marriages, adoptions, deaths — are recorded in the koseki of their household. When a Japanese immigrant arrived in America or Australia, they carried the genealogical thread back to that koseki in a specific Japanese municipality. Obtain the koseki and you have the family documented in Japan."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor East Asian genealogy records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is a Chinese <strong>zupu</strong> and what information does it typically record?</li>\n  <li>What is the Japanese <strong>koseki</strong> and from when does the modern system date?</li>\n  <li>What are <strong>Chinese Exclusion Act records</strong> and why are they genealogically significant?</li>\n  <li>What is a Korean <strong>jokbo</strong> and how does the Korean clan system differ from using Western surnames?</li>\n  <li>What is the <strong>Angel Island Immigration Station</strong> and what records does it hold?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A Chinese zupu (clan genealogy) is a compiled genealogical record maintained by a clan group (families sharing a patrilineal ancestor and surname), typically recording male members by generation with name, birth and death dates (traditional calendar), wife's clan surname, and children's names. Revised every 30–60 years; held at clan halls, temple libraries, FamilySearch, and university libraries.\n\nThe Japanese koseki is a household registration system recording every family member's vital events (birth, marriage, divorce, death, adoption) maintained at the municipal level. The modern system dates from 1872 (Meiji era); earlier temple-based registers (shumon aratame-cho) preceded it from the 17th century.\n\nChinese Exclusion Act records (1882–1943) are immigration case files for Chinese applicants for admission to the US under the restrictive Chinese Exclusion Act, including photographs, family testimony, and interrogation records. Many entrants claimed 'paper son' status (purchased identities), making these files genealogically complex but rich with family information — at NARA and on Ancestry.\n\nA Korean jokbo is a clan genealogy recording male descendants of a common ancestor, with names, official ranks, wives' clan surnames, and vital information. Korean surnames are few (Kim, Lee, Park, etc.) but each surname has multiple clan branches (bon) with different origins — the jokbo identifies which branch a family belongs to, distinguishing between, for example, Gyeongju Kim and Gimhae Kim.\n\nAngel Island Immigration Station (1910–1940) was the primary West Coast US entry point for Asian immigrants. Case files at the National Archives at San Francisco (RG 85) contain photographs, interrogation records, and family information for applicants — essential for Chinese American and Japanese American genealogy.",
+      "soloPracticeHtml": "<h3>Bridging the Pacific — connecting a Chinese American ancestor to Chinese records</h3>\n<p>Your great-grandfather Lee Wai Hong arrived in San Francisco in 1910, aged approximately 22. Family tradition says he came from Taishan County, Guangdong Province. He claimed on arrival to be a 'paper son' of an American citizen. Design a research strategy (250–350 words) to establish his true origins in China and connect to Chinese genealogical records.</p>",
+      "modelAnswer": "Step 1 — US immigration file: The Angel Island arrival file for Lee Wai Hong (c.1910) is at the National Archives at San Francisco (RG 85). This file contains the interrogation transcript — the questions he answered to prove his claimed identity. Even if he was a paper son, the file gives his claimed village, father's name, and family details. The interrogation details about his 'paper' family's village in Taishan are still useful: paper son identities were typically purchased from someone from the same county, so the claimed village is often close to or the same as the actual village of origin.\n\nStep 2 — Family oral tradition and community: Taishan County in Guangdong is the origin of the majority of early Chinese Americans. Research the Lee (Li) clan associations in Taishan — the Lee Family Association (a national Chinese American organisation) may have records of early members.\n\nStep 3 — Chinese Exclusion Act papers: Search Ancestry's Chinese Exclusion Act Files for Lee Wai Hong or his claimed paper identity. The file gives his photograph (useful for family comparison), the paper family's details, and sometimes additional testimony that reveals real family information.\n\nStep 4 — Taishan zupu: Search the FamilySearch Catalog for Lee (Li) clan genealogies from Taishan (Xinning) County, Guangdong. Taishan clans are well-represented in the FamilySearch microfilm collection. The zupu may include the generation poem (a fixed character sequence given to each generation) which will identify which generation Lee Wai Hong belongs to and his place in the clan.\n\nStep 5 — Village visit or proxy research: Working with a researcher in Taishan (or through the Taishan Overseas Chinese Archives) to search village records, temple registers, and local clan halls for the Lee family may identify the specific household.",
+      "feynmanPrompt": "Explain to a friend what a Chinese zupu is, how it differs from a Western genealogy register, and why the FamilySearch library holds copies of thousands of them.",
+      "rabbitHoleTerms": [
+        {
+          "term": "zupu (jiapu)",
+          "description": "Chinese clan genealogy — a compiled record of all male descendants of a common patrilineal ancestor, maintained by the clan and revised every 30–60 years; thousands of examples are on FamilySearch microfilm, searchable by province and surname."
+        },
+        {
+          "term": "koseki",
+          "description": "Japan's national household registration system (from 1872) — recording every family member's vital events at the municipal level; accessible to direct descendants and essential for Japanese diaspora genealogical research."
+        },
+        {
+          "term": "jokbo",
+          "description": "Korean clan genealogy — recording male descendants of a common ancestor, with names, official ranks, and wives' clan surnames; essential for distinguishing between different clan branches sharing the same Korean surname."
+        },
+        {
+          "term": "paper son",
+          "description": "A term for Chinese immigrants to the US who entered under purchased false identities claiming to be sons of American citizens — Chinese Exclusion Act case files for paper sons contain family testimony and photographs, at NARA and on Ancestry."
+        },
+        {
+          "term": "Angel Island Immigration Station",
+          "description": "The primary US West Coast immigration processing facility (1910–1940) where Asian immigrants were detained and interrogated; case files at the National Archives at San Francisco (RG 85) contain photographs and family information."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is a Chinese <strong>zupu</strong> and where can significant collections be found?</p>",
+          "options": [
+            "A clan genealogy compiled by families sharing a common patrilineal ancestor and surname, recording male members by generation with names, birth/death dates, wives' surnames, and children — major collections at FamilySearch (microfilm), Shanghai Library, National Central Library (Taiwan), and university libraries",
+            "A government-issued identity document required of all Chinese emigrants, held at the National Archives of China in Beijing",
+            "An annual household register maintained by Chinese village headmen, equivalent to the Japanese koseki",
+            "A certificate of clan membership issued to emigrants before departure, recorded by customs officials at Chinese ports"
+          ],
+          "correctAnswer": "A clan genealogy compiled by families sharing a common patrilineal ancestor and surname, recording male members by generation with names, birth/death dates, wives' surnames, and children — major collections at FamilySearch (microfilm), Shanghai Library, National Central Library (Taiwan), and university libraries",
+          "explanationHtml": "<p>A zupu (also called jiapu or zongpu) is a privately compiled genealogical record maintained by a Chinese clan — a group of families sharing a patrilineal ancestor and the same surname. Compiled by clan elders and revised every generation, zupu typically list all males in the patrilineal line by generation, giving personal name, birth and death dates in the traditional Chinese calendar, the surnames (not full names) of wives, and the names of sons. Women's names are rarely included in their own right. The FamilySearch Family History Library holds microfilmed zupu for thousands of Chinese clans from various provinces, particularly Guangdong and Fujian (provinces with major emigration histories); these are searchable through the FamilySearch Catalog. The Shanghai Library holds one of the largest zupu collections in China.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching a Japanese American ancestor, Kenji Tanaka, who emigrated from Japan to California in 1905. You want to establish his parents' names and birthplace in Japan. What is the most direct record to obtain?</p>",
+          "options": [
+            "The koseki (household register) from the Japanese municipality where Kenji was registered — obtainable from that municipal office by direct descendants; it will record Kenji's birth date, parents' names, and the family's vital events",
+            "The Angel Island Immigration Station case file — all Japanese immigrants were processed at Angel Island and their parents' names are recorded there",
+            "The Japanese American internment records at NARA — these list all Japanese American ancestral villages for everyone of Japanese descent in California",
+            "The 1900 US census — Japanese immigrants' home villages are listed in a special column for recent arrivals"
+          ],
+          "correctAnswer": "The koseki (household register) from the Japanese municipality where Kenji was registered — obtainable from that municipal office by direct descendants; it will record Kenji's birth date, parents' names, and the family's vital events",
+          "explanationHtml": "<p>The koseki is Japan's household registration system, maintained at the municipal level. Every Japanese person is registered in a koseki; when Kenji Tanaka emigrated in 1905, his birth and early life events were recorded in the koseki of his family's registered municipality (likely his home town or village). Direct descendants can obtain copies of ancestral koseki from the relevant Japanese municipal office by submitting a request with proof of relationship. The koseki will give Kenji's full name in Japanese characters, his birth date, his father's name, his mother's name (including her maiden name), and any siblings listed in the family household. This is the most direct route to Japanese family information. US immigration records (ship manifests, Angel Island files) may give the prefecture and sometimes the specific municipality of origin, which then guides the koseki request.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds their Chinese ancestor listed in an Angel Island case file as 'paper son of Chan Ah Fook of San Francisco.' The family claimed origin from 'Sun Wui [Xinhui] County, Guangdong.' The researcher concludes the real village cannot be identified because the ancestor was a paper son. Is this conclusion sound?</p>",
+          "options": [
+            "Not necessarily — paper son identities were typically purchased from someone from the same county, so the claimed county (Xinhui, Guangdong) is often close to or the same as the actual county of origin; the interrogation file's detailed questions about village layout, family members, and local geography were designed to expose inconsistencies, and the answers given (true or false) still point toward Guangdong as the region; the zupu research in Xinhui and neighbouring Taishan counties is still productive",
+            "Yes — paper son documents contain entirely fabricated information with no genealogical value",
+            "Yes — the only reliable identification is the paper identity; the real ancestry cannot be traced",
+            "No — Angel Island staff always verified the true village of origin independently and recorded it separately from the claimed identity"
+          ],
+          "correctAnswer": "Not necessarily — paper son identities were typically purchased from someone from the same county, so the claimed county (Xinhui, Guangdong) is often close to or the same as the actual county of origin; the interrogation file's detailed questions about village layout, family members, and local geography were designed to expose inconsistencies, and the answers given (true or false) still point toward Guangdong as the region; the zupu research in Xinhui and neighbouring Taishan counties is still productive",
+          "explanationHtml": "<p>Paper son identities were a pragmatic immigration strategy: immigrants purchased the documented identity of a Chinese American citizen's (usually fictitious or distant) relative. The paper identity was typically sourced from the same general county or district of Guangdong — partly because the coaching books (preparation guides for the interrogation) needed to describe real local geography that the immigrant could plausibly know. Immigrants were questioned intensively about the physical layout of their claimed home village, the names of neighbours, the location of the village well — all designed to expose inconsistencies. The claimed county (Xinhui/Sun Wui in this case) is therefore a reasonable starting point for research, even under a paper son identity. Additionally, US records sometimes preserved real information through community associations, church records, or the applicant's own later naturalization or other documents where they disclosed their true origins. The Angel Island file is not useless — it is the beginning of a more complex research process.</p>"
+        }
+      ]
+    }
+  ]
+}

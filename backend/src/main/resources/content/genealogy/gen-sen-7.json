@@ -1,0 +1,111 @@
+{
+  "id": "gen-sen-7",
+  "title": "DNA Triangulation & Chromosome Mapping",
+  "glyph": "🗺️",
+  "sortOrder": 7,
+  "tier": "SENIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-sen-6"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-sen-7a",
+      "title": "Segment Triangulation, Chromosome Browsers & Painting Your Genome",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Advanced autosomal DNA analysis moves beyond match lists and clustering into direct examination of DNA segments — the specific chromosomal regions shared between related individuals. Triangulation (confirming that three or more people share the same segment on the same chromosome and are therefore related through the same ancestral line) and chromosome painting (mapping known ancestry to specific chromosomal segments) are the most powerful tools available for using DNA to prove specific genealogical relationships. These techniques require chromosome browser access (not available on Ancestry, but available on 23andMe, FamilyTreeDNA, and MyHeritage) and careful documentation — but when done correctly, they can resolve genealogical problems that documentary research alone cannot.</p>",
+      "explanationHtml": "<h3>Chromosome browsers and segment data</h3>\n<p>A chromosome browser displays, for each of the 22 autosomal chromosomes, the positions and sizes of segments shared between you and a specific match. Key concepts:</p>\n<ul>\n  <li><strong>Segment</strong>: a contiguous stretch of DNA shared between two people. Measured in centimorgans (cM) and base pairs (bp). A segment above 7 cM is generally considered 'real' (identical by descent, IBD) — below 7 cM, segments may be false matches (identical by state, IBS).</li>\n  <li><strong>Chromosome browser</strong>: a visual display showing which chromosomes and positions are shared between you and a match. Available on 23andMe, FamilyTreeDNA (FTDNA), and MyHeritage; not available on Ancestry (which shows only total shared cM).</li>\n  <li><strong>Segment data export</strong>: FTDNA and MyHeritage allow downloading segment data as a CSV file for offline analysis; 23andMe has limited export options. Tools like GEDmatch (gedmatch.com) allow upload of raw DNA from any platform for cross-platform chromosome browser analysis.</li>\n</ul>\n\n<h3>Triangulation</h3>\n<p>Triangulation is the process of confirming that three or more people share the same segment on the same chromosome, proving they all descend from the same ancestral couple through that segment. The principle:</p>\n<ol>\n  <li>Person A shares segment X (chromosome 7, positions 100–150 Mb) with Person B.</li>\n  <li>Person A shares segment X (same position) with Person C.</li>\n  <li>Person B and Person C also share segment X with each other.</li>\n  <li>Conclusion: A, B, and C all received this segment from the same ancestral couple.</li>\n</ol>\n<p>Triangulation is distinct from simple overlap: two matches may share overlapping segments on the same chromosome but from different parental lines (one segment from the paternal side, one from the maternal). The critical check is whether Match B and Match C share the segment with each other — if they do, it confirms a common origin for all three.</p>\n<p>On GEDmatch, the 'Triangulation' tool automates this check for a set of uploaded kits. On FTDNA, the chromosome browser allows manual comparison. On MyHeritage, the chromosome browser with the 'AutoCluster' tool supports triangulation analysis.</p>\n\n<h3>Chromosome painting and DNA Painter</h3>\n<p>Once ancestral origin of a segment is confirmed (through triangulation and documentary research), the segment can be 'painted' to a specific ancestor or ancestral couple. DNA Painter (dnapainter.com) is the primary tool for this:</p>\n<ul>\n  <li>You upload segment data from a match whose relationship and ancestral origin is documented</li>\n  <li>DNA Painter assigns that segment to the named ancestor on a visual chromosome map</li>\n  <li>Over time, as more matches are painted, the chromosomes build up a map showing which segments came from which ancestors</li>\n  <li>A well-painted genome shows which chromosomal regions correspond to each of the four grandparents (or eight great-grandparents)</li>\n</ul>\n<p>Chromosome painting is particularly powerful for identifying the origin of an unknown segment that appears in a new match — if the new match shares a segment already painted to your maternal grandmother's Kowalski line, they are almost certainly related through that line, guiding documentary research.</p>\n\n<h3>GEDmatch</h3>\n<p>GEDmatch (gedmatch.com) is an independent platform where users upload raw DNA files from any testing company. Key tools:</p>\n<ul>\n  <li><strong>One-to-one comparison</strong>: compares two specific kits and shows all shared segments by chromosome</li>\n  <li><strong>One-to-many comparison</strong>: shows all GEDmatch kits that match your kit above a threshold</li>\n  <li><strong>Triangulation tool</strong>: identifies groups of kits that all share the same segment</li>\n  <li><strong>Archaic DNA admixture tool</strong>: Neanderthal and Denisovan ancestry analysis</li>\n  <li><strong>Tier 1 tools</strong> (fee-based): additional analysis tools including phasing, admixture, and segment analysis</li>\n</ul>\n<p>GEDmatch's cross-platform matching is particularly valuable: an AncestryDNA user who uploads to GEDmatch can use the chromosome browser to compare with FTDNA and 23andMe users, enabling triangulation across platforms.</p>\n\n<h3>Phasing</h3>\n<p>Phasing is the process of separating a person's DNA into its two parental strands — identifying which segments came from the maternal side and which from the paternal side. Phased data eliminates false triangulation caused by segments from different parental lines overlapping by chance. Options:</p>\n<ul>\n  <li><strong>Parental phasing</strong>: if a parent (or both parents) has tested, their data can be used to phase your DNA — FTDNA and 23andMe do this automatically when a parent-child relationship is confirmed. This is the most reliable method.</li>\n  <li><strong>Computational phasing</strong>: statistical algorithms (used by 23andMe and in GEDmatch Tier 1) estimate phasing without parental data — less reliable but useful when parents have not tested.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens GEDmatch and pulls up a chromosome browser showing three kits — three cousins — compared against each other. On chromosome 11, a segment of green lights up for all three."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This is triangulation. Three people, chromosome 11, the same segment — all three share it with each other. Not just two of them sharing with a third. All three sharing with each other. That is the confirmation that this segment came from a single ancestral couple. All three of these people received this stretch of chromosome 11 from the same two people who lived perhaps four or five generations ago. Now you trace the trees of all three — where do they overlap? That overlap is the ancestor who passed this segment down."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "DNA Painter takes this further. Once you know where that segment came from — once the documentary evidence confirms the ancestral couple — you paint it. You add it to your chromosome map. Six months from now, a new match appears sharing that exact segment on chromosome 11. You open DNA Painter. The segment is already painted: 'Flynn, County Clare, maternal grandmother's line.' You know where to search before you have opened a single archive. The painted genome is your compass for future research."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor chromosome analysis concepts</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is <strong>triangulation</strong> in DNA analysis and what does it prove?</li>\n  <li>What is <strong>chromosome painting</strong> and what tool is primarily used for it?</li>\n  <li>What is <strong>GEDmatch</strong> and why is its cross-platform function important?</li>\n  <li>Why must Match B and Match C share a segment with each other (not just both share with you) for triangulation to be valid?</li>\n  <li>What is <strong>phasing</strong> and why does it improve triangulation accuracy?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "Triangulation is the confirmation that three or more people share the same segment on the same chromosome at the same positions, and that they all share it with each other — proving they all descend from the same ancestral couple through that segment. It is the most rigorous method for assigning a DNA segment to a specific ancestral line.\n\nChromosome painting maps confirmed ancestral segments to a visual chromosome map, showing which positions on each chromosome came from which identified ancestor. DNA Painter (dnapainter.com) is the primary tool — segments from documented matches are uploaded and painted to named ancestors, building a genome-wide ancestry map over time.\n\nGEDmatch (gedmatch.com) is an independent platform that accepts raw DNA uploads from any testing company, enabling chromosome browser comparison across platforms (Ancestry, 23andMe, FTDNA, MyHeritage users can all compare). This cross-platform function is critical because Ancestry (the largest database) has no chromosome browser — uploading to GEDmatch enables segment-level analysis of Ancestry matches.\n\nMatch B and Match C must share the segment with each other because two matches can share overlapping but different segments from different parental lines. If B shares a maternal segment with you on chromosome 7, and C shares a paternal segment at the same position, B and C are from different lines — but without checking whether B and C share with each other, this is not detectable. The mutual sharing of the same segment by all three confirms a single ancestral origin.\n\nPhasing separates a person's DNA into two parental strands, identifying which segments are maternal and which paternal. This eliminates false triangulation caused by maternal and paternal segments overlapping at the same chromosomal position.",
+      "soloPracticeHtml": "<h3>Applying triangulation to resolve a research problem</h3>\n<p>You have an unknown great-grandparent — your maternal grandmother's father is unidentified. You have painted your maternal grandmother's segments (from her tested grandchildren). On chromosome 5, positions 80–120 Mb, you have an unpainted segment that three of your matches — Mary K, John D, and Robert F — all share with you. When you check GEDmatch, Mary K and John D share this segment with each other, but Robert F does not share it with Mary K or John D.</p>\n<p>Analyse this triangulation result: what does it tell you about these matches, how many ancestral groups are represented on this segment, and what research steps follow?</p>",
+      "modelAnswer": "Triangulation analysis:\n\nMary K and John D share segment on chromosome 5 (80–120 Mb) with me AND with each other — this is a triangulated group. These two matches descend from the same ancestral couple through this segment. Research step: examine Mary K and John D's trees for a common ancestor. If both trees share a common couple (e.g., both trace to a McCann family from County Fermanagh), that couple is the likely origin of this segment.\n\nRobert F shares the segment with me but NOT with Mary K or John D. This indicates Robert's segment at chromosome 5, 80–120 Mb comes from a DIFFERENT ancestral couple than Mary K and John D — the overlapping position is a coincidence (or the segment boundaries differ slightly). Robert is not part of the Mary K/John D triangulated group.\n\nTwo separate ancestral groups are therefore represented on this segment position: (1) the group represented by Mary K and John D; (2) the group represented by Robert F, likely from a different line.\n\nFurther analysis: establish whether Mary K/John D's shared segment is on the maternal or paternal side by checking whether they match my mother (if she has tested) — if yes, this is a maternal segment. If my maternal grandmother's ancestry is half-identified (say, her mother's line is known), determine whether this segment is in her mother's known clusters or in the unknown grandfather's clusters. If it falls outside the known maternal grandmother clusters, it may come from the unknown great-grandfather's line — Mary K and John D's common ancestor is then a candidate for that line.\n\nFor Robert F separately: examine his tree for a match with a known ancestral line.",
+      "feynmanPrompt": "Explain to a friend what DNA triangulation is and why it's more powerful than simply knowing two people share DNA — and what the 'mutual sharing' check adds to the analysis.",
+      "rabbitHoleTerms": [
+        {
+          "term": "triangulation",
+          "description": "The confirmation that three or more DNA matches all share the same chromosomal segment with each other — proving they all descend from the same ancestral couple through that segment; the most rigorous method for assigning a DNA segment to a specific ancestral line."
+        },
+        {
+          "term": "chromosome painting",
+          "description": "The practice of mapping confirmed ancestral DNA segments to a visual chromosome map using DNA Painter (dnapainter.com) — building a genome-wide picture of which chromosomal regions came from which ancestors."
+        },
+        {
+          "term": "GEDmatch",
+          "description": "An independent DNA analysis platform (gedmatch.com) that accepts raw DNA uploads from any testing company, enabling cross-platform chromosome browser comparison, one-to-many matching, and triangulation tools."
+        },
+        {
+          "term": "phasing",
+          "description": "The process of separating a person's DNA into its two parental strands (maternal and paternal) — either through parental DNA comparison or statistical algorithms — improving triangulation accuracy by eliminating false matches from opposite parental lines."
+        },
+        {
+          "term": "identical by descent (IBD) vs identical by state (IBS)",
+          "description": "IBD segments are shared because of a genuine genealogical relationship (a common ancestor); IBS segments appear identical by chance but reflect no genealogical connection. Segments above 7 cM are generally IBD; below 7 cM, IBS is possible."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is <strong>triangulation</strong> in autosomal DNA analysis and what does a successful triangulation prove?</p>",
+          "options": [
+            "Three or more people share the same chromosomal segment at the same position AND share it with each other — proving they all received that segment from the same ancestral couple",
+            "Three DNA testing companies (Ancestry, 23andMe, FTDNA) all give the same ethnicity estimate for a person, confirming their ancestry",
+            "Three generations of a family (grandparent, parent, child) have all tested, enabling complete family DNA analysis",
+            "A DNA match confirms a genealogical relationship through three separate documentary records"
+          ],
+          "correctAnswer": "Three or more people share the same chromosomal segment at the same position AND share it with each other — proving they all received that segment from the same ancestral couple",
+          "explanationHtml": "<p>Triangulation is named for the mathematical concept of determining a point from three reference positions. In DNA analysis, it confirms that a shared segment came from a single ancestral source by requiring mutual sharing among all three people — not just two of them sharing with a third. This is necessary because two people can each share an overlapping chromosomal position with you from different parental lines (one maternal, one paternal); only by confirming that Match B and Match C also share the segment with each other can you rule out this 'pseudo-triangulation' caused by different ancestral lines overlapping. A successful triangulation is strong evidence that the segment came from a single ancestral couple — but documentary evidence is still needed to identify which couple.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You test on AncestryDNA and find 500 matches but cannot see any chromosome segment data. Which platform should you upload your raw DNA to in order to access chromosome browser analysis for your Ancestry matches?</p>",
+          "options": [
+            "GEDmatch (gedmatch.com) — after uploading your raw DNA file there, you can compare with other GEDmatch users (including those who have uploaded from AncestryDNA) using a chromosome browser and triangulation tools",
+            "Ancestry provides a chromosome browser if you upgrade to a premium subscription",
+            "Download your Ancestry matches directly to DNA Painter, which extracts chromosome data automatically",
+            "FTDNA automatically imports AncestryDNA matches and their segment data"
+          ],
+          "correctAnswer": "GEDmatch (gedmatch.com) — after uploading your raw DNA file there, you can compare with other GEDmatch users (including those who have uploaded from AncestryDNA) using a chromosome browser and triangulation tools",
+          "explanationHtml": "<p>AncestryDNA, despite having the largest genealogical DNA database, does not provide a chromosome browser — users can only see total shared cM and a match list. To access segment-level analysis, you must download your raw DNA file from Ancestry (available in the Settings section) and upload it to a platform that offers chromosome browser tools. GEDmatch (gedmatch.com) is the primary cross-platform tool — it accepts raw DNA from Ancestry, 23andMe, FTDNA, MyHeritage, and other platforms, and provides chromosome browsers, one-to-many matching, and triangulation tools. The basic GEDmatch tools are free; Tier 1 advanced tools require a subscription. MyHeritage also accepts uploaded raw DNA files and provides chromosome browser access. DNA Painter does not extract data directly from testing platforms — you must input segment data from a chromosome browser manually or via CSV upload.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>You find three matches — Alice, Bob, and Carol — who all share a segment with you on chromosome 3 (positions 50–80 Mb). Alice and Bob share it with each other; Carol does not share it with either Alice or Bob. A colleague says all three are in the same triangulated group. Is this correct?</p>",
+          "options": [
+            "No — triangulation requires that ALL members of the group share the segment with each other; Alice and Bob form a triangulated pair with you, but Carol's non-sharing with Alice and Bob indicates she represents a separate ancestral line contributing DNA to the same chromosomal position — two distinct ancestral groups are present on this segment",
+            "Yes — all three share the segment with you, which is sufficient for triangulation",
+            "No — triangulation requires a minimum of five matches, not three",
+            "Yes — Carol's segment at positions 50–80 Mb is the same position as Alice and Bob's, so they must be from the same ancestral group"
+          ],
+          "correctAnswer": "No — triangulation requires that ALL members of the group share the segment with each other; Alice and Bob form a triangulated pair with you, but Carol's non-sharing with Alice and Bob indicates she represents a separate ancestral line contributing DNA to the same chromosomal position — two distinct ancestral groups are present on this segment",
+          "explanationHtml": "<p>Triangulation's critical requirement is mutual sharing: every member of the proposed triangulated group must share the segment with every other member, not just with you. Alice and Bob sharing the segment with each other (and both with you) constitutes a valid triangulated group of three. Carol shares the same chromosomal region with you but does not share it with Alice or Bob — this indicates Carol's segment at positions 50–80 Mb on chromosome 3 comes from a different ancestral couple. This is a case of different ancestral contributions landing in the same chromosomal region — a common occurrence because everyone has two copies of each chromosome (one maternal, one paternal). Carol's segment is on a different parental strand than Alice and Bob's. Without phasing, this can be confirmed by checking whether Carol also matches your mother or father (if tested), which would identify which parental strand her segment is on.</p>"
+        }
+      ]
+    }
+  ]
+}

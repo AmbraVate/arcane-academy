@@ -1,0 +1,99 @@
+{
+  "id": "gen-sen-14",
+  "topicId": "genealogy",
+  "tier": "SENIOR",
+  "title": "Historical Geography, Place Names & Boundary Changes",
+  "glyph": "🗺️",
+  "sortOrder": 14,
+  "prerequisites": ["gen-sen-13"],
+  "subChunks": [
+    {
+      "id": "gen-sen-14a",
+      "title": "Historical Geography, Place Names & Boundary Changes",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The place on the map and the place in the record are not always the same place, Theodora said. Boundaries moved. Counties were redrawn. Villages were absorbed into towns. Towns were carved up between new registration districts that respected neither ancient parishes nor human habit." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "A researcher who does not understand the administrative geography of the period they are researching will search in the wrong archives, miss records, and draw false conclusions from what they do not find." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Historical geography is not a luxury. It is a prerequisite." }
+      ],
+      "hookHtml": "<p>Your ancestor was born in 'Staffordshire' in 1830 — but the baptism register you are seeking is held not in Staffordshire Record Office, but in Birmingham Archives. Why? Because in 1974, local government reorganisation transferred that parish into the newly created West Midlands county. The record physically moved with the administrative boundary.</p><p>Historical geography — understanding how administrative units, place names, and boundaries have changed over time — is one of the most underestimated skills in genealogical research. It explains why you search where you search, why records end up where they do, and why the 'obvious' archive may not hold what you expect.</p>",
+      "explanationHtml": "<h3>The Layered Administrative System (England & Wales)</h3><p>English and Welsh records are organised through overlapping administrative systems that do not coincide with each other:</p><ul><li><strong>Ancient parishes:</strong> The fundamental ecclesiastical unit for birth, marriage, and burial records before 1837. Parishes varied enormously in size — from a few hundred acres to sprawling multi-township parishes covering dozens of square miles. Boundaries were relatively stable from the medieval period to the 19th century.</li><li><strong>Poor Law Unions:</strong> Created by the Poor Law Amendment Act 1834, grouping parishes for administrative purposes. Important for workhouse records; their boundaries have no necessary relation to ancient parishes.</li><li><strong>Registration Districts:</strong> Created by the Births, Deaths and Marriages Registration Act 1836 (effective 1 July 1837) for civil registration. Based approximately on Poor Law Unions. A person's civil registration records are indexed by registration district, which may differ from both the ancient parish and the modern county.</li><li><strong>Civil parishes:</strong> Standardised for local government purposes from 1866. May differ from ancient parishes.</li><li><strong>Historic counties:</strong> The 39 ancient English counties, relatively stable until 1974.</li><li><strong>Post-1974 counties:</strong> The Local Government Act 1972 (effective 1974) created new metropolitan and non-metropolitan counties, transferring many places between historic counties. Records held by county record offices may have moved as a result.</li></ul><h3>Key Tools for English Historical Geography</h3><p><strong>GENUKI Parish Pages (genuki.org.uk):</strong> For each county, lists every parish, the registration district it falls in, the county record office holding its records, and links to transcribed indexes. The first stop for identifying which archive holds which parish's records.</p><p><strong>VISION of Britain Through Time (visionofbritain.org.uk):</strong> University of Portsmouth project mapping administrative boundaries for England, Scotland, and Wales at multiple historical moments. Shows registration district, ancient county, and modern authority boundaries overlaid.</p><p><strong>A Topographical Dictionary of England (Samuel Lewis, 1833):</strong> Available free via Google Books; describes every parish and township, giving population, county, registration district, distance from nearest market town — invaluable for identifying records and their archive locations.</p><p><strong>FamilySearch Wiki:</strong> Extensive articles on county-by-county record availability and archive locations.</p><h3>Scotland: A Different System</h3><p>Scotland's administrative geography differs fundamentally from England. The basic ecclesiastical unit is the parish of the Church of Scotland (established church). County structure was based on sheriffdoms. For genealogy, the key administrative unit is the civil registration district (from 1855), which roughly corresponds to parishes.</p><p>All Scottish statutory records (post-1855 civil registration), Old Parish Registers (pre-1855 Church of Scotland baptisms, marriages, and deaths), census returns, and many other record types are held centrally at the National Records of Scotland (NRS) in Edinburgh, accessible online through ScotlandsPeople (scotlandspeople.gov.uk). This centralisation makes Scottish genealogy administratively simpler than English, though record survival is less complete.</p><h3>Ireland: A Fragmented System</h3><p>Irish administrative geography uses four provinces, 32 counties, baronies (subdivisions of counties), civil parishes, and townlands (the smallest land division). For genealogical research, the key units are: civil registration district (from 1864); Church of Ireland parish; Roman Catholic parish (which frequently do not align with Church of Ireland parishes); and townland (essential for identifying property records).</p><p>The 1922 partition created a record access problem: records for the whole island were held in Dublin, but those relating to northern Ireland (six counties, now Northern Ireland) have been progressively transferred or copied to PRONI (Belfast). The 1922 PRO fire destroyed a vast quantity of central records for both jurisdictions. Understanding which records survived and where they are held is fundamental to Irish research.</p><h3>Place Name Changes and Variants</h3><p>Place names change over time through: anglicisation (Irish Gaelic, Welsh, Scots Gaelic place names rendered into English phonetics); administrative renaming; urban absorption (a village becomes a suburb and loses its name); spelling standardisation (variant pre-standardisation spellings in registers).</p><p>Tools: Ordnance Survey name books (for historic variant spellings); Irish Placenames Database (logainm.ie) for Irish Gaelic variants; RCAHMS Canmore for Scottish sites; National Gazetteer of Wales (1868) via Familysearch.</p><h3>US Administrative Geography</h3><p>US genealogy requires understanding state boundary formation, county creation and division, and township systems. States were progressively carved from territories; many counties were later divided as population grew. A person's county in 1800 may not exist in its original form by 1850. The US GenWeb project (usgenweb.org) provides county-level research guides and historical boundary information. The Atlas of Historical County Boundaries (Newberry Library, AHCB, accessible online) is the authoritative source for US county boundary changes.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old why knowing which county a place was in 150 years ago is different from knowing which county it's in today — and why this matters for finding old family records.",
+      "guidedPracticeHtml": "<p>Your ancestor was baptised in 1839 in 'West Bromwich, Staffordshire'. You are looking for his baptism in the Staffordshire Record Office at Stafford. Explain why you might not find it there, what administrative change you should investigate, and which archive(s) might actually hold the relevant parish registers. What tool would you use first to identify the correct repository?</p>",
+      "guidedPracticeModelAnswer": "<p>West Bromwich was part of historic Staffordshire until the Local Government Act 1972, which came into effect in 1974. At that point, West Bromwich was transferred to the newly created metropolitan county of West Midlands. As a result, the parish registers and other local records from West Bromwich — including records created long before 1974 — were transferred to the relevant local authority archive in the West Midlands area, not retained at Staffordshire Record Office.</p><p>The archive holding West Bromwich parish records would be Sandwell Community History and Archives Service (part of Sandwell Metropolitan Borough Council), or in some cases records may be held at Birmingham Archives & Collections, depending on the specific parish and what was transferred.</p><p>The first tool to use is the GENUKI parish pages for Staffordshire (genuki.org.uk/big/eng/STS/) — these list each parish in the historic county, the current archive holding its registers, and the registration district for post-1837 civil registration. A quick search for West Bromwich will show the current archive. Additionally, the FamilySearch Wiki article on Staffordshire genealogy will cross-reference post-1974 archive transfers.</p>",
+      "soloPracticeHtml": "<p>A researcher is trying to find civil registration birth records for ancestors from Monmouthshire, Wales, for the period 1840–1870. She looks in the Welsh county record offices but cannot find a consolidated index. A colleague tells her the records are organised by registration district, not by county. Explain: (1) how civil registration districts were organised in England and Wales; (2) what tool she should use to identify which registration districts covered Monmouthshire parishes; and (3) why the distinction between 'Welsh county' and 'registration district' matters for locating these records on FindMyPast or FamilySearch.</p>",
+      "modelAnswer": "<p>(1) Civil registration districts were created under the 1836 Registration Act and came into force 1 July 1837. They were based approximately on Poor Law Unions and were administered by Superintendent Registrars. Each district was subdivided into sub-districts, each with a registrar. The districts were not coextensive with historic counties — a district might span a county boundary, and a historic county would typically contain multiple districts. Registration district names were used to index GRO records until the introduction of the NHS number system in the late 20th century.</p><p>(2) The best tool is the GENUKI parish pages for Monmouthshire (genuki.org.uk/big/wal/MON/). Each parish listing shows which registration district it falls in. VISION of Britain Through Time (visionofbritain.org.uk) also maps registration district boundaries onto historical county maps and allows a researcher to see which parishes fell within which district at different periods. The FreeCEN and FreeBMD projects also have registration district references for census and civil registration records respectively.</p><p>(3) FindMyPast and FamilySearch index civil registration records by registration district and GRO reference (volume, page). If you search using 'Monmouthshire' as the county filter, you may miss records from parishes near the boundary that were assigned to registration districts administered from the English side (e.g., the Herefordshire border area, or parts of Breconshire). Equally, a search using only a registration district name will return all parishes in that district regardless of which modern county they now fall in. Understanding both the ancient county and the registration district framework is necessary to ensure the search is genuinely comprehensive and no births are missed.</p>",
+      "practiceType": "NONE",
+      "xpReward": 90,
+      "learningObjectives": [
+        "Explain the layered administrative geography of England and Wales (ancient parishes, registration districts, civil parishes, historic counties, post-1974 counties).",
+        "Identify the key tools for English historical geography research (GENUKI, VISION of Britain, Lewis's Topographical Dictionary).",
+        "Describe the fundamental differences between English and Scottish record-holding structures.",
+        "Apply knowledge of administrative boundary changes to identify the correct archive for a given parish's historical records."
+      ],
+      "commonMistakes": [
+        "Searching in the modern county record office for records from a parish that was transferred to a different authority after 1974.",
+        "Assuming registration districts align with historic county boundaries — they do not.",
+        "Searching for Irish records only in Dublin, unaware that records for the six northern counties are progressively held at PRONI Belfast.",
+        "Ignoring townland-level geography in Irish research, leading to confusion between multiple places of the same name in different parishes."
+      ],
+      "assessmentCriteria": [
+        "Accurately describes the relationship between ancient parishes, registration districts, and historic counties in England and Wales.",
+        "Correctly identifies the 1974 local government reorganisation as the cause of post-1974 archive transfers in England.",
+        "Uses appropriate tools (GENUKI, VISION of Britain) to identify archive locations for specific parishes.",
+        "Demonstrates understanding of the Scottish centralised record-holding model versus the English dispersed model."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "GENUKI (genuki.org.uk)", "description": "UK and Ireland genealogy information service; parish pages for each county list records, archives, registration districts, and links — the first stop for archive identification." },
+        { "term": "VISION of Britain Through Time", "description": "University of Portsmouth project (visionofbritain.org.uk) mapping administrative boundary changes for England, Scotland, and Wales across multiple historical periods." },
+        { "term": "Registration Districts", "description": "Administrative units created by the 1836 Registration Act for civil registration; based approximately on Poor Law Unions, not historic county boundaries." },
+        { "term": "Local Government Act 1972", "description": "UK legislation effective 1 April 1974 that reorganised local government in England and Wales, creating metropolitan counties and transferring many parishes between historic counties — with consequent archive transfers." },
+        { "term": "Townland", "description": "The smallest official land division in Ireland, typically 100–300 acres; essential for identifying property records and distinguishing between multiple parishes sharing the same name." },
+        { "term": "Atlas of Historical County Boundaries (AHCB)", "description": "Newberry Library project providing digitised maps of US county boundary changes over time; essential for understanding which county held jurisdiction over a given area at a specific date." }
+      ],
+      "questions": [
+        {
+          "id": "gen-sen-14a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Why might a civil registration birth recorded in 1840 in a parish historically in 'Staffordshire' be indexed under a registration district with a different name?",
+          "options": [
+            "The child's parents were from a different county",
+            "Registration districts were created based on Poor Law Unions and do not align with historic county boundaries",
+            "Births were registered by the mother's county of birth, not the place of birth",
+            "Civil registration districts were renamed in 1840 after the initial act"
+          ],
+          "correctAnswer": "Registration districts were created based on Poor Law Unions and do not align with historic county boundaries",
+          "explanationHtml": "<p>Registration districts were based on Poor Law Union boundaries, which were drawn for administrative convenience and frequently crossed historic county lines. A parish in Staffordshire might fall within a registration district centred on a Worcestershire or Shropshire town.</p>"
+        },
+        {
+          "id": "gen-sen-14a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "You want to find a baptism from 1850 in a parish that was in historic Middlesex but is now in Greater London. Which archive most likely holds the parish registers?",
+          "options": [
+            "Staffordshire Record Office",
+            "The National Archives at Kew",
+            "London Metropolitan Archives (LMA)",
+            "The British Library"
+          ],
+          "correctAnswer": "London Metropolitan Archives (LMA)",
+          "explanationHtml": "<p>After the Local Government Act 1972, Middlesex county ceased to exist as an administrative unit; most of its area was absorbed into Greater London. The London Metropolitan Archives (LMA) holds the records for former Middlesex parishes, including Anglican parish registers.</p>"
+        },
+        {
+          "id": "gen-sen-14a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "What is the key structural difference between Scottish and English genealogical record-holding that makes Scottish research administratively simpler?",
+          "options": [
+            "Scottish records are all digitised and freely available online",
+            "Scotland has far fewer parishes than England, reducing the search area",
+            "Scottish statutory records, Old Parish Registers, and census returns are held centrally at the National Records of Scotland and accessible through ScotlandsPeople, rather than dispersed across dozens of county archives",
+            "Scotland adopted civil registration 30 years earlier than England, giving better record coverage"
+          ],
+          "correctAnswer": "Scottish statutory records, Old Parish Registers, and census returns are held centrally at the National Records of Scotland and accessible through ScotlandsPeople, rather than dispersed across dozens of county archives",
+          "explanationHtml": "<p>England's records are dispersed across county record offices, the GRO, TNA, diocesan archives, and local collections. Scotland centralised its core genealogical records at NRS and created ScotlandsPeople as the access portal — making the starting point clear and the research administratively more straightforward, even if record survival is sometimes less complete.</p>"
+        }
+      ]
+    }
+  ]
+}

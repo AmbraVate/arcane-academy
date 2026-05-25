@@ -1,0 +1,99 @@
+{
+  "id": "gen-sen-17",
+  "topicId": "genealogy",
+  "tier": "SENIOR",
+  "title": "DNA Ethics, Privacy & Informed Consent",
+  "glyph": "🔐",
+  "sortOrder": 17,
+  "prerequisites": ["gen-sen-16"],
+  "subChunks": [
+    {
+      "id": "gen-sen-17a",
+      "title": "DNA Ethics, Privacy & Informed Consent",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "DNA is different from every other genealogical record, Theodora said. A census tells you where your ancestor lived. A baptism record tells you their name. DNA tells you about you — and about every biological relative you have, including people who never chose to be in any database." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "When you upload your DNA, you are making a decision not just for yourself. Your genetic data is partially shared by every close biological relative you have. They did not consent to that exposure. You cannot consent on their behalf." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "This does not mean genetic genealogy is wrong. It means it carries obligations that conventional document research does not. And it means the professional standards we apply to this work are still evolving — because the technology moved faster than the ethics." }
+      ],
+      "hookHtml": "<p>Consumer DNA testing has created one of the largest repositories of personal genetic data in human history. As of 2024, more than 40 million people have tested with one of the major genealogical DNA companies. Each of them has uploaded information that reveals — to varying degrees — their susceptibility to disease, their biological family structure, and genetic information about relatives who never tested and never consented to any of it.</p><p>The ethical questions raised by genetic genealogy are not abstract. They have real-world consequences: insurance companies and employers in some jurisdictions have sought access to genetic information; law enforcement has used genealogical databases for criminal investigation; families have been confronted with non-paternity events, secret adoptions, and donor-conceived relationships they did not choose to discover. Professional genealogists working with DNA have an obligation to understand these issues — and to navigate them with care.</p>",
+      "explanationHtml": "<h3>The Third-Party Problem</h3><p>When a person uploads their DNA to a genealogical database, they expose genetic information not only about themselves but about all their biological relatives. A first-degree relative (parent, sibling, child) shares approximately 50% of their DNA. A first cousin shares approximately 12.5%. The upload of one person's data effectively makes genetic predictions about everyone in their biological family — most of whom have not consented.</p><p>This is the fundamental ethical tension of genetic genealogy: individual autonomy (the right to know one's own DNA) conflicts with family privacy (the right of relatives not to have their genetic information shared). There is no fully satisfactory resolution, but professional practice requires at minimum that researchers: inform clients clearly about these third-party implications before testing; not use or share genetic information beyond what is necessary for the stated research purpose; and handle DNA results with the same confidentiality as any other sensitive personal information.</p><h3>Informed Consent in Genealogical Research</h3><p>Informed consent requires that a person voluntarily agrees to participate in a process after receiving clear information about: what data will be collected; how it will be used; who will have access to it; what the risks are; and their right to withdraw at any time.</p><p>In practice, genealogical DNA testing companies obtain consent through their terms of service — which are frequently long, complex, and not read. True informed consent requires more than a clicked checkbox. Professional genealogists should: ensure clients understand what testing involves before ordering a kit; explain that DNA matches may reveal unexpected family relationships; discuss the option to use an alias or to download raw data and upload to GEDmatch or other platforms rather than using the company's own matching database; and ensure clients understand their deletion rights.</p><h3>Deletion Rights and Data Portability</h3><p>All major genealogical DNA companies provide options to: delete the DNA test from the database; delete the account entirely; download the raw data file; and opt out of research use of the data. Under GDPR (in the UK and EU), data subjects have the right to erasure ('right to be forgotten'). The US lacks equivalent federal legislation, though some states (California's CCPA) provide stronger protections.</p><p>Professional genealogists should inform clients of these rights and ensure they understand that deletion removes the data from matching databases but may not remove it from any third-party databases to which it was previously transferred.</p><h3>The GINA Act and Genetic Discrimination</h3><p>In the United States, the Genetic Information Nondiscrimination Act (GINA, 2008) prohibits discrimination in health insurance and employment on the basis of genetic information. However, GINA does not cover life insurance, disability insurance, or long-term care insurance. Clients considering DNA testing for genealogical purposes should be made aware that genetic test results (including health-risk variants, if tested) could potentially affect their insurability in these unprotected categories.</p><p>The UK's Association of British Insurers has a Code on Genetics and Insurance; life insurers agreed not to require predictive test results for standard policies (with exceptions for very high-value policies and certain Huntington's disease tests). Clients should be directed to current guidance rather than relying on informal advice.</p><h3>Law Enforcement Access</h3><p>The Golden State Killer case established that genealogical databases can be used for criminal investigation. GEDmatch and FamilyTreeDNA subsequently adopted opt-in consent policies for law enforcement access. AncestryDNA and 23andMe do not allow law enforcement use of matching databases but may respond to valid court orders or subpoenas for individual account data.</p><p>Professional genealogists should: know the current policies of each platform they use; advise clients on these policies; and avoid participating in law enforcement IGG work outside an established ethical framework (APG/ISOGG guidelines).</p><h3>Sensitivity of DNA Results</h3><p>DNA results can reveal: non-paternity events (NPEs); previously unknown half-siblings; donor conception; adoptions never disclosed to the adopted person; genetic health risks; ethnicity information that contradicts family identity (e.g., Jewish heritage concealed during the Holocaust; Indigenous ancestry not in family knowledge). These disclosures can be profoundly disruptive.</p><p>Professional practice requires: proactively discussing the possibility of unexpected results before testing; having a clear protocol for handling NPE discoveries (see gen-sen-9); maintaining strict confidentiality about third parties; and being prepared to refer clients to specialist support (counsellors, specialist organisations) when discoveries cause distress.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old why uploading your DNA to a family history website could reveal private information about relatives who never agreed to share their DNA at all.",
+      "guidedPracticeHtml": "<p>A client asks you to help test her elderly mother, Agnes (age 82), for genealogical DNA research into Agnes's unknown paternal line. Agnes has mild cognitive impairment and does not always understand complex explanations. The client says Agnes 'would want to do it' and is happy to consent on her behalf. What are the ethical and practical issues you need to address before proceeding?</p>",
+      "guidedPracticeModelAnswer": "<p>The central issue is Agnes's capacity to consent. If Agnes has mild cognitive impairment, she may or may not have the legal and cognitive capacity to consent to DNA testing — this is not automatically determined by a diagnosis. Before proceeding, you need to: (1) assess whether Agnes has capacity — can she understand what the test involves, what data will be collected, and what the results might reveal, in simple terms? (2) If she has capacity, obtain her direct consent; do not rely on the daughter's proxy consent. (3) If she lacks capacity, the situation is governed by the Mental Capacity Act 2005 (in England and Wales), which requires that any decision made on behalf of a person who lacks capacity must be in their best interests and the least restrictive option. Genealogical DNA testing for the daughter's research benefit is not necessarily in Agnes's best interests — it is in the daughter's.</p><p>Practical steps: Explain this clearly to the client. If Agnes can consent directly, proceed with her direct, informed consent. If Agnes lacks capacity, consider whether a saliva sample can be obtained through the attending GP or a legal guardian with appropriate authority. As a genealogist, you should not proceed on the basis of an adult's assertion that a cognitively impaired relative 'would want' to do this. The ethical and potentially legal risk to you and to Agnes is significant. An alternative approach: test the daughter herself (Agnes's child) — the DNA will partially reflect Agnes's paternal line through shared segments, and this avoids the consent issue entirely while yielding much of the same genealogical information.</p>",
+      "soloPracticeHtml": "<p>You are a professional genealogist. A client's DNA results on AncestryDNA show that her brother (who also tested) is actually her half-brother — they share only 25% DNA, not the expected ~50% for full siblings. The client is shocked and distressed. She does not want to tell her brother what she has found, but she wants to know whether to pursue the question of who the biological father of one of them might be. Discuss the ethical considerations in this scenario and outline how you would approach the next steps with your client.</p>",
+      "modelAnswer": "<p>This is a classic NPE scenario with added complexity: the affected party (the brother) is a living adult who has not been told what the DNA shows. Ethical considerations: (1) The brother's right to know: he tested his own DNA; he has a right to access his own results. However, he has not yet seen or interpreted this specific result. The client's desire to conceal the information from him is understandable but raises its own ethical questions — she cannot 'un-know' this information, and future interactions between them will be coloured by it. (2) Your role: you are the client's genealogist, not the brother's. Your duty of confidentiality is to your client. You cannot contact the brother on her behalf, and you should not encourage her to disclose unless she decides to. (3) The client's autonomy: it is ultimately her decision whether to pursue this and whether to disclose to her brother.</p><p>Practical approach: Acknowledge the client's distress and give her time to process the information. Explain what the 25% match means in terms of relationship possibilities (half-sibling, not full sibling — one of them has a different biological parent than the other). Offer to help her understand the technical basis so she can assess the certainty of the finding. Do not immediately launch into further research without her explicit instruction. If she wants to pursue the biological father question, explain the methodology (building trees for the segment not shared with the brother, as described in gen-sen-9/gen-sen-10). Recommend she speak with a counsellor specialising in DNA discoveries (UK: DONOR CONCEPTION Network or DNA Surprises community groups) to help her process the personal dimension before deciding on next steps. Document your discussions carefully in your case file — including the fact that you explained the implications to her before proceeding further.</p>",
+      "practiceType": "NONE",
+      "xpReward": 90,
+      "learningObjectives": [
+        "Explain the third-party problem in genetic genealogy and why DNA upload decisions affect non-consenting relatives.",
+        "Describe the components of informed consent as applied to genealogical DNA testing.",
+        "Identify the key legal frameworks governing genetic data privacy (GINA, GDPR) and their limitations.",
+        "Apply professional ethical guidelines to sensitive DNA discovery scenarios including NPEs and law enforcement use."
+      ],
+      "commonMistakes": [
+        "Assuming platform terms of service constitute full informed consent without ensuring clients actually understand what they are agreeing to.",
+        "Failing to discuss the possibility of unexpected results (NPEs, unknown relatives) before a client tests.",
+        "Proceeding with DNA research on a cognitively impaired or incapacitated person on the basis of a relative's proxy consent.",
+        "Confusing GINA's protections (health insurance, employment) with full coverage — life, disability, and long-term care insurance are not protected."
+      ],
+      "assessmentCriteria": [
+        "Accurately explains the third-party consent problem with reference to the percentage of shared DNA between relatives.",
+        "Identifies GDPR deletion rights and GINA protections, along with their specific limitations.",
+        "Applies appropriate ethical reasoning to NPE and incapacity scenarios, distinguishing the researcher's role from the client's decision-making authority.",
+        "Demonstrates awareness of current law enforcement access policies for major genealogical databases."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "GINA (Genetic Information Nondiscrimination Act)", "description": "US federal law (2008) prohibiting genetic discrimination in health insurance and employment; does NOT cover life insurance, disability insurance, or long-term care insurance." },
+        { "term": "GDPR Right to Erasure", "description": "Under the General Data Protection Regulation (UK and EU), data subjects have the right to request deletion of their personal data — applicable to genealogical DNA company accounts." },
+        { "term": "Third-Party Consent Problem", "description": "The ethical issue that DNA upload exposes genetic information about non-consenting biological relatives who share DNA with the tester — approximately 50% for parents/siblings, 12.5% for first cousins." },
+        { "term": "Mental Capacity Act 2005", "description": "UK legislation governing decisions made on behalf of people who lack mental capacity to consent; requires decisions to be in the person's best interests, not the interests of others." },
+        { "term": "APG Ethics Guidelines", "description": "Association of Professional Genealogists code of ethics; includes specific provisions on confidentiality, informed consent, and the responsible handling of DNA results." },
+        { "term": "DNA Surprises (Community Support)", "description": "Online community providing peer support for people who have experienced unexpected DNA discoveries, including NPEs, unknown half-siblings, and donor conception revelations." }
+      ],
+      "questions": [
+        {
+          "id": "gen-sen-17a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What categories of insurance are NOT covered by the US Genetic Information Nondiscrimination Act (GINA)?",
+          "options": [
+            "Health insurance and employer-provided group plans",
+            "Life insurance, disability insurance, and long-term care insurance",
+            "Travel insurance and car insurance",
+            "All insurance policies are covered by GINA"
+          ],
+          "correctAnswer": "Life insurance, disability insurance, and long-term care insurance",
+          "explanationHtml": "<p>GINA prohibits genetic discrimination in health insurance and employment. It explicitly does not cover life insurance, disability insurance, or long-term care insurance — a significant gap that clients considering DNA testing for genealogical purposes should be aware of.</p>"
+        },
+        {
+          "id": "gen-sen-17a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A client wants to upload her raw DNA to GEDmatch for additional matching. What should you ensure she understands before she does so?",
+          "options": [
+            "GEDmatch has a larger database than AncestryDNA for all populations",
+            "Raw DNA upload to GEDmatch exposes her data for cross-platform matching; she should understand GEDmatch's current law enforcement opt-in policy, and that she can later delete her kit",
+            "GEDmatch is only suitable for Y-DNA and mtDNA, not autosomal",
+            "GEDmatch automatically shares her results with her DNA matches without her knowledge"
+          ],
+          "correctAnswer": "Raw DNA upload to GEDmatch exposes her data for cross-platform matching; she should understand GEDmatch's current law enforcement opt-in policy, and that she can later delete her kit",
+          "explanationHtml": "<p>Before uploading to GEDmatch, a client should understand: the cross-platform nature of the matching; GEDmatch's current opt-in policy for law enforcement matching (she can choose to opt out); and that she can delete her kit at any time. Informed decision-making requires this information.</p>"
+        },
+        {
+          "id": "gen-sen-17a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A client's AncestryDNA results reveal she has a half-sibling she never knew about. The half-sibling has a public tree and appears to be living. What is the most ethically appropriate next step for the professional genealogist?",
+          "options": [
+            "Contact the half-sibling immediately on the client's behalf to inform them of the match",
+            "Explain the finding to the client, allow her to decide how she wants to proceed, and recommend specialist support organisations before any contact is made with the half-sibling",
+            "Inform the half-sibling's family through their public tree message feature",
+            "Advise the client to hide the match so it cannot be seen by the half-sibling"
+          ],
+          "correctAnswer": "Explain the finding to the client, allow her to decide how she wants to proceed, and recommend specialist support organisations before any contact is made with the half-sibling",
+          "explanationHtml": "<p>The genealogist's role is to inform the client, not to act on her behalf. Contact decisions with a previously unknown biological relative belong entirely to the client. Recommending specialist support before taking action is best practice — unexpected discoveries of this kind can be profoundly disruptive to multiple families.</p>"
+        }
+      ]
+    }
+  ]
+}

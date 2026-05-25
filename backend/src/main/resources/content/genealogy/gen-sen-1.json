@@ -1,0 +1,111 @@
+{
+  "id": "gen-sen-1",
+  "title": "Australian & New Zealand Genealogy",
+  "glyph": "🦘",
+  "sortOrder": 1,
+  "tier": "SENIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-20"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-sen-1a",
+      "title": "Convict Records, Colonial Settlement & the Australasian Record Landscape",
+      "sortOrder": 1,
+      "xpReward": 90,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Australia and New Zealand have some of the most distinctive and richest genealogical record landscapes in the world — shaped by the unusual origins of European settlement. Australia's convict transportation system (1788–1868) generated extraordinarily detailed records of approximately 162,000 individuals transported from Britain and Ireland. New Zealand's Treaty of Waitangi (1840) and subsequent colonial settlement created a different record pattern, with distinctive Māori genealogical traditions intersecting with British colonial administration. For researchers with ancestors in either country, understanding the specific record landscape — state-based archives, distinct vital registration systems, and the unique sources of the colonial period — is essential.</p>",
+      "explanationHtml": "<h3>Australian convict records</h3>\n<p>Approximately 162,000 convicts were transported to Australia between 1788 and 1868. The transportation system generated records at every stage of the process:</p>\n<ul>\n  <li><strong>UK trial records</strong>: Assize court indictments and Old Bailey proceedings (oldbaileyonline.org for London cases) give name, age, offence, and sentence. Quarter Sessions records give the same for lesser offences.</li>\n  <li><strong>Hulk registers (HO8, HO9 at TNA)</strong>: lists of convicts held on prison hulks (decommissioned ships) awaiting transportation — give name, age, ship of conviction, and health status.</li>\n  <li><strong>Transportation registers (HO11 at TNA)</strong>: list convicts per transportation ship, searchable on Ancestry and Findmypast.</li>\n  <li><strong>Convict indent books</strong>: the most genealogically detailed convict document — compiled at arrival in the colony. The indent gives: name, ship, arrival date, native place (specific county or town), age, trade, physical description (height, hair, eye colour, distinguishing marks), literacy, religion, and conduct on the voyage. For NSW, these are at NSW State Archives and Records; many are digitised at NSW BDM (births.nsw.gov.au) and searchable on the <strong>Founders &amp; Survivors</strong> project and the <strong>NSW Convict Records</strong> search.</li>\n  <li><strong>Assignment records</strong>: convicts were assigned as free labour to settlers. Assignment records give the master's name, the property, and the work performed.</li>\n  <li><strong>Ticket of leave records</strong>: a ticket of leave gave a convict conditional freedom within a specified district. The ticket record gives name, ship, year of arrival, and district of restriction.</li>\n  <li><strong>Certificate of Freedom / Absolute Pardon</strong>: on completing sentence or receiving a pardon, the convict received a certificate — the final document in the transportation sequence.</li>\n</ul>\n\n<h3>Australian state archives and vital records</h3>\n<p>Australia's six states each have their own archive and vital registration system. Registration began at different dates per state:</p>\n<ul>\n  <li>New South Wales: 1856 (though some earlier colonial records survive)</li>\n  <li>Victoria: 1853</li>\n  <li>South Australia: 1842 (earliest in Australia)</li>\n  <li>Western Australia: 1841 (early records very sparse)</li>\n  <li>Queensland: 1856 (separated from NSW)</li>\n  <li>Tasmania (Van Diemen's Land): 1838</li>\n</ul>\n<p>Each state's Births, Deaths and Marriages (BDM) registry holds the statutory registers. Indexes are online through each state's BDM website; images require a fee for recent records and are more freely available for older ones. FamilySearch and Ancestry hold extensive Australian vital record collections.</p>\n\n<h3>Key Australian databases</h3>\n<ul>\n  <li><strong>Founders &amp; Survivors</strong> (foundersandsurvivors.org): links UK trial records, transportation records, and Australian convict records for NSW and VDL convicts — the most integrated convict research tool available.</li>\n  <li><strong>NSW State Archives</strong> (records.nsw.gov.au): holds NSW convict records, colonial government records, and land records online.</li>\n  <li><strong>Trove</strong> (trove.nla.gov.au): National Library of Australia's free digitised newspapers (1803–present) and other resources — a major genealogical source for obituaries, land notices, and court reports.</li>\n  <li><strong>Australian War Memorial</strong> (awm.gov.au): WW1 and WW2 service records and nominal rolls.</li>\n  <li><strong>NAA (National Archives of Australia)</strong> (naa.gov.au): federal records including post-federation immigration and naturalisation.</li>\n</ul>\n\n<h3>New Zealand genealogy</h3>\n<p>New Zealand's colonial settlement from 1840 generated a distinct record set:</p>\n<ul>\n  <li><strong>Civil registration</strong>: began 1848 (voluntary) and 1855 (compulsory). New Zealand BDM records are at births.govt.nz; online indexes are freely searchable and images available for a fee.</li>\n  <li><strong>Census records</strong>: New Zealand censuses from 1851 are at Archives New Zealand (archives.govt.nz); the 1881 and later censuses are available online. Note: New Zealand census records were destroyed for privacy after each census until 1966 — no detailed census images survive for most pre-1966 censuses.</li>\n  <li><strong>Land records</strong>: Crown land grants (land.govt.nz) document the transfer of Māori land under various Land Acts and the Treaty — highly sensitive historical material with specialist research requirements.</li>\n  <li><strong>Māori genealogy (whakapapa)</strong>: Māori maintain oral and written genealogical traditions (whakapapa) of exceptional depth. The Māori Land Court records (from 1865) attempted to codify Māori land ownership and contain extensive genealogical testimony. At Archives New Zealand and the Māori Land Court; some digitised on FamilySearch.</li>\n  <li><strong>Papers Past</strong> (paperspast.natlib.govt.nz): free digitised New Zealand newspapers from 1839 — equivalent to Trove for New Zealand research.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a convict indent from 1832 — a large folded sheet handwritten in neat copperplate. Under 'Native Place': 'Tipperary, Ireland.' Under 'Description': 'Height 5'7\", dark hair, grey eyes, scar above left eyebrow, trade: labourer.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The convict indent is one of the richest genealogical documents ever created for the working classes of Britain and Ireland. Name, age, native place — not just county but often the specific townland or village. Trade. Physical description. Literacy. Religion. Conduct on the voyage. For a man who left no other trace in Tipperary's scanty records, the indent is the record that says: he was real, he was this tall, his eyes were grey, he came from this place. It is the most intimate official document many of these people ever generated."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And Trove — never overlook Trove when researching Australian ancestry. The digitised Australian press from 1803 is free and searchable. Colonial newspapers were extraordinarily detailed about local life: arrivals of ships, auction sales of property, court hearings, births notices, funeral reports. A man who arrived in 1840 and built a life in Victoria left traces in the colonial press that no registry will duplicate. Trove finds the texture of a life, not just the administrative framework."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor Australian and New Zealand records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is a <strong>convict indent book</strong> and what information does it typically contain?</li>\n  <li>Name the four stages of the convict transportation record trail from UK to Australia.</li>\n  <li>What is <strong>Trove</strong> and why is it important for Australian genealogical research?</li>\n  <li>Why are New Zealand census records less useful than those in most other countries?</li>\n  <li>What are <strong>Māori Land Court records</strong> and what genealogical information do they contain?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A convict indent book is a record compiled at a convict's arrival in Australia. It gives: name, ship, arrival date, native place (specific county or town), age, trade, physical description (height, hair, eye colour, distinguishing marks), literacy, religion, and conduct on the voyage. It is typically the most genealogically detailed document in the transportation record sequence.\n\nFour stages of the transportation record trail: (1) UK trial records (Assize/Old Bailey indictment — name, age, offence, sentence); (2) hulk registers (HO8/HO9 at TNA — name, age, health while awaiting transport); (3) transportation register (HO11 — ship and passenger list); (4) Australian colonial records (indent, assignment, ticket of leave, certificate of freedom).\n\nTrove (trove.nla.gov.au) is the National Library of Australia's free platform hosting digitised Australian newspapers from 1803 onward, plus books, journals, and other resources. It is important for genealogical research because colonial newspapers carried detailed coverage of local life — ship arrivals, court cases, property auctions, births, and obituaries — providing biographical detail not found in official registries.\n\nNew Zealand census records are less useful than those in most countries because the government destroyed individual census schedules after each census (for privacy) until 1966. Only statistical summaries survive for most pre-1966 censuses — no searchable name indexes or household images exist.\n\nMāori Land Court records (from 1865) were compiled to adjudicate Māori land ownership under various Land Acts. They contain extensive genealogical testimony — witnesses presented whakapapa (genealogy) to support land claims, naming ancestors going back many generations. At Archives New Zealand and some digitised on FamilySearch, they are essential for Māori genealogical research.",
+      "soloPracticeHtml": "<h3>Tracing an Australian convict ancestor</h3>\n<p>You discover that your ancestor Patrick Donnelly was transported from Ireland to New South Wales on the ship 'Minerva' in 1845, sentenced to seven years for stealing. You know his Irish county of origin (Roscommon) but no specific town. Design a research strategy (300–400 words) to: (1) use the transportation record trail to establish his origins in Ireland; (2) trace his life in NSW after arrival; and (3) find his descendants in Australia.</p>",
+      "modelAnswer": "Step 1 — UK trial records: Patrick was tried before 1845 in Ireland. Irish transportation convicts were tried in assizes courts; search the relevant Irish petty sessions, assize, or transported convicts database. The Irish Convict Reference Files at NAI (National Archives of Ireland) and the Transportation Registers are searchable at genealogy.nationalarchives.ie — these may give the specific townland of origin, the offence details, and sometimes a father's name.\n\nStep 2 — Convict indent: Search the NSW Convict Records at NSW State Archives (records.nsw.gov.au) or the Founders &amp; Survivors project for Patrick Donnelly, ship 'Minerva,' arrived c.1845. The indent should give his native place (specific townland in Roscommon), age, trade, physical description, and religion. The 'native place' field is the key to bridging back to Irish records — once the specific parish is identified, Griffith's Valuation (1847–1864), Tithe Applotment Books (1823–1837), and Catholic parish registers can be searched.\n\nStep 3 — Assignment and ticket of leave: Search NSW State Archives for Patrick's assignment record (who he was assigned to as a servant), his ticket of leave (conditional freedom within a district, giving the district name), and his certificate of freedom (when his seven-year sentence expired c.1852). These records trace his movements in NSW colony.\n\nStep 4 — Post-sentence life in NSW: After 1852, Patrick became a free man. Search NSW BDM registers for his marriage (if not married in Ireland), births of children, and death. Search Trove for his name in NSW newspapers — property purchases, court cases, obituary. Search the 1856 NSW electoral roll (on Ancestry) for his address.\n\nStep 5 — Descendants: Use Trove obituaries, NSW BDM marriage indexes for children, and AncestryDNA matches to connect with living Australian descendants who may have shared family knowledge.",
+      "feynmanPrompt": "Explain to a friend why a convict transportation record might tell you more about your Irish or British ancestor than anything you could find in their home country's records.",
+      "rabbitHoleTerms": [
+        {
+          "term": "convict indent",
+          "description": "The record compiled at a convict's arrival in Australia — giving name, ship, native place (specific town), age, trade, physical description, literacy, and religion — often the most genealogically detailed document for working-class British and Irish ancestors."
+        },
+        {
+          "term": "Founders & Survivors",
+          "description": "A research project (foundersandsurvivors.org) linking UK trial records, transportation records, and Australian colonial records for NSW and Tasmanian convicts — the most integrated convict research database available."
+        },
+        {
+          "term": "Trove",
+          "description": "The National Library of Australia's free platform (trove.nla.gov.au) hosting digitised Australian newspapers from 1803, plus books and journals — an essential genealogical source for colonial-era biographical detail."
+        },
+        {
+          "term": "whakapapa",
+          "description": "The Māori genealogical tradition — oral and written genealogies of great depth, recorded in Māori Land Court proceedings (from 1865) and maintained by iwi (tribal) communities — a distinctive and rich source for Māori ancestry."
+        },
+        {
+          "term": "Papers Past",
+          "description": "New Zealand's free digitised newspaper archive (paperspast.natlib.govt.nz), covering 1839 to the present — the New Zealand equivalent of Trove, essential for tracing colonial and 20th-century New Zealand ancestors."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What information does an Australian <strong>convict indent book</strong> typically record?</p>",
+          "options": [
+            "Name, ship, arrival date, native place (specific county or town), age, trade, physical description (height, hair, eye colour, marks), literacy, religion, and conduct on the voyage",
+            "Only the convict's name, sentence length, and the name of the ship that transported them",
+            "The convict's complete criminal history and a record of all previous offences",
+            "The names and addresses of the convict's family in Britain or Ireland, supplied by the government"
+          ],
+          "correctAnswer": "Name, ship, arrival date, native place (specific county or town), age, trade, physical description (height, hair, eye colour, marks), literacy, religion, and conduct on the voyage",
+          "explanationHtml": "<p>The convict indent was compiled at arrival in the Australian colony and is the most genealogically detailed document in the transportation record sequence. Its genealogical significance is particularly high for Irish and British working-class ancestors who left few other records: the 'native place' field often gives a specific townland or parish, not just the county of origin. The physical description — height, hair and eye colour, distinguishing marks — is a direct description of the individual. Taken together, the indent is equivalent to a birth record, physical description, and occupational record combined. NSW indents are at NSW State Archives and accessible through the Founders &amp; Survivors project and the NSW BDM online search.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching an Irish ancestor transported to Van Diemen's Land (Tasmania) in 1825. You have found the transportation register (HO11) confirming the ship and arrival. What is your most productive next step to find his specific Irish town of origin?</p>",
+          "options": [
+            "Search the Tasmanian convict indent (muster roll at the Tasmanian Archive and Heritage Office) — the indent compiled at arrival in VDL should give his 'native place' as a specific Irish county and possibly a specific parish or townland",
+            "Search the 1841 Irish census — if he is still listed in Ireland that means transportation records are wrong",
+            "Search the Irish Ordnance Survey for his surname in Munster — all Irish convicts came from Munster",
+            "The HO11 transportation register is the only document that survives for VDL convicts before 1840"
+          ],
+          "correctAnswer": "Search the Tasmanian convict indent (muster roll at the Tasmanian Archive and Heritage Office) — the indent compiled at arrival in VDL should give his 'native place' as a specific Irish county and possibly a specific parish or townland",
+          "explanationHtml": "<p>The transportation register (HO11) confirms which ship the convict was on and its destination, but gives minimal biographical detail. The next critical document is the colonial arrival record — for Van Diemen's Land (Tasmania), this is the convict muster or indent held at the Tasmanian Archive and Heritage Office (TAHO) in Hobart, now accessible online through the Tasmanian Names Index (libraries.tas.gov.au). This index consolidates convict records for Tasmania and, crucially, gives the 'native place' field which often specifies the Irish county and sometimes the specific parish or townland. This is the key to bridging back to Irish records: once the parish is identified, the researcher can search Catholic parish registers, Griffith's Valuation, and Tithe Applotment Books.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher wants to find their New Zealand ancestor John MacPherson in a New Zealand census from 1881. They search Archives New Zealand and FamilySearch but find no household-level images or name indexes. They conclude no census was taken in 1881. Is this correct?</p>",
+          "options": [
+            "No — New Zealand censuses were taken from 1851, including 1881, but the government destroyed individual household schedules after each census for privacy purposes; only statistical summaries survive for pre-1966 censuses, so the absence of searchable images is expected and reflects government policy, not the absence of a census",
+            "Yes — New Zealand did not conduct a census until 1921",
+            "Yes — the 1881 census records were destroyed in the Christchurch earthquake",
+            "No — 1881 New Zealand census images are freely available on Ancestry under 'New Zealand Census Records'"
+          ],
+          "correctAnswer": "No — New Zealand censuses were taken from 1851, including 1881, but the government destroyed individual household schedules after each census for privacy purposes; only statistical summaries survive for pre-1966 censuses, so the absence of searchable images is expected and reflects government policy, not the absence of a census",
+          "explanationHtml": "<p>New Zealand is unusual among colonial-era nations in that it conducted censuses from 1851 but systematically destroyed the individual household schedules after tabulating the statistics, citing privacy. This means that unlike Australia, England, Scotland, the US, and Canada — where census household images survive and are searchable by name — New Zealand offers no equivalent resource for most of its census history. The 1966 census was the first to be preserved; subsequent censuses are also retained. For pre-1966 New Zealand research, the alternatives are BDM registers, electoral rolls, land records, Trove/Papers Past newspapers, and military records. The researcher should not conclude no census existed — they should adapt their strategy to the records that do survive.</p>"
+        }
+      ]
+    }
+  ]
+}
