@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-10",
+  "title": "Jewish Genealogy — JRI, Yad Vashem & Vital Records",
+  "glyph": "✡️",
+  "sortOrder": 10,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-9"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-10a",
+      "title": "Reconstructing Jewish Family History — Records, Databases, and the Holocaust",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Jewish genealogy combines some of the richest record landscapes in the world with some of its most devastating destructions. On one hand, Jewish communities have maintained detailed records — communal registers, burial society (chevra kadisha) books, rabbinical court documents, and government vital records — for centuries. On the other hand, the Holocaust destroyed between five and six million people and, in many cases, the communities and records that documented them. Jewish genealogical research therefore operates across this paradox: reconstructing identity from surviving fragments while acknowledging the irretrievable losses. The specialised databases — JRI-Poland, Yad Vashem, JewishGen, the JOWBR — are among the most extensively indexed genealogical resources in existence.</p>",
+      "explanationHtml": "<h3>The record landscape — what exists and where</h3>\n<p>Jewish vital records were maintained by different authorities depending on time period and geographic location:</p>\n<ul>\n  <li><strong>Pre-19th century</strong>: community records (kehillah records) — maintained by the Jewish community itself — and rabbinical court records (responsa). These vary enormously by community and survival.</li>\n  <li><strong>Russian Empire (including Congress Poland, 1826–1918)</strong>: Jewish vital records (births, marriages, deaths) were maintained as government metrical books (Russian: metricheskiye knigi) in Russian from 1826 onward; earlier records in Hebrew or Yiddish in synagogue register books. These are primarily at regional state archives in former Russian-controlled territories (Lithuania, Belarus, Ukraine, Poland) and at CAHJP (Central Archives for the History of the Jewish People) in Jerusalem.</li>\n  <li><strong>Austro-Hungarian Empire (Galicia, Bohemia, Hungary, 1784–1918)</strong>: civil registration from 1784 (Catholic) and from 1788 for Jewish communities in some regions; these records are in German and Latin and are increasingly digitised on Matricula Online and FamilySearch.</li>\n  <li><strong>Germany and Western Europe (19th century)</strong>: civil registration, including Jewish vital records, in the relevant state from the early 19th century (earlier in areas under French influence). German Jewish community records are often at local Landesarchive or at CAHJP.</li>\n  <li><strong>United States</strong>: Jewish immigrants' vital records are in the standard US civil registration system; their immigrant origins are documented in passenger lists, naturalization records, and the HIAS (Hebrew Immigrant Aid Society) records.</li>\n</ul>\n\n<h3>JRI-Poland and JewishGen</h3>\n<p><strong>JewishGen.org</strong> is the central coordinating platform for Jewish genealogical research worldwide. It hosts:</p>\n<ul>\n  <li><strong>JRI-Poland (Jewish Records Indexing — Poland)</strong>: indexes millions of Jewish vital records from Polish state archives — one of the largest indexing projects in genealogy. The index gives name, year, record type, and archive location; the underlying image must be obtained from the archive (increasingly digitised on Szukajwarchiwach.pl).</li>\n  <li><strong>JewishGen Family Finder (JGFF)</strong>: a database of surnames and towns being researched by JewishGen members — if someone else is researching your ancestral town and surname, they appear here.</li>\n  <li><strong>The JOWBR (JewishGen Online Worldwide Burial Registry)</strong>: millions of Jewish burial records from cemeteries worldwide — name, birth year, death date, and often a photograph of the gravestone. Particularly useful for communities where civil records do not survive.</li>\n  <li><strong>ShtetlSeeker / communities database</strong>: helps identify the modern name and country of a historical Jewish community (shtetl), which may have been in Russia, Germany, Poland, or elsewhere depending on period.</li>\n</ul>\n\n<h3>Yad Vashem and Holocaust records</h3>\n<p><strong>Yad Vashem</strong> in Jerusalem is Israel's official memorial to Holocaust victims. Its genealogical resources are extraordinary:</p>\n<ul>\n  <li><strong>Central Database of Shoah Victims' Names</strong>: approximately 4.8 million names of victims, compiled from <em>Pages of Testimony</em> (Yizkor sheets) submitted by survivors, and from post-war censuses, transport lists, and ghetto records. Searchable free at yadvashem.org.</li>\n  <li><strong>Pages of Testimony</strong>: one-page memorial forms submitted by survivors and relatives, giving the victim's name, birthplace, birth year, occupation, names of parents, spouse, and children, and the submitter's name. These are community-compiled documents — secondary sources — but invaluable where no other record survives.</li>\n  <li><strong>Transport and camp records</strong>: Yad Vashem holds digitised transport lists, ghetto records, and concentration camp documentation from across Europe — many of which are the only surviving record of an individual's existence.</li>\n  <li><strong>USHMM (United States Holocaust Memorial Museum)</strong>: in Washington DC, holds extensive archives and an online Collections database; the ITS (International Tracing Service) records, documenting displaced persons and camp survivors, are accessible through USHMM.</li>\n</ul>\n\n<h3>Yizkor books</h3>\n<p>Yizkor books (memorial books) are a unique Jewish record type: community memorial books compiled by survivors after the Holocaust to document their destroyed towns and communities. Thousands were published in Hebrew and Yiddish in the 1940s–1960s. They typically contain:</p>\n<ul>\n  <li>Lists of community members (often the entire pre-war population)</li>\n  <li>Memoirs and testimonies about specific families</li>\n  <li>Photographs of individuals, families, and communal events</li>\n  <li>Records of community institutions (schools, synagogues, businesses)</li>\n</ul>\n<p>Many yizkor books have been translated into English and are accessible via the <strong>New York Public Library Yizkor Book Collection</strong>, the <strong>YIVO Encyclopedia of Jews in Eastern Europe</strong>, and the <strong>Yizkor Books in Print</strong> database on JewishGen. They are secondary sources but contain information preserved nowhere else.</p>\n\n<h3>HIAS and immigration records</h3>\n<p>The Hebrew Immigrant Aid Society (HIAS) assisted Jewish immigrants from Eastern Europe from the 1880s onward and maintained case files on immigrants they assisted. HIAS records — now at YIVO Institute for Jewish Research, New York — can give an immigrant's name, town of origin, date of arrival, and names of sponsors. They complement the passenger list and naturalization record for the same individual.</p>\n\n<h3>Name and location challenges</h3>\n<p>Two specific challenges in Jewish genealogy:</p>\n<ul>\n  <li><strong>Name translation</strong>: Jewish given names were often recorded differently in different languages and contexts. Mordecai may appear as Moritz (German), Mordechai (Hebrew), Motl (Yiddish), or Martin (English). Feige may appear as Fanny. The <strong>Given Name Variants</strong> database on JewishGen maps these equivalences.</li>\n  <li><strong>Town identification</strong>: the same town may have had different names in different languages (Łódź = Lodsh in Yiddish = Lodz in German; Vilna = Vilnius in Lithuanian = Vilno in Polish = Wilno in German). ShtetlSeeker on JewishGen identifies historical community names in their various forms and maps them to modern equivalents.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a browser to the Yad Vashem names database. She types a single surname — Goldberg — and a town — Bialystok. The results fill the screen: hundreds of entries. Births, ages, family relationships. Photographs of memorial forms handwritten in Yiddish."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Jewish genealogy exists in this paradox: extraordinary records, extraordinary destruction. The Jewish communities of Eastern Europe maintained detailed documentation for centuries — metrical books, burial society records, rabbinical court responsa. Then, between 1941 and 1945, the communities themselves were destroyed. The records often survived when the people did not. And sometimes the records were also destroyed. The work of Jewish genealogy is reconstruction — finding the fragments that remain and connecting them."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The Pages of Testimony at Yad Vashem were submitted by survivors. A woman in Tel Aviv in 1952, filling out a form about her mother, her father, her brother. Name, birthplace, year, occupation. Parents' names. Spouse's name. Children's names. One page, one person. There are 4.8 million of these pages. They are memorial documents — not official records — but they carry information that exists nowhere else in the world. If your ancestor died in the Holocaust and a relative survived to submit a Page of Testimony, that page may be the only document that says their name."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And JewishGen — start every Jewish genealogical project there. The JRI-Poland index. The burial registry. The community database. The Family Finder — other researchers who are also looking for your town and your surname. Jewish genealogy has been collaborative for decades because it had to be. The records are scattered across a dozen countries. No single researcher can access them all. JewishGen built the infrastructure for sharing what individual researchers find."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor Jewish genealogy resources</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is <strong>JRI-Poland</strong> and what information does it index?</li>\n  <li>What are <strong>Pages of Testimony</strong> at Yad Vashem and what information do they contain?</li>\n  <li>What are <strong>yizkor books</strong> and why are they genealogically valuable?</li>\n  <li>What is the <strong>JOWBR</strong> and what does it record?</li>\n  <li>Name two challenges specific to Jewish genealogy relating to names.</li>\n</ul>",
+      "guidedPracticeModelAnswer": "JRI-Poland (Jewish Records Indexing — Poland) is a project on JewishGen.org that indexes millions of Jewish vital records from Polish state archives, giving name, year, record type, and archive location. The underlying images must be obtained from the relevant Polish archive or Szukajwarchiwach.pl.\n\nPages of Testimony at Yad Vashem are one-page memorial forms submitted by survivors and relatives documenting Holocaust victims. Each page gives the victim's name, birthplace, birth year, occupation, parents' names, spouse's name, children's names, and the submitter's details. Approximately 4.8 million pages are searchable free at yadvashem.org. They are secondary sources (the submitter's memory) but often the only surviving documentation of a victim's identity.\n\nYizkor books are community memorial books compiled by survivors after the Holocaust, typically published in Hebrew or Yiddish in the 1940s–1960s. They often contain lists of pre-war community members, family memoirs, photographs, and records of communal institutions — preserving information about destroyed communities that exists nowhere else.\n\nThe JOWBR (JewishGen Online Worldwide Burial Registry) indexes millions of Jewish burial records from cemeteries worldwide, giving name, birth year, death date, and often a gravestone photograph. It is particularly useful for communities where civil vital records do not survive.\n\nTwo naming challenges: (1) Jewish given names appear in different forms in different languages (Mordecai = Moritz = Motl = Martin), requiring the Given Name Variants database; (2) town names differ by language (Łódź/Lodsh/Lodz), requiring ShtetlSeeker to identify the same community under its various names.",
+      "soloPracticeHtml": "<h3>Building a Jewish genealogical research strategy</h3>\n<p>Your ancestor Rivka Horowitz emigrated from 'Russia' (likely Congress Poland) to New York around 1905, aged approximately 22. She appears in the 1910 US census as 'Rebecca Horowitz,' naturalised 1908, birthplace 'Russia.' Her husband's name was Samuel Horowitz. You want to find her town of origin and pre-emigration family.</p>\n<p>Design a research strategy (300–400 words) explaining: what records you would search in what order, what specific databases or archives you would use, and what challenges specific to Jewish genealogy you would anticipate.</p>",
+      "modelAnswer": "Step 1 — US records first: Find Rivka/Rebecca Horowitz in the 1900 US census (if she arrived before 1900) and the 1910 and 1920 censuses. The 1900 census asks year of immigration and years in the US; the 1910 census asks for state/country of birth and language. Her naturalization from 1908 may be a first or second paper — search the USCIS Historical Reference Library or NARA for naturalisation records for Samuel Horowitz, since wives of naturalised men were derivatively naturalised under pre-1922 law, meaning Samuel's naturalisation record gives both their details.\n\nStep 2 — Passenger list: With a c.1905 arrival date, search Ellis Island records (ellisisland.org) and Ancestry passenger lists for Rebecca or Rivka Horowitz. Post-1906 passenger manifests ask for the last place of residence, contact person in the old country (often a parent or sibling), and where they are going in the US (contact person). This is the most direct route to the specific town.\n\nStep 3 — JewishGen databases: Once the town is identified (or partially identified — 'Russia' as a region), use ShtetlSeeker to identify Jewish communities in the likely area. Search JRI-Poland for Horowitz births in that region to establish the family's presence. The JGFF may identify other researchers working on Horowitz families from the same town.\n\nStep 4 — Vital records: If the town is in the former Congress Kingdom of Poland, search JRI-Poland for metrical book entries. The actual images will be on Szukajwarchiwach.pl or at the relevant Polish state archive. Rivka born c.1883 should appear in a birth register; her parents' marriage should be findable 5–15 years earlier.\n\nStep 5 — Holocaust and Yizkor: If the family remained in the town, search Yad Vashem's database for family members who died in the Holocaust. Check for a yizkor book for that community on JewishGen.\n\nChallenges: name translation (Rivka = Rebecca; Horowitz may appear as Hurwitz, Gurwitz, Harwitz in different records); town name under different languages; post-1939 archive destruction in some areas.",
+      "feynmanPrompt": "Explain to a friend what a 'Page of Testimony' at Yad Vashem is, who created these documents, and why they are valuable for genealogical research even though they are not official government records.",
+      "rabbitHoleTerms": [
+        {
+          "term": "JewishGen",
+          "description": "The central online platform for Jewish genealogical research (jewishgen.org), hosting JRI-Poland, the JOWBR burial registry, the Family Finder, and community databases for thousands of former Jewish communities worldwide."
+        },
+        {
+          "term": "Pages of Testimony",
+          "description": "Memorial forms submitted to Yad Vashem by Holocaust survivors and relatives, documenting victims' names, birth details, family members, and occupations — approximately 4.8 million searchable free at yadvashem.org."
+        },
+        {
+          "term": "yizkor books",
+          "description": "Community memorial books compiled by Holocaust survivors in the 1940s–1960s, documenting destroyed Jewish communities — often containing pre-war population lists, photographs, and family memoirs unavailable elsewhere."
+        },
+        {
+          "term": "JOWBR",
+          "description": "JewishGen Online Worldwide Burial Registry — indexes millions of Jewish burial records globally, with gravestone photographs; particularly useful where civil vital records do not survive."
+        },
+        {
+          "term": "ShtetlSeeker",
+          "description": "A JewishGen tool that identifies historical Jewish community names (shtetlakh) in their various linguistic forms and maps them to modern geographic locations — essential for locating ancestral towns listed under different names in different records."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What are <strong>Pages of Testimony</strong> at Yad Vashem?</p>",
+          "options": [
+            "One-page memorial forms submitted by Holocaust survivors and relatives documenting victims' names, birthplaces, family members, and occupations — approximately 4.8 million searchable free on the Yad Vashem website",
+            "Official government documents recording the deaths of Holocaust victims, held at German federal archives",
+            "Transport lists recording the deportation of Jewish communities from Eastern Europe to concentration camps",
+            "Passports and identity documents confiscated from Jewish people during the Holocaust, held at the International Tracing Service"
+          ],
+          "correctAnswer": "One-page memorial forms submitted by Holocaust survivors and relatives documenting victims' names, birthplaces, family members, and occupations — approximately 4.8 million searchable free on the Yad Vashem website",
+          "explanationHtml": "<p>Pages of Testimony (Daf Ed in Hebrew) are memorial forms submitted to Yad Vashem by survivors and relatives of victims, usually in the decades following the Holocaust. Each form records one victim's name, birthplace, birth year, occupation, parents' names, spouse's name, children's names, and the identity of the submitter. They are secondary sources — the accuracy depends on the submitter's knowledge and memory — but they preserve information, especially family relationships, that exists nowhere else for many victims. The database is searchable free at yadvashem.org and contains approximately 4.8 million names.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching a Jewish ancestor named Moishe Katz who emigrated from Congress Poland to New York around 1910. You want to find his town of origin. Which is the most productive starting point?</p>",
+          "options": [
+            "Search post-1906 US passenger manifests for Moishe Katz or Moses Katz — manifests from this period ask for the emigrant's last town of residence and a contact person (often a relative) in the old country",
+            "Search JRI-Poland directly, as it will list all Katz families in Congress Poland by town",
+            "Search the Yad Vashem database for Moishe Katz — Holocaust records routinely give the emigrant's original town of residence",
+            "Search German passport records, as all Jewish emigrants passed through Germany before sailing to New York"
+          ],
+          "correctAnswer": "Search post-1906 US passenger manifests for Moishe Katz or Moses Katz — manifests from this period ask for the emigrant's last town of residence and a contact person (often a relative) in the old country",
+          "explanationHtml": "<p>The 1906 US immigration act required passenger manifests to collect much more detailed information than before, including the immigrant's last place of residence in the old country, their final destination in the US, and a contact person in both countries (often a relative). This makes post-1906 manifests the single most direct route to a specific European town of origin. For Moishe Katz arriving c.1910, the manifest should give his last residence — potentially a specific Russian-Polish town. JRI-Poland is useful once the town is identified; Yad Vashem is for Holocaust-era victims (after 1941), not emigrants of 1910.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds a Page of Testimony at Yad Vashem for their great-grandmother, Chana Lebowitz, giving her birth year as 1895 and naming her parents as David Lebowitz and Miriam Goldstein. The researcher treats this as a primary source and cites it as proof of Chana's parentage. Is this correct?</p>",
+          "options": [
+            "No — a Page of Testimony is a secondary source, completed from memory by a survivor or relative decades after the events; it is valuable evidence that should be corroborated by a primary source (a birth record or marriage record naming Chana's parents) before being treated as proven",
+            "Yes — Yad Vashem is an official Israeli government institution, so its records are primary sources",
+            "Yes — the submitter had personal knowledge of Chana's family and therefore the information is primary",
+            "No — Pages of Testimony are legally inadmissible and cannot be used in genealogical research at all"
+          ],
+          "correctAnswer": "No — a Page of Testimony is a secondary source, completed from memory by a survivor or relative decades after the events; it is valuable evidence that should be corroborated by a primary source (a birth record or marriage record naming Chana's parents) before being treated as proven",
+          "explanationHtml": "<p>Source classification matters: a Page of Testimony is a secondary source in terms of its information content — the submitter recorded information from their knowledge and memory, often decades after Chana's birth. The institutional status of Yad Vashem (a government institution) does not make the information primary; what determines source type is whether the information was recorded at the time of the event by someone with direct knowledge. Chana's birth record, if it survived, would be primary. The Page of Testimony is valuable corroborating evidence and may be the only evidence that survives — but the professional standard is to note it as secondary and seek a primary corroborating source (a surviving birth register entry, a marriage record naming David and Miriam as Chana's parents, or a sibling's birth record). If no primary source survives due to wartime destruction, the Page of Testimony is the best available evidence, which should be stated explicitly in research notes.</p>"
+        }
+      ]
+    }
+  ]
+}

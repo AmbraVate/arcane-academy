@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-17",
+  "title": "Advanced Autosomal DNA — Clustering & the Leeds Method",
+  "glyph": "🧬",
+  "sortOrder": 17,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-16"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-17a",
+      "title": "Making Sense of Hundreds of DNA Matches — Clustering Methods and the Leeds Method",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>A typical person who takes an autosomal DNA test at AncestryDNA or 23andMe receives thousands of DNA matches — people who share detectable segments of DNA and are therefore related, usually within the last five to seven generations. The challenge is not finding matches; it is making sense of them. Raw match lists are overwhelming: a mix of close relatives, distant cousins, and people who may not know how they are related to you. Advanced analytical methods — particularly chromosome clustering and the Leeds Method — transform this overwhelming list into an organised picture of family groups, pointing the researcher towards the right documentary records for each cluster.</p>",
+      "explanationHtml": "<h3>Autosomal DNA basics — recap</h3>\n<p>Autosomal DNA is inherited from both parents in roughly equal measure, recombining with each generation. The amount of shared DNA decreases by roughly half with each generational step:</p>\n<ul>\n  <li>Parent: ~50% shared DNA (roughly 3,500 cM)</li>\n  <li>Grandparent: ~25% (~1,750 cM)</li>\n  <li>1st cousin: ~12.5% (~875 cM)</li>\n  <li>2nd cousin: ~3.125% (~220 cM)</li>\n  <li>3rd cousin: ~0.78% (~55 cM)</li>\n</ul>\n<p>These are averages — actual shared amounts vary due to recombination randomness. The DNA Painter Shared cM Project (dnapainter.com) provides probability distributions: a 1,800 cM shared DNA could be a grandparent, half-sibling, aunt/uncle, or double first cousin. Context and documentation are required to distinguish these relationships.</p>\n\n<h3>The Leeds Method</h3>\n<p>The Leeds Method, developed by Dana Leeds and published in 2018, is a systematic approach to sorting autosomal DNA matches into family groups using colour-coding. The core idea: two people who are both your DNA matches and who also share DNA with each other likely belong to the same branch of your family. By identifying which matches share DNA with each other, you can group them into clusters corresponding to your four grandparent lines (or eight great-grandparent lines).</p>\n<p><strong>The method, step by step:</strong></p>\n<ol>\n  <li>Export your DNA matches from the testing platform (Ancestry, 23andMe, MyHeritage) — ideally all matches above a threshold (usually 20–30 cM) to a spreadsheet.</li>\n  <li>For each match, check which other matches they share with you (the 'shared matches' or 'in common with' feature on most platforms).</li>\n  <li>Colour-code: assign one colour to your first uncoloured match, then colour all their shared matches the same colour. Move to the next uncoloured match and assign a new colour. Repeat.</li>\n  <li>After processing, matches cluster into colour groups. In theory, each major colour group corresponds to one grandparent line. With four grandparents, you expect four main clusters — though in practice, some clusters merge or split depending on endogamy and the match pool.</li>\n  <li>Identify the surname(s) associated with each cluster by examining the matches' family trees (if public). A cluster where many matches have the surname 'Walsh' and trace back to County Cork likely represents your paternal grandmother's Walsh line.</li>\n</ol>\n\n<h3>Chromosome clustering (Genetic Affairs, AutoCluster)</h3>\n<p>Chromosome clustering tools automate the Leeds Method using algorithms that analyse shared DNA segments. Key tools:</p>\n<ul>\n  <li><strong>Genetic Affairs AutoCluster</strong>: generates an automated cluster report for AncestryDNA, 23andMe, or MyHeritage matches — producing a colour-coded grid showing which matches cluster together. Available at genetic-affairs.com (fee-based).</li>\n  <li><strong>AutoCluster at MyHeritage</strong>: MyHeritage offers its own built-in cluster analysis tool for its match pool.</li>\n  <li><strong>DNAGedcom</strong>: downloads match data from multiple platforms for further analysis; essential for advanced researchers who need to work with raw segment data.</li>\n</ul>\n<p>Chromosome clustering produces a visual matrix where blocks of shared matches appear along the diagonal — each block corresponding to a family group. Matches at the intersection of two blocks are 'crossover' matches who share DNA from two different ancestral lines (typically indicating endogamy or double cousins).</p>\n\n<h3>Working with clusters — documentary research integration</h3>\n<p>A cluster is a hypothesis: 'these matches are all related through the same ancestral line.' Converting a cluster into a proven family group requires documentary research:</p>\n<ol>\n  <li>Identify the 2–3 matches in a cluster with the largest trees and the most geographical detail.</li>\n  <li>Find the most recent common ancestor (MRCA) suggested by the trees — the surname and location pattern points to a specific line.</li>\n  <li>Search documentary records for that line: census, vital records, immigration records, etc.</li>\n  <li>Build the paper trail from the identified MRCA down to you via two separate paths — your paper trail and the match's paper trail — meeting at the MRCA.</li>\n</ol>\n\n<h3>Endogamy and clustering complications</h3>\n<p>In endogamous populations (where relatives have historically married within the same community — Jewish, Irish Traveller, some island communities, some South Asian communities), clustering is more complex. Matches share DNA from multiple lines simultaneously, making it difficult to assign a match to a single grandparent cluster. Specialised approaches for endogamous research include:</p>\n<ul>\n  <li>Using only close matches (above 100 cM) for clustering</li>\n  <li>Working with phased data (separating maternal and paternal matches) where platforms allow</li>\n  <li>Combining DNA evidence with extensive documentary research to distinguish multiple lines</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a spreadsheet on a laptop — thousands of rows, each a DNA match with a name, a shared cM value, and a coloured cell. The spreadsheet is organised into four distinct colour blocks."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Four grandparents. Four family lines. Your autosomal DNA carries fragments from all four, and the people who share those fragments are sorted — invisibly, by biology — into four groups. The Leeds Method makes this visible. You look at each match: who else do they share with you? Colour them together. After a few hours, four colour blocks emerge from a list of hundreds of names. Each block is a grandparent line."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The cluster is the beginning, not the end. The cluster tells you: these thirty-five people are all related through one family line. Now look at their trees. The ones who share a great-grandmother named Sullivan from County Cork — that is your cluster. You have identified the line. Now you go to the documentary records: the Cork parish registers, the Griffith's Valuation, the 1901 census. The DNA tells you which direction to search. The documents prove the connection."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Endogamy complicates everything. In a population where cousins married cousins for generations — Jewish communities, some Irish island communities — a DNA match may share DNA from three or four different ancestral lines simultaneously. The clusters blur. The cM values are inflated. You cannot simply divide by four. In these cases, only close matches — above 100 cM — and extensive documentary research can begin to separate the lines."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor DNA clustering methods</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is the core principle of the <strong>Leeds Method</strong> for organising DNA matches?</li>\n  <li>In theory, how many main colour clusters should you expect when applying the Leeds Method, and why?</li>\n  <li>What does a 'crossover' match (appearing at the intersection of two clusters) typically indicate?</li>\n  <li>Why does <strong>endogamy</strong> complicate DNA clustering?</li>\n  <li>What is <strong>Genetic Affairs AutoCluster</strong> and what does it produce?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The Leeds Method's core principle: two people who are both your DNA matches and who also share DNA with each other are likely related through the same ancestral line. By colour-coding matches who share DNA with each other, matches naturally group into clusters corresponding to ancestral family lines.\n\nIn theory, you expect four main colour clusters — one for each grandparent line. Because autosomal DNA is inherited from four grandparents, and matches in each cluster share DNA from one grandparent's line, four clusters correspond to the four grandparents (paternal grandfather, paternal grandmother, maternal grandfather, maternal grandmother). In practice, clusters may merge (if lines are related) or sub-divide.\n\nA crossover match — one appearing at the intersection of two clusters — typically indicates a person who is related to you through two different ancestral lines, or who comes from an endogamous population where the ancestral lines have multiple connections. Double cousins (whose parents are siblings from different families who married) are a common source of crossover matches.\n\nEndogamy complicates clustering because in populations where relatives have historically married within the same community, DNA matches share segments from multiple lines simultaneously. The clusters blur (a match may belong to two or three clusters), and shared cM values are inflated beyond what the genealogical relationship would predict.\n\nGenetic Affairs AutoCluster is a fee-based tool at genetic-affairs.com that automates clustering for AncestryDNA, 23andMe, and MyHeritage matches, producing a colour-coded visual matrix where blocks along the diagonal represent family groups — automating the Leeds Method for large match pools.",
+      "soloPracticeHtml": "<h3>Interpreting a DNA cluster</h3>\n<p>You apply the Leeds Method to your AncestryDNA matches and identify four main clusters:</p>\n<ul>\n  <li><strong>Blue cluster (18 matches)</strong>: most matches have trees showing Irish surnames — Murphy, O'Brien, Connolly — from County Clare.</li>\n  <li><strong>Green cluster (22 matches)</strong>: most matches have trees showing English surnames — Barnes, Hartley, Fletcher — from Yorkshire.</li>\n  <li><strong>Red cluster (15 matches)</strong>: most matches have trees showing Polish surnames — Kowalski, Nowak — from the Kraków region.</li>\n  <li><strong>Yellow cluster (12 matches)</strong>: matches have mixed trees; no clear pattern visible.</li>\n  <li>Three matches appear at the intersection of Blue and Red.</li>\n</ul>\n<p>You know your four grandparents: Patrick Murphy (Irish), Margaret Murphy née Barnes (half-Irish, half-Yorkshire), Jan Kowalski (Polish), and Helena Kowalski née Schmidt (Polish-German). Analyse these clusters: assign each to a grandparent line where possible, explain the crossover matches, and identify what further research the yellow cluster requires.</p>",
+      "modelAnswer": "Cluster assignments:\n\nBlue cluster (Irish, County Clare surnames): Almost certainly Patrick Murphy's line — Irish surnames from Clare match a grandparent of Irish origin. The Murphy/O'Brien/Connolly surname pattern is consistent with Patrick Murphy's ancestry.\n\nGreen cluster (English, Yorkshire surnames): Most likely Margaret Murphy née Barnes's paternal (Barnes/Yorkshire) line. Margaret is described as half-Irish, half-Yorkshire, so her Yorkshire ancestry should produce a Yorkshire-heavy cluster.\n\nRed cluster (Polish, Kraków region): Almost certainly Jan Kowalski's line or Helena Kowalski née Schmidt's line. Since both are Polish and from overlapping regions, there may be some blurring. The Kowalski/Nowak pattern most directly suggests Jan's paternal line.\n\nYellow cluster (mixed, unclear): Possibly Helena Kowalski née Schmidt's German-Polish line — if Helena's ancestry is from a German-Polish border region, her matches may include both German and Polish surnames, creating apparent confusion. Research step: examine the largest trees in the yellow cluster more carefully for German surnames (Schmidt, Müller, etc.) and cross-reference with Helena's known origin.\n\nCrossover matches (Blue ∩ Red): Three matches who appear in both the Irish Blue cluster and the Polish Red cluster are puzzling unless: (a) there is a historical Irish-Polish connection in the family (unlikely at this distant remove), (b) these matches represent a very distant relationship from two separate lines (possible with small shared cM values), or (c) these are actually the Margaret Murphy line — Margaret being half-Irish and half-Yorkshire, her matches might sometimes bridge Blue (Irish) and appear in different clusters. Re-examine these three matches' trees and shared cM values to determine which explanation fits.",
+      "feynmanPrompt": "Explain to a friend what the Leeds Method is in simple terms — why grouping DNA matches by who they also share with you is more useful than just looking at a raw list of names.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Leeds Method",
+          "description": "A systematic DNA analysis technique developed by Dana Leeds (2018) that colour-codes DNA matches by shared connections, grouping them into clusters corresponding to grandparent family lines — the standard starting method for autosomal DNA organisation."
+        },
+        {
+          "term": "Genetic Affairs AutoCluster",
+          "description": "A fee-based automated clustering tool (genetic-affairs.com) that generates a colour-coded cluster matrix from AncestryDNA, 23andMe, or MyHeritage matches — automating the Leeds Method for large match pools."
+        },
+        {
+          "term": "centimorgans (cM)",
+          "description": "The unit of genetic distance used to measure shared DNA between matches; roughly halves with each generational step — an average 1st cousin shares ~875 cM, a 2nd cousin ~220 cM, a 3rd cousin ~55 cM."
+        },
+        {
+          "term": "endogamy",
+          "description": "The practice of marrying within the same community over generations — found in Jewish, some Irish island, and some South Asian populations — which inflates DNA match cM values and complicates clustering because matches share DNA from multiple ancestral lines simultaneously."
+        },
+        {
+          "term": "DNAGedcom",
+          "description": "A tool that downloads raw match and segment data from multiple DNA testing platforms for advanced offline analysis — essential for researchers working with chromosome browser data or large-scale cluster analysis."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the core principle of the <strong>Leeds Method</strong> for organising autosomal DNA matches?</p>",
+          "options": [
+            "Two people who are both your DNA matches and who also share DNA with each other are likely related through the same ancestral line; colour-coding these shared matches groups them into clusters corresponding to grandparent family lines",
+            "Sort all DNA matches by the size of their shared DNA in centimorgans, from highest to lowest, and the top four matches represent your four grandparent lines",
+            "Compare your DNA matches to a reference population database to assign each match to a geographic region corresponding to a grandparent's country of origin",
+            "Download all match data and use a chromosome browser to identify which specific chromosome segments are shared with each match"
+          ],
+          "correctAnswer": "Two people who are both your DNA matches and who also share DNA with each other are likely related through the same ancestral line; colour-coding these shared matches groups them into clusters corresponding to grandparent family lines",
+          "explanationHtml": "<p>The Leeds Method exploits a property of autosomal DNA inheritance: if two people are both your matches, and they also share DNA with each other, they are almost certainly related through the same ancestral line. By assigning the same colour to a match and all their shared matches, clusters of related people emerge — in theory, one cluster per grandparent line, giving four main colour groups. The method was developed by Dana Leeds and published in 2018 as a practical way to organise large match pools without needing chromosome browser access. It works best for genealogically unexplored families; endogamy and double relationships can complicate it.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You apply the Leeds Method and find one cluster (45 matches) contains surnames pointing to both your paternal grandfather's Murphy line (Irish) and your paternal grandmother's Barnes line (Yorkshire). The two lines have merged into one cluster. What is the most likely explanation?</p>",
+          "options": [
+            "Your paternal grandfather and grandmother's lines are related somewhere — they share a common ancestor, causing their matches to group together in one cluster rather than two separate grandparent clusters",
+            "The Leeds Method always produces fewer than four clusters; having three clusters instead of four is normal and expected",
+            "The matches are incorrectly assigned to this cluster by Ancestry's algorithm and should be manually reassigned",
+            "The cluster merging indicates these matches share DNA by chance (identical by state), not by descent, and should be disregarded"
+          ],
+          "correctAnswer": "Your paternal grandfather and grandmother's lines are related somewhere — they share a common ancestor, causing their matches to group together in one cluster rather than two separate grandparent clusters",
+          "explanationHtml": "<p>When two grandparent lines merge into one cluster, it almost always means the lines share a common ancestor — the two families were related somewhere in the past, and their shared DNA connections are therefore linked. In this case, the Murphy (Irish) and Barnes (Yorkshire) lines may have had an intermarriage several generations back, or they may have overlapping origin regions that produced related lines. The remedy is to examine the trees of the largest matches in the merged cluster carefully, looking for a surname or location that bridges the two lines. The merged cluster is useful genealogical evidence — it points to an unknown connection between the two families — rather than a failure of the method.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher with Ashkenazi Jewish ancestry applies the Leeds Method and finds their clusters are extremely blurred — most matches appear in multiple clusters, and the expected four-cluster pattern does not emerge. They conclude the Leeds Method does not work. Is this correct?</p>",
+          "options": [
+            "No — the Leeds Method is complicated by endogamy, which is common in Ashkenazi Jewish ancestry; because relatives have historically married within the community, DNA matches often share segments from multiple ancestral lines simultaneously, causing cluster blurring; the researcher should use only close matches (above 100 cM) and supplement with documentary research to separate lines",
+            "Yes — the Leeds Method only works for Northern European Protestant ancestry",
+            "Yes — Ashkenazi Jewish DNA databases on testing platforms do not contain enough matches to make clustering viable",
+            "No — the researcher simply needs to use a different colour-coding scheme with eight colours instead of four"
+          ],
+          "correctAnswer": "No — the Leeds Method is complicated by endogamy, which is common in Ashkenazi Jewish ancestry; because relatives have historically married within the community, DNA matches often share segments from multiple ancestral lines simultaneously, causing cluster blurring; the researcher should use only close matches (above 100 cM) and supplement with documentary research to separate lines",
+          "explanationHtml": "<p>Endogamy — where a community has historically married within itself — inflates shared DNA values and creates multiple connections between any two people in the community. An Ashkenazi Jewish person may share DNA with a cousin not just through one line but through three or four, because the cousin's parents and grandparents were also related to the researcher's family through separate lines. When this person is a DNA match, they appear in multiple clusters because their DNA overlaps multiple ancestral lines. The Leeds Method, designed for outbred populations with four clean grandparent lines, struggles under endogamy. The standard workaround is to focus on close matches (above 100 cM), where the relationship is recent enough that the specific line can be identified through documentary evidence, rather than trying to cluster the full match pool.</p>"
+        }
+      ]
+    }
+  ]
+}

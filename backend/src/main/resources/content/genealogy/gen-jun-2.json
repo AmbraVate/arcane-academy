@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-2",
+  "title": "Military Records — USA",
+  "glyph": "🦅",
+  "sortOrder": 2,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-1"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-2a",
+      "title": "Pension Files, Draft Registrations & Service Records",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>American military records span almost four centuries and include some of the most genealogically detailed documents ever created for ordinary people. A Revolutionary War pension file can give a veteran's entire life history — birth, marriage, children, and the testimony of neighbours. A Civil War Compiled Military Service Record names every muster on which a soldier appeared. A WW2 draft registration card gives physical description, employer, and next of kin. If your ancestor served in any American war, the military record may be the richest single source available.</p>",
+      "explanationHtml": "<h3>Revolutionary War records (1775–1783)</h3>\n<p>The Revolutionary War pension and bounty land warrant files (NARA series M804) are among the most remarkable genealogical documents in American history. When veterans or their widows applied for pensions in the early 19th century, they were required to submit sworn depositions giving their life history. A complete pension file might contain:</p>\n<ul>\n  <li>The veteran's birthplace, parents' names, and age at enlistment</li>\n  <li>A narrative of service including officers' names and engagements</li>\n  <li>The widow's sworn statement giving the date and place of marriage and the names of children</li>\n  <li>Deposition of neighbours or family members corroborating the marriage</li>\n</ul>\n<p>These files are digitised and available on Fold3 (Ancestry). Many have been transcribed and published. The widow's pension application in particular is extraordinarily rich, often giving the only surviving marriage evidence for an early-19th-century marriage in a state with poor vital registration.</p>\n\n<h3>War of 1812 and Mexican-American War</h3>\n<p>War of 1812 records (1812–1815) are incomplete — many were destroyed in the British burning of Washington in 1814. What survives: Compiled Military Service Records (CMSRs) on Fold3; pension files (NARA M313); bounty land warrants. The Mexican-American War (1846–1848) records are better preserved. Pension files for both wars are on Fold3 and digitised by NARA.</p>\n\n<h3>Civil War records (1861–1865)</h3>\n<p>The American Civil War produced the most extensive military record system the US had ever created. Key record types:</p>\n<ul>\n  <li><strong>Compiled Military Service Records (CMSRs)</strong>: a jacket of cards compiled from muster rolls, pay vouchers, and hospital records, recording every time a soldier's name appeared on an official list. Available for Union and Confederate forces on Fold3 and Ancestry. Gives rank, unit, and evidence of presence or absence at specific musters.</li>\n  <li><strong>Pension files</strong>: the Civil War pension system was the largest in American history to its date. Files are at NARA and on Fold3. A complete pension file can include medical examination records, marriage certificates, children's affidavits, and the veteran's own sworn life history. Widow's pensions are particularly rich.</li>\n  <li><strong>Regimental records</strong>: each Union regiment kept its own records. State archives and regimental histories fill gaps when federal records are missing.</li>\n  <li><strong>Confederate records</strong>: the CSA did not have the same federal record infrastructure; surviving Confederate records are held partly at NARA (RG109) and partly at state archives in the former Confederate states.</li>\n</ul>\n\n<h3>WW1 draft registration cards</h3>\n<p>The Selective Service Act of 1917 required all men born between 1872 and 1900 to register for the draft. The resulting registration cards (\"Draft Registration Cards\" or \"Questionnaires\") are on Ancestry and FamilySearch. They give:</p>\n<ul>\n  <li>Name, address, date and place of birth</li>\n  <li>Employer name and address</li>\n  <li>Nearest relative (name and address)</li>\n  <li>Physical description: height, weight, eye and hair colour</li>\n  <li>Race and citizenship</li>\n</ul>\n<p>For immigrant men, the birthplace and citizenship questions often give county or even village of origin. For African American men, the race designation was separate and forms were sometimes segregated.</p>\n\n<h3>WW2 draft registration (\"Old Man's Draft\")</h3>\n<p>In 1942, men born between 28 April 1877 and 16 February 1897 were required to register — a group sometimes called the \"Old Man's Draft\" because these men were too old to serve but had to register. These cards give birthplace, physical description, employer, and next of kin. For men born in the 1880s–1890s who appear nowhere else online, the WW2 draft card may give the first documented birthplace in a generation. Available on Ancestry and FamilySearch.</p>\n\n<h3>NARA — the central US military archive</h3>\n<p>The National Archives and Records Administration (NARA) holds all US military records. Access via:</p>\n<ul>\n  <li><strong>archives.gov</strong>: catalogue and ordering portal</li>\n  <li><strong>Fold3</strong> (Ancestry): the commercial partner holding digitised NARA military collections</li>\n  <li><strong>FamilySearch</strong>: holds many military record collections free</li>\n  <li><strong>NPRC (National Personnel Records Center, St. Louis)</strong>: holds records for personnel discharged after about 1912; accessible by writing request for records of deceased veterans</li>\n</ul>\n<p>Note: the NPRC also suffered a devastating fire in 1973 that destroyed 16–18 million Army records for personnel discharged 1912–1960. The pattern of American military record disasters unfortunately mirrors the British Burnt Documents problem — knowing about the losses tells you when substitutes are needed.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora sets down a scanned document — the widow's pension application of a woman named Abigail Murphy, filed in 1832. It runs to eight handwritten pages. She reads the first paragraph aloud."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Abigail Murphy, widow of Thomas Murphy of the Virginia Militia, testifying before a county court in 1832 to establish her right to a pension. She states the date and place of their marriage — 14 November 1784, Orange County, Virginia. She names their minister. She names their witnesses. She lists the names and birth years of each of their nine children. Her neighbours, sworn before the same court, corroborate the marriage because the certificate was lost. Eight pages. A complete family record, created because a seventy-year-old woman needed thirty dollars a year to survive. These Revolutionary War pension files are the richest genealogical gift the American military ever gave us."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And then the Civil War — a different kind of record wealth. The Compiled Military Service Record is a jacket of cards made from muster rolls: every time Thomas Murphy appeared on a roster, it generated a card. The pension file built from them can run to hundreds of pages — medical examinations, affidavits about wounds, arguments about whether he really was at Antietam. Tedious, often. But the name of his commanding officer, the name of the pension examining surgeon, the address of his widow — these are threads you can pull."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "For the twentieth century, the WW1 draft cards are often the only surviving document that gives a birth village for an immigrant man in his thirties. When the question asks 'place of birth' and the man writes not 'Poland' but 'Kraków, Galicia' — that is the thread you need. And the WW2 'Old Man's Draft' captured men born in the 1880s who appear in no other digital record. Never skip the draft cards."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor US military record types</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What genealogical information might a <strong>Revolutionary War widow's pension application</strong> contain?</li>\n  <li>What are <strong>Compiled Military Service Records (CMSRs)</strong> and how were they created?</li>\n  <li>What information does a <strong>WW1 draft registration card</strong> typically provide?</li>\n  <li>What was the <strong>1973 NPRC fire</strong> and which records did it affect?</li>\n  <li>Where are most digitised US military records available online?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A Revolutionary War widow's pension application typically contains: the date and place of the veteran's marriage (sometimes the only surviving evidence of the marriage); the names of the officiating minister and witnesses; a list of children with birth years; sworn depositions from neighbours corroborating the marriage; and the veteran's own service narrative. These files are the richest genealogical source for many 18th-century American families.\n\nCompiled Military Service Records (CMSRs) are jackets of cards created from muster rolls, pay vouchers, and hospital records — every official list on which a soldier's name appeared generated a card that was filed in the CMSR jacket. They give rank, unit, and evidence of presence or absence at specific musters.\n\nA WW1 draft registration card typically provides: name, address, date and place of birth, employer name and address, nearest relative (name and address), and physical description (height, weight, eye colour, hair colour). For immigrant men, the birthplace question can give county or village of origin.\n\nThe 1973 NPRC fire at the National Personnel Records Center in St. Louis destroyed 16–18 million Army records for personnel discharged 1912–1960, with losses particularly heavy for Army discharges 1912–1959 and Air Force 1947–1964. Like the British Burnt Documents, this means that many 20th-century military records cannot be found because they no longer exist.\n\nMost digitised US military records are available on Fold3 (an Ancestry company), with many collections also on FamilySearch (free). NARA's own archives.gov portal allows ordering of records not yet digitised.",
+      "soloPracticeHtml": "<h3>Identifying the right military record</h3>\n<p>For each of the following scenarios, identify the most promising US military record type to search and explain what genealogical information it might provide:</p>\n<ol>\n  <li>Your ancestor James Walsh served in the Union Army in the Civil War, died in 1905, and his widow Mary filed for a pension.</li>\n  <li>Your immigrant great-grandfather Michael Murphy arrived from Poland around 1900 and you cannot find his village of origin.</li>\n  <li>Your ancestor Patrick Crawford served in the Revolutionary War; you need evidence of his marriage to Sarah Kelly in the 1780s.</li>\n  <li>Your ancestor Thomas Murphy served in WW2 and was discharged in 1945; you want his service record.</li>\n</ol>",
+      "modelAnswer": "1. Mary Walsh's widow's Civil War pension file (NARA, digitised on Fold3): A widow's pension file for someone who died in 1905 (40 years after the war) could include medical examination records documenting James's war-related health decline, affidavits by neighbours or family members verifying the marriage, and a sworn statement from Mary giving her marriage date, place, and officiating minister. Children's affidavits may name siblings. This is one of the richest possible sources for an 1860s marriage.\n\n2. WW1 draft registration card (Ancestry / FamilySearch, NARA M1509): If Michael Murphy was born around 1875–1900 (which would make him registerable under the 1917 Selective Service Act), his draft card would ask for his place of birth. Immigrant men frequently gave their specific city, town, or village — not just 'Poland' or 'Russia.' The employer and nearest-relative fields also give 1917 address and contact details that may lead to a naturalization record with more detail.\n\n3. Revolutionary War pension file (NARA M804, Fold3): Patrick Crawford's own pension file may contain a service narrative; if he applied in old age, he would have sworn his life history. More valuably, Sarah Kelly's widow's pension application (if she outlived Patrick) would require sworn testimony giving their marriage date, place, minister, and witnesses — and possibly the names of their children. Neighbour depositions corroborating the marriage are often included.\n\n4. NPRC request or NARA — but note the 1973 fire: Thomas Murphy discharged 1945 falls in the period heavily affected by the 1973 NPRC fire. Army discharges from 1912–1959 were particularly badly hit. A formal NARA/NPRC request should be filed (form SF-180), with the expectation that records may be partially or wholly destroyed. Alternatives: unit histories, separation documents (DD-214) that the family may hold, and VA records if Thomas applied for benefits.",
+      "feynmanPrompt": "Explain to a friend why a Civil War pension file filed in 1870 might tell you more about a couple's 1862 marriage than any church or civil registration record — and why that matters for genealogical research.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Compiled Military Service Records (CMSRs)",
+          "description": "Jackets of cards compiled from muster rolls and pay vouchers recording every official appearance of a US soldier's name — the core service record for Civil War soldiers."
+        },
+        {
+          "term": "NARA M804",
+          "description": "The NARA microfilm series of Revolutionary War pension and bounty land warrant application files — among the most genealogically detailed records for 18th-century American families."
+        },
+        {
+          "term": "Fold3",
+          "description": "An Ancestry company specialising in US military records; the primary online source for NARA military collections including CMSRs, pension files, and draft registrations."
+        },
+        {
+          "term": "1973 NPRC fire",
+          "description": "A fire at the National Personnel Records Center in St. Louis that destroyed 16–18 million Army records for personnel discharged 1912–1960 — the US equivalent of the British Burnt Documents."
+        },
+        {
+          "term": "WW1 draft registration cards (NARA M1509)",
+          "description": "Cards completed by all US men born 1872–1900 under the 1917 Selective Service Act, giving birthplace (often village-level for immigrants), employer, physical description, and nearest relative."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What is the primary genealogical value of a <strong>Revolutionary War widow's pension application</strong>?</p>",
+          "options": [
+            "It often contains the only surviving sworn evidence of a couple's marriage date, place, and witnesses — information not captured in civil vital records, which barely existed in the 1780s",
+            "It gives the veteran's military rank but nothing about his personal life",
+            "It is useful only for establishing that the veteran served, not for genealogical data",
+            "It gives the veteran's date of death but not birthplace or family information"
+          ],
+          "correctAnswer": "It often contains the only surviving sworn evidence of a couple's marriage date, place, and witnesses — information not captured in civil vital records, which barely existed in the 1780s",
+          "explanationHtml": "<p>Widow's pension applications required the widow to prove she was legally married to the veteran. Because most states had minimal vital registration before the mid-19th century, this often meant submitting sworn testimony about the marriage — including the date, place, minister or official, and witnesses. Neighbours might also testify. The resulting file is often the only surviving documentation of an 18th-century American marriage, and may include the names of all children and the veteran's birth details as well.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are searching for the birth village of a Polish immigrant ancestor who arrived in Chicago around 1895. His name was Jan Kowalski and he was born around 1880. Which US military record is most likely to give his village of origin?</p>",
+          "options": [
+            "WW1 draft registration card (1917–1918) — it asked for place of birth and immigrant men often gave their specific city or village",
+            "Civil War pension file — covers the right era for his parents but not himself",
+            "WW2 Compiled Military Service Record — useful but he would be 60+ in WW2",
+            "Revolutionary War pension file — predates his immigration by a century"
+          ],
+          "correctAnswer": "WW1 draft registration card (1917–1918) — it asked for place of birth and immigrant men often gave their specific city or village",
+          "explanationHtml": "<p>Jan Kowalski (b. c.1880) would be approximately 37–38 years old in 1917–1918, within the registerable age range for the Selective Service Act. The WW1 draft registration card asked for place of birth, and immigrant men — especially those from Eastern Europe — frequently gave specific town or village names rather than just the country. Chicago's Polish community was large; the Kowalski name suggests Polish origin. The draft card is the highest-probability record for recovering specific village of origin for an early-20th-century Eastern European immigrant.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher cannot find a service record for their grandfather who served in the US Army and was discharged in 1945. They conclude no record ever existed. What is the correct assessment?</p>",
+          "options": [
+            "The record may have been destroyed in the 1973 NPRC fire, which eliminated 16–18 million Army records for personnel discharged 1912–1960 — the researcher should file an NARA/NPRC request, noting that partial information may survive, and also check for separation documents (DD-214) that the family may hold",
+            "Records for WW2 veterans are always complete and easily found — the grandfather must not have served",
+            "Army records before 1950 are not public and cannot be requested",
+            "Only officers' service records were kept; enlisted men's records were never maintained centrally"
+          ],
+          "correctAnswer": "The record may have been destroyed in the 1973 NPRC fire, which eliminated 16–18 million Army records for personnel discharged 1912–1960 — the researcher should file an NARA/NPRC request, noting that partial information may survive, and also check for separation documents (DD-214) that the family may hold",
+          "explanationHtml": "<p>The 1973 NPRC fire was the American equivalent of Britain's Burnt Documents problem: a catastrophic record loss affecting millions of military personnel files. Army records for discharges 1912–1959 were particularly badly damaged. A missing record for a 1945 discharge does not mean no record existed — it means the record probably burned. The correct response is to submit a formal NARA/NPRC request (SF-180), to check for partial surviving information, and to look for family-held documents such as the DD-214 separation certificate that veterans kept themselves. Unit histories and discharge rosters at state archives may also provide partial information.</p>"
+        }
+      ]
+    }
+  ]
+}

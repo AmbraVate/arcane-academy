@@ -1,0 +1,111 @@
+{
+  "id": "gen-jun-7",
+  "title": "Welsh & Cornish Genealogy",
+  "glyph": "🐉",
+  "sortOrder": 7,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-6"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-7a",
+      "title": "Patronymics, Coal Mines & the Welsh Record Landscape",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Welsh genealogy presents two distinctive challenges: the patronymic surname system (which means surnames changed every generation until the 19th century), and a record landscape shaped by Nonconformist religion and industrial transformation. A Welsh coal-mining family in 19th-century Glamorgan may have been Baptist or Methodist, leaving their records in a chapel minute book rather than an Anglican vestry. Understanding how the Welsh record landscape differs from the English one is the foundation of successful Welsh research.</p>",
+      "explanationHtml": "<h3>Welsh patronymics — recap and research implications</h3>\n<p>As introduced in gen-app-8, Wales used a patronymic surname system until the 19th century. In research practice this means:</p>\n<ul>\n  <li>Before roughly 1750 in south and east Wales, and before roughly 1850 in parts of north and west Wales, surnames change each generation. You track given names, not surnames.</li>\n  <li>The common Welsh surnames — Jones, Williams, Davies, Evans, Roberts, Edwards, Lewis, Thomas, Hughes, Morgan — all derive from patronymic forms of common Welsh given names and cluster densely. In a Welsh coal-mining village, the 1881 census may have twelve Thomas Joneses of similar ages. Distinguishing them requires additional information: middle name, employer, wife's maiden name, street address, and witnesses on all available documents.</li>\n  <li>The Welsh language itself affects name records: Iago, Ieuan, Dafydd, Rhys, and Catrin appear in Welsh-language church registers but may be rendered as James, John, David, Rice, and Catherine in English-language civil records — the same person under two different names.</li>\n</ul>\n\n<h3>Welsh Nonconformity — the chapel record problem</h3>\n<p>Wales was predominantly Nonconformist by the 19th century. The major Welsh denominations — Calvinistic Methodist (now Presbyterian Church of Wales), Congregationalist/Independent, Baptist, and Wesleyan Methodist — maintained their own registers, often more meticulously than Church of England parishes. Key points:</p>\n<ul>\n  <li>Nonconformist registers were surrendered to the Registrar General in 1837 and are now at TNA (RG4, RG6, RG8 series) and on FindMyPast and FamilySearch. These are the official Nonconformist BMD records before civil registration.</li>\n  <li>After 1837, Nonconformist births are recorded in the civil GRO index; but chapel membership records, deacons' minutes, and burial records may survive in chapel archives and are not in any national database. Welsh county record offices (Denbighshire, Flintshire, Gwynedd, Ceredigion, Powys, Carmarthenshire, Glamorgan, etc.) are the repository for these.</li>\n  <li>The Welsh Nonconformist Registers database on Ancestry includes many surrendered registers for Welsh chapels.</li>\n</ul>\n\n<h3>Welsh record repositories</h3>\n<ul>\n  <li><strong>National Library of Wales (NLW) — llgc.org.uk</strong>: holds Welsh probate records (pre-1858), estate papers, tithe maps, and many deposited parish and chapel registers. An extensive digitisation programme makes much available online.</li>\n  <li><strong>County record offices</strong>: each Welsh county has a record office holding the standard range of county records — quarter sessions, estate papers, rate books — plus often extensive Nonconformist archives.</li>\n  <li><strong>Ancestry / FindMyPast</strong>: Welsh census records, GRO BMD indexes, and Nonconformist registers are available on these platforms.</li>\n  <li><strong>Welsh Newspapers Online (newspapers.library.wales)</strong>: free digitised Welsh newspapers from 1804 onward — in both Welsh and English. Important for obituaries, social notices, and court reports.</li>\n</ul>\n\n<h3>Cornish genealogy</h3>\n<p>Cornwall is a distinct cultural and linguistic region of England with its own genealogical peculiarities. Key points for Cornish research:</p>\n<ul>\n  <li><strong>Methodist records</strong>: Cornwall was one of the heartlands of Methodism; as in Wales, many families appear in Methodist circuit records rather than Anglican vestry books. Surrendered Methodist registers are at TNA; later records are with circuit archives or at the Cornwall Record Office.</li>\n  <li><strong>Mining records</strong>: Cornwall's tin and copper mining industry produced extensive occupational records — mine employment registers, accident books, and Mining Journal entries — held partly at the Cornwall Record Office and partly in private collections. Miners who emigrated to Pennsylvania, Michigan, South Australia, and New Zealand were part of the great Cornish diaspora, and their origins are often documented in mining community records on both sides of the Atlantic.</li>\n  <li><strong>Cornish names</strong>: distinctively Cornish surnames (Trewin, Trevithick, Penrose, Pascoe, Opie, Trengrouse) help identify Cornish ancestry in New World records. Many Cornish families anglicised names in the 19th century (Menadue → Monday; Trevithick → Trevitick).</li>\n  <li><strong>Cornwall Record Office (CRO)</strong>: holds parish registers, estate papers, and mineral leases; the <em>CRO catalogue</em> is searchable online.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a page from an 1841 Welsh census — the Rhondda Valley. The household is headed by 'Thomas Jones, 40, collier.' Below him: six children all named Jones. She sweeps her hand across the page."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This is a Welsh coal valley in 1841. On this page, there are fourteen Thomas Joneses in adjacent households. Not related — or not provably related. Neighbours with the same name. The same age. The same occupation. This is the fundamental problem of Welsh genealogy: the density of names derived from patronymics. John, William, Thomas, David — fathers and grandfathers and great-uncles — recycled through generations until every male in the valley is named Thomas Jones, aged 35, collier. You cannot search by surname alone. You need middle names, wives' maiden names, street addresses, and chapel affiliations."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And the chapels. By 1850, most Welsh families were Nonconformist — Calvinistic Methodist, Baptist, Congregationalist. Their records are not in the Church of England vestry book. They are in the chapel minute books, in the deacons' records, in the Nonconformist registers surrendered to the government in 1837. The National Library of Wales has extensive chapel archives. County record offices have more. And Welsh Newspapers Online has the Welsh press from 1804, much of it in Welsh — obituaries, accident reports, social notices. If your Welsh ancestor died in a mining accident, there will be a report. There is always a report."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor Welsh and Cornish records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>Why is the density of common Welsh surnames a specific research challenge, and what information helps distinguish same-name individuals?</li>\n  <li>Where are Welsh Nonconformist registers from before 1837 held?</li>\n  <li>What is the <strong>National Library of Wales (NLW)</strong> and what does it hold?</li>\n  <li>Name one Cornish-specific record type and where it is held.</li>\n  <li>What is <strong>Welsh Newspapers Online</strong> and how can it help genealogical research?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The density of common Welsh surnames (Jones, Williams, Davies, Evans, etc.) — all derived from patronymics — means many unrelated men share identical names, ages, and occupations in the same community. Distinguishing factors include: middle name, wife's maiden name, specific street address, witnesses on documents, employer or mine name, chapel affiliation, and place of birth county.\n\nWelsh Nonconformist registers surrendered to the Registrar General in 1837 are held at TNA in the RG4, RG6, and RG8 series; they are available on FindMyPast and FamilySearch. Post-1837 chapel records are held at Welsh county record offices.\n\nThe National Library of Wales (NLW) in Aberystwyth holds Welsh probate records (pre-1858 wills and inventories from Welsh ecclesiastical courts), estate papers, tithe maps, many Welsh parish and chapel registers, and the Bangor Bishops' Transcripts. Its extensive digitisation programme makes much content searchable online.\n\nCornish mining records — mine employment registers, accident books, and Mining Journal entries — are a Cornish-specific record type documenting Cornwall's tin and copper mining workforce. They are held at the Cornwall Record Office in Truro.\n\nWelsh Newspapers Online (newspapers.library.wales) is a free National Library of Wales resource hosting digitised Welsh newspapers from 1804 onward, in both Welsh and English. It is useful for obituaries, chapel notices, mining accident reports, and social columns.",
+      "soloPracticeHtml": "<h3>Differentiating same-name individuals in a Welsh census</h3>\n<p>The 1881 Wales census for the Rhondda shows the following households in adjacent houses on the same street:</p>\n<ul>\n  <li>Thomas Jones, 38, coal miner, wife Mary (née Richards), children: William (12), John (10), Gwen (8)</li>\n  <li>Thomas Jones, 40, coal miner, wife Catherine (née Williams), children: David (14), Thomas (11), Ann (9)</li>\n  <li>Thomas Jones, 35, colliery overman, wife Jane (née Evans), children: Evan (13), Mary (10), Margaret (8)</li>\n</ul>\n<p>You are researching one specific Thomas Jones who was baptised in Ystrad parish in 1843 and whose father was John Jones. Write a research strategy (250–350 words) explaining how you would determine which (if any) of these three Thomas Joneses is the correct one, and what records you would use.</p>",
+      "modelAnswer": "To identify the correct Thomas Jones (b. 1843, father John Jones):\n\n1. Age analysis: Thomas baptised 1843 should be approximately 38 in 1881. The first household (Thomas, 38) matches exactly; the second (40) is two years off but within possible census age drift; the third (35) is too young if the 1843 baptism date is reliable. Provisionally, the 38-year-old is the most likely candidate.\n\n2. Father's name: I know the father's name is John. I would search the Welsh parish baptism registers or Nonconformist chapel registers for Ystrad parish for the baptism of a Thomas Jones in 1843, son of John Jones. If I can find the baptism, it gives the mother's name too — which I can cross-reference against the wife's maiden name in the census.\n\n3. Marriage record: I would search GRO marriage indexes for a Thomas Jones who married a woman whose maiden name matches the wife in the census (Richards, Williams, or Evans). A marriage entry in the Pontypridd or Ystrad area in the 1860s–early 1870s would confirm identity and give both parties' fathers' names — directly naming 'John Jones' as father would confirm the match.\n\n4. Occupation: The third Thomas is a 'colliery overman' — a more senior role. If the Thomas I am researching was from a labouring background, the overman is less likely. The other two are plain 'coal miners.' This is a supporting indicator, not conclusive.\n\n5. Chapel affiliation: If I can find a chapel membership list or chapel minute book for the correct Thomas Jones (identified from the baptism), it may give his address, which could match one of the three census households.\n\nConclusion: The 38-year-old Thomas Jones (wife Mary née Richards) is the highest-probability candidate pending confirmation from the baptism register and marriage record.",
+      "feynmanPrompt": "Explain to a friend why Welsh genealogy is harder than English genealogy when all you know is a surname like 'Jones' — and what extra information you need to make progress.",
+      "rabbitHoleTerms": [
+        {
+          "term": "National Library of Wales (NLW)",
+          "description": "The national repository for Welsh historical records in Aberystwyth, holding pre-1858 Welsh probate, estate papers, tithe maps, bishops' transcripts, and deposited parish and chapel registers."
+        },
+        {
+          "term": "Welsh Newspapers Online",
+          "description": "Free digitised Welsh newspaper archive at newspapers.library.wales, covering 1804 onward in both Welsh and English — invaluable for obituaries and mining accident reports."
+        },
+        {
+          "term": "Calvinistic Methodist (Presbyterian Church of Wales)",
+          "description": "The dominant Welsh Nonconformist denomination from the 18th century; its records are held at county record offices and NLW, often providing burial and membership data not in Anglican registers."
+        },
+        {
+          "term": "Cornish diaspora",
+          "description": "The migration of Cornish tin and copper miners in the 19th century to Pennsylvania, Michigan, South Australia, New Zealand, and South Africa — linked by distinctive surnames and occupational records on both sides of the Atlantic."
+        },
+        {
+          "term": "RG4/RG6/RG8",
+          "description": "TNA series holding Nonconformist registers surrendered to the Registrar General in 1837, covering Baptist, Methodist, Congregationalist, and other dissenting chapel BMD records for England and Wales."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Where are Welsh Nonconformist registers from <strong>before 1837</strong> held?</p>",
+          "options": [
+            "At TNA in the RG4, RG6, and RG8 series — surrendered to the Registrar General in 1837",
+            "At the National Library of Wales only",
+            "At individual chapel archives across Wales — they were never surrendered",
+            "At PRONI in Belfast"
+          ],
+          "correctAnswer": "At TNA in the RG4, RG6, and RG8 series — surrendered to the Registrar General in 1837",
+          "explanationHtml": "<p>In 1837, Nonconformist congregations across England and Wales were invited to surrender their pre-existing registers to the government. The surrendered registers are now held at TNA in the RG4 (principal registries), RG6 (Society of Friends), and RG8 (other Nonconformist) series, available on FamilySearch and FindMyPast. Post-1837 chapel records remained with the congregations and are now mostly at county record offices or, in Wales, at the National Library of Wales.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You find a Thomas Jones in the 1871 Wales census who appears to match your ancestor's age and location, but you cannot confirm which Thomas Jones he is because three men of that name live on the same street. What is your most productive next step?</p>",
+          "options": [
+            "Find the baptism record for your known ancestor Thomas Jones (born c.1843, father John Jones) and use the mother's name from the baptism to cross-reference against the marriage record and confirm which census household has the right wife",
+            "Accept the most common Thomas Jones at the address as the right one",
+            "Give up on the 1871 census — too many same-name individuals to distinguish",
+            "Search only for Thomas Joneses who emigrated, as non-emigrants cannot be traced"
+          ],
+          "correctAnswer": "Find the baptism record for your known ancestor Thomas Jones (born c.1843, father John Jones) and use the mother's name from the baptism to cross-reference against the marriage record and confirm which census household has the right wife",
+          "explanationHtml": "<p>Distinguishing same-name individuals in Welsh records requires building identification from multiple converging records. The baptism record gives the mother's name; the marriage record gives the wife's maiden name and father's names for both parties; the census gives the wife's name. Cross-referencing the marriage record (which should name 'John Jones' as father of the groom) against the census wife's name allows a confident identification. Using a single document in isolation cannot resolve the ambiguity — the professional approach is to build a constellation of evidence that uniquely identifies one of the three Thomas Joneses.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher's Welsh ancestor was a Baptist who died in 1875 in Swansea. The researcher searches only the GRO death index and finds the death registration but no obituary on any commercial platform. They conclude no further record exists. What has been overlooked?</p>",
+          "options": [
+            "Welsh Newspapers Online (newspapers.library.wales) hosts free digitised Welsh newspapers from 1804 onward; the Swansea press of the 1870s is likely included and may carry an obituary, chapel notice, or death announcement with family information not in the civil registration",
+            "The GRO death index is the only record that can be consulted for a Welsh death in 1875",
+            "Baptist records do not survive before 1900 in Wales",
+            "No Welsh newspapers were published before 1900, so no newspaper source is possible"
+          ],
+          "correctAnswer": "Welsh Newspapers Online (newspapers.library.wales) hosts free digitised Welsh newspapers from 1804 onward; the Swansea press of the 1870s is likely included and may carry an obituary, chapel notice, or death announcement with family information not in the civil registration",
+          "explanationHtml": "<p>Welsh Newspapers Online is a free resource that most beginners overlook entirely. It covers Welsh regional papers from 1804 onward in both Welsh and English. The Cambrian (Swansea) and similar regional papers regularly printed chapel death notices, obituaries, and funeral reports that give family information — surviving relatives, ministers' names, chapel membership — not captured in civil registration. For a Baptist, the chapel's deacons' records (at the county record office or NLW) would also be worth checking for a membership record or burial entry.</p>"
+        }
+      ]
+    }
+  ]
+}

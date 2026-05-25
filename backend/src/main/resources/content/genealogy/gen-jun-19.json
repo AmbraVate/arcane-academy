@@ -1,0 +1,111 @@
+{
+  "id": "gen-jun-19",
+  "title": "Education Records & School Registers",
+  "glyph": "📚",
+  "sortOrder": 19,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-18"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-19a",
+      "title": "School Admission Registers, University Records & the Paper Trail of Learning",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Education records are an underused genealogical source that can bridge the gap between civil records, provide precise ages and parental information, and document a child's life in a way that no other record type matches. A Victorian school admission register gives the child's name, date of birth, father's name and occupation, and home address — information equivalent to a birth certificate in a single administrative document. For ancestors who attended grammar schools, universities, or professional training colleges, the records extend from simple admission data to detailed personal histories. The challenge is knowing which schools existed, where their records are, and how to access them.</p>",
+      "explanationHtml": "<h3>English elementary school records</h3>\n<p>Elementary school records — for children aged 5–13 — are the most genealogically accessible education records. Key record types:</p>\n<ul>\n  <li><strong>Admission registers</strong>: the standard school admission register records the child's name, date of birth (or age), date of admission, father's name and occupation, home address, and name of the school the child came from (if transferring). This information — especially the father's name and occupation — can identify the family at a specific address in a specific year, filling the gap between census enumerations. From 1870 (Education Act) onward, every child was expected to attend school, so admission registers become nearly universal.</li>\n  <li><strong>Log books</strong>: school log books were maintained by the head teacher from 1862 (required by the Education Department). They record daily events: absences and reasons (harvest time, epidemics, bad weather), inspections, incidents, and occasionally names of children — particularly those being punished, praised, or involved in notable events. Log books give a vivid picture of community life and can name individual children.</li>\n  <li><strong>Punishment books</strong>: record individual children's names, offences, and punishments — genealogically useful for names but sensitive.</li>\n  <li><strong>Record location</strong>: elementary school records are held at county record offices for LEA (Local Education Authority) schools. Church schools (National Schools, British Schools) may have records at the relevant diocesan archive or directly at the school. The school's history can be traced via the relevant county history (Victoria County History, VCH) or the local county record office's online catalogue.</li>\n</ul>\n\n<h3>Grammar schools and secondary education</h3>\n<p>Grammar schools (selective secondary schools with long histories) often have extensive records:</p>\n<ul>\n  <li>Admission registers dating from the 17th or 18th century in many cases</li>\n  <li>Prize lists and speech day programmes naming pupils</li>\n  <li>School magazines listing leavers, university places, and careers</li>\n  <li>Old Boys'/Old Girls' associations with their own directories</li>\n</ul>\n<p>Grammar school records are held either at the school itself, the county record office, or — for significant independent schools — at the school's own archive. Many public (independent) schools (Eton, Harrow, Rugby, Winchester) have published registers or online databases of former pupils.</p>\n\n<h3>University and college records</h3>\n<p>For ancestors who attended university, records are rich and often published:</p>\n<ul>\n  <li><strong>Oxford and Cambridge matriculation records</strong>: both universities maintained detailed matriculation registers from the 16th century. Alumni Oxonienses (for Oxford) and Alumni Cantabrigienses (for Cambridge) are published reference works giving name, college, year of matriculation, and often father's name, social status, and subsequent career. Both are digitised online (British History Online for Alumni Oxonienses; Cambridge University Library for Alumni Cantabrigienses).</li>\n  <li><strong>Other UK universities</strong>: Edinburgh, Glasgow, Aberdeen, Dublin (Trinity College), and London universities have published or archive-held student registers from their founding. Many are on FamilySearch, university archives, or published in volumes.</li>\n  <li><strong>US universities</strong>: colonial college records (Harvard, Yale, Princeton, William &amp; Mary) are published and online. 19th-century university registers are increasingly digitised. Many universities have published alumni directories.</li>\n  <li><strong>Professional training registers</strong>: medical schools, theological colleges, teacher training colleges, and law schools all maintained student registers. Medical school admissions at Edinburgh, London, and Dublin from the 18th and 19th centuries are particularly detailed.</li>\n</ul>\n\n<h3>US school records</h3>\n<p>American school records are more fragmented than British ones because education was administered at the local (district) level, not nationally. Key sources:</p>\n<ul>\n  <li><strong>District school records</strong>: where they survive, held at county or state archives; coverage is uneven before 1870.</li>\n  <li><strong>State school censuses</strong>: some states conducted periodic school censuses listing all school-age children by family — functioning as a census substitute and giving children's ages. Iowa's school census and Kansas's school census are examples accessible on FamilySearch.</li>\n  <li><strong>Indian boarding school records</strong>: the records of US government-run Native American boarding schools (Carlisle Indian School and others) are at NARA and digitised on FamilySearch — genealogically essential for Native American research.</li>\n  <li><strong>Freedmen's Bureau schools</strong>: the Bureau established schools for formerly enslaved people and their children; records are at NARA and FamilySearch.</li>\n</ul>\n\n<h3>Locating education records</h3>\n<p>When searching for school records:</p>\n<ol>\n  <li>Identify the school the ancestor likely attended — from census birthplace data, family oral history, or the school nearest to their address.</li>\n  <li>Check whether the school still exists; if so, contact the school's archivist or secretary.</li>\n  <li>If closed, check the county record office catalogue for the relevant LEA.</li>\n  <li>Check the Victoria County History (VCH) for English counties — it typically includes school histories and archive references.</li>\n  <li>Search FamilySearch and Ancestry for digitised school records for the relevant county.</li>\n</ol>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora holds up a large-format ledger — the admission register of a Lancashire Board School, 1881. Each double-page spread lists fifty children with columns for name, date of birth, father's name, father's occupation, and address."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "This admission register was created six months after the 1881 census. For every child who starts school in September 1881, there is an entry: name, date of birth, father's name, father's occupation, home address. The information is equivalent to a birth certificate — and it was recorded independently, from the family, at the time of admission. The father's occupation may be different from the census if he changed work in the intervening months. The address may be different if the family moved. This is not a duplicate of the census; it is a new data point, filling a new moment in the family's timeline."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And for those who went further — grammar schools, university, medical school — the records are sometimes extraordinary. Alumni Cantabrigienses gives every man who matriculated at Cambridge from 1752 to 1900: name, college, year, father's name, father's occupation, whether he took a degree and in what, and his subsequent career. You can trace an ancestor from medical student to general practitioner in a single reference volume. For the professional classes, the universities and their published registers are among the richest genealogical sources available."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor education records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What genealogical information does a Victorian school <strong>admission register</strong> typically contain?</li>\n  <li>What are <strong>school log books</strong> and from what year were they required?</li>\n  <li>What are <strong>Alumni Oxonienses</strong> and <strong>Alumni Cantabrigienses</strong>?</li>\n  <li>Where are elementary school records typically held in England?</li>\n  <li>Name one US-specific education record type that functions as a census substitute.</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A Victorian school admission register typically contains: the child's name, date of birth (or age at admission), date of admission, father's name and occupation, home address, and the name of the previous school (if transferring). This information is equivalent to a birth certificate and provides an independent data point between census years.\n\nSchool log books were maintained by the head teacher from 1862 (required by the Education Department) and record daily events: attendance levels, reasons for absence, inspections, incidents, and occasionally individual children's names. They provide a vivid picture of community life.\n\nAlumni Oxonienses is a published reference work giving details of all Oxford University students, and Alumni Cantabrigienses does the same for Cambridge — both recording name, college, year of matriculation, father's name, father's social status, and subsequent career. Both are digitised on British History Online.\n\nElementary school records in England are held at county record offices for LEA (Local Education Authority) schools, and at diocesan archives for Church of England National Schools or Nonconformist British Schools.\n\nUS state school censuses — such as Iowa's or Kansas's school census — periodically listed all school-age children by family, giving children's names and ages and functioning as a census substitute between federal decennial censuses. Available on FamilySearch.",
+      "soloPracticeHtml": "<h3>Using school records to fill a census gap</h3>\n<p>Your ancestor John Hargreaves appears in the 1881 census in Burnley, Lancashire, age 36, cotton weaver, with wife Annie and three children: Mary (8), James (5), and Thomas (2). He does not appear in the 1891 census in Burnley at all. You want to understand what happened to the family between 1881 and 1891.</p>\n<p>Design a research strategy (250–350 words) using school records and other records covered in this chunk to track the family during this period. What records would you search, in what order, and what information do you expect each to provide?</p>",
+      "modelAnswer": "Step 1 — School admission registers: Mary Hargreaves (born c.1873) was already in school by 1881; she would have started c.1878. James (born c.1876) would start school c.1881; Thomas (born c.1879) would start c.1884. Search Burnley Board School admission registers for James Hargreaves's admission c.1881 — the register gives John's occupation and address at that precise moment, potentially giving the family's address between census years. Thomas's admission c.1884 gives a second address data point.\n\nStep 2 — GRO death index: Search for John Hargreaves deaths in the Burnley registration district between 1881 and 1891. If John died (which might explain his absence from 1891), his death registration gives the date and cause — then search the 1891 census for Annie Hargreaves as a widow.\n\nStep 3 — GRO marriage index: Check whether Annie Hargreaves remarried — if widowed, she may appear in 1891 under a new surname. Search for an Annie Hargreaves marriage after 1881 in Lancashire registration districts.\n\nStep 4 — Electoral registers: Search Burnley electoral registers for John Hargreaves from 1882 to 1890. If he appears in a register and then disappears, the year of disappearance narrows the date range of his death or departure.\n\nStep 5 — School log books: The school log book for the relevant school may record significant family events — an entry noting 'James Hargreaves removed from school, family moved to Blackburn' would explain the 1891 absence from Burnley.\n\nStep 6 — 1891 census broader search: Search the 1891 census for John Hargreaves throughout Lancashire (not just Burnley) — the family may have moved to another town, which would explain the absence from Burnley without John having died.\n\nExpected outcome: school admission registers and electoral registers should narrow the timeframe; GRO indexes confirm survival or death.",
+      "feynmanPrompt": "Explain to a friend why a Victorian school admission register might contain more useful genealogical information than you would expect — and why this information is valuable even though the census was taken just a few years earlier.",
+      "rabbitHoleTerms": [
+        {
+          "term": "school admission register",
+          "description": "A school's record of each new pupil, giving name, date of birth, date of admission, father's name and occupation, and home address — held at county record offices; equivalent in genealogical detail to a birth certificate."
+        },
+        {
+          "term": "school log book",
+          "description": "A daily record maintained by the head teacher from 1862, recording attendance, incidents, inspections, and community events — sometimes naming individual children, particularly for discipline or notable achievement."
+        },
+        {
+          "term": "Alumni Cantabrigienses",
+          "description": "A published reference work giving details of all Cambridge University students from 1752 to 1900, including name, college, father's name and status, degree taken, and subsequent career — digitised and searchable online."
+        },
+        {
+          "term": "Victoria County History (VCH)",
+          "description": "A comprehensive county-by-county historical reference work for England, covering schools, churches, manors, and local institutions with archive references — the first port of call for locating schools and their records."
+        },
+        {
+          "term": "Carlisle Indian School records",
+          "description": "Records of the US government's foremost Native American boarding school (1879–1918), held at NARA and digitised on FamilySearch — essential for Native American genealogy and documenting forced cultural assimilation."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What genealogical information does a Victorian school <strong>admission register</strong> typically record for each child?</p>",
+          "options": [
+            "Name, date of birth, date of admission, father's name and occupation, home address, and name of previous school — providing an independent record of the family at a specific date between census years",
+            "Only the child's name and the date they started school",
+            "The child's academic results, behaviour record, and teacher's assessment",
+            "The child's name, religion, and the amount of school fees paid by the family"
+          ],
+          "correctAnswer": "Name, date of birth, date of admission, father's name and occupation, home address, and name of previous school — providing an independent record of the family at a specific date between census years",
+          "explanationHtml": "<p>Victorian school admission registers — kept from 1870 onward when the Education Act made elementary schooling near-universal — are among the most genealogically underused sources. Each entry gives the child's full name, exact date of birth (not just age), the date they were admitted, their father's name and occupation, the family's home address, and the name of any previous school. This is equivalent in detail to a birth certificate, recorded independently from the family at the time of admission. For families where the birth certificate was not registered (some pre-1875 births were still unregistered), the school admission register may be the most precise birth date record that exists. The father's occupation and address also provide an independent data point between the decennial censuses.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You find your ancestor William Frost in the 1861 census in Oxford, aged 8, son of Thomas Frost, a college servant. You cannot find William in the 1871 census. You want to find out where he was in 1870. What education record might help?</p>",
+          "options": [
+            "The admission register of a local Oxford Board School or National School — William would have started school around 1860 (aged 7); his admission record gives his exact birth date, Thomas's occupation and address, and his departure date from the school, which may indicate when the family moved",
+            "Alumni Oxonienses — as the son of a college servant, William would automatically have been enrolled at Oxford University",
+            "The Oxford University matriculation register — domestic staff children were enrolled with students in the same register",
+            "School records do not exist before 1900 in Oxford"
+          ],
+          "correctAnswer": "The admission register of a local Oxford Board School or National School — William would have started school around 1860 (aged 7); his admission record gives his exact birth date, Thomas's occupation and address, and his departure date from the school, which may indicate when the family moved",
+          "explanationHtml": "<p>William Frost, born c.1853 in Oxford, would have started elementary school around 1858–1860. Oxford had both Church of England National Schools and British Schools operating before the 1870 Education Act. His admission register entry would give his exact birth date, Thomas Frost's name and occupation (college servant), and the family's address at the time of admission. Crucially, the admission register also records when a child left and sometimes why ('removed — family moved to Abingdon'). If William is absent from the 1871 census in Oxford, the school departure date may indicate when the family moved and provide the destination. The records would be at the Oxfordshire History Centre (county record office) or in the relevant school's own archive.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds their ancestor, Dr James Mackintosh (born c.1840, Edinburgh), listed in Alumni Cantabrigienses as 'Mackintosh, James; Trinity College; matriculated 1858; father — Donald Mackintosh, merchant, Edinburgh; MB 1862.' They treat this as a primary source for James's birth year (c.1840, inferred from matriculation age 18). Is this correct?</p>",
+          "options": [
+            "No — Alumni Cantabrigienses is a secondary source compiled from university records; the inferred birth year (c.1840) is a calculation from the matriculation year (1858) and an assumed age at matriculation (18); the actual birth year should be confirmed against a Scottish birth register or census record",
+            "Yes — university matriculation records are primary sources and their information is fully reliable for birth year calculation",
+            "Yes — Alumni Cantabrigienses was compiled directly from birth certificates and is therefore a primary source",
+            "No — university records cannot be used to infer birth years under any circumstances"
+          ],
+          "correctAnswer": "No — Alumni Cantabrigienses is a secondary source compiled from university records; the inferred birth year (c.1840) is a calculation from the matriculation year (1858) and an assumed age at matriculation (18); the actual birth year should be confirmed against a Scottish birth register or census record",
+          "explanationHtml": "<p>Alumni Cantabrigienses is a compiled reference work — a secondary source — drawing on university admission registers and other records. The birth year 'c.1840' is an inference: the researcher has assumed James was 18 when he matriculated in 1858 (a reasonable assumption, but the age at matriculation varied — some students were 16, others 20). The entry itself does not give a birth year directly. To establish James Mackintosh's birth year as a primary source, the researcher should search the Scottish statutory birth register (from 1855) or the OPR baptism registers (pre-1855) for James Mackintosh, son of Donald Mackintosh, merchant, Edinburgh. The father's name and occupation from Alumni Cantabrigienses guide that search effectively — and that is the correct use of the alumni record: as a bridge to primary sources, not as a primary source itself.</p>"
+        }
+      ]
+    }
+  ]
+}

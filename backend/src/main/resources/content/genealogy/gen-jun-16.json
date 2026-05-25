@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-16",
+  "title": "Photograph Identification & Dating",
+  "glyph": "📷",
+  "sortOrder": 16,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-15"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-16a",
+      "title": "Dating and Identifying Ancestral Photographs",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Every family has a box of old photographs — and every genealogist eventually faces the question of who these people are. Ancestral photographs are a unique category of evidence: they are primary sources for what a person looked like at a specific moment, but they carry no inherent identity data. Identifying the people in family photographs requires a combination of photographic dating skills (which type of photograph, what era, what clothing and hairstyle details), contextual evidence (studio stamps, inscriptions, family oral history), and genealogical cross-referencing. Getting this right is important because misidentified photographs become embedded in family trees and are then cited by others as confirmation — creating circular evidence chains.</p>",
+      "explanationHtml": "<h3>Photographic formats and their date ranges</h3>\n<p>The format of a photograph is the first clue to its approximate date. Key formats in genealogical collections:</p>\n<ul>\n  <li><strong>Daguerreotype (c.1839–1860)</strong>: a one-of-a-kind image on silver-coated copper, highly reflective, usually in a hinged leather case. The image shifts from positive to negative depending on the viewing angle. Earliest photographic format; most common in the 1840s and 1850s. US daguerreotypes are typically 1840–1860; British slightly shorter (1840–1855).</li>\n  <li><strong>Ambrotype (c.1852–1870)</strong>: a collodion (glass) negative backed with black material to create a positive image; housed in a hinged case similar to the daguerreotype. Distinguished from daguerreotype by its non-reflective surface. Less expensive than daguerreotype; very common in the 1850s and 1860s.</li>\n  <li><strong>Tintype / Ferrotype (c.1856–1930s)</strong>: image on a thin iron sheet coated with black enamel; cheap, durable, and produced rapidly. The dominant cheap portrait format from the 1860s through to the early 20th century. Not housed in a case. Common at fairs and markets into the 1900s.</li>\n  <li><strong>Carte de Visite (CDV) (c.1854–1900)</strong>: a small albumen print (approximately 6 x 9 cm) mounted on card. The dominant portrait format of the 1860s and 1870s. The photographer's studio name and address are printed on the reverse — useful for dating. CDVs were collected in photograph albums and exchanged like visiting cards.</li>\n  <li><strong>Cabinet Card (c.1866–1910)</strong>: a larger albumen or gelatin print (approximately 11 x 16 cm) mounted on thicker card. Replaced the CDV as the dominant format from the late 1870s. Studio name, address, and sometimes photographer's name on the reverse.</li>\n  <li><strong>Snapshot / roll film (c.1888–present)</strong>: Kodak introduced the first consumer roll-film camera in 1888. From this point, informal 'snapshots' proliferate. Format and size vary enormously from this point onward.</li>\n</ul>\n\n<h3>Dating within format — studio and clothing clues</h3>\n<p>Once the format is identified, the date can be narrowed using additional evidence:</p>\n<ul>\n  <li><strong>Studio address on the reverse (CDV and cabinet card)</strong>: studio addresses can be dated against trade directory entries. If the studio is known to have operated at that address from 1875 to 1882, the photograph dates to that period. The British Association for Local History and various local studies libraries hold directories that can date studio addresses.</li>\n  <li><strong>Fashion and hairstyle</strong>: women's sleeve styles (pagoda sleeves 1850s–1860s; leg-of-mutton sleeves 1890s; narrow fitted 1900s–1910s), hairstyles (centre parting and ringlets 1850s–1860s; swept-up chignons 1870s–1890s; pompadour 1900s), and men's facial hair (beards fashionable 1860s–1890s; cleaner-shaven from 1900s) all provide approximate dates.</li>\n  <li><strong>Photographic processing technology</strong>: albumen prints (CDV era) have a warm sepia tone; gelatin silver prints (after c.1880) are cooler and often have sharper detail.</li>\n  <li><strong>Inscriptions</strong>: pencil or ink inscriptions on the reverse, in the album, or on a protective paper sleeve — names, dates, or occasions written by the original owner.</li>\n</ul>\n\n<h3>Identifying individuals — the evidence</h3>\n<p>Once a photograph is dated, the range of possible subjects narrows. Identification strategies:</p>\n<ul>\n  <li><strong>Family oral history</strong>: the traditional identification passed down — but treat with caution. Misidentifications accumulate over generations; a confident 'That's Great-Grandma Nellie' may itself be based on a misidentification made 60 years ago.</li>\n  <li><strong>Album position and context</strong>: in a Victorian CDV album, photographs were often arranged in family groups — the album structure itself suggests relationships. An unidentified portrait adjacent to identified family members is likely another family member.</li>\n  <li><strong>Genealogical cross-referencing</strong>: once you know the photographer's date range, identify which family members were alive and the right apparent age in that period. If the photograph is a woman aged approximately 30–40, dated c.1875–1882, identify all female ancestors who were 30–40 in that period.</li>\n  <li><strong>Shared photographs</strong>: DNA matches and family networks on Ancestry or MyHeritage sometimes share photographs of the same person from different branches, providing corroboration.</li>\n  <li><strong>Facial comparison</strong>: comparison with other identified photographs, especially series of the same person at different ages, can confirm identity. MyHeritage's 'Photo Enhancer' and similar tools use AI for facial recognition across historical photographs — useful as a lead-generator but not proof.</li>\n</ul>\n\n<h3>Documenting and preserving family photographs</h3>\n<p>Best practice for the genealogist who holds physical photographs:</p>\n<ul>\n  <li>Scan at high resolution (600 dpi minimum for prints; 1200 dpi for small formats like daguerreotypes)</li>\n  <li>Store physical originals in acid-free sleeves or boxes in a stable temperature environment</li>\n  <li>Record all known provenance and identification in metadata and in a research log — including the source of identification and its confidence level</li>\n  <li>Share digital copies with all known family branches — different branches may hold complementary photographs or information</li>\n  <li>Do not write on the back of photographs in ballpoint pen (it can bleed through); use a soft pencil or acid-free paper labels</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora holds up two photographs — one in a hinged leather case (a daguerreotype), one on a mounted card (a cabinet card). She places them side by side on the table."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Before you ask who this person is, ask when this photograph was taken. The format tells you the decade. This daguerreotype — the reflective silver surface, the hinged case — is 1840s or 1850s at the latest. This cabinet card — the mounted print, the studio address printed on the back — is 1870s to 1910s. Once you know the decade, you know which of your ancestors could possibly be in the photograph. You narrow the candidates before you start speculating about faces."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The studio address on the back of a carte de visite or cabinet card is a key. Look up the studio in the trade directories for that town — Kelly's, Slater's, local directories. The directory tells you the years the photographer operated at that address. If the directory shows 'J. Hargreaves, Photographer, 14 Market Street' from 1878 to 1886, this photograph was taken between those years. Now you have a date range of eight years. How many female ancestors were between the ages of 25 and 40 in those eight years? Perhaps two or three. You are not guessing. You are eliminating."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And treat oral identifications carefully. 'That's Great-Grandmother Nellie' — who said so? Your grandmother, 40 years ago, who was told by her own grandmother, who may have been guessing. Misidentifications compound. I have seen researchers build ten years of research on the wrong person because a photograph was misidentified three generations back. The photograph is evidence. Treat it like a document. Date it, contextualise it, cross-reference the possible subjects, and note your confidence level."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor photograph identification</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What are the approximate date ranges for: daguerreotype, carte de visite (CDV), and cabinet card?</li>\n  <li>How can a studio address on the back of a CDV or cabinet card help date a photograph?</li>\n  <li>Why should oral family identifications of photographs be treated with caution?</li>\n  <li>What is the difference between an <strong>ambrotype</strong> and a <strong>daguerreotype</strong>?</li>\n  <li>Name two clothing or fashion features that can help date a Victorian photograph.</li>\n</ul>",
+      "guidedPracticeModelAnswer": "Daguerreotype: c.1839–1860 (most common 1840s–1855). Carte de visite (CDV): c.1854–1900 (dominant 1860s–1870s). Cabinet card: c.1866–1910 (dominant from late 1870s).\n\nThe studio name and address printed on the back of a CDV or cabinet card can be dated against trade directory entries for that town. If directories show the photographer operating at that address from 1878 to 1886, the photograph was taken within those years — narrowing the date range and therefore the range of possible subjects.\n\nOral family identifications should be treated cautiously because they accumulate over generations. An identification passed down from a great-grandmother to a grandmother to a parent may have been uncertain at each step, with confidence added artificially by the passage of time. The original identification may itself have been a guess. A researcher should treat oral identification as a hypothesis to be tested against photographic dating and genealogical cross-referencing, not as established fact.\n\nAmbrotype: a collodion (glass) negative backed with black material, creating a positive image; non-reflective surface, housed in a similar case to the daguerreotype. Daguerreotype: a one-of-a-kind image on silver-coated copper, highly reflective, with an image that shifts from positive to negative depending on viewing angle.\n\nTwo Victorian fashion dating clues: (1) pagoda sleeves (wide at the wrist) indicate 1850s–1860s; leg-of-mutton sleeves (puffed at the shoulder) indicate 1890s; (2) men's facial hair — full beards were fashionable from the 1860s through 1890s; clean-shaven faces became more common from the 1900s.",
+      "soloPracticeHtml": "<h3>Photograph dating and identification exercise</h3>\n<p>You find the following photograph in a family collection with no inscription:</p>\n<ul>\n  <li>Format: cabinet card (mounted print on thick card, approximately 11 x 16 cm)</li>\n  <li>Reverse: 'J. Robinson &amp; Son, Photographers, 22 Bridge Street, Leeds'</li>\n  <li>Image: a woman, apparently aged 35–50, wearing a dark dress with narrow fitted sleeves; hair swept up in a pompadour style</li>\n  <li>Your known female ancestors in the Leeds area: (A) Mary Carr, born 1845, died 1928; (B) Jane Carr (née Whitfield), born 1870, died 1940; (C) Ellen Carr, born 1852, died 1899</li>\n</ul>\n<p>Explain step by step how you would attempt to identify the woman in the photograph, what records you would use to date the studio, and which candidate or candidates remain after your analysis.</p>",
+      "modelAnswer": "Step 1 — Date the format: Cabinet cards were produced from c.1866 to c.1910, with the format dominant from the late 1870s onward.\n\nStep 2 — Date the studio: Search Leeds trade directories (available at Leeds Central Library and on FindMyPast/Ancestry for Kelly's Directories Yorkshire) for 'J. Robinson &amp; Son, Photographers, 22 Bridge Street, Leeds.' Directory entries typically give the years the photographer operated at that address. If the directories show Robinson at this address from 1895 to 1908, the photograph dates to c.1895–1908.\n\nStep 3 — Confirm with fashion: Narrow fitted sleeves and a pompadour hairstyle are consistent with c.1900–1910 fashion. Leg-of-mutton sleeves (dominant 1890s) are absent. This supports a date of c.1898–1908.\n\nStep 4 — Apply age to candidates: If the photograph dates to c.1898–1908, the woman appears aged 35–50. Calculate each candidate's age in that range: (A) Mary Carr born 1845 — would be aged 53–63 in 1898–1908; possibly too old for 35–50 appearance. (B) Jane Carr born 1870 — would be aged 28–38 in 1898–1908; lower end of possible range, appearing young for 35–50. (C) Ellen Carr born 1852 — died 1899; could only have been photographed before 1899, aged up to 47. If the studio operated after 1899, Ellen is eliminated.\n\nStep 5 — Provisional conclusion: If the studio date is confirmed as post-1899, Ellen is eliminated. The strongest candidate given apparent age (35–50) in c.1900–1908 is Mary Carr (born 1845, aged 55–63) — slightly older than estimated, but age estimation from photographs is imprecise — or Jane Carr at the older end of her range. Note confidence level as moderate; confirm by seeking another photograph of either candidate to compare.",
+      "feynmanPrompt": "Explain to a friend how you can narrow down the date of an old family photograph even when there is no date written on it — and what clues you would look for.",
+      "rabbitHoleTerms": [
+        {
+          "term": "daguerreotype",
+          "description": "The earliest photographic format (c.1839–1860): a unique image on silver-coated copper, highly reflective, housed in a hinged leather case — identifiable by the image's shift from positive to negative depending on viewing angle."
+        },
+        {
+          "term": "carte de visite (CDV)",
+          "description": "A small albumen print (c.6 x 9 cm) mounted on card, the dominant portrait format of the 1860s–1870s — often with the photographer's studio name and address on the reverse, enabling date narrowing via trade directories."
+        },
+        {
+          "term": "cabinet card",
+          "description": "A larger albumen or gelatin print (c.11 x 16 cm) mounted on card, dominant from the late 1870s to c.1910 — with studio name on the reverse and dateable via trade directories."
+        },
+        {
+          "term": "ambrotype",
+          "description": "A collodion (glass) negative backed with black material to produce a positive image (c.1852–1870) — non-reflective, housed in a hinged case, distinguishable from daguerreotype by its matte surface."
+        },
+        {
+          "term": "MyHeritage Photo Enhancer",
+          "description": "An AI-powered tool on MyHeritage that enhances, colourises, and performs facial recognition on historical photographs — useful as a lead-generator for identification but not a primary source for genealogical proof."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What are the approximate date ranges for a <strong>carte de visite (CDV)</strong> and a <strong>cabinet card</strong>?</p>",
+          "options": [
+            "CDV: c.1854–1900 (dominant 1860s–1870s); Cabinet card: c.1866–1910 (dominant from late 1870s)",
+            "CDV: c.1839–1855; Cabinet card: c.1855–1880",
+            "CDV: c.1880–1920; Cabinet card: c.1920–1950",
+            "CDV: c.1900–1930; Cabinet card: c.1930–1960"
+          ],
+          "correctAnswer": "CDV: c.1854–1900 (dominant 1860s–1870s); Cabinet card: c.1866–1910 (dominant from late 1870s)",
+          "explanationHtml": "<p>The carte de visite was introduced in France around 1854 and quickly became the dominant portrait format of the 1860s and 1870s — small enough to be exchanged and collected in albums. The cabinet card, a larger format, was introduced around 1866 and gradually replaced the CDV from the late 1870s onward, remaining popular until around 1910. Both formats have the photographer's studio name and address printed or embossed on the reverse, which can be dated against trade directories to narrow the photograph to a specific period at that studio. The formats' overlap in the late 1860s and 1870s is important — a photograph's format alone only narrows the date to a broad range; studio dating and fashion analysis refine it further.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You find a cabinet card portrait with 'William Taylor, Photographer, 5 High Street, Birmingham' on the reverse. How would you use this information to narrow the date of the photograph?</p>",
+          "options": [
+            "Search Birmingham trade directories (Kelly's Directories, Slater's, Pigot's) for William Taylor, photographer, 5 High Street — the years he is listed at that address give the earliest and latest possible date for the photograph",
+            "Contact the current occupant of 5 High Street, Birmingham, who will have records of the building's former uses",
+            "The studio address cannot be used to date the photograph — only the photographic format can provide a date",
+            "Search the GRO birth index for William Taylor to establish when he was working-age and therefore when he was a photographer"
+          ],
+          "correctAnswer": "Search Birmingham trade directories (Kelly's Directories, Slater's, Pigot's) for William Taylor, photographer, 5 High Street — the years he is listed at that address give the earliest and latest possible date for the photograph",
+          "explanationHtml": "<p>Trade directories — Kelly's, Slater's, Pigot's, and others — were published annually or every few years and listed tradespeople by name, occupation, and address. If William Taylor appears as a photographer at 5 High Street in Kelly's Birmingham directories from 1882 to 1891 but not before or after, the photograph was almost certainly taken between those years. This gives a nine-year date range that, combined with the cabinet card format (c.1866–1910) and fashion analysis of the subject's clothing, can often be narrowed to five years or fewer. Birmingham trade directories are available at Birmingham Archives and at the British Library, and many are digitised on local studies portals and Ancestry.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A family member confidently identifies a daguerreotype as 'Great-great-grandmother Hannah, taken around 1890.' What is wrong with this identification?</p>",
+          "options": [
+            "Daguerreotypes were produced c.1839–1860; by 1890 the format was obsolete. If this is genuinely a daguerreotype, it cannot have been taken in 1890 — the format identification and the proposed date are contradictory, suggesting either the format has been misidentified or the date is wrong",
+            "Nothing is wrong — daguerreotypes were produced throughout the Victorian era including the 1890s",
+            "The identification is wrong only because 'great-great-grandmother' is too many generations back for a photograph from 1890",
+            "The name 'Hannah' was not used after 1870, so a photograph dated 1890 cannot show someone with that name"
+          ],
+          "correctAnswer": "Daguerreotypes were produced c.1839–1860; by 1890 the format was obsolete. If this is genuinely a daguerreotype, it cannot have been taken in 1890 — the format identification and the proposed date are contradictory, suggesting either the format has been misidentified or the date is wrong",
+          "explanationHtml": "<p>Daguerreotype production effectively ceased by the early 1860s, displaced by the cheaper ambrotype and then the carte de visite. By 1890 daguerreotypes had been obsolete for nearly 30 years. If the photograph in the hinged case is genuinely a daguerreotype (identifiable by its reflective silver surface and the image's positive-negative shift by viewing angle), it was taken before approximately 1860 — not in 1890. The family's identification is internally inconsistent: either the format is wrong (it may be an ambrotype, which is similar in casing but has a matte surface) or the date is wrong. The researcher should check the photographic format carefully (reflective = daguerreotype; matte = ambrotype) and re-evaluate which ancestor's birth year and location are consistent with a photograph from 1840–1860.</p>"
+        }
+      ]
+    }
+  ]
+}

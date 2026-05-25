@@ -1,0 +1,111 @@
+{
+  "id": "gen-jun-14",
+  "title": "Hospital, Medical & Poor Law Records",
+  "glyph": "🏥",
+  "sortOrder": 14,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-13"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-14a",
+      "title": "Workhouses, Asylums, Hospitals & the Records of Poverty and Illness",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>For ancestors who experienced poverty, illness, or mental distress, the records of the Poor Law, the workhouse, and the hospital are often the most detailed documents their lives ever generated. A pauper in a Victorian workhouse was more thoroughly documented than a prosperous tradesman — their name, age, birthplace, physical condition, family circumstances, and weekly movements all recorded by the relieving officer, the master, and the medical officer. These records are underused partly because of their associations with hardship, and partly because researchers do not know they exist. They deserve a central place in the genealogist's toolkit.</p>",
+      "explanationHtml": "<h3>The English Poor Law system — an overview</h3>\n<p>England's Poor Law system created a vast administrative apparatus that generated genealogically rich records:</p>\n<ul>\n  <li><strong>Old Poor Law (1601–1834)</strong>: each parish was responsible for its own poor. The overseers of the poor maintained accounts, paid relief to named recipients, and carried out settlement examinations.</li>\n  <li><strong>New Poor Law (1834–1929)</strong>: parishes were grouped into Poor Law Unions, each with a Board of Guardians, a workhouse, a relieving officer, and a medical officer. The administrative machinery was more uniform and produced more consistent records.</li>\n</ul>\n\n<h3>Settlement examinations</h3>\n<p>Settlement examinations are among the most genealogically detailed pre-census documents in English history. When a person applied for poor relief, the overseers of the poor had to establish their legal settlement — the parish legally responsible for their support. To do this, the pauper was examined under oath and asked:</p>\n<ul>\n  <li>Where they were born</li>\n  <li>Where their father was born (and his settlement, if different)</li>\n  <li>Where they had lived and worked</li>\n  <li>Whether they had served an apprenticeship, and where</li>\n  <li>Whether they had rented a property above a certain value</li>\n  <li>Whether they were married, and if so where and when (wives derived settlement from husbands)</li>\n  <li>Whether they had children, and their names and ages</li>\n</ul>\n<p>A settlement examination from 1780 can therefore give a life history — birthplace, father's origin, places of work, apprenticeship details, marriage, and children — in a single document. Settlement examinations are held at county record offices (in vestry records and overseers' papers). Some have been transcribed and published by county record societies.</p>\n\n<h3>Workhouse records (1834–1930s)</h3>\n<p>The Union workhouse generated a family of records with different genealogical uses:</p>\n<ul>\n  <li><strong>Admission and discharge registers</strong>: name, age, occupation, reason for admission, date of admission and discharge. The most basic workhouse record but gives an annual snapshot of who was in the institution.</li>\n  <li><strong>Creed registers</strong>: from 1876, workhouses were required to record each inmate's religious denomination. These give name, age, and denomination and sometimes family relationship.</li>\n  <li><strong>Punishment books</strong>: disciplinary records for inmates who broke workhouse rules — occasionally naming family members involved in disturbances.</li>\n  <li><strong>Birth and death registers</strong>: births and deaths within the workhouse were recorded both in the workhouse register and in the civil GRO registration system. A birth in the workhouse is a valuable indicator of family poverty.</li>\n  <li><strong>Guardians' minute books</strong>: the Board of Guardians met regularly and their minutes named individuals whose cases were discussed — including outdoor relief recipients who never entered the workhouse.</li>\n</ul>\n<p>Workhouse records are held at county record offices in the relevant Union's archive. Many have not been indexed and require direct searching by Union and date. The <strong>Workhouses.org.uk</strong> website provides a comprehensive directory of English workhouses and their archive locations.</p>\n\n<h3>Lunacy and asylum records</h3>\n<p>County lunatic asylums were established across England from the 1808 County Asylums Act onward. Asylum records include:</p>\n<ul>\n  <li><strong>Patient admission books</strong>: name, age, occupation, religion, marital status, date of admission, and sometimes next of kin — genealogically detailed.</li>\n  <li><strong>Case notes</strong>: medical and social histories, sometimes extensive, giving the patient's family background, symptoms, and treatment.</li>\n  <li><strong>Discharge and death registers</strong>: outcome records.</li>\n</ul>\n<p>Asylum records are subject to a 100-year access closure in many jurisdictions (England: generally 100 years for individual records). Post-closure records are at county record offices. Many patient records from the 19th and early 20th century are now accessible. The <strong>Wellcome Collection</strong> holds asylum records for some London institutions; TNA holds records from Broadmoor (criminal lunatic asylum, PCOM9 series).</p>\n\n<h3>Hospital records</h3>\n<p>Voluntary hospitals (funded by subscriptions) and later NHS hospitals kept admission registers, case notes, and death registers. Genealogically useful features:</p>\n<ul>\n  <li>Admission registers give name, age, occupation, and parish of origin</li>\n  <li>Case notes (subject to access restrictions) give detailed medical and social history</li>\n  <li>Annual reports name subscribers, benefactors, and sometimes notable cases</li>\n</ul>\n<p>Hospital records are held at local NHS trust archives, county record offices, and in some cases at the Wellcome Collection. Access to records less than 100 years old requires demonstrating a legitimate research interest.</p>\n\n<h3>Scottish and Irish Poor Law equivalents</h3>\n<ul>\n  <li><strong>Scotland</strong>: the Scottish Poor Law Act 1845 created a Board of Supervision overseeing parochial boards. Kirk session records (pre-1845) document poor relief distributed by the church. Post-1845 records are at local council archives and NRS. The Kirk session register of poor relief can be the most detailed document about a poor parishioner's life before civil registration.</li>\n  <li><strong>Ireland</strong>: the Irish Poor Law Act 1838 established 130 Poor Law Unions with workhouses. Irish workhouse records are at county archives and some are online at the relevant county libraries. Many Irish workhouse admission registers were destroyed in 1922; surviving records are held at PRONI (for Ulster) and county archives.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens a large ledger — the admission register of the Stoke-on-Trent Poor Law Union Workhouse, 1871. The columns are dense: name, age, occupation, religion, reason for admission, date in, date out."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "People feel uncomfortable searching workhouse records for their ancestors. The association with poverty and shame is still felt. But I tell you: the pauper in this register was more thoroughly documented than the prosperous draper two streets away who never needed official help. Name, age, occupation, parish of birth, reason for admission — and if he was examined under settlement law, a full life history. Birthplace, father's settlement, places of work, apprenticeship, marriage, children. All sworn under oath. The workhouse records are sometimes the genealogist's greatest prize."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The settlement examination is the record I search before everything else for 18th-century English ancestors. When a man applied for poor relief, the overseer asked him everything: where were you born? Where was your father born? Have you served an apprenticeship? Where did you rent a property? When did you marry, and where? Name your children and their ages. That examination, sworn before a magistrate, is dated, signed, and filed at the county record office. It is a pre-census census, compiled individually, for exactly the people who left the fewest other records."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor Poor Law and medical records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What is a <strong>settlement examination</strong> and what information does it typically contain?</li>\n  <li>Name three types of record generated by the Victorian workhouse system.</li>\n  <li>What is the difference between the Old Poor Law (pre-1834) and the New Poor Law (post-1834)?</li>\n  <li>Where are asylum and hospital records typically held, and what access restrictions apply?</li>\n  <li>What is the Scottish equivalent of the English Kirk session poor relief record?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "A settlement examination was a sworn interview conducted by parish overseers of the poor to establish a pauper's legal settlement (the parish responsible for their support). It typically recorded: birthplace, father's birthplace and settlement, places of work and length of residence, whether an apprenticeship was served and where, whether a qualifying property was rented, marriage date and place, and names and ages of children. It can function as a pre-census autobiography for 18th-century individuals who left few other records.\n\nThree Victorian workhouse record types: (1) Admission and discharge registers — name, age, occupation, reason for admission, dates; (2) Creed registers (from 1876) — name, age, religious denomination; (3) Guardians' minute books — record individuals whose cases were discussed, including outdoor relief recipients who never entered the workhouse.\n\nOld Poor Law (1601–1834): each parish managed its own poor through overseers, paying relief and conducting settlement examinations. Records are held in parish/vestry archives at county record offices. New Poor Law (1834–1929): parishes grouped into Poor Law Unions with Boards of Guardians, a Union workhouse, and a uniform administrative structure producing more consistent records, also at county record offices.\n\nAsylum and hospital records are held at county record offices, NHS trust archives, and specialist collections (Wellcome Collection for London). Access to records less than 100 years old is restricted; 19th-century records are generally accessible. Broadmoor (criminal lunatic asylum) records are at TNA.\n\nThe Scottish equivalent is the Kirk session record of poor relief distribution — maintained by the church before the 1845 Poor Law Act — sometimes the most detailed document about a poor parishioner's life before civil registration, held at NRS or local council archives.",
+      "soloPracticeHtml": "<h3>Analysing a settlement examination</h3>\n<p>You find the following settlement examination for James Hartley, dated 3 March 1792, Rochdale, Lancashire:</p>\n<p><em>'James Hartley, weaver, aged about 38, examined on oath. Says he was born in Bury, Lancashire. That his father Thomas Hartley was born in Bury and settled there all his life. That he, James, was apprenticed to William Ogden, fustian weaver, of Middleton, for seven years, from 1766. That he removed to Rochdale in 1778 and rented a cottage at 12 shillings per annum from John Walsh. That he married Mary née Greenwood at Rochdale parish church in 1779. That he has three children: Thomas, aged 12, Ann, aged 9, and Robert, aged 5.'</em></p>\n<p>Extract every genealogical lead and explain what record you would search for each.</p>",
+      "modelAnswer": "Genealogical leads:\n\n1. James Hartley: born c.1754, Bury, Lancashire, weaver. Search: Bury Anglican baptism register c.1754 for James Hartley, son of Thomas Hartley. James's birth c.1754 should appear in the Bury parish register (now at Lancashire Archives, and digitised on FindMyPast/Ancestry).\n\n2. Thomas Hartley (father): settled in Bury all his life. Search: Bury parish register for Thomas Hartley's baptism (c.1720–1735) and his own marriage; Bury overseers' records for any reference to Thomas; Bury probate records (as Thomas was settled there, any will should be at Lancashire probate).\n\n3. Apprenticeship to William Ogden, fustian weaver, Middleton, from 1766: Search TNA IR1 apprenticeship duty index for James Hartley, apprenticed c.1766, or for William Ogden as master. This should confirm the Middleton connection and James's age at apprenticeship (c.12 years old, consistent with birth c.1754).\n\n4. Mary Hartley née Greenwood, married Rochdale parish church 1779: Search Rochdale parish marriage register 1779 for James Hartley and Mary Greenwood — this gives both parties' names and may include father's names as witnesses.\n\n5. Children: Thomas (b.c.1780), Ann (b.c.1783), Robert (b.c.1787). Search: Rochdale parish baptism register for all three — confirms family and gives exact dates.\n\n6. John Walsh, landlord, 12 shillings rent, Rochdale, c.1778: A minor lead — search Rochdale land tax or rate books for John Walsh as a property owner c.1778.",
+      "feynmanPrompt": "Explain to a friend what a settlement examination is, why parishes conducted them, and why they are such a valuable genealogical source for the 18th century.",
+      "rabbitHoleTerms": [
+        {
+          "term": "settlement examination",
+          "description": "A sworn interview conducted by parish overseers of the poor to establish a pauper's legal settlement — recording birthplace, father's origin, apprenticeship, marriage, and children, functioning as a pre-census life history; held at county record offices."
+        },
+        {
+          "term": "Poor Law Union",
+          "description": "A grouping of parishes under the New Poor Law (1834) with a shared workhouse and Board of Guardians, whose records — admission registers, creed registers, guardians' minutes — are at county record offices and Workhouses.org.uk."
+        },
+        {
+          "term": "creed register",
+          "description": "A workhouse record (required from 1876) giving each inmate's name, age, and religious denomination — a standard finding aid for workhouse residents in the late Victorian period."
+        },
+        {
+          "term": "Wellcome Collection",
+          "description": "A London research library and archive holding hospital and asylum records for various London medical institutions, as well as broad collections on the history of medicine — relevant for tracing ancestors in Victorian London medical care."
+        },
+        {
+          "term": "outdoor relief",
+          "description": "Poor relief given to people in their own homes (as opposed to inside the workhouse) — documented in guardians' minute books and overseers' accounts, covering recipients who never entered the workhouse but were supported by the Poor Law system."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What information does a typical 18th-century <strong>settlement examination</strong> contain?</p>",
+          "options": [
+            "Birthplace, father's settlement, places of work and residence, any apprenticeship served, marriage date and place, and names and ages of children — sworn under oath and functioning as a pre-census life history",
+            "Only the pauper's name, age, and the amount of relief granted — nothing about family history",
+            "A medical assessment of the pauper's physical fitness, conducted by the parish surgeon",
+            "A list of the pauper's debts and creditors, to be settled before relief was granted"
+          ],
+          "correctAnswer": "Birthplace, father's settlement, places of work and residence, any apprenticeship served, marriage date and place, and names and ages of children — sworn under oath and functioning as a pre-census life history",
+          "explanationHtml": "<p>Settlement examinations were conducted to establish the legal parish of settlement for a person applying for poor relief — the parish legally responsible for their support. To establish settlement, the examining magistrate asked a series of standardised questions covering the examinant's birthplace, their father's birthplace and settlement (since children derived settlement from their father), where they had worked and lived, whether they had completed an apprenticeship (which conferred settlement in the master's parish), whether they had rented qualifying property, and their marriage and children. The result is sometimes equivalent to a short autobiography, giving more biographical detail about an 18th-century working-class person than any other single document type.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching a Welsh ancestor, Evan Davies (b. c.1820), who disappears from records after the 1851 census in Merthyr Tydfil. You think he may have fallen into poverty. What is your most productive next step?</p>",
+          "options": [
+            "Search the Merthyr Tydfil Poor Law Union workhouse admission registers at the Glamorgan Archives — if Evan was admitted to the workhouse, the register gives his age, occupation, and reason for admission, and guardians' minutes may include his case",
+            "Search the 1861 census — people who disappear do not leave poor law records",
+            "Search the Merthyr Tydfil electoral register — all men appeared there after 1867 regardless of circumstances",
+            "Apply to the National Archives for Evan's prison record, as poverty frequently led to imprisonment in the Victorian era"
+          ],
+          "correctAnswer": "Search the Merthyr Tydfil Poor Law Union workhouse admission registers at the Glamorgan Archives — if Evan was admitted to the workhouse, the register gives his age, occupation, and reason for admission, and guardians' minutes may include his case",
+          "explanationHtml": "<p>A person falling into poverty in the Victorian era would come into contact with the Poor Law system — either through outdoor relief (documented in guardians' minutes) or through workhouse admission (documented in the admission and discharge register). The Merthyr Tydfil Poor Law Union workhouse records are at Glamorgan Archives. If Evan was admitted between 1851 and his next appearance (or death), the admission register should show him. The creed register (from 1876) and guardians' minutes are also worth checking. The 1861 census is also worth searching — but if Evan was in the workhouse on census night, he would appear there under the institution's entry rather than under his own household.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds their ancestor Mary Walsh in an 1860 lunatic asylum admission record. The record gives her age (35), occupation (domestic servant), and religion (Catholic). The researcher wants to see her full case notes for medical and family history. They are told the records are inaccessible. Is this correct?</p>",
+          "options": [
+            "Probably not — for records from 1860, the standard 100-year access closure has long passed; the case notes for a patient admitted in 1860 should now be accessible at the county record office, though the researcher may need to demonstrate a legitimate genealogical interest and the records may be held under specific conditions",
+            "Yes — all lunatic asylum records are permanently sealed and cannot be accessed by family researchers",
+            "Yes — asylum records from before 1900 were destroyed under data protection legislation",
+            "No — all Victorian asylum records have been fully digitised and are freely available online"
+          ],
+          "correctAnswer": "Probably not — for records from 1860, the standard 100-year access closure has long passed; the case notes for a patient admitted in 1860 should now be accessible at the county record office, though the researcher may need to demonstrate a legitimate genealogical interest and the records may be held under specific conditions",
+          "explanationHtml": "<p>The standard access closure for asylum and hospital records in England is 100 years from the date of creation. Records from 1860 are therefore more than 160 years old and should be accessible. In practice, the researcher needs to identify which county archive holds the records for the specific asylum, confirm that the case notes survive (survival rates vary — admission registers survive more consistently than individual case note files), and make a formal access request. Some archives require a demonstration of legitimate research interest even for historical records. The records are not permanently sealed — that policy applies to records less than 100 years old. Mary's 1860 case notes, if they survive, should be available for genealogical research.</p>"
+        }
+      ]
+    }
+  ]
+}

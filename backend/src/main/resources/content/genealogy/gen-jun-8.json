@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-8",
+  "title": "European Genealogy — Germany, Scandinavia & Eastern Europe",
+  "glyph": "🌍",
+  "sortOrder": 8,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-7"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-8a",
+      "title": "Continental Records and the Emigrant's Paper Trail",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>For the estimated 50 million Americans, Australians, Canadians, and others who descend from European immigrants, the genealogical challenge is bridging the Atlantic — moving from New World records back to a specific European village. Continental European genealogy has its own rich record landscape, but requires understanding different languages, different administrative systems, and different archival traditions. This chunk introduces the key frameworks for German, Scandinavian, and Eastern European research.</p>",
+      "explanationHtml": "<h3>German genealogy</h3>\n<p>Germany as a political entity did not exist before 1871 — pre-unification Germany was a patchwork of kingdoms, duchies, principalities, and free cities, each with its own administrative and record-keeping tradition. This means:</p>\n<ul>\n  <li>There is no single German national archive. Records are held at <em>Landesarchive</em> (state archives) and local town/church archives.</li>\n  <li>Church records (Kirchenbücher) are the primary pre-civil-registration source. Lutheran churches began keeping registers in the 16th century; Catholic parishes began in the 17th century (earlier in some areas after the Council of Trent, 1545–1563). These registers are in German and often Latin, using Gothic (Kurrent) script — a distinctive German cursive that requires specific training to read.</li>\n  <li>Civil registration in Germany began at different dates in different states: France's occupation introduced civil registration in the Rhineland from 1798; Prussia began in 1874; Bavaria and most other states by the 1870s.</li>\n  <li>Key resources: <strong>Archion.de</strong> and <strong>Matricula Online</strong> provide online access to German Catholic and Protestant church records; <strong>FamilySearch</strong> holds extensive German records; <strong>Archivportal-D</strong> is the German archival finding-aid portal.</li>\n  <li>The <strong>Hamburg Emigration Lists (1850–1934)</strong> are the richest European departure record series — listing emigrant name, age, occupation, and specific town of origin. Searchable at ancestry.com and through the Hamburg State Archives.</li>\n</ul>\n\n<h3>Scandinavian genealogy</h3>\n<p>Sweden, Denmark, Norway, and Finland have some of the most detailed and well-preserved population records in the world. The Swedish husförhörslängder (household examination rolls) are a unique feature:</p>\n<ul>\n  <li><strong>Swedish household examination rolls (Husförhörslängder, 1686–1900)</strong>: the Lutheran Church required annual examination of every parishioner's literacy and religious knowledge. The resulting rolls list every household member, their age, literacy assessment, relationship to the head of household, and movement in and out of the parish. They are essentially an annual census that runs for two centuries — extraordinary genealogical detail. Available via <strong>Arkiv Digital</strong> and <strong>SVAR</strong>.</li>\n  <li><strong>Danish church records</strong> (Kirkebøger): Lutheran parish registers from the 17th century, now digitised at <strong>Arkivalieronline.dk</strong> (free) and FamilySearch.</li>\n  <li><strong>Norwegian emigration records</strong>: Norway had one of the highest per-capita emigration rates to the US in the 19th century. The <strong>Emigrantregisteret</strong> (Digitalarkivet.no) lists Norwegian emigrants to America from 1825–1930.</li>\n  <li><strong>Finnish records</strong>: maintained by the Lutheran Church; digitised at the <strong>Digital Archive (Digitalarkivet)</strong> for Norway; Finnish records are at the <strong>Kansallisarkisto (National Archives Finland)</strong>.</li>\n</ul>\n\n<h3>Eastern European genealogy</h3>\n<p>Eastern European genealogy is complicated by border changes, multi-language records, and varying record survival rates after wars and political upheavals. Key frameworks:</p>\n<ul>\n  <li><strong>Jewish records</strong>: covered in depth in gen-jun-10; briefly here — Jewish vital records in Eastern Europe were kept by government authorities from the early 19th century onward (Russian metrical books, Polish civil registry) and by synagogue community records.</li>\n  <li><strong>Polish records</strong>: Poland was partitioned between Russia, Prussia, and Austria 1795–1918. Records vary by region: Prussian-controlled areas have German-style civil registration; Russian-controlled areas have Russian Orthodox Church-maintained metrical books (copies at the State Archive in the relevant guberniya); Austrian-controlled areas (Galicia) have Austro-Hungarian civil registration from 1784. The <strong>Geneteka database</strong> (geneteka.genealodzy.pl) indexes millions of Polish vital records free. <strong>Szukajwarchiwach.pl</strong> provides access to Polish state archive digitisations.</li>\n  <li><strong>Slovak, Czech, and Hungarian records</strong>: Austro-Hungarian civil registration from 1895; church records earlier, in German, Latin, Hungarian, Slovak, or Czech depending on parish. The <strong>Slovak National Archive</strong> and <strong>Matricula Online</strong> hold Slovak and Czech church records.</li>\n  <li><strong>Ukrainian and Russian records</strong>: metrical books (church vital records) and revision lists (periodic census-like counts) are the primary sources. Held at regional state archives (GARF, regional oblasts); Ancestry has some digitised Russian vital records for major cities. FamilySearch has microfilmed many records.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora pulls out a large folded map of pre-1871 Germany — not a modern country map but a patchwork of states, each with a different colour. She traces a circle in the Rhineland."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The first thing to understand about German genealogy: Germany did not exist before 1871. This map shows you thirty-nine separate states, each with its own courts, its own record-keeping traditions, its own church registration dates. When a family emigrated from 'Germany' in 1865, they emigrated from Bavaria, or Baden, or Württemberg — and the records are at the relevant state archive, not at any national centre. Begin by identifying the specific state, then the specific town, then the relevant church and archive."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And the Hamburg emigration lists — the Hamburg passenger lists from 1850 to 1934 — are one of the greatest genealogical resources in the world. Unlike American arrival manifests, these departure records give the emigrant's specific town of origin, not just their country. If your German ancestor sailed from Hamburg and you can find them on the departure list, you have their home village. From the home village, you find the Kirchenbuch. From the Kirchenbuch, you find the family going back three centuries."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "For Scandinavia, especially Sweden, the genealogical record landscape is astonishing. The Swedish household examination rolls ran from 1686 to 1900 — every year, every parishioner examined, recorded. Name, age, literacy, religious knowledge, and every time they moved in or out of the parish. Two centuries of continuous household records. If your Swedish ancestor lived in a Swedish parish between 1686 and 1900, they are in the rolls. Arkiv Digital makes most of them accessible online."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor European records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>Why is there no single German national genealogical archive?</li>\n  <li>What are the <strong>Hamburg Emigration Lists</strong> and why are they especially valuable for German research?</li>\n  <li>What are Swedish <strong>husförhörslängder</strong> (household examination rolls) and what years do they cover?</li>\n  <li>Name one free online resource for Polish vital record indexes.</li>\n  <li>What three empires controlled Poland during 1795–1918, and how does this affect the records?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "There is no single German national genealogical archive because Germany before 1871 was a patchwork of separate states (kingdoms, duchies, free cities) each maintaining its own records. Records are held at Landesarchive (state archives) and local church archives, organised by historical state boundaries — not modern administrative ones.\n\nThe Hamburg Emigration Lists (1850–1934) record departing emigrants by name, age, occupation, and specific town of origin — making them far more useful than many arrival records which only give country of origin. They are searchable at Ancestry and through the Hamburg State Archives.\n\nSwedish husförhörslängder (household examination rolls) were annual parish registers of every parishioner's household composition, ages, and religious literacy assessments, running from 1686 to 1900. They provide two centuries of near-annual census-equivalent data. Available via Arkiv Digital.\n\nGeneteka (geneteka.genealodzy.pl) is a free Polish genealogy database indexing millions of Polish vital records from multiple archives and regions.\n\nPoland was partitioned among three empires 1795–1918: Prussia (German records, German language, civil registration style), Russia (Russian-language metrical books, Orthodox Church administration), and Austria (Austro-Hungarian Galicia, German and Polish, civil registration from 1784). Records for a Polish ancestor vary completely depending on which partition they lived in.",
+      "soloPracticeHtml": "<h3>Identifying the right European record set</h3>\n<p>For each ancestor below, identify the most productive record set to search for their European origin, the language likely used in the records, and one specific online resource to begin:</p>\n<ol>\n  <li>Johann Bauer, emigrated from Bavaria to Cincinnati, Ohio, around 1865</li>\n  <li>Olaf Larsen, emigrated from Norway to Minnesota around 1890</li>\n  <li>Mordecai Goldstein, emigrated from Russian-controlled Poland to New York around 1905</li>\n  <li>Jana Novak, emigrated from Bohemia (now Czech Republic) to Chicago around 1900</li>\n</ol>",
+      "modelAnswer": "1. Johann Bauer (Bavaria, c.1865): Primary record — Bavarian Lutheran or Catholic Kirchenbuch (church register) from the specific parish. Language: German (possibly Latin for older entries). Online resource: Matricula Online (matricula-online.eu) for Catholic records; FamilySearch for FHL-microfilmed Bavarian church records. Confirm specific parish via the Hamburg Emigration List if he sailed from Hamburg.\n\n2. Olaf Larsen (Norway, c.1890): Primary record — Norwegian Lutheran kirkebøger (parish registers) plus the Norwegian emigration lists. Language: Norwegian/Danish. Online resource: Digitalarkivet.no (free Norwegian digital archive) for both church records and the Emigrantregisteret. Norwegian naming conventions (patronymics until the late 19th century) mean the father's name will be visible in earlier generations.\n\n3. Mordecai Goldstein (Russian Poland, c.1905): Russian-controlled Poland maintained Jewish vital records as government metrical books (birth, marriage, death) in Russian from 1826, and earlier in Hebrew/Yiddish in synagogue registers. Language: Russian (metrical books), Hebrew/Yiddish (community records). Online resource: JRI-Poland (jri-poland.org) indexes Polish Jewish vital records; Genealogy Indexer for Russian metrical books; Szukajwarchiwach.pl for digitised state archives.\n\n4. Jana Novak (Bohemia, c.1900): Bohemia was in the Austrian Empire; civil registration began 1784 (Catholic) to 1815. Church registers are primarily Catholic in Czech/Latin/German. Online resource: Matricula Online (matricula-online.eu) for Bohemian Catholic church records; Badatelna.eu for Czech state archive records.",
+      "feynmanPrompt": "Explain to a friend why someone researching an ancestor who emigrated from 'Germany' in 1860 needs to know the specific German state they came from — and why that state might have completely different records from another German state 100 miles away.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Kirchenbücher",
+          "description": "German church registers (Lutheran and Catholic) recording baptisms, marriages, and burials; the primary pre-civil-registration genealogical source in German states, often written in Gothic (Kurrent) script."
+        },
+        {
+          "term": "Hamburg Emigration Lists",
+          "description": "Departure records from Hamburg port (1850–1934) giving emigrant name, age, occupation, and specific German town of origin — among the richest European departure records for genealogical research."
+        },
+        {
+          "term": "husförhörslängder",
+          "description": "Swedish household examination rolls (1686–1900) — annual parish records of every parishioner's household composition and religious literacy, providing two centuries of near-annual census data."
+        },
+        {
+          "term": "Geneteka",
+          "description": "A free Polish genealogy database at geneteka.genealodzy.pl indexing millions of Polish vital records from state archives — the primary starting point for Polish genealogical research."
+        },
+        {
+          "term": "Matricula Online",
+          "description": "A free online platform providing access to Catholic church records (Kirchenbücher) from Germany, Austria, Poland, and other Central European countries."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Why is there no single national archive for German genealogical records?</p>",
+          "options": [
+            "Germany before 1871 was a patchwork of separate states, each with its own record-keeping system; records are held at state (Landes) archives and local church archives organised by historical state boundaries",
+            "German records were entirely destroyed in WW2",
+            "Germany had no civil registration until 1900",
+            "German church records are held exclusively in the Vatican Archive"
+          ],
+          "correctAnswer": "Germany before 1871 was a patchwork of separate states, each with its own record-keeping system; records are held at state (Landes) archives and local church archives organised by historical state boundaries",
+          "explanationHtml": "<p>Before German unification in 1871, the territory now called Germany consisted of approximately 39 separate sovereign states. Each had its own laws, courts, churches, and administrative traditions. Records therefore reflect those state boundaries, not modern Germany. A Bavarian church register is at a Bavarian archive; a Prussian civil registration record is in a Prussian successor archive. Knowing which historical state your ancestor came from is essential before searching any German record.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching a Swedish ancestor named Erik Svensson (b. c.1840) from a small rural parish. You want to establish who his parents were and where the family came from before 1840. Which Swedish record type is most likely to help?</p>",
+          "options": [
+            "The husförhörslängder (household examination rolls) for his parish — these run from 1686 and record every household member's age, family relationships, and movements in and out of the parish annually",
+            "The Swedish civil registration index — it covers all Swedish births from 1800",
+            "The Hamburg Emigration Lists — Swedish emigrants always departed from Hamburg",
+            "Swedish military records — all men over 18 are listed in annual muster rolls"
+          ],
+          "correctAnswer": "The husförhörslängder (household examination rolls) for his parish — these run from 1686 and record every household member's age, family relationships, and movements in and out of the parish annually",
+          "explanationHtml": "<p>The husförhörslängder are the defining resource for Swedish genealogy — the Lutheran Church required annual examination of every parishioner, with results recorded in household rolls listing name, age, relationship to head, and literacy/religious assessment. An 1840 birth would appear in a household examination roll from roughly 1840–1850, showing the family unit; following the family back through earlier rolls would identify the parents and grandparents. Available digitised via Arkiv Digital and SVAR.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher's ancestor emigrated from 'Poland' to Chicago in 1902. They search for Polish church records and find nothing before 1900 for their surname. What is the most likely explanation?</p>",
+          "options": [
+            "In 1902, the area that is now Poland was divided between the Russian, Prussian, and Austrian empires; depending on which partition the ancestor came from, the records may be in Russian, German, or Latin/German and held in a state archive of the relevant empire's successor — a search of 'Polish records' alone would miss records held in Russian or German archives under non-Polish administrative categories",
+            "Poland had no genealogical records before 1900",
+            "Polish church records were all destroyed in WW2",
+            "The ancestor must have had the name anglicised before emigration, so Polish records cannot be found"
+          ],
+          "correctAnswer": "In 1902, the area that is now Poland was divided between the Russian, Prussian, and Austrian empires; depending on which partition the ancestor came from, the records may be in Russian, German, or Latin/German and held in a state archive of the relevant empire's successor — a search of 'Polish records' alone would miss records held in Russian or German archives under non-Polish administrative categories",
+          "explanationHtml": "<p>This is the central analytical problem of Eastern European genealogy: 'Polish' before 1918 was not an administrative category. An ancestor from Russian-controlled Poland has records in Russian-language metrical books (copies at Russian guberniya archives). From Prussian Poland, records are in German civil registration and German-language church books. From Austrian Galicia, records are in German and Polish under Austro-Hungarian systems. Searching only 'Polish' databases will miss vast swathes of records. The first step is determining which partition the specific ancestor's town was in — using historical maps or the Genealogy Indexer / Szukajwarchiwach portals.</p>"
+        }
+      ]
+    }
+  ]
+}

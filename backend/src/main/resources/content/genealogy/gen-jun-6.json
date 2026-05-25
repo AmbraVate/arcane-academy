@@ -1,0 +1,111 @@
+{
+  "id": "gen-jun-6",
+  "title": "Irish Genealogy — Pre- & Post-1922, Griffith's Valuation",
+  "glyph": "☘️",
+  "sortOrder": 6,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-5"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-6a",
+      "title": "Navigating the Irish Record Landscape After the Four Courts Fire",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Irish genealogy is defined by one catastrophic event and one extraordinary resource. The 1922 Four Courts fire destroyed most of Ireland's pre-1900 administrative records — census returns, wills, and estate papers that documented three centuries of ordinary Irish life. What remains requires creative thinking: Griffith's Valuation, Catholic parish registers, civil registration, Tithe Applotment Books, and the surviving scraps of census data. Understanding what survived and where it is held is the most essential skill for any Irish family researcher.</p>",
+      "explanationHtml": "<h3>What the Four Courts fire destroyed</h3>\n<p>On 28 June 1922, forces opposed to the Anglo-Irish Treaty occupied the Four Courts complex in Dublin, which housed the Public Record Office of Ireland (PROI). During the subsequent battle, fire and explosion destroyed almost the entire collection of PROI records, including:</p>\n<ul>\n  <li>Irish census returns for 1821, 1831, 1841, and 1851 (almost entirely; some fragments survive for 1821, 1831, and 1851)</li>\n  <li>The majority of wills proved before the Principal Registry and Consistorial Courts before 1858</li>\n  <li>Most Church of Ireland parish registers that had been deposited at PROI</li>\n  <li>Estate papers for many major landlord estates</li>\n  <li>Tithe defalcation records and other administrative series</li>\n</ul>\n<p>However, the destruction was not total. Strategic pre-disaster copying, transcription programmes, and the survival of duplicates held elsewhere preserved significant portions of the record landscape.</p>\n\n<h3>What survived — and where to find it</h3>\n<p>Key surviving sources for Irish genealogy before 1900:</p>\n<ul>\n  <li><strong>Griffith's Primary Valuation (1847–1864)</strong>: a comprehensive land and property survey of the entire island of Ireland, naming the immediate lessor (landlord) and the occupier of every piece of land and property. Coverage varies by county from 1847–1864. Freely searchable and viewable at askaboutireland.ie and on Ancestry. This is the single most comprehensive 19th-century source for identifying Irish families at townland level — it is used as a census substitute because the actual 1851 census is lost.</li>\n  <li><strong>Tithe Applotment Books (1823–1837)</strong>: a survey of landholders liable to pay tithes to the Church of Ireland, covering roughly 1,000 parishes. Identifies the head of household by name at townland level. Available free on irishgenealogy.ie. Preceding the Famine, these books name families in each townland — the earliest comprehensive nationwide land survey.</li>\n  <li><strong>Catholic parish registers</strong>: most Irish Catholic baptism, marriage, and burial registers from roughly 1800 onward survive and are available free on irishgenealogy.ie and on the National Library of Ireland (NLI) Catholic Parish Registers database (registers.nli.ie). Coverage before 1820 is sparse; Connacht and Munster registers often begin later than Leinster ones.</li>\n  <li><strong>Civil registration from 1864</strong>: full BMD civil registration begins in 1864 (non-Catholic marriages from 1845). Available free on irishgenealogy.ie for the Republic; GRONI for Northern Ireland.</li>\n  <li><strong>1901 and 1911 census returns</strong>: the earliest surviving national censuses for Ireland, available free at census.nationalarchives.ie. Both give household composition with ages, occupations, religion, birthplace (county or province), and literacy. The 1911 census added years of marriage and number of children.</li>\n</ul>\n\n<h3>Griffith's Valuation — the key resource explained</h3>\n<p>Griffith's is the most important single record for 19th-century Irish genealogy. Understanding how to use it:</p>\n<ul>\n  <li>The survey is organised by county, barony, civil parish, and townland. To search, you need to know the county and, ideally, the civil parish or townland.</li>\n  <li>The printed volumes give: reference number, townland name, occupier's name, immediate lessor (the person from whom the occupier holds), the description and extent of the property, and the rateable valuation.</li>\n  <li>Families with the same surname in adjacent townlands were often related — the clustering of surnames in a townland can suggest siblings, cousins, or extended kin networks.</li>\n  <li>The Valuation Office in Dublin holds the original Valuation Office field books (notebooks used during the survey), which give more detail than the printed volumes — sometimes including building descriptions and personal notes. These are partially online via the Valuation Office's own site.</li>\n  <li>A companion resource is the <strong>Griffith's Index</strong> on askaboutireland.ie, which allows you to search by surname across the whole country and view the relevant map showing the property's location.</li>\n</ul>\n\n<h3>Northern Ireland — a separate record landscape since 1922</h3>\n<p>For families with roots in the six counties of Northern Ireland, the record landscape diverges sharply in 1922:</p>\n<ul>\n  <li>Pre-1922 records (including pre-partition Catholic and Church of Ireland registers) may be held at PRONI (Public Record Office of Northern Ireland) in Belfast or at relevant church offices. Some Church of Ireland registers were deposited at PRONI and survived the Four Courts fire entirely.</li>\n  <li>Civil registration for Northern Ireland from 1922 is at GRONI, Belfast (nidirect.gov.uk).</li>\n  <li>PRONI's eCatalogue is fully online and gives a comprehensive guide to what is held.</li>\n  <li>Notable survival: PRONI holds the Freeholder's Records, estate papers for many Ulster landlord estates, and Presbyterian congregation registers — the latter are often well-preserved and cover the 18th century.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora unrolls a large printed map of County Clare, overlaid with townland boundaries. In each townland, tiny text lists the families who lived there in 1855 according to Griffith's Valuation. She traces a finger along a river valley."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The Four Courts fire of 1922 destroyed most of what Ireland had accumulated in three centuries of record-keeping. But it did not destroy Griffith's Valuation — because Griffith's was a printed survey, and printed copies survived everywhere. This survey, conducted county by county from 1847 to 1864, named every person who held land or property in Ireland. Every tenant, every occupier. A family that appears nowhere in any surviving census, whose parish registers were destroyed, who left no will — if they held land in 1850, they are in Griffith's. And they are probably still in the same townland where their parents and grandparents farmed."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "What survives the fire? The Catholic parish registers — most of them. From roughly 1800 onward, in most parishes. Earlier in Leinster, later in the west and south. The 1901 and 1911 census returns — the earliest surviving national counts, free at census.nationalarchives.ie, giving every household member's name, age, occupation, and religion. The Tithe Applotment Books — a land survey from 1823 to 1837 that named every tithe-liable householder. And civil registration from 1864. These are your Irish record landscape. Learn them. Use them together. The Famine gap, the 1922 fire, the late civil registration — none of these destroy the family. They just make you work harder to find it."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor Irish records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What did the <strong>1922 Four Courts fire</strong> destroy, and what did it leave intact?</li>\n  <li>What is <strong>Griffith's Primary Valuation</strong>, what years does it cover, and where is it searchable?</li>\n  <li>What are the <strong>Tithe Applotment Books</strong> and what years do they cover?</li>\n  <li>Which are the two surviving Irish censuses and where are they accessible?</li>\n  <li>Where should you search for Northern Ireland civil registration records after 1922?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The 1922 Four Courts fire destroyed most pre-partition Irish administrative records held at PROI: census returns for 1821, 1831, 1841, and 1851 (almost entirely); most wills proved before 1858; Church of Ireland parish registers deposited at PROI; and many estate papers. What survived: Catholic parish registers (most held locally and not deposited at PROI); civil registration records from 1864; Griffith's Valuation (printed copies survived widely); Tithe Applotment Books; and Church of Ireland registers that had not been deposited at PROI.\n\nGriffith's Primary Valuation was a comprehensive Irish land and property survey conducted 1847–1864, naming the occupier and immediate lessor of every piece of land and property in Ireland. It is searchable free at askaboutireland.ie and on Ancestry.\n\nThe Tithe Applotment Books (1823–1837) surveyed landholders liable to pay tithes to the Church of Ireland, covering approximately 1,000 parishes; they are available free on irishgenealogy.ie.\n\nThe two surviving Irish national censuses are 1901 and 1911, both freely available at census.nationalarchives.ie.\n\nCivil registration records for Northern Ireland after 1922 are held at GRONI (General Register Office for Northern Ireland) in Belfast, accessible via nidirect.gov.uk.",
+      "soloPracticeHtml": "<h3>Irish research strategy</h3>\n<p>Your ancestor Bridget Murphy is believed to have been born in County Mayo, Ireland, around 1840. She emigrated to Boston around 1860. You know she died in Boston in 1910. Her death certificate says she was born in 'County Mayo, Ireland' and that her father was 'Patrick Murphy.' You want to find her specific townland and further family members.</p>\n<p>Design a step-by-step research strategy (350–450 words) using the Irish records covered in this chunk. Explain what each record type might give you and the order in which you would search them.</p>",
+      "modelAnswer": "Research strategy for Bridget Murphy (b. c.1840, County Mayo; emigrated c.1860):\n\n1. Griffith's Valuation (1847–1864) — searchable free at askaboutireland.ie:\nSearch for 'Murphy, Patrick' in County Mayo. The valuation covers the period 1847–1860 for Mayo, which matches Bridget's childhood. Any Patrick Murphy holding land or a cottage in County Mayo during this period could be her father. Note all Patrick Murphy entries — especially those in the same townland or adjacent townlands — and map their locations. Clustering of Murphy families in specific barony suggests kin networks.\n\n2. Tithe Applotment Books (1823–1837) — irishgenealogy.ie:\nOnce I have candidate townlands from Griffith's, search the Tithe Applotment Books for the same parishes. A Patrick Murphy appearing in the same townland in 1830 as in Griffith's in 1855 is almost certainly the same family, confirming continuity. The tithe books give household head only.\n\n3. Catholic parish registers — irishgenealogy.ie / registers.nli.ie:\nMayo is covered on both platforms. Search the relevant parish registers for baptisms of 'Bridget Murphy' circa 1840, with a father named Patrick. Mayo Catholic registers typically begin 1820–1850 depending on parish. If found, the entry gives: baptism date, parents' names (father's name and mother's given name), and townland (sometimes). This confirms identity.\n\n4. 1901 and 1911 Irish census — census.nationalarchives.ie:\nSearch for surviving Murphy family members in the identified townland in 1901 and 1911. Any Patrick Murphy listed in those censuses — especially an older man — might be Bridget's brother or nephew. The 1911 census gives years of marriage and number of children, which can reconstruct family size. Surviving family members may include siblings who did not emigrate.\n\n5. Boston death certificate cross-reference:\nBridget's Boston death certificate (1910) lists father as Patrick Murphy. If I found a Patrick Murphy in a specific Mayo townland in Griffith's and the Catholic parish register, I can now cross-reference: does the informant on the death certificate know the townland name? Was anyone listed with Bridget in the 1900 or 1910 US census who might be a sibling? This confirms the identification.\n\nExpected outcome: Griffith's + Catholic registers should narrow the identification to one or two townlands and produce a baptism record. The 1901/1911 census will show any Murphy family members still in Mayo.",
+      "feynmanPrompt": "Explain to a friend why Irish genealogy before 1900 is harder than English or Scottish genealogy — and how Griffith's Valuation compensates for what was lost in the 1922 fire.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Griffith's Primary Valuation",
+          "description": "A comprehensive 1847–1864 Irish land survey naming every land occupier — the single most important genealogical record for 19th-century Irish families after the 1922 destruction of census returns."
+        },
+        {
+          "term": "Tithe Applotment Books",
+          "description": "1823–1837 surveys of Irish landholders liable to pay tithes, covering approximately 1,000 parishes — the earliest comprehensive nationwide Irish land record, now free on irishgenealogy.ie."
+        },
+        {
+          "term": "PRONI",
+          "description": "Public Record Office of Northern Ireland, Belfast — the main repository for Northern Ireland historical records, including many Church of Ireland and Presbyterian registers and estate papers."
+        },
+        {
+          "term": "irishgenealogy.ie",
+          "description": "The Irish government's free genealogy portal, hosting civil registration records, Catholic parish registers, and the Tithe Applotment Books for the Republic of Ireland."
+        },
+        {
+          "term": "NLI Catholic Parish Registers",
+          "description": "A free online collection at registers.nli.ie of microfilmed Catholic parish registers for Ireland, covering baptisms and marriages from approximately 1740–1880 depending on parish."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>Griffith's Primary Valuation covered what period in Ireland?</p>",
+          "options": [
+            "1847–1864, surveyed county by county",
+            "1821–1851, compiled alongside the census",
+            "1864–1880, after civil registration began",
+            "1901–1911, concurrent with the surviving census returns"
+          ],
+          "correctAnswer": "1847–1864, surveyed county by county",
+          "explanationHtml": "<p>Griffith's Primary Valuation was conducted county by county between 1847 and 1864. The exact year for each county varies — some Munster counties were surveyed in the late 1840s, while Ulster counties were not completed until the early 1860s. This means the survey reflects the post-Famine landscape in the south and west, and the pre-clearance landscape in parts of Ulster. It is the closest substitute to the lost 1851 census for most of Ireland.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are searching for a Murphy family in County Clare, Ireland, around 1850. The 1851 census is lost. Which records would you use to identify the family's townland?</p>",
+          "options": [
+            "Griffith's Primary Valuation (1847–1864) for County Clare, searchable at askaboutireland.ie, which names every land occupier by townland",
+            "The 1841 Irish census — it survived the Four Courts fire for County Clare",
+            "The 1901 census — it gives retrospective 1850 information in its age columns",
+            "The GRO Dublin civil registration index from 1850"
+          ],
+          "correctAnswer": "Griffith's Primary Valuation (1847–1864) for County Clare, searchable at askaboutireland.ie, which names every land occupier by townland",
+          "explanationHtml": "<p>The 1851 census was almost entirely destroyed in the 1922 Four Courts fire. The 1841 census was also largely destroyed. Griffith's Primary Valuation, conducted for County Clare in the early 1850s, names every occupier of land and property by townland — it is the de facto substitute for the lost census for this period. Civil registration began only in 1864 for births and deaths, so a 1850 search would find nothing in those records. The 1901 census gives ages that point to c.1850 births, but does not give 1850 addresses.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher searching for their Irish ancestor's will (said to have been proved in Dublin in 1880) finds it in the National Probate Calendar. They go to find the original will document and discover it was destroyed. Why?</p>",
+          "options": [
+            "The 1922 Four Courts fire destroyed most original Irish wills proved before 1922, though the Probate Calendar (an index) survived — the researcher can get the key details from the calendar and look for testamentary copies or Betham abstracts",
+            "The will would have been sent to England because Ireland was under British rule",
+            "Wills proved after 1864 are sealed for 100 years under Irish privacy law",
+            "The researcher made an error — Irish wills from 1880 are always available at PRONI, not Dublin"
+          ],
+          "correctAnswer": "The 1922 Four Courts fire destroyed most original Irish wills proved before 1922, though the Probate Calendar (an index) survived — the researcher can get the key details from the calendar and look for testamentary copies or Betham abstracts",
+          "explanationHtml": "<p>The Four Courts fire destroyed most original will documents proved before 1922, including those proved after the 1858 civil probate system began. However, the Probate Calendar (the annual index of all proved wills, giving name, date of death, executor, and estate value) survived — it is now freely searchable online. Testamentary copies of wills (copies registered in other courts or held by solicitors) sometimes survive. Betham's abstracts (pre-1858) and the will books at the National Archives may also hold extracts. An 1880 will in the Republic would be at the PRONI only if the testator lived in what became Northern Ireland.</p>"
+        }
+      ]
+    }
+  ]
+}

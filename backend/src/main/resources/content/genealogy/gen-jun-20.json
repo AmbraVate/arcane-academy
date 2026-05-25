@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-20",
+  "title": "Capstone — Genealogical Case Study",
+  "glyph": "📂",
+  "sortOrder": 20,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-19"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-20a",
+      "title": "Junior Capstone — Multi-Record Genealogical Case Study",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "NONE",
+      "hookHtml": "<p>The Junior Genealogy Capstone asks you to demonstrate the full range of specialist record knowledge you have developed across this tier. You are no longer working from a single record type in isolation; you are working as a researcher who must select the right tools for a complex problem, evaluate evidence from multiple sources, resolve conflicts, and present your findings as a coherent case study. This is the standard of work expected of a competent amateur researcher preparing a case for publication or submitting evidence in a professional context.</p>",
+      "explanationHtml": "<h3>The Capstone Task</h3>\n<p>Select <strong>one</strong> of the two scenarios below and write a genealogical case study of 800–1,200 words. Your case study must demonstrate:</p>\n\n<h4>Scenario A — Crossing the 1870 Wall</h4>\n<p>You are researching Moses Williams, who appears in the 1870 US census in Savannah, Georgia, aged approximately 40, African American, occupation: carpenter. His wife is listed as Hattie, age 35. They have four children: Solomon (14), Ruth (11), Ezra (8), and Naomi (4). Moses does not appear in any record before 1870.</p>\n<p>Write a case study that: (1) identifies the specific records you would search and in what order to attempt to establish Moses's identity before 1865; (2) explains the source evaluation principles you apply to each record type; (3) identifies the evidential gaps and what their likely cause is; (4) proposes a working hypothesis about Moses's pre-1865 life supported by the evidence available; and (5) identifies what DNA testing strategies might complement the documentary research.</p>\n\n<h4>Scenario B — The Disappeared Immigrant</h4>\n<p>Your ancestor Brigid Callaghan appears in the 1901 Irish census in County Galway, age 22, living with her parents Patrick (60) and Mary (58). She does not appear in the 1911 census. Family oral history says she 'went to America.' You have no US records for her yet.</p>\n<p>Write a case study that: (1) identifies the records you would search in Ireland to establish her background before emigration; (2) identifies the immigration records you would search in the US and explains how the year and port of arrival affects the records available; (3) explains how you would search for her in US records once a possible arrival is found; (4) discusses the source evaluation challenges specific to this research; and (5) identifies one DNA testing approach that might help if documentary research stalls.</p>\n\n<h3>What your case study must include</h3>\n<ul>\n  <li><strong>Research question</strong>: a clearly stated question your case study addresses</li>\n  <li><strong>Record selection rationale</strong>: explain why each record type is appropriate for this research problem</li>\n  <li><strong>Source evaluation</strong>: classify at least three records as primary/secondary/original/derivative and explain the classification</li>\n  <li><strong>Evidence analysis</strong>: assess what each piece of evidence proves, suggests, or fails to establish</li>\n  <li><strong>Conflict acknowledgement</strong>: identify at least one evidential conflict or gap and explain how you would approach it</li>\n  <li><strong>Conclusion</strong>: a clearly stated, appropriately qualified conclusion supported by the evidence</li>\n</ul>\n\n<h3>Assessment criteria</h3>\n<p>Your case study will be assessed on four dimensions, each weighted 25%:</p>\n<ol>\n  <li><strong>Record selection and sequencing (25%)</strong>: Does the researcher select appropriate records for the specific problem? Are they searched in a logical, efficient sequence? Are specialist records (Freedmen's Bureau, Griffith's Valuation, passenger manifests) correctly identified and prioritised?</li>\n  <li><strong>Source and information classification (25%)</strong>: Are sources correctly classified as primary/secondary/original/derivative? Is the distinction between the source type and the information type correctly applied? Is secondary information treated with appropriate scepticism?</li>\n  <li><strong>Evidence reasoning (25%)</strong>: Does the researcher reason from evidence to conclusion without overstating certainty? Are evidential gaps and conflicts acknowledged? Is the conclusion appropriately qualified?</li>\n  <li><strong>Communication and structure (25%)</strong>: Is the case study clearly written and logically structured? Does it follow a research question → evidence → analysis → conclusion format? Is terminology used accurately?</li>\n</ol>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora sets down her pen and looks across the Archive at the learner — no new document open, no new database pulled up. Just the desk, the light, and the question."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "You have learned the records. Military records and newspaper archives. Scottish OPRs and Irish Griffith's Valuation. Chancery suits and workhouse registers. African American research across the 1870 wall. Jewish records from Yad Vashem to JRI-Poland. Immigration manifests before and after 1906. DNA clustering and surname projects. Gravestones and photograph dating. School admission registers and university alumni."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Now apply it. A research problem is not a question about a single record type. It is a situation with incomplete evidence, multiple possible sources, conflicting data, and gaps that may never be filled. The competent researcher does not wait for a perfect source. They use what exists, evaluate it honestly, and build the strongest possible conclusion from the available evidence — while stating clearly what remains unknown."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "The Genealogical Proof Standard requires exhaustive search, complete citations, analysis, resolution of conflicts, and a soundly reasoned conclusion. You do not need to find every record. You need to search every relevant record type, document what you found and what you did not find, and reason honestly from the evidence. That is what separates a genealogical researcher from someone who fills in a family tree with guesses. Write the case study. Show your work."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Pre-capstone review</h3>\n<p>Before writing your case study, answer these preparation questions from memory:</p>\n<ul>\n  <li>What are the five elements of the Genealogical Proof Standard?</li>\n  <li>For Scenario A (Moses Williams): what is the first record type you would search, and why?</li>\n  <li>For Scenario B (Brigid Callaghan): what Irish records document her background before emigration?</li>\n  <li>What is the difference between a <em>source</em> classification and an <em>information</em> classification?</li>\n  <li>What does 'appropriately qualified conclusion' mean in a genealogical context?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The five elements of the GPS: (1) reasonably exhaustive search of all potentially relevant sources; (2) complete and accurate source citations; (3) thorough analysis and correlation of the collected evidence; (4) resolution of any conflicting evidence; (5) a soundly reasoned, coherently written conclusion.\n\nFor Scenario A (Moses Williams): The first record to search is the Freedmen's Bureau records for Chatham County (Savannah), Georgia, on FamilySearch — labour contracts, marriage registers, and ration lists, which may name Moses and identify his former enslaver. This is the primary bridge record for crossing the 1870 wall for an African American man in the Deep South.\n\nFor Scenario B (Brigid Callaghan): Irish records documenting her background include: (1) the 1901 and 1911 Irish census for the Callaghan household (census.nationalarchives.ie); (2) Catholic parish baptism registers for the relevant County Galway parish (irishgenealogy.ie or NLI registers); (3) Griffith's Valuation for the family's landholding history; (4) Tithe Applotment Books for an earlier generation; (5) civil registration records from 1864 onward.\n\nSource vs information classification: Source classification (original/derivative/authored) describes how the record was created and preserved. Information classification (primary/secondary) describes the knowledge of the informant — whether the person who provided the information had direct, first-hand knowledge of the event recorded. A death certificate is an original source; the cause of death is primary information (from the certifying physician); the deceased's birthplace is secondary information (from a family member's memory).\n\nAn appropriately qualified conclusion in genealogy states what the evidence proves (beyond reasonable doubt), what it suggests (probable but not proven), and what remains unknown — without asserting more certainty than the evidence supports. 'Moses Williams was almost certainly enslaved by a Williams family in Chatham County, Georgia, based on surname proximity and Freedmen's Bureau labour contract evidence; however, this hypothesis has not been confirmed by a direct documentary connection.'",
+      "soloPracticeHtml": "<h3>The Capstone Case Study</h3>\n<p>Choose Scenario A or Scenario B from the task description above and write your genealogical case study of 800–1,200 words. Your case study must address all five required elements: research question, record selection rationale, source evaluation, evidence analysis, conflict acknowledgement, and conclusion.</p>\n<p>Submit your completed case study for assessment against the four criteria: record selection (25%), source classification (25%), evidence reasoning (25%), and communication (25%).</p>",
+      "modelAnswer": "MODEL ANSWER — SCENARIO B (Brigid Callaghan)\n\nResearch question: What are the origins of Brigid Callaghan (born c.1879, County Galway, Ireland) and what records document her emigration to the United States, likely between 1901 and 1911?\n\nIrish background research:\n\nSource 1 — 1901 Irish census (census.nationalarchives.ie): Primary source; original government document. Brigid appears in her parents' household, confirming her birth year (c.1879), her parents' names (Patrick and Mary Callaghan), the family's county and civil parish, and her religion (Catholic). This is primary information for all listed individuals.\n\nSource 2 — Catholic parish baptism register: Search the civil parish identified from the 1901 census on irishgenealogy.ie. A baptism entry for Brigid Callaghan c.1879 would be a primary source for her birth date and parents' names. This should confirm the 1901 census information and give the mother's maiden name (listed in Irish baptism entries).\n\nSource 3 — Griffith's Primary Valuation and Tithe Applotment Books: The Callaghan family's presence in the townland can be confirmed in Griffith's (1847–1864) — searching for Patrick Callaghan (father) or an earlier Callaghan in the same townland. This gives the landholding history and confirms the family's continuous residence.\n\nImmigration research:\n\nSource 4 — US passenger manifests: Brigid emigrated between 1901 and 1911. Searching passenger manifests on Ancestry and Ellis Island for Brigid Callaghan, female, Irish, aged approximately 22–32, with County Galway as origin. A post-1906 manifest (if she emigrated after 1906) would give her last townland or parish in Ireland, a contact person in Ireland (likely Patrick or Mary Callaghan), and her US destination contact — potentially identifying where she settled in America. A pre-1906 manifest would give only 'Ireland' and her age.\n\nSource 5 — US census (1910, 1920): Once a probable arrival is identified from the manifest, search the 1910 US census (and 1920 if needed) for Brigid Callaghan or her married name if she married after arrival. The census gives her immigration year (cross-reference against the manifest) and naturalisation status.\n\nSource evaluation conflicts and gaps:\n\nConflict 1: The 1901 census gives Brigid's age as 22 (born c.1879). The baptism register may give a different year. Age discrepancies of 1–2 years between census and baptism records are common; the baptism register, as the original primary source for the birth event, should be preferred for the precise year.\n\nGap: Brigid does not appear in the 1911 Irish census. This is consistent with emigration, but she may also have died, married and moved under a different name within Ireland, or simply been missed by the enumerator. The passenger manifest search is the critical next step; if she emigrated, the manifest should identify her. If no manifest is found, a search of the GRO death index for County Galway (1901–1911) and marriage index are needed.\n\nDNA strategy: If documentary research stalls (no manifest found, or too many Brigid Callaghan manifests to distinguish), autosomal DNA testing of living descendants or relatives can help. A DNA match with known Callaghan descendants from County Galway who have documented trees would confirm the County Galway connection. The Leeds Method clustering could identify the Callaghan cluster and point to specific family lines.\n\nConclusion: The evidence strongly supports Brigid Callaghan emigrating from County Galway between 1901 and 1911, consistent with family oral history. The 1901 census and baptism records establish her Irish background with high confidence. The immigration record has not yet been located; the research is ongoing pending a systematic passenger manifest search. The working hypothesis — that she emigrated to the northeastern United States, as the majority of County Galway emigrants did in this period — is plausible but not yet proven. A conclusion asserting her specific American residence cannot be drawn from the current evidence.",
+      "feynmanPrompt": "Explain to a friend what a 'genealogical case study' is and why writing up your research in that format — with source evaluation, evidence analysis, and an honest conclusion — makes your family history more reliable than simply filling in a family tree website.",
+      "rabbitHoleTerms": [
+        {
+          "term": "Genealogical Proof Standard (GPS)",
+          "description": "The five-element professional standard for genealogical conclusions: reasonably exhaustive search, complete citations, analysis and correlation, conflict resolution, and a soundly reasoned written conclusion — the benchmark for credible genealogical research."
+        },
+        {
+          "term": "case study (genealogical)",
+          "description": "A written research presentation that documents a specific genealogical problem, the sources consulted, the evidence analysed, any conflicts resolved, and a qualified conclusion — the standard format for publishable or professional genealogical work."
+        },
+        {
+          "term": "appropriately qualified conclusion",
+          "description": "A genealogical conclusion that states only what the evidence proves, clearly distinguishes proven from probable, and acknowledges what remains unknown — avoiding both overclaiming and underclaiming based on the available evidence."
+        },
+        {
+          "term": "reasonably exhaustive search",
+          "description": "The GPS requirement that a researcher consult all sources that a reasonable, competent genealogist would consider potentially relevant to the specific research question — not merely a convenient subset of available records."
+        },
+        {
+          "term": "evidence correlation",
+          "description": "The process of comparing and cross-referencing evidence from multiple independent sources to establish whether they consistently support, partially support, or conflict with a proposed genealogical conclusion."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What are the five elements of the <strong>Genealogical Proof Standard (GPS)</strong>?</p>",
+          "options": [
+            "Reasonably exhaustive search; complete and accurate citations; thorough analysis and correlation of evidence; resolution of conflicting evidence; soundly reasoned written conclusion",
+            "Census research; civil registration; military records; DNA testing; newspaper archives",
+            "Primary sources; secondary sources; original records; derivative records; authored works",
+            "Birth record; marriage record; death record; census entry; immigration record"
+          ],
+          "correctAnswer": "Reasonably exhaustive search; complete and accurate citations; thorough analysis and correlation of evidence; resolution of conflicting evidence; soundly reasoned written conclusion",
+          "explanationHtml": "<p>The Genealogical Proof Standard (GPS) was developed by the Board for Certification of Genealogists and is the accepted professional standard for genealogical conclusions. Its five elements are: (1) a reasonably exhaustive search of all potentially relevant sources — not just convenient ones; (2) complete and accurate citations for all sources consulted; (3) thorough analysis and correlation of the collected evidence; (4) resolution of any conflicting evidence before drawing conclusions; and (5) a soundly reasoned, coherently written conclusion that states only what the evidence supports. A conclusion that satisfies all five elements can be presented as meeting the GPS — and remains open to revision if new evidence emerges.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>In your Scenario A case study (Moses Williams, 1870 Georgia), you search Freedmen's Bureau records and find a labour contract for a 'Moses Williams, carpenter, aged approx 40, formerly enslaved by Thomas Williams, Chatham County.' You conclude this proves Moses was enslaved by the Williams family. Is this conclusion correctly stated?</p>",
+          "options": [
+            "No — the labour contract is strong evidence but it does not constitute proof by itself; an appropriately qualified conclusion would state: 'Moses Williams was almost certainly formerly enslaved by the Williams family in Chatham County, based on the labour contract, the shared surname, and his Savannah location — this hypothesis should be confirmed by searching estate records, slave schedules, and wills of Thomas Williams'",
+            "Yes — a primary source document naming Thomas Williams as the former enslaver is definitive proof",
+            "No — Freedmen's Bureau records are secondary sources and cannot prove any genealogical connection",
+            "Yes — if the labour contract matches the name, age, and location, no further evidence is required under the GPS"
+          ],
+          "correctAnswer": "No — the labour contract is strong evidence but it does not constitute proof by itself; an appropriately qualified conclusion would state: 'Moses Williams was almost certainly formerly enslaved by the Williams family in Chatham County, based on the labour contract, the shared surname, and his Savannah location — this hypothesis should be confirmed by searching estate records, slave schedules, and wills of Thomas Williams'",
+          "explanationHtml": "<p>The GPS requires that a conclusion be 'soundly reasoned' and supported by evidence that has been thoroughly analysed and correlated. A single labour contract is strong evidence — it names Moses, gives his approximate age (matching 1870), his occupation (carpenter, matching 1870), and identifies a former enslaver named Williams in Chatham County. But it does not prove the full hypothesis without corroboration: the Williams name could have been chosen by Moses independently; the Thomas Williams in the contract needs to be confirmed as a Chatham County slaveholder; the slave schedule for Thomas Williams in 1850/1860 should be checked for an enslaved man aged approximately 20–30 at those dates, consistent with Moses's age. The appropriately qualified conclusion names the evidence, states the probability, and identifies what further research would confirm or refute it — this is the professional standard.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>Two researchers investigate Brigid Callaghan (Scenario B). Researcher A finds a passenger manifest for a 'Bridget Callaghan, female, age 23, Ireland' arriving at New York in 1903 and concludes this is the right person. Researcher B says this identification is not yet proven. Who is correct?</p>",
+          "options": [
+            "Researcher B is correct — 'Bridget Callaghan, female, age 23, Ireland' with no specific county, no contact person in Ireland, and no US destination address (a pre-1906 manifest) is consistent with the ancestor but could be any of several Bridget Callaghans from Ireland; the identification requires corroboration from the US side (census, marriage record) before it can be accepted",
+            "Researcher A is correct — name, sex, approximate age, and country match are sufficient to identify an immigrant on a passenger manifest",
+            "Both researchers are wrong — pre-1906 manifests are not genealogically usable",
+            "Researcher B is correct only if the manifest gives no age at all; if an age is given, it is sufficient for identification"
+          ],
+          "correctAnswer": "Researcher B is correct — 'Bridget Callaghan, female, age 23, Ireland' with no specific county, no contact person in Ireland, and no US destination address (a pre-1906 manifest) is consistent with the ancestor but could be any of several Bridget Callaghans from Ireland; the identification requires corroboration from the US side (census, marriage record) before it can be accepted",
+          "explanationHtml": "<p>Pre-1906 passenger manifests give name, age, sex, and country of origin — but not a specific town of origin, contact person, or US destination. 'Bridget Callaghan, female, age 23, Ireland' arriving in 1903 is consistent with the ancestor (who was born c.1879 and emigrated between 1901 and 1911) but the same manifest may include several women with similar names. Without corroboration — finding the same Bridget Callaghan in a 1910 US census where her immigration year (1903) and birthplace (County Galway) match — the identification is a working hypothesis, not a proven conclusion. Researcher B's caution is the professional standard. The correct procedure is to note the manifest as a potential match, then search the 1910 census for Brigid/Bridget Callaghan with immigration year 1903, and cross-reference the US address with contact information from the 1901 Irish census household to see whether the puzzle pieces fit together.</p>"
+        }
+      ]
+    }
+  ]
+}

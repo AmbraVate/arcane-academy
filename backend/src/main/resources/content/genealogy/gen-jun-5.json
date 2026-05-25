@@ -1,0 +1,119 @@
+{
+  "id": "gen-jun-5",
+  "title": "Scottish Genealogy — OPR, GROS & Scottish Courts",
+  "glyph": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  "sortOrder": 5,
+  "tier": "JUNIOR",
+  "topicId": "genealogy",
+  "prerequisites": ["gen-jun-4"],
+  "rabbitHoles": [],
+  "subChunks": [
+    {
+      "id": "gen-jun-5a",
+      "title": "Scotland's Unique Record Landscape",
+      "sortOrder": 1,
+      "xpReward": 80,
+      "practiceType": "NONE",
+      "hookHtml": "<p>Scotland has one of the richest, most centralised, and most accessible genealogical record landscapes in the world. The statutory registers (from 1855) are the most detailed BMD records in the British Isles; the Old Parochial Registers go back to 1553; census records run from 1841 to 1911; and the Commissary and Sheriff Court records hold centuries of wills and inventories. For the Scottish researcher, the challenge is not finding records but understanding the unique legal and administrative framework that shaped them.</p>",
+      "explanationHtml": "<h3>The statutory registers — 1855 and after</h3>\n<p>Scotland's civil registration began on 1 January 1855 and was designed with extraordinary genealogical care, especially in the first year. The 1855 birth register is uniquely detailed:</p>\n<ul>\n  <li>Child's name and sex</li>\n  <li>Date and place of birth</li>\n  <li>Father's name, occupation, and age</li>\n  <li>Mother's maiden name and age</li>\n  <li>Date and place of parents' marriage (this was not asked in England until 1969)</li>\n  <li>Number of previous children (still living and deceased)</li>\n</ul>\n<p>This 1855 birth register entry is sometimes the equivalent of a small family history — giving not just the birth itself but the marriage data needed to find the parents' marriage record, and the sibling count needed to understand family size. After 1855, the detailed marriage date and sibling count were dropped, but Scottish registers remained richer than their English equivalents in other ways, particularly the death register, which records both parents' names including the mother's maiden name.</p>\n\n<h3>Scottish death records — two generations at once</h3>\n<p>A Scottish death register entry records:</p>\n<ul>\n  <li>Name, age, sex, occupation</li>\n  <li>Date, time, and place of death</li>\n  <li>Cause of death and certifying doctor</li>\n  <li>Marital status and spouse's name</li>\n  <li>Father's name and occupation</li>\n  <li>Mother's maiden name</li>\n  <li>Informant's name and relationship</li>\n</ul>\n<p>This is a fundamentally different document from an English death certificate, which rarely gives parents' names. A Scottish death certificate can give you two generations of a family — the deceased and both their parents — in a single record. Where the English researcher must infer parentage from wills and censuses, the Scottish researcher often finds it stated on the death certificate.</p>\n\n<h3>Old Parochial Registers (OPRs)</h3>\n<p>Scotland's pre-1855 church records are called Old Parochial Registers (OPRs) — maintained by Church of Scotland (and some other Protestant) parishes. Coverage begins as early as 1553 (for a few parishes) but is very uneven before 1700. Key features:</p>\n<ul>\n  <li>OPR baptism entries give the child's name, the parents' names (usually both), and the date</li>\n  <li>OPR marriage entries often give the proclamation date (equivalent of banns) rather than the marriage date itself — the marriage typically followed within 1–3 weeks of proclamation</li>\n  <li>OPR burial entries are often sparse or missing — many parishes kept poor burial records</li>\n  <li>Roman Catholic registers are kept separately; Scottish Catholics are less well-documented in OPRs and must be sought in Catholic mission registers (from about 1800 for most areas; earlier in the Highlands and Islands)</li>\n</ul>\n<p>All OPRs are held at the National Records of Scotland (NRS) and are fully digitised on ScotlandsPeople. An OPR parish number coding system (e.g. 644 = Edinburgh) allows you to identify the relevant register.</p>\n\n<h3>Scottish census records — 1841 to 1921</h3>\n<p>Scotland's census records parallel England's in most respects but are held separately. Scottish census records from 1841 to 1921 are on ScotlandsPeople (paid per view), but the 1841, 1861, 1871, 1881, and 1891 censuses are also on Ancestry (subscription). Note: Scotland's 1921 census was released in 2022 (after a 100-year closure), making it an important new source for early-20th-century Scottish families.</p>\n\n<h3>Scottish court and legal records</h3>\n<p>Scotland's legal system is distinct from England's — it operates under Scots law (a civil law system), not English common law. Key record series:</p>\n<ul>\n  <li><strong>Commissary Courts (16th–18th century)</strong>: handled testamentary (will) matters and some civil actions. Commissary inventories (lists of a deceased person's moveable estate) and testaments dative (administration of intestate estates) are genealogically rich. Digitised on ScotlandsPeople.</li>\n  <li><strong>Sheriff Courts</strong>: the main local civil court from 1823 onward, handling probate, debt, and civil matters. Sheriff Court records are at NRS and relevant local archives.</li>\n  <li><strong>Court of Session</strong>: the supreme civil court; its records (CS series at NRS) are particularly rich for property disputes, which often name family members and relationships.</li>\n  <li><strong>Valuation Rolls</strong>: annual property valuations listing the landlord, tenant, and annual rent for every property in Scotland, from 1855 to 1989. Available on ScotlandsPeople for 1855, 1865, 1875, 1885, 1895, 1905. A near-annual census substitute for property occupiers.</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Theodora opens ScotlandsPeople in a browser and pulls up an 1855 birth register entry for a child named Margaret MacDonald. The page is dense with columns — more than any English birth certificate you have seen."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "Look at what Scotland did in 1855. They decided to do it properly. One birth register entry: the child's name, the father's name and age, the mother's maiden name and age, the date of the parents' marriage, and the number of previous children. One entry. In England you would need a birth certificate, a marriage certificate, and a census to extract that same information. In Scotland, it is here, on one line, in the first year of civil registration."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "And the death certificates. When a Scot died, the informant was asked the names of the deceased's parents — including the mother's maiden name. This makes a Scottish death certificate extraordinary. You can follow the dead person's chain of ancestry two generations back from a single death certificate. In England, the parents' names were not routinely included on death certificates until reforms in the 20th century. Scotland recorded them from 1855."
+        },
+        {
+          "type": "dialogue",
+          "av": "📜",
+          "cls": "mentor",
+          "speaker": "Theodora of the Thousand Names",
+          "sCls": "mentor",
+          "text": "For anything before 1855, you go to the Old Parochial Registers. The OPRs begin in 1553 for some parishes — three centuries of Scottish family history, now fully digitised on ScotlandsPeople. The coverage is uneven; many rural parishes are sparse before 1700. But where the OPR survives, it gives the child's name and both parents' names. The marriage entry gives the proclamation — the Scottish equivalent of banns. And the Commissary Court records hold the inventories and wills from before civil probate began in 1823. The whole landscape is at ScotlandsPeople. It is one of the finest genealogical archives in the world."
+        }
+      ],
+      "guidedPracticeHtml": "<h3>📜 Anchor Scottish records</h3>\n<p>Retrieve from memory:</p>\n<ul>\n  <li>What made the <strong>1855 Scottish birth register</strong> uniquely detailed compared to contemporary English records?</li>\n  <li>What additional information does a <strong>Scottish death certificate</strong> typically include that an English one does not?</li>\n  <li>What are the <strong>OPRs</strong> and where are they held?</li>\n  <li>What are <strong>Scottish Valuation Rolls</strong> and how often were they compiled?</li>\n  <li>What was the <strong>Commissary Court</strong> and what records did it produce?</li>\n</ul>",
+      "guidedPracticeModelAnswer": "The 1855 Scottish birth register was uniquely detailed because it recorded the child's birth date and place, both parents' names and ages, the date and place of the parents' marriage, and the number of previous children (living and deceased). This is equivalent to information requiring multiple documents in the English system.\n\nA Scottish death certificate typically includes both parents' names (including the mother's maiden name) — information not routinely on English death certificates. This means a single Scottish death certificate can give two generations of ancestry.\n\nThe OPRs (Old Parochial Registers) are Scotland's pre-1855 church registers, maintained by Church of Scotland parishes from as early as 1553. They are held at the National Records of Scotland (NRS) and are fully digitised on ScotlandsPeople.\n\nScottish Valuation Rolls were annual property valuations listing the landlord, tenant, and rent for every Scottish property from 1855 to 1989. ScotlandsPeople provides access for key years (1855, 1865, 1875, etc.), making them a near-annual census substitute for property occupiers.\n\nThe Commissary Courts handled testamentary matters (wills and inventories) in Scotland until 1823. Commissary inventories (lists of a deceased person's moveable estate) and testaments dative (for intestate estates) are genealogically valuable and are digitised on ScotlandsPeople.",
+      "soloPracticeHtml": "<h3>Extracting maximum value from a Scottish death certificate</h3>\n<p>You find the following Scottish death register entry for Donald MacKenzie, 1875:</p>\n<p><em>Name: Donald MacKenzie. Sex: Male. Age: 67. Occupation: Crofter. Date of death: 14 September 1875. Place: Dingwall, Ross-shire. Cause of death: Apoplexy, certified. Marital status: Widower (wife Margaret, née Campbell, deceased 1870). Father: Angus MacKenzie, crofter. Mother: Janet MacKenzie, née Ross. Informant: James MacKenzie (son), Dingwall.</em></p>\n<p>Extract every genealogical lead this entry provides and explain what further records you would search for each lead.</p>",
+      "modelAnswer": "Genealogical leads extracted:\n\n1. Donald MacKenzie: born approximately 1808 (aged 67 in 1875), Crofter, died 14 September 1875, Dingwall, Ross-shire, of apoplexy. Search: OPR baptism registers for Dingwall and adjacent Ross-shire parishes for a Donald MacKenzie born c.1808, son of Angus MacKenzie and Janet Ross.\n\n2. Margaret Campbell (deceased wife): Donald was a widower at death; wife Margaret (née Campbell) died 1870. Search: Scottish death register for Margaret MacKenzie (née Campbell) 1870 in Ross-shire for exact date, cause, and informant. Search: statutory marriage register for Donald MacKenzie and Margaret Campbell (probably pre-1855 in OPRs, or post-1855 statutory) for marriage date and place.\n\n3. Angus MacKenzie (father) and Janet Ross (mother): Donald's parents are named. Search: OPR baptism records for Angus MacKenzie's own baptism (c.1770–1790); OPR marriage for Angus MacKenzie and Janet Ross; Commissary Court inventories for Angus MacKenzie's estate (if he is deceased by 1875).\n\n4. James MacKenzie (son, informant): Lives in Dingwall 1875. Search: 1871 and 1881 Scottish census for James MacKenzie, Dingwall; statutory registers for James's own marriage and children. James may have provided information about his grandfather Angus that informed the death certificate entry.\n\n5. Cause of death 'apoplexy': Apoplexy = stroke. This is primary information certified by a physician — reliable for the date and manner of death. No genealogical follow-up needed for this fact specifically.",
+      "feynmanPrompt": "Explain to a friend why a Scottish death certificate from 1875 can effectively give you three generations of a family — and why this makes Scottish genealogy unusually accessible compared to England.",
+      "rabbitHoleTerms": [
+        {
+          "term": "ScotlandsPeople",
+          "description": "The official Scottish government genealogy portal holding statutory registers, OPRs, census records, Commissary Court records, and Valuation Rolls — the central resource for all Scottish genealogy."
+        },
+        {
+          "term": "OPR (Old Parochial Registers)",
+          "description": "Scotland's pre-1855 Church of Scotland parish registers of baptisms, marriages, and burials, digitised on ScotlandsPeople; begin as early as 1553 for some parishes."
+        },
+        {
+          "term": "Commissary Court",
+          "description": "The Scottish church court handling testamentary matters before 1823; its inventories and testaments dative are the pre-civil-registration equivalent of probate records."
+        },
+        {
+          "term": "Valuation Rolls",
+          "description": "Annual Scottish property valuations (1855–1989) listing landlord, tenant, and rent for every property — a near-annual census substitute available for key years on ScotlandsPeople."
+        },
+        {
+          "term": "testament dative",
+          "description": "The Scottish term for an administrator's confirmation in an intestate estate — the equivalent of English letters of administration; held in Commissary Court records."
+        }
+      ],
+      "questions": [
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "<p>What additional information did the <strong>1855 Scottish birth register</strong> include that contemporary English records did not?</p>",
+          "options": [
+            "The date and place of the parents' marriage, and the number of the couple's previous children",
+            "The name of the attending midwife and the weight of the child",
+            "The nationality of both parents and their religion",
+            "The name of the nearest church and the officiating minister"
+          ],
+          "correctAnswer": "The date and place of the parents' marriage, and the number of the couple's previous children",
+          "explanationHtml": "<p>The 1855 Scottish birth register uniquely required the date and place of the parents' marriage, and the number of previous children (living and deceased). This is equivalent information to what an English researcher would need to gather from a marriage certificate and a census. After 1855, these columns were dropped from Scotland's birth register, but they make the 1855 entries uniquely valuable for families with children born that year.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "<p>You are researching a Scottish family and find a death certificate for an ancestor who died in 1890. You know his name and approximate birth year (c.1820) but nothing about his parents. Which field on the Scottish death certificate is most likely to help you identify the previous generation?</p>",
+          "options": [
+            "The fields for father's name and mother's maiden name — Scottish death certificates routinely recorded both parents' names, giving the researcher a direct bridge to the grandparent generation",
+            "The cause of death field — it often names the family doctor who can be traced to a family",
+            "The marital status field — it gives the wife's name but not parents",
+            "Scottish death certificates do not name parents — that information must come from birth records"
+          ],
+          "correctAnswer": "The fields for father's name and mother's maiden name — Scottish death certificates routinely recorded both parents' names, giving the researcher a direct bridge to the grandparent generation",
+          "explanationHtml": "<p>Unlike English death certificates (which rarely name parents before 20th-century reforms), Scottish statutory death registers from 1855 onward routinely recorded the deceased's father's name and occupation, and mother's maiden name. These were provided by the informant (usually a family member). While the information is secondary (relying on the informant's memory), it provides both parents' names — enabling an immediate OPR or statutory register search for the next generation back.</p>"
+        },
+        {
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "<p>A researcher finds an OPR marriage entry showing a 'proclamation' date for John MacKenzie and Mary Ross in 1840, but no separate marriage date. They conclude the marriage cannot be dated precisely. Is this correct?</p>",
+          "options": [
+            "No — Scottish OPR marriage entries typically record the proclamation date (equivalent to banns), with the marriage following 1–3 weeks later; the proclamation date gives a close approximation of the marriage date, and the researcher should treat it as 'married approximately 1–3 weeks after [proclamation date]'",
+            "Yes — without the actual marriage date, the entry cannot be used for genealogical dating",
+            "Yes — Scottish law required three separate proclamations over three weeks before marriage, making the date window 3–6 weeks",
+            "No — Scottish OPR entries record only the marriage date, not proclamations"
+          ],
+          "correctAnswer": "No — Scottish OPR marriage entries typically record the proclamation date (equivalent to banns), with the marriage following 1–3 weeks later; the proclamation date gives a close approximation of the marriage date, and the researcher should treat it as 'married approximately 1–3 weeks after [proclamation date]'",
+          "explanationHtml": "<p>In the Church of Scotland system, couples were 'proclaimed' (the Scottish equivalent of banns) on one or more Sundays before the marriage. The OPR records the proclamation date, not the marriage date. Convention was to marry soon after proclamation — typically within one to three weeks. The genealogical practice is to use the proclamation date as an approximation of the marriage date, noting the distinction in research notes. This is not a problem for most purposes; for precise legal dating, a search of session records or other sources confirming the marriage itself might be needed.</p>"
+        }
+      ]
+    }
+  ]
+}
