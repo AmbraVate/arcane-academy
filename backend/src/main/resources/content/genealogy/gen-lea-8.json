@@ -1,0 +1,98 @@
+{
+  "id": "gen-lea-8",
+  "topicId": "genealogy",
+  "tier": "LEAD",
+  "title": "Archival Preservation & Digitisation Principles",
+  "glyph": "🏺",
+  "sortOrder": 8,
+  "prerequisites": ["gen-lea-7"],
+  "subChunks": [
+    {
+      "id": "gen-lea-8a",
+      "title": "Archival Preservation & Digitisation Principles",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Every document you have ever consulted, Theodora said, survived because someone made a decision to keep it. Paper rots. Ink fades. Fires happen. Floods happen. Every record that reaches us has already survived by a margin that narrows every century." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Preservation is not an archivists' problem. It is every genealogist's problem, because the records we use are irreplaceable. When the Cork PRO burned in 1922, eighteen hundred years of Irish history burned with it. Not because anyone was careless. Because no one had made copies." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Digitisation is the modern answer — and it is a partial answer, not a complete one. Digital files deteriorate too. Formats become obsolete. Storage media fail. The digital preservation problem is, in many ways, harder than the paper preservation problem." }
+      ],
+      "hookHtml": "<p>Genealogists are ultimately dependent on the survival of historical records. Every document we use has endured centuries of physical deterioration, institutional neglect, war, flood, fire, and administrative failure. The destruction of records is not a historical problem — it is an ongoing one. The National Archives' backlog of uncatalogued records grows faster than it shrinks. Climate change threatens coastal and basement archives. Digital files created in the 1980s are already inaccessible on obsolete media.</p><p>Understanding archival preservation principles — why records deteriorate, how preservation works, and what digitisation can and cannot achieve — makes genealogists better users of records and better advocates for their preservation. In a world where genealogists are some of the most engaged users of archival collections, that advocacy role matters.</p>",
+      "explanationHtml": "<h3>Why Records Deteriorate</h3><p>Physical records deteriorate through several mechanisms:</p><ul><li><strong>Acid degradation:</strong> Most post-1850 paper contains wood pulp with lignin and acidic compounds that cause yellowing and brittleness over time. Pre-1850 rag paper (made from cotton and linen rags) is more durable and many 18th-century records survive in better condition than 19th-century ones.</li><li><strong>Iron gall ink corrosion:</strong> Iron gall ink (standard for handwriting from the medieval period to the 19th century) becomes acidic over time and can eat through paper, leaving holes where letters once were.</li><li><strong>Biological attack:</strong> Fungi, bacteria, insects, and rodents all consume paper and parchment. Poor storage conditions (high humidity, inadequate climate control) dramatically accelerate biological deterioration.</li><li><strong>Physical handling:</strong> Every time a fragile document is handled, it is at risk of tearing, folding damage, or the transfer of oils and acids from human skin. This is why archives require pencils, clean hands, and in some cases gloves for particularly fragile materials.</li><li><strong>Light damage:</strong> Ultraviolet light fades ink and degrades paper. Archives limit light exposure; flash photography is universally prohibited.</li></ul><h3>Preservation Environment</h3><p>The ideal preservation environment for paper records: temperature 15–18°C, relative humidity 45–55%, stable (large fluctuations cause paper to expand and contract, accelerating deterioration). Archives invest heavily in climate-controlled storage. Many archival collections are stored in conditions significantly worse than ideal — a backlog problem across both national and local archives.</p><p>Permanent paper standards (ISO 9706, BS EN ISO 9706) specify requirements for paper intended to last 500+ years: alkaline pH, low lignin content, specific tearing resistance. Records created on permanent paper to these standards are significantly more durable than typical wood-pulp documents.</p><h3>Digitisation Principles</h3><p>Digitisation creates a surrogate copy of a physical document — a digital image that can be accessed, shared, and preserved without further handling of the fragile original. Digitisation does not replace the original; it reduces the need to access it, which extends the original's life.</p><p>Key parameters for archival digitisation:</p><ul><li><strong>Resolution:</strong> 300–400 dpi for most text documents; 600 dpi or higher for documents with fine detail. FADGI (Federal Agencies Digital Guidelines Initiative) and METAMORFOZE (Dutch national standard) provide widely adopted specifications.</li><li><strong>Colour depth:</strong> 24-bit colour for colour documents; 8-bit greyscale for black-and-white documents; 1-bit bitonal for simple text only if fine details are not required.</li><li><strong>File format:</strong> TIFF (uncompressed) as the archival master; JPEG or PDF/A for access copies. Proprietary formats are avoided for archival masters — the preservation risk of format obsolescence.</li><li><strong>Metadata:</strong> Every digitised file requires metadata recording: document identity, date digitised, equipment used, resolution, and any condition issues. Without metadata, a collection of image files has no provenance.</li></ul><h3>Digital Preservation Challenges</h3><p>Digital files are not inherently stable. Challenges include: bit rot (errors accumulate in stored files over time without intervention); format obsolescence (software to open 1990s WordPerfect files is now rare — the genealogical equivalent is early 1990s genealogy software's proprietary database formats); hardware obsolescence (8-inch floppy disks, VHS tapes, early CD-ROMs); and storage failure (hard drives have mean time between failures measurable in years).</p><p>Digital preservation best practice: the 3-2-1 rule (3 copies, on 2 different media, 1 offsite); regular integrity checking (checksums); active format migration (converting files to current formats before the previous format becomes unreadable); and institutional commitment to long-term digital preservation (e.g., LOCKSS — Lots of Copies Keep Stuff Safe).</p><h3>The Genealogist's Role in Preservation</h3><p>Genealogists are not archivists, but they play a role in preservation: (1) using archives carefully (handling rules, not requesting unnecessarily fragile originals when digital surrogates exist); (2) reporting condition concerns to archivists; (3) advocating for archive funding — genealogical societies have successfully lobbied for archive preservation grants; (4) contributing to digitisation projects (many societies crowdsource digitisation and indexing); (5) preserving their own family collections appropriately (acid-free storage, digitisation, cloud backup).</p>",
+      "feynmanPrompt": "Explain to a 16-year-old why digitising old documents doesn't mean we don't need to preserve the originals anymore — and what the risks are of relying only on digital copies.",
+      "guidedPracticeHtml": "<p>A local family history society has been given custody of a collection of 18th-century parish record copies (not originals) made by a Victorian antiquary in the 1880s. The collection consists of 200 sheets of late-19th-century paper with iron gall ink transcriptions, currently stored in cardboard boxes in a church vestry with no climate control. The society wants to make the collection accessible to researchers. Outline a preservation and digitisation plan for this collection, in order of priority.</p>",
+      "guidedPracticeModelAnswer": "<p>Priority 1 — Immediate stabilisation: The church vestry is not a suitable storage environment. Move the collection immediately to a better environment: ideally a records office or at minimum a cool, dry, stable room with controlled humidity. Store in acid-free folders and archival boxes (not cardboard, which is acidic). This costs relatively little and prevents further deterioration from the immediate environment.</p><p>Priority 2 — Condition survey: Before anything else, assess the condition of each sheet. Document any: iron gall ink corrosion (text eating through paper); mould damage; insect damage; significant tears or losses. This informs subsequent decisions about which items need conservation treatment before digitisation and which can be digitised immediately.</p><p>Priority 3 — Conservation treatment: Items with active mould or severe iron gall damage should be assessed by a conservator before further handling. A local university conservation department or the Society of Archivists' conservator directory can advise. Not all items will need treatment — condition assessment first.</p><p>Priority 4 — Digitisation: Scan all sheets at a minimum 400 dpi greyscale; 600 dpi if any detail is fine or ink is fading. Save TIFF masters. Create JPEG access copies. Attach metadata to every file: transcriber name (Victorian antiquary), approximate date (1880s), original parish (if known), condition notes. Store TIFF masters in at least two locations (local NAS + cloud backup).</p><p>Priority 5 — Access and indexing: Create an index of names and parishes covered. Publish access copies on the society's website or upload to FamilySearch. Inform the relevant county record office of the collection's existence.</p>",
+      "soloPracticeHtml": "<p>A genealogist discovers that their own personal collection — 30 years of accumulated research including original family documents (birth certificates, letters, photographs), handwritten notes, and digital files on a 2005-era external hard drive — is at risk. The hard drive makes clicking sounds when accessed. The photographs are stored in a damp attic. The original documents are in a box with no acid-free protection. Design an emergency preservation plan for this personal collection, prioritising the most urgent risks.</p>",
+      "modelAnswer": "<p>The clicking hard drive is the most urgent risk — this is a symptom of imminent drive failure ('click of death'). Immediate action: stop using the drive immediately (further use accelerates failure). Attempt to copy the contents to a new drive right now if the drive can still be read. If the drive has already failed, professional data recovery (DriveSavers, Ontrack) costs £300–1500 but may recover most data. Going forward: 3-2-1 backup (primary drive + cloud backup + separate external drive kept offsite).</p><p>Second priority — the photographs in a damp attic: damp conditions promote mould and chemical deterioration. Remove all photographs immediately to a dry, cool location. Separate any that show white fuzzy spots (mould) from clean items. Mouldy photographs should be isolated; active mould can spread. Scan clean photographs at 600 dpi before further deterioration. Store originals in acid-free sleeves in archival boxes.</p><p>Third priority — original documents in unprotected box: transfer certificates, letters, and other documents to acid-free folders and archival box. Digitise all original documents (600 dpi for certificates, letters; 400 dpi for handwritten notes). Provide cloud backup of all digitised files.</p><p>Longer-term: Create a simple catalogue of the collection — what exists, where it is stored, what its condition is. Consider lodging copies of the most significant documents (the family birth/marriage/death certificates) with a county record office or local studies library, which provides institutional preservation and public access. Ensure the digitised collection is organised with metadata so a future researcher (or family member) can understand what they are looking at.</p>",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "learningObjectives": [
+        "Explain the principal causes of physical document deterioration and the environmental conditions that accelerate or retard them.",
+        "Describe the key technical parameters for archival digitisation (resolution, file format, metadata).",
+        "Identify the specific risks of digital preservation and the 3-2-1 backup rule.",
+        "Apply preservation priorities to a real or hypothetical archival collection in an emergency stabilisation scenario."
+      ],
+      "commonMistakes": [
+        "Assuming digitisation means the original can be discarded — digitisation reduces access pressure but does not replace the original.",
+        "Using JPEG as the only format for digitised records — JPEG compression degrades image quality with each save; TIFF masters should be preserved.",
+        "Believing digital storage is inherently stable and permanent — bit rot, format obsolescence, and hardware failure all threaten digital preservation.",
+        "Ignoring metadata when digitising — a collection of image files with no provenance information has significantly reduced genealogical value."
+      ],
+      "assessmentCriteria": [
+        "Correctly identifies the primary deterioration mechanisms and appropriate environmental conditions for paper preservation.",
+        "Specifies appropriate digitisation parameters (minimum 300 dpi for text; TIFF masters; metadata requirements).",
+        "Describes the 3-2-1 backup principle and its rationale for digital preservation.",
+        "Prioritises preservation actions correctly, addressing most urgent risks (imminent digital failure, active mould) before longer-term improvements."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Iron Gall Ink", "description": "The standard writing ink from the medieval period to the 19th century; becomes acidic over time and can eat through paper — a significant preservation challenge for pre-1850 manuscript documents." },
+        { "term": "3-2-1 Backup Rule", "description": "Digital preservation best practice: maintain at least 3 copies of data, on at least 2 different types of media, with at least 1 copy stored offsite." },
+        { "term": "FADGI (Federal Agencies Digital Guidelines Initiative)", "description": "US federal guidelines for digitisation standards; widely adopted internationally as a quality benchmark for archival digitisation resolution and file format specifications." },
+        { "term": "Bit Rot", "description": "The gradual accumulation of errors in stored digital data over time; undetected without regular integrity checking (checksums), and potentially leading to complete data loss." },
+        { "term": "Permanent Paper (ISO 9706)", "description": "International standard specifying requirements for paper intended to last 500+ years; alkaline pH, low lignin, specified physical properties. Records created on permanent paper have significantly longer expected lifespans." }
+      ],
+      "questions": [
+        {
+          "id": "gen-lea-8a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Why is TIFF the preferred format for archival master copies of digitised records, rather than JPEG?",
+          "options": [
+            "TIFF files are smaller and easier to store than JPEGs",
+            "TIFF is an uncompressed format that preserves full image quality; JPEG uses lossy compression that degrades quality with each save",
+            "JPEG is not supported by genealogical platforms",
+            "TIFF files include automatic metadata; JPEGs do not"
+          ],
+          "correctAnswer": "TIFF is an uncompressed format that preserves full image quality; JPEG uses lossy compression that degrades quality with each save",
+          "explanationHtml": "<p>JPEG uses lossy compression that reduces file size by discarding image data; quality degrades with each save. TIFF is uncompressed (or losslessly compressed), preserving full image data. For archival masters, which may be re-processed or reprinted many times over decades, TIFF's quality preservation is essential. JPEGs are appropriate for access copies where file size matters more than archival quality.</p>"
+        },
+        {
+          "id": "gen-lea-8a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A hard drive containing 30 years of genealogical research begins making clicking sounds. What is the most urgent action?",
+          "options": [
+            "Run a disk repair utility to fix the drive",
+            "Stop using the drive immediately and attempt to copy all data to a new drive before the drive fails completely",
+            "Continue using the drive carefully while ordering a replacement",
+            "Reformat the drive and start fresh"
+          ],
+          "correctAnswer": "Stop using the drive immediately and attempt to copy all data to a new drive before the drive fails completely",
+          "explanationHtml": "<p>Clicking sounds indicate mechanical failure ('click of death') — further use accelerates failure and may cause complete data loss. The most urgent action is to attempt data recovery immediately while the drive can still be read. Every additional read operation risks permanent damage. Professional data recovery services can often recover data from partially failed drives if engaged promptly.</p>"
+        },
+        {
+          "id": "gen-lea-8a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A genealogical society completes a digitisation project for a collection of Victorian census transcriptions, creating 10,000 JPEG images. A researcher later finds that several images appear corrupted. What preservation principle was most likely not followed?",
+          "options": [
+            "The 3-2-1 backup rule",
+            "Regular integrity checking using checksums to detect bit rot or storage errors",
+            "TIFF format for archival masters",
+            "Adequate resolution for the document type"
+          ],
+          "correctAnswer": "Regular integrity checking using checksums to detect bit rot or storage errors",
+          "explanationHtml": "<p>Digital corruption (bit rot, storage errors) occurs silently without regular integrity checks. Checksums (hash values) created at the time of digitisation can be compared against current file states to detect corruption before it becomes undetectable. Without regular checksums, corruption may not be discovered until files are accessed — by which time the corrupted version may be the only copy.</p>"
+        }
+      ]
+    }
+  ]
+}

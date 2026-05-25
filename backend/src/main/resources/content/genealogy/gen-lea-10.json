@@ -1,0 +1,98 @@
+{
+  "id": "gen-lea-10",
+  "topicId": "genealogy",
+  "tier": "LEAD",
+  "title": "Legal Issues — Heir Finding, Intestacy & Data Protection",
+  "glyph": "⚖️",
+  "sortOrder": 10,
+  "prerequisites": ["gen-lea-9"],
+  "subChunks": [
+    {
+      "id": "gen-lea-10a",
+      "title": "Legal Issues — Heir Finding, Intestacy & Data Protection",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Genealogy intersects with the law at several points, Theodora said. Probate. DNA evidence in court. Data protection. Each intersection carries obligations and risks that the professional genealogist must understand — even if they are not, themselves, a lawyer." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The most immediate is heir finding. When someone dies intestate and no heirs can be located, a solicitor or the Bona Vacantia Division will commission a genealogist to trace them. The work is genealogy. The context is law. The standard is legal. The liability, if you get it wrong, is real." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Data protection is the other critical area. When you hold a client's personal information — including DNA data — you are a data controller under GDPR. That is not a bureaucratic inconvenience. It is a legal obligation with enforcement consequences." }
+      ],
+      "hookHtml": "<p>The legal dimensions of professional genealogical practice are often underestimated by new practitioners. Heir finding requires research to satisfy evidentiary standards that can withstand legal challenge. DNA data held on behalf of clients is personal data subject to GDPR. Genealogists providing expert testimony must comply with court rules. And the commission structure of commercial heir-hunting has its own legal and ethical complications.</p><p>This lesson does not aim to make genealogists into lawyers — it aims to make them aware of the legal dimensions of their work so they know when to seek legal advice, when their research is entering legally sensitive territory, and what their obligations are as data controllers handling sensitive personal information.</p>",
+      "explanationHtml": "<h3>Intestacy and Heir Finding</h3><p>When a person dies intestate (without a valid will) in England and Wales, their estate is distributed according to the statutory intestacy rules (Administration of Estates Act 1925, as amended). The order of priority is: spouse/civil partner; children; parents; siblings (and their children); half-siblings; grandparents; uncles and aunts; half-uncles and half-aunts. If no living relatives can be found, the estate passes to the Crown as bona vacantia.</p><p>The Bona Vacantia Division (BVD) of the Government Legal Department publishes a list of unclaimed estates (gov.uk/government/collections/bona-vacantia). Commercial heir-finding firms monitor this list and trace potential heirs, taking a percentage of the inheritance as their fee. This is a legal and common practice, though the commission percentages charged (sometimes 25–33%) are subject to criticism. Potential heirs have no obligation to use a commercial heir-finder; they can approach the BVD directly and claim their entitlement independently.</p><h3>The Evidentiary Standard for Heir Finding</h3><p>Heir-finding research must satisfy the solicitor or administrator handling the estate that all potential heirs have been identified and that the relationships claimed are proven. This typically means: a narrative report with a complete pedigree; documentary proof (birth, marriage, death certificates) for every generational link; and an explicit statement of what is proven and what remains uncertain.</p><p>In complex estates, the report may be reviewed by a barrister or presented to court. The genealogist's methods and conclusions may be challenged by opposing counsel or by other potential heirs. Professional indemnity insurance is essential for this type of work.</p><h3>GDPR and the Genealogist as Data Controller</h3><p>Under the UK General Data Protection Regulation (UK GDPR, post-Brexit version of EU GDPR) and the Data Protection Act 2018, any organisation or individual that determines the purposes and means of processing personal data is a 'data controller'. A professional genealogist who holds client information — including names, addresses, dates of birth, family history, and especially DNA data — is a data controller.</p><p>Key GDPR obligations for genealogical practitioners:</p><ul><li><strong>Lawful basis for processing:</strong> The genealogist must have a lawful basis for processing personal data. For client work, the basis is usually 'performance of a contract'. For research involving third parties (living relatives of a deceased subject), the basis may be 'legitimate interests'.</li><li><strong>Data minimisation:</strong> Collect only the data necessary for the research purpose. Do not retain data beyond what is needed.</li><li><strong>Security:</strong> Implement appropriate technical and organisational measures to protect personal data. This includes secure password management, encrypted storage for sensitive data (especially DNA data), and a clear policy for responding to data breaches.</li><li><strong>Retention:</strong> Do not keep personal data longer than necessary. Establish a data retention policy.</li><li><strong>Rights of data subjects:</strong> Individuals have the right to access their data, request correction, request deletion ('right to be forgotten'), and object to processing. Genealogists must be able to respond to these requests.</li></ul><p>Registration with the Information Commissioner's Office (ICO) as a data controller may be required for professional genealogists processing personal data, depending on the scale and nature of their practice. Check current ICO guidance at ico.org.uk.</p><h3>DNA Data as Special Category Data</h3><p>Under GDPR, genetic data is 'special category data' — the highest category of sensitivity, requiring explicit consent for processing or an alternative Article 9 legal basis. When a genealogist processes a client's DNA data (match lists, raw data files, test results), they are processing special category data and must comply with the heightened requirements: explicit written consent, documented legal basis, and enhanced security measures.</p><h3>Expert Witness and Court Testimony</h3><p>A genealogist providing evidence in legal proceedings — as an expert witness in an inheritance dispute, for example — is subject to Civil Procedure Rules Part 35 (CPR 35) in England and Wales. Key rules: the expert's duty is to the court, not to the instructing party; the expert must give their honest professional opinion even if it is adverse to the party who instructed them; and the report must be declared to be the expert's own work and genuine belief.</p><p>Expert witnesses in genealogical matters are most commonly encountered in: inheritance and probate disputes; proof of identity cases; historical property claims; immigration cases requiring proof of family relationship; and criminal cases (forensic genealogy). In each context, the genealogist's report must meet the court's standards for admissibility, which in England follows the Ikarian Reefer criteria for expert evidence.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old what GDPR means for a genealogist who keeps client information including DNA data on their computer — what rules they must follow and what happens if they get it wrong.",
+      "guidedPracticeHtml": "<p>An estate solicitor instructs you to identify all heirs entitled to the estate of Clara Horton (died 2024, intestate, age 91). Clara had no spouse or children. Her parents and only sibling predeceased her. Clara's sibling, Albert Horton, had three children: one of whom died childless; one who emigrated to Australia in 1980 and has not been heard from since; and one who lives locally and is known to the solicitor. Outline the heir-finding research you would need to conduct and the documents you would need to produce for the solicitor's file.</p>",
+      "guidedPracticeModelAnswer": "<p>Under the intestacy rules, the estate passes to siblings or their issue. Clara's sibling Albert predeceased her; the estate therefore passes equally to Albert's three children or their issue.</p><p>Known heir (lives locally): Verify identity with birth certificate (child of Albert Horton) and current address. Obtain certified copy of birth certificate linking them to Albert.</p><p>Deceased child of Albert (died childless): Obtain death certificate confirming death without surviving issue. This eliminates this branch of the claim.</p><p>Australian emigrant: This is the principal research challenge. Steps: (1) Obtain the emigrant's birth certificate (child of Albert — already needed to confirm the family). (2) Trace their emigration records (passenger list, emigration register). (3) Search Australian death indexes for all states to confirm whether they are living or deceased. (4) If deceased: search for a will (Australasian Legal Information Institute covers probate); identify any children through marriage/birth records. (5) If living: attempt to locate through electoral rolls, public records, or DNA matching. (6) If confirmed living with no children: they are a direct heir entitled to one-third of the estate.</p><p>Documents for solicitor's file: certified birth certificates for all three of Albert's children linking them to Albert; death certificate for deceased sibling confirming no children; death certificate for Albert himself; research report documenting all searches conducted, including negative evidence (searches that confirmed no further heirs in any branch); and a pedigree chart showing the complete family structure and the status of each potential heir.</p>",
+      "soloPracticeHtml": "<p>You are a professional genealogist and you have just been notified of a data breach: your laptop, which contains client files including one client's raw DNA data, was stolen. You are registered with the ICO as a data controller. What are your obligations under GDPR in the 72 hours following the breach, and what should you do to mitigate the impact on the affected client?</p>",
+      "modelAnswer": "<p>Under GDPR Article 33, a personal data breach that is likely to result in a risk to individuals' rights and freedoms must be reported to the ICO within 72 hours of becoming aware of it. A stolen laptop containing personal data — and particularly raw DNA data (special category data) — almost certainly crosses this threshold.</p><p>Immediate actions in the 72-hour window: (1) Report to the ICO at ico.org.uk/report-a-breach. The report must include: a description of the nature of the breach; categories and approximate number of individuals affected; categories and approximate number of records concerned; contact details of the data protection officer or responsible person; likely consequences of the breach; and measures taken or proposed to address it. (2) Notify the affected client directly under GDPR Article 34 — where a breach is likely to result in a high risk to a natural person's rights and freedoms, the data controller must communicate the breach to the affected individual without undue delay. The communication should describe the nature of the breach in plain language, provide the data protection officer's contact details, and advise the client of the steps they can take to protect themselves (e.g., reviewing their genealogical platform account settings, being vigilant for fraudulent use of their DNA data).</p><p>Mitigation actions: Report the theft to the police (for insurance and record purposes). If the laptop had a whole-disk encryption, the risk from the stolen device is significantly reduced — this is a material mitigating factor for the ICO report. If not encrypted, the risk is higher. Change any passwords that were stored on the laptop. Advise the client to change their AncestryDNA/MyHeritage passwords immediately. Review and strengthen data security practices going forward: full-disk encryption, strong passwords, cloud backup, regular security review.</p>",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "learningObjectives": [
+        "Describe the intestacy rules in England and Wales and explain how they determine the heir-finding research required for an intestate estate.",
+        "Explain GDPR obligations for a genealogist as a data controller, including the special category data requirements for DNA.",
+        "Describe the 72-hour breach reporting obligation under GDPR Article 33.",
+        "Identify the CPR 35 obligations of an expert witness genealogist in English court proceedings."
+      ],
+      "commonMistakes": [
+        "Assuming GDPR does not apply to small genealogical practices — any individual processing personal data on behalf of clients is potentially a data controller.",
+        "Not treating DNA data as special category data requiring explicit consent and enhanced security.",
+        "Failing to notify the ICO within 72 hours of discovering a data breach — this is a legal obligation with enforcement consequences.",
+        "Believing the duty as an expert witness is to the instructing party rather than to the court — this is a fundamental misunderstanding of CPR 35."
+      ],
+      "assessmentCriteria": [
+        "Correctly identifies the order of priority in the intestacy rules and applies it to a specific estate scenario.",
+        "Describes the GDPR data controller obligations with specific reference to DNA as special category data.",
+        "Accurately describes the 72-hour breach reporting requirement and what information must be included in the ICO report.",
+        "Explains the expert witness duty to the court (not the instructing party) under CPR 35."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Bona Vacantia", "description": "Doctrine under which estates with no traceable heirs pass to the Crown in England and Wales; the Bona Vacantia Division publishes a list of unclaimed estates available to potential heirs." },
+        { "term": "Special Category Data (GDPR)", "description": "The highest category of sensitive personal data under GDPR, including genetic data; processing requires explicit consent or an alternative Article 9 legal basis and enhanced security measures." },
+        { "term": "CPR 35 (Civil Procedure Rules Part 35)", "description": "UK court rule governing expert evidence; an expert witness's overriding duty is to the court, not to the instructing party — they must give honest professional opinion regardless of whose case it supports." },
+        { "term": "Administration of Estates Act 1925", "description": "The UK legislation establishing the statutory order of intestacy — determining who inherits when a person dies without a valid will." },
+        { "term": "ICO (Information Commissioner's Office)", "description": "UK data protection regulator; data controllers must register with the ICO and report personal data breaches within 72 hours under GDPR Article 33." }
+      ],
+      "questions": [
+        {
+          "id": "gen-lea-10a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "Under the intestacy rules in England and Wales, if a person dies without a will and has no spouse, children, or parents, who is next in line to inherit?",
+          "options": [
+            "First cousins",
+            "Siblings (and the children of any predeceased siblings)",
+            "The nearest living relative of any kind",
+            "The Crown automatically"
+          ],
+          "correctAnswer": "Siblings (and the children of any predeceased siblings)",
+          "explanationHtml": "<p>The intestacy priority order under the Administration of Estates Act 1925 is: spouse/civil partner → children → parents → siblings (and their issue if the sibling predeceased the deceased). First cousins are further down the order; the Crown (bona vacantia) only inherits if no qualifying relatives can be found.</p>"
+        },
+        {
+          "id": "gen-lea-10a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "A genealogist holds raw DNA files and match lists for three clients on their office computer. Under GDPR, this data is classified as:",
+          "options": [
+            "Standard personal data requiring normal GDPR protections",
+            "Special category data (genetic data) requiring explicit consent, a documented legal basis, and enhanced security measures",
+            "Anonymous data not subject to GDPR since it relates to ancestry, not identity",
+            "Non-personal data since it was voluntarily submitted by the client"
+          ],
+          "correctAnswer": "Special category data (genetic data) requiring explicit consent, a documented legal basis, and enhanced security measures",
+          "explanationHtml": "<p>DNA data is explicitly categorised as 'genetic data' — a special category under GDPR Article 9. Processing special category data requires a legal basis under Article 9 (typically explicit written consent for genealogical purposes) and enhanced security measures beyond those required for standard personal data.</p>"
+        },
+        {
+          "id": "gen-lea-10a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A solicitor instructs you as an expert witness in an inheritance dispute. In your research, you discover evidence that actually supports the opposing party's claim rather than your instructing solicitor's client. What must you do?",
+          "options": [
+            "Include the evidence in your report — your duty under CPR 35 is to the court, not to the instructing solicitor",
+            "Omit the evidence since it conflicts with your instructions",
+            "Include it but phrase it in a way that minimises its impact on the instructing party's case",
+            "Withdraw from the case to avoid the conflict"
+          ],
+          "correctAnswer": "Include the evidence in your report — your duty under CPR 35 is to the court, not to the instructing solicitor",
+          "explanationHtml": "<p>CPR 35 establishes that an expert witness's overriding duty is to the court, not to the party who instructed them. This means an expert must include evidence that is adverse to their instructing party if it is relevant and material. Omitting or minimising relevant evidence to favour the instructing party is a breach of the expert's duty and professional ethics.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "gen-lea-13",
+  "topicId": "genealogy",
+  "tier": "LEAD",
+  "title": "Presenting Research — Lectures, Conferences & Webinars",
+  "glyph": "🎤",
+  "sortOrder": 13,
+  "prerequisites": ["gen-lea-12"],
+  "subChunks": [
+    {
+      "id": "gen-lea-13a",
+      "title": "Presenting Research — Lectures, Conferences & Webinars",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The research report and the conference lecture are different animals, Theodora said. A report is designed to be read, reread, scrutinised. A lecture is experienced once, in real time, by an audience who cannot pause you to check a citation." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Good genealogical presentation takes the complexity of your research and makes it immediately graspable. That requires different skills from good genealogical writing. You must structure for comprehension under time pressure. You must hold attention. You must make abstract methodology concrete." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "And increasingly, you must do all of this to a camera, talking to a chat box on a screen, with no immediate feedback whatsoever. Online presenting is its own discipline, and the genealogical community has been grappling with it, with varying degrees of success, since 2020." }
+      ],
+      "hookHtml": "<p>Genealogical conferences — RootsTech, NGS, GRIP, IGHR, the Society of Genealogists' events, county society conferences — are the primary continuing education mechanism of the discipline. They are also the primary vehicle through which professional genealogists disseminate their research, build their reputations, and contribute to the profession's knowledge base.</p><p>Presenting at a conference or webinar is both a professional development activity and a service to the community. It requires the ability to design and deliver a presentation that is clear, well-structured, well-evidenced, and engaging under time pressure. These skills are teachable and learnable, and they are among the most valued in a professional genealogist's portfolio.</p>",
+      "explanationHtml": "<h3>Types of Genealogical Presentation</h3><ul><li><strong>Conference lecture (45–60 min):</strong> A structured presentation on a specific topic or case study, delivered to a conference audience. May include Q&A. The most common formal presentation format.</li><li><strong>Workshop (2–3 hours):</strong> A hands-on session combining instruction and practice activities. Participants expect to do as well as listen.</li><li><strong>Society lecture (60–90 min):</strong> Presented to a local or national genealogical society, often in the evening. Audience ranges from beginners to experts.</li><li><strong>Webinar (45–90 min):</strong> Online presentation, live or pre-recorded. Unique challenges: no physical presence feedback, chat box interaction, technical issues.</li><li><strong>Recorded course module (15–30 min):</strong> Pre-recorded content for an online learning platform. Must be self-contained; no live Q&A.</li></ul><h3>Structuring a Conference Presentation</h3><p>A conference presentation follows a clear structure:</p><ol><li><strong>Opening hook (2–3 min):</strong> Grab attention immediately — a compelling case study question, a surprising fact, a relevant story. Do not begin with housekeeping or personal introduction.</li><li><strong>Signposting (1 min):</strong> Tell the audience what they will learn and why it matters. 'By the end of this session, you will know how to...'</li><li><strong>Content (35–45 min):</strong> Structured in logical segments with clear transitions. Use no more than 3–5 main points. Each point should have: an explanation, an example (ideally from a real case), and a takeaway.</li><li><strong>Summary (3–5 min):</strong> Recap the main points explicitly. Adult learners benefit from repetition; conferences are high-information environments where retention is lower than in a quieter learning setting.</li><li><strong>Calls to action (1–2 min):</strong> What should the audience do next? Which resources should they consult? Where can they find your handout?</li></ol><h3>Slide Design Principles</h3><p>Common presentation failures attributable to slide design: too much text on a single slide; font too small to read from the back of the room; low-contrast colour combinations; cluttered layouts competing for attention. Key principles:</p><ul><li>One idea per slide. A slide is a visual aid, not a script.</li><li>Maximum 6 lines of text per slide; maximum 6 words per line (the 6x6 rule — rarely achievable in genealogy, but a useful aspiration).</li><li>Minimum 28pt font for body text; 36pt+ for headers.</li><li>High contrast: dark text on light background or light text on dark background. Avoid yellow on white, red on green.</li><li>Use images actively — a relevant document image, a map of a migration route, a chart of a pedigree — not decoratively.</li></ul><h3>Online Presenting</h3><p>Webinars and online conferences present specific challenges: the presenter cannot see the audience's reactions (confusion, engagement, boredom); interaction is mediated through chat; technical issues interrupt flow; and home environments introduce distractions.</p><p>Adaptations for online delivery: shorter segments with more frequent interaction (polls, chat questions); explicit acknowledgement of the chat ('I see someone has asked about...'); a clear structure at the start so participants know what to expect; good audio (the most critical technical element — poor audio kills engagement faster than anything else); and a dedicated quiet, well-lit recording/streaming environment.</p><h3>Handouts</h3><p>A good conference handout: provides the key content in a durable, reference-able format that the audience will use after the presentation; includes all cited sources; is not simply a printout of the slides; and is available for download before the session so participants can annotate it during the talk. Platforms like Legacy Family Tree Webinars and RootsTech have standardised handout formats.</p><h3>Proposing Sessions at Conferences</h3><p>Most conferences accept session proposals through a call for presentations (CFP), typically 6–12 months before the event. Proposals usually require: a session title and abstract (100–200 words); learning objectives (2–3 specific outcomes); the presenter's credentials and previous speaking experience; and sometimes a sample of slides or outline. Competition for conference slots is significant; clear learning objectives and a distinctive topic improve acceptance rates.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old what makes a genealogical conference presentation good — and why reading your slides out loud word-for-word is one of the worst things a presenter can do.",
+      "guidedPracticeHtml": "<p>Design a 45-minute conference presentation on the topic 'Using DNA to Break Through the 1870 Wall in African American Genealogy.' Write: (1) an opening hook (the first 2–3 minutes); (2) three main points with their supporting examples; (3) two specific slide design choices you would make; (4) the handout you would provide.</p>",
+      "guidedPracticeModelAnswer": "<p><strong>Opening hook (2–3 min):</strong> Open with a specific case: 'In 1985, Martha Johnson spent twenty years trying to trace her great-great-grandfather Moses, who appeared in the 1870 census in Georgia. Before 1870, the record was silent — his name was nowhere. In 2019, a DNA match led her to a third cousin whose family had been enslaved on the same plantation. Through that match, and the Freedmen's Bureau records that neither had known to look for, Moses became a person with a name, a father, and a county of origin. Tonight, I'm going to show you how that kind of research is done — and what tools are available to you right now.'</p><p><strong>Three main points:</strong><br>(1) Why the 1870 wall exists (slave schedules 1850/1860 record names only, not enslaved people; 1870 is the first census to record freed people's surnames) — example: show a real slave schedule versus a 1870 census entry for the same person.<br>(2) DNA clustering for identifying the plantation connection — example: show the Leeds Method applied to an anonymised African American DNA match list, with clusters mapped to potential slaveholding families.<br>(3) Freedmen's Bureau records as the documentary bridge — example: show a specific Freedmen's Bureau labour contract naming formerly enslaved individuals and the plantation, demonstrating how it links to the DNA-identified family.</p><p><strong>Slide design choices:</strong> (a) Use side-by-side images of the 1860 slave schedule (unnamed) and the 1870 census entry (named, with family) for the same individual — this visual contrast makes the problem visceral, not abstract. (b) For the Leeds Method, use a colour-coded match list graphic — visual colour groupings are immediately comprehensible, whereas a text explanation of the same method requires sustained concentration.</p><p><strong>Handout:</strong> One-page reference guide including: the key databases for Freedmen's Bureau records (FamilySearch, NARA Ancestry database); the Slave Voyages database URL; the 1870 wall explanation with census dates; a step-by-step DNA clustering process summary; and a reading list (Alex Haley's methodology notes; a recommended book on African American genealogy methods).</p>",
+      "soloPracticeHtml": "<p>You have been invited to give a 60-minute webinar for a county genealogical society on 'Advanced Evidence Analysis — Why Three Sources That Agree Might Still Be Wrong.' You have 150 registrants, ranging from beginners to experienced researchers. Design the webinar session plan, including: how you will handle the mixed-experience audience; two ways you will build in interactivity; and how you will structure the Q&A.</p>",
+      "modelAnswer": "<p><strong>Session plan:</strong><br>0–5 min: Introduction and opening poll: 'Have you ever been surprised to find that a fact you thought was certain turned out to be wrong? Vote yes/no.' Use the poll result as an entry point to the topic.<br>5–15 min: The derived conflict problem — why agreeing sources aren't automatically reliable. Case study: show how a single error in one online tree propagates to ten copies. Chat activity: ask participants to type in the chat: 'What is the most surprising error you've ever found in genealogical records?'<br>15–30 min: The resolution hierarchy in detail (original vs. derivative, primary vs. secondary, contemporaneous vs. retrospective). Work through a single, detailed case where three seemingly agreeing sources all trace to one underlying error.<br>30–45 min: Case studies for different experience levels. Present two cases: one accessible to beginners (a birth year conflict between two censuses and a baptism register); one more advanced (a cluster of DNA matches that all appear to point to the same family but reflect an endogamous population rather than independent descent). Label each clearly by level.<br>45–55 min: Live Q&A. Ask participants to submit questions through the Q&A function rather than chat — easier to manage. Address questions from most to least specific, with 8–10 minutes maximum.<br>55–60 min: Summary, handout reminder, resource list.</p><p><strong>Mixed-experience handling:</strong> (1) Use 'level flags' in the presentation — mark specific slides with a beginners/intermediate/advanced tag so participants know where they are on the complexity spectrum. (2) Invite more experienced participants explicitly to engage with the advanced case study in the chat while less experienced participants are processing the beginner case.</p><p><strong>Interactivity:</strong> Opening poll (engagement from first minute); chat exercise ('type your best error discovery') — these serve double functions as engagement tools and data-gathering that can be referenced in the presentation.</p><p><strong>Q&A structure:</strong> Collect all questions via the Q&A function; answer 4–5 most commonly submitted or most broadly applicable; note that remaining questions will be addressed in a handout supplement posted on the society website after the event.</p>",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "learningObjectives": [
+        "Design a structured 45–60 minute conference or webinar presentation with a clear opening hook, signposting, main points, and summary.",
+        "Apply slide design principles that prioritise clarity and audience comprehension over visual density.",
+        "Identify the specific adaptations required for effective online webinar delivery compared to in-person presentation.",
+        "Write a conference session proposal that clearly states learning objectives and highlights the session's distinctive contribution."
+      ],
+      "commonMistakes": [
+        "Reading slide content aloud word-for-word — removes any reason for the audience to listen rather than just read.",
+        "Trying to cover too much material in the available time — depth on a few points is more valuable than breadth across many.",
+        "Neglecting audio quality for online presentations — poor audio is the single fastest way to lose an online audience.",
+        "Designing handouts as slide printouts rather than as standalone reference documents the audience will use after the event."
+      ],
+      "assessmentCriteria": [
+        "Presentation structure follows the recommended arc: hook, signposting, content (3–5 main points), summary, call to action.",
+        "Slide design principles are applied: one idea per slide, legible font size, high contrast, active use of images.",
+        "Interactive elements are specific and purposeful, not merely tacked on.",
+        "Mixed-experience audience is addressed through tiered case studies and explicit level labelling."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "6x6 Slide Rule", "description": "A presentation design guideline recommending a maximum of 6 lines of text per slide and 6 words per line — rarely achievable in detail-heavy subjects but a useful aspiration for clarity." },
+        { "term": "Call for Presentations (CFP)", "description": "The invitation issued by conference organisers for session proposals; typically requires a session abstract, learning objectives, and presenter credentials 6–12 months before the event." },
+        { "term": "Legacy Family Tree Webinars", "description": "A subscription genealogical webinar platform (legacyfamilytree.com/webinars.asp) with an extensive back-catalogue and standardised handout format; one of the largest online genealogical education platforms." },
+        { "term": "RootsTech", "description": "The world's largest genealogical conference, now primarily online and free to attend; hundreds of sessions available live and on-demand annually from FamilySearch." }
+      ],
+      "questions": [
+        {
+          "id": "gen-lea-13a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What is the 'opening hook' in a conference presentation and why is it important?",
+          "options": [
+            "The final slide reminding the audience of key takeaways",
+            "An attention-grabbing opening (compelling case, surprising fact, story) that engages the audience before the main content — more effective than beginning with housekeeping or biography",
+            "A physical prop used to introduce the topic",
+            "The first three minutes of Q&A at the beginning of the session"
+          ],
+          "correctAnswer": "An attention-grabbing opening (compelling case, surprising fact, story) that engages the audience before the main content — more effective than beginning with housekeeping or biography",
+          "explanationHtml": "<p>The opening hook is the first thing the audience experiences. An engaging, relevant opening (a case study question, a surprising statistic, a compelling story) immediately establishes why the audience should pay attention. Opening with housekeeping, 'who I am', or 'today I'll talk about...' wastes the critical first minutes when attention is highest.</p>"
+        },
+        {
+          "id": "gen-lea-13a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "You are preparing a 45-minute webinar slide deck and find you have 25 detailed content slides. What should you do?",
+          "options": [
+            "Speak faster to cover all 25 slides in the time available",
+            "Reduce to 12–15 slides by merging content — each slide should make one point, and the presentation should have depth on fewer points rather than breadth across more",
+            "Ask the conference organiser for a 60-minute slot instead",
+            "Move half the slides to an appendix that participants can read afterward"
+          ],
+          "correctAnswer": "Reduce to 12–15 slides by merging content — each slide should make one point, and the presentation should have depth on fewer points rather than breadth across more",
+          "explanationHtml": "<p>25 detailed slides in 45 minutes allows less than 2 minutes per slide — insufficient time for explanation, examples, and audience processing. The correct solution is to cut content, not speed up delivery. Depth on fewer points produces more durable learning than superficial coverage of many points.</p>"
+        },
+        {
+          "id": "gen-lea-13a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "Why is audio quality the most critical technical element for online webinar presentations?",
+          "options": [
+            "Because participants expect broadcast-quality audio from professional genealogists",
+            "Because poor audio — muffled, echoey, or interrupted — makes content difficult to understand and causes participants to disengage or leave, regardless of how good the visual presentation is",
+            "Because most genealogical conference organisers require professional-grade microphones",
+            "Because poor audio affects search engine rankings for recorded webinars"
+          ],
+          "correctAnswer": "Because poor audio — muffled, echoey, or interrupted — makes content difficult to understand and causes participants to disengage or leave, regardless of how good the visual presentation is",
+          "explanationHtml": "<p>Research on online learning consistently shows that participants tolerate mediocre video quality but disengage quickly from poor audio. Audiences can follow imperfect slides if they can hear clearly; they cannot follow excellent slides if the audio is unintelligible. A good USB microphone (£50–100) makes more difference to webinar quality than any other single investment.</p>"
+        }
+      ]
+    }
+  ]
+}

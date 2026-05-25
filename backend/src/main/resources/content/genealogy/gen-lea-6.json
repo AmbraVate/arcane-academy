@@ -1,0 +1,98 @@
+{
+  "id": "gen-lea-6",
+  "topicId": "genealogy",
+  "tier": "LEAD",
+  "title": "Teaching Genealogy — Workshops & Courses",
+  "glyph": "🏫",
+  "sortOrder": 6,
+  "prerequisites": ["gen-lea-5"],
+  "subChunks": [
+    {
+      "id": "gen-lea-6a",
+      "title": "Teaching Genealogy — Workshops & Courses",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Teaching is the deepest form of learning, Theodora said. When you prepare to explain something to someone else — to a room full of beginners who know nothing, or to an advanced class who will challenge every assumption — you discover what you actually understand, as opposed to what you think you understand." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Genealogical education has never been more needed. A billion people have access to genealogical databases. Most of them make the same twenty mistakes, over and over, because they have never been taught the fundamentals of evidence analysis, source citation, or critical thinking." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Teaching genealogy well is not simply knowing genealogy well. It requires pedagogy — an understanding of how people learn, what confuses them, and how to structure information for different levels of experience. It is a distinct professional skill, and it deserves the same attention you would give to research methodology." }
+      ],
+      "hookHtml": "<p>Genealogical education is a rapidly growing field, driven by the explosion in consumer DNA testing, the digitisation of historical records, and the growing awareness among the general public that discovering family history is both possible and meaningful. Workshops, courses, webinars, society lectures, online tutorials, and university continuing education programmes all feed a demand that shows no sign of diminishing.</p><p>For professional genealogists, teaching is not merely an optional extra — it is a core professional responsibility (transmitting standards to the next generation) and a significant revenue stream. Teaching skills are explicitly recognised in the BCG's Certified Genealogical Lecturer (CGL) credential, and most major genealogical conferences rely on practitioner-educators for their programme content.</p>",
+      "explanationHtml": "<h3>Principles of Adult Learning</h3><p>Most genealogical learners are adults — a different population from school learners. Andragogy (adult learning theory, Malcolm Knowles) identifies key characteristics of adult learners relevant to genealogical teaching:</p><ul><li><strong>Self-directed:</strong> Adults prefer to direct their own learning. Structure is welcome; prescription is not. Give learners choices within a framework.</li><li><strong>Experience-based:</strong> Adults bring rich prior experience — their own family research attempts, their knowledge of their own records. Connect new concepts to that existing knowledge.</li><li><strong>Problem-centred:</strong> Adults learn best when solving real problems. Abstract theory is less engaging than a concrete genealogical puzzle to work through.</li><li><strong>Intrinsically motivated:</strong> Adults in a genealogy class want to be there. Motivation is already high; the teacher's job is to channel it productively, not to generate it from scratch.</li><li><strong>Learners first, students second:</strong> Adults have their own goals, which may not perfectly align with the course curriculum. Flexibility and responsiveness are essential.</li></ul><h3>Designing a Genealogical Workshop</h3><p>A well-designed workshop has four elements:</p><ol><li><strong>Learning objectives:</strong> Specific, measurable outcomes — what will participants be able to do at the end that they could not do at the beginning? (Not 'understand X' but 'identify X in a specific record type' or 'apply X method to a sample case')</li><li><strong>Content selection:</strong> What is the minimum content needed to achieve the learning objectives? More content does not mean more learning — an overloaded session leaves participants unable to absorb anything.</li><li><strong>Activities:</strong> Practice is essential. Lectures without practice may produce understanding in the moment; they rarely produce durable skill. Include at least one hands-on exercise (a sample document to analyse, a DNA match list to cluster, a citation to construct).</li><li><strong>Assessment/reflection:</strong> How will participants (and the instructor) know whether learning has occurred? A brief Q&A, a quick writing exercise, or a 'what will you do differently when you get home' reflection all serve this purpose.</li></ol><h3>Differentiating for Different Experience Levels</h3><p>A genealogical audience is rarely homogeneous. A single room may contain someone who has never used a genealogy platform and someone who has been researching for thirty years. Techniques for differentiation include: providing tiered handout materials (beginner/intermediate/advanced sections); framing activities as having minimum and extension components; explicitly acknowledging the range of experience in the room and inviting more experienced participants to assist less experienced ones; and structuring Q&A to allow both basic and advanced questions.</p><h3>Common Teaching Mistakes</h3><p>Common mistakes in genealogical teaching include: overloading content (trying to cover everything in the available time); over-reliance on slides filled with text; teaching procedures rather than principles (showing how to use a specific platform rather than how to evaluate any source); failing to include practice activities; and presenting a 'magic solution' that implies genealogical research is simpler than it is.</p><h3>Online Teaching</h3><p>Genealogical education has moved substantially online. Webinars (live online presentations), pre-recorded courses (Udemy, Coursera, society learning portals), and hybrid formats all require adaptations of classroom teaching principles. Key considerations for online genealogy teaching: shorter segments (30–45 minutes for a single topic rather than a 90-minute lecture); more frequent interactive elements (polls, chat exercises, breakout discussions); clear visual design (legible slides, good audio); and explicit technical support for participants unfamiliar with the platform.</p><p>Major platforms for genealogical webinars: RootsTech (free, annual, largest genealogical online conference), Legacy Family Tree Webinars (subscription, extensive back-catalogue), Genealogical Research Institute of Pittsburgh (GRIP), Salt Lake Institute of Genealogy (SLIG). Society-specific webinar series are run by most major national and regional societies.</p><h3>BCG Certified Genealogical Lecturer (CGL)</h3><p>The CGL credential, awarded by the Board for Certification of Genealogists, recognises demonstrated competency in genealogical education. CGL applicants must submit a portfolio demonstrating: the ability to design learning-objective-driven sessions; clear explanation of genealogical concepts; effective use of examples; and ethical representation of genealogical knowledge. The CGL is distinct from the CG — it is possible to hold one without the other, though many practitioners hold both.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old what makes teaching genealogy to adults different from teaching in a school — and what a good genealogy workshop looks like.",
+      "guidedPracticeHtml": "<p>Design a 90-minute workshop on 'Understanding Census Records' for an audience of beginners (people who have never used genealogical records before). Write: (1) three specific learning objectives; (2) a content outline with time allocations; (3) one hands-on activity with its instructions; (4) a brief reflection exercise for the end of the session.</p>",
+      "guidedPracticeModelAnswer": "<p><strong>Learning objectives</strong> (what participants will be able to do at the end): (1) Identify the information recorded in UK census returns from 1841 to 1911 and explain how that information varies across census years. (2) Evaluate a census entry using the primary/secondary information framework to assess the reliability of each data point. (3) Search for a family member in an online census database using at least two search strategies.</p><p><strong>Content outline:</strong><br>0–10 min: Introduction — why census records matter; when they start (1801 in UK, household-level images from 1841); overview of what they contain.<br>10–25 min: What each census records — demonstrate the differences between 1841 (approximate ages, relationship structure limited) and 1851+ (precise ages, relationships, birthplaces). Show sample entries.<br>25–40 min: Reliability — who was the informant? What did they actually know? Introduce primary vs. secondary information with a worked example (age stated as 45 vs. birth certificate showing 1842).<br>40–60 min: Hands-on activity (see below).<br>60–80 min: Searching online — live demonstration of Ancestry/FindMyPast search strategies (exact name, wildcard, phonetic); common search tips and pitfalls.<br>80–90 min: Reflection exercise and Q&A.</p><p><strong>Hands-on activity:</strong> Each participant receives a printed sample 1881 census page (a real, anonymised entry set). Instructions: (a) Find the head of household and circle their occupation. (b) Identify three pieces of secondary information in the entry and explain why they are secondary. (c) Write down one thing in this entry that you would verify with another source, and explain why.</p><p><strong>Reflection exercise:</strong> On an index card, write: (1) One thing I learned today that I didn't know before. (2) One question I still have. (3) What I will try differently in my next census search. Collect cards — they provide immediate feedback on what landed and what needs more explanation next time.</p>",
+      "soloPracticeHtml": "<p>You are designing a two-hour intermediate workshop on 'Using DNA for Genealogy' for an audience of experienced traditional genealogists who have all done a DNA test but feel overwhelmed by their match lists and don't know what to do with the results. Describe: (1) the specific challenges this audience is likely to face (both technical and psychological); (2) how you would structure the session to address those challenges; (3) what the single most important thing is that they need to leave understanding.</p>",
+      "modelAnswer": "<p>(1) Challenges: Technical — understanding cM values and relationship ranges; reading the match list without feeling overwhelmed by hundreds of distant matches; not knowing where to start. Psychological — frustration that DNA 'should' have answered all their questions but hasn't; possibly anxiety about unexpected discoveries (NPE, unknown relatives); feeling that DNA is a separate skill from their existing documentary expertise rather than a complementary tool. The audience's existing strength (experienced traditional genealogists) is also a potential obstacle: they may be resistant to changing their research approach, or may undervalue what their existing skills (tree-building, source evaluation) bring to DNA analysis.</p><p>(2) Structure: Start by validating their existing expertise — explain that DNA analysis IS genealogical analysis, using the same skills they already have: identifying sources, evaluating evidence, building trees, resolving conflicts. The match list is a list of sources to be analysed, not a magic answer. Then: explain cM values and relationship ranges (20 min, with a visual chart). Demonstrate the Leeds Method on a real (anonymised) match list (25 min). Hands-on: participants cluster their own top 20 matches into groups (25 min). Discuss what to do with clusters — tree-building strategies, how to connect DNA evidence to documentary research (20 min). Q&A and 'next steps' planning (10 min).</p><p>(3) The single most important thing: DNA matching is not a separate skill from genealogical research — it is another source type requiring the same analytical framework. The cM value tells you the likely relationship range; a tree tells you who in that range is plausible; your existing records confirm or refute the connection. They already have the skills; they just need to apply them to a new source type.</p>",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "learningObjectives": [
+        "Apply adult learning principles (andragogy) to the design of genealogical workshops and courses.",
+        "Write specific, measurable learning objectives for a genealogical teaching session.",
+        "Design a workshop with appropriate content selection, hands-on activities, and reflection elements.",
+        "Describe the adaptations required for effective online genealogical teaching."
+      ],
+      "commonMistakes": [
+        "Writing vague learning objectives ('understand how census records work') instead of specific, measurable ones.",
+        "Over-filling session content — trying to cover everything in the time available, resulting in participants absorbing nothing.",
+        "Teaching procedures for specific platforms rather than transferable principles — platform-dependent skills become obsolete; analytical principles do not.",
+        "Neglecting hands-on practice — adult learners retain far more from doing than from watching."
+      ],
+      "assessmentCriteria": [
+        "Learning objectives are specific, measurable, and achievable within the stated time.",
+        "Content selection is focused and appropriately scoped — not an attempt to cover everything.",
+        "Activity design provides genuine hands-on practice of the target skill, not just passive observation.",
+        "Reflection element enables assessment of whether learning has occurred and identifies gaps."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Andragogy", "description": "Adult learning theory developed by Malcolm Knowles; identifies key characteristics of adult learners (self-directed, experience-based, problem-centred) with implications for instructional design." },
+        { "term": "BCG Certified Genealogical Lecturer (CGL)", "description": "BCG credential for genealogical educators, assessed through a portfolio demonstrating effective learning-objective-driven session design and clear explanation of genealogical concepts." },
+        { "term": "RootsTech", "description": "The world's largest genealogical conference, now primarily online and free to attend; offers hundreds of presentations from leading genealogical educators annually." },
+        { "term": "Learning Objectives vs. Teaching Objectives", "description": "A learning objective describes what participants will be able to do (participant-centred); a teaching objective describes what the instructor will cover (content-centred). Effective session design uses learning objectives." },
+        { "term": "Salt Lake Institute of Genealogy (SLIG)", "description": "Week-long intensive genealogical education programme held annually in Salt Lake City; covers advanced research methodologies across multiple specialisms." }
+      ],
+      "questions": [
+        {
+          "id": "gen-lea-6a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What is the key characteristic of adult learning (andragogy) most relevant to designing genealogical workshops?",
+          "options": [
+            "Adults learn best from rote memorisation and repetition",
+            "Adults are problem-centred learners who engage most effectively with concrete problems and experience-based activities rather than abstract theory",
+            "Adults need more content than younger learners to feel the session was worthwhile",
+            "Adults prefer lectures without interactive elements because they find activities childish"
+          ],
+          "correctAnswer": "Adults are problem-centred learners who engage most effectively with concrete problems and experience-based activities rather than abstract theory",
+          "explanationHtml": "<p>Andragogy identifies adults as problem-centred learners who bring rich prior experience and learn best by applying new concepts to real problems. For genealogy, this means hands-on exercises with real records are more effective than abstract lectures about methodology.</p>"
+        },
+        {
+          "id": "gen-lea-6a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "Which of the following is a well-written learning objective for a genealogical workshop?",
+          "options": [
+            "'Participants will understand how to use Ancestry.'",
+            "'Participants will be able to identify the three main types of evidence (direct, indirect, negative) in a census entry and explain the reliability implications of each.'",
+            "'The instructor will cover census records from 1841 to 1911.'",
+            "'Participants will learn about historical records.'"
+          ],
+          "correctAnswer": "'Participants will be able to identify the three main types of evidence (direct, indirect, negative) in a census entry and explain the reliability implications of each.'",
+          "explanationHtml": "<p>A learning objective describes what participants will be able to do at the end of the session — not what the instructor will cover. It should be specific (which record type?), measurable (identify? apply? construct?), and achievable. The correct option is participant-centred, specific, and tied to a demonstrable skill.</p>"
+        },
+        {
+          "id": "gen-lea-6a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "You are teaching an intermediate DNA workshop to a mixed audience of experienced documentary researchers and DNA enthusiasts. What is the most important framing for experienced documentary researchers who feel DNA is a separate skill from their existing work?",
+          "options": [
+            "Explain that DNA replaces documentary research for most genealogical questions",
+            "Frame DNA analysis as another source type requiring the same analytical skills they already have — the cM value is the raw data; tree-building and source evaluation are the tools to interpret it",
+            "Suggest that documentary researchers may not be well-suited for DNA analysis",
+            "Focus entirely on the DNA enthusiasts and ask the documentary researchers to be patient"
+          ],
+          "correctAnswer": "Frame DNA analysis as another source type requiring the same analytical skills they already have — the cM value is the raw data; tree-building and source evaluation are the tools to interpret it",
+          "explanationHtml": "<p>Experienced documentary researchers often feel alienated by DNA analysis because it is presented as a technical separate domain. Reframing it as another evidential source requiring the same analytical framework they already use (source evaluation, tree building, evidence correlation) lowers the psychological barrier and enables them to leverage their existing skills immediately.</p>"
+        }
+      ]
+    }
+  ]
+}

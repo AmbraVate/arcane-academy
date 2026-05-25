@@ -1,0 +1,98 @@
+{
+  "id": "gen-lea-15",
+  "topicId": "genealogy",
+  "tier": "LEAD",
+  "title": "Emerging Technologies in Genealogy — AI, LLMs & Big Data",
+  "glyph": "🤖",
+  "sortOrder": 15,
+  "prerequisites": ["gen-lea-14"],
+  "subChunks": [
+    {
+      "id": "gen-lea-15a",
+      "title": "Emerging Technologies in Genealogy — AI, LLMs & Big Data",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Every generation of genealogists has had its transformative technology, Theodora said. The microfilm reader. The personal computer. The internet. The consumer DNA test. Each one changed what was possible. Each one also changed what skills were needed." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Now we have machine learning tools that can read 18th-century handwriting — badly. And large language models that can summarise family histories — sometimes accurately. And AI-assisted photo enhancement that can sharpen a face in a 150-year-old photograph." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The professional genealogist's response to these tools is not fear and not uncritical adoption. It is the same response we apply to every new source type: evaluate carefully, understand the limitations, use where appropriate, cite your methods honestly." }
+      ],
+      "hookHtml": "<p>Artificial intelligence is transforming genealogical research faster than any technology since the internet. Handwritten text recognition (HTR) tools are making it possible to automatically transcribe millions of historical documents. Large language models (LLMs) are being used to generate family narrative summaries and to assist with research queries. Photo AI tools enhance and analyse historical images. Predictive DNA matching algorithms are becoming increasingly sophisticated.</p><p>These tools offer genuine benefits — and genuine risks. Automated transcription makes errors; LLMs hallucinate; photo enhancement can introduce visual artefacts that look like evidence but aren't. The professional genealogist's task is to understand these technologies well enough to use them as tools rather than oracles — and to evaluate their outputs with the same critical rigour applied to any other source.</p>",
+      "explanationHtml": "<h3>Handwritten Text Recognition (HTR)</h3><p>HTR (also called Handwritten Character Recognition or HCR) uses machine learning models trained on historical document samples to automatically transcribe handwritten text. Unlike OCR (Optical Character Recognition), which works well for printed text, HTR must handle the enormous variability of handwriting styles across centuries, languages, and script types.</p><p>Current state: FamilySearch's indexing AI, Transkribus (transkribus.eu), and similar platforms can achieve 70–95% character accuracy on well-represented document types. Transkribus allows custom model training on a researcher's specific document collection — a tool that can be genuinely transformative for large archive digitisation projects.</p><p>Critical limitations: HTR models make plausible-looking errors. 'Thomas' may become 'Thos' may become 'Thos' may become something unrecognisable. Proper names, dates, and uncommon vocabulary have higher error rates. HTR transcriptions should always be validated against the original document before being used as a source. An HTR-generated transcription is a derivative source — it is not the same as the original.</p><h3>Large Language Models (LLMs) in Genealogy</h3><p>LLMs (GPT-4, Claude, Gemini, and their successors) have several potential genealogical applications: generating narrative summaries from structured data; assisting with translation of foreign-language documents; suggesting record types for a given research problem; and answering questions about genealogical methodology.</p><p>Critical limitations — hallucination: LLMs generate plausible text by predicting what words are likely to follow other words, trained on patterns in their training data. They do not access live databases; they do not 'look up' facts. When asked about specific genealogical records, LLMs may generate confident-sounding but entirely fabricated record references ('John Smith appears in the 1850 census for Lancaster County, Pennsylvania' — a claim that may or may not be true, stated with false certainty). This is 'hallucination' — the AI generating plausible but false information.</p><p>Professional use: LLMs can legitimately assist with: summarising information the researcher has provided; explaining methodology at a conceptual level; drafting report sections that are based on facts the researcher supplies; and language tasks (translation, paraphrasing). They should not be used as a source of genealogical facts about specific records or individuals.</p><h3>AI Photo Enhancement and Facial Recognition</h3><p>Tools like MyHeritage's Deep Nostalgia, Remini, and similar AI enhancement tools can: restore faded photographs; sharpen blurred images; animate still photographs; and compare faces across images to identify possible matches.</p><p>Critical limitations: AI photo restoration may introduce visual elements that were not in the original — it fills in missing detail by reference to its training data, not by recovering actual information. An 'enhanced' photograph is a derivative with added invented detail. Use these tools for personal interest and family engagement, but do not treat enhanced images as evidence of physical appearance. Facial recognition matching across historical photographs has significant error rates and should not be used to claim identity without independent documentary corroboration.</p><h3>Big Data and Population-Scale DNA Analysis</h3><p>The aggregation of tens of millions of DNA profiles enables population-scale analysis: identifying historical migration patterns; reconstructing genetic genealogies for specific geographic regions; identifying common ancestry patterns in isolated communities. Academic research platforms (Ancestry's AncestryDNA research partnerships, University of Oxford's work with UK Biobank) are using genealogical DNA data at unprecedented scale.</p><p>For professional genealogists, big data tools mean: ethnicity reference populations are continually improving; new DNA platforms are emerging that provide different reference populations; and the interpretation of admixture results is becoming more geographically precise. The risk: over-precision — tools that claim to identify county-level ancestry from DNA when the genuine precision is at most regional level.</p><h3>Citation Practice for AI-Assisted Research</h3><p>When AI tools are used in research, the methodology must be disclosed. For HTR transcriptions: note that the transcription was machine-generated and verified against the original. For LLM assistance: note the tool used and the specific task it assisted with (e.g., 'Translation of Spanish text assisted by [LLM]; verified by the researcher against original document'). For photo enhancement: note that images were processed with [tool] for presentation purposes and that the enhanced image is not the original record. Transparency about tools used is an extension of the GPS principle of honest, complete documentation.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old what an AI 'hallucination' is in the context of genealogical research — and why trusting an AI chatbot to tell you facts about your ancestors could lead you completely astray.",
+      "guidedPracticeHtml": "<p>You are using Transkribus to automatically transcribe a set of 19th-century English parish registers that are difficult to read manually. The system produces a transcript that you are going to use as the basis for an index. What quality control steps would you implement before publishing the index, and how would you cite the transcription in any report that uses facts from it?</p>",
+      "guidedPracticeModelAnswer": "<p>Quality control steps: (1) Do not publish the HTR transcript without human verification. Random sample check: review at least 10% of the automatically generated text against the original images, focusing on names, dates, and relationships (the highest-error-rate categories). (2) Flag all proper names for human review — personal names are the most important data in the index and have the highest HTR error rate. Even a 95% overall accuracy rate means 1 in 20 characters is wrong; in a name with 10 characters, this gives a significant probability of at least one error. (3) For any entry where the AI transcript appears uncertain or garbled, manually review the original image. Transkribus provides confidence scores per word — low-confidence words should be human-reviewed. (4) Have a second human reviewer check a sample of the verified transcript against the original for quality assurance. (5) Note in the published index that the transcript was generated with HTR assistance and verify against original images where precision is critical.</p><p>Citation for a report using facts from the transcript: 'St Mary's Church, Spalding, Lincolnshire, baptism register, 14 March 1832, entry for Thomas Walker; original record at Lincolnshire Archives; Transkribus HTR transcript, accuracy verified by researcher against original image, March 2025.' The citation must indicate that the information came from an HTR transcript that was verified — as opposed to simply from the original document directly, or from an unverified HTR transcript.</p>",
+      "soloPracticeHtml": "<p>A colleague shows you a report in which she cites: 'According to ChatGPT, Thomas Wilkins was born in 1843 in Staffordshire and emigrated to Pennsylvania in 1867 (ChatGPT-4, consulted 15 March 2025).' Evaluate this citation and explain what she has done wrong and how she should have used the LLM tool if she wanted to use it at all.</p>",
+      "modelAnswer": "<p>This citation is seriously flawed for two fundamental reasons: (1) ChatGPT is not a source of genealogical facts. LLMs generate text based on patterns in their training data; they do not query genealogical databases or access historical records. A claim that 'Thomas Wilkins was born in 1843 in Staffordshire and emigrated to Pennsylvania in 1867' generated by ChatGPT is either (a) a hallucination (invented), (b) a repetition of something in the LLM's training data (which itself may be erroneous), or (c) a coincidental match to a real fact. The probability of any of these is unknowable without verification against original records. (2) ChatGPT is not citable as a genealogical source even if it were reliable — it has no provenance, no author in the scholarly sense, and no accountability. It cannot be verified independently by another researcher.</p><p>What she should have done: Use the LLM for methodological guidance ('what records exist for Pennsylvania emigration in the 1860s?') or as a drafting tool ('help me write a paragraph summarising these facts I've already verified'). Then verify the factual claim using appropriate original sources: Pennsylvania emigration records, Pennsylvania census (1870), Staffordshire birth registers (GRO), passenger manifests. Once verified, cite the original sources, not the LLM. If she used the LLM as a starting hypothesis that then directed her to original records, that is legitimate — but cite the original records, note the methodology, and mention the LLM only as a research tool that prompted a direction of inquiry, not as a source of fact.</p>",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "learningObjectives": [
+        "Explain what HTR is, its current accuracy levels, and the verification steps required before using HTR transcriptions in genealogical research.",
+        "Define LLM hallucination and explain why LLMs cannot be cited as sources of genealogical facts about specific individuals.",
+        "Describe the appropriate uses of LLMs in genealogical research (methodology guidance, drafting assistance) versus inappropriate uses (sourcing facts).",
+        "Identify the citation practices required when AI tools have assisted in a research project."
+      ],
+      "commonMistakes": [
+        "Treating an HTR transcript as equivalent to examining the original document — HTR produces plausible-looking errors that require verification.",
+        "Citing an LLM as a genealogical source — LLMs hallucinate specific genealogical facts and are not accountable or verifiable.",
+        "Using AI photo enhancement as evidence of a subject's actual physical appearance — enhanced images contain AI-generated detail that was not in the original.",
+        "Failing to disclose AI tool use in research documentation — transparency about methodology is a GPS requirement."
+      ],
+      "assessmentCriteria": [
+        "Correctly identifies HTR accuracy limitations and specifies appropriate verification steps for HTR transcriptions.",
+        "Accurately explains LLM hallucination and distinguishes appropriate from inappropriate LLM applications in genealogical research.",
+        "Demonstrates appropriate citation practice for AI-assisted research, including disclosure of tool use and verification status.",
+        "Evaluates AI tools with critical rigour consistent with GPS evidence analysis principles."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Transkribus", "description": "An HTR platform (transkribus.eu) that uses machine learning to transcribe historical handwritten documents; supports custom model training on specific document types." },
+        { "term": "Hallucination (LLM)", "description": "The generation by a large language model of confident-sounding but false or fabricated information, particularly problematic for specific factual claims about individuals, records, or locations." },
+        { "term": "Deep Nostalgia", "description": "MyHeritage's AI tool that animates still photographs of deceased individuals; useful for family engagement but not an evidential tool — animated images are AI-generated representations, not primary evidence." },
+        { "term": "UK Biobank", "description": "UK research resource with genetic and health data for 500,000 participants; supports academic genealogy research at population scale, including studies of genetic genealogy and historical migration patterns." },
+        { "term": "Confidence Score (HTR)", "description": "A probability estimate provided by HTR systems indicating how confident the model is in each word's transcription; low-confidence words should be prioritised for human review." }
+      ],
+      "questions": [
+        {
+          "id": "gen-lea-15a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What is 'hallucination' in the context of large language models (LLMs)?",
+          "options": [
+            "The tendency of LLMs to misinterpret images as text",
+            "The generation of confident-sounding but false or fabricated information, particularly about specific factual claims",
+            "A visual processing error in AI photo enhancement tools",
+            "The tendency of LLMs to repeat the same sentence multiple times"
+          ],
+          "correctAnswer": "The generation of confident-sounding but false or fabricated information, particularly about specific factual claims",
+          "explanationHtml": "<p>LLMs predict likely word sequences based on training data patterns; they do not 'look up' facts. This produces confident-sounding false claims — 'hallucinations' — particularly dangerous in genealogical contexts where specific record references may sound plausible but be entirely invented.</p>"
+        },
+        {
+          "id": "gen-lea-15a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "You have used an LLM to help translate a Spanish-language document from a Mexican archive. How should this use be disclosed in your research report?",
+          "options": [
+            "It does not need to be disclosed — translation tools are standard research aids",
+            "'Translation provided by [LLM name]; verified by the researcher against the original document' — noting the tool and the verification step",
+            "Cite the LLM as the primary source for any facts extracted from the translated document",
+            "Describe the LLM as a 'human translator' to avoid confusion"
+          ],
+          "correctAnswer": "'Translation provided by [LLM name]; verified by the researcher against the original document' — noting the tool and the verification step",
+          "explanationHtml": "<p>Transparency about methodology is a GPS requirement. Noting the LLM assistance and the researcher's verification step accurately describes how the information was obtained and allows other researchers to assess the reliability of the translation. Concealing AI tool use violates the honesty principles of GPS and professional ethics codes.</p>"
+        },
+        {
+          "id": "gen-lea-15a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A Transkribus HTR transcription of a 19th-century English parish register shows an entry for 'Thomas Wylkns' — clearly a misread of a name. What does this illustrate about HTR accuracy?",
+          "options": [
+            "HTR is unreliable and should never be used for genealogical work",
+            "HTR produces plausible-looking errors, particularly in proper names — this illustrates why human verification against original images is essential before publishing or using HTR transcriptions",
+            "This is a true transcription of the original name 'Wylkns'",
+            "HTR errors are random and cannot be predicted or checked for"
+          ],
+          "correctAnswer": "HTR produces plausible-looking errors, particularly in proper names — this illustrates why human verification against original images is essential before publishing or using HTR transcriptions",
+          "explanationHtml": "<p>HTR errors in proper names are common because names are among the least predictable words in a text. 'Wylkns' looks plausible enough to escape casual review but would misdirect any name-based search. Systematic human review of all proper names is essential quality control for HTR-generated genealogical transcriptions.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "gen-lea-14",
+  "topicId": "genealogy",
+  "tier": "LEAD",
+  "title": "Mentoring New Genealogists",
+  "glyph": "🌱",
+  "sortOrder": 14,
+  "prerequisites": ["gen-lea-13"],
+  "subChunks": [
+    {
+      "id": "gen-lea-14a",
+      "title": "Mentoring New Genealogists",
+      "storyBeats": [
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "You know what I am to you, Theodora said. You know that I have asked you questions more often than I have given you answers. I have pushed back when you were certain. I have let you struggle when struggling was the point. That is mentoring." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "The mentor's job is not to do the work for the mentee. It is to create the conditions under which the mentee develops the capacity to do the work for themselves. That takes patience. It takes the willingness to ask uncomfortable questions. It takes the ability to tolerate the discomfort of watching someone make an error you could easily correct — and not correcting it immediately, because the error is the teacher." },
+        { "av": "📜", "cls": "mentor", "sCls": "mentor", "txt": "Every experienced genealogist was a beginner. Every confident researcher once made the mistakes you now recognise instantly. Mentoring is your contribution to the next generation of the discipline — and it is one of the most generous acts a professional can perform." }
+      ],
+      "hookHtml": "<p>The genealogical community is unusual among professional disciplines in the degree to which experienced practitioners informally mentor newer ones. Society meetings, online forums, conference hallways, and online communities are full of experienced researchers who generously give their time and expertise to help newer researchers avoid errors and develop skills.</p><p>This culture of informal mentoring is one of genealogy's great strengths. Formalising it — developing intentional mentoring relationships, understanding the pedagogy of mentoring, and being conscious about what effective mentoring looks like — amplifies its impact and ensures that the best practices of the profession are transmitted effectively to the next generation.</p>",
+      "explanationHtml": "<h3>What Mentoring Is (and Isn't)</h3><p>Mentoring is a structured, intentional relationship in which a more experienced practitioner supports the professional development of a less experienced one. It is not:</p><ul><li><strong>Teaching:</strong> Teaching delivers specific knowledge or skills. Mentoring supports broader professional development — confidence, judgment, professional identity, career navigation.</li><li><strong>Coaching:</strong> Coaching addresses specific performance challenges, often in a corporate context. Mentoring is longer-term and more holistic.</li><li><strong>Consulting:</strong> Consulting provides expert advice to solve a specific problem. Mentoring develops the mentee's capacity to solve their own problems.</li><li><strong>Friendship:</strong> Mentoring has clear professional purpose. Friendship is mutual and unstructured. Mentoring relationships may develop into friendship; they are not the same thing.</li></ul><h3>What Mentors Do</h3><p>Effective mentors:</p><ul><li><strong>Ask questions rather than giving answers.</strong> 'What records have you searched?' develops thinking skills. 'Try the court records' delivers an answer the mentee may not internalise.</li><li><strong>Model professional practice.</strong> How the mentor handles difficult client conversations, manages ethical dilemmas, writes reports, handles peer review — all of this is modelled behaviour that the mentee observes and internalises.</li><li><strong>Provide honest, specific feedback.</strong> 'Your citation is incomplete — here's exactly what's missing and why it matters' is useful feedback. 'This is good, keep going' is not.</li><li><strong>Share professional networks.</strong> Introducing the mentee to other professionals, conference speakers, and society contacts accelerates career development.</li><li><strong>Challenge assumptions.</strong> When the mentee is certain, the mentor asks: 'How do you know? What's the evidence? Have you considered...?'</li></ul><h3>The Mentoring Relationship</h3><p>Effective mentoring relationships are structured around clear goals and regular contact. Initial conversations should establish: what the mentee wants to achieve (in 6 months? 1 year? 5 years?); what specific skills or knowledge gaps they want to address; how often they will meet (typically monthly); and what the format will be (in person, video call, email review of work samples).</p><p>Formal mentoring programmes: BCG offers a mentoring programme for CG applicants preparing their portfolios. APG operates a mentoring referral programme. Many county genealogical societies match beginners with experienced mentors through their society events. The Genealogical Research Institute of Pittsburgh (GRIP) pairs students with faculty mentors during intensive study weeks.</p><h3>Common Challenges in Mentoring</h3><ul><li><strong>Dependency:</strong> A mentee who relies too heavily on the mentor for answers rather than developing their own judgment. Solution: consistently redirect to questions ('what do you think?') rather than providing answers.</li><li><strong>Mismatch in goals:</strong> The mentor has one vision for the mentee's development; the mentee has a different one. Solution: explicit goal-setting at the start and periodic review.</li><li><strong>The expert trap:</strong> The mentor who demonstrates expertise rather than facilitating the mentee's learning. Solution: conscious discipline — 'what have you tried?' before offering any suggestion.</li><li><strong>Boundaries:</strong> Mentoring must remain professional. The mentor is not a therapist, a friend, or a business partner (unless explicitly and separately agreed). Clear professional boundaries protect both parties.</li></ul><h3>Mentoring Diverse Populations</h3><p>Genealogical mentoring increasingly serves diverse populations: researchers from ethnic minority communities tracing family histories in record environments that were designed for white Western families; older learners who are new to digital tools; researchers outside the US/UK context where most genealogical education resources are produced. Effective mentors adapt their approach to the mentee's context rather than assuming a generic 'default' genealogist.</p><h3>Reverse Mentoring</h3><p>Experienced genealogists can also learn from newer practitioners. Newer researchers who are digital natives, who are familiar with international record environments, or who bring skills from other disciplines (data science, history, law) can mentor more experienced genealogists in those areas. Explicitly building in reverse mentoring — asking the mentee what they know that the mentor doesn't — models intellectual humility and enriches the relationship.</p>",
+      "feynmanPrompt": "Explain to a 16-year-old what the difference is between a mentor and a teacher — and why asking questions is often more useful for the mentee than giving answers.",
+      "guidedPracticeHtml": "<p>Your mentee, Sarah, has been researching her great-great-grandfather for six months. She brings you a research report that concludes he was born in 'County Cork, Ireland, around 1840.' The only source cited is: 'Ancestry.com — family tree.' She is proud of this conclusion and expects your approval. How do you respond as her mentor, and what questions would you ask?</p>",
+      "guidedPracticeModelAnswer": "<p>As a mentor, the goal is not to correct the error for Sarah but to help her see it herself and understand why it matters. Avoid: 'This citation is wrong, here's what you should write.' Use instead: open questions that guide her to the problem.</p><p>Opening: 'Thank you for sharing this — I can see you've been working hard on this question. Tell me about this conclusion. How confident are you in it?'</p><p>Questions: 'What source does this conclusion rest on?' (She says: the Ancestry family tree.) 'Who created that tree? Do you know if it was her research or someone else's?' (She checks — it was copied from another tree.) 'So what's the original source of this claim?' (She doesn't know.) 'Could you trace it back?' (Pause for her to think.)</p><p>'What other records could tell us where he was born?' (She mentions: death certificate, census entries, birth certificate if it exists.) 'Have you checked those?' (She hasn't.) 'What would they tell us that the family tree doesn't?' (He thinks.) 'Which of those records would be most reliable for a birthplace claim, and why?' (Guide her to the source/information/evidence framework.)</p><p>End goal: Sarah arrives at the conclusion that the Ancestry tree is a derivative source with an unknown informant, that the claim needs to be verified against original records, and that the next step is to check death certificate and census entries. She has made these connections herself — they will stick better than being told.</p>",
+      "soloPracticeHtml": "<p>You have been asked to set up a formal mentoring programme for your county genealogical society, pairing experienced members with newer researchers. Design: (1) the matching criteria you would use to pair mentors and mentees; (2) the intake documentation (what both parties complete before the relationship begins); (3) how you would structure the first meeting; and (4) how you would evaluate whether the programme is working after six months.</p>",
+      "modelAnswer": "<p>(1) Matching criteria: Mentee's stated research interests and geographic focus (a mentee researching Scottish records should be matched with a mentor who has Scottish record expertise, not English); mentee's experience level and specific skill gaps; mentor's availability and preferred communication style; geographic proximity (if in-person meetings are preferred); and any specific requests (e.g., a mentee who is a new immigrant might prefer a mentor from the same cultural background).</p><p>(2) Intake documentation — Mentee form: Current research focus and questions; research experience level; specific skills or knowledge they want to develop; preferred meeting frequency and format; any constraints (language, technology, time zone). Mentor form: Areas of expertise; availability; preferred mentee experience level; maximum number of mentees willing to take on; preferred communication format.</p><p>(3) First meeting structure: 45–60 minutes. (a) Introductions — both share their genealogical background briefly. (b) Mentee shares their research focus and what they are currently working on. (c) Discussion of specific goals for the mentoring relationship — what would 'success' look like in 6 months? (d) Agree practical logistics: frequency of contact, format, what material the mentee will share between meetings. (e) The mentor asks one open question about the mentee's current research to model the mentoring approach from the first meeting.</p><p>(4) Evaluation after six months: Survey both mentors and mentees: Is the relationship meeting expectations? Are meetings happening? Has the mentee made progress on stated goals? Are there barriers to effectiveness? Hold a brief reflection session with all programme participants to identify systemic improvements. Key metrics: retention of mentors and mentees in the programme; mentee confidence self-assessment before and after; concrete evidence of skill development (e.g., mentee submits first society journal article, completes BCG application, presents at a society event).</p>",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "learningObjectives": [
+        "Distinguish mentoring from teaching, coaching, and consulting.",
+        "Apply the Socratic questioning technique to a mentoring scenario — asking questions to develop judgment rather than providing answers.",
+        "Design a formal genealogical mentoring programme including matching criteria, intake documentation, and evaluation measures.",
+        "Identify the common challenges in mentoring relationships (dependency, mismatch, expert trap) and their solutions."
+      ],
+      "commonMistakes": [
+        "Acting as a consultant (giving answers) rather than a mentor (developing the mentee's capacity) — reinforces dependency rather than independence.",
+        "Failing to establish explicit goals and a structured relationship at the start — vague mentoring produces vague development.",
+        "Not providing honest, specific feedback — vague approval ('this looks good') fails to develop the mentee's skills.",
+        "Allowing the mentoring relationship to drift into friendship without maintaining professional structure and purpose."
+      ],
+      "assessmentCriteria": [
+        "Correctly distinguishes mentoring from teaching and consulting in terms of purpose and method.",
+        "Demonstrates the Socratic questioning approach — questions that develop thinking rather than answers that provide content.",
+        "Programme design addresses matching, intake, first meeting structure, and evaluation with appropriate specificity.",
+        "Identifies specific mentoring challenges and articulates practical solutions."
+      ],
+      "rabbitHoleTerms": [
+        { "term": "Socratic Method", "description": "A teaching approach using probing questions to help learners arrive at understanding themselves, rather than presenting answers; highly effective in mentoring for developing independent judgment." },
+        { "term": "BCG Mentoring Programme", "description": "BCG's formal programme pairing CG applicants preparing their portfolios with experienced credentialled genealogists; one of the best-structured formal mentoring programmes in the genealogical profession." },
+        { "term": "Reverse Mentoring", "description": "A mentoring approach in which the traditional direction is reversed — the less experienced person mentors the more experienced one in specific areas (digital tools, diverse record environments, new methodologies)." },
+        { "term": "Dependency in Mentoring", "description": "A risk in mentoring where the mentee over-relies on the mentor for answers rather than developing their own judgment; addressed by consistently redirecting to questions rather than providing solutions." }
+      ],
+      "questions": [
+        {
+          "id": "gen-lea-14a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "questionHtml": "What is the key difference between a mentor and a teacher in a professional development context?",
+          "options": [
+            "Teachers are paid; mentors are volunteers",
+            "Teachers deliver specific knowledge or skills; mentors support broader professional development including judgment, confidence, and career navigation",
+            "Teachers work with groups; mentors always work one-to-one",
+            "Mentors only work with beginners; teachers work at all levels"
+          ],
+          "correctAnswer": "Teachers deliver specific knowledge or skills; mentors support broader professional development including judgment, confidence, and career navigation",
+          "explanationHtml": "<p>Teaching aims to transfer specific knowledge or skills. Mentoring is broader and longer-term — it supports the mentee's development as a professional, including the judgment and confidence required to navigate complex situations that no specific 'lesson' can prepare them for.</p>"
+        },
+        {
+          "id": "gen-lea-14a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "questionHtml": "Your mentee shows you a conclusion they are proud of that is based on a single unsourced Ancestry family tree. What is the most effective mentoring response?",
+          "options": [
+            "'This citation is wrong — you need to find the original record instead.'",
+            "'That's a great start — well done for reaching a conclusion!'",
+            "Ask: 'Who created that family tree? Can you trace where they got this information? What original records could you check to verify this conclusion?' — guiding them to identify the problem themselves",
+            "Rewrite the citation correctly and return it without comment"
+          ],
+          "correctAnswer": "Ask: 'Who created that family tree? Can you trace where they got this information? What original records could you check to verify this conclusion?' — guiding them to identify the problem themselves",
+          "explanationHtml": "<p>The Socratic approach — guiding the mentee to identify the problem through questions — develops independent judgment. Correcting the error directly provides the answer but not the skill. The mentee who arrives at the insight themselves is far more likely to apply the same critical thinking to future work.</p>"
+        },
+        {
+          "id": "gen-lea-14a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "questionHtml": "A mentee begins calling you daily for advice on every aspect of their research, clearly reluctant to make any decisions without your approval. What is the most professionally appropriate response?",
+          "options": [
+            "Continue answering — this is what mentoring is for",
+            "Refuse all future contact to force independence",
+            "Address the dependency directly: explain that good mentoring develops independent judgment, not reliance; commit to answering genuinely complex questions while consistently redirecting routine decisions with 'what do you think?' and 'what have you tried?'",
+            "Charge a consultation fee to reduce the frequency of contact"
+          ],
+          "correctAnswer": "Address the dependency directly: explain that good mentoring develops independent judgment, not reliance; commit to answering genuinely complex questions while consistently redirecting routine decisions with 'what do you think?' and 'what have you tried?'",
+          "explanationHtml": "<p>Dependency is a recognised mentoring challenge. The mentor's goal is the mentee's eventual independence. Continuing to answer every question reinforces dependency; abrupt refusal is unnecessarily harsh. The professional response is honest, constructive, and consistent — model the expectation that the mentee develop their own judgment.</p>"
+        }
+      ]
+    }
+  ]
+}
