@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react'
 import type { User } from '@/shared/types'
 import { authApi } from '@/shared/api/services'
 import { REFRESH_TOKEN_KEY } from '@/shared/api/client'
@@ -71,6 +71,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return updated
     })
   }, [])
+
+  // On every page load, silently re-fetch user data from the server so that
+  // admin changes (bypassPaywall, role, subscriptionStatus) take effect
+  // immediately without requiring the user to log out and back in.
+  useEffect(() => {
+    const stored = localStorage.getItem('arcane_user')
+    if (!stored) return // not logged in — nothing to hydrate
+    authApi.me()
+      .then(fresh => persist(fresh))
+      .catch(() => { /* token expired — the 401 interceptor in client.ts handles logout */ })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <AuthContext.Provider value={{ user, login, register, loginWithToken, logout, updateXp, updateStreak }}>

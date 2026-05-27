@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi } from '@/shared/api/services'
-import type { UserCapstone, UserNote, MyStuckReport } from '@/shared/api/services'
+import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi, paymentsApi } from '@/shared/api/services'
+import type { UserCapstone, UserNote, MyStuckReport, SubscriptionStatusResponse } from '@/shared/api/services'
 import { useTopicsDashboard } from '@/hooks/queries'
 import { ACTIVE_TOPICS } from '@/features/topics/data/topics'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, Download } from 'lucide-react'
+import { Trash2, ExternalLink, Download, CreditCard, Zap, Crown, Infinity, CheckCircle } from 'lucide-react'
+import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
-type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'preferences'
+type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'subscription' | 'preferences'
 
 const PALETTES = [
   { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
@@ -32,8 +33,12 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function ProfilePage() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { theme, blizzardPrefs, blizzardAvailable, toggleTheme, setBlizzardPref } = useTheme()
-  const [tab, setTab] = useState<Tab>('overview')
+
+  // Support ?tab=subscription deep-link (e.g. from Stripe portal return URL)
+  const tabParam = searchParams.get('tab') as Tab | null
+  const [tab, setTab] = useState<Tab>(tabParam ?? 'overview')
 
   const [badges, setBadges] = useState<Badge[]>([])
   const [badgesLoading, setBadgesLoading] = useState(false)
@@ -60,6 +65,11 @@ export default function ProfilePage() {
 
   const [reports, setReports] = useState<MyStuckReport[]>([])
   const [reportsLoading, setReportsLoading] = useState(false)
+
+  const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatusResponse | null>(null)
+  const [subLoading, setSubLoading] = useState(false)
+  const [portalLoading, setPortalLoading] = useState(false)
+  const [showUpgradeFromProfile, setShowUpgradeFromProfile] = useState(false)
 
   // Load visibility + overview data on mount
   useEffect(() => {
@@ -88,6 +98,10 @@ export default function ProfilePage() {
       setReportsLoading(true)
       stuckReportApi.mine().then(setReports).finally(() => setReportsLoading(false))
     }
+    if (tab === 'subscription' && !subscriptionStatus && !subLoading) {
+      setSubLoading(true)
+      paymentsApi.getStatus().then(setSubscriptionStatus).finally(() => setSubLoading(false))
+    }
   }, [tab]) // intentionally omitting derived state to avoid re-fetching on every render
 
   async function toggleVisibility() {
@@ -113,6 +127,16 @@ export default function ProfilePage() {
       await notesApi.delete(noteId)
       setNotes(prev => prev.filter(n => n.id !== noteId))
     } catch { /* ignore */ } finally { setDeletingNoteId(null) }
+  }
+
+  async function openBillingPortal() {
+    setPortalLoading(true)
+    try {
+      const url = await paymentsApi.createPortal()
+      window.location.href = url
+    } catch {
+      setPortalLoading(false)
+    }
   }
 
   async function deleteCapstone(capstoneId: string) {
@@ -167,6 +191,7 @@ export default function ProfilePage() {
     { id: 'notes', label: `Notes${notes.length ? ` (${notes.length})` : ''}` },
     { id: 'projects', label: `Projects${capstones.length ? ` (${capstones.length})` : ''}` },
     { id: 'reports', label: `Reports${reports.length ? ` (${reports.length})` : ''}` },
+    { id: 'subscription', label: 'Subscription' },
     { id: 'preferences', label: 'Preferences' },
   ]
 
@@ -515,6 +540,26 @@ export default function ProfilePage() {
           </div>
         )}
 
+        {/* Tab: Subscription */}
+        {tab === 'subscription' && (
+          <div className="flex flex-col gap-4">
+            {showUpgradeFromProfile && (
+              <UpgradeModal onClose={() => setShowUpgradeFromProfile(false)} />
+            )}
+
+            {subLoading ? (
+              <div className="text-center py-12 text-muted font-cinzel text-[13px]">Loading…</div>
+            ) : subscriptionStatus ? (
+              <SubscriptionPanel
+                status={subscriptionStatus}
+                onManage={openBillingPortal}
+                onUpgrade={() => setShowUpgradeFromProfile(true)}
+                portalLoading={portalLoading}
+              />
+            ) : null}
+          </div>
+        )}
+
         {/* Tab: Preferences */}
         {tab === 'preferences' && (
           <div className="flex flex-col gap-4">
@@ -741,6 +786,166 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
             🗑
           </button>
         )}
+      </div>
+    </div>
+  )
+}
+
+// ── Subscription panel ────────────────────────────────────────────────────────
+
+const PLAN_META: Record<string, { icon: React.ElementType; color: string; label: string; description: string }> = {
+  FREE:      { icon: Zap,      color: 'var(--muted)',       label: 'Free Plan',     description: 'One discipline included.' },
+  MONTHLY:   { icon: Zap,      color: 'var(--teal)',        label: 'Monthly',       description: 'Billed monthly. Cancel any time.' },
+  ANNUAL:    { icon: Crown,    color: 'var(--gold)',        label: 'Annual',        description: 'Billed annually. ~40% saving.' },
+  LIFETIME:  { icon: Infinity, color: 'var(--purple-light)', label: 'Lifetime',    description: 'One-time purchase. Never expires.' },
+  CANCELLED: { icon: Zap,      color: '#f87171',            label: 'Cancelled',    description: 'Access continues until period end.' },
+}
+
+function SubscriptionPanel({
+  status,
+  onManage,
+  onUpgrade,
+  portalLoading,
+}: {
+  status: SubscriptionStatusResponse
+  onManage: () => void
+  onUpgrade: () => void
+  portalLoading: boolean
+}) {
+  const meta = PLAN_META[status.status] ?? PLAN_META.FREE
+  const Icon = meta.icon
+
+  const periodEndDate = status.periodEnd
+    ? new Date(status.periodEnd).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : null
+
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Current plan card */}
+      <div className="bg-card border border-border rounded-[14px] p-6">
+        <div className="flex items-center gap-4 mb-4">
+          <div
+            className="w-11 h-11 rounded-[12px] flex items-center justify-center flex-shrink-0"
+            style={{ background: `color-mix(in srgb, ${meta.color} 15%, transparent)` }}
+          >
+            <Icon size={20} strokeWidth={1.75} color={meta.color} />
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <span className="font-cinzel text-[17px] font-bold text-text">{meta.label}</span>
+              {status.active && (
+                <span className="flex items-center gap-1 text-[11px] text-teal font-cinzel">
+                  <CheckCircle size={11} strokeWidth={2.5} />
+                  Active
+                </span>
+              )}
+            </div>
+            <p className="text-[12px] text-muted mt-0.5">{meta.description}</p>
+          </div>
+        </div>
+
+        {/* Period end */}
+        {periodEndDate && (
+          <div
+            className="mb-4 px-4 py-3 rounded-[10px] border text-[13px]"
+            style={{
+              borderColor: status.status === 'CANCELLED' ? 'rgba(248,113,113,0.25)' : 'rgba(201,162,39,0.25)',
+              background:  status.status === 'CANCELLED' ? 'rgba(248,113,113,0.05)' : 'rgba(201,162,39,0.05)',
+              color: status.status === 'CANCELLED' ? '#f87171' : 'var(--gold)',
+            }}
+          >
+            {status.status === 'CANCELLED'
+              ? `Access ends ${periodEndDate}`
+              : `Next renewal: ${periodEndDate}`}
+          </div>
+        )}
+
+        {/* CTAs */}
+        <div className="flex gap-3 flex-wrap">
+          {status.status === 'FREE' && (
+            <button
+              onClick={onUpgrade}
+              className="px-5 py-2.5 rounded-[9px] font-cinzel text-[13px] font-semibold cursor-pointer
+                transition-[background] duration-150"
+              style={{
+                background: 'linear-gradient(135deg, var(--gold), color-mix(in srgb, var(--gold) 70%, var(--purple-light)))',
+                color: '#1a1a2e',
+              }}
+            >
+              Upgrade to Premium
+            </button>
+          )}
+
+          {(status.status === 'MONTHLY' || status.status === 'ANNUAL') && status.hasStripeCustomer && (
+            <button
+              onClick={onManage}
+              disabled={portalLoading}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-[9px] font-cinzel text-[13px]
+                border border-border text-muted hover:border-gold hover:text-gold
+                transition-[border-color,color] duration-150 disabled:opacity-50 cursor-pointer"
+            >
+              <CreditCard size={14} strokeWidth={1.75} />
+              {portalLoading ? 'Opening…' : 'Manage Subscription'}
+            </button>
+          )}
+
+          {status.status === 'CANCELLED' && status.hasStripeCustomer && (
+            <>
+              <button
+                onClick={onUpgrade}
+                className="px-5 py-2.5 rounded-[9px] font-cinzel text-[13px] font-semibold cursor-pointer
+                  transition-[background] duration-150"
+                style={{
+                  background: 'linear-gradient(135deg, var(--gold), color-mix(in srgb, var(--gold) 70%, var(--purple-light)))',
+                  color: '#1a1a2e',
+                }}
+              >
+                Re-subscribe
+              </button>
+              <button
+                onClick={onManage}
+                disabled={portalLoading}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-[9px] font-cinzel text-[13px]
+                  border border-border text-muted hover:border-muted
+                  transition-[border-color,color] duration-150 disabled:opacity-50 cursor-pointer"
+              >
+                <CreditCard size={14} strokeWidth={1.75} />
+                {portalLoading ? 'Opening…' : 'Billing History'}
+              </button>
+            </>
+          )}
+
+          {status.status === 'LIFETIME' && (
+            <div className="px-4 py-2 rounded-[9px] border border-[rgba(196,181,253,0.3)]
+              bg-[rgba(196,181,253,0.06)] font-cinzel text-[12px] text-purple-light">
+              ✦ Lifetime member — no further action needed
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* What's included */}
+      <div className="bg-card border border-border rounded-[14px] p-5">
+        <div className="font-cinzel text-[12px] tracking-[0.1em] text-muted uppercase mb-3">What's Included</div>
+        <ul className="flex flex-col gap-2">
+          {[
+            ['✦', 'Your first discipline — always free, all tiers'],
+            ['🔓', status.active ? 'All disciplines unlocked' : 'Additional disciplines (subscription required)'],
+            ['📚', 'Spaced-repetition review system'],
+            ['🏆', 'Badges, XP, ranks & leaderboards'],
+            ['🧠', 'AI mentor feedback on written practice'],
+          ].map(([icon, text]) => (
+            <li key={text} className="flex items-center gap-3 text-[13px]">
+              <span className="text-[14px] flex-shrink-0">{icon}</span>
+              <span className={cn(
+                'leading-[1.5]',
+                text.includes('subscription required') && !status.active
+                  ? 'text-muted'
+                  : 'text-text',
+              )}>{text}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

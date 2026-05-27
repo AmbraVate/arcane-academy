@@ -1,12 +1,14 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { useTopicsDashboard } from '@/hooks/queries'
 import { TopicIcon } from '@/components/icons/TopicIcon'
 import { Badge } from '@/components/ui/badge'
-import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight, RotateCcw, LifeBuoy, ChevronDown } from 'lucide-react'
+import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight, RotateCcw, LifeBuoy, ChevronDown, CheckCircle, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ACTIVE_TOPICS, ACTIVE_TOPIC_IDS, COMING_SOON_TOPICS, type Topic } from '@/features/topics/data/topics'
+import { hasActiveSubscription } from '@/shared/types'
+import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 
@@ -246,9 +248,24 @@ function TopicCard({
 /* ── Page ────────────────────────────────────────────────────────────────── */
 
 export default function HomePage() {
-  const { user }  = useAuth()
-  const navigate  = useNavigate()
-  const rawData   = useTopicsDashboard(ACTIVE_TOPIC_IDS)
+  const { user }        = useAuth()
+  const navigate        = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const rawData         = useTopicsDashboard(ACTIVE_TOPIC_IDS)
+
+  const [showUpgrade, setShowUpgrade]     = useState(false)
+  const [paymentBanner, setPaymentBanner] = useState<'success' | 'cancelled' | null>(null)
+
+  // Handle return from Stripe Checkout
+  useEffect(() => {
+    const payment = searchParams.get('payment')
+    if (payment === 'success' || payment === 'cancelled') {
+      setPaymentBanner(payment)
+      setSearchParams({}, { replace: true })
+      const timer = setTimeout(() => setPaymentBanner(null), 6000)
+      return () => clearTimeout(timer)
+    }
+  }, [searchParams, setSearchParams])
 
   // Normalise dashboard data
   const topicData: Record<string, TopicData> = Object.fromEntries(
@@ -269,8 +286,8 @@ export default function HomePage() {
     const d = topicData[t.id]
     return d && (d.progress > 0 || d.diagnosticCompleted)
   })
-  const hasEnrollments   = enrolledTopics.length > 0
-  const canBypassPaywall = user?.role === 'ADMIN' || user?.bypassPaywall === true
+  const hasEnrollments = enrolledTopics.length > 0
+  const canUnlock      = hasActiveSubscription(user)
 
   // Unenrolled active topics
   const unenrolledActive = ACTIVE_TOPICS.filter(t => !enrolledTopics.find(e => e.id === t.id))
@@ -281,6 +298,10 @@ export default function HomePage() {
     navigate(needsOnboarding ? `/topic/${topic.id}/onboarding` : `/topic/${topic.id}`)
   }
 
+  function handleLockedTopicClick() {
+    setShowUpgrade(true)
+  }
+
   // Greeting personalisation
   const firstName = user?.username?.split(/[^a-zA-Z]/)[0] ?? 'Scholar'
   const greeting  = hasEnrollments ? `Welcome back, ${firstName}` : `Welcome to the Academy, ${firstName}`
@@ -288,6 +309,28 @@ export default function HomePage() {
   /* ── Render ─────────────────────────────────────────────────────────────── */
   return (
     <div className="max-w-[860px] mx-auto px-5 py-8 pb-20 overflow-y-auto max-[600px]:px-4 max-[600px]:py-6">
+
+      {/* Upgrade modal */}
+      {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} />}
+
+      {/* Payment return banner */}
+      {paymentBanner && (
+        <div
+          className={cn(
+            'mb-6 flex items-center gap-3 px-4 py-3 rounded-[10px] border text-[13px]',
+            paymentBanner === 'success'
+              ? 'border-teal/30 bg-teal/5 text-teal'
+              : 'border-border bg-card text-muted',
+          )}
+        >
+          {paymentBanner === 'success'
+            ? <CheckCircle size={16} strokeWidth={2} />
+            : <XCircle size={16} strokeWidth={2} />}
+          {paymentBanner === 'success'
+            ? 'Payment successful — your subscription is now active. Welcome to the full Academy!'
+            : 'Checkout cancelled. Your subscription has not changed.'}
+        </div>
+      )}
 
       {/* ── Hero ───────────────────────────────────────────────────────────── */}
       <div className="mb-10">
@@ -382,35 +425,46 @@ export default function HomePage() {
       )}
 
       {/* ── Active unenrolled / paywall ─────────────────────────────────────── */}
-      {(unenrolledActive.length > 0 || (hasEnrollments && !canBypassPaywall)) && (
+      {(unenrolledActive.length > 0 || hasEnrollments) && (
         <section className="mb-10">
           <SectionHeading>
             {hasEnrollments ? 'More Disciplines' : 'Choose Your First Discipline'}
           </SectionHeading>
 
-          {/* When user has enrollment and can't bypass: paywall callout */}
-          {hasEnrollments && !canBypassPaywall && unenrolledActive.length > 0 && (
-            <div className="mb-4 flex items-start gap-3 px-4 py-3.5 rounded-[10px]
-              border border-[rgba(201,162,39,0.25)] bg-[rgba(201,162,39,0.05)]">
-              <span className="text-gold text-[16px] flex-shrink-0 mt-0.5">🔒</span>
-              <p className="text-[13px] text-muted leading-[1.6] m-0">
-                Additional disciplines unlock with a premium subscription — coming soon.
-                Master your current path first.
-              </p>
+          {/* When user has enrollments and no subscription: upgrade prompt */}
+          {hasEnrollments && !canUnlock && unenrolledActive.length > 0 && (
+            <div
+              onClick={() => setShowUpgrade(true)}
+              className="mb-4 flex items-center gap-3 px-4 py-3.5 rounded-[10px]
+                border border-[rgba(201,162,39,0.35)] bg-[rgba(201,162,39,0.05)]
+                cursor-pointer hover:bg-[rgba(201,162,39,0.09)] transition-colors"
+            >
+              <span className="text-gold text-[18px] flex-shrink-0">🔒</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] text-text leading-[1.5] m-0 font-semibold">
+                  Unlock all disciplines with a subscription
+                </p>
+                <p className="text-[12px] text-muted leading-[1.5] m-0">
+                  Monthly from £6.99 · Annual from £49.99 · Lifetime £99
+                </p>
+              </div>
+              <span className="text-[12px] font-cinzel text-gold whitespace-nowrap">
+                View plans →
+              </span>
             </div>
           )}
 
           <div className="grid gap-3"
             style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
             {unenrolledActive.map(topic => {
-              const isLocked = hasEnrollments && !canBypassPaywall
+              const isLocked = hasEnrollments && !canUnlock
               return (
                 <TopicCard
                   key={topic.id}
                   topic={topic}
                   isLocked={isLocked}
                   canEnrol={!isLocked}
-                  onClick={() => handleTopicClick(topic)}
+                  onClick={isLocked ? handleLockedTopicClick : () => handleTopicClick(topic)}
                 />
               )
             })}

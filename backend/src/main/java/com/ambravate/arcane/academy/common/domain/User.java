@@ -86,4 +86,48 @@ public class User {
         return role != null ? role : UserRole.USER;
     }
 
+    // ── Stripe / Subscription ─────────────────────────────────────────────────
+
+    /**
+     * Current subscription tier. Defaults to FREE (one topic allowed).
+     * Updated by the Stripe webhook controller on payment events.
+     */
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private SubscriptionStatus subscriptionStatus = SubscriptionStatus.FREE;
+
+    /**
+     * When the current billing period ends (epoch).
+     * Null for FREE and LIFETIME subscribers.
+     * Used to maintain access after cancellation until the paid period expires.
+     */
+    private Instant subscriptionPeriodEnd;
+
+    /**
+     * Stripe's customer ID (cus_...). Created on the user's first checkout session.
+     * Required to open the Stripe Customer Portal.
+     */
+    private String stripeCustomerId;
+
+    /**
+     * Stripe's subscription ID (sub_...). Null for one-time LIFETIME purchases.
+     * Used to correlate subscription lifecycle webhook events back to this user.
+     */
+    private String stripeSubscriptionId;
+
+    /**
+     * Returns true when this user has an active paid subscription that grants
+     * access to all topics. Takes cancellation grace periods into account.
+     */
+    public boolean hasActiveSubscription() {
+        if (subscriptionStatus == null) return false;
+        return switch (subscriptionStatus) {
+            case MONTHLY, ANNUAL -> subscriptionPeriodEnd != null && Instant.now().isBefore(subscriptionPeriodEnd);
+            // CANCELLED: keep access until the period end the user already paid for
+            case CANCELLED -> subscriptionPeriodEnd != null && Instant.now().isBefore(subscriptionPeriodEnd);
+            case LIFETIME -> true;
+            case FREE -> false;
+        };
+    }
+
 }

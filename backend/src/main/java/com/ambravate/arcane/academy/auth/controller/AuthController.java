@@ -4,11 +4,13 @@ import com.ambravate.arcane.academy.auth.dto.AuthResponse;
 import com.ambravate.arcane.academy.auth.dto.LoginRequest;
 import com.ambravate.arcane.academy.auth.dto.RegisterRequest;
 import com.ambravate.arcane.academy.auth.service.AuthService;
+import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -28,6 +30,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<AuthResponse> me(@AuthenticationPrincipal UserPrincipal principal) {
+        return ResponseEntity.ok(authService.getMe(principal.getId()));
     }
 
     @GetMapping("/check-username")

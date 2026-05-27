@@ -1,0 +1,128 @@
+{
+  "id": "sci-lea-12",
+  "topicId": "sciences",
+  "tier": "LEAD",
+  "title": "Scientific Leadership & Managing Research Teams",
+  "glyph": "👩‍🔬",
+  "sortOrder": 12,
+  "prerequisites": ["sci-lea-11"],
+  "xpReward": 100,
+  "practiceType": "NONE",
+  "subChunks": [
+    {
+      "id": "sci-lea-12a",
+      "title": "Scientific Leadership & Managing Research Teams",
+      "practiceType": "NONE",
+      "xpReward": 100,
+      "hookHtml": "<p>Theodora set down her coffee and surveyed the chaos of her lab: three PhD students arguing over a dataset, a postdoc running a gel for the fifth time, and an undergraduate somewhere in a storage cupboard retrieving a reagent that had been mislabelled. She had solved equations that described the heat death of the universe, but managing a research team, she had confided to a colleague, was demonstrably harder.</p><p>\"The dirty secret of science,\" she told her newest doctoral student, who had arrived expecting intellectual grandeur, \"is that most of your time will be spent on human beings — their anxieties, their miscommunications, their competing agendas, their need for recognition and for someone to notice when they are struggling. Science is a social enterprise. Lead it poorly and the best minds leave. Lead it well and the work sings.\"</p><p>Scientific leadership is a discipline distinct from scientific expertise, yet it is rarely taught formally. Researchers ascend the career ladder on the strength of their technical skill and publication record, then find themselves responsible for budgets, personnel decisions, welfare concerns, intellectual property disputes, and the careers of junior colleagues who are watching their every move. Understanding what good scientific leadership looks like — and the structural forces that make it difficult — is essential for anyone who aspires to run a research programme.</p>",
+      "explanationHtml": "<h3>The Transition from Scientist to Leader</h3><p>The move from PhD student or postdoc to principal investigator (PI) or group leader represents one of the sharpest transitions in any professional career. Overnight, a researcher who has been responsible primarily for their own experiments becomes responsible for the intellectual direction, career development, welfare, and day-to-day management of a team that may include students, postdocs, technicians, and visiting researchers.</p><p>This transition is poorly scaffolded in most institutions. Leadership skills are rarely part of doctoral training, mentoring culture is highly variable, and early-career researchers often receive their first PI position without any formal instruction in management, HR, or organisational behaviour. The result is that many scientists lead by imitation — replicating the style of their own supervisor, whether good or bad — or improvise, discovering through costly mistakes what could have been learned in advance.</p><h3>Core Competencies of Research Leadership</h3><p>Research leadership draws on several distinct competencies. <strong>Scientific vision</strong> involves setting a coherent intellectual agenda, identifying high-priority questions, and making strategic decisions about where to focus limited resources. <strong>Mentoring and supervision</strong> requires different approaches for different career stages: undergraduate students need structured guidance and frequent feedback; PhD students need increasing autonomy balanced with support at key decision points; postdocs need opportunities to develop independent identity rather than simply executing the PI's agenda.</p><p><strong>Communication</strong> operates in multiple directions simultaneously: upward (to funders, department heads, institutional leadership), laterally (to collaborators, reviewers, peer scientists), and downward (to team members). Effective leaders communicate the <em>why</em> as well as the <em>what</em> — team members who understand the significance of their work show greater persistence and creativity than those who are simply executing tasks.</p><p><strong>Conflict resolution</strong> is a nearly universal requirement. Disputes over authorship, credit, data ownership, and intellectual priority are endemic to research environments. A PI who avoids these conflicts, hoping they will resolve themselves, typically sees them escalate; those who address them early and transparently tend to preserve both relationships and productivity.</p><h3>Building and Sustaining High-Functioning Teams</h3><p>Research on team performance — much of it originating in organisational psychology — identifies several features of high-functioning research groups. <strong>Psychological safety</strong>, a concept developed by Amy Edmondson at Harvard Business School, refers to a shared belief that the team is safe for interpersonal risk-taking: that raising problems, admitting errors, and proposing unconventional ideas will not result in punishment or humiliation. Groups with high psychological safety identify problems earlier, fail fast, and learn more efficiently than those in which members conceal difficulties.</p><p>High-functioning groups also tend to have <strong>clear role definitions</strong> — everyone understands who is responsible for what — combined with sufficient <strong>autonomy</strong> that members feel ownership of their work. The tension between structure (which prevents duplication and confusion) and autonomy (which supports creativity and motivation) must be actively managed rather than left to resolve itself.</p><p><strong>Inclusive practice</strong> is increasingly recognised as both an ethical requirement and a performance driver. Research groups that include members from diverse backgrounds, career stages, and disciplinary perspectives produce more creative solutions and are better at identifying their own blind spots. Conversely, groups dominated by a single demographic or intellectual tradition tend toward groupthink and have higher rates of harassment and exclusion — problems that drive talented researchers out of science entirely.</p><h3>Research Culture and its Dysfunction</h3><p>Research culture — the values, norms, and behaviours that characterise a field or institution — is not neutral. The UKRI-commissioned Wellcome Trust research culture report (2020) and subsequent surveys have documented widespread problems: overwork, poor work-life balance, exploitation of junior researchers, competitive norms that discourage collaboration and data sharing, and a widespread reluctance to report misconduct for fear of professional consequences.</p><p>Many of these problems trace to incentive structures. When hiring, promotion, and grant success depend overwhelmingly on publication quantity and impact factor, individual researchers face strong pressure to prioritise outputs over people. PIs who run their groups well — who invest time in mentoring, who are transparent about failure, who maintain humane working conditions — are not systematically rewarded over those who are exploitative but highly productive. Reforming research culture therefore requires structural change (in how scientists are assessed and rewarded) as much as behavioural change at the individual level.</p><h3>Practical Leadership Tools</h3><p>Several concrete practices are associated with better-led research groups. Regular one-to-one meetings between PI and each team member — not just group meetings — allow individual concerns to surface before they become crises. <strong>Group lab meetings</strong> serve multiple functions: knowledge sharing, developing critical appraisal skills, and building cohesion; but they need careful facilitation to avoid becoming performative or dominated by the most confident voices.</p><p><strong>Onboarding</strong> — the deliberate process of integrating new team members into the group's culture, methods, and expectations — is frequently neglected. A new PhD student left to sink or swim in week one may never develop the confidence or social capital needed to thrive. A well-designed onboarding process (introductions to key people, clear documentation of protocols, explicit discussion of expectations around working hours, authorship, and communication) dramatically reduces early dropout and increases long-term retention.</p><p>Finally, <strong>succession planning</strong> — thinking deliberately about how team members will transition out of the group and into their next role — is an ethical responsibility of leadership. A postdoc who has spent four years advancing a PI's agenda deserves active support in developing a career beyond that group, not just a reference letter and good wishes.</p>",
+      "storyBeats": [
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "Theodora opened a lab notebook — not hers, but one belonging to a former student. 'He was brilliant,' she said quietly. 'Left science in his third year. When I finally talked to him, he said he'd never once felt safe to admit he was struggling. That's on me.'"
+        },
+        {
+          "av": "🎓",
+          "cls": "learner",
+          "sCls": "learner",
+          "text": "I always thought leadership was about having good ideas and communicating them. You're describing something much more... human."
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'Human is exactly right. The science happens inside people's heads, and people's heads are complicated. Your job as a leader is to create the conditions under which good thinking is possible — and that means attending to safety, fairness, recognition, and belonging just as rigorously as you attend to methodology.'"
+        },
+        {
+          "av": "🎓",
+          "cls": "learner",
+          "sCls": "learner",
+          "text": "But there's so much pressure to produce — to publish, to get grants. How do you lead well when the system rewards something different?"
+        },
+        {
+          "av": "📜",
+          "cls": "mentor",
+          "sCls": "mentor",
+          "text": "'That tension is real, and I won't pretend otherwise. But you have more latitude than you think. You can choose how you run your group regardless of what the system rewards. You can be the leader you wish you'd had. Not everyone does. That difference shows up in who stays in science, and who leaves carrying wounds.'"
+        }
+      ],
+      "feynmanPrompt": "Explain the concept of 'psychological safety' in a research team to a first-year undergraduate who has never managed anyone. Why does it matter for scientific productivity?",
+      "learningObjectives": [
+        "Describe the key transition challenges researchers face when moving from practitioner to principal investigator",
+        "Identify core competencies of effective scientific leadership including mentoring, communication, and conflict resolution",
+        "Explain how psychological safety and inclusive practice affect research team performance",
+        "Critically analyse the structural barriers to good research culture and propose evidence-based improvements"
+      ],
+      "commonMistakes": [
+        "Assuming that technical expertise automatically confers leadership ability — the skills are distinct and the transition requires deliberate effort",
+        "Treating all team members identically rather than adapting mentoring style to career stage and individual need",
+        "Avoiding conflict rather than addressing authorship, credit, or interpersonal disputes early when they are most resolvable",
+        "Attributing poor research culture solely to individual bad actors rather than recognising the role of perverse incentive structures"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates sophisticated understanding of the competencies required for scientific leadership beyond technical expertise",
+        "Shows awareness of evidence on team performance, psychological safety, and inclusive practice in research contexts",
+        "Critically engages with systemic drivers of poor research culture rather than offering only individualist solutions",
+        "Proposes practical, evidence-informed strategies appropriate to the realities of academic research environments"
+      ],
+      "guidedPracticeHtml": "<p>A PI you know runs a high-output lab with a strong publication record. However, three postdocs have left in two years, PhD student completion rates are below departmental average, and a technician has raised an informal HR concern about working hours. The PI insists these are isolated issues and that the lab's success speaks for itself.</p><p>Drawing on concepts from this chunk: (a) identify at least three specific leadership or culture problems that may be occurring in this lab; (b) explain what evidence-based interventions the PI could adopt; (c) discuss the structural incentives that may be enabling this situation to persist.</p>",
+      "guidedPracticeModelAnswer": "<p>The pattern of postdoc turnover, low PhD completion, and an HR concern suggests systemic culture problems rather than isolated incidents. Possible issues include: (a) insufficient psychological safety — team members may not feel able to raise problems without professional consequences; poor mentoring practice — postdocs may be treated as technical labour rather than developing independent scientists; unsustainable working norms enforced informally through the PI's own behaviour; and inadequate conflict resolution, with grievances accumulating rather than being addressed early.</p><p>Evidence-based interventions could include: introducing structured one-to-one meetings to surface concerns early; explicit lab culture discussions (some PIs use 'lab compacts' or co-authored agreements); onboarding protocols for new members; and seeking mentoring training. The department could require exit interviews and make completion/retention data visible to hiring committees.</p><p>Structurally, the situation persists because the PI is rewarded for publications, not for training quality or retention. Until hiring, promotion, and grant panels weight mentoring outcomes and team welfare alongside output metrics, individual PIs face weak incentives to change. Reform requires both individual behaviour change and systemic recalibration of what counts as scientific success.</p>",
+      "soloPracticeHtml": "<p>Reflect on a research or educational team you have been part of (as student, employee, or collaborator). Using the frameworks in this chunk — psychological safety, inclusive practice, mentoring, role clarity, incentive structures — analyse what the leadership of that team did well and where there were failures. What would you do differently if you were the leader?</p>",
+      "modelAnswer": "<p>Strong responses will apply the frameworks from the chunk to a specific, concrete situation rather than giving generic observations. They will distinguish between individual leadership behaviours and structural factors, avoid simplistic blame, and show awareness of the difficulty of leading well in environments that may not reward good practice. High-quality responses will identify specific interventions — not just diagnose problems — and reflect on why particular approaches are appropriate for the context described.</p>",
+      "rabbitHoleTerms": [
+        {"term": "Psychological safety", "description": "Amy Edmondson's concept describing a team climate in which members believe they can speak up, admit errors, and take interpersonal risks without punishment — associated with learning, innovation, and error detection."},
+        {"term": "Lab compact", "description": "A collaboratively written document establishing shared norms, expectations, and values for a research group — used to make implicit culture explicit and negotiable."},
+        {"term": "Research culture", "description": "The values, norms, practices, and power structures that characterise how science is done in a field or institution — increasingly the subject of policy reform efforts."},
+        {"term": "Principal investigator (PI)", "description": "The lead researcher on a grant or project, typically a faculty member or group leader responsible for scientific direction, personnel management, and financial oversight."},
+        {"term": "Succession planning in academia", "description": "The practice of deliberately preparing group members for career transitions beyond the current lab — an ethical responsibility of scientific leaders that is frequently neglected."},
+        {"term": "Onboarding", "description": "The process of integrating new team members into a group's culture, methods, and expectations — when done well, strongly associated with retention and early productivity."}
+      ],
+      "questions": [
+        {
+          "id": "sci-lea-12a-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "question": "What does Amy Edmondson's concept of 'psychological safety' refer to in the context of research teams?",
+          "options": [
+            "A shared belief that team members can take interpersonal risks without fear of punishment or humiliation",
+            "Physical safety protocols in laboratory environments including PPE and hazard management",
+            "Job security guarantees provided to postdoctoral researchers by their institutions",
+            "Confidentiality agreements that protect researchers from having their ideas stolen"
+          ],
+          "correctAnswer": "A shared belief that team members can take interpersonal risks without fear of punishment or humiliation",
+          "explanationHtml": "<p>Psychological safety, developed by Amy Edmondson, refers to a team climate in which members believe they can raise problems, admit errors, propose unconventional ideas, and take interpersonal risks without professional punishment. It is associated with earlier problem identification and better learning outcomes, not with physical safety or job security.</p>"
+        },
+        {
+          "id": "sci-lea-12a-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "question": "A new postdoc joins a lab and is given a project with minimal introduction, unclear expectations, and no scheduled meetings with the PI. Three months in, they have not made progress and are reluctant to ask for help. Which leadership failure best explains this situation?",
+          "options": [
+            "Poor onboarding and insufficient structured mentoring for the postdoc's career stage",
+            "Inadequate technical expertise on the part of the PI in the relevant research area",
+            "Failure to apply for sufficient grant funding to resource the project properly",
+            "Absence of lab safety protocols governing chemical and biological hazard management"
+          ],
+          "correctAnswer": "Poor onboarding and insufficient structured mentoring for the postdoc's career stage",
+          "explanationHtml": "<p>The scenario describes a classic onboarding failure: no structured integration, unclear expectations, and no regular contact with the PI. The postdoc's reluctance to seek help suggests low psychological safety in addition. This is a mentoring and management failure, not a technical or financial one. Effective onboarding and regular one-to-one meetings are among the most evidence-supported interventions for early-stage researcher retention.</p>"
+        },
+        {
+          "id": "sci-lea-12a-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "question": "Which of the following most accurately characterises the relationship between individual leadership behaviour and systemic research culture?",
+          "options": [
+            "Individual leaders can create positive local cultures, but systemic change requires reform of incentive structures such as how promotion and grants are awarded",
+            "Research culture is determined entirely by individual PI behaviour; systemic factors are irrelevant to culture problems",
+            "Incentive structures are the only meaningful driver of research culture; individual leaders have no meaningful agency",
+            "Research culture problems are primarily caused by insufficient government funding rather than by management practices"
+          ],
+          "correctAnswer": "Individual leaders can create positive local cultures, but systemic change requires reform of incentive structures such as how promotion and grants are awarded",
+          "explanationHtml": "<p>The correct answer reflects the nuanced position in the chunk: individual leaders have real agency and can make a meaningful difference within their groups, but the persistence of poor culture across science as a whole reflects structural incentives that reward high publication output regardless of how teams are led. Sustained culture change therefore requires both individual behaviour change and systemic reform of evaluation and reward mechanisms — neither alone is sufficient.</p>"
+        }
+      ]
+    }
+  ]
+}

@@ -159,6 +159,7 @@ public class AdminStatsService {
                 .role(u.getRole().name())
                 .blocked(u.isBlocked())
                 .bypassPaywall(u.isBypassPaywall())
+                .subscriptionStatus(u.getSubscriptionStatus() != null ? u.getSubscriptionStatus().name() : "FREE")
                 .createdAt(u.getCreatedAt())
                 .lastLoginAt(u.getLastLoginAt())
                 .completedSubChunks(completedCount)

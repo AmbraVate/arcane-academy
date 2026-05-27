@@ -134,6 +134,13 @@
       <version>${bucket4j.version}</version>
     </dependency>
 
+    <!-- Stripe — payment processing -->
+    <dependency>
+      <groupId>com.stripe</groupId>
+      <artifactId>stripe-java</artifactId>
+      <version>26.4.0</version>
+    </dependency>
+
     <!-- Flyway — versioned SQL migrations; replaces ddl-auto:update -->
     <dependency>
       <groupId>org.flywaydb</groupId>

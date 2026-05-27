@@ -1,9 +1,24 @@
 // ── Auth ──────────────────────────────────────────────────────────────────────
+export type SubscriptionStatus = 'FREE' | 'MONTHLY' | 'ANNUAL' | 'LIFETIME' | 'CANCELLED'
+
 export interface User {
   userId: string; username: string; totalXp: number; rank: string; streakDays: number; token: string
   role?: 'USER' | 'ADMIN'
   /** Admin-granted flag allowing enrolment in multiple topics without a subscription. */
   bypassPaywall?: boolean
+  /** Current billing status. FREE = one topic allowed; MONTHLY/ANNUAL/LIFETIME = full access. */
+  subscriptionStatus?: SubscriptionStatus
+}
+
+/** Returns true when the user has full, active access to all topics. */
+export function hasActiveSubscription(user?: User | null): boolean {
+  if (!user) return false
+  if (user.role === 'ADMIN' || user.bypassPaywall) return true
+  return (
+    user.subscriptionStatus === 'MONTHLY' ||
+    user.subscriptionStatus === 'ANNUAL' ||
+    user.subscriptionStatus === 'LIFETIME'
+  )
 }
 
 // ── Shared (kept from old system) ────────────────────────────────────────────

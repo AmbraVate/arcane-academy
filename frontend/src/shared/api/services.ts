@@ -5,6 +5,7 @@ import type {
   RetrievalResultDto, ReviewSessionDto, ReviewResultDto,
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
   RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
+  SubscriptionStatus,
 } from '@/shared/types'
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
@@ -20,6 +21,12 @@ export const authApi = {
   },
   login: async (email: string, password: string): Promise<User> => {
     const { data } = await api.post('/api/auth/login', { email, password })
+    storeRefreshToken(data)
+    return data
+  },
+  /** Fetch fresh user data from the server (picks up admin changes to bypassPaywall etc.) */
+  me: async (): Promise<User> => {
+    const { data } = await api.get('/api/auth/me')
     storeRefreshToken(data)
     return data
   },
@@ -413,6 +420,47 @@ export const notesApi = {
   },
   delete: async (noteId: string): Promise<void> => {
     await api.delete(`/api/notes/${noteId}`)
+  },
+}
+
+// ── Payments ─────────────────────────────────────────────────────────────────
+
+export type PlanType = 'MONTHLY' | 'ANNUAL' | 'LIFETIME'
+
+export interface SubscriptionStatusResponse {
+  /** FREE | MONTHLY | ANNUAL | LIFETIME | CANCELLED */
+  status: SubscriptionStatus
+  /** True when the user currently has full access. */
+  active: boolean
+  /** ISO string — when the current billing period ends. Null for FREE / LIFETIME. */
+  periodEnd: string | null
+  /** Whether the user has a Stripe customer record (has ever paid). */
+  hasStripeCustomer: boolean
+}
+
+export const paymentsApi = {
+  /**
+   * Creates a Stripe Checkout Session for the given plan.
+   * Returns the Stripe-hosted checkout URL to redirect the user to.
+   */
+  createCheckout: async (planType: PlanType): Promise<string> => {
+    const { data } = await api.post('/api/payments/checkout', { planType })
+    return data.url as string
+  },
+
+  /**
+   * Creates a Stripe Customer Portal session.
+   * Returns the Stripe-hosted portal URL to redirect the user to.
+   */
+  createPortal: async (): Promise<string> => {
+    const { data } = await api.post('/api/payments/portal')
+    return data.url as string
+  },
+
+  /** Returns the current user's subscription status. */
+  getStatus: async (): Promise<SubscriptionStatusResponse> => {
+    const { data } = await api.get('/api/payments/status')
+    return data
   },
 }
 

@@ -162,6 +162,13 @@ public class AuthService {
         return buildResponse(user, token);
     }
 
+    public AuthResponse getMe(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
+        return buildResponse(user, token);
+    }
+
     public boolean isUsernameAvailable(String username) {
         return !userRepository.existsByUsername(username);
     }
@@ -171,6 +178,9 @@ public class AuthService {
     }
 
     private AuthResponse buildResponse(User user, String token) {
+        String subStatus = user.getSubscriptionStatus() != null
+                ? user.getSubscriptionStatus().name()
+                : "FREE";
         return AuthResponse.anAuthResponse()
                 .withToken(token)
                 .withRefreshToken(user.getRefreshToken())
@@ -181,6 +191,7 @@ public class AuthService {
                 .withStreakDays(user.getStreakDays())
                 .withRole(user.getRole().name())
                 .withBypassPaywall(user.isBypassPaywall())
+                .withSubscriptionStatus(subStatus)
                 .build();
     }
 }

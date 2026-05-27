@@ -50,6 +50,18 @@ jwt:
 app:
   oauth2:
     redirect-uri: ${OAUTH2_FRONTEND_REDIRECT:http://localhost:5173/oauth2/callback}
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+
+# Stripe — payment processing.
+# Set all values via environment variables in production.
+# Create products + prices in your Stripe dashboard and paste the Price IDs below.
+# Use test keys (sk_test_...) during development; switch to live keys (sk_live_...) in prod.
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_replace_with_your_key}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_replace_with_your_secret}
+  price-id-monthly: ${STRIPE_PRICE_ID_MONTHLY:price_replace_monthly}
+  price-id-annual:  ${STRIPE_PRICE_ID_ANNUAL:price_replace_annual}
+  price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME:price_replace_lifetime}
 
 # Anthropic config kept for reference but AiMentorService no longer makes API calls
 anthropic:
