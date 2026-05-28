@@ -1,4 +1,9 @@
 
+# Must do every time
+1. Read `PROJECT_REFERENCE.md` to understand what has been done thus far.
+2. Update `PROJECT_REFERENCE.md` with new information as it comes across it.
+
+
 ## Guides
 The following needs to be applied:
 

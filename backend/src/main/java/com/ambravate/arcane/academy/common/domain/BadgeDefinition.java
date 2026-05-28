@@ -28,10 +28,33 @@ public enum BadgeDefinition {
     SQL_QUERY_OPTIMISER("Query Optimiser", "Master sql-g: Indexes & EXPLAIN \u2014 read the engine's plan", "\u2699\uFE0F", Category.LEARNING),
     SQL_TRACK_MASTER("Cipher's Heir", "Complete every chunk in the SQL track \u2014 Foundation through Expert", "\uD83D\uDDC3\uFE0F", Category.LEARNING),
 
-    // React track milestones \u2014 mirrors the Tailwind minimalism (Foundation/Practitioner + capstone)
+    // React track milestones \u2014 legacy (kept so existing awarded badges are not lost)
+    /** @deprecated Use REACT_APPRENTICE_COMPLETE */
     REACT_HOOK_INITIATE("Hook Initiate", "Master rx-a: Components, props, and your first hook", "\u269B\uFE0F", Category.LEARNING),
+    /** @deprecated Use REACT_JUNIOR_COMPLETE */
     REACT_STATE_WEAVER("State Weaver", "Master rx-b: useEffect, custom hooks, and lifting state", "\uD83E\uDDF6", Category.LEARNING),
+    /** @deprecated Use REACT_LEAD_CAPSTONE */
     REACT_CAPSTONE_COMPLETE("Guild Architect", "Deliver The Guild Portal \u2014 React capstone project", "\uD83C\uDFDB\uFE0F", Category.LEARNING),
+
+    // \u2500\u2500 React tier badges \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    REACT_APPRENTICE_COMPLETE("Interface Apprentice", "Complete all Apprentice React topics", "\u269B\uFE0F", Category.LEARNING),
+    REACT_JUNIOR_COMPLETE("Hook Weaver", "Complete all Junior React topics", "\uD83E\uDDF9", Category.LEARNING),
+    REACT_SENIOR_COMPLETE("State Archmage", "Complete all Senior React topics", "\uD83D\uDD2E", Category.LEARNING),
+    REACT_LEAD_COMPLETE("Guild Architect", "Complete all Lead React topics", "\uD83C\uDFDB\uFE0F", Category.PATH),
+    REACT_APPRENTICE_CAPSTONE("First Component", "Submit your React Apprentice capstone", "\u2728", Category.PATH),
+    REACT_JUNIOR_CAPSTONE("App Deployed", "Submit your React Junior capstone", "\uD83D\uDE80", Category.PATH),
+    REACT_SENIOR_CAPSTONE("State Master", "Submit your React Senior capstone", "\uD83D\uDC8E", Category.PATH),
+    REACT_LEAD_CAPSTONE("Portal Architect", "Submit your React Lead capstone", "\uD83C\uDFC6", Category.PATH),
+
+    // \u2500\u2500 Tailwind tier badges \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    TW_APPRENTICE_COMPLETE("Utility Apprentice", "Complete all Apprentice Tailwind topics", "\uD83C\uDFA8", Category.LEARNING),
+    TW_JUNIOR_COMPLETE("Layout Weaver", "Complete all Junior Tailwind topics", "\u270F\uFE0F", Category.LEARNING),
+    TW_SENIOR_COMPLETE("Design Systems Architect", "Complete all Senior Tailwind topics", "\uD83D\uDDA5\uFE0F", Category.LEARNING),
+    TW_LEAD_COMPLETE("Agency Archmage", "Complete all Lead Tailwind topics", "\uD83C\uDF10", Category.PATH),
+    TW_APPRENTICE_CAPSTONE("First Interface", "Submit your Tailwind Apprentice capstone", "\uD83C\uDFD7\uFE0F", Category.PATH),
+    TW_JUNIOR_CAPSTONE("Layout Mastered", "Submit your Tailwind Junior capstone", "\uD83D\uDCCF", Category.PATH),
+    TW_SENIOR_CAPSTONE("Systems Designer", "Submit your Tailwind Senior capstone", "\uD83C\uDFAF", Category.PATH),
+    TW_LEAD_CAPSTONE("Commission Complete", "Submit your Tailwind Lead capstone", "\uD83C\uDFC6", Category.PATH),
 
     // Non-technical track Foundation milestones (legacy \u2014 superseded by tier badges below)
     PSY_FOUNDATION_COMPLETE("Mind-Walker", "Complete the Apprentice tier of Psychology", "\uD83E\uDDE0", Category.LEARNING),

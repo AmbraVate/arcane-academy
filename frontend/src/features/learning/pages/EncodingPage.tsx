@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useParams, useNavigate } from 'react-router-dom'
 import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi, notesApi, capstoneApi } from '@/shared/api/services'
 import type { UserNote } from '@/shared/api/services'
@@ -521,8 +522,15 @@ export default function EncodingPage() {
     : 'Note'
 
   const notePhaseVisible = encoding
-    ? ['EXPLANATION', 'GUIDED_PRACTICE', 'SOLO_PRACTICE'].includes(encoding.phase)
+    ? ['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'SOLO_PRACTICE'].includes(encoding.phase)
     : false
+
+  // Lock body scroll whenever any full-screen overlay is open (prevents background scroll on iOS)
+  useEffect(() => {
+    const anyOverlayOpen = storyOpen || showTaskOverlay
+    document.body.style.overflow = anyOverlayOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [storyOpen, showTaskOverlay])
 
   async function saveNoteNow() {
     if (!encoding || !subChunkId || !noteContent.trim()) return
@@ -744,10 +752,10 @@ export default function EncodingPage() {
           {/* Mobile task overlay */}
           {showTaskOverlay && (
             <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[640px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
-              <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-8 max-h-[70vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
+              <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-[max(32px,env(safe-area-inset-bottom,32px))] max-h-[75vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
                   <span className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</span>
-                  <button className="btn btn-ghost text-[12px]" onClick={() => setShowTaskOverlay(false)}>✕</button>
+                  <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>✕ Close</button>
                 </div>
                 <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
                 {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
@@ -939,10 +947,10 @@ export default function EncodingPage() {
           {/* Mobile task overlay */}
           {showTaskOverlay && (
             <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[640px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
-              <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-8 max-h-[70vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
+              <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-[max(32px,env(safe-area-inset-bottom,32px))] max-h-[75vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
                   <span className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</span>
-                  <button className="btn btn-ghost text-[12px]" onClick={() => setShowTaskOverlay(false)}>✕</button>
+                  <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>✕ Close</button>
                 </div>
                 <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} subChunkId={encoding.subChunkId} topicId={encoding.topicId} className={proseHtml} />
                 {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
@@ -1326,26 +1334,27 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* Story re-read modal */}
-      {storyOpen && encoding.storyBeats?.length ? (
+      {/* Story re-read modal — rendered in document.body via portal so it covers the Nav on iOS */}
+      {storyOpen && encoding.storyBeats?.length ? createPortal(
         <div
-          className="fixed inset-0 z-[300] flex items-center justify-center p-4"
-          style={{ background: 'rgba(0,0,0,0.72)' }}
+          className="fixed inset-0 z-[9000] flex items-start justify-center p-4"
+          style={{ background: 'rgba(0,0,0,0.80)', paddingTop: 'max(16px, env(safe-area-inset-top, 16px))' }}
           onClick={() => setStoryOpen(false)}
         >
           <div
-            className="relative bg-card border border-[rgba(139,92,246,0.35)] rounded-[16px] w-full max-w-[680px] max-h-[82vh] flex flex-col shadow-[0_8px_48px_rgba(0,0,0,0.6)]"
+            className="relative bg-card border border-[rgba(139,92,246,0.35)] rounded-[16px] w-full max-w-[680px] max-h-[calc(100dvh-32px)] flex flex-col shadow-[0_8px_48px_rgba(0,0,0,0.6)] mt-0"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-border flex-shrink-0">
               <span className="text-[13px] font-bold text-gold tracking-[0.06em] uppercase">📖 Story</span>
-              <button className="btn btn-ghost text-[13px] px-2.5 py-1" onClick={() => setStoryOpen(false)}>✕ Close</button>
+              <button type="button" className="btn btn-ghost text-[13px] px-4 py-2 min-h-[44px]" onClick={() => setStoryOpen(false)}>✕ Close</button>
             </div>
             <div className="overflow-y-auto flex-1 px-5 py-5">
               <StoryPanel beats={encoding.storyBeats} fullPage subChunkId={encoding.subChunkId} topicId={encoding.topicId} rabbitHoleTerms={encoding.rabbitHoleTerms} />
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       ) : null}
 
       {/* StuckButton — only during active practice phases */}
@@ -1353,16 +1362,18 @@ export default function EncodingPage() {
         <StuckButton />
       )}
 
-      {/* Notes floating button — visible during EXPLANATION, GUIDED_PRACTICE, SOLO_PRACTICE */}
+      {/* Notes floating button — bottom-LEFT so it never clashes with StuckButton (bottom-right) */}
       {notePhaseVisible && (
         <button
+          type="button"
           onClick={() => setNotePanelOpen(v => !v)}
           className={cn(
-            'fixed bottom-6 right-6 z-[150] flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-cinzel tracking-wide shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-200',
+            'fixed left-4 z-[150] flex items-center gap-2 px-4 py-2.5 rounded-full text-[12px] font-cinzel tracking-wide shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all duration-200',
             notePanelOpen
               ? 'bg-purple text-white border border-purple'
               : 'bg-card border border-border text-muted hover:border-purple-dim hover:text-text',
           )}
+          style={{ bottom: 'max(24px, env(safe-area-inset-bottom, 24px))' }}
         >
           <StickyNote size={13} strokeWidth={2} />
           {notePanelOpen ? 'Close Notes' : 'Notes'}
@@ -1372,9 +1383,12 @@ export default function EncodingPage() {
         </button>
       )}
 
-      {/* Notes panel — slides up from bottom-right */}
+      {/* Notes panel — slides up from bottom-left */}
       {notePhaseVisible && notePanelOpen && (
-        <div className="fixed bottom-[72px] right-6 z-[140] w-[380px] max-w-[calc(100vw-48px)] bg-card border border-purple-dim rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden animate-[toast-in_0.2s_ease]">
+        <div
+          className="fixed left-4 z-[140] w-[380px] max-w-[calc(100vw-32px)] bg-card border border-purple-dim rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden animate-[toast-in_0.2s_ease]"
+          style={{ bottom: 'calc(max(24px, env(safe-area-inset-bottom, 24px)) + 52px)' }}
+        >
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <div className="flex items-center gap-2">
               <StickyNote size={13} className="text-purple" />
@@ -1384,13 +1398,14 @@ export default function EncodingPage() {
               {noteSaving && <Loader2 size={11} className="animate-spin text-muted" />}
               {noteSaved && !noteSaving && <span className="text-[10px] text-teal font-cinzel">Saved ✓</span>}
               <button
+                type="button"
                 onClick={saveNoteNow}
                 disabled={noteSaving || !noteContent.trim()}
                 className="text-[10px] font-cinzel px-2.5 py-1 rounded-[6px] bg-purple-dim text-purple-light border border-purple disabled:opacity-40 transition-colors hover:bg-purple hover:text-white"
               >
                 Save
               </button>
-              <button onClick={() => setNotePanelOpen(false)} className="text-muted hover:text-text transition-colors p-0.5">
+              <button type="button" onClick={() => setNotePanelOpen(false)} className="text-muted hover:text-text transition-colors p-0.5">
                 <X size={13} />
               </button>
             </div>

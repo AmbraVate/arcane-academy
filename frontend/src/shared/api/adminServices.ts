@@ -26,8 +26,8 @@ export interface AdminSubChunk {
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null
   guidedPracticeHtml: string | null; guidedPracticeStarterCode: string | null
-  guidedPracticeTests: TestCase[] | null
-  soloPracticeHtml: string | null; feynmanPrompt: string | null
+  guidedPracticeTests: TestCase[] | null; guidedPracticeModelAnswer: string | null
+  soloPracticeHtml: string | null; modelAnswer: string | null; feynmanPrompt: string | null
   questionCount: number
   // Structured lesson metadata (Sprint 1)
   learningObjectives: string[] | null

@@ -57,11 +57,11 @@ app:
 # Create products + prices in your Stripe dashboard and paste the Price IDs below.
 # Use test keys (sk_test_...) during development; switch to live keys (sk_live_...) in prod.
 stripe:
-  secret-key: ${STRIPE_SECRET_KEY:sk_test_replace_with_your_key}
-  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_replace_with_your_secret}
-  price-id-monthly: ${STRIPE_PRICE_ID_MONTHLY:price_replace_monthly}
-  price-id-annual:  ${STRIPE_PRICE_ID_ANNUAL:price_replace_annual}
-  price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME:price_replace_lifetime}
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_51Tbhu48LtlZA9QG9SFyIAr7IuLcWJgbhfKrhEeIa5C1pdhWFvy9GGQqnV9OvdutBdVhHsTUzYtngOEtdUNvfhhpo00OVekIgB0}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_cKt0hijH2wohtilbBOFhTJly1o3Rkqw0}
+  price-id-monthly: ${STRIPE_PRICE_ID_MONTHLY:price_1TbiUQ8LtlZA9QG9YIzWvFWi}
+  price-id-annual:  ${STRIPE_PRICE_ID_ANNUAL:price_1TbiXw8LtlZA9QG97qNpidXT}
+  price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME:price_1Tbj8l8LtlZA9QG9AR6lU2zP}
 
 # Anthropic config kept for reference but AiMentorService no longer makes API calls
 anthropic:

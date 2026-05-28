@@ -524,6 +524,28 @@ public class EncodingService {
         try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
     }
 
+    /**
+     * Returns true when the response looks like pseudocode / structured algorithm notation
+     * rather than a prose essay. Detection: 3 or more uppercase algorithm keywords present.
+     * Used to switch check #3 from a prose-connector test to an algorithm-structure test.
+     */
+    private boolean looksLikePseudocode(String answer) {
+        String[] algorithmKeywords = {
+            "ALGORITHM", " FOR ", " IF ", " SET ", " RETURN ", " PRINT ",
+            " WHILE ", " FOREACH ", " ELSE ", " OUTPUT ", " INPUT ",
+            " ASSIGN ", " PURCHASE ", " BREAK ", " GOTO ", " GO TO ",
+            "FOR EACH", "FOR each", "If ", "Return ", "Print ", "Set "
+        };
+        int matches = 0;
+        for (String kw : algorithmKeywords) {
+            if (answer.contains(kw)) {
+                matches++;
+                if (matches >= 3) return true;
+            }
+        }
+        return false;
+    }
+
     private PracticeResult gradeWrittenPractice(String userId, SubChunk subChunk, String response, boolean solo) {
         String answer = response == null ? "" : response.trim();
         String lowerAnswer = answer.toLowerCase(Locale.ROOT);
@@ -555,31 +577,57 @@ public class EncodingService {
                         : "Use more lesson vocabulary: " + matchedTerms + "/" + minTerms + " key terms found.",
                 minTerms + "+ key terms"
         ));
-        boolean hasExplanatoryConnector = lowerAnswer.contains("because")
-                || lowerAnswer.contains(" since ")
-                || lowerAnswer.contains("therefore")
-                || lowerAnswer.contains("however")
-                || lowerAnswer.contains("which means")
-                || lowerAnswer.contains("this means")
-                || lowerAnswer.contains("as a result")
-                || lowerAnswer.contains("this suggests")
-                || lowerAnswer.contains("this explains")
-                || lowerAnswer.contains("in contrast")
-                || lowerAnswer.contains("whereas")
-                || lowerAnswer.contains("while")
-                || lowerAnswer.contains("although")
-                || lowerAnswer.contains(" — ")   // em-dash used as an explanatory connector
-                || lowerAnswer.contains(" -- ");  // double-hyphen equivalent
-        results.add(new TestResult(
-                "Explains rather than lists",
-                sentenceCount >= 3 && hasExplanatoryConnector,
-                sentenceCount >= 3 && hasExplanatoryConnector
-                        ? "Includes explanation and reasoning."
-                        : "Add more explanation: use words like 'because', 'therefore', 'however', or 'this means' to link your ideas.",
-                "3+ sentences with reasoning"
-        ));
 
-        if (solo) {
+        // Check #3 — branch on response type:
+        //   • Pseudocode / algorithm: check for structural elements (conditions + actions).
+        //   • Prose / essay: check for explanatory connectors and sentence count.
+        if (looksLikePseudocode(answer)) {
+            boolean hasCondition = lowerAnswer.contains(" if ") || answer.startsWith("IF ")
+                    || lowerAnswer.contains(" when ") || lowerAnswer.contains(" while ")
+                    || lowerAnswer.contains(" for ") || lowerAnswer.contains(" foreach ")
+                    || lowerAnswer.contains("for each");
+            boolean hasAction = lowerAnswer.contains(" set ") || lowerAnswer.contains(" print ")
+                    || lowerAnswer.contains(" return ") || lowerAnswer.contains(" output ")
+                    || lowerAnswer.contains(" assign ") || lowerAnswer.contains(" purchase ")
+                    || lowerAnswer.contains(" go to ") || lowerAnswer.contains(" goto ");
+            boolean hasStructure = hasCondition && hasAction;
+            results.add(new TestResult(
+                    "Shows algorithmic structure",
+                    hasStructure,
+                    hasStructure
+                            ? "Pseudocode includes control flow and action steps."
+                            : "Include both a condition step (IF/FOR/WHILE) and an action step (SET/PRINT/RETURN) in your pseudocode.",
+                    "Control flow + action steps"
+            ));
+        } else {
+            boolean hasExplanatoryConnector = lowerAnswer.contains("because")
+                    || lowerAnswer.contains(" since ")
+                    || lowerAnswer.contains("therefore")
+                    || lowerAnswer.contains("however")
+                    || lowerAnswer.contains("which means")
+                    || lowerAnswer.contains("this means")
+                    || lowerAnswer.contains("as a result")
+                    || lowerAnswer.contains("this suggests")
+                    || lowerAnswer.contains("this explains")
+                    || lowerAnswer.contains("in contrast")
+                    || lowerAnswer.contains("whereas")
+                    || lowerAnswer.contains("while")
+                    || lowerAnswer.contains("although")
+                    || lowerAnswer.contains(" — ")   // em-dash used as an explanatory connector
+                    || lowerAnswer.contains(" -- ");  // double-hyphen equivalent
+            results.add(new TestResult(
+                    "Explains rather than lists",
+                    sentenceCount >= 3 && hasExplanatoryConnector,
+                    sentenceCount >= 3 && hasExplanatoryConnector
+                            ? "Includes explanation and reasoning."
+                            : "Add more explanation: use words like 'because', 'therefore', 'however', or 'this means' to link your ideas.",
+                    "3+ sentences with reasoning"
+            ));
+        }
+
+        // Solo prose check: pseudocode solo tasks demonstrate independence through a novel
+        // algorithm, not through essay-style "example/case/evidence" language — skip it.
+        if (solo && !looksLikePseudocode(answer)) {
             boolean hasIndependentApplication = lowerAnswer.contains("example")
                     || lowerAnswer.contains("case")
                     || lowerAnswer.contains("evidence")
@@ -605,9 +653,16 @@ public class EncodingService {
                     progressRepository.findByUserId(userId),
                     reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
         } else if (!allPassed) {
-            mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
-                    + "and explain why the ideas matter. "
-                    + (solo ? "For solo practice, add your own case or example rather than following the guided wording." : "");
+            if (looksLikePseudocode(answer)) {
+                mentorFeedback = "Use the task checklist: include all required steps, use lesson vocabulary "
+                        + "(ingredient names, threshold values, actions), and make sure your algorithm covers "
+                        + "both the condition check (IF) and the action to take (SET/PRINT/RETURN). "
+                        + (solo ? "For the solo challenge, write a fresh algorithm without copying the guided example." : "");
+            } else {
+                mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
+                        + "and explain why the ideas matter. "
+                        + (solo ? "For solo practice, add your own case or example rather than following the guided wording." : "");
+            }
         }
 
         return new PracticeResult(allPassed, results, xpEarned, mentorFeedback,

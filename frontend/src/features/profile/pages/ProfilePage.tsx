@@ -222,14 +222,14 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Tab bar */}
-        <div className="flex gap-1 mb-6 border-b border-border pb-0">
+        {/* Tab bar — horizontally scrollable on mobile */}
+        <div className="flex mb-6 border-b border-border pb-0 overflow-x-auto scrollbar-none">
           {tabs.map(t => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={cn(
-                'px-4 py-2.5 text-[13px] font-cinzel tracking-wide border-b-2 transition-[border-color,color] duration-150 -mb-px',
+                'px-3 py-2.5 text-[12px] font-cinzel tracking-wide border-b-2 transition-[border-color,color] duration-150 -mb-px whitespace-nowrap flex-shrink-0',
                 tab === t.id
                   ? 'border-gold text-gold'
                   : 'border-transparent text-muted hover:text-text',

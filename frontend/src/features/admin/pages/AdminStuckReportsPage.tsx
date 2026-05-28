@@ -186,33 +186,37 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
           </div>
 
           {/* Action row */}
-          <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap', alignItems: 'center' }}>
             {(['NEW', 'REVIEWED', 'RESOLVED'] as Status[]).map(s => (
               <button
+                type="button"
                 key={s}
                 disabled={saving || report.status === s}
-                onClick={() => setStatus(s)}
+                onClick={e => { e.stopPropagation(); setStatus(s) }}
                 style={{
-                  padding: '5px 12px', borderRadius: 6, fontSize: 11,
+                  minHeight: 44, padding: '10px 16px', borderRadius: 8, fontSize: 12,
                   fontFamily: 'Cinzel, serif', cursor: report.status === s ? 'default' : 'pointer',
                   background: report.status === s ? STATUS_META[s].bg : 'transparent',
                   color: STATUS_META[s].color,
                   border: `1px solid ${STATUS_META[s].border}`,
                   opacity: saving ? 0.6 : 1,
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 {STATUS_META[s].label}
               </button>
             ))}
             <button
+              type="button"
               disabled={saving}
-              onClick={saveNotes}
+              onClick={e => { e.stopPropagation(); saveNotes() }}
               style={{
-                marginLeft: 'auto', padding: '5px 14px', borderRadius: 6, fontSize: 11,
+                minHeight: 44, padding: '10px 18px', borderRadius: 8, fontSize: 12,
                 fontFamily: 'Cinzel, serif', cursor: 'pointer',
                 background: 'rgba(139,92,246,.12)', color: '#c4b5fd',
                 border: '1px solid rgba(139,92,246,.3)',
                 opacity: saving ? 0.6 : 1,
+                WebkitTapHighlightColor: 'transparent',
               }}
             >
               {saving ? 'Saving…' : 'Save Notes'}

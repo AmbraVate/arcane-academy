@@ -170,7 +170,7 @@ public class BadgeService implements GamificationFacade {
           "java-fnd-5", "java-fnd-6", "java-fnd-7", "java-fnd-8"));
 
       case JAVA_CAPSTONE_COMPLETE -> completedChunks.contains("java-cap");
-      case TAILWIND_CAPSTONE_COMPLETE -> completedChunks.contains("tw-d");
+      case TAILWIND_CAPSTONE_COMPLETE -> completedChunks.contains("tw-d") || completedChunks.contains("tw-lea-17");
 
       case SQL_QUERY_INITIATE -> completedChunks.contains("sql-a");
       case SQL_JOIN_WEAVER -> completedChunks.contains("sql-d");
@@ -178,9 +178,30 @@ public class BadgeService implements GamificationFacade {
       case SQL_TRACK_MASTER -> completedChunks.containsAll(java.util.List.of(
           "sql-a", "sql-b", "sql-c", "sql-d", "sql-e", "sql-f", "sql-g", "sql-h"));
 
-      case REACT_HOOK_INITIATE -> completedChunks.contains("rx-a");
-      case REACT_STATE_WEAVER -> completedChunks.contains("rx-b");
-      case REACT_CAPSTONE_COMPLETE -> completedChunks.contains("rx-d");
+      // Legacy React badges — kept for backwards compat; honour old and new chunk IDs
+      case REACT_HOOK_INITIATE     -> completedChunks.contains("rx-a") || completedChunks.contains("rx-app-1");
+      case REACT_STATE_WEAVER      -> completedChunks.contains("rx-b") || completedChunks.contains("rx-jun-1");
+      case REACT_CAPSTONE_COMPLETE -> completedChunks.contains("rx-d") || completedChunks.contains("rx-lea-17");
+
+      // ── React tier badges ──────────────────────────────────────────────
+      case REACT_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "rx-app-", 15);
+      case REACT_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "rx-jun-", 20);
+      case REACT_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "rx-sen-", 19);
+      case REACT_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "rx-lea-", 17);
+      case REACT_APPRENTICE_CAPSTONE -> completedChunks.contains("rx-app-15");
+      case REACT_JUNIOR_CAPSTONE     -> completedChunks.contains("rx-jun-20");
+      case REACT_SENIOR_CAPSTONE     -> completedChunks.contains("rx-sen-19");
+      case REACT_LEAD_CAPSTONE       -> completedChunks.contains("rx-lea-17");
+
+      // ── Tailwind tier badges ──────────────────────────────────────────
+      case TW_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "tw-app-", 15);
+      case TW_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "tw-jun-", 20);
+      case TW_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "tw-sen-", 19);
+      case TW_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "tw-lea-", 17);
+      case TW_APPRENTICE_CAPSTONE -> completedChunks.contains("tw-app-15");
+      case TW_JUNIOR_CAPSTONE     -> completedChunks.contains("tw-jun-20");
+      case TW_SENIOR_CAPSTONE     -> completedChunks.contains("tw-sen-19");
+      case TW_LEAD_CAPSTONE       -> completedChunks.contains("tw-lea-17");
 
       // Legacy foundation badges — now check new psy-app-*/gen-app-*/sci-app-* IDs
       case PSY_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("psy-app-1", "psy-app-2", "psy-app-3"));

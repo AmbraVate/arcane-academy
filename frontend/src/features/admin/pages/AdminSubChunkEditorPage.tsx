@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { adminSubChunkApi, type AdminSubChunk, type StoryBeat, type TestCase } from '@/shared/api/adminServices'
 
 type Tab = 'meta' | 'hook' | 'explanation' | 'story' | 'guided' | 'solo' | 'feynman'
@@ -136,6 +137,7 @@ function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: 
 export default function AdminSubChunkEditorPage() {
   const { subChunkId } = useParams<{ subChunkId: string }>()
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
   const [sc, setSc] = useState<AdminSubChunk | null>(null)
   const [form, setForm] = useState<Partial<AdminSubChunk>>({})
   const [activeTab, setActiveTab] = useState<Tab>('meta')
@@ -185,11 +187,15 @@ export default function AdminSubChunkEditorPage() {
         <span style={{ color: '#e8e0f0' }}>{sc.title}</span>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-        <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: 20, color: '#c9a227' }}>
+      <div style={{
+        display: 'flex', alignItems: isMobile ? 'flex-start' : 'center',
+        flexDirection: isMobile ? 'column' : 'row',
+        justifyContent: 'space-between', gap: 12, marginBottom: 24,
+      }}>
+        <h1 style={{ fontFamily: 'Cinzel, serif', fontSize: isMobile ? 16 : 20, color: '#c9a227' }}>
           Edit: {sc.title}
         </h1>
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
           {saved && <span style={{ color: '#4ade80', fontSize: 12 }}>✓ Saved</span>}
           {error && <span style={{ color: '#f87171', fontSize: 12 }}>{error}</span>}
           <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={handleSave} disabled={saving}>
@@ -199,28 +205,59 @@ export default function AdminSubChunkEditorPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: 2, marginBottom: 20, borderBottom: '1px solid #2e2850', paddingBottom: 0 }}>
-        {TABS.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+      {isMobile ? (
+        <div style={{ marginBottom: 20 }}>
+          <select
+            value={activeTab}
+            onChange={e => setActiveTab(e.target.value as Tab)}
             style={{
+              width: '100%',
+              background: '#1e1a35',
+              border: '1px solid #2e2850',
+              borderRadius: 8,
+              color: '#c4b5fd',
+              fontSize: 13,
               fontFamily: 'Cinzel, serif',
-              fontSize: 11,
-              padding: '8px 14px',
-              border: 'none',
-              borderBottom: activeTab === tab.id ? '2px solid #8b5cf6' : '2px solid transparent',
-              background: 'transparent',
-              color: activeTab === tab.id ? '#c4b5fd' : '#8b7fa0',
+              padding: '10px 14px',
+              outline: 'none',
               cursor: 'pointer',
-              transition: 'all .15s',
-              marginBottom: -1,
             }}
           >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+            {TABS.map(tab => (
+              <option key={tab.id} value={tab.id}>{tab.label}</option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <div style={{
+          display: 'flex', gap: 2, marginBottom: 20,
+          borderBottom: '1px solid #2e2850',
+          overflowX: 'auto',
+        }}>
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                fontFamily: 'Cinzel, serif',
+                fontSize: 11,
+                padding: '8px 14px',
+                border: 'none',
+                borderBottom: activeTab === tab.id ? '2px solid #8b5cf6' : '2px solid transparent',
+                background: 'transparent',
+                color: activeTab === tab.id ? '#c4b5fd' : '#8b7fa0',
+                cursor: 'pointer',
+                transition: 'all .15s',
+                marginBottom: -1,
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Tab content */}
       <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
@@ -294,18 +331,56 @@ export default function AdminSubChunkEditorPage() {
                 onChange={tests => set('guidedPracticeTests', tests.length > 0 ? tests : null)}
               />
             </div>
+            <div style={{ borderTop: '1px solid #2e2850', paddingTop: 16 }}>
+              <label style={labelStyle}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  Model Answer
+                  <span style={{
+                    fontSize: 9, fontFamily: 'Cinzel, serif', padding: '1px 6px', borderRadius: 4,
+                    background: 'rgba(139,92,246,.15)', border: '1px solid rgba(139,92,246,.3)',
+                    color: '#c4b5fd',
+                  }}>ADMIN ONLY</span>
+                </span>
+                <textarea
+                  style={{ ...inputStyle, minHeight: 140, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
+                  placeholder="Reference solution shown only to admins…"
+                  value={form.guidedPracticeModelAnswer ?? ''}
+                  onChange={e => set('guidedPracticeModelAnswer', e.target.value || null)}
+                />
+              </label>
+            </div>
           </div>
         )}
 
         {activeTab === 'solo' && (
-          <label style={labelStyle}>
-            Solo Practice HTML (challenge prompt — no starter code)
-            <textarea
-              style={{ ...inputStyle, minHeight: 200, resize: 'vertical' }}
-              value={form.soloPracticeHtml ?? ''}
-              onChange={e => set('soloPracticeHtml', e.target.value || null)}
-            />
-          </label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <label style={labelStyle}>
+              Solo Practice HTML (challenge prompt — no starter code)
+              <textarea
+                style={{ ...inputStyle, minHeight: 200, resize: 'vertical' }}
+                value={form.soloPracticeHtml ?? ''}
+                onChange={e => set('soloPracticeHtml', e.target.value || null)}
+              />
+            </label>
+            <div style={{ borderTop: '1px solid #2e2850', paddingTop: 16 }}>
+              <label style={labelStyle}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  Model Answer
+                  <span style={{
+                    fontSize: 9, fontFamily: 'Cinzel, serif', padding: '1px 6px', borderRadius: 4,
+                    background: 'rgba(139,92,246,.15)', border: '1px solid rgba(139,92,246,.3)',
+                    color: '#c4b5fd',
+                  }}>ADMIN ONLY</span>
+                </span>
+                <textarea
+                  style={{ ...inputStyle, minHeight: 160, resize: 'vertical' }}
+                  placeholder="Model answer or solution revealed only to admins…"
+                  value={form.modelAnswer ?? ''}
+                  onChange={e => set('modelAnswer', e.target.value || null)}
+                />
+              </label>
+            </div>
+          </div>
         )}
 
         {activeTab === 'feynman' && (
