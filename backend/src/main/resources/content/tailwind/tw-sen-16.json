@@ -1,0 +1,102 @@
+{
+  "id": "tw-sen-16",
+  "title": "Advanced Container Queries",
+  "glyph": "🔮",
+  "sortOrder": 16,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-18"],
+  "subChunks": [
+    {
+      "id": "tw-sen-16-1",
+      "title": "Advanced Container Queries",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>The Junior tier introduced container queries as a replacement for viewport breakpoints in components. This lesson goes deeper: named containers, container query units (<code>cqw</code>, <code>cqh</code>), container style queries, and the architectural patterns that make container queries the foundation of a truly reusable component library.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"A component that responds to its own container is a component that belongs in a library. A component that responds to the viewport is a component that belongs only in that specific layout. Container queries are the difference between a component and a utility.\"</p></div>\n\n<h3>Named containers — resolving nested container ambiguity</h3>\n<pre><code>/* Without names, @sm: resolves to the nearest @container ancestor */\n&lt;div class=\"@container\"&gt;\n  &lt;div class=\"@container\"&gt;\n    &lt;div class=\"@sm:text-lg\"&gt;\n      /* Responds to inner container — is that what you want? */\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;\n\n/* With names, you target a specific ancestor */\n&lt;div class=\"@container/sidebar\"&gt;\n  &lt;div class=\"@container/card\"&gt;\n    &lt;div class=\"@sm/sidebar:text-lg\"&gt;\n      /* Explicitly responds to /sidebar, not /card */\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Container query units: cqw and cqh</h3>\n<pre><code>/* cqw = 1% of the container's width */\n/* cqh = 1% of the container's height */\n/* cqi = 1% of the container's inline size (usually width) */\n\n&lt;div class=\"@container\"&gt;\n  &lt;!-- Text size based on container width, not viewport --&gt;\n  &lt;h2 class=\"text-[3cqw] font-bold\"&gt;\n    Fluid heading scaled to container\n  &lt;/h2&gt;\n\n  &lt;!-- Image that fills exactly half the container width --&gt;\n  &lt;img class=\"w-[50cqw]\" /&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>The adaptive component pattern</h3>\n<pre><code>/* A ProductCard that works in all contexts */\n&lt;div class=\"@container/product\"&gt;\n  &lt;article class=\"\n    flex flex-col\n    @sm/product:flex-row\n    @lg/product:grid @lg/product:grid-cols-[1fr_2fr]\n    gap-4 bg-white rounded-xl border border-gray-100 overflow-hidden\n  \"&gt;\n    &lt;!-- Thumbnail: full width → sidebar → fixed panel --&gt;\n    &lt;div class=\"\n      aspect-video\n      @sm/product:aspect-square @sm/product:w-32 @sm/product:flex-none\n      @lg/product:aspect-auto @lg/product:w-auto\n      overflow-hidden\n    \"&gt;\n      &lt;img class=\"w-full h-full object-cover\" /&gt;\n    &lt;/div&gt;\n\n    &lt;div class=\"flex-1 p-4\"&gt;\n      &lt;h3 class=\"font-semibold text-gray-900\"&gt;Product Name&lt;/h3&gt;\n      &lt;!-- Show description only at medium+ container --&gt;\n      &lt;p class=\"hidden @md/product:block text-sm text-gray-500 mt-1\"&gt;\n        Description shown when container is at least md (448px)\n      &lt;/p&gt;\n      &lt;!-- Show extra metadata at large+ container --&gt;\n      &lt;div class=\"hidden @lg/product:flex items-center gap-3 mt-3\"&gt;\n        &lt;span class=\"text-sm font-medium text-blue-600\"&gt;500 XP&lt;/span&gt;\n      &lt;/div&gt;\n    &lt;/div&gt;\n  &lt;/article&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Container style queries (CSS-native, limited support)</h3>\n<pre><code>/* Style queries respond to computed style values on the container */\n/* Browser support: Chrome 111+, limited — use @container (width) for now */\n\n@container style(--featured: 1) {\n  .card-title { font-size: 1.25rem; font-weight: 700; }\n}\n\n&lt;div class=\"@container\" style=\"--featured: 1\"&gt;\n  &lt;h3 class=\"card-title\"&gt;Featured card — larger title&lt;/h3&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Container queries vs media queries decision matrix</h3>\n<pre><code>Use MEDIA QUERIES when:                 Use CONTAINER QUERIES when:\n─ Page-level layout structure          ─ Component internal layout\n─ Navigation visibility (mobile menu)  ─ Card grid item layout\n─ Font size baseline                   ─ List item layout\n─ Body/html level                      ─ Sidebar widget layout\n─ Feature detection                    ─ Reusable library components</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"The rule: if the component will ever appear in more than one layout context, use container queries. If you are making a page-level decision, use media queries. Most component decisions are container queries.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "Named containers disambiguate nested @container contexts. Container query units (cqw, cqh) size elements relative to their container, not the viewport. Together these make components that are genuinely portable — drop them anywhere and they adapt correctly."
+        },
+        {
+          "type": "example",
+          "speaker": "Named container targeting",
+          "text": "<div class=\"@container/outer\">\n  <div class=\"@container/inner\">\n    <p class=\"@sm/outer:text-lg\">Responds to outer, not inner</p>\n  </div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an adaptive quest card that uses a named container and shows three layout states:</p>\n<ul>\n  <li><strong>.adv-container</strong>: <code>@container/quest</code></li>\n  <li><strong>.adv-card</strong>: <code>flex</code>, <code>flex-col</code>, <code>@md/quest:flex-row</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code>, <code>overflow-hidden</code></li>\n  <li><strong>.adv-image</strong>: <code>aspect-video</code>, <code>@md/quest:aspect-square</code>, <code>@md/quest:w-36</code>, <code>@md/quest:flex-none</code>, <code>overflow-hidden</code></li>\n  <li><strong>.adv-img</strong>: <code>w-full</code>, <code>h-full</code>, <code>object-cover</code></li>\n  <li><strong>.adv-body</strong>: <code>flex-1</code>, <code>p-4</code></li>\n  <li><strong>.adv-xp</strong>: <code>hidden</code>, <code>@lg/quest:flex</code>, <code>items-center</code>, <code>gap-2</code>, <code>mt-2</code></li>\n  <li><strong>.adv-desc</strong>: <code>hidden</code>, <code>@md/quest:block</code>, <code>text-sm</code>, <code>text-gray-500</code>, <code>mt-1</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<!-- Full width — shows all layout states -->\n<div class=\"space-y-4 p-6\">\n\n  <!-- Wide container (lg layout) -->\n  <div class=\"adv-container max-w-2xl\">\n    <article class=\"adv-card\">\n      <div class=\"adv-image\">\n        <img class=\"adv-img\" src=\"https://picsum.photos/seed/quest1/400/300\" alt=\"Quest\" />\n      </div>\n      <div class=\"adv-body\">\n        <span class=\"text-xs font-medium text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full\">Active</span>\n        <h3 class=\"font-semibold text-gray-900 mt-2\">Slay the Ancient Dragon</h3>\n        <p class=\"adv-desc\">Deep in the Ember Mountains, an ancient dragon guards legendary artefacts.</p>\n        <div class=\"adv-xp\">\n          <span class=\"text-sm font-medium text-blue-600\">500 XP</span>\n          <span class=\"text-gray-300\">•</span>\n          <span class=\"text-xs text-gray-500\">3 days left</span>\n        </div>\n      </div>\n    </article>\n  </div>\n\n  <!-- Narrow container (sidebar simulation) -->\n  <div class=\"adv-container max-w-xs bg-gray-100 rounded-xl p-3\">\n    <p class=\"text-xs text-gray-400 mb-2\">Sidebar context</p>\n    <article class=\"adv-card\">\n      <div class=\"adv-image\">\n        <img class=\"adv-img\" src=\"https://picsum.photos/seed/quest2/400/300\" alt=\"Quest\" />\n      </div>\n      <div class=\"adv-body\">\n        <h3 class=\"font-semibold text-gray-900\">Forest Expedition</h3>\n        <p class=\"adv-desc\">Explore the ancient woods.</p>\n      </div>\n    </article>\n  </div>\n\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Container: @container/quest",         "selector": ".adv-container", "requiredClass": "@container/quest"     },
+        { "label": "Card: flex",                         "selector": ".adv-card",      "requiredClass": "flex"                 },
+        { "label": "Card: flex-col default",             "selector": ".adv-card",      "requiredClass": "flex-col"             },
+        { "label": "Card: @md/quest:flex-row",           "selector": ".adv-card",      "requiredClass": "@md/quest:flex-row"   },
+        { "label": "Image: aspect-video",                "selector": ".adv-image",     "requiredClass": "aspect-video"         },
+        { "label": "Image: @md/quest:aspect-square",     "selector": ".adv-image",     "requiredClass": "@md/quest:aspect-square" },
+        { "label": "Image: @md/quest:flex-none",         "selector": ".adv-image",     "requiredClass": "@md/quest:flex-none"  },
+        { "label": "Img: object-cover",                  "selector": ".adv-img",       "requiredClass": "object-cover"         },
+        { "label": "Body: flex-1",                       "selector": ".adv-body",      "requiredClass": "flex-1"               },
+        { "label": "XP: hidden default",                 "selector": ".adv-xp",        "requiredClass": "hidden"               },
+        { "label": "XP: @lg/quest:flex",                 "selector": ".adv-xp",        "requiredClass": "@lg/quest:flex"       },
+        { "label": "Desc: hidden default",               "selector": ".adv-desc",      "requiredClass": "hidden"               },
+        { "label": "Desc: @md/quest:block",              "selector": ".adv-desc",      "requiredClass": "@md/quest:block"      }
+      ],
+      "soloPracticeHtml": "<p>Build a three-panel layout where the same Article component adapts through 3 states based on its container: narrow (stacked image + title only), medium (side-by-side + description), wide (full layout with image, title, description, metadata, and CTA). Place the same component in containers of 280px, 480px, and 700px to verify. No starter code.</p>",
+      "feynmanPrompt": "Explain when you would use a named container (@container/name) vs an unnamed @container. Give a concrete example where the unnamed container would produce the wrong result and the named container fixes it. What are container query units (cqw) and when would you use them?",
+      "questions": [
+        {
+          "id": "tw-sen-16-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "What does @container/card mean, and when do you need it instead of @container?",
+          "options": [
+            "It names the container 'card' so children can target it specifically with @sm/card: — needed when multiple nested @container elements exist and you must target a specific ancestor",
+            "It applies container query behaviour only to elements with class 'card'",
+            "It's the v4 syntax for @container — the name is mandatory in v4",
+            "It creates a named CSS container-type: style that can be queried with @container style()"
+          ],
+          "answer": "It names the container 'card' so children can target it specifically with @sm/card: — needed when multiple nested @container elements exist and you must target a specific ancestor",
+          "explanation": "Without a name, @sm: (and other container query variants) resolve to the nearest @container ancestor. When containers are nested, this may not be the container you want to query. Naming a container (@container/card) lets children use @sm/card: to explicitly target that container regardless of nesting depth."
+        },
+        {
+          "id": "tw-sen-16-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A heading uses class=\"text-[3cqw] font-bold\" inside an @container. At 400px container width, what is the approximate font size?",
+          "options": [
+            "12px — 3% of 400px = 12px",
+            "12rem — cqw maps directly to rem",
+            "3px — cqw is 1/100th of a CSS pixel",
+            "3vw — cqw falls back to vw when inside a container"
+          ],
+          "answer": "12px — 3% of 400px = 12px",
+          "explanation": "1cqw = 1% of the container's width. At 400px container width, 3cqw = 3% × 400px = 12px. This creates fluid typography that scales with the container rather than the viewport — useful for headings in adaptive components where the container width varies significantly across contexts."
+        },
+        {
+          "id": "tw-sen-16-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "SENIOR",
+          "prompt": "A navigation bar should collapse to a hamburger menu on mobile screens (viewport < 768px) regardless of which layout it appears in. A product card should stack vertically in a 300px sidebar but be horizontal in a 600px main column. Which breakpoint type should each use?",
+          "options": [
+            "Navigation: media query (md:hidden) — viewport decision. Product card: container query (@md:flex-row) — container decision",
+            "Both should use container queries — container queries are always more accurate",
+            "Navigation: container query (the nav container is full-width, so it's the same as viewport). Product card: media query",
+            "Both should use media queries — container queries have limited browser support"
+          ],
+          "answer": "Navigation: media query (md:hidden) — viewport decision. Product card: container query (@md:flex-row) — container decision",
+          "explanation": "Navigation collapse is a viewport-level decision — the nav always spans the full width, so viewport and container width are equivalent, and the intent is 'mobile device = collapsed'. Product card layout is a container decision — the same card appears in different-width columns on the same screen. Container queries ensure the card adapts to its actual space, not the screen size."
+        }
+      ]
+    }
+  ]
+}

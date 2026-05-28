@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-11",
+  "title": "Modals and Dialogs",
+  "glyph": "⚗️",
+  "sortOrder": 11,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-5"],
+  "subChunks": [
+    {
+      "id": "tw-jun-11-1",
+      "title": "Modals and Dialogs",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Modals are high-stakes UI components. They demand full-screen overlays, keyboard focus trapping, scroll locking, and proper ARIA markup — all to create the impression of a focused interruption. The Tailwind classes for modals are simple; the challenge is understanding how they work together.</p>",
+      "explanationHtml": "<h3>The modal overlay pattern</h3>\n<pre><code>/* Overlay — covers the entire viewport, dims everything behind */\n&lt;div class=\"fixed inset-0 z-50 bg-black/50\n            flex items-center justify-center\n            p-4\"  &lt;!-- padding prevents modal touching screen edge on mobile --&gt;\n     role=\"dialog\" aria-modal=\"true\"&gt;\n\n  /* Modal panel */\n  &lt;div class=\"bg-white rounded-xl shadow-xl\n              w-full max-w-md\n              max-h-[90vh] overflow-y-auto\"&gt;\n    &lt;!-- modal content --&gt;\n  &lt;/div&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Modal anatomy</h3>\n<pre><code>/* Header */\n&lt;div class=\"flex items-center justify-between p-6 border-b border-gray-100\"&gt;\n  &lt;h2 class=\"text-lg font-semibold text-gray-900\" id=\"modal-title\"&gt;Confirm Action&lt;/h2&gt;\n  &lt;button class=\"text-gray-400 hover:text-gray-600 transition-colors\"\n          aria-label=\"Close dialog\"&gt;\n    &times;\n  &lt;/button&gt;\n&lt;/div&gt;\n\n/* Body */\n&lt;div class=\"p-6\"&gt;\n  &lt;p class=\"text-sm text-gray-600\"&gt;This action cannot be undone.&lt;/p&gt;\n&lt;/div&gt;\n\n/* Footer */\n&lt;div class=\"flex items-center justify-end gap-3 p-6 border-t border-gray-100\"&gt;\n  &lt;button class=\"px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md\"&gt;\n    Cancel\n  &lt;/button&gt;\n  &lt;button class=\"px-4 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-md\"&gt;\n    Confirm Delete\n  &lt;/button&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Animated modal entrance</h3>\n<pre><code>/* Overlay — fade in */\n&lt;div class=\"fixed inset-0 z-50 bg-black/50\n            flex items-center justify-center p-4\n            animate-in fade-in duration-200\"&gt;  &lt;!-- Tailwind v4 animate utilities --&gt;\n\n/* Panel — slide up */\n&lt;div class=\"... animate-in slide-in-from-bottom-4 duration-200\"&gt;</code></pre>\n<p>Or using standard utilities with transition classes from JavaScript state:</p>\n<pre><code>/* Overlay: opacity transition */\n{isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}\ntransition-opacity duration-200\n\n/* Panel: translate transition */\n{isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}\ntransition duration-200</code></pre>\n\n<h3>Sizes</h3>\n<pre><code>max-w-sm    /* compact confirmation dialog */\nmax-w-md    /* standard dialog */\nmax-w-lg    /* form modal */\nmax-w-2xl   /* content-rich modal */\nmax-w-screen-md  /* nearly full screen */</code></pre>\n\n<h3>Accessibility requirements</h3>\n<ul>\n  <li><code>role=\"dialog\"</code> and <code>aria-modal=\"true\"</code> on the modal container</li>\n  <li><code>aria-labelledby</code> pointing to the modal title's id</li>\n  <li>Close button with <code>aria-label=\"Close dialog\"</code></li>\n  <li>Focus must be trapped inside the modal (requires JavaScript)</li>\n  <li>Pressing Escape must close the modal (requires JavaScript)</li>\n  <li>Scroll on <code>body</code> must be locked when modal is open (requires JavaScript)</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"The overlay must be <code>fixed inset-0</code> — not absolute. Fixed positions relative to the viewport so it covers the entire screen even when the page is scrolled. <code>inset-0</code> is shorthand for top-0 right-0 bottom-0 left-0. Together they create a full-viewport cover. Then <code>z-50</code> ensures it sits above all other content.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "A modal demands the user's full attention — it must interrupt everything. fixed inset-0 covers the entire viewport. bg-black/50 dims what's behind. The panel inside must have a maximum height and overflow-y-auto so it never exceeds the screen, no matter how much content it holds."
+        },
+        {
+          "type": "example",
+          "speaker": "Complete modal structure",
+          "text": "<div class=\"fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4\"\n     role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"modal-title\">\n  <div class=\"bg-white rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto\">\n    <div class=\"flex items-center justify-between p-6 border-b border-gray-100\">\n      <h2 id=\"modal-title\" class=\"text-lg font-semibold text-gray-900\">Delete Quest</h2>\n      <button aria-label=\"Close dialog\" class=\"text-gray-400 hover:text-gray-600\">&times;</button>\n    </div>\n    <div class=\"p-6\"><p class=\"text-sm text-gray-600\">This action cannot be undone.</p></div>\n    <div class=\"flex justify-end gap-3 p-6 border-t border-gray-100\">\n      <button class=\"px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md\">Cancel</button>\n      <button class=\"px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white font-medium rounded-md\">Delete</button>\n    </div>\n  </div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a complete confirmation modal:</p>\n<ul>\n  <li><strong>.modal-overlay</strong>: <code>fixed</code>, <code>inset-0</code>, <code>z-50</code>, <code>bg-black/50</code>, <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>p-4</code></li>\n  <li><strong>.modal-panel</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>shadow-xl</code>, <code>w-full</code>, <code>max-w-md</code>, <code>max-h-[90vh]</code>, <code>overflow-y-auto</code></li>\n  <li><strong>.modal-header</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-between</code>, <code>p-6</code>, <code>border-b</code>, <code>border-gray-100</code></li>\n  <li><strong>.modal-body</strong>: <code>p-6</code></li>\n  <li><strong>.modal-footer</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-end</code>, <code>gap-3</code>, <code>p-6</code>, <code>border-t</code>, <code>border-gray-100</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"modal-overlay\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"modal-title\">\n  <div class=\"modal-panel\">\n    <div class=\"modal-header\">\n      <h2 id=\"modal-title\" class=\"text-lg font-semibold text-gray-900\">Abandon Quest?</h2>\n      <button class=\"text-gray-400 hover:text-gray-600 transition-colors text-xl leading-none\"\n              aria-label=\"Close dialog\">&times;</button>\n    </div>\n    <div class=\"modal-body\">\n      <p class=\"text-sm text-gray-600\">\n        Abandoning this quest will forfeit all your current progress. You can restart it later, but your current streak will be lost.\n      </p>\n    </div>\n    <div class=\"modal-footer\">\n      <button class=\"px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors\">\n        Keep Questing\n      </button>\n      <button class=\"px-4 py-2 text-sm font-medium bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors\">\n        Abandon Quest\n      </button>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Overlay: fixed",                "selector": ".modal-overlay", "requiredClass": "fixed"             },
+        { "label": "Overlay: inset-0",              "selector": ".modal-overlay", "requiredClass": "inset-0"           },
+        { "label": "Overlay: z-50",                 "selector": ".modal-overlay", "requiredClass": "z-50"              },
+        { "label": "Overlay: semi-transparent bg",  "selector": ".modal-overlay", "requiredClass": "bg-black/50"       },
+        { "label": "Overlay: flex centering",       "selector": ".modal-overlay", "requiredClass": "flex"              },
+        { "label": "Panel: white background",       "selector": ".modal-panel",   "requiredClass": "bg-white"          },
+        { "label": "Panel: rounded-xl",             "selector": ".modal-panel",   "requiredClass": "rounded-xl"        },
+        { "label": "Panel: max-w-md",               "selector": ".modal-panel",   "requiredClass": "max-w-md"          },
+        { "label": "Panel: overflow-y-auto",        "selector": ".modal-panel",   "requiredClass": "overflow-y-auto"   },
+        { "label": "Footer: justify-end",           "selector": ".modal-footer",  "requiredClass": "justify-end"       }
+      ],
+      "soloPracticeHtml": "<p>Build a form modal from scratch (no starter code): a modal overlay with backdrop, a panel containing a header (title + close button), a form body with two inputs (name and description), and a footer with cancel and save buttons. Add all accessibility attributes. Make the panel max-h-[90vh] with overflow-y-auto so long forms scroll inside the modal.</p>",
+      "feynmanPrompt": "Explain why the modal overlay uses fixed inset-0 rather than absolute inset-0. Walk through each class on the overlay (fixed, inset-0, z-50, bg-black/50, flex items-center justify-center) and explain what removing any single one of them would break. Why does the panel need max-h-[90vh] and overflow-y-auto?",
+      "questions": [
+        {
+          "id": "tw-jun-11-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A modal overlay uses absolute inset-0 instead of fixed inset-0. When the user scrolls down the page and opens the modal, the overlay doesn't cover the full visible screen. What is the cause?",
+          "options": [
+            "absolute positions relative to the nearest positioned ancestor — if the body is scrolled, the overlay starts at the body top, not the viewport top. fixed always positions relative to the viewport",
+            "absolute needs a z-index to cover the viewport when scrolled",
+            "inset-0 only works with fixed positioning — it must be changed to top-0 right-0 bottom-0 left-0 for absolute",
+            "The body needs overflow-hidden for absolute overlays to work correctly"
+          ],
+          "answer": "absolute positions relative to the nearest positioned ancestor — if the body is scrolled, the overlay starts at the body top, not the viewport top. fixed always positions relative to the viewport",
+          "explanation": "absolute positioning is relative to the nearest positioned ancestor (often the document root). When the user scrolls, absolute elements scroll with the page. fixed positioning is always relative to the viewport — it stays in place regardless of scroll position. Modal overlays must use fixed to cover the visible screen at any scroll position."
+        },
+        {
+          "id": "tw-jun-11-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A modal panel contains a long form that extends beyond the viewport height. Instead of cutting off, the panel should scroll internally while the overlay stays fixed. Which classes on the panel achieve this?",
+          "options": [
+            "max-h-[90vh] overflow-y-auto — limits panel height to 90% of viewport and enables internal scrolling",
+            "h-screen overflow-scroll — sets full viewport height with scroll",
+            "max-height-screen overflow-hidden — restricts height and hides overflow",
+            "overflow-y-scroll — overflow-y-scroll alone handles this"
+          ],
+          "answer": "max-h-[90vh] overflow-y-auto — limits panel height to 90% of viewport and enables internal scrolling",
+          "explanation": "max-h-[90vh] prevents the panel from growing beyond 90% of the viewport height (leaving some gap at top/bottom). overflow-y-auto adds a scrollbar only when content exceeds this height. Together, they create a panel that scrolls internally when content is long, rather than overflowing the viewport."
+        },
+        {
+          "id": "tw-jun-11-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A modal is visually correct but screen reader users can still interact with elements behind it (the page content under the overlay). Which combination of attributes on the modal container addresses this?",
+          "options": [
+            "role=\"dialog\" and aria-modal=\"true\" — aria-modal tells assistive technology to treat the content behind as inert",
+            "tabindex=\"-1\" on all elements behind the modal",
+            "aria-hidden=\"true\" on the modal container",
+            "focus-trap class on the modal panel"
+          ],
+          "answer": "role=\"dialog\" and aria-modal=\"true\" — aria-modal tells assistive technology to treat the content behind as inert",
+          "explanation": "role='dialog' announces the element as a dialog to screen readers. aria-modal='true' tells modern screen readers to restrict their virtual cursor to the dialog's content, treating everything behind it as inert. Without aria-modal, screen reader users can navigate to elements behind the overlay. Note: some older screen readers still require JavaScript focus trapping in addition to aria-modal."
+        }
+      ]
+    }
+  ]
+}

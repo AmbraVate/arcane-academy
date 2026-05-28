@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-14",
+  "title": "Skeleton Loaders and Empty States",
+  "glyph": "⚗️",
+  "sortOrder": 14,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-5"],
+  "subChunks": [
+    {
+      "id": "tw-jun-14-1",
+      "title": "Skeleton Loaders and Empty States",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Loading states and empty states are the moments your UI is most likely to feel broken. A page with spinning loaders or blank white space signals uncertainty. Skeleton loaders communicate structure while content loads. Well-designed empty states guide users toward the next action. Both are small investments with large perceived quality returns.</p>",
+      "explanationHtml": "<h3>Skeleton loading pattern</h3>\n<p>Skeleton loaders are placeholder shapes that mirror the structure of the real content while it loads. The key utility is <code>animate-pulse</code> on a <code>bg-gray-200</code> div.</p>\n<pre><code>/* Text lines */\n&lt;div class=\"h-4 bg-gray-200 rounded animate-pulse\"&gt;&lt;/div&gt;  &lt;!-- full width --&gt;\n&lt;div class=\"h-4 bg-gray-200 rounded animate-pulse w-3/4\"&gt;&lt;/div&gt;  &lt;!-- 3/4 width --&gt;\n&lt;div class=\"h-4 bg-gray-200 rounded animate-pulse w-1/2\"&gt;&lt;/div&gt;  &lt;!-- 1/2 width --&gt;\n\n/* Avatar --&gt;\n&lt;div class=\"w-10 h-10 rounded-full bg-gray-200 animate-pulse flex-none\"&gt;&lt;/div&gt;\n\n/* Card image placeholder */\n&lt;div class=\"w-full aspect-video bg-gray-200 animate-pulse rounded-t-xl\"&gt;&lt;/div&gt;</code></pre>\n\n<h3>Skeleton card</h3>\n<pre><code>&lt;div class=\"bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden\"&gt;\n  &lt;!-- Image placeholder --&gt;\n  &lt;div class=\"aspect-video bg-gray-200 animate-pulse\"&gt;&lt;/div&gt;\n  &lt;div class=\"p-5 space-y-3\"&gt;\n    &lt;!-- Title placeholder --&gt;\n    &lt;div class=\"h-5 bg-gray-200 rounded animate-pulse w-3/4\"&gt;&lt;/div&gt;\n    &lt;!-- Description placeholders --&gt;\n    &lt;div class=\"h-4 bg-gray-200 rounded animate-pulse\"&gt;&lt;/div&gt;\n    &lt;div class=\"h-4 bg-gray-200 rounded animate-pulse w-5/6\"&gt;&lt;/div&gt;\n    &lt;!-- Footer placeholders --&gt;\n    &lt;div class=\"flex justify-between pt-4 border-t border-gray-100\"&gt;\n      &lt;div class=\"h-4 bg-gray-200 rounded animate-pulse w-16\"&gt;&lt;/div&gt;\n      &lt;div class=\"h-4 bg-gray-200 rounded animate-pulse w-12\"&gt;&lt;/div&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Skeleton list item</h3>\n<pre><code>&lt;div class=\"flex items-start gap-4 px-4 py-3\"&gt;\n  &lt;div class=\"w-10 h-10 rounded-full bg-gray-200 animate-pulse flex-none\"&gt;&lt;/div&gt;\n  &lt;div class=\"flex-1 space-y-2\"&gt;\n    &lt;div class=\"h-4 bg-gray-200 rounded animate-pulse w-1/3\"&gt;&lt;/div&gt;\n    &lt;div class=\"h-3 bg-gray-200 rounded animate-pulse\"&gt;&lt;/div&gt;\n    &lt;div class=\"h-3 bg-gray-200 rounded animate-pulse w-4/5\"&gt;&lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Reducing motion for accessibility</h3>\n<pre><code>&lt;div class=\"bg-gray-200 rounded animate-pulse motion-reduce:animate-none\"&gt;&lt;/div&gt;</code></pre>\n\n<h3>Empty state patterns</h3>\n<p>Empty states appear when a list or section has no data. They should communicate <em>why</em> it's empty and what the user should do next.</p>\n<pre><code>/* Centred empty state with illustration */\n&lt;div class=\"flex flex-col items-center justify-center py-16 text-center\"&gt;\n  &lt;div class=\"text-5xl mb-4\"&gt;🗺️&lt;/div&gt;\n  &lt;h3 class=\"text-sm font-semibold text-gray-900\"&gt;No quests found&lt;/h3&gt;\n  &lt;p class=\"text-sm text-gray-500 mt-1 max-w-xs\"&gt;\n    Your quest log is empty. Browse available quests to get started.\n  &lt;/p&gt;\n  &lt;button class=\"mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors\"&gt;\n    Browse Quests\n  &lt;/button&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Empty state in a table row</h3>\n<pre><code>&lt;tr&gt;\n  &lt;td colspan=\"5\" class=\"px-4 py-12 text-center text-sm text-gray-500\"&gt;\n    No members found. Try adjusting your filters.\n  &lt;/td&gt;\n&lt;/tr&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"An empty state is not an error. It is an opportunity. The illustration makes it friendly. The title names the state clearly. The description explains the cause. The button tells the user exactly what to do next. Every empty state should have all four of these elements.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "The loading state and the empty state are the most honest moments in your UI — they show what happens when there is nothing to show. A blank white page is not a state. A skeleton that mirrors the real content tells the user: something is coming, and this is the shape of it."
+        },
+        {
+          "type": "example",
+          "speaker": "Skeleton list item",
+          "text": "<div class=\"flex items-start gap-4 px-4 py-3\">\n  <div class=\"w-10 h-10 rounded-full bg-gray-200 animate-pulse flex-none\"></div>\n  <div class=\"flex-1 space-y-2\">\n    <div class=\"h-4 bg-gray-200 rounded animate-pulse w-1/3\"></div>\n    <div class=\"h-3 bg-gray-200 rounded animate-pulse\"></div>\n    <div class=\"h-3 bg-gray-200 rounded animate-pulse w-4/5\"></div>\n  </div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a skeleton card and an empty state component:</p>\n<ul>\n  <li><strong>.skeleton-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code>, <code>shadow-sm</code>, <code>overflow-hidden</code></li>\n  <li><strong>.skeleton-image</strong>: <code>aspect-video</code>, <code>bg-gray-200</code>, <code>animate-pulse</code></li>\n  <li><strong>.skeleton-line</strong>: <code>h-4</code>, <code>bg-gray-200</code>, <code>rounded</code>, <code>animate-pulse</code>, <code>motion-reduce:animate-none</code></li>\n  <li><strong>.empty-state</strong>: <code>flex</code>, <code>flex-col</code>, <code>items-center</code>, <code>justify-center</code>, <code>py-16</code>, <code>text-center</code></li>\n  <li><strong>.empty-title</strong>: <code>text-sm</code>, <code>font-semibold</code>, <code>text-gray-900</code></li>\n  <li><strong>.empty-desc</strong>: <code>text-sm</code>, <code>text-gray-500</code>, <code>mt-1</code>, <code>max-w-xs</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"p-6 space-y-8 max-w-sm\">\n  <!-- Skeleton card -->\n  <div class=\"skeleton-card\">\n    <div class=\"skeleton-image\"></div>\n    <div class=\"p-5 space-y-3\">\n      <div class=\"skeleton-line w-3/4\"></div>\n      <div class=\"skeleton-line\"></div>\n      <div class=\"skeleton-line w-5/6\"></div>\n      <div class=\"flex justify-between pt-4 border-t border-gray-100\">\n        <div class=\"skeleton-line w-16\"></div>\n        <div class=\"skeleton-line w-12\"></div>\n      </div>\n    </div>\n  </div>\n\n  <!-- Empty state -->\n  <div class=\"empty-state bg-white rounded-xl border border-gray-100 shadow-sm\">\n    <div class=\"text-5xl mb-4\">🗺️</div>\n    <h3 class=\"empty-title\">No quests found</h3>\n    <p class=\"empty-desc\">Your quest log is empty. Browse available quests to get started on your adventure.</p>\n    <button class=\"mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors\">\n      Browse Quests\n    </button>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: rounded-xl",           "selector": ".skeleton-card",  "requiredClass": "rounded-xl"              },
+        { "label": "Card: overflow-hidden",      "selector": ".skeleton-card",  "requiredClass": "overflow-hidden"         },
+        { "label": "Image: aspect-video",        "selector": ".skeleton-image", "requiredClass": "aspect-video"            },
+        { "label": "Image: animate-pulse",       "selector": ".skeleton-image", "requiredClass": "animate-pulse"           },
+        { "label": "Line: h-4",                  "selector": ".skeleton-line",  "requiredClass": "h-4"                     },
+        { "label": "Line: bg-gray-200",          "selector": ".skeleton-line",  "requiredClass": "bg-gray-200"             },
+        { "label": "Line: animate-pulse",        "selector": ".skeleton-line",  "requiredClass": "animate-pulse"           },
+        { "label": "Line: motion-reduce",        "selector": ".skeleton-line",  "requiredClass": "motion-reduce:animate-none"},
+        { "label": "Empty: flex-col",            "selector": ".empty-state",    "requiredClass": "flex-col"                },
+        { "label": "Empty desc: max-w-xs",       "selector": ".empty-desc",     "requiredClass": "max-w-xs"                }
+      ],
+      "soloPracticeHtml": "<p>Build a full loading/empty state system from scratch for a member directory: a 3-column grid of skeleton member cards while loading, and an empty state when no members match a search. The skeleton card should mirror the structure of a real member card (avatar circle, name line, role line, stat line). The empty state should have an illustration, title, description, and a clear action button. No starter code.</p>",
+      "feynmanPrompt": "Explain why skeleton loaders are considered better UX than spinner overlays for loading content. Walk through the animate-pulse utility — what CSS does it apply? Why should skeleton shapes mirror the real content's structure? What are the four elements of an effective empty state, and why does each matter?",
+      "questions": [
+        {
+          "id": "tw-jun-14-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "JUNIOR",
+          "prompt": "Which class creates the pulsing animation used for skeleton loading placeholders?",
+          "options": [
+            "animate-pulse",
+            "animate-skeleton",
+            "loading-pulse",
+            "animate-fade"
+          ],
+          "answer": "animate-pulse",
+          "explanation": "animate-pulse applies a CSS animation that transitions opacity between 100% and 50% in a loop. Combined with bg-gray-200 and a specific height/width, it creates the skeleton shimmer effect used to indicate loading content."
+        },
+        {
+          "id": "tw-jun-14-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A skeleton card has rounded-xl on its wrapper but the top image placeholder doesn't respect the rounding. What class is missing from the wrapper?",
+          "options": [
+            "overflow-hidden — clips child elements to the wrapper's border-radius",
+            "rounded-t-xl on the skeleton image placeholder",
+            "clip-rounded on the skeleton card",
+            "border-radius: inherit on the image element"
+          ],
+          "answer": "overflow-hidden — clips child elements to the wrapper's border-radius",
+          "explanation": "rounded-xl creates the rounded shape but doesn't clip child backgrounds. Adding overflow-hidden to the wrapper makes all child elements respect the border-radius. This is the same pattern required for real cards with images — the skeleton card should mirror the exact same structure."
+        },
+        {
+          "id": "tw-jun-14-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "An empty state shows just 'No results' as a plain text string. What is the minimum set of elements that turns this into a useful empty state?",
+          "options": [
+            "Illustration/icon, title (names the empty state), description (explains why and context), and an action button (tells the user what to do next)",
+            "A large spinner to indicate the content may still be loading",
+            "A link back to the previous page and a reload button",
+            "The title alone is sufficient — descriptions and actions are optional extras"
+          ],
+          "answer": "Illustration/icon, title (names the empty state), description (explains why and context), and an action button (tells the user what to do next)",
+          "explanation": "An effective empty state has four parts: (1) an illustration or icon to make it feel intentional and friendly rather than broken, (2) a title that names the state clearly ('No quests found'), (3) a description that provides context ('Your quest log is empty — you haven't started any quests yet'), and (4) an action button that gives the user a clear next step ('Browse Quests'). Without the action button, you've diagnosed the problem but not solved it."
+        }
+      ]
+    }
+  ]
+}

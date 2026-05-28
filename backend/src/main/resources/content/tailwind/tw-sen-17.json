@@ -1,0 +1,102 @@
+{
+  "id": "tw-sen-17",
+  "title": "Performance Deep Dive",
+  "glyph": "🔮",
+  "sortOrder": 17,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-4"],
+  "subChunks": [
+    {
+      "id": "tw-sen-17-1",
+      "title": "Performance Deep Dive",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>A Tailwind build that produces 8 KB of CSS is fast. One that produces 400 KB is a performance regression. Understanding <em>why</em> the bundle grows, how to diagnose it, how to optimise it, and what trade-offs exist between CSS size, runtime class manipulation, and rendering performance separates a senior from a mid-level engineer.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"Two categories of performance issue exist in a Tailwind codebase: build-time (CSS bundle size) and runtime (class computation in JavaScript). A 400KB CSS file causes a network stall. Hundreds of cn() calls on every render cause a CPU stall. Both are measurable. Both are fixable.\"</p></div>\n\n<h3>Auditing CSS bundle size</h3>\n<pre><code>npm run build\n\n# Check the CSS file size:\nls -lh dist/assets/*.css\n\n# Or use bundle analyser plugin:\n# vite-bundle-visualizer, rollup-plugin-visualizer\n\n# Expected sizes (gzipped):\n#  Small app (10–30 components):     3–8 KB\n#  Medium app (50–100 components):   8–20 KB\n#  Large app (200+ components):      15–35 KB\n#  > 50 KB gzipped: investigate immediately</code></pre>\n\n<h3>Diagnosing a large CSS file</h3>\n<pre><code>/* 1. Check @source paths — are you scanning too much? */\n@source \"../src/**/*.{ts,tsx,html}\";\n/* ❌ Too broad: */\n@source \"../src/**/*\";  /* matches .json, .svg, .md — anything with class-like strings */\n\n/* 2. Check @source inline() — are patterns too wide? */\n@source inline(\"{bg,text,border,ring}-{red,green,blue,yellow,purple,pink,orange,gray}-{50,100,200,300,400,500,600,700,800,900,950}\");\n/* This generates ~200+ classes. Use only what's needed. */\n\n/* 3. Look for accidentally scanned data files */\n/* A JSON file with user-generated content might contain strings\n   like 'class_name_123' or colour words that match utilities */</code></pre>\n\n<h3>Runtime performance: the cn() cost</h3>\n<pre><code>/* cn() calls twMerge(clsx(...)) — not free at scale */\n\n/* ❌ Expensive: cn() in a list of 500 items, called on every render */\n{items.map(item =&gt; (\n  &lt;div className={cn('base-class', item.variant === 'active' && 'bg-blue-50', item.variant === 'error' && 'bg-red-50')} /&gt;\n))}\n\n/* ✅ Better: precompute static variant maps */\nconst itemClasses: Record&lt;string, string&gt; = {\n  active:  'base-class bg-blue-50',\n  error:   'base-class bg-red-50',\n  default: 'base-class',\n};\n{items.map(item =&gt; (\n  &lt;div className={itemClasses[item.variant] ?? itemClasses.default} /&gt;\n))}\n\n/* ✅ Better still: memoize expensive cn() derivations */\nconst computedClass = useMemo(\n  () =&gt; cn('base-class', dynamicCondition && 'conditional-class'),\n  [dynamicCondition]\n);</code></pre>\n\n<h3>Critical CSS for above-the-fold performance</h3>\n<pre><code>/* Vite automatically handles CSS code splitting.\n   For critical CSS, use Vite's critters plugin: */\n\n// vite.config.ts\nimport { critters } from 'vite-plugin-critters';\n\nexport default defineConfig({\n  plugins: [\n    react(),\n    critters(),  // Inline critical CSS, defer non-critical\n  ],\n});\n\n/* Result: above-the-fold CSS is inlined in &lt;head&gt;,\n   the rest loads asynchronously — no render blocking */</code></pre>\n\n<h3>Reducing re-renders from class string changes</h3>\n<pre><code>/* className prop changes trigger re-renders in React */\n\n/* ❌ New string reference every render */\nfunction Card({ isActive }: { isActive: boolean }) {\n  return &lt;div className={cn('card', isActive && 'ring-2 ring-blue-500')} /&gt;;\n  // cn() returns a new string reference on every render — React sees a prop change\n}\n\n/* ✅ Memoize when className computation is expensive */\nfunction Card({ isActive }: { isActive: boolean }) {\n  const className = useMemo(\n    () =&gt; cn('card', isActive && 'ring-2 ring-blue-500'),\n    [isActive]\n  );\n  return &lt;div className={className} /&gt;;\n}</code></pre>\n\n<h3>font-display: swap for custom fonts</h3>\n<pre><code>@layer base {\n  @font-face {\n    font-family: 'Cal Sans';\n    src: url('/fonts/CalSans-SemiBold.woff2') format('woff2');\n    font-weight: 600;\n    font-display: swap;  /* Show fallback immediately, swap when loaded */\n  }\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Ember:</strong> \"Performance is not a feature you add. It is a constraint you maintain. Measure CSS bundle size on every PR. Profile component render time when you see slowdowns. Fix it before it ships.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "Build time: audit CSS bundle size. @source paths that are too broad, inline patterns that are too wide — these balloon the output. Runtime: cn() in tight loops is measurable overhead. Precompute static maps. Memoize expensive derivations."
+        },
+        {
+          "type": "example",
+          "speaker": "Precomputed variant class map",
+          "text": "const variantClasses = {\n  active:  'bg-blue-50 ring-2 ring-blue-500',\n  error:   'bg-red-50 ring-2 ring-red-500',\n  default: 'bg-white',\n} satisfies Record<Status, string>;\n\n// No cn() in the render loop"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a high-performance status list using precomputed class maps (no cn() in the render):</p>\n<ul>\n  <li><strong>.perf-list</strong>: <code>divide-y</code>, <code>divide-gray-100</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>overflow-hidden</code></li>\n  <li><strong>.perf-item</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-between</code>, <code>px-4</code>, <code>py-3</code>, <code>hover:bg-gray-50</code>, <code>transition-colors</code></li>\n  <li><strong>.perf-status-active</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>text-xs</code>, <code>font-medium</code>, <code>bg-emerald-100</code>, <code>text-emerald-800</code></li>\n  <li><strong>.perf-status-warning</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>text-xs</code>, <code>font-medium</code>, <code>bg-amber-100</code>, <code>text-amber-800</code></li>\n  <li><strong>.perf-status-error</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>text-xs</code>, <code>font-medium</code>, <code>bg-red-100</code>, <code>text-red-800</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-lg p-6\">\n  <div class=\"perf-list\">\n    <div class=\"perf-item\">\n      <div>\n        <p class=\"text-sm font-medium text-gray-900\">Quest Database</p>\n        <p class=\"text-xs text-gray-500\">arcane-db-prod</p>\n      </div>\n      <span class=\"perf-status-active\">Active</span>\n    </div>\n    <div class=\"perf-item\">\n      <div>\n        <p class=\"text-sm font-medium text-gray-900\">Reward Service</p>\n        <p class=\"text-xs text-gray-500\">rewards-svc-01</p>\n      </div>\n      <span class=\"perf-status-warning\">Degraded</span>\n    </div>\n    <div class=\"perf-item\">\n      <div>\n        <p class=\"text-sm font-medium text-gray-900\">Badge Processor</p>\n        <p class=\"text-xs text-gray-500\">badge-proc-02</p>\n      </div>\n      <span class=\"perf-status-error\">Error</span>\n    </div>\n    <div class=\"perf-item\">\n      <div>\n        <p class=\"text-sm font-medium text-gray-900\">Notification Queue</p>\n        <p class=\"text-xs text-gray-500\">notif-queue-01</p>\n      </div>\n      <span class=\"perf-status-active\">Active</span>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "List: divide-y",                     "selector": ".perf-list",          "requiredClass": "divide-y"          },
+        { "label": "List: divide-gray-100",              "selector": ".perf-list",          "requiredClass": "divide-gray-100"   },
+        { "label": "List: rounded-xl",                   "selector": ".perf-list",          "requiredClass": "rounded-xl"        },
+        { "label": "Item: flex",                         "selector": ".perf-item",          "requiredClass": "flex"              },
+        { "label": "Item: justify-between",              "selector": ".perf-item",          "requiredClass": "justify-between"   },
+        { "label": "Item: hover:bg-gray-50",             "selector": ".perf-item",          "requiredClass": "hover:bg-gray-50"  },
+        { "label": "Item: transition-colors",            "selector": ".perf-item",          "requiredClass": "transition-colors" },
+        { "label": "Active: bg-emerald-100",             "selector": ".perf-status-active", "requiredClass": "bg-emerald-100"    },
+        { "label": "Active: text-emerald-800",           "selector": ".perf-status-active", "requiredClass": "text-emerald-800"  },
+        { "label": "Warning: bg-amber-100",              "selector": ".perf-status-warning","requiredClass": "bg-amber-100"      },
+        { "label": "Warning: text-amber-800",            "selector": ".perf-status-warning","requiredClass": "text-amber-800"    },
+        { "label": "Error: bg-red-100",                  "selector": ".perf-status-error",  "requiredClass": "bg-red-100"        },
+        { "label": "Error: text-red-800",                "selector": ".perf-status-error",  "requiredClass": "text-red-800"      }
+      ],
+      "soloPracticeHtml": "<p>Build a performance audit dashboard from scratch. Include: a CSS bundle size indicator card, a render performance timeline, a list of 10+ status items using a precomputed class map (no cn() in the list), and a font-loading status indicator. Comment the code to explain which performance optimisations are applied and why.</p>",
+      "feynmanPrompt": "Walk through two separate performance problems in a Tailwind codebase: (1) an oversized CSS bundle and (2) runtime slowness from cn() in render loops. For each, describe: what causes it, how you diagnose it, and how you fix it.",
+      "questions": [
+        {
+          "id": "tw-sen-17-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "After a production build, the CSS file is 180 KB gzipped (expected: 15–20 KB). What is the most likely root cause?",
+          "options": [
+            "An @source path is too broad — scanning node_modules, JSON data files, or build artifacts that contain class-like strings",
+            "Too many @theme tokens were defined — each token generates multiple utilities",
+            "The @tailwindcss/typography plugin generates a large amount of prose styles",
+            "dark: variant doubles the number of utilities in the output"
+          ],
+          "answer": "An @source path is too broad — scanning node_modules, JSON data files, or build artifacts that contain class-like strings",
+          "explanation": "The scanner emits a utility for every complete class string it finds. A JSON file with user content, a markdown file, or a broad node_modules glob can contain thousands of class-like strings (colour names, CSS property values) that match utility patterns. The fix: narrow @source paths to only files that intentionally contain Tailwind class strings."
+        },
+        {
+          "id": "tw-sen-17-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A list renders 500 items. Each item calls cn('item', item.status === 'active' && 'bg-blue-50', item.status === 'error' && 'bg-red-50'). Profiling shows this is slow. What is the most effective optimisation?",
+          "options": [
+            "Replace cn() with a precomputed class map: const statusMap = { active: 'item bg-blue-50', error: 'item bg-red-50', default: 'item' }",
+            "Memoize the entire list with React.memo — prevents the cn() calls from running at all",
+            "Replace cn() with twMerge only — clsx is the performance bottleneck",
+            "Extract to a CSS class using @layer components — moves the logic out of JavaScript"
+          ],
+          "answer": "Replace cn() with a precomputed class map: const statusMap = { active: 'item bg-blue-50', error: 'item bg-red-50', default: 'item' }",
+          "explanation": "cn() calls twMerge(clsx(...)) which parses class strings on every invocation. For 500 items with static status values, the full class string can be computed once per status and looked up in O(1). The precomputed map eliminates the cn() overhead in the render loop entirely. React.memo wouldn't help because the items themselves change."
+        },
+        {
+          "id": "tw-sen-17-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "SENIOR",
+          "prompt": "A developer proposes using @source inline(\"{bg,text,border}-{red,green,blue,yellow,purple,pink,orange}-{50,100,200,300,400,500,600,700,800,900}\") to safelist all colour utilities 'just in case'. A senior pushes back. Why?",
+          "options": [
+            "This generates ~630 classes that may never be used, potentially adding 40–80 KB to the CSS bundle unnecessarily",
+            "The brace expansion syntax is not valid in @source inline() — it only accepts exact class names",
+            "Safelisting prevents the JIT scanner from working — all utilities must be discovered via scanning",
+            "It creates specificity conflicts with utilities generated by the scanner"
+          ],
+          "answer": "This generates ~630 classes that may never be used, potentially adding 40–80 KB to the CSS bundle unnecessarily",
+          "explanation": "The pattern {bg,text,border}-{red,green,blue,yellow,purple,pink,orange}-{50,100,200,...} generates 7 colours × 10 shades × 3 property types = 210+ base classes, each potentially with modifier variants. @source inline() should be precise: list only the classes that actually come from dynamic data sources, not a blanket safelist."
+        }
+      ]
+    }
+  ]
+}

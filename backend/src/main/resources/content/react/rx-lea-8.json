@@ -1,0 +1,88 @@
+{
+  "id": "rx-lea-8",
+  "title": "GraphQL with Apollo Client",
+  "glyph": "⚛",
+  "sortOrder": 8,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-8"],
+  "subChunks": [
+    {
+      "id": "rx-lea-8-1",
+      "title": "GraphQL with Apollo Client",
+      "sortOrder": 1,
+      "xpReward": 225,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>REST APIs return fixed shapes — you get what the endpoint gives you, nothing more, nothing less. GraphQL lets the client declare exactly what data it needs. Apollo Client handles the network layer, normalised caching, optimistic updates, and real-time subscriptions. When your application has complex data requirements across many components, GraphQL can eliminate both over-fetching and under-fetching in a single query.</p>",
+      "explanationHtml": "<h3>Setup</h3>\n\n<pre><code>// main.tsx:\nimport { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';\n\nconst client = new ApolloClient({\n  uri: '/graphql',\n  cache: new InMemoryCache(),\n  defaultOptions: {\n    watchQuery: { fetchPolicy: 'cache-and-network' },\n  },\n});\n\n// Wrap app:\n&lt;ApolloProvider client={client}&gt;\n  &lt;App /&gt;\n&lt;/ApolloProvider&gt;</code></pre>\n\n<h3>Queries</h3>\n\n<pre><code>import { gql, useQuery } from '@apollo/client';\n\nconst GET_QUESTS = gql`\n  query GetQuests($status: QuestStatus) {\n    quests(status: $status) {\n      id\n      title\n      xpReward\n      assignedTo {\n        id\n        name\n        avatar\n      }\n    }\n  }\n`;\n\nfunction QuestList({ status }: { status: QuestStatus }) {\n  const { data, loading, error, refetch } = useQuery(GET_QUESTS, {\n    variables: { status },\n  });\n\n  if (loading) return &lt;QuestSkeleton /&gt;;\n  if (error) return &lt;ErrorMessage error={error} /&gt;;\n\n  return (\n    &lt;ul&gt;\n      {data.quests.map(quest =&gt; (\n        &lt;QuestCard key={quest.id} quest={quest} /&gt;\n      ))}\n    &lt;/ul&gt;\n  );\n}</code></pre>\n\n<h3>Mutations with optimistic updates</h3>\n\n<pre><code>const ACCEPT_QUEST = gql`\n  mutation AcceptQuest($questId: ID!) {\n    acceptQuest(questId: $questId) {\n      id\n      status\n      acceptedAt\n    }\n  }\n`;\n\nfunction AcceptButton({ quest }: { quest: Quest }) {\n  const [acceptQuest, { loading }] = useMutation(ACCEPT_QUEST, {\n    variables: { questId: quest.id },\n    // Optimistic update — update UI before server responds:\n    optimisticResponse: {\n      acceptQuest: {\n        __typename: 'Quest',\n        id: quest.id,\n        status: 'ACCEPTED',\n        acceptedAt: new Date().toISOString(),\n      },\n    },\n    // Or update the cache manually:\n    update(cache, { data }) {\n      cache.modify({\n        id: cache.identify({ __typename: 'Quest', id: quest.id }),\n        fields: {\n          status: () => data.acceptQuest.status,\n        },\n      });\n    },\n  });\n\n  return &lt;button onClick={() =&gt; acceptQuest()} disabled={loading}&gt;Accept&lt;/button&gt;;\n}</code></pre>\n\n<h3>Normalized cache</h3>\n\n<pre><code>// Apollo normalises the cache by __typename + id:\n// If the same quest appears in two queries, one cache entry:\n// Quest:42 → { id: 42, title: '...', status: 'OPEN' }\n\n// When acceptQuest mutation returns Quest:42 with status: ACCEPTED,\n// every component showing Quest:42 re-renders automatically.\n\n// Custom cache key if your ID field isn't 'id':\nnew InMemoryCache({\n  typePolicies: {\n    Quest: { keyFields: ['questId'] },       // Use questId as key\n    Member: { keyFields: ['email'] },         // Use email as key\n    GuildSettings: { keyFields: [] },         // Singleton — no ID\n  },\n})</code></pre>\n\n<h3>Subscriptions for real-time</h3>\n\n<pre><code>import { gql, useSubscription } from '@apollo/client';\nimport { GraphQLWsLink } from '@apollo/client/link/subscriptions';\nimport { createClient } from 'graphql-ws';\n\n// Add WebSocket link for subscriptions:\nconst wsLink = new GraphQLWsLink(createClient({\n  url: 'wss://api.arcane.academy/graphql',\n}));\n\nconst QUEST_UPDATES = gql`\n  subscription OnQuestUpdate {\n    questUpdated {\n      id\n      status\n      assignedTo { id name }\n    }\n  }\n`;\n\nfunction LiveQuestTracker() {\n  const { data } = useSubscription(QUEST_UPDATES);\n  // data.questUpdated updates in real-time as events arrive\n  return &lt;QuestCard quest={data?.questUpdated} /&gt;;\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"GraphQL's killer feature is not queries — it's the normalised cache. When a mutation updates Quest:42, every component that ever queried Quest:42 updates automatically. No manual cache invalidation, no refetchQueries hunting. The trade-off: you're coupling your frontend to a GraphQL schema. REST is more universal; GraphQL is more powerful when you control both ends.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The dashboard needs quest titles, member names, and treasury totals — three REST calls, three loading states, three error handlers. With GraphQL, one query declares all three. The data arrives together or not at all."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "GraphQL's real advantage is the normalised cache. A mutation to Quest:42 updates every component that ever queried that quest — automatically. You don't invalidate; the cache knows. The cost: your frontend is coupled to a schema, and that schema must be maintained. For public APIs, REST remains the standard."
+        },
+        {
+          "type": "example",
+          "speaker": "Query declares exactly what data is needed",
+          "text": "const { data } = useQuery(gql`\n  query {\n    quest(id: 42) {\n      title          # Only these fields\n      xpReward       # Nothing extra\n      assignedTo { name }\n    }\n  }\n`);"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build Apollo Client data fetching:</p><ul><li>Set up ApolloClient with InMemoryCache and wrap the app in ApolloProvider</li><li>Write a <code>GET_QUESTS</code> query and a component that uses <code>useQuery</code> to display quests with loading/error states</li><li>Write an <code>ACCEPT_QUEST</code> mutation with an optimistic response that immediately sets the quest status to ACCEPTED before the server responds</li></ul>",
+      "guidedPracticeStarterCode": "// Apollo Client Exercise\n// Mock Apollo for the sandbox:\nconst mockQuests = [\n  { id: '1', title: 'Slay the Dragon', xpReward: 500, status: 'OPEN' },\n  { id: '2', title: 'Find the Tome', xpReward: 300, status: 'OPEN' },\n];\n\n// Mock hooks simulating Apollo:\nfunction useQuery(query, options) {\n  const [data] = useState({ quests: mockQuests });\n  return { data, loading: false, error: null };\n}\n\nfunction useMutation(mutation) {\n  const [quests, setQuests] = useState(mockQuests);\n  const execute = ({ variables, optimisticResponse }) => {\n    if (optimisticResponse) {\n      // Apply optimistic update\n      setQuests(prev => prev.map(q =>\n        q.id === variables.questId\n          ? { ...q, ...optimisticResponse.acceptQuest }\n          : q\n      ));\n    }\n  };\n  return [execute, { loading: false }];\n}\n\nimport { useState } from 'react';\n\n// TODO: QuestList component using useQuery\nfunction QuestList() {\n  const { data, loading, error } = useQuery('GET_QUESTS');\n\n  if (loading) return <p>Loading...</p>;\n  if (error) return <p>Error!</p>;\n\n  return (\n    <ul data-testid=\"quest-list\">\n      {data.quests.map(quest => (\n        <li key={quest.id} data-testid={`quest-${quest.id}`}>\n          {quest.title} — {quest.status}\n          {/* TODO: AcceptButton with optimistic response */}\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nexport default function App() {\n  return (\n    <div data-testid=\"app\">\n      <h1>Quest Board</h1>\n      <QuestList />\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Quest list renders",
+          "selector": "[data-testid='quest-list']",
+          "exists": true
+        },
+        {
+          "label": "First quest renders",
+          "selector": "[data-testid='quest-1']",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a GraphQL-powered quest board using Apollo Client against a real GraphQL API (use a public one or set up a simple Express+Apollo Server locally): (1) useQuery for listing quests with variables for filtering by status, (2) useMutation for accepting a quest with an optimistic response and cache.modify to update related queries, (3) useSubscription for live quest updates via WebSocket, (4) custom InMemoryCache typePolicies to handle a type that doesn't use 'id' as its key field. Add Apollo DevTools to inspect the normalised cache state.</p>",
+      "feynmanPrompt": "Explain GraphQL's normalised cache — what is a 'cache key', how does Apollo derive it from __typename and id, and why does this mean mutations automatically update all related queries? Compare GraphQL vs REST: give two scenarios where GraphQL is clearly better and one where REST is the better choice. Explain optimistic updates — what happens if the server returns an error after an optimistic update was applied?",
+      "questions": [
+        {
+          "id": "rx-lea-8-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "After an `acceptQuest` mutation, the quest list component still shows the old status. The mutation returned the updated quest data. What is most likely the issue?",
+          "options": [
+            "The mutation response is missing `__typename: 'Quest'` — Apollo can't match it to the cache entry without the typename, so the cache isn't updated",
+            "The mutation needs a `refetchQueries` array to trigger a re-fetch",
+            "useQuery needs to set fetchPolicy: 'no-cache' to see mutation results",
+            "Apollo Client doesn't update the cache from mutations automatically"
+          ],
+          "answer": "The mutation response is missing `__typename: 'Quest'` — Apollo can't match it to the cache entry without the typename, so the cache isn't updated",
+          "explanation": "Apollo's normalised cache identifies objects by `__typename + id`. If the mutation's selection set doesn't include `__typename`, Apollo can't find the matching cache entry and the update is lost. Always include `__typename` in mutation response fields, or use `optimisticResponse` with explicit `__typename`. Apollo DevTools shows the cache state — if the entry isn't updated, check what the mutation actually returned."
+        },
+        {
+          "id": "rx-lea-8-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "When would you choose REST over GraphQL for a new React application?",
+          "options": [
+            "When the API will be consumed by multiple clients you don't control (mobile apps, third-party integrations, public API consumers) — REST is more universal and doesn't require a GraphQL client",
+            "When the frontend has complex, overlapping data requirements across many components",
+            "When you need real-time updates via subscriptions",
+            "When you want to avoid over-fetching data"
+          ],
+          "answer": "When the API will be consumed by multiple clients you don't control (mobile apps, third-party integrations, public API consumers) — REST is more universal and doesn't require a GraphQL client",
+          "explanation": "GraphQL is a powerful choice when you control both client and server and have complex data requirements. But it requires a GraphQL client, a schema to maintain, and a more complex server setup. REST APIs are universally accessible with a plain fetch() — no client library required. For public APIs, webhooks, simple CRUD applications, or teams where GraphQL expertise is scarce, REST is often the pragmatic choice."
+        }
+      ]
+    }
+  ]
+}

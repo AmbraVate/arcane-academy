@@ -1,0 +1,127 @@
+{
+  "id": "rx-sen-9",
+  "title": "Forms with React Hook Form",
+  "glyph": "⚛",
+  "sortOrder": 9,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-4"],
+  "subChunks": [
+    {
+      "id": "rx-sen-9-1",
+      "title": "Forms with React Hook Form",
+      "sortOrder": 1,
+      "xpReward": 175,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Building forms with controlled components works — but it doesn't scale. Every field re-renders the entire form on each keystroke. Validation logic sprawls across state and effects. React Hook Form solves both problems: uncontrolled inputs with ref-based registration, rendering only what changed, and a declarative validation API that handles field-level and form-level rules.</p>",
+      "explanationHtml": "<h3>Why React Hook Form</h3>\n\n<p>Controlled form problems: every keystroke triggers a state update → re-render of the entire form. With 20 fields, that's 20 component trees re-rendering per keystroke. React Hook Form uses uncontrolled inputs under the hood — refs instead of state — so only the fields that changed re-render.</p>\n\n<h3>Basic usage</h3>\n\n<pre><code>import { useForm } from 'react-hook-form';\n\nfunction QuestForm({ onSubmit }) {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n    reset,\n  } = useForm({\n    defaultValues: { title: '', difficulty: 'easy', xp: 100 },\n  });\n\n  return (\n    &lt;form onSubmit={handleSubmit(onSubmit)}&gt;\n      &lt;input\n        {...register('title', {\n          required: 'Title is required',\n          minLength: { value: 3, message: 'At least 3 characters' },\n        })}\n      /&gt;\n      {errors.title &amp;&amp; &lt;p role=\"alert\"&gt;{errors.title.message}&lt;/p&gt;}\n\n      &lt;select {...register('difficulty')}&gt;\n        &lt;option value=\"easy\"&gt;Easy&lt;/option&gt;\n        &lt;option value=\"hard\"&gt;Hard&lt;/option&gt;\n      &lt;/select&gt;\n\n      &lt;button type=\"submit\" disabled={isSubmitting}&gt;\n        {isSubmitting ? 'Saving...' : 'Create Quest'}\n      &lt;/button&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<h3>Validation rules</h3>\n\n<pre><code>register('email', {\n  required: 'Email is required',\n  pattern: { value: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, message: 'Invalid email' },\n});\n\nregister('xp', {\n  required: true,\n  min: { value: 1, message: 'XP must be at least 1' },\n  max: { value: 1000, message: 'XP cannot exceed 1000' },\n  valueAsNumber: true, // Parse the input value as a number\n});\n\n// Custom async validation:\nregister('username', {\n  validate: async (value) =&gt; {\n    const taken = await checkUsernameTaken(value);\n    return !taken || 'Username is already taken';\n  },\n});</code></pre>\n\n<h3>Integrating with UI libraries — Controller</h3>\n\n<p>For custom input components that don't expose a ref (like a date picker or custom select), use <code>Controller</code>:</p>\n\n<pre><code>import { Controller } from 'react-hook-form';\n\n&lt;Controller\n  name=\"category\"\n  control={control}\n  rules={{ required: 'Select a category' }}\n  render={({ field }) =&gt; (\n    &lt;CustomSelect\n      value={field.value}\n      onChange={field.onChange}\n      onBlur={field.onBlur}\n    /&gt;\n  )}\n/&gt;</code></pre>\n\n<h3>Watching values and derived state</h3>\n\n<pre><code>const { watch } = useForm();\nconst difficulty = watch('difficulty');\n\n// Show different fields based on watched value:\n{difficulty === 'boss' &amp;&amp; (\n  &lt;input {...register('bossHealth')} placeholder=\"Boss health\" /&gt;\n)}</code></pre>\n\n<h3>Schema validation with Zod</h3>\n\n<pre><code>import { zodResolver } from '@hookform/resolvers/zod';\nimport { z } from 'zod';\n\nconst schema = z.object({\n  title: z.string().min(3, 'At least 3 characters'),\n  xp: z.number().min(1).max(1000),\n  email: z.string().email('Invalid email'),\n});\n\nuseForm({ resolver: zodResolver(schema) });</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The resolver pattern is where React Hook Form gets really powerful — define your validation schema once in Zod, get TypeScript types and runtime validation from the same definition, and React Hook Form handles the wiring. One schema, two birds.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A registration form with 15 fields. Every keystroke re-renders all 15. The form validation logic spans 80 lines of useEffect and useState. Vex opens a blank file and installs react-hook-form."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "React Hook Form uses refs, not state, to track field values. The form doesn't re-render on every keystroke — only on submission and validation events. register() connects a native input to the form. handleSubmit validates and calls your submit function. errors tells you what went wrong."
+        },
+        {
+          "type": "example",
+          "speaker": "Minimal React Hook Form",
+          "text": "const { register, handleSubmit, formState: { errors } } = useForm();\n\n<form onSubmit={handleSubmit(data => console.log(data))}>\n  <input {...register('email', { required: 'Email required' })} />\n  {errors.email && <p>{errors.email.message}</p>}\n  <button type=\"submit\">Submit</button>\n</form>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a quest creation form using React Hook Form:</p><ul><li>Fields: <code>title</code> (required, min 3 chars), <code>difficulty</code> (select: easy/normal/hard), <code>xpReward</code> (number, min 10, max 500)</li><li>Show field-level error messages with <code>role=\"alert\"</code></li><li>Show an <code>isSubmitting</code> state on the submit button</li><li>On successful submit, log the data and reset the form</li></ul>",
+      "guidedPracticeStarterCode": "import { useForm } from 'react-hook-form';\n\nexport default function QuestForm() {\n  const {\n    register,\n    handleSubmit,\n    reset,\n    formState: { errors, isSubmitting },\n  } = useForm({\n    defaultValues: { title: '', difficulty: 'easy', xpReward: 100 },\n  });\n\n  const onSubmit = async (data) => {\n    await new Promise(r => setTimeout(r, 500)); // simulate async\n    console.log('Created quest:', data);\n    reset();\n  };\n\n  return (\n    <form onSubmit={handleSubmit(onSubmit)}>\n      {/* TODO: title input with required + minLength validation */}\n      {/* TODO: difficulty select */}\n      {/* TODO: xpReward number input with min/max */}\n      {/* TODO: submit button that shows isSubmitting state */}\n    </form>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Form renders",
+          "selector": "form",
+          "exists": true
+        },
+        {
+          "label": "Title field exists",
+          "selector": "input[name='title']",
+          "exists": true
+        },
+        {
+          "label": "Error shows for empty submit",
+          "action": "click",
+          "selector": "button[type='submit']",
+          "then": {
+            "selector": "[role='alert']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a multi-step registration form (3 steps) using React Hook Form. Step 1: name + email. Step 2: password + confirm (custom validation: passwords match). Step 3: avatar selection (radio buttons). Navigation only proceeds if the current step's fields are valid (use <code>trigger()</code> to validate specific fields). On final submit, show a success summary. Use Zod for schema validation on each step.</p>",
+      "feynmanPrompt": "Explain the key architectural difference between React Hook Form's approach and controlled components. Why does this difference matter for performance? Walk through how register(), handleSubmit(), and errors work together. Then explain when you'd use Controller vs register, and when you'd add a Zod resolver.",
+      "questions": [
+        {
+          "id": "rx-sen-9-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Why does React Hook Form perform better than controlled components for large forms?",
+          "options": [
+            "It uses uncontrolled inputs with refs — field values are read from the DOM on submit rather than stored in React state, so there are no re-renders on each keystroke",
+            "It batches all state updates and applies them once per second",
+            "It uses a virtual DOM outside of React's reconciler",
+            "It memoizes every field component automatically"
+          ],
+          "answer": "It uses uncontrolled inputs with refs — field values are read from the DOM on submit rather than stored in React state, so there are no re-renders on each keystroke",
+          "explanation": "Controlled components store field values in React state — every keystroke triggers a setState → re-render cycle. React Hook Form uses refs to read values from the DOM without triggering re-renders. Only validation errors and submission state are React state. This means a 20-field form has no keystroke-triggered re-renders."
+        },
+        {
+          "id": "rx-sen-9-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does `register('email', { required: 'Email required' })` return?",
+          "options": [
+            "An object with { name, ref, onChange, onBlur } — spread it onto a native input to connect it to the form",
+            "A validation rule object that must be passed to a separate validate() function",
+            "A React ref that must be attached to the input via ref={...}",
+            "A boolean indicating whether the field is currently valid"
+          ],
+          "answer": "An object with { name, ref, onChange, onBlur } — spread it onto a native input to connect it to the form",
+          "explanation": "register() returns { name, ref, onChange, onBlur }. Spreading this onto a native input (<input {...register('email')} />) connects the input to the form: the ref tracks the value, onChange handles updates, onBlur triggers validation. The rules object (required, pattern, minLength, etc.) is evaluated by handleSubmit and populates the errors object."
+        },
+        {
+          "id": "rx-sen-9-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A custom date picker component doesn't expose a ref. How do you integrate it with React Hook Form?",
+          "options": [
+            "Use Controller with a render prop — it provides field.value, field.onChange, field.onBlur as props for the custom component",
+            "Wrap the date picker in a native input with type='hidden'",
+            "Use register() with a custom ref callback",
+            "Store the date in useState and sync it to the form via setValue()"
+          ],
+          "answer": "Use Controller with a render prop — it provides field.value, field.onChange, field.onBlur as props for the custom component",
+          "explanation": "register() works with native HTML inputs via ref. Custom components that don't forward refs (most UI library components) require Controller. Controller renders your component via a render prop and provides the field object with value/onChange/onBlur — the same interface React Hook Form needs to track and validate the field."
+        },
+        {
+          "id": "rx-sen-9-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "What advantage does using a Zod resolver with React Hook Form provide over inline validation rules?",
+          "options": [
+            "The schema is reusable, type-safe (TypeScript infers the form data type from the schema), and validated consistently between frontend and backend if the same schema is shared",
+            "Zod validators run faster than inline rules",
+            "Inline rules don't support async validation; Zod does",
+            "Zod displays better error messages by default"
+          ],
+          "answer": "The schema is reusable, type-safe (TypeScript infers the form data type from the schema), and validated consistently between frontend and backend if the same schema is shared",
+          "explanation": "With zodResolver, you define validation once in a Zod schema. TypeScript can infer the form data type: type FormData = z.infer<typeof schema>. The same schema can be used server-side for API validation, ensuring front and back agree on constraints. Inline register rules duplicate logic and don't give you TypeScript inference of the validated type."
+        }
+      ]
+    }
+  ]
+}

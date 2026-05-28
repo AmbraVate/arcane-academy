@@ -1,0 +1,118 @@
+{
+  "id": "rx-jun-2",
+  "title": "Fetching Data from APIs",
+  "glyph": "⚛",
+  "sortOrder": 2,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-1"],
+  "subChunks": [
+    {
+      "id": "rx-jun-2-1",
+      "title": "Fetching Data from APIs",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Most real React apps consume data from a server. Fetching, tracking loading state, handling errors, and displaying the result are the four-step pattern every component that talks to an API must implement. Get this pattern right once and you'll use it everywhere.</p>",
+      "explanationHtml": "<h3>The three-state pattern</h3>\n\n<p>Every data fetch has three possible states your UI must handle:</p>\n<ul>\n  <li><strong>Loading</strong> — the request is in flight</li>\n  <li><strong>Error</strong> — the request failed</li>\n  <li><strong>Success</strong> — data is available</li>\n</ul>\n\n<pre><code>import { useState, useEffect } from 'react';\n\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() =&gt; {\n    setLoading(true);\n    setError(null);\n\n    fetch(`https://api.example.com/users/${userId}`)\n      .then(res =&gt; {\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        return res.json();\n      })\n      .then(data =&gt; {\n        setUser(data);\n        setLoading(false);\n      })\n      .catch(err =&gt; {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, [userId]);\n\n  if (loading) return &lt;p data-testid=\"loading\"&gt;Loading...&lt;/p&gt;;\n  if (error)   return &lt;p data-testid=\"error\"&gt;Error: {error}&lt;/p&gt;;\n  return &lt;div data-testid=\"user\"&gt;&lt;h2&gt;{user.name}&lt;/h2&gt;&lt;/div&gt;;\n}</code></pre>\n\n<h3>Using async/await with useEffect</h3>\n\n<p>You cannot make the effect callback itself async — it would return a Promise. Define an async function inside the effect and call it immediately:</p>\n\n<pre><code>useEffect(() =&gt; {\n  async function loadUser() {\n    try {\n      setLoading(true);\n      const res = await fetch(`/api/users/${userId}`);\n      if (!res.ok) throw new Error(`HTTP ${res.status}`);\n      const data = await res.json();\n      setUser(data);\n    } catch (err) {\n      setError(err.message);\n    } finally {\n      setLoading(false);\n    }\n  }\n\n  loadUser();\n}, [userId]);</code></pre>\n\n<h3>Avoiding race conditions with a cleanup flag</h3>\n\n<pre><code>useEffect(() =&gt; {\n  let cancelled = false;\n\n  async function loadUser() {\n    try {\n      setLoading(true);\n      const res = await fetch(`/api/users/${userId}`);\n      const data = await res.json();\n      if (!cancelled) setUser(data);\n    } catch (err) {\n      if (!cancelled) setError(err.message);\n    } finally {\n      if (!cancelled) setLoading(false);\n    }\n  }\n\n  loadUser();\n  return () =&gt; { cancelled = true; };\n}, [userId]);</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Always reset loading and error state at the start of a new fetch. If you skip resetting error, a user who retried after an error will see the old error flash briefly before the new data arrives.\"</p></div>\n\n<h3>Using a public test API</h3>\n\n<p><a href=\"https://jsonplaceholder.typicode.com\" target=\"_blank\">jsonplaceholder.typicode.com</a> provides free REST endpoints with realistic fake data:</p>\n\n<pre><code>// GET /posts — array of 100 posts\n// GET /posts/1 — single post\n// GET /users — array of 10 users\nfetch('https://jsonplaceholder.typicode.com/posts/1')\n  .then(r =&gt; r.json())\n  .then(data =&gt; console.log(data));</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A messenger raven arrives with a scroll. Vex holds it up: 'The Guild's quest board is now live — data from a real server. How do we display it?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Every data fetch has three possible states: loading, error, and success. Your UI must handle all three. Show a spinner while loading. Show an error message if the request fails. Show the data when it arrives. Skip any of the three and users will see broken, confusing interfaces."
+        },
+        {
+          "type": "example",
+          "speaker": "The three-state fetch pattern",
+          "text": "const [data, setData] = useState(null);\nconst [loading, setLoading] = useState(true);\nconst [error, setError] = useState(null);\n\nuseEffect(() => {\n  async function load() {\n    try {\n      const res = await fetch('/api/quests');\n      if (!res.ok) throw new Error(`HTTP ${res.status}`);\n      setData(await res.json());\n    } catch (e) {\n      setError(e.message);\n    } finally {\n      setLoading(false);\n    }\n  }\n  load();\n}, []);"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;PostViewer postId /&gt;</code> component that fetches a post from <code>https://jsonplaceholder.typicode.com/posts/{postId}</code>.</p><ul><li>While loading: render <code>&lt;p data-testid=\"loading\"&gt;Loading...&lt;/p&gt;</code></li><li>On error: render <code>&lt;p data-testid=\"error\"&gt;Failed to load post.&lt;/p&gt;</code></li><li>On success: render a <code>&lt;div data-testid=\"post\"&gt;</code> containing an <code>&lt;h2&gt;</code> with the post's <code>title</code> and a <code>&lt;p&gt;</code> with the post's <code>body</code></li><li>Re-fetch whenever <code>postId</code> changes</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useEffect } from 'react';\n\nexport default function PostViewer({ postId }) {\n  const [post, setPost] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    // TODO: reset loading/error, define async loadPost(), handle errors, call it\n  }, [postId]);\n\n  // TODO: render loading, error, and success states\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Shows loading state initially",
+          "selector": "[data-testid='loading']",
+          "exists": true
+        },
+        {
+          "label": "Shows post after load",
+          "selector": "[data-testid='post'] h2",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;UserList&gt;</code> component from scratch. Fetch all users from <code>https://jsonplaceholder.typicode.com/users</code> once on mount. Show a loading state, error state, and on success render each user's <code>name</code> and <code>email</code> in a list. Include a Retry button in the error state that re-triggers the fetch.</p>",
+      "feynmanPrompt": "Walk through the three-state data-fetching pattern. What state variables do you need, what are their initial values, and why? What breaks if you forget to reset the error state before re-fetching? What is a race condition in this context, and how does a cleanup flag prevent it?",
+      "questions": [
+        {
+          "id": "rx-jun-2-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "Why can't you make the useEffect callback itself an async function?",
+          "options": [
+            "An async function returns a Promise, but useEffect expects either nothing or a cleanup function",
+            "async/await is not supported inside React hooks",
+            "It would cause the component to suspend rendering",
+            "Async callbacks are not supported in JavaScript functions"
+          ],
+          "answer": "An async function returns a Promise, but useEffect expects either nothing or a cleanup function",
+          "explanation": "useEffect's return value is treated as a cleanup function. If you return a Promise (by making the effect async), React doesn't know how to call it as a cleanup. The fix: define an async function inside the effect and call it immediately — the effect itself remains synchronous."
+        },
+        {
+          "id": "rx-jun-2-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "The Fetch API does not throw an error for 4xx or 5xx HTTP responses. How do you handle this?",
+          "options": [
+            "Check `res.ok` and throw manually: `if (!res.ok) throw new Error('HTTP ' + res.status)`",
+            "The fetch Promise rejects automatically for any non-2xx response",
+            "Use res.status === 200 to check before calling res.json()",
+            "Wrap the entire fetch in a try/catch — it will catch HTTP errors automatically"
+          ],
+          "answer": "Check `res.ok` and throw manually: `if (!res.ok) throw new Error('HTTP ' + res.status)`",
+          "explanation": "fetch() only rejects its Promise for network failures. A 404 or 500 response resolves successfully with res.ok === false. You must check res.ok and throw to route those cases into your catch block."
+        },
+        {
+          "id": "rx-jun-2-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "After a failed fetch, the user retries. They see the old error flash before the new loading state appears. What is the cause?",
+          "options": [
+            "The error state is not reset at the start of the new fetch",
+            "setLoading(true) is called before setError(null)",
+            "The retry button is rendering a new component instance",
+            "React batches the state updates and applies loading last"
+          ],
+          "answer": "The error state is not reset at the start of the new fetch",
+          "explanation": "Always reset both at the start of every fetch: setLoading(true); setError(null). If error is not cleared, the component may briefly show both loading and error states."
+        },
+        {
+          "id": "rx-jun-2-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A user quickly switches between two userId values. Without a cleanup flag, what can go wrong?",
+          "options": [
+            "Both requests complete, but the slower one may resolve last and overwrite the result for userId=2 with data for userId=1",
+            "React cancels the first fetch automatically when userId changes",
+            "The component will throw a runtime error due to two concurrent state updates",
+            "Both results are displayed simultaneously, causing a duplicate render"
+          ],
+          "answer": "Both requests complete, but the slower one may resolve last and overwrite the result for userId=2 with data for userId=1",
+          "explanation": "This is a race condition. The cleanup flag (let cancelled = true in cleanup) prevents the stale response from calling setState after the component has moved on to a new userId."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "id": "tw-sen-8",
+  "title": "Advanced Animation Systems",
+  "glyph": "🔮",
+  "sortOrder": 8,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-5"],
+  "subChunks": [
+    {
+      "id": "tw-sen-8-1",
+      "title": "Advanced Animation Systems",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Tailwind's built-in animations (spin, pulse, bounce, ping) cover 80% of use cases. The other 20% — entrance animations, staggered reveals, complex keyframes, and orchestrated sequences — require you to extend <code>@theme</code> with custom keyframes. Getting this right distinguishes polished UIs from amateur work.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Sable the Illuminator:</strong> \"Animation is not decoration. It communicates state, guides attention, and rewards interaction. But poorly implemented animation — choppy, excessive, ignoring prefers-reduced-motion — communicates incompetence just as loudly.\"</p></div>\n\n<h3>Custom keyframe animations in @theme</h3>\n<pre><code>/* index.css */\n@import \"tailwindcss\";\n\n@theme {\n  /* 1. Define the keyframes */\n  --animate-fade-in: fade-in 0.3s ease-out;\n  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);\n  --animate-slide-down: slide-down 0.4s cubic-bezier(0.16, 1, 0.3, 1);\n  --animate-scale-in: scale-in 0.2s ease-out;\n}\n\n/* 2. Define the @keyframes outside @theme */\n@keyframes fade-in {\n  from { opacity: 0; }\n  to   { opacity: 1; }\n}\n\n@keyframes slide-up {\n  from { transform: translateY(8px); opacity: 0; }\n  to   { transform: translateY(0);   opacity: 1; }\n}\n\n@keyframes slide-down {\n  from { transform: translateY(-8px); opacity: 0; }\n  to   { transform: translateY(0);    opacity: 1; }\n}\n\n@keyframes scale-in {\n  from { transform: scale(0.95); opacity: 0; }\n  to   { transform: scale(1);    opacity: 1; }\n}</code></pre>\n\n<p>Now use them like any built-in animation:</p>\n<pre><code>&lt;div class=\"animate-fade-in\"&gt;Fades in&lt;/div&gt;\n&lt;div class=\"animate-slide-up\"&gt;Slides up from below&lt;/div&gt;\n&lt;div class=\"animate-scale-in\"&gt;Scales in&lt;/div&gt;</code></pre>\n\n<h3>Staggered entrance animations</h3>\n<p>CSS custom properties on inline styles create stagger delays without JavaScript:</p>\n<pre><code>&lt;ul class=\"space-y-2\"&gt;\n  &lt;li class=\"animate-slide-up [animation-delay:0ms]\"&gt;Item 1&lt;/li&gt;\n  &lt;li class=\"animate-slide-up [animation-delay:50ms]\"&gt;Item 2&lt;/li&gt;\n  &lt;li class=\"animate-slide-up [animation-delay:100ms]\"&gt;Item 3&lt;/li&gt;\n&lt;/ul&gt;\n\n&lt;!-- Or with inline style for dynamic stagger --&gt;\n{items.map((item, i) =&gt; (\n  &lt;li\n    key={item.id}\n    className=\"animate-slide-up\"\n    style={{ animationDelay: `${i * 50}ms` }}\n  &gt;\n    {item.name}\n  &lt;/li&gt;\n))}</code></pre>\n\n<h3>animation-fill-mode — preventing flash before animation</h3>\n<pre><code>/* Without fill-mode, the element appears at full opacity for a frame before animating */\n&lt;div class=\"animate-fade-in [animation-fill-mode:both]\"&gt;\n\n/* Or apply globally in CSS: */\n.animate-fade-in { animation-fill-mode: both; }</code></pre>\n\n<h3>Scroll-triggered animations (pure CSS)</h3>\n<pre><code>/* No Intersection Observer needed for simple reveal effects */\n@keyframes reveal {\n  from {\n    opacity: 0;\n    clip-path: inset(0 0 100% 0);\n  }\n  to {\n    opacity: 1;\n    clip-path: inset(0 0 0 0);\n  }\n}\n\n@theme {\n  --animate-reveal: reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;\n}\n\n/* Use with animation-timeline in modern browsers: */\n.animate-reveal {\n  animation: var(--animate-reveal);\n  animation-timeline: view();\n  animation-range: entry 0% entry 30%;\n}</code></pre>\n\n<h3>will-change — use sparingly</h3>\n<pre><code>/* Promotes element to its own compositor layer before animation */\n&lt;div class=\"will-change-transform animate-slide-up\"&gt;\n&lt;div class=\"will-change-opacity animate-fade-in\"&gt;\n\n/* Add before animation starts, remove after */\n/* Do NOT apply globally — wastes GPU memory */</code></pre>\n\n<h3>The motion-reduce pattern — always apply it</h3>\n<pre><code>&lt;div class=\"animate-slide-up motion-reduce:animate-none motion-reduce:opacity-100\"&gt;\n  Content\n&lt;/div&gt;\n\n/* Custom animation + motion-reduce: */\n&lt;div class=\"animate-fade-in motion-reduce:animate-none\"&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"The golden rule: animations should take under 300ms for response feedback, under 500ms for state transitions, under 1000ms for page entrances. Anything longer needs a purpose. And always: motion-reduce: on everything.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "Built-in animations cover loading states. Custom animations cover entrances, reveals, transitions. The @theme block holds the animation definitions — the @keyframes live outside it. Define once, use everywhere, disable for prefers-reduced-motion."
+        },
+        {
+          "type": "example",
+          "speaker": "Custom fade-in animation in @theme",
+          "text": "@theme {\n  --animate-fade-in: fade-in 0.3s ease-out;\n}\n\n@keyframes fade-in {\n  from { opacity: 0; }\n  to   { opacity: 1; }\n}\n\n<!-- Usage -->\n<div class=\"animate-fade-in\">...</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an animated notification card that uses entrance animations and the correct motion-reduce pattern:</p>\n<ul>\n  <li><strong>.anim-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code>, <code>shadow-sm</code>, <code>p-5</code>, <code>animate-slide-up</code>, <code>motion-reduce:animate-none</code></li>\n  <li><strong>.anim-icon</strong>: <code>w-10</code>, <code>h-10</code>, <code>rounded-full</code>, <code>bg-blue-100</code>, <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>text-blue-600</code>, <code>flex-none</code></li>\n  <li><strong>.anim-badge</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>bg-emerald-100</code>, <code>text-emerald-800</code>, <code>text-xs</code>, <code>font-medium</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>animate-pulse</code>, <code>motion-reduce:animate-none</code></li>\n  <li><strong>.anim-spinner</strong>: <code>w-4</code>, <code>h-4</code>, <code>border-2</code>, <code>border-blue-600</code>, <code>border-t-transparent</code>, <code>rounded-full</code>, <code>animate-spin</code>, <code>motion-reduce:animate-none</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"p-6 space-y-4\">\n  <!-- Entrance animation -->\n  <div class=\"anim-card\">\n    <div class=\"flex items-start gap-4\">\n      <div class=\"anim-icon\">📬</div>\n      <div class=\"flex-1 min-w-0\">\n        <p class=\"text-sm font-semibold text-gray-900\">New message received</p>\n        <p class=\"text-sm text-gray-500 mt-0.5\">Lyra sent you a quest update</p>\n      </div>\n      <span class=\"anim-badge\">Live</span>\n    </div>\n  </div>\n\n  <!-- Loading state -->\n  <div class=\"flex items-center gap-3 p-4 bg-gray-50 rounded-xl\">\n    <div class=\"anim-spinner\"></div>\n    <span class=\"text-sm text-gray-600\">Processing your request...</span>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: animate-slide-up",            "selector": ".anim-card",    "requiredClass": "animate-slide-up"     },
+        { "label": "Card: motion-reduce:animate-none",  "selector": ".anim-card",    "requiredClass": "motion-reduce:animate-none" },
+        { "label": "Card: bg-white",                    "selector": ".anim-card",    "requiredClass": "bg-white"             },
+        { "label": "Icon: rounded-full",                "selector": ".anim-icon",    "requiredClass": "rounded-full"         },
+        { "label": "Icon: bg-blue-100",                 "selector": ".anim-icon",    "requiredClass": "bg-blue-100"          },
+        { "label": "Badge: animate-pulse",              "selector": ".anim-badge",   "requiredClass": "animate-pulse"        },
+        { "label": "Badge: motion-reduce:animate-none", "selector": ".anim-badge",   "requiredClass": "motion-reduce:animate-none" },
+        { "label": "Badge: bg-emerald-100",             "selector": ".anim-badge",   "requiredClass": "bg-emerald-100"       },
+        { "label": "Spinner: animate-spin",             "selector": ".anim-spinner", "requiredClass": "animate-spin"         },
+        { "label": "Spinner: motion-reduce:animate-none","selector": ".anim-spinner","requiredClass": "motion-reduce:animate-none" },
+        { "label": "Spinner: border-t-transparent",     "selector": ".anim-spinner", "requiredClass": "border-t-transparent" }
+      ],
+      "soloPracticeHtml": "<p>Build a staggered card list from scratch where 5 cards animate in sequentially with 50ms delay increments. Use a custom <code>animate-slide-up</code> animation defined in <code>@theme</code> + <code>@keyframes</code>. Each card must also have <code>motion-reduce:animate-none motion-reduce:opacity-100</code>. No starter code.</p>",
+      "feynmanPrompt": "Explain the difference between Tailwind's built-in animate-* utilities and custom animations defined in @theme. Walk through defining a slide-up entrance animation: where do the @keyframes go, what goes in @theme, and how does motion-reduce: interact with the animation?",
+      "questions": [
+        {
+          "id": "tw-sen-8-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "In Tailwind v4, where do you define a custom animation called 'slide-up' so that animate-slide-up becomes a utility?",
+          "options": [
+            "Add --animate-slide-up: slide-up 0.4s ease to @theme, plus a @keyframes slide-up {} block outside @theme",
+            "Add the keyframes directly inside the @theme block",
+            "Define it in tailwind.config.js under theme.extend.keyframes",
+            "Use @utility animate-slide-up { animation: slide-up 0.4s ease; } only"
+          ],
+          "answer": "Add --animate-slide-up: slide-up 0.4s ease to @theme, plus a @keyframes slide-up {} block outside @theme",
+          "explanation": "In v4, the @theme block holds --animate-{name}: {keyframe-name} {duration} {easing}. The actual @keyframes definition lives outside @theme in the same CSS file. The --animate-* naming convention tells Tailwind to generate the animate-{name} utility."
+        },
+        {
+          "id": "tw-sen-8-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A card list needs to animate in with a 50ms stagger delay between each item. Which approach is correct?",
+          "options": [
+            "Apply animate-slide-up to each item and set style={{ animationDelay: `${i * 50}ms` }} dynamically",
+            "Use animation-delay: class variants — animate-slide-up delay-50, animate-slide-up delay-100, etc.",
+            "Apply animate-slide-up to the parent list and use the children: prefix on the items",
+            "JavaScript is required — CSS cannot stagger animations across separate elements"
+          ],
+          "answer": "Apply animate-slide-up to each item and set style={{ animationDelay: `${i * 50}ms` }} dynamically",
+          "explanation": "CSS stagger requires each element to have its own delay. In Tailwind, animation-delay is most naturally handled via inline style for dynamic values (i * 50ms). For a static small list, arbitrary values like [animation-delay:50ms] work too. The parent-children pattern doesn't work because CSS animations don't propagate stagger through the DOM."
+        },
+        {
+          "id": "tw-sen-8-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A card animates in with animate-fade-in, but for a frame before the animation starts, it appears at full opacity. Which class fixes this?",
+          "options": [
+            "[animation-fill-mode:both] — applies the from keyframe styles before the animation begins",
+            "opacity-0 — manually hides the element before animation starts",
+            "invisible — hides the element until the animation is triggered",
+            "delay-0 — ensures the animation starts immediately with no pre-render"
+          ],
+          "answer": "[animation-fill-mode:both] — applies the from keyframe styles before the animation begins",
+          "explanation": "animation-fill-mode: both tells the browser to apply the starting keyframe values before the animation delay period and the ending values after. Without it, the element renders at its natural style before the animation starts, causing a flash. Apply [animation-fill-mode:both] or set it globally on the animation class."
+        }
+      ]
+    }
+  ]
+}

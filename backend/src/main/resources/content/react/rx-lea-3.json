@@ -1,0 +1,91 @@
+{
+  "id": "rx-lea-3",
+  "title": "Advanced Next.js — Server Actions, Streaming, and the Edge",
+  "glyph": "⚛",
+  "sortOrder": 3,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-12"],
+  "subChunks": [
+    {
+      "id": "rx-lea-3-1",
+      "title": "Advanced Next.js — Server Actions, Streaming, and the Edge",
+      "sortOrder": 1,
+      "xpReward": 250,
+      "practicalType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Next.js App Router introduced patterns that blur the line between frontend and backend: Server Actions let you write server-side mutations directly in React components. Streaming sends HTML progressively to the browser. Edge runtime moves computation closer to users. These are the patterns that make Next.js applications genuinely full-stack.</p>",
+      "explanationHtml": "<h3>Server Actions — mutations from the server</h3>\n\n<pre><code>// app/quests/actions.ts\n'use server';\nimport { db } from '@/lib/db';\nimport { revalidatePath } from 'next/cache';\n\nexport async function acceptQuest(questId: number) {\n  // This runs on the server — has DB access, no API route needed:\n  await db.quest.update({\n    where: { id: questId },\n    data: { status: 'accepted' },\n  });\n\n  // Revalidate the cache so the page shows fresh data:\n  revalidatePath('/quests');\n}\n\n// In a Client Component:\n'use client';\nimport { acceptQuest } from './actions';\n\nexport function AcceptButton({ questId }: { questId: number }) {\n  return (\n    &lt;form action={acceptQuest.bind(null, questId)}&gt;\n      &lt;button type=\"submit\"&gt;Accept Quest&lt;/button&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<h3>Progressive enhancement with Server Actions</h3>\n\n<pre><code>// Server Actions work without JavaScript — the form submits natively:\n// When JS loads, React enhances it to submit without page reload\n\nimport { useFormStatus, useFormState } from 'react-dom';\n\nfunction SubmitButton() {\n  const { pending } = useFormStatus();\n  return &lt;button type=\"submit\" disabled={pending}&gt;{pending ? 'Saving...' : 'Save'}&lt;/button&gt;\n}\n\nasync function submitAction(prevState: any, formData: FormData) {\n  'use server';\n  const title = formData.get('title') as string;\n  if (!title) return { error: 'Title is required' };\n  await db.quest.create({ data: { title } });\n  revalidatePath('/quests');\n  return { success: true };\n}\n\nfunction QuestForm() {\n  const [state, action] = useFormState(submitAction, {});\n  return (\n    &lt;form action={action}&gt;\n      &lt;input name=\"title\" /&gt;\n      {state.error &amp;&amp; &lt;p role=\"alert\"&gt;{state.error}&lt;/p&gt;}\n      &lt;SubmitButton /&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<h3>Streaming with Suspense</h3>\n\n<pre><code>// app/dashboard/page.tsx:\nimport { Suspense } from 'react';\nimport { QuestList } from './QuestList';\nimport { MemberStats } from './MemberStats';\nimport { TreasuryChart } from './TreasuryChart';\n\n// These three components fetch data independently\n// HTML streams to the browser as each resolves:\nexport default function Dashboard() {\n  return (\n    &lt;div&gt;\n      &lt;Suspense fallback={&lt;QuestListSkeleton /&gt;}&gt;\n        &lt;QuestList /&gt;  {/* Fast — streams first */}\n      &lt;/Suspense&gt;\n      &lt;Suspense fallback={&lt;StatsSkeleton /&gt;}&gt;\n        &lt;MemberStats /&gt;  {/* Medium — streams second */}\n      &lt;/Suspense&gt;\n      &lt;Suspense fallback={&lt;ChartSkeleton /&gt;}&gt;\n        &lt;TreasuryChart /&gt;  {/* Slow — streams last */}\n      &lt;/Suspense&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>Edge Runtime</h3>\n\n<pre><code>// app/api/auth/route.ts — runs at the CDN edge:\nexport const runtime = 'edge';\n\nexport async function GET(request: Request) {\n  // Runs in ~50ms worldwide instead of ~200ms from a single region\n  const token = request.headers.get('authorization');\n  // JWT verification, geo-routing, A/B testing...\n  return Response.json({ valid: !!token });\n}\n\n// Middleware.ts — runs on every request at the edge:\nexport function middleware(request: NextRequest) {\n  const token = request.cookies.get('auth-token');\n  if (!token &amp;&amp; request.nextUrl.pathname.startsWith('/dashboard')) {\n    return NextResponse.redirect(new URL('/login', request.url));\n  }\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Server Actions remove the API layer for mutations. revalidatePath removes the cache invalidation layer. Streaming removes the waterfall — the page starts loading before all data is ready. The Edge moves computation to the user. Each of these is an architectural choice with trade-offs — not features to use by default.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "An admin form. A Server Action. No API route. The mutation runs on the server, the cache invalidates, the page reflects the change — all from inside the React component. The architecture has collapsed the stack."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Server Actions collapse the API layer for simple mutations. Streaming collapses the loading waterfall — send HTML for fast sections first, stream slow sections after. The Edge collapses geographic latency — auth middleware runs 50ms from the user instead of 200ms from a single region."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "But: Server Actions are not a replacement for an API if you have mobile clients, third-party integrations, or need versioned endpoints. Streaming adds complexity to loading state design. The Edge runtime has a limited API surface — no native Node.js APIs. Know the trade-offs before you choose."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Architecture exercise — Server Actions and Streaming:</p><ul><li>Write a Server Action that creates a quest (takes FormData, validates title, creates in DB, revalidates /quests path)</li><li>Write the client form that uses it with <code>useFormStatus</code> for pending state</li><li>Write a dashboard page that streams three independent data sections using Suspense with skeleton fallbacks</li></ul>",
+      "guidedPracticeStarterCode": "// Next.js Server Actions and Streaming exercise\n// Assume this runs in a Next.js 14+ App Router project\n\n// PART 1: Server Action\n// File: app/quests/actions.ts\n/*\n'use server';\nexport async function createQuest(prevState: any, formData: FormData) {\n  // TODO: validate formData.get('title')\n  // TODO: create in DB (mock with console.log)\n  // TODO: revalidatePath('/quests')\n  // TODO: return { success } or { error }\n}\n*/\n\n// PART 2: Client form using the action\n// File: app/quests/CreateQuestForm.tsx\nimport { useState } from 'react';\n\n// TODO: useFormState and useFormStatus version\n// (mock the imports for this exercise)\nexport function CreateQuestForm() {\n  return (\n    <form data-testid=\"create-form\">\n      <input name=\"title\" data-testid=\"title-input\" placeholder=\"Quest title\" />\n      <button data-testid=\"submit-btn\" type=\"submit\">Create Quest</button>\n    </form>\n  );\n}\n\n// PART 3: Streaming dashboard\n// Each section fetches independently\nexport function Dashboard() {\n  return (\n    <div data-testid=\"dashboard\">\n      {/* TODO: wrap each section in Suspense with skeleton fallback */}\n      <div data-testid=\"quest-section\">Quest List</div>\n      <div data-testid=\"stats-section\">Member Stats</div>\n      <div data-testid=\"chart-section\">Treasury Chart</div>\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <div>\n      <CreateQuestForm />\n      <Dashboard />\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Create form renders",
+          "selector": "[data-testid='create-form']",
+          "exists": true
+        },
+        {
+          "label": "Dashboard sections render",
+          "selector": "[data-testid='dashboard']",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a complete Next.js App Router form with full progressive enhancement: a quest creation form that (1) works without JavaScript using a Server Action bound to a native HTML form, (2) enhances with React when JS loads (useFormStatus for pending state, useFormState for error display), (3) uses Zod for server-side validation within the Server Action, and (4) redirects to the quest detail page on success. Test by disabling JavaScript in DevTools and verifying the form still submits.</p>",
+      "feynmanPrompt": "Explain Server Actions — what layer of the traditional React architecture do they replace, and what are their limits? Explain streaming with Suspense — what is sent to the browser first, and how does it differ from loading all data before sending HTML? Explain Edge runtime — what is it, what can't it do, and why is it valuable for auth middleware?",
+      "questions": [
+        {
+          "id": "rx-lea-3-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "What does `revalidatePath('/quests')` do inside a Server Action?",
+          "options": [
+            "Invalidates Next.js's full-route cache for /quests — on the next request, the page will be re-rendered with fresh data instead of serving a cached version",
+            "Redirects the user to /quests after the action completes",
+            "Clears the client-side TanStack Query cache for queries containing 'quests'",
+            "Triggers a client-side navigation to /quests"
+          ],
+          "answer": "Invalidates Next.js's full-route cache for /quests — on the next request, the page will be re-rendered with fresh data instead of serving a cached version",
+          "explanation": "Next.js aggressively caches page renders. After a mutation (creating, updating, deleting data), the cached version is stale. revalidatePath('/quests') marks that cached entry as stale — the next request to /quests will re-render the Server Component and fetch fresh data. Without this, users would see stale data after their mutation. revalidateTag() does the same for named cache tags."
+        },
+        {
+          "id": "rx-lea-3-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "When should you use Server Actions vs a traditional REST API endpoint for mutations in Next.js?",
+          "options": [
+            "Server Actions for mutations only consumed by this Next.js app. REST API for mutations that need to be consumed by mobile clients, external services, or third-party integrations.",
+            "Always Server Actions — they eliminate the need for any API layer",
+            "REST API for all mutations — Server Actions are only for static sites",
+            "Server Actions for read operations, REST API for writes"
+          ],
+          "answer": "Server Actions for mutations only consumed by this Next.js app. REST API for mutations that need to be consumed by mobile clients, external services, or third-party integrations.",
+          "explanation": "Server Actions are tightly coupled to Next.js — they're called via a special POST request format, not a standard REST endpoint. If a React Native app or third-party webhook needs to call the same mutation, a REST endpoint is necessary. Server Actions excel for web-only mutations: form submissions, cart updates, admin actions where the caller is always your Next.js UI."
+        }
+      ]
+    }
+  ]
+}

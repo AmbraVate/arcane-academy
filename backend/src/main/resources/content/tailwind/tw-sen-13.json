@@ -1,0 +1,103 @@
+{
+  "id": "tw-sen-13",
+  "title": "Custom Design Token Systems",
+  "glyph": "🔮",
+  "sortOrder": 13,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-1", "tw-sen-10"],
+  "subChunks": [
+    {
+      "id": "tw-sen-13-1",
+      "title": "Custom Design Token Systems",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>A design token system is the contract between design and engineering. When implemented well in Tailwind v4's <code>@theme</code>, every design decision is a CSS variable — and changing the brand colour, spacing scale, or typography requires touching one file, not one thousand. This lesson builds a complete token system from first principles.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"A design token is not a variable. It is an intent. <code>--color-brand-600</code> is not 'the hex value I chose today.' It is 'the primary interactive colour of this product.' That distinction matters when the product changes, the designer changes, or the client changes.\"</p></div>\n\n<h3>The token hierarchy</h3>\n<pre><code>/* 3 levels of tokens: primitive → semantic → component */\n\n/* Level 1: Primitive — raw values, named by scale */\n@theme {\n  --color-indigo-50:  oklch(0.97 0.02 270);\n  --color-indigo-100: oklch(0.93 0.04 270);\n  --color-indigo-500: oklch(0.55 0.20 270);\n  --color-indigo-900: oklch(0.25 0.10 270);\n}\n\n/* Level 2: Semantic — intent, not value */\n@theme {\n  --color-primary:            var(--color-indigo-500);\n  --color-primary-light:      var(--color-indigo-100);\n  --color-primary-foreground: oklch(0.99 0 0);\n  --color-surface:            oklch(0.99 0 0);\n  --color-surface-raised:     oklch(0.96 0 0);\n  --color-foreground:         oklch(0.15 0 0);\n  --color-muted:              oklch(0.60 0 0);\n  --color-border:             oklch(0.90 0 0);\n  --color-error:              oklch(0.55 0.20 25);\n  --color-success:            oklch(0.55 0.18 155);\n  --color-warning:            oklch(0.75 0.15 80);\n}\n\n/* Level 3: Component — specific usage */\n@theme {\n  --color-btn-primary-bg:     var(--color-primary);\n  --color-btn-primary-text:   var(--color-primary-foreground);\n  --color-input-border:       var(--color-border);\n  --color-input-focus:        var(--color-primary);\n}</code></pre>\n\n<h3>Fluid typography with clamp()</h3>\n<pre><code>/* Fluid font sizes that scale smoothly between breakpoints */\n@theme {\n  --font-size-fluid-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);\n  --font-size-fluid-md: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);\n  --font-size-fluid-lg: clamp(1.25rem, 1rem + 1.25vw, 2rem);\n  --font-size-fluid-xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);\n}\n\n/* Usage: */\n&lt;h1 class=\"text-[var(--font-size-fluid-xl)] font-bold\"&gt;Hero Title&lt;/h1&gt;</code></pre>\n\n<h3>oklch() — the correct colour space for design tokens</h3>\n<pre><code>/* oklch(lightness chroma hue) */\n/* lightness: 0 = black, 1 = white */\n/* chroma: 0 = gray, higher = more saturated */\n/* hue: 0–360 (red=25, yellow=80, green=155, blue=250, purple=300) */\n\n/* Creating a coherent colour ramp: */\n@theme {\n  --color-brand-50:  oklch(0.97 0.02 270);  /* very light */\n  --color-brand-100: oklch(0.93 0.05 270);\n  --color-brand-200: oklch(0.86 0.09 270);\n  --color-brand-300: oklch(0.78 0.13 270);\n  --color-brand-400: oklch(0.68 0.17 270);\n  --color-brand-500: oklch(0.58 0.20 270);  /* main brand */\n  --color-brand-600: oklch(0.50 0.20 270);\n  --color-brand-700: oklch(0.42 0.18 270);\n  --color-brand-800: oklch(0.34 0.15 270);\n  --color-brand-900: oklch(0.24 0.10 270);  /* very dark */\n}\n\n/* Advantage over hex: perceptual uniformity — each step looks\n   equally different from the next. hex ramps are often visually\n   uneven at the light and dark extremes. */</code></pre>\n\n<h3>Spacing scale customisation</h3>\n<pre><code>@theme {\n  /* Extend the default scale with project-specific values */\n  --spacing-18:  4.5rem;   /* 72px — common section padding */\n  --spacing-88:  22rem;    /* 352px — sidebar width */\n  --spacing-112: 28rem;    /* 448px — dialog max-width */\n  --spacing-128: 32rem;    /* 512px — content column */\n}</code></pre>\n\n<h3>Border radius tokens</h3>\n<pre><code>@theme {\n  --radius-sm:  4px;\n  --radius-md:  8px;\n  --radius-lg:  12px;\n  --radius-xl:  16px;\n  --radius-2xl: 24px;\n  --radius-pill: 9999px;\n}\n\n/* Usage: rounded-[var(--radius-xl)] or define via @layer */</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Solomon:</strong> \"A complete token system answers: what is every possible value for colour, spacing, typography, radius, and shadow in this product? If you cannot answer from the CSS file, the design system is incomplete.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "Three levels: primitive (raw values), semantic (intent), component (usage). A colour rebrand changes primitives. A theme change changes semantics. Component code never changes. That is a well-designed token system."
+        },
+        {
+          "type": "example",
+          "speaker": "oklch colour ramp — perceptually uniform",
+          "text": "@theme {\n  --color-brand-500: oklch(0.58 0.20 270);  /* main */\n  --color-primary:   var(--color-brand-500); /* semantic */\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a token-driven design system card. These classes simulate a fully configured @theme system:</p>\n<ul>\n  <li><strong>.token-card</strong>: <code>bg-white</code>, <code>border</code>, <code>border-gray-200</code>, <code>rounded-2xl</code>, <code>p-6</code>, <code>shadow-sm</code></li>\n  <li><strong>.token-swatch-row</strong>: <code>flex</code>, <code>gap-2</code>, <code>flex-wrap</code>, <code>mb-4</code></li>\n  <li><strong>.token-swatch</strong>: <code>w-10</code>, <code>h-10</code>, <code>rounded-lg</code></li>\n  <li><strong>.token-label</strong>: <code>text-xs</code>, <code>font-mono</code>, <code>text-gray-500</code>, <code>mt-1</code></li>\n  <li><strong>.token-divider</strong>: <code>border-t</code>, <code>border-gray-100</code>, <code>my-4</code></li>\n  <li><strong>.token-heading</strong>: <code>text-sm</code>, <code>font-semibold</code>, <code>text-gray-700</code>, <code>mb-3</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-lg p-6\">\n  <div class=\"token-card\">\n    <h2 class=\"text-lg font-bold text-gray-900 mb-1\">Brand Token Palette</h2>\n    <p class=\"text-sm text-gray-500 mb-4\">Primitive colour tokens — brand scale</p>\n\n    <h3 class=\"token-heading\">Brand Scale</h3>\n    <div class=\"token-swatch-row\">\n      <div>\n        <div class=\"token-swatch bg-indigo-50\"></div>\n        <p class=\"token-label\">brand-50</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-indigo-200\"></div>\n        <p class=\"token-label\">brand-200</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-indigo-500\"></div>\n        <p class=\"token-label\">brand-500</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-indigo-700\"></div>\n        <p class=\"token-label\">brand-700</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-indigo-900\"></div>\n        <p class=\"token-label\">brand-900</p>\n      </div>\n    </div>\n\n    <div class=\"token-divider\"></div>\n\n    <h3 class=\"token-heading\">Semantic Tokens</h3>\n    <div class=\"token-swatch-row\">\n      <div>\n        <div class=\"token-swatch bg-indigo-500\"></div>\n        <p class=\"token-label\">primary</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-emerald-500\"></div>\n        <p class=\"token-label\">success</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-red-500\"></div>\n        <p class=\"token-label\">error</p>\n      </div>\n      <div>\n        <div class=\"token-swatch bg-amber-400\"></div>\n        <p class=\"token-label\">warning</p>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: bg-white",            "selector": ".token-card",       "requiredClass": "bg-white"         },
+        { "label": "Card: rounded-2xl",         "selector": ".token-card",       "requiredClass": "rounded-2xl"      },
+        { "label": "Card: border-gray-200",     "selector": ".token-card",       "requiredClass": "border-gray-200"  },
+        { "label": "Card: shadow-sm",           "selector": ".token-card",       "requiredClass": "shadow-sm"        },
+        { "label": "Swatch row: flex",          "selector": ".token-swatch-row", "requiredClass": "flex"             },
+        { "label": "Swatch row: gap-2",         "selector": ".token-swatch-row", "requiredClass": "gap-2"            },
+        { "label": "Swatch: w-10",              "selector": ".token-swatch",     "requiredClass": "w-10"             },
+        { "label": "Swatch: h-10",              "selector": ".token-swatch",     "requiredClass": "h-10"             },
+        { "label": "Swatch: rounded-lg",        "selector": ".token-swatch",     "requiredClass": "rounded-lg"       },
+        { "label": "Label: text-xs",            "selector": ".token-label",      "requiredClass": "text-xs"          },
+        { "label": "Label: font-mono",          "selector": ".token-label",      "requiredClass": "font-mono"        },
+        { "label": "Divider: border-t",         "selector": ".token-divider",    "requiredClass": "border-t"         },
+        { "label": "Heading: text-sm",          "selector": ".token-heading",    "requiredClass": "text-sm"          },
+        { "label": "Heading: font-semibold",    "selector": ".token-heading",    "requiredClass": "font-semibold"    }
+      ],
+      "soloPracticeHtml": "<p>Design a complete @theme token system for a SaaS product from scratch. Define: a 9-step colour scale for your brand using oklch(), 5 semantic tokens (primary, surface, foreground, muted, border), 3 fluid typography sizes using clamp(), and 4 custom spacing values. Then build a card using only your semantic tokens — no raw utility colours. No starter code.</p>",
+      "feynmanPrompt": "Explain the three-level token hierarchy (primitive, semantic, component) with a concrete colour example. Why does using oklch() give you a better colour ramp than hex? Walk through what happens to components when a brand colour is rebranded in a well-designed token system.",
+      "questions": [
+        {
+          "id": "tw-sen-13-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "In oklch(lightness chroma hue), what does the chroma value control?",
+          "options": [
+            "Saturation — 0 produces gray, higher values produce more vivid colour",
+            "Transparency — 0 is transparent, 1 is fully opaque",
+            "Contrast — relative to the background",
+            "Hue rotation — offsets the hue by the chroma value in degrees"
+          ],
+          "answer": "Saturation — 0 produces gray, higher values produce more vivid colour",
+          "explanation": "In oklch: lightness (0=black, 1=white), chroma (0=gray/achromatic, increasing = more saturated colour), hue (0–360 degrees: ~25=red, ~80=yellow, ~155=green, ~250=blue, ~300=purple). oklch is perceptually uniform — equal increments in lightness look equally different to the human eye."
+        },
+        {
+          "id": "tw-sen-13-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "What is the advantage of the three-level token hierarchy (primitive → semantic → component) over using raw colour utilities directly in components?",
+          "options": [
+            "A brand colour change requires updating only the primitive token — semantic and component tokens reference it via var(), so all components update automatically",
+            "It adds type safety — TypeScript can validate the token names",
+            "It reduces CSS file size — fewer unique values are emitted",
+            "It makes dark mode automatic — semantic tokens resolve correctly in both themes"
+          ],
+          "answer": "A brand colour change requires updating only the primitive token — semantic and component tokens reference it via var(), so all components update automatically",
+          "explanation": "The primitive --color-brand-500 is referenced by semantic --color-primary: var(--color-brand-500), which is used in every component. Changing --color-brand-500: oklch(0.53 0.17 155) (from indigo to teal) propagates through all three levels without touching a single component file. Dark mode is a separate concern — the semantic layer also handles that by reassigning variable values."
+        },
+        {
+          "id": "tw-sen-13-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A design spec has h1 at 32px on mobile and 56px on desktop (1280px). Which @theme declaration creates a fluid font size that scales smoothly between these breakpoints?",
+          "options": [
+            "--font-size-hero: clamp(2rem, 1.5rem + 2.5vw, 3.5rem)",
+            "--font-size-hero: 2rem; @screen lg { --font-size-hero: 3.5rem; }",
+            "--font-size-hero: min(3.5rem, max(2rem, 5vw))",
+            "Fluid typography requires JavaScript — CSS cannot interpolate between breakpoints"
+          ],
+          "answer": "--font-size-hero: clamp(2rem, 1.5rem + 2.5vw, 3.5rem)",
+          "explanation": "clamp(min, preferred, max) creates a fluid value. With clamp(2rem, 1.5rem + 2.5vw, 3.5rem): at 320px viewport the preferred (1.5rem + 2.5vw ≈ 2rem) hits the minimum; at 1280px it reaches ~3.5rem. The font scales smoothly between breakpoints without JavaScript or media queries."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "id": "tw-lea-2",
+  "title": "The Hero Section",
+  "glyph": "🌐",
+  "sortOrder": 2,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-lea-1"],
+  "subChunks": [
+    {
+      "id": "tw-lea-2-1",
+      "title": "The Hero Section",
+      "sortOrder": 1,
+      "xpReward": 175,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>The header is done. Solomon nodded once — that is high praise. Now comes the most important section of the entire site: <strong>the hero</strong>. Three seconds. That's how long a visitor decides whether to stay or leave. Your hero must communicate scale, craft, and a clear next step — instantly.</p><p>In this section you'll build gradient backgrounds, gradient text, multi-column layouts, and shadow effects with opacity modifiers. This is where the site comes alive.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Sable the Illuminator:</strong> \"First impressions are not about content. They are about feeling. The visitor reads your hero and they feel either: 'This is serious work,' or they don't. We are going for deep, dark, and authoritative. Indigo-950 through purple-950 to slate-900. The gradient should feel like looking into a midnight sky over an ancient city.\"</p></div>\n\n<h3>Multi-stop gradient backgrounds</h3>\n\n<p>Tailwind's gradient system uses three classes together: direction, starting colour, and ending colour. For a three-stop gradient, add a <code>via-*</code> colour in the middle:</p>\n\n<pre><code>&lt;!-- Two-stop gradient --&gt;\n&lt;section class=\"bg-gradient-to-r from-indigo-600 to-purple-600\"&gt;\n\n&lt;!-- Three-stop gradient: from → via → to --&gt;\n&lt;section class=\"bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900\"&gt;</code></pre>\n\n<p>The direction <code>to-br</code> means bottom-right (diagonal), which creates a more dynamic feel than a flat horizontal gradient.</p>\n\n<h3>Gradient text — the three-class recipe</h3>\n\n<p>This is one of the most-asked-about Tailwind techniques. Three classes must work together:</p>\n\n<ol>\n<li><code>bg-gradient-to-r from-indigo-400 to-purple-400</code> — sets the gradient as the element's background</li>\n<li><code>bg-clip-text</code> — clips the background so it only shows through the text shape</li>\n<li><code>text-transparent</code> — makes the actual text colour transparent, revealing the clipped background gradient</li>\n</ol>\n\n<pre><code>&lt;span class=\"text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400\"&gt;\n  experiences\n&lt;/span&gt;\n\n&lt;!-- Remove text-transparent: solid black text with invisible gradient background --&gt;\n&lt;!-- Remove bg-clip-text: gradient rectangle behind normally-coloured text --&gt;</code></pre>\n\n<p>All three are required. Missing any one breaks the effect in a different way.</p>\n\n<h3>Shadow with opacity modifier</h3>\n\n<p>The <code>/</code> modifier syntax applies colour opacity to shadows:</p>\n\n<pre><code>&lt;!-- Shadow using the brand colour at 25% opacity --&gt;\n&lt;button class=\"shadow-lg shadow-indigo-500/25\"&gt;\n  Start a Project\n&lt;/button&gt;\n\n&lt;!-- This creates a glowing halo effect in the brand colour --&gt;</code></pre>\n\n<h3>Two-column responsive layout with grid</h3>\n\n<pre><code>&lt;div class=\"grid grid-cols-1 lg:grid-cols-2 gap-16 items-center\"&gt;\n  &lt;div&gt;&lt;!-- text content --&gt;&lt;/div&gt;\n  &lt;div class=\"hidden lg:block\"&gt;&lt;!-- visual, hidden on mobile --&gt;&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>The glassmorphism card</h3>\n\n<p>The hero card uses <code>bg-slate-800/60</code> (60% opacity) and <code>backdrop-blur-sm</code>. The <code>border border-slate-700/50</code> adds a subtle edge at 50% opacity. All three create a sense of depth and layering on a dark background.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"Notice the eyebrow text: <code>tracking-widest uppercase</code>. Wide letter-spacing on all-caps small text is a classic typographic technique for creating visual hierarchy without size. It reads as a label, a category, a subtitle — before the main heading even registers.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Sable the Illuminator stands at the window, three colour swatches in hand: deep indigo, midnight purple, cool slate. She turns as you enter."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌟",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "The hero section gets three seconds. Three seconds for a stranger to decide if they care. Colour does the heavy lifting before a single word is read. Deep, dark, authoritative — indigo-950 through purple-950. A gradient like a midnight sky over an ancient city."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "The heading needs a gradient word — one that glows in the indigo-to-purple spectrum. Three classes, in the right order: <code>text-transparent</code>, <code>bg-clip-text</code>, <code>bg-gradient-to-r</code>. Remove any one of them and the effect breaks. This is a recipe, not a preference."
+        },
+        {
+          "type": "example",
+          "speaker": "Gradient text — the three-class recipe",
+          "text": "text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build the Arcane Guild's hero section. Gradient backgrounds, gradient text, coloured shadows, and a responsive two-column layout all come together here.</p>\n<ul>\n  <li><strong>.hero</strong>: <code>bg-gradient-to-br</code>, <code>from-indigo-950</code>, <code>via-purple-950</code>, <code>to-slate-900</code>, <code>py-24</code>, <code>px-6</code></li>\n  <li><strong>.hero-inner</strong>: <code>max-w-7xl</code>, <code>mx-auto</code>, <code>grid</code>, <code>grid-cols-1</code>, <code>lg:grid-cols-2</code>, <code>gap-16</code>, <code>items-center</code></li>\n  <li><strong>.hero-eyebrow</strong>: <code>text-indigo-400</code>, <code>text-sm</code>, <code>font-semibold</code>, <code>tracking-widest</code>, <code>uppercase</code>, <code>mb-4</code></li>\n  <li><strong>.hero-heading</strong>: <code>text-5xl</code>, <code>lg:text-6xl</code>, <code>font-extrabold</code>, <code>text-white</code>, <code>leading-tight</code>, <code>mb-6</code></li>\n  <li><strong>.hero-heading span</strong>: <code>text-transparent</code>, <code>bg-clip-text</code>, <code>bg-gradient-to-r</code>, <code>from-indigo-400</code>, <code>to-purple-400</code></li>\n  <li><strong>.hero-cta-primary</strong>: <code>bg-indigo-500</code>, <code>hover:bg-indigo-400</code>, <code>text-white</code>, <code>font-semibold</code>, <code>px-8</code>, <code>py-4</code>, <code>rounded-xl</code>, <code>shadow-lg</code>, <code>shadow-indigo-500/25</code>, <code>transition-all</code>, <code>duration-300</code></li>\n  <li><strong>.hero-visual</strong>: <code>hidden</code>, <code>lg:block</code></li>\n  <li><strong>.hero-card</strong>: <code>bg-slate-800/60</code>, <code>backdrop-blur-sm</code>, <code>rounded-2xl</code>, <code>border</code>, <code>border-slate-700/50</code>, <code>p-8</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<section class=\"hero\">\n  <div class=\"hero-inner\">\n    <div class=\"hero-content\">\n      <p class=\"hero-eyebrow\">Arcane Guild · Est. 1842</p>\n      <h1 class=\"hero-heading\">\n        We craft digital<br>\n        <span>experiences</span><br>\n        that endure.\n      </h1>\n      <p class=\"hero-body\">From rapid prototypes to production-grade systems — we build with craft, clarity, and the full depth of the arcane arts.</p>\n      <div class=\"flex flex-col sm:flex-row gap-4\">\n        <a href=\"#\" class=\"hero-cta-primary\">Start a Project →</a>\n        <a href=\"#\" class=\"hero-cta-secondary\">View Our Work</a>\n      </div>\n    </div>\n    <div class=\"hero-visual\">\n      <div class=\"hero-card\">\n        <div class=\"text-4xl mb-4\">⬡</div>\n        <div class=\"text-white font-semibold text-xl mb-2\">Project Nexus</div>\n        <div class=\"text-slate-400 text-sm\">42 components · Design system · 98% Lighthouse</div>\n      </div>\n    </div>\n  </div>\n</section>",
+      "guidedPracticeTests": [
+        { "label": "Hero: bg-gradient-to-br",          "selector": ".hero",             "requiredClass": "bg-gradient-to-br"   },
+        { "label": "Hero: from-indigo-950",            "selector": ".hero",             "requiredClass": "from-indigo-950"     },
+        { "label": "Hero: via-purple-950",             "selector": ".hero",             "requiredClass": "via-purple-950"      },
+        { "label": "Hero: py-24",                      "selector": ".hero",             "requiredClass": "py-24"               },
+        { "label": "Inner: grid",                      "selector": ".hero-inner",       "requiredClass": "grid"                },
+        { "label": "Inner: lg:grid-cols-2",            "selector": ".hero-inner",       "requiredClass": "lg:grid-cols-2"      },
+        { "label": "Inner: items-center",              "selector": ".hero-inner",       "requiredClass": "items-center"        },
+        { "label": "Eyebrow: tracking-widest",         "selector": ".hero-eyebrow",     "requiredClass": "tracking-widest"     },
+        { "label": "Eyebrow: uppercase",               "selector": ".hero-eyebrow",     "requiredClass": "uppercase"           },
+        { "label": "Heading: font-extrabold",          "selector": ".hero-heading",     "requiredClass": "font-extrabold"      },
+        { "label": "Heading: text-5xl",                "selector": ".hero-heading",     "requiredClass": "text-5xl"            },
+        { "label": "Gradient span: bg-clip-text",      "selector": ".hero-heading span","requiredClass": "bg-clip-text"        },
+        { "label": "Gradient span: text-transparent",  "selector": ".hero-heading span","requiredClass": "text-transparent"    },
+        { "label": "CTA: shadow-lg",                   "selector": ".hero-cta-primary", "requiredClass": "shadow-lg"           },
+        { "label": "CTA: rounded-xl",                  "selector": ".hero-cta-primary", "requiredClass": "rounded-xl"          },
+        { "label": "CTA: hover:bg-indigo-400",         "selector": ".hero-cta-primary", "requiredClass": "hover:bg-indigo-400" },
+        { "label": "Visual: hidden on mobile",         "selector": ".hero-visual",      "requiredClass": "hidden"              },
+        { "label": "Visual: lg:block",                 "selector": ".hero-visual",      "requiredClass": "lg:block"            },
+        { "label": "Card: backdrop-blur-sm",           "selector": ".hero-card",        "requiredClass": "backdrop-blur-sm"    },
+        { "label": "Card: rounded-2xl",                "selector": ".hero-card",        "requiredClass": "rounded-2xl"         }
+      ],
+      "soloPracticeHtml": "<p>Build a hero headline with gradient text from scratch. The headline should use the <code>text-transparent bg-clip-text bg-gradient-to-r</code> technique with colour stops of your choice. Below it, add a one-line subheading in plain white. No class list given — recall the gradient-text pattern from memory.</p>",
+      "feynmanPrompt": "Explain how the three classes text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 work together to create gradient text. What would the element look like if you removed only text-transparent? What if you removed only bg-clip-text?",
+      "questions": [
+        {
+          "id": "tw-lea-2-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "Which three Tailwind classes are required to create gradient-coloured text?",
+          "options": [
+            "text-transparent, bg-clip-text, bg-gradient-to-r (plus from-* / to-* colours)",
+            "text-gradient, from-indigo-400, to-purple-400",
+            "bg-gradient, text-clip, text-transparent",
+            "gradient-text, bg-clip-text, from-indigo-400"
+          ],
+          "answer": "text-transparent, bg-clip-text, bg-gradient-to-r (plus from-* / to-* colours)",
+          "explanation": "The gradient is set as a background with bg-gradient-to-r from-* to-*. Then bg-clip-text clips it to the text shape only. Finally text-transparent makes the actual text colour transparent, revealing the clipped gradient background behind it. All three must be present."
+        },
+        {
+          "id": "tw-lea-2-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "You want a button shadow that glows in the brand colour (indigo-500) at low opacity, creating a subtle halo. Which class combination achieves this?",
+          "options": [
+            "shadow-lg shadow-indigo-500/25",
+            "shadow-lg shadow-indigo-500 opacity-25",
+            "shadow-indigo-lg/25",
+            "glow-indigo-500 shadow-lg"
+          ],
+          "answer": "shadow-lg shadow-indigo-500/25",
+          "explanation": "Tailwind's colour-shadow pattern requires two classes: shadow-lg sets the shadow size, and shadow-indigo-500/25 sets the colour with the opacity modifier. The /25 suffix applies 25% opacity to the shadow colour specifically — it does not affect the element itself."
+        },
+        {
+          "id": "tw-lea-2-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A dark hero section has body text using text-slate-300. A colleague suggests using pure white (text-white) for better readability. What is the correct response?",
+          "options": [
+            "text-slate-300 is the correct choice — pure white on a dark background causes eye strain and flattens the visual hierarchy. Slightly muted white preserves contrast while being easier to read at length.",
+            "text-white is always better for contrast on dark backgrounds — maximum contrast is always the goal",
+            "Use text-gray-300 instead of text-slate-300 for better cross-browser consistency",
+            "Neither — body text on dark backgrounds should use text-slate-100 at minimum per WCAG AA"
+          ],
+          "answer": "text-slate-300 is the correct choice — pure white on a dark background causes eye strain and flattens the visual hierarchy. Slightly muted white preserves contrast while being easier to read at length.",
+          "explanation": "Pure white on a very dark background can cause eye strain with prolonged reading and removes tonal hierarchy — if everything is pure white, how do you distinguish headings from body from captions? text-slate-300 passes WCAG AA contrast on dark backgrounds and creates a natural reading hierarchy where headings (text-white) have more visual weight than body text."
+        }
+      ]
+    }
+  ]
+}

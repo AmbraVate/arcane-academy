@@ -1,0 +1,130 @@
+{
+  "id": "rx-sen-18",
+  "title": "State Machines and XState in React",
+  "glyph": "⚛",
+  "sortOrder": 18,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-10"],
+  "subChunks": [
+    {
+      "id": "rx-sen-18-1",
+      "title": "State Machines and XState in React",
+      "sortOrder": 1,
+      "xpReward": 175,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Complex UI logic — multi-step forms, media players, auth flows, drag interactions — often ends up as a tangle of booleans: <code>isLoading && !isError && !isSuccess && currentStep === 3</code>. State machines make impossible states impossible to represent. They describe exactly which states a component can be in, which transitions are valid, and what side effects each transition triggers. XState is the production-grade state machine library for JavaScript.</p>",
+      "explanationHtml": "<h3>The problem with boolean soup</h3>\n\n<pre><code>// ❌ Impossible states are representable:\nconst [isLoading, setIsLoading] = useState(false);\nconst [isSuccess, setIsSuccess] = useState(false);\nconst [isError, setIsError] = useState(false);\n// What does isLoading=true AND isSuccess=true mean?\n// This is a bug waiting to happen.\n\n// ✅ State machine — only one state at a time:\ntype FetchState = 'idle' | 'loading' | 'success' | 'error';</code></pre>\n\n<h3>useReducer as a simple state machine</h3>\n\n<pre><code>type State =\n  | { status: 'idle' }\n  | { status: 'loading' }\n  | { status: 'success'; data: Quest[] }\n  | { status: 'error'; error: string };\n\ntype Event =\n  | { type: 'FETCH' }\n  | { type: 'SUCCESS'; data: Quest[] }\n  | { type: 'ERROR'; error: string }\n  | { type: 'RESET' };\n\nfunction reducer(state: State, event: Event): State {\n  switch (state.status) {\n    case 'idle':\n      if (event.type === 'FETCH') return { status: 'loading' };\n      return state;\n\n    case 'loading':\n      if (event.type === 'SUCCESS') return { status: 'success', data: event.data };\n      if (event.type === 'ERROR') return { status: 'error', error: event.error };\n      return state;\n\n    case 'success':\n    case 'error':\n      if (event.type === 'RESET') return { status: 'idle' };\n      return state;\n\n    default: return state;\n  }\n}\n\n// Invalid transitions return the current state — impossible states can't occur.</code></pre>\n\n<h3>XState — for complex state machines</h3>\n\n<pre><code>import { createMachine } from 'xstate';\nimport { useMachine } from '@xstate/react';\n\nconst questMachine = createMachine({\n  id: 'quest',\n  initial: 'idle',\n  states: {\n    idle: {\n      on: { FETCH: 'loading' }\n    },\n    loading: {\n      on: {\n        SUCCESS: 'success',\n        ERROR: 'error',\n      }\n    },\n    success: {\n      on: { RESET: 'idle' }\n    },\n    error: {\n      on: {\n        RETRY: 'loading',\n        RESET: 'idle',\n      }\n    },\n  }\n});\n\nfunction QuestList() {\n  const [state, send] = useMachine(questMachine);\n\n  if (state.matches('loading')) return &lt;Spinner /&gt;;\n  if (state.matches('error')) {\n    return (\n      &lt;div&gt;\n        &lt;p&gt;Error loading quests&lt;/p&gt;\n        &lt;button onClick={() =&gt; send({ type: 'RETRY' })}&gt;Retry&lt;/button&gt;\n      &lt;/div&gt;\n    );\n  }\n  if (state.matches('success')) return &lt;QuestGrid quests={state.context.quests} /&gt;;\n\n  return &lt;button onClick={() =&gt; send({ type: 'FETCH' })}&gt;Load Quests&lt;/button&gt;;\n}</code></pre>\n\n<h3>When to use a state machine</h3>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The signal that you need a state machine: you have booleans that can be in combinations that don't make sense. isLoading AND isSuccess is a bug waiting to happen. A state machine with states 'loading' and 'success' makes that combination structurally impossible. Use useReducer for simple machines. Reach for XState when you have nested states, parallel states, or side effects that need to be modelled explicitly.\"</p></div>\n\n<h3>Multi-step form with state machine</h3>\n\n<pre><code>type FormState =\n  | { step: 1; data: Partial&lt;FormData&gt; }\n  | { step: 2; data: Partial&lt;FormData&gt; }\n  | { step: 3; data: Partial&lt;FormData&gt; }\n  | { step: 'submitting'; data: FormData }\n  | { step: 'success' }\n  | { step: 'error'; error: string };\n\ntype FormEvent =\n  | { type: 'NEXT'; data: Partial&lt;FormData&gt; }\n  | { type: 'BACK' }\n  | { type: 'SUBMIT'; data: FormData }\n  | { type: 'SUCCESS' }\n  | { type: 'ERROR'; error: string };</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A multi-step form with 6 boolean flags. Impossible state: isLoading=true, isComplete=true. The developer adds another if statement to 'handle' it. Vex draws a state diagram."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "State machines don't eliminate bugs — they make entire classes of bugs structurally impossible. You can't be loading AND complete at the same time if your state type is 'idle' | 'loading' | 'complete'. You can't transition from 'success' to 'loading' unless you explicitly model that. The machine enforces the rules."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Start with useReducer for simple machines — the dispatch pattern is already a state machine. Add XState when the machine has nested states, parallel regions, or entry/exit actions. The XState visualiser lets you draw the state diagram and generate the machine definition from it."
+        },
+        {
+          "type": "example",
+          "speaker": "Boolean soup vs state machine",
+          "text": "// ❌ Impossible states:\nconst [isLoading, isError, isSuccess] = [true, false, true]; // What?\n\n// ✅ Only valid states:\ntype FetchState = 'idle' | 'loading' | 'success' | 'error';\nconst [state, setState] = useState<FetchState>('idle');"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a fetch state machine using useReducer:</p><ul><li>Model the states: <code>idle → loading → success | error</code>. From error, allow <code>RETRY</code> back to loading.</li><li>Use a discriminated union for <code>State</code> so TypeScript knows what data is available in each state</li><li>Render different UI for each state: an idle button, a loading spinner, success data, and an error message with retry</li><li>Use <code>data-testid</code> attributes for each state's UI</li></ul>",
+      "guidedPracticeStarterCode": "import { useReducer } from 'react';\n\n// Mock API:\nlet fetchCount = 0;\nconst mockFetchQuests = () => new Promise((resolve, reject) => {\n  fetchCount++;\n  setTimeout(() => {\n    if (fetchCount % 2 === 0) {\n      resolve([{ id: 1, title: 'Slay the Dragon' }, { id: 2, title: 'Find the Tome' }]);\n    } else {\n      reject(new Error('Server error'));\n    }\n  }, 800);\n});\n\n// TODO: Define State discriminated union\n// idle | loading | { status: 'success', data } | { status: 'error', error }\ntype State = any;\n\n// TODO: Define Event union\ntype Event = any;\n\n// TODO: Implement reducer\nfunction reducer(state: State, event: Event): State {\n  return state;\n}\n\nexport default function QuestFetcher() {\n  const [state, dispatch] = useReducer(reducer, { status: 'idle' });\n\n  const fetch = () => {\n    dispatch({ type: 'FETCH' });\n    mockFetchQuests()\n      .then(data => dispatch({ type: 'SUCCESS', data }))\n      .catch(err => dispatch({ type: 'ERROR', error: err.message }));\n  };\n\n  // TODO: render based on state.status\n  // idle: <button data-testid=\"fetch-btn\">Load Quests</button>\n  // loading: <p data-testid=\"loading\">Loading...</p>\n  // success: <ul data-testid=\"quest-list\">{...}</ul>\n  // error: <div data-testid=\"error\">...<button data-testid=\"retry-btn\">Retry</button></div>\n  return <div>TODO</div>;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Fetch button renders in idle state",
+          "selector": "[data-testid='fetch-btn']",
+          "exists": true
+        },
+        {
+          "label": "Loading state appears after fetch",
+          "action": "click",
+          "selector": "[data-testid='fetch-btn']",
+          "then": {
+            "selector": "[data-testid='loading']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a drag-and-drop card sorter using a state machine. States: <code>idle → dragging → dropping → idle</code> (or back to dragging on failed drop). The machine should track: which card is being dragged, over which target, and the committed order. Use XState (<code>createMachine</code> + <code>useMachine</code>) with context to store the card order. Add the XState visualiser to see the state diagram at runtime. Make the transition guards explicit — dragging to a different column is only allowed if the card's type matches the column type.</p>",
+      "feynmanPrompt": "Explain what problem state machines solve that boolean flags don't. Give a concrete example of an impossible state that boolean flags allow but a state machine prevents. Walk through the reducer-as-state-machine pattern — what does the switch(state.status) outer switch enforce? Then explain when you'd reach for XState vs useReducer.",
+      "questions": [
+        {
+          "id": "rx-sen-18-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the main advantage of modelling UI state as a finite state machine vs multiple boolean flags?",
+          "options": [
+            "Impossible states become structurally unrepresentable — the type system prevents invalid combinations like isLoading=true AND isSuccess=true",
+            "State machines are faster than boolean state updates",
+            "State machines automatically handle async operations",
+            "State machines reduce the number of re-renders"
+          ],
+          "answer": "Impossible states become structurally unrepresentable — the type system prevents invalid combinations like isLoading=true AND isSuccess=true",
+          "explanation": "With boolean flags, you can set isLoading=true and isSuccess=true simultaneously — a logically impossible state that requires defensive if-checks everywhere. A discriminated union type 'idle' | 'loading' | 'success' | 'error' has exactly one value at a time. TypeScript enforces this at compile time, eliminating an entire class of bugs."
+        },
+        {
+          "id": "rx-sen-18-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "In the reducer-as-state-machine pattern, why does each case in the outer switch return the current state for unhandled events?",
+          "options": [
+            "To enforce valid transitions — an event that isn't valid in the current state is silently ignored rather than causing an invalid state change",
+            "To satisfy TypeScript's exhaustive switch requirement",
+            "For performance — returning the same reference skips re-renders",
+            "To log ignored events for debugging"
+          ],
+          "answer": "To enforce valid transitions — an event that isn't valid in the current state is silently ignored rather than causing an invalid state change",
+          "explanation": "Returning the current state for unhandled events means only explicitly modelled transitions can occur. If a RETRY event arrives while in 'success' state and the machine doesn't handle it, nothing changes. This encodes the machine's transition rules — if you didn't model it, it doesn't happen. Compare with boolean flags where any combination can be set by accident."
+        },
+        {
+          "id": "rx-sen-18-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A multi-step form has steps 1, 2, 3, then submitting, success, and error states. The BACK action should only work from steps 2 and 3. How do you model this with a state machine?",
+          "options": [
+            "Define BACK transitions only in the step 2 and step 3 state definitions — the event doesn't exist in other states so it can't trigger",
+            "Add a canGoBack boolean to state and check it before dispatching BACK",
+            "Dispatch BACK from anywhere and add a guard in the reducer",
+            "Use a separate isFirstStep boolean to prevent the dispatch"
+          ],
+          "answer": "Define BACK transitions only in the step 2 and step 3 state definitions — the event doesn't exist in other states so it can't trigger",
+          "explanation": "In a state machine, you only define transitions where they're valid. step2: { on: { BACK: 'step1', NEXT: 'step3' } } explicitly allows BACK from step 2. step1: { on: { NEXT: 'step2' } } doesn't include BACK — sending BACK while in step 1 falls to the default return-current-state case and does nothing. No guard needed — the machine structure enforces it."
+        },
+        {
+          "id": "rx-sen-18-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When should you reach for XState instead of useReducer for a state machine?",
+          "options": [
+            "When the machine has nested states (hierarchical), parallel states, entry/exit actions, or invoked services (async operations with defined transitions)",
+            "When the machine has more than 5 states",
+            "When TypeScript types are needed for the machine",
+            "When the machine needs to be shared between components"
+          ],
+          "answer": "When the machine has nested states (hierarchical), parallel states, entry/exit actions, or invoked services (async operations with defined transitions)",
+          "explanation": "useReducer handles flat state machines well — one level of states, explicit transitions, no side effects in the machine itself. XState adds: hierarchical states (a state with sub-states), parallel states (multiple active regions), entry/exit actions, invoked services (actors that run async work as part of the machine), and the visualiser for debugging. The threshold is roughly: if you're adding 'on enter state X, do Y' logic to a useReducer — reach for XState."
+        }
+      ]
+    }
+  ]
+}

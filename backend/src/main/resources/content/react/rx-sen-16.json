@@ -1,0 +1,136 @@
+{
+  "id": "rx-sen-16",
+  "title": "Design Systems with React",
+  "glyph": "⚛",
+  "sortOrder": 16,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-13", "rx-jun-17"],
+  "subChunks": [
+    {
+      "id": "rx-sen-16-1",
+      "title": "Design Systems with React",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.tsx",
+      "hookHtml": "<p>A design system is a collection of reusable components, guided by clear standards, that can be assembled to build applications. When done well, it accelerates development, enforces consistency, and encodes accessibility into every component. Building and maintaining one requires TypeScript mastery, API design skills, and an understanding of what makes a component reusable across many different use cases.</p>",
+      "explanationHtml": "<h3>What a design system provides</h3>\n\n<ul>\n  <li><strong>Primitive components:</strong> Button, Input, Text, Box, Stack — the lowest level building blocks</li>\n  <li><strong>Composite components:</strong> Modal, Select, DatePicker — built from primitives</li>\n  <li><strong>Tokens:</strong> design decisions captured in code (colours, spacing, typography scales)</li>\n  <li><strong>Documentation:</strong> Storybook stories showing every state of every component</li>\n  <li><strong>Accessibility:</strong> baked into every component so consumers don't have to think about it</li>\n</ul>\n\n<h3>Design tokens with CSS custom properties</h3>\n\n<pre><code>/* tokens.css */\n:root {\n  --color-primary: #6366f1;\n  --color-danger: #ef4444;\n  --space-1: 4px;\n  --space-2: 8px;\n  --space-4: 16px;\n  --space-8: 32px;\n  --radius-sm: 4px;\n  --radius-md: 8px;\n  --text-sm: 14px;\n  --text-md: 16px;\n  --text-lg: 18px;\n}\n\n// tokens.ts — type-safe token consumption:\nexport const tokens = {\n  color: { primary: 'var(--color-primary)', danger: 'var(--color-danger)' },\n  space: { 1: 'var(--space-1)', 2: 'var(--space-2)', 4: 'var(--space-4)' },\n} as const;</code></pre>\n\n<h3>Building a polymorphic primitive: Box</h3>\n\n<pre><code>// Box — renders as any element, accepts layout props:\ntype BoxProps&lt;C extends React.ElementType = 'div'&gt; = {\n  as?: C;\n  padding?: keyof typeof tokens.space;\n  gap?: keyof typeof tokens.space;\n} &amp; React.ComponentPropsWithoutRef&lt;C&gt;;\n\nfunction Box&lt;C extends React.ElementType = 'div'&gt;({\n  as,\n  padding,\n  gap,\n  style,\n  ...rest\n}: BoxProps&lt;C&gt;) {\n  const Component = as ?? 'div';\n  return (\n    &lt;Component\n      style={{\n        padding: padding ? tokens.space[padding] : undefined,\n        gap: gap ? tokens.space[gap] : undefined,\n        ...style,\n      }}\n      {...rest}\n    /&gt;\n  );\n}\n\n// Usage:\n&lt;Box as=\"section\" padding={4} gap={2}&gt;...&lt;/Box&gt;</code></pre>\n\n<h3>Component API design principles</h3>\n\n<p><strong>Be explicit, not magic:</strong></p>\n<pre><code>// ❌ Magic prop — consumer can't understand without reading source:\n&lt;Button kind=\"destructive-ghost-small\" /&gt;\n\n// ✅ Explicit composition:\n&lt;Button variant=\"ghost\" size=\"sm\" intent=\"danger\"&gt;Delete&lt;/Button&gt;</code></pre>\n\n<p><strong>Escape hatches — always provide them:</strong></p>\n<pre><code>// Every DS component should accept className and style overrides:\n// Consumers will always need to customise something\nfunction Button({ className, style, ...props }: ButtonProps) {\n  return &lt;button className={cn('btn', className)} style={style} {...props} /&gt;;\n}</code></pre>\n\n<p><strong>Slots for composition:</strong></p>\n<pre><code>// Instead of leftIcon/rightIcon props:\n&lt;Button&gt;\n  &lt;Button.Icon&gt;&lt;SearchIcon /&gt;&lt;/Button.Icon&gt;\n  Search\n&lt;/Button&gt;</code></pre>\n\n<h3>Storybook — document every state</h3>\n\n<pre><code>// Button.stories.tsx:\nimport type { Meta, StoryObj } from '@storybook/react';\nimport { Button } from './Button';\n\nconst meta: Meta&lt;typeof Button&gt; = {\n  component: Button,\n  tags: ['autodocs'],\n};\nexport default meta;\n\ntype Story = StoryObj&lt;typeof Button&gt;;\n\nexport const Primary: Story = { args: { children: 'Click me', variant: 'primary' } };\nexport const Loading: Story = { args: { children: 'Saving...', isLoading: true } };\nexport const Disabled: Story = { args: { children: 'Disabled', disabled: true } };</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The best design system components are easy to use correctly and hard to use incorrectly. TypeScript enforces the API. Accessibility is built in. Escape hatches exist for edge cases. Stories document every state. The consumer should never need to read the source to understand what a component does.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Three teams, three button styles, three different colour systems, twelve accessibility violations. Vex proposes a design system. 'One source of truth. Every component accessible by default. Every state documented.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "A design system is not a component library. It's a contract. The contract says: use these components and you get accessibility, consistency, and maintainability for free. Break the contract — build your own button — and you own all those problems yourself."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Design tokens are decisions captured in code. The primary colour is a token — change the token and every component updates. Primitives are the atoms — Box, Text, Stack. Composites are built from atoms. Accessibility is baked in. Stories document every state. TypeScript enforces the API."
+        },
+        {
+          "type": "example",
+          "speaker": "Token-driven component",
+          "text": "// Token changes propagate everywhere:\n:root { --color-primary: #6366f1; }\n\n// Component uses the token:\nfunction Button({ children }: ButtonProps) {\n  return (\n    <button style={{ background: 'var(--color-primary)' }}>\n      {children}\n    </button>\n  );\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build three design system primitives:</p><ul><li><code>Text</code> — renders as any heading or paragraph, accepts a <code>size</code> prop mapped to token values, and <code>weight</code> prop (<code>'regular' | 'medium' | 'bold'</code>)</li><li><code>Button</code> — accepts <code>variant: 'primary' | 'secondary' | 'ghost'</code>, <code>size: 'sm' | 'md' | 'lg'</code>, <code>isLoading: boolean</code>, and passes through all native button props. Use a cn() helper for class composition.</li><li><code>Stack</code> — renders a div with flexbox, accepts <code>gap</code> mapped to tokens and <code>direction: 'row' | 'column'</code></li></ul>",
+      "guidedPracticeStarterCode": "import React from 'react';\n\n// Design tokens:\nconst tokens = {\n  space: { 1: '4px', 2: '8px', 4: '16px', 8: '32px' },\n  fontSize: { sm: '14px', md: '16px', lg: '18px', xl: '24px' },\n  fontWeight: { regular: 400, medium: 500, bold: 700 },\n} as const;\n\n// Simple cn() utility:\nfunction cn(...classes: (string | undefined | false)[]) {\n  return classes.filter(Boolean).join(' ');\n}\n\n// TODO 1: Text component\ntype TextSize = keyof typeof tokens.fontSize;\ntype TextWeight = 'regular' | 'medium' | 'bold';\ntype TextProps<C extends React.ElementType = 'p'> = {\n  as?: C;\n  size?: TextSize;\n  weight?: TextWeight;\n} & React.ComponentPropsWithoutRef<C>;\n\nfunction Text<C extends React.ElementType = 'p'>({ as, size = 'md', weight = 'regular', style, ...rest }: TextProps<C>) {\n  // TODO\n  return null as any;\n}\n\n// TODO 2: Button component\ntype ButtonVariant = 'primary' | 'secondary' | 'ghost';\ntype ButtonSize = 'sm' | 'md' | 'lg';\ntype ButtonProps = React.ComponentPropsWithoutRef<'button'> & {\n  variant?: ButtonVariant;\n  size?: ButtonSize;\n  isLoading?: boolean;\n};\n\nfunction Button({ variant = 'primary', size = 'md', isLoading, children, className, disabled, ...rest }: ButtonProps) {\n  // TODO\n  return null as any;\n}\n\n// TODO 3: Stack component\ntype StackGap = keyof typeof tokens.space;\ntype StackProps = React.ComponentPropsWithoutRef<'div'> & {\n  gap?: StackGap;\n  direction?: 'row' | 'column';\n};\n\nfunction Stack({ gap = 2, direction = 'column', style, ...rest }: StackProps) {\n  // TODO\n  return null as any;\n}\n\nexport default function App() {\n  return (\n    <Stack gap={4} data-testid=\"app\">\n      <Text as=\"h1\" size=\"xl\" weight=\"bold\" data-testid=\"heading\">Quest Board</Text>\n      <Stack direction=\"row\" gap={2}>\n        <Button variant=\"primary\" data-testid=\"primary-btn\">Accept Quest</Button>\n        <Button variant=\"ghost\" data-testid=\"ghost-btn\">View Details</Button>\n        <Button isLoading data-testid=\"loading-btn\">Saving...</Button>\n      </Stack>\n    </Stack>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "App renders",
+          "selector": "[data-testid='app']",
+          "exists": true
+        },
+        {
+          "label": "Heading renders",
+          "selector": "[data-testid='heading']",
+          "requiredText": "Quest Board"
+        },
+        {
+          "label": "Primary button renders",
+          "selector": "[data-testid='primary-btn']",
+          "exists": true
+        },
+        {
+          "label": "Loading button is disabled",
+          "selector": "[data-testid='loading-btn'][disabled]",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a full component: an accessible <code>&lt;Select&gt;</code> dropdown using the compound components pattern (from rx-jun-17) with full TypeScript types, design token integration, keyboard navigation (Arrow keys, Enter, Escape), ARIA attributes (<code>role=\"combobox\"</code>, <code>aria-expanded</code>, <code>aria-haspopup</code>), and a Storybook story showing: default, open, selected, disabled, and error states.</p>",
+      "feynmanPrompt": "Explain what a design system provides beyond a component library. What are design tokens and why are they important? Walk through the API design principles: why should components be explicit, have escape hatches, and support composition? What role does TypeScript play in a design system?",
+      "questions": [
+        {
+          "id": "rx-sen-16-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What are design tokens?",
+          "options": [
+            "Named design decisions (colours, spacing, typography) captured in code — changing a token propagates through all components that reference it",
+            "React components that render design system documentation",
+            "CSS utility classes generated from a design configuration file",
+            "TypeScript types for design system component props"
+          ],
+          "answer": "Named design decisions (colours, spacing, typography) captured in code — changing a token propagates through all components that reference it",
+          "explanation": "Design tokens are the single source of truth for design decisions. --color-primary: #6366f1 is a token. Every component that uses it via var(--color-primary) will update automatically when the brand colour changes. Tokens exist at the intersection of design tools (Figma), code (CSS custom properties), and documentation."
+        },
+        {
+          "id": "rx-sen-16-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Why should every design system component accept `className` and `style` props as escape hatches?",
+          "options": [
+            "Consumers will always encounter use cases the component author didn't anticipate — escape hatches prevent forcing consumers to fork the component",
+            "They are required by React's prop interface",
+            "They improve performance by allowing CSS-only updates",
+            "They enable server-side rendering"
+          ],
+          "answer": "Consumers will always encounter use cases the component author didn't anticipate — escape hatches prevent forcing consumers to fork the component",
+          "explanation": "No design system can anticipate every use case. A button that needs an unusual margin in one specific layout context shouldn't require a PR to the design system. Accepting className and style lets consumers override while using the base component for all the accessibility, behaviour, and token integration it provides. The escape hatch is a controlled pressure valve."
+        },
+        {
+          "id": "rx-sen-16-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A design system Button has `variant='primary' | 'secondary'` and `intent='default' | 'danger'`. A developer wants a destructive secondary button but the combination isn't styled. What is the correct design system approach?",
+          "options": [
+            "Add the missing variant+intent combination to the token system and component styles — it's a valid design decision that belongs in the system",
+            "Tell the developer to use the className escape hatch for the one-off case",
+            "Create a separate DestructiveSecondaryButton component",
+            "Use inline styles directly on the button"
+          ],
+          "answer": "Add the missing variant+intent combination to the token system and component styles — it's a valid design decision that belongs in the system",
+          "explanation": "If multiple teams need a destructive secondary button, it's a product-wide design decision — it belongs in the system. The component should support all valid combinations. Repeatedly sending teams to the escape hatch for the same pattern is a signal the design system is incomplete, not that consumers should work around it."
+        },
+        {
+          "id": "rx-sen-16-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When should you build a custom design system vs adopting an existing one (Radix, shadcn/ui, MUI)?",
+          "options": [
+            "Build custom when: strong brand differentiation requirements, existing systems can't be sufficiently themed, or the team has the capacity to maintain it. Adopt existing when: speed matters, the brand is flexible, or the team is small.",
+            "Always build custom — existing systems create vendor lock-in",
+            "Always adopt existing — custom systems are never worth the investment",
+            "Build custom only when the team has 10+ frontend developers"
+          ],
+          "answer": "Build custom when: strong brand differentiation requirements, existing systems can't be sufficiently themed, or the team has the capacity to maintain it. Adopt existing when: speed matters, the brand is flexible, or the team is small.",
+          "explanation": "Custom design systems require significant investment: initial build (months), documentation, accessibility testing, and ongoing maintenance. For most teams, adopting a headless component library (Radix UI for behaviour) combined with custom tokens and styling (shadcn/ui model) gives the benefits of a design system without the full cost. Pure custom is justified for companies with strict brand requirements and a dedicated design systems team."
+        }
+      ]
+    }
+  ]
+}

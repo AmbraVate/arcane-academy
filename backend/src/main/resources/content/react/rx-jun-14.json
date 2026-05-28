@@ -1,0 +1,107 @@
+{
+  "id": "rx-jun-14",
+  "title": "Optimistic UI — Instant Feedback Before Server Confirmation",
+  "glyph": "⚛",
+  "sortOrder": 14,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-2"],
+  "subChunks": [
+    {
+      "id": "rx-jun-14-1",
+      "title": "Optimistic UI — Instant Feedback Before Server Confirmation",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>When a user clicks 'Like' and has to wait 500ms for the count to update, the app feels slow. Optimistic UI updates the UI immediately as if the request already succeeded, then corrects it if the server responds with an error. It's the technique behind the instant-feeling interactions in every major social app — and it's straightforward to implement in React.</p>",
+      "explanationHtml": "<h3>The optimistic update pattern</h3>\n\n<ol>\n  <li>User performs an action</li>\n  <li>Update UI immediately (optimistically)</li>\n  <li>Send the request to the server in the background</li>\n  <li>If success: leave the UI as-is (or sync with server response)</li>\n  <li>If failure: roll back the UI to the previous state and show an error</li>\n</ol>\n\n<pre><code>function LikeButton({ post }) {\n  const [liked, setLiked] = useState(post.liked);\n  const [likeCount, setLikeCount] = useState(post.likeCount);\n\n  async function handleLike() {\n    // 1. Capture current state for rollback:\n    const prevLiked = liked;\n    const prevCount = likeCount;\n\n    // 2. Update optimistically:\n    setLiked(!liked);\n    setLikeCount(liked ? likeCount - 1 : likeCount + 1);\n\n    // 3. Send to server:\n    try {\n      await toggleLike(post.id);\n    } catch (err) {\n      // 4. Roll back on failure:\n      setLiked(prevLiked);\n      setLikeCount(prevCount);\n      alert('Failed to update like. Please try again.');\n    }\n  }\n\n  return (\n    &lt;button onClick={handleLike}&gt;\n      {liked ? '❤️' : '🤍'} {likeCount}\n    &lt;/button&gt;\n  );\n}</code></pre>\n\n<h3>List-level optimistic updates</h3>\n\n<pre><code>function QuestList() {\n  const [quests, setQuests] = useState(INITIAL_QUESTS);\n\n  async function handleComplete(id) {\n    // Capture for rollback:\n    const prev = quests;\n\n    // Optimistic update:\n    setQuests(qs =&gt; qs.map(q =&gt; q.id === id ? { ...q, done: true } : q));\n\n    try {\n      await markQuestComplete(id);\n    } catch {\n      setQuests(prev); // Roll back\n    }\n  }\n}</code></pre>\n\n<h3>Optimistic deletion</h3>\n\n<pre><code>async function handleDelete(id) {\n  const prev = items;\n  setItems(items.filter(item =&gt; item.id !== id)); // Remove immediately\n\n  try {\n    await deleteItem(id);\n  } catch {\n    setItems(prev); // Re-add if failed\n  }\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The key discipline: always save the previous state before mutating. A single line: <code>const prev = items;</code>. The rollback is then one line: <code>setItems(prev)</code>. If you forget to save before, you've lost the ability to undo.\"</p></div>\n\n<h3>When optimistic updates are appropriate</h3>\n\n<ul>\n  <li>Actions that succeed &gt;99% of the time (likes, toggles, reorders)</li>\n  <li>Actions where the delay is perceptible and frustrating</li>\n  <li>When the rollback doesn't cause confusion (toggling a like vs. a payment)</li>\n</ul>\n\n<p>Do <strong>not</strong> use optimistic updates for destructive or financial operations — where showing a failure is less confusing than a sudden reversal.</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "An apprentice marks a quest as complete. In the old system, the scroll stays blank until the guild's ledger updates — three seconds of nothing. In Vex's system, the quest is marked instantly. The ledger catches up in the background."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The three disciplines: save the old state before changing it, update immediately, send to the server. If the server rejects the change, one line restores the old state. If it accepts, nothing more is needed. The user never waits."
+        },
+        {
+          "type": "example",
+          "speaker": "Save → update → rollback",
+          "text": "async function handleLike() {\n  const prev = liked; // Save\n  setLiked(!liked);   // Update optimistically\n\n  try {\n    await api.toggleLike(id);\n  } catch {\n    setLiked(prev);   // Roll back\n  }\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;TodoListOptimistic /&gt;</code>:</p><ul><li>State: array of <code>{ id, text, done }</code> items</li><li>Each item has a 'Complete' button that marks it done optimistically</li><li>The async <code>markDone(id)</code> has a 20% chance of failure (simulate with <code>Math.random() &lt; 0.2</code>)</li><li>On failure, roll back the done state and show <code>&lt;p data-testid=\"error\"&gt;Failed&lt;/p&gt;</code></li><li>Completed items get <code>className=\"done\"</code> and <code>data-testid=\"done-{id}\"</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nconst INITIAL = [\n  { id: 1, text: 'Forge the Amulet', done: false },\n  { id: 2, text: 'Find the Tome', done: false },\n];\n\nasync function markDone(id) {\n  await new Promise(r => setTimeout(r, 300));\n  if (Math.random() < 0.2) throw new Error('Server error');\n}\n\nexport default function TodoListOptimistic() {\n  const [items, setItems] = useState(INITIAL);\n  const [error, setError] = useState(null);\n\n  async function handleComplete(id) {\n    // TODO: save prev state\n    // TODO: update optimistically\n    // TODO: try markDone, catch and roll back, set error\n  }\n\n  return (\n    <div>\n      {error && <p data-testid=\"error\">{error}</p>}\n      <ul>\n        {items.map(item => (\n          <li key={item.id} className={item.done ? 'done' : ''}\n              data-testid={item.done ? `done-${item.id}` : `pending-${item.id}`}>\n            {item.text}\n            {!item.done && (\n              <button onClick={() => handleComplete(item.id)}>Complete</button>\n            )}\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders initial items",
+          "selector": "li",
+          "count": 2
+        },
+        {
+          "label": "Clicking Complete shows done state immediately",
+          "action": "click",
+          "selector": "button",
+          "then": {
+            "selector": "li.done",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;MessageBoard /&gt;</code> from scratch. Users can post messages and delete them. Post and delete use optimistic updates with rollback. Simulate a 30% failure rate for both operations. Show a dismissible error banner when either fails. No scaffold.</p>",
+      "feynmanPrompt": "Explain the optimistic update pattern to a developer who currently waits for server confirmation before updating the UI. Walk through the three steps, why saving the previous state is critical, and give an example of a use case where optimistic updates are inappropriate.",
+      "questions": [
+        {
+          "id": "rx-jun-14-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is an optimistic UI update?",
+          "options": [
+            "Updating the UI immediately as if the server request succeeded, then rolling back if it fails",
+            "Updating the UI only after the server confirms success",
+            "Showing a loading state while the server processes the request",
+            "Caching the UI state to avoid refetching from the server"
+          ],
+          "answer": "Updating the UI immediately as if the server request succeeded, then rolling back if it fails",
+          "explanation": "Optimistic updates improve perceived performance by applying changes to the UI immediately. The server request happens in the background. If it fails, the UI reverts to the previous state. If it succeeds, no further UI changes are needed."
+        },
+        {
+          "id": "rx-jun-14-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is the most critical step to include before making an optimistic update?",
+          "options": [
+            "Save the current state in a variable before updating it — needed to roll back if the request fails",
+            "Disable the button to prevent double-clicks",
+            "Show a loading spinner to indicate the request is in progress",
+            "Validate the input before updating"
+          ],
+          "answer": "Save the current state in a variable before updating it — needed to roll back if the request fails",
+          "explanation": "const prev = state; before the optimistic update. If the server call fails, you restore: setState(prev). Without this save, you've lost the ability to undo the optimistic change."
+        },
+        {
+          "id": "rx-jun-14-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "For which of these actions is an optimistic update INAPPROPRIATE?",
+          "options": [
+            "Completing a payment — the reversal would be confusing and the user needs server confirmation before assuming success",
+            "Toggling a like on a social post",
+            "Reordering items in a drag-and-drop list",
+            "Marking a todo as complete"
+          ],
+          "answer": "Completing a payment — the reversal would be confusing and the user needs server confirmation before assuming success",
+          "explanation": "Optimistic updates work for reversible, low-stakes actions that succeed almost always. A payment reversal — showing 'Payment successful' then changing it to 'Failed' — is far more confusing and potentially harmful than the slight delay of waiting for confirmation. Financial operations, account changes, and destructive actions should wait for server confirmation."
+        }
+      ]
+    }
+  ]
+}

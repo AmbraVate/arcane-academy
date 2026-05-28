@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-8",
+  "title": "Tables and Data Display",
+  "glyph": "⚗️",
+  "sortOrder": 8,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-2"],
+  "subChunks": [
+    {
+      "id": "tw-jun-8-1",
+      "title": "Tables and Data Display",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Data tables are the backbone of admin dashboards, analytics pages, and any UI dealing with structured data. They're also one of the most commonly botched components — bad spacing, no hover states, inaccessible column headers, and non-responsive behaviour on mobile. Building them well means handling all of these concerns correctly.</p>",
+      "explanationHtml": "<h3>Table structure and base styles</h3>\n<pre><code>&lt;div class=\"overflow-hidden rounded-xl border border-gray-200\"&gt;\n  &lt;table class=\"w-full text-sm\"&gt;\n    &lt;thead class=\"bg-gray-50 border-b border-gray-200\"&gt;\n      &lt;tr&gt;\n        &lt;th class=\"px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider\"&gt;\n          Name\n        &lt;/th&gt;\n      &lt;/tr&gt;\n    &lt;/thead&gt;\n    &lt;tbody class=\"divide-y divide-gray-100 bg-white\"&gt;\n      &lt;tr class=\"hover:bg-gray-50 transition-colors\"&gt;\n        &lt;td class=\"px-4 py-3 text-gray-900 font-medium\"&gt;Aria Sunforge&lt;/td&gt;\n      &lt;/tr&gt;\n    &lt;/tbody&gt;\n  &lt;/table&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Key table utilities</h3>\n<pre><code>/* Table layout */\ntable-auto     /* default — columns size to content */\ntable-fixed    /* all columns equal width, overflow clips */\n\n/* Borders between rows */\ndivide-y divide-gray-100    /* on tbody: adds border between tr elements */\n\n/* Column header conventions */\ntext-left text-xs font-semibold text-gray-500 uppercase tracking-wider\n\n/* Data cell conventions */\npx-4 py-3 text-sm text-gray-900   /* standard data */\npx-4 py-3 text-sm font-medium     /* primary column */</code></pre>\n\n<h3>Striped rows with odd:/even:</h3>\n<pre><code>&lt;tbody&gt;\n  &lt;tr class=\"odd:bg-white even:bg-gray-50\"&gt;\n  &lt;!-- alternating row colours --&gt;\n&lt;/tbody&gt;</code></pre>\n\n<h3>Status badge in table</h3>\n<pre><code>&lt;td class=\"px-4 py-3\"&gt;\n  &lt;span class=\"inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium\n               bg-emerald-100 text-emerald-700\"&gt;\n    Active\n  &lt;/span&gt;\n&lt;/td&gt;</code></pre>\n\n<h3>Action column</h3>\n<pre><code>&lt;td class=\"px-4 py-3 text-right\"&gt;\n  &lt;button class=\"text-sm text-blue-600 hover:text-blue-700 font-medium\"&gt;Edit&lt;/button&gt;\n  &lt;button class=\"ml-3 text-sm text-red-600 hover:text-red-700 font-medium\"&gt;Delete&lt;/button&gt;\n&lt;/td&gt;</code></pre>\n\n<h3>Responsive table — horizontal scroll on mobile</h3>\n<pre><code>/* Wrap the table in an overflow-x-auto container */\n&lt;div class=\"overflow-x-auto rounded-xl border border-gray-200\"&gt;\n  &lt;table class=\"min-w-full text-sm\"&gt;\n    &lt;!-- min-w-full ensures table doesn't shrink below content width --&gt;\n  &lt;/table&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Empty state</h3>\n<pre><code>&lt;tbody&gt;\n  &lt;tr&gt;\n    &lt;td colspan=\"4\" class=\"px-4 py-12 text-center text-sm text-gray-500\"&gt;\n      No results found.\n    &lt;/td&gt;\n  &lt;/tr&gt;\n&lt;/tbody&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"The wrapper pattern is essential: <code>overflow-hidden rounded-xl border border-gray-200</code> on the outer div clips the table's corners to the border radius. Without it, the table bleeds through the rounded wrapper. Always pair rounded with overflow-hidden.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "A table is a contract with data. Every row must be scannable — hover states, striped backgrounds, and enough whitespace between columns. Column headers must be distinguishable from data. An action column must be visually separated. Get these right and the table feels like a tool, not a list of noise."
+        },
+        {
+          "type": "example",
+          "speaker": "Complete table structure",
+          "text": "<div class=\"overflow-hidden rounded-xl border border-gray-200\">\n  <table class=\"w-full text-sm\">\n    <thead class=\"bg-gray-50 border-b border-gray-200\">\n      <tr>\n        <th class=\"px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider\">Name</th>\n        <th class=\"px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider\">Status</th>\n        <th class=\"px-4 py-3\"></th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y divide-gray-100 bg-white\">\n      <tr class=\"hover:bg-gray-50 transition-colors\">\n        <td class=\"px-4 py-3 font-medium text-gray-900\">Aria Sunforge</td>\n        <td class=\"px-4 py-3\"><span class=\"bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full font-medium\">Active</span></td>\n        <td class=\"px-4 py-3 text-right\"><button class=\"text-sm text-blue-600 hover:text-blue-700\">Edit</button></td>\n      </tr>\n    </tbody>\n  </table>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a complete members data table:</p>\n<ul>\n  <li><strong>.table-wrapper</strong>: <code>overflow-hidden</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code></li>\n  <li><strong>.table</strong>: <code>w-full</code>, <code>text-sm</code></li>\n  <li><strong>.table-head</strong>: <code>bg-gray-50</code>, <code>border-b</code>, <code>border-gray-200</code></li>\n  <li><strong>.table-th</strong>: <code>px-4</code>, <code>py-3</code>, <code>text-left</code>, <code>text-xs</code>, <code>font-semibold</code>, <code>text-gray-500</code>, <code>uppercase</code>, <code>tracking-wider</code></li>\n  <li><strong>.table-body</strong>: <code>divide-y</code>, <code>divide-gray-100</code>, <code>bg-white</code></li>\n  <li><strong>.table-row</strong>: <code>hover:bg-gray-50</code>, <code>transition-colors</code></li>\n  <li><strong>.table-td</strong>: <code>px-4</code>, <code>py-3</code>, <code>text-gray-900</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"p-6 bg-gray-50\">\n  <div class=\"table-wrapper\">\n    <table class=\"table\">\n      <thead class=\"table-head\">\n        <tr>\n          <th class=\"table-th\">Member</th>\n          <th class=\"table-th\">XP</th>\n          <th class=\"table-th\">Status</th>\n          <th class=\"table-th\"></th>\n        </tr>\n      </thead>\n      <tbody class=\"table-body\">\n        <tr class=\"table-row\">\n          <td class=\"table-td font-medium\">Aria Sunforge</td>\n          <td class=\"table-td text-gray-500\">4,820</td>\n          <td class=\"table-td\">\n            <span class=\"inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700\">Active</span>\n          </td>\n          <td class=\"table-td text-right\">\n            <button class=\"text-sm text-blue-600 hover:text-blue-700 font-medium\">Edit</button>\n          </td>\n        </tr>\n        <tr class=\"table-row\">\n          <td class=\"table-td font-medium\">Elric Vane</td>\n          <td class=\"table-td text-gray-500\">3,100</td>\n          <td class=\"table-td\">\n            <span class=\"inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600\">Inactive</span>\n          </td>\n          <td class=\"table-td text-right\">\n            <button class=\"text-sm text-blue-600 hover:text-blue-700 font-medium\">Edit</button>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Wrapper: overflow-hidden",   "selector": ".table-wrapper", "requiredClass": "overflow-hidden"   },
+        { "label": "Wrapper: rounded-xl",        "selector": ".table-wrapper", "requiredClass": "rounded-xl"        },
+        { "label": "Wrapper: border",            "selector": ".table-wrapper", "requiredClass": "border"            },
+        { "label": "Table: full width",          "selector": ".table",         "requiredClass": "w-full"            },
+        { "label": "Head: bg-gray-50",           "selector": ".table-head",    "requiredClass": "bg-gray-50"        },
+        { "label": "TH: text-left",              "selector": ".table-th",      "requiredClass": "text-left"         },
+        { "label": "TH: uppercase",              "selector": ".table-th",      "requiredClass": "uppercase"         },
+        { "label": "Body: divide-y",             "selector": ".table-body",    "requiredClass": "divide-y"          },
+        { "label": "Row: hover background",      "selector": ".table-row",     "requiredClass": "hover:bg-gray-50"  },
+        { "label": "TD: padding",                "selector": ".table-td",      "requiredClass": "px-4"              }
+      ],
+      "soloPracticeHtml": "<p>Build a responsive data table from scratch showing quest data (quest name, difficulty, XP reward, status badge, and an action column). Wrap it in an overflow-x-auto container for mobile. Add striped rows using odd:/even: variants. Include an empty state row. No starter code.</p>",
+      "feynmanPrompt": "Walk through the pattern for a responsive table — why do you need overflow-x-auto on the wrapper and min-w-full on the table? Explain the divide-y pattern for row separators and why it's better than adding border-b to each row individually. Why does the table wrapper need both border and overflow-hidden?",
+      "questions": [
+        {
+          "id": "tw-jun-8-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A table is wider than its container on mobile, causing horizontal page overflow. Which wrapper + table class combination fixes this?",
+          "options": [
+            "overflow-x-auto on the wrapper, min-w-full on the table",
+            "overflow-hidden on the wrapper, w-full on the table",
+            "overflow-scroll on both the wrapper and table",
+            "max-w-full on the table — it will shrink to fit"
+          ],
+          "answer": "overflow-x-auto on the wrapper, min-w-full on the table",
+          "explanation": "overflow-x-auto on the wrapper creates a scrollable area — the table can be wider than the viewport but users can scroll horizontally to see it. min-w-full ensures the table doesn't collapse below its natural width. Using overflow-hidden would clip the table content instead of making it scrollable."
+        },
+        {
+          "id": "tw-jun-8-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "You want alternating row colours in a table body — white for odd rows, gray-50 for even rows. Which approach using Tailwind variants achieves this without JavaScript?",
+          "options": [
+            "odd:bg-white even:bg-gray-50 on each tr element",
+            "stripe-rows on the tbody element",
+            "nth-child(even):bg-gray-50 as an arbitrary variant",
+            "alternate-rows on the table element"
+          ],
+          "answer": "odd:bg-white even:bg-gray-50 on each tr element",
+          "explanation": "Tailwind provides odd: and even: structural variants that map to CSS :nth-child(odd) and :nth-child(even) pseudo-classes. Apply odd:bg-white even:bg-gray-50 to each tr element to create alternating row colours without JavaScript."
+        },
+        {
+          "id": "tw-jun-8-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A data table wrapper has rounded-xl but the table's top corners bleed through the rounding on the thead background. What is missing from the wrapper?",
+          "options": [
+            "overflow-hidden on the wrapper — it clips child content (like the thead background) to the border-radius",
+            "rounded-t-xl on the thead element to match the wrapper",
+            "border-collapse on the table element",
+            "The thead needs overflow-hidden applied directly"
+          ],
+          "answer": "overflow-hidden on the wrapper — it clips child content (like the thead background) to the border-radius",
+          "explanation": "border-radius creates the rounded visual shape on the wrapper, but child elements with background colours can still paint outside it without overflow-hidden. Adding overflow-hidden to the wrapper clips all child content to the border-radius — this is the standard pattern for rounded containers with coloured children."
+        }
+      ]
+    }
+  ]
+}

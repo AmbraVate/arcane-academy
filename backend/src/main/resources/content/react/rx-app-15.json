@@ -1,0 +1,136 @@
+{
+  "id": "rx-app-15",
+  "title": "Capstone: Interactive Product Card Builder",
+  "glyph": "⚛",
+  "sortOrder": 15,
+  "tier": "APPRENTICE",
+  "topicId": "react",
+  "prerequisites": ["rx-app-14", "rx-app-10", "rx-app-9"],
+  "subChunks": [
+    {
+      "id": "rx-app-15-1",
+      "title": "Capstone: Interactive Product Card Builder",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>You've reached the Apprentice capstone. This challenge synthesises everything from the tier: component composition, state management, immutable array updates, derived values, controlled inputs, form validation, conditional rendering, and dynamic styling. You'll build a product card builder — a live UI where users configure and preview cards that get added to a collection. No scaffolding this time. The architecture decisions are yours.</p>",
+      "explanationHtml": "<h3>What you're building</h3>\n\n<p>A two-panel UI: on the left, a form to configure a product card. On the right, a live preview of the card and a gallery of all saved cards below it.</p>\n\n<h3>Component architecture (suggested — not mandated)</h3>\n\n<pre><code>App\n├── CardForm          — controlled inputs, validation\n├── CardPreview       — live preview of current form state\n└── CardGallery\n    └── ProductCard   — individual saved card</code></pre>\n\n<h3>Form fields and validation rules</h3>\n\n<ul>\n  <li><strong>name</strong> — required, min 2 chars</li>\n  <li><strong>price</strong> — required, must be a positive number</li>\n  <li><strong>category</strong> — select: Spell, Potion, Weapon, Armour</li>\n  <li><strong>badge</strong> — select: none, New, Sale, Rare (optional)</li>\n  <li><strong>inStock</strong> — checkbox</li>\n</ul>\n\n<h3>Behaviours required</h3>\n\n<ul>\n  <li>Live preview updates as the form changes</li>\n  <li>Validation runs on submit — show field-level errors</li>\n  <li>On valid submit: append to the gallery, reset the form</li>\n  <li>Each gallery card has a Remove button</li>\n  <li>Gallery shows item count and total value (sum of all prices) — derived, not stored</li>\n  <li>Cards with badge <code>'Rare'</code> display with a distinct visual style</li>\n  <li>Out-of-stock cards show \"Out of Stock\" badge and reduced opacity</li>\n</ul>\n\n<h3>Architecture decisions to make</h3>\n\n<p>Where does state live? The form values need to be accessible to both <code>CardForm</code> (for the inputs) and <code>CardPreview</code> (for the preview). This means they lift up to <code>App</code>. The saved cards array also lives in <code>App</code>.</p>\n\n<p>Which components extract into separate files? At minimum <code>ProductCard</code> is reused (gallery + preview). <code>CardForm</code> is large enough to justify its own component.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Notice you're making real architecture decisions now — where state lives, which components own what behaviour, how data flows. This is what differentiates Apprentice from beginner: not whether you know the APIs, but whether you can wire them together into a coherent whole.\"</p></div>\n\n<h3>The capstone checklist</h3>\n\n<ol>\n  <li>Live preview reflects form values</li>\n  <li>Form validation prevents invalid submissions</li>\n  <li>Array updates are immutable (no direct mutation)</li>\n  <li>Total value and item count are derived from state, not stored</li>\n  <li>Remove works correctly via filter</li>\n  <li>Components are appropriately split and named</li>\n  <li>Styling communicates state (rare, out-of-stock)</li>\n</ol>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex steps back from the workbench and crosses her arms. The diagrams are gone. The templates are gone. Just the tools, the empty workbench, and a single sentence on the chalkboard: 'Build the card forge.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "You have all the tools. This is the first time I'm not handing you the plan. Where state lives, how components split, what derives from what — those are your choices. Make them deliberately."
+        },
+        {
+          "type": "narration",
+          "text": "You look at the blank canvas. Props flow down. Events flow up. State lives where it is needed. You've built each piece. Now you assemble."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build the <strong>Interactive Product Card Builder</strong>. Your implementation must satisfy all items on the capstone checklist above. Suggested starting point: define the form state shape, write the validate function, then build CardPreview first (it has no state logic — just renders props). Work outward from there.</p><p>Minimum testable requirements:</p><ul><li><code>&lt;div data-testid=\"preview\"&gt;</code> — live card preview</li><li><code>&lt;div data-testid=\"gallery\"&gt;</code> — saved cards container</li><li><code>&lt;p data-testid=\"item-count\"&gt;</code> — derived item count</li><li><code>&lt;p data-testid=\"total-value\"&gt;</code> — derived total price</li><li><code>&lt;button data-testid=\"add\"&gt;</code> — form submit/add button</li><li>Each gallery card has <code>&lt;button data-testid=\"remove-{id}\"&gt;</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\n// TODO: define your component architecture here\n// Suggested:\n//   - CardForm (controlled inputs + validation)\n//   - CardPreview (renders a preview card from props)\n//   - ProductCard (renders a saved card with remove button)\n//   - CardGallery (renders the list of saved cards)\n//   - App (owns all state, passes down as props)\n\nconst INITIAL_FORM = {\n  name: '',\n  price: '',\n  category: 'Spell',\n  badge: 'none',\n  inStock: true,\n};\n\nexport default function App() {\n  const [form, setForm] = useState(INITIAL_FORM);\n  const [cards, setCards] = useState([]);\n  const [errors, setErrors] = useState({});\n\n  // TODO: validate, handleChange, handleSubmit, handleRemove\n  // TODO: derive itemCount, totalValue\n\n  return (\n    <div style={{ display: 'flex', gap: '2rem', padding: '1rem' }}>\n      <div>\n        {/* TODO: CardForm */}\n        {/* TODO: CardPreview */}\n      </div>\n      <div data-testid=\"gallery\">\n        <p data-testid=\"item-count\">{/* itemCount */}</p>\n        <p data-testid=\"total-value\">{/* totalValue */}</p>\n        {/* TODO: map cards to ProductCard */}\n      </div>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Gallery is initially empty — item count 0",
+          "selector": "[data-testid='item-count']",
+          "requiredText": "0"
+        },
+        {
+          "label": "Total value starts at 0",
+          "selector": "[data-testid='total-value']",
+          "requiredText": "0"
+        },
+        {
+          "label": "Preview renders the live form name",
+          "action": "type",
+          "selector": "[name='name']",
+          "value": "Frost Wand",
+          "then": {
+            "selector": "[data-testid='preview']",
+            "requiredText": "Frost Wand"
+          }
+        },
+        {
+          "label": "Valid submit adds card to gallery",
+          "actions": [
+            { "action": "type", "selector": "[name='name']", "value": "Flame Staff" },
+            { "action": "type", "selector": "[name='price']", "value": "50" },
+            { "action": "click", "selector": "[data-testid='add']" }
+          ],
+          "then": {
+            "selector": "[data-testid='item-count']",
+            "requiredText": "1"
+          }
+        },
+        {
+          "label": "Item count updates correctly after add",
+          "actions": [
+            { "action": "type", "selector": "[name='name']", "value": "Shadow Dagger" },
+            { "action": "type", "selector": "[name='price']", "value": "25" },
+            { "action": "click", "selector": "[data-testid='add']" }
+          ],
+          "then": {
+            "selector": "[data-testid='item-count']",
+            "requiredText": "1"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Extend the Product Card Builder with two enhancements:</p><ol><li><strong>Search filter</strong> — a text input that filters the gallery by card name (case-insensitive, derived from state — do not store the filtered array)</li><li><strong>Sort control</strong> — a select to sort the gallery by Name (A-Z) or Price (low-high). Again, derive the sorted/filtered array — do not store it.</li></ol><p>Both features should update the displayed cards instantly without modifying the underlying cards array in state.</p>",
+      "feynmanPrompt": "Walk through the data flow in your Product Card Builder implementation. Start from the form's onChange, trace through state updates, preview rendering, submit validation, and gallery updates. Identify every place where state lives and explain why it lives there rather than somewhere else.",
+      "questions": [
+        {
+          "id": "rx-app-15-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "Both `CardForm` and `CardPreview` need access to the current form values. Where should the form state live?",
+          "options": [
+            "In the closest common ancestor — the parent component that renders both CardForm and CardPreview",
+            "In CardForm, with CardPreview receiving values via a global event emitter",
+            "In CardPreview, since it displays the values",
+            "In a separate module-level variable shared by both components"
+          ],
+          "answer": "In the closest common ancestor — the parent component that renders both CardForm and CardPreview",
+          "explanation": "When two sibling components need the same state, you 'lift state up' to their nearest common parent. The parent holds the state and passes it down as props to both children. This is the fundamental React data-sharing pattern. Event emitters and module-level variables bypass React's rendering model and cause synchronisation bugs."
+        },
+        {
+          "id": "rx-app-15-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "A gallery displays filtered and sorted cards. Should the filtered/sorted array be stored in state or derived?",
+          "options": [
+            "Derived — compute it inline from the cards array, filter string, and sort order on each render",
+            "Stored in state and updated with useEffect whenever filter or sort changes",
+            "Stored in state and updated manually in every handler that modifies cards, filter, or sort",
+            "Stored in a ref to avoid unnecessary re-renders"
+          ],
+          "answer": "Derived — compute it inline from the cards array, filter string, and sort order on each render",
+          "explanation": "The filtered/sorted array is entirely determined by three pieces of existing state: `cards`, `filterText`, and `sortOrder`. It passes the litmus test for derived values — it can always be recalculated from other state. Storing it means you need to keep it in sync with three different sources of truth, creating multiple opportunities for bugs. Derive it on every render — the cost is negligible for a typical list size."
+        },
+        {
+          "id": "rx-app-15-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "FOUNDATION",
+          "prompt": "After a valid form submit, the form should reset. What is the cleanest approach in a React controlled form?",
+          "options": [
+            "Call setForm(INITIAL_FORM) — all inputs instantly reflect the initial values because they're controlled",
+            "Manually clear each input using document.querySelector and setting .value = ''",
+            "Give the form element a key prop, increment it on submit to force a remount",
+            "Call form.reset() on the form DOM element ref"
+          ],
+          "answer": "Call setForm(INITIAL_FORM) — all inputs instantly reflect the initial values because they're controlled",
+          "explanation": "Controlled inputs are driven entirely by state. Setting state to the initial values instantly resets every input — no DOM manipulation needed. Querying the DOM directly violates React's model and won't update React state. The key trick works but is heavy-handed for a simple reset. form.reset() is an uncontrolled technique that only works if inputs aren't controlled."
+        }
+      ]
+    }
+  ]
+}

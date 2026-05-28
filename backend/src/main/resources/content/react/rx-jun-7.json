@@ -1,0 +1,107 @@
+{
+  "id": "rx-jun-7",
+  "title": "useRef — DOM Access, Focus Management, and Mutable Values",
+  "glyph": "⚛",
+  "sortOrder": 7,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-1"],
+  "subChunks": [
+    {
+      "id": "rx-jun-7-1",
+      "title": "useRef — DOM Access, Focus Management, and Mutable Values",
+      "sortOrder": 1,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p><code>useRef</code> serves two distinct purposes that beginners often conflate. First, it gives you a direct reference to a DOM element — letting you focus an input, measure dimensions, or integrate with non-React libraries. Second, it stores a mutable value that persists across renders <em>without</em> causing a re-render when it changes. Both uses are important. Neither replaces state.</p>",
+      "explanationHtml": "<h3>useRef for DOM access</h3>\n\n<p>Attach a ref to a JSX element using the <code>ref</code> prop. After render, <code>ref.current</code> points to the DOM node:</p>\n\n<pre><code>import { useRef, useEffect } from 'react';\n\nfunction SearchModal({ isOpen }) {\n  const inputRef = useRef(null);\n\n  useEffect(() =&gt; {\n    if (isOpen) inputRef.current?.focus(); // Focus input when modal opens\n  }, [isOpen]);\n\n  return &lt;input ref={inputRef} type=\"text\" placeholder=\"Search...\" /&gt;;\n}</code></pre>\n\n<h3>Common DOM ref use cases</h3>\n\n<ul>\n  <li><strong>Auto-focus</strong> — focus an input on mount or when a condition changes</li>\n  <li><strong>Measuring dimensions</strong> — read <code>ref.current.getBoundingClientRect()</code></li>\n  <li><strong>Integrating with third-party libs</strong> — D3, video players, canvas, maps</li>\n  <li><strong>Triggering imperative animations</strong></li>\n</ul>\n\n<h3>useRef for mutable values — the interval ID pattern</h3>\n\n<p>Unlike state, <code>ref.current</code> can be mutated directly and the change does <strong>not</strong> trigger a re-render. This makes it perfect for storing values that the render output doesn't depend on:</p>\n\n<pre><code>function StopwatchWithRef() {\n  const [elapsed, setElapsed] = useState(0);\n  const intervalRef = useRef(null); // Stores the interval ID — not display data\n\n  function start() {\n    intervalRef.current = setInterval(() =&gt; {\n      setElapsed(e =&gt; e + 1);\n    }, 1000);\n  }\n\n  function stop() {\n    clearInterval(intervalRef.current);\n  }\n\n  return (\n    &lt;div&gt;\n      &lt;p&gt;{elapsed}s&lt;/p&gt;\n      &lt;button onClick={start}&gt;Start&lt;/button&gt;\n      &lt;button onClick={stop}&gt;Stop&lt;/button&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<p>The interval ID belongs in a ref because: (1) it changes over time, (2) the UI doesn't need to re-render when it changes, (3) it needs to persist across renders.</p>\n\n<h3>Ref vs state — the decision matrix</h3>\n\n<table>\n  <tr><th>Question</th><th>Answer → Use</th></tr>\n  <tr><td>Does the UI need to update when this value changes?</td><td>Yes → State | No → Ref</td></tr>\n  <tr><td>Does it need to survive re-renders?</td><td>Yes → Ref or State | No → Local variable</td></tr>\n  <tr><td>Is it a DOM node?</td><td>Yes → Ref</td></tr>\n</table>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Refs are escape hatches from React's data flow. Use them for the things React can't manage — DOM manipulation, integration with external libraries, values that tick along without driving the UI. When in doubt, try state first.\"</p></div>\n\n<h3>Storing previous values</h3>\n\n<pre><code>function Counter({ count }) {\n  const prevCountRef = useRef();\n\n  useEffect(() =&gt; {\n    prevCountRef.current = count; // Update AFTER render\n  });\n\n  const prevCount = prevCountRef.current;\n\n  return (\n    &lt;p&gt;Now: {count} | Before: {prevCount}&lt;/p&gt;\n  );\n}</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex picks up a wand — not for casting spells, but as a pointer. 'Sometimes you need to reach into the DOM directly,' she says. 'Not to change how it looks — React handles that — but to tell it to do something: focus, play, scroll. That's what refs are for.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Two uses. First: a direct handle to a DOM node — for focus, measurement, and third-party integrations. Second: a mutable container for values the render output doesn't depend on. The key difference from state: changing a ref does not trigger a re-render."
+        },
+        {
+          "type": "example",
+          "speaker": "Auto-focus with useRef",
+          "text": "const inputRef = useRef(null);\n\nuseEffect(() => {\n  inputRef.current?.focus();\n}, []);\n\nreturn <input ref={inputRef} />;"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;FocusInput /&gt;</code> component:</p><ul><li>Renders a text <code>&lt;input data-testid=\"input\"&gt;</code> and a <code>&lt;button data-testid=\"focus-btn\"&gt;Focus Input&lt;/button&gt;</code></li><li>Clicking the button programmatically focuses the input using a ref</li><li>Also render a click counter <code>&lt;p data-testid=\"clicks\"&gt;</code> that tracks how many times the button was clicked — store the interval ID in a ref (not state) as a separate exercise; here just increment a counter in state</li></ul>",
+      "guidedPracticeStarterCode": "import { useRef, useState } from 'react';\n\nexport default function FocusInput() {\n  const inputRef = useRef(null);\n  const [clicks, setClicks] = useState(0);\n\n  function handleFocus() {\n    // TODO: focus the input via ref\n    setClicks(c => c + 1);\n  }\n\n  return (\n    <div>\n      <input data-testid=\"input\" type=\"text\" ref={inputRef} />\n      <button data-testid=\"focus-btn\" onClick={handleFocus}>Focus Input</button>\n      <p data-testid=\"clicks\">{clicks}</p>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders input and button",
+          "selector": "[data-testid='input']",
+          "exists": true
+        },
+        {
+          "label": "Click count updates",
+          "action": "click",
+          "selector": "[data-testid='focus-btn']",
+          "then": {
+            "selector": "[data-testid='clicks']",
+            "requiredText": "1"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;Stopwatch /&gt;</code> from scratch. Buttons: Start, Stop, Reset. Store the interval ID in a ref (not state). Display elapsed seconds in state (triggers re-renders for display). Stop clears the interval via the ref. Reset clears the interval and sets elapsed to 0.</p>",
+      "feynmanPrompt": "Explain the two uses of useRef to a colleague who only knows useState. When would you use a ref instead of state? Give a concrete example where putting a value in state instead of a ref would cause a bug or unnecessary re-renders.",
+      "questions": [
+        {
+          "id": "rx-jun-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is the key difference between useRef and useState?",
+          "options": [
+            "Mutating a ref does not trigger a re-render; updating state always does",
+            "Refs persist across renders; state is reset on every render",
+            "Refs can only hold DOM elements; state can hold any value",
+            "useState is for primitives; useRef is for objects and arrays"
+          ],
+          "answer": "Mutating a ref does not trigger a re-render; updating state always does",
+          "explanation": "Both refs and state persist across renders. The critical difference: calling a state setter schedules a re-render; mutating ref.current does not. Use state for values that drive the UI; use refs for values the render output doesn't depend on."
+        },
+        {
+          "id": "rx-jun-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A modal should auto-focus its first input when it opens. Which approach is correct?",
+          "options": [
+            "Attach a ref to the input; in a useEffect that watches the isOpen prop, call ref.current.focus()",
+            "Use document.querySelector inside the modal component's render function",
+            "Set autoFocus={true} on the input (always focuses, even when modal is closed)",
+            "Pass a callback prop from the parent that imperatively focuses the input"
+          ],
+          "answer": "Attach a ref to the input; in a useEffect that watches the isOpen prop, call ref.current.focus()",
+          "explanation": "The ref gives you a direct DOM handle. The useEffect fires after render when isOpen changes to true — the DOM element exists by then so focus() works. document.querySelector breaks React's encapsulation. autoFocus only fires on initial mount."
+        },
+        {
+          "id": "rx-jun-7-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A setInterval ID needs to be stored so it can be cleared by a Stop button. Should it be stored in state or a ref?",
+          "options": [
+            "A ref — the interval ID doesn't affect the UI and doesn't need to trigger a re-render",
+            "State — all values that change over time should be stored in state",
+            "A local variable — it only needs to persist for the duration of the interval",
+            "A constant defined outside the component"
+          ],
+          "answer": "A ref — the interval ID doesn't affect the UI and doesn't need to trigger a re-render",
+          "explanation": "The interval ID is needed for clearInterval but has no effect on what's displayed. Putting it in state would trigger an unnecessary re-render when Start is clicked. A local variable wouldn't survive across renders (it's re-created each render). A ref persists across renders without causing re-renders."
+        }
+      ]
+    }
+  ]
+}

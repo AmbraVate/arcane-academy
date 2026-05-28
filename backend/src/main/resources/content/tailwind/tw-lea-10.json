@@ -1,0 +1,107 @@
+{
+  "id": "tw-lea-10",
+  "title": "Advanced Typography Systems",
+  "glyph": "🌐",
+  "sortOrder": 10,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-13"],
+  "subChunks": [
+    {
+      "id": "tw-lea-10-1",
+      "title": "Advanced Typography Systems",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Typography is 95% of design. A typographic system — not a font list, a system — defines the complete scale from micro-copy to display headings, the rhythm between elements, the density at different viewports, and the rules for when and how type weight, size, and spacing shift. This lesson builds that system in Tailwind.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Sable the Illuminator:</strong> \"Typography done poorly is invisible — the reader just finds the content hard to read and leaves. Typography done well is also invisible — the reader absorbs the content effortlessly and stays. Your job is to be invisible. That requires a system, not vibes.\"</p></div>\n\n<h3>The modular type scale</h3>\n\n<p>Tailwind's default type scale uses a modular ratio. Understanding the steps helps you pick the right size:</p>\n\n<pre><code>xs: 0.75rem (12px)  — captions, legal text, helper text\nsm: 0.875rem (14px) — secondary body, UI labels, table cells\nbase: 1rem (16px)   — primary body text\nlg: 1.125rem (18px) — lead text, card bodies\nxl: 1.25rem (20px)  — small headings, section intros\n2xl: 1.5rem (24px)  — H3 level headings\n3xl: 1.875rem (30px) — H2 level headings\n4xl: 2.25rem (36px) — H1 on mobile\n5xl: 3rem (48px)    — H1 on desktop\n6xl: 3.75rem (60px) — Display headings</code></pre>\n\n<h3>Fluid typography with clamp()</h3>\n\n<pre><code>/* Static responsive: size jumps at breakpoints */\n&lt;h1 class=\"text-4xl md:text-5xl lg:text-6xl\"&gt;\n\n/* Fluid: size scales continuously with viewport */\n&lt;h1 class=\"text-[clamp(2.25rem,5vw,3.75rem)]\"&gt;\n/* 36px minimum → scales with viewport → 60px maximum */\n\n/* Custom font-size token for reuse: */\n@theme {\n  --font-size-display: clamp(2.5rem, 5vw + 1rem, 4.5rem);\n}\n/* Then use: text-display */</code></pre>\n\n<h3>OpenType features in Tailwind</h3>\n\n<pre><code>/* Tailwind has built-in font feature utilities */\nfont-nums          → font-variant-numeric: ordinal\nfont-tabular-nums  → font-variant-numeric: tabular-nums\nfont-slashed-zero  → font-variant-numeric: slashed-zero\nfont-oldstyle-nums → font-variant-numeric: oldstyle-nums\nfont-lining-nums   → font-variant-numeric: lining-nums\nfont-fraction      → font-variant-numeric: diagonal-fractions\n\n/* Usage */\n&lt;span class=\"font-tabular-nums text-sm\"&gt;$1,234.56&lt;/span&gt;\n/* Numbers align in columns — essential for financial tables */</code></pre>\n\n<h3>Variable fonts and Tailwind</h3>\n\n<pre><code>/* Variable font setup */\n@theme {\n  --font-display: 'InterVariable', 'Inter', sans-serif;\n  /* InterVariable supports wdth, wght, slnt axes */\n}\n\n/* Access variation axes via arbitrary properties */\n&lt;h1 class=\"[font-variation-settings:'wght'_700,'wdth'_125]\"&gt;\n  Condensed Bold Display Heading\n&lt;/h1&gt;\n\n/* Or via CSS custom properties */\n@layer base {\n  :root {\n    --font-weight-display: 750;  /* Between bold (700) and extrabold (800) */\n  }\n}\n&lt;h1 style={{ fontVariationSettings: \"'wght' var(--font-weight-display)\" }}&gt;</code></pre>\n\n<h3>Prose-like content with @tailwindcss/typography</h3>\n\n<pre><code>/* Install */\nnpm install @tailwindcss/typography\n\n/* Add to globals.css */\n@plugin \"@tailwindcss/typography\";\n\n/* Usage */\n&lt;article class=\"prose prose-lg dark:prose-invert max-w-none\"&gt;\n  {/* Long-form content — H1-H6, p, ul, ol, code, blockquote all styled */}\n&lt;/article&gt;\n\n/* Customise prose colours via @theme */\n@theme {\n  --color-prose-headings: var(--color-foreground);\n  --color-prose-body: var(--color-muted-foreground);\n  --color-prose-links: var(--color-primary);\n}</code></pre>\n\n<h3>Line length and reading rhythm</h3>\n\n<pre><code>/* Optimal reading line length: 60-75 characters */\n/* Tailwind's max-w-prose = 65ch — the canonical choice */\n\n&lt;article class=\"max-w-prose mx-auto\"&gt;\n  &lt;p class=\"leading-relaxed\"&gt;Body text with comfortable leading.&lt;/p&gt;\n&lt;/article&gt;\n\n/* leading- scale */\nleading-none:     1     — display headings, tight tracking\nleading-tight:    1.25  — subheadings\nleading-snug:     1.375 — card titles\nleading-normal:   1.5   — default\nleading-relaxed:  1.625 — body text, long form\nleading-loose:    2     — spacious layouts</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"font-tabular-nums is the single most-neglected OpenType feature in web typography. Every financial table, every statistic, every number that aligns in a column — use it. Proportional numbers in aligned columns look like a broken spreadsheet. Tabular numbers look professional.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🌟",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "The type scale is not decoration. It is the information hierarchy made visible. Heading sizes communicate importance. Line height communicates density. Letter spacing communicates register. Every typographic decision has a reason — or it shouldn't exist."
+        },
+        {
+          "type": "example",
+          "speaker": "Fluid type with clamp()",
+          "text": "/* Static responsive — jumps at breakpoints */\n<h1 class=\"text-4xl md:text-5xl lg:text-6xl\">\n\n/* Fluid — scales continuously */\n<h1 class=\"text-[clamp(2.25rem,5vw,3.75rem)]\">\n/* 36px → scales with viewport → 60px */"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a typography specimen card showing the complete type scale with correct size, weight, and leading:</p>\n<ul>\n  <li><strong>.type-specimen</strong>: <code>bg-white</code>, <code>rounded-2xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>p-8</code>, <code>space-y-6</code></li>\n  <li><strong>.type-display</strong>: <code>text-5xl</code>, <code>font-extrabold</code>, <code>leading-none</code>, <code>tracking-tight</code>, <code>text-gray-950</code></li>\n  <li><strong>.type-h1</strong>: <code>text-4xl</code>, <code>font-bold</code>, <code>leading-tight</code>, <code>tracking-tight</code>, <code>text-gray-900</code></li>\n  <li><strong>.type-h2</strong>: <code>text-3xl</code>, <code>font-semibold</code>, <code>leading-snug</code>, <code>text-gray-900</code></li>\n  <li><strong>.type-h3</strong>: <code>text-xl</code>, <code>font-semibold</code>, <code>leading-snug</code>, <code>text-gray-800</code></li>\n  <li><strong>.type-body</strong>: <code>text-base</code>, <code>leading-relaxed</code>, <code>text-gray-700</code>, <code>max-w-prose</code></li>\n  <li><strong>.type-caption</strong>: <code>text-sm</code>, <code>leading-normal</code>, <code>text-gray-500</code></li>\n  <li><strong>.type-micro</strong>: <code>text-xs</code>, <code>leading-normal</code>, <code>text-gray-400</code>, <code>font-medium</code>, <code>uppercase</code>, <code>tracking-wider</code></li>\n  <li><strong>.type-divider</strong>: <code>border-t</code>, <code>border-gray-100</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-2xl p-6\">\n  <div class=\"type-specimen\">\n    <div>\n      <p class=\"type-micro\">Display</p>\n      <p class=\"type-display\">The Arcane Way</p>\n    </div>\n    <div class=\"type-divider\"></div>\n    <div>\n      <p class=\"type-micro\">Heading 1</p>\n      <h1 class=\"type-h1\">Mastering the Craft of CSS</h1>\n    </div>\n    <div class=\"type-divider\"></div>\n    <div>\n      <p class=\"type-micro\">Heading 2</p>\n      <h2 class=\"type-h2\">Typography is Invisible</h2>\n    </div>\n    <div class=\"type-divider\"></div>\n    <div>\n      <p class=\"type-micro\">Heading 3</p>\n      <h3 class=\"type-h3\">Fluid Scales and OpenType</h3>\n    </div>\n    <div class=\"type-divider\"></div>\n    <div>\n      <p class=\"type-micro\">Body</p>\n      <p class=\"type-body\">Good body text is invisible. The reader absorbs the meaning without noticing the rendering. This requires comfortable line height, optimal line length, and sufficient but not excessive contrast.</p>\n    </div>\n    <div class=\"type-divider\"></div>\n    <div>\n      <p class=\"type-micro\">Caption</p>\n      <p class=\"type-caption\">Secondary supporting information, image credits, footnotes.</p>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Specimen: bg-white",       "selector": ".type-specimen", "requiredClass": "bg-white"       },
+        { "label": "Specimen: rounded-2xl",    "selector": ".type-specimen", "requiredClass": "rounded-2xl"    },
+        { "label": "Specimen: space-y-6",      "selector": ".type-specimen", "requiredClass": "space-y-6"      },
+        { "label": "Display: text-5xl",        "selector": ".type-display",  "requiredClass": "text-5xl"       },
+        { "label": "Display: font-extrabold",  "selector": ".type-display",  "requiredClass": "font-extrabold" },
+        { "label": "Display: leading-none",    "selector": ".type-display",  "requiredClass": "leading-none"   },
+        { "label": "H1: text-4xl",             "selector": ".type-h1",       "requiredClass": "text-4xl"       },
+        { "label": "H1: leading-tight",        "selector": ".type-h1",       "requiredClass": "leading-tight"  },
+        { "label": "H2: text-3xl",             "selector": ".type-h2",       "requiredClass": "text-3xl"       },
+        { "label": "H2: leading-snug",         "selector": ".type-h2",       "requiredClass": "leading-snug"   },
+        { "label": "H3: text-xl",              "selector": ".type-h3",       "requiredClass": "text-xl"        },
+        { "label": "Body: leading-relaxed",    "selector": ".type-body",     "requiredClass": "leading-relaxed"},
+        { "label": "Body: max-w-prose",        "selector": ".type-body",     "requiredClass": "max-w-prose"    },
+        { "label": "Caption: text-sm",         "selector": ".type-caption",  "requiredClass": "text-sm"        },
+        { "label": "Micro: text-xs",           "selector": ".type-micro",    "requiredClass": "text-xs"        },
+        { "label": "Micro: uppercase",         "selector": ".type-micro",    "requiredClass": "uppercase"      },
+        { "label": "Micro: tracking-wider",    "selector": ".type-micro",    "requiredClass": "tracking-wider" },
+        { "label": "Divider: border-t",        "selector": ".type-divider",  "requiredClass": "border-t"       }
+      ],
+      "soloPracticeHtml": "<p>Build a complete typographic system showcase from scratch that includes: the full scale (display through micro), a fluid heading using clamp(), a financial table using font-tabular-nums, a prose block using max-w-prose and leading-relaxed, and an eyebrow label using tracking-widest uppercase. No starter code.</p>",
+      "feynmanPrompt": "Explain the difference between static responsive typography (text-4xl md:text-5xl lg:text-6xl) and fluid typography (text-[clamp(...)]) — what does each approach do and when would you choose one over the other? Then explain what font-tabular-nums does and give a concrete example of where it is essential.",
+      "questions": [
+        {
+          "id": "tw-lea-10-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "What does Tailwind's max-w-prose class set, and why is it the standard choice for body text columns?",
+          "options": [
+            "max-width: 65ch — 65 characters wide, which is within the optimal 60-75 character reading line length for comfortable reading",
+            "max-width: 65rem — a fixed wide column suitable for long-form articles",
+            "max-width: 100% — removes all width constraints to allow full-width prose",
+            "max-width: 65px — a narrow column for sidebar content"
+          ],
+          "answer": "max-width: 65ch — 65 characters wide, which is within the optimal 60-75 character reading line length for comfortable reading",
+          "explanation": "The ch unit is relative to the width of the '0' character in the current font. max-w-prose sets max-width: 65ch, which provides approximately 65 characters per line — within the research-backed optimal range of 60-75 characters for comfortable extended reading. Using a ch-based measure means the line length adapts to font size changes, maintaining the same character count per line."
+        },
+        {
+          "id": "tw-lea-10-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "A financial dashboard shows a table of prices. The numbers align vertically incorrectly because proportional digits have different widths (1 is narrower than 8). Which Tailwind class fixes this?",
+          "options": [
+            "font-tabular-nums — sets font-variant-numeric: tabular-nums, making all digits equal width for column alignment",
+            "font-mono — switches to a monospace font where all characters have equal width",
+            "tracking-tighter — reduces letter spacing to align numbers",
+            "tabular-nums is not available in Tailwind — use text-[font-variant-numeric:tabular-nums]"
+          ],
+          "answer": "font-tabular-nums — sets font-variant-numeric: tabular-nums, making all digits equal width for column alignment",
+          "explanation": "font-tabular-nums is a Tailwind utility that applies font-variant-numeric: tabular-nums. This OpenType feature instructs the font to use the tabular (equal-width) variant of each digit, which makes 0-9 all occupy the same horizontal space. In a sans-serif font like Inter, without tabular-nums, '1' is narrower than '0' or '8', causing number columns to misalign vertically."
+        },
+        {
+          "id": "tw-lea-10-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A designer wants a heading that is 36px on mobile, scales smoothly with viewport width, and caps at 60px on large screens. Which implementation is correct?",
+          "options": [
+            "class=\"text-[clamp(2.25rem,5vw,3.75rem)]\" — minimum 36px (2.25rem), preferred 5vw (scales with viewport), maximum 60px (3.75rem)",
+            "class=\"text-4xl lg:text-6xl\" — jumps from 36px to 60px at the lg breakpoint",
+            "class=\"text-[36px] md:text-[48px] lg:text-[60px]\" — three fixed sizes at three breakpoints",
+            "class=\"text-[clamp(36,5,60)]\" — unitless clamp() for pixel values"
+          ],
+          "answer": "class=\"text-[clamp(2.25rem,5vw,3.75rem)]\" — minimum 36px (2.25rem), preferred 5vw (scales with viewport), maximum 60px (3.75rem)",
+          "explanation": "clamp(min, preferred, max) creates fluid scaling. The preferred value 5vw scales continuously with viewport width — at a 720px viewport, 5vw = 36px (the minimum); at a 1200px viewport, 5vw = 60px (the maximum). Between these viewports the size grows smoothly. This avoids the abrupt jump that occurs with static responsive breakpoints. rem units for min/max ensure the values respect user font size preferences."
+        }
+      ]
+    }
+  ]
+}

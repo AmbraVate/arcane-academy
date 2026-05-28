@@ -1,0 +1,102 @@
+{
+  "id": "tw-sen-18",
+  "title": "Monorepo and Shared Config",
+  "glyph": "🔮",
+  "sortOrder": 18,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-1", "tw-sen-13"],
+  "subChunks": [
+    {
+      "id": "tw-sen-18-1",
+      "title": "Monorepo and Shared Config",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Enterprises and large products run multiple apps in a single monorepo: a customer-facing app, an admin dashboard, a marketing site, and a shared component library. All need the same design tokens. Getting this right — shared tokens, per-app overrides, one source of truth — prevents the design system from fragmenting into 3 competing token sets within 6 months.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"In a monorepo, the design system CSS file is the constitution. All apps inherit it. An app may extend it — adding tokens for its specific domain. No app may contradict it without a governance decision. That discipline is what makes the system worth having.\"</p></div>\n\n<h3>Monorepo structure</h3>\n<pre><code>packages/\n  ui/               # Shared component library\n    src/\n      tokens.css    # The design system CSS\n      components/\n    package.json\n\napps/\n  web/              # Customer-facing app\n    src/\n      index.css     # Imports tokens + app-specific overrides\n  admin/            # Admin dashboard\n    src/\n      index.css\n  marketing/\n    src/\n      index.css</code></pre>\n\n<h3>The shared tokens file</h3>\n<pre><code>/* packages/ui/src/tokens.css */\n@import \"tailwindcss\";\n@variant dark (&:where(.dark, .dark *));\n\n@theme {\n  /* Brand scale */\n  --color-brand-50:  oklch(0.97 0.02 270);\n  --color-brand-500: oklch(0.55 0.20 270);\n  --color-brand-900: oklch(0.25 0.10 270);\n\n  /* Semantic tokens */\n  --color-primary:            var(--color-brand-500);\n  --color-primary-foreground: oklch(0.99 0 0);\n  --color-surface:            oklch(0.99 0 0);\n  --color-foreground:         oklch(0.15 0 0);\n  --color-border:             oklch(0.90 0 0);\n  --color-error:              oklch(0.55 0.20 25);\n\n  /* Dark mode overrides */\n  /* (in .dark rule — see tw-sen-10) */\n\n  /* Shared spacing */\n  --spacing-18: 4.5rem;\n  --spacing-88: 22rem;\n\n  /* Typography */\n  --font-display: \"Cal Sans\", sans-serif;\n}</code></pre>\n\n<h3>Per-app extension</h3>\n<pre><code>/* apps/admin/src/index.css */\n@import \"tailwindcss\";\n@import \"@my-org/ui/src/tokens.css\"; /* Import shared tokens */\n\n/* Admin-specific overrides and extensions */\n@theme {\n  /* Admin has a tighter density */\n  --spacing-sidebar: 200px;  /* narrower than web's 240px */\n\n  /* Admin accent is different from consumer brand */\n  --color-admin-accent: oklch(0.55 0.15 160);  /* teal for admin */\n}\n\n/* Include admin app's source files */\n@source \"../src/**/*.{ts,tsx}\";</code></pre>\n\n<h3>Component CSS co-location</h3>\n<pre><code>/* packages/ui/src/components/button.css */\n@import \"tailwindcss\";\n\n/* Components use tokens from the shared system */\n@utility btn-primary {\n  background: var(--color-primary);\n  color: var(--color-primary-foreground);\n  &:hover {\n    background: oklch(from var(--color-primary) calc(l - 0.05) c h);\n  }\n}\n\n/* Any app that imports tokens.css gets these utilities too */</code></pre>\n\n<h3>Workspace package.json setup</h3>\n<pre><code>// packages/ui/package.json\n{\n  \"name\": \"@my-org/ui\",\n  \"version\": \"1.0.0\",\n  \"exports\": {\n    \"./tokens.css\": \"./src/tokens.css\",\n    \"./components/*\": \"./src/components/*\"\n  },\n  \"peerDependencies\": {\n    \"tailwindcss\": \"^4.0.0\"\n  }\n}\n\n// apps/web/package.json\n{\n  \"dependencies\": {\n    \"@my-org/ui\": \"workspace:*\"\n  }\n}</code></pre>\n\n<h3>The governance model</h3>\n<ul>\n<li><strong>tokens.css is owned by design</strong> — changes require design review</li>\n<li><strong>Apps may add tokens</strong> — in their own index.css, not in tokens.css</li>\n<li><strong>Apps may not override brand primitives</strong> — changing --color-brand-500 in an app breaks the system</li>\n<li><strong>Semantic tokens are the API</strong> — components reference semantic tokens, never primitives directly</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Solomon:</strong> \"The monorepo is not a technical problem. It is a governance problem that happens to be solved with technical tools. Define ownership before you write the first line of CSS.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "One tokens.css. Imported by all apps. Extended per app, never overridden. Components reference semantic tokens. Semantic tokens reference primitives. Only primitives change during a rebrand."
+        },
+        {
+          "type": "example",
+          "speaker": "App CSS importing shared tokens",
+          "text": "/* apps/admin/src/index.css */\n@import \"tailwindcss\";\n@import \"@my-org/ui/src/tokens.css\";\n\n/* Admin-specific extensions only */\n@theme {\n  --spacing-sidebar: 200px;\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a design system reference card that demonstrates the monorepo token architecture:</p>\n<ul>\n  <li><strong>.mono-card</strong>: <code>bg-white</code>, <code>rounded-2xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>overflow-hidden</code>, <code>shadow-sm</code></li>\n  <li><strong>.mono-header</strong>: <code>bg-indigo-50</code>, <code>border-b</code>, <code>border-indigo-100</code>, <code>px-6</code>, <code>py-4</code></li>\n  <li><strong>.mono-title</strong>: <code>text-base</code>, <code>font-semibold</code>, <code>text-indigo-900</code></li>\n  <li><strong>.mono-subtitle</strong>: <code>text-xs</code>, <code>text-indigo-600</code>, <code>mt-0.5</code></li>\n  <li><strong>.mono-body</strong>: <code>p-6</code>, <code>space-y-3</code></li>\n  <li><strong>.mono-token-row</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-between</code>, <code>text-sm</code></li>\n  <li><strong>.mono-token-name</strong>: <code>font-mono</code>, <code>text-gray-700</code></li>\n  <li><strong>.mono-token-value</strong>: <code>font-mono</code>, <code>text-xs</code>, <code>text-gray-500</code>, <code>bg-gray-100</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-md p-6\">\n  <div class=\"mono-card\">\n    <div class=\"mono-header\">\n      <p class=\"mono-title\">packages/ui/tokens.css</p>\n      <p class=\"mono-subtitle\">Shared design system tokens — inherited by all apps</p>\n    </div>\n    <div class=\"mono-body\">\n      <div class=\"mono-token-row\">\n        <span class=\"mono-token-name\">--color-primary</span>\n        <span class=\"mono-token-value\">var(--color-brand-500)</span>\n      </div>\n      <div class=\"mono-token-row\">\n        <span class=\"mono-token-name\">--color-surface</span>\n        <span class=\"mono-token-value\">oklch(0.99 0 0)</span>\n      </div>\n      <div class=\"mono-token-row\">\n        <span class=\"mono-token-name\">--color-foreground</span>\n        <span class=\"mono-token-value\">oklch(0.15 0 0)</span>\n      </div>\n      <div class=\"mono-token-row\">\n        <span class=\"mono-token-name\">--spacing-18</span>\n        <span class=\"mono-token-value\">4.5rem</span>\n      </div>\n      <div class=\"mono-token-row\">\n        <span class=\"mono-token-name\">--font-display</span>\n        <span class=\"mono-token-value\">\"Cal Sans\", sans-serif</span>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: bg-white",           "selector": ".mono-card",        "requiredClass": "bg-white"         },
+        { "label": "Card: rounded-2xl",        "selector": ".mono-card",        "requiredClass": "rounded-2xl"      },
+        { "label": "Card: shadow-sm",          "selector": ".mono-card",        "requiredClass": "shadow-sm"        },
+        { "label": "Header: bg-indigo-50",     "selector": ".mono-header",      "requiredClass": "bg-indigo-50"     },
+        { "label": "Header: border-b",         "selector": ".mono-header",      "requiredClass": "border-b"         },
+        { "label": "Title: font-semibold",     "selector": ".mono-title",       "requiredClass": "font-semibold"    },
+        { "label": "Title: text-indigo-900",   "selector": ".mono-title",       "requiredClass": "text-indigo-900"  },
+        { "label": "Body: space-y-3",          "selector": ".mono-body",        "requiredClass": "space-y-3"        },
+        { "label": "Token row: flex",          "selector": ".mono-token-row",   "requiredClass": "flex"             },
+        { "label": "Token row: justify-between","selector": ".mono-token-row",  "requiredClass": "justify-between"  },
+        { "label": "Token name: font-mono",    "selector": ".mono-token-name",  "requiredClass": "font-mono"        },
+        { "label": "Token value: font-mono",   "selector": ".mono-token-value", "requiredClass": "font-mono"        },
+        { "label": "Token value: bg-gray-100", "selector": ".mono-token-value", "requiredClass": "bg-gray-100"      }
+      ],
+      "soloPracticeHtml": "<p>Design a monorepo design system reference UI from scratch. It should display: the token hierarchy (primitives → semantic → component), three app-level override panels (web, admin, marketing), and a visual diff showing how each app's accent colour differs from the base brand. No starter code.</p>",
+      "feynmanPrompt": "Walk through the monorepo token architecture: what goes in the shared tokens.css, what goes in per-app index.css, and what governance rules prevent fragmentation. What is the difference between an app-specific token (allowed) and overriding a brand primitive (not allowed)?",
+      "questions": [
+        {
+          "id": "tw-sen-18-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "In a monorepo with a shared tokens.css, how does an app import the shared tokens?",
+          "options": [
+            "@import \"@my-org/ui/src/tokens.css\" in the app's index.css, after @import \"tailwindcss\"",
+            "Copy the tokens.css file into each app manually — CSS files cannot be imported across packages",
+            "Use a PostCSS plugin that merges all token files at build time",
+            "Extend tailwind.config.js with a preset pointing to the shared tokens file"
+          ],
+          "answer": "@import \"@my-org/ui/src/tokens.css\" in the app's index.css, after @import \"tailwindcss\"",
+          "explanation": "Tailwind v4 uses CSS @import for composition. Apps import the shared tokens file using the package's export path. This works because workspace packages use file system symlinks — @import resolves the package path correctly. Each app can then add its own @theme extensions after the import."
+        },
+        {
+          "id": "tw-sen-18-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "The admin app needs a sidebar width of 200px (the shared system uses 240px). Where should --spacing-sidebar: 200px be defined?",
+          "options": [
+            "In apps/admin/src/index.css inside a @theme block — app-specific extension that doesn't affect other apps",
+            "In packages/ui/src/tokens.css — all apps share the same sidebar width",
+            "In a CSS custom property on the sidebar element itself: style='--spacing-sidebar: 200px'",
+            "In a separate admin-tokens.css file that overrides the shared file"
+          ],
+          "answer": "In apps/admin/src/index.css inside a @theme block — app-specific extension that doesn't affect other apps",
+          "explanation": "App-specific tokens belong in the app's CSS file. Adding it to the shared tokens.css would affect all apps. Putting it on the element via inline style bypasses Tailwind's utility system. A separate override file works but adds unnecessary complexity — the app's index.css is the correct place for extensions."
+        },
+        {
+          "id": "tw-sen-18-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "SENIOR",
+          "prompt": "Six months after launch, the web app's index.css contains --color-brand-500: oklch(0.53 0.17 155) to match a new brand colour. The admin and marketing apps haven't been updated. What problem has this caused?",
+          "options": [
+            "The brand colour is now different across apps — web shows teal, admin and marketing show indigo — fragmenting the design system",
+            "No problem — each app overriding brand primitives independently is the intended architecture",
+            "The web app's CSS bundle increased because the override creates duplicate colour utilities",
+            "The override only affects primitives, not semantic tokens, so components still look the same"
+          ],
+          "answer": "The brand colour is now different across apps — web shows teal, admin and marketing show indigo — fragmenting the design system",
+          "explanation": "Brand primitive overrides must happen in the shared tokens.css and be rolled out to all apps simultaneously. When a single app overrides a brand primitive, users see different brand colours in different parts of the product — the exact fragmentation the shared token system was designed to prevent. This is the governance violation: only semantic tokens may be overridden per-app."
+        }
+      ]
+    }
+  ]
+}

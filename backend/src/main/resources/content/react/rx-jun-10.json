@@ -1,0 +1,109 @@
+{
+  "id": "rx-jun-10",
+  "title": "useReducer — Managing Complex State",
+  "glyph": "⚛",
+  "sortOrder": 10,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-app-6", "rx-app-7"],
+  "subChunks": [
+    {
+      "id": "rx-jun-10-1",
+      "title": "useReducer — Managing Complex State",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>When state has multiple sub-values that update together, when the next state depends on the previous in complex ways, or when state update logic is getting tangled in handlers, it's time for <code>useReducer</code>. It's not a replacement for <code>useState</code> — it's an upgrade for cases where state management logic has outgrown setter functions.</p>",
+      "explanationHtml": "<h3>The reducer pattern</h3>\n\n<p>A reducer is a pure function that takes the current state and an action, and returns the next state:</p>\n\n<pre><code>function reducer(state, action) {\n  switch (action.type) {\n    case 'INCREMENT':\n      return { ...state, count: state.count + 1 };\n    case 'DECREMENT':\n      return { ...state, count: state.count - 1 };\n    case 'RESET':\n      return { count: 0 };\n    default:\n      throw new Error(`Unknown action: ${action.type}`);\n  }\n}\n\nfunction Counter() {\n  const [state, dispatch] = useReducer(reducer, { count: 0 });\n\n  return (\n    &lt;div&gt;\n      &lt;p&gt;{state.count}&lt;/p&gt;\n      &lt;button onClick={() =&gt; dispatch({ type: 'INCREMENT' })}&gt;+&lt;/button&gt;\n      &lt;button onClick={() =&gt; dispatch({ type: 'DECREMENT' })}&gt;-&lt;/button&gt;\n      &lt;button onClick={() =&gt; dispatch({ type: 'RESET' })}&gt;Reset&lt;/button&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>Actions with payloads</h3>\n\n<pre><code>function todoReducer(state, action) {\n  switch (action.type) {\n    case 'ADD_ITEM':\n      return [...state, { id: Date.now(), text: action.text, done: false }];\n    case 'TOGGLE_ITEM':\n      return state.map(item =&gt;\n        item.id === action.id ? { ...item, done: !item.done } : item\n      );\n    case 'REMOVE_ITEM':\n      return state.filter(item =&gt; item.id !== action.id);\n    default:\n      return state;\n  }\n}\n\n// Dispatch with payload:\ndispatch({ type: 'ADD_ITEM', text: 'Learn useReducer' });\ndispatch({ type: 'TOGGLE_ITEM', id: 42 });</code></pre>\n\n<h3>When useReducer beats useState</h3>\n\n<p>Reach for useReducer when:</p>\n<ul>\n  <li>State is an object with multiple related sub-values</li>\n  <li>The next state depends on the previous in complex ways</li>\n  <li>Multiple handlers perform similar state transformations (risk of duplication)</li>\n  <li>You want the update logic in one testable place (the reducer)</li>\n  <li>State changes are complex enough to name with an action type</li>\n</ul>\n\n<p>Stick with useState when:</p>\n<ul>\n  <li>State is a single independent value (boolean, number, string)</li>\n  <li>Updates are simple setters with no complex logic</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The reducer pattern separates what happened (the action) from what to do about it (the reducer). When you have six different buttons each calling a setter with slightly different logic, you have six places where bugs can live. A reducer puts all that logic in one place.\"</p></div>\n\n<h3>Initialising with a function (lazy initialisation)</h3>\n\n<pre><code>// Expensive initial state — only computed once:\nconst [state, dispatch] = useReducer(\n  reducer,\n  null,                          // ignored\n  () =&gt; ({ items: loadFromStorage(), count: 0 }) // called once on mount\n);</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The workbench has six buttons, each reaching into the same state object through different handlers. Vex circles the handlers with chalk. 'Six places where the same logic lives, slightly differently. Find the bug.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "A reducer is a single, testable function that describes every way your state can change. Instead of calling setState directly from five handlers with slightly different logic, you dispatch a named action. The reducer handles all the cases in one place."
+        },
+        {
+          "type": "example",
+          "speaker": "Todo reducer",
+          "text": "function reducer(items, action) {\n  switch (action.type) {\n    case 'ADD':    return [...items, { id: Date.now(), text: action.text, done: false }];\n    case 'TOGGLE': return items.map(i => i.id === action.id ? { ...i, done: !i.done } : i);\n    case 'REMOVE': return items.filter(i => i.id !== action.id);\n    default: return items;\n  }\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;TodoApp /&gt;</code> using <code>useReducer</code>:</p><ul><li>Reducer handles: <code>ADD</code> (add item with text from action), <code>TOGGLE</code> (toggle done by id), <code>REMOVE</code> (remove by id)</li><li>Render a list of todos, each with a toggle button (<code>data-testid=\"toggle-{id}\"</code>) and remove button (<code>data-testid=\"remove-{id}\"</code>)</li><li>An input + Add button (<code>data-testid=\"add\"</code>) dispatches ADD</li><li>Completed items have <code>className=\"done\"</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useReducer, useState } from 'react';\n\nfunction reducer(items, action) {\n  switch (action.type) {\n    case 'ADD':\n      return [...items, { id: Date.now(), text: action.text, done: false }];\n    case 'TOGGLE':\n      // TODO: toggle done for the matching id\n      return items;\n    case 'REMOVE':\n      // TODO: filter out the matching id\n      return items;\n    default:\n      return items;\n  }\n}\n\nexport default function TodoApp() {\n  const [items, dispatch] = useReducer(reducer, []);\n  const [text, setText] = useState('');\n\n  function handleAdd() {\n    if (!text.trim()) return;\n    dispatch({ type: 'ADD', text });\n    setText('');\n  }\n\n  return (\n    <div>\n      <input value={text} onChange={e => setText(e.target.value)} data-testid=\"input\" />\n      <button data-testid=\"add\" onClick={handleAdd}>Add</button>\n      <ul>\n        {items.map(item => (\n          <li key={item.id} className={item.done ? 'done' : ''}>\n            {item.text}\n            <button data-testid={`toggle-${item.id}`} onClick={() => dispatch({ type: 'TOGGLE', id: item.id })}>Toggle</button>\n            <button data-testid={`remove-${item.id}`} onClick={() => dispatch({ type: 'REMOVE', id: item.id })}>Remove</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Starts with empty list",
+          "selector": "li",
+          "count": 0
+        },
+        {
+          "label": "Add button appends item",
+          "actions": [
+            { "action": "type", "selector": "[data-testid='input']", "value": "Learn React" },
+            { "action": "click", "selector": "[data-testid='add']" }
+          ],
+          "then": {
+            "selector": "li",
+            "count": 1
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;ShoppingCart /&gt;</code> using useReducer from scratch. State: array of <code>{ id, name, price, qty }</code>. Actions: <code>ADD_ITEM</code> (adds new or increments qty), <code>REMOVE_ITEM</code>, <code>INCREMENT_QTY</code>, <code>DECREMENT_QTY</code> (min qty 1), <code>CLEAR</code>. Display total price (derived). No scaffold.</p>",
+      "feynmanPrompt": "Explain when to use useReducer instead of useState. Give a concrete example — take a component with 5 event handlers that each call multiple setState calls — and show how converting to useReducer makes the logic clearer and more testable.",
+      "questions": [
+        {
+          "id": "rx-jun-10-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What are the two arguments returned by `useReducer(reducer, initialState)`?",
+          "options": [
+            "The current state and a dispatch function to send actions to the reducer",
+            "The current state and a setState function identical to useState's setter",
+            "The reducer function and the current state",
+            "An action object and a commit function"
+          ],
+          "answer": "The current state and a dispatch function to send actions to the reducer",
+          "explanation": "useReducer returns [state, dispatch]. state is the current state value. dispatch is a function that accepts an action object — calling it schedules a re-render with the state returned by reducer(currentState, action)."
+        },
+        {
+          "id": "rx-jun-10-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A reducer receives action `{ type: 'ADD_ITEM', text: 'Buy milk' }`. How does the reducer access the text?",
+          "options": [
+            "Via action.text — the action is the second parameter passed to the reducer",
+            "Via state.lastAction.text — reducers read the action from state",
+            "Via a separate useActionPayload() hook",
+            "Via event.data.text — actions arrive as events"
+          ],
+          "answer": "Via action.text — the action is the second parameter passed to the reducer",
+          "explanation": "The reducer signature is reducer(state, action). The action object can have any shape — conventionally it has a type property (string) and optional payload properties. action.text, action.id, action.payload are all valid patterns."
+        },
+        {
+          "id": "rx-jun-10-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A form has three independent fields: email, password, and acceptTerms. Should you use useReducer or three separate useStates?",
+          "options": [
+            "Three separate useStates — the fields are independent and each has a simple setter; a reducer adds unnecessary ceremony",
+            "useReducer — any multi-field form should use a reducer",
+            "useReducer — form state should always be co-located in one place",
+            "Neither — use a form library for any multi-field form"
+          ],
+          "answer": "Three separate useStates — the fields are independent and each has a simple setter; a reducer adds unnecessary ceremony",
+          "explanation": "useReducer shines when state sub-values are interdependent or update logic is complex. Three independent form fields with simple value-setting updates don't benefit from a reducer. The useReducer version would be more verbose with no advantage. Use the simplest tool that works."
+        }
+      ]
+    }
+  ]
+}

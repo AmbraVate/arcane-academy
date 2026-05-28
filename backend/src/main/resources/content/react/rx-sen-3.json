@@ -1,0 +1,130 @@
+{
+  "id": "rx-sen-3",
+  "title": "TypeScript with React",
+  "glyph": "⚛",
+  "sortOrder": 3,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-5"],
+  "subChunks": [
+    {
+      "id": "rx-sen-3-1",
+      "title": "TypeScript with React",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.tsx",
+      "hookHtml": "<p>TypeScript turns runtime errors into compile-time errors. In React, that means wrong props, missing handlers, and incorrect event types are caught before the code ever runs — not after a user finds a bug in production. Adding TypeScript to React is straightforward once you know the five patterns that cover 90% of what you'll write.</p>",
+      "explanationHtml": "<h3>Typing component props</h3>\n\n<pre><code>type ProfileCardProps = {\n  name: string;\n  xp: number;\n  role?: string;          // Optional prop — may be undefined\n  onLevelUp: () =&gt; void;  // Function with no return value\n};\n\nfunction ProfileCard({ name, xp, role = 'Novice', onLevelUp }: ProfileCardProps) {\n  return (\n    &lt;div&gt;\n      &lt;h2&gt;{name}&lt;/h2&gt;\n      &lt;p&gt;{role} — {xp} XP&lt;/p&gt;\n      &lt;button onClick={onLevelUp}&gt;Level Up&lt;/button&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>Typing useState</h3>\n\n<pre><code>// TypeScript infers from the initial value — no annotation needed:\nconst [count, setCount] = useState(0);          // number\nconst [name, setName] = useState('');            // string\n\n// When the initial value is ambiguous, annotate explicitly:\nconst [user, setUser] = useState&lt;User | null&gt;(null);\n\n// Arrays — always annotate:\nconst [items, setItems] = useState&lt;Quest[]&gt;([]);</code></pre>\n\n<h3>Typing event handlers</h3>\n\n<pre><code>function handleChange(e: React.ChangeEvent&lt;HTMLInputElement&gt;) {\n  setValue(e.target.value);\n}\n\nfunction handleSubmit(e: React.FormEvent&lt;HTMLFormElement&gt;) {\n  e.preventDefault();\n}\n\n// Shorthand for inline handlers — TypeScript infers the event type:\n&lt;input onChange={(e) =&gt; setValue(e.target.value)} /&gt;</code></pre>\n\n<h3>Typing children</h3>\n\n<pre><code>// React.ReactNode is the most permissive children type:\ntype LayoutProps = {\n  children: React.ReactNode;\n};\n\n// Avoid React.FC — it adds implicit children in older types and\n// prevents generic components. Prefer explicit prop types.</code></pre>\n\n<h3>Generic components</h3>\n\n<pre><code>type ListProps&lt;T&gt; = {\n  items: T[];\n  renderItem: (item: T) =&gt; React.ReactNode;\n  keyExtractor: (item: T) =&gt; string;\n};\n\nfunction List&lt;T&gt;({ items, renderItem, keyExtractor }: ListProps&lt;T&gt;) {\n  return (\n    &lt;ul&gt;\n      {items.map(item =&gt; (\n        &lt;li key={keyExtractor(item)}&gt;{renderItem(item)}&lt;/li&gt;\n      ))}\n    &lt;/ul&gt;\n  );\n}\n\n// Usage — TypeScript infers T from items:\n&lt;List\n  items={quests}\n  renderItem={(q) =&gt; &lt;span&gt;{q.title}&lt;/span&gt;}\n  keyExtractor={(q) =&gt; q.id.toString()}\n/&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The most common TypeScript mistake in React: annotating things TypeScript already infers. Don't write <code>useState&lt;number&gt;(0)</code> — TypeScript already knows it's a number. Save annotations for ambiguous cases: union types, nullable values, empty arrays, and function signatures.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A quest component throws a runtime error: 'Cannot read property name of undefined.' Vex pulls up the TypeScript configuration."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "That error would have been a compile error in TypeScript — caught before a single user saw it. TypeScript with React is not about writing more code. It's about moving errors from runtime to compile time. The five patterns: typed props, typed useState for nullable values, typed event handlers, typed children, and generic components."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Don't over-annotate. TypeScript infers types from initial values and inline JSX. Annotate where the type is ambiguous — null initial state, empty arrays, function prop signatures. Everything else: let the compiler do the work."
+        },
+        {
+          "type": "example",
+          "speaker": "Props type + typed event handler",
+          "text": "type ButtonProps = {\n  label: string;\n  onClick: (id: number) => void;\n  disabled?: boolean;\n};\n\nfunction Button({ label, onClick, disabled = false }: ButtonProps) {\n  return (\n    <button disabled={disabled} onClick={() => onClick(1)}>\n      {label}\n    </button>\n  );\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Convert a JavaScript component to TypeScript with full type safety:</p><ul><li>Define a <code>Quest</code> type: <code>{ id: number; title: string; xp: number; completed: boolean }</code></li><li>Type the <code>&lt;QuestCard&gt;</code> props: <code>quest: Quest</code> and <code>onComplete: (id: number) =&gt; void</code></li><li>Type the <code>&lt;QuestList&gt;</code> props: <code>quests: Quest[]</code> and <code>onComplete: (id: number) =&gt; void</code></li><li>In <code>App</code>, type the <code>quests</code> state as <code>Quest[]</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\n// TODO: define Quest type\n\n// TODO: define QuestCardProps type\nfunction QuestCard({ quest, onComplete }) {\n  return (\n    <div className={quest.completed ? 'done' : ''}>\n      <h3>{quest.title}</h3>\n      <span>{quest.xp} XP</span>\n      {!quest.completed && (\n        <button onClick={() => onComplete(quest.id)}>Complete</button>\n      )}\n    </div>\n  );\n}\n\n// TODO: define QuestListProps type\nfunction QuestList({ quests, onComplete }) {\n  return (\n    <ul>\n      {quests.map(q => <QuestCard key={q.id} quest={q} onComplete={onComplete} />)}\n    </ul>\n  );\n}\n\nexport default function App() {\n  // TODO: type the quests state\n  const [quests, setQuests] = useState([\n    { id: 1, title: 'Learn TypeScript', xp: 100, completed: false },\n    { id: 2, title: 'Type your props', xp: 150, completed: false },\n  ]);\n\n  // TODO: type the id parameter\n  function handleComplete(id) {\n    setQuests(prev => prev.map(q => q.id === id ? { ...q, completed: true } : q));\n  }\n\n  return <QuestList quests={quests} onComplete={handleComplete} />;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders quest titles",
+          "selector": "h3",
+          "count": 2
+        },
+        {
+          "label": "Completing a quest marks it done",
+          "action": "click",
+          "selector": "button",
+          "then": {
+            "selector": ".done",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a fully TypeScript-typed <code>&lt;DataTable&lt;T&gt;&gt;</code> generic component from scratch. It accepts: <code>data: T[]</code>, <code>columns: Array&lt;{ key: keyof T; header: string }&gt;</code>, and <code>onRowClick?: (row: T) =&gt; void</code>. It renders a <code>&lt;table&gt;</code> with headers from <code>columns</code> and one row per data item. Demonstrate generic component types, optional props, and <code>keyof T</code> usage.</p>",
+      "feynmanPrompt": "Explain the five TypeScript patterns every React developer must know: typing props, typing useState, typing event handlers, typing children, and generic components. For each, give a one-sentence rule for when you need an explicit annotation vs when TypeScript can infer it.",
+      "questions": [
+        {
+          "id": "rx-sen-3-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What TypeScript type should you use for a useState variable that starts as null but will hold a User object after fetching?",
+          "options": [
+            "useState<User | null>(null)",
+            "useState<User>(null)",
+            "useState<any>(null)",
+            "useState<User>(undefined)"
+          ],
+          "answer": "useState<User | null>(null)",
+          "explanation": "The initial value is null, but the type will eventually be User. TypeScript cannot infer User from null alone — it would infer null as the only possible value. The union type User | null tells TypeScript the variable can be either, requiring null checks before accessing User properties."
+        },
+        {
+          "id": "rx-sen-3-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the correct TypeScript type for an onChange handler on a text input?",
+          "options": [
+            "React.ChangeEvent<HTMLInputElement>",
+            "React.InputEvent<HTMLInputElement>",
+            "React.SyntheticEvent<HTMLInputElement>",
+            "Event<HTMLInputElement>"
+          ],
+          "answer": "React.ChangeEvent<HTMLInputElement>",
+          "explanation": "React provides typed event interfaces for each event type. ChangeEvent is for change events (onChange), MouseEvent is for clicks, FormEvent is for form submissions. The generic parameter specifies the element type — HTMLInputElement for text inputs, HTMLSelectElement for selects. TypeScript infers these automatically for inline handlers."
+        },
+        {
+          "id": "rx-sen-3-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "You define `const [items, setItems] = useState([])`. What is TypeScript's inferred type for items, and what is the problem?",
+          "options": [
+            "never[] — TypeScript infers an empty array with no element type, making it impossible to push typed items",
+            "any[] — TypeScript infers any for empty arrays",
+            "undefined[] — TypeScript uses undefined for empty initial values",
+            "There is no problem — TypeScript infers the type when items are first added"
+          ],
+          "answer": "never[] — TypeScript infers an empty array with no element type, making it impossible to push typed items",
+          "explanation": "TypeScript infers [] as never[] — an array that can only ever be empty. Any attempt to add items of a real type will fail type checking. Fix: provide an explicit type parameter: useState<Quest[]>([]). This tells TypeScript what type the array will contain."
+        },
+        {
+          "id": "rx-sen-3-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When is it appropriate to use `React.FC<Props>` vs an explicit prop type with a typed function signature?",
+          "options": [
+            "Prefer an explicit prop type (`function Comp({ name }: Props)`) — React.FC adds implicit children, restricts the function signature, and is generally discouraged in modern React",
+            "React.FC is always preferable — it automatically types children and return value",
+            "Use React.FC for class components and explicit prop types for function components",
+            "They are identical — the choice is purely stylistic"
+          ],
+          "answer": "Prefer an explicit prop type (`function Comp({ name }: Props)`) — React.FC adds implicit children, restricts the function signature, and is generally discouraged in modern React",
+          "explanation": "React.FC was common in React 17 and earlier. In modern React, it's discouraged because: (1) it used to implicitly add children to every component's props, (2) it prevents using generics like function Comp<T>(), and (3) the explicit approach is more readable and flexible. The official React TypeScript docs now recommend explicit prop types."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "id": "rx-jun-4",
+  "title": "Forms: Validation and Multi-Field Patterns",
+  "glyph": "⚛",
+  "sortOrder": 4,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-app-14"],
+  "subChunks": [
+    {
+      "id": "rx-jun-4-1",
+      "title": "Forms: Validation and Multi-Field Patterns",
+      "sortOrder": 1,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Single-field forms are straightforward. Real forms have five, ten, twenty fields — and they need validation, error messages, and submission state. The patterns you use for multi-field forms determine whether your code stays manageable or collapses under its own weight.</p>",
+      "explanationHtml": "<h3>Managing multi-field state with an object</h3>\n\n<pre><code>function RegistrationForm() {\n  const [fields, setFields] = useState({\n    username: '',\n    email: '',\n    password: '',\n  });\n\n  function handleChange(e) {\n    const { name, value } = e.target;\n    setFields(prev =&gt; ({ ...prev, [name]: value }));\n  }\n\n  return (\n    &lt;form&gt;\n      &lt;input name=\"username\" value={fields.username} onChange={handleChange} /&gt;\n      &lt;input name=\"email\"    value={fields.email}    onChange={handleChange} /&gt;\n      &lt;input name=\"password\" value={fields.password} onChange={handleChange} type=\"password\" /&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<h3>Validate on submit</h3>\n\n<pre><code>const [errors, setErrors] = useState({});\n\nfunction validate(fields) {\n  const errs = {};\n  if (!fields.username.trim()) errs.username = 'Username is required';\n  if (!fields.email.includes('@')) errs.email = 'Enter a valid email';\n  if (fields.password.length &lt; 8) errs.password = 'At least 8 characters';\n  return errs;\n}\n\nfunction handleSubmit(e) {\n  e.preventDefault();\n  const errs = validate(fields);\n  if (Object.keys(errs).length &gt; 0) { setErrors(errs); return; }\n  // Proceed\n}</code></pre>\n\n<h3>Validate on blur</h3>\n\n<pre><code>function handleBlur(e) {\n  const { name, value } = e.target;\n  const fieldError = validateField(name, value);\n  setErrors(prev =&gt; ({ ...prev, [name]: fieldError }));\n}</code></pre>\n\n<h3>Submission state</h3>\n\n<pre><code>const [submitting, setSubmitting] = useState(false);\n\nasync function handleSubmit(e) {\n  e.preventDefault();\n  if (submitting) return;\n  setSubmitting(true);\n  try {\n    await registerUser(fields);\n    navigate('/welcome');\n  } catch (err) {\n    setSubmitError(err.message);\n  } finally {\n    setSubmitting(false);\n  }\n}\n\n&lt;button type=\"submit\" disabled={submitting}&gt;\n  {submitting ? 'Creating account...' : 'Create Account'}\n&lt;/button&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Disable the submit button while submitting. A double-submitted registration creates two accounts. A form that shows no feedback looks broken. Both cost you users.\"</p></div>\n\n<h3>useRef for uncontrolled inputs</h3>\n\n<pre><code>import { useRef } from 'react';\n\nfunction SimpleSearch() {\n  const inputRef = useRef(null);\n\n  function handleSubmit(e) {\n    e.preventDefault();\n    console.log(inputRef.current.value);\n  }\n\n  return (\n    &lt;form onSubmit={handleSubmit}&gt;\n      &lt;input ref={inputRef} type=\"text\" /&gt;\n      &lt;button type=\"submit\"&gt;Search&lt;/button&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "One useState per field is fine for two fields. For ten fields it is noise. Store all field values in one state object — the field's name attribute is the key. One handleChange function updates any field by reading e.target.name."
+        },
+        {
+          "type": "example",
+          "speaker": "One handleChange for all fields",
+          "text": "function handleChange(e) {\n  const { name, value } = e.target;\n  setFields(prev => ({ ...prev, [name]: value }));\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;LoginForm onSubmit /&gt;</code> with two fields: <code>email</code> and <code>password</code>. Use a single state object and single handler. Validate on submit: email must contain <code>@</code>, password min 6 chars. Show inline errors in <code>&lt;p data-testid=\"error-email\"&gt;</code> and <code>&lt;p data-testid=\"error-password\"&gt;</code>. Call <code>onSubmit(fields)</code> if valid.</p>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nexport default function LoginForm({ onSubmit }) {\n  const [fields, setFields] = useState({ email: '', password: '' });\n  const [errors, setErrors] = useState({});\n\n  function handleChange(e) {\n    // TODO: update the correct field\n  }\n\n  function handleSubmit(e) {\n    e.preventDefault();\n    // TODO: validate, call onSubmit if valid\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      {/* TODO: email input + error, password input + error, submit */}\n    </form>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders email input",
+          "selector": "input[name='email']",
+          "exists": true
+        },
+        {
+          "label": "Shows email error when invalid",
+          "action": "click",
+          "selector": "button[type='submit']",
+          "then": {
+            "selector": "[data-testid='error-email']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;RegistrationForm&gt;</code> from scratch with three fields: <code>username</code> (min 3 chars), <code>email</code> (must contain @), <code>password</code> (min 8 chars). Single state object, single handler. Show inline validation errors. Disable submit while submitting. Log fields on success.</p>",
+      "feynmanPrompt": "Explain the pattern of storing all form fields in one state object with a shared handleChange. Why is this preferable to a separate useState per field? Walk through what happens when a user types into the email input.",
+      "questions": [
+        {
+          "id": "rx-jun-4-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "In the single-object form state pattern, how does one `handleChange` function update the correct field?",
+          "options": [
+            "It reads `e.target.name` and uses it as a computed property key: `[name]: value`",
+            "It reads `e.target.id` and finds the matching state key by ID",
+            "React automatically maps onChange events to the matching state key",
+            "It updates all fields simultaneously and React diffs to find the changed one"
+          ],
+          "answer": "It reads `e.target.name` and uses it as a computed property key: `[name]: value`",
+          "explanation": "const { name, value } = e.target gives you the input's name and new value. setFields(prev => ({ ...prev, [name]: value })) spreads existing fields and overwrites only the matching key."
+        },
+        {
+          "id": "rx-jun-4-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "Why should the submit button be disabled while a form submission is in progress?",
+          "options": [
+            "To prevent double-submissions — a second click would trigger a second async request",
+            "Disabled buttons look more professional in loading states",
+            "React throws an error if state is updated on an unmounted component after double-submit",
+            "The browser reloads the page if a submit event fires twice"
+          ],
+          "answer": "To prevent double-submissions — a second click would trigger a second async request",
+          "explanation": "If the user clicks Submit twice before the async request completes, two identical requests go out. For actions like creating an account or placing an order, this creates duplicate records."
+        },
+        {
+          "id": "rx-jun-4-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "When is `useRef` for an uncontrolled input preferable over `useState`?",
+          "options": [
+            "When you only need the value at submission time and have no real-time validation or derived UI",
+            "When the form has more than 5 fields — useRef performs better at scale",
+            "When the input value might be empty — useState can't represent empty strings",
+            "useRef is always preferable — controlled inputs cause unnecessary re-renders"
+          ],
+          "answer": "When you only need the value at submission time and have no real-time validation or derived UI",
+          "explanation": "Controlled inputs re-render on every keystroke — which is exactly what you need for live validation. If you don't need any of that, useRef reads the value once at submission with no state overhead."
+        },
+        {
+          "id": "rx-jun-4-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Validate-on-submit vs validate-on-blur: which is more appropriate for a long registration form?",
+          "options": [
+            "Validate on blur for individual fields combined with a full validate-on-submit pass as the final gate",
+            "Validate on submit only — blur validation is too aggressive",
+            "Validate on every keystroke — gives the most immediate feedback",
+            "Validate on blur only — on-submit validation is redundant"
+          ],
+          "answer": "Validate on blur for individual fields combined with a full validate-on-submit pass as the final gate",
+          "explanation": "Blur validation shows errors after the user finishes a field, which feels natural. A final on-submit pass catches fields the user skipped entirely. The combination gives good UX without being aggressive."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "rx-lea-10",
+  "title": "Progressive Web Apps (PWA) with React",
+  "glyph": "⚛",
+  "sortOrder": 10,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-lea-7"],
+  "subChunks": [
+    {
+      "id": "rx-lea-10-1",
+      "title": "Progressive Web Apps (PWA) with React",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>A Progressive Web App is a website that earns installation rights — it loads instantly from cache, works offline, receives push notifications, and can be added to the home screen like a native app. With Vite's PWA plugin, turning a React app into a PWA is primarily configuration: define what to cache, what the manifest should say, and let the service worker handle the rest.</p>",
+      "explanationHtml": "<h3>Vite PWA plugin setup</h3>\n\n<pre><code>// vite.config.ts:\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport { VitePWA } from 'vite-plugin-pwa';\n\nexport default defineConfig({\n  plugins: [\n    react(),\n    VitePWA({\n      registerType: 'autoUpdate',\n      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],\n      manifest: {\n        name: 'Arcane Academy',\n        short_name: 'Arcane',\n        description: 'Master the arcane arts of React',\n        theme_color: '#1a1a2e',\n        background_color: '#1a1a2e',\n        display: 'standalone',\n        icons: [\n          { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },\n          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },\n          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },\n        ],\n      },\n      workbox: {\n        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],\n        runtimeCaching: [\n          {\n            urlPattern: /^https:\\/\\/api\\.arcane\\.academy\\/.*/,\n            handler: 'NetworkFirst',\n            options: {\n              cacheName: 'api-cache',\n              expiration: { maxEntries: 100, maxAgeSeconds: 86400 },\n              networkTimeoutSeconds: 10,\n            },\n          },\n        ],\n      },\n    }),\n  ],\n});</code></pre>\n\n<h3>Caching strategies</h3>\n\n<pre><code>// Workbox provides four main strategies:\n\n// CacheFirst — serve from cache, update in background:\n// Use for: fonts, images, app shell, static assets\n// Risk: stale content served until cache expires\n\n// NetworkFirst — try network, fall back to cache:\n// Use for: API responses, dynamic content\n// Risk: slow when network is slow (waits for timeout)\n\n// StaleWhileRevalidate — serve cache instantly, update in background:\n// Use for: user avatars, non-critical API data\n// Benefit: fast + eventually fresh\n\n// NetworkOnly — always fetch, never cache:\n// Use for: POST mutations, payment endpoints, auth</code></pre>\n\n<h3>Offline detection and UI</h3>\n\n<pre><code>import { useRegisterSW } from 'virtual:pwa-register/react';\n\nfunction PWAUpdatePrompt() {\n  const { needRefresh, updateServiceWorker } = useRegisterSW({\n    onRegistered(r) {\n      console.log('SW registered:', r);\n    },\n    onRegisterError(error) {\n      console.error('SW registration error:', error);\n    },\n  });\n\n  return needRefresh ? (\n    &lt;div role=\"alert\" className=\"update-banner\"&gt;\n      &lt;p&gt;New version available!&lt;/p&gt;\n      &lt;button onClick={() =&gt; updateServiceWorker(true)}&gt;Update now&lt;/button&gt;\n    &lt;/div&gt;\n  ) : null;\n}\n\n// Offline status hook:\nfunction useOnlineStatus() {\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n\n  useEffect(() =&gt; {\n    const handleOnline = () =&gt; setIsOnline(true);\n    const handleOffline = () =&gt; setIsOnline(false);\n    window.addEventListener('online', handleOnline);\n    window.addEventListener('offline', handleOffline);\n    return () =&gt; {\n      window.removeEventListener('online', handleOnline);\n      window.removeEventListener('offline', handleOffline);\n    };\n  }, []);\n\n  return isOnline;\n}</code></pre>\n\n<h3>Background sync for offline mutations</h3>\n\n<pre><code>// Queue mutations that fail offline, replay when back online:\nasync function acceptQuestWithSync(questId: string) {\n  try {\n    await fetch(`/api/quests/${questId}/accept`, { method: 'POST' });\n  } catch {\n    // Store in IndexedDB for later:\n    const db = await openDB('sync-queue', 1);\n    await db.add('pending-mutations', {\n      type: 'ACCEPT_QUEST',\n      payload: { questId },\n      timestamp: Date.now(),\n    });\n\n    // Register for background sync:\n    const sw = await navigator.serviceWorker.ready;\n    await sw.sync.register('sync-mutations');\n  }\n}\n\n// Service worker handles 'sync' event and replays mutations</code></pre>\n\n<h3>Push notifications</h3>\n\n<pre><code>async function subscribeToPushNotifications() {\n  const registration = await navigator.serviceWorker.ready;\n\n  const subscription = await registration.pushManager.subscribe({\n    userVisibleOnly: true,\n    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),\n  });\n\n  // Send subscription to your server:\n  await fetch('/api/push/subscribe', {\n    method: 'POST',\n    body: JSON.stringify(subscription),\n    headers: { 'Content-Type': 'application/json' },\n  });\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"A PWA is not a replacement for a native app — it's a website that earns installation. The bar is: fast first load, works offline for core features, has an icon and manifest. Caching strategy is the hard part: CacheFirst for static assets, NetworkFirst for API data, NetworkOnly for mutations. Never cache POST requests.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A guild member in a remote mountain pass loses signal mid-quest. The app goes blank — all that cached data, inaccessible. A service worker and an offline manifest later: the quest board loads from cache. The acceptance queues for background sync. The network returns; the mutation replays."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Service workers are JavaScript that runs in the background, separate from your app. They intercept every fetch request. You decide: serve from cache, fetch from network, or both. CacheFirst makes your app load instantly. NetworkFirst keeps data fresh. The manifest makes it installable. Together: a PWA."
+        },
+        {
+          "type": "example",
+          "speaker": "Offline detection + UI feedback",
+          "text": "function OfflineBanner() {\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n  useEffect(() => {\n    window.addEventListener('online', () => setIsOnline(true));\n    window.addEventListener('offline', () => setIsOnline(false));\n  }, []);\n  return !isOnline ? <div role=\"alert\">You're offline — changes will sync when reconnected</div> : null;\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build offline awareness into a React app:</p><ul><li>Create a <code>useOnlineStatus()</code> hook that listens to window online/offline events</li><li>Create an <code>OfflineBanner</code> component that renders only when offline with an accessible alert role</li><li>Write the Vite PWA plugin configuration with: NetworkFirst caching for /api/* routes, CacheFirst for static assets, and an app manifest for a quest tracker app</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useEffect } from 'react';\n\n// TODO: useOnlineStatus hook\nfunction useOnlineStatus() {\n  const [isOnline, setIsOnline] = useState(true); // TODO: use navigator.onLine\n\n  useEffect(() => {\n    // TODO: listen to online/offline events\n  }, []);\n\n  return isOnline;\n}\n\n// TODO: OfflineBanner component\nfunction OfflineBanner() {\n  const isOnline = useOnlineStatus();\n\n  if (isOnline) return null;\n\n  return (\n    <div role=\"alert\" data-testid=\"offline-banner\" style={{ background: '#f59e0b', padding: '8px' }}>\n      You're offline — changes will sync when reconnected\n    </div>\n  );\n}\n\n// TODO: PWA config (as a comment/object for this exercise)\nconst vitePluginPWAConfig = {\n  registerType: 'autoUpdate',\n  manifest: {\n    name: 'Quest Tracker',\n    short_name: 'Quests',\n    // TODO: theme_color, display, icons\n  },\n  workbox: {\n    runtimeCaching: [\n      // TODO: NetworkFirst for /api/* routes\n      // TODO: CacheFirst for static assets\n    ],\n  },\n};\n\nexport default function App() {\n  return (\n    <div data-testid=\"app\">\n      <OfflineBanner />\n      <h1>Quest Tracker</h1>\n      <p data-testid=\"pwa-config\">{JSON.stringify(vitePluginPWAConfig.manifest.name)}</p>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "App renders",
+          "selector": "[data-testid='app']",
+          "exists": true
+        },
+        {
+          "label": "PWA manifest name defined",
+          "selector": "[data-testid='pwa-config']",
+          "requiredText": "Quest Tracker"
+        }
+      ],
+      "soloPracticeHtml": "<p>Turn the quest board into a full PWA: (1) Vite PWA plugin with a complete manifest (name, icons, theme colour, display: standalone). (2) NetworkFirst caching for API routes with a 10-second timeout and 24-hour cache expiry. (3) An OfflineBanner component with accessible role=alert and a specific message about what works offline vs what doesn't. (4) Background sync for quest acceptance — when offline, queue the mutation in IndexedDB and replay it when back online. Verify in Chrome DevTools > Application > Service Workers > Offline checkbox that the app loads and displays cached quests.</p>",
+      "feynmanPrompt": "Explain what a service worker is — where does it run, what can it intercept, and why does it exist as a separate thread? Walk through the four Workbox caching strategies and give a real example of when you'd use each one. Explain why POST mutations should use NetworkOnly — what would happen if you cached a POST request for quest acceptance?",
+      "questions": [
+        {
+          "id": "rx-lea-10-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "Your PWA caches the quest list with StaleWhileRevalidate. A user accepts a quest offline, then comes online. The quest list still shows the quest as 'OPEN'. What is the problem?",
+          "options": [
+            "StaleWhileRevalidate always serves the cached (stale) version first — the background revalidation runs, but the component doesn't re-render with the fresh data. Use NetworkFirst for mutable data that changes from user actions.",
+            "StaleWhileRevalidate doesn't work for authenticated endpoints",
+            "The service worker needs to be unregistered after offline mutations",
+            "The cache needs a shorter maxAgeSeconds to expire the stale entry"
+          ],
+          "answer": "StaleWhileRevalidate always serves the cached (stale) version first — the background revalidation runs, but the component doesn't re-render with the fresh data. Use NetworkFirst for mutable data that changes from user actions.",
+          "explanation": "StaleWhileRevalidate is ideal for data where 'almost current' is good enough (avatars, public content, non-critical feeds). For user-specific data that changes based on user actions, NetworkFirst is safer: it tries the network first, waits up to networkTimeoutSeconds, then falls back to cache. This ensures the user sees their actual current state rather than a cached snapshot."
+        },
+        {
+          "id": "rx-lea-10-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A user's Stripe payment mutation is accidentally cached by the service worker. What could go wrong?",
+          "options": [
+            "If the cached response is served instead of making a real network request, the user could be shown a success response from a previous payment while the new payment never actually processed — leading to a financial discrepancy",
+            "The payment would be charged twice because the cache replays the mutation",
+            "Service workers can't intercept HTTPS requests, so payment endpoints are safe",
+            "The browser will warn the user before serving a cached payment response"
+          ],
+          "answer": "If the cached response is served instead of making a real network request, the user could be shown a success response from a previous payment while the new payment never actually processed — leading to a financial discrepancy",
+          "explanation": "POST mutations should always use NetworkOnly. If a payment endpoint returns a 200 and that response gets cached, the next payment attempt could be served from cache — the UI shows success, no money moves. Payment endpoints, authentication, and any state-changing operation must bypass the service worker entirely. In Workbox: urlPattern: /\\/api\\/payment/, handler: 'NetworkOnly'."
+        }
+      ]
+    }
+  ]
+}

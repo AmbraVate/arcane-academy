@@ -1,0 +1,131 @@
+{
+  "id": "rx-sen-2",
+  "title": "Performance: memo, useMemo, and useCallback",
+  "glyph": "⚛",
+  "sortOrder": 2,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-19"],
+  "subChunks": [
+    {
+      "id": "rx-sen-2-1",
+      "title": "Performance: memo, useMemo, and useCallback",
+      "sortOrder": 1,
+      "xpReward": 175,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>React is fast by default. Most apps never need manual optimisation. But when a component renders too often, or an expensive calculation runs on every keystroke, you need to know when and how to intervene — without making the code harder to read than the problem it solves. This lesson covers the three memoisation tools, how they interact, and critically: when NOT to use them.</p>",
+      "explanationHtml": "<h3>How React decides to re-render</h3>\n\n<p>A component re-renders when its own state changes, its parent re-renders (even if props didn't change), or a context it subscribes to changes. This default behaviour is correct and efficient for most components.</p>\n\n<h3>React.memo — skip re-renders when props haven't changed</h3>\n\n<pre><code>import { memo } from 'react';\n\n// Without memo: re-renders every time the parent re-renders\nfunction ExpensiveList({ items }) {\n  return &lt;ul&gt;{items.map(i =&gt; &lt;li key={i.id}&gt;{i.name}&lt;/li&gt;)}&lt;/ul&gt;;\n}\n\n// With memo: only re-renders if items actually changed (by reference)\nconst ExpensiveList = memo(function ExpensiveList({ items }) {\n  return &lt;ul&gt;{items.map(i =&gt; &lt;li key={i.id}&gt;{i.name}&lt;/li&gt;)}&lt;/ul&gt;;\n});</code></pre>\n\n<p><code>memo</code> does a shallow comparison of props. If all props are the same reference as before, the re-render is skipped. <strong>memo only helps when the parent re-renders but the memoised component's props genuinely haven't changed.</strong></p>\n\n<h3>useMemo — cache expensive calculations</h3>\n\n<pre><code>import { useMemo } from 'react';\n\nfunction QuestAnalytics({ quests }) {\n  // ❌ Recalculates on every render — even unrelated state changes:\n  const stats = computeHeavyStats(quests);\n\n  // ✅ Only recalculates when quests changes:\n  const stats = useMemo(() =&gt; computeHeavyStats(quests), [quests]);\n\n  return &lt;div&gt;{stats.averageXP} avg XP&lt;/div&gt;;\n}</code></pre>\n\n<p><code>useMemo</code> caches a value and only recomputes when dependencies change. Use it when a calculation is genuinely expensive (measured via profiler) — not for simple filters or array operations.</p>\n\n<h3>useCallback — stable function references</h3>\n\n<pre><code>import { useCallback } from 'react';\n\nfunction ParentList({ items }) {\n  // ❌ New function reference on every render — memo'd children always re-render:\n  const handleDelete = (id) =&gt; setItems(prev =&gt; prev.filter(i =&gt; i.id !== id));\n\n  // ✅ Stable reference — memo'd children can skip re-renders:\n  const handleDelete = useCallback(\n    (id) =&gt; setItems(prev =&gt; prev.filter(i =&gt; i.id !== id)),\n    [] // Functional update — no state dependency needed\n  );\n\n  return items.map(item =&gt; (\n    &lt;MemoizedItem key={item.id} item={item} onDelete={handleDelete} /&gt;\n  ));\n}</code></pre>\n\n<h3>The golden rule — measure before optimising</h3>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Do not add memo, useMemo, or useCallback until you have measured a real performance problem with the React DevTools Profiler. These tools add overhead. Wrapping every component and function 'just in case' makes the code harder to read and can actually slow things down. Profile first. Optimise precisely.\"</p></div>\n\n<h3>Quick reference</h3>\n\n<pre><code>// Component re-renders even when props haven't changed:\nconst MyComp = memo(MyComp);\n\n// Expensive calculation runs on every render:\nconst result = useMemo(() =&gt; expensiveCalc(data), [data]);\n\n// Function reference changes every render, defeating memo on children:\nconst fn = useCallback(() =&gt; doThing(dep), [dep]);</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The profiler shows a component tree where a small counter update causes half the app to re-render. Vex points at the flame chart."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "React is fast by default — most apps never need these tools. memo skips a component's re-render when its props haven't changed. useMemo caches an expensive calculation. useCallback stabilises a function reference so memo'd children don't re-render unnecessarily."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The mandatory first step is always the React DevTools Profiler. Measure what is actually slow. Then apply the precise fix. Adding memo and useCallback everywhere 'just in case' is cargo-cult optimisation — it adds overhead and makes the codebase harder to understand without solving anything."
+        },
+        {
+          "type": "example",
+          "speaker": "When to use each",
+          "text": "// Component re-renders with same props → memo\nconst List = memo(({ items }) => <ul>...</ul>);\n\n// Expensive calculation on every render → useMemo\nconst stats = useMemo(() => heavyCalc(data), [data]);\n\n// New function reference defeating memo → useCallback\nconst onDelete = useCallback(id => remove(id), []);"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Optimise a slow component tree:</p><ul><li>A <code>&lt;Counter /&gt;</code> button increments a count. Every click re-renders the parent, causing <code>&lt;ExpensiveList items /&gt;</code> to re-render — even though items never changes.</li><li>Wrap <code>ExpensiveList</code> in <code>memo</code></li><li>The parent passes an <code>onItemClick</code> callback to the list. Stabilise it with <code>useCallback</code></li><li>Add <code>useMemo</code> to cache a <code>totalXP</code> calculation (sum of all item XP values)</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, memo, useMemo, useCallback } from 'react';\n\nconst items = [\n  { id: 1, name: 'Learn JSX', xp: 75 },\n  { id: 2, name: 'Master Hooks', xp: 150 },\n  { id: 3, name: 'Build a custom hook', xp: 200 },\n];\n\n// TODO: wrap in memo\nfunction ExpensiveList({ items, onItemClick }) {\n  return (\n    <ul>\n      {items.map(item => (\n        <li key={item.id} onClick={() => onItemClick(item.id)}>\n          {item.name} ({item.xp} XP)\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n\n  // TODO: stabilise with useCallback\n  const handleItemClick = (id) => console.log('Clicked item', id);\n\n  // TODO: cache with useMemo\n  const totalXP = items.reduce((sum, item) => sum + item.xp, 0);\n\n  return (\n    <div>\n      <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>\n      <p data-testid=\"total\">Total XP: {totalXP}</p>\n      <ExpensiveList items={items} onItemClick={handleItemClick} />\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders count button",
+          "selector": "button",
+          "exists": true
+        },
+        {
+          "label": "Displays total XP",
+          "selector": "[data-testid='total']",
+          "requiredText": "Total XP: 425"
+        },
+        {
+          "label": "ExpensiveList renders all items",
+          "selector": "li",
+          "count": 3
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;SearchableList items /&gt;</code> component from scratch demonstrating all three optimisation tools: <code>memo</code> on a <code>ListItem</code> child component, <code>useMemo</code> for the filtered results calculation, and <code>useCallback</code> for the item click handler passed to each <code>ListItem</code>. Each item has <code>id</code>, <code>name</code>, and <code>xp</code>. A text input filters the list by name. Add a comment above each use explaining why it's needed here.</p>",
+      "feynmanPrompt": "Explain the relationship between React.memo and useCallback. Why does memo alone not solve the problem when a parent passes a callback prop? What is the root cause, and what does useCallback fix? Then explain when you should NOT use these tools.",
+      "questions": [
+        {
+          "id": "rx-sen-2-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does React.memo do?",
+          "options": [
+            "It wraps a component and skips re-rendering if all props are shallowly equal to the previous render's props",
+            "It caches the component's rendered output and never updates it",
+            "It prevents the component's state from resetting between renders",
+            "It lazily imports the component to improve initial load time"
+          ],
+          "answer": "It wraps a component and skips re-rendering if all props are shallowly equal to the previous render's props",
+          "explanation": "memo does a shallow comparison of the previous and next props. If all props are reference-equal (primitives have the same value, objects/functions are the same reference), the component's render is skipped and React reuses the previous output. It does not affect re-renders triggered by the component's own state changes."
+        },
+        {
+          "id": "rx-sen-2-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the difference between `useMemo` and `useCallback`?",
+          "options": [
+            "useMemo caches a computed value; useCallback caches a function reference",
+            "useMemo is for async operations; useCallback is for synchronous operations",
+            "useMemo is used in class components; useCallback is for function components",
+            "They are identical — useCallback(fn, deps) is shorthand for useMemo(() => fn, deps)"
+          ],
+          "answer": "useMemo caches a computed value; useCallback caches a function reference",
+          "explanation": "useMemo(() => computeValue(data), [data]) caches and returns a value. useCallback((id) => doThing(id), []) caches and returns a function. Technically useCallback(fn, deps) is equivalent to useMemo(() => fn, deps), but they communicate different intent — value vs function — so both exist for readability."
+        },
+        {
+          "id": "rx-sen-2-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A component is wrapped in memo but still re-renders every time its parent re-renders. The only prop it receives is a callback function `onSave`. What is the most likely cause?",
+          "options": [
+            "The parent creates a new function reference for onSave on every render — memo sees a new reference and re-renders",
+            "memo does not work for components that receive function props",
+            "The component's own state is changing, which bypasses memo",
+            "memo requires all props to be primitives — object and function props always trigger re-renders"
+          ],
+          "answer": "The parent creates a new function reference for onSave on every render — memo sees a new reference and re-renders",
+          "explanation": "Functions in JavaScript are objects. A new arrow function defined in the parent's render body creates a new reference on every render. memo's shallow comparison sees a different reference and considers the prop changed. Fix: wrap onSave in useCallback in the parent so the reference is stable between renders."
+        },
+        {
+          "id": "rx-sen-2-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When is it NOT appropriate to add useMemo to a calculation?",
+          "options": [
+            "When the calculation is a simple array filter or map — the memoization overhead likely exceeds the savings",
+            "When the calculation depends on multiple state variables",
+            "When the calculation result is used in JSX directly",
+            "When the component re-renders frequently"
+          ],
+          "answer": "When the calculation is a simple array filter or map — the memoization overhead likely exceeds the savings",
+          "explanation": "useMemo itself has a cost: it stores the previous result and compares dependencies on every render. For a simple filter of 10-100 items, this overhead is comparable to or greater than the calculation itself. useMemo is justified when the computation is provably expensive (measured via profiler) — sorting thousands of items, running statistical calculations, building complex derived data structures."
+        }
+      ]
+    }
+  ]
+}

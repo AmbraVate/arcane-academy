@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-18",
+  "title": "Container Queries",
+  "glyph": "⚗️",
+  "sortOrder": 18,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-2"],
+  "subChunks": [
+    {
+      "id": "tw-jun-18-1",
+      "title": "Container Queries",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Responsive design with viewport breakpoints has one fundamental weakness: a component's layout depends on the screen width, not its own container width. A card that should be horizontal when it's 500px wide — whether that's in a full-screen layout or a narrow sidebar — can't achieve this with <code>sm:</code> breakpoints. Container queries solve this by making components respond to their own container's size.</p>",
+      "explanationHtml": "<h3>The problem with viewport breakpoints for components</h3>\n<pre><code>/* This card goes horizontal at 640px VIEWPORT width */\n&lt;div class=\"flex flex-col sm:flex-row gap-4\"&gt;\n\n/* Problem: if this card is in a 300px sidebar on a 1200px screen,\n   the sm: breakpoint still fires and makes it horizontal — which\n   doesn't fit the sidebar at all. */</code></pre>\n\n<h3>Container query syntax in Tailwind v4</h3>\n<p>In Tailwind v4, container queries are built-in using <code>@container</code>. You create a containment context and then use <code>@sm:</code>, <code>@md:</code>, <code>@lg:</code> variants on children to respond to the container's width, not the viewport.</p>\n<pre><code>/* 1. Mark the container */\n&lt;div class=\"@container\"&gt;\n\n  /* 2. Respond to the container's width */\n  &lt;div class=\"flex flex-col @sm:flex-row gap-4\"&gt;\n    &lt;img class=\"w-full @sm:w-32 @sm:h-32 object-cover rounded-lg\" /&gt;\n    &lt;div class=\"flex-1\"&gt;\n      &lt;h3 class=\"font-semibold text-gray-900\"&gt;Card Title&lt;/h3&gt;\n      &lt;p class=\"text-sm text-gray-500\"&gt;Description&lt;/p&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n\n&lt;/div&gt;</code></pre>\n\n<h3>Container query breakpoints</h3>\n<pre><code>@xs:    /* ≥ 320px container width */\n@sm:    /* ≥ 384px container width */\n@md:    /* ≥ 448px container width */\n@lg:    /* ≥ 512px container width */\n@xl:    /* ≥ 576px container width */\n@2xl:   /* ≥ 672px container width */</code></pre>\n<p>These breakpoints are relative to the <em>container</em>, not the viewport. The same component will display differently depending on how wide its wrapping <code>@container</code> element is.</p>\n\n<h3>Named containers</h3>\n<pre><code>/* For nested containers, name them to avoid ambiguity */\n&lt;div class=\"@container/card\"&gt;\n  &lt;div class=\"@lg/card:flex-row\"&gt;...&lt;/div&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Real-world use case — the adaptive card</h3>\n<pre><code>/* This card adjusts its own layout based on how much space it has */\n&lt;div class=\"@container\"&gt;\n  &lt;article class=\"flex flex-col @md:flex-row gap-4 bg-white rounded-xl p-4\"&gt;\n\n    &lt;!-- Image: full width stacked, or square thumbnail side-by-side --&gt;\n    &lt;div class=\"aspect-video @md:aspect-square @md:w-32 @md:flex-none overflow-hidden rounded-lg\"&gt;\n      &lt;img class=\"w-full h-full object-cover\" src=\"...\" /&gt;\n    &lt;/div&gt;\n\n    &lt;div class=\"flex-1\"&gt;\n      &lt;h3 class=\"font-semibold text-gray-900\"&gt;Quest Name&lt;/h3&gt;\n      &lt;p class=\"text-sm text-gray-500 mt-1 @md:line-clamp-2\"&gt;Description&lt;/p&gt;\n      &lt;!-- Show XP only when there's enough room --&gt;\n      &lt;p class=\"hidden @lg:block text-sm font-medium text-blue-600 mt-2\"&gt;500 XP&lt;/p&gt;\n    &lt;/div&gt;\n  &lt;/article&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>When to use container queries vs viewport breakpoints</h3>\n<ul>\n  <li>Use <strong>viewport breakpoints</strong> (<code>sm:</code>, <code>md:</code>) for page-level layout decisions — overall page structure, navigation patterns.</li>\n  <li>Use <strong>container queries</strong> (<code>@sm:</code>, <code>@md:</code>) for component-level layout decisions — cards, list items, widgets that can appear in different contexts.</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"Container queries are the single biggest improvement to responsive CSS in a decade. A component that adapts to its own space — not the viewport — is a truly reusable component. Place it in a full-width layout or a narrow sidebar and it handles itself. That is what component-first design actually means.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "A component that changes layout based on the viewport is not truly reusable. Put it in a sidebar and it still thinks it is full-screen. Container queries break this dependency — the component adapts to its own allocated space, wherever it appears. This is the future of responsive design."
+        },
+        {
+          "type": "example",
+          "speaker": "Adaptive card with @container",
+          "text": "<!-- Container: marks the boundary -->\n<div class=\"@container\">\n  <!-- Card adapts based on how wide @container is -->\n  <div class=\"flex flex-col @md:flex-row gap-4 bg-white rounded-xl p-4\">\n    <div class=\"aspect-video @md:aspect-square @md:w-32 @md:flex-none overflow-hidden rounded-lg\">\n      <img class=\"w-full h-full object-cover\" src=\"/quest.jpg\" alt=\"\" />\n    </div>\n    <div class=\"flex-1\">\n      <h3 class=\"font-semibold\">Dragon Quest</h3>\n      <p class=\"text-sm text-gray-500 mt-1\">Slay the ancient dragon</p>\n    </div>\n  </div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an adaptive quest card that switches from stacked to horizontal layout based on its container width:</p>\n<ul>\n  <li><strong>.card-container</strong>: <code>@container</code></li>\n  <li><strong>.quest-card</strong>: <code>flex</code>, <code>flex-col</code>, <code>@md:flex-row</code>, <code>gap-4</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code>, <code>overflow-hidden</code></li>\n  <li><strong>.quest-image</strong>: <code>aspect-video</code>, <code>@md:aspect-square</code>, <code>@md:w-36</code>, <code>@md:flex-none</code>, <code>overflow-hidden</code></li>\n  <li><strong>.quest-image img</strong>: <code>w-full</code>, <code>h-full</code>, <code>object-cover</code></li>\n  <li><strong>.quest-info</strong>: <code>flex-1</code>, <code>p-4</code></li>\n  <li><strong>.quest-xp</strong>: <code>hidden</code>, <code>@lg:block</code>, <code>text-sm</code>, <code>font-medium</code>, <code>text-blue-600</code>, <code>mt-2</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<!-- Full width card -->\n<div class=\"card-container max-w-xl p-6\">\n  <div class=\"quest-card\">\n    <div class=\"quest-image\">\n      <img src=\"https://picsum.photos/seed/quest1/400/300\" alt=\"Quest banner\" />\n    </div>\n    <div class=\"quest-info\">\n      <span class=\"text-xs font-medium text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full\">Active</span>\n      <h3 class=\"font-semibold text-gray-900 mt-2\">Slay the Ancient Dragon</h3>\n      <p class=\"text-sm text-gray-500 mt-1\">Deep in the Ember Mountains, an ancient dragon guards a hoard of legendary artefacts.</p>\n      <p class=\"quest-xp\">500 XP</p>\n    </div>\n  </div>\n</div>\n\n<!-- Narrow container (simulating a sidebar) -->\n<div class=\"card-container max-w-xs p-6 mt-4 bg-gray-100 rounded-xl\">\n  <p class=\"text-xs text-gray-500 mb-3\">In a narrow sidebar context:</p>\n  <div class=\"quest-card\">\n    <div class=\"quest-image\">\n      <img src=\"https://picsum.photos/seed/quest2/400/300\" alt=\"Quest banner\" />\n    </div>\n    <div class=\"quest-info\">\n      <h3 class=\"font-semibold text-gray-900\">Forest Expedition</h3>\n      <p class=\"text-sm text-gray-500 mt-1\">Explore the ancient woods.</p>\n      <p class=\"quest-xp\">300 XP</p>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Container: @container",        "selector": ".card-container", "requiredClass": "@container"        },
+        { "label": "Card: flex layout",            "selector": ".quest-card",     "requiredClass": "flex"              },
+        { "label": "Card: default flex-col",       "selector": ".quest-card",     "requiredClass": "flex-col"          },
+        { "label": "Card: @md:flex-row",           "selector": ".quest-card",     "requiredClass": "@md:flex-row"      },
+        { "label": "Image: aspect-video default",  "selector": ".quest-image",    "requiredClass": "aspect-video"      },
+        { "label": "Image: @md:aspect-square",     "selector": ".quest-image",    "requiredClass": "@md:aspect-square" },
+        { "label": "Image: @md:flex-none",         "selector": ".quest-image",    "requiredClass": "@md:flex-none"     },
+        { "label": "Info: flex-1",                 "selector": ".quest-info",     "requiredClass": "flex-1"            },
+        { "label": "XP: hidden default",           "selector": ".quest-xp",       "requiredClass": "hidden"            },
+        { "label": "XP: @lg:block",                "selector": ".quest-xp",       "requiredClass": "@lg:block"         }
+      ],
+      "soloPracticeHtml": "<p>Build a component library card that uses container queries to show three different layouts: stacked (narrow, < 384px), horizontal with thumbnail (medium, 384px-512px), and full horizontal with extra metadata visible (wide, > 512px). Place the same component in both a full-width container and a narrow sidebar container to verify it adapts correctly. No starter code.</p>",
+      "feynmanPrompt": "Explain the fundamental difference between viewport breakpoints (sm:, md:) and container queries (@sm:, @md:). Give a concrete example of a component that would break with viewport breakpoints but work correctly with container queries. What does @container do, and what is a named container (@container/name) useful for?",
+      "questions": [
+        {
+          "id": "tw-jun-18-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "JUNIOR",
+          "prompt": "Which class marks an element as a container query context in Tailwind v4?",
+          "options": [
+            "@container",
+            "container-query",
+            "cq-context",
+            "@scope"
+          ],
+          "answer": "@container",
+          "explanation": "@container applies the CSS containment context (container-type: inline-size) to the element. Children of this element can then use @sm:, @md:, @lg: variants to respond to the container's width rather than the viewport width."
+        },
+        {
+          "id": "tw-jun-18-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A card component uses @md:flex-row to switch to horizontal layout at 448px container width. When this card appears in a sidebar that's only 280px wide, what happens to the layout?",
+          "options": [
+            "It stays in the default flex-col (stacked) layout — @md: checks the container width, not the viewport, and 280px is below the 448px threshold",
+            "It switches to flex-row because the viewport is wider than 448px",
+            "It breaks the layout — container queries don't work inside narrow containers",
+            "It uses the viewport width as a fallback"
+          ],
+          "answer": "It stays in the default flex-col (stacked) layout — @md: checks the container width, not the viewport, and 280px is below the 448px threshold",
+          "explanation": "This is exactly the power of container queries. The @md: variant activates at 448px of the nearest @container's width. Since the sidebar is 280px wide (its @container element is 280px), @md: doesn't activate and the card stays stacked. If this same card were placed in a 600px column, @md: would activate and it would go horizontal."
+        },
+        {
+          "id": "tw-jun-18-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "You're building a dashboard with a main column (70% width) and a sidebar column (30% width). Both columns render the same quest card component. You want the card to be horizontal in the main column and stacked in the sidebar. Which approach is correct?",
+          "options": [
+            "Wrap each card in a @container div and use @md:flex-row on the card — it will automatically be horizontal in the wide column and stacked in the narrow one",
+            "Use md:flex-row viewport breakpoints on the card — it will adapt to the overall page width",
+            "Pass a prop to the card component that manually sets the layout variant",
+            "Container queries don't work inside CSS grid columns — use JavaScript to detect column width"
+          ],
+          "answer": "Wrap each card in a @container div and use @md:flex-row on the card — it will automatically be horizontal in the wide column and stacked in the narrow one",
+          "explanation": "This is the exact use case container queries were designed for. Wrapping each card placement in a @container div makes the card respond to its own allocated space. In the 70% column (likely > 448px), @md:flex-row activates. In the 30% column (likely < 448px), it doesn't — the card stays stacked. No JavaScript or prop passing needed."
+        }
+      ]
+    }
+  ]
+}

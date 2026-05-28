@@ -1,0 +1,110 @@
+{
+  "id": "tw-sen-6",
+  "title": "Portfolio-Ready Patterns",
+  "glyph": "🔮",
+  "sortOrder": 6,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-3", "tw-sen-5"],
+  "subChunks": [
+    {
+      "id": "tw-sen-6-1",
+      "title": "Portfolio-Ready Patterns",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>You know the utilities, the config, the tooling, the accessibility, the JIT scanner. Now assemble them into the patterns that appear on every portfolio and job-application project — the UI shapes that hiring managers and tech leads evaluate when looking at your work.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"Every product is a recombination of a handful of patterns. A hero section. A responsive nav. A card grid. A modal. A footer. Master these and you can scaffold any new screen in an afternoon.\"</p></div>\n\n<h3>Pattern 1: Responsive Navigation (fixed, glass morphism)</h3>\n<pre><code>&lt;nav class=\"fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100\"&gt;\n  &lt;div class=\"container mx-auto px-4 h-16 flex items-center justify-between\"&gt;\n    &lt;a href=\"/\" class=\"text-xl font-bold text-gray-900 tracking-tight\"&gt;Logo&lt;/a&gt;\n\n    &lt;!-- Desktop links: hidden on mobile, flex on md+ --&gt;\n    &lt;div class=\"hidden md:flex items-center gap-8\"&gt;\n      &lt;a href=\"/about\" class=\"text-sm text-gray-600 hover:text-gray-900 transition-colors\"&gt;About&lt;/a&gt;\n      &lt;a href=\"/contact\" class=\"text-sm font-medium px-4 py-1.5 bg-gray-900 text-white rounded-full hover:bg-gray-700 transition-colors\"&gt;Contact&lt;/a&gt;\n    &lt;/div&gt;\n\n    &lt;!-- Mobile button: visible on mobile, hidden on md+ --&gt;\n    &lt;button class=\"md:hidden p-2 text-gray-600\" aria-label=\"Open menu\"&gt;\n      &lt;span class=\"sr-only\"&gt;Open menu&lt;/span&gt;\n    &lt;/button&gt;\n  &lt;/div&gt;\n&lt;/nav&gt;</code></pre>\n\n<h3>Pattern 2: Hero Section</h3>\n<pre><code>&lt;section class=\"min-h-screen flex items-center bg-gradient-to-br from-slate-900 to-slate-800 px-4\"&gt;\n  &lt;div class=\"container mx-auto text-center\"&gt;\n    &lt;span class=\"inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-6\"&gt;\n      Available for hire\n    &lt;/span&gt;\n    &lt;h1 class=\"text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight\"&gt;\n      Full-Stack Developer\n    &lt;/h1&gt;\n    &lt;div class=\"flex gap-4 justify-center flex-wrap\"&gt;\n      &lt;a class=\"px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition-colors\"&gt;View Work&lt;/a&gt;\n      &lt;a class=\"px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border border-white/20\"&gt;Get in Touch&lt;/a&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/section&gt;</code></pre>\n\n<h3>Pattern 3: Project Card with group hover</h3>\n<pre><code>&lt;article class=\"bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group\"&gt;\n  &lt;div class=\"aspect-video overflow-hidden\"&gt;\n    &lt;img class=\"w-full h-full object-cover group-hover:scale-105 transition-transform duration-300\" /&gt;\n  &lt;/div&gt;\n  &lt;div class=\"p-6\"&gt;\n    &lt;h3 class=\"text-lg font-semibold text-gray-900 mb-2\"&gt;Project Name&lt;/h3&gt;\n    &lt;a class=\"text-sm font-medium text-blue-600 hover:text-blue-700\"&gt;View project&lt;/a&gt;\n  &lt;/div&gt;\n&lt;/article&gt;</code></pre>\n\n<h3>How to approach a new portfolio project</h3>\n<ol>\n<li><strong>Start mobile-first.</strong> Design for the smallest breakpoint first.</li>\n<li><strong>Establish type hierarchy first.</strong> Decide h1 (text-5xl), h2 (text-3xl), h3 (text-xl), body (text-base) before writing other classes.</li>\n<li><strong>Pick one accent colour, three shades.</strong> light/100 for backgrounds, mid/600 for text, dark/900 for high-contrast.</li>\n<li><strong>Use <code>container mx-auto px-4</code> on every section wrapper.</strong></li>\n<li><strong>Add <code>transition-*</code> from day one.</strong> Retrofitting animations is painful.</li>\n<li><strong>Use <code>group</code> + <code>group-hover:</code> for card hover effects.</strong></li>\n</ol>\n\n<div class=\"dialogue mentor\"><p><strong>Solomon:</strong> \"You are no longer an apprentice. You have the constitution, the grammar, the habits, and the patterns. You may build now.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Solomon leads you out onto the balcony above the Pattern Gardens. The evening air is cool. Below, you can see the shapes of every screen you've built arranged like specimens."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "Start mobile-first. Establish type hierarchy first. One accent colour, three shades. container mx-auto px-4 on every section. transition-* from day one. group + group-hover: for card effects."
+        },
+        {
+          "type": "example",
+          "speaker": "Project card with group hover",
+          "text": "<article class=\"group rounded-xl overflow-hidden hover:shadow-md transition-shadow\">\n  <img class=\"group-hover:scale-105 transition-transform duration-300\" />\n</article>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a portfolio hero section. Apply these classes exactly:</p>\n<ul>\n  <li><strong>.hero-section</strong>: <code>min-h-screen</code>, <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>bg-gradient-to-br</code>, <code>from-slate-900</code>, <code>to-slate-800</code>, <code>px-4</code></li>\n  <li><strong>.hero-inner</strong>: <code>text-center</code>, <code>max-w-3xl</code>, <code>mx-auto</code></li>\n  <li><strong>.hero-badge</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>px-3</code>, <code>py-1</code>, <code>bg-blue-500/20</code>, <code>text-blue-400</code>, <code>rounded-full</code>, <code>text-sm</code>, <code>font-medium</code>, <code>mb-6</code></li>\n  <li><strong>.hero-title</strong>: <code>text-5xl</code>, <code>font-bold</code>, <code>text-white</code>, <code>mb-6</code>, <code>tracking-tight</code></li>\n  <li><strong>.hero-subtitle</strong>: <code>text-xl</code>, <code>text-slate-400</code>, <code>mb-8</code>, <code>leading-relaxed</code>, <code>max-w-xl</code>, <code>mx-auto</code></li>\n  <li><strong>.hero-cta-primary</strong>: <code>px-8</code>, <code>py-4</code>, <code>bg-blue-600</code>, <code>hover:bg-blue-500</code>, <code>text-white</code>, <code>font-semibold</code>, <code>rounded-lg</code>, <code>transition-colors</code></li>\n  <li><strong>.hero-cta-secondary</strong>: <code>px-8</code>, <code>py-4</code>, <code>bg-white/10</code>, <code>hover:bg-white/20</code>, <code>text-white</code>, <code>font-semibold</code>, <code>rounded-lg</code>, <code>transition-colors</code>, <code>border</code>, <code>border-white/20</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<section class=\"hero-section\">\n  <div class=\"hero-inner\">\n    <span class=\"hero-badge\">Available for hire</span>\n    <h1 class=\"hero-title\">Full-Stack Developer</h1>\n    <p class=\"hero-subtitle\">\n      Building performant, accessible web applications with React, TypeScript, and modern tooling.\n    </p>\n    <div class=\"flex gap-4 justify-center flex-wrap mt-2\">\n      <a href=\"#work\" class=\"hero-cta-primary\">View Work</a>\n      <a href=\"#contact\" class=\"hero-cta-secondary\">Get in Touch</a>\n    </div>\n  </div>\n</section>",
+      "guidedPracticeTests": [
+        { "label": "Section: min-h-screen",           "selector": ".hero-section",      "requiredClass": "min-h-screen"    },
+        { "label": "Section: items-center",           "selector": ".hero-section",      "requiredClass": "items-center"    },
+        { "label": "Section: from-slate-900",         "selector": ".hero-section",      "requiredClass": "from-slate-900"  },
+        { "label": "Section: to-slate-800",           "selector": ".hero-section",      "requiredClass": "to-slate-800"    },
+        { "label": "Inner: text-center",              "selector": ".hero-inner",        "requiredClass": "text-center"     },
+        { "label": "Inner: max-w-3xl mx-auto",        "selector": ".hero-inner",        "requiredClass": "max-w-3xl"       },
+        { "label": "Badge: bg-blue-500/20",           "selector": ".hero-badge",        "requiredClass": "bg-blue-500/20"  },
+        { "label": "Badge: text-blue-400",            "selector": ".hero-badge",        "requiredClass": "text-blue-400"   },
+        { "label": "Badge: rounded-full",             "selector": ".hero-badge",        "requiredClass": "rounded-full"    },
+        { "label": "Title: text-5xl",                 "selector": ".hero-title",        "requiredClass": "text-5xl"        },
+        { "label": "Title: tracking-tight",           "selector": ".hero-title",        "requiredClass": "tracking-tight"  },
+        { "label": "Subtitle: text-slate-400",        "selector": ".hero-subtitle",     "requiredClass": "text-slate-400"  },
+        { "label": "Subtitle: leading-relaxed",       "selector": ".hero-subtitle",     "requiredClass": "leading-relaxed" },
+        { "label": "Primary CTA: bg-blue-600",        "selector": ".hero-cta-primary",  "requiredClass": "bg-blue-600"     },
+        { "label": "Primary CTA: hover:bg-blue-500",  "selector": ".hero-cta-primary",  "requiredClass": "hover:bg-blue-500" },
+        { "label": "Secondary CTA: bg-white/10",      "selector": ".hero-cta-secondary","requiredClass": "bg-white/10"     },
+        { "label": "Secondary CTA: border-white/20",  "selector": ".hero-cta-secondary","requiredClass": "border-white/20" }
+      ],
+      "soloPracticeHtml": "<p>Build a team member card from scratch using <code>group</code> / <code>group-hover:</code>. The card shows a photo placeholder and a name by default. On hover, a bio overlay slides up from the bottom using <code>translate-y</code> transitions.</p>",
+      "feynmanPrompt": "Walk through the group + group-hover: pattern for a project card that scales its image on hover. Why does this pattern work, and what alternative (and worse) approach might a junior developer reach for instead?",
+      "questions": [
+        {
+          "id": "tw-sen-6-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "Which pair of classes creates a fixed navbar that has a frosted-glass effect over content below it?",
+          "options": [
+            "fixed top-0 inset-x-0 bg-white/80 backdrop-blur-md",
+            "sticky top-0 bg-white opacity-80",
+            "absolute top-0 w-full blur-sm bg-white",
+            "fixed bg-white/80 filter blur"
+          ],
+          "answer": "fixed top-0 inset-x-0 bg-white/80 backdrop-blur-md",
+          "explanation": "fixed top-0 inset-x-0 pins the nav to the top of the viewport spanning full width. bg-white/80 makes it 80% opaque. backdrop-blur-md blurs the content visible through it — the frosted glass effect."
+        },
+        {
+          "id": "tw-sen-6-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "You have a project card where hovering the card should scale the card image. Which pattern correctly applies the scale only to the image, triggered by hovering the card?",
+          "options": [
+            "Add class 'group' to the card, then 'group-hover:scale-105 transition-transform' to the image",
+            "Add 'hover:scale-105' to both the card and the image",
+            "Add 'hover:*:scale-105' to the card to target all children",
+            "Use JavaScript to add 'scale-105' to the image on card mouseenter"
+          ],
+          "answer": "Add class 'group' to the card, then 'group-hover:scale-105 transition-transform' to the image",
+          "explanation": "The group class marks the parent. Any descendant with a group-hover: prefix applies that utility when the group ancestor is hovered. This keeps the hover trigger and the visual response cleanly separated without JavaScript."
+        },
+        {
+          "id": "tw-sen-6-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A junior developer's portfolio hero text is 72px and overflows on mobile (375px). What underlying principle did they miss when building it?",
+          "options": [
+            "Mobile-first: the base (unprefixed) utility is for the smallest screen — start with text-4xl and add md:text-5xl lg:text-7xl",
+            "They should use fluid typography: text-[clamp(2rem,8vw,4.5rem)] instead of responsive prefixes",
+            "The issue is fixed with max-sm:text-4xl to reduce the size on small screens",
+            "Responsive font sizes don't work with text-* utilities — use the font-size CSS property directly"
+          ],
+          "answer": "Mobile-first: the base (unprefixed) utility is for the smallest screen — start with text-4xl and add md:text-5xl lg:text-7xl",
+          "explanation": "There is no Tailwind equivalent of a max-sm: prefix to decrease font size at small screens (it exists but is rarely idiomatic). The correct pattern is always to set the smallest-screen value as the base and override upward. Mobile-first means the base is the smallest. Larger screens add, never subtract."
+        }
+      ]
+    }
+  ]
+}

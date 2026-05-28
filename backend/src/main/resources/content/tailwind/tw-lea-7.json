@@ -1,0 +1,103 @@
+{
+  "id": "tw-lea-7",
+  "title": "Tailwind v4 Internals",
+  "glyph": "🌐",
+  "sortOrder": 7,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-1", "tw-sen-4"],
+  "subChunks": [
+    {
+      "id": "tw-lea-7-1",
+      "title": "Tailwind v4 Internals",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Senior engineers use Tailwind. Lead engineers understand how it works. Knowing the internals of Tailwind v4 — the Oxide engine, the CSS-first configuration model, how scanning and class generation work — lets you make architectural decisions with precision instead of intuition. This is what lets you debug a 400KB CSS file or explain to a principal why v4 dropped <code>tailwind.config.js</code> as the primary interface.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"Understanding the engine separates the engineer who uses a tool from the engineer who owns it. When the build breaks in a way you've never seen, when the CSS is the wrong size, when a class doesn't generate — you need the mental model of what's actually happening, not a Stack Overflow answer.\"</p></div>\n\n<h3>The Oxide engine — Rust-based scanning</h3>\n\n<p>Tailwind v4 uses a Rust-based engine (codenamed Oxide) for scanning source files and generating CSS. Key implications:</p>\n\n<ul>\n<li><strong>Speed</strong>: 10x–100x faster than v3's PostCSS-only pipeline — full rebuilds in milliseconds</li>\n<li><strong>Text scanning</strong>: Still scans source files as text (not parsing JS/TS AST). Any string matching a utility pattern generates CSS</li>\n<li><strong>Auto-detection</strong>: v4 detects files to scan automatically via <code>.gitignore</code> + heuristics. No <code>content</code> array needed by default</li>\n<li><strong>Explicit override</strong>: <code>@source</code> directives override auto-detection when needed</li>\n</ul>\n\n<h3>CSS-first configuration — what changed from v3</h3>\n\n<pre><code>/* v3: tailwind.config.js */\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: { brand: { 500: '#6366f1' } },\n      spacing: { 18: '4.5rem' },\n    }\n  }\n};\n\n/* v4: CSS-first via @theme */\n@theme {\n  --color-brand-500: #6366f1;\n  --spacing-18: 4.5rem;\n}\n/* The @theme block IS the configuration. No separate JS file needed. */</code></pre>\n\n<p>The configuration model shift has deeper consequences: tokens defined in <code>@theme</code> become CSS custom properties AND Tailwind utilities simultaneously. The source of truth is CSS, which means design tokens are live in the browser DevTools.</p>\n\n<h3>How the JIT engine generates classes</h3>\n\n<pre><code>/* The generation pipeline for bg-indigo-500: */\n1. Scanner finds string \"bg-indigo-500\" in a .tsx file\n2. Parser matches against known utility patterns\n3. Generator looks up --color-indigo-500 from @theme tokens\n4. Emits: .bg-indigo-500 { background-color: var(--color-indigo-500); }\n\n/* For an arbitrary value bg-[#ff0000]: */\n1. Scanner finds \"bg-[#ff0000]\"\n2. Parser recognises arbitrary value bracket syntax\n3. Emits: .bg-\\[\\#ff0000\\] { background-color: #ff0000; }</code></pre>\n\n<h3>The CSS cascade in v4</h3>\n\n<pre><code>/* v4 uses @layer to control cascade order */\n@layer theme, base, components, utilities;\n\n/* theme: CSS custom properties from @theme */\n/* base: element resets, font-face declarations */\n/* components: multi-property patterns (@layer components) */\n/* utilities: single-property utilities — highest specificity layer */\n\n/* Unlayered CSS (no @layer) beats ALL layers */\n.my-override { color: red; }  /* Beats any utility class */</code></pre>\n\n<h3>Vite plugin vs PostCSS plugin</h3>\n\n<pre><code>/* v4 with Vite — preferred for Vite projects */\n// vite.config.ts\nimport tailwindcss from '@tailwindcss/vite';\nexport default defineConfig({ plugins: [tailwindcss()] });\n\n/* v4 with PostCSS — for non-Vite build tools */\n// postcss.config.mjs\nexport default { plugins: { '@tailwindcss/postcss': {} } };\n\n/* The Vite plugin integrates with Vite's HMR pipeline —\n   CSS changes propagate without full page reload */</code></pre>\n\n<h3>Theme resolution order</h3>\n\n<p>When the same token is defined multiple times, v4 follows CSS cascade rules within <code>@theme</code>:</p>\n\n<pre><code>/* Later declarations win, like regular CSS */\n@import \"@my-org/ui/tokens.css\";  /* defines --color-primary: oklch(0.55 0.20 270) */\n\n@theme {\n  --color-primary: oklch(0.50 0.18 200);  /* overrides the imported value */\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Cordell:</strong> \"The CSS-first model is not just an aesthetic preference. It means your design tokens are inspectable in DevTools, overridable at runtime via JavaScript, and composable with any CSS tool. The v3 JS config was a dead end — tokens trapped in a JS file that CSS couldn't natively read.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "The Oxide engine is Rust-based. It scans your files as text — not AST, not parsed JS. Any string matching a utility pattern becomes CSS. This is why bg-${color}-500 breaks: the scanner never sees the full class string. The engine has no idea what color will be at runtime."
+        },
+        {
+          "type": "example",
+          "speaker": "v3 config vs v4 CSS-first",
+          "text": "/* v3 tailwind.config.js */\ntheme: { extend: { colors: { brand: '#6366f1' } } }\n\n/* v4 @theme in CSS */\n@theme {\n  --color-brand-500: #6366f1;\n  /* Also creates bg-brand-500, text-brand-500, etc. */\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a Tailwind internals explainer card showing the CSS-first configuration model:</p>\n<ul>\n  <li><strong>.internal-card</strong>: <code>bg-white</code>, <code>rounded-2xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>overflow-hidden</code>, <code>shadow-sm</code></li>\n  <li><strong>.internal-header</strong>: <code>bg-slate-900</code>, <code>px-6</code>, <code>py-4</code></li>\n  <li><strong>.internal-title</strong>: <code>text-white</code>, <code>font-mono</code>, <code>text-sm</code>, <code>font-semibold</code></li>\n  <li><strong>.internal-body</strong>: <code>p-6</code>, <code>space-y-4</code></li>\n  <li><strong>.internal-row</strong>: <code>flex</code>, <code>items-start</code>, <code>gap-3</code></li>\n  <li><strong>.internal-label</strong>: <code>text-xs</code>, <code>font-semibold</code>, <code>text-slate-500</code>, <code>uppercase</code>, <code>tracking-wider</code>, <code>w-24</code>, <code>flex-none</code>, <code>mt-0.5</code></li>\n  <li><strong>.internal-value</strong>: <code>font-mono</code>, <code>text-sm</code>, <code>text-slate-800</code></li>\n  <li><strong>.internal-badge</strong>: <code>inline-block</code>, <code>text-xs</code>, <code>font-medium</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded</code>, <code>bg-emerald-100</code>, <code>text-emerald-800</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-md p-6\">\n  <div class=\"internal-card\">\n    <div class=\"internal-header\">\n      <h3 class=\"internal-title\">Tailwind v4 — CSS-First Config</h3>\n    </div>\n    <div class=\"internal-body\">\n      <div class=\"internal-row\">\n        <span class=\"internal-label\">Engine</span>\n        <span class=\"internal-value\">Oxide (Rust) — 10-100x faster than v3 PostCSS</span>\n      </div>\n      <div class=\"internal-row\">\n        <span class=\"internal-label\">Config</span>\n        <span class=\"internal-value\">@theme { } in CSS — no tailwind.config.js required</span>\n      </div>\n      <div class=\"internal-row\">\n        <span class=\"internal-label\">Tokens</span>\n        <span class=\"internal-value\">@theme vars → CSS custom props AND utilities <span class=\"internal-badge\">Dual output</span></span>\n      </div>\n      <div class=\"internal-row\">\n        <span class=\"internal-label\">Scanning</span>\n        <span class=\"internal-value\">Text scan (not AST) — full strings must appear verbatim</span>\n      </div>\n      <div class=\"internal-row\">\n        <span class=\"internal-label\">Build</span>\n        <span class=\"internal-value\">@tailwindcss/vite preferred; @tailwindcss/postcss for others</span>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: bg-white",          "selector": ".internal-card",   "requiredClass": "bg-white"        },
+        { "label": "Card: rounded-2xl",       "selector": ".internal-card",   "requiredClass": "rounded-2xl"     },
+        { "label": "Card: overflow-hidden",   "selector": ".internal-card",   "requiredClass": "overflow-hidden" },
+        { "label": "Header: bg-slate-900",    "selector": ".internal-header", "requiredClass": "bg-slate-900"    },
+        { "label": "Title: text-white",       "selector": ".internal-title",  "requiredClass": "text-white"      },
+        { "label": "Title: font-mono",        "selector": ".internal-title",  "requiredClass": "font-mono"       },
+        { "label": "Body: space-y-4",         "selector": ".internal-body",   "requiredClass": "space-y-4"       },
+        { "label": "Row: flex",               "selector": ".internal-row",    "requiredClass": "flex"            },
+        { "label": "Row: items-start",        "selector": ".internal-row",    "requiredClass": "items-start"     },
+        { "label": "Label: text-xs",          "selector": ".internal-label",  "requiredClass": "text-xs"         },
+        { "label": "Label: uppercase",        "selector": ".internal-label",  "requiredClass": "uppercase"       },
+        { "label": "Label: flex-none",        "selector": ".internal-label",  "requiredClass": "flex-none"       },
+        { "label": "Value: font-mono",        "selector": ".internal-value",  "requiredClass": "font-mono"       },
+        { "label": "Badge: bg-emerald-100",   "selector": ".internal-badge",  "requiredClass": "bg-emerald-100"  }
+      ],
+      "soloPracticeHtml": "<p>Create a v3 vs v4 comparison dashboard from scratch showing: the configuration model (JS config vs CSS @theme), the build pipeline (PostCSS-only vs Vite plugin + Oxide engine), scanning approach (content array vs auto-detect + @source), and token output (JS theme values vs CSS custom properties). No starter code.</p>",
+      "feynmanPrompt": "Explain the difference between Tailwind v3 and v4 at the architectural level: configuration model, engine, and token output. Then explain what it means that Tailwind v4 scans files as text (not AST) — give a concrete example of code that would work in v3 but fail in v4 due to this scanning model.",
+      "questions": [
+        {
+          "id": "tw-lea-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "What is the Oxide engine in Tailwind v4 and why is it significant?",
+          "options": [
+            "A Rust-based scanner and CSS generator that replaces the v3 PostCSS-only pipeline, providing 10-100x faster builds",
+            "A new CSS optimisation algorithm that reduces bundle size by removing duplicate properties",
+            "The name for Tailwind v4's CSS-first configuration model that replaces tailwind.config.js",
+            "A Vite plugin that integrates Tailwind with the Vite HMR pipeline"
+          ],
+          "answer": "A Rust-based scanner and CSS generator that replaces the v3 PostCSS-only pipeline, providing 10-100x faster builds",
+          "explanation": "Oxide is the Rust-based core engine of Tailwind v4. Rust's performance characteristics make scanning source files and generating CSS dramatically faster than the previous Node.js/PostCSS pipeline. This means full rebuilds complete in milliseconds instead of seconds on large codebases, and incremental builds (changing one class) are near-instantaneous."
+        },
+        {
+          "id": "tw-lea-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "In Tailwind v4, a token defined in @theme as --color-brand-500: #6366f1 produces which outputs?",
+          "options": [
+            "Both a CSS custom property (var(--color-brand-500)) AND utility classes (bg-brand-500, text-brand-500, border-brand-500, etc.)",
+            "Only a CSS custom property — utility classes must be added separately via @utility",
+            "Only utility classes — CSS custom properties require a separate :root block",
+            "A CSS variable in @layer theme only — it cannot be used outside @theme blocks"
+          ],
+          "answer": "Both a CSS custom property (var(--color-brand-500)) AND utility classes (bg-brand-500, text-brand-500, border-brand-500, etc.)",
+          "explanation": "This dual output is one of Tailwind v4's most important architectural changes. Every @theme token is exposed as a CSS custom property (usable in arbitrary values, inline styles, and native CSS) and simultaneously generates the full family of utility classes. The separation that existed in v3 (JS config creates utilities, CSS creates custom props) is eliminated."
+        },
+        {
+          "id": "tw-lea-7-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A v3 project has tailwind.config.js with theme.extend.colors.brand = '#6366f1'. After migrating to v4, the bg-brand utility no longer generates. What is the most likely cause?",
+          "options": [
+            "v4 uses CSS-first configuration — the token must be moved to @theme { --color-brand: #6366f1; } in the CSS file; tailwind.config.js extend.colors is not the primary config in v4",
+            "v4 removed support for single-shade colour tokens — you must use a full 50-950 scale",
+            "The @tailwindcss/vite plugin doesn't read tailwind.config.js at all — only PostCSS does",
+            "v4 renamed the color scale — brand must become brand-DEFAULT to be recognised"
+          ],
+          "answer": "v4 uses CSS-first configuration — the token must be moved to @theme { --color-brand: #6366f1; } in the CSS file; tailwind.config.js extend.colors is not the primary config in v4",
+          "explanation": "Tailwind v4's primary configuration mechanism is CSS @theme. While tailwind.config.js is still supported for plugin registration and some legacy options, theme token definitions should be migrated to @theme in your CSS file. The v4 migration tool (npx @tailwindcss/upgrade) handles this automatically, but understanding the underlying cause is essential for debugging manual migrations."
+        }
+      ]
+    }
+  ]
+}

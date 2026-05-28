@@ -1,0 +1,101 @@
+{
+  "id": "tw-sen-9",
+  "title": "Complex CSS Grid Patterns",
+  "glyph": "🔮",
+  "sortOrder": 9,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-1"],
+  "subChunks": [
+    {
+      "id": "tw-sen-9-1",
+      "title": "Complex CSS Grid Patterns",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Grid's junior usage — <code>grid-cols-3 gap-6</code> — is covered in the Junior tier. This lesson covers the patterns that separate senior-level layouts from beginner ones: auto-fill vs auto-fit, subgrid, named grid lines, dense auto-placement, and the masonry-style magazine layout.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"Most developers use Grid as 'smarter Flexbox'. That is twenty percent of its capability. The patterns here — auto-fill, dense placement, subgrid — make complex editorial layouts achievable in pure CSS.\"</p></div>\n\n<h3>auto-fill vs auto-fit</h3>\n<p>Both create responsive column counts without media queries. The difference is how empty tracks are handled:</p>\n<pre><code>/* auto-fill: creates as many columns as fit, preserving empty tracks */\n&lt;div class=\"grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4\"&gt;\n\n/* auto-fit: collapses empty columns — items stretch to fill the row */\n&lt;div class=\"grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4\"&gt;</code></pre>\n<p>Use <strong>auto-fill</strong> when you want items to maintain consistent sizing regardless of count. Use <strong>auto-fit</strong> when you want items to stretch and fill available space when there are fewer items than columns fit.</p>\n\n<h3>Dense auto-placement — filling gaps automatically</h3>\n<pre><code>/* Items of varying sizes, gaps filled automatically */\n&lt;div class=\"grid grid-cols-3 grid-rows-[auto] gap-4\n            [grid-auto-flow:dense]\"&gt;\n  &lt;div class=\"col-span-2\"&gt;Wide item&lt;/div&gt;\n  &lt;div&gt;Normal item&lt;/div&gt;\n  &lt;div class=\"col-span-2\"&gt;Another wide&lt;/div&gt;\n  &lt;div&gt;Fills the gap&lt;/div&gt;  &lt;!-- moved to fill the gap left by col-span-2 --&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Subgrid — aligning nested grids to the parent track</h3>\n<p>Subgrid allows a child to inherit the parent's grid tracks. This solves the \"misaligned card content\" problem:</p>\n<pre><code>/* Parent grid */\n&lt;div class=\"grid grid-cols-3 gap-4\"&gt;\n\n  /* Each card spans one column but has its own internal rows */\n  &lt;article class=\"grid [grid-row:span_3] [grid-template-rows:subgrid] gap-0\"&gt;\n    &lt;!-- These three items align to the parent's row tracks --&gt;\n    &lt;img class=\"aspect-video object-cover w-full\" /&gt;    &lt;!-- row 1 --&gt;\n    &lt;h3 class=\"px-4 pt-3 font-semibold\"&gt;Title&lt;/h3&gt;    &lt;!-- row 2 --&gt;\n    &lt;p class=\"px-4 pb-4 text-sm text-gray-500\"&gt;Desc&lt;/p&gt; &lt;!-- row 3 --&gt;\n  &lt;/article&gt;\n\n&lt;/div&gt;\n\n/* Result: all card titles align on the same row, descriptions align below,\n   regardless of title or image height */</code></pre>\n\n<h3>Named grid lines — semantic layout</h3>\n<pre><code>/* Define named lines in the grid template */\n.layout {\n  display: grid;\n  grid-template-columns:\n    [sidebar-start] 240px\n    [sidebar-end content-start] 1fr\n    [content-end];\n}\n\n/* Place items by name */\n.sidebar { grid-column: sidebar-start / sidebar-end; }\n.main    { grid-column: content-start / content-end; }</code></pre>\n<p>In Tailwind, use arbitrary values: <code>col-[sidebar-start/sidebar-end]</code>.</p>\n\n<h3>Magazine-style layout (varying card sizes)</h3>\n<pre><code>&lt;div class=\"grid grid-cols-4 grid-rows-3 gap-4 h-[600px]\"&gt;\n  &lt;!-- Hero: spans 2 cols, 2 rows --&gt;\n  &lt;article class=\"col-span-2 row-span-2 bg-slate-800 rounded-xl overflow-hidden\"&gt;\n    &lt;img class=\"w-full h-full object-cover\" /&gt;\n  &lt;/article&gt;\n\n  &lt;!-- Normal cards --&gt;\n  &lt;article class=\"bg-white rounded-xl\"&gt;Card 2&lt;/article&gt;\n  &lt;article class=\"bg-white rounded-xl\"&gt;Card 3&lt;/article&gt;\n  &lt;article class=\"col-span-2 bg-white rounded-xl\"&gt;Wide card&lt;/article&gt;\n  &lt;article class=\"bg-white rounded-xl\"&gt;Card 5&lt;/article&gt;\n  &lt;article class=\"bg-white rounded-xl\"&gt;Card 6&lt;/article&gt;\n&lt;/div&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"Subgrid is the solution to 95% of card-alignment problems. Stop using min-height hacks. Let the grid track handle it.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "auto-fill and auto-fit create responsive grids without a single media query. Dense auto-placement fills gaps you would otherwise manage with JavaScript. Subgrid solves the card alignment problem that plagues every grid layout. These three patterns replace entire libraries."
+        },
+        {
+          "type": "example",
+          "speaker": "Responsive card grid — no media queries",
+          "text": "<div class=\"grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4\">\n  <!-- Cards automatically reflow from 1 to N columns -->\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a magazine-style featured content grid:</p>\n<ul>\n  <li><strong>.mag-grid</strong>: <code>grid</code>, <code>grid-cols-4</code>, <code>gap-4</code></li>\n  <li><strong>.mag-hero</strong>: <code>col-span-2</code>, <code>row-span-2</code>, <code>bg-slate-800</code>, <code>rounded-xl</code>, <code>overflow-hidden</code>, <code>relative</code></li>\n  <li><strong>.mag-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code>, <code>overflow-hidden</code></li>\n  <li><strong>.mag-card-wide</strong>: <code>col-span-2</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code>, <code>overflow-hidden</code>, <code>flex</code></li>\n  <li><strong>.mag-img</strong>: <code>w-full</code>, <code>h-full</code>, <code>object-cover</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"mag-grid p-6 bg-gray-50 min-h-[500px]\">\n  <!-- Hero card: spans 2 cols, 2 rows -->\n  <div class=\"mag-hero\">\n    <img class=\"mag-img\" src=\"https://picsum.photos/seed/hero/600/400\" alt=\"Hero\" />\n    <div class=\"absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 to-transparent\">\n      <p class=\"text-white font-bold text-lg\">The Ancient Dragon Awakens</p>\n      <p class=\"text-white/70 text-sm mt-1\">A quest unlike any before</p>\n    </div>\n  </div>\n\n  <!-- Standard cards -->\n  <div class=\"mag-card\">\n    <img class=\"aspect-video w-full object-cover\" src=\"https://picsum.photos/seed/c2/400/300\" alt=\"Card\" />\n    <div class=\"p-3\">\n      <p class=\"text-sm font-semibold text-gray-900\">Forest Expedition</p>\n    </div>\n  </div>\n  <div class=\"mag-card\">\n    <img class=\"aspect-video w-full object-cover\" src=\"https://picsum.photos/seed/c3/400/300\" alt=\"Card\" />\n    <div class=\"p-3\">\n      <p class=\"text-sm font-semibold text-gray-900\">Sky Citadel</p>\n    </div>\n  </div>\n\n  <!-- Wide card -->\n  <div class=\"mag-card-wide\">\n    <img class=\"w-40 flex-none object-cover\" src=\"https://picsum.photos/seed/c4/400/300\" alt=\"Card\" />\n    <div class=\"p-4\">\n      <p class=\"text-sm font-semibold text-gray-900\">Lava Dungeon Expansion</p>\n      <p class=\"text-xs text-gray-500 mt-1\">Three new areas, twelve new quests</p>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Grid: grid layout",      "selector": ".mag-grid",      "requiredClass": "grid"          },
+        { "label": "Grid: grid-cols-4",      "selector": ".mag-grid",      "requiredClass": "grid-cols-4"   },
+        { "label": "Grid: gap-4",            "selector": ".mag-grid",      "requiredClass": "gap-4"         },
+        { "label": "Hero: col-span-2",       "selector": ".mag-hero",      "requiredClass": "col-span-2"    },
+        { "label": "Hero: row-span-2",       "selector": ".mag-hero",      "requiredClass": "row-span-2"    },
+        { "label": "Hero: rounded-xl",       "selector": ".mag-hero",      "requiredClass": "rounded-xl"    },
+        { "label": "Hero: overflow-hidden",  "selector": ".mag-hero",      "requiredClass": "overflow-hidden"},
+        { "label": "Card: bg-white",         "selector": ".mag-card",      "requiredClass": "bg-white"      },
+        { "label": "Card: rounded-xl",       "selector": ".mag-card",      "requiredClass": "rounded-xl"    },
+        { "label": "Wide: col-span-2",       "selector": ".mag-card-wide", "requiredClass": "col-span-2"    },
+        { "label": "Wide: flex",             "selector": ".mag-card-wide", "requiredClass": "flex"          },
+        { "label": "Img: object-cover",      "selector": ".mag-img",       "requiredClass": "object-cover"  }
+      ],
+      "soloPracticeHtml": "<p>Build a responsive masonry-style photo gallery from scratch using <code>grid-cols-[repeat(auto-fill,minmax(200px,1fr))]</code> and <code>[grid-auto-flow:dense]</code>. Mix cards that are single-column, double-column, and double-row sized. No starter code.</p>",
+      "feynmanPrompt": "Explain the difference between auto-fill and auto-fit in CSS Grid. Give a concrete example where each one is the better choice. What problem does subgrid solve for card grids, and why is min-height a worse solution?",
+      "questions": [
+        {
+          "id": "tw-sen-9-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "What is the difference between auto-fill and auto-fit in CSS Grid column templates?",
+          "options": [
+            "auto-fill preserves empty column tracks; auto-fit collapses them so items stretch to fill available space",
+            "auto-fill creates fixed-size columns; auto-fit creates flexible columns",
+            "auto-fit is for Firefox; auto-fill is for Chromium — both produce the same layout",
+            "auto-fill works with fr units; auto-fit only works with px units"
+          ],
+          "answer": "auto-fill preserves empty column tracks; auto-fit collapses them so items stretch to fill available space",
+          "explanation": "Both create as many columns as fit the container width using minmax(). The difference appears when there are fewer items than available columns: auto-fill keeps empty tracks (items stay their minimum size), while auto-fit collapses empty tracks (items stretch to fill the row with 1fr). Use auto-fill for uniform card grids; auto-fit for items that should always fill the row."
+        },
+        {
+          "id": "tw-sen-9-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A 3-column card grid has cards with varying title lengths. The body text starts at different heights on each card, making the grid look misaligned. Which CSS Grid feature solves this without min-height hacks?",
+          "options": [
+            "Subgrid — the card spans multiple parent row tracks and each internal element aligns to those shared tracks",
+            "grid-auto-rows: 1fr — forces all rows to equal height",
+            "align-items: stretch on the parent — makes cards equal height",
+            "place-content: center on each card — vertically centres all content"
+          ],
+          "answer": "Subgrid — the card spans multiple parent row tracks and each internal element aligns to those shared tracks",
+          "explanation": "Subgrid (grid-template-rows: subgrid) allows a card to inherit the parent grid's row tracks. When every card uses subgrid, the image, title, and description of each card align to the same rows across all columns — regardless of content length. align-items: stretch makes cards equal height but doesn't align internal elements."
+        },
+        {
+          "id": "tw-sen-9-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A magazine layout has cards of varying sizes. A col-span-2 card leaves a gap on the right because the next item is placed after it, not in the gap. Which class fills gaps automatically?",
+          "options": [
+            "[grid-auto-flow:dense] on the grid container — backfills smaller items into gaps left by larger ones",
+            "grid-flow-row-dense on each card — instructs each item to pack tightly",
+            "gap-0 on the container — removes gaps so items pack together",
+            "col-auto on smaller items — lets them flow into available positions"
+          ],
+          "answer": "[grid-auto-flow:dense] on the grid container — backfills smaller items into gaps left by larger ones",
+          "explanation": "grid-auto-flow: dense changes the auto-placement algorithm to fill gaps left by wide or tall items with subsequent smaller items. Without it, items are placed in source order and gaps remain. Note: dense placement changes visual order from source order, which can harm accessibility if the visual reading order matters."
+        }
+      ]
+    }
+  ]
+}

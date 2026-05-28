@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-7",
+  "title": "Form Layout and Styling",
+  "glyph": "⚗️",
+  "sortOrder": 7,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-3"],
+  "subChunks": [
+    {
+      "id": "tw-jun-7-1",
+      "title": "Form Layout and Styling",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Forms are the most interaction-dense part of any web application. Getting them right means handling inputs, labels, validation states, checkboxes, selects, and error messages — all with proper accessible associations, correct focus indicators, and consistent visual hierarchy. Tailwind has utilities for every piece of this puzzle.</p>",
+      "explanationHtml": "<h3>Input anatomy</h3>\n<pre><code>&lt;div class=\"flex flex-col gap-1\"&gt;\n  &lt;label class=\"text-sm font-medium text-gray-700\" for=\"email\"&gt;Email&lt;/label&gt;\n  &lt;input\n    id=\"email\" type=\"email\"\n    class=\"w-full px-3 py-2 text-sm border border-gray-300 rounded-md\n           placeholder:text-gray-400\n           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500\n           disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed\"\n  /&gt;\n  &lt;p class=\"text-xs text-gray-500\"&gt;We'll never share your email.&lt;/p&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Validation states</h3>\n<pre><code>/* Error state */\nborder-red-500 focus:ring-red-500 focus:border-red-500\n\n/* Error message */\n&lt;p class=\"text-xs text-red-600 mt-1\"&gt;Email is required.&lt;/p&gt;\n\n/* Success state */\nborder-green-500 focus:ring-green-500</code></pre>\n\n<h3>Select element</h3>\n<pre><code>&lt;select class=\"w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white\n               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500\n               appearance-none cursor-pointer\"&gt;\n  &lt;option value=\"\"&gt;Select a tier...&lt;/option&gt;\n  &lt;option value=\"app\"&gt;Apprentice&lt;/option&gt;\n&lt;/select&gt;</code></pre>\n<p><code>appearance-none</code> removes the browser's default dropdown arrow so you can add a custom one.</p>\n\n<h3>Textarea</h3>\n<pre><code>&lt;textarea\n  class=\"w-full px-3 py-2 text-sm border border-gray-300 rounded-md resize-none\n         focus:outline-none focus:ring-2 focus:ring-blue-500\n         min-h-[120px]\"\n  rows=\"4\"\n&gt;&lt;/textarea&gt;</code></pre>\n\n<h3>Checkbox and radio</h3>\n<pre><code>&lt;!-- Accessible checkbox group --&gt;\n&lt;label class=\"flex items-center gap-3 cursor-pointer\"&gt;\n  &lt;input type=\"checkbox\"\n    class=\"w-4 h-4 rounded border-gray-300 text-blue-600\n           focus:ring-2 focus:ring-blue-500 cursor-pointer\"\n  /&gt;\n  &lt;span class=\"text-sm text-gray-700\"&gt;Remember me&lt;/span&gt;\n&lt;/label&gt;\n\n&lt;!-- Radio group --&gt;\n&lt;div class=\"space-y-2\"&gt;\n  &lt;label class=\"flex items-center gap-3 cursor-pointer\"&gt;\n    &lt;input type=\"radio\" name=\"plan\" value=\"free\"\n      class=\"w-4 h-4 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500\"\n    /&gt;\n    &lt;span class=\"text-sm text-gray-700\"&gt;Free plan&lt;/span&gt;\n  &lt;/label&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Form layout patterns</h3>\n<pre><code>/* Stacked form (mobile-first) */\n&lt;form class=\"space-y-4\"&gt;\n\n/* Two-column form on desktop */\n&lt;div class=\"grid grid-cols-1 sm:grid-cols-2 gap-4\"&gt;\n\n/* Inline form (search bar style) */\n&lt;form class=\"flex gap-2\"&gt;\n  &lt;input class=\"flex-1 ...\" /&gt;\n  &lt;button class=\"flex-none ...\"&gt;Submit&lt;/button&gt;\n&lt;/form&gt;</code></pre>\n\n<h3>Form fieldset</h3>\n<pre><code>&lt;fieldset class=\"border border-gray-200 rounded-lg p-4\"&gt;\n  &lt;legend class=\"text-sm font-medium text-gray-900 px-2\"&gt;Notifications&lt;/legend&gt;\n  &lt;div class=\"space-y-3\"&gt;\n    &lt;!-- checkboxes --&gt;\n  &lt;/div&gt;\n&lt;/fieldset&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"Every input must have an associated label — either via <code>for</code>/<code>id</code> or by wrapping the input inside the label. No exceptions. A form that screen readers can't navigate is not a form — it's a guessing game for a quarter of your users.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "A form that breaks under keyboard navigation or fails to communicate errors clearly is not a form — it's a barrier. Every input needs a label. Every error needs colour AND text. Every required field needs to say so. Build the form right, and the rest of the interface trusts you."
+        },
+        {
+          "type": "example",
+          "speaker": "Complete input with all states",
+          "text": "<div class=\"flex flex-col gap-1\">\n  <label class=\"text-sm font-medium text-gray-700\" for=\"email\">Email</label>\n  <input id=\"email\" type=\"email\"\n    class=\"w-full px-3 py-2 text-sm border border-gray-300 rounded-md\n           placeholder:text-gray-400\n           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500\n           disabled:bg-gray-50 disabled:cursor-not-allowed\" />\n  <p class=\"text-xs text-red-600\">Please enter a valid email.</p>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a complete contact form with proper layout and all interactive states:</p>\n<ul>\n  <li><strong>.form-group</strong>: <code>flex</code>, <code>flex-col</code>, <code>gap-1</code></li>\n  <li><strong>.form-label</strong>: <code>text-sm</code>, <code>font-medium</code>, <code>text-gray-700</code></li>\n  <li><strong>.form-input</strong>: <code>w-full</code>, <code>px-3</code>, <code>py-2</code>, <code>text-sm</code>, <code>border</code>, <code>border-gray-300</code>, <code>rounded-md</code>, <code>placeholder:text-gray-400</code>, <code>focus:outline-none</code>, <code>focus:ring-2</code>, <code>focus:ring-blue-500</code>, <code>focus:border-blue-500</code></li>\n  <li><strong>.form-error</strong>: <code>text-xs</code>, <code>text-red-600</code></li>\n  <li><strong>.form-hint</strong>: <code>text-xs</code>, <code>text-gray-500</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<form class=\"space-y-5 p-6 bg-white rounded-xl shadow-sm max-w-md\">\n  <h2 class=\"text-lg font-semibold text-gray-900\">Contact Us</h2>\n\n  <div class=\"form-group\">\n    <label class=\"form-label\" for=\"name\">Name</label>\n    <input id=\"name\" class=\"form-input\" type=\"text\" placeholder=\"Your name\" />\n  </div>\n\n  <div class=\"form-group\">\n    <label class=\"form-label\" for=\"contact-email\">Email</label>\n    <input id=\"contact-email\" class=\"form-input border-red-500 focus:ring-red-500\" type=\"email\" placeholder=\"you@example.com\" />\n    <p class=\"form-error\">Please enter a valid email address.</p>\n  </div>\n\n  <div class=\"form-group\">\n    <label class=\"form-label\" for=\"message\">Message</label>\n    <textarea id=\"message\" class=\"form-input resize-none min-h-[100px]\" placeholder=\"How can we help?\"></textarea>\n    <p class=\"form-hint\">Maximum 500 characters.</p>\n  </div>\n\n  <button type=\"submit\" class=\"w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors\">\n    Send Message\n  </button>\n</form>",
+      "guidedPracticeTests": [
+        { "label": "Group: flex-col layout",      "selector": ".form-group",  "requiredClass": "flex-col"               },
+        { "label": "Group: gap",                  "selector": ".form-group",  "requiredClass": "gap-1"                  },
+        { "label": "Label: text-sm",              "selector": ".form-label",  "requiredClass": "text-sm"                },
+        { "label": "Label: font-medium",          "selector": ".form-label",  "requiredClass": "font-medium"            },
+        { "label": "Input: full width",           "selector": ".form-input",  "requiredClass": "w-full"                 },
+        { "label": "Input: border",               "selector": ".form-input",  "requiredClass": "border"                 },
+        { "label": "Input: placeholder style",    "selector": ".form-input",  "requiredClass": "placeholder:text-gray-400"},
+        { "label": "Input: focus ring",           "selector": ".form-input",  "requiredClass": "focus:ring-2"           },
+        { "label": "Error: red color",            "selector": ".form-error",  "requiredClass": "text-red-600"           },
+        { "label": "Hint: muted color",           "selector": ".form-hint",   "requiredClass": "text-gray-500"          }
+      ],
+      "soloPracticeHtml": "<p>Build a registration form from scratch with: a two-column name row (first name, last name), an email input with error state (red border + red error message), a password input with a hint, a select dropdown for country, a checkbox for terms agreement using peer to show a styled label, and a full-width submit button. No starter code.</p>",
+      "feynmanPrompt": "Walk through the anatomy of a well-built form input — what classes are needed for the container, label, input, hint text, and error message? Why is the focus: state pattern different for inputs vs buttons? Explain the appearance-none class and when you need it.",
+      "questions": [
+        {
+          "id": "tw-jun-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A select element shows the browser's default dropdown arrow even after styling with Tailwind. Which class removes it so you can add a custom one?",
+          "options": [
+            "appearance-none",
+            "select-none",
+            "arrow-none",
+            "outline-none"
+          ],
+          "answer": "appearance-none",
+          "explanation": "appearance-none removes the browser's native form control styling, including the default dropdown arrow on select elements. After applying it, you can add a custom SVG arrow with absolute positioning and pointer-events-none."
+        },
+        {
+          "id": "tw-jun-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A textarea can be resized by dragging its corner, distorting the form layout. Which class prevents this?",
+          "options": [
+            "resize-none",
+            "overflow-hidden",
+            "fixed-size",
+            "no-resize"
+          ],
+          "answer": "resize-none",
+          "explanation": "resize-none sets resize: none on the textarea, preventing the user from dragging its resize handle. Tailwind also provides resize-y (allow vertical resize only) and resize-x (horizontal only) if you want partial resize control."
+        },
+        {
+          "id": "tw-jun-7-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A form shows validation errors using only red border colour (no error text). A user who is colour-blind cannot distinguish the error from a normal input. What is the accessible fix?",
+          "options": [
+            "Add an error message text in addition to the red border — colour alone is never sufficient to communicate state (WCAG 1.4.1)",
+            "Increase the border thickness from 1px to 2px on error inputs",
+            "Add a red background (bg-red-50) in addition to the border",
+            "Use aria-invalid on the input — screen readers will announce the error automatically"
+          ],
+          "answer": "Add an error message text in addition to the red border — colour alone is never sufficient to communicate state (WCAG 1.4.1)",
+          "explanation": "WCAG 1.4.1 (Use of Color) requires that colour is not the only visual means of conveying information. An error must be communicated through text (error message), not just a colour change. The complete error pattern is: red border + red error message text + aria-describedby linking the input to the error message for screen readers."
+        }
+      ]
+    }
+  ]
+}

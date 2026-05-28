@@ -1,0 +1,93 @@
+{
+  "id": "tw-app-10",
+  "title": "Position and Z-Index",
+  "glyph": "🎨",
+  "sortOrder": 10,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-9"],
+  "subChunks": [
+    {
+      "id": "tw-app-10-1",
+      "title": "Position and Z-Index",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Absolute positioning, sticky headers, fixed modals, and z-index stacking are essential for any real UI. These are the utilities that let you break out of the normal document flow — and the ones that cause the most confusion when used incorrectly.</p>",
+      "explanationHtml": "<h3>Position</h3>\n<pre><code>static    /* default — normal document flow         */\nrelative  /* positioned relative to itself          */\nabsolute  /* positioned relative to nearest positioned ancestor */\nfixed     /* positioned relative to viewport        */\nsticky    /* sticks when scrolled to its threshold  */\n</code></pre>\n\n<h3>Inset (top, right, bottom, left)</h3>\n<pre><code>/* All four sides */\ninset-0      /* top: 0; right: 0; bottom: 0; left: 0 */\ninset-x-0    /* left: 0; right: 0                    */\ninset-y-0    /* top: 0; bottom: 0                    */\n\n/* Individual sides */\ntop-0    top-4    top-auto\nright-0  right-4  right-auto\nbottom-0 bottom-4 bottom-auto\nleft-0   left-4   left-auto\n\n/* Full positioning shorthand */\ntop-1/2     /* 50% — used with -translate-y-1/2 for vertical centering */\n</code></pre>\n\n<h3>Z-index</h3>\n<pre><code>z-0\nz-10\nz-20\nz-30\nz-40\nz-50      /* max default */\nz-auto\n\n/* Common z-index layers */\n/* z-10:  floating labels, tooltips */\n/* z-20:  dropdowns, select menus   */\n/* z-30:  fixed headers, sidebars   */\n/* z-40:  modals, dialogs           */\n/* z-50:  toasts, notifications     */\n</code></pre>\n\n<h3>Common patterns</h3>\n\n<pre><code>/* Sticky header */\n&lt;nav class=\"sticky top-0 z-30 bg-white border-b border-gray-100\"&gt;\n\n/* Full-screen modal overlay */\n&lt;div class=\"fixed inset-0 z-40 bg-black/50 flex items-center justify-center\"&gt;\n  &lt;div class=\"bg-white rounded-xl p-8 max-w-md w-full mx-4\"&gt;\n    &lt;!-- modal content --&gt;\n  &lt;/div&gt;\n&lt;/div&gt;\n\n/* Badge on avatar (top-right corner) */\n&lt;div class=\"relative\"&gt;\n  &lt;img class=\"w-10 h-10 rounded-full\" src=\"/avatar.jpg\" alt=\"\" /&gt;\n  &lt;span class=\"absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full\n               text-white text-xs flex items-center justify-center\"&gt;\n    3\n  &lt;/span&gt;\n&lt;/div&gt;\n\n/* Absolutely centred within parent */\n&lt;div class=\"relative w-64 h-64 bg-gray-100\"&gt;\n  &lt;div class=\"absolute inset-0 flex items-center justify-center\"&gt;\n    &lt;p&gt;Centred content&lt;/p&gt;\n  &lt;/div&gt;\n&lt;/div&gt;\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"The most important rule: relative is the anchor, absolute is the attachment. Every absolute element positions itself relative to the nearest ancestor that has position: relative (or absolute, fixed, sticky). If you forget to add relative to the parent, the absolute element will fly off to an unexpected ancestor — usually the entire page.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "There are two rules. First: relative is the parent, absolute is the child. Forget relative on the parent and the absolute child escapes to an ancestor you did not intend. Second: sticky top-0 z-30 on the navigation bar. That is the entire implementation of a sticky header. Three classes."
+        },
+        {
+          "type": "example",
+          "speaker": "Avatar with notification badge",
+          "text": "<!-- relative on parent, absolute on badge -->\n<div class=\"relative inline-block\">\n  <img class=\"w-10 h-10 rounded-full\" src=\"/avatar.jpg\" alt=\"Aria\" />\n  <span class=\"absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full\n               text-white text-xs flex items-center justify-center\">\n    3\n  </span>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a sticky header and a notification badge:</p>\n<ul>\n  <li><strong>.sticky-nav</strong>: <code>sticky</code>, <code>top-0</code>, <code>z-30</code>, <code>bg-white</code>, <code>border-b</code>, <code>border-gray-100</code>, <code>px-6</code>, <code>py-4</code>, <code>flex</code>, <code>items-center</code></li>\n  <li><strong>.avatar-wrap</strong>: <code>relative</code>, <code>inline-block</code></li>\n  <li><strong>.notification-dot</strong>: <code>absolute</code>, <code>-top-1</code>, <code>-right-1</code>, <code>w-3</code>, <code>h-3</code>, <code>bg-red-500</code>, <code>rounded-full</code></li>\n  <li><strong>.modal-overlay</strong>: <code>fixed</code>, <code>inset-0</code>, <code>z-40</code>, <code>bg-black/50</code>, <code>flex</code>, <code>items-center</code>, <code>justify-center</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div>\n  <nav class=\"sticky-nav\">\n    <span class=\"font-bold text-gray-900\">Arcane Academy</span>\n    <div class=\"ml-auto avatar-wrap\">\n      <img class=\"w-8 h-8 rounded-full\" src=\"https://picsum.photos/seed/aria/40/40\" alt=\"Aria\" />\n      <span class=\"notification-dot\"></span>\n    </div>\n  </nav>\n  <div class=\"p-8\">\n    <p class=\"text-gray-700\">Page content scrolls under the sticky nav.</p>\n  </div>\n  <div class=\"modal-overlay\">\n    <div class=\"bg-white rounded-xl p-8 max-w-sm w-full mx-4 shadow-xl\">\n      <h2 class=\"text-xl font-bold text-gray-900\">Quest Completed!</h2>\n      <p class=\"text-gray-600 mt-2\">You earned 500 XP. Congratulations.</p>\n      <button class=\"mt-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm\">Continue</button>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Nav: sticky",           "selector": ".sticky-nav",        "requiredClass": "sticky"           },
+        { "label": "Nav: top-0",            "selector": ".sticky-nav",        "requiredClass": "top-0"            },
+        { "label": "Nav: z-index",          "selector": ".sticky-nav",        "requiredClass": "z-30"             },
+        { "label": "Avatar wrap: relative", "selector": ".avatar-wrap",       "requiredClass": "relative"         },
+        { "label": "Dot: absolute",         "selector": ".notification-dot",  "requiredClass": "absolute"         },
+        { "label": "Dot: position top",     "selector": ".notification-dot",  "requiredClass": "-top-1"           },
+        { "label": "Modal: fixed",          "selector": ".modal-overlay",     "requiredClass": "fixed"            },
+        { "label": "Modal: inset-0",        "selector": ".modal-overlay",     "requiredClass": "inset-0"          },
+        { "label": "Modal: z-index",        "selector": ".modal-overlay",     "requiredClass": "z-40"             }
+      ],
+      "soloPracticeHtml": "<p>Build a profile card with: a position:relative card container, an avatar image with an absolute 'online' green dot in the top-right corner, a fixed-position toast notification in the bottom-right of the viewport (fixed bottom-4 right-4 z-50), and a sticky heading at the top of a scrollable section.</p>",
+      "feynmanPrompt": "Explain the relationship between relative and absolute positioning — why does adding relative to a parent change where its absolute children position themselves? Walk through the modal overlay pattern (fixed inset-0 z-40 bg-black/50) — what does each class contribute and what would break if any were removed?",
+      "questions": [
+        {
+          "id": "tw-app-10-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "APPRENTICE",
+          "prompt": "Which class makes an element stick to the top of the viewport as the user scrolls?",
+          "options": ["sticky top-0", "fixed top-0", "absolute top-0", "relative top-0"],
+          "answer": "sticky top-0",
+          "explanation": "sticky top-0 makes an element stick to the top of its scroll container when it reaches that position while scrolling. Unlike fixed, a sticky element still participates in normal document flow and only sticks within its parent's bounds. fixed top-0 would remove it from the flow entirely and always stick to the viewport."
+        },
+        {
+          "id": "tw-app-10-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You add absolute top-0 right-0 to a badge, expecting it to appear in the top-right corner of its parent card. Instead it appears in the top-right corner of the page. What is wrong?",
+          "options": [
+            "The parent card is missing relative — absolute elements position relative to the nearest positioned ancestor, defaulting to the viewport/document if none exists",
+            "The badge needs z-index to appear on top of the card",
+            "top-0 right-0 positions relative to the page by default and needs a parent offset",
+            "absolute requires a fixed-size parent to work correctly"
+          ],
+          "answer": "The parent card is missing relative — absolute elements position relative to the nearest positioned ancestor, defaulting to the viewport/document if none exists",
+          "explanation": "absolute positioning finds the nearest ancestor with position set to anything other than static (relative, absolute, fixed, sticky). If no such ancestor exists, it uses the initial containing block (essentially the viewport). Adding relative to the card makes it the containing block, and the badge positions itself within the card's bounds."
+        },
+        {
+          "id": "tw-app-10-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "APPRENTICE",
+          "prompt": "When should you use fixed positioning vs sticky positioning for a site navigation bar?",
+          "options": [
+            "sticky top-0 is usually better — it participates in document flow and sticks only within its scroll container, avoiding the common fixed-nav pitfall of content being hidden under it",
+            "fixed top-0 is better — sticky has a browser support issue on iOS Safari",
+            "sticky requires JavaScript to work; fixed is pure CSS",
+            "Both are identical — the choice is purely stylistic"
+          ],
+          "answer": "sticky top-0 is usually better — it participates in document flow and sticks only within its scroll container, avoiding the common fixed-nav pitfall of content being hidden under it",
+          "explanation": "fixed nav bars remove the element from document flow — you must add padding-top to the body equal to the nav height, otherwise content hides under it. sticky nav bars stay in flow initially, then stick — no offset required. Sticky has full modern browser support including iOS Safari (with the webkit prefix handled automatically by Tailwind). sticky is the preferred choice for most nav bars."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "tw-lea-9",
+  "title": "Next.js and Server Components",
+  "glyph": "🌐",
+  "sortOrder": 9,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-lea-7"],
+  "subChunks": [
+    {
+      "id": "tw-lea-9-1",
+      "title": "Next.js and Server Components",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Next.js with React Server Components (RSC) changes how you think about Tailwind. CSS is rendered on the server, streamed to the client, and styles must be available before hydration. Naively applying Tailwind to a Server Components app produces flash-of-unstyled-content, class conflicts between server and client renders, and oversized CSS bundles from scanning the wrong files. This lesson covers the patterns that prevent all three.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"Server Components are rendered on the server — once. Client Components hydrate on the client — potentially many times. Tailwind classes applied during server rendering must be stable and deterministic. Dynamic classes computed at runtime must be on Client Components. This is not a Tailwind constraint — it is an RSC constraint that Tailwind exposes.\"</p></div>\n\n<h3>Setting up Tailwind v4 with Next.js 15</h3>\n\n<pre><code># Install\nnpm install tailwindcss @tailwindcss/postcss postcss\n\n# postcss.config.mjs\nexport default { plugins: { '@tailwindcss/postcss': {} } };\n\n# app/globals.css\n@import \"tailwindcss\";\n\n@theme {\n  --font-sans: var(--font-inter);  /* Next.js font variable */\n  --color-primary: oklch(0.55 0.20 270);\n}\n\n# app/layout.tsx\nimport './globals.css';</code></pre>\n\n<h3>Server Components with Tailwind</h3>\n\n<pre><code>// ✅ Server Component — classes are static, determined at build time\nexport default function ProductCard({ product }: { product: Product }) {\n  return (\n    &lt;article className=\"bg-white rounded-xl border border-gray-200 p-6\"&gt;\n      &lt;h2 className=\"font-semibold text-gray-900\"&gt;{product.name}&lt;/h2&gt;\n      &lt;p className=\"text-gray-500 mt-1\"&gt;{product.description}&lt;/p&gt;\n    &lt;/article&gt;\n  );\n}\n// No 'use client' — this is a Server Component.\n// Static Tailwind classes ✅</code></pre>\n\n<h3>Client Components for dynamic classes</h3>\n\n<pre><code>'use client';\n\nimport { useState } from 'react';\nimport { cn } from '@/lib/utils';\n\n// ✅ Client Component — dynamic classes require client-side JS\nexport function TabList({ tabs }: { tabs: string[] }) {\n  const [active, setActive] = useState(0);\n  return (\n    &lt;div className=\"flex gap-1\"&gt;\n      {tabs.map((tab, i) =&gt; (\n        &lt;button\n          key={tab}\n          onClick={() =&gt; setActive(i)}\n          className={cn(\n            'px-3 py-1.5 text-sm rounded-md transition-colors',\n            i === active\n              ? 'bg-indigo-600 text-white'\n              : 'text-gray-500 hover:bg-gray-100'\n          )}\n        &gt;\n          {tab}\n        &lt;/button&gt;\n      ))}\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>@source for Next.js App Router</h3>\n\n<pre><code>/* globals.css */\n@import \"tailwindcss\";\n\n/* Explicit scanning for Next.js App Router structure */\n@source \"../../app/**/*.{ts,tsx}\";\n@source \"../../components/**/*.{ts,tsx}\";\n\n/* v4 auto-detects via .gitignore heuristics,\n   but explicit @source prevents scanning node_modules or .next */</code></pre>\n\n<h3>Next.js font integration with Tailwind tokens</h3>\n\n<pre><code>// app/layout.tsx\nimport { Inter, Fira_Code } from 'next/font/google';\n\nconst inter = Inter({ subsets: ['latin'], variable: '--font-inter' });\nconst firaCode = Fira_Code({ subsets: ['latin'], variable: '--font-fira-code' });\n\nexport default function RootLayout({ children }) {\n  return (\n    &lt;html className={`${inter.variable} ${firaCode.variable}`}&gt;\n      &lt;body className=\"font-sans\"&gt;{children}&lt;/body&gt;\n    &lt;/html&gt;\n  );\n}\n\n// globals.css: map Next.js CSS variables to Tailwind tokens\n@theme {\n  --font-sans: var(--font-inter);\n  --font-mono: var(--font-fira-code);\n}</code></pre>\n\n<h3>Avoiding class hydration mismatches</h3>\n\n<pre><code>// ❌ Class mismatch: server renders one thing, client hydrates another\nfunction Component() {\n  const isClient = typeof window !== 'undefined';\n  return &lt;div className={isClient ? 'bg-blue-50' : 'bg-white'}&gt;...\n  // React will warn: Text content does not match server-rendered HTML\n}\n\n// ✅ Use useEffect for class changes that depend on client-only state\n'use client';\nfunction Component() {\n  const [mounted, setMounted] = useState(false);\n  useEffect(() =&gt; setMounted(true), []);\n  return &lt;div className={mounted ? 'bg-blue-50' : 'bg-white'}&gt;...\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"The rule of thumb: if the class depends on server data, it's safe in a Server Component. If it depends on client state (user interactions, browser APIs, localStorage), it requires a Client Component. The boundary is not Tailwind's — it is React's.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Server Components render once — on the server. Their Tailwind classes must be deterministic: known at build time, derived from props or data, never from client state. Dynamic, interactive classes belong to Client Components. This boundary clarifies everything."
+        },
+        {
+          "type": "example",
+          "speaker": "Next.js font → Tailwind token mapping",
+          "text": "// layout.tsx: expose Next.js font as CSS variable\nconst inter = Inter({ variable: '--font-inter' });\n\n// globals.css: map to Tailwind @theme token\n@theme {\n  --font-sans: var(--font-inter);\n}\n\n// Usage: font-sans now uses the Next.js-loaded Inter"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a Next.js architecture reference card demonstrating the Server vs Client Component boundary for Tailwind:</p>\n<ul>\n  <li><strong>.next-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>overflow-hidden</code></li>\n  <li><strong>.next-header</strong>: <code>px-5</code>, <code>py-3</code>, <code>border-b</code>, <code>border-gray-100</code>, <code>flex</code>, <code>items-center</code>, <code>gap-2</code></li>\n  <li><strong>.next-badge-server</strong>: <code>text-xs</code>, <code>font-medium</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>bg-blue-100</code>, <code>text-blue-800</code></li>\n  <li><strong>.next-badge-client</strong>: <code>text-xs</code>, <code>font-medium</code>, <code>px-2</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>bg-amber-100</code>, <code>text-amber-800</code></li>\n  <li><strong>.next-body</strong>: <code>p-5</code>, <code>space-y-3</code></li>\n  <li><strong>.next-rule</strong>: <code>flex</code>, <code>items-start</code>, <code>gap-2</code>, <code>text-sm</code>, <code>text-gray-700</code></li>\n  <li><strong>.next-icon</strong>: <code>w-4</code>, <code>h-4</code>, <code>flex-none</code>, <code>mt-0.5</code>, <code>text-emerald-500</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-md p-6 space-y-4\">\n  <div class=\"next-card\">\n    <div class=\"next-header\">\n      <span class=\"next-badge-server\">Server Component</span>\n      <span class=\"text-sm font-medium text-gray-700\">Static Tailwind classes</span>\n    </div>\n    <div class=\"next-body\">\n      <div class=\"next-rule\">\n        <span class=\"next-icon\">✓</span>\n        <span>Classes derived from props or server data</span>\n      </div>\n      <div class=\"next-rule\">\n        <span class=\"next-icon\">✓</span>\n        <span>No useState, no event handlers, no browser APIs</span>\n      </div>\n      <div class=\"next-rule\">\n        <span class=\"next-icon\">✓</span>\n        <span>Zero JavaScript shipped to the client</span>\n      </div>\n    </div>\n  </div>\n  <div class=\"next-card\">\n    <div class=\"next-header\">\n      <span class=\"next-badge-client\">Client Component</span>\n      <span class=\"text-sm font-medium text-gray-700\">Dynamic Tailwind classes</span>\n    </div>\n    <div class=\"next-body\">\n      <div class=\"next-rule\">\n        <span class=\"next-icon\">✓</span>\n        <span>cn() calls with runtime conditions</span>\n      </div>\n      <div class=\"next-rule\">\n        <span class=\"next-icon\">✓</span>\n        <span>Classes based on useState or user interaction</span>\n      </div>\n      <div class=\"next-rule\">\n        <span class=\"next-icon\">✓</span>\n        <span>Requires 'use client' directive</span>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: bg-white",             "selector": ".next-card",          "requiredClass": "bg-white"         },
+        { "label": "Card: rounded-xl",           "selector": ".next-card",          "requiredClass": "rounded-xl"       },
+        { "label": "Card: overflow-hidden",      "selector": ".next-card",          "requiredClass": "overflow-hidden"  },
+        { "label": "Header: flex",               "selector": ".next-header",        "requiredClass": "flex"             },
+        { "label": "Header: border-b",           "selector": ".next-header",        "requiredClass": "border-b"         },
+        { "label": "Server badge: bg-blue-100",  "selector": ".next-badge-server",  "requiredClass": "bg-blue-100"      },
+        { "label": "Server badge: text-blue-800","selector": ".next-badge-server",  "requiredClass": "text-blue-800"    },
+        { "label": "Client badge: bg-amber-100", "selector": ".next-badge-client",  "requiredClass": "bg-amber-100"     },
+        { "label": "Client badge: text-amber-800","selector": ".next-badge-client", "requiredClass": "text-amber-800"   },
+        { "label": "Body: space-y-3",            "selector": ".next-body",          "requiredClass": "space-y-3"        },
+        { "label": "Rule: flex",                 "selector": ".next-rule",          "requiredClass": "flex"             },
+        { "label": "Rule: text-sm",              "selector": ".next-rule",          "requiredClass": "text-sm"          },
+        { "label": "Icon: flex-none",            "selector": ".next-icon",          "requiredClass": "flex-none"        },
+        { "label": "Icon: text-emerald-500",     "selector": ".next-icon",          "requiredClass": "text-emerald-500" }
+      ],
+      "soloPracticeHtml": "<p>Design a complete Next.js + Tailwind setup guide card from scratch. Include: the postcss.config.mjs setup, the globals.css @import and @theme font mapping pattern, a Server Component example with static classes, a Client Component example with cn() dynamic classes, and the rule for when each is appropriate. No starter code.</p>",
+      "feynmanPrompt": "Explain the Server Component vs Client Component boundary as it relates to Tailwind class usage. Why can static Tailwind classes appear in Server Components? Why do dynamic classes (cn() with runtime conditions) require Client Components? Give a concrete example of a component that correctly splits into a Server parent and a Client interactive child.",
+      "questions": [
+        {
+          "id": "tw-lea-9-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "How do you integrate Next.js Google Fonts (loaded via next/font) with Tailwind v4 @theme tokens?",
+          "options": [
+            "Expose the font as a CSS variable in layout.tsx (e.g., variable: '--font-inter'), then map it in globals.css @theme: --font-sans: var(--font-inter)",
+            "Import the font directly in globals.css using @font-face — next/font is not compatible with Tailwind v4",
+            "Add the font name as a string to @theme: --font-sans: 'Inter, sans-serif'",
+            "Use the Next.js fonts plugin for Tailwind which handles the mapping automatically"
+          ],
+          "answer": "Expose the font as a CSS variable in layout.tsx (e.g., variable: '--font-inter'), then map it in globals.css @theme: --font-sans: var(--font-inter)",
+          "explanation": "next/font exposes loaded fonts as CSS custom properties via the variable option. By adding the variable class to the html element in layout.tsx, the CSS variable becomes available globally. Then in @theme, you map that variable to a Tailwind font token: --font-sans: var(--font-inter). This gives you font-sans utility class backed by the optimised Next.js font loader."
+        },
+        {
+          "id": "tw-lea-9-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "A product card component renders on the server and shows a 'featured' badge based on a database field. Should this be a Server Component or Client Component?",
+          "options": [
+            "Server Component — the 'featured' class is derived from server data (a database field), not from client state or user interaction",
+            "Client Component — cn() is required to conditionally apply the featured class, and cn() requires 'use client'",
+            "Both — use a Server Component parent and Client Component child to split the static and dynamic parts",
+            "Neither — conditional classes should use CSS data attributes, not Tailwind conditionals"
+          ],
+          "answer": "Server Component — the 'featured' class is derived from server data (a database field), not from client state or user interaction",
+          "explanation": "Server Components can absolutely render conditional classes based on data fetched on the server. The determining factor is not 'does this use cn()' but 'does this class depend on client-side state or browser APIs?' A featured badge derived from a database field is known at render time on the server — no client interactivity needed. cn() itself can be called in Server Components; it's a pure function."
+        },
+        {
+          "id": "tw-lea-9-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A component renders correctly on the server but shows a React hydration warning: 'Text content does not match server-rendered HTML.' The component uses typeof window !== 'undefined' to conditionally apply a Tailwind class. What is the correct fix?",
+          "options": [
+            "Move the conditional class to a useEffect that runs after mount, or use suppressHydrationWarning and ensure the class is stable on initial render",
+            "Add 'use client' to the component — server and client rendering must match, so the class must be applied client-side only",
+            "Replace typeof window !== 'undefined' with a Tailwind media query variant",
+            "Use a CSS variable with @variant to detect server vs client render"
+          ],
+          "answer": "Move the conditional class to a useEffect that runs after mount, or use suppressHydrationWarning and ensure the class is stable on initial render",
+          "explanation": "The hydration mismatch occurs because the server renders with one class (typeof window === 'undefined' → true on server) and the client hydrates with a different class (typeof window !== 'undefined' → true on client). The fix: either use a stable initial value on both server and client, or defer the client-specific class until after mount via useEffect. The latter pattern is correct for anything that genuinely depends on the browser environment."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "id": "rx-jun-1",
+  "title": "useEffect: Side Effects and the Outside World",
+  "glyph": "⚛",
+  "sortOrder": 1,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-app-3"],
+  "subChunks": [
+    {
+      "id": "rx-jun-1-1",
+      "title": "useEffect: Side Effects and the Outside World",
+      "sortOrder": 1,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Components render UI from data. But what about operations that <em>reach outside</em> the component — fetching from an API, reading localStorage, starting a timer, subscribing to a WebSocket? These are side effects: actions that touch the world beyond React's render cycle. <code>useEffect</code> is the hook that manages them safely.</p>",
+      "explanationHtml": "<h3>What is a side effect?</h3>\n\n<p>A side effect is anything a component does that isn't \"take props and state → return JSX\". Examples:</p>\n<ul>\n  <li>Fetching data from an API</li>\n  <li>Setting the document title</li>\n  <li>Starting or stopping a timer</li>\n  <li>Subscribing to a WebSocket or event listener</li>\n  <li>Reading/writing localStorage</li>\n</ul>\n\n<p>Side effects don't belong directly in the render function — they run on every render, including intermediate ones, causing duplicated calls or infinite loops.</p>\n\n<h3>useEffect syntax</h3>\n\n<pre><code>import { useEffect } from 'react';\n\nuseEffect(() =&gt; {\n  // Side effect code goes here\n}, [dependencies]);</code></pre>\n\n<p>useEffect takes two arguments: an effect function and a dependency array.</p>\n\n<h3>The dependency array — the most important part</h3>\n\n<pre><code>// 1. No array — runs after EVERY render (rarely what you want):\nuseEffect(() =&gt; {\n  console.log('Runs after every render');\n});\n\n// 2. Empty array — runs ONCE after the first render (mount):\nuseEffect(() =&gt; {\n  console.log('Runs once on mount');\n}, []);\n\n// 3. With dependencies — runs after mount AND whenever a dep changes:\nuseEffect(() =&gt; {\n  console.log('userId changed:', userId);\n}, [userId]);</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The dependency array is a contract: 'this effect depends on these values.' If you use a value inside the effect, it must be in the array. ESLint's <code>exhaustive-deps</code> rule enforces this. If you find yourself wanting to omit a dependency to 'avoid re-running', that's a design smell — you probably need a different structure.\"</p></div>\n\n<h3>Cleanup functions</h3>\n\n<p>If your effect sets up a subscription or timer, it must tear it down when the component unmounts (or before the next run). Return a cleanup function:</p>\n\n<pre><code>useEffect(() =&gt; {\n  const id = setInterval(() =&gt; {\n    setTick(t =&gt; t + 1);\n  }, 1000);\n\n  // This runs when the component unmounts or before the next effect:\n  return () =&gt; clearInterval(id);\n}, []); // Empty array: start once, clear on unmount</code></pre>\n\n<p>Without cleanup, the interval would keep running after the component unmounts — causing state updates on an unmounted component and eventually a memory leak.</p>\n\n<h3>Setting the document title — a safe first effect</h3>\n\n<pre><code>function QuestPage({ questTitle }) {\n  useEffect(() =&gt; {\n    document.title = `${questTitle} — Arcane Academy`;\n\n    return () =&gt; {\n      document.title = 'Arcane Academy';\n    };\n  }, [questTitle]); // Re-run whenever questTitle changes\n\n  return &lt;h1&gt;{questTitle}&lt;/h1&gt;;\n}</code></pre>\n\n<h3>What useEffect is not for</h3>\n\n<pre><code>// ❌ Unnecessary effect — this is just a derived value:\nconst [filtered, setFiltered] = useState([]);\nuseEffect(() =&gt; {\n  setFiltered(items.filter(i =&gt; i.done));\n}, [items]);\n\n// ✅ Compute it directly — no effect needed:\nconst filtered = items.filter(i =&gt; i.done);</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex holds up a component diagram. Inside the render box, everything is clean. Outside it: timers, network requests, browser APIs. She draws a boundary between them."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "A component's render function must be pure. Fetching data, setting timers, reading localStorage — these are side effects. They touch the world outside React. useEffect is the designated place to run them safely, after the render is committed to the screen."
+        },
+        {
+          "type": "example",
+          "speaker": "Effect with cleanup",
+          "text": "useEffect(() => {\n  const id = setInterval(() => setTick(t => t + 1), 1000);\n  return () => clearInterval(id); // cleanup on unmount\n}, []);"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;PageTitleSync title /&gt;</code> component. It should use <code>useEffect</code> to set <code>document.title</code> to the value of the <code>title</code> prop every time <code>title</code> changes. When the component unmounts, reset <code>document.title</code> to <code>'Arcane Academy'</code>.</p><p>Also render the title in an <code>&lt;h1 data-testid=\"heading\"&gt;</code>.</p>",
+      "guidedPracticeStarterCode": "import { useEffect } from 'react';\n\nexport default function PageTitleSync({ title }) {\n  useEffect(() => {\n    // TODO: set document.title\n    // TODO: return cleanup that resets it\n  }, [/* dependency */]);\n\n  return <h1 data-testid=\"heading\">{title}</h1>;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders h1 with title",
+          "selector": "[data-testid='heading']",
+          "requiredText": "Quest: The Component Trial",
+          "props": { "title": "Quest: The Component Trial" }
+        },
+        {
+          "label": "Sets document.title on mount",
+          "documentTitle": "Quest: The Component Trial — Arcane Academy",
+          "props": { "title": "Quest: The Component Trial" }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;CountdownTimer seconds /&gt;</code> component from scratch. It takes a <code>seconds</code> prop (initial countdown value). Every second, the displayed count decreases by 1. When it reaches 0, display <strong>Time's up!</strong> instead of a number. Use <code>useEffect</code> for the interval and make sure you clean it up.</p>",
+      "feynmanPrompt": "Explain useEffect's dependency array to a colleague. What does it control? What are the three different behaviours depending on whether the array is absent, empty, or contains values? What breaks when you use a value inside an effect but leave it out of the dependency array?",
+      "questions": [
+        {
+          "id": "rx-jun-1-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What does passing an empty array `[]` as useEffect's second argument cause?",
+          "options": [
+            "The effect runs once after the first render and never again",
+            "The effect runs after every render",
+            "The effect never runs",
+            "The effect runs before the first render"
+          ],
+          "answer": "The effect runs once after the first render and never again",
+          "explanation": "An empty dependency array tells React 'this effect has no dependencies — nothing can cause it to re-run.' It fires once after the initial render (mount) and the cleanup runs once when the component unmounts. This is the correct pattern for one-time setup like subscribing to a WebSocket or fetching initial data."
+        },
+        {
+          "id": "rx-jun-1-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is the purpose of the function returned from a useEffect callback?",
+          "options": [
+            "It runs when the component unmounts or before the next effect run — used to cancel subscriptions and clear timers",
+            "It runs before the effect to set up preconditions",
+            "It is a callback React calls with the effect's result",
+            "It tells React whether to re-run the effect"
+          ],
+          "answer": "It runs when the component unmounts or before the next effect run — used to cancel subscriptions and clear timers",
+          "explanation": "The cleanup function prevents memory leaks and stale subscriptions. React calls it in two situations: when the component unmounts, and before re-running the effect (if dependencies changed). Always return a cleanup from effects that set up subscriptions, intervals, or event listeners."
+        },
+        {
+          "id": "rx-jun-1-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A component fetches user data based on a `userId` prop. Which dependency array is correct?\n\nuseEffect(() => {\n  fetchUser(userId).then(setUser);\n}, [???]);",
+          "options": [
+            "[userId] — the effect must re-run whenever userId changes",
+            "[] — fetch only once on mount",
+            "No array — re-fetch on every render",
+            "[userId, fetchUser] — include all referenced values"
+          ],
+          "answer": "[userId] — the effect must re-run whenever userId changes",
+          "explanation": "The effect uses userId, so it belongs in the dependency array. Without it, the effect would only run on mount and the displayed user would never update when userId changes."
+        },
+        {
+          "id": "rx-jun-1-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A component filters a list of items for display using useEffect to set filtered state. What is the problem?",
+          "options": [
+            "It creates an unnecessary extra render — filtered is a derived value that can be computed directly in the component body",
+            "useEffect cannot call setState functions",
+            "The filter function mutates the original array",
+            "Missing cleanup will cause a memory leak"
+          ],
+          "answer": "It creates an unnecessary extra render — filtered is a derived value that can be computed directly in the component body",
+          "explanation": "Storing derived data in state adds a wasted render cycle: items changes → effect runs → setFiltered → another render. Instead, compute inline: const filtered = items.filter(i => i.done). This is synchronous, always up-to-date, and requires no effect."
+        }
+      ]
+    }
+  ]
+}

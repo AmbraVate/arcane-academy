@@ -1,0 +1,83 @@
+{
+  "id": "rx-lea-7",
+  "title": "CI/CD for React Apps — GitHub Actions, Pipelines, and Deployment",
+  "glyph": "⚛",
+  "sortOrder": 7,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-lea-6"],
+  "subChunks": [
+    {
+      "id": "rx-lea-7-1",
+      "title": "CI/CD for React Apps — GitHub Actions, Pipelines, and Deployment",
+      "sortOrder": 1,
+      "xpReward": 225,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Shipping code manually is a liability — a missed build step, a forgotten environment variable, a test that was skipped 'just this once.' A CI/CD pipeline turns deployment into a documented, repeatable, automated process. For React apps, this means: lint on every PR, test on every push, build artefacts cached between runs, preview deployments for every branch, and production deploys that roll back automatically if health checks fail.</p>",
+      "explanationHtml": "<h3>GitHub Actions pipeline</h3>\n\n<pre><code># .github/workflows/ci.yml\nname: CI\n\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n\njobs:\n  quality:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: 'npm'         # Cache node_modules\n\n      - run: npm ci            # Clean install (uses package-lock.json)\n      - run: npm run lint\n      - run: npm run type-check\n      - run: npm test -- --run  # Vitest run (not watch mode)\n\n  build:\n    needs: quality             # Only build if quality passes\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: 'npm'\n      - run: npm ci\n      - run: npm run build\n      - uses: actions/upload-artifact@v4\n        with:\n          name: dist\n          path: dist/\n          retention-days: 7</code></pre>\n\n<h3>Environment-specific deployments</h3>\n\n<pre><code># Deploy to preview on PR, production on main:\ndeploy-preview:\n  if: github.event_name == 'pull_request'\n  needs: build\n  runs-on: ubuntu-latest\n  steps:\n    - uses: actions/download-artifact@v4\n      with:\n        name: dist\n    - name: Deploy to Netlify Preview\n      uses: nwtgck/actions-netlify@v3\n      with:\n        publish-dir: './dist'\n        github-token: ${{ secrets.GITHUB_TOKEN }}\n        deploy-message: 'PR #${{ github.event.pull_request.number }}'\n      env:\n        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}\n        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}\n\ndeploy-production:\n  if: github.ref == 'refs/heads/main'\n  needs: build\n  runs-on: ubuntu-latest\n  environment: production     # Requires manual approval if configured\n  steps:\n    - uses: actions/download-artifact@v4\n      with:\n        name: dist\n    - name: Deploy to production\n      run: |  # Your deploy command here\n        npx netlify deploy --prod --dir=dist</code></pre>\n\n<h3>Performance budgets in CI</h3>\n\n<pre><code># Fail the build if bundle size exceeds limits:\n- name: Check bundle size\n  run: npx bundlesize\n\n# bundlesize in package.json:\n\"bundlesize\": [\n  { \"path\": \"./dist/assets/index-*.js\", \"maxSize\": \"100 kB\" },\n  { \"path\": \"./dist/assets/vendor-*.js\", \"maxSize\": \"200 kB\" }\n]\n\n# Lighthouse CI — fail if performance < 90:\n- uses: treosh/lighthouse-ci-action@v11\n  with:\n    urls: 'https://preview-url.netlify.app'\n    budgetPath: './lighthouse-budget.json'\n    uploadArtifacts: true</code></pre>\n\n<h3>Secrets and environment variables</h3>\n\n<pre><code># GitHub Actions secrets vs variables:\n# Secrets: encrypted, never logged, use for API keys\n# Variables: plaintext, visible in logs, use for config\n\n# In workflow — pass build-time env vars:\n- run: npm run build\n  env:\n    VITE_API_URL: ${{ vars.API_URL }}\n    VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}\n\n# Never embed runtime secrets in the frontend bundle!\n# VITE_ prefix = bundled into client JS = publicly readable\n# API keys go to the backend, not the frontend</code></pre>\n\n<h3>Caching strategies</h3>\n\n<pre><code># Cache node_modules between runs:\n- uses: actions/cache@v4\n  with:\n    path: ~/.npm\n    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}\n    restore-keys: |\n      ${{ runner.os }}-node-\n\n# Cache Turborepo build cache:\n- uses: actions/cache@v4\n  with:\n    path: .turbo\n    key: ${{ runner.os }}-turbo-${{ github.sha }}\n    restore-keys: |\n      ${{ runner.os }}-turbo-</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The most important principle: your CI pipeline is documentation. It documents exactly what 'ship-ready' means for your project. If linting isn't in CI, it's optional. If bundle size isn't in CI, it will grow unchecked. If E2E isn't in CI, you find out about regressions from users. The pipeline is the contract.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A hotfix deployed manually. The developer forgot to run tests. The linter would have caught the typo. The build would have caught the missing import. Production is down at 2am. The post-mortem recommendation: automate everything that should never be skipped."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "CI is not about distrust — it's about making the right thing the default thing. Nobody skips tests on purpose; they skip them when they're in a hurry. The pipeline runs them whether you're in a hurry or not. It also documents your quality bar: if bundle size is in CI, everyone knows that's a real constraint."
+        },
+        {
+          "type": "example",
+          "speaker": "Minimal React CI pipeline",
+          "text": "on: [push, pull_request]\njobs:\n  ci:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with: { node-version: 20, cache: npm }\n      - run: npm ci\n      - run: npm run lint && npm run type-check && npm test -- --run && npm run build"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Design a CI/CD pipeline for a React application:</p><ul><li>Write a GitHub Actions workflow with two jobs: <code>quality</code> (lint, type-check, test) and <code>build</code> (only runs if quality passes, uploads dist as artifact)</li><li>Add a third job that deploys to a preview URL on pull requests and production on pushes to main</li><li>Add bundle size enforcement using bundlesize with a 150kb main JS limit</li></ul>",
+      "guidedPracticeStarterCode": "// CI/CD Pipeline Architecture Exercise\n// Write the GitHub Actions workflow as a JS object\n// (In production this would be .github/workflows/ci.yml)\n\nconst ciWorkflow = {\n  name: 'CI/CD',\n  on: {\n    push: { branches: ['main'] },\n    pull_request: { branches: ['main'] },\n  },\n  jobs: {\n    // TODO: quality job — lint, type-check, test\n    quality: {\n      'runs-on': 'ubuntu-latest',\n      steps: [\n        // TODO: checkout, setup-node with cache, npm ci, lint, type-check, test\n      ],\n    },\n\n    // TODO: build job — depends on quality, uploads artifact\n    build: {\n      needs: 'quality',\n      'runs-on': 'ubuntu-latest',\n      steps: [\n        // TODO\n      ],\n    },\n\n    // TODO: deploy job — preview on PR, production on main push\n    deploy: {\n      // TODO: conditional on github.ref or github.event_name\n    },\n  },\n};\n\n// TODO: bundlesize config\nconst bundlesizeConfig = [\n  // TODO: main JS bundle max 150kb\n];\n\nexport default function App() {\n  return (\n    <div data-testid=\"app\">\n      <h1>CI/CD Pipeline Exercise</h1>\n      <pre>{JSON.stringify(ciWorkflow, null, 2)}</pre>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Pipeline structure is defined",
+          "selector": "[data-testid='app']",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Set up a complete CI/CD pipeline for your quest board project: (1) GitHub Actions workflow with lint, TypeScript type-check, Vitest tests with coverage threshold (80%), and bundle size checks. (2) Preview deployments to Netlify for every PR with the PR number in the deploy message. (3) Production deployment on main merge with a required manual approval step. (4) Lighthouse CI running against the preview URL with a performance budget of 90+. Verify the pipeline blocks a PR that introduces a 500kb import by checking the bundlesize failure in the CI logs.</p>",
+      "feynmanPrompt": "Explain what CI (continuous integration) and CD (continuous delivery/deployment) mean separately — why is the distinction important? Walk through what happens when a developer opens a PR in a well-configured pipeline: list every automated check that runs and explain what each catches. Explain why VITE_ environment variables should never contain secrets — where do production secrets live instead, and how does the frontend access them safely?",
+      "questions": [
+        {
+          "id": "rx-lea-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "Your GitHub Actions CI job takes 8 minutes — 6 minutes are spent on `npm install`. How do you fix this?",
+          "options": [
+            "Use `actions/setup-node` with `cache: 'npm'` and replace `npm install` with `npm ci` — the cache restores node_modules from a previous run, skipping re-downloading packages when package-lock.json hasn't changed",
+            "Use `npm install --prefer-offline` to use the local registry",
+            "Split the install step into multiple parallel jobs",
+            "Use `npm install --production` to skip devDependencies"
+          ],
+          "answer": "Use `actions/setup-node` with `cache: 'npm'` and replace `npm install` with `npm ci` — the cache restores node_modules from a previous run, skipping re-downloading packages when package-lock.json hasn't changed",
+          "explanation": "The `cache: 'npm'` option in actions/setup-node caches the npm cache directory keyed by package-lock.json's hash. When package-lock.json hasn't changed, `npm ci` restores packages from the cache in seconds instead of downloading them. Using `npm ci` (not `npm install`) is important for CI: it requires package-lock.json, does a clean install, and fails if lock file is out of sync — making builds reproducible."
+        },
+        {
+          "id": "rx-lea-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A developer sets `VITE_STRIPE_SECRET_KEY` in GitHub Actions secrets and uses it in their React component. What is the security problem?",
+          "options": [
+            "VITE_ prefix variables are bundled into the client-side JavaScript at build time — anyone who downloads your app can read the secret key from the bundle. Secrets must stay on the server.",
+            "GitHub Actions secrets are not available to VITE_ prefixed variables",
+            "The VITE_ prefix encrypts the variable, making it inaccessible to React components",
+            "Stripe secret keys must use the REACT_APP_ prefix instead"
+          ],
+          "answer": "VITE_ prefix variables are bundled into the client-side JavaScript at build time — anyone who downloads your app can read the secret key from the bundle. Secrets must stay on the server.",
+          "explanation": "Any variable prefixed with VITE_ is replaced at build time with its literal value in the JavaScript bundle. Open DevTools > Sources > search for the variable name and you'll find the secret in plain text. Stripe's secret key (sk_live_...) must only exist server-side. The frontend uses the publishable key (pk_live_...) which is safe to expose. For backend calls, secrets live in server environment variables — never in VITE_ variables."
+        }
+      ]
+    }
+  ]
+}

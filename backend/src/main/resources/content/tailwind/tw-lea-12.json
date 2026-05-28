@@ -1,0 +1,104 @@
+{
+  "id": "tw-lea-12",
+  "title": "Figma Variables Pipeline",
+  "glyph": "🌐",
+  "sortOrder": 12,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-13"],
+  "subChunks": [
+    {
+      "id": "tw-lea-12-1",
+      "title": "Figma Variables Pipeline",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>The gap between design and code is measured in token drift. A designer updates a colour in Figma. The developer updates a different shade in the codebase. Six months later, there are three slightly different values of 'primary blue' in the product. A Figma Variables pipeline — Figma Variables → token export → CSS custom properties → Tailwind @theme — eliminates this drift by making design tokens a single-source-of-truth artifact that flows from tool to tool without human transcription.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Sable the Illuminator:</strong> \"The pipeline exists because humans transcribe incorrectly. Not through carelessness — through the inherent ambiguity of converting visual values to code. Indigo-600 in Figma might be #4f46e5. The developer sees it and picks text-indigo-600. But the designer also has a 'Primary' variable pointing to a custom value. Without a pipeline, you have two colours that look similar but aren't the same.\"</p></div>\n\n<h3>Figma Variables → Design Token JSON</h3>\n\n<p>Figma Variables (introduced 2023) expose design tokens as JSON via the REST API or plugins:</p>\n\n<pre><code>// tokens.json (exported from Figma via Token Studio or Figma Tokens plugin)\n{\n  \"color\": {\n    \"brand\": {\n      \"$type\": \"color\",\n      \"$value\": \"oklch(0.55 0.20 270)\",\n      \"$description\": \"Primary brand colour\"\n    },\n    \"surface\": {\n      \"$type\": \"color\",\n      \"$value\": \"{color.neutral.50}\",\n      \"$description\": \"Default page background\"\n    }\n  },\n  \"spacing\": {\n    \"4\": { \"$type\": \"dimension\", \"$value\": \"16px\" },\n    \"8\": { \"$type\": \"dimension\", \"$value\": \"32px\" }\n  }\n}</code></pre>\n\n<h3>Style Dictionary — token transformer</h3>\n\n<pre><code>// style-dictionary.config.mjs\nimport StyleDictionary from 'style-dictionary';\n\nexport default {\n  source: ['tokens/**/*.json'],\n  platforms: {\n    css: {\n      transformGroup: 'css',\n      prefix: '',\n      buildPath: 'src/styles/',\n      files: [{\n        destination: 'tokens.css',\n        format: 'css/variables',\n        options: {\n          outputReferences: true,\n          selector: ':root',\n        }\n      }]\n    }\n  }\n};\n\n// Output: src/styles/tokens.css\n:root {\n  --color-brand: oklch(0.55 0.20 270);\n  --color-surface: var(--color-neutral-50);\n  --spacing-4: 16px;\n  --spacing-8: 32px;\n}</code></pre>\n\n<h3>Bridging Style Dictionary output to Tailwind @theme</h3>\n\n<pre><code>/* globals.css */\n@import \"tailwindcss\";\n@import \"./styles/tokens.css\";  /* Style Dictionary output */\n\n/* Map CSS custom properties to Tailwind @theme tokens */\n@theme {\n  --color-primary: var(--color-brand);\n  --color-surface: var(--color-surface);  /* Already a custom prop */\n  --spacing-4: var(--spacing-4);\n\n  /* Or: reference the generated vars directly in utilities */\n  /* bg-[var(--color-brand)] works without @theme mapping */\n}\n\n/* Now: bg-primary, text-primary, border-primary */\n/* AND: bg-[var(--color-brand)] as a fallback */</code></pre>\n\n<h3>Automated pipeline with CI</h3>\n\n<pre><code># .github/workflows/tokens.yml\nname: Sync Design Tokens\non:\n  push:\n    paths: ['tokens/**']\n\njobs:\n  build-tokens:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm install\n      - run: npx style-dictionary build\n      - name: Open PR if tokens changed\n        uses: peter-evans/create-pull-request@v6\n        with:\n          title: 'chore: sync design tokens from Figma'\n          body: 'Automated token sync'\n          branch: 'chore/token-sync'</code></pre>\n\n<h3>W3C Design Token Format (DTF)</h3>\n\n<p>The W3C Design Token Community Group is standardising the token JSON format:</p>\n\n<pre><code>// W3C DTF (draft standard) — what Figma Variables exports target\n{\n  \"Brand Blue\": {\n    \"$type\": \"color\",\n    \"$value\": \"#0047AB\"\n  },\n  \"Spacing Medium\": {\n    \"$type\": \"dimension\",\n    \"$value\": \"16px\"\n  }\n}\n// This is the format Style Dictionary v4 natively supports</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"The pipeline is the contract between design and engineering. When a designer changes a token in Figma, it creates a PR. An engineer reviews it. The change is intentional and tracked. No more 'I updated the colour in the mockup but forgot to tell dev.' The pipeline makes that omission structurally impossible.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🌟",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "The Figma Variables pipeline removes the human from the transcription step. Designers change a token. A script runs. A PR opens. An engineer reviews. The change lands in the codebase exactly as designed — no interpretation, no drift, no 'I thought it was indigo-500.'"
+        },
+        {
+          "type": "example",
+          "speaker": "Token → CSS → Tailwind chain",
+          "text": "/* 1. Figma Variable: color/brand → oklch(0.55 0.20 270) */\n/* 2. Style Dictionary: --color-brand: oklch(0.55 0.20 270) in :root */\n/* 3. globals.css @theme: --color-primary: var(--color-brand) */\n/* 4. Component: <button class=\"bg-primary\"> */\n/* Change the Figma variable → everything updates */"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a token pipeline visualiser showing the flow from Figma to CSS to Tailwind:</p>\n<ul>\n  <li><strong>.pipe-container</strong>: <code>max-w-2xl</code>, <code>mx-auto</code>, <code>p-6</code></li>\n  <li><strong>.pipe-step</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>p-4</code></li>\n  <li><strong>.pipe-step-header</strong>: <code>flex</code>, <code>items-center</code>, <code>gap-2</code>, <code>mb-2</code></li>\n  <li><strong>.pipe-step-num</strong>: <code>w-6</code>, <code>h-6</code>, <code>rounded-full</code>, <code>bg-indigo-600</code>, <code>text-white</code>, <code>text-xs</code>, <code>font-bold</code>, <code>flex</code>, <code>items-center</code>, <code>justify-center</code>, <code>flex-none</code></li>\n  <li><strong>.pipe-step-title</strong>: <code>font-semibold</code>, <code>text-sm</code>, <code>text-gray-900</code></li>\n  <li><strong>.pipe-step-desc</strong>: <code>text-sm</code>, <code>text-gray-500</code></li>\n  <li><strong>.pipe-arrow</strong>: <code>text-center</code>, <code>text-gray-400</code>, <code>py-1</code>, <code>text-lg</code></li>\n  <li><strong>.pipe-code</strong>: <code>mt-2</code>, <code>font-mono</code>, <code>text-xs</code>, <code>bg-gray-50</code>, <code>rounded</code>, <code>p-2</code>, <code>text-gray-700</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"pipe-container\">\n  <div class=\"space-y-1\">\n    <div class=\"pipe-step\">\n      <div class=\"pipe-step-header\">\n        <span class=\"pipe-step-num\">1</span>\n        <h3 class=\"pipe-step-title\">Figma Variables</h3>\n      </div>\n      <p class=\"pipe-step-desc\">Designer defines token: color/brand = oklch(0.55 0.20 270)</p>\n      <div class=\"pipe-code\">$type: color / $value: oklch(0.55 0.20 270)</div>\n    </div>\n    <div class=\"pipe-arrow\">↓</div>\n    <div class=\"pipe-step\">\n      <div class=\"pipe-step-header\">\n        <span class=\"pipe-step-num\">2</span>\n        <h3 class=\"pipe-step-title\">Style Dictionary</h3>\n      </div>\n      <p class=\"pipe-step-desc\">Token JSON → CSS custom properties</p>\n      <div class=\"pipe-code\">:root { --color-brand: oklch(0.55 0.20 270); }</div>\n    </div>\n    <div class=\"pipe-arrow\">↓</div>\n    <div class=\"pipe-step\">\n      <div class=\"pipe-step-header\">\n        <span class=\"pipe-step-num\">3</span>\n        <h3 class=\"pipe-step-title\">Tailwind @theme</h3>\n      </div>\n      <p class=\"pipe-step-desc\">CSS vars mapped to Tailwind tokens → utility classes generated</p>\n      <div class=\"pipe-code\">@theme { --color-primary: var(--color-brand); }\n/* Generates: bg-primary, text-primary, border-primary */</div>\n    </div>\n    <div class=\"pipe-arrow\">↓</div>\n    <div class=\"pipe-step\">\n      <div class=\"pipe-step-header\">\n        <span class=\"pipe-step-num\">4</span>\n        <h3 class=\"pipe-step-title\">Component</h3>\n      </div>\n      <p class=\"pipe-step-desc\">Tailwind class references the token chain</p>\n      <div class=\"pipe-code\">&lt;button class=\"bg-primary text-white\"&gt;CTA&lt;/button&gt;</div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Container: max-w-2xl",        "selector": ".pipe-container",     "requiredClass": "max-w-2xl"        },
+        { "label": "Step: bg-white",              "selector": ".pipe-step",          "requiredClass": "bg-white"         },
+        { "label": "Step: rounded-xl",            "selector": ".pipe-step",          "requiredClass": "rounded-xl"       },
+        { "label": "Step: border",                "selector": ".pipe-step",          "requiredClass": "border"           },
+        { "label": "Header: flex",                "selector": ".pipe-step-header",   "requiredClass": "flex"             },
+        { "label": "Header: items-center",        "selector": ".pipe-step-header",   "requiredClass": "items-center"     },
+        { "label": "Num: rounded-full",           "selector": ".pipe-step-num",      "requiredClass": "rounded-full"     },
+        { "label": "Num: bg-indigo-600",          "selector": ".pipe-step-num",      "requiredClass": "bg-indigo-600"    },
+        { "label": "Num: text-white",             "selector": ".pipe-step-num",      "requiredClass": "text-white"       },
+        { "label": "Num: flex-none",              "selector": ".pipe-step-num",      "requiredClass": "flex-none"        },
+        { "label": "Title: font-semibold",        "selector": ".pipe-step-title",    "requiredClass": "font-semibold"    },
+        { "label": "Desc: text-gray-500",         "selector": ".pipe-step-desc",     "requiredClass": "text-gray-500"    },
+        { "label": "Arrow: text-center",          "selector": ".pipe-arrow",         "requiredClass": "text-center"      },
+        { "label": "Code: font-mono",             "selector": ".pipe-code",          "requiredClass": "font-mono"        },
+        { "label": "Code: bg-gray-50",            "selector": ".pipe-code",          "requiredClass": "bg-gray-50"       }
+      ],
+      "soloPracticeHtml": "<p>Design a complete Figma Variables pipeline architecture diagram from scratch. Show: the Figma Variables export step (format, tool), the Style Dictionary transformation step (config, output format), the Tailwind @theme mapping step, the CI automation step (trigger, PR creation), and where semantic vs primitive tokens live in the chain. No starter code.</p>",
+      "feynmanPrompt": "Explain the Figma Variables → Style Dictionary → Tailwind @theme pipeline end-to-end. What problem does it solve? What is the role of each tool in the chain? What happens when a designer updates a token in Figma — walk through exactly what occurs in the pipeline and what the final effect is in the codebase.",
+      "questions": [
+        {
+          "id": "tw-lea-12-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "What problem does a Figma Variables → CSS tokens pipeline solve?",
+          "options": [
+            "Token drift — prevents designers and developers from maintaining separate, diverging values for the same design tokens",
+            "Bundle size — reduces CSS file size by sharing tokens across design tools and codebases",
+            "Type safety — generates TypeScript types from Figma variables for use in component props",
+            "Version control — makes Figma designs version-controllable via Git"
+          ],
+          "answer": "Token drift — prevents designers and developers from maintaining separate, diverging values for the same design tokens",
+          "explanation": "Token drift is the primary problem: without a pipeline, designers update tokens in Figma and developers maintain separate values in code. Over months, these diverge — there are three slightly different 'primary blues' across the product. A pipeline makes Figma the single source of truth and exports tokens programmatically, eliminating human transcription errors."
+        },
+        {
+          "id": "tw-lea-12-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "Style Dictionary outputs --color-brand: oklch(0.55 0.20 270) in a :root CSS block. How do you make Tailwind generate bg-brand and text-brand utility classes from this value?",
+          "options": [
+            "In @theme: --color-brand: var(--color-brand) — this maps the CSS custom property to a Tailwind token, which generates the bg-brand, text-brand, etc. utilities",
+            "Add brand to the extend.colors section of tailwind.config.js pointing to the CSS variable",
+            "Tailwind automatically detects :root CSS variables and generates utilities — no mapping needed",
+            "Use @utility to manually define .bg-brand { background-color: var(--color-brand); }"
+          ],
+          "answer": "In @theme: --color-brand: var(--color-brand) — this maps the CSS custom property to a Tailwind token, which generates the bg-brand, text-brand, etc. utilities",
+          "explanation": "In Tailwind v4, @theme is the mechanism that bridges CSS custom properties to utility class generation. By adding --color-brand: var(--color-brand) to @theme, you tell Tailwind to create a color token named 'brand' whose value comes from the CSS variable. Tailwind then generates the full family of colour utilities: bg-brand, text-brand, border-brand, shadow-brand, ring-brand, etc."
+        },
+        {
+          "id": "tw-lea-12-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A team exports Figma Variables as JSON and manually copies values into Tailwind @theme every sprint. A colleague proposes automating this with Style Dictionary + a GitHub Action. What is the main benefit beyond saving time?",
+          "options": [
+            "Determinism — the automated pipeline applies the same transformation rules every time, preventing human errors like typos, rounding differences, or accidentally using the wrong colour mode",
+            "Speed — CI pipelines run faster than manual copying, reducing build times",
+            "Type safety — Style Dictionary generates TypeScript interfaces that manual copying cannot",
+            "Versioning — CI automation creates a commit history for token changes"
+          ],
+          "answer": "Determinism — the automated pipeline applies the same transformation rules every time, preventing human errors like typos, rounding differences, or accidentally using the wrong colour mode",
+          "explanation": "The primary value of automation is not speed — it's determinism. A human copying oklch(0.55 0.20 270) might type oklch(0.55 0.20 27) (dropping a digit). They might use the light-mode value when they should use the dark-mode value. They might apply rounded values instead of exact values. An automated pipeline applies exactly the same transformation rules every time, making the result predictable and auditable. Version history (answer D) is also a valid benefit but is secondary to correctness."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "id": "tw-app-9",
+  "title": "Display, Overflow, and Visibility",
+  "glyph": "🎨",
+  "sortOrder": 9,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-5"],
+  "subChunks": [
+    {
+      "id": "tw-app-9-1",
+      "title": "Display, Overflow, and Visibility",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Controlling what is visible, how content overflows, and what kind of box an element creates are some of the most frequently needed utilities in any UI. These classes are the building blocks of conditional rendering, scroll containers, truncated text, and responsive show/hide patterns.</p>",
+      "explanationHtml": "<h3>Display</h3>\n<pre><code>block         /* display: block        */\ninline        /* display: inline       */\ninline-block  /* display: inline-block */\nflex          /* display: flex         */\ninline-flex   /* display: inline-flex  */\ngrid          /* display: grid         */\nhidden        /* display: none         */\ncontents      /* display: contents — removes the box, keeps children */\n</code></pre>\n\n<h3>Visibility vs display none</h3>\n<pre><code>/* hidden — removed from layout (takes no space) */\n&lt;div class=\"hidden\"&gt;Not rendered&lt;/div&gt;\n\n/* invisible — takes space but is not visible */\n&lt;div class=\"invisible\"&gt;Space reserved&lt;/div&gt;\n\n/* visible — default (overrides invisible) */\n&lt;div class=\"visible\"&gt;Shown&lt;/div&gt;\n</code></pre>\n\n<h3>Overflow</h3>\n<pre><code>overflow-hidden    /* clips content at element edge */\noverflow-auto      /* scrollbar only when needed   */\noverflow-scroll    /* always shows scrollbar        */\noverflow-visible   /* default — content bleeds out */\n\n/* Per-axis */\noverflow-x-hidden  overflow-x-auto  overflow-x-scroll\noverflow-y-hidden  overflow-y-auto  overflow-y-scroll\n\n/* Scroll snapping */\nscroll-smooth  /* smooth scroll-behavior */\nscroll-auto\n</code></pre>\n\n<h3>Text overflow</h3>\n<pre><code>truncate        /* overflow-hidden + text-overflow: ellipsis + white-space: nowrap */\ntext-ellipsis   /* text-overflow: ellipsis (requires overflow-hidden) */\ntext-clip       /* text-overflow: clip */\ntext-nowrap     /* white-space: nowrap */\ntext-wrap       /* white-space: normal — default */\n\n/* Multi-line clamp */\nline-clamp-1    /* clamp to 1 line  */\nline-clamp-2    /* clamp to 2 lines */\nline-clamp-3    /* clamp to 3 lines */\nline-clamp-none /* remove clamp     */\n</code></pre>\n\n<h3>Responsive show/hide</h3>\n<pre><code>/* Show only on mobile (hidden on md+) */\n&lt;div class=\"block md:hidden\"&gt;Mobile only&lt;/div&gt;\n\n/* Show only on desktop (hidden on mobile) */\n&lt;div class=\"hidden md:block\"&gt;Desktop only&lt;/div&gt;\n\n/* Show/hide based on state (JavaScript adds a class) */\n&lt;div class=\"hidden\" id=\"modal\"&gt;Modal content&lt;/div&gt;\n</code></pre>\n\n<h3>Opacity</h3>\n<pre><code>opacity-0    /* fully transparent */\nopacity-25\nopacity-50\nopacity-75\nopacity-100  /* fully opaque */\n\n/* Useful for disabled states: */\n&lt;button class=\"opacity-50 cursor-not-allowed\" disabled&gt;\n  Unavailable\n&lt;/button&gt;\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"truncate and line-clamp-2 are two of the most useful text utilities you will reach for constantly. truncate is for single-line titles that must not wrap. line-clamp-2 is for card descriptions — show two lines, add an ellipsis, clip the rest. Always add a title attribute so the full text is accessible on hover.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Two utilities you will use daily: truncate for single-line titles that cannot wrap, and line-clamp-2 for card descriptions. They look simple but they encode three CSS properties each — properties that every developer looks up separately until they learn the shortcuts."
+        },
+        {
+          "type": "example",
+          "speaker": "Card with truncated title and clamped description",
+          "text": "<div class=\"max-w-xs bg-white rounded-xl p-4 shadow-sm\">\n  <h3 class=\"font-semibold text-gray-900 truncate\">\n    A Very Long Quest Title That Would Otherwise Wrap to Multiple Lines\n  </h3>\n  <p class=\"text-sm text-gray-500 mt-1 line-clamp-2\">\n    This description is longer than two lines. It will be clamped\n    and an ellipsis will appear after the second line no matter\n    how much text follows.\n  </p>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Style a quest card with proper overflow handling:</p>\n<ul>\n  <li><strong>.quest-title</strong>: <code>font-semibold</code>, <code>text-gray-900</code>, <code>truncate</code></li>\n  <li><strong>.quest-desc</strong>: <code>text-sm</code>, <code>text-gray-500</code>, <code>mt-1</code>, <code>line-clamp-2</code></li>\n  <li><strong>.scroll-list</strong>: <code>overflow-y-auto</code>, <code>max-h-48</code></li>\n  <li><strong>.badge-hidden</strong>: <code>hidden</code></li>\n  <li><strong>.badge-draft</strong>: <code>opacity-50</code>, <code>cursor-not-allowed</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"space-y-4 p-6 max-w-sm\">\n  <div class=\"bg-white rounded-xl p-4 shadow-sm\">\n    <h3 class=\"quest-title\">The Ancient Dragon of the Ember Mountains — A Quest of Great Renown</h3>\n    <p class=\"quest-desc\">Deep in the mountains lies a dragon whose hoard contains the legendary Tome of Infinite Wisdom. You must navigate treacherous paths, solve ancient riddles, and face the dragon in combat.</p>\n  </div>\n  <ul class=\"scroll-list bg-white rounded-xl p-4 shadow-sm space-y-2\">\n    <li class=\"text-sm text-gray-700\">Quest 1: The Goblin Cave</li>\n    <li class=\"text-sm text-gray-700\">Quest 2: The Haunted Forest</li>\n    <li class=\"text-sm text-gray-700\">Quest 3: The Sea Serpent</li>\n    <li class=\"text-sm text-gray-700\">Quest 4: The Frost Giant</li>\n    <li class=\"text-sm text-gray-700\">Quest 5: The Shadow Realm</li>\n    <li class=\"text-sm text-gray-700\">Quest 6: The Lava Dungeon</li>\n  </ul>\n  <span class=\"badge-hidden bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full\">Secret badge</span>\n  <button class=\"badge-draft bg-blue-600 text-white px-4 py-2 rounded-md text-sm\" disabled>Accept Quest</button>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Title: truncate",          "selector": ".quest-title",  "requiredClass": "truncate"        },
+        { "label": "Desc: line-clamp-2",       "selector": ".quest-desc",   "requiredClass": "line-clamp-2"    },
+        { "label": "List: overflow-y-auto",    "selector": ".scroll-list",  "requiredClass": "overflow-y-auto" },
+        { "label": "List: max height",         "selector": ".scroll-list",  "requiredClass": "max-h-48"        },
+        { "label": "Badge: hidden",            "selector": ".badge-hidden", "requiredClass": "hidden"          },
+        { "label": "Button: opacity-50",       "selector": ".badge-draft",  "requiredClass": "opacity-50"      }
+      ],
+      "soloPracticeHtml": "<p>Build a notification centre with: a scrollable list (max height 200px, overflow-y-auto) of at least 6 notification items. Each notification has a title (truncated to one line) and a preview (clamped to 2 lines). Include a 'No new notifications' placeholder that starts hidden (hidden class) but can be shown by removing the class.</p>",
+      "feynmanPrompt": "Explain the difference between hidden and invisible — when would you use each? Explain line-clamp-2 — what three CSS properties does it set under the hood? When might you need to add a title attribute alongside truncate?",
+      "questions": [
+        {
+          "id": "tw-app-9-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "APPRENTICE",
+          "prompt": "What is the difference between `hidden` and `invisible` in Tailwind?",
+          "options": [
+            "hidden removes the element from layout (display: none); invisible hides it visually but preserves its space (visibility: hidden)",
+            "hidden uses visibility: hidden; invisible uses display: none",
+            "They are identical — both remove the element from the document",
+            "hidden applies opacity: 0; invisible applies display: none"
+          ],
+          "answer": "hidden removes the element from layout (display: none); invisible hides it visually but preserves its space (visibility: hidden)",
+          "explanation": "hidden applies display: none — the element is removed from layout, takes no space, and adjacent elements move to fill its position. invisible applies visibility: hidden — the element is transparent but still occupies its original space. Use hidden for modals, dropdowns, and conditional content. Use invisible when you need to preserve layout while hiding content (e.g., maintaining button width during loading states)."
+        },
+        {
+          "id": "tw-app-9-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "A card shows a one-line title and a two-line description preview. Which classes achieve this without wrapping?",
+          "options": [
+            "truncate on the title, line-clamp-2 on the description",
+            "text-nowrap on both, overflow-hidden on the card",
+            "max-lines-1 on the title, max-lines-2 on the description",
+            "text-overflow-ellipsis on the title, text-overflow-clip-2 on the description"
+          ],
+          "answer": "truncate on the title, line-clamp-2 on the description",
+          "explanation": "truncate applies overflow-hidden + text-overflow: ellipsis + white-space: nowrap to the title — one line with ellipsis. line-clamp-2 uses the -webkit-line-clamp CSS property to show exactly two lines and add an ellipsis after the second. Both are single Tailwind utilities that encode three CSS properties each."
+        },
+        {
+          "id": "tw-app-9-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You want a disabled button that is visually dimmed with a not-allowed cursor. Which class combination is correct?",
+          "options": [
+            "opacity-50 cursor-not-allowed",
+            "text-gray-400 pointer-events-none",
+            "disabled:bg-gray-300 cursor-blocked",
+            "filter-grayscale cursor-default"
+          ],
+          "answer": "opacity-50 cursor-not-allowed",
+          "explanation": "opacity-50 dims the button to 50% opacity, giving a clear visual signal that it is unavailable. cursor-not-allowed shows the prohibited cursor on hover. Add pointer-events-none if you also want to prevent click events from reaching the element (though for a real button, use the HTML disabled attribute instead)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "rx-lea-2",
+  "title": "Monorepo Management with Turborepo",
+  "glyph": "⚛",
+  "sortOrder": 2,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-19"],
+  "subChunks": [
+    {
+      "id": "rx-lea-2-1",
+      "title": "Monorepo Management with Turborepo",
+      "sortOrder": 1,
+      "xpReward": 225,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>As a frontend organisation grows, sharing code between applications — a design system, utility functions, TypeScript types, API clients — becomes a coordination problem. Monorepos keep all related code in one repository with clear internal package boundaries. Turborepo adds intelligent caching and parallel execution to make monorepo builds fast at any scale.</p>",
+      "explanationHtml": "<h3>Monorepo structure</h3>\n\n<pre><code>arcane-academy/\n  apps/\n    web/                    — main React app\n    admin/                  — admin dashboard\n    docs/                   — documentation site\n  packages/\n    ui/                     — shared component library\n    config/                 — shared ESLint, TypeScript configs\n    types/                  — shared TypeScript types\n    api-client/             — typed API client\n  turbo.json\n  package.json              — workspace root</code></pre>\n\n<h3>Workspace package.json</h3>\n\n<pre><code>// packages/ui/package.json:\n{\n  \"name\": \"@arcane/ui\",\n  \"main\": \"./src/index.ts\",\n  \"exports\": {\n    \".\": \"./src/index.ts\"\n  }\n}\n\n// apps/web/package.json:\n{\n  \"dependencies\": {\n    \"@arcane/ui\": \"*\",     // * = always use workspace version\n    \"@arcane/types\": \"*\",\n    \"@arcane/api-client\": \"*\"\n  }\n}</code></pre>\n\n<h3>Turborepo pipeline</h3>\n\n<pre><code>// turbo.json:\n{\n  \"$schema\": \"https://turbo.build/schema.json\",\n  \"pipeline\": {\n    \"build\": {\n      \"dependsOn\": [\"^build\"], // Build deps first (^ means upstream packages)\n      \"outputs\": [\"dist/**\"]    // Cache these outputs\n    },\n    \"test\": {\n      \"dependsOn\": [\"build\"],\n      \"outputs\": []\n    },\n    \"lint\": {\n      \"outputs\": []\n    },\n    \"dev\": {\n      \"cache\": false,  // Don't cache dev servers\n      \"persistent\": true\n    }\n  }\n}</code></pre>\n\n<h3>Running tasks</h3>\n\n<pre><code># Build everything (in dependency order, in parallel):\nturbo run build\n\n# Build only affected packages (since last git commit):\nturbo run build --filter=...[HEAD^1]\n\n# Run dev for specific apps:\nturbo run dev --filter=web --filter=admin\n\n# Lint only the ui package and its dependents:\nturbo run lint --filter=@arcane/ui...</code></pre>\n\n<h3>Remote caching</h3>\n\n<pre><code># Connect to Vercel Remote Cache (or self-hosted):\nnpx turbo login\nnpx turbo link\n\n# Now CI shares build cache with local machines:\n# If your colleague built the same commit, you skip the build entirely\nturbo run build  # Cache hit: restored from remote cache in 3s</code></pre>\n\n<h3>Internal package patterns</h3>\n\n<pre><code>// packages/ui/src/index.ts:\nexport { Button } from './Button';\nexport { Input } from './Input';\nexport { Modal } from './Modal';\nexport type { ButtonProps, InputProps } from './types';\n\n// packages/ui/tsconfig.json:\n{\n  \"compilerOptions\": {\n    \"composite\": true,   // Required for project references\n    \"declaration\": true,\n    \"declarationDir\": \"./dist/types\"\n  }\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The key benefit of a monorepo is not co-location — it's atomic changes. When you update a shared type in @arcane/types and need to update every app that uses it, you do it in one PR, one CI run, one review. With separate repos, you're coordinating version bumps across 5 PRs. The monorepo makes cross-cutting changes trivially easy.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Five repositories. A shared Button component duplicated in four of them. A type change that requires five coordinated PRs across five teams. The Lead Archmage proposes a monorepo."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "A monorepo doesn't mean one giant app. It means one repository with multiple apps and packages, clear boundaries, and shared tooling. When the Button changes in @arcane/ui, every app using it gets the update in the same PR. One atomic change. One CI run. One review."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Turborepo makes the builds fast: it caches task outputs, runs tasks in parallel, knows which packages changed, and only rebuilds what's affected. Remote caching means your CI hits the same cache as your local machine. A build that took 10 minutes now takes 30 seconds because it was already built by another developer."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Design a monorepo structure (no code needed — architecture exercise):</p><ul><li>Sketch the directory structure for a guild management platform with: a web app, an admin app, a shared UI library, shared TypeScript types, and a shared API client</li><li>Write the <code>turbo.json</code> pipeline that: builds packages in dependency order, caches build outputs, and doesn't cache dev servers</li><li>Write the workspace dependency declarations for the web app consuming the shared packages</li></ul>",
+      "guidedPracticeStarterCode": "// Monorepo Architecture Exercise\n\n// PART 1: Directory structure\n// Sketch the structure in a comment:\n/*\narcane-platform/\n  apps/\n    TODO\n  packages/\n    TODO\n*/\n\n// PART 2: turbo.json pipeline\nconst turboConfig = {\n  \"$schema\": \"https://turbo.build/schema.json\",\n  \"pipeline\": {\n    // TODO: build pipeline with dependsOn and outputs\n    // TODO: test pipeline\n    // TODO: dev pipeline (no cache)\n  }\n};\n\n// PART 3: apps/web/package.json\nconst webPackageJson = {\n  \"name\": \"@arcane/web\",\n  \"dependencies\": {\n    // TODO: reference workspace packages\n  }\n};\n\nexport default function App() {\n  return <div data-testid=\"app\">Architecture exercise — see comments</div>;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Architecture is documented",
+          "checkComments": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Set up a working Turborepo monorepo with: a <code>packages/ui</code> library (exports a Button and Input component with TypeScript), an <code>apps/web</code> React app consuming the UI library, and shared ESLint and TypeScript configs in <code>packages/config</code>. Configure Turborepo pipelines for build, test, and lint. Verify that <code>turbo run build</code> builds ui first (as a dependency of web), and that changing ui causes both ui and web to rebuild while an unchanged app in the monorepo hits the cache.</p>",
+      "feynmanPrompt": "Explain what a monorepo is and why it's different from a single large application. What specific problems does it solve for a multi-app organisation? Walk through Turborepo's caching mechanism — what does it cache, when does it invalidate the cache, and why is remote caching transformative for large teams? When would you use polyrepo instead?",
+      "questions": [
+        {
+          "id": "rx-lea-2-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "In a Turborepo pipeline, what does `dependsOn: [\"^build\"]` mean for the `build` task?",
+          "options": [
+            "Before running this package's build, run build in all of this package's dependencies first (^ means upstream packages in the dependency graph)",
+            "This build task depends on the previous git commit's build output",
+            "Run this build task after all other builds finish",
+            "The ^ prefix means the task is optional and can be skipped"
+          ],
+          "answer": "Before running this package's build, run build in all of this package's dependencies first (^ means upstream packages in the dependency graph)",
+          "explanation": "^ in Turborepo means 'workspace dependencies'. dependsOn: ['build'] means 'run my own build task first' (for sequential tasks in the same package). dependsOn: ['^build'] means 'run the build task in all my dependencies first'. This ensures @arcane/ui builds before apps/web, which depends on @arcane/ui."
+        },
+        {
+          "id": "rx-lea-2-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "When would you choose polyrepo (separate git repos) over monorepo for a multi-team frontend?",
+          "options": [
+            "When teams have fundamentally different tech stacks, release cadences, or security/compliance boundaries that make shared tooling and coordination costly",
+            "When more than 2 teams are involved — monorepos only work for small organisations",
+            "When any team uses TypeScript — monorepos don't support mixed-language repos",
+            "Never — monorepos are always better for frontend"
+          ],
+          "answer": "When teams have fundamentally different tech stacks, release cadences, or security/compliance boundaries that make shared tooling and coordination costly",
+          "explanation": "Monorepos excel when teams share code, technology, and deployment practices. Polyrepo makes sense when: teams have truly independent tech stacks (React vs Angular vs Vue), when compliance requires code isolation (SOC 2, PCI), or when one team's changes genuinely should never affect another's CI. Open source libraries often use polyrepo because contributors don't need access to the entire organisation's code."
+        }
+      ]
+    }
+  ]
+}

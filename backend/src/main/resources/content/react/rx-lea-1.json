@@ -1,0 +1,85 @@
+{
+  "id": "rx-lea-1",
+  "title": "Micro-frontend Architecture and Module Federation",
+  "glyph": "⚛",
+  "sortOrder": 1,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-19"],
+  "subChunks": [
+    {
+      "id": "rx-lea-1-1",
+      "title": "Micro-frontend Architecture and Module Federation",
+      "sortOrder": 1,
+      "xpReward": 250,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>At scale, a single React application becomes a coordination problem. Twenty teams sharing one codebase means deployment coupling, merge conflicts, and slow build times. Micro-frontends solve this by allowing teams to own, deploy, and release their parts of the UI independently. Module Federation is Webpack 5's mechanism for sharing live code between separately deployed applications.</p>",
+      "explanationHtml": "<h3>What are micro-frontends?</h3>\n\n<p>Micro-frontends apply the micro-service pattern to the frontend. Each team owns a distinct part of the UI, deploys it independently, and integrates with other teams' parts at runtime. The shell application (host) composes the micro-frontends into a coherent whole.</p>\n\n<pre><code>// Architecture:\n// shell-app (host) — the container\n//   ├── quest-board (remote) — owned by the Quest team\n//   ├── member-portal (remote) — owned by the Member team\n//   └── treasury (remote) — owned by the Finance team\n\n// Each remote is a separately deployed app\n// that exports components the shell consumes at runtime</code></pre>\n\n<h3>Module Federation — sharing code at runtime</h3>\n\n<pre><code>// webpack.config.js in the REMOTE app (quest-board):\nconst { ModuleFederationPlugin } = require('webpack').container;\n\nplugins: [\n  new ModuleFederationPlugin({\n    name: 'questBoard',\n    filename: 'remoteEntry.js',\n    exposes: {\n      './QuestBoard': './src/QuestBoard',\n      './QuestCard': './src/components/QuestCard',\n    },\n    shared: {\n      react: { singleton: true, requiredVersion: '^18.0.0' },\n      'react-dom': { singleton: true, requiredVersion: '^18.0.0' },\n    },\n  }),\n]</code></pre>\n\n<pre><code>// webpack.config.js in the HOST app (shell):\nplugins: [\n  new ModuleFederationPlugin({\n    name: 'shell',\n    remotes: {\n      questBoard: 'questBoard@https://quest-board.arcane.academy/remoteEntry.js',\n    },\n    shared: { react: { singleton: true }, 'react-dom': { singleton: true } },\n  }),\n]</code></pre>\n\n<pre><code>// Consuming a remote component in the shell:\nimport React, { lazy, Suspense } from 'react';\n\n// Dynamic import from the remote — loads at runtime:\nconst RemoteQuestBoard = lazy(() => import('questBoard/QuestBoard'));\n\nfunction App() {\n  return (\n    &lt;Suspense fallback={&lt;div&gt;Loading Quest Board...&lt;/div&gt;}&gt;\n      &lt;RemoteQuestBoard /&gt;\n    &lt;/Suspense&gt;\n  );\n}</code></pre>\n\n<h3>Integration patterns</h3>\n\n<p><strong>Build-time integration</strong> — publish remotes as npm packages. Simple but requires rebuilding the host on every remote update.</p>\n<p><strong>Runtime integration (Module Federation)</strong> — remotes expose JavaScript loaded by the host at runtime. A remote can be updated and deployed without rebuilding the host.</p>\n<p><strong>Server-side integration</strong> — compose HTML fragments on the server. Good for performance, complex to implement.</p>\n\n<h3>Shared state between micro-frontends</h3>\n\n<pre><code>// Option 1: Custom events (loose coupling):\n// Remote dispatches, shell/other remotes listen:\nwindow.dispatchEvent(new CustomEvent('quest:accepted', { detail: { questId } }));\nwindow.addEventListener('quest:accepted', handler);\n\n// Option 2: Shared Zustand store (tighter coupling):\n// Both remotes import from the same shared package\n// Only works if they share the same store instance</code></pre>\n\n<h3>The cost of micro-frontends</h3>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Micro-frontends solve organisational problems, not technical ones. The right question is not 'can we use micro-frontends?' but 'do we have the organisational scale that justifies their complexity?' Two teams sharing one codebase should not use micro-frontends. Twenty teams with ten independent products probably should. Don't optimise for scale you don't have yet.\"</p></div>\n\n<ul>\n  <li>Runtime overhead: multiple JavaScript bundles, hydration latency</li>\n  <li>Versioning complexity: shared dependencies must be carefully managed</li>\n  <li>Cross-team contracts: prop interfaces, event schemas, shared state shape</li>\n  <li>Testing: integration tests between teams are expensive</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Twenty teams. One frontend repository. Every release requires coordinating all twenty. A deployment blocked by one team's broken test. The Lead Archmage calls a meeting."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "At this scale, shared deployment is shared risk. The quest board should not be blocked by a broken treasury component. Module Federation allows each team to deploy their piece independently. The shell composes them at runtime. No rebuild. No redeployment of the whole."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "But the cost is real. Versioning shared dependencies. Cross-team contracts for props and events. Integration testing across deployment boundaries. Micro-frontends solve organisational scale problems — if you have them. If you don't, you're buying a solution for a problem you don't have."
+        }
+      ],
+      "guidedPracticeHtml": "<p>This is an architecture exercise (Module Federation requires a local webpack setup). Document the architecture:</p><ul><li>Sketch the module federation config for a 3-team app: shell, quest-board (exposes QuestBoard, QuestCard), member-portal (exposes MemberList)</li><li>Write the Suspense-wrapped lazy import code for the shell consuming quest-board</li><li>Describe how you'd handle shared authentication state between the shell and both remotes — what are the tradeoffs of custom events vs a shared store?</li></ul>",
+      "guidedPracticeStarterCode": "// Module Federation Architecture Exercise\n\n// PART 1: Remote config (quest-board team)\n// Complete this webpack.config.js:\n/*\nnew ModuleFederationPlugin({\n  name: 'questBoard',\n  filename: 'remoteEntry.js',\n  exposes: { /* TODO: expose QuestBoard and QuestCard */ },\n  shared: { /* TODO: singleton React */ },\n})\n*/\n\n// PART 2: Host config (shell team)\n// Complete this:\n/*\nnew ModuleFederationPlugin({\n  name: 'shell',\n  remotes: { /* TODO: point to quest-board and member-portal remotes */ },\n  shared: { /* TODO */ },\n})\n*/\n\n// PART 3: Shell consuming the remote — write the code:\nimport { lazy, Suspense } from 'react';\n\n// TODO: lazy-import questBoard/QuestBoard\n// TODO: wrap in Suspense with fallback\n\n// PART 4: Auth state sharing\n// TODO: describe in a comment block — custom events vs shared store trade-offs\n\nexport default function Shell() {\n  return <div data-testid=\"shell\">Shell placeholder</div>;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Architecture is documented",
+          "checkComments": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Set up a local Module Federation proof-of-concept using Vite Federation plugin (or Webpack). Create two Vite apps: a shell and a remote. The remote exposes a <code>&lt;QuestWidget /&gt;</code> component. The shell consumes it lazily. Demonstrate hot reload — change the remote component and verify the shell picks up the change without rebuilding. Write a one-page architectural decision record (ADR) explaining when you would and wouldn't recommend this pattern to your team.</p>",
+      "feynmanPrompt": "Explain micro-frontends to a senior developer who has only worked on monolithic React SPAs. What problem does the architecture solve? Walk through Module Federation's mechanism — what is remoteEntry.js, what does 'singleton' mean for shared libraries, and how does lazy import across apps work? Finally, what organisational conditions must be true for micro-frontends to be worth their cost?",
+      "questions": [
+        {
+          "id": "rx-lea-1-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "Why must React be configured as `singleton: true` in Module Federation?",
+          "options": [
+            "If each micro-frontend bundles its own React, multiple React instances exist in the same browser — hooks throw errors because they rely on a single React module instance",
+            "It reduces bundle size by sharing the React code",
+            "It ensures all micro-frontends use the same React version",
+            "singletons are required for Suspense to work across remotes"
+          ],
+          "answer": "If each micro-frontend bundles its own React, multiple React instances exist in the same browser — hooks throw errors because they rely on a single React module instance",
+          "explanation": "React's hooks (useState, useContext, etc.) depend on a global registry that only works with a single React instance. If the shell and two remotes each bundle React, three React instances exist — any cross-boundary component usage fails with 'Invalid hook call'. singleton: true tells Module Federation to share the host's React instance with all remotes, ensuring everyone uses the same one."
+        },
+        {
+          "id": "rx-lea-1-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "Two teams share a React codebase and want independent deployments. Should they use Module Federation?",
+          "options": [
+            "Probably not — two teams can coordinate deployments and the complexity of MFE (versioning, integration testing, shared state contracts) outweighs the benefit",
+            "Yes — independent deployments always require Module Federation",
+            "Yes — Module Federation is the standard for any multi-team frontend",
+            "Only if they use different JavaScript frameworks"
+          ],
+          "answer": "Probably not — two teams can coordinate deployments and the complexity of MFE (versioning, integration testing, shared state contracts) outweighs the benefit",
+          "explanation": "Module Federation introduces real overhead: dependency versioning contracts, cross-team interface agreements, integration testing across deployment boundaries, runtime loading performance impact. For two teams, CI/CD with feature flags and coordinated release cadences is almost always simpler. MFE pays off around 5-10+ teams with truly independent domains. Applying it earlier is premature architectural complexity."
+        }
+      ]
+    }
+  ]
+}

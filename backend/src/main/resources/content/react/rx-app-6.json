@@ -1,0 +1,148 @@
+{
+  "id": "rx-app-6",
+  "title": "Immutable State: Updating Objects and Arrays",
+  "glyph": "⚛",
+  "sortOrder": 6,
+  "tier": "APPRENTICE",
+  "topicId": "react",
+  "prerequisites": ["rx-app-3"],
+  "subChunks": [
+    {
+      "id": "rx-app-6-1",
+      "title": "Immutable State: Updating Objects and Arrays",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>You know how to update a number or a string with <code>useState</code>. But real apps have state that's a list of items or an object with many fields. The trap: React won't re-render if you <em>mutate</em> the existing value. You must always replace it with a new copy. This is immutability — the rule that keeps React predictable.</p>",
+      "explanationHtml": "<p>Vex sets two diagrams side-by-side. On the left, a list with an arrow stabbing into it — the word <em>mutate</em>. On the right, a new list being created with the old items plus one more — the word <em>replace</em>.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"React uses reference equality to detect changes. If you hand it the same object reference it already has — even if the object's contents changed — it sees no update and skips the render. You must always give it a new reference.\"</p></div>\n\n<h3>Why mutation fails</h3>\n\n<pre><code>// ❌ This does NOT trigger a re-render:\nconst [user, setUser] = useState({ name: 'Aria', xp: 100 });\n\nfunction handleGainXp() {\n  user.xp += 50; // Mutating the existing object\n  setUser(user); // Passing the same reference — React ignores it\n}</code></pre>\n\n<h3>Updating objects — spread to create a copy</h3>\n\n<pre><code>// ✅ Create a new object with the spread operator:\nfunction handleGainXp() {\n  setUser(prev =&gt; ({ ...prev, xp: prev.xp + 50 }));\n  //              ^^^^^^^^^ copies all existing fields\n  //                         ^^^^^^^^^^^^^^^^^ then overrides xp\n}</code></pre>\n\n<p>The <code>...prev</code> spread copies every key from the old object. Then you list only the keys you want to change. The rest stay identical.</p>\n\n<h3>Updating arrays — the four operations</h3>\n\n<p><strong>Add an item:</strong></p>\n<pre><code>setItems(prev =&gt; [...prev, newItem]);</code></pre>\n\n<p><strong>Remove an item:</strong></p>\n<pre><code>setItems(prev =&gt; prev.filter(item =&gt; item.id !== targetId));</code></pre>\n\n<p><strong>Update one item:</strong></p>\n<pre><code>setItems(prev =&gt; prev.map(item =&gt;\n  item.id === targetId ? { ...item, done: true } : item\n));</code></pre>\n\n<p><strong>Reorder / insert at position:</strong></p>\n<pre><code>// Insert after index 2:\nsetItems(prev =&gt; [\n  ...prev.slice(0, 3),\n  newItem,\n  ...prev.slice(3),\n]);</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Notice the pattern: <code>filter</code> removes, <code>map</code> transforms, <code>spread</code> adds. These three array methods are 90% of all state updates you will ever write. Learn them reflexively.\"</p></div>\n\n<h3>Nested objects — spread at every level</h3>\n\n<pre><code>const [profile, setProfile] = useState({\n  user: { name: 'Aria', xp: 0 },\n  settings: { theme: 'dark' },\n});\n\n// ✅ Spread at every nested level you touch:\nfunction handleXpGain() {\n  setProfile(prev =&gt; ({\n    ...prev,          // copy top-level keys (settings stays untouched)\n    user: {\n      ...prev.user,   // copy user fields\n      xp: prev.user.xp + 50,\n    },\n  }));\n}</code></pre>\n\n<p>For deeply nested state this becomes verbose. That's a sign the state should be flatter — or you need <code>useReducer</code> (covered in Junior tier).</p>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex points to two diagrams on the wall. One shows a hand plunging into a list and pulling out a piece. The other shows the list being copied onto fresh parchment, with the change already applied."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "React compares references, not contents. If you modify the same object and pass it back, React sees the same reference it already had — and skips the render entirely. The screen doesn't update. You've changed the data but the user sees nothing."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The rule is simple: never mutate. Always replace. For objects: spread the old one, override the changed field. For arrays: filter to remove, map to update, spread to add. These patterns become second nature."
+        },
+        {
+          "type": "example",
+          "speaker": "The three array operations",
+          "text": "// Add\nsetItems(prev => [...prev, newItem]);\n\n// Remove\nsetItems(prev => prev.filter(i => i.id !== id));\n\n// Update one item\nsetItems(prev => prev.map(i =>\n  i.id === id ? { ...i, done: true } : i\n));"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a simple quest tracker. State is an array of quest objects: <code>{ id, title, done }</code>.</p><ul><li>Render a <code>&lt;ul&gt;</code> with a <code>&lt;li&gt;</code> per quest; completed quests should have <code>className=\"done\"</code></li><li>Each item has a <code>&lt;button data-testid=\"toggle-{id}\"&gt;Complete&lt;/button&gt;</code> that sets <code>done: true</code> — use <code>map</code> to create a new array</li><li>Below the list render a <code>&lt;button data-testid=\"add\"&gt;Add Quest&lt;/button&gt;</code> that appends <code>{ id: Date.now(), title: 'New Quest', done: false }</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nconst INITIAL = [\n  { id: 1, title: 'Learn JSX', done: false },\n  { id: 2, title: 'Understand props', done: false },\n];\n\nexport default function QuestTracker() {\n  const [quests, setQuests] = useState(INITIAL);\n\n  function handleToggle(id) {\n    // TODO: map over quests; set done:true where id matches\n  }\n\n  function handleAdd() {\n    // TODO: append a new quest object using spread\n  }\n\n  return (\n    <div>\n      <ul>\n        {quests.map(q => (\n          <li key={q.id} className={q.done ? 'done' : ''}>\n            {q.title}\n            <button data-testid={`toggle-${q.id}`} onClick={() => handleToggle(q.id)}>\n              Complete\n            </button>\n          </li>\n        ))}\n      </ul>\n      <button data-testid=\"add\" onClick={handleAdd}>Add Quest</button>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders initial quests",
+          "selector": "li",
+          "count": 2
+        },
+        {
+          "label": "Clicking toggle marks item done",
+          "action": "click",
+          "selector": "[data-testid='toggle-1']",
+          "then": {
+            "selector": "li.done",
+            "exists": true
+          }
+        },
+        {
+          "label": "Other item stays undone",
+          "action": "click",
+          "selector": "[data-testid='toggle-1']",
+          "then": {
+            "selector": "li:not(.done)",
+            "exists": true
+          }
+        },
+        {
+          "label": "Add button appends a new item",
+          "action": "click",
+          "selector": "[data-testid='add']",
+          "then": {
+            "selector": "li",
+            "count": 3
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;TagEditor&gt;</code> component from scratch. State is an array of strings (tags). Render each tag as a <code>&lt;span&gt;</code> with a remove button beside it. Below the list, a text input and an Add button append new tags. Clicking a remove button removes that tag. No duplicates allowed — if the same tag is added twice, ignore the second attempt.</p>",
+      "feynmanPrompt": "Explain why React requires immutable state updates. Why does mutating an array or object directly fail to trigger a re-render? Use an analogy that doesn't involve React to explain reference equality, then connect it back to why <code>setItems([...items, newItem])</code> works but <code>items.push(newItem); setItems(items)</code> doesn't.",
+      "questions": [
+        {
+          "id": "rx-app-6-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "Why does mutating state directly (e.g. `arr.push(item); setState(arr)`) fail to re-render the component?",
+          "options": [
+            "React compares object references — the same reference means no change detected",
+            "push() is not allowed inside React components",
+            "setState only works with primitive values like numbers and strings",
+            "React batches mutations and applies them on the next tick"
+          ],
+          "answer": "React compares object references — the same reference means no change detected",
+          "explanation": "React uses Object.is() (reference equality) to decide whether state changed. After arr.push(item), arr is still the same array reference. React sees the same reference it stored previously and skips the render. You must create a new array: setState([...arr, item])."
+        },
+        {
+          "id": "rx-app-6-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "State is `{ name: 'Aria', xp: 100, rank: 'Apprentice' }`. You want to increase xp by 50 without changing name or rank. Which setter call is correct?",
+          "options": [
+            "setUser(prev => ({ ...prev, xp: prev.xp + 50 }))",
+            "setUser({ xp: user.xp + 50 })",
+            "user.xp += 50; setUser(user)",
+            "setUser(Object.assign(user, { xp: user.xp + 50 }))"
+          ],
+          "answer": "setUser(prev => ({ ...prev, xp: prev.xp + 50 }))",
+          "explanation": "Spreading ...prev copies all existing fields (name, rank) into the new object, then xp: prev.xp + 50 overrides only xp. Option B would set name and rank to undefined. Options C and D mutate the existing object. The functional form prev => ensures you're always working with the latest state."
+        },
+        {
+          "id": "rx-app-6-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "You have an array of tasks. To mark a task with id=3 as done, which is correct?",
+          "options": [
+            "setTasks(prev => prev.map(t => t.id === 3 ? { ...t, done: true } : t))",
+            "tasks.find(t => t.id === 3).done = true; setTasks(tasks)",
+            "setTasks(prev => { prev[2].done = true; return prev; })",
+            "setTasks(tasks.splice(2, 1, { ...tasks[2], done: true }))"
+          ],
+          "answer": "setTasks(prev => prev.map(t => t.id === 3 ? { ...t, done: true } : t))",
+          "explanation": "map() creates a new array. For the matching item, { ...t, done: true } creates a new object with done set — all other fields preserved. Other options mutate the existing array or objects, which will not trigger a re-render."
+        },
+        {
+          "id": "rx-app-6-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "FOUNDATION",
+          "prompt": "When should you consider flattening nested state rather than spreading at multiple levels?",
+          "options": [
+            "When the nesting is more than 1-2 levels deep and updates become error-prone verbose expressions",
+            "Always — nested state is never valid in React",
+            "Only when using TypeScript, because TypeScript cannot type nested spread",
+            "When the state contains more than 5 fields at the top level"
+          ],
+          "answer": "When the nesting is more than 1-2 levels deep and updates become error-prone verbose expressions",
+          "explanation": "Shallow nesting (1-2 levels) is fine with spread. Deep nesting creates brittle, hard-to-read update logic. The idiomatic React solution is to normalise state — either flatten the shape, split into multiple useState calls, or use useReducer which handles complex update logic more clearly."
+        }
+      ]
+    }
+  ]
+}

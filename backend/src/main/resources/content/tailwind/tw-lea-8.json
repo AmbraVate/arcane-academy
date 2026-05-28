@@ -1,0 +1,105 @@
+{
+  "id": "tw-lea-8",
+  "title": "v3 to v4 Migration",
+  "glyph": "🌐",
+  "sortOrder": 8,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-lea-7"],
+  "subChunks": [
+    {
+      "id": "tw-lea-8-1",
+      "title": "v3 to v4 Migration",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Migrating a production Tailwind v3 codebase to v4 is a high-stakes operation. Classes renamed. Config model replaced. PostCSS setup changed. A careless migration breaks thousands of classes across hundreds of files. A systematic migration — running the automated tool, understanding what it can and can't fix, then addressing the manual changes — takes a large codebase from v3 to v4 without regressions.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"Do not migrate in production. Do not migrate without a complete test suite baseline. The automated tool handles ~90% of the work — class renames, config moves, PostCSS updates. The remaining 10% requires judgment: plugin compatibility, custom utility patterns, and anything that touched the JS config in ways the tool cannot infer.\"</p></div>\n\n<h3>Step 1: Run the automated migration tool</h3>\n\n<pre><code>npx @tailwindcss/upgrade\n\n# The tool:\n# 1. Updates tailwind and PostCSS dependencies\n# 2. Converts tailwind.config.js → CSS @theme\n# 3. Renames deprecated class names\n# 4. Updates PostCSS config\n# 5. Adds @import \"tailwindcss\" to your CSS entry</code></pre>\n\n<h3>Breaking changes: renamed utilities</h3>\n\n<pre><code>/* Colour palette renames */\nv3 → v4\nshadow-sm        → shadow-xs\nshadow           → shadow-sm\nshadow-md        → shadow      (default)\nring-0           → ring-0 (unchanged)\nblur             → blur-sm\nblur-sm          → blur-xs\n\n/* Opacity utilities */\nbg-opacity-50    → bg-black/50  (use / modifier)\ntext-opacity-75  → text-current with opacity modifier\n\n/* Outline rename */\noutline-none     → outline-hidden (v4)\n                   (outline: none now literally means no outline — a11y risk)</code></pre>\n\n<h3>Breaking changes: configuration</h3>\n\n<pre><code>/* v3 tailwind.config.js */\nmodule.exports = {\n  content: ['./src/**/*.{ts,tsx,html}'],  // → @source in CSS\n  darkMode: 'class',                       // → @variant dark in CSS\n  theme: {\n    extend: {\n      colors: { brand: '#6366f1' },        // → @theme in CSS\n      fontFamily: { sans: ['Inter'] },      // → @theme in CSS\n    }\n  },\n  plugins: [require('@tailwindcss/forms')]  // → still in tailwind.config.js\n};</code></pre>\n\n<h3>What the tool cannot fix automatically</h3>\n\n<ul>\n<li><strong>Custom plugin compatibility</strong> — v3 plugins that use the old API may need updating</li>\n<li><strong>JIT safelist patterns</strong> — safelist with regex patterns must become @source inline()</li>\n<li><strong>Complex theme() references</strong> — theme() in CSS that references extended values</li>\n<li><strong>CSS Modules with @apply</strong> — @apply behaviour changed slightly in v4</li>\n<li><strong>outline-none → outline-hidden</strong> — semantic change requires manual audit</li>\n</ul>\n\n<h3>The @apply change in v4</h3>\n\n<pre><code>/* v3: @apply worked anywhere in CSS */\n.my-component {\n  @apply flex items-center gap-4 hover:bg-gray-100;\n}\n\n/* v4: @apply still works, but:\n  - Variants in @apply (hover:) are expanded inline\n  - Utilities must be generated before @apply can reference them\n  - CSS Modules: may need extra configuration */</code></pre>\n\n<h3>Testing your migration</h3>\n\n<pre><code># Before migration: capture visual baseline\nnpx percy snapshot dist/  # or Chromatic, Playwright screenshots\n\n# Run migration\nnpx @tailwindcss/upgrade\n\n# Build and compare\nnpm run build\n# Compare CSS bundle size (should be similar or smaller)\n# Run visual regression suite\n# Run accessibility tests\nnpx axe-cli http://localhost:3000</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Cordell:</strong> \"The outline-none change is the most dangerous breaking change in v4 for accessibility. In v3, outline-none suppressed the browser's focus ring. In v4, outline-hidden suppresses it. If you missed this rename, your focus styles silently broke. Always check: every focus-visible: must have a corresponding outline-hidden or ring-* utility.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "The migration tool handles the mechanical work — renames, config conversion, dependency updates. What it cannot do is reason about your intent. Was that outline-none suppressing a focus ring that you're replacing with focus-visible:? Or was it a mistake? That judgment is yours."
+        },
+        {
+          "type": "example",
+          "speaker": "Critical rename: outline-none → outline-hidden",
+          "text": "/* v3 — suppresses focus ring */\n.btn { @apply focus:outline-none focus-visible:ring-2; }\n\n/* v4 migration — MUST update outline-none to outline-hidden */\n.btn { @apply focus:outline-hidden focus-visible:ring-2; }\n\n/* If you don't update: outline: none literally means no outline\n   AND no ring — your keyboard focus disappears entirely */"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a migration checklist UI showing the v3→v4 breaking changes by category:</p>\n<ul>\n  <li><strong>.mig-page</strong>: <code>max-w-2xl</code>, <code>mx-auto</code>, <code>p-6</code>, <code>space-y-4</code></li>\n  <li><strong>.mig-section</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>overflow-hidden</code></li>\n  <li><strong>.mig-section-header</strong>: <code>flex</code>, <code>items-center</code>, <code>gap-2</code>, <code>px-4</code>, <code>py-3</code>, <code>bg-gray-50</code>, <code>border-b</code>, <code>border-gray-100</code></li>\n  <li><strong>.mig-section-title</strong>: <code>text-sm</code>, <code>font-semibold</code>, <code>text-gray-700</code></li>\n  <li><strong>.mig-list</strong>: <code>divide-y</code>, <code>divide-gray-100</code></li>\n  <li><strong>.mig-item</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-between</code>, <code>px-4</code>, <code>py-2.5</code>, <code>text-sm</code></li>\n  <li><strong>.mig-old</strong>: <code>font-mono</code>, <code>text-red-600</code>, <code>line-through</code>, <code>text-xs</code></li>\n  <li><strong>.mig-new</strong>: <code>font-mono</code>, <code>text-emerald-700</code>, <code>text-xs</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"mig-page\">\n  <div class=\"mig-section\">\n    <div class=\"mig-section-header\">\n      <span>⚠️</span>\n      <h3 class=\"mig-section-title\">Shadow Renames</h3>\n    </div>\n    <div class=\"mig-list\">\n      <div class=\"mig-item\">\n        <span class=\"mig-old\">shadow-sm</span>\n        <span class=\"text-gray-400\">→</span>\n        <span class=\"mig-new\">shadow-xs</span>\n      </div>\n      <div class=\"mig-item\">\n        <span class=\"mig-old\">shadow</span>\n        <span class=\"text-gray-400\">→</span>\n        <span class=\"mig-new\">shadow-sm</span>\n      </div>\n    </div>\n  </div>\n  <div class=\"mig-section\">\n    <div class=\"mig-section-header\">\n      <span>🚨</span>\n      <h3 class=\"mig-section-title\">Accessibility Breaking Changes</h3>\n    </div>\n    <div class=\"mig-list\">\n      <div class=\"mig-item\">\n        <span class=\"mig-old\">focus:outline-none</span>\n        <span class=\"text-gray-400\">→</span>\n        <span class=\"mig-new\">focus:outline-hidden</span>\n      </div>\n    </div>\n  </div>\n  <div class=\"mig-section\">\n    <div class=\"mig-section-header\">\n      <span>🔧</span>\n      <h3 class=\"mig-section-title\">Config Model</h3>\n    </div>\n    <div class=\"mig-list\">\n      <div class=\"mig-item\">\n        <span class=\"mig-old\">content: [...]</span>\n        <span class=\"text-gray-400\">→</span>\n        <span class=\"mig-new\">@source in CSS</span>\n      </div>\n      <div class=\"mig-item\">\n        <span class=\"mig-old\">darkMode: 'class'</span>\n        <span class=\"text-gray-400\">→</span>\n        <span class=\"mig-new\">@variant dark</span>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Page: max-w-2xl",           "selector": ".mig-page",           "requiredClass": "max-w-2xl"        },
+        { "label": "Page: space-y-4",           "selector": ".mig-page",           "requiredClass": "space-y-4"        },
+        { "label": "Section: bg-white",         "selector": ".mig-section",        "requiredClass": "bg-white"         },
+        { "label": "Section: rounded-xl",       "selector": ".mig-section",        "requiredClass": "rounded-xl"       },
+        { "label": "Section: overflow-hidden",  "selector": ".mig-section",        "requiredClass": "overflow-hidden"  },
+        { "label": "Header: flex",              "selector": ".mig-section-header", "requiredClass": "flex"             },
+        { "label": "Header: bg-gray-50",        "selector": ".mig-section-header", "requiredClass": "bg-gray-50"       },
+        { "label": "Header: border-b",          "selector": ".mig-section-header", "requiredClass": "border-b"         },
+        { "label": "Title: font-semibold",      "selector": ".mig-section-title",  "requiredClass": "font-semibold"    },
+        { "label": "List: divide-y",            "selector": ".mig-list",           "requiredClass": "divide-y"         },
+        { "label": "Item: flex",                "selector": ".mig-item",           "requiredClass": "flex"             },
+        { "label": "Item: justify-between",     "selector": ".mig-item",           "requiredClass": "justify-between"  },
+        { "label": "Old: font-mono",            "selector": ".mig-old",            "requiredClass": "font-mono"        },
+        { "label": "Old: text-red-600",         "selector": ".mig-old",            "requiredClass": "text-red-600"     },
+        { "label": "New: font-mono",            "selector": ".mig-new",            "requiredClass": "font-mono"        },
+        { "label": "New: text-emerald-700",     "selector": ".mig-new",            "requiredClass": "text-emerald-700" }
+      ],
+      "soloPracticeHtml": "<p>Design a complete v3→v4 migration plan card from scratch. Include: automated tool command and what it covers, a table of the 5 most critical manual checks (outline-none, shadow renames, plugin audit, @apply in CSS Modules, JIT safelist), and a testing checklist (visual baseline, bundle size comparison, axe audit). No starter code.</p>",
+      "feynmanPrompt": "Walk through the v3→v4 migration process step by step: what the automated tool does, what it cannot do, and the single most dangerous breaking change for accessibility. If a v3 codebase has 'outline-none' on buttons, what exactly breaks in v4 and how do you fix it?",
+      "questions": [
+        {
+          "id": "tw-lea-8-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "What does the npx @tailwindcss/upgrade command handle automatically during a v3→v4 migration?",
+          "options": [
+            "Dependency updates, config conversion from tailwind.config.js to CSS @theme, class renames (shadow, blur, etc.), and PostCSS config updates",
+            "Only class renames — config and dependency changes require manual intervention",
+            "Only the PostCSS config — all other changes must be done manually",
+            "Everything including plugin compatibility and @apply audit — the migration is fully automated"
+          ],
+          "answer": "Dependency updates, config conversion from tailwind.config.js to CSS @theme, class renames (shadow, blur, etc.), and PostCSS config updates",
+          "explanation": "The upgrade tool handles the mechanical, deterministic parts of migration: updating package versions, converting theme extend values to @theme blocks, renaming classes with known v3→v4 mappings (shadow-sm→shadow-xs, etc.), and updating the PostCSS or Vite config. It cannot handle cases that require intent judgment — plugin compatibility, complex theme() references, or semantic changes like outline-none."
+        },
+        {
+          "id": "tw-lea-8-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "After migrating a v3 codebase to v4, keyboard focus indicators disappear on all buttons. The buttons used focus:outline-none focus-visible:ring-2. What happened and how do you fix it?",
+          "options": [
+            "outline-none in v4 means literal CSS outline: none — the ring-2 never renders because the ring requires outline to be set. Fix: change focus:outline-none to focus:outline-hidden, which suppresses the native ring while allowing ring-* to render.",
+            "focus-visible:ring-2 is not supported in v4 — change it to focus:ring-2",
+            "The ring-2 class was renamed to ring in v4 — the ring disappeared because the class generates no CSS",
+            "The migration tool accidentally deleted all focus-visible: classes — rerun the migration"
+          ],
+          "answer": "outline-none in v4 means literal CSS outline: none — the ring-2 never renders because the ring requires outline to be set. Fix: change focus:outline-none to focus:outline-hidden, which suppresses the native ring while allowing ring-* to render.",
+          "explanation": "This is the most impactful breaking change in v4. In v3, outline-none was a semantic utility that suppressed the browser's native focus outline while the developer provided a custom one (usually via ring-*). In v4, the semantic has changed: outline-hidden suppresses the native ring (matching v3's outline-none behavior), and outline-none literally sets outline: none — which conflicts with ring-* rendering. Every focus:outline-none must become focus:outline-hidden."
+        },
+        {
+          "id": "tw-lea-8-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A v3 project has safelist: [{ pattern: /^bg-/ }] in tailwind.config.js. The migration tool does not convert this automatically. What is the v4 equivalent?",
+          "options": [
+            "@source inline(\"bg-{red,blue,green,indigo}-{100,200,300,400,500,600,700,800,900}\") in the CSS file — listing the specific patterns needed rather than a broad regex",
+            "safelist: [/^bg-/] in tailwind.config.js still works in v4 — no change needed",
+            "@theme { --safelist-pattern: '^bg-'; } in the CSS file",
+            "There is no v4 equivalent — regex safelists must be converted to individual class names"
+          ],
+          "answer": "@source inline(\"bg-{red,blue,green,indigo}-{100,200,300,400,500,600,700,800,900}\") in the CSS file — listing the specific patterns needed rather than a broad regex",
+          "explanation": "v4 replaces regex safelist patterns with @source inline() using brace-expansion syntax. The migration requires understanding which specific classes the regex was meant to safelist and being precise rather than broad. A regex like /^bg-/ could match thousands of classes — @source inline() forces you to specify exactly which colour-shade combinations you need, which also prevents the performance anti-pattern of generating an enormous CSS file."
+        }
+      ]
+    }
+  ]
+}

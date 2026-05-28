@@ -1,0 +1,103 @@
+{
+  "id": "tw-sen-15",
+  "title": "Storybook and Component Documentation",
+  "glyph": "🔮",
+  "sortOrder": 15,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-2", "tw-sen-11"],
+  "subChunks": [
+    {
+      "id": "tw-sen-15-1",
+      "title": "Storybook and Component Documentation",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Storybook is the industry-standard tool for building and documenting component libraries. When your component library uses CVA and Tailwind, Storybook stories become the living specification for every variant, size, and state — and the controls panel lets non-engineers explore the component API without touching code.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Sable the Illuminator:</strong> \"A component without documentation is a component that only its author can use. Storybook transforms your CVA definition into an interactive specification. The designer can see all variants. The product manager can test states. The engineer inherits a regression baseline.\"</p></div>\n\n<h3>Setting up Tailwind in Storybook</h3>\n<pre><code>// .storybook/preview.ts\nimport '../src/index.css';  // Import your Tailwind CSS file\n\nconst preview: Preview = {\n  parameters: {\n    backgrounds: {\n      default: 'light',\n      values: [\n        { name: 'light',    value: '#ffffff' },\n        { name: 'surface',  value: '#f9fafb' },\n        { name: 'dark',     value: '#111827' },\n      ],\n    },\n  },\n  // Global decorator: wraps every story in a div with base styles\n  decorators: [\n    (Story) =&gt; (\n      &lt;div className=\"font-sans antialiased p-6\"&gt;\n        &lt;Story /&gt;\n      &lt;/div&gt;\n    ),\n  ],\n};</code></pre>\n\n<h3>Writing stories for CVA components</h3>\n<pre><code>// Button.stories.tsx\nimport type { Meta, StoryObj } from '@storybook/react';\nimport { Button } from './button';\n\nconst meta: Meta&lt;typeof Button&gt; = {\n  title: 'UI/Button',\n  component: Button,\n  // argTypes auto-generates controls from component props\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['primary', 'secondary', 'ghost', 'destructive'],\n    },\n    size: {\n      control: 'select',\n      options: ['sm', 'md', 'lg'],\n    },\n    disabled: { control: 'boolean' },\n    children: { control: 'text' },\n  },\n  args: {\n    children: 'Click me',\n    variant: 'primary',\n    size: 'md',\n    disabled: false,\n  },\n};\n\nexport default meta;\ntype Story = StoryObj&lt;typeof meta&gt;;\n\n// Individual stories for each meaningful variant\nexport const Primary: Story = { args: { variant: 'primary' } };\nexport const Secondary: Story = { args: { variant: 'secondary' } };\nexport const Destructive: Story = { args: { variant: 'destructive' } };\nexport const Small: Story = { args: { size: 'sm' } };\nexport const Large: Story = { args: { size: 'lg' } };\nexport const Disabled: Story = { args: { disabled: true } };\n\n// Showcase story — shows all variants in one view\nexport const AllVariants: Story = {\n  render: () =&gt; (\n    &lt;div className=\"flex gap-3 flex-wrap\"&gt;\n      &lt;Button variant=\"primary\"&gt;Primary&lt;/Button&gt;\n      &lt;Button variant=\"secondary\"&gt;Secondary&lt;/Button&gt;\n      &lt;Button variant=\"ghost\"&gt;Ghost&lt;/Button&gt;\n      &lt;Button variant=\"destructive\"&gt;Destructive&lt;/Button&gt;\n    &lt;/div&gt;\n  ),\n};</code></pre>\n\n<h3>Dark mode decorator</h3>\n<pre><code>// Toggle dark mode in stories\nimport { withThemeByClassName } from '@storybook/addon-themes';\n\nexport const decorators = [\n  withThemeByClassName({\n    themes: { light: '', dark: 'dark' },  // 'dark' adds .dark to html\n    defaultTheme: 'light',\n  }),\n];\n\n// Now every story has a light/dark toggle in the toolbar</code></pre>\n\n<h3>Play functions — interactive story testing</h3>\n<pre><code>import { userEvent, within, expect } from '@storybook/test';\n\nexport const FocusState: Story = {\n  play: async ({ canvasElement }) =&gt; {\n    const canvas = within(canvasElement);\n    const button = canvas.getByRole('button');\n\n    // Simulate keyboard focus\n    await userEvent.tab();\n    await expect(button).toHaveFocus();\n  },\n};</code></pre>\n\n<h3>What makes a good story</h3>\n<ul>\n<li><strong>One story per meaningful state</strong> — not one per prop combination</li>\n<li><strong>An AllVariants / Showcase story</strong> — shows the full capability at a glance</li>\n<li><strong>Play functions for interactive states</strong> — hover, focus, error, loading</li>\n<li><strong>Realistic args</strong> — use real content, not 'Button' or 'Lorem ipsum'</li>\n<li><strong>A dark mode story for every component</strong> — use the theme decorator</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"Storybook is your design system's source of truth. If a variant or state doesn't have a story, it hasn't been reviewed. Write the story before the component is merged.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "argTypes maps your CVA VariantProps to Storybook controls automatically. The controls panel becomes a live API explorer. Every variant and size is clickable. The designer, PM, and QA engineer all see exactly what the component can do."
+        },
+        {
+          "type": "example",
+          "speaker": "AllVariants showcase story",
+          "text": "export const AllVariants: Story = {\n  render: () => (\n    <div className=\"flex gap-3 flex-wrap\">\n      <Button variant=\"primary\">Primary</Button>\n      <Button variant=\"secondary\">Secondary</Button>\n      <Button variant=\"destructive\">Delete</Button>\n    </div>\n  ),\n};"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a visual component showcase — the kind of view that a Storybook AllVariants story would render:</p>\n<ul>\n  <li><strong>.sb-showcase</strong>: <code>p-6</code>, <code>space-y-8</code>, <code>bg-gray-50</code>, <code>min-h-screen</code></li>\n  <li><strong>.sb-section</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>p-6</code></li>\n  <li><strong>.sb-section-title</strong>: <code>text-xs</code>, <code>font-semibold</code>, <code>text-gray-500</code>, <code>uppercase</code>, <code>tracking-wider</code>, <code>mb-4</code></li>\n  <li><strong>.sb-row</strong>: <code>flex</code>, <code>items-center</code>, <code>gap-3</code>, <code>flex-wrap</code></li>\n  <li><strong>.sb-badge</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>px-2.5</code>, <code>py-0.5</code>, <code>rounded-full</code>, <code>text-xs</code>, <code>font-medium</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"sb-showcase\">\n  <!-- Button variants -->\n  <div class=\"sb-section\">\n    <p class=\"sb-section-title\">Button Variants</p>\n    <div class=\"sb-row\">\n      <button class=\"inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors\">Primary</button>\n      <button class=\"inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition-colors shadow-sm\">Secondary</button>\n      <button class=\"inline-flex items-center gap-2 px-4 py-2 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-100 transition-colors\">Ghost</button>\n      <button class=\"inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors\">Destructive</button>\n    </div>\n  </div>\n\n  <!-- Badge variants -->\n  <div class=\"sb-section\">\n    <p class=\"sb-section-title\">Badge Variants</p>\n    <div class=\"sb-row\">\n      <span class=\"sb-badge bg-emerald-100 text-emerald-800\">Success</span>\n      <span class=\"sb-badge bg-amber-100 text-amber-800\">Warning</span>\n      <span class=\"sb-badge bg-red-100 text-red-800\">Error</span>\n      <span class=\"sb-badge bg-blue-100 text-blue-800\">Info</span>\n      <span class=\"sb-badge bg-gray-100 text-gray-700\">Default</span>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Showcase: bg-gray-50",          "selector": ".sb-showcase",      "requiredClass": "bg-gray-50"      },
+        { "label": "Showcase: space-y-8",           "selector": ".sb-showcase",      "requiredClass": "space-y-8"       },
+        { "label": "Section: bg-white",             "selector": ".sb-section",       "requiredClass": "bg-white"        },
+        { "label": "Section: rounded-xl",           "selector": ".sb-section",       "requiredClass": "rounded-xl"      },
+        { "label": "Section: border-gray-200",      "selector": ".sb-section",       "requiredClass": "border-gray-200" },
+        { "label": "Title: text-xs",                "selector": ".sb-section-title", "requiredClass": "text-xs"         },
+        { "label": "Title: uppercase",              "selector": ".sb-section-title", "requiredClass": "uppercase"       },
+        { "label": "Title: tracking-wider",         "selector": ".sb-section-title", "requiredClass": "tracking-wider"  },
+        { "label": "Row: flex",                     "selector": ".sb-row",           "requiredClass": "flex"            },
+        { "label": "Row: items-center",             "selector": ".sb-row",           "requiredClass": "items-center"    },
+        { "label": "Row: gap-3",                    "selector": ".sb-row",           "requiredClass": "gap-3"           },
+        { "label": "Badge: rounded-full",           "selector": ".sb-badge",         "requiredClass": "rounded-full"    },
+        { "label": "Badge: text-xs",                "selector": ".sb-badge",         "requiredClass": "text-xs"         },
+        { "label": "Badge: font-medium",            "selector": ".sb-badge",         "requiredClass": "font-medium"     }
+      ],
+      "soloPracticeHtml": "<p>Write a complete Storybook story file as an HTML comment block for a Card component with three variants (default, elevated, outlined). Include: the Meta config, 4 individual stories, an AllVariants render story, a dark mode story, and a Play function story that focuses the card CTA button. Then build the HTML implementation of the three card variants.</p>",
+      "feynmanPrompt": "Explain how argTypes in Storybook works with a CVA-based component. What does Storybook infer from VariantProps? Walk through writing an AllVariants story — what is its purpose vs individual variant stories?",
+      "questions": [
+        {
+          "id": "tw-sen-15-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "In a Storybook story file, what does the argTypes configuration do?",
+          "options": [
+            "Defines the controls available in Storybook's UI for interactively changing component props",
+            "Specifies TypeScript types for the story's arguments",
+            "Configures how the component renders in different viewports",
+            "Maps CVA variant names to CSS class strings for documentation"
+          ],
+          "answer": "Defines the controls available in Storybook's UI for interactively changing component props",
+          "explanation": "argTypes tells Storybook how to render controls for each prop — select dropdowns for variant, boolean toggles for disabled, text fields for string props. When Storybook infers argTypes from TypeScript types, CVA's VariantProps union types become select menus with all valid options automatically."
+        },
+        {
+          "id": "tw-sen-15-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "How do you enable dark mode switching in Storybook for components that use Tailwind's dark: variant?",
+          "options": [
+            "Use withThemeByClassName decorator that toggles the 'dark' class on the html element — matching how Tailwind's @variant dark is configured",
+            "Set the background to dark in parameters — Tailwind detects a dark background and activates dark: utilities",
+            "Import a dark.css file in preview.ts that contains dark-mode overrides",
+            "Add data-theme=\"dark\" to the story wrapper div — Tailwind's dark variant responds to data attributes"
+          ],
+          "answer": "Use withThemeByClassName decorator that toggles the 'dark' class on the html element — matching how Tailwind's @variant dark is configured",
+          "explanation": "Tailwind's @variant dark (&:where(.dark, .dark *)) activates dark: classes when .dark is present on an ancestor. The withThemeByClassName addon from @storybook/addon-themes adds .dark to the html element when the dark theme is selected in the Storybook toolbar — matching the application's theme toggle behaviour exactly."
+        },
+        {
+          "id": "tw-sen-15-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "SENIOR",
+          "prompt": "A team has a Button component with 4 variants, 3 sizes, and a disabled state. They write 12 separate stories (one per variant/size combination) but no AllVariants story. What is missing?",
+          "options": [
+            "An AllVariants showcase story that shows all variants simultaneously — essential for design review and catching visual regressions across variants at a glance",
+            "A play function story for each variant to test keyboard interaction",
+            "A story with no args to document the default state",
+            "A viewports story to show how each variant responds to screen size changes"
+          ],
+          "answer": "An AllVariants showcase story that shows all variants simultaneously — essential for design review and catching visual regressions across variants at a glance",
+          "explanation": "Individual stories show one variant in isolation. An AllVariants story shows all variants side-by-side, which is how designers review component consistency, how QA validates a new variant didn't break others, and how snapshot tests capture the full component spectrum in one image. It's the most important story in a component's story file."
+        }
+      ]
+    }
+  ]
+}

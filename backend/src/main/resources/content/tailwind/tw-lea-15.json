@@ -1,0 +1,104 @@
+{
+  "id": "tw-lea-15",
+  "title": "Build Pipeline Optimisation",
+  "glyph": "🌐",
+  "sortOrder": 15,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-17", "tw-lea-7"],
+  "subChunks": [
+    {
+      "id": "tw-lea-15-1",
+      "title": "Build Pipeline Optimisation",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Build time is developer experience. A 45-second CSS rebuild on every file save costs 30 seconds of focus reset, compounding across dozens of engineers and hundreds of saves per day. A misconfigured pipeline that generates 400KB of CSS blocks the critical rendering path and degrades Core Web Vitals. Build pipeline optimisation is not premature optimisation — it is maintenance of the conditions under which good engineering can happen.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"The build pipeline is infrastructure. It exists to serve the engineers who use it. A pipeline that takes 60 seconds to show a CSS change is not a pipeline — it is a punishment. Optimise it with the same urgency you would fix a production outage.\"</p></div>\n\n<h3>Vite plugin vs PostCSS plugin performance</h3>\n\n<pre><code>/* @tailwindcss/vite: preferred for Vite projects */\n// Integrates with Vite's module graph — only rebuilds CSS for changed modules\n// HMR: CSS updates without full page reload\n// Typical: &lt;100ms incremental, &lt;500ms cold start\n\n// vite.config.ts\nimport tailwindcss from '@tailwindcss/vite';\nexport default defineConfig({ plugins: [tailwindcss()] });\n\n/* @tailwindcss/postcss: required for webpack, Astro, non-Vite */\n// Rebuilds full CSS on any source change in the scan scope\n// Typical: 200-800ms incremental on large codebases</code></pre>\n\n<h3>Precise @source paths reduce rebuild scope</h3>\n\n<pre><code>/* ❌ Too broad — triggers rebuild on any file change in src */\n@source \"../src/**/*\";\n\n/* ✅ Precise — only watches component files */\n@source \"../src/components/**/*.{ts,tsx}\";\n@source \"../src/pages/**/*.{ts,tsx}\";\n@source \"../src/app/**/*.{ts,tsx}\";\n\n/* Benefit: rebuilds only when component files change,\n   not when .json, .md, .svg, or test files change */</code></pre>\n\n<h3>Separating critical from non-critical CSS</h3>\n\n<pre><code>/* vite-plugin-critters: inlines above-the-fold CSS */\nimport { critters } from 'vite-plugin-critters';\n\nexport default defineConfig({\n  plugins: [\n    react(),\n    tailwindcss(),\n    critters({\n      strategy: 'critical',\n      preload: 'swap',  // Preload full CSS while rendering with critical only\n    }),\n  ],\n});\n\n/* Result:\n   &lt;style&gt;/* critical CSS inlined */&lt;/style&gt;\n   &lt;link rel=\"preload\" href=\"/styles.css\" ...&gt;\n   LCP improvement: 200-400ms on 3G connections */</code></pre>\n\n<h3>Bundle analysis workflow</h3>\n\n<pre><code># 1. Build with visualiser\nnpm install -D rollup-plugin-visualizer\n\n// vite.config.ts\nimport { visualizer } from 'rollup-plugin-visualizer';\nexport default defineConfig({\n  plugins: [visualizer({ open: true, filename: 'bundle-report.html' })]\n});\n\n# 2. Analyse CSS specifically\nnpm run build\nls -lh dist/assets/*.css  # Check raw size\ngzip -k dist/assets/*.css && ls -lh dist/assets/*.css.gz  # Gzipped size\n\n# 3. Find large CSS contributors\nnpx cssstats dist/assets/index.css\n# Reports: total declarations, unique values, specificity distribution</code></pre>\n\n<h3>CI gate for CSS bundle size</h3>\n\n<pre><code># .github/workflows/css-budget.yml\n- name: Check CSS bundle size\n  run: |\n    npm run build\n    CSS_SIZE=$(gzip -c dist/assets/*.css | wc -c)\n    CSS_BUDGET=25600  # 25 KB gzipped\n    if [ $CSS_SIZE -gt $CSS_BUDGET ]; then\n      echo \"CSS bundle (${CSS_SIZE} bytes) exceeds budget (${CSS_BUDGET} bytes)\"\n      exit 1\n    fi\n    echo \"CSS bundle: ${CSS_SIZE} bytes (budget: ${CSS_BUDGET} bytes)\"</code></pre>\n\n<h3>Font loading optimisation</h3>\n\n<pre><code>/* Preconnect to font origin before requesting fonts */\n&lt;link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin&gt;\n\n/* font-display: swap in @font-face ensures FOUT instead of FOIT */\n@layer base {\n  @font-face {\n    font-family: 'Inter';\n    src: url('/fonts/inter.woff2') format('woff2');\n    font-display: swap;  /* Show fallback immediately, swap when loaded */\n    font-weight: 100 900;  /* Variable font — covers all weights */\n  }\n}\n\n/* System font stack as fallback: */\n@theme {\n  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Cordell:</strong> \"Set a CSS budget in CI and fail the build when it's exceeded. This is not bureaucracy — it is a forcing function. When the budget is exceeded, the conversation is 'what did we add that caused this?' and not 'how did we end up with 800KB of CSS?' Prevention is easier than remediation at scale.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "Set a CSS size budget in CI. Fail the build when it's exceeded. This is not pedantry — it is prevention. If you don't measure it, you can't manage it. And if you don't enforce it automatically, it will be ignored under deadline pressure every single time."
+        },
+        {
+          "type": "example",
+          "speaker": "CSS bundle CI gate",
+          "text": "# CI: fail if CSS exceeds 25KB gzipped\nCSS_SIZE=$(gzip -c dist/assets/*.css | wc -c)\nCSS_BUDGET=25600\nif [ $CSS_SIZE -gt $CSS_BUDGET ]; then\n  echo \"Budget exceeded: ${CSS_SIZE}b > ${CSS_BUDGET}b\"\n  exit 1\nfi"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a build pipeline performance dashboard:</p>\n<ul>\n  <li><strong>.build-grid</strong>: <code>grid</code>, <code>grid-cols-2</code>, <code>gap-3</code>, <code>p-6</code></li>\n  <li><strong>.build-metric</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>p-4</code></li>\n  <li><strong>.build-label</strong>: <code>text-xs</code>, <code>font-medium</code>, <code>text-gray-500</code>, <code>mb-1</code></li>\n  <li><strong>.build-value</strong>: <code>text-2xl</code>, <code>font-bold</code>, <code>text-gray-900</code></li>\n  <li><strong>.build-unit</strong>: <code>text-sm</code>, <code>font-normal</code>, <code>text-gray-500</code></li>\n  <li><strong>.build-bar</strong>: <code>h-2</code>, <code>rounded-full</code>, <code>bg-gray-100</code>, <code>mt-2</code>, <code>overflow-hidden</code></li>\n  <li><strong>.build-bar-fill</strong>: <code>h-full</code>, <code>rounded-full</code>, <code>bg-indigo-500</code></li>\n  <li><strong>.build-bar-fill--warn</strong>: <code>bg-amber-500</code></li>\n  <li><strong>.build-bar-fill--over</strong>: <code>bg-red-500</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-lg\">\n  <div class=\"build-grid\">\n    <div class=\"build-metric\">\n      <p class=\"build-label\">CSS Bundle (gzip)</p>\n      <p class=\"build-value\">18 <span class=\"build-unit\">KB</span></p>\n      <div class=\"build-bar\">\n        <div class=\"build-bar-fill\" style=\"width: 72%\"></div>\n      </div>\n    </div>\n    <div class=\"build-metric\">\n      <p class=\"build-label\">Cold Build</p>\n      <p class=\"build-value\">380 <span class=\"build-unit\">ms</span></p>\n      <div class=\"build-bar\">\n        <div class=\"build-bar-fill\" style=\"width: 38%\"></div>\n      </div>\n    </div>\n    <div class=\"build-metric\">\n      <p class=\"build-label\">HMR Update</p>\n      <p class=\"build-value\">42 <span class=\"build-unit\">ms</span></p>\n      <div class=\"build-bar\">\n        <div class=\"build-bar-fill\" style=\"width: 8%\"></div>\n      </div>\n    </div>\n    <div class=\"build-metric\">\n      <p class=\"build-label\">Budget Used</p>\n      <p class=\"build-value\">72 <span class=\"build-unit\">%</span></p>\n      <div class=\"build-bar\">\n        <div class=\"build-bar-fill build-bar-fill--warn\" style=\"width: 72%\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Grid: grid",                  "selector": ".build-grid",         "requiredClass": "grid"           },
+        { "label": "Grid: grid-cols-2",           "selector": ".build-grid",         "requiredClass": "grid-cols-2"    },
+        { "label": "Grid: gap-3",                 "selector": ".build-grid",         "requiredClass": "gap-3"          },
+        { "label": "Metric: bg-white",            "selector": ".build-metric",       "requiredClass": "bg-white"       },
+        { "label": "Metric: rounded-xl",          "selector": ".build-metric",       "requiredClass": "rounded-xl"     },
+        { "label": "Label: text-xs",              "selector": ".build-label",        "requiredClass": "text-xs"        },
+        { "label": "Value: text-2xl",             "selector": ".build-value",        "requiredClass": "text-2xl"       },
+        { "label": "Value: font-bold",            "selector": ".build-value",        "requiredClass": "font-bold"      },
+        { "label": "Bar: h-2",                    "selector": ".build-bar",          "requiredClass": "h-2"            },
+        { "label": "Bar: rounded-full",           "selector": ".build-bar",          "requiredClass": "rounded-full"   },
+        { "label": "Bar: overflow-hidden",        "selector": ".build-bar",          "requiredClass": "overflow-hidden"},
+        { "label": "Fill: h-full",                "selector": ".build-bar-fill",     "requiredClass": "h-full"         },
+        { "label": "Fill: rounded-full",          "selector": ".build-bar-fill",     "requiredClass": "rounded-full"   },
+        { "label": "Fill: bg-indigo-500",         "selector": ".build-bar-fill",     "requiredClass": "bg-indigo-500"  },
+        { "label": "Fill warn: bg-amber-500",     "selector": ".build-bar-fill--warn","requiredClass": "bg-amber-500"  }
+      ],
+      "soloPracticeHtml": "<p>Build a complete build pipeline audit dashboard from scratch. Include: CSS bundle size with budget utilisation bar, cold build time vs target, HMR update time, @source path count, font loading strategy indicator, and a CI status for the CSS budget gate. Show green/amber/red status for each metric. No starter code.</p>",
+      "feynmanPrompt": "Explain the difference between @tailwindcss/vite and @tailwindcss/postcss for build performance. Then walk through the process of diagnosing an oversized CSS bundle: what tools you use, what you look for, and what the most common root causes are. Finally, explain why setting a CSS budget in CI is better than periodic manual audits.",
+      "questions": [
+        {
+          "id": "tw-lea-15-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "Why does @tailwindcss/vite provide faster HMR than @tailwindcss/postcss in a Vite project?",
+          "options": [
+            "@tailwindcss/vite integrates with Vite's module graph and only rebuilds CSS for modules that changed, while PostCSS processes the entire stylesheet on every source change",
+            "@tailwindcss/vite uses WebAssembly instead of Rust for CSS generation, which is faster in browser environments",
+            "@tailwindcss/vite skips the JIT scanner and uses pre-built utilities, reducing processing time",
+            "PostCSS plugins run in Node.js child processes which are slower to start than the main process"
+          ],
+          "answer": "@tailwindcss/vite integrates with Vite's module graph and only rebuilds CSS for modules that changed, while PostCSS processes the entire stylesheet on every source change",
+          "explanation": "Vite's architecture is based on a module graph — it tracks which modules depend on which. The @tailwindcss/vite plugin hooks into this graph and triggers only the CSS rebuilds needed by changed modules. In HMR mode, this means a component change only triggers a CSS update for that component's classes. The PostCSS plugin doesn't have access to Vite's module graph and must process the full CSS entry point on every change."
+        },
+        {
+          "id": "tw-lea-15-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "A team's Next.js project has @source \"../src/**/*\" in globals.css. Build times are slow and the CSS bundle is 180KB. What is the most likely fix?",
+          "options": [
+            "Replace with specific file type globs: @source \"../src/**/*.{ts,tsx}\"; — this prevents scanning JSON, SVG, MDX, and other files that may contain class-like strings",
+            "Add @source not to exclude node_modules explicitly",
+            "Switch from @tailwindcss/postcss to @tailwindcss/vite for all projects",
+            "Add purge: true to the Tailwind v4 config to remove unused utilities"
+          ],
+          "answer": "Replace with specific file type globs: @source \"../src/**/*.{ts,tsx}\"; — this prevents scanning JSON, SVG, MDX, and other files that may contain class-like strings",
+          "explanation": "The glob **/* matches every file in src — including .json data files, .svg assets, .md documentation, test fixtures, and generated files. These files often contain strings that match Tailwind utility patterns (colour names, numeric values, CSS property names) causing the JIT scanner to generate thousands of spurious utilities. Restricting to {ts,tsx} (and optionally .html, .mdx for content) drastically reduces the scan surface, both speeding up the build and reducing the CSS output."
+        },
+        {
+          "id": "tw-lea-15-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A 15KB (gzip) CSS bundle is within budget today. Six months later it's 35KB after three feature releases. Nobody noticed the growth. How do you prevent this in future?",
+          "options": [
+            "Add a CI step that fails the build when CSS exceeds a defined budget (e.g., 25KB gzip) — prevents growth from going unnoticed under deadline pressure",
+            "Run a manual CSS audit before each major release",
+            "Set Tailwind's maxSize option to 25KB — it will refuse to generate more CSS than the limit",
+            "Use Lighthouse CI to monitor CSS bundle size in PR checks"
+          ],
+          "answer": "Add a CI step that fails the build when CSS exceeds a defined budget (e.g., 25KB gzip) — prevents growth from going unnoticed under deadline pressure",
+          "explanation": "Manual audits fail because they depend on someone remembering to run them under deadline pressure — and deadlines always win. A CI gate that fails the build forces the conversation at the exact moment the regression occurs: 'this PR added 5KB — what did it add and is it justified?' Lighthouse CI (answer D) is a secondary check but measures many things and has a less direct CSS-specific enforcement mechanism. The CI shell script approach is precise, fast, and impossible to bypass."
+        }
+      ]
+    }
+  ]
+}

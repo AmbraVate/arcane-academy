@@ -1,0 +1,93 @@
+{
+  "id": "rx-lea-16",
+  "title": "Performance Profiling and Advanced Optimisation",
+  "glyph": "⚛",
+  "sortOrder": 16,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-2", "rx-sen-14"],
+  "subChunks": [
+    {
+      "id": "rx-lea-16-1",
+      "title": "Performance Profiling and Advanced Optimisation",
+      "sortOrder": 1,
+      "xpReward": 225,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Premature optimisation is the root of all evil — but so is shipping a React application that drops frames on mid-range Android devices. The discipline is: measure first, optimise the bottleneck, measure again. React DevTools Profiler shows you exactly which components re-rendered and why. Chrome Performance tab shows you where the main thread is blocked. Bundle analyser shows you which dependencies own the most bytes. Every optimisation should be justified by data, not intuition.</p>",
+      "explanationHtml": "<h3>React DevTools Profiler</h3>\n\n<pre><code>// Record a profiling session:\n// 1. Open React DevTools → Profiler tab\n// 2. Click Record\n// 3. Interact with the slow part of the UI\n// 4. Stop recording\n// 5. Analyse the flame graph\n\n// What to look for:\n// - Components with long render times (wide bars)\n// - Components that re-render when they shouldn't (check 'Why did this render?')\n// - Cascading re-renders (parent renders → all children render)\n\n// The 'Why did this render?' panel shows:\n// - Props changed: { questId: 1 → 2 }\n// - State changed\n// - Context value changed\n// - Parent re-rendered (the most common culprit)\n\n// Add Profiler API for production measurement:\nimport { Profiler } from 'react';\n\nfunction onRenderCallback(id, phase, actualDuration, baseDuration) {\n  if (actualDuration &gt; 16) {  // Over one frame (60fps = 16ms)\n    console.warn(`Slow render: ${id} took ${actualDuration.toFixed(1)}ms`);\n  }\n}\n\n&lt;Profiler id=\"QuestBoard\" onRender={onRenderCallback}&gt;\n  &lt;QuestBoard /&gt;\n&lt;/Profiler&gt;</code></pre>\n\n<h3>Identifying and fixing unnecessary re-renders</h3>\n\n<pre><code>// Problem: new object reference on every render\nfunction ParentComponent() {\n  // ❌ New object every render → child always re-renders\n  const filters = { status: 'OPEN', page: 1 };\n  return &lt;QuestList filters={filters} /&gt;;\n}\n\n// Fix 1: Move constant outside component\nconst DEFAULT_FILTERS = { status: 'OPEN', page: 1 }; // Stable reference\n\n// Fix 2: useMemo for computed values\nconst filters = useMemo(() =&gt; ({ status, page }), [status, page]);\n\n// Fix 3: memo + custom comparison for expensive children\nconst QuestList = memo(function QuestList({ filters, quests }) {\n  // Only re-renders if filters or quests actually changed\n}, (prevProps, nextProps) =&gt; {\n  // Custom comparison — return true to skip re-render:\n  return prevProps.filters.status === nextProps.filters.status\n    &amp;&amp; prevProps.quests.length === nextProps.quests.length;\n});\n\n// Problem: inline function prop creates new reference\n// ❌ New function every parent render:\n&lt;Button onClick={() =&gt; acceptQuest(questId)} /&gt;\n// ✅ Stable reference:\nconst handleAccept = useCallback(() =&gt; acceptQuest(questId), [questId]);</code></pre>\n\n<h3>Bundle analysis and code splitting</h3>\n\n<pre><code>// Analyse bundle:\nnpm run build -- --report\n# Or:\nnpx vite-bundle-visualizer\n# Or:\nnpx webpack-bundle-analyzer dist/stats.json\n\n// What to look for:\n// 1. Large dependencies imported in the main chunk\n// 2. Duplicate packages (two versions of a library)\n// 3. Dev-only code in production bundle\n// 4. Missing code splitting on route-level components\n\n// Route-based splitting:\nconst QuestBoard = lazy(() =&gt; import('./features/quests/QuestBoard'));\nconst TreasuryChart = lazy(() =&gt; import('./features/treasury/TreasuryChart'));\n\n// Library-level splitting for large deps:\nconst { default: DayJS } = await import('dayjs'); // Load only when needed\n\n// Tree-shake properly:\nimport { format } from 'date-fns'; // ✅ Tree-shakeable\nimport moment from 'moment';       // ❌ 300kb, not tree-shakeable\n\n// Replace heavy deps:\n// moment → date-fns or dayjs\n// lodash → lodash-es (tree-shakeable) or native JS\n// @mui/icons-material → import only needed icons</code></pre>\n\n<h3>Long task optimisation</h3>\n\n<pre><code>// Long tasks block the main thread — use scheduler or web workers:\n\n// Option 1: scheduler.yield() (Chrome 115+)\nasync function processQuestData(quests: Quest[]) {\n  const results = [];\n  for (const quest of quests) {\n    results.push(processQuest(quest));\n    // Yield to browser every 5ms to prevent jank:\n    if (results.length % 50 === 0) {\n      await scheduler.yield();\n    }\n  }\n  return results;\n}\n\n// Option 2: Web Worker for CPU-intensive work:\n// worker.ts:\nself.onmessage = (e) =&gt; {\n  const result = heavyComputation(e.data);\n  self.postMessage(result);\n};\n\n// In React:\nconst worker = new Worker(new URL('./worker.ts', import.meta.url));\nworker.postMessage(largeDataset);\nworker.onmessage = (e) =&gt; setResult(e.data);\n\n// Option 3: startTransition for non-urgent updates\nstartTransition(() =&gt; {\n  setFilteredQuests(expensiveFilter(quests, query));\n});</code></pre>\n\n<h3>Image and asset optimisation</h3>\n\n<pre><code>// Modern image loading:\n&lt;img\n  src={quest.thumbnail}\n  loading=\"lazy\"          // Browser native lazy loading\n  decoding=\"async\"        // Decode off main thread\n  width={320}             // Prevent layout shift\n  height={180}\n  srcSet=\"thumb-320.webp 320w, thumb-640.webp 640w\"\n  sizes=\"(max-width: 768px) 320px, 640px\"\n  alt={quest.title}\n/&gt;\n\n// Preload critical images (above the fold):\n&lt;link rel=\"preload\" as=\"image\" href=\"/hero.webp\" /&gt;\n\n// Lazy load components below the fold:\nconst TreasuryChart = lazy(() =&gt; import('./TreasuryChart'));\n&lt;Suspense fallback={&lt;ChartSkeleton /&gt;}&gt;\n  &lt;TreasuryChart /&gt;\n&lt;/Suspense&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The most common React performance mistake is not using useMemo where it matters — it's creating object/array literals as props. A filter object created inline triggers a re-render of every child that receives it, regardless of whether the values changed. Profile first: often the bottleneck is not where you think it is.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The quest board feels sluggish on the product manager's laptop. DevTools Profiler reveals a 180ms render. The flame graph shows a single component: TreasuryChart re-rendering on every keystroke in the search box. A useMemo and a memo wrapper: 8ms."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Performance investigation is detective work, not speculation. 'The app feels slow' is a symptom. The Profiler tells you which component rendered, for how long, and why. The bundle analyser tells you what's in your JavaScript. Only then do you optimise. Guessing wastes time and adds complexity without improving the metric that matters."
+        },
+        {
+          "type": "example",
+          "speaker": "Profile before optimising — find the actual bottleneck",
+          "text": "// React DevTools Profiler showed TreasuryChart re-renders on every search keystroke\n// Root cause: filters object created inline in parent\n\n// Before: new object every render\n<TreasuryChart filters={{ period: 'monthly', currency: 'gp' }} />\n\n// After: stable reference\nconst filters = useMemo(() => ({ period, currency }), [period, currency]);\n<TreasuryChart filters={filters} />"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Profile and fix performance issues:</p><ul><li>Identify three sources of unnecessary re-renders in the starter code (inline objects, inline functions, missing memo)</li><li>Fix each one with the appropriate tool: move constants outside the component, useCallback for handlers, useMemo for computed values, memo for the child</li><li>Add a Profiler wrapper that logs a warning when any component takes over 16ms to render</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useMemo, useCallback, memo, Profiler } from 'react';\n\n// Performance profiler wrapper\nfunction onRenderCallback(id, phase, actualDuration) {\n  if (actualDuration > 16) {\n    console.warn(`Slow render [${id}]: ${actualDuration.toFixed(1)}ms (${phase})`);\n  }\n}\n\n// Heavy child — should only re-render when quests or filters change\nconst QuestList = memo(function QuestList({ quests, filters, onAccept }) {\n  return (\n    <ul data-testid=\"quest-list\">\n      {quests\n        .filter(q => q.status === filters.status)\n        .map(q => (\n          <li key={q.id}>\n            {q.title}\n            <button onClick={() => onAccept(q.id)}>Accept</button>\n          </li>\n        ))}\n    </ul>\n  );\n});\n\nexport default function App() {\n  const [search, setSearch] = useState('');\n  const [accepted, setAccepted] = useState([]);\n\n  const allQuests = [\n    { id: 1, title: 'Slay Dragon', status: 'OPEN' },\n    { id: 2, title: 'Find Tome', status: 'OPEN' },\n    { id: 3, title: 'Brew Potion', status: 'CLOSED' },\n  ];\n\n  // TODO: Fix 1 — inline object causes QuestList to re-render on every search keystroke\n  const filters = { status: 'OPEN' };\n\n  // TODO: Fix 2 — inline function creates new reference every render\n  const handleAccept = (id) => setAccepted(prev => [...prev, id]);\n\n  // TODO: Fix 3 — filtered quests recomputed on every render even when allQuests/search unchanged\n  const filteredQuests = allQuests.filter(q =>\n    q.title.toLowerCase().includes(search.toLowerCase())\n  );\n\n  return (\n    <Profiler id=\"App\" onRender={onRenderCallback}>\n      <div data-testid=\"app\">\n        <input\n          data-testid=\"search\"\n          value={search}\n          onChange={e => setSearch(e.target.value)}\n          placeholder=\"Search quests\"\n        />\n        <QuestList\n          quests={filteredQuests}\n          filters={filters}\n          onAccept={handleAccept}\n        />\n        <p data-testid=\"accepted\">Accepted: {accepted.length}</p>\n      </div>\n    </Profiler>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "App renders",
+          "selector": "[data-testid='app']",
+          "exists": true
+        },
+        {
+          "label": "Quest list renders",
+          "selector": "[data-testid='quest-list']",
+          "exists": true
+        },
+        {
+          "label": "Search input renders",
+          "selector": "[data-testid='search']",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Full performance audit of the quest board: (1) Record a React DevTools Profiler session while scrolling and filtering the quest list — identify every component that re-renders unnecessarily and document why. Fix each one. (2) Run vite-bundle-visualizer and identify the three largest dependencies — replace or lazy-load each one with justification. (3) Add a Profiler API wrapper on the three most complex components that sends actualDuration to your analytics if it exceeds 16ms. (4) Use the Chrome Performance tab to find any long tasks (>50ms) during initial load — fix with route-based code splitting or deferred loading. Document before/after measurements for each optimisation.</p>",
+      "feynmanPrompt": "Walk through the React DevTools Profiler — what does the flame graph show, what does 'Why did this render?' tell you, and what are the three most common root causes of unnecessary re-renders? Explain why an inline object prop (`filters={{ status: 'OPEN' }}`) causes a child component to re-render even when the values haven't changed. Walk through the bundle analysis process — what are you looking for, and what is the most impactful class of optimisation for initial load performance?",
+      "questions": [
+        {
+          "id": "rx-lea-16-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "React DevTools shows that `<MemberCard>` re-renders on every parent state change even though it's wrapped in `memo()`. What should you investigate first?",
+          "options": [
+            "The props passed to MemberCard — one of them is likely a new object/array/function reference on every render. memo() uses shallow equality; if a prop is a new reference, memo considers it changed even if the content is identical.",
+            "Whether the component uses useContext — context changes bypass memo",
+            "Whether the component has internal state — memo only prevents prop-triggered re-renders",
+            "Whether memo is imported from the correct package"
+          ],
+          "answer": "The props passed to MemberCard — one of them is likely a new object/array/function reference on every render. memo() uses shallow equality; if a prop is a new reference, memo considers it changed even if the content is identical.",
+          "explanation": "memo() does a shallow prop comparison: it checks if each prop is === to its previous value. Objects and arrays created inline fail this check because {} !== {} even if they have the same content. Inspect each prop: callbacks should be wrapped in useCallback, computed objects in useMemo, constant objects moved outside the component. The DevTools 'Why did this render?' panel shows exactly which prop triggered the re-render."
+        },
+        {
+          "id": "rx-lea-16-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "Bundle analysis shows `moment.js` is 300kb of your 450kb total bundle. It's used in two places to format dates. What is the best fix?",
+          "options": [
+            "Replace moment with date-fns or dayjs for just the formatting operations needed — date-fns is tree-shakeable (only the imported functions are bundled) and dayjs is 2kb. The savings: ~290kb.",
+            "Lazy-load moment with dynamic import() so it only loads when needed",
+            "Enable moment's tree-shaking by using named imports: import { format } from 'moment'",
+            "Gzip the bundle — 300kb compresses to ~90kb, which is acceptable"
+          ],
+          "answer": "Replace moment with date-fns or dayjs for just the formatting operations needed — date-fns is tree-shakeable (only the imported functions are bundled) and dayjs is 2kb. The savings: ~290kb.",
+          "explanation": "moment.js is not tree-shakeable — importing any part of it includes the entire 300kb library. Lazy-loading helps first paint but the user still downloads 300kb eventually. Gzip helps (~90kb) but the browser still parses and executes 300kb of JavaScript. Replacing with date-fns (tree-shakeable, ~2-15kb for a few functions) or dayjs (2kb full library) is the correct fix. For just date formatting, you may not even need a library: new Intl.DateTimeFormat() is built into browsers."
+        }
+      ]
+    }
+  ]
+}

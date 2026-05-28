@@ -1,0 +1,97 @@
+{
+  "id": "tw-app-8",
+  "title": "Backgrounds and Gradients",
+  "glyph": "🎨",
+  "sortOrder": 8,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-4"],
+  "subChunks": [
+    {
+      "id": "tw-app-8-1",
+      "title": "Backgrounds and Gradients",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Backgrounds are the canvas of every UI. Solid colours, subtle gradients, and decorative patterns transform flat layouts into polished products. Tailwind's background and gradient utilities let you create rich visual depth without leaving HTML.</p>",
+      "explanationHtml": "<h3>Background colour</h3>\n<pre><code>bg-white        bg-black\nbg-transparent  bg-current\nbg-gray-50      /* near-white page background */\nbg-gray-100     /* subtle card background     */\nbg-blue-500     /* vivid fill                 */\nbg-blue-600     /* slightly darker — hover state */\n\n/* Opacity modifier */\nbg-blue-500/10  /* 10% opacity blue — tinted backgrounds */\nbg-black/50     /* semi-transparent overlay */\n</code></pre>\n\n<h3>Background size and position</h3>\n<pre><code>bg-cover    /* covers container, may crop     */\nbg-contain  /* fits inside, may show gaps     */\nbg-auto     /* natural size                   */\n\nbg-center   bg-top   bg-bottom   bg-left   bg-right\nbg-top-left  bg-top-right\n\nbg-no-repeat  bg-repeat  bg-repeat-x  bg-repeat-y\n</code></pre>\n\n<h3>Gradients</h3>\n<p>Tailwind gradients use three parts: direction, from-colour, via-colour (optional), and to-colour:</p>\n<pre><code>/* Direction */\nbg-gradient-to-r   /* left to right  */\nbg-gradient-to-l   /* right to left  */\nbg-gradient-to-b   /* top to bottom  */\nbg-gradient-to-t   /* bottom to top  */\nbg-gradient-to-br  /* diagonal       */\n\n/* Colour stops */\nfrom-blue-500    /* start colour    */\nvia-purple-500   /* middle colour   */\nto-pink-500      /* end colour      */\n\n/* From position */\nfrom-0%  from-25%  from-50%\nto-75%   to-90%    to-100%\n</code></pre>\n\n<h3>Common gradient patterns</h3>\n<pre><code>/* Hero gradient */\n&lt;div class=\"bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500\"&gt;\n\n/* Subtle card tint */\n&lt;div class=\"bg-gradient-to-b from-white to-gray-50\"&gt;\n\n/* Dark overlay on image */\n&lt;div class=\"bg-gradient-to-t from-black/80 to-transparent\"&gt;\n\n/* Success/error semantic */\n&lt;div class=\"bg-gradient-to-r from-emerald-400 to-green-500\"&gt;\n</code></pre>\n\n<h3>Background image</h3>\n<pre><code>/* Custom background image via inline style — Tailwind v4 supports arbitrary values: */\n&lt;div class=\"bg-[url('/hero.jpg')] bg-cover bg-center\"&gt;\n  &lt;!-- content --&gt;\n&lt;/div&gt;\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"A gradient is not decoration — it is depth. The hero section of every serious product uses a gradient. Learn from-indigo-600 to-purple-600 and you can fake the look of a professional design in under a minute. The key: always pair a dark overlay gradient with any background image for readable text.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "Gradients are the quickest way to elevate a flat UI. Three classes: bg-gradient-to-r, from-indigo-600, to-purple-600. That is a professional hero background. Add a semi-transparent overlay — bg-black/40 — and any text on top becomes readable."
+        },
+        {
+          "type": "example",
+          "speaker": "Hero section with gradient and text overlay",
+          "text": "<div class=\"bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500\n            min-h-64 flex items-center justify-center rounded-2xl\">\n  <h1 class=\"text-4xl font-bold text-white text-center\">\n    Master the Arcane Arts\n  </h1>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a hero card with a gradient background and an image overlay:</p>\n<ul>\n  <li><strong>.hero-card</strong>: <code>bg-gradient-to-br</code>, <code>from-indigo-600</code>, <code>to-purple-700</code>, <code>rounded-2xl</code>, <code>p-10</code>, <code>text-white</code></li>\n  <li><strong>.hero-title</strong>: <code>text-3xl</code>, <code>font-bold</code>, <code>leading-tight</code></li>\n  <li><strong>.hero-sub</strong>: <code>text-indigo-200</code>, <code>mt-2</code>, <code>text-lg</code></li>\n  <li><strong>.overlay-card</strong>: <code>bg-black/50</code>, <code>backdrop-blur-sm</code>, <code>rounded-xl</code>, <code>p-4</code>, <code>text-white</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"hero-card\">\n  <h1 class=\"hero-title\">Master the Arcane Arts</h1>\n  <p class=\"hero-sub\">Begin your journey with 142 guided quests</p>\n  <div class=\"overlay-card mt-6 inline-block\">\n    <p class=\"text-sm\">2,847 apprentices enrolled this week</p>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Hero: gradient direction",  "selector": ".hero-card", "requiredClass": "bg-gradient-to-br" },
+        { "label": "Hero: from colour",         "selector": ".hero-card", "requiredClass": "from-indigo-600"   },
+        { "label": "Hero: to colour",           "selector": ".hero-card", "requiredClass": "to-purple-700"     },
+        { "label": "Hero: rounded",             "selector": ".hero-card", "requiredClass": "rounded-2xl"       },
+        { "label": "Hero: text white",          "selector": ".hero-card", "requiredClass": "text-white"        },
+        { "label": "Title: large text",         "selector": ".hero-title","requiredClass": "text-3xl"          },
+        { "label": "Sub: tinted colour",        "selector": ".hero-sub",  "requiredClass": "text-indigo-200"   },
+        { "label": "Overlay: semi-transparent", "selector": ".overlay-card","requiredClass": "bg-black/50"     }
+      ],
+      "soloPracticeHtml": "<p>Build a hero banner with: a gradient background going from emerald to cyan, white text, a large bold headline, and a translucent stats bar at the bottom (semi-transparent dark background). The banner should be at least 200px tall with centred content.</p>",
+      "feynmanPrompt": "Explain Tailwind's three-part gradient system — direction, from, via, to. Then explain when you would use bg-blue-500/10 (opacity modifier) vs a gradient with from-blue-500 to-transparent. What problem does the overlay gradient solve on background images?",
+      "questions": [
+        {
+          "id": "tw-app-8-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "APPRENTICE",
+          "prompt": "Which three classes create a gradient that goes from blue on the left to purple on the right?",
+          "options": [
+            "bg-gradient-to-r from-blue-500 to-purple-500",
+            "gradient-horizontal from-blue to-purple",
+            "bg-linear from-blue-500 to-purple-500",
+            "bg-gradient-lr blue-500 purple-500"
+          ],
+          "answer": "bg-gradient-to-r from-blue-500 to-purple-500",
+          "explanation": "Tailwind gradients need three parts: the direction (bg-gradient-to-r), the start colour (from-blue-500), and the end colour (to-purple-500). Add via-* for a three-stop gradient."
+        },
+        {
+          "id": "tw-app-8-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You have a card that should have a very subtle blue tint — barely visible, not vivid. Which class achieves this without adding opacity to text inside?",
+          "options": [
+            "bg-blue-500/10 — applies the background at 10% opacity without affecting children",
+            "bg-blue-50 — the lightest blue shade",
+            "opacity-10 bg-blue-500 — reduces opacity of the whole element",
+            "bg-sky-50 with text-sky-900 for contrast"
+          ],
+          "answer": "bg-blue-500/10 — applies the background at 10% opacity without affecting children",
+          "explanation": "bg-blue-500/10 applies the background-color at 10% opacity using CSS color-mix or rgba — only the background, not the text or children. Using opacity-10 on the whole element would make text transparent too. bg-blue-50 is similar but a fixed shade, not an opacity of a vivid colour."
+        },
+        {
+          "id": "tw-app-8-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You have a full-width hero image and want white text readable on top of it. What is the standard Tailwind pattern?",
+          "options": [
+            "bg-[url('/hero.jpg')] bg-cover relative, then an absolutely positioned child with bg-gradient-to-t from-black/70 to-transparent for the overlay",
+            "img tag with filter-grayscale to desaturate the image so text is readable",
+            "text-shadow on the heading to add contrast",
+            "bg-cover bg-center on the img tag with opacity-50"
+          ],
+          "answer": "bg-[url('/hero.jpg')] bg-cover relative, then an absolutely positioned child with bg-gradient-to-t from-black/70 to-transparent for the overlay",
+          "explanation": "The standard pattern: set the image as a CSS background on the container (bg-[url(...)]), then add a gradient overlay div with bg-gradient-to-t from-black/70 to-transparent that fades from dark at the bottom (where text lives) to transparent at the top. This keeps the image visible while making text readable."
+        }
+      ]
+    }
+  ]
+}

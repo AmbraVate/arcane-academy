@@ -1,0 +1,97 @@
+{
+  "id": "tw-jun-19",
+  "title": "Print Styles and Screen-Only Content",
+  "glyph": "⚗️",
+  "sortOrder": 19,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-2"],
+  "subChunks": [
+    {
+      "id": "tw-jun-19-1",
+      "title": "Print Styles and Screen-Only Content",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Print is not dead. Invoices, receipts, reports, certificates, and form summaries are frequently printed — and a UI that looks professional on screen but prints as a garbled mess destroys trust. Tailwind's <code>print:</code> variant lets you define print-specific styles inline with your screen styles, no separate print stylesheet required.</p>",
+      "explanationHtml": "<h3>The print: variant</h3>\n<p>The <code>print:</code> variant applies utilities inside a <code>@media print</code> rule. Any Tailwind utility can be prefixed with <code>print:</code>.</p>\n<pre><code>/* Hide on print */\n&lt;nav class=\"print:hidden\"&gt;\n\n/* Show only on print */\n&lt;p class=\"hidden print:block\"&gt;\n\n/* Print-specific colours */\n&lt;div class=\"bg-blue-600 print:bg-transparent text-white print:text-black\"&gt;\n\n/* Remove shadows on print */\n&lt;div class=\"shadow-lg print:shadow-none\"&gt;\n\n/* Full width on print */\n&lt;main class=\"max-w-4xl mx-auto print:max-w-none print:mx-0\"&gt;</code></pre>\n\n<h3>What to hide on print</h3>\n<pre><code>/* Navigation, sidebars, CTAs — print:hidden */\n&lt;nav class=\"print:hidden\"&gt;\n&lt;aside class=\"print:hidden\"&gt;\n&lt;button class=\"print:hidden\"&gt;Download PDF&lt;/button&gt;\n&lt;footer class=\"print:hidden\"&gt;\n\n/* Interactive elements that make no sense on paper */\n&lt;div class=\"print:hidden\"&gt;tabs, dropdowns, carousels&lt;/div&gt;</code></pre>\n\n<h3>What to show on print</h3>\n<pre><code>/* Full URL of links (hidden on screen, visible on print) */\n&lt;a href=\"https://example.com\" class=\"text-blue-600\"&gt;\n  View details\n  &lt;span class=\"hidden print:inline text-gray-500 text-sm\"&gt;\n    (https://example.com)\n  &lt;/span&gt;\n&lt;/a&gt;\n\n/* Page header/footer with contact info */\n&lt;header class=\"hidden print:block border-b border-gray-300 pb-4 mb-8\"&gt;\n  &lt;img src=\"/logo.svg\" alt=\"Arcane Academy\" class=\"h-8\" /&gt;\n  &lt;p class=\"text-sm text-gray-500\"&gt;arcane-academy.com&lt;/p&gt;\n&lt;/header&gt;</code></pre>\n\n<h3>Print layout adjustments</h3>\n<pre><code>/* Convert sidebar layout to full-width for print */\n&lt;div class=\"grid grid-cols-[240px_1fr] print:grid-cols-1\"&gt;\n\n/* Remove backgrounds — saves ink, looks cleaner */\n&lt;div class=\"bg-gray-50 print:bg-white\"&gt;\n\n/* Adjust font size for print */\n&lt;body class=\"text-sm print:text-xs\"&gt;\n\n/* Page break control */\n&lt;section class=\"break-inside-avoid\"&gt;   &lt;!-- don't break within this section --&gt;\n&lt;h2 class=\"break-before-page\"&gt;          &lt;!-- force a page break before --&gt;\n&lt;div class=\"break-after-avoid\"&gt;         &lt;!-- try not to break after --&gt;</code></pre>\n\n<h3>Page break utilities</h3>\n<pre><code>break-before-auto      /* default */\nbreak-before-page      /* force page break before */\nbreak-before-avoid     /* avoid break before */\nbreak-inside-avoid     /* avoid breaking mid-element (important for cards, tables) */\nbreak-after-page       /* force page break after */</code></pre>\n\n<h3>A printable invoice pattern</h3>\n<pre><code>&lt;div class=\"max-w-2xl mx-auto p-8\n            print:max-w-none print:p-0\"&gt;\n\n  &lt;!-- Screen header --&gt;\n  &lt;div class=\"flex justify-between items-center mb-8 print:hidden\"&gt;\n    &lt;h1 class=\"text-2xl font-bold\"&gt;Invoice&lt;/h1&gt;\n    &lt;button class=\"bg-blue-600 text-white px-4 py-2 rounded-md print:hidden\"&gt;\n      Download PDF\n    &lt;/button&gt;\n  &lt;/div&gt;\n\n  &lt;!-- Print header (company info) --&gt;\n  &lt;div class=\"hidden print:flex justify-between mb-8\"&gt;\n    &lt;p class=\"font-bold text-lg\"&gt;Arcane Academy&lt;/p&gt;\n    &lt;p class=\"text-sm text-gray-500\"&gt;Invoice #1247 • Printed: {date}&lt;/p&gt;\n  &lt;/div&gt;\n\n  &lt;!-- Content (same on screen and print) --&gt;\n  &lt;table class=\"w-full text-sm border-collapse\"&gt;\n    &lt;!-- invoice rows --&gt;\n  &lt;/table&gt;\n&lt;/div&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"The three rules of print CSS: (1) Hide navigation and interactive elements with <code>print:hidden</code>. (2) Remove background colours and shadows — they waste ink. (3) Add <code>break-inside-avoid</code> to tables, cards, and any block that shouldn't be split across pages. Everything else takes care of itself.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "A certificate of completion printed with a navigation bar and shadow-xl on every card is an embarrassment. A receipt that comes out as a garbled mobile layout is unprofessional. Print styles take thirty minutes and they are the clearest mark of a developer who thinks about the whole user experience — not just the screen."
+        },
+        {
+          "type": "example",
+          "speaker": "Print-aware certificate layout",
+          "text": "<!-- Screen: navigation, sidebar, colours -->\n<nav class=\"print:hidden sticky top-0 ...\">Navigation</nav>\n\n<!-- Print: full-width, no sidebar, clean -->\n<main class=\"max-w-4xl mx-auto print:max-w-none\">\n  <div class=\"bg-white shadow-lg rounded-xl print:shadow-none print:rounded-none p-8\">\n    <h1 class=\"text-2xl font-bold text-gray-900\">Certificate of Completion</h1>\n    <!-- link with URL shown on print -->\n    <a href=\"/verify/abc123\" class=\"text-blue-600\">\n      Verify certificate\n      <span class=\"hidden print:inline text-gray-500\"> (arcane-academy.com/verify/abc123)</span>\n    </a>\n  </div>\n</main>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a printable member profile page that adapts for print:</p>\n<ul>\n  <li><strong>.print-nav</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-between</code>, <code>p-4</code>, <code>border-b</code>, <code>print:hidden</code></li>\n  <li><strong>.print-header</strong>: <code>hidden</code>, <code>print:flex</code>, <code>justify-between</code>, <code>items-center</code>, <code>mb-6</code>, <code>pb-4</code>, <code>border-b</code></li>\n  <li><strong>.profile-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>shadow-sm</code>, <code>p-6</code>, <code>print:shadow-none</code>, <code>print:rounded-none</code>, <code>print:p-0</code></li>\n  <li><strong>.print-only</strong>: <code>hidden</code>, <code>print:block</code></li>\n  <li><strong>.screen-only</strong>: <code>print:hidden</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-2xl mx-auto\">\n  <!-- Navigation — hidden on print -->\n  <nav class=\"print-nav\">\n    <span class=\"font-bold text-gray-900\">🏰 Arcane Academy</span>\n    <button class=\"screen-only px-4 py-2 bg-blue-600 text-white text-sm rounded-md\">Print Profile</button>\n  </nav>\n\n  <!-- Print-only header -->\n  <div class=\"print-header\">\n    <span class=\"font-bold text-gray-900\">🏰 Arcane Academy — Member Profile</span>\n    <span class=\"text-sm text-gray-500\">Printed 2026-05-28</span>\n  </div>\n\n  <!-- Profile content -->\n  <div class=\"p-6\">\n    <div class=\"profile-card\">\n      <div class=\"flex items-start gap-4\">\n        <img class=\"w-16 h-16 rounded-full object-cover print:w-12 print:h-12\"\n             src=\"https://picsum.photos/seed/aria/64/64\" alt=\"Aria\" />\n        <div>\n          <h1 class=\"text-xl font-bold text-gray-900\">Aria Sunforge</h1>\n          <p class=\"text-sm text-gray-500\">Level 12 • 4,820 XP</p>\n          <!-- URL shown on print -->\n          <p class=\"text-sm text-blue-600 mt-1\">\n            arcane-academy.com/members/aria\n            <span class=\"print-only text-gray-500\">(https://arcane-academy.com/members/aria-sunforge)</span>\n          </p>\n        </div>\n      </div>\n\n      <div class=\"mt-6 grid grid-cols-3 gap-4 print:grid-cols-3\">\n        <div class=\"text-center bg-blue-50 print:bg-white print:border print:border-gray-200 rounded-lg p-3\">\n          <p class=\"text-2xl font-bold text-blue-700 print:text-gray-900\">47</p>\n          <p class=\"text-xs text-gray-500 mt-1\">Quests</p>\n        </div>\n        <div class=\"text-center bg-emerald-50 print:bg-white print:border print:border-gray-200 rounded-lg p-3\">\n          <p class=\"text-2xl font-bold text-emerald-700 print:text-gray-900\">12</p>\n          <p class=\"text-xs text-gray-500 mt-1\">Badges</p>\n        </div>\n        <div class=\"text-center bg-purple-50 print:bg-white print:border print:border-gray-200 rounded-lg p-3\">\n          <p class=\"text-2xl font-bold text-purple-700 print:text-gray-900\">4,820</p>\n          <p class=\"text-xs text-gray-500 mt-1\">Total XP</p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Nav: print:hidden",            "selector": ".print-nav",    "requiredClass": "print:hidden"       },
+        { "label": "Print header: hidden",         "selector": ".print-header", "requiredClass": "hidden"             },
+        { "label": "Print header: print:flex",     "selector": ".print-header", "requiredClass": "print:flex"         },
+        { "label": "Card: print:shadow-none",      "selector": ".profile-card", "requiredClass": "print:shadow-none"  },
+        { "label": "Card: print:rounded-none",     "selector": ".profile-card", "requiredClass": "print:rounded-none" },
+        { "label": "Print only: hidden",           "selector": ".print-only",   "requiredClass": "hidden"             },
+        { "label": "Print only: print:block",      "selector": ".print-only",   "requiredClass": "print:block"        },
+        { "label": "Screen only: print:hidden",    "selector": ".screen-only",  "requiredClass": "print:hidden"       }
+      ],
+      "soloPracticeHtml": "<p>Build a printable invoice from scratch: a screen header with logo and download button (hidden on print), a print header showing company name and invoice number (hidden on screen), an invoice line items table with break-inside-avoid, a totals section, and a footer with payment instructions. Ensure all background colours are stripped for print, shadows removed, and the layout goes full-width. No starter code.</p>",
+      "feynmanPrompt": "Walk through the three main categories of print CSS adjustments: what to hide, what to show only on print, and what to restructure. Explain the break-inside-avoid utility — what problem does it solve for tables and cards across page breaks? Why should you strip background colours for print?",
+      "questions": [
+        {
+          "id": "tw-jun-19-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "JUNIOR",
+          "prompt": "Which class hides an element on screen but makes it visible when printing?",
+          "options": [
+            "hidden print:block",
+            "invisible print:visible",
+            "print-show screen-hide",
+            "opacity-0 print:opacity-100"
+          ],
+          "answer": "hidden print:block",
+          "explanation": "hidden sets display: none at all sizes (screen and print). print:block overrides this inside @media print, setting display: block. Together they create an element that is invisible on screen but appears when printing — the correct pattern for print headers with company information."
+        },
+        {
+          "id": "tw-jun-19-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A multi-page invoice has a table with 30 rows. Some rows get split across page breaks in a visually awkward way. Which class on the table rows prevents them from being split across pages?",
+          "options": [
+            "break-inside-avoid on each row (tr) or on grouped sections",
+            "page-break-inside: avoid — must use custom CSS for this",
+            "break-after-avoid on each row",
+            "overflow-hidden on the table"
+          ],
+          "answer": "break-inside-avoid on each row (tr) or on grouped sections",
+          "explanation": "break-inside-avoid applies break-inside: avoid in CSS, which instructs the print engine not to break the element's content across pages. Apply it to rows or grouped sections that should stay together. It won't always be respected (long sections may still need to break), but it prevents unnecessary breaks for short rows."
+        },
+        {
+          "id": "tw-jun-19-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A certificate uses bg-blue-600 for its header background. When printed in black and white, the text is invisible against the dark background. What is the correct fix?",
+          "options": [
+            "Add print:bg-white print:text-gray-900 to remove the blue background and adjust text colour for print",
+            "Add print:opacity-0 to hide the header on print",
+            "Use print:invert to invert the colours for print",
+            "Add print:grayscale — this converts blue to a printable gray"
+          ],
+          "answer": "Add print:bg-white print:text-gray-900 to remove the blue background and adjust text colour for print",
+          "explanation": "print:bg-white removes the blue background for print (saving ink and avoiding black-and-white legibility issues). print:text-gray-900 ensures the text stays dark and readable on the white background. print:grayscale would make the background gray, which still uses ink and may have contrast issues. print:invert would produce a negative image."
+        }
+      ]
+    }
+  ]
+}

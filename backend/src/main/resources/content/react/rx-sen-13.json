@@ -1,0 +1,118 @@
+{
+  "id": "rx-sen-13",
+  "title": "Advanced TypeScript Patterns for React",
+  "glyph": "⚛",
+  "sortOrder": 13,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-3"],
+  "subChunks": [
+    {
+      "id": "rx-sen-13-1",
+      "title": "Advanced TypeScript Patterns for React",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.tsx",
+      "hookHtml": "<p>Basic TypeScript types catch typos. Advanced TypeScript patterns catch architectural mistakes. Discriminated unions, conditional types, template literal types, and utility types let you express complex component APIs in ways that make wrong usage impossible to compile. This lesson covers the patterns that senior React developers use to build truly type-safe component libraries.</p>",
+      "explanationHtml": "<h3>Discriminated unions for variant components</h3>\n\n<pre><code>// Instead of optional props that can be combined incorrectly:\ntype BadAlertProps = {\n  type?: 'success' | 'error' | 'warning';\n  onRetry?: () =&gt; void; // Only makes sense for 'error'\n  onDismiss?: () =&gt; void;\n};\n\n// Discriminated union — invalid combinations are type errors:\ntype AlertProps =\n  | { type: 'success'; message: string; onDismiss: () =&gt; void }\n  | { type: 'error'; message: string; onRetry: () =&gt; void; onDismiss: () =&gt; void }\n  | { type: 'warning'; message: string; onDismiss: () =&gt; void };\n\nfunction Alert(props: AlertProps) {\n  // TypeScript narrows the type based on props.type:\n  if (props.type === 'error') {\n    // TypeScript knows onRetry is available here\n    return &lt;div&gt;{props.message} &lt;button onClick={props.onRetry}&gt;Retry&lt;/button&gt;&lt;/div&gt;;\n  }\n  return &lt;div&gt;{props.message}&lt;/div&gt;;\n}</code></pre>\n\n<h3>Polymorphic components — the `as` prop</h3>\n\n<pre><code>// A Button that can render as any HTML element:\ntype ButtonProps&lt;C extends React.ElementType = 'button'&gt; = {\n  as?: C;\n  children: React.ReactNode;\n  variant?: 'primary' | 'secondary';\n} &amp; React.ComponentPropsWithoutRef&lt;C&gt;;\n\nfunction Button&lt;C extends React.ElementType = 'button'&gt;({\n  as,\n  children,\n  variant = 'primary',\n  ...rest\n}: ButtonProps&lt;C&gt;) {\n  const Component = as ?? 'button';\n  return &lt;Component className={`btn btn--${variant}`} {...rest}&gt;{children}&lt;/Component&gt;;\n}\n\n// Usage — TypeScript infers the correct prop set:\n&lt;Button&gt;Click me&lt;/Button&gt;            // button props\n&lt;Button as=\"a\" href=\"/quests\"&gt;Link&lt;/Button&gt;  // anchor props\n&lt;Button as={Link} to=\"/quests\"&gt;Link&lt;/Button&gt; // React Router Link props</code></pre>\n\n<h3>Utility types for component APIs</h3>\n\n<pre><code>// Extract props from an existing component:\ntype ButtonProps = React.ComponentPropsWithoutRef&lt;'button'&gt;;\n\n// Extend native element props:\ntype InputProps = React.ComponentPropsWithoutRef&lt;'input'&gt; &amp; {\n  label: string;\n  error?: string;\n};\n\n// Make some required fields optional:\ntype PartialQuestProps = Partial&lt;QuestCardProps&gt;;\n\n// Pick specific fields:\ntype QuestSummary = Pick&lt;Quest, 'id' | 'title' | 'xp'&gt;;\n\n// Exclude a type from a union:\ntype WithoutAdmin = Exclude&lt;UserRole, 'admin'&gt;;</code></pre>\n\n<h3>Template literal types</h3>\n\n<pre><code>// Type-safe CSS class variants:\ntype Size = 'sm' | 'md' | 'lg';\ntype Colour = 'primary' | 'secondary' | 'danger';\ntype ButtonClass = `btn-${Size}-${Colour}`;\n// Valid: 'btn-sm-primary', 'btn-lg-danger' etc.\n// Invalid: 'btn-xl-primary' — type error!\n\n// Type-safe event handler prop names:\ntype EventName = 'click' | 'change' | 'submit';\ntype HandlerProps = {\n  [K in EventName as `on${Capitalize&lt;K&gt;}`]?: () =&gt; void;\n};\n// Results in: { onClick?: () => void; onChange?: () => void; onSubmit?: () => void }</code></pre>\n\n<h3>Conditional types</h3>\n\n<pre><code>// A form field that is required or optional based on a generic:\ntype FieldProps&lt;Required extends boolean = false&gt; = {\n  label: string;\n  value: string;\n} &amp; (Required extends true\n  ? { required: true; defaultValue?: never }\n  : { required?: false; defaultValue?: string });\n\n// Usage:\n&lt;Field&lt;true&gt; label=\"Email\" value={email} required /&gt;  // must have required=true\n&lt;Field label=\"Bio\" value={bio} defaultValue=\"\" /&gt;       // optional, has defaultValue</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The goal of advanced TypeScript patterns is to make invalid states unrepresentable. If a component accepts onRetry only for error alerts — encode that in the type. If an as-prop Button accepts anchor-specific props when as='a' — encode that. Every invalid usage caught at compile time is a runtime error that never reaches a user.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A component that accepts 12 optional props — but only specific combinations are valid. Runtime errors when the wrong ones are combined. Vex opens the types file."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Advanced TypeScript doesn't just annotate values. It expresses the rules of your component API. A discriminated union makes invalid prop combinations a compile error. A polymorphic as prop gives the correct props for each element type. The type system becomes the documentation — and it's enforced."
+        },
+        {
+          "type": "example",
+          "speaker": "Discriminated union preventing invalid prop combinations",
+          "text": "type ButtonProps =\n  | { as: 'a'; href: string; onClick?: never }  // links use href\n  | { as?: 'button'; href?: never; onClick: () => void }; // buttons use onClick\n\n// TypeScript error — can't have both href and onClick:\n<Button as=\"button\" href=\"/quests\" onClick={() => {}} />"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Apply advanced TypeScript patterns to a component API:</p><ul><li>Build an <code>Alert</code> component using a discriminated union type. <code>'success'</code> alerts have no <code>onRetry</code>; <code>'error'</code> alerts require <code>onRetry</code>. Both have <code>message</code> and <code>onDismiss</code>.</li><li>Build an <code>Input</code> component that extends <code>React.ComponentPropsWithoutRef&lt;'input'&gt;</code> and adds a required <code>label</code> and optional <code>error</code> prop.</li><li>Define a <code>Size</code> and <code>Colour</code> union and a template literal type <code>ButtonClass = \\'btn-${Size}\\''</code>.</li></ul>",
+      "guidedPracticeStarterCode": "import React from 'react';\n\n// TODO 1: Discriminated union for Alert\ntype AlertProps = never; // Replace with discriminated union\n\nfunction Alert(props: AlertProps) {\n  return <div role=\"alert\">{/* TODO */}</div>;\n}\n\n// TODO 2: Input extending native input props\ntype InputProps = never; // Replace\n\nfunction Input({ label, error, ...rest }: InputProps) {\n  return (\n    <div>\n      <label>{label}</label>\n      <input {...rest} />\n      {error && <p role=\"alert\">{error}</p>}\n    </div>\n  );\n}\n\n// TODO 3: Template literal type\ntype Size = 'sm' | 'md' | 'lg';\ntype ButtonClass = never; // Replace with template literal type\n\nexport default function App() {\n  return (\n    <div>\n      <Alert type=\"error\" message=\"Quest failed\" onRetry={() => {}} onDismiss={() => {}} />\n      <Alert type=\"success\" message=\"Quest complete!\" onDismiss={() => {}} />\n      <Input label=\"Quest title\" placeholder=\"Enter title...\" />\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Alert renders",
+          "selector": "[role='alert']",
+          "exists": true
+        },
+        {
+          "label": "Input renders with label",
+          "selector": "label",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a fully typed polymorphic <code>&lt;Text&gt;</code> component that can render as any heading (h1-h6), paragraph, or span. The <code>as</code> prop determines the element and its allowed props. Add a <code>size</code> prop with values matching heading levels (<code>'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'</code>) and a <code>weight</code> prop. Use conditional types to make <code>htmlFor</code> available only when <code>as=\"label\"</code>. Demonstrate that invalid usage produces compile errors.</p>",
+      "feynmanPrompt": "Explain discriminated unions to a developer who uses optional props for variant components. What problem do they solve? Then explain the polymorphic `as` prop pattern — what TypeScript challenge does it solve and how does ComponentPropsWithoutRef help? Finally, explain when template literal types are useful.",
+      "questions": [
+        {
+          "id": "rx-sen-13-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is a discriminated union in TypeScript?",
+          "options": [
+            "A union type where each variant has a common literal property (the discriminant) that TypeScript uses to narrow the type in conditional checks",
+            "A union type that excludes certain values",
+            "A type that discriminates between runtime and compile-time values",
+            "A union type defined with the `discriminate` keyword"
+          ],
+          "answer": "A union type where each variant has a common literal property (the discriminant) that TypeScript uses to narrow the type in conditional checks",
+          "explanation": "A discriminated union has a shared property (the discriminant — like 'type') with a unique literal value in each variant. When you check props.type === 'error', TypeScript narrows the type to the error variant, making error-only properties available. This makes invalid prop combinations type errors — the type system encodes the component's rules."
+        },
+        {
+          "id": "rx-sen-13-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does `React.ComponentPropsWithoutRef<'button'>` give you?",
+          "options": [
+            "The full TypeScript type of all valid HTML props for a button element, including onClick, disabled, type, etc. — without the ref prop",
+            "A generic type for any React component",
+            "The return type of a button component's render function",
+            "The props type excluding children and className"
+          ],
+          "answer": "The full TypeScript type of all valid HTML props for a button element, including onClick, disabled, type, etc. — without the ref prop",
+          "explanation": "ComponentPropsWithoutRef<'button'> extracts the props type from the built-in button element definition. Extending it for a custom Button component gives you all native button props plus your custom ones, and users get autocomplete for native props they already know. ComponentPropsWithRef includes the ref prop — needed when you forward refs."
+        },
+        {
+          "id": "rx-sen-13-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "You have `type Size = 'sm' | 'md' | 'lg'` and `type Colour = 'red' | 'blue'`. What does `type ButtonClass = \\'btn-${Size}-${Colour}\\'` produce?",
+          "options": [
+            "'btn-sm-red' | 'btn-sm-blue' | 'btn-md-red' | 'btn-md-blue' | 'btn-lg-red' | 'btn-lg-blue' — all combinations",
+            "A string type that accepts any string starting with 'btn-'",
+            "An error — template literal types don't work with union types",
+            "'btn-Size-Colour' — a literal string"
+          ],
+          "answer": "'btn-sm-red' | 'btn-sm-blue' | 'btn-md-red' | 'btn-md-blue' | 'btn-lg-red' | 'btn-lg-blue' — all combinations",
+          "explanation": "TypeScript distributes template literal types over union members. It generates all combinations of the constituent unions. This lets you write type-safe class name systems, event handler names, CSS variable names, or any string pattern where the valid values are a known set of combinations."
+        },
+        {
+          "id": "rx-sen-13-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "A component has both an `href` prop (for anchor behaviour) and an `onClick` prop (for button behaviour). A developer passes both. Why is a discriminated union better than making both optional?",
+          "options": [
+            "Optional props allow invalid combinations at compile time — both href and onClick can be passed together. A discriminated union makes only valid combinations possible.",
+            "Discriminated unions are faster at runtime",
+            "Optional props can't have different types; discriminated unions can",
+            "TypeScript requires discriminated unions for all components with more than 3 props"
+          ],
+          "answer": "Optional props allow invalid combinations at compile time — both href and onClick can be passed together. A discriminated union makes only valid combinations possible.",
+          "explanation": "With optional props, <Button href=\"/quests\" onClick={() => {}} /> compiles fine but behaves ambiguously. A discriminated union with { as: 'a'; href: string; onClick?: never } | { as?: 'button'; onClick: () => void; href?: never } makes it a type error to pass both. The type system enforces the contract at compile time, not at runtime with a console.warn."
+        }
+      ]
+    }
+  ]
+}

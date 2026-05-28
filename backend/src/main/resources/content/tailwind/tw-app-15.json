@@ -1,0 +1,106 @@
+{
+  "id": "tw-app-15",
+  "title": "Apprentice Capstone — Landing Page Section",
+  "glyph": "🏆",
+  "sortOrder": 15,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-14"],
+  "subChunks": [
+    {
+      "id": "tw-app-15-1",
+      "title": "Apprentice Capstone — Landing Page Section",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>You have mastered every individual utility in the Apprentice tier. Now you must compose them. A real landing page demands spacing, typography, colour, flexbox, borders, sizing, backgrounds, gradients, position, hover states, shadows, buttons, and cards working together as a single cohesive design. This is your capstone — build it from first principles.</p>",
+      "explanationHtml": "<h3>Landing page anatomy</h3>\n<p>A typical SaaS landing page is composed of four distinct sections, each using a different subset of Tailwind utilities:</p>\n<pre><code>/* 1. Sticky navigation */\nsticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-gray-100\n\n/* 2. Hero section */\nbg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800\ntext-white text-center px-4 py-24\n\n/* 3. Feature cards grid */\nflex flex-wrap gap-6 max-w-5xl mx-auto\neach card: bg-white rounded-xl shadow-sm p-6 border border-gray-100\n          hover:shadow-md hover:-translate-y-0.5 transition\n\n/* 4. CTA section */\nbg-gray-900 text-white text-center px-4 py-16\n</code></pre>\n\n<h3>Composing utilities — the mental model</h3>\n<p>When starting a new section, ask these questions in order:</p>\n<ol>\n  <li><strong>Layout</strong>: What is the flex/grid structure?</li>\n  <li><strong>Sizing</strong>: What are the width constraints? (max-w-*, w-full)</li>\n  <li><strong>Spacing</strong>: What padding/margin do sections and elements need?</li>\n  <li><strong>Colour</strong>: Background, text, border colours?</li>\n  <li><strong>Typography</strong>: Size, weight, line-height?</li>\n  <li><strong>Effects</strong>: Shadows, rounding, gradients?</li>\n  <li><strong>States</strong>: Hover, focus, transition?</li>\n</ol>\n\n<h3>The centering pattern</h3>\n<pre><code>/* Full-width section with centred, constrained content */\n&lt;section class=\"bg-gray-50 px-4 py-16\"&gt;   &lt;!-- full width bg + breathing room --&gt;\n  &lt;div class=\"max-w-5xl mx-auto\"&gt;          &lt;!-- constrain and centre --&gt;\n    &lt;!-- content --&gt;\n  &lt;/div&gt;\n&lt;/section&gt;\n</code></pre>\n\n<h3>Hero typography scale</h3>\n<pre><code>/* Landing page type scale */\n&lt;h1 class=\"text-4xl font-bold tracking-tight leading-tight\"&gt;Headline&lt;/h1&gt;\n&lt;p  class=\"text-xl text-blue-100 mt-4 max-w-2xl mx-auto\"&gt;Subheadline&lt;/p&gt;\n&lt;div class=\"flex gap-4 justify-center mt-8\"&gt;\n  &lt;!-- Primary CTA --&gt;\n  &lt;button class=\"bg-white text-blue-700 font-semibold px-6 py-3 rounded-lg\n                 hover:bg-blue-50 transition\"&gt;Get Started&lt;/button&gt;\n  &lt;!-- Ghost CTA --&gt;\n  &lt;button class=\"border border-white/50 text-white font-semibold px-6 py-3 rounded-lg\n                 hover:bg-white/10 transition\"&gt;Learn More&lt;/button&gt;\n&lt;/div&gt;\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"A capstone is not about memorising classes — it is about composing systems. Start with structure, then colour, then spacing, then states. If you try to apply all utilities at once you will lose your place. Layer them deliberately, section by section, element by element. When you are done, every class should have a purpose you can articulate.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "This is the moment everything converges. Spacing, colour, typography, flex, borders, sizing, backgrounds, position, states, shadows, buttons, cards — every utility you have learned is needed here. A landing page is not a collection of components. It is a single, coherent statement of visual intent. Build it as if it will ship tomorrow."
+        },
+        {
+          "type": "example",
+          "speaker": "The complete four-section landing pattern",
+          "text": "<!-- STICKY NAV -->\n<nav class=\"sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex items-center justify-between\">\n  <span class=\"font-bold text-gray-900\">Arcane Academy</span>\n  <button class=\"bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-blue-700 transition\">Sign Up</button>\n</nav>\n\n<!-- HERO -->\n<section class=\"bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white text-center px-4 py-24\">\n  <h1 class=\"text-4xl font-bold tracking-tight\">Master Modern CSS</h1>\n  <p class=\"text-xl text-blue-100 mt-4 max-w-2xl mx-auto\">Learn Tailwind the way professionals do.</p>\n  <div class=\"flex gap-4 justify-center mt-8\">\n    <button class=\"bg-white text-blue-700 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition\">Get Started</button>\n  </div>\n</section>\n\n<!-- FEATURES -->\n<section class=\"px-4 py-16 bg-gray-50\">\n  <div class=\"max-w-5xl mx-auto\">\n    <div class=\"flex flex-wrap gap-6\">\n      <div class=\"bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex-1 min-w-[260px] hover:shadow-md hover:-translate-y-0.5 transition\">\n        <h3 class=\"font-semibold text-gray-900\">Feature One</h3>\n        <p class=\"text-sm text-gray-500 mt-2\">Description of the feature.</p>\n      </div>\n    </div>\n  </div>\n</section>\n\n<!-- CTA -->\n<section class=\"bg-gray-900 text-white text-center px-4 py-16\">\n  <h2 class=\"text-3xl font-bold\">Ready to begin?</h2>\n  <button class=\"mt-6 bg-blue-500 text-white font-semibold px-8 py-4 rounded-xl hover:bg-blue-400 transition text-lg\">Start Learning Free</button>\n</section>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a four-section Arcane Academy landing page:</p>\n<ul>\n  <li><strong>.landing-nav</strong>: <code>sticky</code>, <code>top-0</code>, <code>z-30</code>, <code>bg-white/90</code>, <code>backdrop-blur-md</code>, <code>border-b</code>, <code>border-gray-100</code>, <code>px-6</code>, <code>py-4</code>, <code>flex</code>, <code>items-center</code>, <code>justify-between</code></li>\n  <li><strong>.hero-section</strong>: <code>bg-gradient-to-br</code>, <code>from-blue-600</code>, <code>to-indigo-800</code>, <code>text-white</code>, <code>text-center</code>, <code>px-4</code>, <code>py-24</code></li>\n  <li><strong>.hero-title</strong>: <code>text-4xl</code>, <code>font-bold</code>, <code>tracking-tight</code></li>\n  <li><strong>.hero-cta</strong>: <code>bg-white</code>, <code>text-blue-700</code>, <code>font-semibold</code>, <code>rounded-lg</code>, <code>hover:bg-blue-50</code>, <code>transition</code></li>\n  <li><strong>.features-section</strong>: <code>px-4</code>, <code>py-16</code>, <code>bg-gray-50</code></li>\n  <li><strong>.feature-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>shadow-sm</code>, <code>border</code>, <code>border-gray-100</code>, <code>hover:shadow-md</code>, <code>hover:-translate-y-0.5</code>, <code>transition</code></li>\n  <li><strong>.cta-section</strong>: <code>bg-gray-900</code>, <code>text-white</code>, <code>text-center</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div>\n  <!-- Navigation -->\n  <nav class=\"landing-nav\">\n    <span class=\"font-bold text-gray-900\">Arcane Academy</span>\n    <button class=\"bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-blue-700 transition\">Sign Up Free</button>\n  </nav>\n\n  <!-- Hero -->\n  <section class=\"hero-section\">\n    <div class=\"max-w-3xl mx-auto\">\n      <span class=\"bg-blue-500/30 text-blue-100 text-sm font-medium px-3 py-1 rounded-full\">Now in beta</span>\n      <h1 class=\"hero-title mt-4\">Master Tailwind CSS the Right Way</h1>\n      <p class=\"text-xl text-blue-100 mt-4 max-w-xl mx-auto leading-relaxed\">Learn through quests, earn XP, and build real components from day one.</p>\n      <div class=\"flex gap-4 justify-center mt-8\">\n        <button class=\"hero-cta px-6 py-3\">Start Learning</button>\n        <button class=\"border border-white/40 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/10 transition\">See Curriculum</button>\n      </div>\n    </div>\n  </section>\n\n  <!-- Features -->\n  <section class=\"features-section\">\n    <div class=\"max-w-5xl mx-auto\">\n      <h2 class=\"text-2xl font-bold text-gray-900 text-center\">Everything you need to ship</h2>\n      <div class=\"flex flex-wrap gap-6 mt-10\">\n        <div class=\"feature-card p-6 flex-1 min-w-[240px]\">\n          <div class=\"w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-lg\">⚡</div>\n          <h3 class=\"font-semibold text-gray-900 mt-3\">Learn by Doing</h3>\n          <p class=\"text-sm text-gray-500 mt-2\">Every concept is a hands-on quest. No passive reading.</p>\n        </div>\n        <div class=\"feature-card p-6 flex-1 min-w-[240px]\">\n          <div class=\"w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 text-lg\">🏆</div>\n          <h3 class=\"font-semibold text-gray-900 mt-3\">Earn XP & Badges</h3>\n          <p class=\"text-sm text-gray-500 mt-2\">Progress through tiers and unlock badges as you level up.</p>\n        </div>\n        <div class=\"feature-card p-6 flex-1 min-w-[240px]\">\n          <div class=\"w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-lg\">🎨</div>\n          <h3 class=\"font-semibold text-gray-900 mt-3\">Real Components</h3>\n          <p class=\"text-sm text-gray-500 mt-2\">Build production-quality buttons, cards, and layouts.</p>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- CTA -->\n  <section class=\"cta-section px-4 py-16\">\n    <div class=\"max-w-2xl mx-auto\">\n      <h2 class=\"text-3xl font-bold\">Ready to begin your quest?</h2>\n      <p class=\"text-gray-400 mt-3 text-lg\">Join thousands of developers learning Tailwind the right way.</p>\n      <button class=\"mt-8 bg-blue-500 text-white font-semibold px-8 py-4 rounded-xl hover:bg-blue-400 transition text-lg\">Start Learning Free</button>\n    </div>\n  </section>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Nav: sticky",              "selector": ".landing-nav",     "requiredClass": "sticky"             },
+        { "label": "Nav: backdrop-blur",       "selector": ".landing-nav",     "requiredClass": "backdrop-blur-md"   },
+        { "label": "Nav: flex layout",         "selector": ".landing-nav",     "requiredClass": "flex"               },
+        { "label": "Hero: gradient",           "selector": ".hero-section",    "requiredClass": "bg-gradient-to-br"  },
+        { "label": "Hero: from-blue-600",      "selector": ".hero-section",    "requiredClass": "from-blue-600"      },
+        { "label": "Hero: text-white",         "selector": ".hero-section",    "requiredClass": "text-white"         },
+        { "label": "Hero: text-center",        "selector": ".hero-section",    "requiredClass": "text-center"        },
+        { "label": "Title: text-4xl",          "selector": ".hero-title",      "requiredClass": "text-4xl"           },
+        { "label": "Title: font-bold",         "selector": ".hero-title",      "requiredClass": "font-bold"          },
+        { "label": "CTA btn: bg-white",        "selector": ".hero-cta",        "requiredClass": "bg-white"           },
+        { "label": "CTA btn: hover",           "selector": ".hero-cta",        "requiredClass": "hover:bg-blue-50"   },
+        { "label": "Features: bg-gray-50",     "selector": ".features-section","requiredClass": "bg-gray-50"         },
+        { "label": "Card: rounded-xl",         "selector": ".feature-card",    "requiredClass": "rounded-xl"         },
+        { "label": "Card: hover shadow",       "selector": ".feature-card",    "requiredClass": "hover:shadow-md"    },
+        { "label": "Card: hover lift",         "selector": ".feature-card",    "requiredClass": "hover:-translate-y-0.5" },
+        { "label": "CTA section: bg-gray-900", "selector": ".cta-section",     "requiredClass": "bg-gray-900"        },
+        { "label": "CTA section: text-white",  "selector": ".cta-section",     "requiredClass": "text-white"         }
+      ],
+      "soloPracticeHtml": "<p>Build a complete SaaS pricing page from scratch: a sticky frosted-glass nav, a hero with badge + headline + two CTA buttons, a three-column pricing cards section (each card has a plan name, price, feature list, and CTA button — the 'Pro' card should have an elevated/highlighted style), a testimonial strip with three avatar cards, and a footer with a gradient background. No starter code. No guided selectors. Everything from memory.</p>",
+      "feynmanPrompt": "Walk through the complete landing page you just built, section by section. For each section explain: (1) what layout pattern it uses and why, (2) what colour choices you made and why, (3) which interactive states you applied and what they communicate to the user. If you had to remove five classes from the entire page that would cause the most visible visual degradation, which five would they be?",
+      "questions": [
+        {
+          "id": "tw-app-15-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "A hero section needs a blue gradient background, white text, and its content centred both horizontally and vertically within a fixed height. Which class combination on the section achieves this?",
+          "options": [
+            "bg-gradient-to-br from-blue-600 to-indigo-800 text-white min-h-screen flex items-center justify-center",
+            "bg-blue-600 text-white h-screen absolute inset-0",
+            "gradient-blue text-white flex-center h-full",
+            "bg-gradient-to-r from-blue-500 text-white display-flex align-center"
+          ],
+          "answer": "bg-gradient-to-br from-blue-600 to-indigo-800 text-white min-h-screen flex items-center justify-center",
+          "explanation": "bg-gradient-to-br sets a bottom-right gradient direction, from-blue-600 to-indigo-800 defines the colour stops, text-white makes all text white by default, min-h-screen ensures the section fills the viewport, and flex items-center justify-center centres the content. Using min-h-screen rather than h-screen allows the section to grow if content overflows."
+        },
+        {
+          "id": "tw-app-15-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "A feature cards row uses flex flex-wrap gap-6. Each card has flex-1 min-w-[240px]. On a 1200px container there are 3 cards. On a 600px container the cards stack. What does min-w-[240px] contribute to this behaviour?",
+          "options": [
+            "It sets a minimum width below which the card will not shrink — when the container is too narrow for 240px cards, they wrap to new rows",
+            "It forces each card to be exactly 240px wide on all screen sizes",
+            "It prevents the card from growing beyond 240px",
+            "It is unnecessary — flex-wrap alone handles the responsive stacking"
+          ],
+          "answer": "It sets a minimum width below which the card will not shrink — when the container is too narrow for 240px cards, they wrap to new rows",
+          "explanation": "flex-1 makes cards grow to fill available space. min-w-[240px] prevents them from collapsing below 240px. When the container is too narrow to fit multiple 240px cards side-by-side, flex-wrap causes them to move to a new row. Without min-w, flex-1 items would shrink indefinitely to fit the same row, making cards very narrow. The combination of flex-1 + min-w creates a naturally responsive flex grid."
+        },
+        {
+          "id": "tw-app-15-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You have built a complete landing page using only Tailwind utilities. A designer asks you to make the hero headline 52px with a line-height of 1.1 — values that don't exist in the default Tailwind scale. Which approach is most consistent with the Tailwind utility philosophy?",
+          "options": [
+            "Use arbitrary values: text-[52px] leading-[1.1] — Tailwind v3+ supports one-off arbitrary values in square brackets",
+            "Write a custom CSS class in your stylesheet and combine it with Tailwind utilities",
+            "Edit the Tailwind config to add 52px to the fontSize scale",
+            "Use text-5xl (48px) as the closest available size — never deviate from the default scale"
+          ],
+          "answer": "Use arbitrary values: text-[52px] leading-[1.1] — Tailwind v3+ supports one-off arbitrary values in square brackets",
+          "explanation": "Tailwind's arbitrary value syntax (square brackets) lets you use any valid CSS value while keeping the utility-class pattern. text-[52px] generates font-size: 52px; leading-[1.1] generates line-height: 1.1. This is the correct tool for one-off values that don't warrant a scale extension. Customising the config makes sense for brand-wide tokens used frequently (e.g., a brand colour used in 50 places). For a single headline size, arbitrary values are cleaner."
+        }
+      ]
+    }
+  ]
+}

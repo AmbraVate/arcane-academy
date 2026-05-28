@@ -1,0 +1,92 @@
+{
+  "id": "tw-app-7",
+  "title": "Sizing — Width, Height, and Constraints",
+  "glyph": "🎨",
+  "sortOrder": 7,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-3"],
+  "subChunks": [
+    {
+      "id": "tw-app-7-1",
+      "title": "Sizing — Width, Height, and Constraints",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Understanding how to size elements explicitly — and when to let content drive size — is the difference between layouts that hold together and layouts that break unpredictably. Tailwind's sizing utilities cover fixed sizes, fractions, viewport units, and the min/max constraints that keep responsive design sane.</p>",
+      "explanationHtml": "<h3>Width</h3>\n<pre><code>/* Spacing scale (same as padding) */\nw-0  w-1  w-2  w-4  w-8  w-16  w-32  w-64\n\n/* Fractions */\nw-1/2   /* 50%  */\nw-1/3   /* 33.333% */\nw-2/3   /* 66.667% */\nw-1/4   /* 25%  */\nw-3/4   /* 75%  */\n\n/* Keywords */\nw-auto    /* content width       */\nw-full    /* 100% of parent      */\nw-screen  /* 100vw               */\nw-min     /* min-content         */\nw-max     /* max-content         */\nw-fit     /* fit-content         */\n</code></pre>\n\n<h3>Height</h3>\n<pre><code>h-0  h-1  h-2  h-4  h-8  h-16  h-32  h-64\nh-auto    /* content height      */\nh-full    /* 100% of parent      */\nh-screen  /* 100vh               */\nh-svh     /* 100svh (mobile fix) */\nh-dvh     /* 100dvh (dynamic vh) */\n</code></pre>\n\n<h3>Min and Max constraints</h3>\n<pre><code>/* Minimum width/height */\nmin-w-0       /* 0 — important for flex-1 + truncate to work */\nmin-w-full    /* 100% */\nmin-h-screen  /* 100vh — full-page layouts */\nmin-h-0       /* 0 */\n\n/* Maximum width/height */\nmax-w-xs  max-w-sm  max-w-md  max-w-lg  max-w-xl\nmax-w-2xl  max-w-4xl  max-w-7xl  max-w-prose  max-w-full\nmax-h-48  max-h-64  max-h-96  max-h-screen\n</code></pre>\n\n<h3>Fixed sizes for icons and avatars</h3>\n<pre><code>/* Common fixed square sizes */\nw-4 h-4    /* 16px — small icon  */\nw-5 h-5    /* 20px — icon        */\nw-6 h-6    /* 24px — icon        */\nw-8 h-8    /* 32px — small avatar */\nw-10 h-10  /* 40px — avatar      */\nw-12 h-12  /* 48px — avatar      */\nw-16 h-16  /* 64px — large avatar */\n</code></pre>\n\n<h3>Aspect ratio</h3>\n<pre><code>aspect-square  /* 1 / 1  */\naspect-video   /* 16 / 9 */\naspect-auto\n</code></pre>\n\n<h3>Object fit (for images)</h3>\n<pre><code>object-cover    /* fills container, crops to fit */\nobject-contain  /* fits inside without cropping  */\nobject-fill     /* stretches to fill             */\nobject-center   /* centers the image             */\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"min-w-0 is the most frequently forgotten utility in Tailwind. When you add flex-1 to a container hoping text will truncate, it won't — unless you also add min-w-0. The default min-width is auto (the content's natural width), which prevents shrinking below the text. Always pair flex-1 min-w-0 on containers that need to shrink.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "Two patterns you will use on every avatar: the fixed square with rounded-full for circles, and object-cover to fill without stretching. w-12 h-12 rounded-full object-cover — that is every avatar in every app. Learn it once."
+        },
+        {
+          "type": "example",
+          "speaker": "Avatar + image sizing pattern",
+          "text": "<!-- Fixed avatar -->\n<img class=\"w-12 h-12 rounded-full object-cover flex-none\" src=\"/avatar.jpg\" alt=\"Aria\" />\n\n<!-- Responsive hero image -->\n<img class=\"w-full aspect-video object-cover rounded-xl\" src=\"/hero.jpg\" alt=\"Quest\" />\n\n<!-- Full-page layout -->\n<div class=\"min-h-screen flex flex-col\">\n  <nav>...</nav>\n  <main class=\"flex-1\">...</main>  <!-- fills remaining height -->\n  <footer>...</footer>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Style a member profile card with proper sizing:</p>\n<ul>\n  <li><strong>.avatar</strong>: <code>w-16</code>, <code>h-16</code>, <code>rounded-full</code>, <code>object-cover</code>, <code>flex-none</code></li>\n  <li><strong>.hero-img</strong>: <code>w-full</code>, <code>aspect-video</code>, <code>object-cover</code>, <code>rounded-xl</code></li>\n  <li><strong>.card</strong>: <code>max-w-sm</code>, <code>mx-auto</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>shadow-md</code>, <code>overflow-hidden</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"card\">\n  <img class=\"hero-img\" src=\"https://picsum.photos/seed/quest/800/450\" alt=\"Quest banner\" />\n  <div class=\"p-6 flex gap-4 items-start\">\n    <img class=\"avatar\" src=\"https://picsum.photos/seed/aria/100/100\" alt=\"Aria\" />\n    <div class=\"flex-1 min-w-0\">\n      <h3 class=\"font-semibold text-gray-900 truncate\">Aria Sunforge</h3>\n      <p class=\"text-sm text-gray-500\">Senior Enchanter &middot; 142 Quests</p>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Avatar: width",       "selector": ".avatar",   "requiredClass": "w-16"       },
+        { "label": "Avatar: height",      "selector": ".avatar",   "requiredClass": "h-16"       },
+        { "label": "Avatar: circle",      "selector": ".avatar",   "requiredClass": "rounded-full"},
+        { "label": "Avatar: object-cover","selector": ".avatar",   "requiredClass": "object-cover"},
+        { "label": "Hero: full width",    "selector": ".hero-img", "requiredClass": "w-full"     },
+        { "label": "Hero: aspect ratio",  "selector": ".hero-img", "requiredClass": "aspect-video"},
+        { "label": "Hero: object-cover",  "selector": ".hero-img", "requiredClass": "object-cover"},
+        { "label": "Card: max-width",     "selector": ".card",     "requiredClass": "max-w-sm"   }
+      ],
+      "soloPracticeHtml": "<p>Build a quest card: a landscape banner image (16:9 aspect, full width, object-cover), then a row with a 48px circular avatar, the quest title (truncated if too long), and an XP badge. The card should be constrained to max-w-sm and centred.</p>",
+      "feynmanPrompt": "Explain why flex-1 alone is not enough for text truncation to work in a flex container — what is min-w-0, why is it needed, and what is the CSS mechanism behind the problem? When would you use w-full vs max-w-full?",
+      "questions": [
+        {
+          "id": "tw-app-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "APPRENTICE",
+          "prompt": "Which class constrains an image to maintain a 16:9 aspect ratio as it resizes?",
+          "options": ["aspect-video", "aspect-16/9", "ratio-video", "w-16 h-9"],
+          "answer": "aspect-video",
+          "explanation": "aspect-video applies aspect-ratio: 16 / 9. Combined with w-full and object-cover, this creates a responsive image that maintains its ratio at any container width. aspect-square does the same for 1:1 ratios."
+        },
+        {
+          "id": "tw-app-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You add flex-1 to a div containing a long text string, hoping it will shrink and the text will truncate. It doesn't work. What is missing?",
+          "options": [
+            "min-w-0 on the same element — flex items have min-width: auto by default, preventing shrinking below content width",
+            "overflow-hidden on the parent container",
+            "whitespace-nowrap on the text element",
+            "flex-shrink on the element"
+          ],
+          "answer": "min-w-0 on the same element — flex items have min-width: auto by default, preventing shrinking below content width",
+          "explanation": "CSS flex items have min-width: auto by default — they won't shrink smaller than their content. min-w-0 overrides this to allow shrinking. The full pattern for shrinkable text in flex: flex-1 min-w-0 on the container, then truncate on the text element."
+        },
+        {
+          "id": "tw-app-7-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You need a full-page layout where the footer is always at the bottom of the viewport, and the main content area fills all remaining space. Which class combination achieves this?",
+          "options": [
+            "min-h-screen flex flex-col on the root, flex-1 on the main element",
+            "h-screen overflow-scroll on the root, h-full on the main element",
+            "position-fixed on the footer, padding-bottom on the main element",
+            "h-full on the root, flex-grow on the main element"
+          ],
+          "answer": "min-h-screen flex flex-col on the root, flex-1 on the main element",
+          "explanation": "min-h-screen ensures the root is at least full viewport height. flex flex-col makes it a vertical flex container. flex-1 on main makes it grow to fill all remaining space between the nav and footer. min-h-screen (not h-screen) allows the page to grow taller than the viewport if content requires it."
+        }
+      ]
+    }
+  ]
+}

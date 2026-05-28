@@ -1,0 +1,101 @@
+{
+  "id": "tw-sen-14",
+  "title": "Testing Tailwind Components",
+  "glyph": "🔮",
+  "sortOrder": 14,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-2", "tw-sen-3"],
+  "subChunks": [
+    {
+      "id": "tw-sen-14-1",
+      "title": "Testing Tailwind Components",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Testing UI components requires a different mindset than testing business logic. You're not testing CSS values — you're testing that the correct classes are applied for each state, that ARIA roles are present, and that variants produce their expected outputs. This lesson covers the practical testing patterns used in production Tailwind/React codebases.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"Do not test CSS. CSS works. Test that the correct classes are applied when the component is in a given state. Test that the ARIA attributes are correct. Test the contract of the component — not the implementation of the utility.\"</p></div>\n\n<h3>What to test and what not to test</h3>\n<pre><code>// ✅ Test: class presence for state\n// ✅ Test: ARIA attributes and roles\n// ✅ Test: variant output (CVA contracts)\n// ✅ Test: className prop override (cn() merging)\n// ✅ Test: keyboard interaction\n\n// ❌ Don't test: computed CSS property values\n// ❌ Don't test: visual rendering (screenshot tests are for that)\n// ❌ Don't test: what a specific class does (that's Tailwind's job)</code></pre>\n\n<h3>Testing CVA variant output</h3>\n<pre><code>import { describe, it, expect } from 'vitest';\nimport { buttonVariants } from '@/components/ui/button';\n\ndescribe('buttonVariants', () =&gt; {\n  it('includes base classes', () =&gt; {\n    const result = buttonVariants();\n    expect(result).toContain('inline-flex');\n    expect(result).toContain('font-medium');\n    expect(result).toContain('transition-colors');\n  });\n\n  it('applies primary variant classes', () =&gt; {\n    const result = buttonVariants({ variant: 'primary' });\n    expect(result).toContain('bg-blue-600');\n    expect(result).toContain('text-white');\n  });\n\n  it('applies destructive variant classes', () =&gt; {\n    const result = buttonVariants({ variant: 'destructive' });\n    expect(result).toContain('bg-red-600');\n    expect(result).not.toContain('bg-blue-600');\n  });\n\n  it('sm size reduces padding', () =&gt; {\n    const result = buttonVariants({ size: 'sm' });\n    expect(result).toContain('px-3');\n    expect(result).not.toContain('px-4');\n  });\n});</code></pre>\n\n<h3>Testing class application in React Testing Library</h3>\n<pre><code>import { render, screen } from '@testing-library/react';\nimport { Button } from '@/components/ui/button';\n\ndescribe('Button', () =&gt; {\n  it('renders with primary variant classes by default', () =&gt; {\n    render(&lt;Button&gt;Save&lt;/Button&gt;);\n    const btn = screen.getByRole('button', { name: 'Save' });\n    expect(btn).toHaveClass('bg-blue-600', 'text-white');\n  });\n\n  it('applies caller className overriding defaults', () =&gt; {\n    render(&lt;Button className=\"bg-purple-600\"&gt;Save&lt;/Button&gt;);\n    const btn = screen.getByRole('button', { name: 'Save' });\n    // cn() + twMerge should resolve: purple wins over blue\n    expect(btn).toHaveClass('bg-purple-600');\n    expect(btn).not.toHaveClass('bg-blue-600');\n  });\n\n  it('is accessible — has correct role and is keyboard operable', () =&gt; {\n    render(&lt;Button&gt;Save&lt;/Button&gt;);\n    const btn = screen.getByRole('button');\n    btn.focus();\n    expect(btn).toHaveFocus();\n  });\n});</code></pre>\n\n<h3>Snapshot testing — stabilise your component API</h3>\n<pre><code>import { render } from '@testing-library/react';\nimport { Button } from '@/components/ui/button';\n\nit('matches snapshot', () =&gt; {\n  const { container } = render(&lt;Button variant=\"primary\" size=\"md\"&gt;Save&lt;/Button&gt;);\n  expect(container.firstChild).toMatchSnapshot();\n});\n\n// Snapshot captures the class string. When you intentionally change\n// a variant's classes, the snapshot diff shows exactly what changed.\n// Update with: vitest --update-snapshots (or jest --updateSnapshot)</code></pre>\n\n<h3>Accessibility testing with axe</h3>\n<pre><code>import { render } from '@testing-library/react';\nimport { axe, toHaveNoViolations } from 'jest-axe';\n\nexpect.extend(toHaveNoViolations);\n\nit('has no accessibility violations', async () =&gt; {\n  const { container } = render(\n    &lt;button&gt;\n      &lt;svg aria-hidden=\"true\" /&gt;\n      &lt;span className=\"sr-only\"&gt;Close dialog&lt;/span&gt;\n    &lt;/button&gt;\n  );\n  const results = await axe(container);\n  expect(results).toHaveNoViolations();\n});</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"One axe test catches what five manual reviews miss. Run it on every component with interactive behaviour. A component that ships without an axe scan is a component that has not been reviewed.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Test the contract, not the implementation. CVA variant output tests are fast and catch regressions. axe tests catch accessibility violations. Snapshot tests stabilise the class API. These three together give you meaningful coverage without testing CSS internals."
+        },
+        {
+          "type": "example",
+          "speaker": "CVA variant test",
+          "text": "it('applies primary variant', () => {\n  const result = buttonVariants({ variant: 'primary' });\n  expect(result).toContain('bg-blue-600');\n  expect(result).toContain('text-white');\n});"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a well-tested component demo card. The visual representation uses classes that would be verified in unit tests:</p>\n<ul>\n  <li><strong>.test-card</strong>: <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>p-6</code>, <code>shadow-sm</code></li>\n  <li><strong>.test-btn-primary</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>gap-2</code>, <code>px-4</code>, <code>py-2</code>, <code>bg-blue-600</code>, <code>text-white</code>, <code>text-sm</code>, <code>font-medium</code>, <code>rounded-md</code>, <code>hover:bg-blue-700</code>, <code>transition-colors</code>, <code>focus:outline-none</code>, <code>focus-visible:ring-2</code>, <code>focus-visible:ring-blue-500</code>, <code>focus-visible:ring-offset-2</code></li>\n  <li><strong>.test-btn-secondary</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>gap-2</code>, <code>px-4</code>, <code>py-2</code>, <code>border</code>, <code>border-gray-300</code>, <code>text-gray-700</code>, <code>text-sm</code>, <code>font-medium</code>, <code>rounded-md</code>, <code>hover:bg-gray-50</code>, <code>transition-colors</code>, <code>focus:outline-none</code>, <code>focus-visible:ring-2</code></li>\n  <li><strong>.test-sr-label</strong>: <code>sr-only</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-md p-6\">\n  <div class=\"test-card\" role=\"region\" aria-label=\"Quest actions\">\n    <h3 class=\"text-lg font-semibold text-gray-900 mb-4\">Dragon Quest</h3>\n    <p class=\"text-sm text-gray-600 mb-6\">Defeat the ancient dragon in the Ember Mountains.</p>\n    <div class=\"flex gap-3\">\n      <!-- Primary action button -->\n      <button class=\"test-btn-primary\">\n        <svg aria-hidden=\"true\" class=\"w-4 h-4\" viewBox=\"0 0 16 16\" fill=\"currentColor\">\n          <path d=\"M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13z\"/>\n        </svg>\n        Start Quest\n      </button>\n\n      <!-- Icon-only button with sr-only label -->\n      <button class=\"test-btn-secondary p-2\" aria-label=\"Save quest\">\n        <svg aria-hidden=\"true\" class=\"w-4 h-4\" viewBox=\"0 0 16 16\" fill=\"currentColor\">\n          <path d=\"M2 2h12v12H2z\"/>\n        </svg>\n        <span class=\"test-sr-label\">Save quest</span>\n      </button>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: bg-white",                         "selector": ".test-card",          "requiredClass": "bg-white"                  },
+        { "label": "Card: rounded-xl",                       "selector": ".test-card",          "requiredClass": "rounded-xl"                },
+        { "label": "Card: shadow-sm",                        "selector": ".test-card",          "requiredClass": "shadow-sm"                 },
+        { "label": "Primary btn: bg-blue-600",               "selector": ".test-btn-primary",   "requiredClass": "bg-blue-600"               },
+        { "label": "Primary btn: text-white",                "selector": ".test-btn-primary",   "requiredClass": "text-white"                },
+        { "label": "Primary btn: hover:bg-blue-700",         "selector": ".test-btn-primary",   "requiredClass": "hover:bg-blue-700"         },
+        { "label": "Primary btn: focus:outline-none",        "selector": ".test-btn-primary",   "requiredClass": "focus:outline-none"        },
+        { "label": "Primary btn: focus-visible:ring-2",      "selector": ".test-btn-primary",   "requiredClass": "focus-visible:ring-2"      },
+        { "label": "Primary btn: focus-visible:ring-offset-2","selector": ".test-btn-primary",  "requiredClass": "focus-visible:ring-offset-2"},
+        { "label": "Secondary btn: border-gray-300",         "selector": ".test-btn-secondary", "requiredClass": "border-gray-300"           },
+        { "label": "Secondary btn: text-gray-700",           "selector": ".test-btn-secondary", "requiredClass": "text-gray-700"             },
+        { "label": "SR label: sr-only",                      "selector": ".test-sr-label",      "requiredClass": "sr-only"                   }
+      ],
+      "soloPracticeHtml": "<p>Write a complete Vitest test suite (as a code comment) for a Badge component with success/warning/error variants. Include: 3 CVA variant output tests, 2 React Testing Library class assertion tests (one for default, one for className override), and 1 axe accessibility test for an icon-only badge. Then build the HTML representation of all three badge variants.</p>",
+      "feynmanPrompt": "Explain what you test in a Tailwind component and what you don't. Why is testing computed CSS property values a bad idea? Walk through the three most valuable test types for a CVA component and what bug each one prevents.",
+      "questions": [
+        {
+          "id": "tw-sen-14-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "What is the primary value of testing CVA variant output directly (not via React Testing Library)?",
+          "options": [
+            "It's fast and pure — tests the class generation logic without DOM rendering, catching variant regressions immediately",
+            "It tests that CSS variables are resolved correctly at runtime",
+            "It replaces snapshot tests — no separate snapshots are needed",
+            "It verifies that tailwind-merge resolves conflicts correctly between variants"
+          ],
+          "answer": "It's fast and pure — tests the class generation logic without DOM rendering, catching variant regressions immediately",
+          "explanation": "CVA variant tests call the variant function directly (buttonVariants({ variant: 'primary' })) and check the returned string. No DOM, no rendering, no React. These tests are near-instant and catch cases where a refactor changes which classes a variant produces — the most common regression in component library maintenance."
+        },
+        {
+          "id": "tw-sen-14-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A test checks: expect(btn).not.toHaveClass('bg-blue-600'). This is checking that a className override worked. What is this testing about the cn() function?",
+          "options": [
+            "That twMerge resolved the conflict between the base bg-blue-600 and the caller's override, keeping only the caller's class",
+            "That clsx filtered out falsy values from the class list",
+            "That the CSS specificity of the override class is higher than the base class",
+            "That the caller's class was appended after the base class in the class string"
+          ],
+          "answer": "That twMerge resolved the conflict between the base bg-blue-600 and the caller's override, keeping only the caller's class",
+          "explanation": "When a caller passes className='bg-purple-600' and the component base has 'bg-blue-600', cn() uses twMerge to detect the conflict (both in the bg-* group) and keep only the last one. The test verifies that twMerge is working — if cn() was replaced with a simple concatenation, this test would fail because both classes would be present."
+        },
+        {
+          "id": "tw-sen-14-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "SENIOR",
+          "prompt": "A PR adds a button variant. The variant tests pass but a visual regression appears in production — the new variant's hover colour is the same as the background colour. What test type would have caught this?",
+          "options": [
+            "A visual regression test (screenshot diff) — it captures the rendered appearance and flags pixel-level differences",
+            "A CVA unit test checking toContain('hover:bg-...')",
+            "An axe accessibility test — contrast issues are detected by axe",
+            "A React Testing Library test checking toHaveClass('hover:...')"
+          ],
+          "answer": "A visual regression test (screenshot diff) — it captures the rendered appearance and flags pixel-level differences",
+          "explanation": "Class presence tests verify that a specific class exists — but they cannot verify that the class produces the correct visual result. If the hover colour value is wrong (e.g. hover:bg-blue-600 when it should be hover:bg-blue-400), the class test passes but the visual is wrong. Screenshot diff tools (Chromatic, Percy, Playwright) catch rendered appearance regressions that class-level tests miss."
+        }
+      ]
+    }
+  ]
+}

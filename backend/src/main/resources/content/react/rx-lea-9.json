@@ -1,0 +1,88 @@
+{
+  "id": "rx-lea-9",
+  "title": "WebSockets and Real-Time React",
+  "glyph": "⚛",
+  "sortOrder": 9,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-8"],
+  "subChunks": [
+    {
+      "id": "rx-lea-9-1",
+      "title": "WebSockets and Real-Time React",
+      "sortOrder": 1,
+      "xpReward": 225,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>HTTP is a request-response protocol — the client asks, the server answers, and the connection closes. For real-time features (live notifications, collaborative editing, chat, live dashboards), the server needs to push data without waiting for a request. WebSockets maintain a persistent bidirectional connection. Socket.io abstracts reconnection, rooms, and fallbacks. Server-Sent Events offer a simpler one-way push model. Each has its place.</p>",
+      "explanationHtml": "<h3>Native WebSocket hook</h3>\n\n<pre><code>import { useEffect, useRef, useState, useCallback } from 'react';\n\nfunction useWebSocket(url: string) {\n  const [messages, setMessages] = useState&lt;string[]&gt;([]);\n  const [status, setStatus] = useState&lt;'connecting' | 'open' | 'closed'&gt;('connecting');\n  const ws = useRef&lt;WebSocket | null&gt;(null);\n\n  useEffect(() =&gt; {\n    ws.current = new WebSocket(url);\n\n    ws.current.onopen = () =&gt; setStatus('open');\n    ws.current.onclose = () =&gt; setStatus('closed');\n    ws.current.onmessage = (event) =&gt; {\n      setMessages(prev =&gt; [...prev, event.data]);\n    };\n\n    return () =&gt; ws.current?.close();\n  }, [url]);\n\n  const send = useCallback((msg: string) =&gt; {\n    if (ws.current?.readyState === WebSocket.OPEN) {\n      ws.current.send(msg);\n    }\n  }, []);\n\n  return { messages, status, send };\n}</code></pre>\n\n<h3>Socket.io with React</h3>\n\n<pre><code>// hooks/useSocket.ts:\nimport { useEffect, useRef } from 'react';\nimport { io, Socket } from 'socket.io-client';\n\nlet socket: Socket | null = null; // Singleton — one connection for the app\n\nexport function useSocket() {\n  useEffect(() =&gt; {\n    socket = io('https://api.arcane.academy', {\n      auth: { token: localStorage.getItem('auth-token') },\n      reconnection: true,\n      reconnectionDelay: 1000,\n      reconnectionAttempts: 5,\n    });\n\n    return () =&gt; { socket?.disconnect(); socket = null; };\n  }, []);\n\n  return socket;\n}\n\n// Guild chat:\nfunction GuildChat({ guildId }: { guildId: string }) {\n  const [messages, setMessages] = useState&lt;Message[]&gt;([]);\n  const socket = useSocket();\n\n  useEffect(() =&gt; {\n    if (!socket) return;\n\n    // Join the guild's room:\n    socket.emit('join-guild', guildId);\n\n    // Listen for messages:\n    socket.on('guild-message', (msg: Message) =&gt; {\n      setMessages(prev =&gt; [...prev, msg]);\n    });\n\n    return () =&gt; {\n      socket.off('guild-message');\n      socket.emit('leave-guild', guildId);\n    };\n  }, [socket, guildId]);\n\n  const sendMessage = (text: string) =&gt; {\n    socket?.emit('guild-message', { guildId, text });\n  };\n\n  return &lt;ChatUI messages={messages} onSend={sendMessage} /&gt;;\n}</code></pre>\n\n<h3>Server-Sent Events (SSE) for one-way push</h3>\n\n<pre><code>// Simpler than WebSockets for server → client only:\nfunction useSSE(url: string) {\n  const [events, setEvents] = useState&lt;string[]&gt;([]);\n\n  useEffect(() =&gt; {\n    const es = new EventSource(url, { withCredentials: true });\n\n    es.onmessage = (e) =&gt; setEvents(prev =&gt; [...prev, e.data]);\n    es.addEventListener('quest-update', (e) =&gt; {\n      // Handle specific event types:\n      const quest = JSON.parse(e.data);\n      updateQuestInState(quest);\n    });\n    es.onerror = () =&gt; es.close();\n\n    return () =&gt; es.close();\n  }, [url]);\n\n  return events;\n}\n\n// Server sends:\n// data: {\"id\":42,\"status\":\"COMPLETED\"}\n// event: quest-update\n// \\n\\n (blank line = message end)</code></pre>\n\n<h3>Reconnection and presence patterns</h3>\n\n<pre><code>// Exponential backoff reconnection:\nfunction useReconnectingWebSocket(url: string) {\n  const attemptRef = useRef(0);\n\n  const connect = useCallback(() =&gt; {\n    const ws = new WebSocket(url);\n\n    ws.onopen = () =&gt; { attemptRef.current = 0; }; // Reset on success\n\n    ws.onclose = () =&gt; {\n      const delay = Math.min(1000 * 2 ** attemptRef.current, 30000);\n      attemptRef.current++;\n      setTimeout(connect, delay); // 1s, 2s, 4s, 8s... max 30s\n    };\n\n    return ws;\n  }, [url]);\n\n  useEffect(() =&gt; {\n    const ws = connect();\n    return () =&gt; ws.close();\n  }, [connect]);\n}\n\n// Presence (who's online):\nsocket.on('presence-update', (members: OnlineMember[]) =&gt; {\n  setOnlineMembers(members);\n});\nsocket.emit('heartbeat'); // Server removes you if no heartbeat in 30s</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Choose the right primitive: SSE for server-push only (live notifications, news feeds, progress updates) — it's HTTP, works through proxies, auto-reconnects. WebSockets for bidirectional communication (chat, collaborative editing, gaming). Socket.io for anything that needs rooms, namespaces, or must work behind enterprise firewalls that block WebSockets. Don't default to WebSockets when SSE will do.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The guild board shows quest status from a 5-minute polling interval. A member completes a quest — 4 minutes of stale data before anyone sees it. The solution: a WebSocket connection. The quest board updates the moment anything changes."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Polling is HTTP repeated. WebSockets are HTTP upgraded to a persistent connection. The choice isn't about complexity — it's about communication direction. One-way server updates? Use SSE: it's simpler, auto-reconnects, and works through HTTP proxies. Bidirectional? WebSocket. Rooms, namespaces, and enterprise firewall compatibility? Socket.io."
+        },
+        {
+          "type": "example",
+          "speaker": "SSE for live notifications — simpler than WebSockets",
+          "text": "const es = new EventSource('/api/notifications');\nes.onmessage = (e) => addNotification(JSON.parse(e.data));\n// Server pushes — no client send needed\n// Auto-reconnects on disconnect\n// Works through HTTP/2 multiplexing"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a real-time notification system:</p><ul><li>Create a <code>useWebSocket(url)</code> hook that connects on mount, exposes messages state, a send function, and connection status, and cleans up on unmount</li><li>Create a <code>LiveNotifications</code> component that uses the hook to display incoming notifications with a badge count</li><li>Add exponential backoff reconnection to the hook (1s, 2s, 4s... max 30s)</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useEffect, useRef, useCallback } from 'react';\n\n// Mock WebSocket for sandbox:\nclass MockWebSocket {\n  onopen = null;\n  onmessage = null;\n  onclose = null;\n  readyState = 1; // OPEN\n\n  constructor(url) {\n    // Simulate receiving messages:\n    setTimeout(() => this.onopen?.(), 100);\n    setTimeout(() => this.onmessage?.({ data: JSON.stringify({ id: 1, text: 'Quest completed!' }) }), 500);\n    setTimeout(() => this.onmessage?.({ data: JSON.stringify({ id: 2, text: 'New member joined!' }) }), 1200);\n  }\n\n  send(data) { console.log('Sent:', data); }\n  close() { this.onclose?.(); }\n}\n\n// TODO: useWebSocket hook\nfunction useWebSocket(url) {\n  const [messages, setMessages] = useState([]);\n  const [status, setStatus] = useState('connecting');\n  const wsRef = useRef(null);\n\n  useEffect(() => {\n    // TODO: Create MockWebSocket (use MockWebSocket instead of WebSocket)\n    // TODO: Set up onopen, onmessage, onclose\n    // TODO: Return cleanup\n  }, [url]);\n\n  const send = useCallback((msg) => {\n    // TODO: send if open\n  }, []);\n\n  return { messages, status, send };\n}\n\n// TODO: LiveNotifications component\nfunction LiveNotifications() {\n  const { messages, status } = useWebSocket('wss://mock');\n\n  return (\n    <div data-testid=\"notifications\">\n      <span data-testid=\"status\">{status}</span>\n      <span data-testid=\"badge\">{messages.length}</span>\n      <ul data-testid=\"message-list\">\n        {messages.map((m, i) => (\n          <li key={i}>{typeof m === 'string' ? m : JSON.parse(m).text}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <div data-testid=\"app\">\n      <h1>Live Notifications</h1>\n      <LiveNotifications />\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Notifications component renders",
+          "selector": "[data-testid='notifications']",
+          "exists": true
+        },
+        {
+          "label": "Status indicator renders",
+          "selector": "[data-testid='status']",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a real-time guild dashboard: (1) A WebSocket hook with exponential backoff reconnection and a visible connection status indicator (connecting/connected/reconnecting). (2) A live member presence list — members appear when they connect and disappear after 30s without a heartbeat. (3) A live quest event feed using Server-Sent Events (SSE) showing the last 20 quest completions. (4) A collaborative quest assignment — when one user drags a quest to a member, all connected users see the assignment update within 100ms. Test by opening two browser tabs and observing synchronized state.</p>",
+      "feynmanPrompt": "Explain the difference between polling, Server-Sent Events, and WebSockets — what does each protocol actually do at the HTTP layer? When would you use each? Explain the singleton socket pattern — why is it important to maintain one WebSocket connection for the whole app rather than one per component? Walk through the reconnection problem: what happens to messages sent while disconnected, and how do you handle them?",
+      "questions": [
+        {
+          "id": "rx-lea-9-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "A component creates a new WebSocket connection in useEffect. When the component re-renders due to unrelated state, a second connection opens. How do you fix this?",
+          "options": [
+            "Use a module-level singleton or a ref to store the socket instance — create it once per app lifecycle, not per render, and expose it via context or a custom hook",
+            "Add the WebSocket instance to useState so React tracks it between renders",
+            "Use useMemo to memoize the WebSocket instance",
+            "Add an empty dependency array to useEffect — this prevents it from re-running"
+          ],
+          "answer": "Use a module-level singleton or a ref to store the socket instance — create it once per app lifecycle, not per render, and expose it via context or a custom hook",
+          "explanation": "useEffect with an empty array [] still runs on every mount — if the component is unmounted and remounted (route navigation), a new connection opens. A module-level singleton (let socket: Socket | null = null outside the component) ensures one connection per application session. The cleanup function disconnects it when the app unmounts. Alternatively, create the socket in a Context provider at the app root — one instance, shared everywhere."
+        },
+        {
+          "id": "rx-lea-9-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "You need to show live order status updates on a delivery tracking page. Users can't reply — they only watch the status change. Should you use WebSockets or Server-Sent Events?",
+          "options": [
+            "Server-Sent Events — they're purpose-built for server-to-client streaming, work over standard HTTP (no upgrade needed), auto-reconnect natively, and require less infrastructure than WebSockets",
+            "WebSockets — they're more modern and support bidirectional communication if you later add features",
+            "Neither — use polling every 5 seconds for real-time delivery status",
+            "WebSockets because SSE doesn't support JSON data"
+          ],
+          "answer": "Server-Sent Events — they're purpose-built for server-to-client streaming, work over standard HTTP (no upgrade needed), auto-reconnect natively, and require less infrastructure than WebSockets",
+          "explanation": "SSE is ideal for one-directional server push: notifications, live feeds, progress updates, status tracking. It uses standard HTTP/1.1 or HTTP/2, works through proxies and load balancers without special configuration, and the EventSource API auto-reconnects with Last-Event-ID support (so no events are missed on reconnect). WebSockets require a protocol upgrade and stateful connections on the server — more infrastructure for no additional benefit when you only need server-to-client streaming."
+        }
+      ]
+    }
+  ]
+}

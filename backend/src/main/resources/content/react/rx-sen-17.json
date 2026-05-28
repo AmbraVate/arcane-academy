@@ -1,0 +1,155 @@
+{
+  "id": "rx-sen-17",
+  "title": "Advanced Hooks Patterns — useImperativeHandle, useDebugValue, and Custom Hook Architecture",
+  "glyph": "⚛",
+  "sortOrder": 17,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-sen-2"],
+  "subChunks": [
+    {
+      "id": "rx-sen-17-1",
+      "title": "Advanced Hooks Patterns — useImperativeHandle, useDebugValue, and Custom Hook Architecture",
+      "sortOrder": 1,
+      "xpReward": 175,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Most React developers know useState, useEffect, and useContext. The advanced hooks — <code>useImperativeHandle</code>, <code>useDebugValue</code>, <code>forwardRef</code>, and sophisticated custom hook patterns — are what separate component library authors from application developers. This lesson covers the hooks you need to build genuinely reusable, debuggable, and composable custom hook systems.</p>",
+      "explanationHtml": "<h3>forwardRef — exposing a ref to the parent</h3>\n\n<pre><code>import { forwardRef, useRef } from 'react';\n\n// A custom Input that exposes its DOM ref:\nconst Input = forwardRef(function Input({ label, ...props }, ref) {\n  return (\n    &lt;div&gt;\n      &lt;label&gt;{label}&lt;/label&gt;\n      &lt;input ref={ref} {...props} /&gt;\n    &lt;/div&gt;\n  );\n});\n\n// Parent can now focus the input programmatically:\nfunction Form() {\n  const inputRef = useRef(null);\n\n  return (\n    &lt;div&gt;\n      &lt;Input ref={inputRef} label=\"Quest Title\" /&gt;\n      &lt;button onClick={() =&gt; inputRef.current.focus()}&gt;\n        Focus Input\n      &lt;/button&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>useImperativeHandle — exposing a custom API via ref</h3>\n\n<p>Instead of exposing the raw DOM node, expose a controlled imperative API:</p>\n\n<pre><code>import { forwardRef, useImperativeHandle, useRef } from 'react';\n\nconst VideoPlayer = forwardRef(function VideoPlayer({ src }, ref) {\n  const videoRef = useRef(null);\n\n  // Expose only the API you want — not the whole DOM node:\n  useImperativeHandle(ref, () =&gt; ({\n    play: () =&gt; videoRef.current.play(),\n    pause: () =&gt; videoRef.current.pause(),\n    seek: (seconds) =&gt; {\n      videoRef.current.currentTime = seconds;\n    },\n  }));\n\n  return &lt;video ref={videoRef} src={src} /&gt;;\n});\n\n// Parent uses the controlled API:\nfunction App() {\n  const playerRef = useRef(null);\n  return (\n    &lt;div&gt;\n      &lt;VideoPlayer ref={playerRef} src=\"/quest-tutorial.mp4\" /&gt;\n      &lt;button onClick={() =&gt; playerRef.current.play()}&gt;Play&lt;/button&gt;\n      &lt;button onClick={() =&gt; playerRef.current.seek(30)}&gt;Skip 30s&lt;/button&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>\n\n<h3>useDebugValue — label custom hooks in DevTools</h3>\n\n<pre><code>import { useDebugValue } from 'react';\n\nfunction useOnlineStatus() {\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n\n  useEffect(() =&gt; {\n    const handler = () =&gt; setIsOnline(navigator.onLine);\n    window.addEventListener('online', handler);\n    window.addEventListener('offline', handler);\n    return () =&gt; {\n      window.removeEventListener('online', handler);\n      window.removeEventListener('offline', handler);\n    };\n  }, []);\n\n  // Shows 'useOnlineStatus: Online' or 'Offline' in DevTools:\n  useDebugValue(isOnline ? 'Online' : 'Offline');\n\n  return isOnline;\n}\n\n// With a formatter function (lazy evaluation):\nuseDebugValue(user, user =&gt; user ? `Logged in as ${user.name}` : 'Logged out');</code></pre>\n\n<h3>Custom hook architecture patterns</h3>\n\n<p><strong>The factory pattern — creating hooks with shared configuration:</strong></p>\n<pre><code>// Create a hook factory for API endpoints:\nfunction createEntityHook(endpoint) {\n  return function useEntity(id) {\n    const [data, setData] = useState(null);\n    const [loading, setLoading] = useState(false);\n\n    useEffect(() =&gt; {\n      setLoading(true);\n      fetch(`${endpoint}/${id}`)\n        .then(r =&gt; r.json())\n        .then(setData)\n        .finally(() =&gt; setLoading(false));\n    }, [id]);\n\n    return { data, loading };\n  };\n}\n\nconst useQuest = createEntityHook('/api/quests');\nconst useUser = createEntityHook('/api/users');\nconst useItem = createEntityHook('/api/items');</code></pre>\n\n<p><strong>Composing custom hooks:</strong></p>\n<pre><code>// useQuestBoard = useFetch + useLocalStorage + useOptimistic:\nfunction useQuestBoard() {\n  const { data: quests, refetch } = useFetch('/api/quests');\n  const [savedFilters, setSavedFilters] = useLocalStorage('quest-filters', {});\n  const { optimisticUpdate } = useOptimistic(quests);\n\n  const acceptQuest = useCallback((questId) =&gt; {\n    optimisticUpdate(q =&gt; q.id === questId ? { ...q, accepted: true } : q);\n    return fetch(`/api/quests/${questId}/accept`, { method: 'POST' });\n  }, [optimisticUpdate]);\n\n  return { quests, savedFilters, setSavedFilters, acceptQuest };\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"useImperativeHandle is the escape valve for imperative control. 90% of React is declarative — you describe the UI you want and React renders it. But media players, canvas animations, and third-party imperative libraries sometimes need direct method calls. useImperativeHandle lets you expose a controlled imperative API without leaking the whole DOM node.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A video player component needs to expose play/pause/seek controls to its parent — but not the entire DOM element. A custom hook system manages five interacting state slices. Vex reaches for forwardRef and useImperativeHandle."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "forwardRef passes a ref through a component to the underlying element. useImperativeHandle replaces what that ref points to — instead of exposing the raw DOM node, expose only the methods you want the parent to call. The hook factory pattern creates parameterised hooks for related resources. Compose hooks to build higher-level abstractions."
+        },
+        {
+          "type": "example",
+          "speaker": "useImperativeHandle — controlled API",
+          "text": "const Modal = forwardRef(function Modal({ children }, ref) {\n  const [open, setOpen] = useState(false);\n\n  useImperativeHandle(ref, () => ({\n    open: () => setOpen(true),\n    close: () => setOpen(false),\n  }));\n\n  if (!open) return null;\n  return <div role=\"dialog\">{children}</div>;\n});\n\n// Parent calls modal methods directly:\nmodalRef.current.open();"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build two advanced hook patterns:</p><ul><li>A <code>TextInput</code> component that uses <code>forwardRef</code> + <code>useImperativeHandle</code> to expose a custom API with <code>{ focus, clear, getValue }</code> methods — not the raw DOM input</li><li>A <code>useCounter</code> custom hook factory: <code>createCounterHook(min, max, step)</code> that returns a <code>useCounter()</code> hook respecting bounds. Add <code>useDebugValue</code> to show the current value in DevTools.</li></ul>",
+      "guidedPracticeStarterCode": "import { forwardRef, useImperativeHandle, useRef, useState, useDebugValue } from 'react';\n\n// PART 1: TextInput with custom imperative API\nconst TextInput = forwardRef(function TextInput({ label, ...props }, ref) {\n  const inputRef = useRef(null);\n\n  // TODO: useImperativeHandle to expose { focus, clear, getValue }\n  // focus: focuses the input\n  // clear: sets value to ''\n  // getValue: returns current value\n\n  return (\n    <div>\n      {label && <label>{label}</label>}\n      <input data-testid=\"text-input\" ref={inputRef} {...props} />\n    </div>\n  );\n});\n\n// PART 2: Counter hook factory\nfunction createCounterHook(min = 0, max = Infinity, step = 1) {\n  return function useCounter(initial = min) {\n    const [count, setCount] = useState(Math.max(min, Math.min(max, initial)));\n\n    // TODO: add useDebugValue showing current count\n\n    const increment = () => setCount(c => Math.min(max, c + step));\n    const decrement = () => setCount(c => Math.max(min, c - step));\n    const reset = () => setCount(Math.max(min, initial));\n\n    return { count, increment, decrement, reset };\n  };\n}\n\nconst useXpCounter = createCounterHook(0, 1000, 50);\n\nexport default function App() {\n  const inputRef = useRef(null);\n  const { count, increment, decrement, reset } = useXpCounter(100);\n\n  return (\n    <div>\n      <TextInput ref={inputRef} label=\"Quest Title\" defaultValue=\"\" />\n      <button data-testid=\"focus-btn\" onClick={() => inputRef.current?.focus()}>Focus</button>\n      <button data-testid=\"clear-btn\" onClick={() => inputRef.current?.clear()}>Clear</button>\n\n      <div data-testid=\"xp-display\">XP: {count}</div>\n      <button data-testid=\"inc-btn\" onClick={increment}>+50 XP</button>\n      <button data-testid=\"dec-btn\" onClick={decrement}>-50 XP</button>\n      <button data-testid=\"reset-btn\" onClick={reset}>Reset</button>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Text input renders",
+          "selector": "[data-testid='text-input']",
+          "exists": true
+        },
+        {
+          "label": "XP display shows initial value",
+          "selector": "[data-testid='xp-display']",
+          "requiredText": "XP: 100"
+        },
+        {
+          "label": "Increment increases XP",
+          "action": "click",
+          "selector": "[data-testid='inc-btn']",
+          "then": {
+            "selector": "[data-testid='xp-display']",
+            "requiredText": "XP: 150"
+          }
+        },
+        {
+          "label": "XP caps at max (1000)",
+          "sequence": [
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" },
+            { "action": "click", "selector": "[data-testid='inc-btn']" }
+          ],
+          "then": {
+            "selector": "[data-testid='xp-display']",
+            "requiredText": "XP: 1000"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>useStateMachine</code> hook that implements a finite state machine. It takes an initial state and a transitions map (<code>{ [currentState]: { [eventName]: nextState } }</code>) and returns <code>{ state, send, can }</code> where <code>send(event)</code> transitions if valid and <code>can(event)</code> returns whether the transition is possible from the current state. Use it to model a quest lifecycle: <code>available → accepted → inProgress → completed</code>. Add <code>useDebugValue</code> showing the current state. Write the TypeScript types so invalid states and events are compile errors.</p>",
+      "feynmanPrompt": "Explain forwardRef and useImperativeHandle — what problem does each solve, and why is useImperativeHandle preferable to exposing the raw DOM node in most cases? Then explain the hook factory pattern — what does it enable that a single custom hook doesn't? Finally, what does useDebugValue do and when should you add it?",
+      "questions": [
+        {
+          "id": "rx-sen-17-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does `forwardRef` do in React?",
+          "options": [
+            "Allows a parent component to pass a ref to a custom component, which can then attach it to a DOM element or expose it via useImperativeHandle",
+            "Forwards all props from parent to child automatically",
+            "Creates a ref that persists across component re-renders",
+            "Enables ref usage in function components that don't use hooks"
+          ],
+          "answer": "Allows a parent component to pass a ref to a custom component, which can then attach it to a DOM element or expose it via useImperativeHandle",
+          "explanation": "By default, refs passed to custom components are ignored — you can only attach refs to DOM elements. forwardRef creates a component that receives the ref as a second argument (alongside props) and can pass it to an inner DOM element or use useImperativeHandle to expose a custom API."
+        },
+        {
+          "id": "rx-sen-17-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What does `useImperativeHandle` do?",
+          "options": [
+            "Customises the value exposed via a ref — instead of the raw DOM node, you expose a controlled object with specific methods",
+            "Makes a component's ref work with both class and function components",
+            "Handles imperative code (side effects) before the component renders",
+            "Provides an imperative API for updating state without re-rendering"
+          ],
+          "answer": "Customises the value exposed via a ref — instead of the raw DOM node, you expose a controlled object with specific methods",
+          "explanation": "useImperativeHandle(ref, () => ({ play, pause, seek })) replaces what ref.current points to. Instead of the full HTMLVideoElement with 100+ properties and methods, the parent only sees { play, pause, seek }. This is the principle of least exposure — give the caller only what they need."
+        },
+        {
+          "id": "rx-sen-17-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "You have a `TextInput` component that uses forwardRef. A parent passes a ref and calls `ref.current.focus()`. With useImperativeHandle exposing `{ focus, clear }` — what does `ref.current` contain?",
+          "options": [
+            "The object { focus, clear } returned by the useImperativeHandle callback — not the underlying HTMLInputElement",
+            "The HTMLInputElement — useImperativeHandle adds methods to it",
+            "null — useImperativeHandle prevents ref access",
+            "The TextInput component instance"
+          ],
+          "answer": "The object { focus, clear } returned by the useImperativeHandle callback — not the underlying HTMLInputElement",
+          "explanation": "useImperativeHandle completely replaces what the ref exposes. ref.current is exactly the object returned by the callback: { focus: () => inputRef.current.focus(), clear: () => ... }. The underlying inputRef stays internal. The parent can only call focus and clear — nothing else about the input is accessible."
+        },
+        {
+          "id": "rx-sen-17-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When is the hook factory pattern (`createEntityHook(endpoint)`) more appropriate than writing individual hooks?",
+          "options": [
+            "When multiple hooks share the same logic structure but differ in configuration — the factory eliminates duplication and ensures all hooks behave consistently",
+            "When performance is critical — factory hooks re-render less often",
+            "When the hooks need to share state with each other",
+            "When the hooks are used in class components"
+          ],
+          "answer": "When multiple hooks share the same logic structure but differ in configuration — the factory eliminates duplication and ensures all hooks behave consistently",
+          "explanation": "If useQuest, useUser, and useItem all have identical fetch/loading/error logic differing only by endpoint, a factory eliminates the repetition. Bug fixes and improvements apply to all generated hooks automatically. It follows DRY while keeping each hook focused — useQuest doesn't know about useUser's endpoint."
+        }
+      ]
+    }
+  ]
+}

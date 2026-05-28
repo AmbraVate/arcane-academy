@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-17",
+  "title": "Scroll Behaviour and Overflow Patterns",
+  "glyph": "⚗️",
+  "sortOrder": 17,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-9"],
+  "subChunks": [
+    {
+      "id": "tw-jun-17-1",
+      "title": "Scroll Behaviour and Overflow Patterns",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Scroll behaviour is one of the most overlooked aspects of UI quality. Horizontal scroll on mobile, scrolling panels within a fixed layout, smooth anchor navigation, scroll snap for sliders — all require specific Tailwind utilities that most developers miss until something breaks.</p>",
+      "explanationHtml": "<h3>Overflow utilities</h3>\n<pre><code>overflow-auto      /* scroll only when needed (both axes) */\noverflow-hidden    /* clip content — no scroll */\noverflow-scroll    /* always show scrollbars */\noverflow-visible   /* let content overflow (default) */\n\noverflow-x-auto    /* horizontal scroll when needed */\noverflow-y-auto    /* vertical scroll when needed */\noverflow-x-hidden  /* hide horizontal overflow */\noverflow-y-hidden  /* hide vertical overflow */</code></pre>\n\n<h3>Scroll containers — internal scrolling</h3>\n<pre><code>/* Panel that scrolls internally within a fixed-height parent */\n&lt;div class=\"h-screen flex flex-col\"&gt;\n  &lt;header class=\"flex-none h-16 border-b\"&gt;Header&lt;/header&gt;\n  &lt;main class=\"flex-1 overflow-y-auto p-6\"&gt;\n    &lt;!-- long scrollable content --&gt;\n  &lt;/main&gt;\n&lt;/div&gt;\n\n/* Horizontal scrolling tag list */\n&lt;div class=\"flex gap-2 overflow-x-auto pb-2 scrollbar-hide\"&gt;\n  &lt;span class=\"flex-none px-3 py-1 bg-blue-100 rounded-full text-sm\"&gt;Tag&lt;/span&gt;\n  &lt;!-- many tags --&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Scroll snapping</h3>\n<pre><code>/* Horizontal scroll carousel with snapping */\n&lt;div class=\"flex gap-4 overflow-x-auto\n            snap-x snap-mandatory\n            scroll-smooth\"&gt;\n  &lt;div class=\"snap-start flex-none w-80\"&gt;Card 1&lt;/div&gt;\n  &lt;div class=\"snap-start flex-none w-80\"&gt;Card 2&lt;/div&gt;\n  &lt;div class=\"snap-start flex-none w-80\"&gt;Card 3&lt;/div&gt;\n&lt;/div&gt;\n\nsnap-x          /* snap on the x-axis */\nsnap-y          /* snap on the y-axis */\nsnap-mandatory  /* always snaps to a snap point */\nsnap-proximity  /* snaps if close enough */\n\nsnap-start      /* snap child to start */\nsnap-center     /* snap child to center */\nsnap-end        /* snap child to end */</code></pre>\n\n<h3>Smooth scrolling</h3>\n<pre><code>/* On the html element (or scroll container) */\nscroll-smooth\n\n/* Anchor padding — prevent content hiding under sticky header */\nscroll-mt-20    /* 80px offset when scrolled to anchor */\n\n&lt;!-- The element with the anchor id --&gt;\n&lt;section id=\"features\" class=\"scroll-mt-20\"&gt;</code></pre>\n\n<h3>Scroll padding and margin</h3>\n<pre><code>scroll-p-4      /* padding inside a scroll container */\nscroll-pt-20    /* top padding — prevents sticky header overlap */\nscroll-m-4      /* margin offset for anchored elements */\nscroll-mt-16    /* margin-top — offset from sticky nav height */</code></pre>\n\n<h3>overscroll behaviour</h3>\n<pre><code>overscroll-contain   /* prevent scroll chaining — modal scrolls stay in modal */\noverscroll-none      /* prevent pull-to-refresh and bounce effects */\noverscroll-auto      /* default browser behaviour */</code></pre>\n\n<h3>Hiding scrollbars (custom)</h3>\n<p>Tailwind v4 doesn't have a scrollbar-hide utility by default. Use the scrollbar Tailwind plugin or target with CSS:</p>\n<pre><code>/* In your CSS */\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"<code>overscroll-contain</code> is the fix for the modal scroll problem — when a user scrolls to the bottom of a modal and continues scrolling, the page behind shouldn't move. Add <code>overscroll-contain</code> to the modal panel and scrolling stays contained.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "The layout that works perfectly on desktop falls apart on mobile when a horizontal table causes full-page scroll. The modal that works visually breaks when users reach the bottom and scroll into the page behind it. These are not edge cases — they are daily bugs. overflow-x-auto and overscroll-contain are two of the most valuable utilities in the entire framework."
+        },
+        {
+          "type": "example",
+          "speaker": "Scroll snap carousel",
+          "text": "<div class=\"flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 pb-4\">\n  <div class=\"snap-start flex-none w-72 bg-white rounded-xl shadow-sm p-5\">Card 1</div>\n  <div class=\"snap-start flex-none w-72 bg-white rounded-xl shadow-sm p-5\">Card 2</div>\n  <div class=\"snap-start flex-none w-72 bg-white rounded-xl shadow-sm p-5\">Card 3</div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a horizontal scroll carousel and an internal-scroll panel:</p>\n<ul>\n  <li><strong>.carousel</strong>: <code>flex</code>, <code>gap-4</code>, <code>overflow-x-auto</code>, <code>snap-x</code>, <code>snap-mandatory</code>, <code>scroll-smooth</code>, <code>pb-2</code></li>\n  <li><strong>.carousel-item</strong>: <code>snap-start</code>, <code>flex-none</code>, <code>w-72</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>shadow-sm</code>, <code>p-5</code>, <code>border</code>, <code>border-gray-100</code></li>\n  <li><strong>.scroll-panel</strong>: <code>h-64</code>, <code>overflow-y-auto</code>, <code>overscroll-contain</code>, <code>border</code>, <code>border-gray-200</code>, <code>rounded-xl</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"p-6 space-y-8\">\n  <!-- Horizontal carousel -->\n  <div>\n    <h3 class=\"text-sm font-semibold text-gray-900 mb-3\">Featured Quests</h3>\n    <div class=\"carousel\">\n      <div class=\"carousel-item\">\n        <div class=\"aspect-video bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg mb-3\"></div>\n        <h4 class=\"font-medium text-gray-900\">Dragon Quest</h4>\n        <p class=\"text-sm text-gray-500 mt-1\">Slay the ancient dragon</p>\n      </div>\n      <div class=\"carousel-item\">\n        <div class=\"aspect-video bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg mb-3\"></div>\n        <h4 class=\"font-medium text-gray-900\">Forest Expedition</h4>\n        <p class=\"text-sm text-gray-500 mt-1\">Explore the ancient woods</p>\n      </div>\n      <div class=\"carousel-item\">\n        <div class=\"aspect-video bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg mb-3\"></div>\n        <h4 class=\"font-medium text-gray-900\">Sky Citadel</h4>\n        <p class=\"text-sm text-gray-500 mt-1\">Breach the floating fortress</p>\n      </div>\n      <div class=\"carousel-item\">\n        <div class=\"aspect-video bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg mb-3\"></div>\n        <h4 class=\"font-medium text-gray-900\">Lava Dungeon</h4>\n        <p class=\"text-sm text-gray-500 mt-1\">Survive the molten depths</p>\n      </div>\n    </div>\n  </div>\n\n  <!-- Internal scroll panel -->\n  <div>\n    <h3 class=\"text-sm font-semibold text-gray-900 mb-3\">Activity Log</h3>\n    <div class=\"scroll-panel\">\n      <div class=\"divide-y divide-gray-100\">\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Aria</span> completed Dragon Quest <span class=\"text-gray-400 ml-2\">2h ago</span></div>\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Elric</span> started Forest Expedition <span class=\"text-gray-400 ml-2\">4h ago</span></div>\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Zara</span> earned Ember Badge <span class=\"text-gray-400 ml-2\">6h ago</span></div>\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Mira</span> reached Level 10 <span class=\"text-gray-400 ml-2\">8h ago</span></div>\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Aria</span> started Sky Citadel <span class=\"text-gray-400 ml-2\">10h ago</span></div>\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Elric</span> earned Wanderer Badge <span class=\"text-gray-400 ml-2\">12h ago</span></div>\n        <div class=\"px-4 py-3 text-sm\"><span class=\"font-medium\">Zara</span> completed Forest Expedition <span class=\"text-gray-400 ml-2\">14h ago</span></div>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Carousel: overflow-x-auto",    "selector": ".carousel",       "requiredClass": "overflow-x-auto"   },
+        { "label": "Carousel: snap-x",             "selector": ".carousel",       "requiredClass": "snap-x"            },
+        { "label": "Carousel: snap-mandatory",     "selector": ".carousel",       "requiredClass": "snap-mandatory"    },
+        { "label": "Carousel: scroll-smooth",      "selector": ".carousel",       "requiredClass": "scroll-smooth"     },
+        { "label": "Item: snap-start",             "selector": ".carousel-item",  "requiredClass": "snap-start"        },
+        { "label": "Item: flex-none",              "selector": ".carousel-item",  "requiredClass": "flex-none"         },
+        { "label": "Item: w-72",                   "selector": ".carousel-item",  "requiredClass": "w-72"              },
+        { "label": "Panel: h-64",                  "selector": ".scroll-panel",   "requiredClass": "h-64"              },
+        { "label": "Panel: overflow-y-auto",       "selector": ".scroll-panel",   "requiredClass": "overflow-y-auto"   },
+        { "label": "Panel: overscroll-contain",    "selector": ".scroll-panel",   "requiredClass": "overscroll-contain"}
+      ],
+      "soloPracticeHtml": "<p>Build a complete scroll-aware layout from scratch: a sticky nav with scroll-mt-20 on all section anchors, a horizontal quest category carousel with snap scrolling, a fixed-height notifications panel with overscroll-contain and overflow-y-auto, and a responsive table wrapped in overflow-x-auto. No starter code.</p>",
+      "feynmanPrompt": "Explain the difference between overflow-auto and overflow-scroll. Walk through the snap-x snap-mandatory pattern for a carousel — what does each class contribute and what would a carousel without snap feel like? Explain overscroll-contain and the specific problem it solves for modals.",
+      "questions": [
+        {
+          "id": "tw-jun-17-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A page has a sticky navigation bar 64px tall. When clicking anchor links, the target sections are partially hidden under the nav. Which class on the target sections fixes this?",
+          "options": [
+            "scroll-mt-16 — adds a 64px scroll margin-top offset when the element is scrolled into view via an anchor link",
+            "pt-16 — adds padding-top to push content down",
+            "mt-16 — adds margin-top to offset the nav",
+            "top-16 — positions the element 64px from the top"
+          ],
+          "answer": "scroll-mt-16 — adds a 64px scroll margin-top offset when the element is scrolled into view via an anchor link",
+          "explanation": "scroll-mt-{n} sets the scroll-margin-top CSS property, which adds an offset when an element is scrolled to via an anchor link or focus. When the user clicks an anchor (#section), the browser scrolls so the element appears 64px from the top — below the sticky nav. pt-16 would add visual padding, not a scroll offset, changing the layout of every section."
+        },
+        {
+          "id": "tw-jun-17-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A horizontal card carousel uses overflow-x-auto and the cards are flex-none. When swiped, cards scroll freely but don't stop at card boundaries — they stop at arbitrary positions. Which class on the container enables snapping to card positions?",
+          "options": [
+            "snap-x snap-mandatory on the container, snap-start on each card",
+            "scroll-snap on the container, snap-point on each card",
+            "scroll-stop on the container — Tailwind handles the rest",
+            "snap-scroll snap-items-start on the container"
+          ],
+          "answer": "snap-x snap-mandatory on the container, snap-start on each card",
+          "explanation": "snap-x enables horizontal scroll snapping on the container. snap-mandatory forces the scroll to always settle at a snap point (rather than stopping between items). Each card needs snap-start (or snap-center) to define its snap point. Without the snap-start on individual cards, the snap container has no defined snap points to lock onto."
+        },
+        {
+          "id": "tw-jun-17-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A modal has a long terms-of-service text. When the user scrolls to the bottom of the modal and keeps scrolling, the background page also scrolls. Which class on the modal panel prevents this scroll chaining?",
+          "options": [
+            "overscroll-contain — contains scroll events within the element, preventing them from propagating to the parent",
+            "overflow-hidden — prevents any scrolling on the modal",
+            "position-fixed — fixes the modal in place preventing scroll",
+            "scroll-lock — Tailwind's built-in scroll lock utility"
+          ],
+          "answer": "overscroll-contain — contains scroll events within the element, preventing them from propagating to the parent",
+          "explanation": "overscroll-contain sets overscroll-behavior: contain, which prevents scroll events from chaining to the parent once the element reaches its scroll boundary. Without it, reaching the bottom of the modal and continuing to scroll causes the background page to scroll (scroll chaining). This is the CSS-only solution to the modal scroll problem."
+        }
+      ]
+    }
+  ]
+}

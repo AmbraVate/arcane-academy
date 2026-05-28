@@ -1,0 +1,99 @@
+{
+  "id": "tw-jun-13",
+  "title": "Lists, Feeds, and List Items",
+  "glyph": "⚗️",
+  "sortOrder": 13,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-3"],
+  "subChunks": [
+    {
+      "id": "tw-jun-13-1",
+      "title": "Lists, Feeds, and List Items",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Lists appear in nearly every UI — navigation menus, activity feeds, search results, notification panels, and settings pages. The challenge is making each item scannable: clear information hierarchy, proper image/text alignment, interaction states, and consistent spacing across variable-length content.</p>",
+      "explanationHtml": "<h3>List container patterns</h3>\n<pre><code>/* Divided list */\n&lt;ul class=\"divide-y divide-gray-100 bg-white rounded-xl\"&gt;\n\n/* Card list (each item is its own card) */\n&lt;ul class=\"space-y-3\"&gt;\n\n/* Compact list (tight spacing) */\n&lt;ul class=\"space-y-1\"&gt;</code></pre>\n\n<h3>Standard list item anatomy</h3>\n<pre><code>&lt;li class=\"flex items-start gap-4 px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer\"&gt;\n  &lt;!-- Avatar --&gt;\n  &lt;img class=\"w-10 h-10 rounded-full flex-none mt-0.5\" src=\"...\" alt=\"\" /&gt;\n\n  &lt;!-- Content --&gt;\n  &lt;div class=\"flex-1 min-w-0\"&gt;  &lt;!-- min-w-0 enables truncation inside flex --&gt;\n    &lt;div class=\"flex items-center justify-between gap-2\"&gt;\n      &lt;span class=\"text-sm font-medium text-gray-900 truncate\"&gt;Aria Sunforge&lt;/span&gt;\n      &lt;time class=\"text-xs text-gray-400 flex-none\"&gt;2h ago&lt;/time&gt;\n    &lt;/div&gt;\n    &lt;p class=\"text-sm text-gray-500 mt-0.5 line-clamp-2\"&gt;Completed the Dragon Quest...&lt;/p&gt;\n  &lt;/div&gt;\n&lt;/li&gt;</code></pre>\n\n<h3>The min-w-0 rule for flex children</h3>\n<p>By default, flex items won't shrink below their minimum content size. This prevents <code>truncate</code> from working on text inside a flex item. Adding <code>min-w-0</code> to the flex item allows it to shrink, enabling truncation.</p>\n<pre><code>/* Without min-w-0: truncate doesn't work, text overflows */\n&lt;div class=\"flex-1\"&gt;\n  &lt;p class=\"truncate\"&gt;Very long text that won't truncate...&lt;/p&gt;\n&lt;/div&gt;\n\n/* With min-w-0: truncate works correctly */\n&lt;div class=\"flex-1 min-w-0\"&gt;\n  &lt;p class=\"truncate\"&gt;Very long text that will truncate&lt;/p&gt;\n&lt;/div&gt;</code></pre>\n\n<h3>Activity feed item</h3>\n<pre><code>&lt;li class=\"flex gap-3 py-4\"&gt;\n  &lt;!-- Timeline dot --&gt;\n  &lt;div class=\"relative flex-none mt-1\"&gt;\n    &lt;div class=\"w-2 h-2 rounded-full bg-blue-500\"&gt;&lt;/div&gt;\n    &lt;!-- Vertical line connecting items --&gt;\n    &lt;div class=\"absolute top-2 bottom-0 left-1/2 -translate-x-1/2 w-px bg-gray-200\"&gt;&lt;/div&gt;\n  &lt;/div&gt;\n  &lt;div class=\"flex-1 min-w-0 pb-4\"&gt;\n    &lt;p class=\"text-sm text-gray-900\"&gt;Aria completed &lt;strong&gt;Dragon Quest&lt;/strong&gt;&lt;/p&gt;\n    &lt;time class=\"text-xs text-gray-400 mt-0.5 block\"&gt;2 hours ago&lt;/time&gt;\n  &lt;/div&gt;\n&lt;/li&gt;</code></pre>\n\n<h3>Empty list state</h3>\n<pre><code>&lt;div class=\"py-12 text-center\"&gt;\n  &lt;div class=\"text-4xl mb-3\"&gt;🗺️&lt;/div&gt;\n  &lt;p class=\"text-sm font-medium text-gray-900\"&gt;No quests yet&lt;/p&gt;\n  &lt;p class=\"text-sm text-gray-500 mt-1\"&gt;Start a quest to see it here.&lt;/p&gt;\n  &lt;button class=\"mt-4 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md\"&gt;\n    Browse Quests\n  &lt;/button&gt;\n&lt;/div&gt;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"<code>min-w-0</code> on flex children is one of the most commonly forgotten utilities in Tailwind. The moment you put <code>truncate</code> on text inside a flex item and it doesn't work — add <code>min-w-0</code> to the parent. Flex items default to <code>min-width: auto</code>, which prevents them from shrinking below their content. <code>min-w-0</code> overrides this.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "A list item must be scannable in under a second. Avatar or icon on the left. Primary text in bold. Secondary text smaller and muted. Timestamp right-aligned. Action on hover. This is not opinion — it is the pattern every human being has learned from years of email clients and social feeds."
+        },
+        {
+          "type": "example",
+          "speaker": "Standard activity feed item",
+          "text": "<li class=\"flex items-start gap-4 px-4 py-3 hover:bg-gray-50 transition-colors\">\n  <img class=\"w-10 h-10 rounded-full flex-none\" src=\"/avatar.jpg\" alt=\"\" />\n  <div class=\"flex-1 min-w-0\">\n    <div class=\"flex items-center justify-between\">\n      <span class=\"text-sm font-medium text-gray-900 truncate\">Aria Sunforge</span>\n      <time class=\"text-xs text-gray-400 flex-none ml-2\">2h ago</time>\n    </div>\n    <p class=\"text-sm text-gray-500 mt-0.5 line-clamp-2\">Completed the Dragon Quest and earned the Ember Badge.</p>\n  </div>\n</li>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a notification feed with proper list item anatomy:</p>\n<ul>\n  <li><strong>.feed</strong>: <code>divide-y</code>, <code>divide-gray-100</code>, <code>bg-white</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-100</code></li>\n  <li><strong>.feed-item</strong>: <code>flex</code>, <code>items-start</code>, <code>gap-4</code>, <code>px-4</code>, <code>py-3</code>, <code>hover:bg-gray-50</code>, <code>transition-colors</code>, <code>cursor-pointer</code></li>\n  <li><strong>.feed-avatar</strong>: <code>w-10</code>, <code>h-10</code>, <code>rounded-full</code>, <code>flex-none</code></li>\n  <li><strong>.feed-content</strong>: <code>flex-1</code>, <code>min-w-0</code></li>\n  <li><strong>.feed-name</strong>: <code>text-sm</code>, <code>font-medium</code>, <code>text-gray-900</code>, <code>truncate</code></li>\n  <li><strong>.feed-time</strong>: <code>text-xs</code>, <code>text-gray-400</code>, <code>flex-none</code></li>\n  <li><strong>.feed-text</strong>: <code>text-sm</code>, <code>text-gray-500</code>, <code>mt-0.5</code>, <code>line-clamp-2</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<ul class=\"feed max-w-md\">\n  <li class=\"feed-item\">\n    <img class=\"feed-avatar\" src=\"https://picsum.photos/seed/aria/40/40\" alt=\"Aria\" />\n    <div class=\"feed-content\">\n      <div class=\"flex items-center justify-between\">\n        <span class=\"feed-name\">Aria Sunforge</span>\n        <time class=\"feed-time\">2h ago</time>\n      </div>\n      <p class=\"feed-text\">Completed the Dragon Quest and earned the legendary Ember Badge. +500 XP added to your profile.</p>\n    </div>\n  </li>\n  <li class=\"feed-item\">\n    <img class=\"feed-avatar\" src=\"https://picsum.photos/seed/elric/40/40\" alt=\"Elric\" />\n    <div class=\"feed-content\">\n      <div class=\"flex items-center justify-between\">\n        <span class=\"feed-name\">Elric Vane the Wandering Scholar of the Northern Archives</span>\n        <time class=\"feed-time\">5h ago</time>\n      </div>\n      <p class=\"feed-text\">Started the Ember Mountains expedition.</p>\n    </div>\n  </li>\n</ul>",
+      "guidedPracticeTests": [
+        { "label": "Feed: divide-y",            "selector": ".feed",         "requiredClass": "divide-y"          },
+        { "label": "Feed: bg-white",            "selector": ".feed",         "requiredClass": "bg-white"          },
+        { "label": "Item: flex layout",         "selector": ".feed-item",    "requiredClass": "flex"              },
+        { "label": "Item: hover state",         "selector": ".feed-item",    "requiredClass": "hover:bg-gray-50"  },
+        { "label": "Avatar: flex-none",         "selector": ".feed-avatar",  "requiredClass": "flex-none"         },
+        { "label": "Avatar: rounded-full",      "selector": ".feed-avatar",  "requiredClass": "rounded-full"      },
+        { "label": "Content: flex-1",           "selector": ".feed-content", "requiredClass": "flex-1"            },
+        { "label": "Content: min-w-0",          "selector": ".feed-content", "requiredClass": "min-w-0"           },
+        { "label": "Name: truncate",            "selector": ".feed-name",    "requiredClass": "truncate"          },
+        { "label": "Text: line-clamp-2",        "selector": ".feed-text",    "requiredClass": "line-clamp-2"      }
+      ],
+      "soloPracticeHtml": "<p>Build a search results list from scratch: each item shows a thumbnail image, a title (truncated to one line), a URL (truncated, muted colour), and a description (clamped to two lines). Add a hover state, an empty state message when there are no results, and a 'Load more' button at the bottom. No starter code.</p>",
+      "feynmanPrompt": "Explain the min-w-0 rule — why does truncate fail inside a flex item without it, and what does min-w-0 actually set in CSS? Walk through the flex items-start gap-4 pattern for list items — why items-start rather than items-center, and why gap-4 rather than margin?",
+      "questions": [
+        {
+          "id": "tw-jun-13-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A list item has flex layout and a text span with truncate, but the text never truncates — it overflows the container. Which class on the text's parent div fixes this?",
+          "options": [
+            "min-w-0 — overrides the default min-width: auto on flex items, allowing them to shrink and enabling truncation",
+            "overflow-hidden — clips the overflow directly",
+            "max-w-full — constrains the parent width",
+            "flex-shrink — allows the element to shrink"
+          ],
+          "answer": "min-w-0 — overrides the default min-width: auto on flex items, allowing them to shrink and enabling truncation",
+          "explanation": "Flex items have min-width: auto by default, which means they won't shrink below their content's natural width. This prevents truncate from working because the element never becomes narrower than the text. min-w-0 sets min-width: 0, allowing the flex item to shrink to zero, which then allows overflow: hidden (from truncate) to actually clip the text."
+        },
+        {
+          "id": "tw-jun-13-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A divided list uses divide-y divide-gray-100 on the ul. But the last list item also has a bottom border from the divide-y. Which Tailwind variant removes the bottom border from the last item?",
+          "options": [
+            "last:border-b-0 on each li element",
+            "divide-y doesn't add a border to the last item — only between items",
+            "remove-last:divide on the ul",
+            "not-last:divide-y on each li"
+          ],
+          "answer": "divide-y doesn't add a border to the last item — only between items",
+          "explanation": "divide-y adds a border-top to every child element except the first one (using the :not(:first-child) selector). This creates dividers between items but not after the last one. There's no trailing border to remove — divide-y already handles this correctly by design."
+        },
+        {
+          "id": "tw-jun-13-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A list item uses items-center to vertically align an avatar with multi-line text. The avatar appears centred against the text block. Which alignment variant would produce more natural reading alignment for multi-line text?",
+          "options": [
+            "items-start — aligns the avatar with the top of the text block, which looks more natural for multi-line content",
+            "items-baseline — aligns avatar bottom with text baseline",
+            "items-stretch — stretches the avatar to match text height",
+            "items-center is always correct for list items"
+          ],
+          "answer": "items-start — aligns the avatar with the top of the text block, which looks more natural for multi-line content",
+          "explanation": "items-center vertically centres the avatar against the full height of the text block. For a two-line text block, this positions the avatar in the middle of both lines. items-start aligns the avatar with the top line, which is more natural — the eye connects the avatar with the first line (the name), not the centre of the content block. For single-line content, items-center is fine."
+        }
+      ]
+    }
+  ]
+}

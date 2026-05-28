@@ -1,0 +1,118 @@
+{
+  "id": "tw-lea-4",
+  "title": "Team Section",
+  "glyph": "🌐",
+  "sortOrder": 4,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-lea-3"],
+  "subChunks": [
+    {
+      "id": "tw-lea-4-1",
+      "title": "Team Section",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>The guild's reputation rests on its people. The team section is not a formality — Grand Archmage Solomon has made clear that it is a declaration of expertise. Four masters, four disciplines, displayed with the precision and dignity their craft deserves.</p><p>In this section you'll master <code>object-cover</code> for consistent avatar images, the <code>relative</code>/<code>absolute</code> positioning pattern for the online status dot, and the multi-breakpoint responsive grid.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"Every commissioned work must credit its makers. In our tradition, the team section is not a courtesy — it is a declaration of who has put their name to this work. Four faces. Four titles. No ambiguity.\"</p></div>\n\n<h3>object-cover for consistent avatar images</h3>\n\n<p>Avatar images come from many sources — users upload photos of varying aspect ratios. Without proper handling, some avatars appear stretched or squished.</p>\n\n<pre><code>&lt;!-- Without object-cover: image may appear stretched if not square --&gt;\n&lt;img src=\"avatar.jpg\" class=\"w-24 h-24 rounded-full\"&gt;\n\n&lt;!-- With object-cover: image fills the circle, cropping from the centre --&gt;\n&lt;img src=\"avatar.jpg\" class=\"w-24 h-24 rounded-full object-cover\"&gt;</code></pre>\n\n<p><code>object-cover</code> maps to CSS <code>object-fit: cover</code>. It maintains the image's aspect ratio while filling the entire container, cropping any excess from the centre.</p>\n\n<h3>The relative/absolute positioning pattern for status dots</h3>\n\n<p>The online status dot sits on the bottom-right corner of the avatar. This classic UI pattern requires:</p>\n\n<ol>\n<li>A wrapper element with <code>relative</code> positioning to act as the positioning context</li>\n<li>The status dot with <code>absolute</code> positioning to place it precisely within that context</li>\n</ol>\n\n<pre><code>&lt;div class=\"relative w-24 h-24\"&gt;\n  &lt;img src=\"avatar.jpg\" class=\"w-24 h-24 rounded-full object-cover ring-4 ring-white shadow-lg\"&gt;\n  &lt;span class=\"absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full ring-2 ring-white\"&gt;&lt;/span&gt;\n&lt;/div&gt;\n\n&lt;!-- If relative is removed from the wrapper: --&gt;\n&lt;!-- absolute is placed relative to the nearest positioned ancestor, --&gt;\n&lt;!-- which might be the section or the body — the dot flies off the avatar --&gt;</code></pre>\n\n<p>The <code>ring-2 ring-white</code> on the status dot creates a 2px white gap between the dot and the avatar image, making the green dot clearly readable even on dark-edged photos.</p>\n\n<h3>ring-* on avatars vs border</h3>\n\n<ul>\n<li>Ring renders outside the element via box-shadow, so the <code>w-24 h-24</code> dimensions remain exact</li>\n<li>Ring offset creates a clean gap between the image and a coloured outer ring, useful for hover states</li>\n<li>The group-hover state changes <code>ring-white</code> to <code>group-hover:ring-indigo-300</code> — a colour transition on a ring</li>\n</ul>\n\n<h3>Multi-breakpoint responsive grid</h3>\n\n<pre><code>&lt;!-- Mobile: 1 column → sm (640px+): 2 columns → lg (1024px+): 4 columns --&gt;\n&lt;div class=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8\"&gt;</code></pre>\n\n<p>Skipping <code>md:grid-cols-4</code> (going directly to 4 at lg) is intentional — at 768px four avatars feel cramped. At 1024px there's comfortable breathing room.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"The <code>text-center group</code> on each team card is worth noting. The card has no visual background — it is transparent. The group is there purely for the group-hover ring change on the avatar. A component can be a group for behavioural reasons, not visual ones.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Grand Archmage Solomon enters without announcement. He studies the header and hero on the preview screen for a long moment — long enough that the silence becomes intentional. Then he turns."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "In our tradition, work that bears the guild's name also bears the names of those who made it. The Guild Council section is not a formality. It is a declaration. Four masters, displayed with the dignity their craft has earned. Make it worthy of them."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "The status dot uses relative on the wrapper and absolute bottom-1 right-1 on the dot. The wrapper must have relative — otherwise the dot looks for the nearest positioned ancestor, which might be the section container, and the dot ends up in completely the wrong position."
+        },
+        {
+          "type": "example",
+          "speaker": "Relative/absolute status dot pattern",
+          "text": "<div class=\"relative w-24 h-24\">\n  <img class=\"w-24 h-24 rounded-full object-cover ring-4 ring-white\">\n  <span class=\"absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full ring-2 ring-white\"></span>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build the Arcane Guild's team section. Key techniques: object-cover for consistent avatar crops, relative/absolute positioning for the status dot, ring-* for avatar frames with hover colour change, and a three-breakpoint responsive grid.</p>\n<ul>\n  <li><strong>.team</strong>: <code>bg-white</code>, <code>py-24</code>, <code>px-6</code></li>\n  <li><strong>.team-grid</strong>: <code>grid</code>, <code>grid-cols-1</code>, <code>sm:grid-cols-2</code>, <code>lg:grid-cols-4</code>, <code>gap-8</code></li>\n  <li><strong>.team-card</strong>: <code>text-center</code>, <code>group</code></li>\n  <li><strong>.team-avatar-wrap</strong>: <code>relative</code>, <code>w-24</code>, <code>h-24</code>, <code>mx-auto</code>, <code>mb-5</code></li>\n  <li><strong>.team-avatar</strong>: <code>w-24</code>, <code>h-24</code>, <code>rounded-full</code>, <code>object-cover</code>, <code>ring-4</code>, <code>ring-white</code>, <code>shadow-lg</code>, <code>group-hover:ring-indigo-300</code>, <code>transition-all</code>, <code>duration-300</code></li>\n  <li><strong>.team-status</strong>: <code>absolute</code>, <code>bottom-1</code>, <code>right-1</code>, <code>w-4</code>, <code>h-4</code>, <code>bg-green-400</code>, <code>rounded-full</code>, <code>ring-2</code>, <code>ring-white</code></li>\n  <li><strong>.team-role</strong>: <code>text-sm</code>, <code>text-indigo-600</code>, <code>font-semibold</code>, <code>mb-3</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<section class=\"team\">\n  <div class=\"team-inner\">\n    <h2 class=\"team-heading\">The Guild Council</h2>\n    <p class=\"team-subheading\">Four disciplines. Four masters. One shared obsession with doing the work well.</p>\n    <div class=\"team-grid\">\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=1\" alt=\"Archmage Eldrin\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Archmage Eldrin</h3>\n        <p class=\"team-role\">Chief Architect</p>\n        <p class=\"team-bio\">20 years crafting systems that outlast their requirements.</p>\n      </div>\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=5\" alt=\"Lyra the Scribe\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Lyra the Scribe</h3>\n        <p class=\"team-role\">Design Lead</p>\n        <p class=\"team-bio\">Translates intent into interface. Utility-first, accessibility-always.</p>\n      </div>\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=9\" alt=\"Maester Cordell\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Maester Cordell</h3>\n        <p class=\"team-role\">DevOps Mage</p>\n        <p class=\"team-bio\">If it isn't deployed, it isn't real. Zero-downtime deploys.</p>\n      </div>\n      <div class=\"team-card\">\n        <div class=\"team-avatar-wrap\">\n          <img src=\"https://i.pravatar.cc/96?img=12\" alt=\"Sable the Illuminator\" class=\"team-avatar\">\n          <span class=\"team-status\"></span>\n        </div>\n        <h3 class=\"team-name\">Sable</h3>\n        <p class=\"team-role\">UX Researcher</p>\n        <p class=\"team-bio\">Runs user tests before writing a line of code.</p>\n      </div>\n    </div>\n  </div>\n</section>",
+      "guidedPracticeTests": [
+        { "label": "Team: bg-white",                      "selector": ".team",             "requiredClass": "bg-white"               },
+        { "label": "Team: py-24",                         "selector": ".team",             "requiredClass": "py-24"                  },
+        { "label": "Grid: grid",                          "selector": ".team-grid",        "requiredClass": "grid"                   },
+        { "label": "Grid: sm:grid-cols-2",                "selector": ".team-grid",        "requiredClass": "sm:grid-cols-2"         },
+        { "label": "Grid: lg:grid-cols-4",                "selector": ".team-grid",        "requiredClass": "lg:grid-cols-4"         },
+        { "label": "Card: group",                         "selector": ".team-card",        "requiredClass": "group"                  },
+        { "label": "Avatar: rounded-full",                "selector": ".team-avatar",      "requiredClass": "rounded-full"           },
+        { "label": "Avatar: ring-4",                      "selector": ".team-avatar",      "requiredClass": "ring-4"                 },
+        { "label": "Avatar: group-hover:ring-indigo-300", "selector": ".team-avatar",      "requiredClass": "group-hover:ring-indigo-300" },
+        { "label": "Avatar: shadow-lg",                   "selector": ".team-avatar",      "requiredClass": "shadow-lg"              },
+        { "label": "Avatar: object-cover",                "selector": ".team-avatar",      "requiredClass": "object-cover"           },
+        { "label": "Status: rounded-full",                "selector": ".team-status",      "requiredClass": "rounded-full"           },
+        { "label": "Status: bg-green-400",                "selector": ".team-status",      "requiredClass": "bg-green-400"           },
+        { "label": "Status: absolute",                    "selector": ".team-status",      "requiredClass": "absolute"               },
+        { "label": "Role: text-indigo-600",               "selector": ".team-role",        "requiredClass": "text-indigo-600"        },
+        { "label": "Role: font-semibold",                 "selector": ".team-role",        "requiredClass": "font-semibold"          },
+        { "label": "Avatar wrap: relative",               "selector": ".team-avatar-wrap", "requiredClass": "relative"               }
+      ],
+      "soloPracticeHtml": "<p>Build an avatar with a positioned status dot from scratch using Tailwind positioning utilities. The avatar is a circular image placeholder (w-14 h-14) with a small w-3.5 h-3.5 green dot anchored to its bottom-right corner. The dot must stay in the corner regardless of the avatar size. Apply relative and absolute without any class scaffold.</p>",
+      "feynmanPrompt": "Explain how relative on the avatar wrapper and absolute bottom-1 right-1 on the status dot work together to place the dot correctly in the corner of the avatar. What would happen visually if you removed relative from the wrapper?",
+      "questions": [
+        {
+          "id": "tw-lea-4-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "LEAD",
+          "prompt": "What does the object-cover class do to an img element that has both width and height constraints?",
+          "options": [
+            "The image fills the container entirely, maintaining aspect ratio by cropping any excess from the centre",
+            "The image is scaled down to fit entirely within the container, potentially leaving whitespace",
+            "The image is stretched to fill the container, ignoring aspect ratio",
+            "The image is tiled to fill the container"
+          ],
+          "answer": "The image fills the container entirely, maintaining aspect ratio by cropping any excess from the centre",
+          "explanation": "object-cover maps to CSS object-fit: cover. The image is scaled proportionally until it fills the container's dimensions completely. Any parts of the image that extend beyond the container are cropped. This is why avatar images look correctly proportioned in a fixed w-24 h-24 circle, regardless of whether the original photo is landscape, portrait, or square."
+        },
+        {
+          "id": "tw-lea-4-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "You have a notification badge that must appear at the top-right corner of an icon button. Which structure correctly positions the badge?",
+          "options": [
+            "<div class=\"relative\"> <button>...</button> <span class=\"absolute top-0 right-0\">3</span> </div>",
+            "<div class=\"absolute\"> <button>...</button> <span class=\"relative top-0 right-0\">3</span> </div>",
+            "<button class=\"absolute\"> <span class=\"absolute top-0 right-0\">3</span> </button>",
+            "<div> <button>...</button> <span class=\"absolute top-0 right-0\">3</span> </div>"
+          ],
+          "answer": "<div class=\"relative\"> <button>...</button> <span class=\"absolute top-0 right-0\">3</span> </div>",
+          "explanation": "The wrapper must have relative to create a positioning context. The badge uses absolute top-0 right-0 to anchor itself to the top-right corner of that context. Without relative on the wrapper, the badge would be positioned relative to the nearest ancestor that has position: relative/absolute/fixed/sticky — which could be anywhere in the page."
+        },
+        {
+          "id": "tw-lea-4-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "For an avatar image frame (a circular ring that visually frames the avatar photo), which is the better choice and why: ring-4 ring-white or border-4 border-white?",
+          "options": [
+            "ring-4 ring-white — ring uses box-shadow so the image dimensions stay exactly w-24 h-24, and ring-offset creates a clean gap that border cannot",
+            "border-4 border-white — borders are more widely supported and render more predictably across browsers",
+            "Both are identical in all practical respects — choose whichever you prefer",
+            "border-4 border-white — because ring uses box-shadow which doesn't work on circular elements"
+          ],
+          "answer": "ring-4 ring-white — ring uses box-shadow so the image dimensions stay exactly w-24 h-24, and ring-offset creates a clean gap that border cannot",
+          "explanation": "Tailwind ring-* uses box-shadow to render outside the element's box model. A ring-4 avatar image stays exactly w-24 h-24 (96px) — the ring is cosmetic. A border-4 would add 8px to the rendered dimensions, potentially misaligning the avatar with other layout elements. Additionally, ring-offset-* creates a gap between the image and an outer ring — something border cannot do without extra markup."
+        }
+      ]
+    }
+  ]
+}

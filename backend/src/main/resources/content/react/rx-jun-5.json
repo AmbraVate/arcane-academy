@@ -1,0 +1,119 @@
+{
+  "id": "rx-jun-5",
+  "title": "Component Patterns: Composition and Lifting State",
+  "glyph": "⚛",
+  "sortOrder": 5,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-app-8"],
+  "subChunks": [
+    {
+      "id": "rx-jun-5-1",
+      "title": "Component Patterns: Composition and Lifting State",
+      "sortOrder": 1,
+      "xpReward": 125,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>As apps grow, two problems emerge: state that needs to be shared between components, and UI that needs to be flexible without becoming a tangle of props. Lifting state and composition patterns are the structural answers — and getting them right is what separates scalable React apps from spaghetti.</p>",
+      "explanationHtml": "<h3>Lifting state up</h3>\n\n<p>When two components need to share the same state, move the state to their closest common ancestor:</p>\n\n<pre><code>// ✅ Parent owns the state and distributes it:\nfunction SearchPage() {\n  const [query, setQuery] = useState('');\n\n  return (\n    &lt;&gt;\n      &lt;FilterInput query={query} onQueryChange={setQuery} /&gt;\n      &lt;ResultsList query={query} /&gt;\n    &lt;/&gt;\n  );\n}\n\nfunction FilterInput({ query, onQueryChange }) {\n  return (\n    &lt;input value={query} onChange={(e) =&gt; onQueryChange(e.target.value)} /&gt;\n  );\n}</code></pre>\n\n<h3>Prop drilling — and when it becomes a problem</h3>\n\n<p>Passing props through two or three levels is fine. When you're passing the same prop through five levels of components that don't use it themselves, that's prop drilling. Solutions:</p>\n<ul>\n  <li>Component composition — often eliminates the need to drill</li>\n  <li>Context API — for truly global data</li>\n</ul>\n\n<h3>Composition: avoiding prop drilling</h3>\n\n<pre><code>// ❌ Prop drilling: App → Page → Section → Widget → Button needs user\nfunction App() {\n  const user = useUser();\n  return &lt;Page user={user} /&gt;;\n}\n\n// ✅ Render at the level that has user — data travels one level:\nfunction App() {\n  const user = useUser();\n  return (\n    &lt;Page&gt;\n      &lt;Section&gt;\n        &lt;UserButton user={user} /&gt;\n      &lt;/Section&gt;\n    &lt;/Page&gt;\n  );\n}\nfunction Page({ children }) { return &lt;div&gt;{children}&lt;/div&gt;; }</code></pre>\n\n<h3>Controlled components</h3>\n\n<p>Any component whose state is owned externally is 'controlled'. This applies beyond inputs:</p>\n\n<pre><code>// Controlled modal — parent owns the state:\nfunction Modal({ open, onClose }) {\n  if (!open) return null;\n  return &lt;div className=\"modal\"&gt;... &lt;button onClick={onClose}&gt;Close&lt;/button&gt;&lt;/div&gt;;\n}</code></pre>\n\n<p>Controlled components are more reusable — the parent can open/close in response to anything.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"When two components need the same data, don't try to sync them — lift the state to their common parent and pass it down. The parent owns truth. Children receive and report.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Before reaching for Context, ask: can composition solve this? Passing children or rendering components higher in the tree often cuts the drilling chain entirely."
+        },
+        {
+          "type": "example",
+          "speaker": "Lifting state to the common parent",
+          "text": "function SearchPage() {\n  const [query, setQuery] = useState('');\n  return (\n    <>\n      <FilterInput value={query} onChange={setQuery} />\n      <ResultsList query={query} />\n    </>\n  );\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>&lt;FilterableList items /&gt;</code> component that lifts state:</p><ul><li>A <code>&lt;SearchInput value onSearch /&gt;</code> renders a controlled text input</li><li>An <code>&lt;ItemList items query /&gt;</code> renders only items whose name includes the query (case-insensitive)</li><li><code>FilterableList</code> owns the <code>query</code> state and passes it to both children</li><li>Show <code>&lt;p data-testid=\"empty\"&gt;No results.&lt;/p&gt;</code> when nothing matches</li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nfunction SearchInput({ value, onSearch }) {\n  return null; // TODO\n}\n\nfunction ItemList({ items, query }) {\n  return null; // TODO\n}\n\nexport default function FilterableList({ items }) {\n  // TODO: own query state, pass to both children\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders search input",
+          "selector": "input",
+          "exists": true
+        },
+        {
+          "label": "Shows empty state when no match",
+          "action": "type",
+          "selector": "input",
+          "value": "zzznomatch",
+          "then": {
+            "selector": "[data-testid='empty']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a controlled accordion from scratch. An <code>&lt;Accordion&gt;</code> renders a list of items (each with <code>title</code> and <code>content</code>). Only one item can be expanded at a time. The expanded item index is owned by <code>Accordion</code> — each <code>AccordionItem</code> receives <code>isOpen</code> and <code>onToggle</code>.</p>",
+      "feynmanPrompt": "Explain 'lifting state up'. What is the symptom that tells you state needs to be lifted? Walk through a concrete example — a filter input and a filtered list — describing exactly what changes when you lift the state.",
+      "questions": [
+        {
+          "id": "rx-jun-5-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "When should you lift state up to a parent component?",
+          "options": [
+            "When two or more sibling components need to read or respond to the same state",
+            "When a component has too many useState calls",
+            "When the state is only read once during the component's lifetime",
+            "Only when the component is re-rendering too frequently"
+          ],
+          "answer": "When two or more sibling components need to read or respond to the same state",
+          "explanation": "State lives at the lowest level where it needs to be accessible. If only one component needs it, keep it there. If two siblings need it, the closest common ancestor is the right home."
+        },
+        {
+          "id": "rx-jun-5-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What is prop drilling and when does it become a problem?",
+          "options": [
+            "Passing props through intermediate components that don't use the data — becomes a problem at 3-5+ levels deep",
+            "Passing too many props to a single component",
+            "Passing functions as props — creates tight coupling",
+            "Prop drilling is always a problem at any depth"
+          ],
+          "answer": "Passing props through intermediate components that don't use the data — becomes a problem at 3-5+ levels deep",
+          "explanation": "Two or three levels is normal. The problem appears when components pass props they don't use — coupling them to the data shape and making refactoring harder."
+        },
+        {
+          "id": "rx-jun-5-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A Modal that owns its open/closed state can only be opened from inside itself. How do you make it openable from anywhere?",
+          "options": [
+            "Make it controlled: accept `open` and `onClose` as props, let the parent own the state",
+            "Use a global variable to store the modal's open state",
+            "Add a ref and call modalRef.current.open() from outside",
+            "Use useEffect to watch for a custom DOM event"
+          ],
+          "answer": "Make it controlled: accept `open` and `onClose` as props, let the parent own the state",
+          "explanation": "A controlled Modal receives its open state from outside and calls onClose when it wants to close. The parent can open it from a button, a timeout, or any event."
+        },
+        {
+          "id": "rx-jun-5-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Data is needed 5 levels deep. Before using Context, which composition technique eliminates the drilling?",
+          "options": [
+            "Render the component that needs data at the level where data is available, passing it as children through layout components",
+            "Convert intermediate components to class components to access data via this.props",
+            "Use useRef to store data at the top level and read it anywhere",
+            "Inline all intermediate components into one large parent"
+          ],
+          "answer": "Render the component that needs data at the level where data is available, passing it as children through layout components",
+          "explanation": "Component composition is the first tool before Context. Render <UserButton user={user} /> in App and pass it as children — Page, Section, Widget become layout-only components that don't need to know about user at all."
+        }
+      ]
+    }
+  ]
+}

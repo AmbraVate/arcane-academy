@@ -1,0 +1,104 @@
+{
+  "id": "tw-jun-5",
+  "title": "Transitions and Animations",
+  "glyph": "⚗️",
+  "sortOrder": 5,
+  "tier": "JUNIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-jun-3"],
+  "subChunks": [
+    {
+      "id": "tw-jun-5-1",
+      "title": "Transitions and Animations",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>The difference between a UI that feels polished and one that feels cheap is often just a 150ms transition. Without one, hover states snap, buttons teleport, and modals pop in jarringly. Tailwind provides transition, duration, and easing utilities — plus four built-in animations for common patterns like loading states and notification indicators.</p>",
+      "explanationHtml": "<h3>The fundamental rule — transition goes on the BASE state</h3>\n<pre><code>/* WRONG — transition on hover state (forward works, reverse snaps) */\nclass=\"bg-blue-600 hover:bg-blue-700 hover:transition-colors\"\n\n/* CORRECT — transition on the base element */\nclass=\"bg-blue-600 hover:bg-blue-700 transition-colors duration-150\"</code></pre>\n<p>The transition must be present in <em>both</em> states for it to work in both directions. On the hover state, it only applies entering — the reverse snap is instant.</p>\n\n<h3>Transition utilities</h3>\n<pre><code>transition            /* transitions all commonly animated properties */\ntransition-colors     /* only color, bg, border, fill, stroke — most performant for buttons */\ntransition-transform  /* only transform — use for scale/rotate effects */\ntransition-opacity    /* only opacity */\ntransition-shadow     /* only box-shadow */\ntransition-none       /* disable all transitions */</code></pre>\n\n<h3>Duration and easing</h3>\n<pre><code>duration-75    /* 75ms  — near-instant */\nduration-100   /* 100ms — fast */\nduration-150   /* 150ms — standard for interactive UI */\nduration-200   /* 200ms */\nduration-300   /* 300ms — modals, panels */\nduration-500   /* 500ms — hero transitions */\n\nease-linear    /* constant speed */\nease-in        /* slow start, fast end */\nease-out       /* fast start, slow end — entering elements */\nease-in-out    /* slow start, slow end — most natural */</code></pre>\n\n<h3>Transform utilities</h3>\n<pre><code>scale-95         /* 95% — pressed/active state */\nscale-105        /* 105% — hovered card lift */\nrotate-180       /* 180 degrees — accordion arrow flip */\n-translate-y-1   /* shift up 4px — subtle card lift */\ntranslate-x-full /* shift fully right — slide out */</code></pre>\n\n<h3>Built-in animations</h3>\n<pre><code>animate-spin    /* 360deg rotation loop — loading spinners */\nanimate-pulse   /* opacity 0.5 ↔ 1 loop — skeleton loading screens */\nanimate-bounce  /* bouncing Y-axis — scroll indicators */\nanimate-ping    /* scale 1→2 with opacity fade — notification dots */</code></pre>\n\n<h3>Practical examples</h3>\n<pre><code>/* Loading spinner */\n&lt;svg class=\"animate-spin h-5 w-5 text-white\"&gt;...&lt;/svg&gt;\n\n/* Skeleton loading line */\n&lt;div class=\"h-4 bg-gray-200 rounded animate-pulse\"&gt;&lt;/div&gt;\n\n/* Notification badge with ping */\n&lt;span class=\"relative flex h-2 w-2\"&gt;\n  &lt;span class=\"animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75\"&gt;&lt;/span&gt;\n  &lt;span class=\"relative inline-flex rounded-full h-2 w-2 bg-red-500\"&gt;&lt;/span&gt;\n&lt;/span&gt;</code></pre>\n\n<h3>Accessibility — always add reduced motion</h3>\n<pre><code>motion-safe:animate-bounce     /* only animates if user HASN'T requested reduced motion */\nmotion-reduce:transition-none  /* disables transitions for users who have */\nmotion-reduce:animate-none     /* disables animations for users who have */</code></pre>\n<p>This is a WCAG requirement. Some users experience nausea or seizure risk from motion. Always add <code>motion-reduce:</code> to looping or attention-grabbing animations.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"One hundred and fifty milliseconds, ease-in-out — that is the difference between a button that feels alive and one that feels painted on a wall. And remember: motion-reduce:transition-none. Always. Some readers cannot tolerate motion. Ignoring them is not craft. It is negligence.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "The snap is cheap. The breath is craft. One hundred and fifty milliseconds, ease-in-out — that is the difference between a button that feels alive and one that feels painted on a wall."
+        },
+        {
+          "type": "example",
+          "speaker": "Transition on the base state (correct pattern)",
+          "text": "<!-- CORRECT: transition on the element, hover changes the value -->\n<button class=\"bg-blue-600 hover:bg-blue-700 active:scale-95\n               transition-all duration-150 ease-in-out\n               motion-reduce:transition-none\">\n  Submit\n</button>"
+        },
+        {
+          "type": "example",
+          "speaker": "Skeleton loading screen",
+          "text": "<div class=\"space-y-3 p-6\">\n  <div class=\"h-5 bg-gray-200 rounded animate-pulse w-3/4\"></div>\n  <div class=\"h-4 bg-gray-200 rounded animate-pulse\"></div>\n  <div class=\"h-4 bg-gray-200 rounded animate-pulse w-5/6\"></div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an animated interactive button and a skeleton loading card:</p>\n<ul>\n  <li><strong>.btn-primary</strong>: <code>inline-flex</code>, <code>items-center</code>, <code>gap-2</code>, <code>px-5</code>, <code>py-2.5</code>, <code>bg-blue-600</code>, <code>hover:bg-blue-700</code>, <code>active:scale-95</code>, <code>text-white</code>, <code>text-sm</code>, <code>font-medium</code>, <code>rounded-lg</code>, <code>transition-all</code>, <code>duration-150</code>, <code>ease-in-out</code>, <code>motion-reduce:transition-none</code></li>\n  <li><strong>.spinner</strong>: <code>animate-spin</code>, <code>h-4</code>, <code>w-4</code></li>\n  <li><strong>.skeleton-line</strong>: <code>h-4</code>, <code>bg-gray-200</code>, <code>rounded</code>, <code>animate-pulse</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"p-8 space-y-8 bg-gray-50\">\n  <!-- Interactive button -->\n  <button class=\"btn-primary\">\n    <svg class=\"spinner\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\">\n      <circle class=\"opacity-25\" cx=\"12\" cy=\"12\" r=\"10\" stroke=\"currentColor\" stroke-width=\"4\"></circle>\n      <path class=\"opacity-75\" fill=\"currentColor\" d=\"M4 12a8 8 0 018-8v8H4z\"></path>\n    </svg>\n    Loading...\n  </button>\n\n  <!-- Skeleton card -->\n  <div class=\"bg-white p-6 rounded-xl shadow-sm space-y-3\">\n    <div class=\"skeleton-line w-1/2\"></div>\n    <div class=\"skeleton-line\"></div>\n    <div class=\"skeleton-line w-4/5\"></div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Button: inline-flex",          "selector": ".btn-primary",   "requiredClass": "inline-flex"            },
+        { "label": "Button: blue background",       "selector": ".btn-primary",   "requiredClass": "bg-blue-600"            },
+        { "label": "Button: hover darkens",         "selector": ".btn-primary",   "requiredClass": "hover:bg-blue-700"      },
+        { "label": "Button: active shrinks",        "selector": ".btn-primary",   "requiredClass": "active:scale-95"        },
+        { "label": "Button: transition-all",        "selector": ".btn-primary",   "requiredClass": "transition-all"         },
+        { "label": "Button: duration-150",          "selector": ".btn-primary",   "requiredClass": "duration-150"           },
+        { "label": "Button: reduced motion",        "selector": ".btn-primary",   "requiredClass": "motion-reduce:transition-none"},
+        { "label": "Spinner: animate-spin",         "selector": ".spinner",       "requiredClass": "animate-spin"           },
+        { "label": "Skeleton: animate-pulse",       "selector": ".skeleton-line", "requiredClass": "animate-pulse"          },
+        { "label": "Skeleton: gray background",     "selector": ".skeleton-line", "requiredClass": "bg-gray-200"            }
+      ],
+      "soloPracticeHtml": "<p>Build an animated notification bell from scratch. The bell should animate-bounce with a red badge counter positioned absolutely in the corner. Add a transition-all wrapper so the component fades when toggled. Include motion-reduce:animate-none on any animated element.</p>",
+      "feynmanPrompt": "Why does the transition utility need to be on the base state rather than the hover state? What happens to the transition if you put it only on hover:? Explain what each of the four built-in animations (spin, pulse, bounce, ping) does and give one real UI use case for each.",
+      "questions": [
+        {
+          "id": "tw-jun-5-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "JUNIOR",
+          "prompt": "Which animation class creates a repeating scale-and-fade effect, commonly used for notification dot indicators?",
+          "options": [
+            "animate-ping",
+            "animate-pulse",
+            "animate-bounce",
+            "animate-spin"
+          ],
+          "answer": "animate-ping",
+          "explanation": "animate-ping scales an element up while fading it out, creating a ripple/radar effect. It's the standard pattern for the pulsing notification dot. animate-pulse is for skeleton loading screens, animate-spin for spinners, and animate-bounce for vertical bouncing."
+        },
+        {
+          "id": "tw-jun-5-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "JUNIOR",
+          "prompt": "A loading indicator is an SVG that should spin continuously. Which class produces this effect?",
+          "options": [
+            "animate-spin",
+            "animate-ping",
+            "transition-transform duration-1000",
+            "rotate-360"
+          ],
+          "answer": "animate-spin",
+          "explanation": "animate-spin applies a continuous 360-degree rotation animation (spin 1s linear infinite). It is the standard class for loading spinners in Tailwind."
+        },
+        {
+          "id": "tw-jun-5-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "JUNIOR",
+          "prompt": "A developer applies hover:transition-colors hover:duration-200 hover:bg-blue-700 to a button. When testing, the forward hover transition works, but when the cursor leaves, the background snaps back instantly. What is the bug?",
+          "options": [
+            "The transition utilities are on the hover state — when the cursor leaves and the hover state is removed, the transition is removed too, so the reverse change is instant. Fix: move transition-colors and duration-200 to the base element",
+            "hover: variants don't support transitions — use JavaScript for transitions",
+            "duration-200 needs to also be on the base element but transition-colors can stay on hover:",
+            "The browser doesn't support reverse transitions — add transition-reverse class"
+          ],
+          "answer": "The transition utilities are on the hover state — when the cursor leaves and the hover state is removed, the transition is removed too, so the reverse change is instant. Fix: move transition-colors and duration-200 to the base element",
+          "explanation": "CSS transitions must be present on the element in both states for the transition to work in both directions. If transition-colors is only under hover:, the browser adds the transition when the mouse enters (forward works) but removes it when the mouse leaves (reverse snaps). Moving transition-colors duration-200 to the base class fixes both directions."
+        }
+      ]
+    }
+  ]
+}

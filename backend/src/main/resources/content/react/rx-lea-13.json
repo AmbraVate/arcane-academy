@@ -1,0 +1,88 @@
+{
+  "id": "rx-lea-13",
+  "title": "Technical Leadership — Architecture Decisions and Team Practices",
+  "glyph": "⚛",
+  "sortOrder": 13,
+  "tier": "LEAD",
+  "topicId": "react",
+  "prerequisites": ["rx-lea-12"],
+  "subChunks": [
+    {
+      "id": "rx-lea-13-1",
+      "title": "Technical Leadership — Architecture Decisions and Team Practices",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>A Lead engineer's primary output is not code — it's decisions that scale. Architecture Decision Records document why a choice was made so future engineers understand the constraints that drove it. Coding standards encoded in ESLint and CI enforce consistency without requiring code review bandwidth. Mentorship multiplies capability. Technical debt prioritisation tells the team which shortcuts to address now versus accept. These are the skills that distinguish a senior engineer from a lead.</p>",
+      "explanationHtml": "<h3>Architecture Decision Records (ADR)</h3>\n\n<pre><code>// docs/decisions/0003-state-management.md\n\n# ADR-0003: State Management Strategy\n\n## Status: Accepted\n\n## Context\nThe application has three types of state:\n1. Server state (quests, members, treasury) — async, cached, invalidated on mutation\n2. UI state (modals open, selected tab) — local, ephemeral\n3. User preferences (theme, locale) — persistent, cross-component\n\n## Decision\n- Server state: TanStack Query (caching, background refetch, optimistic updates)\n- UI state: useState/useReducer (component-local by default)\n- User preferences: Zustand with localStorage persistence\n\nExplicitly NOT using Redux or a global store for server state — this was\nconsidered and rejected because TanStack Query handles cache invalidation\nnatively, which Redux does not.\n\n## Consequences\n✅ Each state type managed by the right tool\n✅ Server state cache automatically consistent across components\n❌ Developers new to TanStack Query require onboarding\n❌ Three different patterns to learn vs one global store\n\n## Alternatives Considered\n- Redux Toolkit Query: similar to TanStack Query but more boilerplate\n- Jotai: atom-based, good for fine-grained reactivity, less ecosystem\n- Context API only: insufficient for server state complexity</code></pre>\n\n<h3>Frontend folder structure decision</h3>\n\n<pre><code>// Feature-based structure (recommended for medium-large apps):\nsrc/\n  features/\n    quests/\n      components/        // QuestCard, QuestBoard, QuestForm\n      hooks/             // useQuests, useQuestMutation\n      types/             // Quest, QuestStatus, QuestFilter\n      api.ts             // Quest API calls\n      index.ts           // Public API of the feature\n    members/\n    treasury/\n  shared/\n    components/          // Button, Input, Modal (no business logic)\n    hooks/               // useDebounce, useLocalStorage\n    utils/\n  app/\n    router.tsx\n    store.ts\n\n// Rule: features/ may import from shared/ but never from other features/\n// Cross-feature data flows through app-level state or the API</code></pre>\n\n<h3>Defining team standards</h3>\n\n<pre><code>// Standards as code — things that can be linted/type-checked:\n// 1. No 'any' types (ESLint: @typescript-eslint/no-explicit-any: error)\n// 2. All components tested (Vitest coverage threshold)\n// 3. No direct API calls in components (only via feature hooks)\n// 4. Accessibility linting (jsx-a11y)\n\n// Standards as documentation — things that require judgment:\n// 1. Component size: if it needs a scroll to read, split it\n// 2. PR size: under 400 lines changed — split larger changes\n// 3. Tests: test behaviour, not implementation\n// 4. Naming: be specific (QuestAcceptButton vs Button)\n\n// Standards in CI:\n// - type-check fails build\n// - test coverage < 80% fails build\n// - bundle size > limit fails build\n// - eslint errors fail build (warnings don't)</code></pre>\n\n<h3>Technical debt triage</h3>\n\n<pre><code>// Classify debt before acting:\n\n// High impact, low effort → fix now (in next sprint):\n// - Missing error boundaries (production crashes are unbounded)\n// - Missing key props in lists (causes subtle re-render bugs)\n// - console.error in production (leaks internal info)\n\n// High impact, high effort → schedule as a project:\n// - Migrating from class components to hooks\n// - Replacing a brittle global state with TanStack Query\n// - Adding TypeScript to a JavaScript project\n\n// Low impact, low effort → fix when nearby:\n// - Inconsistent naming conventions\n// - Missing return type annotations\n// - Unused dependencies in package.json\n\n// Low impact, high effort → accept and document:\n// - Legacy component that works and is never modified\n// - Old pattern that's replaced but still has one user\n\n// Document debt in code:\n// TODO(LEAD): Migrate to TanStack Query when we refactor this module\n// FIXME: This assumes single guild — fails for multi-guild accounts</code></pre>\n\n<h3>Code review as mentorship</h3>\n\n<pre><code>// Effective code review comments:\n\n// ❌ Vague:\n// \"This could be better\"\n\n// ❌ Nitpick without rationale:\n// \"Change this to a ternary\"\n\n// ✅ Explains the why + suggests the how:\n// \"This useEffect is missing questId in its dependency array —\n//  if questId changes, the effect won't re-run and will show\n//  stale data. Try: useEffect(() => {...}, [questId])\"\n\n// ✅ Identifies the pattern, not just the instance:\n// \"We're fetching directly in the component here and in QuestForm.tsx.\n//  Consider extracting to useQuestData() hook — that way fetch logic\n//  and error handling live in one place.\"\n\n// Label your reviews:\n// [blocking]: Must fix before merge (correctness, security)\n// [suggestion]: Non-blocking improvement\n// [question]: Genuine question, not blocking\n// [nit]: Style/preference, explicitly non-blocking</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"An ADR's value is not the decision — it's the context. Six months later, a new engineer asks 'why are we using TanStack Query instead of Redux?' The ADR explains the constraints that existed when the decision was made: the team's existing knowledge, the project's data patterns, the alternatives that were evaluated. Without context, every decision looks arbitrary.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A new engineer joins and spends a week migrating the state management from TanStack Query to Redux. At review, the lead asks why — 'because Redux is standard.' The ADR explains why TanStack Query was chosen. The migration is reverted. An hour of reading saved a week of work."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Technical leadership is the practice of making decisions that outlast your presence on the team. An ADR means the decision survives. A lint rule means the standard is enforced without a code review reminder. A well-structured folder means new engineers know where to put things without asking. Your job is to make the team faster, not to be the fastest engineer."
+        },
+        {
+          "type": "example",
+          "speaker": "ADR template — context-decision-consequences",
+          "text": "# ADR-0042: Use React Router v6 over Next.js\n\n## Context\nNew dashboard app, team unfamiliar with Next.js, no SSR requirements, \nall data behind auth wall.\n\n## Decision  \nVite + React Router. Next.js adds complexity (SSR, file routing, App Router)\nwithout benefit for a fully-authenticated SPA.\n\n## Consequences\n✅ Team productive immediately\n❌ No SSR if requirements change — revisit if public pages needed"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Technical leadership artifacts exercise:</p><ul><li>Write an ADR for a decision: choose between React Context API and Zustand for user preferences state (theme, locale) — include context, decision, consequences, and alternatives considered</li><li>Define a folder structure for a feature module following the feature-based pattern with an index.ts public API</li><li>Write three code review comments on the same code: one blocking (correctness), one suggestion (improvement), one question — following the label format</li></ul>",
+      "guidedPracticeStarterCode": "// Technical Leadership Exercise\n\n// PART 1: Architecture Decision Record\nconst adr = {\n  id: 'ADR-0007',\n  title: 'User Preferences State Management',\n  status: 'Draft',\n  context: `\n    // TODO: Describe the problem — what state needs to be managed?\n    // Who reads it? How often does it change?\n    // What persistence requirements exist?\n  `,\n  decision: `\n    // TODO: State your decision — Context API or Zustand?\n    // Be specific about what it manages and why this tool fits\n  `,\n  consequences: {\n    positive: [\n      // TODO: List benefits\n    ],\n    negative: [\n      // TODO: List trade-offs\n    ],\n  },\n  alternativesConsidered: [\n    // TODO: What did you reject and why?\n  ],\n};\n\n// PART 2: Feature module structure\nconst questsFeatureStructure = {\n  'src/features/quests/': {\n    'components/': ['QuestCard.tsx', 'QuestBoard.tsx', 'QuestForm.tsx'],\n    'hooks/': ['useQuests.ts', 'useQuestMutation.ts'],\n    'types/': ['quest.types.ts'],\n    'api.ts': '// Quest API calls',\n    'index.ts': '// TODO: What should this export?',\n  },\n};\n\n// PART 3: Code review comments for this code:\n/*\nfunction QuestList({ filter }) {\n  const [quests, setQuests] = useState([]);\n  useEffect(() => {\n    fetch('/api/quests').then(r => r.json()).then(setQuests);\n  }, []); // Missing filter dep\n  return quests.map(q => <div>{q.title}</div>); // Missing key\n}\n*/\nconst codeReviewComments = [\n  {\n    label: '[blocking]',\n    comment: '// TODO: blocking issue (correctness/bug)',\n  },\n  {\n    label: '[suggestion]',\n    comment: '// TODO: non-blocking improvement',\n  },\n  {\n    label: '[question]',\n    comment: '// TODO: genuine question',\n  },\n];\n\nexport default function App() {\n  return (\n    <div data-testid=\"app\">\n      <h1>Technical Leadership</h1>\n      <p data-testid=\"adr-title\">{adr.title}</p>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "App renders",
+          "selector": "[data-testid='app']",
+          "exists": true
+        },
+        {
+          "label": "ADR title renders",
+          "selector": "[data-testid='adr-title']",
+          "requiredText": "User Preferences"
+        }
+      ],
+      "soloPracticeHtml": "<p>Create a technical leadership artifact set for the quest board project: (1) An ADR for your most significant architecture decision (state management, routing, testing strategy, or folder structure) — with real context, real alternatives considered, and explicit trade-offs. (2) A CONTRIBUTING.md that defines coding standards: what ESLint rules are required, how to name hooks/components/tests, PR size limit, and the code review label convention. (3) A technical debt inventory: list 5 areas of debt, classify each by impact/effort, and propose a resolution timeline. (4) A feature module refactor: take an existing component with business logic mixed in and extract it to the feature/ pattern with a clean index.ts public API.</p>",
+      "feynmanPrompt": "Explain what an Architecture Decision Record is and why 'context' is the most important section — what does a future engineer need to know to evaluate whether the decision still makes sense? Walk through the feature-based folder structure — what problem does it solve compared to type-based structure (components/, hooks/, pages/), and what is the rule about cross-feature imports? Explain the difference between a 'blocking' and 'suggestion' code review comment — why does the distinction matter for team dynamics?",
+      "questions": [
+        {
+          "id": "rx-lea-13-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "A teammate proposes refactoring the entire state management from Zustand to Jotai because 'Jotai has better DX'. There's no ADR for the Zustand decision. What should you do?",
+          "options": [
+            "First write an ADR documenting why Zustand was chosen — if the original reasons still apply, they should be weighed against the proposed change. Write a second ADR for the proposal with its costs and benefits. Make the decision based on evidence, not preference.",
+            "Accept the refactor — if the team prefers it, the DX improvement justifies the migration",
+            "Reject the refactor — existing architecture decisions should never be changed",
+            "Accept a trial: migrate one feature to Jotai while keeping others on Zustand"
+          ],
+          "answer": "First write an ADR documenting why Zustand was chosen — if the original reasons still apply, they should be weighed against the proposed change. Write a second ADR for the proposal with its costs and benefits. Make the decision based on evidence, not preference.",
+          "explanation": "Without an ADR for the original decision, the team is debating preferences rather than trade-offs. Writing the ADR retrospectively often surfaces the original constraints — maybe Zustand was chosen because the team knew it, the bundle size mattered, or a specific middleware was needed. Once the original context is documented, the proposal can be evaluated against it. 'Better DX' needs to outweigh the migration cost, the learning cost, and any capability gaps."
+        },
+        {
+          "id": "rx-lea-13-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A feature has 15 components in a flat `src/components/` folder, plus 8 hooks in `src/hooks/`, plus types scattered across files. What organisational pattern should you recommend and why?",
+          "options": [
+            "Feature-based colocation: move all quest-related components, hooks, and types into src/features/quests/ with an index.ts public API — this makes the feature self-contained and deletable as a unit",
+            "Atomic design: categorise components into atoms, molecules, organisms — this creates a universal hierarchy for any UI",
+            "Keep the flat structure but add better naming conventions to make the relationships clear",
+            "Move to a monorepo so each feature can be a separate package"
+          ],
+          "answer": "Feature-based colocation: move all quest-related components, hooks, and types into src/features/quests/ with an index.ts public API — this makes the feature self-contained and deletable as a unit",
+          "explanation": "Type-based structure (all components together, all hooks together) creates an implicit coupling: to understand how quests work, you read across three folders. Feature-based colocation keeps everything related to quests in one place. The index.ts enforces an API boundary — other features import from features/quests (the public API), not from specific files within it. This means internal refactoring doesn't break other features. The folder is also self-documenting: delete features/quests/ to remove the entire feature."
+        }
+      ]
+    }
+  ]
+}

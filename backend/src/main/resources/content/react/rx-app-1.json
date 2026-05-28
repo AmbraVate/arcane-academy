@@ -1,0 +1,126 @@
+{
+  "id": "rx-app-1",
+  "title": "React Foundation — The Component Forge",
+  "glyph": "⚛",
+  "sortOrder": 1,
+  "tier": "APPRENTICE",
+  "topicId": "react",
+  "prerequisites": [],
+  "subChunks": [
+    {
+      "id": "rx-app-1-1",
+      "title": "The Component Model",
+      "sortOrder": 1,
+      "xpReward": 75,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>The web started with static documents — HTML files that looked the same for every visitor. Then JavaScript let us change things dynamically, but that meant hunting through the page to find elements and update them by hand. The bigger the page, the worse it got.</p><p>React's answer: describe <em>what the UI should look like given your data</em>, and let React figure out how to update the page. The tool for this is the <strong>component</strong> — a reusable, composable function that returns a piece of UI.</p>",
+      "explanationHtml": "<p>Vex the Interface Weaver's workshop smells of old parchment and new electricity. Spell-diagrams cover the walls — not of fire or ice, but of <em>interfaces</em>: boxes within boxes, arrows showing data flow.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Vex the Interface Weaver:</strong> \"Before React, building a page that could change meant writing HTML to describe the initial state, then writing JavaScript to hunt through that HTML and manually update it when data changed. Imagine rewriting a novel every time you changed one sentence. We found a better way.\"</p></div>\n\n<h3>JSX — JavaScript with HTML syntax</h3>\n\n<p>JSX looks like HTML, but it is JavaScript. A build tool (Babel or esbuild) transforms your JSX into calls to <code>React.createElement()</code>:</p>\n\n<pre><code>// What you write:\nfunction Greeting() {\n  return &lt;h1&gt;Hello, Arcane Academy!&lt;/h1&gt;;\n}\n\n// What it compiles to (you never write this):\nfunction Greeting() {\n  return React.createElement('h1', null, 'Hello, Arcane Academy!');\n}</code></pre>\n\n<p>You write the readable version. The machine handles the translation.</p>\n\n<h3>A component is just a function</h3>\n\n<p>Any function that returns JSX is a React component — with two rules:</p>\n<ul>\n  <li>The function name must start with a <strong>capital letter</strong> (React uses this to tell your components apart from HTML tags)</li>\n  <li>It must return <strong>JSX or null</strong></li>\n</ul>\n\n<pre><code>function PageTitle() {\n  return &lt;h1&gt;Welcome to the Academy&lt;/h1&gt;;\n}\n\nconst Badge = () =&gt; &lt;span className=\"badge\"&gt;Expert&lt;/span&gt;;</code></pre>\n\n<h3>Four JSX rules you must know</h3>\n\n<p><strong>1. Single root element.</strong> Wrap siblings in a <code>&lt;div&gt;</code> or an empty fragment <code>&lt;&gt;…&lt;/&gt;</code>.</p>\n\n<pre><code>// ✅ Fragment wraps both without adding a DOM node\nfunction Right() {\n  return (\n    &lt;&gt;\n      &lt;h1&gt;Title&lt;/h1&gt;\n      &lt;p&gt;Subtitle&lt;/p&gt;\n    &lt;/&gt;\n  );\n}</code></pre>\n\n<p><strong>2. Self-close void tags.</strong> <code>&lt;img /&gt;</code>, <code>&lt;input /&gt;</code>, <code>&lt;br /&gt;</code> — JSX requires the slash.</p>\n\n<p><strong>3. <code>className</code>, not <code>class</code>.</strong> <code>class</code> is a reserved word in JavaScript.</p>\n\n<p><strong>4. Expressions in <code>{}</code>.</strong> Any JavaScript expression can be embedded inside JSX.</p>\n\n<pre><code>function UserCard() {\n  const name = 'Archmage Eldrin';\n  const yearsActive = 2024 - 1987;\n  return (\n    &lt;div className=\"card\"&gt;\n      &lt;h2&gt;{name}&lt;/h2&gt;\n      &lt;p&gt;{yearsActive} years of experience&lt;/p&gt;\n    &lt;/div&gt;\n  );\n}</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex the Interface Weaver's workshop is cluttered with diagrams — boxes nested inside boxes, arrows tracing paths between them. On the central workbench: a single glowing screen showing a page that keeps changing without a hand touching it."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Before React, you wrote HTML to describe the starting state of a page, then wrote JavaScript to hunt through that HTML and mutate it when something changed. The bigger the page, the more hunting. The more hunting, the more bugs. We found a better way: describe what the UI <em>should</em> look like given your data — and let React handle the updating."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The unit of composition is the component. A component is a function. It takes data in. It returns JSX — a description of what to render. That's it. Everything in React is built from components calling other components."
+        },
+        {
+          "type": "example",
+          "speaker": "Your first component",
+          "text": "function Greeting() {\n  return <h1>Hello, Arcane Academy!</h1>;\n}"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Write a <code>Greeting</code> component that renders two elements:</p><ul><li>An <code>&lt;h1&gt;</code> containing exactly: <strong>Hello, Arcane Academy!</strong></li><li>A <code>&lt;p&gt;</code> containing exactly: <strong>Your journey begins here.</strong></li></ul><p>Both must be returned from a single component. The starter code returns <code>null</code> — replace it with the correct JSX.</p>",
+      "guidedPracticeStarterCode": "export default function Greeting() {\n  // TODO: return JSX with an <h1> and a <p>\n  // Wrap them in a fragment <></> or a <div>\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders h1 with correct text",
+          "selector": "h1",
+          "requiredText": "Hello, Arcane Academy!"
+        },
+        {
+          "label": "Renders paragraph with correct text",
+          "selector": "p",
+          "requiredText": "Your journey begins here."
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;PageHeader&gt;</code> component from scratch — no scaffold. Render a <code>&lt;header&gt;</code> element containing an <code>&lt;h1&gt;</code> with <strong>The Arcane Academy</strong> and a <code>&lt;p&gt;</code> with <strong>Master many arts. Forget nothing.</strong></p>",
+      "feynmanPrompt": "Explain JSX to someone who only knows HTML. What is it, why does it look like HTML if it isn't, and what does it actually become when the code runs? Include what happens to a JavaScript expression like <code>{user.name}</code> embedded inside JSX.",
+      "questions": [
+        {
+          "id": "rx-app-1-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does JSX compile to when your code runs?",
+          "options": [
+            "Calls to React.createElement()",
+            "Raw HTML strings injected directly into the DOM",
+            "JSON objects sent to the server",
+            "CSS class declarations"
+          ],
+          "answer": "Calls to React.createElement()",
+          "explanation": "JSX is syntactic sugar. A build tool (Babel, esbuild, or the React compiler) transforms every JSX element into a React.createElement() call. Writing JSX is purely a developer convenience — the browser never sees JSX directly."
+        },
+        {
+          "id": "rx-app-1-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "In JSX, which attribute replaces the HTML `class` attribute?",
+          "options": [
+            "className",
+            "classname",
+            "class-name",
+            "htmlClass"
+          ],
+          "answer": "className",
+          "explanation": "`class` is a reserved keyword in JavaScript (used for ES6 classes). JSX, being JavaScript, must use `className` instead. Similarly, `for` on a label element becomes `htmlFor` in JSX."
+        },
+        {
+          "id": "rx-app-1-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "React distinguishes your components from HTML tags using:",
+          "options": [
+            "A capital first letter on the component name",
+            "A special `component={}` attribute on the element",
+            "Wrapping the name in double angle brackets like <<MyComp>>",
+            "A React.component() wrapper function call"
+          ],
+          "answer": "A capital first letter on the component name",
+          "explanation": "When React sees <div>, it renders an HTML div. When it sees <MyCard>, the capital letter tells React to look for a function named MyCard and call it. Lowercase = HTML tag. Capitalised = your component."
+        },
+        {
+          "id": "rx-app-1-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "This component has a syntax error:\n\nfunction Header() {\n  return (\n    <h1>Title</h1>\n    <p>Subtitle</p>\n  );\n}\n\nWhat are the valid fixes?",
+          "options": [
+            "Wrap both in a fragment: <><h1>Title</h1><p>Subtitle</p></>",
+            "Add a comma between the elements",
+            "Return an array: return [<h1 key=\"t\">Title</h1>, <p key=\"s\">Subtitle</p>]",
+            "Both A and C are valid fixes"
+          ],
+          "answer": "Both A and C are valid fixes",
+          "explanation": "A component must have a single root — but that can be a fragment (<>…</>) which adds no DOM node, or an array of keyed elements. Fragment syntax is more common and readable. Both are correct."
+        }
+      ]
+    }
+  ]
+}

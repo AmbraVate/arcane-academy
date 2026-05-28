@@ -1,0 +1,92 @@
+{
+  "id": "tw-app-12",
+  "title": "Shadows and Effects",
+  "glyph": "🎨",
+  "sortOrder": 12,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-4"],
+  "subChunks": [
+    {
+      "id": "tw-app-12-1",
+      "title": "Shadows and Effects",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Shadows, filters, and blending effects create the depth and atmosphere that separate polished UIs from flat ones. Tailwind's shadow scale, drop-shadow filters, and backdrop utilities let you build elevated cards, frosted glass effects, and depth cues without writing any CSS.</p>",
+      "explanationHtml": "<h3>Box shadow</h3>\n<pre><code>shadow-none  /* removes shadow                */\nshadow-sm    /* very subtle — 1px elevation   */\nshadow       /* default — card-level          */\nshadow-md    /* moderate — floating element   */\nshadow-lg    /* prominent — dropdown          */\nshadow-xl    /* strong — modal                */\nshadow-2xl   /* dramatic — overlays           */\nshadow-inner /* inset shadow — recessed look  */\n\n/* Coloured shadows */\nshadow-blue-500/20   /* blue-tinted shadow at 20% opacity */\n</code></pre>\n\n<h3>Drop shadow (filter-based, for non-rectangular shapes)</h3>\n<pre><code>/* Works on PNG icons, SVGs with transparency: */\ndrop-shadow-sm\ndrop-shadow\ndrop-shadow-md\ndrop-shadow-lg\ndrop-shadow-xl\ndrop-shadow-none\n</code></pre>\n\n<h3>Backdrop filter (frosted glass)</h3>\n<pre><code>/* Frosted glass effect: */\n&lt;div class=\"backdrop-blur-md bg-white/20 border border-white/30 rounded-xl p-6\"&gt;\n  &lt;!-- content visible through the blur --&gt;\n&lt;/div&gt;\n\nbackdrop-blur-sm   backdrop-blur   backdrop-blur-md   backdrop-blur-lg   backdrop-blur-xl\nbackdrop-brightness-75  /* darken behind */\nbackdrop-saturate-150   /* enhance colour behind */\n</code></pre>\n\n<h3>Filter effects</h3>\n<pre><code>blur-sm   blur   blur-md   blur-lg   blur-xl   blur-none\nbrightness-50   brightness-75   brightness-100   brightness-125   brightness-150\ncontrast-50     contrast-75     contrast-100     contrast-125\ngrayscale       /* fully desaturated     */\ngrayscale-0     /* no grayscale (reset)  */\nsepia           /* warm sepia tone       */\ninvert          /* colour inversion      */\nhue-rotate-90\n</code></pre>\n\n<h3>Transform effects</h3>\n<pre><code>scale-95   scale-100   scale-105   scale-110   scale-150\n-translate-x-1   translate-x-2   translate-y-4\nrotate-45   rotate-90   rotate-180   -rotate-6\nskew-x-6   skew-y-3\n</code></pre>\n\n<h3>Common design patterns</h3>\n<pre><code>/* Elevated card */\n&lt;div class=\"bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-200\"&gt;\n\n/* Frosted glass nav */\n&lt;nav class=\"sticky top-0 z-30\n            backdrop-blur-md bg-white/80\n            border-b border-gray-200/50\"&gt;\n\n/* Image with grayscale on hover (portfolio style) */\n&lt;img class=\"grayscale hover:grayscale-0 transition-all duration-300\"&gt;\n\n/* Loading skeleton shimmer */\n&lt;div class=\"bg-gray-200 rounded animate-pulse h-4 w-3/4\"&gt;&lt;/div&gt;\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Sable:</strong> \"backdrop-blur is the modern way to create depth without blocking content. It is used extensively in macOS, iOS, and modern SaaS products. The pattern is always the same: backdrop-blur-md bg-white/70 border border-white/20. That combination creates the frosted glass effect used in high-end product UIs.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧑‍🎨",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "Shadows communicate elevation. A card is shadow-md. A dropdown is shadow-lg. A modal is shadow-xl. The shadow scale is a vocabulary of depth — learn it once and you will know instinctively which shadow belongs on which element."
+        },
+        {
+          "type": "example",
+          "speaker": "Frosted glass navigation bar",
+          "text": "<!-- Modern frosted-glass nav -->\n<nav class=\"sticky top-0 z-30\n            backdrop-blur-md bg-white/80\n            border-b border-gray-200/50\n            px-6 py-4\">\n  <!-- nav content -->\n</nav>\n\n<!-- Skeleton loader -->\n<div class=\"space-y-3\">\n  <div class=\"bg-gray-200 rounded animate-pulse h-4 w-3/4\"></div>\n  <div class=\"bg-gray-200 rounded animate-pulse h-4 w-1/2\"></div>\n</div>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an elevated card and a frosted glass header:</p>\n<ul>\n  <li><strong>.elevated-card</strong>: <code>bg-white</code>, <code>rounded-2xl</code>, <code>shadow-lg</code>, <code>hover:shadow-xl</code>, <code>hover:-translate-y-0.5</code>, <code>transition</code>, <code>duration-200</code>, <code>p-6</code></li>\n  <li><strong>.glass-nav</strong>: <code>sticky</code>, <code>top-0</code>, <code>z-30</code>, <code>backdrop-blur-md</code>, <code>bg-white/80</code>, <code>border-b</code>, <code>border-gray-200/50</code>, <code>px-6</code>, <code>py-4</code></li>\n  <li><strong>.skeleton</strong>: <code>bg-gray-200</code>, <code>rounded</code>, <code>animate-pulse</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div>\n  <nav class=\"glass-nav flex items-center justify-between\">\n    <span class=\"font-bold text-gray-900\">Arcane Academy</span>\n    <span class=\"text-sm text-gray-500\">Frosted Glass Nav</span>\n  </nav>\n  <div class=\"p-6 space-y-4\">\n    <div class=\"elevated-card\">\n      <h3 class=\"font-semibold text-gray-900\">Slay the Dragon</h3>\n      <p class=\"text-sm text-gray-500 mt-1\">500 XP reward</p>\n    </div>\n    <div class=\"elevated-card\">\n      <div class=\"space-y-2\">\n        <div class=\"skeleton h-4 w-3/4\"></div>\n        <div class=\"skeleton h-4 w-1/2\"></div>\n        <div class=\"skeleton h-4 w-2/3\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: shadow-lg",           "selector": ".elevated-card", "requiredClass": "shadow-lg"         },
+        { "label": "Card: hover shadow-xl",     "selector": ".elevated-card", "requiredClass": "hover:shadow-xl"   },
+        { "label": "Card: hover lift",          "selector": ".elevated-card", "requiredClass": "hover:-translate-y-0.5" },
+        { "label": "Card: transition",          "selector": ".elevated-card", "requiredClass": "transition"        },
+        { "label": "Nav: backdrop-blur",        "selector": ".glass-nav",     "requiredClass": "backdrop-blur-md"  },
+        { "label": "Nav: semi-transparent bg",  "selector": ".glass-nav",     "requiredClass": "bg-white/80"       },
+        { "label": "Nav: sticky",               "selector": ".glass-nav",     "requiredClass": "sticky"            },
+        { "label": "Skeleton: animate-pulse",   "selector": ".skeleton",      "requiredClass": "animate-pulse"     }
+      ],
+      "soloPracticeHtml": "<p>Build a profile card with depth: a shadow that increases on hover with a subtle upward movement, a member avatar with a grayscale filter that animates to full colour on hover, a skeleton loading state for the card content (three animated placeholder lines), and a frosted glass overlay that appears on hover covering the bottom third of the card.</p>",
+      "feynmanPrompt": "Explain the difference between shadow (box-shadow) and drop-shadow (filter: drop-shadow) — when should you use each? Walk through the frosted glass pattern: what does each of backdrop-blur-md, bg-white/80, and border-white/20 contribute to the visual effect?",
+      "questions": [
+        {
+          "id": "tw-app-12-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "APPRENTICE",
+          "prompt": "Which class creates a pulsing animation used for skeleton loading states?",
+          "options": ["animate-pulse", "animate-skeleton", "skeleton-loading", "transition-pulse"],
+          "answer": "animate-pulse",
+          "explanation": "animate-pulse applies a CSS animation that fades the element's opacity between 100% and 50% repeatedly. Combined with bg-gray-200 and rounded on a div, it creates the skeleton loading effect used in modern UIs while content loads."
+        },
+        {
+          "id": "tw-app-12-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You want a navigation bar that blurs the content behind it (frosted glass effect). Which class combination achieves this?",
+          "options": [
+            "backdrop-blur-md bg-white/80 — blurs what's behind and uses a semi-transparent white background",
+            "blur-md bg-white/80 — blur the nav itself and make it transparent",
+            "filter-blur-md bg-white opacity-80 — applies filter to the nav",
+            "background-blur bg-white/80 — CSS background blur shorthand"
+          ],
+          "answer": "backdrop-blur-md bg-white/80 — blurs what's behind and uses a semi-transparent white background",
+          "explanation": "backdrop-blur-md applies the backdrop-filter: blur() CSS property, which blurs the content behind the element. The element itself needs a semi-transparent background (bg-white/80) to show the blur effect — a fully opaque background would hide the blur. blur-md would blur the nav's own content, which is the opposite of what you want."
+        },
+        {
+          "id": "tw-app-12-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You want a PNG icon with a transparent background to have a coloured glow/shadow effect that follows its exact shape. Should you use shadow-* or drop-shadow-*?",
+          "options": [
+            "drop-shadow-* — it's a CSS filter that traces the actual visible pixels of the image, including transparency",
+            "shadow-* — box-shadow is more performant than filter",
+            "Both work identically for PNG images",
+            "shadow-* with rounded-none to prevent clipping"
+          ],
+          "answer": "drop-shadow-* — it's a CSS filter that traces the actual visible pixels of the image, including transparency",
+          "explanation": "box-shadow (shadow-*) creates a shadow behind the element's rectangular bounding box — for a PNG with a transparent background, you'd see a rectangular shadow, not one that follows the icon shape. drop-shadow as a CSS filter traces the actual opaque pixels, creating a shadow that follows the icon's visual outline. For icons, logos, and illustrated characters: drop-shadow. For cards and containers: shadow."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "id": "rx-jun-6",
+  "title": "Custom Hooks: Extracting Reusable Logic",
+  "glyph": "⚛",
+  "sortOrder": 6,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-1", "rx-jun-2"],
+  "subChunks": [
+    {
+      "id": "rx-jun-6-1",
+      "title": "Custom Hooks: Extracting Reusable Logic",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>When the same combination of useState and useEffect appears in three components, it's time to extract a custom hook. Custom hooks let you package stateful logic — fetching, timers, local storage sync, form handling — into a single reusable function. The result: components that are readable, and logic that is testable.</p>",
+      "explanationHtml": "<h3>What is a custom hook?</h3>\n\n<p>A custom hook is a JavaScript function whose name starts with <code>use</code> and that calls other hooks. That's the entire definition.</p>\n\n<pre><code>function useWindowWidth() {\n  const [width, setWidth] = useState(window.innerWidth);\n\n  useEffect(() =&gt; {\n    const handleResize = () =&gt; setWidth(window.innerWidth);\n    window.addEventListener('resize', handleResize);\n    return () =&gt; window.removeEventListener('resize', handleResize);\n  }, []);\n\n  return width;\n}\n\nfunction ResponsiveLayout() {\n  const width = useWindowWidth();\n  return &lt;p&gt;{width &gt; 768 ? 'Desktop' : 'Mobile'}&lt;/p&gt;;\n}</code></pre>\n\n<h3>useFetch — the most useful custom hook you'll write</h3>\n\n<pre><code>function useFetch(url) {\n  const [data, setData] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() =&gt; {\n    let cancelled = false;\n    async function load() {\n      setLoading(true); setError(null);\n      try {\n        const res = await fetch(url);\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        const json = await res.json();\n        if (!cancelled) setData(json);\n      } catch (e) {\n        if (!cancelled) setError(e.message);\n      } finally {\n        if (!cancelled) setLoading(false);\n      }\n    }\n    load();\n    return () =&gt; { cancelled = true; };\n  }, [url]);\n\n  return { data, loading, error };\n}\n\n// Every component that fetches data:\nfunction UserProfile({ userId }) {\n  const { data: user, loading, error } = useFetch(`/api/users/${userId}`);\n  if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;\n  if (error)   return &lt;p&gt;Error: {error}&lt;/p&gt;;\n  return &lt;h2&gt;{user.name}&lt;/h2&gt;;\n}</code></pre>\n\n<h3>useLocalStorage</h3>\n\n<pre><code>function useLocalStorage(key, initialValue) {\n  const [value, setValue] = useState(() =&gt; {\n    try {\n      const stored = localStorage.getItem(key);\n      return stored ? JSON.parse(stored) : initialValue;\n    } catch {\n      return initialValue;\n    }\n  });\n\n  function setStoredValue(newValue) {\n    setValue(newValue);\n    localStorage.setItem(key, JSON.stringify(newValue));\n  }\n\n  return [value, setStoredValue];\n}\n\n// Drop-in replacement for useState that persists:\nconst [theme, setTheme] = useLocalStorage('theme', 'light');</code></pre>\n\n<h3>When to extract a custom hook</h3>\n\n<ul>\n  <li>The same useState + useEffect combination appears in multiple components</li>\n  <li>A component's logic is complex enough that hook logic dominates readability</li>\n  <li>You want to unit test the logic independently of the UI</li>\n</ul>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Custom hooks are the final piece of the Junior bridge. Components describe <em>what to render</em>. Custom hooks contain <em>how to get the data</em>. Keep them separate and both become easier to read, test, and change.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "When you see the same useState and useEffect combination in three places, that is a custom hook waiting to be written. A custom hook is just a function that starts with 'use' and calls other hooks. Extract it once. Use it everywhere."
+        },
+        {
+          "type": "example",
+          "speaker": "useFetch",
+          "text": "function useFetch(url) {\n  const [data, setData] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n  useEffect(() => { /* fetch logic */ }, [url]);\n  return { data, loading, error };\n}\n\nconst { data, loading, error } = useFetch('/api/quests');"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Extract the data-fetching logic into a <code>useFetch(url)</code> custom hook, then use it in a <code>&lt;QuestList&gt;</code> component.</p><ul><li><code>useFetch</code> accepts a URL and returns <code>{ data, loading, error }</code></li><li>It handles loading state, error state, and the race-condition cleanup flag</li><li><code>QuestList</code> calls <code>useFetch('https://jsonplaceholder.typicode.com/todos?_limit=5')</code> and renders a loading message, error message, or a <code>&lt;ul data-testid=\"list\"&gt;</code> of item titles</li></ul>",
+      "guidedPracticeStarterCode": "import { useState, useEffect } from 'react';\n\n// TODO: implement useFetch(url) returning { data, loading, error }\nfunction useFetch(url) {\n}\n\nexport default function QuestList() {\n  // TODO: use useFetch\n  return null;\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Shows loading state initially",
+          "selector": "[data-testid='loading']",
+          "exists": true
+        },
+        {
+          "label": "Shows list after load",
+          "selector": "[data-testid='list']",
+          "exists": true
+        },
+        {
+          "label": "Renders 5 list items",
+          "selector": "li",
+          "count": 5
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>useLocalStorage(key, initialValue)</code> custom hook from scratch that behaves like useState but persists to localStorage. Then use it in a <code>&lt;ThemeToggle&gt;</code> component that persists 'light' or 'dark' across page refreshes.</p>",
+      "feynmanPrompt": "Explain what a custom hook is and why the `use` prefix matters. Walk through how you would extract a repeated fetch pattern into a `useFetch` hook — what does the hook contain, what does it return, and what does the component look like after extraction?",
+      "questions": [
+        {
+          "id": "rx-jun-6-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "What are the two requirements for a function to be a React custom hook?",
+          "options": [
+            "Its name must start with `use`, and it must call at least one React hook",
+            "It must be defined inside a component and return JSX",
+            "It must accept props as its first argument and return state",
+            "It must be exported from a separate file"
+          ],
+          "answer": "Its name must start with `use`, and it must call at least one React hook",
+          "explanation": "The `use` prefix lets React's linter and runtime enforce hook rules. Any function starting with `use` that calls useState, useEffect, or other hooks is a valid custom hook."
+        },
+        {
+          "id": "rx-jun-6-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "Two components call the same custom hook. Do they share state?",
+          "options": [
+            "No — each component gets its own independent state from the hook",
+            "Yes — hooks share state between all components that call them",
+            "Only if the hook uses useContext internally",
+            "Only if both components are rendered by the same parent"
+          ],
+          "answer": "No — each component gets its own independent state from the hook",
+          "explanation": "Custom hooks are not singletons. Each call creates an independent set of state and effects for that specific component instance — same as calling useState directly."
+        },
+        {
+          "id": "rx-jun-6-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "A component calls `useFetch(url)` with a URL that depends on a prop. What must you ensure?",
+          "options": [
+            "The full URL string must be constructed before passing to useFetch, and the hook's dependency array must include url",
+            "Pass the base URL and params separately — useFetch builds the final URL internally",
+            "Memoize the URL with useMemo to prevent the effect from re-running",
+            "The URL must be a constant — dynamic URLs require a separate useEffect"
+          ],
+          "answer": "The full URL string must be constructed before passing to useFetch, and the hook's dependency array must include url",
+          "explanation": "The component builds the URL: useFetch(`/api/users/${userId}`). The hook's internal effect must have url in its dependency array so it re-fetches when the URL changes."
+        },
+        {
+          "id": "rx-jun-6-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "When is it NOT appropriate to extract logic into a custom hook?",
+          "options": [
+            "When the logic is used in only one place and is straightforward — the abstraction adds indirection without benefit",
+            "When the logic involves more than two useState calls",
+            "When the hook would call useEffect",
+            "When the logic is synchronous"
+          ],
+          "answer": "When the logic is used in only one place and is straightforward — the abstraction adds indirection without benefit",
+          "explanation": "Extract when the pattern repeats or when complexity dominates readability. Don't extract for the sake of cleanliness when there's only one usage — you create a new file, a new abstraction, and no concrete benefit."
+        }
+      ]
+    }
+  ]
+}

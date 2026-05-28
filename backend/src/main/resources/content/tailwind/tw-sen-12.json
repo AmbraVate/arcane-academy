@@ -1,0 +1,101 @@
+{
+  "id": "tw-sen-12",
+  "title": "CSS Layers and Cascade Management",
+  "glyph": "🔮",
+  "sortOrder": 12,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-1"],
+  "subChunks": [
+    {
+      "id": "tw-sen-12-1",
+      "title": "CSS Layers and Cascade Management",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>CSS specificity wars are the root cause of most <code>!important</code> abuse. CSS <code>@layer</code> gives you explicit control over the cascade order — Tailwind v4 uses layers internally, and understanding them lets you integrate third-party CSS, base styles, and custom utilities without specificity conflicts.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"Every !important in a codebase is a confession that someone lost a specificity battle they did not understand. @layer removes the battle entirely. You declare the order; the cascade respects it.\"</p></div>\n\n<h3>How @layer works</h3>\n<p>Layers have explicit precedence order. A rule in a higher-priority layer beats a rule in a lower-priority layer regardless of specificity:</p>\n<pre><code>/* Declare layer order — last listed wins in conflicts */\n@layer base, components, utilities;\n\n@layer base {\n  /* Low priority — can be overridden by components or utilities */\n  h1 { font-size: 2rem; }\n  p  { line-height: 1.6; }\n}\n\n@layer components {\n  .card { background: white; border-radius: 0.5rem; padding: 1rem; }\n}\n\n@layer utilities {\n  /* Highest priority — wins over base and components */\n  .text-red-500 { color: rgb(239 68 68); }\n}\n\n/* Unlayered CSS is treated as above all layers */\n.override { font-size: 1rem !important; }  /* Only use as last resort */</code></pre>\n\n<h3>Tailwind v4's layer structure</h3>\n<pre><code>/* When you @import \"tailwindcss\", Tailwind emits: */\n@layer theme { /* CSS variables from @theme */ }\n@layer base { /* normalize, default element styles */ }\n@layer components { /* @utility definitions */ }\n@layer utilities { /* generated utility classes */ }\n\n/* Your custom CSS can extend or override these layers: */\n@layer base {\n  /* Add to Tailwind's base layer */\n  *, *::before, *::after {\n    box-sizing: border-box;\n  }\n  :focus-visible {\n    outline: 2px solid var(--color-primary);\n    outline-offset: 2px;\n  }\n}\n\n@layer components {\n  /* Component styles that Tailwind utilities can still override */\n  .prose-custom {\n    max-width: 65ch;\n    line-height: 1.75;\n  }\n}</code></pre>\n\n<h3>Integrating third-party CSS without specificity conflicts</h3>\n<pre><code>/* Wrap third-party CSS in a low-priority layer */\n@layer vendor {\n  @import \"third-party-library.css\";\n}\n\n/* Declare vendor below your layers so it never wins */\n@layer vendor, base, components, utilities;</code></pre>\n\n<h3>The specificity chart with @layer</h3>\n<pre><code>/* Specificity order (lowest to highest): */\n/* 1. @layer vendor                         */\n/* 2. @layer base                           */\n/* 3. @layer components                     */\n/* 4. @layer utilities                      */\n/* 5. Unlayered CSS                         */\n/* 6. !important (within layers, reversed)  */\n\n/* A class in utilities ALWAYS beats a class in base, */\n/* even if the base rule has higher selector specificity. */</code></pre>\n\n<h3>When to use @layer components vs @utility</h3>\n<pre><code>/* @utility — for single-responsibility utilities */\n@utility scrollbar-hide { scrollbar-width: none; }\n@utility focus-ring { outline: 2px solid var(--color-primary); }\n\n/* @layer components — for multi-property component patterns */\n@layer components {\n  .input-base {\n    width: 100%;\n    padding: 0.5rem 0.75rem;\n    border: 1px solid var(--color-border);\n    border-radius: 0.375rem;\n    font-size: 0.875rem;\n    transition: border-color 0.15s;\n  }\n}\n/* Tailwind utilities can still override: */\n&lt;input class=\"input-base border-red-500\"&gt; /* Overrides border-color from @layer components */</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Maester Cordell:</strong> \"The rule: @utility for single-purpose reusable utilities. @layer components for multi-property base styles that utilities will override. @layer vendor for third-party CSS. Never reach for !important when @layer solves it.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "maester",
+          "speaker": "Maester Cordell",
+          "sCls": "mentor",
+          "text": "@layer gives you explicit cascade order. A utility class in @layer utilities always beats a component style in @layer components — regardless of selector specificity. This is how Tailwind wins every style conflict without !important."
+        },
+        {
+          "type": "example",
+          "speaker": "@layer order declaration",
+          "text": "@layer vendor, base, components, utilities;\n\n/* utilities layer always wins — no !important needed */\n.text-red-500 { color: ... } /* in utilities layer — beats any component style */"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a form input system using @layer components for base styles that Tailwind utilities override:</p>\n<ul>\n  <li><strong>.layer-input</strong>: <code>w-full</code>, <code>px-3</code>, <code>py-2</code>, <code>border</code>, <code>border-gray-300</code>, <code>rounded-md</code>, <code>text-sm</code>, <code>focus:outline-none</code>, <code>focus-visible:ring-2</code>, <code>focus-visible:ring-blue-500</code>, <code>focus-visible:border-blue-500</code>, <code>transition-colors</code></li>\n  <li><strong>.layer-input-error</strong>: <code>w-full</code>, <code>px-3</code>, <code>py-2</code>, <code>border</code>, <code>border-red-500</code>, <code>rounded-md</code>, <code>text-sm</code>, <code>focus:outline-none</code>, <code>focus-visible:ring-2</code>, <code>focus-visible:ring-red-500</code>, <code>transition-colors</code></li>\n  <li><strong>.layer-label</strong>: <code>block</code>, <code>text-sm</code>, <code>font-medium</code>, <code>text-gray-700</code>, <code>mb-1</code></li>\n  <li><strong>.layer-hint</strong>: <code>text-xs</code>, <code>text-gray-500</code>, <code>mt-1</code></li>\n  <li><strong>.layer-error-msg</strong>: <code>text-xs</code>, <code>text-red-600</code>, <code>mt-1</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"max-w-sm p-6 space-y-4\">\n  <!-- Normal input -->\n  <div>\n    <label class=\"layer-label\">Username</label>\n    <input class=\"layer-input\" type=\"text\" placeholder=\"aria_sunforge\" />\n    <p class=\"layer-hint\">This will be your public username.</p>\n  </div>\n\n  <!-- Error state input -->\n  <div>\n    <label class=\"layer-label\">Email address</label>\n    <input class=\"layer-input-error\" type=\"email\" value=\"invalid-email\" />\n    <p class=\"layer-error-msg\">Please enter a valid email address.</p>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Input: w-full",                       "selector": ".layer-input",       "requiredClass": "w-full"                       },
+        { "label": "Input: border-gray-300",              "selector": ".layer-input",       "requiredClass": "border-gray-300"              },
+        { "label": "Input: focus:outline-none",           "selector": ".layer-input",       "requiredClass": "focus:outline-none"           },
+        { "label": "Input: focus-visible:ring-2",         "selector": ".layer-input",       "requiredClass": "focus-visible:ring-2"         },
+        { "label": "Input: focus-visible:ring-blue-500",  "selector": ".layer-input",       "requiredClass": "focus-visible:ring-blue-500"  },
+        { "label": "Input: transition-colors",            "selector": ".layer-input",       "requiredClass": "transition-colors"            },
+        { "label": "Error input: border-red-500",         "selector": ".layer-input-error", "requiredClass": "border-red-500"               },
+        { "label": "Error input: focus-visible:ring-red-500","selector": ".layer-input-error","requiredClass": "focus-visible:ring-red-500" },
+        { "label": "Label: block",                        "selector": ".layer-label",       "requiredClass": "block"                        },
+        { "label": "Label: font-medium",                  "selector": ".layer-label",       "requiredClass": "font-medium"                  },
+        { "label": "Hint: text-xs",                       "selector": ".layer-hint",        "requiredClass": "text-xs"                      },
+        { "label": "Error msg: text-red-600",             "selector": ".layer-error-msg",   "requiredClass": "text-red-600"                 }
+      ],
+      "soloPracticeHtml": "<p>Build a demonstration of @layer cascade management from scratch. Create three CSS rules — one in @layer base, one in @layer components, one in @layer utilities — that all set the same property on the same selector. Show that the utilities layer wins. Write a comment explaining why, even if the base rule has a higher specificity selector.</p>",
+      "feynmanPrompt": "Explain why @layer makes !important largely unnecessary in a Tailwind codebase. Walk through how Tailwind v4 uses layers internally, and explain the correct use case for @utility vs @layer components for a new reusable class.",
+      "questions": [
+        {
+          "id": "tw-sen-12-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "Given @layer base, components, utilities declared in this order, a rule in @layer utilities with specificity (0,1,0) and a rule in @layer base with specificity (1,0,0) — which wins?",
+          "options": [
+            "The @layer utilities rule wins — layer order overrides selector specificity",
+            "The @layer base rule wins — specificity (1,0,0) is higher",
+            "Both apply — they are in different layers so no conflict occurs",
+            "The one declared later in the source file wins"
+          ],
+          "answer": "The @layer utilities rule wins — layer order overrides selector specificity",
+          "explanation": "@layer explicitly overrides specificity within the cascade. The layer declared later in the @layer order always wins, regardless of selector specificity. This is the entire point: utilities always override base styles without needing higher specificity selectors or !important."
+        },
+        {
+          "id": "tw-sen-12-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "You are integrating a third-party CSS library that sets font-size on .card. Tailwind's text-sm should override it but doesn't. What is the most elegant fix using @layer?",
+          "options": [
+            "Wrap the library import in @layer vendor { ... } and declare: @layer vendor, base, components, utilities — utilities always win",
+            "Add !important to the text-sm Tailwind utility",
+            "Increase selector specificity: .card.text-sm { font-size: 0.875rem; }",
+            "Load the third-party CSS after Tailwind so it takes precedence by source order"
+          ],
+          "answer": "Wrap the library import in @layer vendor { ... } and declare: @layer vendor, base, components, utilities — utilities always win",
+          "explanation": "Wrapping third-party CSS in a low-priority @layer vendor places it below all Tailwind layers in the cascade. Any Tailwind utility then wins the conflict without !important or increased specificity. Loading third-party CSS last in source order would make it win, not Tailwind."
+        },
+        {
+          "id": "tw-sen-12-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "SENIOR",
+          "prompt": "You want to create a reusable .input-base class with multiple properties (padding, border, font-size) that Tailwind utilities can still override. Should you use @utility or @layer components?",
+          "options": [
+            "@layer components — multi-property component styles that Tailwind's utilities layer overrides",
+            "@utility — all custom CSS should be defined as @utility to participate in Tailwind's system",
+            "Either works identically — the choice is purely stylistic",
+            "@utility for multi-property styles; @layer components for single-property utilities"
+          ],
+          "answer": "@layer components — multi-property component styles that Tailwind's utilities layer overrides",
+          "explanation": "@utility is for single-responsibility utilities (like .scrollbar-hide) that should behave like Tailwind built-ins — participating in the utilities layer. @layer components is for multi-property component base styles that are meant to be extended by utility classes. Tailwind utilities in @layer utilities always override @layer components, so the override pattern works correctly."
+        }
+      ]
+    }
+  ]
+}

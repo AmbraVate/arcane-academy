@@ -1,0 +1,108 @@
+{
+  "id": "tw-sen-7",
+  "title": "Design Handoff: Figma to Tailwind",
+  "glyph": "🔮",
+  "sortOrder": 7,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-1", "tw-sen-6"],
+  "subChunks": [
+    {
+      "id": "tw-sen-7-1",
+      "title": "Design Handoff: Figma to Tailwind",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Knowing Tailwind classes is necessary. Translating a Figma design into those classes fluently is what makes you useful on day one of a real job. Most junior developers struggle at this seam — not because they don't know Tailwind, but because they've never practised reading a spec.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"Every real project starts here: a design, and a blank editor. The designer has made decisions about spacing, colour, type, and layout. Your job is to read those decisions correctly and express them in Tailwind. That is a skill. It requires practice.\"</p></div>\n\n<h3>Reading spacing from a design</h3>\n<p>Map Figma pixel values to the Tailwind scale (4px base unit):</p>\n<pre><code>4px  → p-1 / m-1     8px  → p-2 / m-2     12px → p-3 / m-3\n16px → p-4 / m-4     24px → p-6 / m-6     32px → p-8 / m-8\n48px → p-12 / m-12   64px → p-16 / m-16   96px → p-24 / m-24</code></pre>\n<p><strong>When in doubt, round to the nearest token.</strong> A 14px padding is more likely intentional <code>p-3.5</code> than a design accident.</p>\n\n<h3>Reading typography</h3>\n<ul>\n<li><strong>Font size</strong>: 12px → <code>text-xs</code>, 14px → <code>text-sm</code>, 16px → <code>text-base</code>, 18px → <code>text-lg</code>, 20px → <code>text-xl</code>, 24px → <code>text-2xl</code></li>\n<li><strong>Font weight</strong>: 400 → <code>font-normal</code>, 500 → <code>font-medium</code>, 600 → <code>font-semibold</code>, 700 → <code>font-bold</code></li>\n<li><strong>Line height</strong>: leading-5 = 20px, leading-6 = 24px (5 × 4px scale)</li>\n</ul>\n\n<h3>Reading colour</h3>\n<p><strong>Scenario A — default palette:</strong> Copy the hex from Figma and look it up. <code>#6366f1</code> is <code>indigo-500</code>. <code>#374151</code> is <code>gray-700</code>.</p>\n<p><strong>Scenario B — custom palette:</strong> Use the semantic token name, not a hardcoded hex. Don't write <code>bg-[#6366f1]</code> when the project has <code>bg-primary</code>.</p>\n\n<h3>Reading layout</h3>\n<ul>\n<li><strong>Row of items</strong>: flex. Evenly spaced → <code>justify-between</code>. Packed left → <code>justify-start gap-4</code>.</li>\n<li><strong>Card grid</strong>: grid. Count columns per row → <code>grid-cols-1 md:grid-cols-2 lg:grid-cols-3</code>.</li>\n<li><strong>Sidebar + content</strong>: <code>grid-cols-[240px_1fr]</code>.</li>\n<li><strong>Centred column</strong>: <code>max-w-* mx-auto px-*</code>.</li>\n</ul>\n\n<h3>The professional workflow</h3>\n<ol>\n<li><strong>Identify components</strong> — mentally group the design before writing code.</li>\n<li><strong>Mobile-first</strong> — start with the phone layout. Add breakpoint prefixes for larger screens.</li>\n<li><strong>Structure before colour</strong> — get layout and spacing correct first.</li>\n<li><strong>Closest token wins</strong> — prefer a Tailwind token over an arbitrary value. If you're using more than 2–3 arbitrary values on a component, the <code>@theme</code> config is missing those tokens.</li>\n<li><strong>Check in browser at multiple sizes</strong> — resize constantly.</li>\n</ol>\n\n<div class=\"dialogue mentor\"><p><strong>Solomon:</strong> \"The developer who can read a design accurately and translate it faithfully the first time will always be valued above the one who must be corrected six times before the spacing is right.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Solomon places a printed screenshot on the desk. No annotation. No measurements. Just the design."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "Reading spacing: 8px is p-2, 16px is p-4, 24px is p-6. Reading type: 14px semi-bold is text-sm font-semibold. Reading layout: a row of spaced items is flex justify-between. None of this is guessing. It is pattern recognition built through practice."
+        },
+        {
+          "type": "example",
+          "speaker": "Spacing scale — memorise this mapping",
+          "text": "4px  → p-1     8px  → p-2     12px → p-3\n16px → p-4     24px → p-6     32px → p-8\n48px → p-12    64px → p-16    96px → p-24"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Recreate this notification card from the visual description below — no class list provided. Read the spec and apply the correct utilities:</p>\n<p><strong>White card</strong>, 16px all-around padding, 12px rounded corners, small shadow, thin gray-200 border. <strong>Header row</strong>: small green dot (10×10px circle, bg-green-400) on the left, then the title \"System online\" in 14px semi-bold dark gray, then a dismiss ✕ pushed to the far right in muted gray. <strong>Body text</strong> below: 12px, gray-500, 4px top margin: \"All services are operating normally.\"</p>\n<ul>\n  <li><strong>.notify-card</strong>: <code>bg-white</code>, <code>p-4</code>, <code>rounded-xl</code>, <code>border</code>, <code>border-gray-200</code>, <code>shadow-sm</code></li>\n  <li><strong>.notify-header</strong>: <code>flex</code>, <code>items-center</code>, <code>justify-between</code>, <code>gap-2</code></li>\n  <li><strong>.notify-dot</strong>: <code>w-2.5</code>, <code>h-2.5</code>, <code>rounded-full</code>, <code>bg-green-400</code>, <code>flex-none</code></li>\n  <li><strong>.notify-title</strong>: <code>text-sm</code>, <code>font-semibold</code>, <code>text-gray-900</code>, <code>flex-1</code></li>\n  <li><strong>.notify-dismiss</strong>: <code>text-gray-400</code>, <code>hover:text-gray-600</code>, <code>text-sm</code></li>\n  <li><strong>.notify-body</strong>: <code>text-xs</code>, <code>text-gray-500</code>, <code>mt-1</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"notify-card\">\n  <div class=\"notify-header\">\n    <span class=\"notify-dot\"></span>\n    <span class=\"notify-title\">System online</span>\n    <button class=\"notify-dismiss\">✕</button>\n  </div>\n  <p class=\"notify-body\">All services are operating normally.</p>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Card: bg-white",                "selector": ".notify-card",     "requiredClass": "bg-white"        },
+        { "label": "Card: p-4",                     "selector": ".notify-card",     "requiredClass": "p-4"             },
+        { "label": "Card: rounded-xl",              "selector": ".notify-card",     "requiredClass": "rounded-xl"      },
+        { "label": "Card: border",                  "selector": ".notify-card",     "requiredClass": "border"          },
+        { "label": "Card: shadow-sm",               "selector": ".notify-card",     "requiredClass": "shadow-sm"       },
+        { "label": "Header: flex",                  "selector": ".notify-header",   "requiredClass": "flex"            },
+        { "label": "Header: items-center",          "selector": ".notify-header",   "requiredClass": "items-center"    },
+        { "label": "Header: justify-between",       "selector": ".notify-header",   "requiredClass": "justify-between" },
+        { "label": "Dot: bg-green-400",             "selector": ".notify-dot",      "requiredClass": "bg-green-400"    },
+        { "label": "Dot: rounded-full",             "selector": ".notify-dot",      "requiredClass": "rounded-full"    },
+        { "label": "Title: font-semibold",          "selector": ".notify-title",    "requiredClass": "font-semibold"   },
+        { "label": "Title: text-sm",                "selector": ".notify-title",    "requiredClass": "text-sm"         },
+        { "label": "Body: text-xs",                 "selector": ".notify-body",     "requiredClass": "text-xs"         },
+        { "label": "Body: text-gray-500",           "selector": ".notify-body",     "requiredClass": "text-gray-500"   },
+        { "label": "Body: mt-1",                    "selector": ".notify-body",     "requiredClass": "mt-1"            }
+      ],
+      "soloPracticeHtml": "<p>Build a pricing tier card from scratch (no starter classes): white card with 24px padding, 16px rounded corners, medium shadow, indigo-200 border. Include: a \"Pro\" pill badge (indigo-100 bg, indigo-700 text, uppercase, wide tracking), a price row ($49 in 48px bold + /mo in gray), a 3-item feature list with green checkmarks, and a full-width CTA button at the bottom.</p>",
+      "feynmanPrompt": "A designer hands you a Figma file with no annotations. Describe your step-by-step process to translate one section (a hero with headline, subheading, and two CTA buttons) into Tailwind. What do you look at first? How do you handle spacing that doesn't match the Tailwind scale? How do you deal with colours?",
+      "questions": [
+        {
+          "id": "tw-sen-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "A Figma component shows 16px padding on all sides and 8px gap between child elements in a row. Which Tailwind classes represent these values?",
+          "options": [
+            "p-4 on the container, gap-2 on the flex parent",
+            "p-16 on the container, gap-8 on the flex parent",
+            "padding-4 on the container, flex-gap-2 on the parent",
+            "p-4 on the container, space-x-2 on each child"
+          ],
+          "answer": "p-4 on the container, gap-2 on the flex parent",
+          "explanation": "Tailwind's 4px base unit: 16px = 4 × 4px → p-4. 8px gap = 2 × 4px → gap-2 on the flex or grid parent. Memorising the core scale (4→1, 8→2, 12→3, 16→4, 24→6, 32→8) is a prerequisite skill for design handoff."
+        },
+        {
+          "id": "tw-sen-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A Figma card has 18px internal padding. There is no p-4.5 in standard Tailwind. What is the correct approach?",
+          "options": [
+            "Use p-[18px] for a one-off value, or add --spacing-4.5: 18px to @theme if used repeatedly",
+            "Round to p-4 (16px) — Tailwind always rounds down",
+            "Use p-5 (20px) — Tailwind always rounds up",
+            "Use p-4 and fix the design to 16px — non-scale values should not exist"
+          ],
+          "answer": "Use p-[18px] for a one-off value, or add --spacing-4.5: 18px to @theme if used repeatedly",
+          "explanation": "When a design value falls between scale tokens, Tailwind's arbitrary value syntax (p-[18px]) is the correct one-off fix. If the same value appears throughout the design, add it to @theme as --spacing-4.5: 18px to generate p-4.5, m-4.5, etc. Silently rounding causes the implementation to differ visibly from the design."
+        },
+        {
+          "id": "tw-sen-7-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A developer uses bg-[#6366f1] for a pricing card's background. A senior asks them to change one thing. What is it, and why?",
+          "options": [
+            "Replace with bg-indigo-500 (or the project's semantic token bg-primary) — #6366f1 is Tailwind's exact indigo-500 and using the token participates in the design system",
+            "Replace with bg-indigo-600 — the design spec was rounded to the wrong shade",
+            "Add the hex to @theme as --color-pricing: #6366f1 — this makes it a named token",
+            "No change needed — arbitrary hex values are acceptable for one-off colours"
+          ],
+          "answer": "Replace with bg-indigo-500 (or the project's semantic token bg-primary) — #6366f1 is Tailwind's exact indigo-500 and using the token participates in the design system",
+          "explanation": "#6366f1 is the default Tailwind indigo-500. Using bg-indigo-500 (or a semantic token like bg-primary) means the colour participates in the design system — it can be updated in one place. Arbitrary hex values are invisible to the theming layer and will not update when someone adjusts the brand colour token."
+        }
+      ]
+    }
+  ]
+}

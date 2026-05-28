@@ -1,0 +1,128 @@
+{
+  "id": "rx-sen-4",
+  "title": "Testing React — Async, Mocks, and Test Architecture",
+  "glyph": "⚛",
+  "sortOrder": 4,
+  "tier": "SENIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-16"],
+  "subChunks": [
+    {
+      "id": "rx-sen-4-1",
+      "title": "Testing React — Async, Mocks, and Test Architecture",
+      "sortOrder": 1,
+      "xpReward": 200,
+      "practiceType": "REACT",
+      "filename": "App.test.jsx",
+      "hookHtml": "<p>You know the basics of React Testing Library. At Senior level, the challenges are harder: async fetch flows, mocking modules, testing components that use Context or Router, and structuring a test suite that scales. This lesson covers the patterns that make test suites reliable and maintainable in production codebases.</p>",
+      "explanationHtml": "<h3>Testing async fetch flows</h3>\n\n<pre><code>import { render, screen } from '@testing-library/react';\nimport { vi } from 'vitest';\n\n// Mock fetch globally:\nglobal.fetch = vi.fn();\n\ntest('shows user name after successful fetch', async () =&gt; {\n  fetch.mockResolvedValueOnce({\n    ok: true,\n    json: async () =&gt; ({ name: 'Archmage Eldrin' }),\n  });\n\n  render(&lt;UserProfile userId={1} /&gt;);\n\n  // Loading state first:\n  expect(screen.getByText('Loading...')).toBeInTheDocument();\n\n  // Wait for data:\n  expect(await screen.findByText('Archmage Eldrin')).toBeInTheDocument();\n});\n\ntest('shows error state on fetch failure', async () =&gt; {\n  fetch.mockResolvedValueOnce({ ok: false, status: 404 });\n\n  render(&lt;UserProfile userId={99} /&gt;);\n\n  expect(await screen.findByText(/failed to load/i)).toBeInTheDocument();\n});</code></pre>\n\n<h3>Testing components that use Context</h3>\n\n<pre><code>// Create a custom render helper that wraps with your providers:\nfunction renderWithProviders(ui, { theme = 'light' } = {}) {\n  return render(\n    &lt;ThemeProvider initialTheme={theme}&gt;\n      &lt;AuthProvider&gt;\n        {ui}\n      &lt;/AuthProvider&gt;\n    &lt;/ThemeProvider&gt;\n  );\n}\n\n// Tests become clean:\ntest('shows username from auth context', () =&gt; {\n  renderWithProviders(&lt;UserMenu /&gt;, { user: { name: 'Vex' } });\n  expect(screen.getByText('Vex')).toBeInTheDocument();\n});</code></pre>\n\n<h3>Testing components that use React Router</h3>\n\n<pre><code>import { MemoryRouter } from 'react-router-dom';\n\ntest('navigates to quest detail on click', async () =&gt; {\n  const user = userEvent.setup();\n  render(\n    &lt;MemoryRouter initialEntries={['/']}}&gt;\n      &lt;Routes&gt;\n        &lt;Route path=\"/\" element={&lt;QuestList /&gt;} /&gt;\n        &lt;Route path=\"/quests/:id\" element={&lt;QuestDetail /&gt;} /&gt;\n      &lt;/Routes&gt;\n    &lt;/MemoryRouter&gt;\n  );\n\n  await user.click(screen.getByText('View Quest'));\n\n  expect(screen.getByRole('heading', { name: /quest detail/i })).toBeInTheDocument();\n});</code></pre>\n\n<h3>Mocking modules with vi.mock</h3>\n\n<pre><code>// Mock a specific module:\nvi.mock('../api/quests', () =&gt; ({\n  fetchQuests: vi.fn().mockResolvedValue([\n    { id: 1, title: 'Test Quest', xp: 100 },\n  ]),\n}));\n\ntest('renders fetched quests', async () =&gt; {\n  render(&lt;QuestBoard /&gt;);\n  expect(await screen.findByText('Test Quest')).toBeInTheDocument();\n});</code></pre>\n\n<h3>Test architecture — the testing pyramid</h3>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Most of your tests should be component integration tests — render a component with all its real children, mock only the network boundary (fetch). A few unit tests for pure utility functions. A handful of E2E tests for critical paths. Many teams invert this pyramid and pay for it with slow, brittle test suites.\"</p></div>\n\n<h3>The custom render pattern</h3>\n\n<pre><code>// test-utils.jsx — shared across all tests:\nimport { render } from '@testing-library/react';\nimport { BrowserRouter } from 'react-router-dom';\nimport { ThemeProvider } from '../context/ThemeContext';\n\nexport function renderWithProviders(ui, options = {}) {\n  function Wrapper({ children }) {\n    return (\n      &lt;BrowserRouter&gt;\n        &lt;ThemeProvider&gt;{children}&lt;/ThemeProvider&gt;\n      &lt;/BrowserRouter&gt;\n    );\n  }\n  return render(ui, { wrapper: Wrapper, ...options });\n}\n\n// Re-export everything from RTL so tests import only test-utils:\nexport * from '@testing-library/react';</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A production incident notice arrives: a button that should open a modal was broken for three days before anyone noticed. No tests caught it."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "That button had no test. The state variable that tracked open/closed — that was tested. React Testing Library's philosophy: test what the user experiences, not how the component implements it. Find elements by role, label, or text. Interact by click and type. Assert on visible output."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "At Senior level: mock the network, not the component. Use a custom renderWithProviders helper. Test the loading state, the success state, and the error state. A test that can only pass by reaching into implementation details will fail when you refactor correctly."
+        },
+        {
+          "type": "example",
+          "speaker": "Full async test: loading → success → error",
+          "text": "test('fetch lifecycle', async () => {\n  fetch.mockResolvedValueOnce({\n    ok: true, json: async () => ({ name: 'Eldrin' })\n  });\n\n  render(<Profile id={1} />);\n  expect(screen.getByText('Loading...')).toBeInTheDocument();\n  expect(await screen.findByText('Eldrin')).toBeInTheDocument();\n});"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Write three tests for a <code>&lt;TaskForm onAdd /&gt;</code> component:</p><ul><li><strong>Test 1</strong>: the form renders an input and a submit button</li><li><strong>Test 2</strong>: submitting the form with text calls the <code>onAdd</code> prop callback with the trimmed text, then clears the input</li><li><strong>Test 3</strong>: submitting an empty input does not call <code>onAdd</code></li></ul><p>Use <code>getByRole</code> for the input and button, <code>userEvent.type</code> and <code>userEvent.click</code> for interactions, and <code>vi.fn()</code> for the callback mock.</p>",
+      "guidedPracticeStarterCode": "import { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { vi } from 'vitest';\nimport TaskForm from './TaskForm';\n\ntest('renders input and submit button', () => {\n  // TODO: render TaskForm and assert both elements are present\n});\n\ntest('calls onAdd with text and clears input on submit', async () => {\n  const onAdd = vi.fn();\n  const user = userEvent.setup();\n  // TODO: render, type 'New task', click submit\n  // TODO: assert onAdd was called with 'New task'\n  // TODO: assert input is cleared\n});\n\ntest('does not call onAdd for empty input', async () => {\n  const onAdd = vi.fn();\n  const user = userEvent.setup();\n  // TODO: render, click submit without typing\n  // TODO: assert onAdd was not called\n});",
+      "guidedPracticeTests": [
+        {
+          "label": "Test 1 passes",
+          "testLabel": "renders input and submit button"
+        },
+        {
+          "label": "Test 2 passes",
+          "testLabel": "calls onAdd with text and clears input on submit"
+        },
+        {
+          "label": "Test 3 passes",
+          "testLabel": "does not call onAdd for empty input"
+        }
+      ],
+      "soloPracticeHtml": "<p>Write a full test suite for a <code>&lt;PostViewer postId /&gt;</code> component. Tests must cover: (1) loading state renders while fetching, (2) post title and body render after a successful mock fetch, (3) error message renders when the fetch fails. Create a <code>renderWithProviders</code> helper that wraps with BrowserRouter and any required context. Mock <code>fetch</code> using <code>vi.fn()</code> with <code>mockResolvedValueOnce</code> / <code>mockRejectedValueOnce</code>. Use <code>findBy*</code> queries for async assertions.</p>",
+      "feynmanPrompt": "Explain React Testing Library's guiding philosophy at Senior level. Why does it discourage querying by component name or internal state? Explain the query priority order. Then walk through how you'd test a component with async data fetching: what do you mock, what three states do you test, and why should you use a custom render helper for components that use Context or Router?",
+      "questions": [
+        {
+          "id": "rx-sen-4-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "What is the difference between `getByRole`, `queryByRole`, and `findByRole`?",
+          "options": [
+            "getBy throws if not found; queryBy returns null; findBy is async and waits for the element to appear",
+            "getBy is for static content; queryBy is for dynamic content; findBy is for form elements",
+            "They are identical — the prefix only affects error message formatting",
+            "findBy is deprecated in favour of getBy with async/await"
+          ],
+          "answer": "getBy throws if not found; queryBy returns null; findBy is async and waits for the element to appear",
+          "explanation": "getBy* is the default for present elements — it throws immediately if not found, failing the test with a helpful error. queryBy* returns null instead of throwing — use it to assert something is NOT in the document. findBy* returns a Promise and retries until the element appears or a timeout is reached — use it for elements that appear after async operations."
+        },
+        {
+          "id": "rx-sen-4-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "EXPERT",
+          "prompt": "Why is `getByRole` the highest priority query in React Testing Library's recommendations?",
+          "options": [
+            "Querying by role mirrors how screen readers and assistive technology navigate the page — tests that use it verify accessibility automatically",
+            "getByRole is faster than other queries because it uses native browser APIs",
+            "It is the only query that works for all HTML elements",
+            "Role-based queries are immune to CSS class and ID changes"
+          ],
+          "answer": "Querying by role mirrors how screen readers and assistive technology navigate the page — tests that use it verify accessibility automatically",
+          "explanation": "Screen readers navigate by ARIA roles — button, heading, textbox, link, checkbox. A test that finds elements by role will fail if the role is wrong (e.g., a div styled as a button but not actually a button element) — catching accessibility bugs for free."
+        },
+        {
+          "id": "rx-sen-4-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "EXPERT",
+          "prompt": "A component uses ThemeContext and React Router. Your test renders it with `render(<Component />)` and it throws 'useTheme must be used within a ThemeProvider'. What is the correct fix?",
+          "options": [
+            "Create a renderWithProviders helper that wraps the component in the required Provider and Router before passing to render()",
+            "Mock the useTheme hook with vi.mock to return a test value",
+            "Import ThemeProvider directly in the test file and wrap it around each render call",
+            "Move the context logic into props so tests don't need providers"
+          ],
+          "answer": "Create a renderWithProviders helper that wraps the component in the required Provider and Router before passing to render()",
+          "explanation": "A shared renderWithProviders helper that wraps with all required providers is the recommended pattern. It's reusable across all tests, keeps test code clean, and tests the real integration between component and context. Mocking the hook works but tests a less realistic scenario — the component doesn't go through the real context path."
+        },
+        {
+          "id": "rx-sen-4-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "EXPERT",
+          "prompt": "When is it appropriate to use `data-testid` attributes and `getByTestId` in your tests?",
+          "options": [
+            "As a last resort when no accessible query (role, label, text, placeholder) can uniquely identify the element",
+            "Always — data-testid is the most stable way to query elements and should be used by default",
+            "For any element that doesn't have visible text content",
+            "Only for elements inside lists — getByRole doesn't work inside map()"
+          ],
+          "answer": "As a last resort when no accessible query (role, label, text, placeholder) can uniquely identify the element",
+          "explanation": "data-testid bypasses accessibility checks — you can query any element regardless of its role or visibility. It's appropriate for custom loading spinners, containers, or elements with purely visual purpose. But defaulting to it skips the accessibility validation that role/label queries provide. Try role, then label, then text, then placeholder, then testId."
+        }
+      ]
+    }
+  ]
+}

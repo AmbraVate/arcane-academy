@@ -1,0 +1,93 @@
+{
+  "id": "tw-app-3",
+  "title": "The Spacing System",
+  "glyph": "🎨",
+  "sortOrder": 3,
+  "tier": "APPRENTICE",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-app-1"],
+  "subChunks": [
+    {
+      "id": "tw-app-3-1",
+      "title": "The Spacing System",
+      "sortOrder": 1,
+      "xpReward": 50,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Tailwind's spacing scale is the single most-used part of the framework. Master it and you can build any layout without writing a single pixel value — every gap, margin, and padding comes from the same shared system.</p>",
+      "explanationHtml": "<h3>The 4px base unit</h3>\n<p>Every spacing value in Tailwind is a multiple of <strong>4px</strong> (0.25rem). The number in the class name is the multiplier:</p>\n<pre><code>p-0   →  0px\np-1   →  4px   (0.25rem)\np-2   →  8px   (0.5rem)\np-4   →  16px  (1rem)     ← most common default\np-6   →  24px  (1.5rem)\np-8   →  32px  (2rem)\np-12  →  48px  (3rem)\np-16  →  64px  (4rem)\n</code></pre>\n\n<h3>Padding variants</h3>\n<pre><code>p-4      /* all four sides */\npx-4     /* left + right (horizontal) */\npy-4     /* top + bottom (vertical)   */\npt-4  pr-4  pb-4  pl-4  /* individual sides */\n</code></pre>\n\n<h3>Margin variants</h3>\n<pre><code>m-4      /* all four sides */\nmx-4     /* left + right   */\nmy-4     /* top + bottom   */\nmt-4  mr-4  mb-4  ml-4  /* individual sides */\nmx-auto  /* auto left+right — centres a block element */\n</code></pre>\n\n<h3>Centering with mx-auto</h3>\n<p><code>mx-auto</code> is the Tailwind equivalent of <code>margin: 0 auto</code>. Pair it with a <code>max-w-*</code> class to create a centred content column:</p>\n<pre><code>&lt;div class=\"max-w-3xl mx-auto px-6\"&gt;\n  &lt;!-- page content --&gt;\n&lt;/div&gt;\n</code></pre>\n\n<h3>Width constraints: max-w-*</h3>\n<pre><code>max-w-xs    →  320px\nmax-w-sm    →  384px\nmax-w-lg    →  512px\nmax-w-2xl   →  672px\nmax-w-4xl   →  896px\nmax-w-7xl   →  1280px  ← common page width\nmax-w-prose →  65ch    ← optimal reading width\n</code></pre>\n\n<h3>Gap for flex and grid children</h3>\n<p><code>gap-*</code> sets the gutter between flex or grid children. Prefer <code>gap-*</code> over margins on individual children — it is symmetric and easier to change:</p>\n<pre><code>&lt;div class=\"flex gap-4\"&gt;\n  &lt;div&gt;Item 1&lt;/div&gt;\n  &lt;div&gt;Item 2&lt;/div&gt;\n&lt;/div&gt;\n\ngap-x-4   /* horizontal gap only */\ngap-y-4   /* vertical gap only   */\n</code></pre>\n\n<h3>Space between siblings: space-y-*</h3>\n<pre><code>&lt;ul class=\"space-y-3\"&gt;\n  &lt;li&gt;First item&lt;/li&gt;\n  &lt;li&gt;Second item&lt;/li&gt;  &lt;!-- margin-top: 0.75rem --&gt;\n&lt;/ul&gt;\n</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Master Ember:</strong> \"Every space in the Academy is measured in the same unit: four pixels. You do not guess distances. You choose from the scale — and because every element uses the same scale, the whole page breathes in rhythm.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "dialogue",
+          "av": "🧙‍♂️",
+          "cls": "carver",
+          "speaker": "Master Ember",
+          "sCls": "mentor",
+          "text": "Every space in the Academy is measured in the same unit: four pixels. You do not guess distances. You choose from the scale. p-1 is four pixels. p-4 is sixteen. p-8 is thirty-two. The number times four equals pixels. Learn it once and you never calculate again."
+        },
+        {
+          "type": "example",
+          "speaker": "The 4px scale — number × 4 = pixels",
+          "text": "p-1  →  4px    p-4  → 16px    p-8  → 32px\np-2  →  8px    p-6  → 24px    p-12 → 48px\np-3  → 12px    p-5  → 20px    p-16 → 64px"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a profile card layout using only Tailwind spacing utilities:</p>\n<ul>\n  <li><strong>.container</strong>: <code>max-w-lg</code>, <code>mx-auto</code>, <code>px-6</code>, <code>py-8</code></li>\n  <li><strong>.card</strong>: <code>bg-white</code>, <code>rounded-2xl</code>, <code>shadow-lg</code>, <code>p-8</code></li>\n  <li><strong>.card-header</strong>: <code>mb-6</code></li>\n  <li><strong>.card-name</strong>: <code>text-2xl</code>, <code>font-bold</code>, <code>text-gray-900</code></li>\n  <li><strong>.card-stats</strong>: <code>flex</code>, <code>gap-6</code>, <code>mt-4</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<div class=\"container\">\n  <div class=\"card\">\n    <div class=\"card-header\">\n      <h2 class=\"card-name\">Aria Sunforge</h2>\n      <p class=\"text-sm text-gray-500\">Senior Enchanter</p>\n    </div>\n    <div class=\"card-stats\">\n      <div>\n        <p class=\"text-2xl font-bold text-gray-900\">142</p>\n        <p class=\"text-xs text-gray-500\">Quests</p>\n      </div>\n      <div>\n        <p class=\"text-2xl font-bold text-gray-900\">98%</p>\n        <p class=\"text-xs text-gray-500\">Retention</p>\n      </div>\n    </div>\n  </div>\n</div>",
+      "guidedPracticeTests": [
+        { "label": "Container: max-width",         "selector": ".container",   "requiredClass": "max-w-lg"    },
+        { "label": "Container: centred",           "selector": ".container",   "requiredClass": "mx-auto"     },
+        { "label": "Container: horizontal padding","selector": ".container",   "requiredClass": "px-6"        },
+        { "label": "Card: padding",                "selector": ".card",        "requiredClass": "p-8"         },
+        { "label": "Card: rounded",                "selector": ".card",        "requiredClass": "rounded-2xl" },
+        { "label": "Card: shadow",                 "selector": ".card",        "requiredClass": "shadow-lg"   },
+        { "label": "Header: bottom margin",        "selector": ".card-header", "requiredClass": "mb-6"        },
+        { "label": "Stats: flex layout",           "selector": ".card-stats",  "requiredClass": "flex"        },
+        { "label": "Stats: gap between items",     "selector": ".card-stats",  "requiredClass": "gap-6"       }
+      ],
+      "soloPracticeHtml": "<p>Rebuild this profile card layout from memory. A constrained-width container centred horizontally with padding. A card with generous inner padding, rounded corners, and a shadow. A header with a bottom margin. A flex stats row with gaps between items.</p>",
+      "feynmanPrompt": "Explain Tailwind's spacing scale to a designer who works with an 8-point grid in Figma. How do the Tailwind spacing numbers map to their existing workflow? At what points do they differ, and what is the practical impact?",
+      "questions": [
+        {
+          "id": "tw-app-3-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "APPRENTICE",
+          "prompt": "What pixel value does `p-6` represent?",
+          "options": ["24px", "6px", "16px", "32px"],
+          "answer": "24px",
+          "explanation": "Tailwind's spacing scale uses a 4px base unit. p-6 = 6 × 4px = 24px (1.5rem). Key values: p-2=8px, p-4=16px, p-6=24px, p-8=32px."
+        },
+        {
+          "id": "tw-app-3-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "You want a page content column that is at most 1280px wide, centred on the page, with 24px of horizontal padding on each side. Which class combination achieves this?",
+          "options": [
+            "max-w-7xl mx-auto px-6",
+            "width-1280 center px-24",
+            "max-width-7xl margin-auto padding-6",
+            "container mx-6 max-w-full"
+          ],
+          "answer": "max-w-7xl mx-auto px-6",
+          "explanation": "max-w-7xl caps the width at 1280px, mx-auto centres it, and px-6 adds 24px of horizontal padding (6 × 4px). This is the most common page-level container pattern in Tailwind projects."
+        },
+        {
+          "id": "tw-app-3-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "APPRENTICE",
+          "prompt": "A flex container has three child elements. You want 16px of space between each child. Which approach is preferred in Tailwind?",
+          "options": [
+            "gap-4 on the flex container",
+            "mr-4 on every child except the last",
+            "ml-4 on every child except the first",
+            "space-x-4 on each child individually"
+          ],
+          "answer": "gap-4 on the flex container",
+          "explanation": "gap-4 on the flex parent is the correct approach. It is symmetric (applies between all children without affecting outer edges), and changing the gap requires editing only one class in one place. Applying margins to individual children is fragile."
+        }
+      ]
+    }
+  ]
+}

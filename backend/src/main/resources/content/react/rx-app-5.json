@@ -1,0 +1,171 @@
+{
+  "id": "rx-app-5",
+  "title": "Events and Forms",
+  "glyph": "⚛",
+  "sortOrder": 5,
+  "tier": "APPRENTICE",
+  "topicId": "react",
+  "prerequisites": [
+    "rx-app-1"
+  ],
+  "subChunks": [
+    {
+      "id": "rx-app-5-1",
+      "title": "Events and Forms",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Components that display data are useful. Components that <em>respond</em> to users are what makes an application. Events and forms are the input layer — clicks, keystrokes, and submissions that drive state changes and trigger actions.</p>",
+      "explanationHtml": "<h3>Event handlers in React</h3>\n\n<p>React uses camelCase event props. Pass a function <em>reference</em> — not a function call:</p>\n\n<pre><code>&lt;!-- HTML: --&gt;\n&lt;button onclick=\"handleClick()\"&gt;Click&lt;/button&gt;\n\n&lt;!-- JSX — function reference, not a call: --&gt;\n&lt;button onClick={handleClick}&gt;Click&lt;/button&gt;\n\n&lt;!-- Common mistake — this calls the function during render: --&gt;\n&lt;button onClick={handleClick()}&gt;WRONG&lt;/button&gt;</code></pre>\n\n<pre><code>function AlertButton() {\n  function handleClick() {\n    alert('Spell cast!');\n  }\n  return (\n    &lt;&gt;\n      &lt;button onClick={handleClick}&gt;Named handler&lt;/button&gt;\n      &lt;button onClick={() =&gt; alert('Inline!')}&gt;Arrow function&lt;/button&gt;\n    &lt;/&gt;\n  );\n}</code></pre>\n\n<h3>The event object</h3>\n\n<p>React passes a synthetic event object to your handler. The most-used property is <code>e.target.value</code> — the current value of the element that triggered the event:</p>\n\n<pre><code>function TextInput() {\n  const [value, setValue] = useState('');\n  return (\n    &lt;input\n      value={value}\n      onChange={(e) =&gt; setValue(e.target.value)}\n    /&gt;\n  );\n}</code></pre>\n\n<h3>Forms and e.preventDefault()</h3>\n\n<p>By default, form submission causes a full page reload. In React, handle submissions in JavaScript:</p>\n\n<pre><code>function SearchForm() {\n  const [query, setQuery] = useState('');\n\n  function handleSubmit(e) {\n    e.preventDefault(); // Stop the page reload\n    console.log('Searching for:', query);\n  }\n\n  return (\n    &lt;form onSubmit={handleSubmit}&gt;\n      &lt;input\n        value={query}\n        onChange={(e) =&gt; setQuery(e.target.value)}\n        placeholder=\"Search...\"\n      /&gt;\n      &lt;button type=\"submit\"&gt;Search&lt;/button&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<h3>Lifting state — passing callbacks to children</h3>\n\n<p>When a form adds items to a list and both are separate components, the parent owns the list state and passes an <code>onAdd</code> callback down:</p>\n\n<pre><code>function App() {\n  const [tasks, setTasks] = useState([]);\n\n  function handleAdd(text) {\n    setTasks(prev =&gt; [...prev, { id: Date.now(), text, done: false }]);\n  }\n\n  return (\n    &lt;&gt;\n      &lt;AddTaskForm onAdd={handleAdd} /&gt;\n      &lt;TaskList tasks={tasks} /&gt;\n    &lt;/&gt;\n  );\n}\n\nfunction AddTaskForm({ onAdd }) {\n  const [text, setText] = useState('');\n\n  function handleSubmit(e) {\n    e.preventDefault();\n    if (!text.trim()) return; // Guard: reject empty submissions\n    onAdd(text.trim());\n    setText('');             // Clear the input after adding\n  }\n\n  return (\n    &lt;form onSubmit={handleSubmit}&gt;\n      &lt;input value={text} onChange={(e) =&gt; setText(e.target.value)} /&gt;\n      &lt;button type=\"submit\"&gt;Add&lt;/button&gt;\n    &lt;/form&gt;\n  );\n}</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Two things to never forget: <code>e.preventDefault()</code> on every form submit — always — and clear the input after a successful submission. An input that doesn't clear is a broken form, every time.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A parchment form and quill appear on the workbench. Vex nods towards them."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Displaying data is the easy half. Receiving it is the other half. Clicks, keystrokes, form submissions — React handles these with event props: onClick, onChange, onSubmit. Same browser events, camelCase names."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Two rules. First: pass a function reference, not a call. onClick={handleClick} — not onClick={handleClick()}. Second: on form submit, always call e.preventDefault() or the browser reloads the page and everything you've built is gone."
+        },
+        {
+          "type": "example",
+          "speaker": "Controlled form input — the complete pattern",
+          "text": "const [text, setText] = useState('');\n\n<form onSubmit={handleSubmit}>\n  <input\n    value={text}\n    onChange={e => setText(e.target.value)}\n  />\n  <button type=\"submit\">Add</button>\n</form>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an <code>&lt;AddItemForm onAdd /&gt;</code> component. <code>onAdd</code> is a callback function. The form should:</p><ul><li>Render a <code>&lt;form&gt;</code> with a <code>&lt;input data-testid=\"input\" type=\"text\"&gt;</code> and a <code>&lt;button data-testid=\"submit\" type=\"submit\"&gt;Add&lt;/button&gt;</code></li><li>On submit: call <code>onAdd(text.trim())</code> and clear the input</li><li>If the input is empty or only whitespace, do not call <code>onAdd</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nexport default function AddItemForm({ onAdd }) {\n  const [text, setText] = useState('');\n\n  function handleSubmit(e) {\n    // TODO: prevent default\n    // TODO: guard against empty text\n    // TODO: call onAdd with trimmed text\n    // TODO: clear the input\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      {/* TODO: controlled input (value + onChange) */}\n      {/* TODO: submit button */}\n    </form>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Renders text input",
+          "selector": "[data-testid='input']",
+          "exists": true
+        },
+        {
+          "label": "Renders submit button",
+          "selector": "[data-testid='submit']",
+          "exists": true
+        },
+        {
+          "label": "Calls onAdd with typed text on submit",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "[data-testid='input']",
+              "value": "Learn React"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid='submit']"
+            }
+          ],
+          "onAddCalledWith": "Learn React"
+        },
+        {
+          "label": "Clears input after submit",
+          "sequence": [
+            {
+              "action": "type",
+              "selector": "[data-testid='input']",
+              "value": "Test"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid='submit']"
+            }
+          ],
+          "then": {
+            "selector": "[data-testid='input']",
+            "value": ""
+          }
+        },
+        {
+          "label": "Does not call onAdd for empty input",
+          "sequence": [
+            {
+              "action": "click",
+              "selector": "[data-testid='submit']"
+            }
+          ],
+          "onAddNotCalled": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a complete <code>&lt;NoteApp&gt;</code> component from scratch. It manages a list of notes in state. At the top: a form with a text input and an Add button. Below: a <code>&lt;ul&gt;</code> of submitted notes as <code>&lt;li&gt;</code> elements. When there are no notes, show <code>&lt;p data-testid=\"empty\"&gt;No notes yet.&lt;/p&gt;</code>. Submitting adds to the list and clears the input. No scaffold provided — you have all the pieces from this chapter.</p>",
+      "feynmanPrompt": "Explain the controlled input pattern. What makes an input 'controlled' in React? What two props does it require and why? What breaks if you provide <code>value</code> without <code>onChange</code>?",
+      "questions": [
+        {
+          "id": "rx-app-5-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What is the difference between `onClick={handleClick}` and `onClick={handleClick()}`?",
+          "options": [
+            "The first passes the function to be called on click; the second calls the function immediately during render",
+            "They are identical — React normalises both forms",
+            "The second is correct; the first would pass undefined",
+            "The first only works for arrow functions; the second works for named functions"
+          ],
+          "answer": "The first passes the function to be called on click; the second calls the function immediately during render",
+          "explanation": "onClick expects a function reference, not a return value. handleClick() calls the function right away and passes whatever it returns (often undefined) as the handler. This means your logic runs on every render, not on click. Always pass the reference: onClick={handleClick}."
+        },
+        {
+          "id": "rx-app-5-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "What does `e.preventDefault()` do in a form's onSubmit handler?",
+          "options": [
+            "Stops the browser's default behaviour of sending an HTTP request and reloading the page",
+            "Prevents the form from running its built-in field validation",
+            "Stops the event from bubbling up to parent elements",
+            "Clears all form inputs automatically"
+          ],
+          "answer": "Stops the browser's default behaviour of sending an HTTP request and reloading the page",
+          "explanation": "Browsers submit forms via HTTP by default, which reloads the page. In a React SPA, you handle submissions in JavaScript. e.preventDefault() cancels the reload so your onSubmit handler runs instead."
+        },
+        {
+          "id": "rx-app-5-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "An input has `value={name}` from state but no `onChange` handler. What happens when the user types?",
+          "options": [
+            "The input appears frozen — React overwrites the user's input with the state value on every keystroke",
+            "The input works normally — value is only used as the initial value",
+            "React throws a runtime error immediately",
+            "The input updates visually but state doesn't change"
+          ],
+          "answer": "The input appears frozen — React overwrites the user's input with the state value on every keystroke",
+          "explanation": "A controlled input's value is always what React says it is. Without onChange, the state never updates, so React keeps resetting the input to the current state value on every render. The input appears frozen. React also logs a warning: 'You provided a value prop without an onChange handler.'"
+        },
+        {
+          "id": "rx-app-5-1-q4",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "FOUNDATION",
+          "prompt": "A form component needs to add submitted items to a list rendered by a sibling component. Where should the list state live?",
+          "options": [
+            "In the parent of both components — it owns the state and passes props/callbacks down",
+            "In the form component — it knows what's being added",
+            "In the list component — it knows how to render items",
+            "In a global variable — state shared between siblings should be global"
+          ],
+          "answer": "In the parent of both components — it owns the state and passes props/callbacks down",
+          "explanation": "When siblings share state, lift it to their closest common ancestor. The parent holds the state, passes items to the list as a prop, and passes an onAdd callback to the form. The form calls onAdd on submit; the parent updates state; React re-renders the list. This is 'lifting state up' — React's core pattern for sibling communication before needing Context."
+        }
+      ]
+    }
+  ]
+}

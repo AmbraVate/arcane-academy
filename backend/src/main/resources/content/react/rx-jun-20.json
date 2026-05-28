@@ -1,0 +1,125 @@
+{
+  "id": "rx-jun-20",
+  "title": "Capstone: Quest Board Application",
+  "glyph": "⚛",
+  "sortOrder": 20,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-jun-3", "rx-jun-6", "rx-jun-10", "rx-jun-11", "rx-jun-12"],
+  "subChunks": [
+    {
+      "id": "rx-jun-20-1",
+      "title": "Capstone: Quest Board Application",
+      "sortOrder": 1,
+      "xpReward": 250,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>You've reached the Junior capstone. This challenge synthesises the full Junior toolkit: routing with params, data fetching with loading/error states, custom hooks, useReducer for cart-like state, Context for global data, error boundaries for resilience, URL state for filters, and code splitting for performance. This is not a guided exercise — it's a real project brief.</p>",
+      "explanationHtml": "<h3>What you're building</h3>\n\n<p>A Quest Board application — a multi-page app where adventurers browse available quests, view details, and manage their active quest tracker.</p>\n\n<h3>Pages and routing</h3>\n\n<ul>\n  <li><strong>/</strong> — Quest Board: paginated list of quests with filter (status: all/open/completed) and search stored in URL params</li>\n  <li><strong>/quests/:id</strong> — Quest Detail: fetch quest by ID, show full details, 'Accept Quest' button adds to tracker</li>\n  <li><strong>*</strong> — 404 page</li>\n</ul>\n\n<h3>Data and state architecture</h3>\n\n<ul>\n  <li>Quest list: fetched from a mock API (or JSONPlaceholder as substitute). Managed with a <code>useFetch</code> custom hook.</li>\n  <li>Active quest tracker: managed with <code>useReducer</code>. Actions: ADD_QUEST, REMOVE_QUEST, COMPLETE_QUEST.</li>\n  <li>User context: a <code>UserContext</code> providing <code>{ name: 'Adventurer', xp: 0, addXp }</code>. XP increases when a quest is completed.</li>\n</ul>\n\n<h3>Required technical implementation</h3>\n\n<ol>\n  <li>React Router with nested layout and route-level code splitting (lazy)</li>\n  <li>Suspense with a loading fallback for lazy routes</li>\n  <li>Error boundary wrapping the main content</li>\n  <li>Custom <code>useFetch(url)</code> hook with loading/error/data states and cleanup flag</li>\n  <li>Quest tracker with <code>useReducer</code></li>\n  <li>UserContext with Provider and <code>useUser()</code> custom hook</li>\n  <li>URL search params for list filtering and search</li>\n  <li>At least one optimistic update (marking a quest complete)</li>\n</ol>\n\n<h3>Component architecture (suggested)</h3>\n\n<pre><code>App\n├── Layout (nav, footer)\n│   ├── HomePage\n│   │   ├── QuestFilters      (URL search params)\n│   │   └── QuestList\n│   │       └── QuestCard\n│   ├── QuestDetailPage\n│   │   └── QuestDetail\n│   └── NotFoundPage\n├── QuestTrackerSidebar         (useReducer state)\n└── UserHeader                  (UserContext)</code></pre>\n\n<h3>Acceptance criteria checklist</h3>\n\n<ol>\n  <li>Quest list loads with loading state, error state, and success state</li>\n  <li>Filter and search update the URL and persist on refresh</li>\n  <li>Navigating to /quests/:id shows correct quest data</li>\n  <li>Accepting a quest adds it to the tracker (reducer)</li>\n  <li>Completing a quest updates optimistically and adds XP via context</li>\n  <li>All routes are lazy-loaded</li>\n  <li>Error boundary catches render errors</li>\n  <li>UserContext provides name and XP accessible from Header and Tracker</li>\n</ol>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Junior tier is where you learn to assemble the pieces. You know each tool individually. The capstone asks you to make decisions: where does state live? What needs context? What should be lazy? There is no single correct architecture — but there are wrong ones. Justify your choices.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The Guild Hall's quest board stands before you — a full application to build. Boards covered in parchment quests. An empty adventurer's log. A tracker that needs filling. No templates. No scaffolding. Just the tools you've learned and the brief."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "This is where Junior ends and Senior begins. You have routing, data fetching, state management, context, code splitting, and error handling in your kit. This project uses all of them. Build something you'd be proud to show as a portfolio piece."
+        },
+        {
+          "type": "narration",
+          "text": "You open a blank file. Routes first. Then data layer. Then components. The system takes shape — one decision at a time."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build the <strong>Quest Board Application</strong> described in the brief. Minimum testable requirements:</p><ul><li><code>&lt;nav data-testid=\"nav\"&gt;</code> visible on all pages</li><li><code>&lt;div data-testid=\"quest-list\"&gt;</code> on the home page</li><li><code>&lt;div data-testid=\"quest-detail\"&gt;</code> on the detail page</li><li><code>&lt;div data-testid=\"tracker\"&gt;</code> showing active quests</li><li><code>&lt;p data-testid=\"user-xp\"&gt;</code> showing current XP</li><li><code>&lt;input data-testid=\"search\"&gt;</code> wired to URL params</li></ul>",
+      "guidedPracticeStarterCode": "// Quest Board Application\n// Build from scratch following the brief in the explanation.\n//\n// Suggested file structure:\n//   src/\n//     App.jsx           — Router + Layout\n//     context/\n//       UserContext.jsx — createContext, Provider, useUser hook\n//     hooks/\n//       useFetch.js     — data fetching custom hook\n//     pages/\n//       HomePage.jsx    — quest list + URL filters\n//       QuestDetailPage.jsx\n//       NotFoundPage.jsx\n//     components/\n//       QuestCard.jsx\n//       QuestTracker.jsx  — useReducer\n//       Layout.jsx\n\n// For this single-file sandbox, build the core architecture here.\n// Focus on: routing, useFetch, useReducer tracker, UserContext.\n\nimport { useState, useEffect, useReducer, createContext, useContext } from 'react';\nimport { BrowserRouter, Routes, Route, Link, useParams, useSearchParams } from 'react-router-dom';\n\n// TODO: implement the Quest Board application\n\nexport default function App() {\n  return (\n    <BrowserRouter>\n      <div data-testid=\"nav\">Nav placeholder</div>\n      <Routes>\n        <Route path=\"/\" element={<div data-testid=\"quest-list\">Quest list</div>} />\n        <Route path=\"/quests/:id\" element={<div data-testid=\"quest-detail\">Quest detail</div>} />\n        <Route path=\"*\" element={<div>404</div>} />\n      </Routes>\n      <div data-testid=\"tracker\">Tracker</div>\n      <p data-testid=\"user-xp\">XP: 0</p>\n      <input data-testid=\"search\" />\n    </BrowserRouter>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Nav renders on home page",
+          "selector": "[data-testid='nav']",
+          "exists": true,
+          "path": "/"
+        },
+        {
+          "label": "Quest list renders on home page",
+          "selector": "[data-testid='quest-list']",
+          "exists": true,
+          "path": "/"
+        },
+        {
+          "label": "Quest detail renders at /quests/1",
+          "selector": "[data-testid='quest-detail']",
+          "exists": true,
+          "path": "/quests/1"
+        },
+        {
+          "label": "Tracker is visible",
+          "selector": "[data-testid='tracker']",
+          "exists": true
+        },
+        {
+          "label": "XP display renders",
+          "selector": "[data-testid='user-xp']",
+          "exists": true
+        },
+        {
+          "label": "Search input renders",
+          "selector": "[data-testid='search']",
+          "exists": true
+        }
+      ],
+      "soloPracticeHtml": "<p>Extend the Quest Board with three features: (1) <strong>Quest categories</strong> — quests have a category (Combat/Exploration/Craft); add a category filter to the URL params. (2) <strong>XP leaderboard</strong> — a page at <code>/leaderboard</code> showing a hardcoded list of adventurers and their XP, sorted descending (use useMemo for sorting). (3) <strong>Quest history</strong> — completed quests persist in localStorage via a custom <code>useLocalStorage</code> hook so they survive page refresh.</p>",
+      "feynmanPrompt": "Walk through the state architecture of your Quest Board. For each piece of state, explain: where does it live, why there, and what would break if you moved it somewhere else? Include the URL state, the reducer state, the context state, and any component-local state.",
+      "questions": [
+        {
+          "id": "rx-jun-20-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "The Quest Board needs both a search query (in URL) and a tracker of accepted quests. Where should each live?",
+          "options": [
+            "Search in URL search params (shareable, persistent); tracker in useReducer state (complex multi-action mutations, not shareable)",
+            "Both in URL search params — all state should be in the URL",
+            "Both in useReducer — centralising state is always better",
+            "Search in localStorage, tracker in sessionStorage"
+          ],
+          "answer": "Search in URL search params (shareable, persistent); tracker in useReducer state (complex multi-action mutations, not shareable)",
+          "explanation": "Search is view configuration — users want to share and bookmark their filtered view. URL params are the right home. The quest tracker is application state with multiple mutations (add, remove, complete) — useReducer provides a clear, testable update model. Neither belongs in the other's location."
+        },
+        {
+          "id": "rx-jun-20-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "User XP needs to be accessible from the nav bar, the quest tracker sidebar, and the quest detail page. Where should it live?",
+          "options": [
+            "In a UserContext — it's truly global UI data needed across unrelated parts of the tree",
+            "In the root App component's state, passed as props to all three",
+            "In three separate useState calls — one per component that needs it",
+            "In localStorage, read by each component independently"
+          ],
+          "answer": "In a UserContext — it's truly global UI data needed across unrelated parts of the tree",
+          "explanation": "XP is needed in three unrelated parts of the tree — this is the canonical use case for Context. Prop drilling through the layout to nav, sidebar, and detail would require passing user data through many components that don't use it. Three separate useStates would diverge."
+        },
+        {
+          "id": "rx-jun-20-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "The detail page is lazy-loaded. A user navigates to it for the first time on a slow connection. What do they see?",
+          "options": [
+            "The Suspense fallback (loading spinner) while the page chunk downloads, then the page once loaded",
+            "A blank screen — lazy loading has no loading state",
+            "The error boundary fallback — slow networks always trigger error boundaries",
+            "The previously viewed page — React keeps it until the new page is ready"
+          ],
+          "answer": "The Suspense fallback (loading spinner) while the page chunk downloads, then the page once loaded",
+          "explanation": "React.lazy triggers Suspense to show its fallback while the dynamic import resolves. Once the chunk loads, React renders the actual component. On subsequent visits the chunk is cached. The error boundary handles import failures, not slow loads."
+        }
+      ]
+    }
+  ]
+}

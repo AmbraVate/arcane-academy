@@ -1,0 +1,117 @@
+{
+  "id": "rx-app-7",
+  "title": "Multiple State Variables and Derived State",
+  "glyph": "⚛",
+  "sortOrder": 7,
+  "tier": "APPRENTICE",
+  "topicId": "react",
+  "prerequisites": ["rx-app-3"],
+  "subChunks": [
+    {
+      "id": "rx-app-7-1",
+      "title": "Multiple State Variables and Derived State",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Every new developer over-uses <code>useState</code>. They create a state variable for every value they track — including values that could simply be calculated from other state. This creates synchronisation bugs: two pieces of state that represent the same truth, drifting apart. The skill is knowing <em>what to put in state</em> vs. <em>what to derive</em>.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"Ask yourself: can this value be calculated from what I already have? If yes — calculate it. Do not put it in state. State is for values that cannot be derived from anything else.\"</p></div>\n\n<h3>When to use multiple useState calls</h3>\n\n<p>Use separate <code>useState</code> calls for independent values. They don't need to be updated together:</p>\n\n<pre><code>const [username, setUsername] = useState('');\nconst [email, setEmail] = useState('');\nconst [age, setAge] = useState(18);\n\n// These three are independent — changing one doesn't affect the others.\n// Three separate useState calls is correct here.</code></pre>\n\n<h3>When to use one object in useState</h3>\n\n<p>Group related values that always change together:</p>\n\n<pre><code>// Good candidate for a single object:\nconst [position, setPosition] = useState({ x: 0, y: 0 });\n\n// You always update x and y together — one setter is cleaner\nfunction handleMouseMove(e) {\n  setPosition({ x: e.clientX, y: e.clientY });\n}</code></pre>\n\n<h3>Derived state — compute, don't store</h3>\n\n<p>If a value can be calculated from existing state or props, compute it inline. Do <strong>not</strong> put it in <code>useState</code>:</p>\n\n<pre><code>// ❌ Derived state — out of sync risk:\nconst [items, setItems] = useState([...]);\nconst [count, setCount] = useState(0); // BUG: must remember to update both!\n\n// ✅ Derived value — always accurate:\nconst [items, setItems] = useState([...]);\nconst count = items.length; // Computed on every render from source of truth\n</code></pre>\n\n<pre><code>// More examples of derived values:\nconst completedCount = tasks.filter(t =&gt; t.done).length;\nconst totalPrice = cartItems.reduce((sum, item) =&gt; sum + item.price * item.qty, 0);\nconst isFormValid = username.length &gt;= 3 &amp;&amp; email.includes('@');\nconst hasResults = searchResults.length &gt; 0;</code></pre>\n\n<h3>The litmus test for state</h3>\n\n<p>A value belongs in state if <strong>all three</strong> are true:</p>\n<ol>\n  <li>It <strong>changes over time</strong> in response to user actions or async events</li>\n  <li>It <strong>cannot be calculated</strong> from other state or props</li>\n  <li>React needs to <strong>re-render</strong> when it changes</li>\n</ol>\n\n<p>If it fails any test — it's not state.</p>\n\n<h3>The danger of redundant state</h3>\n\n<pre><code>// ❌ firstName, lastName, AND fullName in state:\nconst [firstName, setFirstName] = useState('');\nconst [lastName, setLastName] = useState('');\nconst [fullName, setFullName] = useState(''); // REDUNDANT — must sync manually\n\n// Every update to firstName must also update fullName. You will forget.\n\n// ✅ Derive fullName — always correct, zero maintenance:\nconst [firstName, setFirstName] = useState('');\nconst [lastName, setLastName] = useState('');\nconst fullName = `${firstName} ${lastName}`;</code></pre>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex draws a map on the workbench — a city district where two scribes track the same census. One updates his scroll, forgets to tell the other. A week later the counts diverge."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "Every piece of redundant state is two sources of truth waiting to disagree. You added a count alongside a list — now every list update must also update the count. You will forget once. The bug will be subtle. The fix is simple: don't store what you can calculate."
+        },
+        {
+          "type": "example",
+          "speaker": "State vs derived value",
+          "text": "// State: the list (cannot be derived)\nconst [tasks, setTasks] = useState([]);\n\n// Derived: the count (calculated from the list)\nconst count = tasks.length;\nconst doneCount = tasks.filter(t => t.done).length;"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a cart summary component. State is an array of <code>{ id, name, price, qty }</code> objects. Derive all totals — do not store them in state.</p><ul><li>Render a list of items</li><li>Render <code>&lt;p data-testid=\"item-count\"&gt;</code> showing the number of unique items</li><li>Render <code>&lt;p data-testid=\"total-qty\"&gt;</code> showing the sum of all quantities</li><li>Render <code>&lt;p data-testid=\"total-price\"&gt;</code> showing the total cost (price × qty for each item, summed)</li><li>Add a <code>&lt;button data-testid=\"add\"&gt;</code> that appends a new item <code>{ id: Date.now(), name: 'Potion', price: 5, qty: 1 }</code></li></ul>",
+      "guidedPracticeStarterCode": "import { useState } from 'react';\n\nconst INITIAL = [\n  { id: 1, name: 'Spell Tome', price: 30, qty: 2 },\n  { id: 2, name: 'Magic Staff', price: 150, qty: 1 },\n];\n\nexport default function CartSummary() {\n  const [items, setItems] = useState(INITIAL);\n\n  // TODO: derive itemCount, totalQty, totalPrice from items\n\n  function handleAdd() {\n    setItems(prev => [...prev, { id: Date.now(), name: 'Potion', price: 5, qty: 1 }]);\n  }\n\n  return (\n    <div>\n      {/* TODO: render item list */}\n      <p data-testid=\"item-count\">{/* itemCount */}</p>\n      <p data-testid=\"total-qty\">{/* totalQty */}</p>\n      <p data-testid=\"total-price\">{/* totalPrice */}</p>\n      <button data-testid=\"add\" onClick={handleAdd}>Add Item</button>\n    </div>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "Shows correct item count (2)",
+          "selector": "[data-testid='item-count']",
+          "requiredText": "2"
+        },
+        {
+          "label": "Shows correct total qty (3)",
+          "selector": "[data-testid='total-qty']",
+          "requiredText": "3"
+        },
+        {
+          "label": "Shows correct total price (210)",
+          "selector": "[data-testid='total-price']",
+          "requiredText": "210"
+        },
+        {
+          "label": "After add, item count updates to 3",
+          "action": "click",
+          "selector": "[data-testid='add']",
+          "then": {
+            "selector": "[data-testid='item-count']",
+            "requiredText": "3"
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build a <code>&lt;ReadingList&gt;</code> from scratch. State: array of <code>{ id, title, read }</code> books. Render the full list. Derive and display (do not store in state): total books, number read, number unread, and percentage read (0 decimal places). A 'Mark Read' button on each unread book sets <code>read: true</code>.</p>",
+      "feynmanPrompt": "Explain the concept of derived state to a new React developer. Give three concrete examples where storing an extra piece of state would create a synchronisation bug — and show how calculating the value instead eliminates the bug entirely.",
+      "questions": [
+        {
+          "id": "rx-app-7-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "FOUNDATION",
+          "prompt": "A value is appropriate for `useState` when:",
+          "options": [
+            "It changes over time, cannot be derived from other state/props, and must trigger a re-render when it changes",
+            "It is used in more than one component",
+            "It is a number or a boolean (not an array or object)",
+            "It is fetched from an API"
+          ],
+          "answer": "It changes over time, cannot be derived from other state/props, and must trigger a re-render when it changes",
+          "explanation": "All three conditions must hold. If a value can be calculated from existing state, it should be derived inline — not stored. If it doesn't need to trigger a re-render, a ref (not state) is appropriate. API data does belong in state, but because it passes the three tests, not simply because it comes from an API."
+        },
+        {
+          "id": "rx-app-7-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "FOUNDATION",
+          "prompt": "A shopping cart has state `items` (array). A developer adds `const [total, setTotal] = useState(0)` and updates it manually on every item change. What is the correct approach?",
+          "options": [
+            "Derive total inline: `const total = items.reduce((s, i) => s + i.price, 0)`",
+            "Keep both — total in state for performance, updated with useEffect",
+            "Use useCallback to memoize the total calculation",
+            "The developer's approach is correct — useState is always better for values displayed in the UI"
+          ],
+          "answer": "Derive total inline: `const total = items.reduce((s, i) => s + i.price, 0)`",
+          "explanation": "Total is a function of items — it can always be recalculated from the source of truth. Storing it separately creates a synchronisation requirement: every items update must also call setTotal. Calculating it inline is always accurate and requires zero maintenance."
+        },
+        {
+          "id": "rx-app-7-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "FOUNDATION",
+          "prompt": "You have `firstName` and `lastName` in state. When should `fullName` be in state rather than derived?",
+          "options": [
+            "Never — fullName can always be derived as `${firstName} ${lastName}`",
+            "When fullName can be edited independently of firstName and lastName",
+            "When the component re-renders more than 10 times per second",
+            "When TypeScript strict mode is enabled"
+          ],
+          "answer": "When fullName can be edited independently of firstName and lastName",
+          "explanation": "If fullName can be edited to something that doesn't match firstName + lastName (e.g. a display alias), then it carries independent information and belongs in state. But if fullName is always just firstName + ' ' + lastName, deriving it is always correct. Only store state when there is information that cannot be reconstructed from other state."
+        }
+      ]
+    }
+  ]
+}

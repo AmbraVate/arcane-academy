@@ -1,0 +1,105 @@
+{
+  "id": "tw-sen-3",
+  "title": "Accessibility with Tailwind",
+  "glyph": "🔮",
+  "sortOrder": 3,
+  "tier": "SENIOR",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-sen-2"],
+  "subChunks": [
+    {
+      "id": "tw-sen-3-1",
+      "title": "Accessibility with Tailwind",
+      "sortOrder": 1,
+      "xpReward": 100,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Accessibility is not optional — it is a legal requirement under WCAG, the ADA, and the European Accessibility Act, and it is a professional expectation at every serious company. Tailwind gives you all the tools. Using them correctly is the mark of an expert.</p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"A spell that works only for some readers is a spell half-cast. Let me show you the five habits that cover ninety percent of accessibility work in a Tailwind codebase.\"</p></div>\n\n<h3>Habit 1: focus-visible: over focus:</h3>\n<pre><code>// ❌ WRONG — shows a ring on every mouse click (annoying)\n&lt;button class=\"focus:ring-2 focus:ring-blue-500\"&gt;Save&lt;/button&gt;\n\n// ✅ CORRECT — ring appears only when focused via keyboard\n&lt;button class=\"focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2\"&gt;Save&lt;/button&gt;</code></pre>\n\n<p><code>focus-visible:</code> maps to <code>:focus-visible</code> — the browser only applies this when focus came from the keyboard, not a mouse click. Removing the outline entirely is a WCAG violation.</p>\n\n<h3>Habit 2: sr-only for icon-only controls</h3>\n<pre><code>&lt;button class=\"p-2 rounded-md focus-visible:ring-2 focus-visible:ring-blue-500\"&gt;\n  &lt;svg aria-hidden=\"true\" class=\"w-5 h-5\" /&gt;\n  &lt;span class=\"sr-only\"&gt;Close dialog&lt;/span&gt;\n&lt;/button&gt;</code></pre>\n<p>Always mark SVG icons with <code>aria-hidden=\"true\"</code> to prevent them being read aloud as noise.</p>\n\n<h3>Habit 3: ARIA state variants</h3>\n<pre><code>&lt;!-- Chevron that rotates when dropdown opens --&gt;\n&lt;button aria-expanded=\"false\" class=\"flex items-center gap-2\"&gt;\n  Menu\n  &lt;svg class=\"w-4 h-4 transition-transform aria-expanded:rotate-180\" /&gt;\n&lt;/button&gt;\n\n&lt;!-- Tab active state --&gt;\n&lt;button role=\"tab\" aria-selected=\"false\"\n  class=\"px-4 py-2 text-sm border-b-2 border-transparent\n         aria-selected:border-blue-600 aria-selected:text-blue-600\"&gt;\n  Overview\n&lt;/button&gt;</code></pre>\n\n<h3>Habit 4: Colour contrast</h3>\n<p>WCAG AA requires 4.5:1 for normal body text and 3:1 for large text. Several popular combinations fail:</p>\n<pre><code>// Contrast ratios against white background:\ngray-400:  3.5:1  ❌ fails for body text\ngray-500:  4.6:1  ✓ barely passes — prefer gray-600\ngray-600:  5.9:1  ✓ solid\nblue-400:  2.5:1  ❌ use blue-700 (5.5:1) for text on white</code></pre>\n\n<h3>Habit 5: Reduced motion</h3>\n<pre><code>&lt;div class=\"animate-bounce motion-reduce:animate-none\"&gt;\n&lt;div class=\"transition-transform duration-300 motion-reduce:transition-none\"&gt;</code></pre>\n<p>Add <code>motion-reduce:</code> to every animated element. Users with vestibular disorders can be physically harmed by excessive motion.</p>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra:</strong> \"Five habits. Write them on the wall above your desk. Every component you ship should pass all five before it leaves your branch.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "A blindfolded figure sits at a desk in the lamp-lit room below the library, tracing a page with her fingertips. Lyra speaks quietly beside you."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "focus-visible: instead of focus:. sr-only on every icon-only button. ARIA state variants. Contrast ratios above 4.5:1. motion-reduce: on every animation. Five habits. All five. Every component."
+        },
+        {
+          "type": "example",
+          "speaker": "Accessible icon button",
+          "text": "<button>\n  <svg aria-hidden=\"true\" />\n  <span class=\"sr-only\">Close dialog</span>\n</button>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build an accessible form group:</p>\n<ul>\n  <li><strong>.form-group</strong>: <code>flex</code>, <code>flex-col</code>, <code>gap-1</code></li>\n  <li><strong>.form-label</strong>: <code>text-sm</code>, <code>font-medium</code>, <code>text-gray-700</code></li>\n  <li><strong>.form-input</strong>: <code>px-3</code>, <code>py-2</code>, <code>border</code>, <code>border-gray-300</code>, <code>rounded-md</code>, <code>text-sm</code>, <code>focus:outline-none</code>, <code>focus-visible:ring-2</code>, <code>focus-visible:ring-blue-500</code>, <code>invalid:border-red-500</code></li>\n  <li><strong>.form-error</strong>: <code>text-sm</code>, <code>text-red-600</code></li>\n  <li><strong>.visually-hidden</strong>: <code>sr-only</code></li>\n  <li><strong>.submit-btn</strong>: <code>px-4</code>, <code>py-2</code>, <code>bg-blue-600</code>, <code>text-white</code>, <code>rounded-md</code>, <code>font-medium</code>, <code>hover:bg-blue-700</code>, <code>focus:outline-none</code>, <code>focus-visible:ring-2</code>, <code>focus-visible:ring-blue-500</code>, <code>focus-visible:ring-offset-2</code>, <code>transition-colors</code></li>\n</ul>",
+      "guidedPracticeStarterCode": "<form class=\"max-w-sm space-y-4 p-6\">\n  <div class=\"form-group\">\n    <label class=\"form-label\" for=\"email\">Email address</label>\n    <input class=\"form-input\" type=\"email\" id=\"email\" />\n    <p class=\"form-error\">Please enter a valid email.</p>\n  </div>\n  <div class=\"form-group\">\n    <button type=\"button\" class=\"visually-hidden\">Hidden helper</button>\n  </div>\n  <button type=\"submit\" class=\"submit-btn\">Create account</button>\n</form>",
+      "guidedPracticeTests": [
+        { "label": "Form group: flex",                    "selector": ".form-group",      "requiredClass": "flex"                        },
+        { "label": "Form group: gap-1",                   "selector": ".form-group",      "requiredClass": "gap-1"                       },
+        { "label": "Label: text-sm",                      "selector": ".form-label",      "requiredClass": "text-sm"                     },
+        { "label": "Label: font-medium",                  "selector": ".form-label",      "requiredClass": "font-medium"                 },
+        { "label": "Input: focus:outline-none",           "selector": ".form-input",      "requiredClass": "focus:outline-none"          },
+        { "label": "Input: focus-visible:ring-2",         "selector": ".form-input",      "requiredClass": "focus-visible:ring-2"        },
+        { "label": "Input: focus-visible:ring-blue-500",  "selector": ".form-input",      "requiredClass": "focus-visible:ring-blue-500" },
+        { "label": "Input: invalid:border-red-500",       "selector": ".form-input",      "requiredClass": "invalid:border-red-500"      },
+        { "label": "Error: text-red-600",                 "selector": ".form-error",      "requiredClass": "text-red-600"                },
+        { "label": "Visually hidden: sr-only",            "selector": ".visually-hidden", "requiredClass": "sr-only"                     },
+        { "label": "Submit: focus-visible:ring-offset-2", "selector": ".submit-btn",      "requiredClass": "focus-visible:ring-offset-2" },
+        { "label": "Submit: transition-colors",           "selector": ".submit-btn",      "requiredClass": "transition-colors"           }
+      ],
+      "soloPracticeHtml": "<p>Build an accessible navigation menu from scratch. It must include: a skip-to-content link (<code>sr-only focus:not-sr-only</code>), keyboard-focusable nav links with <code>focus-visible:ring-2</code>, and at least one <code>aria-current=\"page\"</code> active state style.</p>",
+      "feynmanPrompt": "Explain to a junior developer why removing outline: none from a button is a WCAG violation, but using focus:outline-none focus-visible:ring-2 is acceptable. What is the practical difference?",
+      "questions": [
+        {
+          "id": "tw-sen-3-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "What does sr-only do?",
+          "options": [
+            "Visually hides content while keeping it accessible to screen readers",
+            "Removes content from the DOM and the accessibility tree",
+            "Hides content from screen readers but keeps it visually visible",
+            "Sets display: none on the element"
+          ],
+          "answer": "Visually hides content while keeping it accessible to screen readers",
+          "explanation": "sr-only uses position, size, clipping, and overflow CSS to make an element invisible on screen while keeping it in the accessibility tree, where screen readers can still announce it."
+        },
+        {
+          "id": "tw-sen-3-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "SENIOR",
+          "prompt": "A dropdown button toggles aria-expanded between true and false in JavaScript. Which Tailwind approach correctly rotates a chevron icon when the dropdown is open?",
+          "options": [
+            "class=\"transition-transform aria-expanded:rotate-180\" on the chevron SVG",
+            "class=\"rotate-180\" toggled by JavaScript alongside aria-expanded",
+            "class=\"open:rotate-180\" which fires on the open state",
+            "class=\"expanded:rotate-180\" which maps to aria-expanded"
+          ],
+          "answer": "class=\"transition-transform aria-expanded:rotate-180\" on the chevron SVG",
+          "explanation": "Tailwind's aria-expanded: variant applies when the element (or its closest ARIA-attributable ancestor) has aria-expanded=\"true\". This keeps JS responsible for ARIA, and CSS responds declaratively."
+        },
+        {
+          "id": "tw-sen-3-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "SENIOR",
+          "prompt": "What is the WCAG AA minimum contrast ratio for normal body text?",
+          "options": [
+            "4.5:1",
+            "3:1",
+            "7:1",
+            "2:1"
+          ],
+          "answer": "4.5:1",
+          "explanation": "WCAG AA requires 4.5:1 for normal text and 3:1 for large text (18px+ or 14px+ bold). WCAG AAA raises these to 7:1 and 4.5:1 respectively. gray-400 on white (3.5:1) fails for body text — use gray-600 (5.9:1) or darker."
+        }
+      ]
+    }
+  ]
+}

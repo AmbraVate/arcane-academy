@@ -1,0 +1,144 @@
+{
+  "id": "tw-lea-5",
+  "title": "The Grand Commission",
+  "glyph": "🌐",
+  "sortOrder": 5,
+  "tier": "LEAD",
+  "topicId": "tailwind",
+  "prerequisites": ["tw-lea-4"],
+  "subChunks": [
+    {
+      "id": "tw-lea-5-1",
+      "title": "The Grand Commission",
+      "sortOrder": 1,
+      "xpReward": 350,
+      "practiceType": "TAILWIND",
+      "filename": "index.html",
+      "hookHtml": "<p>Four sections. One page. Everything you have learned — sticky headers, gradient backgrounds, gradient text, coloured shadows, the group pattern, ring highlights, multi-breakpoint grids, object-cover, absolute positioning — converges here.</p><p>The guild is watching. Grand Archmage Solomon himself will review the final page. This is the moment that separates a practitioner from an expert.</p><p><strong>The Grand Commission is open. Demonstrate your mastery.</strong></p>",
+      "explanationHtml": "<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"You have learned every technique this commission requires. The gradient background. The gradient text. The sticky header. The group pattern. The ring. The status dot. The responsive grids. Individually they are tools. Together, assembled with judgment and precision, they are a product. You will now assemble them.\"</p></div>\n\n<div class=\"dialogue mentor\"><p><strong>Lyra the Scribe:</strong> \"I have prepared the HTML skeleton. Every section is present. Every semantic class name is applied. But the Tailwind utilities are stripped. You must restore them from memory and understanding, not from copying. The starter code has comments at each section reminding you what is required. Trust your knowledge.\"</p></div>\n\n<h3>What this challenge tests</h3>\n\n<p>This is not a recall exercise — it is a synthesis exercise. You will encounter moments where you must choose between similar approaches:</p>\n\n<ul>\n<li><strong>Sticky vs fixed</strong> for the header — you know the answer</li>\n<li><strong>Ring vs border</strong> for the featured card — you know which affects layout and which does not</li>\n<li><strong>hidden lg:block</strong> vs <strong>lg:hidden block</strong> for the hero visual — the order of mobile-first matters</li>\n<li><strong>text-transparent bg-clip-text</strong> vs just a coloured heading — you know which creates the gradient text effect</li>\n</ul>\n\n<h3>Working methodically</h3>\n\n<p>Work section by section. Start with the header — it is the simplest. Then the hero. Then services. Then team. Do not jump around. Each section is self-contained.</p>\n\n<h3>Deploying your commission</h3>\n\n<h4>CodePen (fastest — 2 minutes)</h4>\n<ol>\n<li>Go to <strong>codepen.io</strong>, create a free account, click <strong>+ New Pen</strong></li>\n<li>Paste your completed HTML into the HTML panel — the CDN script is already in the starter code</li>\n<li>Click <strong>Save</strong> — your page is live at a codepen.io URL</li>\n</ol>\n\n<h4>GitHub Pages (portfolio-grade — 5 minutes)</h4>\n<ol>\n<li>Create a new public GitHub repo named <code>arcane-guild</code></li>\n<li>Add your HTML as <code>index.html</code>, commit to <code>main</code></li>\n<li>Go to Settings → Pages → Source: <code>main</code> branch → Save</li>\n<li>Your site is live at <code>https://your-username.github.io/arcane-guild/</code></li>\n</ol>\n\n<div class=\"dialogue mentor\"><p><strong>Grand Archmage Solomon:</strong> \"A craftsperson without a portfolio is invisible. Every future employer will ask to see your work. This URL is evidence — of your taste, your precision, and your craft. Guard it. Maintain it. Point to it with pride.\"</p></div>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "The guild's great hall has never been this quiet. Every lantern is lit. The full Guild Council — Solomon, Lyra, Sable, the other masters — stands assembled. Solomon steps to the centre."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "You have learned every technique this commission requires. Individually they are tools. Together, assembled with judgment and precision, they are a product. The HTML skeleton is prepared. The Tailwind utilities have been stripped. You will restore them."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙‍♀️",
+          "cls": "mentor",
+          "speaker": "Lyra the Scribe",
+          "sCls": "mentor",
+          "text": "Comments in the starter code remind you what each section requires. They are hints, not cheats. Work methodically — header first, then hero, then services, then team. Each section is self-contained."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌟",
+          "cls": "illuminator",
+          "speaker": "Sable the Illuminator",
+          "sCls": "mentor",
+          "text": "This page will be seen by everyone the guild hopes to work with. Every pixel represents the guild's craft. Do not rush. Do not guess. Apply what you know."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "archmage",
+          "speaker": "Grand Archmage Solomon",
+          "sCls": "archmage",
+          "text": "THE GRAND COMMISSION IS OPEN. DEMONSTRATE YOUR MASTERY."
+        }
+      ],
+      "guidedPracticeHtml": "<p>Apply all Tailwind classes to the complete Arcane Guild page. The HTML structure is provided with all four sections. Your task is to restore every class from TWL1 through TWL4:</p>\n<ol>\n<li><strong>Header</strong> — sticky frosted-glass header with responsive navigation</li>\n<li><strong>Hero</strong> — dark gradient section with two-column layout and gradient text</li>\n<li><strong>Services</strong> — three-card grid with group hover effects and featured ring</li>\n<li><strong>Team</strong> — four-column grid with circular avatars and status dots</li>\n</ol>\n<p>The comments in the starter code tell you which classes each section requires. This is a full-page synthesis — every technique from this chapter must be applied correctly for all tests to pass.</p>",
+      "guidedPracticeStarterCode": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <script src=\"https://cdn.tailwindcss.com\"></script>\n  <title>Arcane Guild</title>\n</head>\n<body class=\"font-sans antialiased\">\n\n  <!-- HEADER: apply sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 -->\n  <header class=\"site-header\">\n    <!-- INNER: apply max-w-7xl mx-auto px-6 py-4 flex items-center justify-between -->\n    <div class=\"header-inner\">\n      <!-- LOGO: apply text-xl font-bold text-indigo-600 font-mono -->\n      <a href=\"#\" class=\"site-logo\">⬡ ArcaneGuild</a>\n      <!-- NAV: apply hidden md:flex items-center gap-8 -->\n      <nav class=\"nav-links\">\n        <!-- NAV LINK: apply text-gray-600 hover:text-indigo-600 text-sm font-medium transition-colors duration-200 -->\n        <a href=\"#\" class=\"nav-link\">Services</a>\n        <a href=\"#\" class=\"nav-link\">Work</a>\n        <a href=\"#\" class=\"nav-link\">Team</a>\n        <a href=\"#\" class=\"nav-link\">Contact</a>\n      </nav>\n      <!-- CTA: apply bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors duration-200 -->\n      <a href=\"#\" class=\"header-cta\">Get Started</a>\n    </div>\n  </header>\n\n  <!-- HERO: apply py-24 px-6 bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900 -->\n  <section class=\"hero\">\n    <!-- HERO INNER: apply max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center -->\n    <div class=\"hero-inner\">\n      <div>\n        <!-- EYEBROW: apply text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-4 -->\n        <p class=\"hero-eyebrow\">Arcane Guild · Est. 1842</p>\n        <!-- HEADING: apply text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 -->\n        <h1 class=\"hero-heading\">\n          We craft digital<br>\n          <!-- SPAN: apply text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 -->\n          <span>experiences</span><br>\n          that endure.\n        </h1>\n        <!-- BODY: apply text-lg text-slate-300 leading-relaxed mb-10 -->\n        <p class=\"hero-body\">From rapid prototypes to production-grade systems — we build with craft, clarity, and the full depth of the arcane arts.</p>\n        <div class=\"flex flex-col sm:flex-row gap-4\">\n          <!-- PRIMARY CTA: apply bg-indigo-500 hover:bg-indigo-400 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/25 -->\n          <a href=\"#\" class=\"hero-cta-primary\">Start a Project →</a>\n          <!-- SECONDARY CTA: apply border border-slate-600 text-slate-300 hover:border-slate-400 hover:text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 -->\n          <a href=\"#\" class=\"hero-cta-secondary\">View Our Work</a>\n        </div>\n      </div>\n      <!-- VISUAL: apply hidden lg:block relative -->\n      <div class=\"hero-visual\">\n        <!-- CARD: apply bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 -->\n        <div class=\"hero-card\">\n          <div class=\"text-4xl mb-4\">⬡</div>\n          <div class=\"text-white font-semibold\">Project Nexus</div>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- SERVICES: apply py-24 px-6 bg-slate-50 -->\n  <section class=\"services\">\n    <div class=\"services-inner\">\n      <h2 class=\"services-heading\">What We Build</h2>\n      <p class=\"services-subheading\">Three disciplines. One philosophy.</p>\n      <!-- GRID: apply grid grid-cols-1 md:grid-cols-3 gap-8 -->\n      <div class=\"services-grid\">\n        <!-- CARD: apply bg-white rounded-2xl p-8 border border-slate-200 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 group -->\n        <div class=\"service-card\">\n          <!-- ICON: apply w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:bg-indigo-600 transition-colors duration-300 -->\n          <div class=\"service-icon\">⚡</div>\n          <h3 class=\"service-title\">Frontend Engineering</h3>\n          <p class=\"service-description\">Pixel-perfect interfaces, accessibility baked in.</p>\n          <a href=\"#\" class=\"service-link\">Learn more →</a>\n        </div>\n        <!-- FEATURED CARD: same as .service-card PLUS ring-2 ring-indigo-500 ring-offset-2 -->\n        <div class=\"service-card service-card--featured\">\n          <div class=\"service-icon\">🏛️</div>\n          <h3 class=\"service-title\">System Architecture</h3>\n          <p class=\"service-description\">Scalable backends, domain-driven design.</p>\n          <a href=\"#\" class=\"service-link\">Learn more →</a>\n        </div>\n        <div class=\"service-card\">\n          <div class=\"service-icon\">🔮</div>\n          <h3 class=\"service-title\">Design Systems</h3>\n          <p class=\"service-description\">Token-driven, team-ready component libraries.</p>\n          <a href=\"#\" class=\"service-link\">Learn more →</a>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- TEAM: apply py-24 px-6 bg-white -->\n  <section class=\"team\">\n    <div class=\"team-inner\">\n      <h2 class=\"team-heading\">The Guild Council</h2>\n      <p class=\"team-subheading\">Four disciplines. Four masters.</p>\n      <!-- GRID: apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 -->\n      <div class=\"team-grid\">\n        <!-- CARD: apply text-center group -->\n        <div class=\"team-card\">\n          <!-- WRAP: apply relative w-24 h-24 mx-auto mb-5 -->\n          <div class=\"team-avatar-wrap\">\n            <!-- AVATAR: apply w-24 h-24 rounded-full object-cover ring-4 ring-white shadow-lg group-hover:ring-indigo-300 transition-all duration-300 -->\n            <img src=\"https://i.pravatar.cc/96?img=1\" alt=\"Eldrin\" class=\"team-avatar\">\n            <!-- STATUS: apply absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full ring-2 ring-white -->\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Archmage Eldrin</h3>\n          <p class=\"team-role\">Chief Architect</p>\n        </div>\n        <div class=\"team-card\">\n          <div class=\"team-avatar-wrap\">\n            <img src=\"https://i.pravatar.cc/96?img=5\" alt=\"Lyra\" class=\"team-avatar\">\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Lyra the Scribe</h3>\n          <p class=\"team-role\">Design Lead</p>\n        </div>\n        <div class=\"team-card\">\n          <div class=\"team-avatar-wrap\">\n            <img src=\"https://i.pravatar.cc/96?img=9\" alt=\"Cordell\" class=\"team-avatar\">\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Maester Cordell</h3>\n          <p class=\"team-role\">DevOps Mage</p>\n        </div>\n        <div class=\"team-card\">\n          <div class=\"team-avatar-wrap\">\n            <img src=\"https://i.pravatar.cc/96?img=12\" alt=\"Sable\" class=\"team-avatar\">\n            <span class=\"team-status\"></span>\n          </div>\n          <h3 class=\"team-name\">Sable</h3>\n          <p class=\"team-role\">UX Researcher</p>\n        </div>\n      </div>\n    </div>\n  </section>\n\n</body>\n</html>",
+      "guidedPracticeTests": [
+        { "label": "Header: sticky",                      "selector": ".site-header",           "requiredClass": "sticky"            },
+        { "label": "Header: border-b",                    "selector": ".site-header",           "requiredClass": "border-b"          },
+        { "label": "Inner: flex",                         "selector": ".header-inner",          "requiredClass": "flex"              },
+        { "label": "Inner: justify-between",              "selector": ".header-inner",          "requiredClass": "justify-between"   },
+        { "label": "Inner: max-w-7xl",                    "selector": ".header-inner",          "requiredClass": "max-w-7xl"         },
+        { "label": "Nav: hidden on mobile",               "selector": ".nav-links",             "requiredClass": "hidden"            },
+        { "label": "Nav: md:flex",                        "selector": ".nav-links",             "requiredClass": "md:flex"           },
+        { "label": "CTA: bg-indigo-600",                  "selector": ".header-cta",            "requiredClass": "bg-indigo-600"     },
+        { "label": "CTA: rounded-lg",                     "selector": ".header-cta",            "requiredClass": "rounded-lg"        },
+        { "label": "Hero: bg-gradient-to-br",             "selector": ".hero",                  "requiredClass": "bg-gradient-to-br" },
+        { "label": "Hero: py-24",                         "selector": ".hero",                  "requiredClass": "py-24"             },
+        { "label": "Hero inner: grid",                    "selector": ".hero-inner",            "requiredClass": "grid"              },
+        { "label": "Hero inner: lg:grid-cols-2",          "selector": ".hero-inner",            "requiredClass": "lg:grid-cols-2"    },
+        { "label": "Gradient span: bg-clip-text",         "selector": ".hero-heading span",     "requiredClass": "bg-clip-text"      },
+        { "label": "Gradient span: text-transparent",     "selector": ".hero-heading span",     "requiredClass": "text-transparent"  },
+        { "label": "Primary CTA: bg-indigo-500",          "selector": ".hero-cta-primary",      "requiredClass": "bg-indigo-500"     },
+        { "label": "Primary CTA: rounded-xl",             "selector": ".hero-cta-primary",      "requiredClass": "rounded-xl"        },
+        { "label": "Services: bg-slate-50",               "selector": ".services",              "requiredClass": "bg-slate-50"       },
+        { "label": "Services grid: grid",                 "selector": ".services-grid",         "requiredClass": "grid"              },
+        { "label": "Services grid: md:grid-cols-3",       "selector": ".services-grid",         "requiredClass": "md:grid-cols-3"    },
+        { "label": "Service card: group",                 "selector": ".service-card",          "requiredClass": "group"             },
+        { "label": "Service card: hover:shadow-xl",       "selector": ".service-card",          "requiredClass": "hover:shadow-xl"   },
+        { "label": "Icon: group-hover:bg-indigo-600",     "selector": ".service-icon",          "requiredClass": "group-hover:bg-indigo-600" },
+        { "label": "Featured: ring-2",                    "selector": ".service-card--featured","requiredClass": "ring-2"            },
+        { "label": "Featured: ring-indigo-500",           "selector": ".service-card--featured","requiredClass": "ring-indigo-500"   },
+        { "label": "Team grid: sm:grid-cols-2",           "selector": ".team-grid",             "requiredClass": "sm:grid-cols-2"    },
+        { "label": "Team grid: lg:grid-cols-4",           "selector": ".team-grid",             "requiredClass": "lg:grid-cols-4"    },
+        { "label": "Avatar: rounded-full",                "selector": ".team-avatar",           "requiredClass": "rounded-full"      },
+        { "label": "Avatar: ring-4",                      "selector": ".team-avatar",           "requiredClass": "ring-4"            },
+        { "label": "Status: absolute",                    "selector": ".team-status",           "requiredClass": "absolute"          },
+        { "label": "Status: bg-green-400",                "selector": ".team-status",           "requiredClass": "bg-green-400"      },
+        { "label": "Role: text-indigo-600",               "selector": ".team-role",             "requiredClass": "text-indigo-600"   }
+      ],
+      "soloPracticeHtml": "<p><strong>The final act of every commission is delivery.</strong> Take your completed Grand Commission page and deploy it to a live public URL — this is your portfolio artefact. Deploy to CodePen or GitHub Pages, verify the sticky header, gradient text, card hover effects, and responsive grid all work. Then share your URL.</p>",
+      "feynmanPrompt": "You have just built a complete multi-section landing page with Tailwind. The client now wants to change the brand colour from indigo to violet across the entire site. Describe two different approaches: one that works for the current codebase (utility classes throughout), and one that would have been the ideal architectural choice from the start. Which approach would you recommend if you were starting fresh today?",
+      "questions": [
+        {
+          "id": "tw-lea-5-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "A non-technical client asks: 'Why do some classes start with lg: or md: or sm:?' Give the clearest, most accurate explanation.",
+          "options": [
+            "They are responsive breakpoint prefixes — the class only applies when the screen is at least that wide. Tailwind is mobile-first, so unprefixed classes apply at all sizes, and prefixed classes activate at and above that breakpoint.",
+            "They are browser prefixes for specific browser compatibility, similar to -webkit- or -moz-",
+            "They are media query shortcuts that reduce the size of the full Tailwind stylesheet",
+            "They are optional style layers that activate only in production builds"
+          ],
+          "answer": "They are responsive breakpoint prefixes — the class only applies when the screen is at least that wide. Tailwind is mobile-first, so unprefixed classes apply at all sizes, and prefixed classes activate at and above that breakpoint.",
+          "explanation": "Tailwind uses a mobile-first approach: grid-cols-1 applies at all screen sizes; md:grid-cols-3 overrides it at screens 768px and wider; lg:grid-cols-4 overrides again at 1024px and wider. Reading a responsive class string, always start from the unprefixed value (the mobile default) and then read each prefix as 'at this size and above, switch to this.'"
+        },
+        {
+          "id": "tw-lea-5-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "LEAD",
+          "prompt": "The full-page layout has a two-column hero grid (lg:grid-cols-2) with the right column using hidden lg:block. On a 900px screen (between md and lg), what does the layout look like?",
+          "options": [
+            "A single column with only the text content visible — the hero visual is hidden because lg is not yet active",
+            "A two-column layout with both columns visible",
+            "A two-column layout but the visual column is transparent",
+            "An error — grid-cols-1 and lg:grid-cols-2 cannot coexist"
+          ],
+          "answer": "A single column with only the text content visible — the hero visual is hidden because lg is not yet active",
+          "explanation": "At 900px, the lg: breakpoint (1024px) has not yet activated. So grid-cols-1 is still in effect (single column), and hidden lg:block means the visual column is still display: none. The visitor sees only the text content. This is the intentional mobile/tablet layout — the decorative card would clutter a narrower screen."
+        },
+        {
+          "id": "tw-lea-5-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "LEAD",
+          "prompt": "A colleague reviews the finished page and says: 'The nav bar disappears on mobile — that's a bug.' You explain it is intentional. What is the complete explanation?",
+          "options": [
+            "The nav uses hidden md:flex — it is deliberately hidden on screens below 768px because a full horizontal nav does not work on small screens. The correct fix is to add a mobile hamburger menu with md:hidden, not to make the desktop nav visible on mobile.",
+            "The nav uses display:none on mobile because Tailwind automatically hides navs on mobile for performance reasons",
+            "It is a bug — all navigation should always be visible regardless of screen size",
+            "The nav is hidden because md:flex does not work without a flex parent container"
+          ],
+          "answer": "The nav uses hidden md:flex — it is deliberately hidden on screens below 768px because a full horizontal nav does not work on small screens. The correct fix is to add a mobile hamburger menu with md:hidden, not to make the desktop nav visible on mobile.",
+          "explanation": "Hiding the horizontal desktop nav on mobile is correct responsive design practice. A four-link horizontal nav bar on a 375px iPhone screen either overflows, wraps awkwardly, or forces tiny text. The production solution is to pair hidden md:flex (desktop nav) with a hamburger button that uses md:hidden (mobile nav toggle) — showing the mobile nav in a dropdown or slide-out drawer."
+        }
+      ]
+    }
+  ]
+}

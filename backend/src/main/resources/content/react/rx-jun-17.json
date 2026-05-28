@@ -1,0 +1,112 @@
+{
+  "id": "rx-jun-17",
+  "title": "Compound Components and the Slot Pattern",
+  "glyph": "⚛",
+  "sortOrder": 17,
+  "tier": "JUNIOR",
+  "topicId": "react",
+  "prerequisites": ["rx-app-8", "rx-jun-11"],
+  "subChunks": [
+    {
+      "id": "rx-jun-17-1",
+      "title": "Compound Components and the Slot Pattern",
+      "sortOrder": 1,
+      "xpReward": 150,
+      "practiceType": "REACT",
+      "filename": "App.jsx",
+      "hookHtml": "<p>Some components are naturally a collection of related sub-components: a <code>Select</code> with <code>Option</code> items, a <code>Tabs</code> container with <code>Tab</code> and <code>TabPanel</code> pieces. The compound components pattern lets callers compose these pieces freely while the parent manages shared state — without prop drilling or rigid configuration objects.</p>",
+      "explanationHtml": "<h3>The problem with configuration-heavy components</h3>\n\n<pre><code>// ❌ Rigid — every option requires a prop:\n&lt;Tabs\n  tabs={[\n    { id: 'overview', label: 'Overview', content: &lt;OverviewPanel /&gt; },\n    { id: 'stats', label: 'Stats', content: &lt;StatsPanel /&gt; },\n  ]}\n  activeTab=\"overview\"\n  onTabChange={setActiveTab}\n/&gt;</code></pre>\n\n<h3>Compound components — flexible composition</h3>\n\n<pre><code>// ✅ Composable — caller controls the structure:\n&lt;Tabs defaultActive=\"overview\"&gt;\n  &lt;Tabs.List&gt;\n    &lt;Tabs.Tab id=\"overview\"&gt;Overview&lt;/Tabs.Tab&gt;\n    &lt;Tabs.Tab id=\"stats\"&gt;Stats&lt;/Tabs.Tab&gt;\n  &lt;/Tabs.List&gt;\n  &lt;Tabs.Panel id=\"overview\"&gt;&lt;OverviewPanel /&gt;&lt;/Tabs.Panel&gt;\n  &lt;Tabs.Panel id=\"stats\"&gt;&lt;StatsPanel /&gt;&lt;/Tabs.Panel&gt;\n&lt;/Tabs&gt;</code></pre>\n\n<h3>Implementation using Context</h3>\n\n<p>The parent manages shared state; sub-components read it via context:</p>\n\n<pre><code>const TabsContext = createContext(null);\n\nfunction Tabs({ defaultActive, children }) {\n  const [active, setActive] = useState(defaultActive);\n\n  return (\n    &lt;TabsContext.Provider value={{ active, setActive }}&gt;\n      &lt;div className=\"tabs\"&gt;{children}&lt;/div&gt;\n    &lt;/TabsContext.Provider&gt;\n  );\n}\n\nfunction TabList({ children }) {\n  return &lt;div className=\"tab-list\" role=\"tablist\"&gt;{children}&lt;/div&gt;;\n}\n\nfunction Tab({ id, children }) {\n  const { active, setActive } = useContext(TabsContext);\n  return (\n    &lt;button\n      role=\"tab\"\n      aria-selected={active === id}\n      className={active === id ? 'tab tab--active' : 'tab'}\n      onClick={() =&gt; setActive(id)}\n    &gt;\n      {children}\n    &lt;/button&gt;\n  );\n}\n\nfunction TabPanel({ id, children }) {\n  const { active } = useContext(TabsContext);\n  if (active !== id) return null;\n  return &lt;div role=\"tabpanel\"&gt;{children}&lt;/div&gt;;\n}\n\n// Attach sub-components as properties:\nTabs.List = TabList;\nTabs.Tab = Tab;\nTabs.Panel = TabPanel;</code></pre>\n\n<div class=\"dialogue mentor\"><p><strong>Vex:</strong> \"The compound components pattern is the library designer's tool. When you're building a component that will be used in many different configurations, give the caller the building blocks instead of trying to anticipate every configuration with props. They know their use case; you don't.\"</p></div>\n\n<h3>When to use this pattern</h3>\n\n<ul>\n  <li>Components with multiple distinct parts that must share state</li>\n  <li>When callers need control over the ordering or nesting of sub-parts</li>\n  <li>When you're building a reusable component library</li>\n  <li>Accordions, Tabs, Select/Option, Dialog with parts, Menus</li>\n</ul>",
+      "storyBeats": [
+        {
+          "type": "narration",
+          "text": "Vex builds a lantern from modular parts: a glass dome, a flame chamber, a base. Each piece works independently. Together they form a lantern — and the caller decides how tall the base is or whether to add a handle. No single 'build lantern' spell; just composable components."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚗️",
+          "cls": "weaver",
+          "speaker": "Vex the Interface Weaver",
+          "sCls": "mentor",
+          "text": "The parent manages state. The children read it via context. The caller composes them freely. This is how Radix UI, Headless UI, and every serious component library is built — because they can't anticipate every possible use case, so they give you the pieces."
+        },
+        {
+          "type": "example",
+          "speaker": "Tabs compound component",
+          "text": "<Tabs defaultActive=\"one\">\n  <Tabs.List>\n    <Tabs.Tab id=\"one\">Tab One</Tabs.Tab>\n    <Tabs.Tab id=\"two\">Tab Two</Tabs.Tab>\n  </Tabs.List>\n  <Tabs.Panel id=\"one\">Content for tab one</Tabs.Panel>\n  <Tabs.Panel id=\"two\">Content for tab two</Tabs.Panel>\n</Tabs>"
+        }
+      ],
+      "guidedPracticeHtml": "<p>Build a <code>Tabs</code> compound component system with the API shown in the explanation. Requirements:</p><ul><li><code>Tabs</code> — manages active tab state, provides context, <code>data-testid=\"tabs\"</code></li><li><code>Tabs.List</code> — container for tab buttons</li><li><code>Tabs.Tab</code> — button that sets active tab; active tab gets <code>className=\"active\"</code> and <code>aria-selected=\"true\"</code></li><li><code>Tabs.Panel</code> — renders children only when its <code>id</code> matches the active tab</li></ul>",
+      "guidedPracticeStarterCode": "import { createContext, useContext, useState } from 'react';\n\n// TODO: implement TabsContext, Tabs, TabList, Tab, TabPanel\n// Attach TabList, Tab, TabPanel to Tabs as Tabs.List, Tabs.Tab, Tabs.Panel\n\nconst TabsContext = createContext(null);\n\nfunction Tabs({ defaultActive, children }) {\n  const [active, setActive] = useState(defaultActive);\n  return (\n    <TabsContext.Provider value={{ active, setActive }}>\n      <div data-testid=\"tabs\">{children}</div>\n    </TabsContext.Provider>\n  );\n}\n\n// TODO: TabList, Tab, TabPanel\n\nTabs.List = /* TODO */ null;\nTabs.Tab = /* TODO */ null;\nTabs.Panel = /* TODO */ null;\n\nexport default function App() {\n  return (\n    <Tabs defaultActive=\"quest\">\n      <Tabs.List>\n        <Tabs.Tab id=\"quest\">Quests</Tabs.Tab>\n        <Tabs.Tab id=\"items\">Items</Tabs.Tab>\n      </Tabs.List>\n      <Tabs.Panel id=\"quest\"><p data-testid=\"quest-panel\">Quest list here</p></Tabs.Panel>\n      <Tabs.Panel id=\"items\"><p data-testid=\"items-panel\">Items here</p></Tabs.Panel>\n    </Tabs>\n  );\n}",
+      "guidedPracticeTests": [
+        {
+          "label": "First panel visible by default",
+          "selector": "[data-testid='quest-panel']",
+          "exists": true
+        },
+        {
+          "label": "Second panel hidden by default",
+          "selector": "[data-testid='items-panel']",
+          "exists": false
+        },
+        {
+          "label": "Clicking second tab shows second panel",
+          "action": "click",
+          "selector": "button:nth-child(2)",
+          "then": {
+            "selector": "[data-testid='items-panel']",
+            "exists": true
+          }
+        }
+      ],
+      "soloPracticeHtml": "<p>Build an <code>Accordion</code> compound component from scratch using the same pattern. <code>Accordion</code> manages open state. <code>Accordion.Item</code> wraps one entry. <code>Accordion.Trigger</code> toggles open/close. <code>Accordion.Content</code> shows content only when open. Support both single-open and multi-open modes via a <code>multiple</code> prop on the parent.</p>",
+      "feynmanPrompt": "Explain the compound components pattern to a developer who uses prop-drilling or rigid config objects for multi-part components. What problem does it solve? Walk through how the parent manages state and how sub-components access it without props being passed explicitly.",
+      "questions": [
+        {
+          "id": "rx-jun-17-1-q1",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "RECALL",
+          "minPath": "PRACTITIONER",
+          "prompt": "How do sub-components in a compound component pattern typically access shared state?",
+          "options": [
+            "Via a Context that the parent provides — sub-components call useContext to read the state",
+            "Via props explicitly passed from the parent to each sub-component",
+            "Via a global store that all components subscribe to",
+            "Via React.cloneElement — the parent injects props into each child"
+          ],
+          "answer": "Via a Context that the parent provides — sub-components call useContext to read the state",
+          "explanation": "The parent creates and provides a Context with its state and setters. Sub-components (Tab, TabPanel, etc.) call useContext to read the shared state. This eliminates prop drilling while keeping the state co-located in the parent."
+        },
+        {
+          "id": "rx-jun-17-1-q2",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "APPLICATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "Why are sub-components attached to the parent as properties (e.g., `Tabs.Tab = Tab`)?",
+          "options": [
+            "It provides a clear API namespace — users import Tabs and get all related components with dot notation",
+            "It's required for React to recognise them as part of the compound component",
+            "It shares state between the parent and sub-components automatically",
+            "It prevents the sub-components from being used outside the parent"
+          ],
+          "answer": "It provides a clear API namespace — users import Tabs and get all related components with dot notation",
+          "explanation": "Attaching sub-components as properties is a purely ergonomic convention. import { Tabs } from './Tabs' gives you Tabs, Tabs.List, Tabs.Tab, Tabs.Panel — all related components from one import. Sub-components are still normal components; the dot notation is just JavaScript object properties."
+        },
+        {
+          "id": "rx-jun-17-1-q3",
+          "type": "MULTIPLE_CHOICE",
+          "tier": "DISCRIMINATION",
+          "minPath": "PRACTITIONER",
+          "prompt": "When should you use the compound components pattern vs. a simple config-object prop?",
+          "options": [
+            "Use compound components when callers need control over structure, ordering, or insertion of custom elements between sub-parts",
+            "Always use compound components — they are strictly superior to config objects",
+            "Use config objects when the component will be used more than once",
+            "Use compound components only when the component library requires it"
+          ],
+          "answer": "Use compound components when callers need control over structure, ordering, or insertion of custom elements between sub-parts",
+          "explanation": "Config objects work well for fixed structures: <Tabs tabs={[{id, label, content}]} />. Compound components shine when callers need to insert custom elements between tabs, render tabs conditionally, or mix in other components. If the caller only ever needs the standard layout, a config object is simpler."
+        }
+      ]
+    }
+  ]
+}
