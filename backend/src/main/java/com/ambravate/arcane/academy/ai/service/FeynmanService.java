@@ -46,8 +46,8 @@ public class FeynmanService {
         if (sc.getFeynmanPrompt() != null && !sc.getFeynmanPrompt().isBlank()) {
             return sc.getFeynmanPrompt();
         }
-        return "Explain " + sc.getTitle() + " in your own words as if teaching someone who has never programmed. " +
-               "Use at least one analogy. Write 3-5 sentences.";
+        return "Explain " + sc.getTitle() + " in your own words, as if teaching someone encountering it for the first time. " +
+               "Use at least one analogy or real-world example. Write 3-5 sentences.";
     }
 
     /**

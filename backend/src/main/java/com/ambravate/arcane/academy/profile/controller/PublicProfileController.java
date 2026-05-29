@@ -6,9 +6,11 @@ import com.ambravate.arcane.academy.profile.service.PublicProfileService;
 import com.ambravate.arcane.academy.profile.domain.PublicProfile;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.domain.User;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/profile")
 @RequiredArgsConstructor
+@Validated
 public class PublicProfileController {
 
     private final PublicProfileService publicProfileService;
@@ -54,6 +57,29 @@ public class PublicProfileController {
         user.setPublicProfileEnabled(body.enabled());
         userRepository.save(user);
         return ResponseEntity.ok(Map.of("enabled", user.isPublicProfileEnabled()));
+    }
+
+    /** Returns the caller's current location string (may be null if not set). */
+    @GetMapping("/location")
+    public ResponseEntity<Map<String, String>> getLocation(@AuthenticationPrincipal UserPrincipal principal) {
+        User user = userRepository.findById(principal.getId()).orElseThrow();
+        return ResponseEntity.ok(Map.of("location", user.getLocation() != null ? user.getLocation() : ""));
+    }
+
+    /**
+     * Updates the caller's location. Send {@code {"location": ""}} to clear it.
+     * Maximum 100 characters; validated server-side.
+     */
+    @PatchMapping("/location")
+    public ResponseEntity<Map<String, String>> setLocation(
+        @AuthenticationPrincipal UserPrincipal principal,
+        @RequestBody Map<String, @Size(max = 100, message = "Location must be 100 characters or fewer") String> body
+    ) {
+        User user = userRepository.findById(principal.getId()).orElseThrow();
+        String loc = body.getOrDefault("location", "").trim();
+        user.setLocation(loc.isEmpty() ? null : loc);
+        userRepository.save(user);
+        return ResponseEntity.ok(Map.of("location", user.getLocation() != null ? user.getLocation() : ""));
     }
 
 }

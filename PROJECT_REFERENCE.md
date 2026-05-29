@@ -507,8 +507,8 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 
 ### CAPSTONE_CHUNK_IDS in EncodingPage
 
-- Hard-coded set: `java-app-15`, `java-jun-20`, `java-sen-19`, `java-lea-17`
-- When new capstone chunks are added (for Tailwind, React, etc.), this set must be updated manually
+- Hard-coded set: Java (`java-app-15`, `java-jun-20`, `java-sen-19`, `java-lea-17`), Tailwind (`tw-app-15` … `tw-lea-17`), React (`rx-app-15` … `rx-lea-17`)
+- When new capstone chunks are added for future topics, update this set manually
 - Location: `EncodingPage.tsx` line ~7
 
 ---
@@ -558,10 +558,10 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 |---|---|---|
 | Migrate older Java question format to new format (`id`, `minPath`, `prompt`) | ~~Medium~~ Done | All 71 Java content files migrated 2026-05-29 — 384 questions converted |
 | Extend tier auto-advance to non-Java topics (`UserTopicProfile`) | ~~Medium~~ Done | `UserTopicProfile.currentTier` added; `EncodingService.advanceLearnerPathIfTierComplete` now handles all topics; `TIER_PROGRESSION` corrected to APPRENTICE→LEAD; V22 migration |
-| Add Tailwind / React capstone IDs to `CAPSTONE_CHUNK_IDS` | Low | When those capstones are confirmed |
-| SQL content expansion (currently 8 files, target 71) | Low | Not yet started |
-| Hard-coded Feynman persona references mentor by name | Low | Generic enough for non-Java topics |
-| `looksLikePseudocode` detection for mixed-case responses | Low | Handles capitalised keywords; fully lowercase pseudocode would be misclassified as prose |
+| Add Tailwind / React capstone IDs to `CAPSTONE_CHUNK_IDS` | ~~Low~~ Done | All 8 IDs added (tw/rx × app/jun/sen/lea). Verified all JSON files exist. |
+| SQL content expansion (currently 8 files, target 71) | Low | Deferred until content sprint |
+| Hard-coded Feynman persona references mentor by name | ~~Low~~ Done | FeynmanService fallback prompt changed from "never programmed" to "encountering it for the first time" — topic-agnostic |
+| `looksLikePseudocode` detection for mixed-case responses | ~~Low~~ Done | Now uppercases answer before keyword comparison; lowercase pseudocode detected. Added `BEGIN`/`END`/`DO`/`THEN`/`STEP`; removed duplicates and typo (`PURCHASE`). |
 
 ---
 
@@ -575,5 +575,5 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 | Additional topic content (polymathic expansion) | Medium | Extend beyond current 6 topics to broaden the polymathic offering |
 | Production security review | ~~High~~ Done | Completed 2026-05-29 — see Decision Log §[2026-05-29] |
 | AI optimisation (prompt caching, token efficiency) | ~~Medium~~ Done | AiMentorService uses `CacheControlEphemeral.Ttl.TTL_1H` on the system prompt; usage logged per call |
-| User location for leaderboard gamification | Low | Optional location field on profile; regional / global leaderboard segments |
+| User location for leaderboard gamification | ~~Low~~ Done | `location` VARCHAR(100) added to `users` (V23). GET/PATCH `/api/profile/location`. Shown on leaderboard rows with MapPin icon; client-side filter by location string. Set from Profile → Overview. |
 | Icons, images, and infographics | ~~Medium~~ Done | Completed 2026-05-29: lucide icons replace emojis in LandingPage features grid + ChunkMapPage chips + Profile quick-nav; TopicIcon used in Profile TopicCard + LandingPage coming-soon pills; rank-based avatar + XP-to-next-rank progress bar added to Profile header |

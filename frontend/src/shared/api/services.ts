@@ -286,6 +286,7 @@ export interface LeaderboardEntry {
   rankTitle: string
   topicCount: number   // -1 on topic boards (only set for /polymath)
   badgeCount: number
+  location: string | null  // optional user location, e.g. "Manchester, UK"
 }
 
 export const leaderboardApi = {
@@ -395,6 +396,14 @@ export const profileApi = {
   setVisibility: async (enabled: boolean): Promise<boolean> => {
     const { data } = await api.post('/api/profile/visibility', { enabled })
     return Boolean(data?.enabled)
+  },
+  getLocation: async (): Promise<string> => {
+    const { data } = await api.get('/api/profile/location')
+    return data?.location ?? ''
+  },
+  setLocation: async (location: string): Promise<string> => {
+    const { data } = await api.patch('/api/profile/location', { location })
+    return data?.location ?? ''
   },
 }
 

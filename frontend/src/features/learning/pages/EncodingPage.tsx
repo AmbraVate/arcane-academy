@@ -5,7 +5,14 @@ import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi, notesApi, ca
 import type { UserNote } from '@/shared/api/services'
 
 /** Chunk IDs that are capstone lessons — show the project save form on COMPLETE. */
-const CAPSTONE_CHUNK_IDS = new Set(['java-app-15', 'java-jun-20', 'java-sen-19', 'java-lea-17'])
+const CAPSTONE_CHUNK_IDS = new Set([
+  // Java capstones (one per tier)
+  'java-app-15', 'java-jun-20', 'java-sen-19', 'java-lea-17',
+  // Tailwind capstones
+  'tw-app-15',   'tw-jun-20',   'tw-sen-19',   'tw-lea-17',
+  // React capstones
+  'rx-app-15',   'rx-jun-20',   'rx-sen-19',   'rx-lea-17',
+])
 import { useAuth } from '@/shared/hooks/useAuth'
 import type { SubChunkEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
 import StuckButton from '@/components/StuckButton'

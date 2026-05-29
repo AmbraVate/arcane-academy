@@ -8,5 +8,7 @@ public record LeaderboardEntry(
     int streakDays,
     String rankTitle,
     int topicCount,
-    int badgeCount
+    int badgeCount,
+    /** Optional location set by the user (e.g. "Manchester, UK"). May be null. */
+    String location
 ) {}

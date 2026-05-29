@@ -552,19 +552,24 @@ public class EncodingService {
 
     /**
      * Returns true when the response looks like pseudocode / structured algorithm notation
-     * rather than a prose essay. Detection: 3 or more uppercase algorithm keywords present.
-     * Used to switch check #3 from a prose-connector test to an algorithm-structure test.
+     * rather than a prose essay.
+     *
+     * <p>Detection: 3 or more algorithm control-flow keywords present, matched
+     * case-insensitively (uppercased before comparison) so that students who write
+     * entirely lowercase pseudocode ("for each", "if x = 1", "return x") are classified
+     * correctly. Space-padding ensures whole-word matching — " IF " won't trigger on "DIFFICULT".
      */
     private boolean looksLikePseudocode(String answer) {
+        String upper = answer.toUpperCase(Locale.ROOT);
         String[] algorithmKeywords = {
             "ALGORITHM", " FOR ", " IF ", " SET ", " RETURN ", " PRINT ",
             " WHILE ", " FOREACH ", " ELSE ", " OUTPUT ", " INPUT ",
-            " ASSIGN ", " PURCHASE ", " BREAK ", " GOTO ", " GO TO ",
-            "FOR EACH", "FOR each", "If ", "Return ", "Print ", "Set "
+            " ASSIGN ", " BREAK ", " GOTO ", " GO TO ", "FOR EACH",
+            " BEGIN ", " END ", " DO ", " THEN ", " STEP "
         };
         int matches = 0;
         for (String kw : algorithmKeywords) {
-            if (answer.contains(kw)) {
+            if (upper.contains(kw)) {
                 matches++;
                 if (matches >= 3) return true;
             }
