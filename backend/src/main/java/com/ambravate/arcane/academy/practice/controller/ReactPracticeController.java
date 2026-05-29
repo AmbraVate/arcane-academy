@@ -19,30 +19,30 @@ public class ReactPracticeController {
     /**
      * Validates a React JSX submission against client-reported in-iframe test results.
      *
-     * <p>POST /api/react/{subChunkId}/submit
+     * <p>POST /api/react/{lessonId}/submit
      * <br>Body: {@link ReactSubmitRequest}
      */
-    @PostMapping("/{subChunkId}/submit")
+    @PostMapping("/{lessonId}/submit")
     public ResponseEntity<SubmitResponse> submit(
-            @PathVariable String subChunkId,
+            @PathVariable String lessonId,
             @RequestBody ReactSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         return ResponseEntity.ok(
-                reactPracticeService.submit(user.getId(), subChunkId, request));
+                reactPracticeService.submit(user.getId(), lessonId, request));
     }
 
     /**
-     * Solo practice submission — same validation as guided practice.
+     * Solo practice submission â€” same validation as guided practice.
      * The service has idempotency built-in (won't re-award XP if already passed).
      *
-     * <p>POST /api/react/{subChunkId}/solo-practice/submit
+     * <p>POST /api/react/{lessonId}/solo-practice/submit
      */
-    @PostMapping("/{subChunkId}/solo-practice/submit")
+    @PostMapping("/{lessonId}/solo-practice/submit")
     public ResponseEntity<SubmitResponse> submitSoloPractice(
-            @PathVariable String subChunkId,
+            @PathVariable String lessonId,
             @RequestBody ReactSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         return ResponseEntity.ok(
-                reactPracticeService.submit(user.getId(), subChunkId, request));
+                reactPracticeService.submit(user.getId(), lessonId, request));
     }
 }

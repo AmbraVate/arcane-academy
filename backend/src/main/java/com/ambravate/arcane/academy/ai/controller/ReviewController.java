@@ -37,13 +37,13 @@ public class ReviewController {
     return ResponseEntity.ok(toSessionDto(session, "DAILY_REVIEW"));
   }
 
-  @GetMapping("/interleaved/{subChunkId}")
+  @GetMapping("/interleaved/{lessonId}")
   public ResponseEntity<ReviewSessionDto> getInterleavedReview(
-      @PathVariable String subChunkId,
+      @PathVariable String lessonId,
       @AuthenticationPrincipal UserPrincipal user
   ) {
     ReviewSessionQuestions session =
-        interleavingService.generateInterleavedReview(user.getId(), subChunkId);
+        interleavingService.generateInterleavedReview(user.getId(), lessonId);
     return ResponseEntity.ok(toSessionDto(session, "INTERLEAVED_REVIEW"));
   }
 

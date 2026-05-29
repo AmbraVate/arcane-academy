@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { adminTopicApi, type AdminTopic } from '@/shared/api/adminServices'
 
 const BLANK_TOPIC: Partial<AdminTopic> = {
-  id: '', name: '', glyph: '📚', tagline: '', accentColor: 'var(--purple)', sortOrder: 0, active: false,
+  id: '', name: '', glyph: 'ðŸ“š', tagline: '', accentColor: 'var(--purple)', sortOrder: 0, active: false,
 }
 
 function TopicForm({
@@ -64,7 +64,7 @@ function TopicForm({
   )
 }
 
-export default function AdminTopicsPage() {
+export default function AdminDomainsPage() {
   const [topics, setTopics] = useState<AdminTopic[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -109,7 +109,7 @@ export default function AdminTopicsPage() {
       load()
     } catch (e: unknown) {
       const status = (e as { response?: { status?: number } })?.response?.status
-      setError(status === 409 ? 'Cannot delete — this topic still has chunks. Remove all chunks first.' : 'Delete failed')
+      setError(status === 409 ? 'Cannot delete â€” this topic still has chunks. Remove all chunks first.' : 'Delete failed')
     }
   }
 
@@ -141,7 +141,7 @@ export default function AdminTopicsPage() {
       )}
 
       {loading ? (
-        <div style={{ color: '#8b7fa0', textAlign: 'center', paddingTop: 40 }}>Loading…</div>
+        <div style={{ color: '#8b7fa0', textAlign: 'center', paddingTop: 40 }}>Loadingâ€¦</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {topics.map(topic => (

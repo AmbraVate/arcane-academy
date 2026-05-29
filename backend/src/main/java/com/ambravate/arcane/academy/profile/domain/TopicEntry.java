@@ -2,7 +2,7 @@
 package com.ambravate.arcane.academy.profile.domain;
 
 public record TopicEntry(
-    String topicId,
+    String domainId,
     String name,
     String glyph,
     String accentColor,

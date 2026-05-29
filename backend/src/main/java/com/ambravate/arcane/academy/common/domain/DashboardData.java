@@ -15,5 +15,5 @@ public record DashboardData(
     int reviewsDue,
     int dailyGoalMinutes,
     double overallProgress,
-    List<ChunkHealth> chunkHealth
+    List<ModuleHealth> chunkHealth
 ) {}

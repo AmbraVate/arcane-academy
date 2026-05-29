@@ -6,5 +6,6 @@ public enum EncodingPhase {
     GUIDED_PRACTICE,
     SOLO_PRACTICE,
     RETRIEVAL_CHECK,
+    INTEGRATION,
     COMPLETE
 }

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import { adminSubChunkApi, type AdminSubChunk, type StoryBeat, type TestCase } from '@/shared/api/adminServices'
+import { adminLessonApi, type AdminLesson, type StoryBeat, type TestCase } from '@/shared/api/adminServices'
 
 type Tab = 'meta' | 'hook' | 'explanation' | 'story' | 'guided' | 'solo' | 'feynman'
 
@@ -18,7 +18,7 @@ const TABS: { id: Tab; label: string }[] = [
 const PRACTICE_TYPES = ['JAVA', 'TAILWIND', 'NONE']
 const BEAT_TYPES = ['narration', 'dialogue', 'example']
 
-// ── Story beat editor ─────────────────────────────────────────────────────────
+// â”€â”€ Story beat editor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b: StoryBeat[]) => void }) {
   const updateBeat = (i: number, key: keyof StoryBeat, val: unknown) => {
@@ -69,9 +69,9 @@ function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b
               {beat.type.toUpperCase()}
             </span>
             <div style={{ flex: 1 }} />
-            <button style={iconBtn} onClick={() => moveBeat(i, -1)}>↑</button>
-            <button style={iconBtn} onClick={() => moveBeat(i, 1)}>↓</button>
-            <button style={{ ...iconBtn, color: '#f87171' }} onClick={() => removeBeat(i)}>✕</button>
+            <button style={iconBtn} onClick={() => moveBeat(i, -1)}>â†‘</button>
+            <button style={iconBtn} onClick={() => moveBeat(i, 1)}>â†“</button>
+            <button style={{ ...iconBtn, color: '#f87171' }} onClick={() => removeBeat(i)}>âœ•</button>
           </div>
 
           {beat.type === 'dialogue' && (
@@ -102,7 +102,7 @@ function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b
   )
 }
 
-// ── Test case editor ───────────────────────────────────────────────────────────
+// â”€â”€ Test case editor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: TestCase[]) => void }) {
   const update = (i: number, key: string, val: string) => {
@@ -124,7 +124,7 @@ function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: 
             <label style={labelStyle}>Label <input style={inputStyle} value={t.label ?? ''} onChange={e => update(i, 'label', e.target.value)} /></label>
             <label style={labelStyle}>Input (vars) <input style={inputStyle} value={t.input ?? ''} onChange={e => update(i, 'input', e.target.value)} /></label>
             <label style={labelStyle}>Expected <input style={inputStyle} value={t.expected ?? ''} onChange={e => update(i, 'expected', e.target.value)} /></label>
-            <button style={{ ...iconBtn, color: '#f87171', marginBottom: 1 }} onClick={() => remove(i)}>✕</button>
+            <button style={{ ...iconBtn, color: '#f87171', marginBottom: 1 }} onClick={() => remove(i)}>âœ•</button>
           </div>
         </div>
       ))}
@@ -132,14 +132,14 @@ function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: 
   )
 }
 
-// ── Main page ─────────────────────────────────────────────────────────────────
+// â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-export default function AdminSubChunkEditorPage() {
-  const { subChunkId } = useParams<{ subChunkId: string }>()
+export default function AdminLessonEditorPage() {
+  const { lessonId } = useParams<{ lessonId: string }>()
   const navigate = useNavigate()
   const isMobile = useIsMobile()
-  const [sc, setSc] = useState<AdminSubChunk | null>(null)
-  const [form, setForm] = useState<Partial<AdminSubChunk>>({})
+  const [sc, setSc] = useState<AdminLesson | null>(null)
+  const [form, setForm] = useState<Partial<AdminLesson>>({})
   const [activeTab, setActiveTab] = useState<Tab>('meta')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -147,21 +147,21 @@ export default function AdminSubChunkEditorPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!subChunkId) return
-    adminSubChunkApi.get(subChunkId)
+    if (!lessonId) return
+    adminLessonApi.get(lessonId)
       .then(data => { setSc(data); setForm(data) })
       .catch(() => setError('Failed to load sub-chunk'))
       .finally(() => setLoading(false))
-  }, [subChunkId])
+  }, [lessonId])
 
-  const set = (k: keyof AdminSubChunk, v: unknown) => setForm(prev => ({ ...prev, [k]: v }))
+  const set = (k: keyof AdminLesson, v: unknown) => setForm(prev => ({ ...prev, [k]: v }))
 
   const handleSave = async () => {
-    if (!subChunkId) return
+    if (!lessonId) return
     setSaving(true)
     setSaved(false)
     try {
-      const updated = await adminSubChunkApi.update(subChunkId, form)
+      const updated = await adminLessonApi.update(lessonId, form)
       setSc(updated)
       setForm(updated)
       setSaved(true)
@@ -173,7 +173,7 @@ export default function AdminSubChunkEditorPage() {
     }
   }
 
-  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
+  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loadingâ€¦</div>
   if (!sc) return <div style={{ color: '#f87171', fontSize: 14 }}>{error ?? 'Lesson not found'}</div>
 
   return (
@@ -181,9 +181,9 @@ export default function AdminSubChunkEditorPage() {
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
-        <span>›</span>
-        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.chunkId}/subchunks`)}>Lessons</span>
-        <span>›</span>
+        <span>â€º</span>
+        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.moduleId}/subchunks`)}>Lessons</span>
+        <span>â€º</span>
         <span style={{ color: '#e8e0f0' }}>{sc.title}</span>
       </div>
 
@@ -196,10 +196,10 @@ export default function AdminSubChunkEditorPage() {
           Edit: {sc.title}
         </h1>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
-          {saved && <span style={{ color: '#4ade80', fontSize: 12 }}>✓ Saved</span>}
+          {saved && <span style={{ color: '#4ade80', fontSize: 12 }}>âœ“ Saved</span>}
           {error && <span style={{ color: '#f87171', fontSize: 12 }}>{error}</span>}
           <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={handleSave} disabled={saving}>
-            {saving ? 'Saving…' : 'Save Changes'}
+            {saving ? 'Savingâ€¦' : 'Save Changes'}
           </button>
         </div>
       </div>
@@ -343,7 +343,7 @@ export default function AdminSubChunkEditorPage() {
                 </span>
                 <textarea
                   style={{ ...inputStyle, minHeight: 140, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
-                  placeholder="Reference solution shown only to admins…"
+                  placeholder="Reference solution shown only to adminsâ€¦"
                   value={form.guidedPracticeModelAnswer ?? ''}
                   onChange={e => set('guidedPracticeModelAnswer', e.target.value || null)}
                 />
@@ -355,7 +355,7 @@ export default function AdminSubChunkEditorPage() {
         {activeTab === 'solo' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <label style={labelStyle}>
-              Solo Practice HTML (challenge prompt — no starter code)
+              Solo Practice HTML (challenge prompt â€” no starter code)
               <textarea
                 style={{ ...inputStyle, minHeight: 200, resize: 'vertical' }}
                 value={form.soloPracticeHtml ?? ''}
@@ -374,7 +374,7 @@ export default function AdminSubChunkEditorPage() {
                 </span>
                 <textarea
                   style={{ ...inputStyle, minHeight: 160, resize: 'vertical' }}
-                  placeholder="Model answer or solution revealed only to admins…"
+                  placeholder="Model answer or solution revealed only to adminsâ€¦"
                   value={form.modelAnswer ?? ''}
                   onChange={e => set('modelAnswer', e.target.value || null)}
                 />

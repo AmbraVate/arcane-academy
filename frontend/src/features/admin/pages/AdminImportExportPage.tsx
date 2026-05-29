@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { adminChunkApi, adminContentApi, adminTopicApi, type AdminChunk, type AdminTopic } from '@/shared/api/adminServices'
 
 export default function AdminImportExportPage() {
@@ -7,7 +7,7 @@ export default function AdminImportExportPage() {
   const [topicFilter, setTopicFilter] = useState('')
   const [loadingChunks, setLoadingChunks] = useState(false)
   const [importing, setImporting] = useState(false)
-  const [importResult, setImportResult] = useState<{ status: string; chunkId: string; subChunks: number } | null>(null)
+  const [importResult, setImportResult] = useState<{ status: string; moduleId: string; lessons: number } | null>(null)
   const [importError, setImportError] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -23,8 +23,8 @@ export default function AdminImportExportPage() {
       .finally(() => setLoadingChunks(false))
   }, [topicFilter])
 
-  const handleExport = (chunkId: string, chunkTitle: string) => {
-    const path = adminContentApi.exportChunk(chunkId)
+  const handleExport = (moduleId: string, chunkTitle: string) => {
+    const path = adminContentApi.exportChunk(moduleId)
     const a = document.createElement('a')
     a.href = path
     a.download = `chunk-${chunkTitle.toLowerCase().replace(/\s+/g, '-')}.json`
@@ -56,7 +56,7 @@ export default function AdminImportExportPage() {
         Import / Export
       </h1>
       <p style={{ color: '#8b7fa0', fontSize: 13, marginBottom: 32 }}>
-        Transfer content chunks as JSON files — great for backups and moving content between environments.
+        Transfer content chunks as JSON files â€” great for backups and moving content between environments.
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
@@ -64,7 +64,7 @@ export default function AdminImportExportPage() {
         {/* Export */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
           <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#c4b5fd', marginBottom: 6 }}>
-            📤 Export Chunk
+            ðŸ“¤ Export Chunk
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
             Download a full module (including all lessons, questions, and story beats) as a JSON file.
@@ -90,7 +90,7 @@ export default function AdminImportExportPage() {
           </div>
 
           {loadingChunks ? (
-            <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading modules…</div>
+            <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading modulesâ€¦</div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 360, overflowY: 'auto' }}>
               {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
@@ -112,7 +112,7 @@ export default function AdminImportExportPage() {
                     style={{ fontSize: 11, padding: '4px 12px', flexShrink: 0 }}
                     onClick={() => handleExport(chunk.id, chunk.title)}
                   >
-                    ⬇ Export
+                    â¬‡ Export
                   </button>
                 </div>
               ))}
@@ -123,7 +123,7 @@ export default function AdminImportExportPage() {
         {/* Import */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
           <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#c4b5fd', marginBottom: 6 }}>
-            📥 Import Chunk
+            ðŸ“¥ Import Chunk
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
             Upload a previously exported JSON file to create or update a chunk. If a chunk with the same ID exists, it will be updated in place.
@@ -153,9 +153,9 @@ export default function AdminImportExportPage() {
               }
             }}
           >
-            <div style={{ fontSize: 32, marginBottom: 10 }}>📂</div>
+            <div style={{ fontSize: 32, marginBottom: 10 }}>ðŸ“‚</div>
             <div style={{ fontFamily: 'Cinzel, serif', fontSize: 13, color: '#c4b5fd', marginBottom: 6 }}>
-              {importing ? 'Importing…' : 'Click or drag JSON file here'}
+              {importing ? 'Importingâ€¦' : 'Click or drag JSON file here'}
             </div>
             <div style={{ fontSize: 11, color: '#8b7fa0' }}>Accepts .json chunk export files</div>
           </div>
@@ -177,10 +177,10 @@ export default function AdminImportExportPage() {
               padding: '12px 16px',
             }}>
               <div style={{ color: '#4ade80', fontFamily: 'Cinzel, serif', fontSize: 12, marginBottom: 4 }}>
-                ✓ Import Successful
+                âœ“ Import Successful
               </div>
               <div style={{ fontSize: 12, color: '#e8e0f0' }}>
-                Module <strong>{importResult.chunkId}</strong> — {importResult.subChunks} lessons imported
+                Module <strong>{importResult.moduleId}</strong> â€” {importResult.lessons} lessons imported
               </div>
             </div>
           )}
@@ -200,7 +200,7 @@ export default function AdminImportExportPage() {
           <div style={{ marginTop: 20, padding: '14px 16px', background: 'rgba(139,92,246,.07)', border: '1px solid rgba(139,92,246,.2)', borderRadius: 8 }}>
             <div style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: '#c4b5fd', marginBottom: 6 }}>Format notes</div>
             <ul style={{ listStyle: 'disc', paddingLeft: 16, fontSize: 11, color: '#8b7fa0', display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <li>The JSON must contain a top-level <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>chunk</code> object and a <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>subChunks</code> array</li>
+              <li>The JSON must contain a top-level <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>chunk</code> object and a <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>lessons</code> array</li>
               <li>Questions are included under each lesson as a <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>questions</code> array</li>
               <li>Story beats are stored as a JSON array in <code style={{ background: '#2e2850', padding: '1px 4px', borderRadius: 3 }}>storyBeats</code></li>
             </ul>

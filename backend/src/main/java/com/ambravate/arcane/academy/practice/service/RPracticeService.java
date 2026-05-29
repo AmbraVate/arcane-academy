@@ -3,11 +3,11 @@ package com.ambravate.arcane.academy.practice.service;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.practice.dto.RSubmitRequest;
 import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -32,7 +32,7 @@ import java.util.Optional;
  * performs a lightweight structural sanity check on the R source before
  * awarding XP.
  *
- * <p>Same trust domain as {@link SqlPracticeService} — documented in CLAUDE.md §0.
+ * <p>Same trust domain as {@link SqlPracticeService} â€” documented in CLAUDE.md Â§0.
  */
 @Service
 @RequiredArgsConstructor
@@ -45,7 +45,7 @@ public class RPracticeService {
    */
   private static final int MIN_SOURCE_LENGTH = 3;
 
-  private final SubChunkRepository subChunkRepository;
+  private final LessonRepository lessonRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
   private final ReviewSessionRepository reviewSessionRepository;
@@ -53,16 +53,16 @@ public class RPracticeService {
   private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
-  public SubmitResponse submit(String userId, String subChunkId, RSubmitRequest request) {
-    SubChunk subChunk = subChunkRepository.findById(subChunkId)
-        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + subChunkId));
+  public SubmitResponse submit(String userId, String lessonId, RSubmitRequest request) {
+    Lesson subChunk = lessonRepository.findById(lessonId)
+        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + lessonId));
 
-    // ── 1. Structural sanity check on source ────────────────────────────────
+    // â”€â”€ 1. Structural sanity check on source â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     String code = request.getCode() == null ? "" : request.getCode().trim();
     if (code.length() < MIN_SOURCE_LENGTH || !looksLikeR(code)) {
       log.info(
-          "[R] Rejected — source too short or not R-like | user={} subChunk={}",
-          userId, subChunkId
+          "[R] Rejected â€” source too short or not R-like | user={} subChunk={}",
+          userId, lessonId
       );
       return buildResponse(
           false,
@@ -76,7 +76,7 @@ public class RPracticeService {
       );
     }
 
-    // ── 2. Trust the client-reported test results ───────────────────────────
+    // â”€â”€ 2. Trust the client-reported test results â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     List<RSubmitRequest.ClientTestResult> clientResults =
         request.getClientTestResults() == null ? List.of() : request.getClientTestResults();
 
@@ -95,19 +95,19 @@ public class RPracticeService {
       }
     }
 
-    // ── 3. Award XP if all passed ────────────────────────────────────────────
+    // â”€â”€ 3. Award XP if all passed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     int xpEarned = 0;
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
-      xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
+      xpEarned = awardXp(userId, lessonId, subChunk.getXpReward());
       newBadges = gamification.evaluateAndAwardBadges(userId,
               progressRepository.findByUserId(userId),
               reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
-      log.info("[R] All tests passed | user={} subChunk={} xp={}", userId, subChunkId, xpEarned);
+      log.info("[R] All tests passed | user={} subChunk={} xp={}", userId, lessonId, xpEarned);
     } else {
       log.info(
           "[R] Tests failed | user={} subChunk={} failures={}",
-          userId, subChunkId,
+          userId, lessonId,
           results.stream()
               .filter(r -> !r.isPassed())
               .map(SubmitResponse.TestResult::getLabel)
@@ -119,7 +119,7 @@ public class RPracticeService {
   }
 
   /**
-   * Lightweight R detection. We're not parsing — we just want to reject obviously
+   * Lightweight R detection. We're not parsing â€” we just want to reject obviously
    * non-R submissions like "abc" or "<html>". The code must contain at least one
    * R-flavoured token: assignment operator, common function call, pipe, or
    * statistical keyword.
@@ -140,15 +140,15 @@ public class RPracticeService {
   }
 
   /**
-   * Awards XP exactly once per sub-chunk per user — same idempotency pattern as
+   * Awards XP exactly once per sub-chunk per user â€” same idempotency pattern as
    * {@link SqlPracticeService}.
    */
-  private int awardXp(String userId, String subChunkId, int xp) {
+  private int awardXp(String userId, String lessonId, int xp) {
     Optional<UserChunkProgress> progressOpt =
-        progressRepository.findByUserIdAndSubChunkId(userId, subChunkId);
+        progressRepository.findByUserIdAndLessonId(userId, lessonId);
 
     boolean alreadyAwarded = progressOpt
-        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == SubChunkStatus.COMPLETE)
+        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == LessonStatus.COMPLETE)
         .orElse(false);
     if (alreadyAwarded) {
       return 0;
@@ -161,7 +161,7 @@ public class RPracticeService {
     userRepository.save(user);
 
     UserChunkProgress progress = progressOpt.orElseGet(() ->
-        UserChunkProgress.builder().userId(userId).subChunkId(subChunkId).build());
+        UserChunkProgress.builder().userId(userId).lessonId(lessonId).build());
     progress.setLastScore(1.0);
     progressRepository.save(progress);
 

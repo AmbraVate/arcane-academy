@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * DTOs for deserialising chunk content from JSON resource files
- * (src/main/resources/content/{topicId}/{chunkId}.json).
+ * (src/main/resources/content/{domainId}/{chunkId}.json).
  *
  * Fields are public so Jackson can populate them without annotations.
  * All fields are optional / nullable unless noted.
@@ -25,19 +25,22 @@ public class ChunkContentDto {
     public String glyph;
     /** Sort position within the topic. */
     public int sortOrder;
-    /** FOUNDATION | PRACTITIONER | EXPERT — also accepted as "learnerPath" */
+    /** FOUNDATION | PRACTITIONER | EXPERT â€" also accepted as "learnerPath" */
     @JsonAlias("learnerPath")
     public String tier;
-    /** E.g. "tailwind" or "java" */
-    public String topicId;
-    /** IDs of chunks that must be completed first. Also accepted as "prerequisiteIds". */
+    /** E.g. "java" or "psychology" — accepts both "topicId" (legacy) and "domainId" (new) */
+    @JsonAlias({"topicId", "domainId"})
+    public String domainId;
+    /** IDs of modules that must be completed first. Also accepted as "prerequisiteIds". */
     @JsonAlias("prerequisiteIds")
     public List<String> prerequisites;
 
+    /** Also accepted as "lessons" (blueprint terminology). */
+    @JsonAlias("lessons")
     public List<SubChunkDto> subChunks;
     public List<RabbitHoleDto> rabbitHoles;
 
-    // ── Sub-chunk ─────────────────────────────────────────────────────────
+    // â"€â"€ Sub-chunk â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SubChunkDto {
@@ -46,7 +49,7 @@ public class ChunkContentDto {
         public String title;
         public int sortOrder;
         public int xpReward;
-        /** File shown in the editor header. E.g. "index.html" — also accepted as "practiceFileName" */
+        /** File shown in the editor header. E.g. "index.html" â€" also accepted as "practiceFileName" */
         @JsonAlias("practiceFileName")
         public String filename;
         /** JAVA | TAILWIND | NONE */
@@ -91,7 +94,7 @@ public class ChunkContentDto {
         /**
          * Optional model answer / exemplar response revealed after solo practice is complete.
          * Use for written-response (practiceType: NONE) sub-chunks to give the learner a
-         * benchmark after their independent attempt. Should be concise (150–300 words) and
+         * benchmark after their independent attempt. Should be concise (150â€"300 words) and
          * demonstrate the vocabulary, structure, and critical evaluation expected at this tier.
          */
         public String modelAnswer;
@@ -110,7 +113,7 @@ public class ChunkContentDto {
          */
         public List<Map<String, Object>> rabbitHoleTerms;
 
-        // ── Structured lesson metadata (V15) ─────────────────────────────────
+        // â"€â"€ Structured lesson metadata (V15) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
         /**
          * Learning objectives shown before story beats begin.
@@ -126,7 +129,7 @@ public class ChunkContentDto {
 
         /**
          * HTML description of an open-ended mini project.
-         * No sandbox — conceptual/design prompt. Shown after the challenge.
+         * No sandbox â€" conceptual/design prompt. Shown after the challenge.
          */
         public String miniProject;
 
@@ -147,6 +150,19 @@ public class ChunkContentDto {
          * Each entry: { "title": "...", "type": "pdf", "url": "/downloads/filename.pdf" }
          */
         public List<Map<String, Object>> downloadables;
+
+        /**
+         * Cross-domain connection prompt shown in the INTEGRATION phase (between retrieval and complete).
+         * Asks the learner to link this concept to other domains they know.
+         * If null or blank, the INTEGRATION phase is skipped automatically.
+         */
+        public String integrationPrompt;
+
+        /**
+         * Blueprint quest classification: KNOWLEDGE | GUIDED | PRACTICE | INVESTIGATION | SYNTHESIS | MASTERY.
+         * Defaults to null (unclassified) if omitted.
+         */
+        public String questType;
 
         @JsonIgnoreProperties(ignoreUnknown = true)
         public static class ChallengeDto {
@@ -180,7 +196,7 @@ public class ChunkContentDto {
         }
     }
 
-    // ── Question ──────────────────────────────────────────────────────────
+    // â"€â"€ Question â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class QuestionDto {
@@ -190,17 +206,17 @@ public class ChunkContentDto {
          * CODE_COMPLETION | WHATS_THE_OUTPUT | DEBUGGING | SCENARIO | COMPARE_CONTRAST | DISCRIMINATION
          */
         public String type;
-        /** RECALL | APPLICATION | DISCRIMINATION — also accepted as "difficulty". */
+        /** RECALL | APPLICATION | DISCRIMINATION â€" also accepted as "difficulty". */
         @JsonAlias("difficulty")
         public String tier;
-        /** Question body. HTML string — also accepted as "prompt". */
+        /** Question body. HTML string â€" also accepted as "prompt". */
         @JsonAlias({"prompt", "question"})
         public String questionHtml;
         /** Optional code block shown alongside the question. */
         public String codeSnippet;
-        /** Answer choices. For TRUE_FALSE this can be omitted — loader fills ["True","False"]. */
+        /** Answer choices. For TRUE_FALSE this can be omitted â€" loader fills ["True","False"]. */
         public List<String> options;
-        /** The correct answer text — also accepted as "answer". Mutually exclusive with correctIndex. */
+        /** The correct answer text â€" also accepted as "answer". Mutually exclusive with correctIndex. */
         @JsonAlias("answer")
         public String correctAnswer;
         /**
@@ -209,14 +225,14 @@ public class ChunkContentDto {
          * The seeder resolves this to the option text before persisting.
          */
         public Integer correctIndex;
-        /** Shown after the learner answers. HTML string — also accepted as "explanation". */
+        /** Shown after the learner answers. HTML string â€" also accepted as "explanation". */
         @JsonAlias("explanation")
         public String explanationHtml;
         /** IDs of other sub-chunks that relate to this question (SCENARIO only). */
         public List<String> crossChunkIds;
     }
 
-    // ── Rabbit hole ───────────────────────────────────────────────────────
+    // â"€â"€ Rabbit hole â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RabbitHoleDto {

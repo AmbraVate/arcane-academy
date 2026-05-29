@@ -1,10 +1,10 @@
 package com.ambravate.arcane.academy.ai.service;
 
 import com.ambravate.arcane.academy.ai.domain.FeynmanResult;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
+import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class FeynmanService {
 
-    private final SubChunkRepository subChunkRepository;
+    private final LessonRepository lessonRepository;
     private final UserChunkProgressRepository progressRepository;
 
     // Key terms per chunk topic for pattern-matching evaluation
@@ -40,9 +40,9 @@ public class FeynmanService {
     /**
      * Get the Feynman prompt for a sub-chunk.
      */
-    public String getPrompt(String subChunkId) {
-        SubChunk sc = subChunkRepository.findById(subChunkId)
-                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+    public String getPrompt(String lessonId) {
+        Lesson sc = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + lessonId));
         if (sc.getFeynmanPrompt() != null && !sc.getFeynmanPrompt().isBlank()) {
             return sc.getFeynmanPrompt();
         }
@@ -56,9 +56,9 @@ public class FeynmanService {
      * simplicity (jargon-free readability), connection (analogies/examples).
      */
     @Transactional
-    public FeynmanResult evaluateExplanation(String userId, String subChunkId, String explanation) {
-        SubChunk sc = subChunkRepository.findById(subChunkId).orElseThrow();
-        String chunkId = sc.getChunkId();
+    public FeynmanResult evaluateExplanation(String userId, String lessonId, String explanation) {
+        Lesson sc = lessonRepository.findById(lessonId).orElseThrow();
+        String chunkId = sc.getModuleId();
 
         String lower = explanation.toLowerCase();
         String[] words = lower.split("\\s+");
@@ -106,7 +106,7 @@ public class FeynmanService {
         if (overall >= 0.7) feedback.append("Well done! Your explanation shows solid understanding.");
 
         // Update progress
-        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).orElse(null);
+        UserChunkProgress progress = progressRepository.findByUserIdAndLessonId(userId, lessonId).orElse(null);
         if (progress != null) {
             progress.setFeynmanCompleted(true);
             progress.setFeynmanScore(overall);
@@ -116,7 +116,7 @@ public class FeynmanService {
         int xpEarned = overall >= 0.5 ? 15 : 5;
 
         log.info("[Feynman] Evaluated | user={} subChunk={} overall={} accuracy={} completeness={} simplicity={} connection={}",
-                userId, subChunkId, overall, accuracy, completeness, simplicity, connection);
+                userId, lessonId, overall, accuracy, completeness, simplicity, connection);
 
         return new FeynmanResult(accuracy, completeness, simplicity, connection, overall,
                 feedback.toString().trim(), xpEarned);

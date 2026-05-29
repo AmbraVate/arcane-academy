@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+﻿import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import type { StoryRabbitHoleTerm } from '@/shared/types'
 import { rabbitHoleTermApi } from '@/shared/api/services'
@@ -9,8 +9,8 @@ interface Props {
   html: string
   terms?: StoryRabbitHoleTerm[] | null
   className?: string
-  subChunkId?: string
-  topicId?: string
+  lessonId?: string
+  domainId?: string
 }
 
 /** Inject data-rh / data-rh-desc spans into text nodes only (not tag attributes). */
@@ -18,7 +18,7 @@ export function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): strin
   if (!terms.length) return html
   const parts = html.split(/(<[^>]+>)/)
   return parts.map((part, i) => {
-    if (i % 2 === 1) return part // it's a tag — skip
+    if (i % 2 === 1) return part // it's a tag â€” skip
     let text = part
     for (const { term, description } of terms) {
       const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -32,10 +32,10 @@ export function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): strin
 
 /**
  * Renders arbitrary HTML with rabbit-hole term annotation and a save-to-queue popover.
- * Pass a `className` for the wrapper div's styling — identical to the plain
+ * Pass a `className` for the wrapper div's styling â€” identical to the plain
  * `dangerouslySetInnerHTML` div it replaces.
  */
-export default function RabbitHoleHtml({ html, terms, className, subChunkId, topicId }: Props) {
+export default function RabbitHoleHtml({ html, terms, className, lessonId, domainId }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [popover, setPopover] = useState<Popover | null>(null)
   const [savedTerms, setSavedTerms] = useState<Set<string>>(new Set())
@@ -75,7 +75,7 @@ export default function RabbitHoleHtml({ html, terms, className, subChunkId, top
     if (!popover || saving) return
     setSaving(true)
     try {
-      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId ?? '', topicId ?? '')
+      await rabbitHoleTermApi.save(popover.term, popover.description, lessonId ?? '', domainId ?? '')
       setSavedTerms(prev => new Set(prev).add(popover.term))
     } catch { /* ignore */ } finally { setSaving(false) }
   }
@@ -107,7 +107,7 @@ export default function RabbitHoleHtml({ html, terms, className, subChunkId, top
           style={{ left: Math.min(popover.x, window.innerWidth - 288), top: popover.y }}
           onClick={e => e.stopPropagation()}
         >
-          <div className="text-[13px] font-bold text-gold mb-1">🐇 {popover.term}</div>
+          <div className="text-[13px] font-bold text-gold mb-1">ðŸ‡ {popover.term}</div>
           {popover.description && (
             <p className="text-[12px] text-muted leading-[1.55] mb-2.5">{popover.description}</p>
           )}
@@ -116,14 +116,14 @@ export default function RabbitHoleHtml({ html, terms, className, subChunkId, top
               className="text-[11px] px-3 py-1.5 rounded-md bg-teal-dim text-teal border border-teal cursor-pointer"
               onClick={handleUnsave} disabled={saving}
             >
-              {saving ? '…' : '✓ Saved — Remove'}
+              {saving ? 'â€¦' : 'âœ“ Saved â€” Remove'}
             </button>
           ) : (
             <button
               className="text-[11px] px-3 py-1.5 rounded-md bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.4)] cursor-pointer hover:bg-[rgba(139,92,246,0.2)]"
               onClick={handleSave} disabled={saving}
             >
-              {saving ? '…' : '🐇 Save to Rabbit Holes'}
+              {saving ? 'â€¦' : 'ðŸ‡ Save to Rabbit Holes'}
             </button>
           )}
         </div>

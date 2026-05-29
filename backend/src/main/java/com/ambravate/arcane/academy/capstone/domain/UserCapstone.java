@@ -19,7 +19,7 @@ public class UserCapstone {
     private String userId;
 
     @Column(name = "chunk_id", nullable = false)
-    private String chunkId;
+    private String moduleId;
 
     @Column(nullable = false)
     private String title;

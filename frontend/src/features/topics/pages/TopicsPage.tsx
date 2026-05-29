@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { TopicIcon } from '@/components/icons/TopicIcon'
 import { Sparkles, RefreshCcw, Check, Lock } from 'lucide-react'
-import { TOPICS, ACTIVE_TOPIC_IDS, type Topic, type Genre } from '../data/topics'
+import { TOPICS, ACTIVE_TOPIC_IDS, type Topic, type School } from '../data/topics'
 
 interface TopicData {
   progress: number
@@ -16,11 +16,13 @@ interface TopicData {
   totalLessons: number
 }
 
-const GENRES: { id: Genre; label: string; glyph: string }[] = [
-  { id: 'all',     label: 'All',        glyph: '✦'  },
-  { id: 'tech',    label: 'Technology', glyph: '💻' },
-  { id: 'science', label: 'Science',    glyph: '🔬' },
-  { id: 'history', label: 'History',    glyph: '📜' },
+const GENRES: { id: School | 'all'; label: string; glyph: string }[] = [
+  { id: 'all',                     label: 'All',         glyph: '✶'  },
+  { id: 'engineering-systems',     label: 'Engineering', glyph: '⚙'  },
+  { id: 'mathematical-scientific', label: 'Science',     glyph: 'Σ'  },
+  { id: 'human-systems',           label: 'Humanities',  glyph: 'Ψ'  },
+  { id: 'creative-cultural',       label: 'Creative',    glyph: '♫'  },
+  { id: 'heritage',                label: 'Heritage',    glyph: 'Ω'  },
 ]
 
 const ACTIVE_TOPICS = ACTIVE_TOPIC_IDS
@@ -54,10 +56,10 @@ function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; s
   )
 }
 
-export default function TopicsPage() {
+export default function DomainsPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
-  const [activeGenre, setActiveGenre] = useState<Genre>('all')
+  const [activeGenre, setActiveGenre] = useState<School | 'all'>('all')
   const rawTopicData = useTopicsDashboard(ACTIVE_TOPICS)
 
   const topicData: Record<string, TopicData> = Object.fromEntries(
@@ -68,11 +70,11 @@ export default function TopicsPage() {
         diagnosticCompleted: d!.diagnosticCompleted,
         diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
         totalChunks: d!.chunkHealth.length,
-        totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalSubChunks, 0),
+        totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalLessons, 0),
       }])
   )
 
-  // ── Enrollment & paywall logic ────────────────────────────────────────────
+  // â”€â”€ Enrollment & paywall logic â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   //
   // A topic is "enrolled" once the user has any engagement: started a
   // diagnostic OR has learning progress. We derive this from the dashboard
@@ -91,7 +93,7 @@ export default function TopicsPage() {
 
   // Filter by genre, then sort: active first, coming_soon after
   const visibleTopics = TOPICS
-    .filter(t => activeGenre === 'all' || t.genre === activeGenre)
+    .filter(t => activeGenre === 'all' || t.school === activeGenre)
     .sort((a, b) => {
       if (a.status === b.status) return 0
       return a.status === 'active' ? -1 : 1
@@ -104,9 +106,9 @@ export default function TopicsPage() {
     navigate(needsOnboarding ? `/topic/${topic.id}/onboarding` : `/topic/${topic.id}`)
   }
 
-  function handleDiagnosticClick(e: React.MouseEvent, topicId: string) {
+  function handleDiagnosticClick(e: React.MouseEvent, domainId: string) {
     e.stopPropagation()
-    navigate(`/topic/${topicId}/diagnostic`)
+    navigate(`/topic/${domainId}/diagnostic`)
   }
 
   function renderDiagnosticRow(topic: Topic) {
@@ -159,7 +161,7 @@ export default function TopicsPage() {
       <div className="mt-1 flex items-center gap-1.5 px-3 py-1.5 rounded-[7px]
         bg-[rgba(0,200,83,0.06)] border border-[rgba(0,200,83,0.2)] text-teal text-[11px] font-cinzel">
         <Check size={12} strokeWidth={2.5} />
-        <span>Diagnostic done{completedDate ? ` · ${completedDate}` : ''}</span>
+        <span>Diagnostic done{completedDate ? ` Â· ${completedDate}` : ''}</span>
         {daysLeft !== null && (
           <span className="ml-auto text-muted text-[10px]">retake in {daysLeft}d</span>
         )}
@@ -176,7 +178,7 @@ export default function TopicsPage() {
         </h1>
         <p className="text-[16px] text-muted leading-[1.7] max-w-[560px] mx-auto">
           {hasActiveEnrollment && !canBypassPaywall
-            ? 'Continue mastering your chosen discipline — or unlock more paths when you\'re ready.'
+            ? 'Continue mastering your chosen discipline â€” or unlock more paths when you\'re ready.'
             : 'Enrol in a discipline and begin your journey. Master it deeply before expanding your path.'}
         </p>
       </div>
@@ -246,7 +248,7 @@ export default function TopicsPage() {
             >
               <div className="flex items-start justify-between mb-1">
                 <div className="opacity-90">
-                  <TopicIcon topicId={topic.id} size={active ? 34 : 30} />
+                  <TopicIcon domainId={topic.id} size={active ? 34 : 30} />
                 </div>
                 <div className="flex flex-col items-end gap-1.5">
                   {isPaywalled ? (
@@ -270,17 +272,17 @@ export default function TopicsPage() {
               </div>
               <div className="text-[13px] text-muted leading-[1.6] flex-1">{topic.tagline}</div>
 
-              {/* Diagnostic row — only shown for enrolled topics */}
+              {/* Diagnostic row â€” only shown for enrolled topics */}
               {active && isEnrolled && renderDiagnosticRow(topic)}
 
               <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
                 <span className="text-[11px] text-muted font-cinzel leading-[1.4]">
                   {active && topicData[topic.id]
-                    ? <>{topicData[topic.id].totalChunks} modules · {topicData[topic.id].totalLessons} lessons</>
-                    : <>{topic.chunks} modules</>}
+                    ? <>{topicData[topic.id].totalChunks} modules Â· {topicData[topic.id].totalLessons} lessons</>
+                    : <>{topic.modules} modules</>}
                 </span>
 
-                {/* Action label — three states */}
+                {/* Action label â€” three states */}
                 {active && (
                   <span className={cn(
                     'text-[13px] font-semibold flex-shrink-0 flex items-center gap-1',
@@ -305,15 +307,15 @@ export default function TopicsPage() {
 
       {/* Contextual bottom note */}
       <div className="flex items-start gap-4 bg-card border border-border border-l-[3px] border-l-gold rounded-[10px] px-6 py-5">
-        <span className="text-[20px] text-gold flex-shrink-0 mt-0.5">✦</span>
+        <span className="text-[20px] text-gold flex-shrink-0 mt-0.5">âœ¦</span>
         {hasActiveEnrollment && !canBypassPaywall ? (
           <p className="text-[14px] text-muted leading-[1.7] m-0">
             You have an active enrolment. Complete modules and build deep mastery in your chosen
-            discipline — unlock additional paths when you're ready to expand.
+            discipline â€” unlock additional paths when you're ready to expand.
           </p>
         ) : (
           <p className="text-[14px] text-muted leading-[1.7] m-0">
-            A polymath builds mastery one discipline at a time. Choose your first path wisely —
+            A polymath builds mastery one discipline at a time. Choose your first path wisely â€”
             depth before breadth is the mark of a true scholar.
           </p>
         )}

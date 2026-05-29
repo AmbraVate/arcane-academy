@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { adminUserApi, type AdminUser, type UserStats } from '@/shared/api/adminServices'
 import { useAuth } from '@/shared/hooks/useAuth'
 import {
@@ -103,7 +103,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
     setResetting(true)
     try {
       await adminUserApi.resetProgress(user.id)
-      setStats(s => s ? { ...s, subChunksCompleted: 0, chunksCompleted: 0, reviewSessionsCompleted: 0 } : s)
+      setStats(s => s ? { ...s, lessonsCompleted: 0, chunksCompleted: 0, reviewSessionsCompleted: 0 } : s)
     } catch {
       setError('Failed to reset progress')
     } finally {
@@ -130,7 +130,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
       </div>
       {statsLoading ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#8b7fa0', fontSize: 12, margin: '8px 0 16px' }}>
-          <Loader2 size={13} className="animate-spin" /> Loading stats…
+          <Loader2 size={13} className="animate-spin" /> Loading statsâ€¦
         </div>
       ) : stats ? (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
@@ -138,7 +138,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
           <StatMini icon={Star}     label="Rank"     value={stats.rank}                     color="#8b5cf6" />
           <StatMini icon={Flame}    label="Streak"   value={`${stats.streakDays}d`}          color="#fb923c" />
           <StatMini icon={Trophy}   label="Badges"   value={stats.badgesEarned}             color="#4ade80" />
-          <StatMini icon={BookOpen} label="Concepts" value={stats.subChunksCompleted}       color="#2dd4bf" />
+          <StatMini icon={BookOpen} label="Concepts" value={stats.lessonsCompleted}       color="#2dd4bf" />
           <StatMini icon={BarChart2}label="Reviews"  value={stats.reviewSessionsCompleted}  color="#60a5fa" />
         </div>
       ) : null}
@@ -178,7 +178,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
         <button disabled={resetting} onClick={handleReset}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(248,113,113,.2)', color: '#f87171', transition: 'all .15s' }}>
           {resetting ? <Loader2 size={13} className="animate-spin" /> : <RotateCcw size={13} />}
-          {resetting ? 'Resetting…' : 'Reset Progress'}
+          {resetting ? 'Resettingâ€¦' : 'Reset Progress'}
         </button>
       </div>
     </div>
@@ -245,7 +245,7 @@ export default function AdminUsersPage() {
           <Search size={13} color="#8b7fa0" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
           <input
             style={{ ...inputStyle, paddingLeft: 32 }}
-            placeholder="Search by username or email…"
+            placeholder="Search by username or emailâ€¦"
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSearch()}
@@ -286,7 +286,7 @@ export default function AdminUsersPage() {
         <div style={{ flex: 1, minWidth: 0 }}>
           {loading ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#8b7fa0', fontSize: 14 }}>
-              <Loader2 size={16} className="animate-spin" /> Loading…
+              <Loader2 size={16} className="animate-spin" /> Loadingâ€¦
             </div>
           ) : (
             <>

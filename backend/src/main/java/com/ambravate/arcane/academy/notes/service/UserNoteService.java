@@ -33,16 +33,16 @@ public class UserNoteService {
      */
     @Transactional
     public NoteDto save(String userId, SaveNoteRequest req) {
-        UserNote note = noteRepo.findByUserIdAndSubChunkId(userId, req.subChunkId())
+        UserNote note = noteRepo.findByUserIdAndLessonId(userId, req.lessonId())
                 .orElseGet(() -> UserNote.builder()
                         .userId(userId)
-                        .subChunkId(req.subChunkId())
-                        .chunkId(req.chunkId())
+                        .lessonId(req.lessonId())
+                        .moduleId(req.moduleId())
                         .build());
 
         note.setTitle(req.title());
         note.setContent(req.content());
-        note.setChunkId(req.chunkId());
+        note.setModuleId(req.moduleId());
 
         return NoteDto.from(noteRepo.save(note));
     }

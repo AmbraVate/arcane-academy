@@ -1,17 +1,17 @@
-import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query'
-import { dashboardApi, chunkApi } from '@/shared/api/services'
+﻿import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query'
+import { dashboardApi, moduleApi } from '@/shared/api/services'
 
 export const QUERY_KEYS = {
-  dashboard: (topicId: string) => ['dashboard', topicId] as const,
+  dashboard: (domainId: string) => ['dashboard', domainId] as const,
   reviewsDue: () => ['dashboard', 'reviews-due'] as const,
-  chunkDetail: (chunkId: string) => ['chunk', chunkId] as const,
+  chunkDetail: (moduleId: string) => ['chunk', moduleId] as const,
 }
 
-export function useDashboard(topicId: string) {
+export function useDashboard(domainId: string) {
   return useQuery({
-    queryKey: QUERY_KEYS.dashboard(topicId),
-    queryFn: () => dashboardApi.get(topicId),
-    enabled: !!topicId,
+    queryKey: QUERY_KEYS.dashboard(domainId),
+    queryFn: () => dashboardApi.get(domainId),
+    enabled: !!domainId,
     staleTime: 30_000,
   })
 }
@@ -24,32 +24,32 @@ export function useReviewsDue() {
   })
 }
 
-export function useChunkDetail(chunkId: string | undefined) {
+export function useModuleDetail(moduleId: string | undefined) {
   return useQuery({
-    queryKey: QUERY_KEYS.chunkDetail(chunkId ?? ''),
-    queryFn: () => chunkApi.getDetail(chunkId!),
-    enabled: !!chunkId,
+    queryKey: QUERY_KEYS.chunkDetail(moduleId ?? ''),
+    queryFn: () => moduleApi.getDetail(moduleId!),
+    enabled: !!moduleId,
   })
 }
 
-/** Fetch dashboard data for multiple topics in parallel (used by TopicsPage). */
-export function useTopicsDashboard(topicIds: string[]) {
+/** Fetch dashboard data for multiple topics in parallel (used by DomainsPage). */
+export function useTopicsDashboard(domainIds: string[]) {
   const results = useQueries({
-    queries: topicIds.map(id => ({
+    queries: domainIds.map(id => ({
       queryKey: QUERY_KEYS.dashboard(id),
       queryFn: () => dashboardApi.get(id),
       staleTime: 30_000,
     })),
   })
-  return Object.fromEntries(topicIds.map((id, i) => [id, results[i].data]))
+  return Object.fromEntries(domainIds.map((id, i) => [id, results[i].data]))
 }
 
 /** Call after any action that should refresh dashboard counts (XP, badges, reviews). */
 export function useInvalidateDashboard() {
   const qc = useQueryClient()
-  return (topicId?: string) => {
-    if (topicId) {
-      qc.invalidateQueries({ queryKey: QUERY_KEYS.dashboard(topicId) })
+  return (domainId?: string) => {
+    if (domainId) {
+      qc.invalidateQueries({ queryKey: QUERY_KEYS.dashboard(domainId) })
     } else {
       qc.invalidateQueries({ queryKey: ['dashboard'] })
     }

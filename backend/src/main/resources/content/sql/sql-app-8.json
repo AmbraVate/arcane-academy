@@ -1,0 +1,38 @@
+{
+  "id": "sql-app-8",
+  "title": "Counting and Summarising",
+  "glyph": "📊",
+  "sortOrder": 8,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-7"],
+  "subChunks": [{
+    "id": "sql-app-8a",
+    "title": "Aggregate Functions — COUNT, SUM, AVG, MIN, MAX",
+    "sortOrder": 1,
+    "xpReward": 70,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Instead of returning rows, aggregate functions return a <em>single summary value</em> computed across many rows — total XP earned, average score, highest quest reward.</p>",
+    "explanationHtml": "<h3>The five essential aggregates</h3><pre><code>SELECT COUNT(*)       AS total_apprentices,\n       COUNT(mentor_id) AS with_mentor,\n       SUM(xp)         AS total_xp,\n       AVG(xp)         AS average_xp,\n       MIN(xp)         AS lowest_xp,\n       MAX(xp)         AS highest_xp\nFROM apprentices;</code></pre><h3>COUNT(*) vs COUNT(col)</h3><ul><li><code>COUNT(*)</code> — counts all rows including NULLs</li><li><code>COUNT(col)</code> — counts only rows where col is NOT NULL</li></ul><h3>NULL behaviour</h3><p>SUM, AVG, MIN, MAX all ignore NULLs. <code>AVG(xp)</code> averages the non-NULL xp values; NULL rows are excluded from both the numerator and denominator.</p><h3>Aggregates without GROUP BY</h3><p>A bare aggregate like <code>SELECT AVG(xp) FROM apprentices</code> collapses the entire table to a single row. You cannot mix a bare aggregate with a non-aggregated column:</p><pre><code>-- ERROR: name is not aggregated or grouped\nSELECT name, AVG(xp) FROM apprentices;</code></pre>",
+    "storyBeats": [
+      {"type":"narration","text":"Cipher clears the main table and places a blank summary sheet. 'The Headmaster wants totals, not lists.'"},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"COUNT, SUM, AVG, MIN, MAX. These collapse many rows into one fact. COUNT(*) counts everything — even blanks. COUNT(col) skips NULLs. SUM and AVG also skip NULLs silently. Know this or your totals will silently lie."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Academy summary</h3><p>Write a single query that returns one row with: the total number of apprentices (<code>total</code>), their total combined XP (<code>total_xp</code>), and the highest XP of any single apprentice (<code>max_xp</code>).</p>",
+    "guidedPracticeStarterCode": "SELECT\n  COUNT(*)  AS total,\n  -- SUM ...\n  -- MAX ...\nFROM apprentices;",
+    "guidedPracticeTests": [
+      {"label":"Returns exactly 1 row","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":1,"matchMode":"rowCount"},
+      {"label":"Columns total, total_xp, max_xp","expectedColumns":["total","total_xp","max_xp"],"matchMode":"columns"},
+      {"label":"Correct values: 6 total, 17930 total_xp, 7500 max_xp","expectedQuery":"SELECT COUNT(*) AS total, SUM(xp) AS total_xp, MAX(xp) AS max_xp FROM apprentices","matchMode":"rowsExact"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return the <code>MIN(xp)</code> aliased as <code>lowest</code> and <code>AVG(xp)</code> aliased as <code>average</code> from apprentices whose rank is <strong>not</strong> 'Novice'.</p>",
+    "feynmanPrompt": "Explain the difference between COUNT(*) and COUNT(col), and what happens to NULL values in SUM and AVG.",
+    "questions": [
+      {"id":"sql-app-8a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What is the difference between COUNT(*) and COUNT(col)?","options":["COUNT(*) counts all rows including NULLs; COUNT(col) counts only non-NULL values in that column","COUNT(*) counts only non-NULL rows; COUNT(col) counts all rows","They are identical","COUNT(col) counts distinct values; COUNT(*) counts duplicates too"],"answer":"COUNT(*) counts all rows including NULLs; COUNT(col) counts only non-NULL values in that column","explanation":"COUNT(*) is a row counter — NULLs do not matter. COUNT(col) counts how many rows have a non-NULL value in that specific column."},
+      {"id":"sql-app-8a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Using the lesson data, what does `SELECT SUM(xp) FROM apprentices WHERE rank = 'Apprentice'` return?","options":["2150 (Alice 1200 + Fenrir 950)","1200","950","3150"],"answer":"2150 (Alice 1200 + Fenrir 950)","explanation":"Only Alice (1200) and Fenrir (950) have rank 'Apprentice'. SUM = 1200 + 950 = 2150."},
+      {"id":"sql-app-8a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Why does `SELECT name, MAX(xp) FROM apprentices` cause an error (in strict SQL engines)?","options":["name is not in an aggregate function and there is no GROUP BY, so the engine cannot determine which name to return","MAX cannot be combined with other columns","name must be aliased when used with an aggregate","Aggregates require a WHERE clause"],"answer":"name is not in an aggregate function and there is no GROUP BY, so the engine cannot determine which name to return","explanation":"When using aggregate functions without GROUP BY, every column in SELECT must itself be an aggregate. `name` is not aggregated — the engine does not know which name to associate with the single MAX value."},
+      {"id":"sql-app-8a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"A table has 10 rows; 3 have NULL in `score`. What does `SELECT AVG(score)` return?","options":["The average of the 7 non-NULL scores","The average of all 10 rows, treating NULL as 0","NULL — because NULLs propagate in AVG","An error"],"answer":"The average of the 7 non-NULL scores","explanation":"AVG (and SUM, MIN, MAX) silently ignores NULL values. The average is computed over the 7 non-NULL values only. This can surprise developers expecting NULLs to count as zero."}
+    ]
+  }]
+}

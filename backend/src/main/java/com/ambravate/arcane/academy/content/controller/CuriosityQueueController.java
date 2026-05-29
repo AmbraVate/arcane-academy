@@ -26,26 +26,26 @@ public class CuriosityQueueController {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("id", i.getId());
             map.put("userId", i.getUserId());
-            map.put("subChunkId", i.getSubChunkId());
+            map.put("lessonId", i.getLessonId());
             map.put("savedAt", i.getSavedAt().toString());
             return map;
         }).collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/{subChunkId}")
+    @PostMapping("/{lessonId}")
     public ResponseEntity<Void> saveForLater(
-            @PathVariable String subChunkId,
+            @PathVariable String lessonId,
             @AuthenticationPrincipal UserPrincipal user) {
-        queueService.saveForLater(user.getId(), subChunkId);
+        queueService.saveForLater(user.getId(), lessonId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{subChunkId}")
+    @DeleteMapping("/{lessonId}")
     public ResponseEntity<Void> removeFromQueue(
-            @PathVariable String subChunkId,
+            @PathVariable String lessonId,
             @AuthenticationPrincipal UserPrincipal user) {
-        queueService.removeFromQueue(user.getId(), subChunkId);
+        queueService.removeFromQueue(user.getId(), lessonId);
         return ResponseEntity.ok().build();
     }
 }

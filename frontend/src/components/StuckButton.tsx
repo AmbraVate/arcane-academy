@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+﻿import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { stuckReportApi } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 type Stage = 'idle' | 'capturing' | 'open' | 'submitting' | 'done'
 
 /**
- * Floating "I'm Stuck" help button — shown globally for logged-in learners.
+ * Floating "I'm Stuck" help button â€” shown globally for logged-in learners.
  * Captures a viewport screenshot (html2canvas), the current URL, and context
  * from URL params, plus an optional free-text description, then sends the
  * report and returns the learner to /topics.
@@ -24,8 +24,8 @@ export default function StuckButton() {
     const url = window.location.href
     const match = location.pathname.match(/\/topic\/([^/]+)(?:\/.*\/([^/]+))?/)
     return {
-      topicId: match?.[1] ?? undefined,
-      subChunkId: undefined as string | undefined,
+      domainId: match?.[1] ?? undefined,
+      lessonId: undefined as string | undefined,
       currentPhase: undefined as string | undefined,
       currentUrl: url,
     }
@@ -43,7 +43,7 @@ export default function StuckButton() {
       })
       return canvas.toDataURL('image/jpeg', 0.7)
     } catch {
-      return undefined    // non-fatal — report still submits without screenshot
+      return undefined    // non-fatal â€” report still submits without screenshot
     }
   }
 
@@ -79,7 +79,7 @@ export default function StuckButton() {
       setStage('done')
       setTimeout(() => navigate('/topics', { replace: true }), 2000)
     } catch {
-      // Even if the request fails, don't strand the user — send them home
+      // Even if the request fails, don't strand the user â€” send them home
       setStage('done')
       setTimeout(() => navigate('/topics', { replace: true }), 2000)
     }
@@ -87,7 +87,7 @@ export default function StuckButton() {
 
   return (
     <>
-      {/* ── Floating trigger button ── */}
+      {/* â”€â”€ Floating trigger button â”€â”€ */}
       <button
         onClick={handleOpen}
         className={cn(
@@ -102,13 +102,13 @@ export default function StuckButton() {
           (stage === 'open' || stage === 'submitting' || stage === 'done') && 'invisible pointer-events-none',
         )}
         disabled={stage === 'capturing'}
-        aria-label="I'm stuck — get help"
+        aria-label="I'm stuck â€” get help"
       >
-        <span className="text-[14px]">🚩</span>
-        {stage === 'capturing' ? 'Capturing…' : "I'm Stuck"}
+        <span className="text-[14px]">ðŸš©</span>
+        {stage === 'capturing' ? 'Capturingâ€¦' : "I'm Stuck"}
       </button>
 
-      {/* ── Backdrop ── */}
+      {/* â”€â”€ Backdrop â”€â”€ */}
       {(stage === 'open' || stage === 'submitting' || stage === 'done') && (
         <div
           className="fixed inset-0 z-[350] bg-black/60 backdrop-blur-sm"
@@ -116,7 +116,7 @@ export default function StuckButton() {
         />
       )}
 
-      {/* ── Dialog ── */}
+      {/* â”€â”€ Dialog â”€â”€ */}
       {(stage === 'open' || stage === 'submitting' || stage === 'done') && (
         <div
           className={cn(
@@ -132,19 +132,19 @@ export default function StuckButton() {
             onClick={e => e.stopPropagation()}
           >
             {stage === 'done' ? (
-              /* ── Success state ── */
+              /* â”€â”€ Success state â”€â”€ */
               <div className="text-center py-4">
-                <div className="text-[44px] mb-3">✅</div>
+                <div className="text-[44px] mb-3">âœ…</div>
                 <h2 className="font-cinzel text-[18px] text-teal m-0 mb-2">Report Sent</h2>
                 <p className="text-[13px] text-muted leading-[1.6] m-0">
-                  We've noted the issue. Returning you to the topics page now…
+                  We've noted the issue. Returning you to the topics page nowâ€¦
                 </p>
               </div>
             ) : (
-              /* ── Input state ── */
+              /* â”€â”€ Input state â”€â”€ */
               <>
                 <div className="flex items-start gap-3 mb-4">
-                  <span className="text-[28px] flex-shrink-0">🚩</span>
+                  <span className="text-[28px] flex-shrink-0">ðŸš©</span>
                   <div>
                     <h2 className="font-cinzel text-[17px] text-[#fca5a5] m-0 mb-1">Hit a wall?</h2>
                     <p className="text-[12px] text-muted leading-[1.55] m-0">
@@ -199,7 +199,7 @@ export default function StuckButton() {
                       'disabled:opacity-50 disabled:cursor-not-allowed',
                     )}
                   >
-                    {stage === 'submitting' ? 'Sending…' : '🚩 Send Report'}
+                    {stage === 'submitting' ? 'Sendingâ€¦' : 'ðŸš© Send Report'}
                   </button>
                 </div>
               </>

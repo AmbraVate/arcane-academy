@@ -23,11 +23,11 @@ public class UserRabbitHoleTerm {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "sub_chunk_id")
-    private String subChunkId;
+    @Column(name = "lesson_id")
+    private String lessonId;
 
-    @Column(name = "topic_id")
-    private String topicId;
+    @Column(name = "domain_id")
+    private String domainId;
 
     @Builder.Default
     @Column(name = "saved_at", nullable = false)

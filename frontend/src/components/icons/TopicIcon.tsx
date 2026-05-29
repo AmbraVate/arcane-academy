@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Branded topic icons.
- * Tech languages use Simple Icons (via react-icons/si) — same source as techicons.dev.
+ * Tech languages use Simple Icons (via react-icons/si) â€” same source as techicons.dev.
  * Non-tech disciplines fall back to lucide-react.
  */
 import {
@@ -44,20 +44,20 @@ const TOPIC_ICONS: Record<string, IconComponent> = {
 }
 
 interface TopicIconProps {
-  topicId: string
+  domainId: string
   size?: number
   /** Override the default brand colour */
   color?: string
   className?: string
 }
 
-export function TopicIcon({ topicId, size = 28, color, className }: TopicIconProps) {
-  const Icon = TOPIC_ICONS[topicId]
+export function TopicIcon({ domainId, size = 28, color, className }: TopicIconProps) {
+  const Icon = TOPIC_ICONS[domainId]
   if (!Icon) return null
   return (
     <Icon
       size={size}
-      color={color ?? TOPIC_COLORS[topicId] ?? 'currentColor'}
+      color={color ?? TOPIC_COLORS[domainId] ?? 'currentColor'}
       className={className}
     />
   )

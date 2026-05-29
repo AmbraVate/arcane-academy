@@ -1,0 +1,37 @@
+{
+  "id": "sql-app-9",
+  "title": "Aggregating per Bucket",
+  "glyph": "📊",
+  "sortOrder": 9,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-8"],
+  "subChunks": [{
+    "id": "sql-app-9a",
+    "title": "GROUP BY",
+    "sortOrder": 1,
+    "xpReward": 70,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p><code>GROUP BY</code> partitions rows into buckets and runs an aggregate function on each bucket — answering questions like <em>\"how many apprentices are in each rank?\"</em></p>",
+    "explanationHtml": "<h3>Syntax</h3><pre><code>SELECT rank, COUNT(*) AS count\nFROM apprentices\nGROUP BY rank;</code></pre><p>Every column in SELECT that is <em>not</em> an aggregate must appear in GROUP BY:</p><pre><code>-- VALID: rank is in GROUP BY\nSELECT rank, COUNT(*), SUM(xp)\nFROM apprentices\nGROUP BY rank;\n\n-- ERROR: name is neither aggregated nor in GROUP BY\nSELECT rank, name, COUNT(*)\nFROM apprentices\nGROUP BY rank;</code></pre><h3>Evaluation order</h3><p>The engine processes: FROM → WHERE → GROUP BY → SELECT. This means WHERE runs before grouping — you cannot filter on an aggregate in WHERE.</p><pre><code>-- Count per rank, only for apprentices with xp > 500:\nSELECT rank, COUNT(*) AS n\nFROM   apprentices\nWHERE  xp > 500\nGROUP BY rank;</code></pre><h3>Multiple grouping columns</h3><pre><code>SELECT rank, mentor_id, COUNT(*) AS n\nFROM apprentices\nGROUP BY rank, mentor_id;</code></pre>",
+    "storyBeats": [
+      {"type":"narration","text":"The Headmaster's second request arrives — how many apprentices in each rank?"},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"GROUP BY cuts the ledger into buckets — one per distinct rank value — then runs the aggregate inside each bucket. The rule is strict: every column you SELECT that is not inside an aggregate must appear in your GROUP BY list."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Count per rank</h3><p>Return each <code>rank</code> and the <strong>number of apprentices</strong> with that rank (<code>COUNT(*)</code> aliased as <code>n</code>). Order by n descending.</p>",
+    "guidedPracticeStarterCode": "SELECT rank, COUNT(*) AS n\nFROM apprentices\nGROUP BY rank\nORDER BY n DESC;",
+    "guidedPracticeTests": [
+      {"label":"Returns 5 rows (one per distinct rank)","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":5,"matchMode":"rowCount"},
+      {"label":"Columns rank and n","expectedColumns":["rank","n"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return each <code>rank</code> and the <code>SUM(xp)</code> aliased as <code>total_xp</code> for apprentices with xp over 500. Group by rank, order by total_xp descending.</p>",
+    "feynmanPrompt": "Explain what GROUP BY does, why every non-aggregate column must appear in GROUP BY, and why you cannot use WHERE to filter on an aggregate result.",
+    "questions": [
+      {"id":"sql-app-9a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What rule must every non-aggregate column in SELECT follow when GROUP BY is present?","options":["It must appear in the GROUP BY clause","It must be declared NOT NULL","It must be the primary key","It must be aliased with AS"],"answer":"It must appear in the GROUP BY clause","explanation":"When using GROUP BY, each row in the output represents a group. A non-aggregated column must be in GROUP BY so every row in the group has the same value for it."},
+      {"id":"sql-app-9a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Using the lesson data, what does `SELECT rank, COUNT(*) AS n FROM apprentices GROUP BY rank` return for rank = 'Apprentice'?","options":["n = 2 (Alice and Fenrir)","n = 1","n = 3","n = 6"],"answer":"n = 2 (Alice and Fenrir)","explanation":"Alice and Fenrir both have rank 'Apprentice'. GROUP BY rank places them in the same bucket; COUNT(*) counts 2."},
+      {"id":"sql-app-9a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"What does adding `WHERE xp > 500` before GROUP BY do?","options":["Filters rows before grouping — low-xp apprentices are excluded from counts","Filters groups after aggregation","Throws an error — WHERE cannot precede GROUP BY","Applies the filter to the aggregate result"],"answer":"Filters rows before grouping — low-xp apprentices are excluded from counts","explanation":"WHERE is evaluated before GROUP BY. Rows where xp <= 500 are removed before any grouping happens, so those apprentices do not contribute to any group's COUNT."},
+      {"id":"sql-app-9a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"Which query will cause an error in a strict SQL engine?","options":["SELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank","SELECT rank, COUNT(*) FROM apprentices GROUP BY rank","SELECT rank, SUM(xp) FROM apprentices GROUP BY rank","SELECT COUNT(*) FROM apprentices"],"answer":"SELECT rank, name, COUNT(*) FROM apprentices GROUP BY rank","explanation":"`name` is neither inside an aggregate function nor in the GROUP BY clause. The engine cannot determine which name to return for each rank group — it is a violation of the SQL grouping rules."}
+    ]
+  }]
+}

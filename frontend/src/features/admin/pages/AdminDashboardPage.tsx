@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AlertTriangle, CheckCircle2, CircleHelp, FileText, Flag, Flame, Map, Package, StickyNote, Trophy, Users } from 'lucide-react'
 import { adminStatsApi, type AdminStats, type DailyCount, type TopicEngagementItem, type XpBucket } from '@/shared/api/adminServices'
 import React from 'react'
 
-// ── Palette helpers ────────────────────────────────────────────────────────────
+// â”€â”€ Palette helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const RANK_ORDER = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
 const RANK_COLOR: Record<string, string> = {
@@ -18,7 +18,7 @@ const SUB_LABEL: Record<string, string> = {
   FREE: 'Free', MONTHLY: 'Monthly', ANNUAL: 'Annual', LIFETIME: 'Lifetime', CANCELLED: 'Cancelled',
 }
 
-// ── Sub-components ─────────────────────────────────────────────────────────────
+// â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function StatCard({ label, value, Icon, color }: { label: string; value: number | string; Icon: React.ElementType; color: string }) {
   return (
@@ -138,16 +138,16 @@ function TopicEngagement({ data }: { data: TopicEngagementItem[] }) {
         </thead>
         <tbody>
           {data.map(row => {
-            const rate = row.totalSubChunks > 0
-              ? Math.round((row.totalCompletions / (row.totalSubChunks * Math.max(row.uniqueLearners, 1))) * 100)
+            const rate = row.totalLessons > 0
+              ? Math.round((row.totalCompletions / (row.totalLessons * Math.max(row.uniqueLearners, 1))) * 100)
               : 0
             const cappedRate = Math.min(rate, 100)
             return (
-              <tr key={row.topicId} style={{ borderBottom: '1px solid #1e1a35' }}>
+              <tr key={row.domainId} style={{ borderBottom: '1px solid #1e1a35' }}>
                 <td style={{ padding: '8px 8px', color: '#e8e0f0' }}>
                   <span style={{ marginRight: 6 }}>{row.glyph}</span>{row.topicName}
                 </td>
-                <td style={{ padding: '8px 8px', color: '#c4b5fd', textAlign: 'right' }}>{row.totalSubChunks}</td>
+                <td style={{ padding: '8px 8px', color: '#c4b5fd', textAlign: 'right' }}>{row.totalLessons}</td>
                 <td style={{ padding: '8px 8px', color: '#4ade80', textAlign: 'right' }}>{row.totalCompletions}</td>
                 <td style={{ padding: '8px 8px', color: '#fb923c', textAlign: 'right' }}>{row.uniqueLearners}</td>
                 <td style={{ padding: '8px 8px', textAlign: 'right' }}>
@@ -169,7 +169,7 @@ function TopicEngagement({ data }: { data: TopicEngagementItem[] }) {
   )
 }
 
-// ── Main page ──────────────────────────────────────────────────────────────────
+// â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate()
@@ -199,7 +199,7 @@ export default function AdminDashboardPage() {
         <p style={{ color: '#8b7fa0', fontSize: 13 }}>Platform health at a glance</p>
       </div>
 
-      {/* Alert row — only shown when action is needed */}
+      {/* Alert row â€” only shown when action is needed */}
       {(stats.openStuckReports > 0 || stats.pendingCapstones > 0) && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           {stats.openStuckReports > 0 && (
@@ -239,7 +239,7 @@ export default function AdminDashboardPage() {
         <StatCard label="Active (7d)"   value={stats.activeUsers7d}  Icon={Flame}      color="#fb923c" />
         <StatCard label="Topics"        value={stats.totalTopics}    Icon={Map}        color="#2dd4bf" />
         <StatCard label="Modules"       value={stats.totalChunks}    Icon={Package}    color="#c9a227" />
-        <StatCard label="Lessons"       value={stats.totalSubChunks} Icon={FileText}   color="#8b5cf6" />
+        <StatCard label="Lessons"       value={stats.totalLessons} Icon={FileText}   color="#8b5cf6" />
         <StatCard label="Questions"     value={stats.totalQuestions} Icon={CircleHelp} color="#4ade80" />
         <StatCard label="Notes"         value={stats.totalNotes ?? 0}     Icon={StickyNote} color="#2dd4bf" />
         <StatCard label="Capstones"     value={stats.totalCapstones ?? 0} Icon={Trophy}     color="#c9a227" />
@@ -271,7 +271,7 @@ export default function AdminDashboardPage() {
 
       {/* Signup trend + XP distribution */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Panel title="Sign-ups — Last 14 Days">
+        <Panel title="Sign-ups â€” Last 14 Days">
           {stats.signupTrend?.length ? (
             <SignupTrend data={stats.signupTrend} />
           ) : (
@@ -326,7 +326,7 @@ export default function AdminDashboardPage() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxHeight: 320, overflowY: 'auto' }}>
               {stats.contentHealth.map(item => (
-                <div key={item.subChunkId} style={{
+                <div key={item.lessonId} style={{
                   background: 'rgba(248,113,113,.07)', border: '1px solid rgba(248,113,113,.25)',
                   borderRadius: 7, padding: '8px 12px',
                 }}>
@@ -336,15 +336,15 @@ export default function AdminDashboardPage() {
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                     <span style={{ fontSize: 11, color: '#8b7fa0' }}>{item.chunkTitle}</span>
-                    {item.topicId && (
-                      <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 4, background: 'rgba(139,92,246,.18)', color: '#c4b5fd', fontWeight: 600 }}>{item.topicId}</span>
+                    {item.domainId && (
+                      <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 4, background: 'rgba(139,92,246,.18)', color: '#c4b5fd', fontWeight: 600 }}>{item.domainId}</span>
                     )}
                     {item.tier && (
                       <span style={{ fontSize: 10, padding: '1px 6px', borderRadius: 4, background: 'rgba(201,162,39,.15)', color: '#c9a227', fontWeight: 600 }}>{item.tier}</span>
                     )}
                   </div>
                   {item.issues.map((issue, i) => (
-                    <div key={i} style={{ fontSize: 11, color: '#f87171' }}>• {issue}</div>
+                    <div key={i} style={{ fontSize: 11, color: '#f87171' }}>â€¢ {issue}</div>
                   ))}
                 </div>
               ))}

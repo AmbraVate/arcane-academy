@@ -1,10 +1,10 @@
-import api from './client'
+﻿import api from './client'
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface AdminStats {
   totalUsers: number; activeUsers7d: number; totalTopics: number
-  totalChunks: number; totalSubChunks: number; totalQuestions: number
+  totalChunks: number; totalLessons: number; totalQuestions: number
   totalNotes: number; totalCapstones: number
   openStuckReports: number; pendingCapstones: number
   recentSignups: AdminUser[]; contentHealth: ContentHealthItem[]
@@ -13,8 +13,8 @@ export interface AdminStats {
   signupTrend: DailyCount[]
   xpDistribution: XpBucket[]
 }
-export interface ContentHealthItem { subChunkId: string; title: string; chunkTitle: string; topicId?: string; tier?: string; issues: string[] }
-export interface TopicEngagementItem { topicId: string; topicName: string; glyph: string; totalSubChunks: number; totalCompletions: number; uniqueLearners: number }
+export interface ContentHealthItem { lessonId: string; title: string; chunkTitle: string; domainId?: string; tier?: string; issues: string[] }
+export interface TopicEngagementItem { domainId: string; topicName: string; glyph: string; totalLessons: number; totalCompletions: number; uniqueLearners: number }
 export interface DailyCount { date: string; count: number }
 export interface XpBucket { rank: string; count: number }
 
@@ -25,11 +25,11 @@ export interface AdminTopic {
 
 export interface AdminChunk {
   id: string; title: string; glyph: string; sortOrder: number
-  tier: string; topicId: string; prerequisiteIds: string[]; subChunkCount: number
+  tier: string; domainId: string; prerequisiteIds: string[]; subChunkCount: number
 }
 
-export interface AdminSubChunk {
-  id: string; chunkId: string; title: string; sortOrder: number
+export interface AdminLesson {
+  id: string; moduleId: string; title: string; sortOrder: number
   xpReward: number; practiceType: string; filename: string
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null
@@ -43,7 +43,7 @@ export interface AdminSubChunk {
   miniProject: string | null
   commonMistakes: string[] | null
   assessmentCriteria: string[] | null
-  // Sprint 7 — downloadable resources
+  // Sprint 7 â€” downloadable resources
   downloadables: { title: string; type: string; url: string }[] | null
 }
 
@@ -56,7 +56,7 @@ export interface StoryBeat {
 export interface TestCase { [key: string]: string }
 
 export interface AdminQuestion {
-  id: string; subChunkId: string; type: string; tier: string
+  id: string; lessonId: string; type: string; tier: string
   questionHtml: string; codeSnippet: string | null
   options: string[] | null; correctAnswer: string; explanationHtml: string
 }
@@ -65,13 +65,13 @@ export interface AdminUser {
   id: string; username: string; email: string; rank: string
   totalXp: number; streakDays: number; authProvider: string; role: string
   blocked: boolean; bypassPaywall: boolean
-  createdAt: string; lastLoginAt: string | null; completedSubChunks: number
+  createdAt: string; lastLoginAt: string | null; completedLessons: number
 }
 
 export interface UserStats {
   userId: string; username: string; email: string
   totalXp: number; rank: string; streakDays: number
-  subChunksCompleted: number; chunksCompleted: number
+  lessonsCompleted: number; chunksCompleted: number
   badgesEarned: number; reviewSessionsCompleted: number
   joinedAt: string; lastLoginAt: string | null
   blocked: boolean; role: string
@@ -81,7 +81,7 @@ export interface PagedResponse<T> {
   content: T[]; totalElements: number; totalPages: number; page: number
 }
 
-// ── Stats ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminStatsApi = {
   get: async (): Promise<AdminStats> => {
@@ -90,79 +90,79 @@ export const adminStatsApi = {
   },
 }
 
-// ── Topics ────────────────────────────────────────────────────────────────────
+// â”€â”€ Topics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminTopicApi = {
   list: async (): Promise<AdminTopic[]> => {
-    const { data } = await api.get('/api/admin/topics')
+    const { data } = await api.get('/api/admin/domains')
     return data
   },
   create: async (topic: Partial<AdminTopic>): Promise<AdminTopic> => {
-    const { data } = await api.post('/api/admin/topics', topic)
+    const { data } = await api.post('/api/admin/domains', topic)
     return data
   },
   update: async (id: string, topic: Partial<AdminTopic>): Promise<AdminTopic> => {
-    const { data } = await api.put(`/api/admin/topics/${id}`, topic)
+    const { data } = await api.put(`/api/admin/domains/${id}`, topic)
     return data
   },
   delete: async (id: string): Promise<void> => {
-    await api.delete(`/api/admin/topics/${id}`)
+    await api.delete(`/api/admin/domains/${id}`)
   },
 }
 
-// ── Chunks ────────────────────────────────────────────────────────────────────
+// â”€â”€ Chunks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminChunkApi = {
-  list: async (topicId?: string): Promise<AdminChunk[]> => {
-    const { data } = await api.get('/api/admin/chunks', { params: topicId ? { topicId } : {} })
+  list: async (domainId?: string): Promise<AdminChunk[]> => {
+    const { data } = await api.get('/api/admin/modules', { params: domainId ? { domainId } : {} })
     return data
   },
   get: async (id: string): Promise<AdminChunk> => {
-    const { data } = await api.get(`/api/admin/chunks/${id}`)
+    const { data } = await api.get(`/api/admin/modules/${id}`)
     return data
   },
   create: async (chunk: Partial<AdminChunk>): Promise<AdminChunk> => {
-    const { data } = await api.post('/api/admin/chunks', chunk)
+    const { data } = await api.post('/api/admin/modules', chunk)
     return data
   },
   update: async (id: string, chunk: Partial<AdminChunk>): Promise<AdminChunk> => {
-    const { data } = await api.put(`/api/admin/chunks/${id}`, chunk)
+    const { data } = await api.put(`/api/admin/modules/${id}`, chunk)
     return data
   },
   delete: async (id: string): Promise<void> => {
-    await api.delete(`/api/admin/chunks/${id}`)
+    await api.delete(`/api/admin/modules/${id}`)
   },
 }
 
-// ── SubChunks ─────────────────────────────────────────────────────────────────
+// â”€â”€ Lessons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-export const adminSubChunkApi = {
-  list: async (chunkId: string): Promise<AdminSubChunk[]> => {
-    const { data } = await api.get('/api/admin/subchunks', { params: { chunkId } })
+export const adminLessonApi = {
+  list: async (moduleId: string): Promise<AdminLesson[]> => {
+    const { data } = await api.get('/api/admin/lessons', { params: { moduleId } })
     return data
   },
-  get: async (id: string): Promise<AdminSubChunk> => {
-    const { data } = await api.get(`/api/admin/subchunks/${id}`)
+  get: async (id: string): Promise<AdminLesson> => {
+    const { data } = await api.get(`/api/admin/lessons/${id}`)
     return data
   },
-  create: async (sc: Partial<AdminSubChunk>): Promise<AdminSubChunk> => {
-    const { data } = await api.post('/api/admin/subchunks', sc)
+  create: async (sc: Partial<AdminLesson>): Promise<AdminLesson> => {
+    const { data } = await api.post('/api/admin/lessons', sc)
     return data
   },
-  update: async (id: string, sc: Partial<AdminSubChunk>): Promise<AdminSubChunk> => {
-    const { data } = await api.put(`/api/admin/subchunks/${id}`, sc)
+  update: async (id: string, sc: Partial<AdminLesson>): Promise<AdminLesson> => {
+    const { data } = await api.put(`/api/admin/lessons/${id}`, sc)
     return data
   },
   delete: async (id: string): Promise<void> => {
-    await api.delete(`/api/admin/subchunks/${id}`)
+    await api.delete(`/api/admin/lessons/${id}`)
   },
 }
 
-// ── Questions ─────────────────────────────────────────────────────────────────
+// â”€â”€ Questions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminQuestionApi = {
-  list: async (subChunkId: string): Promise<AdminQuestion[]> => {
-    const { data } = await api.get('/api/admin/questions', { params: { subChunkId } })
+  list: async (lessonId: string): Promise<AdminQuestion[]> => {
+    const { data } = await api.get('/api/admin/questions', { params: { lessonId } })
     return data
   },
   create: async (q: Partial<AdminQuestion>): Promise<AdminQuestion> => {
@@ -178,7 +178,7 @@ export const adminQuestionApi = {
   },
 }
 
-// ── Users ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Users â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminUserApi = {
   list: async (page = 0, size = 20, search?: string): Promise<PagedResponse<AdminUser>> => {
@@ -210,15 +210,15 @@ export const adminUserApi = {
   },
 }
 
-// ── Stuck Reports ─────────────────────────────────────────────────────────────
+// â”€â”€ Stuck Reports â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface StuckReport {
   id: string
   userId: string
   username: string
   email: string
-  topicId: string | null
-  subChunkId: string | null
+  domainId: string | null
+  lessonId: string | null
   currentPhase: string | null
   currentUrl: string | null
   userMessage: string | null
@@ -241,12 +241,12 @@ export const adminStuckReportApi = {
   },
 }
 
-// ── Admin Capstones ───────────────────────────────────────────────────────────
+// â”€â”€ Admin Capstones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface AdminCapstone {
   id: string
   userId: string
-  chunkId: string
+  moduleId: string
   title: string
   description: string | null
   codeContent: string | null
@@ -268,11 +268,11 @@ export const adminCapstoneApi = {
   },
 }
 
-// ── Import / Export ───────────────────────────────────────────────────────────
+// â”€â”€ Import / Export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminContentApi = {
-  exportChunk: (chunkId: string) => `/api/admin/content/export/chunk/${chunkId}`,
-  importChunk: async (file: File): Promise<{ status: string; chunkId: string; subChunks: number }> => {
+  exportChunk: (moduleId: string) => `/api/admin/content/export/chunk/${moduleId}`,
+  importChunk: async (file: File): Promise<{ status: string; moduleId: string; lessons: number }> => {
     const form = new FormData()
     form.append('file', file)
     const { data } = await api.post('/api/admin/content/import', form, {

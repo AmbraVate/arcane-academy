@@ -1,0 +1,38 @@
+{
+  "id": "sql-app-3",
+  "title": "Ordering and Limiting Results",
+  "glyph": "🗃️",
+  "sortOrder": 3,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-2"],
+  "subChunks": [{
+    "id": "sql-app-3a",
+    "title": "ORDER BY and LIMIT",
+    "sortOrder": 1,
+    "xpReward": 60,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>SQL doesn't promise any row order. <em>\"Top 5 by XP\"</em> only makes sense when you explicitly sort first — then take five.</p>",
+    "explanationHtml": "<h3>ORDER BY</h3><pre><code>SELECT name, xp FROM apprentices ORDER BY xp;        -- ascending (default)\nSELECT name, xp FROM apprentices ORDER BY xp DESC;   -- descending\nSELECT name, rank, xp FROM apprentices ORDER BY rank, xp DESC; -- multi-column</code></pre><p>Multi-column sort: rows are first grouped by <code>rank</code>; ties are broken by <code>xp DESC</code>.</p><h3>LIMIT</h3><pre><code>SELECT name, xp FROM apprentices ORDER BY xp DESC LIMIT 3;</code></pre><p><strong>Always pair LIMIT with ORDER BY.</strong> Without ORDER BY, \"top 3\" could be any 3 rows the engine happens to return — the result is non-deterministic.</p><h3>Clause order</h3><pre><code>SELECT columns\nFROM   table\nWHERE  condition\nORDER BY columns\nLIMIT  n;</code></pre><p>Clauses must appear in this written order even though the engine evaluates FROM → WHERE → SELECT → ORDER BY → LIMIT internally.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"The Headmaster sends a runner — he wants the three highest-XP apprentices posted on the Hall board by noon."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"ORDER BY xp DESC puts the highest XP first. LIMIT 3 takes the first three. Without the ORDER BY, 'three apprentices' means any three — not the top three. Never LIMIT without ORDER BY."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Top of the leaderboard</h3><p>Return <code>name</code> and <code>xp</code> for the <strong>top 3 apprentices by XP</strong>, highest first.</p>",
+    "guidedPracticeStarterCode": "SELECT name, xp\nFROM apprentices\n-- ORDER BY ...?\n-- LIMIT ...?\n;",
+    "guidedPracticeTests": [
+      {"label":"Returns exactly 3 rows","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":3,"matchMode":"rowCount"},
+      {"label":"Columns are name and xp","expectedColumns":["name","xp"],"matchMode":"columns"},
+      {"label":"Elara, Cassia, Bjorn in that order","expectedQuery":"SELECT name, xp FROM apprentices ORDER BY xp DESC LIMIT 3","matchMode":"rowsExact"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return the <code>name</code> and <code>xp</code> of the <strong>two apprentices with the lowest XP</strong>, lowest first.</p>",
+    "feynmanPrompt": "Explain why LIMIT without ORDER BY is almost always a bug, using the apprentices leaderboard as an example.",
+    "questions": [
+      {"id":"sql-app-3a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What does `ORDER BY xp` (no keyword after) do?","options":["Sorts ascending — lowest xp first","Sorts descending — highest xp first","Returns rows in storage order","Throws a syntax error — ASC or DESC is required"],"answer":"Sorts ascending — lowest xp first","explanation":"Ascending is the default. ORDER BY xp and ORDER BY xp ASC are equivalent. To reverse, add DESC."},
+      {"id":"sql-app-3a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"What does `SELECT name FROM apprentices ORDER BY xp DESC LIMIT 2` return from the lesson data?","options":["Elara, Cassia","Cassia, Bjorn","Elara, Bjorn","Alice, Dorian"],"answer":"Elara, Cassia","explanation":"Sorted by xp descending: Elara 7500, Cassia 4800, Bjorn 2400, … LIMIT 2 takes the first two: Elara and Cassia."},
+      {"id":"sql-app-3a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Which clause ordering is syntactically valid SQL?","options":["SELECT → FROM → WHERE → ORDER BY → LIMIT","SELECT → WHERE → FROM → ORDER BY → LIMIT","SELECT → FROM → ORDER BY → WHERE → LIMIT","SELECT → LIMIT → FROM → WHERE → ORDER BY"],"answer":"SELECT → FROM → WHERE → ORDER BY → LIMIT","explanation":"SQL clause order is fixed by the grammar. You must write them in this sequence even though the engine evaluates them in a different internal order."},
+      {"id":"sql-app-3a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"A junior writes `SELECT name FROM apprentices LIMIT 5`. What is the problem?","options":["No ORDER BY — the five rows returned could be any five, not the first five in any meaningful sense","LIMIT requires a WHERE clause to be valid","SELECT name returns only one column so LIMIT is redundant","LIMIT 5 always returns the same 5 rows so it is harmless"],"answer":"No ORDER BY — the five rows returned could be any five, not the first five in any meaningful sense","explanation":"Without ORDER BY, the relational model makes no row-order guarantee. Different engines, different query plans, even different executions can return different rows. LIMIT without ORDER BY gives non-deterministic results."}
+    ]
+  }]
+}

@@ -3,11 +3,11 @@ package com.ambravate.arcane.academy.practice.service;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.practice.dto.ReactSubmitRequest;
 import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -28,7 +28,7 @@ import java.util.Optional;
  *
  * <p>The frontend runs the tests inside a sandboxed iframe (React + Babel via CDN)
  * against the rendered DOM, and reports results back here. The backend performs a lightweight
- * structural sanity check on the source — non-empty, contains JSX markers — to guard against
+ * structural sanity check on the source â€” non-empty, contains JSX markers â€” to guard against
  * trivial empty submissions. See {@link ReactSubmitRequest} for the rationale.
  */
 @Service
@@ -41,7 +41,7 @@ public class ReactPracticeService {
    */
   private static final int MIN_SOURCE_LENGTH = 30;
 
-  private final SubChunkRepository subChunkRepository;
+  private final LessonRepository lessonRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
   private final ReviewSessionRepository reviewSessionRepository;
@@ -49,16 +49,16 @@ public class ReactPracticeService {
   private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
-  public SubmitResponse submit(String userId, String subChunkId, ReactSubmitRequest request) {
-    SubChunk subChunk = subChunkRepository.findById(subChunkId)
-        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + subChunkId));
+  public SubmitResponse submit(String userId, String lessonId, ReactSubmitRequest request) {
+    Lesson subChunk = lessonRepository.findById(lessonId)
+        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + lessonId));
 
-    // ── 1. Structural sanity check on source ────────────────────────────────
+    // â”€â”€ 1. Structural sanity check on source â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     String code = request.getCode() == null ? "" : request.getCode();
     if (code.length() < MIN_SOURCE_LENGTH || !looksLikeJsx(code)) {
       log.info(
-          "[React] Rejected — source too short or not JSX-like | user={} subChunk={}",
-          userId, subChunkId
+          "[React] Rejected â€” source too short or not JSX-like | user={} subChunk={}",
+          userId, lessonId
       );
       return buildResponse(
           false,
@@ -72,7 +72,7 @@ public class ReactPracticeService {
       );
     }
 
-    // ── 2. Trust the client-reported test results ───────────────────────────
+    // â”€â”€ 2. Trust the client-reported test results â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     List<ReactSubmitRequest.ClientTestResult> clientResults =
         request.getClientTestResults() == null ? List.of() : request.getClientTestResults();
 
@@ -91,24 +91,24 @@ public class ReactPracticeService {
       }
     }
 
-    // ── 3. Award XP if all passed ────────────────────────────────────────────
+    // â”€â”€ 3. Award XP if all passed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     int xpEarned = 0;
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
-      xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
+      xpEarned = awardXp(userId, lessonId, subChunk.getXpReward());
       newBadges = gamification.evaluateAndAwardBadges(userId,
               progressRepository.findByUserId(userId),
               reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
       log.info(
           "[React] All tests passed | user={} subChunk={} xp={}",
           userId,
-          subChunkId,
+          lessonId,
           xpEarned
       );
     } else {
       log.info(
           "[React] Tests failed | user={} subChunk={} failures={}",
-          userId, subChunkId,
+          userId, lessonId,
           results.stream()
               .filter(r -> !r.isPassed())
               .map(SubmitResponse.TestResult::getLabel)
@@ -120,14 +120,14 @@ public class ReactPracticeService {
   }
 
   /**
-   * Lightweight JSX detection. We're not parsing — we just want to reject obviously non-React
+   * Lightweight JSX detection. We're not parsing â€” we just want to reject obviously non-React
    * submissions like "abc" or "<html><body>".
    */
   private boolean looksLikeJsx(String code) {
     // At least one of these must be present:
-    // - "return (" or "return <" — function components return JSX
-    // - "createElement(" — explicit React.createElement (rare but valid)
-    // - "useState" / "useEffect" / "function " + capital letter — component idioms
+    // - "return (" or "return <" â€” function components return JSX
+    // - "createElement(" â€” explicit React.createElement (rare but valid)
+    // - "useState" / "useEffect" / "function " + capital letter â€” component idioms
     return code.contains("return (")
         || code.contains("return <")
         || code.contains("React.createElement")
@@ -138,15 +138,15 @@ public class ReactPracticeService {
   }
 
   /**
-   * Awards XP exactly once per sub-chunk per user — same idempotency pattern as
+   * Awards XP exactly once per sub-chunk per user â€” same idempotency pattern as
    * {@link TailwindPracticeService}.
    */
-  private int awardXp(String userId, String subChunkId, int xp) {
+  private int awardXp(String userId, String lessonId, int xp) {
     Optional<UserChunkProgress> progressOpt =
-        progressRepository.findByUserIdAndSubChunkId(userId, subChunkId);
+        progressRepository.findByUserIdAndLessonId(userId, lessonId);
 
     boolean alreadyAwarded = progressOpt
-        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == SubChunkStatus.COMPLETE)
+        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == LessonStatus.COMPLETE)
         .orElse(false);
     if (alreadyAwarded) {
       return 0;
@@ -159,7 +159,7 @@ public class ReactPracticeService {
     userRepository.save(user);
 
     UserChunkProgress progress = progressOpt.orElseGet(() ->
-        UserChunkProgress.builder().userId(userId).subChunkId(subChunkId).build());
+        UserChunkProgress.builder().userId(userId).lessonId(lessonId).build());
     progress.setLastScore(1.0);
     progressRepository.save(progress);
 

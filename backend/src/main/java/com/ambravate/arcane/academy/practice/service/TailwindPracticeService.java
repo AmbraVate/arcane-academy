@@ -2,11 +2,11 @@ package com.ambravate.arcane.academy.practice.service;
 
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -47,7 +47,7 @@ import java.util.Optional;
 @Slf4j
 public class TailwindPracticeService {
 
-  private final SubChunkRepository subChunkRepository;
+  private final LessonRepository lessonRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
   private final ReviewSessionRepository reviewSessionRepository;
@@ -56,14 +56,14 @@ public class TailwindPracticeService {
   private final ObjectMapper objectMapper;
 
   @Transactional
-  public SubmitResponse submit(String userId, String subChunkId, String html) {
-    SubChunk subChunk = subChunkRepository.findById(subChunkId)
-        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + subChunkId));
+  public SubmitResponse submit(String userId, String lessonId, String html) {
+    Lesson subChunk = lessonRepository.findById(lessonId)
+        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + lessonId));
 
     List<Map<String, Object>> specs = parseSpecs(subChunk.getGuidedPracticeTestsJson());
     if (specs.isEmpty()) {
-      // No test specs — award XP immediately
-      int xp = awardXp(userId, subChunkId, subChunk.getXpReward());
+      // No test specs â€” award XP immediately
+      int xp = awardXp(userId, lessonId, subChunk.getXpReward());
       return buildResponse(true, List.of(), xp, List.of());
     }
 
@@ -103,20 +103,20 @@ public class TailwindPracticeService {
     int xpEarned = 0;
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
-      xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
+      xpEarned = awardXp(userId, lessonId, subChunk.getXpReward());
       newBadges = gamification.evaluateAndAwardBadges(userId,
               progressRepository.findByUserId(userId),
               reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
       log.info(
           "[Tailwind] All tests passed | user={} subChunk={} xp={}",
           userId,
-          subChunkId,
+          lessonId,
           xpEarned
       );
     } else {
       log.info(
           "[Tailwind] Tests failed | user={} subChunk={} failures={}",
-          userId, subChunkId,
+          userId, lessonId,
           results.stream()
               .filter(r -> !r.isPassed())
               .map(SubmitResponse.TestResult::getLabel)
@@ -133,12 +133,12 @@ public class TailwindPracticeService {
    * Idempotency: when XP is first awarded we set lastScore = 1.0 on the progress record as a
    * "guided-practice-xp-awarded" marker. Subsequent calls see this flag and return 0.
    */
-  private int awardXp(String userId, String subChunkId, int xp) {
+  private int awardXp(String userId, String lessonId, int xp) {
     Optional<UserChunkProgress> progressOpt =
-        progressRepository.findByUserIdAndSubChunkId(userId, subChunkId);
+        progressRepository.findByUserIdAndLessonId(userId, lessonId);
 
     boolean alreadyAwarded = progressOpt
-        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == SubChunkStatus.COMPLETE)
+        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == LessonStatus.COMPLETE)
         .orElse(false);
     if (alreadyAwarded) {
       return 0;
@@ -152,7 +152,7 @@ public class TailwindPracticeService {
 
     // Mark XP as awarded so re-submissions in the same session don't double-count
     UserChunkProgress progress = progressOpt.orElseGet(() ->
-        UserChunkProgress.builder().userId(userId).subChunkId(subChunkId).build());
+        UserChunkProgress.builder().userId(userId).lessonId(lessonId).build());
     progress.setLastScore(1.0);
     progressRepository.save(progress);
 

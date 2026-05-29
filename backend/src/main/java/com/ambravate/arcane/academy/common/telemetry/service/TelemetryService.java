@@ -14,13 +14,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HexFormat;
 
 /**
- * Engagement event telemetry — emits two channels per event:
+ * Engagement event telemetry â€” emits two channels per event:
  *
  * <ul>
- *   <li><b>Micrometer counters</b> (low-cardinality labels only — topic, tier,
- *       cadence) → scraped by Prometheus via {@code /actuator/prometheus}.
+ *   <li><b>Micrometer counters</b> (low-cardinality labels only â€” topic, tier,
+ *       cadence) â†’ scraped by Prometheus via {@code /actuator/prometheus}.
  *       Drives Grafana dashboards: rates, totals, retention by topic.</li>
- *   <li><b>Structured logs</b> (named logger {@code TELEMETRY}) — every event
+ *   <li><b>Structured logs</b> (named logger {@code TELEMETRY}) â€” every event
  *       includes a HMAC-SHA256-hashed user id. Suitable for log aggregation
  *       (Loki/Datadog/ELK) and per-user behavioural analysis without leaking
  *       the underlying UUID.</li>
@@ -28,14 +28,14 @@ import java.util.HexFormat;
  *
  * <h3>Why hash user IDs?</h3>
  * Putting raw user UUIDs into log streams is a compliance liability. HMAC-SHA256
- * with a per-instance salt produces a stable pseudonym — the same user always
+ * with a per-instance salt produces a stable pseudonym â€” the same user always
  * hashes to the same string, so cohort analysis works, but the hash cannot be
  * reversed without the salt.
  *
  * <h3>Why not put user_id as a Prometheus label?</h3>
  * Prometheus is a time-series database; each unique label combination is a
  * separate series. Adding {@code user_id} as a label would create one series
- * per user → tens of thousands of series, killing query performance. User-level
+ * per user â†’ tens of thousands of series, killing query performance. User-level
  * analysis belongs in the log channel.
  *
  * <h3>Event catalog</h3>
@@ -73,31 +73,31 @@ public class TelemetryService {
         }
     }
 
-    // ── Quest lifecycle ─────────────────────────────────────────────────────────
+    // â”€â”€ Quest lifecycle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     /**
-     * @param chunkId   The parent chunk id — used to derive the topic label
-     *                  ({@code chunk-*} → java, {@code tw-*} → tailwind, {@code rx-*} → react).
+     * @param chunkId   The parent chunk id â€” used to derive the topic label
+     *                  ({@code chunk-*} â†’ java, {@code tw-*} â†’ tailwind, {@code rx-*} â†’ react).
      */
-    public void questStarted(String userId, String subChunkId, String chunkId) {
+    public void questStarted(String userId, String lessonId, String chunkId) {
         String topic = topicFromChunkId(chunkId);
         meterRegistry.counter("arcane.quest.started", "topic", topic).increment();
         TELEMETRY.info("event=quest_started user={} sub_chunk={} chunk={} topic={}",
-                hash(userId), subChunkId, chunkId, topic);
+                hash(userId), lessonId, chunkId, topic);
     }
 
-    public void questCompleted(String userId, String subChunkId, String chunkId, int xpEarned) {
+    public void questCompleted(String userId, String lessonId, String chunkId, int xpEarned) {
         String topic = topicFromChunkId(chunkId);
         meterRegistry.counter("arcane.quest.completed", "topic", topic).increment();
         TELEMETRY.info("event=quest_completed user={} sub_chunk={} chunk={} topic={} xp_earned={}",
-                hash(userId), subChunkId, chunkId, topic, xpEarned);
+                hash(userId), lessonId, chunkId, topic, xpEarned);
     }
 
-    // ── Reviews ─────────────────────────────────────────────────────────────────
+    // â”€â”€ Reviews â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     /**
      * @param cadence "DAILY" | "WEEKLY" | "MONTHLY" | "RETRIEVAL"
-     * @param score   0.0 – 1.0
+     * @param score   0.0 â€“ 1.0
      */
     public void reviewGradeGiven(String userId, String cadence, double score) {
         meterRegistry.counter("arcane.review.grade_given",
@@ -115,7 +115,7 @@ public class TelemetryService {
                 hash(userId), cadence, correct, total, String.format("%.2f", pct));
     }
 
-    // ── Streaks ────────────────────────────────────────────────────────────────
+    // â”€â”€ Streaks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public void streakExtended(String userId, int newLength) {
         meterRegistry.counter("arcane.streak.extended").increment();
@@ -128,7 +128,7 @@ public class TelemetryService {
                 hash(userId), previousLength, daysSinceActive);
     }
 
-    // ── Badges ──────────────────────────────────────────────────────────────────
+    // â”€â”€ Badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public void badgeEarned(String userId, String badgeCode, String category) {
         meterRegistry.counter("arcane.badge.earned",
@@ -137,25 +137,25 @@ public class TelemetryService {
                 hash(userId), badgeCode, category);
     }
 
-    // ── Diagnostic ──────────────────────────────────────────────────────────────
+    // â”€â”€ Diagnostic â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     /**
      * @param placedTier the tier the diagnostic placed the user into
      *                   (FOUNDATION / PRACTITIONER / EXPERT / CAPSTONE / SKIPPED)
      */
-    public void diagnosticCompleted(String userId, String topicId, String placedTier, double score) {
+    public void diagnosticCompleted(String userId, String domainId, String placedTier, double score) {
         meterRegistry.counter("arcane.diagnostic.completed",
-                "topic", safeTopic(topicId),
+                "topic", safeTopic(domainId),
                 "tier", safeLabel(placedTier)).increment();
         TELEMETRY.info("event=diagnostic_completed user={} topic={} tier={} score={}",
-                hash(userId), topicId, placedTier, String.format("%.2f", score));
+                hash(userId), domainId, placedTier, String.format("%.2f", score));
     }
 
-    // ── Helpers ─────────────────────────────────────────────────────────────────
+    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     /**
      * HMAC-SHA256 of the user id with the configured salt, truncated to 16 hex
-     * chars (64 bits — collision probability is negligible at platform scale and
+     * chars (64 bits â€” collision probability is negligible at platform scale and
      * keeps log lines compact).
      */
     String hash(String userId) {
@@ -174,10 +174,10 @@ public class TelemetryService {
      * Bound a label to a known low-cardinality set. Anything unrecognised falls
      * to "unknown" so a typo can't blow up Prometheus series count.
      */
-    private static String safeTopic(String topicId) {
-        if (topicId == null) return "unknown";
-        return switch (topicId) {
-            case "java", "tailwind", "react", "sql" -> topicId;
+    private static String safeTopic(String domainId) {
+        if (domainId == null) return "unknown";
+        return switch (domainId) {
+            case "java", "tailwind", "react", "sql" -> domainId;
             default -> "unknown";
         };
     }
@@ -185,10 +185,10 @@ public class TelemetryService {
     /**
      * Map a chunk id to its parent topic via the seeder naming convention:
      * <ul>
-     *   <li>{@code chunk-*} or {@code chunk-cap} → java</li>
-     *   <li>{@code tw-*} → tailwind</li>
-     *   <li>{@code rx-*} → react</li>
-     *   <li>{@code sql-*} → sql</li>
+     *   <li>{@code chunk-*} or {@code chunk-cap} â†’ java</li>
+     *   <li>{@code tw-*} â†’ tailwind</li>
+     *   <li>{@code rx-*} â†’ react</li>
+     *   <li>{@code sql-*} â†’ sql</li>
      * </ul>
      * Anything else returns {@code unknown}.
      */

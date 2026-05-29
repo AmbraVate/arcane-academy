@@ -1,0 +1,37 @@
+{
+  "id": "sql-jun-2",
+  "title": "INNER JOIN",
+  "glyph": "🔗",
+  "sortOrder": 2,
+  "tier": "JUNIOR",
+  "topicId": "sql",
+  "prerequisites": ["sql-jun-1"],
+  "subChunks": [{
+    "id": "sql-jun-2a",
+    "title": "Joining Two Tables — INNER JOIN",
+    "sortOrder": 1,
+    "xpReward": 100,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Foreign keys link tables in theory. <code>INNER JOIN</code> brings that linked data back together in a single query result.</p>",
+    "explanationHtml": "<h3>Syntax</h3><pre><code>SELECT a.name, a.xp, m.name AS mentor\nFROM   apprentices AS a\nINNER JOIN mentors AS m ON a.mentor_id = m.id;</code></pre><p>The <code>ON</code> clause specifies the join condition — usually <code>foreign_key = primary_key</code>. The <code>INNER JOIN</code> returns only rows where the condition matches in <em>both</em> tables.</p><h3>What rows are excluded</h3><p>Apprentices with <code>mentor_id = NULL</code> (no mentor) are excluded — NULL never matches. Mentors with no apprentices are also excluded.</p><h3>Table aliases are essential</h3><pre><code>-- Ambiguous — which table's 'name'?\nSELECT name FROM apprentices INNER JOIN mentors ON ...\n\n-- Unambiguous:\nSELECT a.name, m.name AS mentor_name\nFROM apprentices AS a\nINNER JOIN mentors AS m ON a.mentor_id = m.id;</code></pre><h3>Joining on non-id columns</h3><p>You can join on any columns with compatible values, not just id columns. But joining on primary key ↔ foreign key is by far the most common pattern.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"'Give me each apprentice's name alongside their mentor's name,' says the Headmaster. Two ledgers, one answer."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"INNER JOIN brings matching rows from two tables together into one result. Rows that do not match on both sides disappear. Apprentices with no mentor vanish. Mentors with no apprentices vanish. Only matched pairs survive."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Apprentice + mentor</h3><p>Return each apprentice's <code>name</code>, their <code>xp</code>, and their mentor's <code>name</code> aliased as <code>mentor</code>. Only apprentices with an assigned mentor should appear.</p>",
+    "guidedPracticeStarterCode": "SELECT a.name, a.xp, m.name AS mentor\nFROM   apprentices AS a\nINNER JOIN mentors AS m ON a.mentor_id = m.id;",
+    "guidedPracticeTests": [
+      {"label":"Returns 4 rows (Dorian and Fenrir have NULL mentor_id — excluded)","setup":"CREATE TABLE mentors (id INTEGER PRIMARY KEY, name TEXT NOT NULL, specialty TEXT NOT NULL); INSERT INTO mentors VALUES (1,'Aldric','Evocation'),(2,'Sereth','Divination'),(3,'Vance','Transmutation'); CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL, mentor_id INTEGER); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200,1),(2,'Bjorn','Adept',2400,2),(3,'Cassia','Mage',4800,1),(4,'Dorian','Novice',80,NULL),(5,'Elara','Archmage',7500,3),(6,'Fenrir','Apprentice',950,NULL);","expectedRowCount":4,"matchMode":"rowCount"},
+      {"label":"Columns name, xp, mentor","expectedColumns":["name","xp","mentor"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return each mentor's <code>name</code> and the <code>COUNT(*)</code> of their apprentices aliased as <code>student_count</code>. Only mentors with at least one apprentice. Order by student_count descending.</p>",
+    "feynmanPrompt": "Explain what INNER JOIN does, which rows are excluded, and why table aliases are important when joining.",
+    "questions": [
+      {"id":"sql-jun-2a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"JUNIOR","prompt":"What does INNER JOIN return?","options":["Only rows where the join condition matches in both tables","All rows from the left table, with NULLs for unmatched right rows","All rows from both tables regardless of matching","The Cartesian product of both tables"],"answer":"Only rows where the join condition matches in both tables","explanation":"INNER JOIN is the intersection of the two tables on the join condition. Rows that do not match on both sides are excluded from the result."},
+      {"id":"sql-jun-2a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"Using the lesson data, how many rows does the INNER JOIN of apprentices and mentors return?","options":["4 (Alice, Bjorn, Cassia, Elara — Dorian and Fenrir have NULL mentor_id)","6 (all apprentices)","3 (one per mentor)","5"],"answer":"4 (Alice, Bjorn, Cassia, Elara — Dorian and Fenrir have NULL mentor_id)","explanation":"Dorian and Fenrir have mentor_id = NULL. NULL never matches any value, so those rows are excluded from the INNER JOIN result. Four apprentices have non-NULL mentor_ids that match existing mentors."},
+      {"id":"sql-jun-2a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"What does `ON a.mentor_id = m.id` specify?","options":["The condition that links rows from the two tables — match apprentice.mentor_id with mentor.id","The primary key of the joined result","A filter applied after the join like WHERE","The column order of the result"],"answer":"The condition that links rows from the two tables — match apprentice.mentor_id with mentor.id","explanation":"The ON clause is the join predicate. It tells the engine which rows from each table correspond to each other. The most common form is foreign_key = primary_key."},
+      {"id":"sql-jun-2a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"JUNIOR","prompt":"Both tables have a column called `name`. A developer writes `SELECT name FROM apprentices INNER JOIN mentors ON ...`. What happens?","options":["An error or ambiguous column error — the engine does not know which table's name column to use","The apprentice name is returned by default","The mentor name is returned by default","Both name columns are returned automatically"],"answer":"An error or ambiguous column error — the engine does not know which table's name column to use","explanation":"When two joined tables share a column name, you must qualify it with the table alias: SELECT a.name, m.name. Without qualification the engine raises an ambiguous column reference error."}
+    ]
+  }]
+}

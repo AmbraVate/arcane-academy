@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { profileApi, type PublicProfile } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
  * Read-only profile view at <code>/u/:username</code>.
  *
  * Shown to anyone authenticated. Returns a friendly "not found / private" page
- * if the user hasn't opted in (the API returns 404 in both cases — they look
+ * if the user hasn't opted in (the API returns 404 in both cases â€” they look
  * the same to the world to avoid leaking enumeration).
  */
 export default function PublicProfilePage() {
@@ -30,14 +30,14 @@ export default function PublicProfilePage() {
   }, [username])
 
   if (loading) {
-    return <p className="text-muted italic text-center py-10">Loading profile…</p>
+    return <p className="text-muted italic text-center py-10">Loading profileâ€¦</p>
   }
 
   if (notFound || !profile) {
     return (
       <div className="flex-1 overflow-y-auto px-6 py-8">
         <div className="max-w-[600px] mx-auto bg-card border border-border rounded-[12px] px-6 py-10 text-center">
-          <div className="text-[32px] mb-3">🌫️</div>
+          <div className="text-[32px] mb-3">ðŸŒ«ï¸</div>
           <h1 className="font-cinzel text-[20px] text-gold mb-2">Profile not visible</h1>
           <p className="text-muted text-[13px] mb-4">
             Either no learner with that name exists, or they haven't opted into public profiles.
@@ -58,10 +58,10 @@ export default function PublicProfilePage() {
     <div className="flex-1 overflow-y-auto px-6 py-8 max-[600px]:px-3 max-[600px]:py-5">
       <div className="max-w-[800px] mx-auto">
 
-        {/* Hero — matches the shape of /profile but stripped of editable bits */}
+        {/* Hero â€” matches the shape of /profile but stripped of editable bits */}
         <div className="flex items-center gap-6 p-7 bg-card border border-border rounded-[14px] mb-6 max-[600px]:flex-col max-[600px]:text-center">
           <div className="text-[56px] w-20 h-20 flex items-center justify-center bg-purple-dim border-2 border-purple rounded-full flex-shrink-0">
-            {profile.rank === 'Archmage' ? '🧙' : '✨'}
+            {profile.rank === 'Archmage' ? 'ðŸ§™' : 'âœ¨'}
           </div>
           <div className="flex-1">
             <h1 className="font-cinzel text-[24px] text-gold mb-1 max-[480px]:text-[20px]">
@@ -90,12 +90,12 @@ export default function PublicProfilePage() {
             Topics
           </h2>
           {profile.topics.length === 0 ? (
-            <p className="text-muted italic">No topic XP yet — they're just getting started.</p>
+            <p className="text-muted italic">No topic XP yet â€” they're just getting started.</p>
           ) : (
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
               {profile.topics.map(topic => (
                 <div
-                  key={topic.topicId}
+                  key={topic.domainId}
                   className="bg-card border border-border rounded-[10px] px-4 py-4"
                   style={{ borderLeft: `3px solid ${topic.accentColor ?? 'var(--purple)'}` }}
                 >
@@ -106,7 +106,7 @@ export default function PublicProfilePage() {
                   <div className="text-[18px] font-semibold text-gold">
                     {topic.xpEarned.toLocaleString()}<span className="text-[11px] text-muted ml-1">xp</span>
                   </div>
-                  <div className="text-[11px] text-muted">{topic.subChunksCompleted} lessons complete</div>
+                  <div className="text-[11px] text-muted">{topic.lessonsCompleted} lessons complete</div>
                 </div>
               ))}
             </div>
@@ -119,7 +119,7 @@ export default function PublicProfilePage() {
             Badges Earned
           </h2>
           {profile.badges.length === 0 ? (
-            <p className="text-muted italic">No badges yet — the journey is just beginning.</p>
+            <p className="text-muted italic">No badges yet â€” the journey is just beginning.</p>
           ) : (
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))' }}>
               {profile.badges.map(badge => (

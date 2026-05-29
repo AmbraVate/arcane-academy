@@ -1,0 +1,37 @@
+{
+  "id": "sql-jun-4",
+  "title": "Self Joins and CROSS JOIN",
+  "glyph": "🔗",
+  "sortOrder": 4,
+  "tier": "JUNIOR",
+  "topicId": "sql",
+  "prerequisites": ["sql-jun-3"],
+  "subChunks": [{
+    "id": "sql-jun-4a",
+    "title": "Self Join and CROSS JOIN",
+    "sortOrder": 1,
+    "xpReward": 100,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>A table can join to itself. This sounds paradoxical — but it is the only way to compare rows within the same table, or represent hierarchical data.</p>",
+    "explanationHtml": "<h3>Self join — comparing rows in one table</h3><pre><code>-- Find pairs of apprentices where one has more than double the xp of the other:\nSELECT a.name AS low, b.name AS high, a.xp, b.xp AS b_xp\nFROM   apprentices AS a\nJOIN   apprentices AS b ON b.xp > a.xp * 2;</code></pre><p>A self join requires two aliases for the same table (<code>a</code> and <code>b</code>) so the engine knows which copy each column comes from.</p><h3>Hierarchical data (manager → employee)</h3><pre><code>-- An employee table where manager_id references another employee's id:\nSELECT e.name AS employee, m.name AS manager\nFROM   employees AS e\nLEFT JOIN employees AS m ON e.manager_id = m.id;</code></pre><h3>CROSS JOIN — every combination</h3><pre><code>SELECT a.name, b.name\nFROM apprentices AS a\nCROSS JOIN apprentices AS b\nWHERE a.id != b.id;  -- exclude self-pairing</code></pre><p>CROSS JOIN produces the Cartesian product — every row from A paired with every row from B. With 6 apprentices that is 36 rows (or 30 excluding self-pairs). Use deliberately and sparingly — it can produce enormous result sets.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"The tournament board shows every possible apprentice pairing. Both columns list names from the same ledger."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"A self join joins a table to itself using two different aliases. You need two names for the same ledger so you can treat them as distinct sources. CROSS JOIN is every row from the left paired with every row from the right — powerful and dangerous in equal measure."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 XP hierarchy</h3><p>Return pairs of apprentice names where apprentice B has <strong>more than double</strong> the XP of apprentice A. Columns: <code>low_xp_name</code>, <code>high_xp_name</code>.</p>",
+    "guidedPracticeStarterCode": "SELECT a.name AS low_xp_name, b.name AS high_xp_name\nFROM   apprentices AS a\nJOIN   apprentices AS b ON b.xp > a.xp * 2;",
+    "guidedPracticeTests": [
+      {"label":"Returns multiple pairs where b.xp > a.xp * 2","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","matchMode":"rowCount","expectedRowCount":7},
+      {"label":"Columns low_xp_name and high_xp_name","expectedColumns":["low_xp_name","high_xp_name"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Using CROSS JOIN (and filtering out self-pairs), return every unique pairing of two different apprentice names. Columns: <code>a_name</code> and <code>b_name</code>. Filter so a.id < b.id to avoid duplicate pairs.</p>",
+    "feynmanPrompt": "Explain when you would use a self join and what the two aliases represent. Also explain what a Cartesian product is.",
+    "questions": [
+      {"id":"sql-jun-4a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"JUNIOR","prompt":"What is required to write a self join?","options":["Two different aliases for the same table so each copy can be referenced independently","A special SELF JOIN keyword","Two copies of the table in the database","A recursive CTE"],"answer":"Two different aliases for the same table so each copy can be referenced independently","explanation":"A self join is just a regular join where both sides reference the same table but with different aliases (e.g. a and b). The aliases let you distinguish which row is which in the ON condition and SELECT list."},
+      {"id":"sql-jun-4a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"In `employees AS e LEFT JOIN employees AS m ON e.manager_id = m.id`, what does the result row look like for the CEO who has no manager?","options":["CEO's name appears with NULL in the manager column","CEO's row is excluded from the result","An error is thrown","CEO appears twice — once as employee and once as manager"],"answer":"CEO's name appears with NULL in the manager column","explanation":"LEFT JOIN keeps all rows from the left side (employees). The CEO has no matching row on the right side (no manager), so the manager column is NULL."},
+      {"id":"sql-jun-4a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"CROSS JOIN of a 10-row table with a 15-row table returns how many rows?","options":["150","25","10","15"],"answer":"150","explanation":"CROSS JOIN (Cartesian product) pairs every row from the left with every row from the right: 10 × 15 = 150 rows."},
+      {"id":"sql-jun-4a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"JUNIOR","prompt":"When is CROSS JOIN appropriate?","options":["When you genuinely need every combination — e.g. generating a calendar grid or a size × colour product matrix","Whenever you need to join two tables without a shared key","As a faster alternative to INNER JOIN","When the tables are too large for INNER JOIN to handle"],"answer":"When you genuinely need every combination — e.g. generating a calendar grid or a size × colour product matrix","explanation":"CROSS JOIN is appropriate only when every combination is meaningful by design. Applied accidentally to large tables it produces millions of rows. It is not a substitute for a missing join condition."}
+    ]
+  }]
+}

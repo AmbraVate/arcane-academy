@@ -6,8 +6,8 @@ import java.time.Instant;
 
 public record NoteDto(
         String id,
-        String subChunkId,
-        String chunkId,
+        String lessonId,
+        String moduleId,
         String title,
         String content,
         Instant createdAt,
@@ -16,8 +16,8 @@ public record NoteDto(
     public static NoteDto from(UserNote note) {
         return new NoteDto(
                 note.getId(),
-                note.getSubChunkId(),
-                note.getChunkId(),
+                note.getLessonId(),
+                note.getModuleId(),
                 note.getTitle(),
                 note.getContent(),
                 note.getCreatedAt(),

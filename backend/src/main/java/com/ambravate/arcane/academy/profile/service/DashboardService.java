@@ -1,21 +1,21 @@
 package com.ambravate.arcane.academy.profile.service;
 
-import com.ambravate.arcane.academy.common.domain.Chunk;
-import com.ambravate.arcane.academy.common.domain.ChunkHealth;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
+import com.ambravate.arcane.academy.common.domain.ModuleHealth;
 import com.ambravate.arcane.academy.common.domain.DashboardData;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
-import com.ambravate.arcane.academy.common.domain.UserTopicProfile;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.common.domain.UserTrackProfile;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
-import com.ambravate.arcane.academy.auth.repository.UserTopicProfileRepository;
+import com.ambravate.arcane.academy.auth.repository.UserTrackProfileRepository;
 import com.ambravate.arcane.academy.ai.service.SpacingService;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +31,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DashboardService {
 
-  private final ChunkRepository chunkRepository;
-  private final SubChunkRepository subChunkRepository;
+  private final LearningModuleRepository moduleRepository;
+  private final LessonRepository lessonRepository;
   private final UserChunkProgressRepository progressRepository;
   private final UserRepository userRepository;
   private final UserLearnerProfileRepository profileRepository;
-  private final UserTopicProfileRepository topicProfileRepository;
+  private final UserTrackProfileRepository trackProfileRepository;
   private final SpacingService spacingService;
   private final GamificationFacade gamification;
 
@@ -45,7 +45,7 @@ public class DashboardService {
     return getDashboard(userId, "java");
   }
 
-  public DashboardData getDashboard(String userId, String topicId) {
+  public DashboardData getDashboard(String userId, String domainId) {
     User user = userRepository.findById(userId).orElseThrow();
 
     boolean diagnosticCompleted;
@@ -53,7 +53,7 @@ public class DashboardService {
     LearnerPath currentPath;
     int dailyGoalMinutes;
 
-    if ("java".equals(topicId)) {
+    if ("java".equals(domainId)) {
       UserLearnerProfile profile = profileRepository.findByUserId(userId)
           .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
       diagnosticCompleted = profile.isDiagnosticCompleted();
@@ -62,30 +62,30 @@ public class DashboardService {
       dailyGoalMinutes = profile.getDailyGoalMinutes();
     } else {
       // Per-topic diagnostic state; path defaults to FOUNDATION (tier is chunk-level)
-      var topicProfile = topicProfileRepository.findByUserIdAndTopicId(userId, topicId);
-      diagnosticCompleted = topicProfile.map(UserTopicProfile::isDiagnosticCompleted).orElse(false);
-      diagnosticCompletedAt = topicProfile.map(UserTopicProfile::getDiagnosticCompletedAt).orElse(null);
+      var trackProfile = trackProfileRepository.findByUserIdAndTrackId(userId, domainId);
+      diagnosticCompleted = trackProfile.map(UserTrackProfile::isDiagnosticCompleted).orElse(false);
+      diagnosticCompletedAt = trackProfile.map(UserTrackProfile::getDiagnosticCompletedAt).orElse(null);
       currentPath = LearnerPath.FOUNDATION;
       dailyGoalMinutes = 40;
     }
 
-    List<ChunkHealth> chunkHealth = getMemoryHealth(userId, topicId);
+    List<ModuleHealth> chunkHealth = getMemoryHealth(userId, domainId);
     int reviewsDue = spacingService.getDueReviews(userId).size();
     boolean streakAtRisk = gamification.isStreakAtRisk(userId);
 
     // Overall progress scoped to this topic's sub-chunks
-    List<Chunk> topicChunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
-    List<String> topicChunkIds = topicChunks.stream().map(Chunk::getId).toList();
-    List<SubChunk> topicSubChunks = topicChunkIds.isEmpty()
+    List<LearningModule> topicChunks = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId);
+    List<String> topicChunkIds = topicChunks.stream().map(LearningModule::getId).toList();
+    List<Lesson> topicSubChunks = topicChunkIds.isEmpty()
         ? List.of()
-        : subChunkRepository.findByChunkIdIn(topicChunkIds);
+        : lessonRepository.findByModuleIdIn(topicChunkIds);
     long totalSubChunks = topicSubChunks.size();
 
     List<UserChunkProgress> allProgress = progressRepository.findByUserId(userId);
-    Set<String> topicSubChunkIds = topicSubChunks.stream().map(SubChunk::getId).collect(Collectors.toSet());
+    Set<String> topicSubChunkIds = topicSubChunks.stream().map(Lesson::getId).collect(Collectors.toSet());
     long completedSubChunks = allProgress.stream()
-        .filter(p -> topicSubChunkIds.contains(p.getSubChunkId()))
-        .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE || p.getStatus() == SubChunkStatus.SKIPPED)
+        .filter(p -> topicSubChunkIds.contains(p.getLessonId()))
+        .filter(p -> p.getStatus() == LessonStatus.COMPLETE || p.getStatus() == LessonStatus.SKIPPED)
         .count();
     double overallProgress = totalSubChunks > 0 ? (double) completedSubChunks / totalSubChunks : 0.0;
 
@@ -107,36 +107,36 @@ public class DashboardService {
   /**
    * Memory health per chunk for the given topic. GREEN > 0.7, YELLOW 0.4-0.7, RED < 0.4.
    */
-  public List<ChunkHealth> getMemoryHealth(String userId, String topicId) {
-    List<Chunk> chunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId);
+  public List<ModuleHealth> getMemoryHealth(String userId, String domainId) {
+    List<LearningModule> chunks = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId);
     List<UserChunkProgress> allProgress = progressRepository.findByUserId(userId);
     Map<String, UserChunkProgress> progressMap = allProgress.stream()
-        .collect(Collectors.toMap(UserChunkProgress::getSubChunkId, p -> p, (a, b) -> a));
+        .collect(Collectors.toMap(UserChunkProgress::getLessonId, p -> p, (a, b) -> a));
 
     Set<String> completedChunks = new HashSet<>();
-    Map<String, List<SubChunk>> chunkSubs = new HashMap<>();
-    for (Chunk c : chunks) {
-      List<SubChunk> subs = subChunkRepository.findByChunkIdOrderBySortOrderAsc(c.getId());
+    Map<String, List<Lesson>> chunkSubs = new HashMap<>();
+    for (LearningModule c : chunks) {
+      List<Lesson> subs = lessonRepository.findByModuleIdOrderBySortOrderAsc(c.getId());
       chunkSubs.put(c.getId(), subs);
       if (!subs.isEmpty() && subs.stream().allMatch(sc -> {
         UserChunkProgress p = progressMap.get(sc.getId());
-        return p != null && (p.getStatus() == SubChunkStatus.COMPLETE
-            || p.getStatus() == SubChunkStatus.SKIPPED);
+        return p != null && (p.getStatus() == LessonStatus.COMPLETE
+            || p.getStatus() == LessonStatus.SKIPPED);
       })) {
         completedChunks.add(c.getId());
       }
     }
 
-    List<ChunkHealth> result = new ArrayList<>();
-    for (Chunk chunk : chunks) {
-      List<SubChunk> subs = chunkSubs.get(chunk.getId());
+    List<ModuleHealth> result = new ArrayList<>();
+    for (LearningModule chunk : chunks) {
+      List<Lesson> subs = chunkSubs.get(chunk.getId());
       double avgStrength = 0.0;
       int count = 0;
 
-      for (SubChunk sc : subs) {
+      for (Lesson sc : subs) {
         UserChunkProgress p = progressMap.get(sc.getId());
-        if (p != null && (p.getStatus() == SubChunkStatus.COMPLETE
-            || p.getStatus() == SubChunkStatus.SKIPPED)) {
+        if (p != null && (p.getStatus() == LessonStatus.COMPLETE
+            || p.getStatus() == LessonStatus.SKIPPED)) {
           avgStrength += spacingService.computeDecayedStrength(p);
           count++;
         }
@@ -150,15 +150,15 @@ public class DashboardService {
         status = "COMPLETE";
       } else if (subs.stream().anyMatch(sc -> {
         UserChunkProgress p = progressMap.get(sc.getId());
-        return p != null && p.getStatus() == SubChunkStatus.IN_PROGRESS;
+        return p != null && p.getStatus() == LessonStatus.IN_PROGRESS;
       })) {
         status = "IN_PROGRESS";
       } else {
-        List<String> prereqs = chunk.getPrerequisites().stream().map(Chunk::getId).toList();
+        List<String> prereqs = chunk.getPrerequisites().stream().map(LearningModule::getId).toList();
         status = prereqs.isEmpty() || completedChunks.containsAll(prereqs) ? "UNLOCKED" : "LOCKED";
       }
 
-      result.add(new ChunkHealth(
+      result.add(new ModuleHealth(
           chunk.getId(), chunk.getTitle(), chunk.getGlyph(),
           status, avgStrength, healthColor,
           subs.size(), count,

@@ -40,8 +40,8 @@ public class StuckReportController {
                 .userId(principal.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .topicId(body.get("topicId"))
-                .subChunkId(body.get("subChunkId"))
+                .domainId(body.get("domainId"))
+                .lessonId(body.get("lessonId"))
                 .currentPhase(body.get("currentPhase"))
                 .currentUrl(body.get("currentUrl"))
                 .userMessage(body.get("userMessage"))
@@ -51,7 +51,7 @@ public class StuckReportController {
                 .build();
 
         stuckReportService.submit(report);
-        return ResponseEntity.ok(Map.of("message", "Report received — we'll look into it."));
+        return ResponseEntity.ok(Map.of("message", "Report received â€” we'll look into it."));
     }
 
     /** Learner: list their own stuck reports (no screenshot). */

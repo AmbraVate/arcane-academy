@@ -1,0 +1,2 @@
+ALTER TABLE lessons ADD COLUMN IF NOT EXISTS integration_prompt TEXT;
+ALTER TABLE lessons ADD COLUMN IF NOT EXISTS quest_type VARCHAR(50);

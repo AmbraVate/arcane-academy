@@ -1,129 +1,129 @@
 package com.ambravate.arcane.academy.content.seeder;
 
-import com.ambravate.arcane.academy.common.domain.Chunk;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.QuestionTier;
 import com.ambravate.arcane.academy.common.domain.QuestionType;
 import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 
 
 public abstract class AbstractChunkSeeder {
 
-    protected final ChunkRepository chunkRepository;
-    protected final SubChunkRepository subChunkRepository;
+    protected final LearningModuleRepository moduleRepository;
+    protected final LessonRepository lessonRepository;
     protected final QuestionRepository questionRepository;
     protected final RabbitHoleModuleRepository rabbitHoleRepository;
 
-    protected AbstractChunkSeeder(ChunkRepository chunkRepository,
-                                   SubChunkRepository subChunkRepository,
+    protected AbstractChunkSeeder(LearningModuleRepository moduleRepository,
+                                   LessonRepository lessonRepository,
                                    QuestionRepository questionRepository,
                                    RabbitHoleModuleRepository rabbitHoleRepository) {
-        this.chunkRepository = chunkRepository;
-        this.subChunkRepository = subChunkRepository;
+        this.moduleRepository = moduleRepository;
+        this.lessonRepository = lessonRepository;
         this.questionRepository = questionRepository;
         this.rabbitHoleRepository = rabbitHoleRepository;
     }
 
     public abstract void seed();
 
-    // ── Chunk helpers ─────────────────────────────────────────────────────
+    // â”€â”€ LearningModule helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    protected Chunk chunk(String id, String title, String glyph, int order, String... prereqs) {
+    protected LearningModule chunk(String id, String title, String glyph, int order, String... prereqs) {
         return chunk(id, title, glyph, order, LearnerPath.FOUNDATION, prereqs);
     }
 
-    protected Chunk chunk(String id, String title, String glyph, int order, LearnerPath tier, String... prereqs) {
-        java.util.List<Chunk> prereqChunks = java.util.Arrays.stream(prereqs)
-                .map(pId -> chunkRepository.findById(pId)
+    protected LearningModule chunk(String id, String title, String glyph, int order, LearnerPath tier, String... prereqs) {
+        java.util.List<LearningModule> prereqChunks = java.util.Arrays.stream(prereqs)
+                .map(pId -> moduleRepository.findById(pId)
                         .orElseThrow(() -> new IllegalStateException("Prerequisite chunk not found: " + pId)))
                 .collect(java.util.stream.Collectors.toList());
-        Chunk c = Chunk.builder().id(id).title(title).glyph(glyph)
+        LearningModule c = LearningModule.builder().id(id).title(title).glyph(glyph)
                 .sortOrder(order).tier(tier).prerequisites(prereqChunks).build();
-        return chunkRepository.save(c);
+        return moduleRepository.save(c);
     }
 
-    // ── SubChunk helpers ──────────────────────────────────────────────────
+    // â”€â”€ Lesson helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    protected SubChunk subChunk(String id, String chunkId, String title, int order, int xp,
+    protected Lesson subChunk(String id, String chunkId, String title, int order, int xp,
                                  String filename, String hook, String explanation,
                                  String story, String gpHtml, String gpStarter, String gpTests,
                                  String feynmanPrompt) {
         return subChunk(id, chunkId, title, order, xp, filename, hook, explanation,
-                story, gpHtml, gpStarter, gpTests, feynmanPrompt, SubChunkPracticeType.JAVA);
+                story, gpHtml, gpStarter, gpTests, feynmanPrompt, LessonPracticeType.JAVA);
     }
 
-    protected SubChunk subChunk(String id, String chunkId, String title, int order, int xp,
+    protected Lesson subChunk(String id, String chunkId, String title, int order, int xp,
                                  String filename, String hook, String explanation,
                                  String story, String gpHtml, String gpStarter, String gpTests,
-                                 String feynmanPrompt, SubChunkPracticeType practiceType) {
-        SubChunk sc = SubChunk.builder()
-                .id(id).chunkId(chunkId).title(title).sortOrder(order).xpReward(xp)
+                                 String feynmanPrompt, LessonPracticeType practiceType) {
+        Lesson sc = Lesson.builder()
+                .id(id).moduleId(chunkId).title(title).sortOrder(order).xpReward(xp)
                 .filename(filename).hookHtml(hook).explanationHtml(explanation)
                 .storyJson(story).guidedPracticeHtml(gpHtml)
                 .guidedPracticeStarterCode(gpStarter).guidedPracticeTestsJson(gpTests)
                 .feynmanPrompt(feynmanPrompt)
                 .practiceType(practiceType)
                 .build();
-        return subChunkRepository.save(sc);
+        return lessonRepository.save(sc);
     }
 
-    // ── Question helpers ──────────────────────────────────────────────────
+    // â”€â”€ Question helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    protected Question mcQuestion(String subChunkId, QuestionTier tier, String html,
+    protected Question mcQuestion(String lessonId, QuestionTier tier, String html,
                                    String[] options, String correct, String explanation) {
         return questionRepository.save(Question.builder()
-                .subChunkId(subChunkId).tier(tier).type(QuestionType.MULTIPLE_CHOICE)
+                .lessonId(lessonId).tier(tier).type(QuestionType.MULTIPLE_CHOICE)
                 .questionHtml(html)
                 .optionsJson("[" + String.join(",", java.util.Arrays.stream(options).map(o -> "\"" + esc(o) + "\"").toArray(String[]::new)) + "]")
                 .correctAnswer(correct).explanationHtml(explanation)
                 .minPath(LearnerPath.FOUNDATION).build());
     }
 
-    protected Question tfQuestion(String subChunkId, QuestionTier tier, String html,
+    protected Question tfQuestion(String lessonId, QuestionTier tier, String html,
                                    String correct, String explanation) {
         return questionRepository.save(Question.builder()
-                .subChunkId(subChunkId).tier(tier).type(QuestionType.TRUE_FALSE)
+                .lessonId(lessonId).tier(tier).type(QuestionType.TRUE_FALSE)
                 .questionHtml(html)
                 .optionsJson("[\"True\",\"False\"]")
                 .correctAnswer(correct).explanationHtml(explanation)
                 .minPath(LearnerPath.FOUNDATION).build());
     }
 
-    protected Question fillQuestion(String subChunkId, QuestionTier tier, String html,
+    protected Question fillQuestion(String lessonId, QuestionTier tier, String html,
                                      String correct, String explanation) {
         return questionRepository.save(Question.builder()
-                .subChunkId(subChunkId).tier(tier).type(QuestionType.FILL_BLANK)
+                .lessonId(lessonId).tier(tier).type(QuestionType.FILL_BLANK)
                 .questionHtml(html).correctAnswer(correct).explanationHtml(explanation)
                 .minPath(LearnerPath.FOUNDATION).build());
     }
 
-    protected Question codeQuestion(String subChunkId, QuestionTier tier, QuestionType type,
+    protected Question codeQuestion(String lessonId, QuestionTier tier, QuestionType type,
                                      String html, String code, String correct, String explanation) {
         return questionRepository.save(Question.builder()
-                .subChunkId(subChunkId).tier(tier).type(type)
+                .lessonId(lessonId).tier(tier).type(type)
                 .questionHtml(html).codeSnippet(code)
                 .correctAnswer(correct).explanationHtml(explanation)
                 .minPath(LearnerPath.FOUNDATION).build());
     }
 
-    protected Question scenarioQuestion(String subChunkId, String html, String correct,
+    protected Question scenarioQuestion(String lessonId, String html, String correct,
                                           String explanation, String... crossChunkIds) {
         String cross = crossChunkIds.length == 0 ? null :
                 "[" + String.join(",", java.util.Arrays.stream(crossChunkIds).map(c -> "\"" + c + "\"").toArray(String[]::new)) + "]";
         return questionRepository.save(Question.builder()
-                .subChunkId(subChunkId).tier(QuestionTier.DISCRIMINATION).type(QuestionType.SCENARIO)
+                .lessonId(lessonId).tier(QuestionTier.DISCRIMINATION).type(QuestionType.SCENARIO)
                 .questionHtml(html).correctAnswer(correct).explanationHtml(explanation)
                 .crossChunkIds(cross).minPath(LearnerPath.PRACTITIONER).build());
     }
 
-    // ── Story beat helpers (same format as original) ──────────────────────
+    // â”€â”€ Story beat helpers (same format as original) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     protected String story(String... beats) { return "[" + String.join(",", beats) + "]"; }
 
@@ -140,7 +140,7 @@ public abstract class AbstractChunkSeeder {
         return "{\"type\":\"example\",\"speaker\":\"" + esc(label) + "\",\"text\":\"" + esc(code) + "\"}";
     }
 
-    // ── Test case helpers ─────────────────────────────────────────────────
+    // â”€â”€ Test case helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     protected String tests(String... ts) { return "[" + String.join(",", ts) + "]"; }
 
@@ -150,13 +150,13 @@ public abstract class AbstractChunkSeeder {
                 + ",\"expected\":\"" + esc(expected) + "\"}";
     }
 
-    // ── Rabbit hole helper ────────────────────────────────────────────────
+    // â”€â”€ Rabbit hole helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     protected RabbitHoleModule rabbitHole(String id, String chunkId, String title, int order,
                                            String contentHtml, String story, String starter,
                                            String testCases, String filename) {
         return rabbitHoleRepository.save(RabbitHoleModule.builder()
-                .id(id).chunkId(chunkId).title(title).sortOrder(order)
+                .id(id).moduleId(chunkId).title(title).sortOrder(order)
                 .contentHtml(contentHtml).storyJson(story)
                 .starterCode(starter).testCasesJson(testCases).filename(filename)
                 .build());

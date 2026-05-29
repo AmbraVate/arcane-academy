@@ -1,0 +1,37 @@
+{
+  "id": "sql-app-7",
+  "title": "Deduplication and Renaming",
+  "glyph": "🗃️",
+  "sortOrder": 7,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-6"],
+  "subChunks": [{
+    "id": "sql-app-7a",
+    "title": "DISTINCT and Column Aliases",
+    "sortOrder": 1,
+    "xpReward": 60,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Sometimes you want unique values only — no duplicates. Sometimes you want to rename a column in the result. <code>DISTINCT</code> and <code>AS</code> handle both.</p>",
+    "explanationHtml": "<h3>DISTINCT — remove duplicate rows</h3><pre><code>-- All ranks (with duplicates):\nSELECT rank FROM apprentices;\n\n-- Unique ranks only:\nSELECT DISTINCT rank FROM apprentices;</code></pre><p><code>DISTINCT</code> applies to the entire row returned, not just the first column. <code>SELECT DISTINCT rank, xp</code> returns unique (rank, xp) pairs — which is rarely what you want.</p><h3>AS — rename columns in the result</h3><pre><code>SELECT name AS wizard_name,\n       xp   AS experience_points\nFROM apprentices;</code></pre><p>The alias exists only in the query result — it does not change the actual column name in the table. You can also alias expressions:</p><pre><code>SELECT name, xp * 2 AS double_xp\nFROM apprentices;</code></pre><h3>Table aliases</h3><pre><code>SELECT a.name, a.xp\nFROM apprentices AS a\nWHERE a.xp > 1000;</code></pre><p>Table aliases become essential in JOIN queries to disambiguate same-named columns from different tables.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"Cipher pulls two quills — a plain one for the query and a red one for annotations."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"DISTINCT strips duplicate rows from the result. AS renames a column or expression in the output — the table itself is untouched. Table aliases become mandatory once you start joining ledgers; practise the habit now."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Unique ranks</h3><p>Return the list of distinct <code>rank</code> values present in the apprentices table — no duplicates. Order alphabetically.</p>",
+    "guidedPracticeStarterCode": "SELECT DISTINCT rank\nFROM apprentices\nORDER BY rank;",
+    "guidedPracticeTests": [
+      {"label":"Returns 4 distinct ranks","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":4,"matchMode":"rowCount"},
+      {"label":"Column named rank","expectedColumns":["rank"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return <code>name</code> aliased as <code>wizard</code> and <code>xp</code> aliased as <code>power</code> for all apprentices with XP over 1 000. Order by power descending.</p>",
+    "feynmanPrompt": "Explain what DISTINCT does and why `SELECT DISTINCT rank, xp` might not return what a beginner expects.",
+    "questions": [
+      {"id":"sql-app-7a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What does SELECT DISTINCT do?","options":["Removes duplicate rows from the result set","Returns only the first row of each group","Sorts results in ascending order","Renames columns in the output"],"answer":"Removes duplicate rows from the result set","explanation":"DISTINCT eliminates duplicate rows from the output. It is placed immediately after SELECT and applies to the full combination of columns selected."},
+      {"id":"sql-app-7a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Using the lesson data, how many rows does `SELECT DISTINCT rank FROM apprentices` return?","options":["4 (Novice, Apprentice, Adept, Mage — Archmage makes 5 but wait — let me check)","5 (Novice, Apprentice, Adept, Mage, Archmage)","6 (one per apprentice)","3"],"answer":"5 (Novice, Apprentice, Adept, Mage, Archmage)","explanation":"The six apprentices have ranks: Apprentice (Alice), Adept (Bjorn), Mage (Cassia), Novice (Dorian), Archmage (Elara), Apprentice (Fenrir). DISTINCT collapses the two Apprentice rows, giving 5 unique ranks."},
+      {"id":"sql-app-7a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"What does `SELECT xp * 2 AS double_xp FROM apprentices WHERE id = 1` return for Alice (xp=1200)?","options":["2400 in a column called double_xp","1200 in a column called xp","2400 in a column called xp * 2","An error — expressions cannot be aliased"],"answer":"2400 in a column called double_xp","explanation":"SQL evaluates the expression xp * 2 and labels the result column double_xp per the AS alias."},
+      {"id":"sql-app-7a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"A developer writes `SELECT DISTINCT rank, xp FROM apprentices` hoping to see unique ranks. Why might the result be surprising?","options":["DISTINCT applies to the full (rank, xp) pair, so rows are only removed if both rank AND xp are identical — it does not deduplicate by rank alone","DISTINCT on two columns returns no rows","DISTINCT cannot be used with more than one column","DISTINCT ignores the second column entirely"],"answer":"DISTINCT applies to the full (rank, xp) pair, so rows are only removed if both rank AND xp are identical — it does not deduplicate by rank alone","explanation":"To get unique ranks only, use SELECT DISTINCT rank. Adding xp means each unique (rank, xp) combination is retained — since all XP values differ, this returns all rows."}
+    ]
+  }]
+}

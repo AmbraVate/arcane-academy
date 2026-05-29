@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { diagnosticApi } from '@/shared/api/services'
@@ -6,46 +6,46 @@ import { CSS_PREREQ_TOPICS, prereqStorageKey } from '@/features/onboarding/data/
 import { useInvalidateDashboard } from '@/hooks/queries'
 
 const TOPIC_META: Record<string, { name: string; glyph: string; question: string }> = {
-  java:       { name: 'Java',             glyph: '☕',  question: 'Have you written Java code before?' },
-  tailwind:   { name: 'Tailwind CSS',     glyph: '🎨', question: 'Have you used Tailwind CSS before?' },
-  react:      { name: 'React',            glyph: '⚛️', question: 'Have you built UIs with React before?' },
-  sql:        { name: 'SQL',              glyph: '🗃️', question: 'Have you written SQL queries before?' },
-  psychology: { name: 'Psychology',       glyph: '🧠', question: 'Have you studied psychology before?' },
-  genealogy:  { name: 'Genealogy',        glyph: '🌳', question: 'Have you researched your family history before?' },
-  sciences:   { name: 'Natural Sciences', glyph: '🔬', question: 'Have you studied natural sciences before?' },
+  java:       { name: 'Java',             glyph: 'â˜•',  question: 'Have you written Java code before?' },
+  tailwind:   { name: 'Tailwind CSS',     glyph: 'ðŸŽ¨', question: 'Have you used Tailwind CSS before?' },
+  react:      { name: 'React',            glyph: 'âš›ï¸', question: 'Have you built UIs with React before?' },
+  sql:        { name: 'SQL',              glyph: 'ðŸ—ƒï¸', question: 'Have you written SQL queries before?' },
+  psychology: { name: 'Psychology',       glyph: 'ðŸ§ ', question: 'Have you studied psychology before?' },
+  genealogy:  { name: 'Genealogy',        glyph: 'ðŸŒ³', question: 'Have you researched your family history before?' },
+  sciences:   { name: 'Natural Sciences', glyph: 'ðŸ”¬', question: 'Have you studied natural sciences before?' },
 }
 
 export default function TopicOnboardingPage() {
-  const { topicId } = useParams<{ topicId: string }>()
+  const { domainId } = useParams<{ domainId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
   const [loading, setLoading] = useState(false)
   const invalidateDashboard = useInvalidateDashboard()
 
-  const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', question: `Have you studied ${topicId} before?` }
+  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: 'ðŸ“–', question: `Have you studied ${domainId} before?` }
 
   /** Has this user already passed/completed the CSS prereq check for this topic? */
   function prereqAlreadyDone(): boolean {
-    if (!user || !topicId || !CSS_PREREQ_TOPICS.has(topicId)) return true
-    return !!localStorage.getItem(prereqStorageKey(user.userId, topicId))
+    if (!user || !domainId || !CSS_PREREQ_TOPICS.has(domainId)) return true
+    return !!localStorage.getItem(prereqStorageKey(user.userId, domainId))
   }
 
   async function handleNew() {
     setLoading(true)
     try {
-      await diagnosticApi.skip(topicId!)
-      // Bust the cached dashboard so TopicsPage re-reads diagnosticCompleted: true
-      invalidateDashboard(topicId)
+      await diagnosticApi.skip(domainId!)
+      // Bust the cached dashboard so DomainsPage re-reads diagnosticCompleted: true
+      invalidateDashboard(domainId)
       // For CSS-dependent topics, route through the prereq check on first visit
-      if (CSS_PREREQ_TOPICS.has(topicId!) && !prereqAlreadyDone()) {
-        navigate(`/topic/${topicId}/prereq-check`)
+      if (CSS_PREREQ_TOPICS.has(domainId!) && !prereqAlreadyDone()) {
+        navigate(`/topic/${domainId}/prereq-check`)
       } else {
-        navigate(`/topic/${topicId}`, { replace: true })
+        navigate(`/topic/${domainId}`, { replace: true })
       }
     } catch { setLoading(false) }
   }
 
-  function handleExperienced() { navigate(`/topic/${topicId}/diagnostic`) }
+  function handleExperienced() { navigate(`/topic/${domainId}/diagnostic`) }
 
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">
@@ -67,7 +67,7 @@ export default function TopicOnboardingPage() {
             onClick={handleNew}
             disabled={loading}
           >
-            <span className="text-[36px]">🌱</span>
+            <span className="text-[36px]">ðŸŒ±</span>
             <span className="text-[16px] font-bold text-teal">No, I'm completely new</span>
             <span className="text-[13px] text-muted leading-[1.5]">
               Start from the very beginning. We'll guide you through every concept step by step.
@@ -83,10 +83,10 @@ export default function TopicOnboardingPage() {
             onClick={handleExperienced}
             disabled={loading}
           >
-            <span className="text-[36px]">⚡</span>
+            <span className="text-[36px]">âš¡</span>
             <span className="text-[16px] font-bold text-purple-light">Yes, I have some experience</span>
             <span className="text-[13px] text-muted leading-[1.5]">
-              Take a short diagnostic — we'll skip what you already know and focus on the gaps.
+              Take a short diagnostic â€” we'll skip what you already know and focus on the gaps.
             </span>
           </button>
         </div>

@@ -11,9 +11,9 @@ public interface UserNoteRepository extends JpaRepository<UserNote, String> {
 
     Optional<UserNote> findByIdAndUserId(String id, String userId);
 
-    boolean existsByUserIdAndSubChunkId(String userId, String subChunkId);
+    boolean existsByUserIdAndLessonId(String userId, String lessonId);
 
-    Optional<UserNote> findByUserIdAndSubChunkId(String userId, String subChunkId);
+    Optional<UserNote> findByUserIdAndLessonId(String userId, String lessonId);
 
     long countByUserId(String userId);
 }

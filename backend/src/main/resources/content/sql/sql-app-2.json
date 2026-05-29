@@ -1,0 +1,39 @@
+{
+  "id": "sql-app-2",
+  "title": "Your First Query",
+  "glyph": "🗃️",
+  "sortOrder": 2,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-1"],
+  "subChunks": [{
+    "id": "sql-app-2a",
+    "title": "SELECT, FROM, WHERE",
+    "sortOrder": 1,
+    "xpReward": 60,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Three words power 80% of all SQL ever written: <code>SELECT</code>, <code>FROM</code>, and <code>WHERE</code>. Master them and you can retrieve any single fact from any table.</p>",
+    "explanationHtml": "<h3>The basic shape</h3><pre><code>SELECT columns\nFROM   table\nWHERE  condition;</code></pre><h3>SELECT — choose columns</h3><pre><code>SELECT * FROM apprentices;          -- all columns\nSELECT name, xp FROM apprentices;   -- two columns\nSELECT name AS wizard FROM apprentices;  -- rename with AS</code></pre><p>In production, list columns explicitly rather than using <code>*</code> — it makes queries resilient to schema changes.</p><h3>WHERE — filter rows</h3><pre><code>SELECT name, xp FROM apprentices WHERE xp >= 2000;\nSELECT *          FROM apprentices WHERE rank = 'Mage';\nSELECT name       FROM apprentices WHERE id = 3;</code></pre><p>Without <code>WHERE</code> every row is returned. With it, only rows satisfying the condition are returned.</p><h3>String literals need single quotes</h3><p><code>'Mage'</code> not <code>\"Mage\"</code>. Double quotes in standard SQL refer to identifiers (column names), not string values. Always single-quote strings.</p><h3>Comparison operators</h3><p><code>=  &lt;&gt;  !=  &lt;  &lt;=  &gt;  &gt;=</code> — all work as expected.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"Cipher slides the ledger toward you and places a quill in your hand."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"SELECT — the columns you want. FROM — the table they live in. WHERE — the filter. Three words, and you can answer almost anything the Headmaster asks of these archives."},
+      {"type":"example","speaker":"Finding Mages","text":"SELECT name, xp\nFROM   apprentices\nWHERE  rank = 'Mage';\n-- Returns only rows where rank equals 'Mage'"}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 First query</h3><p>The Headmaster wants the <strong>name and xp</strong> of every apprentice with <strong>at least 2 000 XP</strong>. Write the query.</p><pre><code>-- Data loaded:\n-- id | name    | rank        | xp\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80\n--  5 | Elara   | Archmage    | 7500\n--  6 | Fenrir  | Apprentice  |  950</code></pre>",
+    "guidedPracticeStarterCode": "SELECT\n  -- columns here\nFROM apprentices\nWHERE\n  -- condition here\n;",
+    "guidedPracticeTests": [
+      {"label":"Returns 3 rows (Bjorn, Cassia, Elara)","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":3,"matchMode":"rowCount"},
+      {"label":"Columns are name and xp","expectedColumns":["name","xp"],"matchMode":"columns"},
+      {"label":"Correct rows returned","expectedQuery":"SELECT name, xp FROM apprentices WHERE xp >= 2000","matchMode":"rowsAnyOrder"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return only the <code>name</code> column for apprentices whose <code>rank</code> is exactly <code>'Novice'</code>.</p>",
+    "feynmanPrompt": "Explain what SELECT, FROM, and WHERE each do, and why single-quoting strings matters in SQL.",
+    "questions": [
+      {"id":"sql-app-2a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What does the WHERE clause do in a SELECT query?","options":["Filters rows so only those matching the condition are returned","Picks which columns appear in the result","Specifies which table to read from","Sorts the output"],"answer":"Filters rows so only those matching the condition are returned","explanation":"SELECT chooses columns; FROM chooses the table; WHERE filters rows. Sorting is handled by ORDER BY (next lesson)."},
+      {"id":"sql-app-2a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Using the lesson data, what does `SELECT name FROM apprentices WHERE xp >= 2000` return?","options":["Bjorn, Cassia, Elara","Alice, Bjorn, Cassia","Cassia, Elara","Alice, Bjorn, Cassia, Elara"],"answer":"Bjorn, Cassia, Elara","explanation":"Bjorn (2400), Cassia (4800), and Elara (7500) all have xp >= 2000. Alice (1200), Dorian (80), and Fenrir (950) do not."},
+      {"id":"sql-app-2a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Which query correctly returns all columns for the apprentice named 'Alice'?","options":["SELECT * FROM apprentices WHERE name = 'Alice';","SELECT * FROM apprentices WHERE name = \"Alice\";","SELECT ALL FROM apprentices WHERE name IS 'Alice';","SELECT apprentices WHERE name = 'Alice';"],"answer":"SELECT * FROM apprentices WHERE name = 'Alice';","explanation":"Single quotes denote string literals in standard SQL. `SELECT *` returns all columns. The other options use double quotes (identifiers), non-standard IS, or are missing the FROM clause."},
+      {"id":"sql-app-2a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"Why does `SELECT name FROM apprentices WHERE rank = \"Mage\"` fail in strict SQL engines?","options":["Double quotes denote identifiers in standard SQL, so the engine looks for a column named Mage rather than the string 'Mage'","Double quotes are reserved for integers","The WHERE clause cannot filter on TEXT columns","SELECT needs a semicolon before WHERE"],"answer":"Double quotes denote identifiers in standard SQL, so the engine looks for a column named Mage rather than the string 'Mage'","explanation":"Standard SQL: single quotes = string literals; double quotes = identifiers (table/column names). Many engines tolerate double-quoted strings, but writing single quotes is the portable, correct habit."}
+    ]
+  }]
+}

@@ -1,10 +1,10 @@
-import { Link, Navigate } from 'react-router-dom'
+﻿import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { RotateCcw, Bot, Rabbit, Trophy, BarChart2, GraduationCap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { TopicIcon } from '@/components/icons/TopicIcon'
 
-// ── Data ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const TRACKS = [
   { img: '/Java.png',            name: 'Java',             color: '#f89820', desc: 'Object-oriented programming, data structures, algorithms, and design patterns.' },
@@ -17,7 +17,7 @@ const TRACKS = [
 
 const COMING_SOON = ['SQL', 'JavaScript', 'TypeScript', 'Python', 'HTML', 'CSS']
 
-const COMING_SOON_TAGLINE = 'We\'re building fast — dozens more disciplines are in active development across coding, sciences, humanities, and beyond.'
+const COMING_SOON_TAGLINE = 'We\'re building fast â€” dozens more disciplines are in active development across coding, sciences, humanities, and beyond.'
 
 const PHASES = [
   { label: 'Hook',      color: '#c9a227', desc: 'An immersive story sets the scene' },
@@ -29,18 +29,18 @@ const PHASES = [
 ]
 
 const FEATURES: { icon: LucideIcon; color: string; title: string; desc: string }[] = [
-  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition', desc: 'The SM-2 algorithm schedules every review at the exact moment your brain is about to forget — building memories that last decades, not days.' },
+  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition', desc: 'The SM-2 algorithm schedules every review at the exact moment your brain is about to forget â€” building memories that last decades, not days.' },
   { icon: Bot,           color: '#c4b5fd', title: 'AI Mentor',         desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
   { icon: Rabbit,        color: '#c9a227', title: 'Rabbit Holes',      desc: 'Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you\'re ready.' },
   { icon: Trophy,        color: '#c9a227', title: 'XP & Ranks',        desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
-  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',     desc: 'Visual memory-strength bars show exactly how well each concept is retained. Green means locked in — yellow means it\'s time to review.' },
+  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',     desc: 'Visual memory-strength bars show exactly how well each concept is retained. Green means locked in â€” yellow means it\'s time to review.' },
   { icon: GraduationCap, color: '#60a5fa', title: 'Feynman Technique', desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
 ]
 
 const PRICING = [
   {
     name: 'Free',
-    price: '£0',
+    price: 'Â£0',
     period: 'forever',
     color: '#6b7280',
     highlight: false,
@@ -50,7 +50,7 @@ const PRICING = [
   },
   {
     name: 'Monthly',
-    price: '£6.99',
+    price: 'Â£6.99',
     period: 'per month',
     color: '#3b82f6',
     highlight: false,
@@ -60,18 +60,18 @@ const PRICING = [
   },
   {
     name: 'Annual',
-    price: '£49.99',
+    price: 'Â£49.99',
     period: 'per year',
     badge: 'Best value',
     color: '#8b5cf6',
     highlight: true,
-    features: ['All topics, unlocked', 'Everything in Free', '≈ £4.17 / month', 'Cancel anytime'],
-    cta: 'Start Free → Upgrade',
+    features: ['All topics, unlocked', 'Everything in Free', 'â‰ˆ Â£4.17 / month', 'Cancel anytime'],
+    cta: 'Start Free â†’ Upgrade',
     href: '/register',
   },
   {
     name: 'Lifetime',
-    price: '£99',
+    price: 'Â£99',
     period: 'one-time',
     color: '#c9a227',
     highlight: false,
@@ -81,13 +81,13 @@ const PRICING = [
   },
 ]
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function GoldRule() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '0 auto 14px', maxWidth: 180 }}>
       <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, rgba(201,162,39,0.4))' }} />
-      <span style={{ color: '#c9a227', fontSize: 12 }}>✦</span>
+      <span style={{ color: '#c9a227', fontSize: 12 }}>âœ¦</span>
       <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, rgba(201,162,39,0.4))' }} />
     </div>
   )
@@ -101,7 +101,7 @@ function SectionLabel({ children }: { children: string }) {
   )
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function LandingPage() {
   const { user } = useAuth()
@@ -112,7 +112,7 @@ export default function LandingPage() {
   return (
     <div style={{ minHeight: '100vh', overflowY: 'auto', background: 'var(--bg)', color: 'var(--text)', fontFamily: 'Crimson Pro, serif' }}>
 
-      {/* ── Sticky nav ───────────────────────────────────────────────────── */}
+      {/* â”€â”€ Sticky nav â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <header style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: 'clamp(12px, 2vw, 16px) clamp(12px, 4vw, 32px)',
@@ -128,11 +128,11 @@ export default function LandingPage() {
         </div>
         <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
           <Link to="/login" className="btn btn-ghost" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(8px, 2.5vw, 16px)', whiteSpace: 'nowrap' }}>Sign In</Link>
-          <Link to="/register" className="btn btn-primary" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 18px)', whiteSpace: 'nowrap' }}>Start Free →</Link>
+          <Link to="/register" className="btn btn-primary" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 18px)', whiteSpace: 'nowrap' }}>Start Free â†’</Link>
         </div>
       </header>
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{
         textAlign: 'center',
         padding: 'clamp(72px, 12vw, 120px) 24px 80px',
@@ -156,7 +156,7 @@ export default function LandingPage() {
           </h1>
           <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--muted)', maxWidth: 580, margin: '0 auto 20px', lineHeight: 1.75 }}>
             Arcane Academy uses spaced repetition, structured encoding phases, and an AI mentor
-            to make you genuinely fluent — across coding, sciences, and humanities.
+            to make you genuinely fluent â€” across coding, sciences, and humanities.
           </p>
 
           {/* Social proof */}
@@ -176,19 +176,19 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/register" className="btn btn-primary" style={{ padding: '14px 36px', fontSize: 15, fontFamily: 'Cinzel, serif' }}>
-              ✦ Begin Your Journey
+              âœ¦ Begin Your Journey
             </Link>
             <Link to="/login" className="btn btn-ghost" style={{ padding: '14px 28px', fontSize: 15 }}>
               Sign In
             </Link>
           </div>
           <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)', letterSpacing: '0.04em' }}>
-            No credit card required · Free forever for one topic
+            No credit card required Â· Free forever for one topic
           </p>
         </div>
       </section>
 
-      {/* ── Encoding sequence ────────────────────────────────────────────── */}
+      {/* â”€â”€ Encoding sequence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', background: 'var(--surface)' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <GoldRule />
@@ -197,7 +197,7 @@ export default function LandingPage() {
             The Encoding Sequence
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, maxWidth: 540, margin: '0 auto 44px', lineHeight: 1.7 }}>
-            Every lesson follows a six-phase sequence designed to encode knowledge deeply — not just recognise it for the moment.
+            Every lesson follows a six-phase sequence designed to encode knowledge deeply â€” not just recognise it for the moment.
           </p>
 
           {/* Phase cards */}
@@ -227,12 +227,12 @@ export default function LandingPage() {
           </div>
 
           <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--muted)', marginTop: 24, fontStyle: 'italic' }}>
-            After completion, the SM-2 spaced-repetition algorithm schedules your next review — right before you would forget.
+            After completion, the SM-2 spaced-repetition algorithm schedules your next review â€” right before you would forget.
           </p>
         </div>
       </section>
 
-      {/* ── Active tracks ────────────────────────────────────────────────── */}
+      {/* â”€â”€ Active tracks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', maxWidth: 1040, margin: '0 auto' }}>
         <GoldRule />
         <SectionLabel>What you can learn</SectionLabel>
@@ -240,7 +240,7 @@ export default function LandingPage() {
           Active Learning Tracks
         </h2>
         <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, marginBottom: 44 }}>
-          71 lessons per topic · Apprentice → Junior → Senior → Lead
+          71 lessons per topic Â· Apprentice â†’ Junior â†’ Senior â†’ Lead
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 16 }}>
@@ -291,7 +291,7 @@ export default function LandingPage() {
                 fontFamily: 'Cinzel, serif', fontSize: 12, color: 'var(--muted)', opacity: 0.6,
                 display: 'flex', alignItems: 'center', gap: 6,
               }}>
-                <TopicIcon topicId={name.toLowerCase().replace(/ /g, '')} size={13} />
+                <TopicIcon domainId={name.toLowerCase().replace(/ /g, '')} size={13} />
                 {name}
               </div>
             ))}
@@ -299,7 +299,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Features ─────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Features â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', background: 'var(--surface)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <GoldRule />
@@ -333,7 +333,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Pricing ──────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Pricing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <GoldRule />
@@ -342,7 +342,7 @@ export default function LandingPage() {
             Start Free. Scale When Ready.
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, marginBottom: 48 }}>
-            One topic is free — forever. Unlock everything when you're ready.
+            One topic is free â€” forever. Unlock everything when you're ready.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 16, alignItems: 'stretch' }}>
@@ -379,7 +379,7 @@ export default function LandingPage() {
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
                   {plan.features.map(feat => (
                     <li key={feat} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontSize: 13, color: 'var(--muted)' }}>
-                      <span style={{ color: plan.color, flexShrink: 0, fontSize: 11 }}>✦</span>
+                      <span style={{ color: plan.color, flexShrink: 0, fontSize: 11 }}>âœ¦</span>
                       {feat}
                     </li>
                   ))}
@@ -412,7 +412,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Final CTA ────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Final CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{
         padding: 'clamp(72px, 10vw, 104px) 24px',
         textAlign: 'center',
@@ -426,17 +426,17 @@ export default function LandingPage() {
           Ready to become a polymath?
         </h2>
         <p style={{ color: 'var(--muted)', marginBottom: 38, fontSize: 17, lineHeight: 1.65, maxWidth: 480, margin: '0 auto 38px' }}>
-          Join thousands of learners mastering code, science, and the human mind — one structured lesson at a time.
+          Join thousands of learners mastering code, science, and the human mind â€” one structured lesson at a time.
         </p>
         <Link to="/register" className="btn btn-primary" style={{ padding: '15px 48px', fontSize: 16, fontFamily: 'Cinzel, serif', letterSpacing: '0.05em' }}>
-          ✦ Enroll Free Today
+          âœ¦ Enroll Free Today
         </Link>
         <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)' }}>
-          No credit card · One topic, forever free · Takes 30 seconds
+          No credit card Â· One topic, forever free Â· Takes 30 seconds
         </p>
       </section>
 
-      {/* ── Contact Us ───────────────────────────────────────────────────── */}
+      {/* â”€â”€ Contact Us â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section style={{ padding: 'clamp(48px, 7vw, 72px) 24px', background: 'var(--surface)' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
           <GoldRule />
@@ -458,7 +458,7 @@ export default function LandingPage() {
               background: 'rgba(201,162,39,0.12)', border: '1px solid rgba(201,162,39,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
             }}>
-              📞
+              ðŸ“ž
             </div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: 'var(--muted)', letterSpacing: '0.12em', marginBottom: 4 }}>
@@ -472,13 +472,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Footer ───────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <footer style={{
         borderTop: '1px solid var(--border)', padding: '24px 32px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
         color: 'var(--muted)', fontSize: 13,
       }}>
-        <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>✦ Arcane Academy</span>
+        <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>âœ¦ Arcane Academy</span>
         <span>Built for lifelong learners</span>
         <div style={{ display: 'flex', gap: 20 }}>
           <Link to="/login"    style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Sign In</Link>

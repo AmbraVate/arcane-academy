@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom'
+﻿import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/shared/hooks/useAuth'
 import OnboardingModal from '@/features/home/components/OnboardingModal'
@@ -11,7 +11,7 @@ import { ACTIVE_TOPICS, ACTIVE_TOPIC_IDS, COMING_SOON_TOPICS, type Topic } from 
 import { hasActiveSubscription } from '@/shared/types'
 import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
-/* ── Types ───────────────────────────────────────────────────────────────── */
+/* â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 interface TopicData {
   progress: number
@@ -22,14 +22,14 @@ interface TopicData {
   totalLessons: number
 }
 
-/* ── Helpers ─────────────────────────────────────────────────────────────── */
+/* â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function diagnosticExpired(completedAt: string | null): boolean {
   if (!completedAt) return false
   return (Date.now() - new Date(completedAt).getTime()) / 86_400_000 >= 30
 }
 
-/* ── How it works ────────────────────────────────────────────────────────── */
+/* â”€â”€ How it works â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const HOW_IT_WORKS = [
   {
@@ -57,7 +57,7 @@ const HOW_IT_WORKS = [
     border: 'rgba(196,181,253,0.2)',
     step: '03',
     title: 'Battle',
-    desc: 'Face boss challenges at each tier. One wrong answer sends you back — mastery is earned, not given.',
+    desc: 'Face boss challenges at each tier. One wrong answer sends you back â€” mastery is earned, not given.',
   },
   {
     icon: RotateCcw,
@@ -82,13 +82,13 @@ const HOW_IT_WORKS = [
     color: '#f87171',
     bg: 'rgba(248,113,113,0.08)',
     border: 'rgba(248,113,113,0.2)',
-    step: '✦',
+    step: 'âœ¦',
     title: 'I\'m Stuck',
-    desc: 'Hit a wall? Tap "I\'m stuck" at any point during a lesson. The academy flags it and can offer a re-explanation, a different angle, or a hint — no scholar is left behind.',
+    desc: 'Hit a wall? Tap "I\'m stuck" at any point during a lesson. The academy flags it and can offer a re-explanation, a different angle, or a hint â€” no scholar is left behind.',
   },
 ]
 
-/* ── Enrolled topic card (large, full-width) ─────────────────────────────── */
+/* â”€â”€ Enrolled topic card (large, full-width) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function EnrolledCard({
   topic, data, onClick,
@@ -122,7 +122,7 @@ function EnrolledCard({
 
         {/* Icon */}
         <div className="flex-shrink-0">
-          <TopicIcon topicId={topic.id} size={44} />
+          <TopicIcon domainId={topic.id} size={44} />
         </div>
 
         {/* Info */}
@@ -153,8 +153,8 @@ function EnrolledCard({
 
           <div className="mt-1.5 font-cinzel text-[11px] text-muted">
             {modulesTotal > 0
-              ? <>{modulesDone} / {modulesTotal} modules · {lessonsTotal} lessons</>
-              : <>{topic.chunks} modules</>}
+              ? <>{modulesDone} / {modulesTotal} modules Â· {lessonsTotal} lessons</>
+              : <>{topic.modules} modules</>}
           </div>
         </div>
 
@@ -176,7 +176,7 @@ function EnrolledCard({
   )
 }
 
-/* ── Small topic card (unenrolled / locked / coming-soon) ────────────────── */
+/* â”€â”€ Small topic card (unenrolled / locked / coming-soon) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function TopicCard({
   topic,
@@ -218,9 +218,9 @@ function TopicCard({
       }}
     >
       <div className="flex items-start justify-between">
-        <TopicIcon topicId={topic.id} size={28} />
+        <TopicIcon domainId={topic.id} size={28} />
         <Badge variant={!active ? 'soon' : isLocked ? 'locked' : 'active'}>
-          {!active ? 'Coming Soon' : isLocked ? '🔒 Premium' : 'Active'}
+          {!active ? 'Coming Soon' : isLocked ? 'ðŸ”’ Premium' : 'Active'}
         </Badge>
       </div>
 
@@ -228,7 +228,7 @@ function TopicCard({
       <div className="text-[12px] text-muted leading-[1.55] flex-1 line-clamp-2">{topic.tagline}</div>
 
       <div className="flex items-center justify-between pt-2 border-t border-border mt-auto">
-        <span className="font-cinzel text-[10px] text-muted">{topic.chunks} modules</span>
+        <span className="font-cinzel text-[10px] text-muted">{topic.modules} modules</span>
         {active && (
           <span className={cn(
             'text-[12px] font-semibold flex items-center gap-1',
@@ -237,7 +237,7 @@ function TopicCard({
             {isLocked
               ? <><Lock size={11} strokeWidth={2} /> Unlock</>
               : canEnrol
-              ? 'Enrol →'
+              ? 'Enrol â†’'
               : null}
           </span>
         )}
@@ -246,7 +246,7 @@ function TopicCard({
   )
 }
 
-/* ── Page ────────────────────────────────────────────────────────────────── */
+/* â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 export default function HomePage() {
   const { user }        = useAuth()
@@ -288,7 +288,7 @@ export default function HomePage() {
         diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
         totalChunks:      d!.chunkHealth.length,
         completedChunks:  d!.chunkHealth.filter(ch => ch.status === 'COMPLETE').length,
-        totalLessons:     d!.chunkHealth.reduce((s, ch) => s + ch.totalSubChunks, 0),
+        totalLessons:     d!.chunkHealth.reduce((s, ch) => s + ch.totalLessons, 0),
       }])
   )
 
@@ -317,11 +317,11 @@ export default function HomePage() {
   const firstName = user?.username?.split(/[^a-zA-Z]/)[0] ?? 'Scholar'
   const greeting  = hasEnrollments ? `Welcome back, ${firstName}` : `Welcome to the Academy, ${firstName}`
 
-  /* ── Render ─────────────────────────────────────────────────────────────── */
+  /* â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   return (
     <div className="max-w-[860px] mx-auto px-5 py-8 pb-20 overflow-y-auto max-[600px]:px-4 max-[600px]:py-6">
 
-      {/* Onboarding modal — shown once for new users */}
+      {/* Onboarding modal â€” shown once for new users */}
       {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)} />}
 
       {/* Upgrade modal */}
@@ -341,12 +341,12 @@ export default function HomePage() {
             ? <CheckCircle size={16} strokeWidth={2} />
             : <XCircle size={16} strokeWidth={2} />}
           {paymentBanner === 'success'
-            ? 'Payment successful — your subscription is now active. Welcome to the full Academy!'
+            ? 'Payment successful â€” your subscription is now active. Welcome to the full Academy!'
             : 'Checkout cancelled. Your subscription has not changed.'}
         </div>
       )}
 
-      {/* ── Hero ───────────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="mb-10">
         <p className="font-cinzel text-[12px] tracking-[0.2em] text-muted mb-2">
           {hasEnrollments ? 'YOUR ACADEMY' : 'THE POLYMATH\'S PATH'}
@@ -378,7 +378,7 @@ export default function HomePage() {
             {/* XP */}
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-border
               font-cinzel text-[11px] text-muted">
-              ✦ {user.totalXp.toLocaleString()} XP
+              âœ¦ {user.totalXp.toLocaleString()} XP
             </div>
 
             {/* Rank */}
@@ -390,7 +390,7 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* ── How it works — first-time only ─────────────────────────────────── */}
+      {/* â”€â”€ How it works â€” first-time only â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {!hasEnrollments && (
         <section className="mb-12">
           <SectionHeading>How the Academy Works</SectionHeading>
@@ -407,7 +407,7 @@ export default function HomePage() {
                 <div>
                   <div className="font-cinzel text-[10px] tracking-[0.15em] mb-0.5"
                     style={{ color: item.color }}>
-                    {item.step} · {item.title.toUpperCase()}
+                    {item.step} Â· {item.title.toUpperCase()}
                   </div>
                   <p className="text-[12px] text-muted leading-[1.6] m-0">{item.desc}</p>
                 </div>
@@ -417,7 +417,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ── Enrolled topics ─────────────────────────────────────────────────── */}
+      {/* â”€â”€ Enrolled topics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {hasEnrollments && (
         <section className="mb-10">
           <SectionHeading>Continue Your Journey</SectionHeading>
@@ -438,7 +438,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ── Active unenrolled / paywall ─────────────────────────────────────── */}
+      {/* â”€â”€ Active unenrolled / paywall â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {(unenrolledActive.length > 0 || hasEnrollments) && (
         <section className="mb-10">
           <SectionHeading>
@@ -453,17 +453,17 @@ export default function HomePage() {
                 border border-[rgba(201,162,39,0.35)] bg-[rgba(201,162,39,0.05)]
                 cursor-pointer hover:bg-[rgba(201,162,39,0.09)] transition-colors"
             >
-              <span className="text-gold text-[18px] flex-shrink-0">🔒</span>
+              <span className="text-gold text-[18px] flex-shrink-0">ðŸ”’</span>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] text-text leading-[1.5] m-0 font-semibold">
                   Unlock all disciplines with a subscription
                 </p>
                 <p className="text-[12px] text-muted leading-[1.5] m-0">
-                  Monthly from £6.99 · Annual from £49.99 · Lifetime £99
+                  Monthly from Â£6.99 Â· Annual from Â£49.99 Â· Lifetime Â£99
                 </p>
               </div>
               <span className="text-[12px] font-cinzel text-gold whitespace-nowrap">
-                View plans →
+                View plans â†’
               </span>
             </div>
           )}
@@ -486,7 +486,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ── Coming soon ─────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Coming soon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section>
         <SectionHeading>On the Horizon</SectionHeading>
         <div className="grid gap-3"
@@ -514,7 +514,7 @@ export default function HomePage() {
   )
 }
 
-/* ── Scroll hint ─────────────────────────────────────────────────────────── */
+/* â”€â”€ Scroll hint â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 /**
  * Floats a subtle "more below" indicator over the bottom of the viewport.
@@ -588,7 +588,7 @@ function ScrollHint() {
   )
 }
 
-/* ── Section heading ─────────────────────────────────────────────────────── */
+/* â”€â”€ Section heading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (

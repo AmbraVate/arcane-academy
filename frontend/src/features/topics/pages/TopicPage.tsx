@@ -1,7 +1,7 @@
-import { useParams, useNavigate } from 'react-router-dom'
+﻿import { useParams, useNavigate } from 'react-router-dom'
 import { useDashboard } from '@/hooks/queries'
 import { useAuth } from '@/shared/hooks/useAuth'
-import type { ChunkHealthDto } from '@/shared/types'
+import type { ModuleHealthDto } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { TopicIcon } from '@/components/icons/TopicIcon'
@@ -20,44 +20,44 @@ type TopicMeta = {
 const TOPIC_META: Record<string, TopicMeta> = {
   java: {
     name: 'Java',
-    glyph: '☕',
+    glyph: 'â˜•',
     tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',
     accent: 'var(--teal)',
   },
   tailwind: {
     name: 'Tailwind CSS',
-    glyph: '🎨',
-    tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',
+    glyph: 'ðŸŽ¨',
+    tagline: 'Compose beautiful interfaces with utility classes â€” no more naming paralysis.',
     accent: 'var(--purple)',
   },
   react: {
     name: 'React',
-    glyph: '⚛️',
-    tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',
+    glyph: 'âš›ï¸',
+    tagline: 'Component-driven UIs. Hooks, state, and the modern frontend â€” all the way to deployment.',
     accent: 'var(--teal)',
   },
   sql: {
     name: 'SQL',
-    glyph: '🗃️',
-    tagline: 'The language of data. Read, filter, summarise — every backend dev writes it daily.',
+    glyph: 'ðŸ—ƒï¸',
+    tagline: 'The language of data. Read, filter, summarise â€” every backend dev writes it daily.',
     accent: 'var(--teal)',
   },
   psychology: {
     name: 'Psychology',
-    glyph: '🧠',
-    tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.',
+    glyph: 'ðŸ§ ',
+    tagline: 'From foundations to frontier â€” the complete undergraduate-to-graduate psychology pathway.',
     accent: 'var(--purple)',
   },
   genealogy: {
     name: 'Genealogy',
-    glyph: '🌳',
-    tagline: 'From vital records to professional proof — become a skilled genealogical researcher.',
+    glyph: 'ðŸŒ³',
+    tagline: 'From vital records to professional proof â€” become a skilled genealogical researcher.',
     accent: 'var(--gold)',
   },
   sciences: {
     name: 'Natural Sciences',
-    glyph: '🔬',
-    tagline: 'From scientific method to frontier research — physics, chemistry, biology, and earth science.',
+    glyph: 'ðŸ”¬',
+    tagline: 'From scientific method to frontier research â€” physics, chemistry, biology, and earth science.',
     accent: 'var(--teal)',
   },
 }
@@ -79,19 +79,19 @@ const TIER_LABELS: Record<string, string> = {
   CAPSTONE:     'Capstone',
 }
 const TIER_DESC: Record<string, string> = {
-  APPRENTICE: 'Foundations — core concepts, vocabulary, and the essential knowledge every learner needs.',
-  JUNIOR:     'Applied knowledge — practical skills and techniques used in real-world contexts.',
-  SENIOR:     'Advanced depth — specialist topics, critical evaluation, and complex synthesis.',
-  LEAD:       'Mastery — professional practice, critical perspectives, and leadership in the field.',
+  APPRENTICE: 'Foundations â€” core concepts, vocabulary, and the essential knowledge every learner needs.',
+  JUNIOR:     'Applied knowledge â€” practical skills and techniques used in real-world contexts.',
+  SENIOR:     'Advanced depth â€” specialist topics, critical evaluation, and complex synthesis.',
+  LEAD:       'Mastery â€” professional practice, critical perspectives, and leadership in the field.',
   // Legacy fallbacks
-  FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
-  ADVANCED:     'Deeper theory and analysis — building fluency beyond the fundamentals.',
-  PRACTITIONER: 'Applied skills in real-world contexts — bringing knowledge into practice.',
+  FOUNDATION:   'Core concepts and vocabulary â€” the solid base every practitioner needs.',
+  ADVANCED:     'Deeper theory and analysis â€” building fluency beyond the fundamentals.',
+  PRACTITIONER: 'Applied skills in real-world contexts â€” bringing knowledge into practice.',
   EXPERT:       'Specialist depth, critical evaluation, and advanced synthesis.',
   CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
 }
 
-function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto; onClick: () => void; accent?: string }) {
+function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDto; onClick: () => void; accent?: string }) {
   const locked = ch.status === 'LOCKED'
   const done   = ch.status === 'COMPLETE'
   const pct    = Math.round(ch.memoryStrength * 100)
@@ -116,13 +116,13 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto
         </Badge>
       </div>
       <div className="text-[15px] font-bold text-text leading-[1.35]">{ch.title}</div>
-      <div className="text-[11px] text-muted">{ch.totalSubChunks} concepts</div>
+      <div className="text-[11px] text-muted">{ch.totalLessons} concepts</div>
       {!locked && (
         <div className="flex items-center gap-2 mt-1">
           <div className="flex-1 h-1 bg-border rounded-full overflow-hidden">
-            <div className="h-full bg-teal rounded-full" style={{ width: `${Math.round((ch.completedSubChunks / ch.totalSubChunks) * 100)}%` }} />
+            <div className="h-full bg-teal rounded-full" style={{ width: `${Math.round((ch.completedLessons / ch.totalLessons) * 100)}%` }} />
           </div>
-          <span className="text-[10px] text-muted flex-shrink-0">{ch.completedSubChunks}/{ch.totalSubChunks}</span>
+          <span className="text-[10px] text-muted flex-shrink-0">{ch.completedLessons}/{ch.totalLessons}</span>
         </div>
       )}
       {done && (
@@ -144,14 +144,14 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ChunkHealthDto
   )
 }
 
-export default function TopicPage() {
-  const { topicId } = useParams<{ topicId: string }>()
+export default function DomainPage() {
+  const { domainId } = useParams<{ domainId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
   const { theme } = useTheme()
-  const { data: dashboard, isLoading } = useDashboard(topicId ?? '')
+  const { data: dashboard, isLoading } = useDashboard(domainId ?? '')
 
-  const meta = TOPIC_META[topicId ?? ''] ?? { name: topicId, glyph: '📖', tagline: '', accent: 'var(--teal)' }
+  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: 'ðŸ“–', tagline: '', accent: 'var(--teal)' }
 
   if (isLoading) {
     return (
@@ -177,10 +177,10 @@ export default function TopicPage() {
         }}
       >
         <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/topics')}>
-          ← All Topics
+          â† All Topics
         </button>
         <div className="mb-2.5 flex justify-center">
-          <TopicIcon topicId={topicId ?? ''} size={52} />
+          <TopicIcon domainId={domainId ?? ''} size={52} />
         </div>
         <h1 className="font-cinzel text-[28px] font-bold m-0 mb-2 max-[600px]:text-[22px]" style={{ color: meta.accent }}>{meta.name}</h1>
         <p className="text-[14px] text-muted leading-[1.7] max-w-[480px] m-0 mb-5">{meta.tagline}</p>
@@ -253,9 +253,9 @@ export default function TopicPage() {
                     <div className="tier-meta">
                       <div className="tier-label">
                         {TIER_LABELS[tier]}
-                        {placedHere && <span className="badge-placed"> · Placed here</span>}
-                        {tierComplete && <span className="badge-done"> · Complete</span>}
-                        {!tierStarted && !tierComplete && <span className="badge-locked"> · Locked</span>}
+                        {placedHere && <span className="badge-placed"> Â· Placed here</span>}
+                        {tierComplete && <span className="badge-done"> Â· Complete</span>}
+                        {!tierStarted && !tierComplete && <span className="badge-locked"> Â· Locked</span>}
                       </div>
                       <div className="tier-desc">{TIER_DESC[tier]}</div>
                     </div>
@@ -269,13 +269,13 @@ export default function TopicPage() {
                       const pct    = Math.round(ch.memoryStrength * 100)
                       return (
                         <div
-                          key={ch.chunkId}
+                          key={ch.moduleId}
                           className={cn('chunk-card', locked && 'locked', done && !warn && 'done', warn && 'warn')}
-                          onClick={() => !locked && navigate(`/chunk/${ch.chunkId}`)}
+                          onClick={() => !locked && navigate(`/chunk/${ch.moduleId}`)}
                         >
-                          <div className="chunk-glyph">{locked ? '🔒' : ch.glyph}</div>
+                          <div className="chunk-glyph">{locked ? 'ðŸ”’' : ch.glyph}</div>
                           <div className="chunk-title">{ch.title}</div>
-                          <div className="chunk-prog">{ch.completedSubChunks}/{ch.totalSubChunks} concepts</div>
+                          <div className="chunk-prog">{ch.completedLessons}/{ch.totalLessons} concepts</div>
                           {!locked && (
                             <>
                               <div className="strength-bar">
@@ -326,7 +326,7 @@ export default function TopicPage() {
                 </div>
                 <button
                   className="btn btn-ghost text-[11px] py-1 px-3 self-start flex-shrink-0 max-[480px]:hidden"
-                  onClick={() => navigate(`/topic/${topicId}/diagnostic`)}
+                  onClick={() => navigate(`/topic/${domainId}/diagnostic`)}
                   title="Retake diagnostic"
                 >
                   <Sparkles size={12} strokeWidth={1.75} />
@@ -336,10 +336,10 @@ export default function TopicPage() {
               <div className="chunk-grid grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
                 {chunks.map(ch => (
                   <ChunkCard
-                    key={ch.chunkId}
+                    key={ch.moduleId}
                     ch={ch}
                     accent={meta.accent}
-                    onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.chunkId}`)}
+                    onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.moduleId}`)}
                   />
                 ))}
               </div>

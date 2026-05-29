@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { chunkApi, rabbitHoleApi } from '@/shared/api/services'
-import type { ChunkDetail, RabbitHoleModule } from '@/shared/types'
+import { moduleApi, rabbitHoleApi } from '@/shared/api/services'
+import type { ModuleDetail, RabbitHoleModule } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Lock, Check, Rabbit, ArrowRight, Loader2, BookOpen, Code2, Zap, Wrench } from 'lucide-react'
@@ -10,21 +10,21 @@ const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-green', YELLOW: 'bg-orange', RED: 'bg-red',
 }
 
-export default function ChunkMapPage() {
-  const { chunkId } = useParams<{ chunkId: string }>()
+export default function ModuleMapPage() {
+  const { moduleId } = useParams<{ moduleId: string }>()
   const navigate = useNavigate()
-  const [chunk, setChunk] = useState<ChunkDetail | null>(null)
+  const [chunk, setChunk] = useState<ModuleDetail | null>(null)
   const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleModule[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!chunkId) return
-    chunkApi.getDetail(chunkId)
+    if (!moduleId) return
+    moduleApi.getDetail(moduleId)
       .then(setChunk)
       .catch(() => navigate('/topics'))
       .finally(() => setLoading(false))
-    rabbitHoleApi.getForChunk(chunkId).then(setRabbitHoles).catch(() => {})
-  }, [chunkId, navigate])
+    rabbitHoleApi.getForChunk(moduleId).then(setRabbitHoles).catch(() => {})
+  }, [moduleId, navigate])
 
   if (loading) {
     return (
@@ -36,12 +36,12 @@ export default function ChunkMapPage() {
   }
   if (!chunk) return null
 
-  const completed = chunk.subChunks.filter(s => s.status === 'COMPLETE' || s.status === 'SKIPPED').length
+  const completed = chunk.lessons.filter(s => s.status === 'COMPLETE' || s.status === 'SKIPPED').length
 
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
-      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/topic/${chunk.topicId}`)}>
-        ← Back to Topic
+      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/topic/${chunk.domainId}`)}>
+        â† Back to Topic
       </button>
 
       <div className="flex items-center gap-4 mb-6 max-[600px]:gap-3">
@@ -52,14 +52,14 @@ export default function ChunkMapPage() {
             <Badge variant={chunk.status === 'COMPLETE' ? 'active' : chunk.status === 'LOCKED' ? 'gray' : 'application'}>
               {chunk.status}
             </Badge>
-            <span className="text-[12px] text-muted">{completed}/{chunk.subChunks.length} concepts</span>
+            <span className="text-[12px] text-muted">{completed}/{chunk.lessons.length} concepts</span>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
-        {chunk.subChunks.map(sc => {
-          // Use the authoritative backend status — EncodingController + ChunkController
+        {chunk.lessons.map(sc => {
+          // Use the authoritative backend status â€” EncodingController + ChunkController
           // both set "LOCKED" for sub-chunks whose sequential prerequisite is not met.
           const isLocked = sc.status === 'LOCKED'
           const isDone   = sc.status === 'COMPLETE' || sc.status === 'SKIPPED'
@@ -76,7 +76,7 @@ export default function ChunkMapPage() {
               )}
               onClick={() => !isLocked && navigate(`/learn/${sc.id}`)}
             >
-              {/* ── Top row: number/status + title + XP/memory ── */}
+              {/* â”€â”€ Top row: number/status + title + XP/memory â”€â”€ */}
               <div className="flex items-start gap-3.5 max-[600px]:gap-2.5">
                 <div className={cn(
                   'w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-bold flex-shrink-0 mt-0.5',
@@ -121,7 +121,7 @@ export default function ChunkMapPage() {
                 </div>
               </div>
 
-              {/* ── Chip metadata row (only when there's content metadata) ── */}
+              {/* â”€â”€ Chip metadata row (only when there's content metadata) â”€â”€ */}
               {!isLocked && (sc.learningObjectiveCount > 0 || sc.hasChallenge || sc.hasMiniProject || sc.practiceType !== 'NONE') && (
                 <div className="flex items-center gap-2 mt-2.5 pl-[46px] flex-wrap max-[600px]:pl-[38px]">
                   {sc.learningObjectiveCount > 0 && (
@@ -158,7 +158,7 @@ export default function ChunkMapPage() {
             <Rabbit size={16} color="var(--gold)" strokeWidth={1.75} />
             Rabbit Holes
           </div>
-          <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives — explore when curious.</p>
+          <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives â€” explore when curious.</p>
           <div className="flex flex-col gap-2">
             {rabbitHoles.map(rh => (
               <div

@@ -3,7 +3,7 @@ package com.ambravate.arcane.academy.admin.controller;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
 import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
 import com.ambravate.arcane.academy.admin.service.AdminStatsService;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserRole;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
@@ -45,7 +45,7 @@ public class AdminUserController {
 
         return ResponseEntity.ok(Map.of(
                 "content", users.getContent().stream().map(u -> {
-                    long completed = progressRepository.countByUserIdAndStatus(u.getId(), SubChunkStatus.COMPLETE);
+                    long completed = progressRepository.countByUserIdAndStatus(u.getId(), LessonStatus.COMPLETE);
                     return statsService.toUserDto(u, completed);
                 }).toList(),
                 "totalElements", users.getTotalElements(),
@@ -58,7 +58,7 @@ public class AdminUserController {
     public ResponseEntity<AdminUserDto> get(@PathVariable String id) {
         User u = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("User not found: " + id));
-        long completed = progressRepository.countByUserIdAndStatus(id, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(id, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(u, completed));
     }
 
@@ -73,7 +73,7 @@ public class AdminUserController {
     }
 
     /**
-     * Change a user's role (ADMIN ↔ USER).
+     * Change a user's role (ADMIN â†” USER).
      * An admin cannot demote their own account.
      */
     @PutMapping("/{userId}/role")
@@ -103,7 +103,7 @@ public class AdminUserController {
         user.setRole(newRole);
         userRepository.save(user);
 
-        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(userId, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(user, completed));
     }
 
@@ -131,7 +131,7 @@ public class AdminUserController {
         user.setBlocked(blocked);
         userRepository.save(user);
 
-        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(userId, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(user, completed));
     }
 
@@ -159,12 +159,12 @@ public class AdminUserController {
         user.setBypassPaywall(bypass);
         userRepository.save(user);
 
-        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(userId, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(user, completed));
     }
 
     /**
-     * Detailed stats for a single user — for the admin user-detail panel.
+     * Detailed stats for a single user â€” for the admin user-detail panel.
      */
     @GetMapping("/{userId}/stats")
     public ResponseEntity<UserStatsDto> getUserStats(@PathVariable String userId) {

@@ -19,16 +19,16 @@ public class CuriosityQueueService {
     }
 
     @Transactional
-    public void saveForLater(String userId, String subChunkId) {
+    public void saveForLater(String userId, String lessonId) {
         if (repository.findByUserIdOrderBySavedAtDesc(userId).stream()
-                .noneMatch(i -> i.getSubChunkId().equals(subChunkId))) {
+                .noneMatch(i -> i.getLessonId().equals(lessonId))) {
             repository.save(CuriosityQueueItem.builder()
-                    .userId(userId).subChunkId(subChunkId).build());
+                    .userId(userId).lessonId(lessonId).build());
         }
     }
 
     @Transactional
-    public void removeFromQueue(String userId, String subChunkId) {
-        repository.deleteByUserIdAndSubChunkId(userId, subChunkId);
+    public void removeFromQueue(String userId, String lessonId) {
+        repository.deleteByUserIdAndSubChunkId(userId, lessonId);
     }
 }

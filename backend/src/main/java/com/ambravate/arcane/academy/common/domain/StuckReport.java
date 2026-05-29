@@ -24,8 +24,8 @@ public class StuckReport {
     private String username;
     private String email;
 
-    private String topicId;
-    private String subChunkId;
+    private String domainId;
+    private String lessonId;
     private String currentPhase;
 
     @Column(length = 2048)

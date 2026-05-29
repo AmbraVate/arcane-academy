@@ -1,0 +1,37 @@
+{
+  "id": "sql-jun-14",
+  "title": "Subqueries",
+  "glyph": "🔗",
+  "sortOrder": 14,
+  "tier": "JUNIOR",
+  "topicId": "sql",
+  "prerequisites": ["sql-jun-13"],
+  "subChunks": [{
+    "id": "sql-jun-14a",
+    "title": "Queries Inside Queries — Subqueries",
+    "sortOrder": 1,
+    "xpReward": 100,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>A subquery is a SELECT statement nested inside another statement. It lets you use the result of one query as input to another — without needing a temporary table.</p>",
+    "explanationHtml": "<h3>Subquery in WHERE</h3><pre><code>-- Apprentices with above-average XP:\nSELECT name, xp FROM apprentices\nWHERE xp > (SELECT AVG(xp) FROM apprentices);</code></pre><p>The inner query runs first and returns a single value (a scalar). The outer WHERE uses it.</p><h3>Subquery with IN</h3><pre><code>-- Apprentices who have completed at least one quest:\nSELECT name FROM apprentices\nWHERE id IN (\n  SELECT DISTINCT apprentice_id FROM quest_completions\n);</code></pre><h3>Subquery in FROM (derived table)</h3><pre><code>-- Average XP per rank, then filter for ranks with avg > 1000:\nSELECT rank, avg_xp\nFROM (\n  SELECT rank, AVG(xp) AS avg_xp\n  FROM apprentices\n  GROUP BY rank\n) AS ranked\nWHERE avg_xp > 1000;</code></pre><p>Subqueries in FROM are called derived tables. They must be given an alias.</p><h3>Correlated subquery</h3><pre><code>-- Apprentices whose XP is above the average for their rank:\nSELECT a.name, a.rank, a.xp\nFROM   apprentices AS a\nWHERE  a.xp > (\n  SELECT AVG(b.xp) FROM apprentices AS b\n  WHERE b.rank = a.rank   -- references outer query\n);</code></pre><p>A correlated subquery references the outer query — it re-runs for each outer row. Powerful but can be slow on large tables; CTEs or joins are often faster alternatives.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"'Show me apprentices with above-average XP.' One query — but the average itself must first be calculated."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"A subquery is a question inside a question. The inner one runs first, its answer becomes an input to the outer one. When the subquery references a column from the outer query — that is a correlated subquery. Powerful, but it runs once per outer row. On a million rows, that cost multiplies."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Above average</h3><p>Return <code>name</code> and <code>xp</code> for apprentices whose XP is strictly above the table-wide average.</p>",
+    "guidedPracticeStarterCode": "SELECT name, xp\nFROM apprentices\nWHERE xp > (SELECT AVG(xp) FROM apprentices);",
+    "guidedPracticeTests": [
+      {"label":"Returns apprentices above average (avg≈1563, so Bjorn 2400, Cassia 4800, Elara 7500)","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":3,"matchMode":"rowCount"},
+      {"label":"Columns name and xp","expectedColumns":["name","xp"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return <code>name</code> for apprentices who have completed at least one quest (their id appears in quest_completions). Use a subquery with IN.</p>",
+    "feynmanPrompt": "Explain what a correlated subquery is, why it can be slow, and when you might use a JOIN or CTE instead.",
+    "questions": [
+      {"id":"sql-jun-14a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"JUNIOR","prompt":"A scalar subquery returns how many values?","options":["Exactly one row and one column (a single value)","One or more rows, one column","Multiple rows and columns","Zero or more rows"],"answer":"Exactly one row and one column (a single value)","explanation":"A scalar subquery must return exactly one row and one column. If it returns more than one row, the query raises an error ('subquery returned more than one row')."},
+      {"id":"sql-jun-14a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"What does `WHERE id IN (SELECT DISTINCT apprentice_id FROM quest_completions)` return?","options":["Rows where the apprentice's id matches any id in the completions table","Rows where the apprentice has completed every quest","Rows where the apprentice has completed no quests","All rows — IN with a subquery always returns all rows"],"answer":"Rows where the apprentice's id matches any id in the completions table","explanation":"IN with a subquery tests membership. A row passes if its id is one of the values returned by the subquery — i.e. the apprentice has at least one completion record."},
+      {"id":"sql-jun-14a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"A derived table in FROM must have what?","options":["An alias — `FROM (SELECT ...) AS alias`","A primary key","At most one column","The same columns as the outer SELECT"],"answer":"An alias — `FROM (SELECT ...) AS alias`","explanation":"All tables in FROM (including derived tables / subqueries) must have a name the outer query can reference. The AS keyword provides that alias."},
+      {"id":"sql-jun-14a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"JUNIOR","prompt":"A correlated subquery runs once per outer row. Why can this be expensive?","options":["If the outer query returns 1 million rows, the inner query also executes 1 million times — O(n) inner executions","Correlated subqueries always scan the entire table for each execution","The inner query cannot use indexes","Correlation requires a full outer join internally"],"answer":"If the outer query returns 1 million rows, the inner query also executes 1 million times — O(n) inner executions","explanation":"Correlated subqueries have N×M complexity where N is outer rows and M is inner cost. A JOIN or CTE often achieves the same result with a single pass. Use correlated subqueries when the correlated form is clearest; replace with JOINs if performance is critical."}
+    ]
+  }]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "sql-app-12",
+  "title": "Numeric Functions",
+  "glyph": "🗃️",
+  "sortOrder": 12,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-11"],
+  "subChunks": [{
+    "id": "sql-app-12a",
+    "title": "ROUND, ABS, and Arithmetic Expressions",
+    "sortOrder": 1,
+    "xpReward": 60,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>SQL lets you compute directly inside a query — rounding floats, taking absolute values, and building arithmetic expressions without fetching data into application code first.</p>",
+    "explanationHtml": "<h3>Arithmetic in SELECT</h3><pre><code>SELECT xp, xp * 1.1 AS boosted_xp FROM apprentices;\nSELECT xp, xp / 100.0 AS xp_hundreds FROM apprentices;</code></pre><p>Integer division: <code>7 / 2 = 3</code> in most SQL engines. Use <code>7 / 2.0 = 3.5</code> or cast to float to avoid truncation.</p><h3>ROUND</h3><pre><code>SELECT ROUND(3.14159, 2);     -- 3.14\nSELECT ROUND(AVG(xp), 0) AS avg_xp FROM apprentices;</code></pre><h3>ABS — absolute value</h3><pre><code>SELECT ABS(-42);    -- 42\nSELECT ABS(xp - 2000) AS distance FROM apprentices;</code></pre><h3>Other useful functions</h3><ul><li><code>CEIL(x)</code> / <code>CEILING(x)</code> — round up</li><li><code>FLOOR(x)</code> — round down</li><li><code>MOD(x, y)</code> or <code>x % y</code> — remainder</li><li><code>POWER(x, n)</code> — x to the nth power</li><li><code>SQRT(x)</code> — square root</li></ul>",
+    "storyBeats": [
+      {"type":"narration","text":"The treasury ledger surfaces — columns of raw floats and negative adjustments."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"Compute in the query itself. Fetching raw numbers to the application just to multiply them is wasteful. ROUND, ABS, CEIL, FLOOR — the engine does arithmetic faster than your code will. Be cautious with integer division: 7 divided by 2 is 3, not 3.5, unless you cast one operand to a decimal."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 XP bonus</h3><p>Return <code>name</code> and each apprentice's XP multiplied by 1.5, rounded to zero decimal places, aliased as <code>bonus_xp</code>.</p>",
+    "guidedPracticeStarterCode": "SELECT\n  name,\n  ROUND(xp * 1.5, 0) AS bonus_xp\nFROM apprentices;",
+    "guidedPracticeTests": [
+      {"label":"Returns 6 rows","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":6,"matchMode":"rowCount"},
+      {"label":"Columns name and bonus_xp","expectedColumns":["name","bonus_xp"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return <code>name</code> and <code>ABS(xp - 2000) AS distance_from_2k</code> for every apprentice, ordered by distance_from_2k ascending.</p>",
+    "feynmanPrompt": "Explain integer division in SQL and why dividing two integers might give a wrong answer. Give an example and the fix.",
+    "questions": [
+      {"id":"sql-app-12a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What does `SELECT ROUND(2.567, 1)` return?","options":["2.6","2.5","3.0","2.57"],"answer":"2.6","explanation":"ROUND(2.567, 1) rounds to one decimal place. 2.567 rounded to one decimal is 2.6 (the second decimal 6 >= 5, so the first decimal rounds up from 5 to 6)."},
+      {"id":"sql-app-12a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"What does `SELECT 7 / 2` return in most SQL engines?","options":["3","3.5","4","3.0"],"answer":"3","explanation":"Integer divided by integer performs integer division in most SQL engines, truncating the decimal. To get 3.5, write 7 / 2.0 or CAST(7 AS REAL) / 2."},
+      {"id":"sql-app-12a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Which expression returns the remainder when xp is divided by 100?","options":["MOD(xp, 100) or xp % 100","xp / 100","xp - FLOOR(xp / 100)","ROUND(xp, -2)"],"answer":"MOD(xp, 100) or xp % 100","explanation":"MOD(x, y) returns the remainder of x divided by y. xp % 100 is an equivalent shorthand in most engines."},
+      {"id":"sql-app-12a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"A developer computes `total_cost / units` where total_cost is INTEGER and units is INTEGER. Results are unexpectedly all zeros for small values. Why?","options":["Integer division truncates toward zero — values less than units return 0","Division always returns zero when both operands are INTEGER","The column type must be FLOAT for any division","A WHERE clause is needed to exclude zero results"],"answer":"Integer division truncates toward zero — values less than units return 0","explanation":"If total_cost < units, the integer quotient is 0. Cast one operand: total_cost * 1.0 / units or CAST(total_cost AS REAL) / units to get fractional results."}
+    ]
+  }]
+}

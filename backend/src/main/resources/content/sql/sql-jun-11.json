@@ -1,0 +1,36 @@
+{
+  "id": "sql-jun-11",
+  "title": "UPDATE",
+  "glyph": "📝",
+  "sortOrder": 11,
+  "tier": "JUNIOR",
+  "topicId": "sql",
+  "prerequisites": ["sql-jun-10"],
+  "subChunks": [{
+    "id": "sql-jun-11a",
+    "title": "Modifying Rows — UPDATE SET WHERE",
+    "sortOrder": 1,
+    "xpReward": 100,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>The most dangerous four-word sequence in SQL is <code>UPDATE table SET col</code> without a WHERE clause — it silently changes every row in the table.</p>",
+    "explanationHtml": "<h3>Syntax</h3><pre><code>UPDATE apprentices\nSET    rank = 'Adept',\n       xp   = xp + 500\nWHERE  id = 1;</code></pre><h3>The cardinal rule: always include WHERE</h3><p>An UPDATE without WHERE modifies every row. In production this is almost always wrong and often catastrophic. Always write the WHERE clause before writing the SET clause — make the filter the first thing you establish.</p><h3>Updating multiple columns</h3><pre><code>UPDATE apprentices\nSET rank = 'Mage', xp = 4800\nWHERE name = 'Alice';</code></pre><h3>Computed updates</h3><pre><code>-- Add 100 XP to everyone in Apprentice rank:\nUPDATE apprentices\nSET    xp = xp + 100\nWHERE  rank = 'Apprentice';</code></pre><h3>Verify before you run</h3><pre><code>-- Step 1: run as SELECT to check which rows match:\nSELECT * FROM apprentices WHERE rank = 'Apprentice';\n\n-- Step 2: satisfied? Run the UPDATE:\nUPDATE apprentices SET xp = xp + 100 WHERE rank = 'Apprentice';</code></pre><p>This select-before-update pattern is one of the most important production habits you can develop.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"Alice passes her advancement exam. Her rank needs updating. Cipher writes nothing yet — first, he checks which rows will change."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"Before every UPDATE, run the WHERE clause as a SELECT. See which rows you are about to change. Only then run the UPDATE. I have seen whole tables emptied with a well-intentioned UPDATE that forgot its WHERE clause. Do not be that archivist."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 XP bonus</h3><p>All apprentices of rank <code>'Apprentice'</code> have earned a 100 XP bonus. Write the UPDATE. Then SELECT their updated rows to verify.</p>",
+    "guidedPracticeStarterCode": "-- First verify which rows will change:\nSELECT name, xp FROM apprentices WHERE rank = 'Apprentice';\n\n-- Then update:\nUPDATE apprentices\nSET    xp = xp + 100\nWHERE  rank = 'Apprentice';\n\n-- Verify the change:\nSELECT name, xp FROM apprentices WHERE rank = 'Apprentice';",
+    "guidedPracticeTests": [
+      {"label":"Apprentice xp increased by 100","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","overrideQuery":"UPDATE apprentices SET xp = xp + 100 WHERE rank = 'Apprentice'; SELECT name, xp FROM apprentices WHERE rank = 'Apprentice' ORDER BY name;","matchMode":"rowsExact","expectedQuery":"SELECT name, xp FROM (SELECT 'Alice' AS name, 1300 AS xp UNION SELECT 'Fenrir', 1050) t ORDER BY name"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Update Alice (id=1) to rank <code>'Adept'</code>. Then update ALL apprentices with xp >= 4000 to have their xp multiplied by 1.1 (rounded to integer). Write both UPDATE statements.</p>",
+    "feynmanPrompt": "Explain why always including a WHERE clause in UPDATE is critical, and describe the select-before-update pattern.",
+    "questions": [
+      {"id":"sql-jun-11a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"JUNIOR","prompt":"What does `UPDATE apprentices SET xp = xp + 100` (no WHERE clause) do?","options":["Adds 100 XP to every row in the apprentices table","Adds 100 XP to the first row only","Throws an error — WHERE is required for UPDATE","Adds 100 to the column definition's default"],"answer":"Adds 100 XP to every row in the apprentices table","explanation":"UPDATE without WHERE modifies every row. This is syntactically valid but almost always unintended in production."},
+      {"id":"sql-jun-11a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"Which query correctly promotes Alice (id=1) to rank 'Adept' and sets her xp to 2500?","options":["UPDATE apprentices SET rank = 'Adept', xp = 2500 WHERE id = 1","UPDATE apprentices SET rank = 'Adept' AND xp = 2500 WHERE id = 1","UPDATE apprentices VALUES ('Adept', 2500) WHERE id = 1","SET rank = 'Adept', xp = 2500 IN apprentices WHERE id = 1"],"answer":"UPDATE apprentices SET rank = 'Adept', xp = 2500 WHERE id = 1","explanation":"Multiple column updates are comma-separated in the SET clause. AND is not used inside SET — it is a logical operator for WHERE conditions."},
+      {"id":"sql-jun-11a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"JUNIOR","prompt":"What is the purpose of running `SELECT * FROM t WHERE condition` before `UPDATE t SET ... WHERE condition`?","options":["To preview exactly which rows will be modified before committing the change","To lock the rows so other sessions cannot change them simultaneously","To check syntax of the WHERE clause","SELECT is required before every UPDATE by the SQL standard"],"answer":"To preview exactly which rows will be modified before committing the change","explanation":"The select-before-update pattern lets you visually confirm the row set before modifying it. It is a safety habit, not a technical requirement — but it prevents many production accidents."},
+      {"id":"sql-jun-11a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"JUNIOR","prompt":"A developer updates a status column to 'archived' but accidentally omits the WHERE clause. What is the quickest recovery if the database has no recent backup?","options":["Rollback — if the UPDATE was inside an open transaction that has not yet been committed","Run a reverse UPDATE setting all rows back","Use UNDO if the engine supports it","No recovery is possible without a backup"],"answer":"Rollback — if the UPDATE was inside an open transaction that has not yet been committed","explanation":"If the UPDATE ran inside an uncommitted transaction (BEGIN / START TRANSACTION), ROLLBACK reverses it entirely. If already committed without a transaction, recovery requires a backup or point-in-time restore. This is why wrapping destructive statements in transactions is a professional habit."}
+    ]
+  }]
+}

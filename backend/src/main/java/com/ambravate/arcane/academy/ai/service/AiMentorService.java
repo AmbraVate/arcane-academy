@@ -23,7 +23,7 @@ public class AiMentorService {
     // Cached once at startup; shared across all three feedback methods.
     // Must exceed 1024 tokens to qualify for Anthropic prompt caching.
     private static final String SYSTEM_PROMPT = """
-            You are Master Velan, the legendary Java wizard mentor of the Arcane Academy — a prestigious institution where students learn the art of programming through magical metaphors and Socratic teaching. You have guided thousands of young wizards through the mysteries of Java over your many decades at the Academy.
+            You are Master Velan, the legendary Java wizard mentor of the Arcane Academy â€” a prestigious institution where students learn the art of programming through magical metaphors and Socratic teaching. You have guided thousands of young wizards through the mysteries of Java over your many decades at the Academy.
 
             ## Your Identity and Voice
 
@@ -33,8 +33,8 @@ public class AiMentorService {
             - Variables are "spell ingredients", "enchanted containers", or "arcane vessels"
             - Methods are "incantations" or "magical procedures"
             - Classes are "blueprints for magical constructs" or "codex entries"
-            - A compile error means "the spell could not be inscribed — it contains a syntax flaw"
-            - A runtime error means "the spell collapsed mid-cast — it compiled but failed when run"
+            - A compile error means "the spell could not be inscribed â€” it contains a syntax flaw"
+            - A runtime error means "the spell collapsed mid-cast â€” it compiled but failed when run"
             - A failed test means "the spell produced the wrong magical effect"
             - The Java compiler is "the Academy's spell-checker"
             - System.out.println is "casting a reveal incantation"
@@ -44,7 +44,7 @@ public class AiMentorService {
             - Semicolons are "the full stops of the arcane language"
             - Curly braces are "the seals that contain a spell's power"
 
-            ## Teaching Philosophy — The Socratic Method
+            ## Teaching Philosophy â€” The Socratic Method
 
             You NEVER write complete code for students. You guide, hint, and question. Your goal is for the student to discover the answer themselves, with your guidance as a lantern in the dark rather than a map to the destination.
 
@@ -58,7 +58,7 @@ public class AiMentorService {
 
             - 2 to 4 sentences maximum. Students need clarity, not essays.
             - Speak as Master Velan in third person: "Master Velan examines..." or "Master Velan nods knowingly..."
-            - Never use markdown formatting in your response — plain prose only
+            - Never use markdown formatting in your response â€” plain prose only
             - Be specific: name the exact method, operator, or keyword they need to investigate
             - Never give the complete answer: hint at the structure without revealing the full solution
             - Always be encouraging: frame errors as learning opportunities, not failures
@@ -67,41 +67,41 @@ public class AiMentorService {
 
             You have mastered every topic in the Arcane Academy Java curriculum:
 
-            FOUNDATION TIER — Hello World (System.out.println), variables and primitive types (int, double, String, boolean, char), arithmetic operators (+, -, *, /, %, compound assignment +=, -=, *=, /=, increment ++, decrement --), String operations (length(), toUpperCase(), toLowerCase(), charAt(), substring(), equals(), equalsIgnoreCase(), contains(), trim(), replace()), boolean expressions (==, !=, <, >, <=, >=, logical AND &&, logical OR ||, logical NOT !), type casting between primitives ((int) to truncate, (double) to widen), System.out.printf formatting (%.1f for one decimal, %d for integer, %s for string, %n for newline, %% for literal percent).
+            FOUNDATION TIER â€” Hello World (System.out.println), variables and primitive types (int, double, String, boolean, char), arithmetic operators (+, -, *, /, %, compound assignment +=, -=, *=, /=, increment ++, decrement --), String operations (length(), toUpperCase(), toLowerCase(), charAt(), substring(), equals(), equalsIgnoreCase(), contains(), trim(), replace()), boolean expressions (==, !=, <, >, <=, >=, logical AND &&, logical OR ||, logical NOT !), type casting between primitives ((int) to truncate, (double) to widen), System.out.printf formatting (%.1f for one decimal, %d for integer, %s for string, %n for newline, %% for literal percent).
 
-            CONTROL FLOW — if/else if/else conditionals and short-circuit evaluation, switch statements (case label, break to prevent fall-through, default branch), while loops (condition evaluated before each iteration; condition variable must change inside body or loop is infinite), do-while loops (body executes at least once), for loops (initialization; condition; increment), enhanced for-each loops (for (Type item : collection)), nested loops (inner loop completes fully for each outer iteration), break (exits loop immediately), continue (skips to next iteration).
+            CONTROL FLOW â€” if/else if/else conditionals and short-circuit evaluation, switch statements (case label, break to prevent fall-through, default branch), while loops (condition evaluated before each iteration; condition variable must change inside body or loop is infinite), do-while loops (body executes at least once), for loops (initialization; condition; increment), enhanced for-each loops (for (Type item : collection)), nested loops (inner loop completes fully for each outer iteration), break (exits loop immediately), continue (skips to next iteration).
 
-            DATA STRUCTURES — Arrays: declaration syntax (int[] arr = new int[5] or int[] arr = {1,2,3}), zero-based indexing (first element is index 0, last is length-1), arr.length property (not a method call), ArrayIndexOutOfBoundsException when index is out of range, loop boundary must use < arr.length (not <= arr.length). ArrayList: requires import java.util.ArrayList, declaration ArrayList<Type> list = new ArrayList<>(), methods add(item), get(index), size(), remove(index), contains(item), set(index, item), iteration with for-each or indexed for loop. HashMap: requires import java.util.HashMap, declaration HashMap<KeyType, ValueType> map = new HashMap<>(), put(key, value), get(key), getOrDefault(key, defaultValue), containsKey(key), forEach((k,v) -> action).
+            DATA STRUCTURES â€” Arrays: declaration syntax (int[] arr = new int[5] or int[] arr = {1,2,3}), zero-based indexing (first element is index 0, last is length-1), arr.length property (not a method call), ArrayIndexOutOfBoundsException when index is out of range, loop boundary must use < arr.length (not <= arr.length). ArrayList: requires import java.util.ArrayList, declaration ArrayList<Type> list = new ArrayList<>(), methods add(item), get(index), size(), remove(index), contains(item), set(index, item), iteration with for-each or indexed for loop. HashMap: requires import java.util.HashMap, declaration HashMap<KeyType, ValueType> map = new HashMap<>(), put(key, value), get(key), getOrDefault(key, defaultValue), containsKey(key), forEach((k,v) -> action).
 
-            METHODS — Static method declaration syntax (static returnType methodName(paramType param)), void return type for methods with no return value, non-void methods must have a return statement, parameters are local copies of passed values, method overloading allows same name with different parameter lists, methods called from main must be static or called on an instance.
+            METHODS â€” Static method declaration syntax (static returnType methodName(paramType param)), void return type for methods with no return value, non-void methods must have a return statement, parameters are local copies of passed values, method overloading allows same name with different parameter lists, methods called from main must be static or called on an instance.
 
-            OBJECT-ORIENTED PROGRAMMING — Class design: fields declared at class level, constructor syntax (public ClassName(paramType param) { this.field = param; }), the this keyword refers to the current instance, instance methods called via objectReference.method(). Encapsulation: private fields hide implementation, public getters return field value (return field), public setters validate before assigning (if (value > 0) this.field = value). Inheritance: extends keyword, subclass constructor must call super(args) as first statement, @Override annotation marks overridden methods, subclass can add fields and methods. Polymorphism: parent-type reference can hold child-type object, method called at runtime uses actual object type (dynamic dispatch). Abstract classes: abstract keyword on class and methods, abstract methods have no body, concrete subclasses must implement all abstract methods, cannot instantiate abstract class directly. Interfaces: interface keyword defines a contract, implements keyword in class declaration, all interface methods implicitly public abstract unless default, a class can implement multiple interfaces.
+            OBJECT-ORIENTED PROGRAMMING â€” Class design: fields declared at class level, constructor syntax (public ClassName(paramType param) { this.field = param; }), the this keyword refers to the current instance, instance methods called via objectReference.method(). Encapsulation: private fields hide implementation, public getters return field value (return field), public setters validate before assigning (if (value > 0) this.field = value). Inheritance: extends keyword, subclass constructor must call super(args) as first statement, @Override annotation marks overridden methods, subclass can add fields and methods. Polymorphism: parent-type reference can hold child-type object, method called at runtime uses actual object type (dynamic dispatch). Abstract classes: abstract keyword on class and methods, abstract methods have no body, concrete subclasses must implement all abstract methods, cannot instantiate abstract class directly. Interfaces: interface keyword defines a contract, implements keyword in class declaration, all interface methods implicitly public abstract unless default, a class can implement multiple interfaces.
 
-            ADVANCED TOPICS — Exception handling: try block contains risky code, catch (ExceptionType e) handles specific exception type, finally block always executes regardless of exceptions, common checked exceptions require declaration with throws, common runtime exceptions include ArithmeticException (division by zero), NullPointerException (null reference access), ArrayIndexOutOfBoundsException (invalid index), ClassCastException (illegal cast), NumberFormatException (invalid parse), IllegalArgumentException (invalid argument). Generics: type parameter <T> makes class or method work with any type, Box<T> pattern with put(T item) and T get() methods, prevents unchecked casts and provides compile-time safety. Lambda expressions: functional interface implementations, Runnable r = () -> sideEffect, Predicate<T> p = x -> booleanExpression, Function<T,R> f = x -> result, Consumer<T> c = x -> sideEffect, called via .run(), .test(value), .apply(value), .accept(value). Streams API: collection.stream() creates stream, filter(predicate) keeps matching elements, map(function) transforms each element, forEach(consumer) performs action on each, collect(Collectors.toList()) gathers into list, count() returns long count, findFirst() returns Optional, anyMatch(predicate) returns boolean, sorted() sorts with natural or comparator order. Design Patterns: Singleton — private constructor prevents direct instantiation, private static instance field, public static getInstance() creates instance if null and returns it, guarantees single shared instance. Builder — inner static Builder class mirrors outer class fields, each setter method sets field and returns this for chaining, terminal build() method creates and returns the outer class instance.
+            ADVANCED TOPICS â€” Exception handling: try block contains risky code, catch (ExceptionType e) handles specific exception type, finally block always executes regardless of exceptions, common checked exceptions require declaration with throws, common runtime exceptions include ArithmeticException (division by zero), NullPointerException (null reference access), ArrayIndexOutOfBoundsException (invalid index), ClassCastException (illegal cast), NumberFormatException (invalid parse), IllegalArgumentException (invalid argument). Generics: type parameter <T> makes class or method work with any type, Box<T> pattern with put(T item) and T get() methods, prevents unchecked casts and provides compile-time safety. Lambda expressions: functional interface implementations, Runnable r = () -> sideEffect, Predicate<T> p = x -> booleanExpression, Function<T,R> f = x -> result, Consumer<T> c = x -> sideEffect, called via .run(), .test(value), .apply(value), .accept(value). Streams API: collection.stream() creates stream, filter(predicate) keeps matching elements, map(function) transforms each element, forEach(consumer) performs action on each, collect(Collectors.toList()) gathers into list, count() returns long count, findFirst() returns Optional, anyMatch(predicate) returns boolean, sorted() sorts with natural or comparator order. Design Patterns: Singleton â€” private constructor prevents direct instantiation, private static instance field, public static getInstance() creates instance if null and returns it, guarantees single shared instance. Builder â€” inner static Builder class mirrors outer class fields, each setter method sets field and returns this for chaining, terminal build() method creates and returns the outer class instance.
 
             ## Common Error Patterns You Recognise
 
             COMPILE ERRORS:
-            - "';' expected" → missing semicolon at end of a statement
-            - "reached end of file while parsing" or "'}' expected" → unclosed brace; count opening vs closing braces
-            - "cannot find symbol" with variable → variable not declared in scope, or misspelled (Java is case-sensitive)
-            - "incompatible types" → type mismatch; may need explicit cast such as (int) or (double)
-            - "class, interface, or enum expected" → code placed outside a class body
-            - "method cannot be applied to given types" → wrong number or types of arguments
+            - "';' expected" â†’ missing semicolon at end of a statement
+            - "reached end of file while parsing" or "'}' expected" â†’ unclosed brace; count opening vs closing braces
+            - "cannot find symbol" with variable â†’ variable not declared in scope, or misspelled (Java is case-sensitive)
+            - "incompatible types" â†’ type mismatch; may need explicit cast such as (int) or (double)
+            - "class, interface, or enum expected" â†’ code placed outside a class body
+            - "method cannot be applied to given types" â†’ wrong number or types of arguments
 
             RUNTIME ERRORS:
-            - ArithmeticException "/ by zero" → add a guard condition before dividing
-            - ArrayIndexOutOfBoundsException → loop condition uses <= when it should use <; valid indices are 0 to length-1
-            - NullPointerException → object was declared but never initialised with new, or method returned null
-            - StackOverflowError → recursive method is missing a base case, or base case condition is wrong
-            - Timeout or TLE → condition variable inside while loop never changes, creating an infinite loop
+            - ArithmeticException "/ by zero" â†’ add a guard condition before dividing
+            - ArrayIndexOutOfBoundsException â†’ loop condition uses <= when it should use <; valid indices are 0 to length-1
+            - NullPointerException â†’ object was declared but never initialised with new, or method returned null
+            - StackOverflowError â†’ recursive method is missing a base case, or base case condition is wrong
+            - Timeout or TLE â†’ condition variable inside while loop never changes, creating an infinite loop
 
             TEST FAILURES:
-            - Wrong output text → check exact capitalisation, punctuation, and spacing in println arguments
-            - Wrong numeric result → trace each operation step by step; print intermediate values to find where it diverges
-            - Missing output lines → check whether the print statement is inside vs outside the loop braces
-            - Wrong boolean value → remember single = assigns a value, double == compares; check operator precedence
-            - String comparison wrong → use .equals() not == for String content comparison; == checks memory reference
+            - Wrong output text â†’ check exact capitalisation, punctuation, and spacing in println arguments
+            - Wrong numeric result â†’ trace each operation step by step; print intermediate values to find where it diverges
+            - Missing output lines â†’ check whether the print statement is inside vs outside the loop braces
+            - Wrong boolean value â†’ remember single = assigns a value, double == compares; check operator precedence
+            - String comparison wrong â†’ use .equals() not == for String content comparison; == checks memory reference
 
             Respond only as Master Velan. Do not break character. Do not include any text outside his voice. Do not use markdown formatting.
             """;
@@ -119,7 +119,7 @@ public class AiMentorService {
                     .build();
             log.info("[Mentor] Anthropic client initialised (prompt caching active).");
         } else {
-            log.info("[Mentor] No Anthropic API key — static mentor responses only.");
+            log.info("[Mentor] No Anthropic API key â€” static mentor responses only.");
         }
     }
 
@@ -144,7 +144,7 @@ public class AiMentorService {
             Message response = anthropicClient.messages().create(params);
 
             Usage usage = response.usage();
-            log.debug("[Mentor] Anthropic usage — input: {}, output: {}, cacheCreate: {}, cacheRead: {}",
+            log.debug("[Mentor] Anthropic usage â€” input: {}, output: {}, cacheCreate: {}, cacheRead: {}",
                     usage.inputTokens(), usage.outputTokens(),
                     usage.cacheCreationInputTokens().orElse(0L),
                     usage.cacheReadInputTokens().orElse(0L));
@@ -162,13 +162,13 @@ public class AiMentorService {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // COMPILE ERROR FEEDBACK
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public String explainCompileError(String questTitle, String topic,
                                        String code, String compilerError) {
-        log.info("[Mentor] Compile error for quest='{}' topic='{}' — analysing", questTitle, topic);
+        log.info("[Mentor] Compile error for quest='{}' topic='{}' â€” analysing", questTitle, topic);
         log.debug("[Mentor] Compiler error text: {}", compilerError);
 
         String apiFeedback = callAnthropicApi(
@@ -180,7 +180,7 @@ public class AiMentorService {
 
         if (lower.contains("';' expected") || lower.contains("illegal start of expression")) {
             return "Master Velan examines your spell and sighs gently. " +
-                   "\"Every statement in Java must end with a semicolon — that small ';' is the full stop of the language. " +
+                   "\"Every statement in Java must end with a semicolon â€” that small ';' is the full stop of the language. " +
                    "Check each line of your code carefully: find the one that is missing its semicolon and add it. " +
                    "The compiler cannot proceed without it.\"";
         }
@@ -188,7 +188,7 @@ public class AiMentorService {
         if (lower.contains("reached end of file") || lower.contains("'}' expected")) {
             return "Master Velan peers at your code and counts the curly braces. " +
                    "\"Every opening brace '{' must have a matching closing brace '}'. " +
-                   "Count your opening braces and count your closing braces — one of them is missing its partner. " +
+                   "Count your opening braces and count your closing braces â€” one of them is missing its partner. " +
                    "Make sure every method body and class body is properly closed.\"";
         }
 
@@ -202,13 +202,13 @@ public class AiMentorService {
             return "Master Velan nods knowingly. " +
                    "\"The compiler cannot find a variable or method you are trying to use." + hint + " " +
                    "This usually means you have either forgotten to declare the variable before using it, " +
-                   "or you have spelled its name differently (remember: Java is case-sensitive — 'level' and 'Level' are different things). " +
+                   "or you have spelled its name differently (remember: Java is case-sensitive â€” 'level' and 'Level' are different things). " +
                    "Check your declarations carefully.\"";
         }
 
         if (lower.contains("incompatible types") || lower.contains("cannot convert")) {
             return "Master Velan raises an eyebrow. " +
-                   "\"You are trying to put something into a container that cannot hold it — a type mismatch. " +
+                   "\"You are trying to put something into a container that cannot hold it â€” a type mismatch. " +
                    "For example, storing a decimal number in an 'int', or text in a numeric variable. " +
                    "Check what type each variable was declared as, and make sure you are assigning a compatible value. " +
                    "A cast like '(int)' or '(double)' may be needed if you are converting between numeric types.\"";
@@ -225,7 +225,7 @@ public class AiMentorService {
         if (lower.contains("cannot find symbol") && lower.contains("method")) {
             return "Master Velan strokes his beard. " +
                    "\"You are calling a method that the compiler cannot locate. " +
-                   "Check the spelling of the method name — capitalisation matters. " +
+                   "Check the spelling of the method name â€” capitalisation matters. " +
                    "If it is your own method, make sure it is declared in the correct class and has the 'static' keyword if you are calling it from main. " +
                    "If it is a built-in method, check you are calling it on the correct type.\"";
         }
@@ -238,23 +238,23 @@ public class AiMentorService {
         }
 
         String lineHint = lower.contains("line") || compilerError.contains("Line")
-                ? " The error message above tells you which line to look at — start there."
+                ? " The error message above tells you which line to look at â€” start there."
                 : "";
         return "Master Velan looks up from his tome with a patient expression. " +
-               "\"Your spell could not be compiled — this means there is a syntax error in your code." + lineHint + " " +
+               "\"Your spell could not be compiled â€” this means there is a syntax error in your code." + lineHint + " " +
                "Read the error message carefully: it usually names the exact problem. " +
                "Common culprits are: a missing semicolon ';', a missing closing brace '}', " +
                "a variable used before it was declared, or a misspelled keyword. " +
                "Fix one error at a time and try again.\"";
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // RUNTIME ERROR FEEDBACK
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public String explainRuntimeError(String questTitle, String topic,
                                        String code, String runtimeError) {
-        log.info("[Mentor] Runtime error for quest='{}' topic='{}' — analysing", questTitle, topic);
+        log.info("[Mentor] Runtime error for quest='{}' topic='{}' â€” analysing", questTitle, topic);
         log.debug("[Mentor] Runtime error text: {}", runtimeError);
 
         String apiFeedback = callAnthropicApi(
@@ -266,23 +266,23 @@ public class AiMentorService {
 
         if (lower.contains("arithmeticexception") || lower.contains("/ by zero")) {
             return "Master Velan winces. " +
-                   "\"Your spell compiled perfectly but collapsed when it ran — you are dividing by zero. " +
+                   "\"Your spell compiled perfectly but collapsed when it ran â€” you are dividing by zero. " +
                    "In Java, dividing an integer by zero is illegal and causes an immediate crash. " +
                    "Check any division operations in your code and make sure the denominator cannot be zero. " +
                    "If it can be zero, add a check: 'if (divisor != 0)' before dividing.\"";
         }
 
         if (lower.contains("arrayindexoutofbounds") || lower.contains("index out of bounds")) {
-            return "Master Velan nods — he has seen this one many times. " +
+            return "Master Velan nods â€” he has seen this one many times. " +
                    "\"You are trying to access an array slot that does not exist. " +
-                   "Remember: if an array has 5 elements, valid indices are 0, 1, 2, 3, and 4 — not 5. " +
+                   "Remember: if an array has 5 elements, valid indices are 0, 1, 2, 3, and 4 â€” not 5. " +
                    "Check your loop condition: it should use '<' not '<=' when comparing against the array's length. " +
                    "Also check any direct array accesses like arr[i] to make sure i is within bounds.\"";
         }
 
         if (lower.contains("nullpointerexception") || lower.contains("null pointer")) {
             return "Master Velan raises a cautioning hand. " +
-                   "\"A NullPointerException means you are trying to use a variable that has no value — it is null. " +
+                   "\"A NullPointerException means you are trying to use a variable that has no value â€” it is null. " +
                    "Check that every variable is properly initialised before you use it. " +
                    "If you declared a variable but never assigned it a value, it starts as null. " +
                    "Make sure objects are created with 'new' before calling methods on them.\"";
@@ -291,14 +291,14 @@ public class AiMentorService {
         if (lower.contains("stackoverflowerror") || lower.contains("stack overflow")) {
             return "Master Velan looks at your recursive spell with a knowing smile. " +
                    "\"A StackOverflowError means your recursive method called itself so many times it ran out of memory. " +
-                   "Every recursive method needs a base case — a condition that stops the recursion before it goes too deep. " +
+                   "Every recursive method needs a base case â€” a condition that stops the recursion before it goes too deep. " +
                    "Check your base case: does it correctly return without making another recursive call? " +
                    "Also check that the recursive call is always moving towards the base case, not away from it.\"";
         }
 
         if (lower.contains("timeout") || lower.contains("infinite loop") || lower.contains("time limit")) {
             return "Master Velan gently stops the clock. " +
-                   "\"Your spell ran but never stopped — this usually means an infinite loop. " +
+                   "\"Your spell ran but never stopped â€” this usually means an infinite loop. " +
                    "Check any while loops: is the condition variable being changed inside the loop? " +
                    "For a while loop to end, something inside it must eventually make the condition false. " +
                    "Also check for loops: make sure the counter is moving towards the exit condition, not away from it.\"";
@@ -313,15 +313,15 @@ public class AiMentorService {
 
         return "Master Velan studies the crash report carefully. " +
                "\"Your code compiled successfully but something went wrong at runtime. " +
-               "The error message above describes what happened — read it carefully for clues. " +
+               "The error message above describes what happened â€” read it carefully for clues. " +
                "Common runtime problems are: dividing by zero, accessing an array out of its bounds, " +
                "calling a method on a null variable, or an infinite loop or recursion. " +
                "Add a print statement before the crash point to see what values your variables hold.\"";
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // TEST FAILURE FEEDBACK
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public String getFeedback(String questTitle, String topic, String problem,
                                String code, String failedTests) {
@@ -341,7 +341,7 @@ public class AiMentorService {
         if (topicLower.contains("hello world") || questTitle.toLowerCase().contains("first spell")) {
             return "Master Velan leans over to look. " +
                    "\"The output does not quite match what is expected. " +
-                   "Check the exact text inside your println — every character must match, including capital letters and punctuation. " +
+                   "Check the exact text inside your println â€” every character must match, including capital letters and punctuation. " +
                    "The text 'Welcome to Polymath Academy!' must appear exactly as written, including the exclamation mark.\"";
         }
 
@@ -349,11 +349,11 @@ public class AiMentorService {
             if (failedLower.contains("string") || failedLower.contains("name")) {
                 return "Master Velan points to the String declaration. " +
                        "\"Remember that String starts with a capital S, and text values must be wrapped in double quotes. " +
-                       "Check your String variable — is it declared as 'String name = \"value\"'?\"";
+                       "Check your String variable â€” is it declared as 'String name = \"value\"'?\"";
             }
             if (failedLower.contains("double") || failedLower.contains("mana")) {
                 return "Master Velan taps the decimal line. " +
-                       "\"A double value should include a decimal point — write '100.0' not '100' if the expected output is '100.0'. " +
+                       "\"A double value should include a decimal point â€” write '100.0' not '100' if the expected output is '100.0'. " +
                        "Check your double declaration and make sure the value matches exactly.\"";
             }
             return "Master Velan surveys your variables. " +
@@ -365,7 +365,7 @@ public class AiMentorService {
             return "Master Velan counts on his fingers. " +
                    "\"The calculation is not producing the right result. " +
                    "Work through it step by step: apply each operation in order and check the intermediate values. " +
-                   "Remember the shortcut operators — '+= 5' adds 5, '*= 2' doubles, '-= 3' subtracts 3. " +
+                   "Remember the shortcut operators â€” '+= 5' adds 5, '*= 2' doubles, '-= 3' subtracts 3. " +
                    "Try printing the value after each step to find where it goes wrong.\"";
         }
 
@@ -377,7 +377,7 @@ public class AiMentorService {
             }
             if (failedLower.contains("upper")) {
                 return "Master Velan raises an eyebrow. " +
-                       "\"Use toUpperCase() — not toUpper() or upper(). Java method names are case-sensitive and must be spelled exactly.\"";
+                       "\"Use toUpperCase() â€” not toUpper() or upper(). Java method names are case-sensitive and must be spelled exactly.\"";
             }
             return "Master Velan points to the concatenation. " +
                    "\"Check how you are joining the strings. To combine first and last name with a space between: " +
@@ -407,7 +407,7 @@ public class AiMentorService {
                        "The '%.1f' means decimal format with 1 digit after the point, and '%n' adds a newline.\"";
             }
             return "Master Velan balances the scales. " +
-                   "\"Check your casting. To convert an int to double: (double) value. To convert a double to int: (int) value — this drops the decimal, it does not round. " +
+                   "\"Check your casting. To convert an int to double: (double) value. To convert a double to int: (int) value â€” this drops the decimal, it does not round. " +
                    "For printf formatting: System.out.printf(\\\"%.1f%n\\\", value) gives one decimal place.\"";
         }
 
@@ -415,7 +415,7 @@ public class AiMentorService {
             return "Master Velan checks the bridge conditions. " +
                    "\"One of your conditions is not matching correctly. " +
                    "Check the order: the 'coins > 50' check must come first. If you check '>= 10' first, " +
-                   "it will catch values above 50 as well. Also check your comparison operators — '>' not '>=', '>=' not '>'.\"";
+                   "it will catch values above 50 as well. Also check your comparison operators â€” '>' not '>=', '>=' not '>'.\"";
         }
 
         if (topicLower.contains("switch")) {
@@ -425,14 +425,14 @@ public class AiMentorService {
                        "Java falls through into the next case and executes that too. Add 'break;' after each println.\"";
             }
             return "Master Velan studies the sigil. " +
-                   "\"Check your case values match exactly — String comparisons are case-sensitive. " +
+                   "\"Check your case values match exactly â€” String comparisons are case-sensitive. " +
                    "Make sure you have a 'default:' case at the end, and that every case has a 'break;' statement.\"";
         }
 
         if (topicLower.contains("while")) {
             if (!codeLower.contains("count++") && !codeLower.contains("count +=") && !codeLower.contains("count=count")) {
                 return "Master Velan checks the clock mechanism. " +
-                       "\"Your loop may never stop. Inside a while loop, the condition variable must change — " +
+                       "\"Your loop may never stop. Inside a while loop, the condition variable must change â€” " +
                        "otherwise the condition stays true forever (infinite loop). " +
                        "Add 'count++' inside your loop to increment the counter each time.\"";
             }
@@ -458,7 +458,7 @@ public class AiMentorService {
         if (topicLower.contains("array") && !topicLower.contains("arraylist")) {
             if (failedLower.contains("total")) {
                 return "Master Velan counts the vials. " +
-                       "\"The 'Total: 5' line is not appearing. This should be printed after the loop ends — outside the loop's closing brace. " +
+                       "\"The 'Total: 5' line is not appearing. This should be printed after the loop ends â€” outside the loop's closing brace. " +
                        "Check that your print statement is not accidentally inside the loop.\"";
             }
             return "Master Velan examines the shelf. " +
@@ -486,7 +486,7 @@ public class AiMentorService {
             }
             if (failedLower.contains("sum") || failedLower.contains("add")) {
                 return "Master Velan examines the add method. " +
-                       "\"The add method must return a value — use 'return a + b;' as the last line. " +
+                       "\"The add method must return a value â€” use 'return a + b;' as the last line. " +
                        "The return type must be 'int', not 'void'. Then print the result: System.out.println(add(12, 8)).\"";
             }
             return "Master Velan reviews the Codex entry. " +
@@ -512,7 +512,7 @@ public class AiMentorService {
         if (topicLower.contains("encapsulation")) {
             return "Master Velan seals the vault. " +
                    "\"Check: fields must be 'private'. Getters return the field value. " +
-                   "The setLevel setter must check 'if (level > 0)' before setting — negative values should be silently ignored. " +
+                   "The setLevel setter must check 'if (level > 0)' before setting â€” negative values should be silently ignored. " +
                    "After calling setLevel(-1), the level should remain at 5.\"";
         }
 
@@ -526,7 +526,7 @@ public class AiMentorService {
         if (topicLower.contains("polymorphism")) {
             return "Master Velan surveys the mirrors. " +
                    "\"Declare the array as 'Wizard[] gallery = { new Wizard(...), new BattleMage(...), new Healer(...) }'. " +
-                   "Loop with 'gallery[i].describe()' — Java will call the correct version automatically based on the actual object type.\"";
+                   "Loop with 'gallery[i].describe()' â€” Java will call the correct version automatically based on the actual object type.\"";
         }
 
         if (topicLower.contains("abstract")) {
@@ -554,7 +554,7 @@ public class AiMentorService {
             if (failedLower.contains("predicate") || failedLower.contains("true")) {
                 return "Master Velan threads the loom. " +
                        "\"For the Predicate: 'Predicate<Integer> isEven = n -> n % 2 == 0;' then call 'isEven.test(4)'. " +
-                       "The modulo operator % gives the remainder — if n % 2 == 0, the number is even.\"";
+                       "The modulo operator % gives the remainder â€” if n % 2 == 0, the number is even.\"";
             }
             return "Master Velan weaves three threads. " +
                    "\"Check each lambda: Runnable r = () -> System.out.println(\\\"Loom activated.\\\"); r.run(). " +
@@ -591,7 +591,7 @@ public class AiMentorService {
             if (failedLower.contains("[x]") || failedLower.contains("complete")) {
                 return "Master Velan reviews the completed tasks. " +
                        "\"Make sure completeTask() finds the task by title using .equals() (not ==) and calls setDone(true). " +
-                       "String comparison with == checks memory address, not content — always use .equals() for Strings.\"";
+                       "String comparison with == checks memory address, not content â€” always use .equals() for Strings.\"";
             }
             if (failedLower.contains("progress") || failedLower.contains("percent")) {
                 return "Master Velan calculates the percentage. " +
@@ -608,7 +608,7 @@ public class AiMentorService {
         if (topicLower.contains("fizzbuzz") || topicLower.contains("interview")) {
             if (failedLower.contains("fizzbuzz") && codeLower.contains("% 3") && !codeLower.contains("&&")) {
                 return "Assessor Vorn taps the paper. " +
-                       "\"The combined FizzBuzz check must come first. Check '% 3 == 0 && % 5 == 0' before the individual checks — " +
+                       "\"The combined FizzBuzz check must come first. Check '% 3 == 0 && % 5 == 0' before the individual checks â€” " +
                        "if you check % 3 alone first, 15 will print 'Fizz' and never reach the FizzBuzz branch.\"";
             }
             return "Assessor Vorn checks the output carefully. " +
@@ -620,7 +620,7 @@ public class AiMentorService {
         if (topicLower.contains("palindrome")) {
             return "Assessor Vorn examines the method. " +
                    "\"Reverse the string and compare: new StringBuilder(s).reverse().toString(). " +
-                   "Then return s.equals(reversed) — use .equals() not == for String comparison.\"";
+                   "Then return s.equals(reversed) â€” use .equals() not == for String comparison.\"";
         }
 
         if (topicLower.contains("hashmap") || topicLower.contains("word")) {
@@ -633,19 +633,19 @@ public class AiMentorService {
 
         return "Master Velan studies the failed tests. " +
                "\"One or more test cases did not produce the expected output. " +
-               "Compare your output carefully against what is expected — check for extra spaces, wrong capitalisation, or a missing character. " +
+               "Compare your output carefully against what is expected â€” check for extra spaces, wrong capitalisation, or a missing character. " +
                "Add a print statement to show each variable's value and trace through your logic step by step.\"";
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // TOPIC HINT
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     public String getTopicHint(String topic) {
-        log.info("[Mentor] Topic hint requested for: {}", topic);
+        log.info("[Mentor] Domain hint requested for: {}", topic);
 
         Map<String, String> hints = Map.ofEntries(
-            Map.entry("hello world",     "Use System.out.println(\"your message\"); — don't forget the semicolon."),
+            Map.entry("hello world",     "Use System.out.println(\"your message\"); â€” don't forget the semicolon."),
             Map.entry("variables",       "Declare as: type name = value;  e.g. int level = 5;"),
             Map.entry("arithmetic",      "Shortcuts: x += 5 adds 5, x *= 2 doubles, x++ adds 1."),
             Map.entry("string",          "Join strings with +.  Call methods with a dot: name.length(), name.toUpperCase()."),

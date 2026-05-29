@@ -1,12 +1,12 @@
 package com.ambravate.arcane.academy.profile.service;
 
-import com.ambravate.arcane.academy.common.domain.Chunk;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -34,16 +34,16 @@ public class LeaderboardService {
 
     private final UserRepository userRepository;
     private final UserChunkProgressRepository progressRepository;
-    private final SubChunkRepository subChunkRepository;
-    private final ChunkRepository chunkRepository;
+    private final LessonRepository lessonRepository;
+    private final LearningModuleRepository moduleRepository;
     private final GamificationFacade gamificationFacade;
 
-    public List<LeaderboardEntry> topicWeekly(String topicId, int limit) {
-        return topicLeaderboard(topicId, currentWeekStart(), limit);
+    public List<LeaderboardEntry> topicWeekly(String domainId, int limit) {
+        return topicLeaderboard(domainId, currentWeekStart(), limit);
     }
 
-    public List<LeaderboardEntry> topicAllTime(String topicId, int limit) {
-        return topicLeaderboard(topicId, Instant.EPOCH, limit);
+    public List<LeaderboardEntry> topicAllTime(String domainId, int limit) {
+        return topicLeaderboard(domainId, Instant.EPOCH, limit);
     }
 
     public List<LeaderboardEntry> polymath(int limit) {
@@ -56,11 +56,11 @@ public class LeaderboardService {
 
         for (UserChunkProgress p : progressRepository.findAll()) {
             if (!users.containsKey(p.getUserId())) continue;
-            if (p.getStatus() != SubChunkStatus.COMPLETE) continue;
-            String topic = topicBySubChunk.get(p.getSubChunkId());
+            if (p.getStatus() != LessonStatus.COMPLETE) continue;
+            String topic = topicBySubChunk.get(p.getLessonId());
             if (topic == null) continue;
             topicsByUser.computeIfAbsent(p.getUserId(), k -> new HashSet<>()).add(topic);
-            totalXpByUser.merge(p.getUserId(), xpBySubChunk.getOrDefault(p.getSubChunkId(), 0), Integer::sum);
+            totalXpByUser.merge(p.getUserId(), xpBySubChunk.getOrDefault(p.getLessonId(), 0), Integer::sum);
         }
 
         List<Map.Entry<String, Set<String>>> sorted = new ArrayList<>(topicsByUser.entrySet());
@@ -88,8 +88,8 @@ public class LeaderboardService {
         return out;
     }
 
-    private List<LeaderboardEntry> topicLeaderboard(String topicId, Instant since, int limit) {
-        Set<String> topicSubChunkIds = topicSubChunkIds(topicId);
+    private List<LeaderboardEntry> topicLeaderboard(String domainId, Instant since, int limit) {
+        Set<String> topicSubChunkIds = topicSubChunkIds(domainId);
         if (topicSubChunkIds.isEmpty()) return List.of();
 
         Map<String, Integer> xpBySubChunk = xpBySubChunk();
@@ -98,10 +98,10 @@ public class LeaderboardService {
         Map<String, Integer> xpByUser = new HashMap<>();
         for (UserChunkProgress p : progressRepository.findAll()) {
             if (!users.containsKey(p.getUserId())) continue;
-            if (p.getStatus() != SubChunkStatus.COMPLETE) continue;
+            if (p.getStatus() != LessonStatus.COMPLETE) continue;
             if (p.getCompletedAt() == null || p.getCompletedAt().isBefore(since)) continue;
-            if (!topicSubChunkIds.contains(p.getSubChunkId())) continue;
-            xpByUser.merge(p.getUserId(), xpBySubChunk.getOrDefault(p.getSubChunkId(), 0), Integer::sum);
+            if (!topicSubChunkIds.contains(p.getLessonId())) continue;
+            xpByUser.merge(p.getUserId(), xpBySubChunk.getOrDefault(p.getLessonId(), 0), Integer::sum);
         }
 
         List<Map.Entry<String, Integer>> sorted = xpByUser.entrySet().stream()
@@ -127,27 +127,27 @@ public class LeaderboardService {
     }
 
     private Map<String, Integer> xpBySubChunk() {
-        return subChunkRepository.findAll().stream()
-            .collect(Collectors.toMap(SubChunk::getId, SubChunk::getXpReward, (a, b) -> a));
+        return lessonRepository.findAll().stream()
+            .collect(Collectors.toMap(Lesson::getId, Lesson::getXpReward, (a, b) -> a));
     }
 
     private Map<String, String> topicBySubChunk() {
-        Map<String, String> chunkTopic = chunkRepository.findAll().stream()
-            .collect(Collectors.toMap(Chunk::getId, Chunk::getTopicId, (a, b) -> a));
+        Map<String, String> chunkTopic = moduleRepository.findAll().stream()
+            .collect(Collectors.toMap(LearningModule::getId, LearningModule::getDomainId, (a, b) -> a));
         Map<String, String> out = new HashMap<>();
-        for (SubChunk sc : subChunkRepository.findAll()) {
-            String topic = chunkTopic.get(sc.getChunkId());
+        for (Lesson sc : lessonRepository.findAll()) {
+            String topic = chunkTopic.get(sc.getModuleId());
             if (topic != null) out.put(sc.getId(), topic);
         }
         return out;
     }
 
-    private Set<String> topicSubChunkIds(String topicId) {
-        List<String> chunkIds = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId)
-            .stream().map(Chunk::getId).toList();
+    private Set<String> topicSubChunkIds(String domainId) {
+        List<String> chunkIds = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId)
+            .stream().map(LearningModule::getId).toList();
         if (chunkIds.isEmpty()) return Set.of();
-        return subChunkRepository.findByChunkIdIn(chunkIds).stream()
-            .map(SubChunk::getId).collect(Collectors.toSet());
+        return lessonRepository.findByModuleIdIn(chunkIds).stream()
+            .map(Lesson::getId).collect(Collectors.toSet());
     }
 
     static Instant currentWeekStart() {

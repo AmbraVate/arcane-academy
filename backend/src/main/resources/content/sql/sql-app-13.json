@@ -1,0 +1,34 @@
+{
+  "id": "sql-app-13",
+  "title": "Dates and Times",
+  "glyph": "🗃️",
+  "sortOrder": 13,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-12"],
+  "subChunks": [{
+    "id": "sql-app-13a",
+    "title": "Date Functions and Filtering by Date",
+    "sortOrder": 1,
+    "xpReward": 60,
+    "filename": "query.sql",
+    "practiceType": "NONE",
+    "hookHtml": "<p>Dates are stored as text or a special DATE type depending on the engine. Querying by date — filtering ranges, extracting year or month, computing age — requires knowing a few engine-specific functions.</p>",
+    "explanationHtml": "<h3>Storing dates</h3><p>Best practice: store dates as <code>DATE</code> (e.g. <code>'2024-03-15'</code>) or <code>TIMESTAMP</code> (date + time) in ISO 8601 format. Text-as-date works in SQLite and sorts correctly if formatted as YYYY-MM-DD.</p><h3>Getting the current date/time</h3><pre><code>-- PostgreSQL / MySQL:\nSELECT CURRENT_DATE, NOW();\n\n-- SQLite:\nSELECT DATE('now'), DATETIME('now');</code></pre><h3>Date arithmetic</h3><pre><code>-- PostgreSQL:\nSELECT joined_date + INTERVAL '30 days' FROM apprentices;\n\n-- SQLite:\nSELECT DATE(joined_date, '+30 days') FROM apprentices;\n\n-- Days between two dates (PostgreSQL):\nSELECT CURRENT_DATE - joined_date AS days_enrolled FROM apprentices;</code></pre><h3>Extracting parts</h3><pre><code>-- PostgreSQL:\nSELECT EXTRACT(YEAR  FROM joined_date) AS yr FROM apprentices;\nSELECT EXTRACT(MONTH FROM joined_date) AS mo FROM apprentices;\n\n-- SQLite:\nSELECT STRFTIME('%Y', joined_date) AS yr FROM apprentices;\nSELECT STRFTIME('%m', joined_date) AS mo FROM apprentices;</code></pre><h3>Filtering by date</h3><pre><code>-- Apprentices who joined in 2024:\nWHERE joined_date >= '2024-01-01' AND joined_date < '2025-01-01'\n-- Or:\nWHERE STRFTIME('%Y', joined_date) = '2024'</code></pre><p>Using the range approach (<code>&gt;= / &lt;</code>) is more index-friendly than wrapping in a function.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"A new column appears in the ledger: joined_date. The Academy wants to know who enrolled this year."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"Store dates in ISO format — year, month, day, always. They sort lexicographically correctly that way. For date ranges, prefer the >= and < boundary approach rather than wrapping dates in functions. Wrapping prevents the engine from using an index; boundaries do not."}
+    ],
+    "guidedPracticeHtml": "<h3>📜 Date range thinking</h3><p>Read the two approaches below and explain in your own words why the range approach is preferred over the function approach for filtering by year.</p><pre><code>-- Approach A (function wrapping):\nWHERE STRFTIME('%Y', joined_date) = '2024'\n\n-- Approach B (range filter):\nWHERE joined_date >= '2024-01-01' AND joined_date < '2025-01-01'</code></pre>",
+    "guidedPracticeModelAnswer": "Approach B (range filter) is preferred because it allows the database engine to use an index on the joined_date column. When a column is wrapped in a function (Approach A), the engine typically cannot use an index on that column — it must evaluate the function for every row, which results in a full table scan. Approach B keeps the column bare on the left side of the comparison, which is the condition for index use.",
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Write the SQL to return all apprentices who joined in March 2024 (between 2024-03-01 inclusive and 2024-04-01 exclusive). Assume the table has a <code>joined_date TEXT</code> column in YYYY-MM-DD format.</p>",
+    "modelAnswer": "SELECT * FROM apprentices WHERE joined_date >= '2024-03-01' AND joined_date < '2024-04-01';\n\nThis uses the index-friendly boundary approach. An equivalent but less performant approach would be: WHERE STRFTIME('%Y-%m', joined_date) = '2024-03'.",
+    "feynmanPrompt": "Explain how to store dates correctly in SQL, how to filter a range of dates, and why wrapping a date column in a function in WHERE is slower.",
+    "questions": [
+      {"id":"sql-app-13a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What ISO 8601 format is recommended for storing dates in SQL?","options":["YYYY-MM-DD (e.g. '2024-03-15')","DD/MM/YYYY (e.g. '15/03/2024')","MM-DD-YYYY (e.g. '03-15-2024')","Any format — SQL normalises automatically"],"answer":"YYYY-MM-DD (e.g. '2024-03-15')","explanation":"ISO 8601 (YYYY-MM-DD) is the universal standard. It sorts lexicographically correctly, which is why dates stored as text in this format still filter and sort properly in SQLite."},
+      {"id":"sql-app-13a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Which WHERE clause correctly finds apprentices who joined in 2024 and is index-friendly?","options":["WHERE joined_date >= '2024-01-01' AND joined_date < '2025-01-01'","WHERE YEAR(joined_date) = 2024","WHERE joined_date LIKE '2024%'","WHERE joined_date BETWEEN '2024' AND '2025'"],"answer":"WHERE joined_date >= '2024-01-01' AND joined_date < '2025-01-01'","explanation":"The range approach keeps the column bare, allowing index use. YEAR(joined_date) and LIKE expressions wrap the column in a function or pattern — both prevent index use. BETWEEN '2024' AND '2025' would include 2025-00-00 which is not intended."},
+      {"id":"sql-app-13a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"In SQLite, what does `SELECT DATE('now', '-7 days')` return?","options":["The date exactly 7 days before today","The date exactly 7 days after today","Today's date","An error — SQLite does not support date arithmetic"],"answer":"The date exactly 7 days before today","explanation":"DATE('now', modifier) applies the modifier to the current date. '-7 days' subtracts 7 days from today. '+7 days' would add 7 days."},
+      {"id":"sql-app-13a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"A developer stores birthdays as '15/03/1990' (DD/MM/YYYY). What goes wrong when they query `WHERE birthday < '2000-01-01'`?","options":["The string comparison is lexicographic — '15/03/1990' compares to '2000-01-01' character by character, producing wrong results","Dates stored as strings cannot be compared with <","The WHERE clause needs a CAST","Nothing — SQL normalises date formats automatically"],"answer":"The string comparison is lexicographic — '15/03/1990' compares to '2000-01-01' character by character, producing wrong results","explanation":"String comparison is character-by-character. '15/03/1990' starts with '1', and '2000-01-01' starts with '2'. '1' < '2' so the comparison might appear correct in this case, but the logic breaks for many dates. ISO 8601 (YYYY-MM-DD) is the only format that sorts correctly as plain text."}
+    ]
+  }]
+}

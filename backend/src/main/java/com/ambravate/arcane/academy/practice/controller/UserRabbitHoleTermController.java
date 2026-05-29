@@ -32,8 +32,8 @@ public class UserRabbitHoleTermController {
                 user.getId(),
                 body.get("term"),
                 body.get("description"),
-                body.get("subChunkId"),
-                body.get("topicId"));
+                body.get("lessonId"),
+                body.get("domainId"));
         return ResponseEntity.ok(dto);
     }
 

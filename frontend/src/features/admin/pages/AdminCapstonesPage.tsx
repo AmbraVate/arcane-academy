@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { adminCapstoneApi, type AdminCapstone, type PagedResponse } from '@/shared/api/adminServices'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -43,7 +43,7 @@ function CapstoneRow({ capstone, onUpdate }: { capstone: AdminCapstone; onUpdate
             {capstone.title}
           </div>
           <div style={{ fontSize: 11, color: 'var(--color-muted)' }}>
-            {capstone.chunkId} · User {capstone.userId.slice(0, 8)}… · {timeAgo(capstone.createdAt)}
+            {capstone.moduleId} Â· User {capstone.userId.slice(0, 8)}â€¦ Â· {timeAgo(capstone.createdAt)}
           </div>
         </div>
         {capstone.reviewedAt
@@ -61,12 +61,12 @@ function CapstoneRow({ capstone, onUpdate }: { capstone: AdminCapstone; onUpdate
           )}
           {capstone.githubUrl && (
             <a href={capstone.githubUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: 'var(--color-purple-light)', display: 'inline-block', marginBottom: 8 }}>
-              GitHub →
+              GitHub â†’
             </a>
           )}
           {capstone.codeContent && (
             <pre style={{ fontSize: 11, background: 'var(--color-surface)', padding: 12, borderRadius: 6, overflow: 'auto', maxHeight: 200, margin: '0 0 12px', color: 'var(--color-text)', border: '1px solid var(--color-border)' }}>
-              {capstone.codeContent.slice(0, 2000)}{capstone.codeContent.length > 2000 ? '\n…(truncated)' : ''}
+              {capstone.codeContent.slice(0, 2000)}{capstone.codeContent.length > 2000 ? '\nâ€¦(truncated)' : ''}
             </pre>
           )}
 
@@ -80,14 +80,14 @@ function CapstoneRow({ capstone, onUpdate }: { capstone: AdminCapstone; onUpdate
               onChange={e => setFeedback(e.target.value)}
               rows={4}
               style={{ width: '100%', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 6, padding: '8px 12px', fontSize: 13, color: 'var(--color-text)', resize: 'vertical', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
-              placeholder="Add feedback for the learner…"
+              placeholder="Add feedback for the learnerâ€¦"
             />
             <button
               onClick={saveFeedback}
               disabled={saving}
               style={{ marginTop: 8, padding: '6px 16px', borderRadius: 6, background: 'var(--color-purple)', color: '#fff', border: 'none', fontSize: 12, cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.6 : 1, fontFamily: 'Cinzel, serif' }}
             >
-              {saving ? 'Saving…' : 'Save Feedback'}
+              {saving ? 'Savingâ€¦' : 'Save Feedback'}
             </button>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function AdminCapstonesPage() {
         Capstone Projects
       </h2>
 
-      {loading && <p style={{ color: 'var(--color-muted)', fontStyle: 'italic' }}>Loading…</p>}
+      {loading && <p style={{ color: 'var(--color-muted)', fontStyle: 'italic' }}>Loadingâ€¦</p>}
 
       {!loading && data && data.totalElements === 0 && (
         <p style={{ color: 'var(--color-muted)', fontStyle: 'italic' }}>No capstone projects submitted yet.</p>
@@ -139,7 +139,7 @@ export default function AdminCapstonesPage() {
             disabled={page === 0}
             style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-card)', color: 'var(--color-text)', cursor: page === 0 ? 'default' : 'pointer', opacity: page === 0 ? 0.4 : 1, fontSize: 12 }}
           >
-            ← Prev
+            â† Prev
           </button>
           <span style={{ fontSize: 12, color: 'var(--color-muted)', padding: '4px 8px' }}>
             {page + 1} / {data.totalPages}
@@ -149,7 +149,7 @@ export default function AdminCapstonesPage() {
             disabled={page >= data.totalPages - 1}
             style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-card)', color: 'var(--color-text)', cursor: page >= data.totalPages - 1 ? 'default' : 'pointer', opacity: page >= data.totalPages - 1 ? 0.4 : 1, fontSize: 12 }}
           >
-            Next →
+            Next â†’
           </button>
         </div>
       )}

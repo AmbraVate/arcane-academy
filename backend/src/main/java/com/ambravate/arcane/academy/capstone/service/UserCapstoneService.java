@@ -22,7 +22,7 @@ public class UserCapstoneService {
 
     private final UserCapstoneRepository capstoneRepo;
 
-    // ── Learner operations ────────────────────────────────────────────────────
+    // â”€â”€ Learner operations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Transactional(readOnly = true)
     public List<CapstoneDto> listForUser(String userId) {
@@ -34,7 +34,7 @@ public class UserCapstoneService {
     public CapstoneDto save(String userId, SaveCapstoneRequest req) {
         UserCapstone capstone = UserCapstone.builder()
                 .userId(userId)
-                .chunkId(req.chunkId())
+                .moduleId(req.moduleId())
                 .title(req.title())
                 .description(req.description())
                 .codeContent(req.codeContent())
@@ -61,7 +61,7 @@ public class UserCapstoneService {
         capstoneRepo.delete(capstone);
     }
 
-    // ── Admin operations ──────────────────────────────────────────────────────
+    // â”€â”€ Admin operations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Transactional(readOnly = true)
     public Page<AdminCapstoneDto> listAll(Pageable pageable) {

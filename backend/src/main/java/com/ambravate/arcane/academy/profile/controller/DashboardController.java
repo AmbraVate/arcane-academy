@@ -1,6 +1,6 @@
 package com.ambravate.arcane.academy.profile.controller;
 
-import com.ambravate.arcane.academy.profile.dto.ChunkHealthDto;
+import com.ambravate.arcane.academy.profile.dto.ModuleHealthDto;
 import com.ambravate.arcane.academy.profile.dto.DashboardDto;
 import com.ambravate.arcane.academy.common.domain.DashboardData;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
@@ -23,24 +23,24 @@ public class DashboardController {
 
   @GetMapping
   public ResponseEntity<DashboardDto> getDashboard(
-      @RequestParam(defaultValue = "java") String topicId,
+      @RequestParam(defaultValue = "java") String domainId,
       @AuthenticationPrincipal UserPrincipal user
   ) {
-    DashboardData data = dashboardService.getDashboard(user.getId(), topicId);
+    DashboardData data = dashboardService.getDashboard(user.getId(), domainId);
 
-    List<ChunkHealthDto> healthDtos = data.chunkHealth()
+    List<ModuleHealthDto> healthDtos = data.chunkHealth()
         .stream()
         .map(chunkHealth ->
-            ChunkHealthDto.aChunkHealthDto()
-                .withChunkId(chunkHealth.chunkId())
-                .withTitle(chunkHealth.title())
-                .withGlyph(chunkHealth.glyph())
-                .withStatus(chunkHealth.status())
-                .withMemoryStrength(chunkHealth.memoryStrength())
-                .withHealthColor(chunkHealth.healthColor())
-                .withTotalSubChunks(chunkHealth.totalSubChunks())
-                .withCompletedSubChunks(chunkHealth.completedSubChunks())
-                .withTier(chunkHealth.tier())
+            ModuleHealthDto.builder()
+                .moduleId(chunkHealth.moduleId())
+                .title(chunkHealth.title())
+                .glyph(chunkHealth.glyph())
+                .status(chunkHealth.status())
+                .memoryStrength(chunkHealth.memoryStrength())
+                .healthColor(chunkHealth.healthColor())
+                .totalLessons(chunkHealth.totalLessons())
+                .completedLessons(chunkHealth.completedLessons())
+                .tier(chunkHealth.tier())
                 .build()
         ).collect(Collectors.toList());
 

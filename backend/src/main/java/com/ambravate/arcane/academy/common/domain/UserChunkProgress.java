@@ -6,11 +6,11 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "user_chunk_progress",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "sub_chunk_id"}),
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "lesson_id"}),
     indexes = {
         @Index(name = "idx_ucp_user_status",   columnList = "user_id, status"),
         @Index(name = "idx_ucp_next_review",   columnList = "next_review_at"),
-        @Index(name = "idx_ucp_user_subchunk", columnList = "user_id, sub_chunk_id"),
+        @Index(name = "idx_ucp_user_lesson",   columnList = "user_id, lesson_id"),
     })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class UserChunkProgress {
@@ -22,8 +22,8 @@ public class UserChunkProgress {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(name = "sub_chunk_id", nullable = false)
-    private String subChunkId;
+    @Column(name = "lesson_id", nullable = false)
+    private String lessonId;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -31,7 +31,7 @@ public class UserChunkProgress {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private SubChunkStatus status = SubChunkStatus.NOT_STARTED;
+    private LessonStatus status = LessonStatus.NOT_STARTED;
 
     @Builder.Default
     private double memoryStrength = 0.0;
@@ -52,15 +52,12 @@ public class UserChunkProgress {
     @Builder.Default
     private double lastScore = 0.0;
 
-    /** Set to true once guided practice has been submitted with a passing result. */
     @Builder.Default
     private boolean guidedPracticePassed = false;
 
-    /** Set to true once solo practice has been submitted with a passing result. */
     @Builder.Default
     private boolean soloPracticePassed = false;
 
-    /** Set to true once the retrieval check has been submitted (regardless of score). */
     @Builder.Default
     private boolean retrievalCheckSubmitted = false;
 

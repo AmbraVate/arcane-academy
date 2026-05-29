@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+﻿import React, { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import ErrorBoundary from './features/errors/components/ErrorBoundary'
 import { useAuth } from './shared/hooks/useAuth'
@@ -8,11 +8,11 @@ import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
 import { BlizzardBackground } from './components/layout/BlizzardScene'
 
-const TopicsPage           = lazy(() => import('./features/topics/pages/TopicsPage'))
+const DomainsPage           = lazy(() => import('./features/domains/pages/DomainsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
 const RegisterPage         = lazy(() => import('./features/auth/pages/RegisterPage'))
 const OAuthCallbackPage    = lazy(() => import('./features/auth/pages/OAuthCallbackPage'))
-const ChunkMapPage         = lazy(() => import('./features/topics/pages/ChunkMapPage'))
+const ModuleMapPage         = lazy(() => import('./features/domains/pages/ModuleMapPage'))
 const EncodingPage         = lazy(() => import('./features/learning/pages/EncodingPage'))
 const ReviewPage           = lazy(() => import('./features/review/pages/ReviewPage'))
 const DiagnosticPage       = lazy(() => import('./features/diagnostic/pages/DiagnosticPage'))
@@ -20,7 +20,7 @@ const OnboardingPage       = lazy(() => import('./features/auth/pages/Onboarding
 const RabbitHolePage       = lazy(() => import('./features/exploration/pages/RabbitHolePage'))
 const CuriosityQueuePage   = lazy(() => import('./features/exploration/pages/CuriosityQueuePage'))
 const ProfilePage          = lazy(() => import('./features/profile/pages/ProfilePage'))
-const TopicPage            = lazy(() => import('./features/topics/pages/TopicPage'))
+const DomainPage            = lazy(() => import('./features/domains/pages/DomainPage'))
 const TopicOnboardingPage  = lazy(() => import('./features/onboarding/pages/TopicOnboardingPage'))
 const TopicDiagnosticPage  = lazy(() => import('./features/diagnostic/pages/TopicDiagnosticPage'))
 const PrerequisiteCheckPage = lazy(() => import('./features/onboarding/pages/PrerequisiteCheckPage'))
@@ -32,12 +32,12 @@ const HomePage             = lazy(() => import('./features/home/pages/HomePage')
 const AdminLayout          = lazy(() => import('./features/admin/pages/AdminLayout'))
 const AdminDashboardPage   = lazy(() => import('./features/admin/pages/AdminDashboardPage'))
 const AdminChunksPage      = lazy(() => import('./features/admin/pages/AdminChunksPage'))
-const AdminSubChunksPage   = lazy(() => import('./features/admin/pages/AdminSubChunksPage'))
-const AdminSubChunkEditorPage = lazy(() => import('./features/admin/pages/AdminSubChunkEditorPage'))
+const AdminLessonsPage   = lazy(() => import('./features/admin/pages/AdminLessonsPage'))
+const AdminLessonEditorPage = lazy(() => import('./features/admin/pages/AdminLessonEditorPage'))
 const AdminQuestionsPage   = lazy(() => import('./features/admin/pages/AdminQuestionsPage'))
 const AdminUsersPage       = lazy(() => import('./features/admin/pages/AdminUsersPage'))
 const AdminImportExportPage = lazy(() => import('./features/admin/pages/AdminImportExportPage'))
-const AdminTopicsPage       = lazy(() => import('./features/admin/pages/AdminTopicsPage'))
+const AdminDomainsPage       = lazy(() => import('./features/admin/pages/AdminDomainsPage'))
 const AdminStuckReportsPage = lazy(() => import('./features/admin/pages/AdminStuckReportsPage'))
 const AdminCapstonesPage    = lazy(() => import('./features/admin/pages/AdminCapstonesPage'))
 const NotFoundPage          = lazy(() => import('./features/errors/pages/NotFoundPage'))
@@ -85,20 +85,20 @@ function BlizzardNav() {
   const streakHot = streak >= 3
 
   const NAV_ITEMS = [
-    { label: 'Topics',  icon: '📚', path: '/topics' },
-    { label: 'Review',  icon: '🔄', path: '/review', badge: reviewsDue > 0 ? reviewsDue : null },
-    { label: 'Ranks',   icon: '🏆', path: '/leaderboard' },
-    { label: 'Profile', icon: '👤', path: '/profile' },
+    { label: 'Topics',  icon: 'ðŸ“š', path: '/topics' },
+    { label: 'Review',  icon: 'ðŸ”„', path: '/review', badge: reviewsDue > 0 ? reviewsDue : null },
+    { label: 'Ranks',   icon: 'ðŸ†', path: '/leaderboard' },
+    { label: 'Profile', icon: 'ðŸ‘¤', path: '/profile' },
   ]
 
   return (
     <nav className="topbar">
-      <div className="nav-brand" onClick={() => navigate('/')}>❄ Arcane Academy</div>
+      <div className="nav-brand" onClick={() => navigate('/')}>â„ Arcane Academy</div>
       <div className="nav-spacer" />
       <div className="nav-right">
         {/* Streak */}
         <div className={`streak${streakHot ? ' hot' : ''}`}>
-          <span className="flame">🔥</span>
+          <span className="flame">ðŸ”¥</span>
           <span className="num">{streak}</span>
         </div>
 
@@ -133,7 +133,7 @@ function BlizzardNav() {
 
         {/* Logout */}
         <button className="nav-btn" onClick={logout} title="Logout">
-          <span className="icon">🚪</span>
+          <span className="icon">ðŸšª</span>
           <span className="lbl">Logout</span>
         </button>
       </div>
@@ -152,28 +152,28 @@ function AppRoutes() {
         <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/"         element={<HomeRedirect />} />
-        <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />
-        <Route path="/learn/:subChunkId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
+        <Route path="/chunk/:moduleId" element={<PrivateRoute><ModuleMapPage /></PrivateRoute>} />
+        <Route path="/learn/:lessonId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
-        <Route path="/topics" element={<PrivateRoute><TopicsPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId" element={<PrivateRoute><TopicPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId/onboarding"   element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId/diagnostic"   element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
-        <Route path="/topic/:topicId/css-primer"   element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
+        <Route path="/topics" element={<PrivateRoute><DomainsPage /></PrivateRoute>} />
+        <Route path="/topic/:domainId" element={<PrivateRoute><DomainPage /></PrivateRoute>} />
+        <Route path="/topic/:domainId/onboarding"   element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
+        <Route path="/topic/:domainId/diagnostic"   element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
+        <Route path="/topic/:domainId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
+        <Route path="/topic/:domainId/css-primer"   element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
         <Route path="/leaderboard"   element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
         <Route path="/u/:username"   element={<PrivateRoute><PublicProfilePage /></PrivateRoute>} />
 
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
-            <Route path="topics" element={<AdminTopicsPage />} />
+            <Route path="topics" element={<AdminDomainsPage />} />
             <Route path="chunks" element={<AdminChunksPage />} />
-            <Route path="chunks/:chunkId/subchunks" element={<AdminSubChunksPage />} />
-            <Route path="subchunks/:subChunkId/edit" element={<AdminSubChunkEditorPage />} />
-            <Route path="subchunks/:subChunkId/questions" element={<AdminQuestionsPage />} />
+            <Route path="chunks/:moduleId/subchunks" element={<AdminLessonsPage />} />
+            <Route path="subchunks/:lessonId/edit" element={<AdminLessonEditorPage />} />
+            <Route path="subchunks/:lessonId/questions" element={<AdminQuestionsPage />} />
             <Route path="users" element={<AdminUsersPage />} />
             <Route path="import-export" element={<AdminImportExportPage />} />
             <Route path="stuck-reports" element={<AdminStuckReportsPage />} />

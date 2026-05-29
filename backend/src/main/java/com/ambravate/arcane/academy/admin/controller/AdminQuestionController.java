@@ -24,9 +24,9 @@ public class AdminQuestionController {
     private final AdminQuestionAssembler adminQuestionAssembler;
 
     @GetMapping
-    public ResponseEntity<List<AdminQuestionDto>> list(@RequestParam String subChunkId) {
+    public ResponseEntity<List<AdminQuestionDto>> list(@RequestParam String lessonId) {
         return ResponseEntity.ok(
-                questionRepository.findBySubChunkId(subChunkId)
+                questionRepository.findByLessonId(lessonId)
                         .stream()
                     .map(adminQuestionAssembler::toDto)
                     .toList());

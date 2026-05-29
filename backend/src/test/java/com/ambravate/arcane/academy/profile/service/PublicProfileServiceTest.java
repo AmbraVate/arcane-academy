@@ -1,16 +1,16 @@
 package com.ambravate.arcane.academy.profile.service;
 
 import com.ambravate.arcane.academy.common.domain.BadgeDefinition;
-import com.ambravate.arcane.academy.common.domain.Chunk;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
-import com.ambravate.arcane.academy.common.domain.Topic;
+import com.ambravate.arcane.academy.common.domain.Domain;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.content.repository.TopicRepository;
+import com.ambravate.arcane.academy.content.repository.DomainRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
  * Tests for {@link PublicProfileService} — verifies that:
  * <ul>
  *   <li>Profiles are gated by the {@code publicProfileEnabled} opt-in flag</li>
- *   <li>Per-topic XP and completion counts are aggregated correctly across topics</li>
+ *   <li>Per-domain XP and completion counts are aggregated correctly across domains</li>
  *   <li>Earned badges are decorated with display names from {@link BadgeDefinition} and sorted recency-first</li>
  *   <li>Unknown badge IDs degrade gracefully without throwing</li>
  * </ul>
@@ -46,9 +46,9 @@ class PublicProfileServiceTest {
     @Mock private UserRepository userRepository;
     @Mock private UserChunkProgressRepository progressRepository;
     @Mock private GamificationFacade gamificationFacade;
-    @Mock private ChunkRepository chunkRepository;
-    @Mock private SubChunkRepository subChunkRepository;
-    @Mock private TopicRepository topicRepository;
+    @Mock private LearningModuleRepository moduleRepository;
+    @Mock private LessonRepository lessonRepository;
+    @Mock private DomainRepository domainRepository;
 
     @InjectMocks private PublicProfileService service;
 
@@ -84,34 +84,34 @@ class PublicProfileServiceTest {
     // ── Aggregation ─────────────────────────────────────────────────────────────
 
     @Test
-    @DisplayName("Aggregates per-topic XP + completion counts when opted in")
-    void aggregatesPerTopic() {
+    @DisplayName("Aggregates per-domain XP + completion counts when opted in")
+    void aggregatesPerDomain() {
         User alice = user("alice", true);
         when(userRepository.findByUsername("alice")).thenReturn(Optional.of(alice));
 
-        when(chunkRepository.findAll()).thenReturn(List.of(
-            Chunk.builder().id("c-java").title("Java A").topicId("java").sortOrder(1).build(),
-            Chunk.builder().id("c-tw").title("TW A").topicId("tailwind").sortOrder(1).build()
+        when(moduleRepository.findAll()).thenReturn(List.of(
+            LearningModule.builder().id("c-java").title("Java A").domainId("java").sortOrder(1).build(),
+            LearningModule.builder().id("c-tw").title("TW A").domainId("tailwind").sortOrder(1).build()
         ));
-        when(subChunkRepository.findAll()).thenReturn(List.of(
-            SubChunk.builder().id("s-java-1").chunkId("c-java").title("J1").sortOrder(1).xpReward(50).build(),
-            SubChunk.builder().id("s-java-2").chunkId("c-java").title("J2").sortOrder(2).xpReward(75).build(),
-            SubChunk.builder().id("s-tw-1").chunkId("c-tw").title("T1").sortOrder(1).xpReward(40).build()
+        when(lessonRepository.findAll()).thenReturn(List.of(
+            Lesson.builder().id("s-java-1").moduleId("c-java").title("J1").sortOrder(1).xpReward(50).build(),
+            Lesson.builder().id("s-java-2").moduleId("c-java").title("J2").sortOrder(2).xpReward(75).build(),
+            Lesson.builder().id("s-tw-1").moduleId("c-tw").title("T1").sortOrder(1).xpReward(40).build()
         ));
         when(progressRepository.findByUserId("u-alice")).thenReturn(List.of(
-            UserChunkProgress.builder().userId("u-alice").subChunkId("s-java-1")
-                .status(SubChunkStatus.COMPLETE).build(),
-            UserChunkProgress.builder().userId("u-alice").subChunkId("s-java-2")
-                .status(SubChunkStatus.COMPLETE).build(),
-            UserChunkProgress.builder().userId("u-alice").subChunkId("s-tw-1")
-                .status(SubChunkStatus.COMPLETE).build(),
+            UserChunkProgress.builder().userId("u-alice").lessonId("s-java-1")
+                .status(LessonStatus.COMPLETE).build(),
+            UserChunkProgress.builder().userId("u-alice").lessonId("s-java-2")
+                .status(LessonStatus.COMPLETE).build(),
+            UserChunkProgress.builder().userId("u-alice").lessonId("s-tw-1")
+                .status(LessonStatus.COMPLETE).build(),
             // IN_PROGRESS row is ignored
-            UserChunkProgress.builder().userId("u-alice").subChunkId("s-tw-1")
-                .status(SubChunkStatus.IN_PROGRESS).build()
+            UserChunkProgress.builder().userId("u-alice").lessonId("s-tw-1")
+                .status(LessonStatus.IN_PROGRESS).build()
         ));
-        when(topicRepository.findAll()).thenReturn(List.of(
-            Topic.builder().id("java").name("Java").glyph("☕").accentColor("#f00").sortOrder(1).build(),
-            Topic.builder().id("tailwind").name("Tailwind").glyph("🎨").accentColor("#0f0").sortOrder(2).build()
+        when(domainRepository.findAll()).thenReturn(List.of(
+            Domain.builder().id("java").name("Java").glyph("☕").accentColor("#f00").sortOrder(1).build(),
+            Domain.builder().id("tailwind").name("Tailwind").glyph("🎨").accentColor("#0f0").sortOrder(2).build()
         ));
         when(gamificationFacade.getEarnedBadges("u-alice")).thenReturn(List.of());
 
@@ -126,11 +126,11 @@ class PublicProfileServiceTest {
 
         // Topics sorted by xpEarned desc — java (50+75=125) before tailwind (40)
         assertThat(profile.topics()).hasSize(2);
-        assertThat(profile.topics().get(0).topicId()).isEqualTo("java");
+        assertThat(profile.topics().get(0).domainId()).isEqualTo("java");
         assertThat(profile.topics().get(0).xpEarned()).isEqualTo(125);
         assertThat(profile.topics().get(0).subChunksCompleted()).isEqualTo(2);
         assertThat(profile.topics().get(0).name()).isEqualTo("Java");
-        assertThat(profile.topics().get(1).topicId()).isEqualTo("tailwind");
+        assertThat(profile.topics().get(1).domainId()).isEqualTo("tailwind");
         assertThat(profile.topics().get(1).xpEarned()).isEqualTo(40);
         assertThat(profile.topics().get(1).subChunksCompleted()).isEqualTo(1);
     }
@@ -143,9 +143,9 @@ class PublicProfileServiceTest {
         User alice = user("alice", true);
         when(userRepository.findByUsername("alice")).thenReturn(Optional.of(alice));
         when(progressRepository.findByUserId("u-alice")).thenReturn(List.of());
-        lenient().when(chunkRepository.findAll()).thenReturn(List.of());
-        lenient().when(subChunkRepository.findAll()).thenReturn(List.of());
-        lenient().when(topicRepository.findAll()).thenReturn(List.of());
+        lenient().when(moduleRepository.findAll()).thenReturn(List.of());
+        lenient().when(lessonRepository.findAll()).thenReturn(List.of());
+        lenient().when(domainRepository.findAll()).thenReturn(List.of());
 
         Instant older = Instant.parse("2025-01-01T00:00:00Z");
         Instant newer = Instant.parse("2025-04-01T00:00:00Z");
@@ -177,9 +177,9 @@ class PublicProfileServiceTest {
         User alice = user("alice", true);
         when(userRepository.findByUsername("alice")).thenReturn(Optional.of(alice));
         when(progressRepository.findByUserId("u-alice")).thenReturn(List.of());
-        lenient().when(chunkRepository.findAll()).thenReturn(List.of());
-        lenient().when(subChunkRepository.findAll()).thenReturn(List.of());
-        lenient().when(topicRepository.findAll()).thenReturn(List.of());
+        lenient().when(moduleRepository.findAll()).thenReturn(List.of());
+        lenient().when(lessonRepository.findAll()).thenReturn(List.of());
+        lenient().when(domainRepository.findAll()).thenReturn(List.of());
 
         when(gamificationFacade.getEarnedBadges("u-alice")).thenReturn(List.of(
             BadgeDto.aBadgeDto().withId("LEGACY_BADGE_NO_LONGER_DEFINED")

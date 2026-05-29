@@ -6,7 +6,7 @@ import java.util.List;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class AdminQuestionDto {
     private String id;
-    private String subChunkId;
+    private String lessonId;
     private String type;
     private String tier;
     private String questionHtml;

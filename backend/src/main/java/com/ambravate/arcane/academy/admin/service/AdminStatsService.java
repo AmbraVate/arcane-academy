@@ -3,19 +3,22 @@ package com.ambravate.arcane.academy.admin.service;
 import com.ambravate.arcane.academy.admin.dto.AdminStatsDto;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
 import com.ambravate.arcane.academy.admin.dto.ContentHealthDto;
+import com.ambravate.arcane.academy.admin.dto.DailyCount;
+import com.ambravate.arcane.academy.admin.dto.TopicEngagementItem;
 import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
-import com.ambravate.arcane.academy.common.domain.Chunk;
+import com.ambravate.arcane.academy.admin.dto.XpBucket;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.Question;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
-import com.ambravate.arcane.academy.content.repository.TopicRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
+import com.ambravate.arcane.academy.content.repository.DomainRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -39,9 +42,9 @@ import java.util.stream.Collectors;
 public class AdminStatsService {
 
     private final UserRepository userRepository;
-    private final TopicRepository topicRepository;
-    private final ChunkRepository chunkRepository;
-    private final SubChunkRepository subChunkRepository;
+    private final DomainRepository domainRepository;
+    private final LearningModuleRepository moduleRepository;
+    private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final UserChunkProgressRepository progressRepository;
     private final GamificationFacade gamificationFacade;
@@ -54,15 +57,15 @@ public class AdminStatsService {
         List<User> recent = userRepository.findTop10ByOrderByCreatedAtDesc();
         List<AdminUserDto> recentDtos = recent.stream().map(u -> toUserDto(u, 0)).toList();
 
-        // Content health — subchunks missing key fields or zero questions
-        List<SubChunk> allSubs = subChunkRepository.findAll();
+        // Content health â€” subchunks missing key fields or zero questions
+        List<Lesson> allSubs = lessonRepository.findAll();
         Map<String, Long> questionCounts = questionRepository.findAll().stream()
-                .collect(Collectors.groupingBy(Question::getSubChunkId, Collectors.counting()));
-        Map<String, Chunk> chunkById = chunkRepository.findAll().stream()
-                .collect(Collectors.toMap(Chunk::getId, c -> c));
+                .collect(Collectors.groupingBy(Question::getLessonId, Collectors.counting()));
+        Map<String, LearningModule> chunkById = moduleRepository.findAll().stream()
+                .collect(Collectors.toMap(LearningModule::getId, c -> c));
 
         List<ContentHealthDto> health = new ArrayList<>();
-        for (SubChunk sc : allSubs) {
+        for (Lesson sc : allSubs) {
             List<String> issues = new ArrayList<>();
             if (sc.getHookHtml() == null || sc.getHookHtml().isBlank())
                 issues.add("Missing hook");
@@ -71,19 +74,19 @@ public class AdminStatsService {
             // "Missing guided practice" is only meaningful for practice-type sub-chunks.
             // NONE-type sub-chunks (SQL read-only, written-response) use a different
             // practice model and may intentionally have no guided-practice HTML.
-            boolean isNonePractice = sc.getPracticeType() == SubChunkPracticeType.NONE;
+            boolean isNonePractice = sc.getPracticeType() == LessonPracticeType.NONE;
             if (!isNonePractice && (sc.getGuidedPracticeHtml() == null || sc.getGuidedPracticeHtml().isBlank()))
                 issues.add("Missing guided practice");
             if (questionCounts.getOrDefault(sc.getId(), 0L) == 0)
                 issues.add("No retrieval questions");
 
             if (!issues.isEmpty()) {
-                Chunk parent = chunkById.get(sc.getChunkId());
+                LearningModule parent = chunkById.get(sc.getModuleId());
                 health.add(ContentHealthDto.builder()
-                        .subChunkId(sc.getId())
+                        .lessonId(sc.getId())
                         .title(sc.getTitle())
-                        .chunkTitle(parent != null ? parent.getTitle() : sc.getChunkId())
-                        .topicId(parent != null ? parent.getTopicId() : null)
+                        .chunkTitle(parent != null ? parent.getTitle() : sc.getModuleId())
+                        .domainId(parent != null ? parent.getDomainId() : null)
                         .tier(parent != null && parent.getTier() != null ? parent.getTier().name() : null)
                         .issues(issues)
                         .build());
@@ -117,17 +120,17 @@ public class AdminStatsService {
                     xpDistribution.add(new XpBucket(rs.getString("rank"), rs.getLong("cnt")));
             });
 
-        // Topic engagement
+        // Domain engagement
         List<TopicEngagementItem> topicEngagement = new ArrayList<>();
         jdbc.query("""
             SELECT t.id AS topic_id, t.name AS topic_name, t.glyph,
                 COUNT(DISTINCT sc.id)                                                    AS total_sub_chunks,
                 COUNT(DISTINCT CASE WHEN ucp.status = 'COMPLETE' THEN ucp.id END)       AS total_completions,
                 COUNT(DISTINCT CASE WHEN ucp.status = 'COMPLETE' THEN ucp.user_id END)  AS unique_learners
-            FROM topics t
-            JOIN chunks c ON c.topic_id = t.id
-            JOIN sub_chunks sc ON sc.chunk_id = c.id
-            LEFT JOIN user_chunk_progress ucp ON ucp.sub_chunk_id = sc.id
+            FROM domains t
+            JOIN modules c ON c.domain_id = t.id
+            JOIN lessons sc ON sc.module_id = c.id
+            LEFT JOIN user_chunk_progress ucp ON ucp.lesson_id = sc.id
             WHERE t.active = true
             GROUP BY t.id, t.name, t.glyph
             ORDER BY t.sort_order
@@ -146,9 +149,9 @@ public class AdminStatsService {
         return AdminStatsDto.builder()
                 .totalUsers(userRepository.count())
                 .activeUsers7d(userRepository.countByLastLoginAtAfter(sevenDaysAgo))
-                .totalTopics(topicRepository.count())
-                .totalChunks(chunkRepository.count())
-                .totalSubChunks(subChunkRepository.count())
+                .totalTopics(domainRepository.count())
+                .totalChunks(moduleRepository.count())
+                .totalSubChunks(lessonRepository.count())
                 .totalQuestions(questionRepository.count())
                 .totalNotes(jdbc.queryForObject("SELECT COUNT(*) FROM user_notes", Long.class))
                 .totalCapstones(jdbc.queryForObject("SELECT COUNT(*) FROM user_capstones", Long.class))
@@ -190,20 +193,20 @@ public class AdminStatsService {
     }
 
     public UserStatsDto toUserStatsDto(User u) {
-        long subChunksCompleted = progressRepository.countByUserIdAndStatus(u.getId(), SubChunkStatus.COMPLETE);
+        long subChunksCompleted = progressRepository.countByUserIdAndStatus(u.getId(), LessonStatus.COMPLETE);
 
         // Count chunks where every sub-chunk is completed by this user
         List<UserChunkProgress> userProgress = progressRepository.findByUserId(u.getId());
         java.util.Set<String> completedSubChunkIds = userProgress.stream()
-                .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE)
-                .map(UserChunkProgress::getSubChunkId)
+                .filter(p -> p.getStatus() == LessonStatus.COMPLETE)
+                .map(UserChunkProgress::getLessonId)
                 .collect(java.util.stream.Collectors.toSet());
-        Map<String, List<SubChunk>> subChunksByChunk = subChunkRepository.findAll().stream()
-                .collect(Collectors.groupingBy(SubChunk::getChunkId));
+        Map<String, List<Lesson>> subChunksByChunk = lessonRepository.findAll().stream()
+                .collect(Collectors.groupingBy(Lesson::getModuleId));
         long chunksCompleted = subChunksByChunk.values().stream()
                 .filter(subs -> !subs.isEmpty()
                         && completedSubChunkIds.containsAll(
-                                subs.stream().map(SubChunk::getId).toList()))
+                                subs.stream().map(Lesson::getId).toList()))
                 .count();
 
         long badgesEarned = gamificationFacade.getBadgeCount(u.getId());

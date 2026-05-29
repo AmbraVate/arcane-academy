@@ -1,0 +1,37 @@
+{
+  "id": "sql-app-14",
+  "title": "Combining Result Sets",
+  "glyph": "🗃️",
+  "sortOrder": 14,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-13"],
+  "subChunks": [{
+    "id": "sql-app-14a",
+    "title": "UNION, INTERSECT, and EXCEPT",
+    "sortOrder": 1,
+    "xpReward": 70,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Sometimes you need to stack the results of two queries vertically — adding rows together rather than joining tables horizontally. <code>UNION</code> does exactly that.</p>",
+    "explanationHtml": "<h3>UNION — combine and deduplicate</h3><pre><code>SELECT name FROM apprentices WHERE rank = 'Novice'\nUNION\nSELECT name FROM apprentices WHERE xp > 4000;</code></pre><p>Rules: both queries must return the same number of columns, and column types must be compatible. <code>UNION</code> removes duplicate rows from the combined result.</p><h3>UNION ALL — keep duplicates</h3><pre><code>SELECT name FROM table_a\nUNION ALL\nSELECT name FROM table_b;</code></pre><p><code>UNION ALL</code> is faster than <code>UNION</code> because it skips the deduplication step. Prefer it when you know the results are distinct or when duplicates are acceptable.</p><h3>INTERSECT — rows in both results</h3><pre><code>SELECT name FROM apprentices WHERE xp > 1000\nINTERSECT\nSELECT name FROM apprentices WHERE rank != 'Mage';</code></pre><h3>EXCEPT — rows in the first but not the second</h3><pre><code>SELECT name FROM apprentices\nEXCEPT\nSELECT name FROM apprentices WHERE rank = 'Novice';</code></pre><p>INTERSECT and EXCEPT are in the SQL standard but not all engines support them (MySQL added INTERSECT only in v8.0.31).</p>",
+    "storyBeats": [
+      {"type":"narration","text":"Two ledgers from different Academy buildings — the Archivist must combine them into a single list with no duplicates."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"UNION stacks two result sets vertically and removes duplicates. UNION ALL stacks them without removing anything — faster, but you must be sure duplicates are acceptable. INTERSECT gives only rows appearing in both; EXCEPT gives rows in the first but absent from the second."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Combined list</h3><p>Return the names of all apprentices who are either rank 'Novice' OR have XP above 4 000, using UNION (no duplicates). Order by name.</p>",
+    "guidedPracticeStarterCode": "SELECT name FROM apprentices WHERE rank = 'Novice'\nUNION\nSELECT name FROM apprentices WHERE xp > 4000\nORDER BY name;",
+    "guidedPracticeTests": [
+      {"label":"Returns 3 rows (Dorian Novice, Cassia xp>4000, Elara xp>4000)","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":3,"matchMode":"rowCount"},
+      {"label":"Returns Cassia, Dorian, Elara (alphabetically)","expectedQuery":"SELECT name FROM apprentices WHERE rank = 'Novice' UNION SELECT name FROM apprentices WHERE xp > 4000 ORDER BY name","matchMode":"rowsExact"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Using EXCEPT, return the names of apprentices who have XP over 500 but are NOT rank 'Apprentice'. Order by name.</p>",
+    "feynmanPrompt": "Explain the difference between UNION and UNION ALL, and when you would choose each one.",
+    "questions": [
+      {"id":"sql-app-14a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What is the key difference between UNION and UNION ALL?","options":["UNION removes duplicates; UNION ALL keeps all rows including duplicates","UNION ALL removes duplicates; UNION keeps all rows","UNION joins horizontally; UNION ALL stacks vertically","UNION ALL requires matching column names; UNION does not"],"answer":"UNION removes duplicates; UNION ALL keeps all rows including duplicates","explanation":"Both stack result sets vertically. UNION does an implicit DISTINCT over the combined results (more expensive). UNION ALL skips deduplication and is therefore faster."},
+      {"id":"sql-app-14a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Using lesson data, how many rows does the UNION query in the guided practice return?","options":["3 (Dorian, Cassia, Elara)","2 (Cassia, Elara)","4","6"],"answer":"3 (Dorian, Cassia, Elara)","explanation":"First query: rank='Novice' → Dorian. Second query: xp>4000 → Cassia (4800), Elara (7500). UNION combines and deduplicates: 3 distinct rows."},
+      {"id":"sql-app-14a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"What must be true for two queries to be combined with UNION?","options":["Both must return the same number of columns with compatible types","Both must query the same table","Both must have the same WHERE clause","Both must return at least one row"],"answer":"Both must return the same number of columns with compatible types","explanation":"UNION stacks rows. For stacking to work, each row must have the same shape — same column count and compatible types. The column names in the result are taken from the first query."},
+      {"id":"sql-app-14a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"When should you prefer UNION ALL over UNION?","options":["When you know the results are already distinct, or duplicates are acceptable — UNION ALL is faster","When you need duplicates removed automatically","When the two queries return different column counts","When ORDER BY is used"],"answer":"When you know the results are already distinct, or duplicates are acceptable — UNION ALL is faster","explanation":"UNION performs a sort/hash to deduplicate, which has a cost. UNION ALL skips that step. If your data is already distinct by design, or duplicates are harmless, always prefer UNION ALL for performance."}
+    ]
+  }]
+}

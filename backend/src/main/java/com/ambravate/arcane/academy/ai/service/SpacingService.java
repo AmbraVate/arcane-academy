@@ -20,21 +20,21 @@ public class SpacingService {
 
     /**
      * Core SM-2 algorithm update.
-     * @param score 0.0 to 1.0 — the learner's score on retrieval/review
+     * @param score 0.0 to 1.0 â€” the learner's score on retrieval/review
      */
     @Transactional
-    public void updateSpacing(String userId, String subChunkId, double score) {
+    public void updateSpacing(String userId, String lessonId, double score) {
         UserChunkProgress progress = progressRepository
-                .findByUserIdAndSubChunkId(userId, subChunkId)
-                .orElseThrow(() -> new IllegalStateException("No progress found for " + subChunkId));
+                .findByUserIdAndLessonId(userId, lessonId)
+                .orElseThrow(() -> new IllegalStateException("No progress found for " + lessonId));
 
         double q5 = score * 5.0; // Map 0-1 to SM-2's 0-5 scale
 
         if (score < 0.6) {
-            // Failed review — reset interval
+            // Failed review â€” reset interval
             progress.setRepetitionCount(0);
             progress.setIntervalDays(1);
-            log.info("[SM-2] Reset | user={} subChunk={} score={}", userId, subChunkId, score);
+            log.info("[SM-2] Reset | user={} subChunk={} score={}", userId, lessonId, score);
         } else {
             int rep = progress.getRepetitionCount() + 1;
             progress.setRepetitionCount(rep);
@@ -52,7 +52,7 @@ public class SpacingService {
             progress.setEaseFactor(Math.max(1.3, ef));
 
             log.info("[SM-2] Updated | user={} subChunk={} score={} interval={}d ef={}",
-                    userId, subChunkId, score, progress.getIntervalDays(), progress.getEaseFactor());
+                    userId, lessonId, score, progress.getIntervalDays(), progress.getEaseFactor());
         }
 
         // Update memory strength: blend of new score and previous strength

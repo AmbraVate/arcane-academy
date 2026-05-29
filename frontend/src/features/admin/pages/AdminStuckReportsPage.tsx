@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { adminStuckReportApi, type StuckReport } from '@/shared/api/adminServices'
 import { AlertTriangle, CheckCircle2, Clock, ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -62,7 +62,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
       borderLeft: `3px solid ${m.color}`,
       borderRadius: 10, overflow: 'hidden', marginBottom: 10,
     }}>
-      {/* ── Summary row ── */}
+      {/* â”€â”€ Summary row â”€â”€ */}
       <div
         style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', cursor: 'pointer' }}
         onClick={() => setExpanded(e => !e)}
@@ -75,13 +75,13 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
               {report.username}
             </span>
             <span style={{ fontSize: 11, color: '#8b7fa0' }}>{report.email}</span>
-            {report.topicId && (
+            {report.domainId && (
               <span style={{
                 fontSize: 10, padding: '1px 6px', borderRadius: 4,
                 background: 'rgba(139,92,246,.15)', color: '#c4b5fd',
                 border: '1px solid rgba(139,92,246,.3)',
               }}>
-                {report.topicId}
+                {report.domainId}
               </span>
             )}
             {report.currentPhase && (
@@ -108,7 +108,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
         </div>
       </div>
 
-      {/* ── Expanded detail ── */}
+      {/* â”€â”€ Expanded detail â”€â”€ */}
       {expanded && (
         <div style={{ padding: '0 16px 16px', borderTop: '1px solid #1e1a35' }}>
 
@@ -143,10 +143,10 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
           )}
 
           {/* Sub-chunk */}
-          {report.subChunkId && (
+          {report.lessonId && (
             <div style={{ marginTop: 10 }}>
               <div style={{ fontSize: 10, color: '#8b7fa0', fontFamily: 'Cinzel, serif', marginBottom: 3 }}>LESSON ID</div>
-              <div style={{ fontSize: 11, color: '#e8e0f0', fontFamily: 'monospace' }}>{report.subChunkId}</div>
+              <div style={{ fontSize: 11, color: '#e8e0f0', fontFamily: 'monospace' }}>{report.lessonId}</div>
             </div>
           )}
 
@@ -174,7 +174,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={2}
-              placeholder="Internal notes (not shown to user)…"
+              placeholder="Internal notes (not shown to user)â€¦"
               style={{
                 width: '100%', boxSizing: 'border-box', resize: 'vertical',
                 background: '#0e0c1e', border: '1px solid #2e2850',
@@ -219,7 +219,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
                 WebkitTapHighlightColor: 'transparent',
               }}
             >
-              {saving ? 'Saving…' : 'Save Notes'}
+              {saving ? 'Savingâ€¦' : 'Save Notes'}
             </button>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function AdminStuckReportsPage() {
     RESOLVED: reports.filter(r => r.status === 'RESOLVED').length,
   }
 
-  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading reports…</div>
+  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading reportsâ€¦</div>
   if (error)   return <div style={{ color: '#f87171', fontSize: 14 }}>{error}</div>
 
   return (

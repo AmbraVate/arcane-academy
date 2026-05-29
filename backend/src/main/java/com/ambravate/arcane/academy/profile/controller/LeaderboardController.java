@@ -19,18 +19,18 @@ public class LeaderboardController {
 
     private final LeaderboardService leaderboardService;
 
-    @GetMapping("/topic/{topicId}/weekly")
+    @GetMapping("/topic/{domainId}/weekly")
     public ResponseEntity<List<LeaderboardEntry>> topicWeekly(
-        @PathVariable String topicId,
+        @PathVariable String domainId,
         @RequestParam(defaultValue = "20") int limit) {
-        return ResponseEntity.ok(leaderboardService.topicWeekly(topicId, clamp(limit)));
+        return ResponseEntity.ok(leaderboardService.topicWeekly(domainId, clamp(limit)));
     }
 
-    @GetMapping("/topic/{topicId}/all-time")
+    @GetMapping("/topic/{domainId}/all-time")
     public ResponseEntity<List<LeaderboardEntry>> topicAllTime(
-        @PathVariable String topicId,
+        @PathVariable String domainId,
         @RequestParam(defaultValue = "20") int limit) {
-        return ResponseEntity.ok(leaderboardService.topicAllTime(topicId, clamp(limit)));
+        return ResponseEntity.ok(leaderboardService.topicAllTime(domainId, clamp(limit)));
     }
 
     @GetMapping("/polymath")

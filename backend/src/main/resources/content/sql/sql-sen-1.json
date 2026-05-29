@@ -1,0 +1,37 @@
+{
+  "id": "sql-sen-1",
+  "title": "Common Table Expressions",
+  "glyph": "⚡",
+  "sortOrder": 1,
+  "tier": "SENIOR",
+  "topicId": "sql",
+  "prerequisites": ["sql-jun-20"],
+  "subChunks": [{
+    "id": "sql-sen-1a",
+    "title": "WITH — Named Subqueries",
+    "sortOrder": 1,
+    "xpReward": 150,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Nested subqueries become unreadable fast. <code>WITH</code> (Common Table Expressions) gives each subquery a name — turning a dense tangle into a readable sequence of named steps.</p>",
+    "explanationHtml": "<h3>Syntax</h3><pre><code>WITH above_avg AS (\n  SELECT name, xp\n  FROM   apprentices\n  WHERE  xp > (SELECT AVG(xp) FROM apprentices)\n)\nSELECT * FROM above_avg ORDER BY xp DESC;</code></pre><h3>Multiple CTEs</h3><pre><code>WITH\n  avg_xp AS (\n    SELECT AVG(xp) AS avg FROM apprentices\n  ),\n  high_earners AS (\n    SELECT a.name, a.xp, m.name AS mentor\n    FROM   apprentices AS a\n    JOIN   mentors AS m ON a.mentor_id = m.id\n    WHERE  a.xp > (SELECT avg FROM avg_xp)\n  )\nSELECT * FROM high_earners ORDER BY xp DESC;</code></pre><p>Each CTE can reference any CTE defined before it in the WITH clause.</p><h3>CTE vs subquery</h3><ul><li>CTEs are named — code reads like steps in a recipe</li><li>CTEs can be referenced multiple times in the main query (saving re-computation in some engines)</li><li>CTEs support recursion (next lesson)</li><li>In most engines, CTEs are not materialised by default — the optimiser may inline them. PostgreSQL 12+ inlines by default; use <code>WITH cte AS MATERIALIZED (...)</code> to force materialisation</li></ul>",
+    "storyBeats": [
+      {"type":"narration","text":"The query spans four sub-queries, nested three levels deep. Nobody can read it tomorrow."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"WITH turns subqueries into named steps. Read it like prose: 'first compute the average, then find those above it, then join to their mentors.' Each step has a name. Each name can be read without unwrapping the nesting. Complex queries become legible."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Named query</h3><p>Using a CTE, first compute the average XP of the entire table as <code>avg_xp</code>, then return <code>name</code> and <code>xp</code> for all apprentices above that average, ordered by xp descending.</p>",
+    "guidedPracticeStarterCode": "WITH avg_xp AS (\n  SELECT AVG(xp) AS avg FROM apprentices\n)\nSELECT a.name, a.xp\nFROM   apprentices AS a, avg_xp\nWHERE  a.xp > avg_xp.avg\nORDER BY a.xp DESC;",
+    "guidedPracticeTests": [
+      {"label":"Returns apprentices above average (Bjorn 2400, Cassia 4800, Elara 7500 with avg≈1563)","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":3,"matchMode":"rowCount"},
+      {"label":"Columns name and xp","expectedColumns":["name","xp"],"matchMode":"columns"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Using two CTEs: (1) compute total XP per rank as <code>rank_totals</code>, (2) find ranks where total XP exceeds 2000 as <code>high_ranks</code>. Return the rank names from high_ranks.</p>",
+    "feynmanPrompt": "Explain what a CTE is, how it differs from a subquery, and when you would use multiple CTEs in a single query.",
+    "questions": [
+      {"id":"sql-sen-1a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"SENIOR","prompt":"What is a CTE (Common Table Expression)?","options":["A named temporary result set defined with WITH, scoped to a single query","A permanent view stored in the database","A table variable available across multiple queries","A type of stored procedure"],"answer":"A named temporary result set defined with WITH, scoped to a single query","explanation":"A CTE is defined with WITH cte_name AS (...) and exists only for the duration of the query that follows. It is not stored permanently."},
+      {"id":"sql-sen-1a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"SENIOR","prompt":"In a WITH clause with multiple CTEs, can a later CTE reference an earlier one?","options":["Yes — each CTE can reference any CTE defined before it in the same WITH clause","No — each CTE is independent","Only if both CTEs query the same table","Only in PostgreSQL, not in SQLite"],"answer":"Yes — each CTE can reference any CTE defined before it in the same WITH clause","explanation":"CTEs are evaluated sequentially within a WITH clause. A later CTE can SELECT from any earlier one by name, enabling step-by-step query construction."},
+      {"id":"sql-sen-1a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"SENIOR","prompt":"What advantage does a CTE have over a repeated subquery?","options":["The CTE is named and can be referenced multiple times in the main query without rewriting the subquery logic","CTEs are always faster than subqueries","CTEs support JOINs; subqueries do not","CTEs bypass the query optimiser"],"answer":"The CTE is named and can be referenced multiple times in the main query without rewriting the subquery logic","explanation":"A CTE can be referenced multiple times in the same query by name. Whether the engine materialises it or re-evaluates it each time depends on the engine and version, but the code is cleaner and less error-prone than repeated subquery text."},
+      {"id":"sql-sen-1a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"SENIOR","prompt":"When would you explicitly use `WITH cte AS MATERIALIZED (...)`?","options":["When the CTE is expensive to compute and referenced multiple times — forcing the engine to compute it once and cache the result","When the CTE contains an ORDER BY clause","When the CTE needs to write to the database","When the CTE references a table with more than 1 million rows"],"answer":"When the CTE is expensive to compute and referenced multiple times — forcing the engine to compute it once and cache the result","explanation":"By default, modern engines may inline CTEs and recompute them for each reference. MATERIALIZED forces a single computation and caches the result set. Useful for expensive CTEs referenced multiple times, or to prevent the optimiser from inlining in cases where that causes performance issues."}
+    ]
+  }]
+}

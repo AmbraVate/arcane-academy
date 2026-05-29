@@ -3,13 +3,13 @@ package com.ambravate.arcane.academy.practice.service;
 import com.ambravate.arcane.academy.ai.domain.GradeResult;
 import com.ambravate.arcane.academy.ai.domain.QuestionResult;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
-import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
+import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.auth.repository.UserTopicProfileRepository;
@@ -53,8 +53,8 @@ class DiagnosticServiceTest {
     private static final String USER_ID = "diag-user";
     private static final String TOPIC_ID = "java";
 
-    @Mock private ChunkRepository chunkRepository;
-    @Mock private SubChunkRepository subChunkRepository;
+    @Mock private LearningModuleRepository moduleRepository;
+    @Mock private LessonRepository lessonRepository;
     @Mock private QuestionRepository questionRepository;
     @Mock private UserChunkProgressRepository progressRepository;
     @Mock private UserLearnerProfileRepository profileRepository;
@@ -66,42 +66,42 @@ class DiagnosticServiceTest {
     @InjectMocks
     private DiagnosticService service;
 
-    private Chunk chunk(String id) {
-        Chunk c = new Chunk();
-        c.setId(id);
-        c.setTopicId(TOPIC_ID);
-        c.setSortOrder(1);
-        return c;
+    private LearningModule chunk(String id) {
+        return LearningModule.builder()
+                .id(id)
+                .domainId(TOPIC_ID)
+                .sortOrder(1)
+                .build();
     }
 
-    private SubChunk subChunk(String id, String chunkId) {
-        SubChunk sc = new SubChunk();
-        sc.setId(id);
-        sc.setChunkId(chunkId);
-        return sc;
+    private Lesson subChunk(String id, String moduleId) {
+        return Lesson.builder()
+                .id(id)
+                .moduleId(moduleId)
+                .build();
     }
 
     /**
-     * Build a GradeResult where the first {@code correctCount} sub-chunks out
-     * of the ordered list are answered correctly (2 correct per chunk → SKIP).
-     * Sub-chunks alternate a/b per chunk, so correct pairs produce SKIP chunks.
+     * Build a GradeResult where the first {@code correctCount} lessons out
+     * of the ordered list are answered correctly (2 correct per module → SKIP).
+     * Lessons alternate a/b per module, so correct pairs produce SKIP modules.
      */
     private GradeResult gradeResult(
-            List<String> subChunkIds, int correctCount) {
+            List<String> lessonIds, int correctCount) {
         List<QuestionResult> results = new java.util.ArrayList<>();
-        for (int i = 0; i < subChunkIds.size(); i++) {
-            String scId = subChunkIds.get(i);
+        for (int i = 0; i < lessonIds.size(); i++) {
+            String scId = lessonIds.get(i);
             results.add(new QuestionResult(
                     "q-" + scId, scId, i < correctCount, "A", "A", "no feedback"));
         }
         return new GradeResult(
-                (double) correctCount / subChunkIds.size(),
-                correctCount, subChunkIds.size(), results);
+                (double) correctCount / lessonIds.size(),
+                correctCount, lessonIds.size(), results);
     }
 
     @BeforeEach
     void commonStubs() {
-        when(progressRepository.existsByUserIdAndSubChunkId(any(), any())).thenReturn(false);
+        when(progressRepository.existsByUserIdAndLessonId(any(), any())).thenReturn(false);
         when(progressRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         ReviewSession session = new ReviewSession();
         session.setId("session-1");
@@ -113,32 +113,32 @@ class DiagnosticServiceTest {
     }
 
     /**
-     * Set up {@code chunkCount} chunks each with 2 sub-chunks.
-     * Returns the flat list of sub-chunk IDs in order.
+     * Set up {@code chunkCount} modules each with 2 lessons.
+     * Returns the flat list of lesson IDs in order.
      */
     private List<String> setupChunks(int chunkCount) {
-        List<Chunk> chunks = new java.util.ArrayList<>();
+        List<LearningModule> chunks = new java.util.ArrayList<>();
         for (int i = 0; i < chunkCount; i++) {
             chunks.add(chunk("chunk-" + i));
         }
-        when(chunkRepository.findAllByOrderBySortOrderAsc()).thenReturn(chunks);
+        when(moduleRepository.findByDomainIdOrderBySortOrderAsc(anyString())).thenReturn(chunks);
 
-        List<SubChunk> allSubChunks = new java.util.ArrayList<>();
-        List<String> allSubChunkIds = new java.util.ArrayList<>();
+        List<Lesson> allLessons = new java.util.ArrayList<>();
+        List<String> allLessonIds = new java.util.ArrayList<>();
 
-        for (Chunk c : chunks) {
-            SubChunk sc1 = subChunk(c.getId() + "-a", c.getId());
-            SubChunk sc2 = subChunk(c.getId() + "-b", c.getId());
-            when(subChunkRepository.findByChunkIdOrderBySortOrderAsc(c.getId()))
+        for (LearningModule c : chunks) {
+            Lesson sc1 = subChunk(c.getId() + "-a", c.getId());
+            Lesson sc2 = subChunk(c.getId() + "-b", c.getId());
+            when(lessonRepository.findByModuleIdOrderBySortOrderAsc(c.getId()))
                     .thenReturn(List.of(sc1, sc2));
-            allSubChunks.add(sc1);
-            allSubChunks.add(sc2);
-            allSubChunkIds.add(sc1.getId());
-            allSubChunkIds.add(sc2.getId());
+            allLessons.add(sc1);
+            allLessons.add(sc2);
+            allLessonIds.add(sc1.getId());
+            allLessonIds.add(sc2.getId());
         }
 
-        when(subChunkRepository.findAll()).thenReturn(allSubChunks);
-        return allSubChunkIds;
+        when(lessonRepository.findAll()).thenReturn(allLessons);
+        return allLessonIds;
     }
 
     // ── FOUNDATION boundary ─────────────────────────────────────────────────────
@@ -148,7 +148,7 @@ class DiagnosticServiceTest {
     class FoundationTier {
 
         @Test
-        @DisplayName("places learner at FOUNDATION when 0% of chunks are skipped")
+        @DisplayName("places learner at FOUNDATION when 0% of modules are skipped")
         void zeroSkipIsFoundation() {
             List<String> scIds = setupChunks(4);
             when(retrievalService.gradeAnswers(any()))
@@ -160,10 +160,8 @@ class DiagnosticServiceTest {
         }
 
         @Test
-        @DisplayName("places learner at FOUNDATION when exactly 50% of chunks are skipped")
+        @DisplayName("places learner at FOUNDATION when exactly 50% of modules are skipped")
         void exactlyFiftyPercentIsFoundation() {
-            // 10 chunks. 2 sub-chunks each → 20 sub-chunk entries.
-            // 10 sub-chunks correct → 5 chunks SKIP (50% = ≤50% → FOUNDATION).
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 10));
@@ -181,10 +179,8 @@ class DiagnosticServiceTest {
     class AdvancedTier {
 
         @Test
-        @DisplayName("places learner at ADVANCED when just over 50% of chunks are skipped")
+        @DisplayName("places learner at ADVANCED when just over 50% of modules are skipped")
         void justOverFiftyPercentIsAdvanced() {
-            // 10 chunks, 2 sub-chunks each → 20 sub-chunk slots.
-            // 12 correct → 6 chunks SKIP (60% > 50% but < 70% → ADVANCED).
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 12));
@@ -195,9 +191,8 @@ class DiagnosticServiceTest {
         }
 
         @Test
-        @DisplayName("places learner at ADVANCED when 65% of chunks are skipped")
+        @DisplayName("places learner at ADVANCED when 65% of modules are skipped")
         void sixtyFivePercentIsAdvanced() {
-            // 20 chunks → 40 sub-chunks. 26 correct → 13 SKIP (65% > 50%, < 70%).
             List<String> scIds = setupChunks(20);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 26));
@@ -208,10 +203,8 @@ class DiagnosticServiceTest {
         }
 
         @Test
-        @DisplayName("places learner at ADVANCED when exactly 70% of chunks are skipped (boundary is strictly > 70%)")
+        @DisplayName("places learner at ADVANCED when exactly 70% of modules are skipped (boundary is strictly > 70%)")
         void exactlySeventyPercentIsAdvanced() {
-            // 10 chunks → 20 sub-chunks. 14 correct → 7 SKIP = 70%.
-            // 70% is NOT > 70%, so it falls into ADVANCED, not PRACTITIONER.
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 14));
@@ -229,9 +222,8 @@ class DiagnosticServiceTest {
     class PractitionerTier {
 
         @Test
-        @DisplayName("places learner at PRACTITIONER when 80% of chunks are skipped")
+        @DisplayName("places learner at PRACTITIONER when 80% of modules are skipped")
         void eightyPercentIsPractitioner() {
-            // 10 chunks → 20 sub-chunks. 16 correct → 8 SKIP (80% > 70%, < 90%).
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 16));
@@ -249,9 +241,8 @@ class DiagnosticServiceTest {
     class ExpertTier {
 
         @Test
-        @DisplayName("places learner at EXPERT when more than 90% of chunks are skipped")
+        @DisplayName("places learner at EXPERT when more than 90% of modules are skipped")
         void ninetyOnePercentIsExpert() {
-            // 10 chunks → 20 sub-chunks. 20 correct → 10 SKIP = 100% > 90% → EXPERT.
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 20));

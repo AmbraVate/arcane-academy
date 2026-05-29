@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi, paymentsApi } from '@/shared/api/services'
@@ -16,7 +16,7 @@ import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
 type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'subscription' | 'preferences'
 
-/* ── Rank progression ────────────────────────────────────────────────────── */
+/* â”€â”€ Rank progression â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const RANK_THRESHOLDS: { rank: string; min: number; max: number | null; icon: LucideIcon; color: string }[] = [
   { rank: 'Novice',     min: 0,     max: 800,   icon: Star,         color: 'var(--muted)'       },
@@ -56,7 +56,7 @@ function RankProgressBar({ rank, totalXp }: { rank: string; totalXp: number }) {
         />
       </div>
       <div className="mt-1 text-[10px] text-muted text-right font-cinzel">
-        {pct}%{current.max ? ` · ${(current.max - totalXp).toLocaleString()} XP to go` : ' · Max rank'}
+        {pct}%{current.max ? ` Â· ${(current.max - totalXp).toLocaleString()} XP to go` : ' Â· Max rank'}
       </div>
     </div>
   )
@@ -262,7 +262,7 @@ export default function ProfilePage() {
     <div className="flex-1 overflow-y-auto px-6 py-8 max-[600px]:px-3 max-[600px]:py-5">
       <div className="max-w-[800px] mx-auto">
 
-        {/* Profile header — always visible */}
+        {/* Profile header â€” always visible */}
         <div className="flex items-center gap-6 p-7 bg-card border border-border rounded-[14px] mb-5 max-[600px]:flex-col max-[600px]:text-center">
           {/* Rank avatar */}
           {(() => {
@@ -301,7 +301,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Tab bar — horizontally scrollable on mobile */}
+        {/* Tab bar â€” horizontally scrollable on mobile */}
         <div className="flex mb-6 border-b border-border pb-0 overflow-x-auto scrollbar-none">
           {tabs.map(t => (
             <button
@@ -326,7 +326,7 @@ export default function ProfilePage() {
             <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex items-center justify-between gap-4 max-[480px]:flex-col max-[480px]:items-start">
               <div>
                 <div className="font-cinzel text-[13px] text-text mb-0.5">
-                  Public profile {publicEnabled ? <span className="text-green">· On</span> : <span className="text-muted">· Off</span>}
+                  Public profile {publicEnabled ? <span className="text-green">Â· On</span> : <span className="text-muted">Â· Off</span>}
                 </div>
                 <div className="text-[11px] text-muted leading-snug">
                   {publicEnabled
@@ -344,7 +344,7 @@ export default function ProfilePage() {
                     : 'bg-card border-border text-muted hover:border-purple-dim'
                 )}
               >
-                {savingVisibility ? 'Saving…' : publicEnabled ? 'Make private' : 'Make public'}
+                {savingVisibility ? 'Savingâ€¦' : publicEnabled ? 'Make private' : 'Make public'}
               </button>
             </div>
 
@@ -352,7 +352,7 @@ export default function ProfilePage() {
             <div className="bg-card border border-border rounded-[12px] px-5 py-4">
               <div className="font-cinzel text-[13px] text-text mb-1">Location</div>
               <div className="text-[11px] text-muted leading-snug mb-3">
-                Shown on public leaderboards. Optional — leave blank to stay anonymous.
+                Shown on public leaderboards. Optional â€” leave blank to stay anonymous.
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -375,7 +375,7 @@ export default function ProfilePage() {
                     'bg-card border-border text-muted hover:border-purple-dim',
                   )}
                 >
-                  {savingLocation ? 'Saving…' : 'Save'}
+                  {savingLocation ? 'Savingâ€¦' : 'Save'}
                 </button>
               </div>
             </div>
@@ -412,19 +412,19 @@ export default function ProfilePage() {
         {/* Tab: Topics */}
         {tab === 'topics' && (
           <div className="flex flex-col gap-4">
-            {dashLoading && <p className="text-muted italic text-center py-8">Loading topic data…</p>}
+            {dashLoading && <p className="text-muted italic text-center py-8">Loading topic dataâ€¦</p>}
             {!dashLoading && ACTIVE_TOPICS.map(topic => {
               const dash = allTopicDash[topic.id]
               if (!dash) return null
               return (
                 <TopicCard
                   key={topic.id}
-                  topicId={topic.id}
+                  domainId={topic.id}
                   name={topic.name}
                   tier={dash.currentPath}
                   diagnosticCompleted={dash.diagnosticCompleted}
-                  completedSubChunks={dash.chunkHealth.reduce((s, c) => s + c.completedSubChunks, 0)}
-                  totalSubChunks={dash.chunkHealth.reduce((s, c) => s + c.totalSubChunks, 0)}
+                  completedLessons={dash.chunkHealth.reduce((s, c) => s + c.completedLessons, 0)}
+                  totalLessons={dash.chunkHealth.reduce((s, c) => s + c.totalLessons, 0)}
                   totalXp={dash.totalXp}
                   onContinue={() => navigate(`/topic/${topic.id}`)}
                   onRetakeDiagnostic={() => navigate(`/topic/${topic.id}/diagnostic`)}
@@ -434,7 +434,7 @@ export default function ProfilePage() {
             {!dashLoading && ACTIVE_TOPICS.every(t => !allTopicDash[t.id]) && (
               <div className="text-center py-10 text-muted italic">
                 <p>No topic data found. Start a topic to see your progress here.</p>
-                <button className="btn btn-primary mt-4" onClick={() => navigate('/topics')}>Browse Topics →</button>
+                <button className="btn btn-primary mt-4" onClick={() => navigate('/topics')}>Browse Topics â†’</button>
               </div>
             )}
           </div>
@@ -443,7 +443,7 @@ export default function ProfilePage() {
         {/* Tab: Badges */}
         {tab === 'badges' && (
           <div>
-            {badgesLoading && <p className="text-muted italic text-center py-8">Loading badges…</p>}
+            {badgesLoading && <p className="text-muted italic text-center py-8">Loading badgesâ€¦</p>}
             {!badgesLoading && (
               <>
                 {/* Category filter chips */}
@@ -467,7 +467,7 @@ export default function ProfilePage() {
                 {earnedFiltered.length > 0 && (
                   <section className="mb-7">
                     <h2 className="font-cinzel text-[13px] text-gold tracking-[1px] mb-3 pb-1.5 border-b border-border">
-                      ✦ Earned ({earnedFiltered.length})
+                      âœ¦ Earned ({earnedFiltered.length})
                     </h2>
                     <BadgeGrid badges={earnedFiltered} />
                   </section>
@@ -476,7 +476,7 @@ export default function ProfilePage() {
                 {availableFiltered.length > 0 && (
                   <section>
                     <h2 className="font-cinzel text-[13px] text-muted tracking-[1px] mb-3 pb-1.5 border-b border-border">
-                      🔒 Available to Earn ({availableFiltered.length})
+                      ðŸ”’ Available to Earn ({availableFiltered.length})
                     </h2>
                     <BadgeGrid badges={availableFiltered} />
                   </section>
@@ -493,10 +493,10 @@ export default function ProfilePage() {
         {/* Tab: Rabbit Holes */}
         {tab === 'rabbit-holes' && (
           <div>
-            {rhLoading && <p className="text-muted italic text-center py-8">Loading rabbit holes…</p>}
+            {rhLoading && <p className="text-muted italic text-center py-8">Loading rabbit holesâ€¦</p>}
             {!rhLoading && rabbitHoles.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">🐇</div>
+                <div className="text-[48px] mb-4">ðŸ‡</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No saved rabbit holes yet. While reading story content, click on highlighted terms to save them here for later exploration.
                 </p>
@@ -520,14 +520,14 @@ export default function ProfilePage() {
         {/* Tab: Notes */}
         {tab === 'notes' && (
           <div>
-            {notesLoading && <p className="text-muted italic text-center py-8">Loading notes…</p>}
+            {notesLoading && <p className="text-muted italic text-center py-8">Loading notesâ€¦</p>}
             {!notesLoading && (
               <>
                 {notes.length > 0 && (
                   <div className="mb-4">
                     <input
                       type="text"
-                      placeholder="Search notes…"
+                      placeholder="Search notesâ€¦"
                       value={noteSearch}
                       onChange={e => setNoteSearch(e.target.value)}
                       className="w-full bg-card border border-border rounded-[10px] px-4 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-purple-dim transition-[border-color] duration-150"
@@ -536,7 +536,7 @@ export default function ProfilePage() {
                 )}
                 {filteredNotes.length === 0 && (
                   <div className="text-center py-12">
-                    <div className="text-[48px] mb-4">📝</div>
+                    <div className="text-[48px] mb-4">ðŸ“</div>
                     <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                       {noteSearch
                         ? 'No notes match your search.'
@@ -574,10 +574,10 @@ export default function ProfilePage() {
         {/* Tab: Projects (Capstones) */}
         {tab === 'projects' && (
           <div>
-            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projects…</p>}
+            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projectsâ€¦</p>}
             {!capstonesLoading && capstones.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">🏗️</div>
+                <div className="text-[48px] mb-4">ðŸ—ï¸</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No saved projects yet. Complete a capstone lesson to save your project here.
                 </p>
@@ -638,10 +638,10 @@ export default function ProfilePage() {
         {/* Tab: Reports (Stuck Reports history) */}
         {tab === 'reports' && (
           <div>
-            {reportsLoading && <p className="text-muted italic text-center py-8">Loading reports…</p>}
+            {reportsLoading && <p className="text-muted italic text-center py-8">Loading reportsâ€¦</p>}
             {!reportsLoading && reports.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">🚩</div>
+                <div className="text-[48px] mb-4">ðŸš©</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No reports yet. Use the "I'm stuck" button during a lesson to get help from the team.
                 </p>
@@ -665,7 +665,7 @@ export default function ProfilePage() {
             )}
 
             {subLoading ? (
-              <div className="text-center py-12 text-muted font-cinzel text-[13px]">Loading…</div>
+              <div className="text-center py-12 text-muted font-cinzel text-[13px]">Loadingâ€¦</div>
             ) : subscriptionStatus ? (
               <SubscriptionPanel
                 status={subscriptionStatus}
@@ -687,10 +687,10 @@ export default function ProfilePage() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <div className="font-cinzel text-[13px] text-text mb-0.5">
-                      {theme === 'blizzard' ? '❄ Blizzard' : '✦ Default (Dark)'}
+                      {theme === 'blizzard' ? 'â„ Blizzard' : 'âœ¦ Default (Dark)'}
                     </div>
                     <div className="text-[11px] text-muted leading-snug">
-                      {theme === 'blizzard' ? 'Frostbound Academy — Lich-King dark fantasy.' : 'Arcane Academy — purples, golds, dark backgrounds.'}
+                      {theme === 'blizzard' ? 'Frostbound Academy â€” Lich-King dark fantasy.' : 'Arcane Academy â€” purples, golds, dark backgrounds.'}
                     </div>
                   </div>
                   <button onClick={toggleTheme} className="btn btn-ghost flex-shrink-0 text-[12px] px-4 py-1.5">
@@ -699,7 +699,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <div className="flex items-center gap-3 text-muted text-[12px] leading-snug">
-                  <span className="text-[20px]">❄</span>
+                  <span className="text-[20px]">â„</span>
                   <span>
                     <strong className="text-text">Blizzard theme is not available on mobile.</strong>
                     <br />Switch to a larger screen to unlock it.
@@ -708,7 +708,7 @@ export default function ProfilePage() {
               )}
             </div>
 
-            {/* Blizzard preferences — only show when blizzard theme active and available */}
+            {/* Blizzard preferences â€” only show when blizzard theme active and available */}
             {blizzardAvailable && theme === 'blizzard' && (
               <>
                 {/* Palette picker */}
@@ -728,7 +728,7 @@ export default function ProfilePage() {
                           ))}
                         </div>
                         <div className="name">{p.name}</div>
-                        {blizzardPrefs.palette === p.id && <div className="check">✓</div>}
+                        {blizzardPrefs.palette === p.id && <div className="check">âœ“</div>}
                       </div>
                     ))}
                   </div>
@@ -755,7 +755,7 @@ export default function ProfilePage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-cinzel text-[12px] text-text tracking-wide">Heading Font</div>
-                      <div className="text-[11px] text-muted">Cinzel — engraved. Rune — gothic blackletter.</div>
+                      <div className="text-[11px] text-muted">Cinzel â€” engraved. Rune â€” gothic blackletter.</div>
                     </div>
                     <div className="seg">
                       <button className={blizzardPrefs.font === 'cinzel' ? 'on' : ''} onClick={() => setBlizzardPref('font', 'cinzel')}>Cinzel</button>
@@ -786,16 +786,16 @@ export default function ProfilePage() {
 }
 
 function TopicCard({
-  topicId, name, tier, diagnosticCompleted,
-  completedSubChunks, totalSubChunks, totalXp,
+  domainId, name, tier, diagnosticCompleted,
+  completedLessons, totalLessons, totalXp,
   onContinue, onRetakeDiagnostic,
 }: {
-  topicId: string; name: string; tier: string
+  domainId: string; name: string; tier: string
   diagnosticCompleted: boolean
-  completedSubChunks: number; totalSubChunks: number; totalXp: number
+  completedLessons: number; totalLessons: number; totalXp: number
   onContinue: () => void; onRetakeDiagnostic: () => void
 }) {
-  const pct = totalSubChunks > 0 ? Math.round((completedSubChunks / totalSubChunks) * 100) : 0
+  const pct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0
   const TIER_LABELS: Record<string, string> = {
     APPRENTICE: 'Apprentice', JUNIOR: 'Junior', SENIOR: 'Senior', LEAD: 'Lead',
     // Legacy fallbacks during migration
@@ -806,7 +806,7 @@ function TopicCard({
     <div className="bg-card border border-border rounded-[12px] p-5">
       <div className="flex items-center gap-3 mb-4">
         <div className="flex-shrink-0">
-          <TopicIcon topicId={topicId} size={36} />
+          <TopicIcon domainId={domainId} size={36} />
         </div>
         <div className="flex-1">
           <div className="text-[16px] font-bold text-text">{name}</div>
@@ -819,7 +819,7 @@ function TopicCard({
         </div>
         <div className="text-right">
           <div className="text-[13px] font-bold text-gold">{totalXp.toLocaleString()} XP</div>
-          <div className="text-[11px] text-muted">{completedSubChunks}/{totalSubChunks} lessons</div>
+          <div className="text-[11px] text-muted">{completedLessons}/{totalLessons} lessons</div>
         </div>
       </div>
 
@@ -829,7 +829,7 @@ function TopicCard({
       </div>
 
       <div className="flex gap-2">
-        <button className="btn btn-primary text-[12px] px-4 py-1.5" onClick={onContinue}>Continue →</button>
+        <button className="btn btn-primary text-[12px] px-4 py-1.5" onClick={onContinue}>Continue â†’</button>
         <button className="btn btn-ghost text-[11px] px-3 py-1.5" onClick={onRetakeDiagnostic}>Retake Diagnostic</button>
       </div>
     </div>
@@ -850,7 +850,7 @@ function BadgeGrid({ badges }: { badges: Badge[] }) {
           )}
         >
           <div className="text-[36px] mb-2.5 max-[480px]:text-[28px]">
-            {badge.earned ? badge.glyph : '🔒'}
+            {badge.earned ? badge.glyph : 'ðŸ”’'}
           </div>
           <div className="font-cinzel text-[12px] text-text mb-1">{badge.displayName}</div>
           <div className="text-[11px] text-muted leading-[1.4]">{badge.description}</div>
@@ -870,14 +870,14 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
 
   return (
     <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex items-start gap-4">
-      <div className="text-[24px] flex-shrink-0">🐇</div>
+      <div className="text-[24px] flex-shrink-0">ðŸ‡</div>
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-bold text-gold mb-0.5">{term.term}</div>
         {term.description && (
           <p className="text-[12px] text-muted leading-[1.55] mb-1.5">{term.description}</p>
         )}
         <div className="text-[10px] text-muted">
-          {term.subChunkId && <span>From {term.subChunkId} · </span>}
+          {term.lessonId && <span>From {term.lessonId} Â· </span>}
           {new Date(term.savedAt).toLocaleDateString()}
         </div>
       </div>
@@ -888,7 +888,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
               className="text-[11px] px-2.5 py-1 rounded-md bg-red/20 text-red border border-red cursor-pointer disabled:opacity-50"
               onClick={onRemove} disabled={removing}
             >
-              {removing ? '…' : 'Remove'}
+              {removing ? 'â€¦' : 'Remove'}
             </button>
             <button
               className="text-[11px] px-2.5 py-1 rounded-md bg-card border border-border text-muted cursor-pointer"
@@ -902,7 +902,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
             className="text-[11px] px-2.5 py-1 rounded-md bg-card border border-border text-muted cursor-pointer hover:border-red hover:text-red transition-[border-color,color] duration-150"
             onClick={() => setConfirmRemove(true)}
           >
-            🗑
+            ðŸ—‘
           </button>
         )}
       </div>
@@ -910,7 +910,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
   )
 }
 
-// ── Subscription panel ────────────────────────────────────────────────────────
+// â”€â”€ Subscription panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PLAN_META: Record<string, { icon: React.ElementType; color: string; label: string; description: string }> = {
   FREE:      { icon: Zap,      color: 'var(--muted)',       label: 'Free Plan',     description: 'One discipline included.' },
@@ -1004,7 +1004,7 @@ function SubscriptionPanel({
                 transition-[border-color,color] duration-150 disabled:opacity-50 cursor-pointer"
             >
               <CreditCard size={14} strokeWidth={1.75} />
-              {portalLoading ? 'Opening…' : 'Manage Subscription'}
+              {portalLoading ? 'Openingâ€¦' : 'Manage Subscription'}
             </button>
           )}
 
@@ -1029,7 +1029,7 @@ function SubscriptionPanel({
                   transition-[border-color,color] duration-150 disabled:opacity-50 cursor-pointer"
               >
                 <CreditCard size={14} strokeWidth={1.75} />
-                {portalLoading ? 'Opening…' : 'Billing History'}
+                {portalLoading ? 'Openingâ€¦' : 'Billing History'}
               </button>
             </>
           )}
@@ -1037,7 +1037,7 @@ function SubscriptionPanel({
           {status.status === 'LIFETIME' && (
             <div className="px-4 py-2 rounded-[9px] border border-[rgba(196,181,253,0.3)]
               bg-[rgba(196,181,253,0.06)] font-cinzel text-[12px] text-purple-light">
-              ✦ Lifetime member — no further action needed
+              âœ¦ Lifetime member â€” no further action needed
             </div>
           )}
         </div>
@@ -1048,11 +1048,11 @@ function SubscriptionPanel({
         <div className="font-cinzel text-[12px] tracking-[0.1em] text-muted uppercase mb-3">What's Included</div>
         <ul className="flex flex-col gap-2">
           {[
-            ['✦', 'Your first discipline — always free, all tiers'],
-            ['🔓', status.active ? 'All disciplines unlocked' : 'Additional disciplines (subscription required)'],
-            ['📚', 'Spaced-repetition review system'],
-            ['🏆', 'Badges, XP, ranks & leaderboards'],
-            ['🧠', 'AI mentor feedback on written practice'],
+            ['âœ¦', 'Your first discipline â€” always free, all tiers'],
+            ['ðŸ”“', status.active ? 'All disciplines unlocked' : 'Additional disciplines (subscription required)'],
+            ['ðŸ“š', 'Spaced-repetition review system'],
+            ['ðŸ†', 'Badges, XP, ranks & leaderboards'],
+            ['ðŸ§ ', 'AI mentor feedback on written practice'],
           ].map(([icon, text]) => (
             <li key={text} className="flex items-center gap-3 text-[13px]">
               <span className="text-[14px] flex-shrink-0">{icon}</span>
@@ -1096,8 +1096,8 @@ function ReportCard({ report }: { report: MyStuckReport }) {
           </div>
         </div>
       </div>
-      {report.subChunkId && (
-        <div className="text-[11px] text-muted mb-1.5">Lesson: {report.subChunkId}</div>
+      {report.lessonId && (
+        <div className="text-[11px] text-muted mb-1.5">Lesson: {report.lessonId}</div>
       )}
       {report.userMessage && (
         <p className="text-[13px] text-text leading-[1.6] mb-2">{report.userMessage}</p>

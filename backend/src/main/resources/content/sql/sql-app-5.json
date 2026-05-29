@@ -1,0 +1,37 @@
+{
+  "id": "sql-app-5",
+  "title": "Patterns, Lists, and Ranges",
+  "glyph": "🗃️",
+  "sortOrder": 5,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": ["sql-app-4"],
+  "subChunks": [{
+    "id": "sql-app-5a",
+    "title": "IN, BETWEEN, and LIKE",
+    "sortOrder": 1,
+    "xpReward": 60,
+    "filename": "query.sql",
+    "practiceType": "SQL",
+    "hookHtml": "<p>Some conditions are unwieldy with bare <code>=</code> and AND. <code>IN</code>, <code>BETWEEN</code>, and <code>LIKE</code> express them more cleanly.</p>",
+    "explanationHtml": "<h3>IN — match any value in a list</h3><pre><code>-- Verbose:\nWHERE rank = 'Novice' OR rank = 'Apprentice' OR rank = 'Adept'\n\n-- Concise:\nWHERE rank IN ('Novice', 'Apprentice', 'Adept')</code></pre><p><code>NOT IN</code> excludes the listed values. Watch out: <code>NOT IN (list with NULL)</code> always returns zero rows — this is a common gotcha.</p><h3>BETWEEN — inclusive range</h3><pre><code>WHERE xp BETWEEN 1000 AND 3000  -- same as xp >= 1000 AND xp <= 3000</code></pre><p><strong>Both ends are inclusive.</strong> <code>BETWEEN 1000 AND 3000</code> includes rows where xp equals exactly 1000 or 3000.</p><h3>LIKE — pattern matching</h3><pre><code>WHERE name LIKE 'A%'     -- starts with A\nWHERE name LIKE '%ia'    -- ends with ia\nWHERE name LIKE '%ss%'   -- contains ss anywhere</code></pre><ul><li><code>%</code> matches zero or more characters</li><li><code>_</code> matches exactly one character</li><li>Case sensitivity depends on the engine; use <code>ILIKE</code> in PostgreSQL for case-insensitive</li></ul>",
+    "storyBeats": [
+      {"type":"narration","text":"The Archivist produces a list of ranks scrawled on parchment — the Headmaster wants everyone in any of three ranks, all at once."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"Three tools, each for a different shape of question. IN for lists: 'any of these values'. BETWEEN for ranges: 'between this and that, inclusive'. LIKE for patterns: percent is a wildcard for zero-or-more characters, underscore for exactly one."}
+    ],
+    "guidedPracticeHtml": "<h3>🪄 Range filter</h3><p>Return <code>name</code> and <code>xp</code> for apprentices whose XP is between <strong>1 000 and 4 000</strong> (inclusive), using <code>BETWEEN</code>.</p>",
+    "guidedPracticeStarterCode": "SELECT name, xp\nFROM apprentices\nWHERE xp BETWEEN -- range here\n;",
+    "guidedPracticeTests": [
+      {"label":"Returns 2 rows (Alice 1200, Bjorn 2400)","setup":"CREATE TABLE apprentices (id INTEGER PRIMARY KEY, name TEXT NOT NULL, rank TEXT NOT NULL, xp INTEGER NOT NULL); INSERT INTO apprentices VALUES (1,'Alice','Apprentice',1200),(2,'Bjorn','Adept',2400),(3,'Cassia','Mage',4800),(4,'Dorian','Novice',80),(5,'Elara','Archmage',7500),(6,'Fenrir','Apprentice',950);","expectedRowCount":2,"matchMode":"rowCount"},
+      {"label":"Correct rows — Alice and Bjorn","expectedQuery":"SELECT name, xp FROM apprentices WHERE xp BETWEEN 1000 AND 4000","matchMode":"rowsAnyOrder"}
+    ],
+    "soloPracticeHtml": "<h3>🏹 Solo</h3><p>Return <code>name</code> for apprentices whose <code>rank</code> is in the list <code>('Novice', 'Apprentice')</code> using <code>IN</code>.</p>",
+    "feynmanPrompt": "Explain IN, BETWEEN, and LIKE with one concrete example each. Make sure to mention that BETWEEN is inclusive on both ends.",
+    "questions": [
+      {"id":"sql-app-5a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What does `WHERE xp BETWEEN 500 AND 2000` include?","options":["Rows where xp >= 500 AND xp <= 2000 (both ends inclusive)","Rows where xp > 500 AND xp < 2000 (both ends exclusive)","Rows where xp = 500 OR xp = 2000 only","Rows where xp is between 500 and 2000, excluding 500"],"answer":"Rows where xp >= 500 AND xp <= 2000 (both ends inclusive)","explanation":"BETWEEN is always inclusive on both ends. xp BETWEEN 500 AND 2000 is exactly equivalent to xp >= 500 AND xp <= 2000."},
+      {"id":"sql-app-5a-q2","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Which query returns apprentices whose name starts with 'C' or 'E'?","options":["WHERE name LIKE 'C%' OR name LIKE 'E%'","WHERE name IN ('C%', 'E%')","WHERE name BETWEEN 'C' AND 'E'","WHERE name LIKE '[CE]%'"],"answer":"WHERE name LIKE 'C%' OR name LIKE 'E%'","explanation":"LIKE patterns cannot be combined inside IN. BETWEEN on text is alphabetic range, not pattern matching. The LIKE approach with OR is the correct, portable solution."},
+      {"id":"sql-app-5a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Using the lesson data, how many rows does `WHERE rank IN ('Novice','Mage','Archmage')` return?","options":["3 (Dorian, Cassia, Elara)","2 (Cassia, Elara)","4","1"],"answer":"3 (Dorian, Cassia, Elara)","explanation":"Dorian is Novice, Cassia is Mage, Elara is Archmage — three rows match."},
+      {"id":"sql-app-5a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"A column `tag` can contain NULL. What does `WHERE tag NOT IN ('fire', 'ice')` return when some rows have NULL in tag?","options":["Only rows where tag is neither 'fire', 'ice', nor NULL — NULL rows are silently excluded","All rows where tag is not 'fire' or 'ice', including NULL rows","An error — NOT IN cannot be used with nullable columns","All rows in the table"],"answer":"Only rows where tag is neither 'fire', 'ice', nor NULL — NULL rows are silently excluded","explanation":"NULL comparisons always produce UNKNOWN, not TRUE or FALSE. NOT IN with a NULL in the list (or NULL in the column) silently excludes those rows. Use IS NOT NULL as an additional filter or NOT EXISTS to avoid this pitfall."}
+    ]
+  }]
+}

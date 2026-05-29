@@ -4,7 +4,7 @@ import com.ambravate.arcane.academy.capstone.domain.UserCapstone;
 
 import java.time.Instant;
 
-/** Extended view for admin panel — includes userId for display. */
+/** Extended view for admin panel â€” includes userId for display. */
 public record AdminCapstoneDto(
         String id,
         String userId,
@@ -20,7 +20,7 @@ public record AdminCapstoneDto(
 ) {
     public static AdminCapstoneDto from(UserCapstone c) {
         return new AdminCapstoneDto(
-                c.getId(), c.getUserId(), c.getChunkId(), c.getTitle(),
+                c.getId(), c.getUserId(), c.getModuleId(), c.getTitle(),
                 c.getDescription(), c.getCodeContent(), c.getGithubUrl(),
                 c.getAdminFeedback(), c.getReviewedAt(), c.getCreatedAt(), c.getUpdatedAt()
         );

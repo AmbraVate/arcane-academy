@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { adminQuestionApi, adminSubChunkApi, type AdminQuestion, type AdminSubChunk } from '@/shared/api/adminServices'
+import { adminQuestionApi, adminLessonApi, type AdminQuestion, type AdminLesson } from '@/shared/api/adminServices'
 
 const Q_TYPES = ['MULTIPLE_CHOICE', 'TRUE_FALSE', 'SHORT_ANSWER', 'CODE_OUTPUT']
 /** Question difficulty tiers (QuestionTier enum values) */
@@ -13,16 +13,16 @@ const BLANK: Partial<AdminQuestion> = {
 
 function QuestionForm({
   initial,
-  subChunkId,
+  lessonId,
   onSave,
   onCancel,
 }: {
   initial: Partial<AdminQuestion>
-  subChunkId: string
+  lessonId: string
   onSave: (q: Partial<AdminQuestion>) => void
   onCancel: () => void
 }) {
-  const [form, setForm] = useState<Partial<AdminQuestion>>({ ...initial, subChunkId })
+  const [form, setForm] = useState<Partial<AdminQuestion>>({ ...initial, lessonId })
   const set = (k: keyof AdminQuestion, v: unknown) => setForm(prev => ({ ...prev, [k]: v }))
 
   const setOption = (i: number, val: string) => {
@@ -105,9 +105,9 @@ const TIER_COLOR: Record<string, string> = {
 }
 
 export default function AdminQuestionsPage() {
-  const { subChunkId } = useParams<{ subChunkId: string }>()
+  const { lessonId } = useParams<{ lessonId: string }>()
   const navigate = useNavigate()
-  const [sc, setSc] = useState<AdminSubChunk | null>(null)
+  const [sc, setSc] = useState<AdminLesson | null>(null)
   const [questions, setQuestions] = useState<AdminQuestion[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -115,12 +115,12 @@ export default function AdminQuestionsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!subChunkId) return
-    Promise.all([adminSubChunkApi.get(subChunkId), adminQuestionApi.list(subChunkId)])
+    if (!lessonId) return
+    Promise.all([adminLessonApi.get(lessonId), adminQuestionApi.list(lessonId)])
       .then(([s, qs]) => { setSc(s); setQuestions(qs) })
       .catch(() => setError('Failed to load data'))
       .finally(() => setLoading(false))
-  }, [subChunkId])
+  }, [lessonId])
 
   const handleSave = async (form: Partial<AdminQuestion>) => {
     try {
@@ -128,7 +128,7 @@ export default function AdminQuestionsPage() {
         const updated = await adminQuestionApi.update(editQ.id, form)
         setQuestions(prev => prev.map(q => q.id === updated.id ? updated : q))
       } else {
-        const created = await adminQuestionApi.create({ ...form, subChunkId })
+        const created = await adminQuestionApi.create({ ...form, lessonId })
         setQuestions(prev => [...prev, created])
       }
       setShowForm(false)
@@ -153,9 +153,9 @@ export default function AdminQuestionsPage() {
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
-        <span>›</span>
-        {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.chunkId}/subchunks`)}>Lessons</span>}
-        {sc && <span>›</span>}
+        <span>â€º</span>
+        {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.moduleId}/subchunks`)}>Lessons</span>}
+        {sc && <span>â€º</span>}
         <span style={{ color: '#e8e0f0' }}>{sc?.title ?? 'Questions'}</span>
       </div>
 
@@ -166,8 +166,8 @@ export default function AdminQuestionsPage() {
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           {sc && (
-            <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={() => navigate(`/admin/subchunks/${subChunkId}/edit`)}>
-              ✏️ Edit Content
+            <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={() => navigate(`/admin/subchunks/${lessonId}/edit`)}>
+              âœï¸ Edit Content
             </button>
           )}
           <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={() => { setEditQ(null); setShowForm(true) }}>
@@ -181,14 +181,14 @@ export default function AdminQuestionsPage() {
       {(showForm || editQ) && (
         <QuestionForm
           initial={editQ ?? BLANK}
-          subChunkId={subChunkId!}
+          lessonId={lessonId!}
           onSave={handleSave}
           onCancel={() => { setShowForm(false); setEditQ(null) }}
         />
       )}
 
       {loading ? (
-        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
+        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loadingâ€¦</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {questions.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No questions yet.</div>}
@@ -232,8 +232,8 @@ export default function AdminQuestionsPage() {
                   )}
                 </div>
                 <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }} onClick={() => { setEditQ(q); setShowForm(false) }}>✏️</button>
-                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171' }} onClick={() => handleDelete(q.id)}>🗑️</button>
+                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }} onClick={() => { setEditQ(q); setShowForm(false) }}>âœï¸</button>
+                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171' }} onClick={() => handleDelete(q.id)}>ðŸ—‘ï¸</button>
                 </div>
               </div>
             </div>

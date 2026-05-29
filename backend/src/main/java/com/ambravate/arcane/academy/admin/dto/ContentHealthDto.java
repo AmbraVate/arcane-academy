@@ -15,11 +15,11 @@ import lombok.Setter;
 @Builder
 public class ContentHealthDto {
 
-  private String subChunkId;
+  private String lessonId;
   private String title;
   private String chunkTitle;
   /** Top-level subject area (e.g. "java", "sql", "tailwind"). */
-  private String topicId;
+  private String domainId;
   /** Tier within the topic (e.g. "FOUNDATION", "PRACTITIONER"). */
   private String tier;
   private List<String> issues;

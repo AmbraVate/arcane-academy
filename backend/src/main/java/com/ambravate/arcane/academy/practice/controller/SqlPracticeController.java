@@ -19,30 +19,30 @@ public class SqlPracticeController {
     /**
      * Validates a SQL submission against client-reported in-iframe test results.
      *
-     * <p>POST /api/sql/{subChunkId}/submit
+     * <p>POST /api/sql/{lessonId}/submit
      * <br>Body: {@link SqlSubmitRequest}
      */
-    @PostMapping("/{subChunkId}/submit")
+    @PostMapping("/{lessonId}/submit")
     public ResponseEntity<SubmitResponse> submit(
-            @PathVariable String subChunkId,
+            @PathVariable String lessonId,
             @RequestBody SqlSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         return ResponseEntity.ok(
-                sqlPracticeService.submit(user.getId(), subChunkId, request));
+                sqlPracticeService.submit(user.getId(), lessonId, request));
     }
 
     /**
-     * Solo practice submission — same validation as guided practice.
+     * Solo practice submission â€” same validation as guided practice.
      * The service has idempotency built-in (won't re-award XP if already passed).
      *
-     * <p>POST /api/sql/{subChunkId}/solo-practice/submit
+     * <p>POST /api/sql/{lessonId}/solo-practice/submit
      */
-    @PostMapping("/{subChunkId}/solo-practice/submit")
+    @PostMapping("/{lessonId}/solo-practice/submit")
     public ResponseEntity<SubmitResponse> submitSoloPractice(
-            @PathVariable String subChunkId,
+            @PathVariable String lessonId,
             @RequestBody SqlSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         return ResponseEntity.ok(
-                sqlPracticeService.submit(user.getId(), subChunkId, request));
+                sqlPracticeService.submit(user.getId(), lessonId, request));
     }
 }

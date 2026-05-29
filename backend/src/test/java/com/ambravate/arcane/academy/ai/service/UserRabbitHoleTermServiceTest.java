@@ -46,8 +46,8 @@ class UserRabbitHoleTermServiceTest {
                 .userId(USER_ID)
                 .term(TERM)
                 .description(DESCRIPTION)
-                .subChunkId(SUB_CHUNK_ID)
-                .topicId(TOPIC_ID)
+                .lessonId(SUB_CHUNK_ID)
+                .domainId(TOPIC_ID)
                 .savedAt(Instant.now())
                 .build();
     }
@@ -80,8 +80,8 @@ class UserRabbitHoleTermServiceTest {
             assertThat(dto.getId()).isEqualTo("rht-1");
             assertThat(dto.getTerm()).isEqualTo(TERM);
             assertThat(dto.getDescription()).isEqualTo(DESCRIPTION);
-            assertThat(dto.getSubChunkId()).isEqualTo(SUB_CHUNK_ID);
-            assertThat(dto.getTopicId()).isEqualTo(TOPIC_ID);
+            assertThat(dto.getLessonId()).isEqualTo(SUB_CHUNK_ID);
+            assertThat(dto.getDomainId()).isEqualTo(TOPIC_ID);
         }
 
         @Test

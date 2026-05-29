@@ -2,13 +2,13 @@ package com.ambravate.arcane.academy.admin.controller;
 
 import com.ambravate.arcane.academy.common.dto.ChunkContentDto;
 import com.ambravate.arcane.academy.content.seeder.JsonContentSeeder;
-import com.ambravate.arcane.academy.common.domain.Chunk;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,8 +30,8 @@ import java.util.NoSuchElementException;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminImportExportController {
 
-    private final ChunkRepository chunkRepository;
-    private final SubChunkRepository subChunkRepository;
+    private final LearningModuleRepository moduleRepository;
+    private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final RabbitHoleModuleRepository rabbitHoleRepository;
     private final JsonContentSeeder jsonContentSeeder;
@@ -43,7 +43,7 @@ public class AdminImportExportController {
      */
     @GetMapping("/export/chunk/{chunkId}")
     public ResponseEntity<byte[]> exportChunk(@PathVariable String chunkId) throws Exception {
-        Chunk chunk = chunkRepository.findById(chunkId)
+        LearningModule chunk = moduleRepository.findById(chunkId)
                 .orElseThrow(() -> new NoSuchElementException("Chunk not found: " + chunkId));
 
         ChunkContentDto dto = buildExportDto(chunk);
@@ -56,7 +56,7 @@ public class AdminImportExportController {
     }
 
     /**
-     * Import a JSON file (ChunkContentDto format) — upserts the chunk and all its content.
+     * Import a JSON file (ChunkContentDto format) â€” upserts the chunk and all its content.
      */
     @PostMapping("/import")
     public ResponseEntity<Map<String, Object>> importChunk(@RequestParam("file") MultipartFile file)
@@ -70,24 +70,24 @@ public class AdminImportExportController {
         ));
     }
 
-    // ── Export helper ──────────────────────────────────────────────────────────
+    // â”€â”€ Export helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    private ChunkContentDto buildExportDto(Chunk chunk) throws Exception {
+    private ChunkContentDto buildExportDto(LearningModule chunk) throws Exception {
         ChunkContentDto dto = new ChunkContentDto();
         dto.id = chunk.getId();
         dto.title = chunk.getTitle();
         dto.glyph = chunk.getGlyph();
         dto.sortOrder = chunk.getSortOrder();
         dto.tier = chunk.getTier().name();
-        dto.topicId = chunk.getTopicId();
-        dto.prerequisites = chunk.getPrerequisites().stream().map(Chunk::getId).toList();
+        dto.domainId = chunk.getDomainId();
+        dto.prerequisites = chunk.getPrerequisites().stream().map(LearningModule::getId).toList();
 
-        List<SubChunk> subChunks = subChunkRepository.findByChunkIdOrderBySortOrderAsc(chunk.getId());
+        List<Lesson> subChunks = lessonRepository.findByModuleIdOrderBySortOrderAsc(chunk.getId());
         dto.subChunks = subChunks.stream().map(sc -> {
             try { return buildSubChunkDto(sc); } catch (Exception e) { throw new RuntimeException(e); }
         }).toList();
 
-        List<RabbitHoleModule> rhs = rabbitHoleRepository.findByChunkIdOrderBySortOrderAsc(chunk.getId());
+        List<RabbitHoleModule> rhs = rabbitHoleRepository.findByModuleIdOrderBySortOrderAsc(chunk.getId());
         dto.rabbitHoles = rhs.stream().map(rh -> {
             try { return buildRabbitHoleDto(rh); } catch (Exception e) { throw new RuntimeException(e); }
         }).toList();
@@ -96,7 +96,7 @@ public class AdminImportExportController {
     }
 
     @SuppressWarnings("unchecked")
-    private ChunkContentDto.SubChunkDto buildSubChunkDto(SubChunk sc) throws Exception {
+    private ChunkContentDto.SubChunkDto buildSubChunkDto(Lesson sc) throws Exception {
         ChunkContentDto.SubChunkDto dto = new ChunkContentDto.SubChunkDto();
         dto.id = sc.getId();
         dto.title = sc.getTitle();
@@ -120,7 +120,7 @@ public class AdminImportExportController {
                 new TypeReference<>() {
                 });
         }
-        dto.questions = questionRepository.findBySubChunkId(sc.getId()).stream()
+        dto.questions = questionRepository.findByLessonId(sc.getId()).stream()
                 .map(q -> {
                     ChunkContentDto.QuestionDto qd = new ChunkContentDto.QuestionDto();
                     qd.type = q.getType().name();

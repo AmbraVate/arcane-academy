@@ -91,7 +91,7 @@ class ContentFileValidationTest {
     private void validateChunk(ChunkContentDto dto, List<String> v) {
         if (blank(dto.id))      v.add("Missing required field: id");
         if (blank(dto.title))   v.add("Missing required field: title");
-        if (blank(dto.topicId)) v.add("Missing required field: topicId");
+        if (blank(dto.domainId)) v.add("Missing required field: domainId");
 
         if (blank(dto.tier)) {
             v.add("Missing required field: tier");

@@ -49,7 +49,7 @@ class SpacingServiceTest {
     void setUp() {
         progress = UserChunkProgress.builder()
                 .userId(USER_ID)
-                .subChunkId(SUB_CHUNK_ID)
+                .lessonId(SUB_CHUNK_ID)
                 .easeFactor(2.5)
                 .repetitionCount(0)
                 .intervalDays(0)
@@ -68,7 +68,7 @@ class SpacingServiceTest {
         void resetsScheduleOnFailure() {
             progress.setRepetitionCount(5);
             progress.setIntervalDays(30);
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.4);
@@ -80,7 +80,7 @@ class SpacingServiceTest {
         @Test
         @DisplayName("schedules next review for tomorrow")
         void nextReviewIsTomorrow() {
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             Instant before = Instant.now();
@@ -100,7 +100,7 @@ class SpacingServiceTest {
         @Test
         @DisplayName("first successful repetition schedules at 1 day")
         void firstRepetitionInterval() {
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
@@ -114,7 +114,7 @@ class SpacingServiceTest {
         void secondRepetitionInterval() {
             progress.setRepetitionCount(1);
             progress.setIntervalDays(1);
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
@@ -129,7 +129,7 @@ class SpacingServiceTest {
             progress.setRepetitionCount(2);
             progress.setIntervalDays(3);
             progress.setEaseFactor(2.5);
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
@@ -143,7 +143,7 @@ class SpacingServiceTest {
         @DisplayName("ease factor is floored at 1.3 (SM-2 minimum)")
         void easeFactorMinimum() {
             progress.setEaseFactor(1.4); // already near the floor
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             // Score of 0.6 maps to q5=3 → EF delta = 0.1 - 2*(0.08+2*0.02) = 0.1 - 0.24 = -0.14
@@ -156,7 +156,7 @@ class SpacingServiceTest {
         @DisplayName("ease factor increases on perfect score")
         void easeFactorIncreasesOnPerfect() {
             double initialEf = progress.getEaseFactor();
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+            when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                     .thenReturn(Optional.of(progress));
 
             spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 1.0);
@@ -172,7 +172,7 @@ class SpacingServiceTest {
     @DisplayName("memory strength is a 70/30 blend of new score and prior strength")
     void memoryStrengthBlend() {
         progress.setMemoryStrength(0.5);
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+        when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                 .thenReturn(Optional.of(progress));
 
         spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 1.0);
@@ -185,7 +185,7 @@ class SpacingServiceTest {
     @DisplayName("memory strength is clamped to [0, 1]")
     void memoryStrengthClamped() {
         progress.setMemoryStrength(0.99);
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+        when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                 .thenReturn(Optional.of(progress));
 
         spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 1.0);
@@ -198,7 +198,7 @@ class SpacingServiceTest {
     @Test
     @DisplayName("save is called on the repository with the updated progress")
     void persistsUpdate() {
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+        when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                 .thenReturn(Optional.of(progress));
 
         spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
@@ -212,7 +212,7 @@ class SpacingServiceTest {
     @Test
     @DisplayName("throws IllegalStateException when no progress row exists")
     void throwsWhenMissing() {
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
+        when(repo.findByUserIdAndLessonId(USER_ID, SUB_CHUNK_ID))
                 .thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8))

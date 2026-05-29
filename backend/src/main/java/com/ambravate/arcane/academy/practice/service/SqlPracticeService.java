@@ -3,11 +3,11 @@ package com.ambravate.arcane.academy.practice.service;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.practice.dto.SqlSubmitRequest;
 import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -31,7 +31,7 @@ import java.util.Optional;
  * are posted back here. The backend performs a lightweight structural sanity check on the SQL
  * source before awarding XP.
  *
- * <p>Same trust domain as {@link ReactPracticeService} — documented in CLAUDE.md §0.
+ * <p>Same trust domain as {@link ReactPracticeService} â€” documented in CLAUDE.md Â§0.
  */
 @Service
 @RequiredArgsConstructor
@@ -43,7 +43,7 @@ public class SqlPracticeService {
    */
   private static final int MIN_SOURCE_LENGTH = 6;
 
-  private final SubChunkRepository subChunkRepository;
+  private final LessonRepository lessonRepository;
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
   private final ReviewSessionRepository reviewSessionRepository;
@@ -51,16 +51,16 @@ public class SqlPracticeService {
   private final ApplicationEventPublisher eventPublisher;
 
   @Transactional
-  public SubmitResponse submit(String userId, String subChunkId, SqlSubmitRequest request) {
-    SubChunk subChunk = subChunkRepository.findById(subChunkId)
-        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + subChunkId));
+  public SubmitResponse submit(String userId, String lessonId, SqlSubmitRequest request) {
+    Lesson subChunk = lessonRepository.findById(lessonId)
+        .orElseThrow(() -> new IllegalArgumentException("SubChunk not found: " + lessonId));
 
-    // ── 1. Structural sanity check on source ────────────────────────────────
+    // â”€â”€ 1. Structural sanity check on source â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     String code = request.getCode() == null ? "" : request.getCode().trim();
     if (code.length() < MIN_SOURCE_LENGTH || !looksLikeSql(code)) {
       log.info(
-          "[SQL] Rejected — source too short or not SQL-like | user={} subChunk={}",
-          userId, subChunkId
+          "[SQL] Rejected â€” source too short or not SQL-like | user={} subChunk={}",
+          userId, lessonId
       );
       return buildResponse(
           false,
@@ -74,7 +74,7 @@ public class SqlPracticeService {
       );
     }
 
-    // ── 2. Trust the client-reported test results ───────────────────────────
+    // â”€â”€ 2. Trust the client-reported test results â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     List<SqlSubmitRequest.ClientTestResult> clientResults =
         request.getClientTestResults() == null ? List.of() : request.getClientTestResults();
 
@@ -93,19 +93,19 @@ public class SqlPracticeService {
       }
     }
 
-    // ── 3. Award XP if all passed ────────────────────────────────────────────
+    // â”€â”€ 3. Award XP if all passed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     int xpEarned = 0;
     List<BadgeDto> newBadges = List.of();
     if (allPassed) {
-      xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
+      xpEarned = awardXp(userId, lessonId, subChunk.getXpReward());
       newBadges = gamification.evaluateAndAwardBadges(userId,
               progressRepository.findByUserId(userId),
               reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
-      log.info("[SQL] All tests passed | user={} subChunk={} xp={}", userId, subChunkId, xpEarned);
+      log.info("[SQL] All tests passed | user={} subChunk={} xp={}", userId, lessonId, xpEarned);
     } else {
       log.info(
           "[SQL] Tests failed | user={} subChunk={} failures={}",
-          userId, subChunkId,
+          userId, lessonId,
           results.stream()
               .filter(r -> !r.isPassed())
               .map(SubmitResponse.TestResult::getLabel)
@@ -117,7 +117,7 @@ public class SqlPracticeService {
   }
 
   /**
-   * Lightweight SQL detection. We're not parsing — we just want to reject obviously non-SQL
+   * Lightweight SQL detection. We're not parsing â€” we just want to reject obviously non-SQL
    * submissions like "abc" or "<html>". The query must contain a recognisable SQL verb keyword.
    */
   private boolean looksLikeSql(String code) {
@@ -130,15 +130,15 @@ public class SqlPracticeService {
   }
 
   /**
-   * Awards XP exactly once per sub-chunk per user — same idempotency pattern as
+   * Awards XP exactly once per sub-chunk per user â€” same idempotency pattern as
    * {@link ReactPracticeService} and {@link TailwindPracticeService}.
    */
-  private int awardXp(String userId, String subChunkId, int xp) {
+  private int awardXp(String userId, String lessonId, int xp) {
     Optional<UserChunkProgress> progressOpt =
-        progressRepository.findByUserIdAndSubChunkId(userId, subChunkId);
+        progressRepository.findByUserIdAndLessonId(userId, lessonId);
 
     boolean alreadyAwarded = progressOpt
-        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == SubChunkStatus.COMPLETE)
+        .map(p -> p.getLastScore() >= 1.0 || p.getStatus() == LessonStatus.COMPLETE)
         .orElse(false);
     if (alreadyAwarded) {
       return 0;
@@ -151,7 +151,7 @@ public class SqlPracticeService {
     userRepository.save(user);
 
     UserChunkProgress progress = progressOpt.orElseGet(() ->
-        UserChunkProgress.builder().userId(userId).subChunkId(subChunkId).build());
+        UserChunkProgress.builder().userId(userId).lessonId(lessonId).build());
     progress.setLastScore(1.0);
     progressRepository.save(progress);
 

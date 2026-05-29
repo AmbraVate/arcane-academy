@@ -26,7 +26,7 @@ public class RabbitHoleService {
     private final ObjectMapper objectMapper;
 
     public List<RabbitHoleModule> getModulesForChunk(String chunkId) {
-        return moduleRepository.findByChunkIdOrderBySortOrderAsc(chunkId);
+        return moduleRepository.findByModuleIdOrderBySortOrderAsc(chunkId);
     }
 
     public RabbitHoleModule getModule(String moduleId) {

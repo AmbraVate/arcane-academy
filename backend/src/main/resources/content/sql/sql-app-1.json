@@ -1,0 +1,35 @@
+{
+  "id": "sql-app-1",
+  "title": "The Shape of Recorded Knowledge",
+  "glyph": "🗃️",
+  "sortOrder": 1,
+  "tier": "APPRENTICE",
+  "topicId": "sql",
+  "prerequisites": [],
+  "subChunks": [{
+    "id": "sql-app-1a",
+    "title": "Tables, Rows, and Columns",
+    "sortOrder": 1,
+    "xpReward": 50,
+    "filename": "query.sql",
+    "practiceType": "NONE",
+    "hookHtml": "<p>Every fact the Academy has ever recorded — every apprentice, every quest, every grade — lives in a <strong>table</strong>. Before you write a single query, you must learn to read one.</p>",
+    "explanationHtml": "<h3>What a table is</h3><p>A table is a grid. <strong>Rows</strong> are records — one row per entity. <strong>Columns</strong> are attributes — one column per named piece of information. A table called <code>apprentices</code> might hold:</p><pre><code>id | name    | rank        | xp\n---+---------+-------------+------\n 1 | Alice   | Apprentice  | 1200\n 2 | Bjorn   | Adept       | 2400\n 3 | Cassia  | Mage        | 4800</code></pre><h3>Columns have types</h3><p><code>id</code> and <code>xp</code> are integers; <code>name</code> and <code>rank</code> are text. The type determines which comparisons make sense. <code>xp &gt; 2000</code> is valid; <code>name &gt; 2000</code> is nonsense — you cannot compare text to a number meaningfully.</p><h3>Key vocabulary</h3><ul><li><strong>Schema</strong> — the column names + types that define a table's structure</li><li><strong>Primary key</strong> — a column whose value uniquely identifies each row (almost always called <code>id</code>)</li><li><strong>NULL</strong> — the absence of a value. Not the same as 0 or empty string.</li></ul><h3>Reading a schema</h3><p>When you see <code>quests(id INT, title TEXT NOT NULL, xp INT, difficulty TEXT)</code>, think: <em>a quest has an id, a required title, optional xp, optional difficulty.</em> That instinct drives every query you will ever write.</p>",
+    "storyBeats": [
+      {"type":"narration","text":"You descend into the Academy's Hall of Records. Shelves stretch into the dim distance, packed with leather-bound ledgers."},
+      {"type":"dialogue","av":"📖","cls":"mentor","speaker":"Cipher the Archivist","sCls":"mentor","text":"Each ledger is a <em>table</em>. Every row is one thing — one apprentice, one quest. Every column is one fact about it. The types tell you which questions make sense. Read the schema first — always."}
+    ],
+    "guidedPracticeHtml": "<h3>📜 Read the schema</h3><p>Study the <code>apprentices</code> schema below. In your own words, explain: what does each column store, which column is the primary key, and why <code>WHERE name &gt; 1000</code> is a type error.</p>",
+    "guidedPracticeStarterCode": "-- apprentices schema:\n-- id   INTEGER PRIMARY KEY\n-- name TEXT    NOT NULL\n-- rank TEXT    NOT NULL\n-- xp   INTEGER NOT NULL\n\n-- Sample data:\n-- id | name    | rank        | xp\n--  1 | Alice   | Apprentice  | 1200\n--  2 | Bjorn   | Adept       | 2400\n--  3 | Cassia  | Mage        | 4800\n--  4 | Dorian  | Novice      |   80",
+    "guidedPracticeModelAnswer": "The `id` column is the primary key — it uniquely identifies each apprentice. `name` and `rank` store text; `xp` stores a whole number (integer). `WHERE name > 1000` is a type error because `name` is TEXT — you cannot compare text to a number with a greater-than operator in a meaningful way. The correct comparison for text is equality: `WHERE name = 'Alice'`.",
+    "soloPracticeHtml": "<h3>🏹 Schema analysis</h3><p>Write a short paragraph identifying: the primary key of the <code>quests</code> table below, which columns are nullable, and one query that would be a type error.</p><pre><code>quests(id INTEGER PRIMARY KEY, title TEXT NOT NULL, xp INTEGER, difficulty TEXT)</code></pre>",
+    "modelAnswer": "The primary key is `id` — it uniquely identifies each quest. `xp` and `difficulty` are nullable (no NOT NULL constraint), meaning a quest can exist without a known XP reward or difficulty rating. `title` is required (NOT NULL). A type error example: `WHERE title > 50` — comparing a TEXT column to an integer.",
+    "feynmanPrompt": "Explain to a complete beginner what a database table is, what a row and column mean, and why columns having types matters. Use the apprentices table as your example.",
+    "questions": [
+      {"id":"sql-app-1a-q1","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"In a SQL table, what is a row?","options":["One record — one entity with values for every column","One named attribute shared by all records","A type definition like INTEGER or TEXT","A relationship between two tables"],"answer":"One record — one entity with values for every column","explanation":"A row is one entity (one apprentice, one quest). A column is the named attribute (e.g. xp). Rows and columns together form the table grid."},
+      {"id":"sql-app-1a-q2","type":"MULTIPLE_CHOICE","tier":"RECALL","minPath":"APPRENTICE","prompt":"What is a primary key?","options":["A column whose value uniquely identifies each row","The first column in the table","A column that cannot be NULL","A keyword for sorting results"],"answer":"A column whose value uniquely identifies each row","explanation":"The primary key uniquely identifies each row — no two rows can share the same primary key value. It is almost always named `id`."},
+      {"id":"sql-app-1a-q3","type":"MULTIPLE_CHOICE","tier":"APPLICATION","minPath":"APPRENTICE","prompt":"Given apprentices(id INTEGER, name TEXT, xp INTEGER), which WHERE clause is a type error?","options":["WHERE name > 500","WHERE xp > 500","WHERE id = 3","WHERE name = 'Alice'"],"answer":"WHERE name > 500","explanation":"`name` is TEXT — comparing it to 500 (an integer) with `>` is a type error. You can compare text with `=` or `LIKE`, but not with numeric comparisons against integer literals."},
+      {"id":"sql-app-1a-q4","type":"MULTIPLE_CHOICE","tier":"DISCRIMINATION","minPath":"APPRENTICE","prompt":"Two apprentices describe NULL. Who is correct?","options":["'NULL is the absence of a value — distinct from 0 or empty string'","'NULL is just another way to write zero'","'NULL means the column was left empty, same as an empty string'","'NULL is an error state — the row should be deleted'"],"answer":"'NULL is the absence of a value — distinct from 0 or empty string'","explanation":"NULL means the value is unknown or not applicable — it is not 0 (a known integer) and not '' (a known empty string). This distinction becomes critical when filtering with IS NULL vs = ''."}
+    ]
+  }]
+}

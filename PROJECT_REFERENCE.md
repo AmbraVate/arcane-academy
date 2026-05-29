@@ -27,20 +27,32 @@
 
 ## 1. What Is Arcane Academy
 
-A gamified, multi-topic learning platform with a wizardry RPG aesthetic. Learners progress through structured content tiers, earn XP and badges, and are guided by an AI mentor. The learning model is spaced-repetition based (SM-2 algorithm) with explicit encoding phases per lesson.
+A degree-level, self-paced learning platform for polymath development. Learners progress through structured knowledge domains organised into Schools, earn XP and badges, and are guided by an AI mentor (Archmage Veylan). The learning model is spaced-repetition based (SM-2 algorithm) with explicit encoding phases per lesson.
 
-**Current active topics (71 sub-chunks each):**
+### Structural Hierarchy
 
-| Topic | ID | Practice Type | Notes |
-|---|---|---|---|
-| Java | `java` | JAVA (code runner) | Original topic; most complete |
-| Tailwind CSS | `tailwind` | TAILWIND (HTML editor) | Live preview |
-| React | `react` | REACT (JSX sandbox) | Client-side iframe execution |
-| Psychology | `psychology` | NONE (written) | Prose essay responses |
-| Natural Sciences | `sciences` | NONE (written) | Prose essay responses |
-| Genealogy | `genealogy` | NONE (written) | Prose essay responses |
+```
+School → Domain → Tier → Module → Lesson → Quest → Retrieval
+```
 
-**Tier structure across all topics:** APPRENTICE → JUNIOR → SENIOR → LEAD (15 / 20 / 19 / 17 sub-chunks)
+- **School**: Broad knowledge category (Engineering & Systems, Human Systems, etc.)
+- **Domain**: Specific discipline (e.g. Software Engineering, Psychology)
+- **Tier**: Level of mastery (APPRENTICE → JUNIOR → SENIOR → LEAD)
+- **Module**: Thematic unit within a domain (formerly "Chunk")
+- **Lesson**: A single learning lesson within a module (formerly "SubChunk")
+
+**Active domains (71 lessons each):**
+
+| Domain | ID | Practice Type | School | Guild |
+|---|---|---|---|---|
+| Java | `java` | JAVA (code runner) | Engineering & Systems | Guild of Systems Architects |
+| Tailwind CSS | `tailwind` | TAILWIND (HTML editor) | Engineering & Systems | Guild of Artisan Interfaces |
+| React | `react` | REACT (JSX sandbox) | Engineering & Systems | Guild of Systems Architects |
+| Psychology | `psychology` | NONE (written) | Human Systems | Order of Minds |
+| Natural Sciences | `sciences` | NONE (written) | Mathematical & Scientific | Observatory of Nature |
+| Genealogy | `genealogy` | NONE (written) | Heritage | Keepers of Lineage |
+
+**Tier structure:** APPRENTICE → JUNIOR → SENIOR → LEAD (15 / 20 / 19 / 17 lessons per module)
 
 ---
 
@@ -87,18 +99,18 @@ arcane-academy/
 │   └── src/
 │       ├── features/                # Feature-sliced: each domain owns its pages
 │       │   ├── learning/            # EncodingPage, editors, AiMentorPanel
-│       │   ├── topics/              # TopicPage, ChunkMapPage
+│       │   ├── topics/              # DomainPage, ModuleMapPage (legacy folder name)
 │       │   ├── auth/                # Login, Register, OAuth callback
 │       │   ├── home/                # Dashboard / HomePage
 │       │   ├── admin/               # Admin CRUD pages
-│       │   ├── diagnostic/          # Topic diagnostic quiz
+│       │   ├── diagnostic/          # Domain diagnostic quiz
 │       │   ├── review/              # Spaced-repetition review page
 │       │   ├── profile/             # User + public profile
 │       │   ├── payment/             # UpgradeModal, Stripe checkout
 │       │   └── exploration/         # Rabbit holes, Curiosity Queue
 │       ├── shared/
-│       │   ├── types/index.ts       # All TypeScript interfaces
-│       │   ├── api/services.ts      # All frontend API calls
+│       │   ├── types/index.ts       # All TypeScript interfaces (ModuleSummary, LessonEncoding, etc.)
+│       │   ├── api/services.ts      # All frontend API calls (moduleApi, encodingApi, etc.)
 │       │   └── hooks/useAuth.tsx    # Auth context
 │       └── components/              # Shared layout (Nav, BlizzardScene)
 └── backend/
@@ -107,13 +119,13 @@ arcane-academy/
         │   ├── ai/                  # AiMentorService, RetrievalService, SpacingService, FeynmanService
         │   ├── auth/                # JWT, OAuth2, UserRepository, seeder
         │   ├── capstone/            # Capstone project saves
-        │   ├── common/              # Shared domain entities, enums, events, telemetry
-        │   ├── content/             # ContentSeeder, SubChunkRepository, ChunkRepository
+        │   ├── common/              # Shared domain entities (Domain, LearningModule, Lesson, School), enums, events
+        │   ├── content/             # ContentSeeder, LessonRepository, LearningModuleRepository, DomainRepository
         │   ├── gamification/        # BadgeService, GamificationFacade (public API only)
         │   ├── notes/               # User notes on lessons
         │   ├── payment/             # Stripe integration
         │   ├── practice/            # EncodingService, TailwindPracticeService, ReactPracticeService, etc.
-        │   └── profile/             # User profile, topic enrolment
+        │   └── profile/             # User profile, domain enrolment
         └── resources/
             ├── content/             # JSON lesson files (see §6)
             └── application.properties
@@ -136,8 +148,9 @@ Each top-level package is a module. Cross-module communication rules:
 
 | Service | Responsibility |
 |---|---|
-| `EncodingService` | Phase state machine, practice submission, written-response grading |
-| `ContentSeeder` | Reads JSON files from `resources/content/` and upserts into DB on startup |
+| `EncodingService` | Phase state machine, lesson submission, written-response grading |
+| `JsonContentSeeder` | Reads JSON files from `resources/content/` and upserts into DB on startup |
+| `ModuleGraphService` | Computes module unlock status (LOCKED/UNLOCKED/IN_PROGRESS/COMPLETE) |
 | `AiMentorService` | Proxies to Anthropic API; compile error explanations, feedback, Feynman grading |
 | `RetrievalService` | Builds and grades retrieval check question sets |
 | `SpacingService` | SM-2 spaced-repetition interval calculation |
@@ -147,6 +160,17 @@ Each top-level package is a module. Cross-module communication rules:
 | `ReactPracticeService` | Accepts client-side DOM test results; awards XP |
 | `SqlPracticeService` | Accepts client-side SQL test results; awards XP |
 | `RPracticeService` | Accepts client-side R (WebR) test results; awards XP |
+
+### API paths (post-rename)
+
+| Old path | New path |
+|---|---|
+| `/api/chunks` | `/api/modules` |
+| `/api/chunks/:id` | `/api/modules/:id` |
+| `/api/admin/chunks` | `/api/admin/modules` |
+| `/api/admin/subchunks` | `/api/admin/lessons` |
+| `/api/admin/topics` | `/api/admin/domains` |
+| `/api/encoding/:subChunkId/...` | `/api/encoding/:lessonId/...` |
 
 ### Phase advance guards
 
@@ -203,7 +227,7 @@ Both are only sent to the frontend after the relevant practice phase is marked a
 ### File naming convention
 
 ```
-{topic}-{tier}-{number}.json
+{domain}-{tier}-{number}.json
 
 Examples:
   java-app-1.json         ← Java Apprentice 1
@@ -228,11 +252,11 @@ Examples:
   "glyph": "🧠",
   "sortOrder": 1,
   "tier": "APPRENTICE",
-  "topicId": "java",
-  "prerequisites": [],             // array of chunk IDs that must be complete
-  "subChunks": [
+  "topicId": "java",               // also accepted as "domainId"
+  "prerequisites": [],             // array of module IDs that must be complete
+  "subChunks": [                   // also accepted as "lessons"
     {
-      "id": "java-app-1a",         // subChunk ID
+      "id": "java-app-1a",         // lesson ID
       "title": "...",
       "sortOrder": 1,
       "xpReward": 50,
@@ -286,7 +310,7 @@ Examples:
 ## 7. Learning Flow (Encoding Phases)
 
 ```
-HOOK → EXPLANATION → GUIDED_PRACTICE → SOLO_PRACTICE → RETRIEVAL_CHECK → COMPLETE
+HOOK → EXPLANATION → GUIDED_PRACTICE → SOLO_PRACTICE → RETRIEVAL_CHECK → INTEGRATION → COMPLETE
 ```
 
 | Phase | Purpose | Can skip? |
@@ -296,9 +320,29 @@ HOOK → EXPLANATION → GUIDED_PRACTICE → SOLO_PRACTICE → RETRIEVAL_CHECK �
 | GUIDED_PRACTICE | Scaffolded task (starter code / worked example) | Gated: must pass before advancing |
 | SOLO_PRACTICE | Same task rebuilt from memory, no hints | Gated if `soloPracticeHtml` exists |
 | RETRIEVAL_CHECK | Quiz drawn from `questions` array | Gated if questions exist; 60% pass threshold |
+| INTEGRATION | Cross-domain connection prompt (Blueprint §7) | Skipped if `integrationPrompt` is blank |
 | COMPLETE | Summary; Feynman teach-back (optional, earns XP) | Terminal state |
 
-**Phase skip logic:** GUIDED_PRACTICE is always entered. SOLO_PRACTICE is entered only if `soloPracticeHtml` is non-blank. If a subChunk has no questions, RETRIEVAL_CHECK is auto-passed.
+**Phase skip logic:** GUIDED_PRACTICE is always entered. SOLO_PRACTICE is entered only if `soloPracticeHtml` is non-blank. If a subChunk has no questions, RETRIEVAL_CHECK is auto-passed. INTEGRATION is entered only if `integrationPrompt` is non-blank.
+
+**Retrieval XP timing:** 25 XP for retrieval is awarded immediately when the check passes, even if INTEGRATION phase follows. The lesson status is set to COMPLETE only after INTEGRATION is acknowledged.
+
+---
+
+## 7b. Quest Types (Blueprint §6)
+
+Each lesson can optionally declare a `questType` in its JSON. Shown as a gold badge in the lesson header.
+
+| Quest Type | Description | Typical Tier |
+|---|---|---|
+| `KNOWLEDGE` | Comprehension — reading + recall | Apprentice |
+| `GUIDED` | Step-by-step scaffolded problem solving | Apprentice / Junior |
+| `PRACTICE` | Independent execution without hints | Junior / Senior |
+| `INVESTIGATION` | Analysis of unfamiliar/open problems | Senior |
+| `SYNTHESIS` | Cross-domain linking tasks | Senior / Lead |
+| `MASTERY` | Lead-tier output creation / teaching | Lead |
+
+Content files declare: `"questType": "GUIDED"`. Omit for unclassified lessons. The field is optional and backward-compatible.
 
 ---
 
@@ -401,6 +445,28 @@ Stripe webhooks (`StripeWebhookController`) update subscription status on `check
 ## 12. Decision Log
 
 Decisions are recorded here with date, context, and rationale. Reference this before making changes that touch the same areas.
+
+---
+
+### [2026-05-29] Full rename to Arcane Academy blueprint terminology
+
+**Context:** The Arcane Academy Hybrid Educational Blueprint defines a precise structural hierarchy: School → Domain → Tier → Module → Lesson → Quest → Retrieval. The codebase previously used different terminology (Topic, Chunk, SubChunk).
+
+**Decision:** Full end-to-end rename across DB, backend entities, API paths, and frontend:
+- `topics` table → `domains` / entity `Topic` → `Domain`
+- `chunks` table → `modules` / entity `Chunk` → `LearningModule` (Module is a Java keyword)
+- `sub_chunks` table → `lessons` / entity `SubChunk` → `Lesson`
+- FK column `topic_id` → `domain_id`, `chunk_id` → `module_id`, `sub_chunk_id` → `lesson_id`
+- Junction table `chunk_prerequisites` → `module_prerequisites`
+- Enum `SubChunkPracticeType` → `LessonPracticeType`, `SubChunkStatus` → `LessonStatus`
+- API: `/api/chunks` → `/api/modules`, `/api/admin/topics` → `/api/admin/domains`, etc.
+- Frontend: `chunkApi` → `moduleApi`, interfaces `ChunkSummary` → `ModuleSummary`, etc.
+
+**New additions:** `School` entity and `schools` DB table (V25); `Domain.schoolId` FK; `Domain.guildName` field for fantasy narrative overlay; `topics.ts` updated with School/Guild metadata for all 6 active domains.
+
+**Content JSON backward compat:** `ChunkContentDto.domainId` accepts both `"topicId"` and `"domainId"` JSON keys via `@JsonAlias`. `subChunks` array also accepts `"lessons"`. Existing content files do not need updating.
+
+**Migrations:** V24 (rename tables/columns), V25 (schools).
 
 ---
 
@@ -549,6 +615,22 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 **Files changed:** `psy-app-3`, `psy-jun-2` through `psy-jun-10`, `psy-sen-2` through `psy-sen-4` (12 files).
 
 **Watch-out:** When authoring new content, always use the current tier abbreviations (`app`, `jun`, `sen`, `lea`). Run the prerequisite validation script before pushing.
+
+---
+
+### [2026-05-29] Blueprint implementation — Integration phase, Quest types, Core 12 domains
+
+**Context:** The Arcane Academy Hybrid Educational Blueprint (PDF) defines: (1) a Learning Loop that ends with an "Integration — cross-domain connection prompt" step; (2) a 6-type Quest taxonomy (Knowledge/Guided/Practice/Investigation/Synthesis/Mastery); (3) a Core 12 domain structure with specific guild assignments.
+
+**Decisions:**
+
+1. **Integration Phase** — Added `INTEGRATION` to `EncodingPhase` enum between `RETRIEVAL_CHECK` and `COMPLETE`. Triggered by `integrationPrompt` field on the lesson (TEXT, nullable). Skipped automatically when blank. Retrieval XP (25) is awarded immediately when the check passes; lesson status transitions to COMPLETE only after the Integration phase is acknowledged. V26 migration adds `integration_prompt` column.
+
+2. **Quest Type** — Added `QuestType` enum (`KNOWLEDGE | GUIDED | PRACTICE | INVESTIGATION | SYNTHESIS | MASTERY`) and `questType` column to `lessons` (V26). Content JSON declares `"questType": "GUIDED"` (optional, backward-compatible). Shown as a gold badge in the EncodingPage lesson header.
+
+3. **Core 12 domain expansion** — `topics.ts` updated with 6 new coming-soon domains matching the blueprint: Mathematics (Lodge of Theorems), Botany (Verdant Archive), Philosophy (Sanctum of Dialectics), History (Chronicle Vaults), Economics (Exchange of Incentives), Music (Conservatory of Harmonics). All tech coming-soon domains now have guild names too.
+
+**Content authoring:** Add `"integrationPrompt"` and/or `"questType"` to any lesson's JSON. Both are optional — existing content files need no changes.
 
 ---
 

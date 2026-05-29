@@ -1,4 +1,4 @@
-// ── Auth ──────────────────────────────────────────────────────────────────────
+﻿// â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export type SubscriptionStatus = 'FREE' | 'MONTHLY' | 'ANNUAL' | 'LIFETIME' | 'CANCELLED'
 
 export interface User {
@@ -23,7 +23,7 @@ export function hasActiveSubscription(user?: User | null): boolean {
   )
 }
 
-// ── Shared (kept from old system) ────────────────────────────────────────────
+// â”€â”€ Shared (kept from old system) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface StoryBeat {
   type: 'narration' | 'dialogue' | 'example'; text: string
   av?: string; cls?: string; speaker?: string; sCls?: string
@@ -33,36 +33,38 @@ export interface TestResult { label: string; passed: boolean; actualOutput: stri
 export interface Badge { id: string; displayName: string; description: string; glyph: string; category: string; earned: boolean; earnedAt: string | null }
 export interface CodeRunResponse { output: string | null; error: string | null; status: 'SUCCESS'|'COMPILE_ERROR'|'RUNTIME_ERROR'|'TIMEOUT'|'ERROR' }
 
-// ── Chunks ───────────────────────────────────────────────────────────────────
-export interface ChunkSummary {
+// â”€â”€ Chunks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export interface ModuleSummary {
   id: string; title: string; glyph: string; status: string
-  totalSubChunks: number; completedSubChunks: number
+  totalLessons: number; completedLessons: number
   memoryStrength: number; healthColor: string; prerequisiteIds: string[]
 }
 
-export interface SubChunkSummary {
+export interface LessonSummary {
   id: string; title: string; sortOrder: number; status: string
   currentPhase: string; memoryStrength: number; healthColor: string
   feynmanCompleted: boolean; xpReward: number
-  // Sprint 1 — chip metadata
+  // Sprint 1 â€” chip metadata
   practiceType: string
   learningObjectiveCount: number
   hasChallenge: boolean
   hasMiniProject: boolean
 }
 
-export interface ChunkDetail {
-  id: string; topicId: string; title: string; glyph: string; status: string
-  subChunks: SubChunkSummary[]
+export interface ModuleDetail {
+  id: string; domainId: string; title: string; glyph: string; status: string
+  lessons: LessonSummary[]
 }
 
-// ── Encoding ─────────────────────────────────────────────────────────────────
-export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'SOLO_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
+// â”€â”€ Encoding â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'SOLO_PRACTICE' | 'RETRIEVAL_CHECK' | 'INTEGRATION' | 'COMPLETE'
+
+export type QuestType = 'KNOWLEDGE' | 'GUIDED' | 'PRACTICE' | 'INVESTIGATION' | 'SYNTHESIS' | 'MASTERY'
 
 export interface StoryRabbitHoleTerm { term: string; description: string }
 
-export interface SubChunkEncoding {
-  subChunkId: string; chunkId: string; topicId: string; title: string
+export interface LessonEncoding {
+  lessonId: string; moduleId: string; domainId: string; title: string
   phase: EncodingPhase; status: string
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null
@@ -78,14 +80,16 @@ export interface SubChunkEncoding {
   modelAnswer: string | null
   /** Exemplar answer revealed after guided practice is passed (written-response sub-chunks only). */
   guidedPracticeModelAnswer: string | null
-  // Sprint 1 — structured lesson metadata
+  // Sprint 1 â€” structured lesson metadata
   learningObjectives: string[] | null
   challenge: { html: string; starterCode: string | null; tests: Record<string, unknown>[] | null } | null
   miniProject: string | null
   commonMistakes: string[] | null
   assessmentCriteria: string[] | null
-  // Sprint 7 — downloadable resources
+  // Sprint 7 â€” downloadable resources
   downloadables: Downloadable[] | null
+  integrationPrompt: string | null
+  questType: QuestType | null
 }
 
 export interface Downloadable {
@@ -100,7 +104,7 @@ export interface PracticeResult {
   errorType?: string | null; newBadges?: Badge[]
 }
 
-// ── Questions ────────────────────────────────────────────────────────────────
+// â”€â”€ Questions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface QuestionDto {
   id: string; tier: string; type: string
   questionHtml: string; codeSnippet: string | null
@@ -114,7 +118,7 @@ export interface QuestionResultDto {
   userAnswer: string; correctAnswer: string; explanationHtml: string
 }
 
-// ── Retrieval ────────────────────────────────────────────────────────────────
+// â”€â”€ Retrieval â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface RetrievalResultDto {
   score: number; correct: number; total: number
   results: QuestionResultDto[]; passed: boolean
@@ -122,7 +126,7 @@ export interface RetrievalResultDto {
   recommendation: string
 }
 
-// ── Reviews ──────────────────────────────────────────────────────────────────
+// â”€â”€ Reviews â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface ReviewSessionDto {
   sessionId: string; sessionType: string
   questions: QuestionDto[]; estimatedMinutes: number
@@ -133,24 +137,24 @@ export interface ReviewResultDto {
   results: QuestionResultDto[]; newBadges: Badge[]
 }
 
-// ── Diagnostic ───────────────────────────────────────────────────────────────
+// â”€â”€ Diagnostic â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface DiagnosticResultDto {
   recommendedPath: string
   chunkRecommendations: Record<string, string>
   overallScore: number
 }
 
-// ── Feynman ──────────────────────────────────────────────────────────────────
+// â”€â”€ Feynman â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface FeynmanResultDto {
   accuracy: number; completeness: number; simplicity: number; connection: number
   overallScore: number; feedback: string; xpEarned: number
 }
 
-// ── Dashboard ────────────────────────────────────────────────────────────────
-export interface ChunkHealthDto {
-  chunkId: string; title: string; glyph: string
+// â”€â”€ Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export interface ModuleHealthDto {
+  moduleId: string; title: string; glyph: string
   status: string; memoryStrength: number; healthColor: string
-  totalSubChunks: number; completedSubChunks: number
+  totalLessons: number; completedLessons: number
   tier: string
 }
 
@@ -158,23 +162,23 @@ export interface DashboardDto {
   totalXp: number; rank: string; streakDays: number; streakAtRisk: boolean
   currentPath: string; diagnosticCompleted: boolean; diagnosticCompletedAt: string | null
   reviewsDue: number; dailyGoalMinutes: number
-  overallProgress: number; chunkHealth: ChunkHealthDto[]
+  overallProgress: number; chunkHealth: ModuleHealthDto[]
 }
 
-// ── Rabbit Holes ─────────────────────────────────────────────────────────────
+// â”€â”€ Rabbit Holes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface RabbitHoleModule {
-  id: string; chunkId: string; title: string
+  id: string; moduleId: string; title: string
   contentHtml: string; storyBeats: StoryBeat[]
   starterCode: string; testCaseLabels: { label: string }[]; filename: string; sortOrder: number
 }
 
-// ── Curiosity Queue ──────────────────────────────────────────────────────────
+// â”€â”€ Curiosity Queue â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface CuriosityQueueItem {
-  id: string; userId: string; subChunkId: string; savedAt: string
+  id: string; userId: string; lessonId: string; savedAt: string
 }
 
-// ── Rabbit Hole Terms ────────────────────────────────────────────────────────
+// â”€â”€ Rabbit Hole Terms â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface RabbitHoleTerm {
   id: string; term: string; description: string | null
-  subChunkId: string | null; topicId: string | null; savedAt: string
+  lessonId: string | null; domainId: string | null; savedAt: string
 }
