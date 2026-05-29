@@ -5,7 +5,9 @@
   "sortOrder": 12,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-11"],
+  "prerequisites": [
+    "java-jun-11"
+  ],
   "subChunks": [
     {
       "id": "java-jun-12a",
@@ -16,11 +18,39 @@
       "hookHtml": "<p>Every time a web application runs, it sends and receives structured messages. Understanding the full request-response cycle — what travels, in what format, and why — makes you a far more effective backend engineer.</p>",
       "explanationHtml": "<h3>The HTTP Request-Response Cycle</h3><p>A client (browser or HTTP client) sends a <strong>request</strong> to a server. The server processes it and sends a <strong>response</strong>. Both have the same structure:</p><pre><code>REQUEST:\n  [Method] [Path] [HTTP version]\n  [Headers]\n  [blank line]\n  [Body (optional)]\n\nRESPONSE:\n  [HTTP version] [Status code] [Reason phrase]\n  [Headers]\n  [blank line]\n  [Body (optional)]</code></pre><h3>Common Request Headers</h3><ul><li><code>Content-Type</code>: the format of the request body (e.g. <code>application/json</code>)</li><li><code>Accept</code>: what format the client can handle in the response</li><li><code>Authorization</code>: carries credentials (e.g. <code>Bearer &lt;token&gt;</code>)</li><li><code>User-Agent</code>: identifies the client software</li><li><code>Cookie</code>: sends stored cookies to the server</li></ul><h3>Common Response Headers</h3><ul><li><code>Content-Type</code>: the format of the response body</li><li><code>Location</code>: URL of newly created resource (with 201 responses)</li><li><code>Set-Cookie</code>: instructs the client to store a cookie</li><li><code>Cache-Control</code>: caching directives (e.g. <code>no-cache</code>, <code>max-age=3600</code>)</li><li><code>WWW-Authenticate</code>: indicates what authentication scheme is required (with 401)</li></ul><h3>Cookies</h3><p>A cookie is a small piece of data the server sends to the browser; the browser automatically includes it in subsequent requests to the same domain. Cookies are used for session management, tracking, and preferences.</p><p>Important cookie attributes: <code>HttpOnly</code> (not accessible via JavaScript), <code>Secure</code> (HTTPS only), <code>SameSite</code> (CSRF protection), <code>Expires</code>/<code>Max-Age</code>.</p><h3>Authentication Basics</h3><ul><li><strong>Basic Auth</strong>: username:password base64-encoded in the Authorization header — only acceptable over HTTPS</li><li><strong>Bearer token (JWT)</strong>: <code>Authorization: Bearer &lt;token&gt;</code> — stateless, verifiable</li><li><strong>Session cookies</strong>: server stores session; client holds only the session ID in a cookie — stateful</li><li><strong>API keys</strong>: a secret string passed as a header or query parameter</li></ul>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's network observatory shows every packet travelling between towers in real time. A senior engineer is walking a junior through what travels in each direction."},
-        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Network Observer Tess", "sCls": "mentor", "text": "Every HTTP conversation is two messages: a request from the client and a response from the server. Both have headers — metadata that tells the other party about the message's format, the sender's identity, and caching instructions. The body is optional."},
-        {"type": "example", "speaker": "A real HTTP request", "text": "POST /api/spells HTTP/1.1\nHost: registry.academy\nContent-Type: application/json\nAuthorization: Bearer eyJhbGc...\n\n{\"name\":\"Blizzard\",\"damage\":300}"},
-        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Network Observer Tess", "sCls": "mentor", "text": "The Authorization header carries the caller's identity. A Bearer token is the most common approach — a signed string (usually a JWT) that the server can verify without a database lookup. Cookies are the older, browser-centric mechanism — the browser stores them and sends them automatically on every request to the same domain."},
-        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Network Observer Tess", "sCls": "mentor", "text": "Mark session cookies as HttpOnly (JavaScript cannot read them — prevents XSS theft) and Secure (HTTPS only). SameSite=Strict prevents them from being sent on cross-origin requests, blocking CSRF attacks. These three attributes together represent modern cookie hygiene."}
+        {
+          "type": "narration",
+          "text": "The Academy's network observatory shows every packet travelling between towers in real time. A senior engineer is walking a junior through what travels in each direction."
+        },
+        {
+          "type": "dialogue",
+          "av": "📡",
+          "cls": "mentor",
+          "speaker": "Network Observer Tess",
+          "sCls": "mentor",
+          "text": "Every HTTP conversation is two messages: a request from the client and a response from the server. Both have headers — metadata that tells the other party about the message's format, the sender's identity, and caching instructions. The body is optional."
+        },
+        {
+          "type": "example",
+          "speaker": "A real HTTP request",
+          "text": "POST /api/spells HTTP/1.1\nHost: registry.academy\nContent-Type: application/json\nAuthorization: Bearer eyJhbGc...\n\n{\"name\":\"Blizzard\",\"damage\":300}"
+        },
+        {
+          "type": "dialogue",
+          "av": "📡",
+          "cls": "mentor",
+          "speaker": "Network Observer Tess",
+          "sCls": "mentor",
+          "text": "The Authorization header carries the caller's identity. A Bearer token is the most common approach — a signed string (usually a JWT) that the server can verify without a database lookup. Cookies are the older, browser-centric mechanism — the browser stores them and sends them automatically on every request to the same domain."
+        },
+        {
+          "type": "dialogue",
+          "av": "📡",
+          "cls": "mentor",
+          "speaker": "Network Observer Tess",
+          "sCls": "mentor",
+          "text": "Mark session cookies as HttpOnly (JavaScript cannot read them — prevents XSS theft) and Secure (HTTPS only). SameSite=Strict prevents them from being sent on cross-origin requests, blocking CSRF attacks. These three attributes together represent modern cookie hygiene."
+        }
       ],
       "learningObjectives": [
         "Describe the structure of an HTTP request and response (start line, headers, body)",
@@ -47,32 +77,44 @@
       "modelAnswer": "1. Problem: sensitive token in the URL — appears in server logs, browser history, and referrer headers.\n   Fix: use POST /api/logout with the token in the Authorization header or as a cookie.\n\n2. Problem: Without HttpOnly, JavaScript can read the session cookie (XSS vulnerability).\n   Without Secure, the cookie is sent over HTTP, exposing it to network sniffing.\n   Fix: Set-Cookie: session=...; HttpOnly; Secure; SameSite=Strict\n\n3. Problem: Status 200 with an error body is misleading — clients check the status code first.\n   Fix: Return 404 Not Found with an error body like {\"error\": \"Spell with id 42 not found\"}.\n\n4. Problem: Plain text passwords are catastrophic if the database is breached.\n   Fix: Hash passwords with bcrypt or Argon2 (adaptive hash functions). Never store or compare plain text.",
       "questions": [
         {
+          "id": "java-jun-12a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which HTTP response header tells the client the URL of a newly created resource?</p>",
-          "options": ["Content-Type", "Authorization", "Location", "Cache-Control"],
-          "correctAnswer": "Location",
-          "explanationHtml": "<p>The <code>Location</code> header is included in 201 Created responses to point the client to the newly created resource. It contains the URL the client should use for subsequent reads or updates of that resource.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which HTTP response header tells the client the URL of a newly created resource?</p>",
+          "options": [
+            "Content-Type",
+            "Authorization",
+            "Location",
+            "Cache-Control"
+          ],
+          "answer": "Location",
+          "explanation": "<p>The <code>Location</code> header is included in 201 Created responses to point the client to the newly created resource. It contains the URL the client should use for subsequent reads or updates of that resource.</p>"
         },
         {
+          "id": "java-jun-12a-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>A cookie with the <code>HttpOnly</code> attribute cannot be read by server-side code.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p><code>HttpOnly</code> prevents <em>JavaScript</em> (client-side code) from reading the cookie via <code>document.cookie</code>. The cookie is still sent to the server in the <code>Cookie</code> header on every request — that is its entire purpose.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>A cookie with the <code>HttpOnly</code> attribute cannot be read by server-side code.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p><code>HttpOnly</code> prevents <em>JavaScript</em> (client-side code) from reading the cookie via <code>document.cookie</code>. The cookie is still sent to the server in the <code>Cookie</code> header on every request — that is its entire purpose.</p>"
         },
         {
+          "id": "java-jun-12a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>Why is stateless authentication (JWT in Authorization header) preferable to server-side session storage for a horizontally scaled service?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Why is stateless authentication (JWT in Authorization header) preferable to server-side session storage for a horizontally scaled service?</p>",
           "options": [
             "JWTs are always smaller than session IDs",
             "The server doesn't need to look up session data — any instance can verify the token independently",
             "Session cookies require HTTPS but JWTs do not",
             "Server-side sessions cannot support multiple users simultaneously"
           ],
-          "correctAnswer": "The server doesn't need to look up session data — any instance can verify the token independently",
-          "explanationHtml": "<p>With server-side sessions, all requests for a user must hit the same server (or share a session store). With JWTs, every request is self-contained — any server instance can verify the token's signature without shared state. This enables true stateless horizontal scaling.</p>"
+          "answer": "The server doesn't need to look up session data — any instance can verify the token independently",
+          "explanation": "<p>With server-side sessions, all requests for a user must hit the same server (or share a session store). With JWTs, every request is self-contained — any server instance can verify the token's signature without shared state. This enables true stateless horizontal scaling.</p>"
         }
       ]
     }

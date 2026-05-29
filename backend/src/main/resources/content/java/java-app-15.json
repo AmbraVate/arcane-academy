@@ -5,7 +5,9 @@
   "sortOrder": 15,
   "tier": "APPRENTICE",
   "topicId": "java",
-  "prerequisites": ["java-app-14"],
+  "prerequisites": [
+    "java-app-14"
+  ],
   "subChunks": [
     {
       "id": "java-app-15a",
@@ -16,11 +18,38 @@
       "hookHtml": "<p>You have arrived. Every concept the APPRENTICE tier has taught — variables, control flow, methods, arrays, strings, OOP, collections, error handling, file I/O, debugging, testing, and algorithms — now comes together into a single, complete application. This is your capstone.</p>",
       "explanationHtml": "<h3>What is a Capstone?</h3><p>A capstone is an open-ended project that demonstrates mastery across the full breadth of a tier. Unlike sandbox exercises with predetermined test cases, a capstone is evaluated holistically against criteria: Does the code compile? Is it structured? Does it handle errors? Is it tested?</p><h3>Project Options</h3><p>Choose <strong>one</strong> of the following projects. All require the same depth of Java knowledge — choose the domain that interests you most.</p><h4>Option A: Text-Based Calculator</h4><p>A command-line calculator that reads mathematical expressions from user input (e.g. <code>12 + 7</code>, <code>100 / 4</code>, <code>3 * 9</code>), computes the result, and handles invalid input gracefully. Requirements: support +, -, *, /; handle division by zero; handle non-numeric input; display a history of the last 5 calculations using an array.</p><h4>Option B: Simple Banking System</h4><p>A simulated bank account system with classes for Account (balance, owner name, account number) and Transaction (type, amount, timestamp as a String). Users can deposit, withdraw, and check balance. Requirements: prevent overdraft (throw exception), display transaction history, save and load accounts from a file using File I/O.</p><h4>Option C: Inventory Manager</h4><p>A stock inventory tool for a merchant. Items have a name, quantity, and price. Users can add items, remove items, search by name (linear search), and display all items sorted by price (insertion sort). Requirements: validate all inputs, handle missing items gracefully, persist inventory to a text file between sessions.</p><h4>Option D: Word Statistics Analyser</h4><p>Reads a paragraph of text (hardcoded or from a file), then reports: total word count, unique word count (case-insensitive), the five most common words, average word length, and the longest word. Requirements: use arrays and String methods throughout; sort the frequency list using a sort algorithm.</p><h4>Option E: Mini Text Adventure</h4><p>A simple dungeon crawler with Rooms connected by exits (north/south/east/west). Player has health and an inventory (array of Strings). Rooms may contain items to pick up or enemies to fight. Requirements: at least 5 rooms, at least 3 items, combat system using random numbers, win/lose conditions handled gracefully.</p><h3>Submission Requirements</h3><p>Regardless of which project you choose, your submission must include:</p><ol><li><strong>Working code</strong> — the program runs without exceptions on normal inputs</li><li><strong>Error handling</strong> — invalid inputs produce friendly messages, not stack traces</li><li><strong>Methods</strong> — logic is organised into named methods; main() is not one giant block</li><li><strong>At least one class</strong> beyond the main class, modelling a real-world concept</li><li><strong>Tests</strong> — at least 5 test cases using your own assertEquals helper or JUnit</li><li><strong>Comments</strong> — non-obvious logic is briefly explained</li></ol>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's graduation hall is vast and silent. Shelves line the walls — not with books, but with projects. Each project, a completed work, stands as evidence that the apprentice who built it is ready for the next tier. The graduating wizard who oversees admissions stands at the centre."},
-        {"type": "dialogue", "av": "🏛️", "cls": "mentor", "speaker": "Grand Archivist Thessaly", "sCls": "mentor", "text": "You have learned the grammar of Java. Now you will speak a sentence. A complete sentence — something that does a real job, handles problems gracefully, and is tested. That is what separates an apprentice from a junior engineer."},
-        {"type": "dialogue", "av": "🏛️", "cls": "mentor", "speaker": "Grand Archivist Thessaly", "sCls": "mentor", "text": "Choose a project that interests you. The domain is irrelevant — a banking system and a text adventure require the same skills. What matters is: does it work? Is it structured? Does it handle the unexpected? Is there evidence you tested it?"},
-        {"type": "dialogue", "av": "🏛️", "cls": "mentor", "speaker": "Grand Archivist Thessaly", "sCls": "mentor", "text": "We do not expect perfection. We expect evidence of the craft. Clean method boundaries. At least one class that models something meaningful. Error handling that protects the user. Comments where the logic would not be obvious to a reader six months from now."},
-        {"type": "narration", "text": "Thessaly gestures to the empty shelf reserved for this cohort. 'The JUNIOR tier awaits. Generics, streams, lambdas, design patterns, REST APIs. The foundation you have built here will carry all of it. Make it solid.'"}
+        {
+          "type": "narration",
+          "text": "The Academy's graduation hall is vast and silent. Shelves line the walls — not with books, but with projects. Each project, a completed work, stands as evidence that the apprentice who built it is ready for the next tier. The graduating wizard who oversees admissions stands at the centre."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏛️",
+          "cls": "mentor",
+          "speaker": "Grand Archivist Thessaly",
+          "sCls": "mentor",
+          "text": "You have learned the grammar of Java. Now you will speak a sentence. A complete sentence — something that does a real job, handles problems gracefully, and is tested. That is what separates an apprentice from a junior engineer."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏛️",
+          "cls": "mentor",
+          "speaker": "Grand Archivist Thessaly",
+          "sCls": "mentor",
+          "text": "Choose a project that interests you. The domain is irrelevant — a banking system and a text adventure require the same skills. What matters is: does it work? Is it structured? Does it handle the unexpected? Is there evidence you tested it?"
+        },
+        {
+          "type": "dialogue",
+          "av": "🏛️",
+          "cls": "mentor",
+          "speaker": "Grand Archivist Thessaly",
+          "sCls": "mentor",
+          "text": "We do not expect perfection. We expect evidence of the craft. Clean method boundaries. At least one class that models something meaningful. Error handling that protects the user. Comments where the logic would not be obvious to a reader six months from now."
+        },
+        {
+          "type": "narration",
+          "text": "Thessaly gestures to the empty shelf reserved for this cohort. 'The JUNIOR tier awaits. Generics, streams, lambdas, design patterns, REST APIs. The foundation you have built here will carry all of it. Make it solid.'"
+        }
       ],
       "learningObjectives": [
         "Integrate all APPRENTICE-tier Java skills into a single, purposeful application",
@@ -50,43 +79,49 @@
       "modelAnswer": "A model submission demonstrates:\n\n✅ Clear class structure — at least two classes, each with a single clear responsibility\n✅ All logic in named methods — main() is at most 20 lines and mostly calls other methods\n✅ Defensive validation — every user-facing input is validated before use\n✅ Meaningful error messages — \"Please enter a positive amount\" not a raw exception message\n✅ At least 5 labelled tests covering happy path, edge cases, and one error case\n✅ Readable variable and method names — no x, y, temp2, or myMethod throughout\n\nExample structure (Banking):\n  Account.java — balance, ownerName, transaction history array; deposit(), withdraw(), getHistory()\n  BankApp.java — main() loop reading user input, delegating to Account methods\n  BankTest.java — test suite with assertEquals helpers\n\nThe best submissions also include one meaningful comment explaining a non-obvious decision (e.g. why the transaction limit is 100, or why a particular error handling approach was chosen).",
       "questions": [
         {
+          "id": "java-app-15a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which of the following is a requirement for a passing APPRENTICE capstone submission?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>Which of the following is a requirement for a passing APPRENTICE capstone submission?</p>",
           "options": [
             "Uses at least three external libraries",
             "Implements a graphical user interface",
             "Includes at least 5 test cases covering core behaviours",
             "Uses generics and lambda expressions"
           ],
-          "correctAnswer": "Includes at least 5 test cases covering core behaviours",
-          "explanationHtml": "<p>The APPRENTICE capstone requirements are all within the APPRENTICE tier: working code, error handling, method decomposition, at least one additional class, at least 5 tests, and readable code. External libraries, GUIs, generics, and lambdas are JUNIOR-tier topics.</p>"
+          "answer": "Includes at least 5 test cases covering core behaviours",
+          "explanation": "<p>The APPRENTICE capstone requirements are all within the APPRENTICE tier: working code, error handling, method decomposition, at least one additional class, at least 5 tests, and readable code. External libraries, GUIs, generics, and lambdas are JUNIOR-tier topics.</p>"
         },
         {
+          "id": "java-app-15a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>You are building the banking capstone. A user tries to withdraw more than their balance. What is the most appropriate response?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>You are building the banking capstone. A user tries to withdraw more than their balance. What is the most appropriate response?</p>",
           "options": [
             "Set the balance to 0 silently",
             "Return -1 to indicate failure",
             "Throw an IllegalArgumentException with a message like 'Insufficient funds: available 50.0, requested 100.0'",
             "Print the error and crash the program"
           ],
-          "correctAnswer": "Throw an IllegalArgumentException with a message like 'Insufficient funds: available 50.0, requested 100.0'",
-          "explanationHtml": "<p>Throwing a meaningful exception from the Account class keeps the error-handling concern in the right place (the banking rule is in Account, the UI decision about what to show the user is in the calling code). A descriptive message with the actual values makes debugging and user feedback straightforward.</p>"
+          "answer": "Throw an IllegalArgumentException with a message like 'Insufficient funds: available 50.0, requested 100.0'",
+          "explanation": "<p>Throwing a meaningful exception from the Account class keeps the error-handling concern in the right place (the banking rule is in Account, the UI decision about what to show the user is in the calling code). A descriptive message with the actual values makes debugging and user feedback straightforward.</p>"
         },
         {
+          "id": "java-app-15a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A fellow apprentice puts all 200 lines of their capstone logic inside the <code>main()</code> method. What is wrong with this approach?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A fellow apprentice puts all 200 lines of their capstone logic inside the <code>main()</code> method. What is wrong with this approach?</p>",
           "options": [
             "Java does not allow main() to contain more than 50 lines",
             "It works correctly but will not compile on some JVMs",
             "Logic buried in main() cannot be tested, reused, or understood in isolation — it violates the single responsibility principle",
             "Nothing — main() is the entry point and all code belongs there"
           ],
-          "correctAnswer": "Logic buried in main() cannot be tested, reused, or understood in isolation — it violates the single responsibility principle",
-          "explanationHtml": "<p>A monolithic main() method cannot be unit-tested (tests can only run the whole program), cannot be reused across different entry points, and is extremely hard to read and maintain as complexity grows. The assessment criterion 'main() delegates rather than implements' exists precisely to enforce this discipline.</p>"
+          "answer": "Logic buried in main() cannot be tested, reused, or understood in isolation — it violates the single responsibility principle",
+          "explanation": "<p>A monolithic main() method cannot be unit-tested (tests can only run the whole program), cannot be reused across different entry points, and is extremely hard to read and maintain as complexity grows. The assessment criterion 'main() delegates rather than implements' exists precisely to enforce this discipline.</p>"
         }
       ]
     }

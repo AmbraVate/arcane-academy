@@ -5,7 +5,9 @@
   "sortOrder": 17,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-16"],
+  "prerequisites": [
+    "java-jun-16"
+  ],
   "subChunks": [
     {
       "id": "java-jun-17a",
@@ -17,11 +19,39 @@
       "hookHtml": "<p>Code that works is not the same as code that is maintainable. Refactoring is the discipline of improving the internal structure of code without changing its external behaviour. It is the craft skill that separates junior engineers from senior ones.</p>",
       "explanationHtml": "<h3>What is Refactoring?</h3><p>Refactoring means changing the code's structure — names, method boundaries, class organisation — without changing what the code does. The behaviour is preserved; the design improves. Refactoring always needs tests to verify nothing broke.</p><h3>Common Code Smells</h3><ul><li><strong>Long Method</strong>: a method that does too much. Split into smaller, named methods.</li><li><strong>Magic Numbers/Strings</strong>: unexplained literal values. Extract to named constants.</li><li><strong>Duplicate Code</strong>: the same logic in two places. Extract to a shared method.</li><li><strong>Dead Code</strong>: variables, methods, or imports that are never used. Delete them.</li><li><strong>God Class</strong>: a class that knows too much and does too much. Split by responsibility.</li><li><strong>Deeply Nested Conditionals</strong>: if inside if inside if. Use guard clauses or extract methods.</li><li><strong>Feature Envy</strong>: a method that uses another class's data more than its own. Move the method there.</li></ul><h3>Extract Method</h3><p>The most-used refactoring: pull a block of code out of a method into its own named method.</p><pre><code>// BEFORE — long method doing everything\npublic void processOrder(Order order) {\n    // validate\n    if (order == null) throw new IllegalArgumentException(\"null order\");\n    if (order.getItems().isEmpty()) throw new IllegalArgumentException(\"empty order\");\n    // calculate total\n    double total = 0;\n    for (Item item : order.getItems()) total += item.getPrice() * item.getQuantity();\n    // apply discount\n    if (order.getMembership() == GOLD) total *= 0.9;\n    // print receipt\n    System.out.println(\"Total: \" + total);\n}\n\n// AFTER — each concern in its own method\npublic void processOrder(Order order) {\n    validate(order);\n    double total = calculateTotal(order);\n    total = applyDiscount(order, total);\n    printReceipt(total);\n}\n\nprivate void validate(Order order) { ... }\nprivate double calculateTotal(Order order) { ... }\nprivate double applyDiscount(Order order, double total) { ... }\nprivate void printReceipt(double total) { ... }</code></pre><h3>Replace Magic Numbers</h3><pre><code>// BEFORE\nif (total > 1000) total *= 0.85;\n\n// AFTER\nstatic final double PREMIUM_THRESHOLD = 1000.0;\nstatic final double PREMIUM_DISCOUNT = 0.85;\nif (total > PREMIUM_THRESHOLD) total *= PREMIUM_DISCOUNT;</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's code review chamber has a wall of scrolls. Red marks cover one scroll in particular — not because it's wrong, but because no one can read it fast enough to know if it's right."},
-        {"type": "dialogue", "av": "♻️", "cls": "mentor", "speaker": "Senior Enchanter Dev", "sCls": "mentor", "text": "Working code is the minimum bar. Maintainable code is the professional bar. A 200-line method that works is a liability — the next developer will be afraid to touch it, and when a bug hides in line 147, they'll have to read all 200 lines to find it. That fear is the real cost of bad structure."},
-        {"type": "dialogue", "av": "♻️", "cls": "mentor", "speaker": "Senior Enchanter Dev", "sCls": "mentor", "text": "Code smells are patterns that signal structural problems. A long method. Magic numbers with no explanation. The same logic copy-pasted in three places. Dead code cluttering the class. A class that knows everything about everything. Each smell has a corresponding refactoring to fix it."},
-        {"type": "example", "speaker": "Extract Method before/after", "text": "// BEFORE: one big method\npublic void castSpell(String id, int mana) {\n    if (id == null) throw new IllegalArgumentException(...);\n    if (mana <= 0) throw new IllegalArgumentException(...);\n    int cost = mana * 3;\n    if (cost > 100) cost = 100;\n    System.out.println(\"Cost: \" + cost);\n}\n\n// AFTER: each concern separated\npublic void castSpell(String id, int mana) {\n    validateInput(id, mana);\n    int cost = calculateCost(mana);\n    printCost(cost);\n}"},
-        {"type": "dialogue", "av": "♻️", "cls": "mentor", "speaker": "Senior Enchanter Dev", "sCls": "mentor", "text": "The golden rule of refactoring: never refactor without tests. Your test suite is your safety net. If behaviour breaks, the tests tell you immediately. Refactoring without tests is just rearranging unknown territory in the dark."}
+        {
+          "type": "narration",
+          "text": "The Academy's code review chamber has a wall of scrolls. Red marks cover one scroll in particular — not because it's wrong, but because no one can read it fast enough to know if it's right."
+        },
+        {
+          "type": "dialogue",
+          "av": "♻️",
+          "cls": "mentor",
+          "speaker": "Senior Enchanter Dev",
+          "sCls": "mentor",
+          "text": "Working code is the minimum bar. Maintainable code is the professional bar. A 200-line method that works is a liability — the next developer will be afraid to touch it, and when a bug hides in line 147, they'll have to read all 200 lines to find it. That fear is the real cost of bad structure."
+        },
+        {
+          "type": "dialogue",
+          "av": "♻️",
+          "cls": "mentor",
+          "speaker": "Senior Enchanter Dev",
+          "sCls": "mentor",
+          "text": "Code smells are patterns that signal structural problems. A long method. Magic numbers with no explanation. The same logic copy-pasted in three places. Dead code cluttering the class. A class that knows everything about everything. Each smell has a corresponding refactoring to fix it."
+        },
+        {
+          "type": "example",
+          "speaker": "Extract Method before/after",
+          "text": "// BEFORE: one big method\npublic void castSpell(String id, int mana) {\n    if (id == null) throw new IllegalArgumentException(...);\n    if (mana <= 0) throw new IllegalArgumentException(...);\n    int cost = mana * 3;\n    if (cost > 100) cost = 100;\n    System.out.println(\"Cost: \" + cost);\n}\n\n// AFTER: each concern separated\npublic void castSpell(String id, int mana) {\n    validateInput(id, mana);\n    int cost = calculateCost(mana);\n    printCost(cost);\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "♻️",
+          "cls": "mentor",
+          "speaker": "Senior Enchanter Dev",
+          "sCls": "mentor",
+          "text": "The golden rule of refactoring: never refactor without tests. Your test suite is your safety net. If behaviour breaks, the tests tell you immediately. Refactoring without tests is just rearranging unknown territory in the dark."
+        }
       ],
       "learningObjectives": [
         "Identify at least five code smells in existing code",
@@ -45,47 +75,70 @@
       "guidedPracticeHtml": "<p>The method below has multiple smells. Refactor it:</p><ol><li>Extract a <code>validate()</code> method for the guard clauses</li><li>Extract a <code>calcXp()</code> method for the XP calculation</li><li>Extract a <code>printResult()</code> method for the output</li><li>Replace the magic numbers 3, 50, 100 with named constants</li></ol>",
       "guidedPracticeStarterCode": "public class RefactorDemo {\n\n    // BEFORE — refactor this method\n    public static void awardXp(String name, int level, int kills) {\n        if (name == null || name.isBlank()) {\n            throw new IllegalArgumentException(\"Name required\");\n        }\n        if (level < 1 || kills < 0) {\n            throw new IllegalArgumentException(\"Invalid level/kills\");\n        }\n        int xp = kills * 3;\n        if (level > 5) xp += 50;\n        if (xp > 100) xp = 100;\n        System.out.println(name + \" earned \" + xp + \" XP\");\n    }\n\n    public static void main(String[] args) {\n        awardXp(\"Lyria\", 7, 8);\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "Refactored method produces same output", "input": "null", "expected": "Lyria earned 74 XP"},
-        {"label": "Null name still throws", "input": "null", "expected": "Name required"}
+        {
+          "label": "Refactored method produces same output",
+          "input": "null",
+          "expected": "Lyria earned 74 XP"
+        },
+        {
+          "label": "Null name still throws",
+          "input": "null",
+          "expected": "Name required"
+        }
       ],
       "soloPracticeHtml": "<p>From scratch, write a <em>well-structured</em> version of: a method <code>processEnrolment(String studentName, int age, String course)</code> that validates (name not blank, age 16-100, course not blank), calculates a fee (base fee 500, +200 if age < 25 for premium support, -50 if course is \"ONLINE\"), and prints <code>\"[name] enrolled in [course] — fee: [fee]\"</code>. Use at least 3 extracted methods and named constants. Test with Lyria, age 22, course ONLINE.</p>",
       "soloPracticeTests": [
-        {"label": "Lyria ONLINE fee correct", "input": "null", "expected": "Lyria enrolled in ONLINE — fee: 650"},
-        {"label": "Blank name throws exception", "input": "null", "expected": "IllegalArgumentException"}
+        {
+          "label": "Lyria ONLINE fee correct",
+          "input": "null",
+          "expected": "Lyria enrolled in ONLINE — fee: 650"
+        },
+        {
+          "label": "Blank name throws exception",
+          "input": "null",
+          "expected": "IllegalArgumentException"
+        }
       ],
       "questions": [
         {
+          "id": "java-jun-17a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is the definition of refactoring?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is the definition of refactoring?</p>",
           "options": [
             "Adding new features without changing existing code",
             "Fixing bugs in a method",
             "Improving code structure without changing its external behaviour",
             "Rewriting a module from scratch"
           ],
-          "correctAnswer": "Improving code structure without changing its external behaviour",
-          "explanationHtml": "<p>Refactoring is a disciplined technique for restructuring code — renaming, extracting, reorganising — while preserving observable behaviour. The tests should still pass after every refactoring step.</p>"
+          "answer": "Improving code structure without changing its external behaviour",
+          "explanation": "<p>Refactoring is a disciplined technique for restructuring code — renaming, extracting, reorganising — while preserving observable behaviour. The tests should still pass after every refactoring step.</p>"
         },
         {
+          "id": "java-jun-17a-q2",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A developer finds the same 10-line block of code in three different methods. What is the code smell and what is the refactoring?</p>",
-          "correctAnswer": "Duplicate Code — extract the shared block into a single named method and call it from all three places",
-          "explanationHtml": "<p>Duplicate Code is one of the most common smells. Three copies means three places to update when a bug is found or the logic changes — and three chances to forget one. Extract to a shared method: one place to update, three callers.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>A developer finds the same 10-line block of code in three different methods. What is the code smell and what is the refactoring?</p>",
+          "options": [],
+          "answer": "Duplicate Code — extract the shared block into a single named method and call it from all three places",
+          "explanation": "<p>Duplicate Code is one of the most common smells. Three copies means three places to update when a bug is found or the logic changes — and three chances to forget one. Extract to a shared method: one place to update, three callers.</p>"
         },
         {
+          "id": "java-jun-17a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>Before refactoring a large class, you realise there are no unit tests for it. What should you do?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Before refactoring a large class, you realise there are no unit tests for it. What should you do?</p>",
           "options": [
             "Proceed anyway — refactoring doesn't change behaviour so tests aren't needed",
             "Write characterisation tests first (capturing current behaviour) then refactor",
             "Rewrite the class from scratch instead of refactoring",
             "Ask a colleague to review the code instead of adding tests"
           ],
-          "correctAnswer": "Write characterisation tests first (capturing current behaviour) then refactor",
-          "explanationHtml": "<p>Characterisation tests (also called golden master tests) lock down the current behaviour by recording inputs and outputs before you start changing anything. Once they pass, you have a safety net. Refactoring without a safety net is how you introduce regressions that only appear in production weeks later.</p>"
+          "answer": "Write characterisation tests first (capturing current behaviour) then refactor",
+          "explanation": "<p>Characterisation tests (also called golden master tests) lock down the current behaviour by recording inputs and outputs before you start changing anything. Once they pass, you have a safety net. Refactoring without a safety net is how you introduce regressions that only appear in production weeks later.</p>"
         }
       ]
     }

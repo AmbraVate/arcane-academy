@@ -5,7 +5,9 @@
   "sortOrder": 4,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-3"],
+  "prerequisites": [
+    "java-jun-3"
+  ],
   "subChunks": [
     {
       "id": "java-jun-4a",
@@ -63,62 +65,136 @@
       "guidedPracticeHtml": "<p>Cast three functional spells in a single <code>Main</code> class:</p><ol><li>Create a <code>Predicate&lt;Integer&gt;</code> named <code>isGreaterThanTen</code> that returns <code>true</code> if the number is greater than 10. Test it on <code>15</code> and <code>5</code>, printing each result.</li><li>Create a <code>Function&lt;String, String&gt;</code> named <code>shout</code> that converts a string to uppercase and appends <code>\"!\"</code>. Apply it to <code>\"arcane\"</code> and print the result.</li><li>Create a <code>Consumer&lt;String&gt;</code> named <code>castingAnnouncer</code> that prints <code>\"Casting: \"</code> followed by the string. Use it with <code>\"Fireball\"</code>.</li></ol>",
       "guidedPracticeStarterCode": "import java.util.function.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        // 1. Predicate: true if n > 10\n        Predicate<Integer> isGreaterThanTen = // TODO\n        System.out.println(isGreaterThanTen.test(15));\n        System.out.println(isGreaterThanTen.test(5));\n\n        // 2. Function: uppercase + \"!\"\n        Function<String, String> shout = // TODO\n        System.out.println(shout.apply(\"arcane\"));\n\n        // 3. Consumer: prints \"Casting: \" + s\n        Consumer<String> castingAnnouncer = // TODO\n        castingAnnouncer.accept(\"Fireball\");\n    }\n}",
       "guidedPracticeTests": [
-        {"label": "Predicate returns true for 15", "input": "null", "expected": "true"},
-        {"label": "Predicate returns false for 5", "input": "null", "expected": "false"},
-        {"label": "Function produces ARCANE!", "input": "null", "expected": "ARCANE!"},
-        {"label": "Consumer prints Casting: Fireball", "input": "null", "expected": "Casting: Fireball"}
+        {
+          "label": "Predicate returns true for 15",
+          "input": "null",
+          "expected": "true"
+        },
+        {
+          "label": "Predicate returns false for 5",
+          "input": "null",
+          "expected": "false"
+        },
+        {
+          "label": "Function produces ARCANE!",
+          "input": "null",
+          "expected": "ARCANE!"
+        },
+        {
+          "label": "Consumer prints Casting: Fireball",
+          "input": "null",
+          "expected": "Casting: Fireball"
+        }
       ],
       "feynmanPrompt": "Explain the difference between Predicate, Function, Consumer, and Supplier in your own words. Include: why would you choose one over another, and what does 'effectively final' mean when capturing a variable in a lambda?",
       "soloPracticeHtml": "<p>From a blank slate, write a <code>Main</code> class that does all three tasks without any starter code:</p><ol><li>A <code>Predicate&lt;Integer&gt;</code> testing whether a number is greater than 10 — test on 15 and 5.</li><li>A <code>Function&lt;String,String&gt;</code> that uppercases and appends <code>!</code> — apply to <code>\"arcane\"</code>.</li><li>A <code>Consumer&lt;String&gt;</code> that prints <code>\"Casting: \"</code> + the value — use with <code>\"Fireball\"</code>.</li></ol>",
       "soloPracticeStarterCode": "",
       "soloPracticeTests": [
-        {"label": "Predicate returns true for 15", "input": "null", "expected": "true"},
-        {"label": "Predicate returns false for 5", "input": "null", "expected": "false"},
-        {"label": "Function produces ARCANE!", "input": "null", "expected": "ARCANE!"},
-        {"label": "Consumer prints Casting: Fireball", "input": "null", "expected": "Casting: Fireball"}
+        {
+          "label": "Predicate returns true for 15",
+          "input": "null",
+          "expected": "true"
+        },
+        {
+          "label": "Predicate returns false for 5",
+          "input": "null",
+          "expected": "false"
+        },
+        {
+          "label": "Function produces ARCANE!",
+          "input": "null",
+          "expected": "ARCANE!"
+        },
+        {
+          "label": "Consumer prints Casting: Fireball",
+          "input": "null",
+          "expected": "Casting: Fireball"
+        }
       ],
       "rabbitHoleTerms": [
-        {"term": "lambda", "description": "An anonymous function expressed inline, using the -> arrow syntax, that can be treated as an object implementing a functional interface."},
-        {"term": "functional interface", "description": "An interface with exactly one abstract method, enabling lambda expressions and method references to be used wherever it is expected."},
-        {"term": "Predicate<T>", "description": "A functional interface whose test(T t) method returns a boolean — used for filtering and condition checks."},
-        {"term": "Consumer<T>", "description": "A functional interface whose accept(T t) method returns void — used for operations with side effects such as printing."},
-        {"term": "Function<T,R>", "description": "A functional interface whose apply(T t) method returns R — used for transforming a value from one type to another."},
-        {"term": "Supplier<T>", "description": "A functional interface whose get() method takes no arguments and returns T — used for lazy value production."},
-        {"term": "method reference", "description": "A shorthand for a lambda that simply calls an existing method, using the :: operator (e.g. String::toUpperCase)."},
-        {"term": "effectively final", "description": "A local variable that is never reassigned after its initial assignment; lambdas can capture effectively-final variables from their enclosing scope."}
+        {
+          "term": "lambda",
+          "description": "An anonymous function expressed inline, using the -> arrow syntax, that can be treated as an object implementing a functional interface."
+        },
+        {
+          "term": "functional interface",
+          "description": "An interface with exactly one abstract method, enabling lambda expressions and method references to be used wherever it is expected."
+        },
+        {
+          "term": "Predicate<T>",
+          "description": "A functional interface whose test(T t) method returns a boolean — used for filtering and condition checks."
+        },
+        {
+          "term": "Consumer<T>",
+          "description": "A functional interface whose accept(T t) method returns void — used for operations with side effects such as printing."
+        },
+        {
+          "term": "Function<T,R>",
+          "description": "A functional interface whose apply(T t) method returns R — used for transforming a value from one type to another."
+        },
+        {
+          "term": "Supplier<T>",
+          "description": "A functional interface whose get() method takes no arguments and returns T — used for lazy value production."
+        },
+        {
+          "term": "method reference",
+          "description": "A shorthand for a lambda that simply calls an existing method, using the :: operator (e.g. String::toUpperCase)."
+        },
+        {
+          "term": "effectively final",
+          "description": "A local variable that is never reassigned after its initial assignment; lambdas can capture effectively-final variables from their enclosing scope."
+        }
       ],
       "questions": [
         {
+          "id": "java-jun-4a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which built-in functional interface takes a value and returns <code>void</code>?</p>",
-          "options": ["Predicate<T>", "Function<T,R>", "Consumer<T>", "Supplier<T>"],
-          "correctAnswer": "Consumer<T>",
-          "explanationHtml": "<p><code>Consumer&lt;T&gt;</code> is designed for operations that consume a value and produce no result — its single abstract method is <code>void accept(T t)</code>. This makes it ideal for side-effectful actions like printing or logging. <code>Predicate</code> returns a boolean, <code>Function</code> returns a value of type R, and <code>Supplier</code> produces a value without consuming one.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which built-in functional interface takes a value and returns <code>void</code>?</p>",
+          "options": [
+            "Predicate<T>",
+            "Function<T,R>",
+            "Consumer<T>",
+            "Supplier<T>"
+          ],
+          "answer": "Consumer<T>",
+          "explanation": "<p><code>Consumer&lt;T&gt;</code> is designed for operations that consume a value and produce no result — its single abstract method is <code>void accept(T t)</code>. This makes it ideal for side-effectful actions like printing or logging. <code>Predicate</code> returns a boolean, <code>Function</code> returns a value of type R, and <code>Supplier</code> produces a value without consuming one.</p>"
         },
         {
+          "id": "java-jun-4a-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "import java.util.function.*;\npublic class Main {\n    public static void main(String[] args) {\n        Function<String, String> f = s -> s.toUpperCase() + \"!\";\n        Predicate<String> p = s -> s.length() > 5;\n        String word = \"magic\";\n        System.out.println(f.apply(word));\n        System.out.println(p.test(word));\n    }\n}",
-          "correctAnswer": "MAGIC!\nfalse",
-          "explanationHtml": "<p><code>f.apply(\"magic\")</code> calls <code>toUpperCase()</code> on <code>\"magic\"</code> producing <code>\"MAGIC\"</code>, then appends <code>\"!\"</code> to get <code>\"MAGIC!\"</code>. <code>p.test(\"magic\")</code> checks whether the length (5) is greater than 5 — it is not, so it prints <code>false</code>. Note the boundary: greater-than (strict), not greater-than-or-equal.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "MAGIC!\nfalse",
+          "explanation": "<p><code>f.apply(\"magic\")</code> calls <code>toUpperCase()</code> on <code>\"magic\"</code> producing <code>\"MAGIC\"</code>, then appends <code>\"!\"</code> to get <code>\"MAGIC!\"</code>. <code>p.test(\"magic\")</code> checks whether the length (5) is greater than 5 — it is not, so it prints <code>false</code>. Note the boundary: greater-than (strict), not greater-than-or-equal.</p>"
         },
         {
+          "id": "java-jun-4a-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>This code fails to compile. What is the bug?</p>",
-          "codeSnippet": "import java.util.function.*;\npublic class Main {\n    public static void main(String[] args) {\n        String prefix = \"Result: \";\n        prefix = \"Answer: \";  // reassigned\n        Consumer<String> printer = s -> System.out.println(prefix + s);\n        printer.accept(\"42\");\n    }\n}",
-          "correctAnswer": "The variable 'prefix' is reassigned after its first assignment, so it is not effectively final and cannot be captured by the lambda.",
-          "explanationHtml": "<p>Java lambdas can only capture local variables from the enclosing scope if they are <strong>effectively final</strong> — meaning they are never reassigned after their first assignment. Here, <code>prefix</code> is assigned twice (<code>\"Result: \"</code> then <code>\"Answer: \"</code>), so the compiler rejects the lambda. The fix is to remove the second assignment, or copy the value into a new final variable: <code>String p = prefix;</code> and capture <code>p</code> instead.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>This code fails to compile. What is the bug?</p>",
+          "options": [],
+          "answer": "The variable 'prefix' is reassigned after its first assignment, so it is not effectively final and cannot be captured by the lambda.",
+          "explanation": "<p>Java lambdas can only capture local variables from the enclosing scope if they are <strong>effectively final</strong> — meaning they are never reassigned after their first assignment. Here, <code>prefix</code> is assigned twice (<code>\"Result: \"</code> then <code>\"Answer: \"</code>), so the compiler rejects the lambda. The fix is to remove the second assignment, or copy the value into a new final variable: <code>String p = prefix;</code> and capture <code>p</code> instead.</p>"
         },
         {
+          "id": "java-jun-4a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>Which of the following is the correct method reference equivalent of <code>s -> s.toUpperCase()</code>?</p>",
-          "options": ["String::new", "String::toUpperCase", "System.out::println", "String::valueOf"],
-          "correctAnswer": "String::toUpperCase",
-          "explanationHtml": "<p><code>String::toUpperCase</code> is an instance method reference on an arbitrary instance of <code>String</code>. When used as a <code>Function&lt;String,String&gt;</code>, Java understands it as: for a given <code>String s</code>, call <code>s.toUpperCase()</code>. <code>String::new</code> is a constructor reference, <code>System.out::println</code> is a bound instance method reference on a specific object (<code>System.out</code>), and <code>String::valueOf</code> is a static method reference.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which of the following is the correct method reference equivalent of <code>s -> s.toUpperCase()</code>?</p>",
+          "options": [
+            "String::new",
+            "String::toUpperCase",
+            "System.out::println",
+            "String::valueOf"
+          ],
+          "answer": "String::toUpperCase",
+          "explanation": "<p><code>String::toUpperCase</code> is an instance method reference on an arbitrary instance of <code>String</code>. When used as a <code>Function&lt;String,String&gt;</code>, Java understands it as: for a given <code>String s</code>, call <code>s.toUpperCase()</code>. <code>String::new</code> is a constructor reference, <code>System.out::println</code> is a bound instance method reference on a specific object (<code>System.out</code>), and <code>String::valueOf</code> is a static method reference.</p>"
         }
       ]
     },
@@ -178,61 +254,108 @@
       "guidedPracticeHtml": "<p>Sort the Academy spell registry two different ways:</p><ol><li>Create <code>ArrayList&lt;String&gt; spells = new ArrayList&lt;&gt;(List.of(\"Blizzard\",\"Fireball\",\"Arc\",\"Zap\",\"Earthquake\"))</code>. Sort <strong>alphabetically</strong> and print each spell on its own line.</li><li>Sort the same list by <strong>length ascending</strong> (shortest first) and print each spell on its own line.</li></ol>",
       "guidedPracticeStarterCode": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> spells = new ArrayList<>(List.of(\"Blizzard\",\"Fireball\",\"Arc\",\"Zap\",\"Earthquake\"));\n\n        // 1. Sort alphabetically and print\n        spells.sort(/* TODO */);\n        spells.forEach(System.out::println);\n\n        System.out.println(\"---\");\n\n        // 2. Sort by length ascending and print\n        spells.sort(/* TODO */);\n        spells.forEach(System.out::println);\n    }\n}",
       "guidedPracticeTests": [
-        {"label": "Arc appears first in alphabetical sort", "input": "null", "expected": "Arc"},
-        {"label": "Zap appears as a short spell in length sort", "input": "null", "expected": "Zap"}
+        {
+          "label": "Arc appears first in alphabetical sort",
+          "input": "null",
+          "expected": "Arc"
+        },
+        {
+          "label": "Zap appears as a short spell in length sort",
+          "input": "null",
+          "expected": "Zap"
+        }
       ],
       "feynmanPrompt": "Explain how Comparator.comparing() works in your own words. What does it mean to chain comparators with thenComparing(), and how is that different from writing a single complex lambda?",
       "soloPracticeHtml": "<p>Recreate the sorting exercise from scratch — no starter code. Create the same list of 5 spells and sort it both alphabetically and by length, printing after each sort.</p>",
       "soloPracticeStarterCode": "",
       "soloPracticeTests": [
-        {"label": "Arc appears first in alphabetical sort", "input": "null", "expected": "Arc"},
-        {"label": "Zap appears as a short spell in length sort", "input": "null", "expected": "Zap"}
+        {
+          "label": "Arc appears first in alphabetical sort",
+          "input": "null",
+          "expected": "Arc"
+        },
+        {
+          "label": "Zap appears as a short spell in length sort",
+          "input": "null",
+          "expected": "Zap"
+        }
       ],
       "rabbitHoleTerms": [
-        {"term": "Comparator<T>", "description": "A functional interface for defining custom ordering; its compare(T o1, T o2) method returns negative, zero, or positive to indicate order."},
-        {"term": "Comparator.comparing()", "description": "A static factory method that creates a Comparator from a key-extraction function, making it easy to sort by a specific field."},
-        {"term": "thenComparing()", "description": "A Comparator method that adds a secondary sort criterion, applied when the primary comparator considers two elements equal."},
-        {"term": "reversed()", "description": "A Comparator method that returns a new Comparator with the ordering flipped."},
-        {"term": "natural order", "description": "The default sort order for Comparable objects (e.g. alphabetical for Strings, numeric for Integers), accessible via Comparator.naturalOrder()."},
-        {"term": "Comparable<T>", "description": "An interface a class implements to define its natural ordering via the compareTo() method; distinct from Comparator which is an external ordering strategy."}
+        {
+          "term": "Comparator<T>",
+          "description": "A functional interface for defining custom ordering; its compare(T o1, T o2) method returns negative, zero, or positive to indicate order."
+        },
+        {
+          "term": "Comparator.comparing()",
+          "description": "A static factory method that creates a Comparator from a key-extraction function, making it easy to sort by a specific field."
+        },
+        {
+          "term": "thenComparing()",
+          "description": "A Comparator method that adds a secondary sort criterion, applied when the primary comparator considers two elements equal."
+        },
+        {
+          "term": "reversed()",
+          "description": "A Comparator method that returns a new Comparator with the ordering flipped."
+        },
+        {
+          "term": "natural order",
+          "description": "The default sort order for Comparable objects (e.g. alphabetical for Strings, numeric for Integers), accessible via Comparator.naturalOrder()."
+        },
+        {
+          "term": "Comparable<T>",
+          "description": "An interface a class implements to define its natural ordering via the compareTo() method; distinct from Comparator which is an external ordering strategy."
+        }
       ],
       "questions": [
         {
+          "id": "java-jun-4b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What does <code>Comparator.reversed()</code> return?</p>",
-          "options": ["A new List in reverse order", "A Comparator with the ordering flipped", "The same Comparator mutated in-place", "A Comparator that sorts by length descending"],
-          "correctAnswer": "A Comparator with the ordering flipped",
-          "explanationHtml": "<p><code>reversed()</code> is a default method on the <code>Comparator</code> interface that returns a <em>new</em> Comparator wrapping the original, with the comparison result negated. The original Comparator is unchanged (Comparators are typically immutable). It does not sort by any particular field — it simply mirrors whatever ordering the original Comparator defined.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does <code>Comparator.reversed()</code> return?</p>",
+          "options": [
+            "A new List in reverse order",
+            "A Comparator with the ordering flipped",
+            "The same Comparator mutated in-place",
+            "A Comparator that sorts by length descending"
+          ],
+          "answer": "A Comparator with the ordering flipped",
+          "explanation": "<p><code>reversed()</code> is a default method on the <code>Comparator</code> interface that returns a <em>new</em> Comparator wrapping the original, with the comparison result negated. The original Comparator is unchanged (Comparators are typically immutable). It does not sort by any particular field — it simply mirrors whatever ordering the original Comparator defined.</p>"
         },
         {
+          "id": "java-jun-4b-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is printed?</p>",
-          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<String> words = new ArrayList<>(List.of(\"Cat\",\"Elephant\",\"Ox\",\"Dog\"));\n        words.sort(Comparator.comparingInt(String::length));\n        System.out.println(words.get(0));\n        System.out.println(words.get(words.size() - 1));\n    }\n}",
-          "correctAnswer": "Ox\nElephant",
-          "explanationHtml": "<p>Sorting by length ascending: <code>Ox</code> (2) &lt; <code>Cat</code> (3) = <code>Dog</code> (3) &lt; <code>Elephant</code> (8). So <code>words.get(0)</code> is <code>\"Ox\"</code> and <code>words.get(words.size()-1)</code> is <code>\"Elephant\"</code>. The tie between Cat and Dog is resolved by the sort algorithm's stability (their relative order is preserved from the original list).</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is printed?</p>",
+          "options": [],
+          "answer": "Ox\nElephant",
+          "explanation": "<p>Sorting by length ascending: <code>Ox</code> (2) &lt; <code>Cat</code> (3) = <code>Dog</code> (3) &lt; <code>Elephant</code> (8). So <code>words.get(0)</code> is <code>\"Ox\"</code> and <code>words.get(words.size()-1)</code> is <code>\"Elephant\"</code>. The tie between Cat and Dog is resolved by the sort algorithm's stability (their relative order is preserved from the original list).</p>"
         },
         {
+          "id": "java-jun-4b-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>This code throws an <code>UnsupportedOperationException</code> at runtime. Why?</p>",
-          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        List<String> spells = List.of(\"Blizzard\", \"Arc\", \"Zap\");\n        spells.sort(Comparator.naturalOrder());\n        spells.forEach(System.out::println);\n    }\n}",
-          "correctAnswer": "List.of() returns an unmodifiable list, so calling sort() on it throws UnsupportedOperationException. Wrap it in new ArrayList<>() to get a mutable copy.",
-          "explanationHtml": "<p><code>List.of()</code> creates an <strong>immutable</strong> list. Calling any mutating method on it — including <code>sort()</code>, <code>add()</code>, or <code>remove()</code> — throws <code>UnsupportedOperationException</code>. The fix is to wrap the list: <code>new ArrayList&lt;&gt;(List.of(...))</code>, which creates a mutable <code>ArrayList</code> initialised with those elements. This is a very common pitfall when using the factory methods introduced in Java 9.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>This code throws an <code>UnsupportedOperationException</code> at runtime. Why?</p>",
+          "options": [],
+          "answer": "List.of() returns an unmodifiable list, so calling sort() on it throws UnsupportedOperationException. Wrap it in new ArrayList<>() to get a mutable copy.",
+          "explanation": "<p><code>List.of()</code> creates an <strong>immutable</strong> list. Calling any mutating method on it — including <code>sort()</code>, <code>add()</code>, or <code>remove()</code> — throws <code>UnsupportedOperationException</code>. The fix is to wrap the list: <code>new ArrayList&lt;&gt;(List.of(...))</code>, which creates a mutable <code>ArrayList</code> initialised with those elements. This is a very common pitfall when using the factory methods introduced in Java 9.</p>"
         },
         {
+          "id": "java-jun-4b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You want to sort a list of spells first by damage descending, then alphabetically for ties. Which is correct?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You want to sort a list of spells first by damage descending, then alphabetically for ties. Which is correct?</p>",
           "options": [
             "Comparator.comparingInt(Spell::damage).thenComparing(Spell::name)",
             "Comparator.comparingInt(Spell::damage).reversed().thenComparing(Spell::name)",
             "Comparator.comparingInt(Spell::damage).thenComparing(Spell::name).reversed()",
             "Comparator.reversed(Spell::damage).thenComparing(Spell::name)"
           ],
-          "correctAnswer": "Comparator.comparingInt(Spell::damage).reversed().thenComparing(Spell::name)",
-          "explanationHtml": "<p>The key insight is that <code>reversed()</code> reverses the <em>entire</em> comparator chain built so far, not just the next step. By calling <code>.reversed()</code> right after <code>comparingInt(Spell::damage)</code> (and before <code>thenComparing</code>), only the damage ordering is reversed. Then <code>thenComparing(Spell::name)</code> adds alphabetical as a secondary criterion in its natural (ascending) order. Option C reverses the whole final comparator — flipping both damage AND name order, which is wrong. Option D is not a valid API call.</p>"
+          "answer": "Comparator.comparingInt(Spell::damage).reversed().thenComparing(Spell::name)",
+          "explanation": "<p>The key insight is that <code>reversed()</code> reverses the <em>entire</em> comparator chain built so far, not just the next step. By calling <code>.reversed()</code> right after <code>comparingInt(Spell::damage)</code> (and before <code>thenComparing</code>), only the damage ordering is reversed. Then <code>thenComparing(Spell::name)</code> adds alphabetical as a secondary criterion in its natural (ascending) order. Option C reverses the whole final comparator — flipping both damage AND name order, which is wrong. Option D is not a valid API call.</p>"
         }
       ]
     },
@@ -361,46 +484,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-4c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which of these is a valid use of <code>var</code>?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which of these is a valid use of <code>var</code>?</p>",
           "options": [
             "var result; result = compute();",
             "public var getName() { return name; }",
             "var items = new ArrayList<String>();",
             "private var count = 0;"
           ],
-          "correctAnswer": "var items = new ArrayList<String>();",
-          "explanationHtml": "<p><code>var</code> requires an initialiser on the same line so the compiler can infer the type. It cannot be used for fields (<code>private var</code>), return types, or without an initialiser. <code>var items = new ArrayList&lt;String&gt;();</code> is valid — the type is inferred as <code>ArrayList&lt;String&gt;</code>.</p>"
+          "answer": "var items = new ArrayList<String>();",
+          "explanation": "<p><code>var</code> requires an initialiser on the same line so the compiler can infer the type. It cannot be used for fields (<code>private var</code>), return types, or without an initialiser. <code>var items = new ArrayList&lt;String&gt;();</code> is valid — the type is inferred as <code>ArrayList&lt;String&gt;</code>.</p>"
         },
         {
+          "id": "java-jun-4c-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "public class Main {\n    static void check(Object obj) {\n        if (obj instanceof String s) {\n            System.out.println(\"String length: \" + s.length());\n        } else if (obj instanceof Integer n) {\n            System.out.println(\"Integer doubled: \" + (n * 2));\n        }\n    }\n    public static void main(String[] args) {\n        check(\"Hello\");\n        check(7);\n    }\n}",
-          "correctAnswer": "String length: 5\nInteger doubled: 14",
-          "explanationHtml": "<p>\"Hello\" matches <code>instanceof String s</code>, and <code>\"Hello\".length()</code> is 5. The integer 7 matches <code>instanceof Integer n</code>, and 7 * 2 = 14.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "String length: 5\nInteger doubled: 14",
+          "explanation": "<p>\"Hello\" matches <code>instanceof String s</code>, and <code>\"Hello\".length()</code> is 5. The integer 7 matches <code>instanceof Integer n</code>, and 7 * 2 = 14.</p>"
         },
         {
+          "id": "java-jun-4c-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is wrong with this code?</p>",
-          "codeSnippet": "public class Main {\n    public static void main(String[] args) {\n        var message;\n        message = \"Hello, Academy!\";\n        System.out.println(message);\n    }\n}",
-          "correctAnswer": "var requires an initialiser on the same declaration line so the compiler can infer the type. Split declaration and assignment is not allowed. Fix: var message = \"Hello, Academy!\";",
-          "explanationHtml": "<p><code>var</code> uses the initialiser expression to determine the type at compile time. If no initialiser is present on the declaration line, there is nothing to infer from, and the code fails to compile. Combine the declaration and assignment: <code>var message = \"Hello, Academy!\";</code></p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is wrong with this code?</p>",
+          "options": [],
+          "answer": "var requires an initialiser on the same declaration line so the compiler can infer the type. Split declaration and assignment is not allowed. Fix: var message = \"Hello, Academy!\";",
+          "explanation": "<p><code>var</code> uses the initialiser expression to determine the type at compile time. If no initialiser is present on the declaration line, there is nothing to infer from, and the code fails to compile. Combine the declaration and assignment: <code>var message = \"Hello, Academy!\";</code></p>"
         },
         {
+          "id": "java-jun-4c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>When should you prefer writing the explicit type instead of <code>var</code>?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>When should you prefer writing the explicit type instead of <code>var</code>?</p>",
           "options": [
             "Always — var reduces readability in all cases",
             "When the right-hand side clearly shows the type (e.g., new ArrayList<>())",
             "When the type is not obvious from the initialiser and a reader needs to know it",
             "Only for primitive types"
           ],
-          "correctAnswer": "When the type is not obvious from the initialiser and a reader needs to know it",
-          "explanationHtml": "<p><code>var</code> works best when the type is evident from context. When a method returns an opaque type (e.g., <code>var result = processSpells(data)</code>), the reader loses information. In that case, writing the explicit type aids comprehension. The guiding question is: does hiding the type hurt the reader?</p>"
+          "answer": "When the type is not obvious from the initialiser and a reader needs to know it",
+          "explanation": "<p><code>var</code> works best when the type is evident from context. When a method returns an opaque type (e.g., <code>var result = processSpells(data)</code>), the reader loses information. In that case, writing the explicit type aids comprehension. The guiding question is: does hiding the type hurt the reader?</p>"
         }
       ]
     },
@@ -529,46 +660,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-4d-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What does the <code>permits</code> clause in a sealed interface declaration specify?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does the <code>permits</code> clause in a sealed interface declaration specify?</p>",
           "options": [
             "The methods the interface requires",
             "The exact set of classes allowed to implement the interface",
             "The module the interface belongs to",
             "The classes the interface extends"
           ],
-          "correctAnswer": "The exact set of classes allowed to implement the interface",
-          "explanationHtml": "<p><code>permits</code> lists every class (or interface) that is allowed to implement (or extend) the sealed type. No other class may implement it — the compiler enforces this at compile time.</p>"
+          "answer": "The exact set of classes allowed to implement the interface",
+          "explanation": "<p><code>permits</code> lists every class (or interface) that is allowed to implement (or extend) the sealed type. No other class may implement it — the compiler enforces this at compile time.</p>"
         },
         {
+          "id": "java-jun-4d-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "sealed interface Animal permits Dog, Cat {}\nrecord Dog(String name) implements Animal {}\nrecord Cat(String name) implements Animal {}\npublic class Main {\n    static String greet(Animal a) {\n        if (a instanceof Dog d) return \"Woof from \" + d.name();\n        else if (a instanceof Cat c) return \"Meow from \" + c.name();\n        throw new IllegalStateException();\n    }\n    public static void main(String[] args) {\n        System.out.println(greet(new Dog(\"Rex\")));\n        System.out.println(greet(new Cat(\"Luna\")));\n    }\n}",
-          "correctAnswer": "Woof from Rex\nMeow from Luna",
-          "explanationHtml": "<p>greet(new Dog(\"Rex\")) matches the first instanceof branch, returning \"Woof from Rex\". greet(new Cat(\"Luna\")) matches the second, returning \"Meow from Luna\".</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "Woof from Rex\nMeow from Luna",
+          "explanation": "<p>greet(new Dog(\"Rex\")) matches the first instanceof branch, returning \"Woof from Rex\". greet(new Cat(\"Luna\")) matches the second, returning \"Meow from Luna\".</p>"
         },
         {
+          "id": "java-jun-4d-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is wrong with this sealed hierarchy?</p>",
-          "codeSnippet": "sealed interface Shape permits Circle {}\nrecord Circle(double radius) implements Shape {}\nrecord Square(double side) implements Shape {} // in same package",
-          "correctAnswer": "Square is not listed in the permits clause of Shape, so it is not allowed to implement Shape. Add Square to the permits list: sealed interface Shape permits Circle, Square {}",
-          "explanationHtml": "<p>Every implementor of a sealed interface must appear in the <code>permits</code> clause. <code>Square implements Shape</code> is a compile error because <code>Square</code> is not permitted. Fix: <code>sealed interface Shape permits Circle, Square {}</code></p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is wrong with this sealed hierarchy?</p>",
+          "options": [],
+          "answer": "Square is not listed in the permits clause of Shape, so it is not allowed to implement Shape. Add Square to the permits list: sealed interface Shape permits Circle, Square {}",
+          "explanation": "<p>Every implementor of a sealed interface must appear in the <code>permits</code> clause. <code>Square implements Shape</code> is a compile error because <code>Square</code> is not permitted. Fix: <code>sealed interface Shape permits Circle, Square {}</code></p>"
         },
         {
+          "id": "java-jun-4d-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You are modelling JSON values: a value is either a JsonString, JsonNumber, JsonBoolean, JsonNull, JsonArray, or JsonObject — nothing else. Which design is most appropriate?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You are modelling JSON values: a value is either a JsonString, JsonNumber, JsonBoolean, JsonNull, JsonArray, or JsonObject — nothing else. Which design is most appropriate?</p>",
           "options": [
             "A regular interface that any class can implement",
             "An abstract class with six concrete subclasses",
             "A sealed interface with six permitted record implementations",
             "An enum with six constants"
           ],
-          "correctAnswer": "A sealed interface with six permitted record implementations",
-          "explanationHtml": "<p>The set of JSON value types is fixed and closed — exactly the use case for a sealed interface. Each variant is a data carrier (ideal for records). The sealed hierarchy enables exhaustive handling in switch expressions and documents clearly that no other variants exist.</p>"
+          "answer": "A sealed interface with six permitted record implementations",
+          "explanation": "<p>The set of JSON value types is fixed and closed — exactly the use case for a sealed interface. Each variant is a data carrier (ideal for records). The sealed hierarchy enables exhaustive handling in switch expressions and documents clearly that no other variants exist.</p>"
         }
       ]
     }

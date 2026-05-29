@@ -5,7 +5,9 @@
   "sortOrder": 11,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-10"],
+  "prerequisites": [
+    "java-jun-10"
+  ],
   "subChunks": [
     {
       "id": "java-jun-11a",
@@ -16,11 +18,39 @@
       "hookHtml": "<p>Most of the software you will build as a Java engineer will talk to other systems over the network. REST is the architectural style that governs how those conversations happen. Understanding it is not optional — it is foundational.</p>",
       "explanationHtml": "<h3>What is REST?</h3><p>REST (Representational State Transfer) is an architectural style for building APIs over HTTP. A RESTful API exposes <em>resources</em> (nouns) at URLs and uses HTTP <em>methods</em> (verbs) to describe actions on them.</p><h3>HTTP Methods</h3><table><tr><th>Method</th><th>Action</th><th>Safe?</th><th>Idempotent?</th></tr><tr><td>GET</td><td>Retrieve a resource</td><td>✅ Yes</td><td>✅ Yes</td></tr><tr><td>POST</td><td>Create a new resource</td><td>❌ No</td><td>❌ No</td></tr><tr><td>PUT</td><td>Replace a resource entirely</td><td>❌ No</td><td>✅ Yes</td></tr><tr><td>PATCH</td><td>Partially update a resource</td><td>❌ No</td><td>Depends</td></tr><tr><td>DELETE</td><td>Remove a resource</td><td>❌ No</td><td>✅ Yes</td></tr></table><p><strong>Safe</strong>: does not modify data. <strong>Idempotent</strong>: calling it multiple times has the same effect as calling it once.</p><h3>HTTP Status Codes</h3><ul><li><strong>2xx — Success</strong>: 200 OK, 201 Created, 204 No Content</li><li><strong>3xx — Redirect</strong>: 301 Moved Permanently, 304 Not Modified</li><li><strong>4xx — Client Error</strong>: 400 Bad Request, 401 Unauthorised, 403 Forbidden, 404 Not Found, 409 Conflict, 422 Unprocessable Entity</li><li><strong>5xx — Server Error</strong>: 500 Internal Server Error, 503 Service Unavailable</li></ul><h3>RESTful URL Design</h3><pre><code>GET    /api/spells          → list all spells\nPOST   /api/spells          → create a new spell\nGET    /api/spells/{id}     → get one spell\nPUT    /api/spells/{id}     → replace a spell\nPATCH  /api/spells/{id}     → partially update a spell\nDELETE /api/spells/{id}     → delete a spell\n\n// Nested resources:\nGET    /api/mages/{id}/spells  → spells assigned to a mage</code></pre><h3>REST Constraints</h3><ol><li><strong>Stateless</strong>: each request contains all information the server needs; no session state stored server-side</li><li><strong>Uniform interface</strong>: resources identified by URLs; standard methods; self-descriptive messages</li><li><strong>Client-server separation</strong>: frontend and backend are independent and communicate only through the API</li><li><strong>Cacheable</strong>: GET responses should indicate whether they can be cached</li></ol>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's inter-tower communication network carries thousands of requests per second — spell lookups, enrolment confirmations, mana transfers. All of it travels as structured HTTP requests following a single architectural convention."},
-        {"type": "dialogue", "av": "🌐", "cls": "mentor", "speaker": "Network Mage Aris", "sCls": "mentor", "text": "REST is not a protocol — it's a set of conventions. Resources are nouns in the URL. HTTP methods are the verbs. GET reads, never writes. POST creates. PUT replaces. DELETE removes. The URL tells you what you're acting on; the method tells you what you're doing to it."},
-        {"type": "example", "speaker": "RESTful API for the spell registry", "text": "GET    /api/spells          → 200 OK + JSON array of spells\nPOST   /api/spells          → 201 Created + new spell JSON\nGET    /api/spells/42       → 200 OK + spell #42, or 404 Not Found\nDELETE /api/spells/42       → 204 No Content (success, nothing to return)"},
-        {"type": "dialogue", "av": "🌐", "cls": "mentor", "speaker": "Network Mage Aris", "sCls": "mentor", "text": "Status codes are part of the contract. 200 is success. 201 is created. 400 means your request is malformed — your fault. 401 means you are not authenticated. 403 means you are authenticated but not authorised. 404 means the resource does not exist. 500 means we broke something on the server — never let this escape to a client without a clean message."},
-        {"type": "dialogue", "av": "🌐", "cls": "mentor", "speaker": "Network Mage Aris", "sCls": "mentor", "text": "The most important REST constraint: <em>stateless</em>. Every request must contain everything the server needs. No server-side session storing 'which mage is logged in'. The authentication token travels in the request header every time."}
+        {
+          "type": "narration",
+          "text": "The Academy's inter-tower communication network carries thousands of requests per second — spell lookups, enrolment confirmations, mana transfers. All of it travels as structured HTTP requests following a single architectural convention."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌐",
+          "cls": "mentor",
+          "speaker": "Network Mage Aris",
+          "sCls": "mentor",
+          "text": "REST is not a protocol — it's a set of conventions. Resources are nouns in the URL. HTTP methods are the verbs. GET reads, never writes. POST creates. PUT replaces. DELETE removes. The URL tells you what you're acting on; the method tells you what you're doing to it."
+        },
+        {
+          "type": "example",
+          "speaker": "RESTful API for the spell registry",
+          "text": "GET    /api/spells          → 200 OK + JSON array of spells\nPOST   /api/spells          → 201 Created + new spell JSON\nGET    /api/spells/42       → 200 OK + spell #42, or 404 Not Found\nDELETE /api/spells/42       → 204 No Content (success, nothing to return)"
+        },
+        {
+          "type": "dialogue",
+          "av": "🌐",
+          "cls": "mentor",
+          "speaker": "Network Mage Aris",
+          "sCls": "mentor",
+          "text": "Status codes are part of the contract. 200 is success. 201 is created. 400 means your request is malformed — your fault. 401 means you are not authenticated. 403 means you are authenticated but not authorised. 404 means the resource does not exist. 500 means we broke something on the server — never let this escape to a client without a clean message."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌐",
+          "cls": "mentor",
+          "speaker": "Network Mage Aris",
+          "sCls": "mentor",
+          "text": "The most important REST constraint: <em>stateless</em>. Every request must contain everything the server needs. No server-side session storing 'which mage is logged in'. The authentication token travels in the request header every time."
+        }
       ],
       "learningObjectives": [
         "Match each HTTP method (GET, POST, PUT, PATCH, DELETE) to its purpose and idempotency",
@@ -47,27 +77,44 @@
       "modelAnswer": "(a) Post endpoints:\n  GET    /api/posts             → list all posts\n  POST   /api/posts             → create post\n  GET    /api/posts/{id}        → get post\n  PUT    /api/posts/{id}        → replace post\n  DELETE /api/posts/{id}        → delete post\n\n  Comment endpoints (nested):\n  GET    /api/posts/{id}/comments         → list comments for post\n  POST   /api/posts/{id}/comments         → add comment to post\n  DELETE /api/posts/{id}/comments/{cid}   → remove a comment\n\n(b) Status codes:\n  Get existing post          → 200 OK\n  Comment created            → 201 Created\n  Delete non-existent comment → 404 Not Found\n  Unauthenticated POST       → 401 Unauthorised\n\n(c) POST /api/posts is not idempotent because each call creates a new post — calling it 3 times creates 3 posts, not the same post 3 times.",
       "questions": [
         {
+          "id": "java-jun-11a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>A REST API endpoint successfully creates a new resource. Which status code should it return?</p>",
-          "options": ["200 OK", "201 Created", "202 Accepted", "204 No Content"],
-          "correctAnswer": "201 Created",
-          "explanationHtml": "<p>201 Created indicates that the request succeeded and a new resource was created. The response typically includes a <code>Location</code> header pointing to the new resource's URL and the created resource in the body.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>A REST API endpoint successfully creates a new resource. Which status code should it return?</p>",
+          "options": [
+            "200 OK",
+            "201 Created",
+            "202 Accepted",
+            "204 No Content"
+          ],
+          "answer": "201 Created",
+          "explanation": "<p>201 Created indicates that the request succeeded and a new resource was created. The response typically includes a <code>Location</code> header pointing to the new resource's URL and the created resource in the body.</p>"
         },
         {
+          "id": "java-jun-11a-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>A REST API that stores session state on the server (e.g. 'which user is logged in') is fully RESTful.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>REST's stateless constraint requires that each request contain all information needed to process it. Server-side session state violates this — if the server stores who is logged in, requests from the same client must hit the same server, preventing horizontal scaling.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>A REST API that stores session state on the server (e.g. 'which user is logged in') is fully RESTful.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>REST's stateless constraint requires that each request contain all information needed to process it. Server-side session state violates this — if the server stores who is logged in, requests from the same client must hit the same server, preventing horizontal scaling.</p>"
         },
         {
+          "id": "java-jun-11a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A user is authenticated but tries to access an admin endpoint they are not allowed to use. Which status code is correct?</p>",
-          "options": ["401 Unauthorised", "403 Forbidden", "404 Not Found", "400 Bad Request"],
-          "correctAnswer": "403 Forbidden",
-          "explanationHtml": "<p>401 means the client is not authenticated (no valid credentials). 403 means the client IS authenticated but lacks the permission for this action. Some APIs return 404 instead of 403 to avoid revealing that the resource exists, but 403 is semantically correct.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>A user is authenticated but tries to access an admin endpoint they are not allowed to use. Which status code is correct?</p>",
+          "options": [
+            "401 Unauthorised",
+            "403 Forbidden",
+            "404 Not Found",
+            "400 Bad Request"
+          ],
+          "answer": "403 Forbidden",
+          "explanation": "<p>401 means the client is not authenticated (no valid credentials). 403 means the client IS authenticated but lacks the permission for this action. Some APIs return 404 instead of 403 to avoid revealing that the resource exists, but 403 is semantically correct.</p>"
         }
       ]
     },
@@ -81,9 +128,23 @@
       "hookHtml": "<p>Knowing the theory of REST is half the job. The other half is writing the code that actually makes HTTP requests. Since Java 11, the standard library includes <code>HttpClient</code> — a modern, fluent API for calling REST endpoints.</p>",
       "explanationHtml": "<h3>java.net.http.HttpClient (Java 11+)</h3><pre><code>import java.net.URI;\nimport java.net.http.*;\nimport java.net.http.HttpResponse.BodyHandlers;\n\n// Build a client (reusable)\nHttpClient client = HttpClient.newHttpClient();\n\n// Build a GET request\nHttpRequest request = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://api.example.com/spells\"))\n    .header(\"Accept\", \"application/json\")\n    .GET()\n    .build();\n\n// Send synchronously\nHttpResponse&lt;String&gt; response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode()); // 200\nSystem.out.println(response.body());       // JSON string</code></pre><h3>POST with a JSON Body</h3><pre><code>String json = \"{\\\"name\\\":\\\"Frostbolt\\\",\\\"damage\\\":120}\";\n\nHttpRequest post = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://api.example.com/spells\"))\n    .header(\"Content-Type\", \"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(json))\n    .build();\n\nHttpResponse&lt;String&gt; res = client.send(post, BodyHandlers.ofString());\nSystem.out.println(res.statusCode()); // 201</code></pre><h3>Handling the Response</h3><pre><code>if (response.statusCode() == 200) {\n    // parse body\n} else if (response.statusCode() == 404) {\n    System.out.println(\"Not found\");\n} else {\n    throw new RuntimeException(\"API error: \" + response.statusCode());\n}</code></pre><h3>Async Request</h3><pre><code>client.sendAsync(request, BodyHandlers.ofString())\n      .thenApply(HttpResponse::body)\n      .thenAccept(System.out::println);\n// Non-blocking — returns immediately, processes when ready</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's cross-tower communication spell has been replaced with a Java client. Junior engineers are expected to call external registries, look up spell databases, and post enrolment confirmations — all via HTTP."},
-        {"type": "dialogue", "av": "📡", "cls": "mentor", "speaker": "Integration Lead Finn", "sCls": "mentor", "text": "Java 11 introduced a proper HTTP client. Build a client once — it's thread-safe and reusable. Build a request per call. The fluent builder pattern makes it readable. Check the status code before trusting the body."},
-        {"type": "example", "speaker": "GET and POST with HttpClient", "text": "HttpClient client = HttpClient.newHttpClient();\n\n// GET\nHttpRequest get = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://registry.academy/api/spells/7\"))\n    .GET().build();\nHttpResponse<String> r = client.send(get, BodyHandlers.ofString());\nif (r.statusCode() == 200) System.out.println(r.body());\n\n// POST\nString body = \"{\\\"name\\\":\\\"Blizzard\\\",\\\"damage\\\":300}\";\nHttpRequest post = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://registry.academy/api/spells\"))\n    .header(\"Content-Type\",\"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(body)).build();\nclient.send(post, BodyHandlers.ofString()); // 201"}
+        {
+          "type": "narration",
+          "text": "The Academy's cross-tower communication spell has been replaced with a Java client. Junior engineers are expected to call external registries, look up spell databases, and post enrolment confirmations — all via HTTP."
+        },
+        {
+          "type": "dialogue",
+          "av": "📡",
+          "cls": "mentor",
+          "speaker": "Integration Lead Finn",
+          "sCls": "mentor",
+          "text": "Java 11 introduced a proper HTTP client. Build a client once — it's thread-safe and reusable. Build a request per call. The fluent builder pattern makes it readable. Check the status code before trusting the body."
+        },
+        {
+          "type": "example",
+          "speaker": "GET and POST with HttpClient",
+          "text": "HttpClient client = HttpClient.newHttpClient();\n\n// GET\nHttpRequest get = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://registry.academy/api/spells/7\"))\n    .GET().build();\nHttpResponse<String> r = client.send(get, BodyHandlers.ofString());\nif (r.statusCode() == 200) System.out.println(r.body());\n\n// POST\nString body = \"{\\\"name\\\":\\\"Blizzard\\\",\\\"damage\\\":300}\";\nHttpRequest post = HttpRequest.newBuilder()\n    .uri(URI.create(\"https://registry.academy/api/spells\"))\n    .header(\"Content-Type\",\"application/json\")\n    .POST(HttpRequest.BodyPublishers.ofString(body)).build();\nclient.send(post, BodyHandlers.ofString()); // 201"
+        }
       ],
       "learningObjectives": [
         "Build a reusable HttpClient and construct GET and POST HttpRequest objects",
@@ -107,36 +168,65 @@
       "guidedPracticeHtml": "<p>Simulate calling a REST API using Java's HttpClient. The sandbox has a mock server at <code>http://localhost:8080/api/spells</code>. Write code to:</p><ol><li>Make a GET request to <code>/api/spells/1</code> and print the status code and body</li><li>Make a POST request to <code>/api/spells</code> with body <code>{\"name\":\"Icestorm\",\"damage\":95}</code> and print the status code</li><li>If the GET returns 200, print <code>\"Found spell\"</code>; if 404, print <code>\"Not found\"</code></li></ol><p><em>Note: In this sandbox, the HTTP calls are simulated — the mock methods are provided for you.</em></p>",
       "guidedPracticeStarterCode": "import java.net.URI;\nimport java.net.http.*;\nimport java.net.http.HttpResponse.BodyHandlers;\n\npublic class SpellApiClient {\n\n    // Simulated HTTP client for sandbox\n    static HttpClient client = HttpClient.newHttpClient();\n\n    public static void main(String[] args) throws Exception {\n        // 1. GET /api/spells/1\n        HttpRequest getReq = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://httpbin.org/status/200\"))\n            .GET()\n            .build();\n        HttpResponse<String> getResp = client.send(getReq, BodyHandlers.ofString());\n        System.out.println(getResp.statusCode());\n\n        // 2. POST with JSON body\n        String json = \"{\\\"name\\\":\\\"Icestorm\\\",\\\"damage\\\":95}\";\n        HttpRequest postReq = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://httpbin.org/status/201\"))\n            .header(\"Content-Type\", \"application/json\")\n            .POST(HttpRequest.BodyPublishers.ofString(json))\n            .build();\n        HttpResponse<String> postResp = client.send(postReq, BodyHandlers.ofString());\n        System.out.println(postResp.statusCode());\n\n        // 3. Conditional print\n        if (getResp.statusCode() == 200) {\n            System.out.println(\"Found spell\");\n        } else if (getResp.statusCode() == 404) {\n            System.out.println(\"Not found\");\n        }\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "GET status code printed", "input": "null", "expected": "200"},
-        {"label": "POST status code printed", "input": "null", "expected": "201"},
-        {"label": "Conditional branch fires", "input": "null", "expected": "Found spell"}
+        {
+          "label": "GET status code printed",
+          "input": "null",
+          "expected": "200"
+        },
+        {
+          "label": "POST status code printed",
+          "input": "null",
+          "expected": "201"
+        },
+        {
+          "label": "Conditional branch fires",
+          "input": "null",
+          "expected": "Found spell"
+        }
       ],
       "soloPracticeHtml": "<p>From scratch. Write a method <code>String fetchOrDefault(String url, String defaultValue)</code> that makes a GET request to the given URL, returns the response body if status is 200, and returns defaultValue for any other status or exception. Then call it with <code>\"https://httpbin.org/status/200\"</code> and <code>\"https://httpbin.org/status/404\"</code> and print both results.</p>",
       "soloPracticeTests": [
-        {"label": "200 returns body (non-empty or httpbin response)", "input": "null", "expected": "200"},
-        {"label": "404 returns default value", "input": "null", "expected": "NOT_FOUND"}
+        {
+          "label": "200 returns body (non-empty or httpbin response)",
+          "input": "null",
+          "expected": "200"
+        },
+        {
+          "label": "404 returns default value",
+          "input": "null",
+          "expected": "NOT_FOUND"
+        }
       ],
       "questions": [
         {
+          "id": "java-jun-11b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which Java class (Java 11+) is used to make HTTP requests?</p>",
-          "options": ["HttpURLConnection", "java.net.http.HttpClient", "URLConnection", "RestTemplate"],
-          "correctAnswer": "java.net.http.HttpClient",
-          "explanationHtml": "<p><code>java.net.http.HttpClient</code> was introduced in Java 11 as the modern, fluent replacement for the older <code>HttpURLConnection</code>. It supports synchronous and asynchronous requests, HTTP/2, and WebSocket.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which Java class (Java 11+) is used to make HTTP requests?</p>",
+          "options": [
+            "HttpURLConnection",
+            "java.net.http.HttpClient",
+            "URLConnection",
+            "RestTemplate"
+          ],
+          "answer": "java.net.http.HttpClient",
+          "explanation": "<p><code>java.net.http.HttpClient</code> was introduced in Java 11 as the modern, fluent replacement for the older <code>HttpURLConnection</code>. It supports synchronous and asynchronous requests, HTTP/2, and WebSocket.</p>"
         },
         {
+          "id": "java-jun-11b-q2",
           "type": "DEBUGGING",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A developer's POST request to create a resource always returns 400 Bad Request from the server. The URL is correct. What is the most likely cause?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>A developer's POST request to create a resource always returns 400 Bad Request from the server. The URL is correct. What is the most likely cause?</p>",
           "options": [
             "The response body has a parse error",
             "The request is missing a required header (e.g. Content-Type: application/json) or the JSON body is malformed",
             "The server does not support POST",
             "The HttpClient should be recreated for each request"
           ],
-          "correctAnswer": "The request is missing a required header (e.g. Content-Type: application/json) or the JSON body is malformed",
-          "explanationHtml": "<p>400 Bad Request typically means the server cannot parse or validate the request. Missing <code>Content-Type: application/json</code> causes many servers to reject the body entirely. Also check that the JSON string is well-formed (correctly escaped quotes, valid structure).</p>"
+          "answer": "The request is missing a required header (e.g. Content-Type: application/json) or the JSON body is malformed",
+          "explanation": "<p>400 Bad Request typically means the server cannot parse or validate the request. Missing <code>Content-Type: application/json</code> causes many servers to reject the body entirely. Also check that the JSON string is well-formed (correctly escaped quotes, valid structure).</p>"
         }
       ]
     }

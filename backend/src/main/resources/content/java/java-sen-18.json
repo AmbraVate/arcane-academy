@@ -5,7 +5,9 @@
   "sortOrder": 18,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-17"],
+  "prerequisites": [
+    "java-sen-17"
+  ],
   "subChunks": [
     {
       "id": "java-sen-18a",
@@ -16,11 +18,38 @@
       "hookHtml": "<p>Technical decision making is a senior engineer's most consequential skill — and the least taught. The ability to reason clearly about trade-offs, document decisions for future colleagues, and distinguish reversible experiments from irreversible commitments separates engineers who build resilient systems from those who create accidental constraints.</p>",
       "explanationHtml": "<h3>Architecture Decision Records (ADRs)</h3><p>An ADR is a short document capturing a significant architectural decision: the context that forced it, the options considered, the decision made, and the consequences. ADRs accumulate in your repository (typically in <code>docs/decisions/</code>) and create an audit trail of why things are the way they are.</p><p>Standard ADR template:</p><pre><code># ADR-0014: Use PostgreSQL as the primary database\n\n## Status\nAccepted\n\n## Context\nThe Academy needs a relational database for spell, user, and progress data.\nTeam has strong SQL expertise. Data has clear relational structure.\n\n## Decision\nUse Neon Postgres (managed Postgres) on Cloud Run.\n\n## Consequences\nPositive: managed backups, automatic failover, SQL familiarity, Flyway migrations.\nNegative: RDBMS harder to scale writes beyond ~10K qps on a single node;\ncannot easily switch to a different consistency model later.\n\n## Options considered\n- MongoDB: flexible schema, but our data is well-structured and relational.\n  Rejected: no strong motivation for document store.\n- MySQL: similar capability; less ecosystem support in GCP.\n  Rejected: Postgres has better GCP integration (CloudSQL, Neon).\n</code></pre><h3>Trade-Off Frameworks</h3><p>Every technical decision involves trade-offs. Common dimensions:</p><ul><li><strong>Performance vs complexity</strong>: caching improves performance but adds invalidation complexity</li><li><strong>Consistency vs availability</strong>: strong consistency requires coordination latency</li><li><strong>Build vs buy</strong>: build for differentiation, buy for commodity</li><li><strong>Flexibility vs simplicity</strong>: abstractions add flexibility but cognitive overhead</li><li><strong>Short-term velocity vs long-term maintainability</strong>: technical debt</li></ul><p>A useful forcing question: <em>What does this decision optimise for?</em> State it explicitly. 'We chose this because it optimises for operational simplicity at the cost of write scalability, which we accept because write throughput is not our constraint.'</p><h3>Reversibility</h3><p>Jeff Bezos's 'Type 1 / Type 2' framework:</p><ul><li><strong>Type 1 (one-way door)</strong>: hard or impossible to reverse. Requires careful, slow decision process. Examples: choosing a database technology, defining an external API contract, making a public commitment to a customer.</li><li><strong>Type 2 (two-way door)</strong>: easily reversible. Should be made quickly, by the smallest group possible, then reversed if wrong. Examples: choosing a library, variable names, internal service implementation details, feature flag configuration.</li></ul><p>The failure mode: treating Type 2 decisions as Type 1 (analysis paralysis on reversible choices) or treating Type 1 decisions as Type 2 (moving fast on irreversible commitments without enough analysis).</p><h3>Decision Quality vs Outcome Quality</h3><p>Good decisions can produce bad outcomes (due to unknown unknowns). Bad decisions can produce good outcomes (lucky). Judge your decision-making process, not just the results. A good process: explicit context, options considered, criteria stated, risks identified. This is what ADRs capture.</p><h3>Sunk Cost Fallacy in Technical Decisions</h3><p>The tendency to continue with a bad technology or approach because 'we've already invested so much.' Sunk costs are gone regardless of what you decide next. The only relevant question is: given where we are now, what is the best decision going forward? Sometimes the right answer is to rewrite; sometimes it is to keep going. The past investment is irrelevant to that calculation.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's senior engineers made a decision to use a novel event store database in 2019. Nobody documented why. By 2023 the original engineers had left, the database vendor had been acquired, and four new engineers stared at an architecture that made no sense to them. There was no ADR. There was no context. There was no record of what alternatives had been rejected and why."},
-        {"type": "dialogue", "av": "⚖️", "cls": "mentor", "speaker": "Staff Engineer Renn", "sCls": "mentor", "text": "An ADR is a letter to your future self and your future colleagues. It says: here is the problem we were solving, here is what we considered, here is why we chose this, here is what we accepted as a downside. When the downside materialises three years later, the ADR tells you whether it was an expected consequence or an unexpected failure. That distinction changes everything about how you respond."},
-        {"type": "dialogue", "av": "⚖️", "cls": "mentor", "speaker": "Staff Engineer Renn", "sCls": "mentor", "text": "The reversibility lens is the most underused framework in technical decision making. Most decisions are two-way doors — try it, if it's wrong, change it. Spend five minutes, move fast. The decisions that deserve deep analysis are the genuine one-way doors: database choice, external API contracts, technology platform. Not which logging library to use."},
-        {"type": "dialogue", "av": "⚖️", "cls": "mentor", "speaker": "Staff Engineer Renn", "sCls": "mentor", "text": "State what you are optimising for. Every architecture trade-off is only correct relative to a set of priorities. 'Use microservices' is not inherently good or bad — it is good if you are optimising for independent team deployment and scaling, and bad if you are optimising for simplicity and a team of three. Write down what you are optimising for before evaluating any option."},
-        {"type": "narration", "text": "Renn points to the ADR folder in the repository — 22 documents. 'Each one took fifteen minutes to write. Combined they save hours of confusion per year. The cost of not writing them is paid in every conversation that starts with why is this like this?'"}
+        {
+          "type": "narration",
+          "text": "The Academy's senior engineers made a decision to use a novel event store database in 2019. Nobody documented why. By 2023 the original engineers had left, the database vendor had been acquired, and four new engineers stared at an architecture that made no sense to them. There was no ADR. There was no context. There was no record of what alternatives had been rejected and why."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚖️",
+          "cls": "mentor",
+          "speaker": "Staff Engineer Renn",
+          "sCls": "mentor",
+          "text": "An ADR is a letter to your future self and your future colleagues. It says: here is the problem we were solving, here is what we considered, here is why we chose this, here is what we accepted as a downside. When the downside materialises three years later, the ADR tells you whether it was an expected consequence or an unexpected failure. That distinction changes everything about how you respond."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚖️",
+          "cls": "mentor",
+          "speaker": "Staff Engineer Renn",
+          "sCls": "mentor",
+          "text": "The reversibility lens is the most underused framework in technical decision making. Most decisions are two-way doors — try it, if it's wrong, change it. Spend five minutes, move fast. The decisions that deserve deep analysis are the genuine one-way doors: database choice, external API contracts, technology platform. Not which logging library to use."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚖️",
+          "cls": "mentor",
+          "speaker": "Staff Engineer Renn",
+          "sCls": "mentor",
+          "text": "State what you are optimising for. Every architecture trade-off is only correct relative to a set of priorities. 'Use microservices' is not inherently good or bad — it is good if you are optimising for independent team deployment and scaling, and bad if you are optimising for simplicity and a team of three. Write down what you are optimising for before evaluating any option."
+        },
+        {
+          "type": "narration",
+          "text": "Renn points to the ADR folder in the repository — 22 documents. 'Each one took fifteen minutes to write. Combined they save hours of confusion per year. The cost of not writing them is paid in every conversation that starts with why is this like this?'"
+        }
       ],
       "learningObjectives": [
         "Write an Architecture Decision Record (ADR) with correct sections: Status, Context, Decision, Consequences, Options Considered",
@@ -47,43 +76,49 @@
       "modelAnswer": "1. Type 1/Type 2 classification:\n   a) Logging library (SLF4J vs Log4j2 implementation): Type 2 (two-way door)\n      — Switching logging implementation is a config change; no external contract or data format commitment.\n   \n   b) External REST API contract: Type 1 (one-way door)\n      — Published API contracts are commitments to external callers; breaking changes require versioning or migration windows. Cannot be undone without coordinating all API consumers.\n   \n   c) Internal package structure: Type 2 (two-way door)\n      — Refactoring package structure is an IDE operation with no external impact. Reversible in an hour.\n   \n   d) PostgreSQL → MongoDB for primary persistence: Type 1 (one-way door)\n      — Data migration at scale is extremely expensive, risky, and time-consuming. Schema design assumptions permeate the application. A near-irreversible commitment.\n   \n   e) Feature flag service (internal use): Type 2 (two-way door)\n      — Internal tooling change; no external contract, no data migration needed. Switch if it's wrong.\n\n2. Reframing the auth system sunk cost:\n   Correct framing: 'We have spent 6 months. The question is not whether to continue because of those 6 months — that time is gone regardless. The question is: given where we are today, what is the better path forward?'\n   \n   Analysis for the forward decision:\n   - Remaining build time estimate: 40% left ≈ ~4 more months (2 engineers)\n   - Cost of Auth0 at current user volume: estimate (e.g. $500/month)\n   - Total cost of Auth0 over 3 years: ~$18K vs ~4 months of engineering time (~$100K)\n   - Auth0 provides: MFA, compliance (SOC2), ongoing security patches, social login, managed sessions\n   - Risk of the custom system: identity is a security-critical domain; internal teams rarely match the security posture of a dedicated provider\n   \n   Recommendation: switch to Auth0. The sunk cost does not change this analysis.\n\n3. Event sourcing for spell history:\n   Optimises for: complete audit trail (every change to a spell's state is recorded), temporal queries (what did this spell look like 3 months ago?), new read projections without data migration (replay events into any shape needed), debugging (replay a production sequence to reproduce a bug).\n   \n   Sacrifices: operational complexity (projection maintenance, snapshot management), eventual consistency of read models, storage growth (event log grows indefinitely), schema evolution difficulty (old events cannot be changed — breaking schema changes require event versioning).\n   \n   Wrong choice if: the team has no prior event sourcing experience and a hard delivery deadline; temporal queries and full audit are not actual requirements; the spell history is simple CRUD with no complex state machine (the overhead is not justified).",
       "questions": [
         {
+          "id": "java-sen-18a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is the primary purpose of writing an Architecture Decision Record (ADR)?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>What is the primary purpose of writing an Architecture Decision Record (ADR)?</p>",
           "options": [
             "To get approval from management before implementing a feature",
             "To document the context, options considered, decision made, and consequences so future engineers understand why the system is designed the way it is",
             "To create a formal specification for a module",
             "To replace code comments inside the implementation"
           ],
-          "correctAnswer": "To document the context, options considered, decision made, and consequences so future engineers understand why the system is designed the way it is",
-          "explanationHtml": "<p>ADRs capture the 'why' behind architectural decisions — context that is not visible in the code itself. Without ADRs, when something seems strange or wrong, engineers waste time reconstructing the reasoning or — worse — change it without understanding the original constraints. ADRs are lightweight (one page), stored in version control alongside code, and written at decision time.</p>"
+          "answer": "To document the context, options considered, decision made, and consequences so future engineers understand why the system is designed the way it is",
+          "explanation": "<p>ADRs capture the 'why' behind architectural decisions — context that is not visible in the code itself. Without ADRs, when something seems strange or wrong, engineers waste time reconstructing the reasoning or — worse — change it without understanding the original constraints. ADRs are lightweight (one page), stored in version control alongside code, and written at decision time.</p>"
         },
         {
+          "id": "java-sen-18a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Using the Type 1 / Type 2 framework, which of these decisions requires the most careful analysis before committing?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>Using the Type 1 / Type 2 framework, which of these decisions requires the most careful analysis before committing?</p>",
           "options": [
             "Which variable name to use for a loop counter",
             "Whether to use Lombok in a project",
             "Designing the public API schema for a service that will be consumed by 15 external partners",
             "Which test assertion library to use (AssertJ vs JUnit built-in)"
           ],
-          "correctAnswer": "Designing the public API schema for a service that will be consumed by 15 external partners",
-          "explanationHtml": "<p>A public API schema consumed by 15 external partners is a classic Type 1 (one-way door) decision. Once published, changing field names, removing fields, or altering response structure breaks all 15 partners. This requires careful design, versioning strategy, and stakeholder input before committing. The other options are all Type 2 (two-way doors) — trivially reversible with no external impact.</p>"
+          "answer": "Designing the public API schema for a service that will be consumed by 15 external partners",
+          "explanation": "<p>A public API schema consumed by 15 external partners is a classic Type 1 (one-way door) decision. Once published, changing field names, removing fields, or altering response structure breaks all 15 partners. This requires careful design, versioning strategy, and stakeholder input before committing. The other options are all Type 2 (two-way doors) — trivially reversible with no external impact.</p>"
         },
         {
+          "id": "java-sen-18a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A team has spent 8 months building a custom data pipeline. It has significant bugs and is 40% complete. A senior engineer says 'we should switch to Apache Spark — it would take 4 weeks.' A manager responds 'we can't stop now, we've spent 8 months on this.' What cognitive bias is affecting the manager's reasoning?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>A team has spent 8 months building a custom data pipeline. It has significant bugs and is 40% complete. A senior engineer says 'we should switch to Apache Spark — it would take 4 weeks.' A manager responds 'we can't stop now, we've spent 8 months on this.' What cognitive bias is affecting the manager's reasoning?</p>",
           "options": [
             "Confirmation bias — seeking evidence that supports the current approach",
             "Sunk cost fallacy — valuing past investment instead of future value in the decision",
             "Optimism bias — underestimating the remaining work on the custom solution",
             "Dunning-Kruger effect — overestimating the team's pipeline engineering expertise"
           ],
-          "correctAnswer": "Sunk cost fallacy — valuing past investment instead of future value in the decision",
-          "explanationHtml": "<p>The sunk cost fallacy: placing too much weight on past investments that cannot be recovered. The 8 months are gone regardless of the decision. The relevant question is: from today, which path (continue building vs switch to Spark) produces more value? If Spark solves the problem in 4 weeks and the custom path needs another 6 months, the correct answer is clear — unless the sunk cost reasoning clouds the judgment. ADRs help by forcing this forward-looking framing explicitly.</p>"
+          "answer": "Sunk cost fallacy — valuing past investment instead of future value in the decision",
+          "explanation": "<p>The sunk cost fallacy: placing too much weight on past investments that cannot be recovered. The 8 months are gone regardless of the decision. The relevant question is: from today, which path (continue building vs switch to Spark) produces more value? If Spark solves the problem in 4 weeks and the custom path needs another 6 months, the correct answer is clear — unless the sunk cost reasoning clouds the judgment. ADRs help by forcing this forward-looking framing explicitly.</p>"
         }
       ]
     }

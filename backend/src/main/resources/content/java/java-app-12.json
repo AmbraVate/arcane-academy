@@ -5,7 +5,9 @@
   "sortOrder": 12,
   "tier": "APPRENTICE",
   "topicId": "java",
-  "prerequisites": ["java-app-11"],
+  "prerequisites": [
+    "java-app-11"
+  ],
   "subChunks": [
     {
       "id": "java-app-12a",
@@ -17,13 +19,48 @@
       "hookHtml": "<p>When a spell misfires, there is always a trace — a pattern of residue that tells you exactly where things went wrong. Java's exceptions and stack traces are that same trail. Learn to read them and you will rarely be lost for long.</p>",
       "explanationHtml": "<h3>What is a Stack Trace?</h3><p>When your program throws an uncaught exception, Java prints a <em>stack trace</em>: the list of method calls active at the moment of the crash, from innermost to outermost. The first line names the exception and its message; subsequent lines show where each method was called from:</p><pre><code>Exception in thread \"main\" java.lang.NullPointerException: Cannot invoke \"String.length()\" because \"name\" is null\n    at BugHunt.validate(BugHunt.java:12)\n    at BugHunt.process(BugHunt.java:7)\n    at BugHunt.main(BugHunt.java:3)</code></pre><p>Read this bottom-up (from <code>main</code>) to understand the call chain, but fix top-down (start at the line that actually threw).</p><h3>Common Exceptions</h3><table><tr><th>Exception</th><th>When it Occurs</th><th>Common Cause</th></tr><tr><td><code>NullPointerException</code> (NPE)</td><td>Calling a method or accessing a field on a <code>null</code> reference</td><td>Missing null check; uninitialised field</td></tr><tr><td><code>ArrayIndexOutOfBoundsException</code></td><td>Accessing an array index < 0 or ≥ length</td><td>Off-by-one in loop; using length instead of length-1</td></tr><tr><td><code>ClassCastException</code></td><td>Casting an object to an incompatible type</td><td>Incorrect downcast</td></tr><tr><td><code>NumberFormatException</code></td><td>Parsing a String that is not a valid number</td><td><code>Integer.parseInt(\"abc\")</code></td></tr><tr><td><code>StackOverflowError</code></td><td>Infinite recursion</td><td>Missing base case in a recursive method</td></tr></table><h3>Systematic Debugging Steps</h3><ol><li><strong>Read the exception name and message</strong> — it usually tells you exactly what went wrong.</li><li><strong>Find the top stack frame</strong> — that is the line that threw. Go there in your code.</li><li><strong>Reproduce with a small case</strong> — if the failure is in production data, isolate it to the simplest input that triggers the bug.</li><li><strong>Add print statements or use a debugger</strong> — print values just before the crash to see what state the program was in.</li><li><strong>Form a hypothesis and test it</strong> — change one thing, run again. Don't change multiple things at once.</li></ol>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's enchantment lab has a shattered warding stone in the centre, surrounded by a cloud of smoke that smells faintly of burnt copper. A senior investigator is crouched over it, tracing glowing runes with a gloved finger."},
-        {"type": "dialogue", "av": "🔍", "cls": "mentor", "speaker": "Investigator Orlen", "sCls": "mentor", "text": "Every failed spell leaves a trace. In Java that trace is called a <em>stack trace</em> — a precise record of where your program was, right down to the line, when everything went wrong. Apprentices who learn to read it rarely stay stuck for long."},
-        {"type": "example", "speaker": "A typical NullPointerException stack trace", "text": "Exception in thread \"main\" java.lang.NullPointerException:\n  Cannot invoke \"String.toUpperCase()\" because \"spellName\" is null\n    at RuneValidator.validate(RuneValidator.java:15)\n    at RuneValidator.main(RuneValidator.java:8)\n\n→ Fix: add a null check before calling toUpperCase()"},
-        {"type": "dialogue", "av": "🔍", "cls": "mentor", "speaker": "Investigator Orlen", "sCls": "mentor", "text": "The exception name is the most important part. <code>NullPointerException</code> — someone tried to use a variable that was never assigned. <code>ArrayIndexOutOfBoundsException</code> — an index that doesn't exist. <code>NumberFormatException</code> — tried to turn 'XYZ' into an integer. Each has a signature pattern and a standard fix."},
-        {"type": "dialogue", "av": "🔍", "cls": "mentor", "speaker": "Investigator Orlen", "sCls": "mentor", "text": "When debugging: read the message first. Go to the top frame in the stack trace — that is the exact line that failed. Form a hypothesis about why. Add a print statement to verify the variable's value just before the crash. Change one thing. Run again. Repeat."},
-        {"type": "example", "speaker": "Print-statement debugging pattern", "text": "// Before the crash (line 15):\nSystem.out.println(\"DEBUG spellName = \" + spellName);\nString upper = spellName.toUpperCase();  // line 15\n// Output: DEBUG spellName = null\n// → confirms the null, trace why it wasn't set"},
-        {"type": "narration", "text": "Orlen finds the rune sequence where a step was skipped, resulting in an uninitialised value. 'The trace never lies,' she says. 'You just have to know how to read it.'"}
+        {
+          "type": "narration",
+          "text": "The Academy's enchantment lab has a shattered warding stone in the centre, surrounded by a cloud of smoke that smells faintly of burnt copper. A senior investigator is crouched over it, tracing glowing runes with a gloved finger."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔍",
+          "cls": "mentor",
+          "speaker": "Investigator Orlen",
+          "sCls": "mentor",
+          "text": "Every failed spell leaves a trace. In Java that trace is called a <em>stack trace</em> — a precise record of where your program was, right down to the line, when everything went wrong. Apprentices who learn to read it rarely stay stuck for long."
+        },
+        {
+          "type": "example",
+          "speaker": "A typical NullPointerException stack trace",
+          "text": "Exception in thread \"main\" java.lang.NullPointerException:\n  Cannot invoke \"String.toUpperCase()\" because \"spellName\" is null\n    at RuneValidator.validate(RuneValidator.java:15)\n    at RuneValidator.main(RuneValidator.java:8)\n\n→ Fix: add a null check before calling toUpperCase()"
+        },
+        {
+          "type": "dialogue",
+          "av": "🔍",
+          "cls": "mentor",
+          "speaker": "Investigator Orlen",
+          "sCls": "mentor",
+          "text": "The exception name is the most important part. <code>NullPointerException</code> — someone tried to use a variable that was never assigned. <code>ArrayIndexOutOfBoundsException</code> — an index that doesn't exist. <code>NumberFormatException</code> — tried to turn 'XYZ' into an integer. Each has a signature pattern and a standard fix."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔍",
+          "cls": "mentor",
+          "speaker": "Investigator Orlen",
+          "sCls": "mentor",
+          "text": "When debugging: read the message first. Go to the top frame in the stack trace — that is the exact line that failed. Form a hypothesis about why. Add a print statement to verify the variable's value just before the crash. Change one thing. Run again. Repeat."
+        },
+        {
+          "type": "example",
+          "speaker": "Print-statement debugging pattern",
+          "text": "// Before the crash (line 15):\nSystem.out.println(\"DEBUG spellName = \" + spellName);\nString upper = spellName.toUpperCase();  // line 15\n// Output: DEBUG spellName = null\n// → confirms the null, trace why it wasn't set"
+        },
+        {
+          "type": "narration",
+          "text": "Orlen finds the rune sequence where a step was skipped, resulting in an uninitialised value. 'The trace never lies,' she says. 'You just have to know how to read it.'"
+        }
       ],
       "learningObjectives": [
         "Read a Java stack trace and identify the exception type, message, and the line that threw",
@@ -47,59 +84,100 @@
       "guidedPracticeHtml": "<p>Each method below contains a deliberate bug. Read the code, identify the bug, and fix it so all three methods run without exceptions:</p><ol><li><code>getLength(null)</code> — should return 0 for a null input, not throw NPE</li><li><code>getElement(arr, 5)</code> where arr has 5 elements — should return -1 for out-of-bounds, not throw AIOOBE</li><li><code>parseOrDefault(\"abc\", 0)</code> — should return the default value for invalid input, not throw NumberFormatException</li></ol>",
       "guidedPracticeStarterCode": "public class BugHunt {\n\n    // BUG: throws NPE when s is null\n    public static int getLength(String s) {\n        return s.length();\n    }\n\n    // BUG: throws ArrayIndexOutOfBoundsException when index >= arr.length\n    public static int getElement(int[] arr, int index) {\n        return arr[index];\n    }\n\n    // BUG: throws NumberFormatException for non-numeric input\n    public static int parseOrDefault(String s, int defaultValue) {\n        return Integer.parseInt(s);\n    }\n\n    public static void main(String[] args) {\n        System.out.println(getLength(null));           // should print 0\n        System.out.println(getElement(new int[]{1,2,3,4,5}, 5));  // should print -1\n        System.out.println(parseOrDefault(\"abc\", 0)); // should print 0\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "getLength(null) = 0", "input": "null", "expected": "0"},
-        {"label": "getElement out-of-bounds = -1", "input": "null", "expected": "-1"},
-        {"label": "parseOrDefault invalid = 0", "input": "null", "expected": "0"}
+        {
+          "label": "getLength(null) = 0",
+          "input": "null",
+          "expected": "0"
+        },
+        {
+          "label": "getElement out-of-bounds = -1",
+          "input": "null",
+          "expected": "-1"
+        },
+        {
+          "label": "parseOrDefault invalid = 0",
+          "input": "null",
+          "expected": "0"
+        }
       ],
       "soloPracticeHtml": "<p>From scratch, write a class <code>BugHunt</code> with three defensive methods:</p><ul><li><code>safeUpper(String s)</code> — returns the upper-case version, or <code>\"EMPTY\"</code> if s is null or blank</li><li><code>safeGet(int[] arr, int i)</code> — returns <code>arr[i]</code> if i is a valid index, otherwise <code>-999</code></li><li><code>parseAge(String s)</code> — parses s as an int and returns it; if parsing fails, returns <code>-1</code></li></ul><p>In main: call safeUpper(null), safeGet(new int[]{10,20,30}, 10), and parseAge(\"twentytwo\") and print each result.</p>",
       "soloPracticeTests": [
-        {"label": "safeUpper(null) = EMPTY", "input": "null", "expected": "EMPTY"},
-        {"label": "safeGet out-of-bounds = -999", "input": "null", "expected": "-999"},
-        {"label": "parseAge invalid = -1", "input": "null", "expected": "-1"}
+        {
+          "label": "safeUpper(null) = EMPTY",
+          "input": "null",
+          "expected": "EMPTY"
+        },
+        {
+          "label": "safeGet out-of-bounds = -999",
+          "input": "null",
+          "expected": "-999"
+        },
+        {
+          "label": "parseAge invalid = -1",
+          "input": "null",
+          "expected": "-1"
+        }
       ],
       "questions": [
         {
+          "id": "java-app-12a-q1",
           "type": "DEBUGGING",
           "tier": "RECALL",
-          "questionHtml": "<p>A stack trace shows: <code>java.lang.NullPointerException: Cannot invoke \"String.length()\" because \"name\" is null</code>. What is the most direct cause?</p>",
-          "correctAnswer": "The variable 'name' is null and .length() is being called on it — add a null check before calling any method on 'name'",
-          "explanationHtml": "<p>NPE is thrown when you call a method or access a field on a null reference. The Java 17+ message helpfully names the variable. Fix: check <code>if (name == null)</code> before using it, or use <code>Objects.requireNonNullElse(name, \"\")</code>.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A stack trace shows: <code>java.lang.NullPointerException: Cannot invoke \"String.length()\" because \"name\" is null</code>. What is the most direct cause?</p>",
+          "options": [],
+          "answer": "The variable 'name' is null and .length() is being called on it — add a null check before calling any method on 'name'",
+          "explanation": "<p>NPE is thrown when you call a method or access a field on a null reference. The Java 17+ message helpfully names the variable. Fix: check <code>if (name == null)</code> before using it, or use <code>Objects.requireNonNullElse(name, \"\")</code>.</p>"
         },
         {
+          "id": "java-app-12a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which exception is thrown when you call <code>Integer.parseInt(\"hello\")</code>?</p>",
-          "options": ["NullPointerException", "ClassCastException", "NumberFormatException", "IllegalArgumentException"],
-          "correctAnswer": "NumberFormatException",
-          "explanationHtml": "<p><code>NumberFormatException</code> is thrown when <code>parseInt</code> (or similar methods) receive a string that cannot be converted to the target numeric type. Wrap with try-catch or validate the format first.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>Which exception is thrown when you call <code>Integer.parseInt(\"hello\")</code>?</p>",
+          "options": [
+            "NullPointerException",
+            "ClassCastException",
+            "NumberFormatException",
+            "IllegalArgumentException"
+          ],
+          "answer": "NumberFormatException",
+          "explanation": "<p><code>NumberFormatException</code> is thrown when <code>parseInt</code> (or similar methods) receive a string that cannot be converted to the target numeric type. Wrap with try-catch or validate the format first.</p>"
         },
         {
+          "id": "java-app-12a-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>This method causes a StackOverflowError. Why?</p>",
-          "codeSnippet": "public static int countdown(int n) {\n    return n + countdown(n - 1);\n}",
-          "correctAnswer": "The method calls itself recursively with no base case — it never stops and eventually exhausts the call stack",
-          "explanationHtml": "<p>Every recursive method needs a <strong>base case</strong> that stops the recursion. Without it the method calls itself forever (or until the JVM stack is full, which throws StackOverflowError). Fix: add <code>if (n <= 0) return 0;</code> before the recursive call.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>This method causes a StackOverflowError. Why?</p>",
+          "options": [],
+          "answer": "The method calls itself recursively with no base case — it never stops and eventually exhausts the call stack",
+          "explanation": "<p>Every recursive method needs a <strong>base case</strong> that stops the recursion. Without it the method calls itself forever (or until the JVM stack is full, which throws StackOverflowError). Fix: add <code>if (n <= 0) return 0;</code> before the recursive call.</p>"
         },
         {
+          "id": "java-app-12a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>When debugging, you find an exception on line 42. You suspect the real problem originated earlier. What should you do <em>first</em>?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>When debugging, you find an exception on line 42. You suspect the real problem originated earlier. What should you do <em>first</em>?</p>",
           "options": [
             "Rewrite the entire method from scratch",
             "Add a print statement just before line 42 to inspect the variable values at that point",
             "Comment out line 42 and run again",
             "Search Stack Overflow for the exception name"
           ],
-          "correctAnswer": "Add a print statement just before line 42 to inspect the variable values at that point",
-          "explanationHtml": "<p>The fastest debugging technique is to add a print statement immediately before the crashing line to see what values the variables hold. This confirms your hypothesis about the cause before you make any code changes.</p>"
+          "answer": "Add a print statement just before line 42 to inspect the variable values at that point",
+          "explanation": "<p>The fastest debugging technique is to add a print statement immediately before the crashing line to see what values the variables hold. This confirms your hypothesis about the cause before you make any code changes.</p>"
         },
         {
+          "id": "java-app-12a-q5",
           "type": "DEBUGGING",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A developer is fixing a bug and changes three things at once, then the bug disappears. What is the problem with this approach?</p>",
-          "correctAnswer": "They cannot know which change fixed the bug — one of the other changes may hide a different bug, or two of the three changes may conflict in subtle ways",
-          "explanationHtml": "<p>Scientific debugging requires changing one variable at a time. Changing multiple things simultaneously means you cannot isolate the cause. The 'fix' may be accidental, and you may have introduced new problems without knowing. Always: one hypothesis, one change, one test.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A developer is fixing a bug and changes three things at once, then the bug disappears. What is the problem with this approach?</p>",
+          "options": [],
+          "answer": "They cannot know which change fixed the bug — one of the other changes may hide a different bug, or two of the three changes may conflict in subtle ways",
+          "explanation": "<p>Scientific debugging requires changing one variable at a time. Changing multiple things simultaneously means you cannot isolate the cause. The 'fix' may be accidental, and you may have introduced new problems without knowing. Always: one hypothesis, one change, one test.</p>"
         }
       ]
     },
@@ -113,11 +191,39 @@
       "hookHtml": "<p>The best debugging is the kind you never have to do. Defensive programming — anticipating bad inputs before they cause crashes — turns a fragile spell into a robust one.</p>",
       "explanationHtml": "<h3>What is Defensive Programming?</h3><p>Defensive programming means writing code that handles unexpected inputs gracefully, instead of crashing with a cryptic exception. The four most common defences are:</p><h4>1. Null Checks</h4><pre><code>public static int length(String s) {\n    if (s == null) return 0;\n    return s.length();\n}</code></pre><h4>2. Bounds Checks for Arrays</h4><pre><code>public static int get(int[] arr, int i) {\n    if (arr == null || i < 0 || i >= arr.length) return -1;\n    return arr[i];\n}</code></pre><h4>3. Validate Before Parsing</h4><pre><code>public static int parseAge(String s) {\n    try {\n        return Integer.parseInt(s);\n    } catch (NumberFormatException e) {\n        return -1;  // signal invalid\n    }\n}</code></pre><h4>4. Precondition Assertions</h4><p>Throw <code>IllegalArgumentException</code> early when a method receives a value it contractually cannot handle:</p><pre><code>public static double sqrt(double n) {\n    if (n < 0) throw new IllegalArgumentException(\"Cannot sqrt negative: \" + n);\n    return Math.sqrt(n);\n}</code></pre><h3>Fail Fast vs. Fail Safe</h3><ul><li><strong>Fail fast</strong>: throw an exception immediately when an invalid value is detected — exposes bugs early, at the source, with a clear message. Preferred in most application code.</li><li><strong>Fail safe</strong>: return a sensible default (empty list, 0, empty string) — prevents crashes but can mask bugs. Appropriate at system boundaries (UI, network).</li></ul>",
       "storyBeats": [
-        {"type": "narration", "text": "A ward-keeper is reviewing the new apprentices' spells before they are cast in the field. She has a checklist. Every spell must pass every check before it leaves the lab."},
-        {"type": "dialogue", "av": "🛡️", "cls": "mentor", "speaker": "Ward-Keeper Petra", "sCls": "mentor", "text": "Defensive programming is the discipline of anticipating everything that can go wrong and handling it before it crashes the system. In the field, a spell that crashes is not just inconvenient — it can be catastrophic."},
-        {"type": "dialogue", "av": "🛡️", "cls": "mentor", "speaker": "Ward-Keeper Petra", "sCls": "mentor", "text": "The four main checks: Is the input null? Is the index in bounds? Can the string be parsed as the type we expect? And does the value satisfy our method's contract? If not — handle it gracefully, or throw a clear exception immediately so the bug is caught at the source, not three layers down in the call stack."},
-        {"type": "example", "speaker": "Guard clauses for defensive validation", "text": "public static String formatSpell(String name, int power) {\n    if (name == null || name.isBlank()) {\n        throw new IllegalArgumentException(\"Spell name must not be blank\");\n    }\n    if (power < 0 || power > 100) {\n        throw new IllegalArgumentException(\"Power must be 0-100, got: \" + power);\n    }\n    return String.format(\"%s [%d]\", name.trim(), power);\n}"},
-        {"type": "dialogue", "av": "🛡️", "cls": "mentor", "speaker": "Ward-Keeper Petra", "sCls": "mentor", "text": "Two philosophies exist: fail fast (throw immediately) or fail safe (return a default). Fail fast is preferred for application logic — it exposes bugs at the source. Fail safe is appropriate at system boundaries, like user input or network responses, where unexpected data is normal and crashing would harm the user."}
+        {
+          "type": "narration",
+          "text": "A ward-keeper is reviewing the new apprentices' spells before they are cast in the field. She has a checklist. Every spell must pass every check before it leaves the lab."
+        },
+        {
+          "type": "dialogue",
+          "av": "🛡️",
+          "cls": "mentor",
+          "speaker": "Ward-Keeper Petra",
+          "sCls": "mentor",
+          "text": "Defensive programming is the discipline of anticipating everything that can go wrong and handling it before it crashes the system. In the field, a spell that crashes is not just inconvenient — it can be catastrophic."
+        },
+        {
+          "type": "dialogue",
+          "av": "🛡️",
+          "cls": "mentor",
+          "speaker": "Ward-Keeper Petra",
+          "sCls": "mentor",
+          "text": "The four main checks: Is the input null? Is the index in bounds? Can the string be parsed as the type we expect? And does the value satisfy our method's contract? If not — handle it gracefully, or throw a clear exception immediately so the bug is caught at the source, not three layers down in the call stack."
+        },
+        {
+          "type": "example",
+          "speaker": "Guard clauses for defensive validation",
+          "text": "public static String formatSpell(String name, int power) {\n    if (name == null || name.isBlank()) {\n        throw new IllegalArgumentException(\"Spell name must not be blank\");\n    }\n    if (power < 0 || power > 100) {\n        throw new IllegalArgumentException(\"Power must be 0-100, got: \" + power);\n    }\n    return String.format(\"%s [%d]\", name.trim(), power);\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🛡️",
+          "cls": "mentor",
+          "speaker": "Ward-Keeper Petra",
+          "sCls": "mentor",
+          "text": "Two philosophies exist: fail fast (throw immediately) or fail safe (return a default). Fail fast is preferred for application logic — it exposes bugs at the source. Fail safe is appropriate at system boundaries, like user input or network responses, where unexpected data is normal and crashing would harm the user."
+        }
       ],
       "learningObjectives": [
         "Apply null checks before calling methods on reference type parameters",
@@ -140,47 +246,95 @@
       "guidedPracticeHtml": "<p>Make these three methods fully defensive:</p><ol><li><code>totalMana(int[] mana)</code> — sums the array. Return 0 if mana is null or empty. The method exists and is partially written below.</li><li><code>firstElement(String[] arr)</code> — returns the first element. Return <code>\"none\"</code> if arr is null, empty, or the first element is null.</li><li><code>parseLevel(String s)</code> — parses as int. Return -1 for null, blank, or non-numeric input.</li></ol>",
       "guidedPracticeStarterCode": "public class Validator {\n\n    public static int totalMana(int[] mana) {\n        // Guard: null or empty → return 0\n\n        int total = 0;\n        for (int m : mana) total += m;\n        return total;\n    }\n\n    public static String firstElement(String[] arr) {\n        // Guard: null, empty, or first element null → return \"none\"\n\n        return arr[0];\n    }\n\n    public static int parseLevel(String s) {\n        // Guard: null, blank, or NumberFormatException → return -1\n\n    }\n\n    public static void main(String[] args) {\n        System.out.println(totalMana(null));                 // 0\n        System.out.println(totalMana(new int[]{}));          // 0\n        System.out.println(totalMana(new int[]{10,20,30}));  // 60\n        System.out.println(firstElement(null));              // none\n        System.out.println(firstElement(new String[]{}));    // none\n        System.out.println(firstElement(new String[]{\"Fire\"})); // Fire\n        System.out.println(parseLevel(null));                // -1\n        System.out.println(parseLevel(\"abc\"));              // -1\n        System.out.println(parseLevel(\"7\"));                // 7\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "totalMana(null) = 0", "input": "null", "expected": "0"},
-        {"label": "totalMana({10,20,30}) = 60", "input": "null", "expected": "60"},
-        {"label": "firstElement(null) = none", "input": "null", "expected": "none"},
-        {"label": "firstElement({Fire}) = Fire", "input": "null", "expected": "Fire"},
-        {"label": "parseLevel(null) = -1", "input": "null", "expected": "-1"},
-        {"label": "parseLevel(7) = 7", "input": "null", "expected": "7"}
+        {
+          "label": "totalMana(null) = 0",
+          "input": "null",
+          "expected": "0"
+        },
+        {
+          "label": "totalMana({10,20,30}) = 60",
+          "input": "null",
+          "expected": "60"
+        },
+        {
+          "label": "firstElement(null) = none",
+          "input": "null",
+          "expected": "none"
+        },
+        {
+          "label": "firstElement({Fire}) = Fire",
+          "input": "null",
+          "expected": "Fire"
+        },
+        {
+          "label": "parseLevel(null) = -1",
+          "input": "null",
+          "expected": "-1"
+        },
+        {
+          "label": "parseLevel(7) = 7",
+          "input": "null",
+          "expected": "7"
+        }
       ],
       "soloPracticeHtml": "<p>From scratch. Write a class <code>Validator</code> with one thorough validation method: <code>validateSpell(String name, int damage, int[] targets)</code>. The method should:</p><ul><li>Throw <code>IllegalArgumentException(\"name must not be blank\")</code> if name is null or blank</li><li>Throw <code>IllegalArgumentException(\"damage must be positive\")</code> if damage is not positive</li><li>Throw <code>IllegalArgumentException(\"targets must not be empty\")</code> if targets is null or length 0</li><li>Otherwise return <code>String.format(\"%s hits %d targets for %d damage each\", name, targets.length, damage)</code></li></ul><p>In main, test with: invalid name, negative damage, and a valid call with name <code>\"Blizzard\"</code>, damage <code>25</code>, targets <code>new int[]{1,2,3}</code>. Wrap each call in try-catch and print the exception message for the invalid cases.</p>",
       "soloPracticeTests": [
-        {"label": "Invalid name exception message", "input": "null", "expected": "name must not be blank"},
-        {"label": "Negative damage exception message", "input": "null", "expected": "damage must be positive"},
-        {"label": "Valid spell output", "input": "null", "expected": "Blizzard hits 3 targets for 25 damage each"}
+        {
+          "label": "Invalid name exception message",
+          "input": "null",
+          "expected": "name must not be blank"
+        },
+        {
+          "label": "Negative damage exception message",
+          "input": "null",
+          "expected": "damage must be positive"
+        },
+        {
+          "label": "Valid spell output",
+          "input": "null",
+          "expected": "Blizzard hits 3 targets for 25 damage each"
+        }
       ],
       "questions": [
         {
+          "id": "java-app-12b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What exception should you throw when a method receives an argument that violates its contract?</p>",
-          "options": ["RuntimeException", "IllegalArgumentException", "NullPointerException", "AssertionError"],
-          "correctAnswer": "IllegalArgumentException",
-          "explanationHtml": "<p><code>IllegalArgumentException</code> signals that the caller passed a value that the method cannot legally accept. It should include a descriptive message explaining what was wrong and what was expected.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What exception should you throw when a method receives an argument that violates its contract?</p>",
+          "options": [
+            "RuntimeException",
+            "IllegalArgumentException",
+            "NullPointerException",
+            "AssertionError"
+          ],
+          "answer": "IllegalArgumentException",
+          "explanation": "<p><code>IllegalArgumentException</code> signals that the caller passed a value that the method cannot legally accept. It should include a descriptive message explaining what was wrong and what was expected.</p>"
         },
         {
+          "id": "java-app-12b-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>In Java, catching <code>Exception</code> (the base class) for all error handling is considered good practice.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Catching the overly broad <code>Exception</code> masks unexpected errors that you did not intend to handle — including bugs in your own code. Always catch the most specific exception type you can handle meaningfully.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>In Java, catching <code>Exception</code> (the base class) for all error handling is considered good practice.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Catching the overly broad <code>Exception</code> masks unexpected errors that you did not intend to handle — including bugs in your own code. Always catch the most specific exception type you can handle meaningfully.</p>"
         },
         {
+          "id": "java-app-12b-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A user enters their age in a web form. Which approach is most appropriate?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A user enters their age in a web form. Which approach is most appropriate?</p>",
           "options": [
             "Let Integer.parseInt throw and propagate the NumberFormatException",
             "Catch NumberFormatException, show a user-friendly error message, and ask for input again",
             "Throw IllegalArgumentException immediately",
             "Return null and handle it later"
           ],
-          "correctAnswer": "Catch NumberFormatException, show a user-friendly error message, and ask for input again",
-          "explanationHtml": "<p>At a system boundary (user input), fail-safe behaviour is appropriate — the user made a mistake, not the code. Show a helpful message and recover. Propagating a raw exception would expose implementation details and crash the application from the user's perspective.</p>"
+          "answer": "Catch NumberFormatException, show a user-friendly error message, and ask for input again",
+          "explanation": "<p>At a system boundary (user input), fail-safe behaviour is appropriate — the user made a mistake, not the code. Show a helpful message and recover. Propagating a raw exception would expose implementation details and crash the application from the user's perspective.</p>"
         }
       ]
     }

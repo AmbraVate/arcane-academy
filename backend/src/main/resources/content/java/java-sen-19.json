@@ -5,7 +5,9 @@
   "sortOrder": 19,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-18"],
+  "prerequisites": [
+    "java-sen-18"
+  ],
   "subChunks": [
     {
       "id": "java-sen-19a",
@@ -16,11 +18,38 @@
       "hookHtml": "<p>You have completed the SENIOR tier. JVM internals, memory management, concurrency, performance, profiling, distributed systems, messaging, event-driven architecture, resilience patterns, system design, observability, CI/CD, containers, cloud, security engineering, DDD, and technical decision making — all of it converges here. Build something that demonstrates you can engineer at the system level, not just the service level.</p>",
       "explanationHtml": "<h3>What Sets This Apart From the JUNIOR Capstone</h3><p>The JUNIOR capstone demonstrated <em>engineering judgment</em> at the service level: layered architecture, REST design, testing, logging. The SENIOR capstone demonstrates <em>systems thinking</em>: how multiple services communicate, how failures are handled gracefully, how the system is observable, how it scales, and how architectural decisions are made and documented.</p><h3>Project Options</h3><h4>Option A: Event-Driven Order Platform</h4><p>A multi-service system: an order service receives orders via REST and publishes <code>OrderPlaced</code> events. An inventory service subscribes and emits <code>InventoryReserved</code> or <code>OutOfStock</code> events. A notification service sends (simulated) emails on relevant events. Requirements: in-memory pub/sub (as built in the messaging lessons), circuit breaker protecting downstream calls, structured logging with correlation IDs (MDC), at least 10 service-layer tests, and an ADR documenting the choreography choice over orchestration.</p><h4>Option B: Real-Time Leaderboard Service</h4><p>A tournament leaderboard API that handles high-read, low-write workloads. Players submit scores via REST; the leaderboard serves the top-N players with sub-100ms latency. Requirements: in-memory Redis-like sorted structure, cache-aside pattern with simulated cache and backing store, bulkhead limiting concurrent expensive recomputations, metric counters (rate/errors/duration tracked in memory), and a system design document explaining the scaling strategy for 100K concurrent users.</p><h4>Option C: Resilient Spell Enrichment Pipeline</h4><p>A pipeline that enriches raw spell data from multiple upstream sources (simulated as in-memory services). For each spell, it calls a damage calculator, a lore service, and a classification service. Requirements: parallel enrichment using CompletableFuture, circuit breaker on each upstream, retry with exponential backoff, bulkhead per upstream, structured logging with trace ID per enrichment job, DLQ for failed enrichments, and at least 12 service-layer tests.</p><h4>Option D: Distributed Cache with Consistency Guarantees</h4><p>Implement a two-node in-memory distributed cache (two Java instances communicating via a simulated network — in-memory message passing). The cache supports get/put/invalidate. Requirements: implement both CP mode (refuse reads during simulated partition) and AP mode (serve stale during partition), document the trade-off with an ADR, demonstrate eventual consistency with a test that shows stale reads resolving after partition heals, and include cache statistics (hit rate, miss rate, eviction count).</p><h4>Option E: Event-Sourced Audit System</h4><p>An event-sourced spell audit log. Every mutation to a spell is recorded as an immutable event. The system supports: current state queries (replay events), temporal queries (state at a given timestamp), and projection generation (aggregate stats by element, by tier). Requirements: append-only event log (no delete/update on events), at least 3 different projection types, snapshot mechanism to avoid full replay, bounded context separation between the event store and the query projection layer, and full test coverage of the projection logic.</p><h3>Mandatory SENIOR Engineering Requirements</h3><ol><li><strong>Distributed thinking</strong>: the system handles failure scenarios — at least one resilience pattern implemented and tested</li><li><strong>Observability</strong>: structured logging with correlation IDs; at least one metrics counter/timer tracked in memory</li><li><strong>Concurrency</strong>: meaningful use of CompletableFuture, ExecutorService, or concurrent data structures (not just thread-per-request)</li><li><strong>Testing</strong>: at least 12 JUnit 5 tests including failure scenarios (circuit open, partition, DLQ routing)</li><li><strong>Documentation</strong>: one ADR for a significant design decision made during the project</li><li><strong>Trade-off reasoning</strong>: a written section explaining two architectural decisions and what they optimise for</li><li><strong>Security</strong>: at least one security concern identified and addressed (auth, input validation, PII in logs)</li></ol>",
       "storyBeats": [
-        {"type": "narration", "text": "The SENIOR graduation chamber has a different kind of shelf. Not programs, not APIs — but architecture diagrams, ADR folders, and deployment pipelines. The items on this shelf survived incidents: the annotation reads 'circuit breaker prevented cascade failure on 14 March' and 'leaderboard handled 80K concurrent tournament users without degradation.' These are not just things that worked — they are things that worked under pressure."},
-        {"type": "dialogue", "av": "🏰", "cls": "mentor", "speaker": "Principal Engineer Rael", "sCls": "mentor", "text": "A JUNIOR project shows you can build a service. A SENIOR project shows you can design a system. The difference is in what you think about before writing a line of code: how does it fail? How does it scale? How will the next engineer understand it when you are gone? How will you know it is healthy? These questions do not show up in the code — they show up in the ADRs, the tests, the observability, and the architecture diagrams."},
-        {"type": "dialogue", "av": "🏰", "cls": "mentor", "speaker": "Principal Engineer Rael", "sCls": "mentor", "text": "Every senior project we review, we look at the failure handling first. Not the happy path — the failure path. What happens when the inventory service is down? What happens when the cache is full? What happens when the enrichment takes 30 seconds instead of 200ms? If your answer is 'the whole system stops,' you have not yet thought at the senior level."},
-        {"type": "dialogue", "av": "🏰", "cls": "mentor", "speaker": "Principal Engineer Rael", "sCls": "mentor", "text": "The ADR is not bureaucracy. It is clarity. When you write 'we chose choreography over orchestration because our team currently lacks the tooling to visualise orchestrated saga state,' you have made the constraint explicit. When that constraint changes, the ADR tells you why the original choice was made and whether it still applies. That is professional engineering."},
-        {"type": "narration", "text": "Rael steps back and looks at the full SENIOR tier wall — concurrency, distributed systems, resilience, observability, CI/CD, containers, cloud, security, DDD. 'The LEAD tier is different again. It is not about writing better code or designing better systems. It is about enabling other engineers to do both — at scale, across teams, across years. The work becomes invisible. The impact multiplies.'"}
+        {
+          "type": "narration",
+          "text": "The SENIOR graduation chamber has a different kind of shelf. Not programs, not APIs — but architecture diagrams, ADR folders, and deployment pipelines. The items on this shelf survived incidents: the annotation reads 'circuit breaker prevented cascade failure on 14 March' and 'leaderboard handled 80K concurrent tournament users without degradation.' These are not just things that worked — they are things that worked under pressure."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏰",
+          "cls": "mentor",
+          "speaker": "Principal Engineer Rael",
+          "sCls": "mentor",
+          "text": "A JUNIOR project shows you can build a service. A SENIOR project shows you can design a system. The difference is in what you think about before writing a line of code: how does it fail? How does it scale? How will the next engineer understand it when you are gone? How will you know it is healthy? These questions do not show up in the code — they show up in the ADRs, the tests, the observability, and the architecture diagrams."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏰",
+          "cls": "mentor",
+          "speaker": "Principal Engineer Rael",
+          "sCls": "mentor",
+          "text": "Every senior project we review, we look at the failure handling first. Not the happy path — the failure path. What happens when the inventory service is down? What happens when the cache is full? What happens when the enrichment takes 30 seconds instead of 200ms? If your answer is 'the whole system stops,' you have not yet thought at the senior level."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏰",
+          "cls": "mentor",
+          "speaker": "Principal Engineer Rael",
+          "sCls": "mentor",
+          "text": "The ADR is not bureaucracy. It is clarity. When you write 'we chose choreography over orchestration because our team currently lacks the tooling to visualise orchestrated saga state,' you have made the constraint explicit. When that constraint changes, the ADR tells you why the original choice was made and whether it still applies. That is professional engineering."
+        },
+        {
+          "type": "narration",
+          "text": "Rael steps back and looks at the full SENIOR tier wall — concurrency, distributed systems, resilience, observability, CI/CD, containers, cloud, security, DDD. 'The LEAD tier is different again. It is not about writing better code or designing better systems. It is about enabling other engineers to do both — at scale, across teams, across years. The work becomes invisible. The impact multiplies.'"
+        }
       ],
       "learningObjectives": [
         "Design and implement a multi-component system demonstrating distributed system patterns",
@@ -51,43 +80,49 @@
       "modelAnswer": "A strong SENIOR capstone demonstrates:\n\n✅ Multi-component system with clear boundaries — no single-class blob\n✅ At least one resilience pattern implemented and tested under failure (circuit breaker opening, DLQ receiving, retry completing)\n✅ Correlation IDs in MDC propagated across all log lines in a request chain\n✅ Meaningful concurrency — parallel enrichment, thread-safe counters, or CompletableFuture chaining\n✅ 12+ JUnit 5 tests including at least 4 failure scenarios\n✅ One complete ADR with all sections filled\n✅ Explicit trade-off reasoning: 'we chose X which optimises for Y at the cost of Z'\n✅ One security concern addressed (not just listed)\n✅ No cascade failure — a single component failure does not bring down the whole system\n\nWhat reviewers look for specifically:\n- The failure tests are as thorough as the happy-path tests\n- The ADR identifies a genuinely interesting trade-off, not an obvious choice\n- Concurrency is correct (no race conditions on shared state)\n- The correlation ID appears in all log lines across all component calls in the same request\n- The trade-off write-up shows the candidate understands what they sacrificed, not just what they gained",
       "questions": [
         {
+          "id": "java-sen-19a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which SENIOR-tier requirement most distinguishes a SENIOR capstone from a JUNIOR capstone?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>Which SENIOR-tier requirement most distinguishes a SENIOR capstone from a JUNIOR capstone?</p>",
           "options": [
             "More REST endpoints",
             "Larger number of unit tests",
             "Failure handling, concurrency, observability, and documented trade-off reasoning at the system level",
             "Using Spring Boot instead of plain Java"
           ],
-          "correctAnswer": "Failure handling, concurrency, observability, and documented trade-off reasoning at the system level",
-          "explanationHtml": "<p>The JUNIOR capstone demonstrates service-level engineering: layered architecture, REST design, validation, testing, logging. The SENIOR capstone elevates to system-level thinking: how does it fail gracefully? How do multiple components coordinate? How is it observable across components? How were the architectural decisions made and documented? These concerns don't appear in a single service — they emerge from designing across service boundaries.</p>"
+          "answer": "Failure handling, concurrency, observability, and documented trade-off reasoning at the system level",
+          "explanation": "<p>The JUNIOR capstone demonstrates service-level engineering: layered architecture, REST design, validation, testing, logging. The SENIOR capstone elevates to system-level thinking: how does it fail gracefully? How do multiple components coordinate? How is it observable across components? How were the architectural decisions made and documented? These concerns don't appear in a single service — they emerge from designing across service boundaries.</p>"
         },
         {
+          "id": "java-sen-19a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Your event-driven Order Platform is in production. The InventoryService crashes. What is the expected behaviour of a well-designed system with a Dead Letter Queue?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>Your event-driven Order Platform is in production. The InventoryService crashes. What is the expected behaviour of a well-designed system with a Dead Letter Queue?</p>",
           "options": [
             "All orders fail immediately with a 500 error",
             "The OrderService stops accepting orders until InventoryService recovers",
             "OrderPlaced events are placed in the DLQ; the OrderService continues accepting orders; events are replayed when InventoryService recovers",
             "The circuit breaker prevents any orders from being placed"
           ],
-          "correctAnswer": "OrderPlaced events are placed in the DLQ; the OrderService continues accepting orders; events are replayed when InventoryService recovers",
-          "explanationHtml": "<p>With a DLQ, failed event deliveries are captured rather than blocking or losing them. The main flow continues (orders are accepted, events published). When InventoryService recovers, the DLQ contents are replayed and processed. This is the key advantage of async event-driven systems over synchronous REST calls: failures in downstream consumers don't block the upstream producer.</p>"
+          "answer": "OrderPlaced events are placed in the DLQ; the OrderService continues accepting orders; events are replayed when InventoryService recovers",
+          "explanation": "<p>With a DLQ, failed event deliveries are captured rather than blocking or losing them. The main flow continues (orders are accepted, events published). When InventoryService recovers, the DLQ contents are replayed and processed. This is the key advantage of async event-driven systems over synchronous REST calls: failures in downstream consumers don't block the upstream producer.</p>"
         },
         {
+          "id": "java-sen-19a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A SENIOR capstone review finds: 12 tests all pass on the happy path, zero tests for failure scenarios. The circuit breaker code exists but has no tests. What is the most accurate assessment?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>A SENIOR capstone review finds: 12 tests all pass on the happy path, zero tests for failure scenarios. The circuit breaker code exists but has no tests. What is the most accurate assessment?</p>",
           "options": [
             "The project meets SENIOR standards — 12 tests is the minimum required",
             "The project is incomplete — untested resilience code may be wrong, and failure scenarios are where SENIOR engineering actually shows",
             "Add one more test and the project will pass",
             "Failure scenario tests are optional at SENIOR level"
           ],
-          "correctAnswer": "The project is incomplete — untested resilience code may be wrong, and failure scenarios are where SENIOR engineering actually shows",
-          "explanationHtml": "<p>Untested circuit breaker code may be syntactically correct but logically wrong — the state machine transitions could be buggy, the threshold could be off-by-one, or the HALF-OPEN recovery could be broken. The whole value of resilience patterns is that they work when failures actually occur. Testing only happy paths on a system designed for failure handling is a fundamental gap that should be addressed before calling it SENIOR-level work.</p>"
+          "answer": "The project is incomplete — untested resilience code may be wrong, and failure scenarios are where SENIOR engineering actually shows",
+          "explanation": "<p>Untested circuit breaker code may be syntactically correct but logically wrong — the state machine transitions could be buggy, the threshold could be off-by-one, or the HALF-OPEN recovery could be broken. The whole value of resilience patterns is that they work when failures actually occur. Testing only happy paths on a system designed for failure handling is a fundamental gap that should be addressed before calling it SENIOR-level work.</p>"
         }
       ]
     }

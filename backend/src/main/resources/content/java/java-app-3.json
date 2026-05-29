@@ -5,7 +5,9 @@
   "sortOrder": 3,
   "tier": "APPRENTICE",
   "topicId": "java",
-  "prerequisites": ["java-app-2"],
+  "prerequisites": [
+    "java-app-2"
+  ],
   "subChunks": [
     {
       "id": "java-app-3a",
@@ -17,117 +19,235 @@
       "hookHtml": "<p>A wizard who casts spells in the wrong order risks catastrophe. Java expressions follow strict rules about which operations happen first — master <strong>operator precedence</strong> or face unpredictable results.</p>",
       "explanationHtml": "<h3>Arithmetic Operators</h3><pre><code>int a = 17, b = 5;\nSystem.out.println(a + b);  // 22 — addition\nSystem.out.println(a - b);  // 12 — subtraction\nSystem.out.println(a * b);  // 85 — multiplication\nSystem.out.println(a / b);  // 3  — integer division (truncates!)\nSystem.out.println(a % b);  // 2  — modulo (remainder)</code></pre><h3>Comparison &amp; Logical Operators</h3><pre><code>boolean eq  = (a == b); // false — equality\nboolean neq = (a != b); // true  — not equal\nboolean gt  = (a > b);  // true  — greater than\nboolean and = (a > 0 &amp;&amp; b > 0); // true — both conditions\nboolean or  = (a < 0 || b > 0); // true — at least one\nboolean not = !(a == b);        // true — negation</code></pre><h3>Compound Assignment</h3><pre><code>int x = 10;\nx += 5;  // x = 15\nx -= 3;  // x = 12\nx *= 2;  // x = 24\nx /= 4;  // x = 6\nx %= 4;  // x = 2</code></pre><h3>Increment &amp; Decrement</h3><pre><code>int n = 5;\nSystem.out.println(n++); // prints 5, then n becomes 6 (post)\nSystem.out.println(++n); // n becomes 7, then prints 7 (pre)</code></pre><h3>Operator Precedence (high → low)</h3><ol><li><code>++</code> <code>--</code> (postfix), then <code>++</code> <code>--</code> (prefix), <code>!</code></li><li><code>*</code> <code>/</code> <code>%</code></li><li><code>+</code> <code>-</code></li><li><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></li><li><code>==</code> <code>!=</code></li><li><code>&amp;&amp;</code></li><li><code>||</code></li><li><code>=</code> <code>+=</code> <code>-=</code> etc.</li></ol><p>When in doubt, use parentheses: <code>(a + b) * c</code> is always clear.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "Eldrin draws a complex rune diagram on the chalkboard — nested circles within circles, each with small symbols connecting them."},
-        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Magic is applied in sequence. <code>3 + 4 * 2</code> — do you add first, or multiply first? If you said multiply, you are correct. Multiplication has higher <em>precedence</em> than addition. The result is 11, not 14."},
-        {"type": "example", "speaker": "Precedence trap", "text": "int wrong = 3 + 4 * 2; // 11 (not 14!)\nint clear = (3 + 4) * 2; // 14 — parentheses win"},
-        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Now for the subtlest trick — <em>post</em>-increment versus <em>pre</em>-increment. <code>n++</code> returns the current value, <em>then</em> increments. <code>++n</code> increments <em>first</em>, then returns. Many apprentices have lost marks on exams over this."},
-        {"type": "example", "speaker": "Pre vs post increment", "text": "int n = 5;\nSystem.out.println(n++); // 5 (returns 5, then n→6)\nSystem.out.println(n);   // 6\nSystem.out.println(++n); // 7 (increments first, then returns 7)"},
-        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "And the modulo operator — <code>%</code> — gives you the <em>remainder</em> after division. Use it to test if a number is even (<code>n % 2 == 0</code>), to wrap indices around an array, or to extract digits. It is more useful than you might think."},
-        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "One trap the unwary fall into: when both operands are integers, division <em>truncates</em> — the decimal part is discarded. <code>7 / 2</code> gives <code>3</code>, not <code>3.5</code>. To get the decimal, cast one operand to <code>double</code> first: <code>(double) 7 / 2</code>."},
-        {"type": "example", "speaker": "Integer division", "text": "System.out.println(7 / 2);           // 3 — truncates!\nSystem.out.println((double) 7 / 2);  // 3.5 — cast first"},
-        {"type": "dialogue", "av": "🧙", "cls": "mentor", "speaker": "Archmage Eldrin", "sCls": "mentor", "text": "Finally, make a habit of <em>compound assignment operators</em> — <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>. Instead of <code>score = score + 5</code>, write <code>score += 5</code>. Same result, fewer characters, less noise. They apply left-to-right just as regular operators do."},
-        {"type": "example", "speaker": "Compound assignment", "text": "int score = 10;\nscore += 5;  // 15\nscore *= 2;  // 30\nscore -= 8;  // 22\nSystem.out.println(score); // 22"}
+        {
+          "type": "narration",
+          "text": "Eldrin draws a complex rune diagram on the chalkboard — nested circles within circles, each with small symbols connecting them."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Magic is applied in sequence. <code>3 + 4 * 2</code> — do you add first, or multiply first? If you said multiply, you are correct. Multiplication has higher <em>precedence</em> than addition. The result is 11, not 14."
+        },
+        {
+          "type": "example",
+          "speaker": "Precedence trap",
+          "text": "int wrong = 3 + 4 * 2; // 11 (not 14!)\nint clear = (3 + 4) * 2; // 14 — parentheses win"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Now for the subtlest trick — <em>post</em>-increment versus <em>pre</em>-increment. <code>n++</code> returns the current value, <em>then</em> increments. <code>++n</code> increments <em>first</em>, then returns. Many apprentices have lost marks on exams over this."
+        },
+        {
+          "type": "example",
+          "speaker": "Pre vs post increment",
+          "text": "int n = 5;\nSystem.out.println(n++); // 5 (returns 5, then n→6)\nSystem.out.println(n);   // 6\nSystem.out.println(++n); // 7 (increments first, then returns 7)"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "And the modulo operator — <code>%</code> — gives you the <em>remainder</em> after division. Use it to test if a number is even (<code>n % 2 == 0</code>), to wrap indices around an array, or to extract digits. It is more useful than you might think."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "One trap the unwary fall into: when both operands are integers, division <em>truncates</em> — the decimal part is discarded. <code>7 / 2</code> gives <code>3</code>, not <code>3.5</code>. To get the decimal, cast one operand to <code>double</code> first: <code>(double) 7 / 2</code>."
+        },
+        {
+          "type": "example",
+          "speaker": "Integer division",
+          "text": "System.out.println(7 / 2);           // 3 — truncates!\nSystem.out.println((double) 7 / 2);  // 3.5 — cast first"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧙",
+          "cls": "mentor",
+          "speaker": "Archmage Eldrin",
+          "sCls": "mentor",
+          "text": "Finally, make a habit of <em>compound assignment operators</em> — <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>. Instead of <code>score = score + 5</code>, write <code>score += 5</code>. Same result, fewer characters, less noise. They apply left-to-right just as regular operators do."
+        },
+        {
+          "type": "example",
+          "speaker": "Compound assignment",
+          "text": "int score = 10;\nscore += 5;  // 15\nscore *= 2;  // 30\nscore -= 8;  // 22\nSystem.out.println(score); // 22"
+        }
       ],
       "guidedPracticeHtml": "<p>Calculate and print the following three values:</p><ol><li>The result of <code>3 + 4 * 2 - 1</code> (follow normal precedence, no extra parentheses)</li><li>The remainder of <code>29 % 6</code></li><li>Starting with <code>int score = 10</code>, apply <code>score += 5</code> then <code>score *= 2</code> and print the final score</li></ol>",
       "guidedPracticeStarterCode": "// 1. Operator precedence\n\n\n// 2. Modulo\n\n\n// 3. Compound assignment\nint score = 10;\n\n\n",
       "guidedPracticeTests": [
-        {"label": "Precedence result", "input": "null", "expected": "10"},
-        {"label": "Modulo result", "input": "null", "expected": "5"},
-        {"label": "Compound assignment result", "input": "null", "expected": "30"}
+        {
+          "label": "Precedence result",
+          "input": "null",
+          "expected": "10"
+        },
+        {
+          "label": "Modulo result",
+          "input": "null",
+          "expected": "5"
+        },
+        {
+          "label": "Compound assignment result",
+          "input": "null",
+          "expected": "30"
+        }
       ],
       "feynmanPrompt": "Explain Java operator precedence to a friend. Include an example where getting the order wrong produces a surprising answer, and explain how to avoid the problem.",
       "soloPracticeHtml": "<p>Now rebuild the same solution from scratch — no starter code. Calculate and print the following three values:</p><ol><li>The result of <code>3 + 4 * 2 - 1</code> (follow normal precedence, no extra parentheses)</li><li>The remainder of <code>29 % 6</code></li><li>Starting with <code>int score = 10</code>, apply <code>score += 5</code> then <code>score *= 2</code> and print the final score</li></ol>",
       "soloPracticeStarterCode": "",
       "soloPracticeTests": [
-        {"label": "Precedence result", "input": "null", "expected": "10"},
-        {"label": "Modulo result", "input": "null", "expected": "5"},
-        {"label": "Compound assignment result", "input": "null", "expected": "30"}
+        {
+          "label": "Precedence result",
+          "input": "null",
+          "expected": "10"
+        },
+        {
+          "label": "Modulo result",
+          "input": "null",
+          "expected": "5"
+        },
+        {
+          "label": "Compound assignment result",
+          "input": "null",
+          "expected": "30"
+        }
       ],
       "questions": [
         {
+          "id": "java-app-3a-q1",
           "type": "WHATS_THE_OUTPUT",
           "tier": "RECALL",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "System.out.println(2 + 3 * 4);",
-          "correctAnswer": "14",
-          "explanationHtml": "<p>Multiplication has higher precedence than addition. <code>3 * 4 = 12</code>, then <code>2 + 12 = 14</code>.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "14",
+          "explanation": "<p>Multiplication has higher precedence than addition. <code>3 * 4 = 12</code>, then <code>2 + 12 = 14</code>.</p>"
         },
         {
+          "id": "java-app-3a-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>In Java, <code>7 / 2</code> evaluates to <code>3.5</code>.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>When both operands are integers, Java performs <em>integer division</em> and truncates the decimal. <code>7 / 2 = 3</code>. Use <code>7.0 / 2</code> or <code>(double) 7 / 2</code> to get <code>3.5</code>.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>In Java, <code>7 / 2</code> evaluates to <code>3.5</code>.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>When both operands are integers, Java performs <em>integer division</em> and truncates the decimal. <code>7 / 2 = 3</code>. Use <code>7.0 / 2</code> or <code>(double) 7 / 2</code> to get <code>3.5</code>.</p>"
         },
         {
+          "id": "java-app-3a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What does the <code>%</code> operator return?</p>",
-          "options": ["The quotient of division", "The remainder after division", "The result rounded to the nearest integer", "The fractional part of the division"],
-          "correctAnswer": "The remainder after division",
-          "explanationHtml": "<p><code>%</code> is the modulo operator. <code>17 % 5 = 2</code> because <code>17 = 3 × 5 + 2</code>. It's useful for detecting even/odd numbers, cycling through array indices, and extracting digits.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What does the <code>%</code> operator return?</p>",
+          "options": [
+            "The quotient of division",
+            "The remainder after division",
+            "The result rounded to the nearest integer",
+            "The fractional part of the division"
+          ],
+          "answer": "The remainder after division",
+          "explanation": "<p><code>%</code> is the modulo operator. <code>17 % 5 = 2</code> because <code>17 = 3 × 5 + 2</code>. It's useful for detecting even/odd numbers, cycling through array indices, and extracting digits.</p>"
         },
         {
+          "id": "java-app-3a-q4",
           "type": "WHATS_THE_OUTPUT",
           "tier": "RECALL",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "int n = 10;\n++n;\nSystem.out.println(n);",
-          "correctAnswer": "11",
-          "explanationHtml": "<p><code>++n</code> is the pre-increment operator — it increments <code>n</code> by 1 before any other operation. After <code>++n</code>, <code>n</code> is 11, so <code>println</code> prints <code>11</code>.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "11",
+          "explanation": "<p><code>++n</code> is the pre-increment operator — it increments <code>n</code> by 1 before any other operation. After <code>++n</code>, <code>n</code> is 11, so <code>println</code> prints <code>11</code>.</p>"
         },
         {
+          "id": "java-app-3a-q5",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>Post-increment (<code>n++</code>) changes <code>n</code> <em>before</em> returning its value.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p><code>n++</code> returns the current value of <code>n</code> <em>first</em>, then increments it. Pre-increment (<code>++n</code>) increments first and then returns the new value.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>Post-increment (<code>n++</code>) changes <code>n</code> <em>before</em> returning its value.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p><code>n++</code> returns the current value of <code>n</code> <em>first</em>, then increments it. Pre-increment (<code>++n</code>) increments first and then returns the new value.</p>"
         },
         {
+          "id": "java-app-3a-q6",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this print?</p>",
-          "codeSnippet": "int n = 5;\nSystem.out.println(n++);\nSystem.out.println(n);",
-          "correctAnswer": "5\n6",
-          "explanationHtml": "<p><code>n++</code> (post-increment) returns the <em>current</em> value (5) before incrementing. After the statement, <code>n</code> is 6.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What does this print?</p>",
+          "options": [],
+          "answer": "5\n6",
+          "explanation": "<p><code>n++</code> (post-increment) returns the <em>current</em> value (5) before incrementing. After the statement, <code>n</code> is 6.</p>"
         },
         {
+          "id": "java-app-3a-q7",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is <code>17 % 5</code>?</p>",
-          "options": ["2", "3", "3.4", "5"],
-          "correctAnswer": "2",
-          "explanationHtml": "<p><code>17 / 5 = 3</code> remainder <code>2</code>. The <code>%</code> operator returns the remainder.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What is <code>17 % 5</code>?</p>",
+          "options": [
+            "2",
+            "3",
+            "3.4",
+            "5"
+          ],
+          "answer": "2",
+          "explanation": "<p><code>17 / 5 = 3</code> remainder <code>2</code>. The <code>%</code> operator returns the remainder.</p>"
         },
         {
+          "id": "java-app-3a-q8",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "int x = 8;\nx -= 3;\nx *= 2;\nSystem.out.println(x);",
-          "correctAnswer": "10",
-          "explanationHtml": "<p><code>x -= 3</code> sets <code>x = 5</code>. Then <code>x *= 2</code> sets <code>x = 10</code>. Compound operators modify the variable in place, applying in sequence.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "10",
+          "explanation": "<p><code>x -= 3</code> sets <code>x = 5</code>. Then <code>x *= 2</code> sets <code>x = 10</code>. Compound operators modify the variable in place, applying in sequence.</p>"
         },
         {
+          "id": "java-app-3a-q9",
           "type": "DEBUGGING",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A developer wants to check if a number is <em>odd</em>. What is wrong with this condition?</p>",
-          "codeSnippet": "if (n % 2 == 1) { System.out.println(\"odd\"); }",
-          "correctAnswer": "It fails for negative odd numbers, where n % 2 is -1, not 1. Use n % 2 != 0 instead.",
-          "explanationHtml": "<p>In Java, the sign of the result of <code>%</code> matches the sign of the left operand. So <code>-3 % 2</code> is <code>-1</code>, not <code>1</code>. The safe idiom for odd-check is <code>n % 2 != 0</code>.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A developer wants to check if a number is <em>odd</em>. What is wrong with this condition?</p>",
+          "options": [],
+          "answer": "It fails for negative odd numbers, where n % 2 is -1, not 1. Use n % 2 != 0 instead.",
+          "explanation": "<p>In Java, the sign of the result of <code>%</code> matches the sign of the left operand. So <code>-3 % 2</code> is <code>-1</code>, not <code>1</code>. The safe idiom for odd-check is <code>n % 2 != 0</code>.</p>"
         },
         {
+          "id": "java-app-3a-q10",
           "type": "DEBUGGING",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A developer writes <code>int result = 5 / 0;</code> — what happens?</p>",
-          "correctAnswer": "ArithmeticException — integer division by zero throws an exception",
-          "explanationHtml": "<p>Integer division by zero throws <code>java.lang.ArithmeticException: / by zero</code> at runtime. Note: floating-point division by zero does <em>not</em> throw — it produces <code>Infinity</code> or <code>NaN</code> (e.g. <code>5.0 / 0</code> = <code>Infinity</code>).</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A developer writes <code>int result = 5 / 0;</code> — what happens?</p>",
+          "options": [],
+          "answer": "ArithmeticException — integer division by zero throws an exception",
+          "explanation": "<p>Integer division by zero throws <code>java.lang.ArithmeticException: / by zero</code> at runtime. Note: floating-point division by zero does <em>not</em> throw — it produces <code>Infinity</code> or <code>NaN</code> (e.g. <code>5.0 / 0</code> = <code>Infinity</code>).</p>"
         },
         {
+          "id": "java-app-3a-q11",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A developer wants to toggle a <code>boolean</code> flag. Which is the cleanest approach?</p>",
-          "options": ["flag = !flag", "flag = flag == false", "if (flag) flag = false; else flag = true;", "flag ^= true"],
-          "correctAnswer": "flag = !flag",
-          "explanationHtml": "<p><code>flag = !flag</code> uses the logical NOT operator for a clean, idiomatic toggle. <code>flag ^= true</code> works but is less readable. The <code>if/else</code> is unnecessarily verbose. <code>flag = flag == false</code> also works but reads awkwardly.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A developer wants to toggle a <code>boolean</code> flag. Which is the cleanest approach?</p>",
+          "options": [
+            "flag = !flag",
+            "flag = flag == false",
+            "if (flag) flag = false; else flag = true;",
+            "flag ^= true"
+          ],
+          "answer": "flag = !flag",
+          "explanation": "<p><code>flag = !flag</code> uses the logical NOT operator for a clean, idiomatic toggle. <code>flag ^= true</code> works but is less readable. The <code>if/else</code> is unnecessarily verbose. <code>flag = flag == false</code> also works but reads awkwardly.</p>"
         }
       ]
     }

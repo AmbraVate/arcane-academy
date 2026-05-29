@@ -5,7 +5,9 @@
   "sortOrder": 20,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-19"],
+  "prerequisites": [
+    "java-jun-19"
+  ],
   "subChunks": [
     {
       "id": "java-jun-20a",
@@ -16,11 +18,38 @@
       "hookHtml": "<p>You have completed the JUNIOR tier. Advanced OOP, generics, streams, lambdas, collections, testing, REST APIs, databases, serialisation, security, logging, refactoring, Git workflows, and layered architecture — all of it converges here. Build something that demonstrates you can engineer, not just code.</p>",
       "explanationHtml": "<h3>What Sets This Apart From the APPRENTICE Capstone</h3><p>The APPRENTICE capstone demonstrated <em>correctness</em>. The JUNIOR capstone demonstrates <em>engineering judgment</em>: layered architecture, clean API design, proper error handling, meaningful tests, and production-level concerns like logging, validation, and security basics.</p><h3>Project Options</h3><h4>Option A: REST Task Management API</h4><p>A backend REST API for managing tasks and projects. Users can create projects, add tasks with due dates and priorities, mark tasks complete, and list tasks by status. Requirements: full CRUD REST endpoints, proper status codes, request validation with meaningful error messages, JUnit 5 tests for the service layer, SLF4J logging at appropriate levels, and a layered architecture (Controller/Service/Repository pattern using interfaces).</p><h4>Option B: Authentication & User Service</h4><p>A user registration and login service. Users can register (username, email, password), log in to receive a JWT-style token (simulate with UUID), and access a protected endpoint only with the token. Requirements: BCrypt password hashing, no sensitive data returned in API responses, input validation, at least 5 service-layer unit tests, structured logging (no passwords in logs), and clean separation between HTTP handling and business logic.</p><h4>Option C: Spell Registry API</h4><p>A REST API for the Academy's spell registry. Spells have a name, tier, damage, and list of elements. The API supports search (by tier, by damage range), paginated listing, creating new spells, and an aggregate endpoint returning stats (average damage per tier, most powerful spell per element). Requirements: Jackson for request/response serialisation, stream-based aggregation in the service layer, proper REST design, request validation, JUnit tests, and logging.</p><h4>Option D: Booking System</h4><p>A simple appointment booking system. Resources (rooms, mages, equipment) can be booked for a time slot. The system prevents double-booking, lists available slots, and allows cancellation. Requirements: business rule enforcement in the service layer (no controller logic), at least 3 SQL queries using PreparedStatement or JPA, transaction handling for double-booking prevention, meaningful error responses, and unit tests covering booking conflict logic.</p><h4>Option E: Event System</h4><p>A simple event publishing and subscription system. Publishers can emit events (name, payload, timestamp). Subscribers register interest in event types and receive them when published. The system provides an API to view event history filtered by type or subscriber. Requirements: correct use of Java generics in the event model, stream-based filtering for history queries, meaningful use of functional interfaces (Predicate, Consumer), test coverage of the subscription and dispatch logic.</p><h3>Mandatory Engineering Requirements</h3><p>Regardless of project choice, your submission must demonstrate:</p><ol><li><strong>Layered architecture</strong>: clear separation of Controller, Service, and Repository layers with no cross-layer violations</li><li><strong>REST design</strong>: correct HTTP methods, meaningful status codes, proper URL structure</li><li><strong>Input validation</strong>: all user-facing inputs validated before processing; informative 400 responses for invalid input</li><li><strong>Error handling</strong>: no raw stack traces in API responses; all errors return structured JSON with a message</li><li><strong>Logging</strong>: INFO for meaningful events, WARN for unexpected conditions, ERROR with context for failures</li><li><strong>Testing</strong>: at least 8 JUnit 5 test cases covering happy paths, edge cases, and validation failures</li><li><strong>Security baseline</strong>: passwords hashed (if applicable); no sensitive data in API responses or logs</li></ol>",
       "storyBeats": [
-        {"type": "narration", "text": "The JUNIOR graduation chamber is different from the APPRENTICE hall. Where the APPRENTICE shelf held completed programs, this shelf holds deployed services — APIs with endpoints, documentation on the wall beside them, and integration test reports pinned underneath."},
-        {"type": "dialogue", "av": "⚔️", "cls": "mentor", "speaker": "Engineering Guild Master Oryn", "sCls": "mentor", "text": "An APPRENTICE builds a program. A JUNIOR engineers a system. The difference is architecture: layers with clear boundaries, interfaces that allow substitution, tests that give you confidence when you change things. You have all the tools. This capstone is your proof that you know how to use them together."},
-        {"type": "dialogue", "av": "⚔️", "cls": "mentor", "speaker": "Engineering Guild Master Oryn", "sCls": "mentor", "text": "When we evaluate your capstone, we look at the service layer first. That is where engineering judgment lives. Is the business logic clean and testable? Are the rules in the right place? Does the service depend on interfaces so it can be tested without a database? The controller and repository are almost mechanical — the service is where you think."},
-        {"type": "dialogue", "av": "⚔️", "cls": "mentor", "speaker": "Engineering Guild Master Oryn", "sCls": "mentor", "text": "Two things will fail you immediately: raw stack traces in API responses, and no meaningful tests. A stack trace in a 500 response exposes implementation details and tells an attacker exactly where to probe. Missing tests tell us you don't yet trust your own code. Fix both before you submit."},
-        {"type": "narration", "text": "Oryn gestures to the empty slot on the shelf. 'SENIOR tier awaits — JVM internals, concurrency, distributed systems, performance. The work you do here builds the foundation for all of it. Make the architecture clean. The SENIOR tier is unforgiving of structural debt.'"}
+        {
+          "type": "narration",
+          "text": "The JUNIOR graduation chamber is different from the APPRENTICE hall. Where the APPRENTICE shelf held completed programs, this shelf holds deployed services — APIs with endpoints, documentation on the wall beside them, and integration test reports pinned underneath."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚔️",
+          "cls": "mentor",
+          "speaker": "Engineering Guild Master Oryn",
+          "sCls": "mentor",
+          "text": "An APPRENTICE builds a program. A JUNIOR engineers a system. The difference is architecture: layers with clear boundaries, interfaces that allow substitution, tests that give you confidence when you change things. You have all the tools. This capstone is your proof that you know how to use them together."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚔️",
+          "cls": "mentor",
+          "speaker": "Engineering Guild Master Oryn",
+          "sCls": "mentor",
+          "text": "When we evaluate your capstone, we look at the service layer first. That is where engineering judgment lives. Is the business logic clean and testable? Are the rules in the right place? Does the service depend on interfaces so it can be tested without a database? The controller and repository are almost mechanical — the service is where you think."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚔️",
+          "cls": "mentor",
+          "speaker": "Engineering Guild Master Oryn",
+          "sCls": "mentor",
+          "text": "Two things will fail you immediately: raw stack traces in API responses, and no meaningful tests. A stack trace in a 500 response exposes implementation details and tells an attacker exactly where to probe. Missing tests tell us you don't yet trust your own code. Fix both before you submit."
+        },
+        {
+          "type": "narration",
+          "text": "Oryn gestures to the empty slot on the shelf. 'SENIOR tier awaits — JVM internals, concurrency, distributed systems, performance. The work you do here builds the foundation for all of it. Make the architecture clean. The SENIOR tier is unforgiving of structural debt.'"
+        }
       ],
       "learningObjectives": [
         "Apply layered architecture across a full project with no cross-layer dependency violations",
@@ -52,38 +81,49 @@
       "modelAnswer": "A strong JUNIOR capstone submission demonstrates:\n\n✅ Three-layer architecture visible in package/class structure — no business logic in Controllers\n✅ Service layer with injected repository interface — mockable in tests without a real database\n✅ REST endpoints returning correct status codes: 200/201 for success, 400 for validation, 404 for not found, 500 for unexpected errors\n✅ All validation in the service layer: checked before any database operation\n✅ Structured error responses: {\"error\": \"descriptive message\"} on all 4xx/5xx responses\n✅ SLF4J logging: at least one INFO per successful operation, WARN for unusual conditions, ERROR with the exception for failures\n✅ 8+ JUnit 5 tests: at least 3 happy paths, at least 3 validation failures, at least 2 edge cases\n✅ Security: passwords BCrypt-hashed (if auth involved), no plaintext in logs or responses\n\nWhat reviewers look for in the service layer:\n- Business rules are methods with clear names (not anonymous if/else blocks)\n- No HTTP types (HttpServletRequest, ResponseEntity) in the service\n- No new Repository() instantiation — constructor injection only\n- Exception types match the scenario: IllegalArgumentException for validation, ResourceNotFoundException for 404 scenarios",
       "questions": [
         {
+          "id": "java-jun-20a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>A REST endpoint receives an invalid request body (missing required field). Which status code should it return?</p>",
-          "options": ["200 OK", "201 Created", "400 Bad Request", "500 Internal Server Error"],
-          "correctAnswer": "400 Bad Request",
-          "explanationHtml": "<p>400 Bad Request signals that the request was syntactically or semantically invalid — the client's fault. The response body should include a descriptive error message explaining what was wrong and how to fix it.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>A REST endpoint receives an invalid request body (missing required field). Which status code should it return?</p>",
+          "options": [
+            "200 OK",
+            "201 Created",
+            "400 Bad Request",
+            "500 Internal Server Error"
+          ],
+          "answer": "400 Bad Request",
+          "explanation": "<p>400 Bad Request signals that the request was syntactically or semantically invalid — the client's fault. The response body should include a descriptive error message explaining what was wrong and how to fix it.</p>"
         },
         {
+          "id": "java-jun-20a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Which testing approach best validates the service layer in isolation?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which testing approach best validates the service layer in isolation?</p>",
           "options": [
             "Start the full application and send real HTTP requests",
             "Use a real database populated with test data",
             "Inject mock implementations of repositories and verify method calls and return values",
             "Copy the service logic into a separate test class and test it there"
           ],
-          "correctAnswer": "Inject mock implementations of repositories and verify method calls and return values",
-          "explanationHtml": "<p>Service layer unit tests should inject mock (or stub) repositories. This avoids database setup, makes tests fast and deterministic, and proves the service works correctly regardless of what the repository returns. Use Mockito in a real JUnit test, or hand-roll simple stubs as you've done in the APPRENTICE tier.</p>"
+          "answer": "Inject mock implementations of repositories and verify method calls and return values",
+          "explanation": "<p>Service layer unit tests should inject mock (or stub) repositories. This avoids database setup, makes tests fast and deterministic, and proves the service works correctly regardless of what the repository returns. Use Mockito in a real JUnit test, or hand-roll simple stubs as you've done in the APPRENTICE tier.</p>"
         },
         {
+          "id": "java-jun-20a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A developer's REST endpoint throws an unhandled exception when the database is unreachable. What does the client receive by default in a Spring Boot application?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>A developer's REST endpoint throws an unhandled exception when the database is unreachable. What does the client receive by default in a Spring Boot application?</p>",
           "options": [
             "A 200 OK with null body",
             "A 404 Not Found",
             "A 500 Internal Server Error with the full stack trace in the response body",
             "The request times out silently"
           ],
-          "correctAnswer": "A 500 Internal Server Error with the full stack trace in the response body",
-          "explanationHtml": "<p>By default, Spring Boot's error handling returns a 500 with a JSON error body that may include the stack trace (especially in development mode). This exposes implementation details to clients. Always implement a global exception handler (<code>@ControllerAdvice</code>) to catch exceptions and return structured, safe error responses.</p>"
+          "answer": "A 500 Internal Server Error with the full stack trace in the response body",
+          "explanation": "<p>By default, Spring Boot's error handling returns a 500 with a JSON error body that may include the stack trace (especially in development mode). This exposes implementation details to clients. Always implement a global exception handler (<code>@ControllerAdvice</code>) to catch exceptions and return structured, safe error responses.</p>"
         }
       ]
     }

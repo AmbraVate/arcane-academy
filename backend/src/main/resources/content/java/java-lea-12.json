@@ -5,7 +5,9 @@
   "sortOrder": 12,
   "tier": "LEAD",
   "topicId": "java",
-  "prerequisites": ["java-lea-11"],
+  "prerequisites": [
+    "java-lea-11"
+  ],
   "subChunks": [
     {
       "id": "java-lea-12a",
@@ -16,10 +18,34 @@
       "hookHtml": "<p>The Lead who cannot communicate is a Lead who cannot lead. Technical excellence that cannot be explained, prioritised, or justified to non-technical stakeholders does not get funded, does not get headcount, and does not get prioritised. Communication is not a soft skill — it is a force multiplier on everything else you do.</p>",
       "explanationHtml": "<h3>Audience-First Communication</h3><p>The fundamental skill in technical communication is adapting your message to your audience's goals and vocabulary. The same decision — 'we are migrating to event-driven architecture' — needs to be communicated differently depending on who is listening:</p><ul><li><strong>Engineers</strong>: what is the architecture? What are the trade-offs? What is the migration path? How does this affect what they build?</li><li><strong>Product managers</strong>: what features become possible? What is delayed while the migration happens? What is the delivery risk?</li><li><strong>Leadership / stakeholders</strong>: what business problem does this solve? What does it cost? What is the competitive or reliability risk of not doing it?</li></ul><p>Not adapting to audience is the most common failure mode in technical communication. Engineers presenting to leadership use jargon that loses the audience before the recommendation is even stated. The analysis may be correct; the communication fails.</p><h3>Written Communication Principles</h3><p><strong>Lead with the conclusion</strong>: engineers often write in the order they discovered things — background, then analysis, then conclusion. Most readers (especially senior stakeholders) want the conclusion first. 'We recommend migrating to Kafka. Here is why.' not 'After investigating our messaging options, we evaluated RabbitMQ, SQS, and Kafka against the following dimensions...'</p><p><strong>One idea per paragraph</strong>: wall-of-text technical writing loses readers. Each paragraph should develop exactly one idea. The first sentence of each paragraph should be the main point.</p><p><strong>Active voice over passive</strong>: 'The deployment failed because of a missing environment variable' is clearer than 'The deployment was observed to fail, which was caused by the absence of an environment variable.'</p><p><strong>Evidence over assertion</strong>: 'Performance is slow' is an assertion. 'Average API response time is 1.8 seconds (p95: 4.2s); the industry standard for this type of endpoint is under 500ms' is evidence-backed and allows others to evaluate the claim.</p><h3>The One-Page Technical Proposal</h3><p>A one-page technical proposal (or a concise email) for a non-technical audience should follow: Problem (one sentence), Impact (one to three sentences on what this costs the business), Proposed Solution (one paragraph — what, not how), What We Need (specific ask: budget, headcount, time, approval), and Timeline (key milestones in plain language). This format respects the reader's time and puts the decision-relevant information first.</p><h3>Presenting Technical Work</h3><p>When presenting to a mixed or non-technical audience: start with 'what problem are we solving and why does it matter?' not 'here is the architecture.' Use analogies for technical concepts — not because the audience is not intelligent, but because they do not have the same mental models. A diagram that makes sense to an engineer can be opaque to a product manager. Ask explicitly: 'Does this diagram make sense, or should I walk through it?'</p><p>Handling technical questions you can't answer: 'I don't know, but I'll find out and follow up by tomorrow' is more credible than a confident-sounding guess. Being wrong under questioning destroys credibility in a way that 'I'll follow up' does not.</p><h3>Documentation as Communication</h3><p>Documentation is communication with future readers. Good technical documentation: states the decision or design first, explains the reasoning (the 'why', not just the 'what'), and links to the source of truth (the code, the ADR, the RFC). Bad documentation: outdated, describes implementation not intent, requires context the reader doesn't have. The best time to write documentation is immediately after understanding something for the first time — before that understanding is taken for granted.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Lead prepared for the quarterly review. She had three months of work to present: a database migration that reduced query latency by 60%, a CI/CD pipeline overhaul that cut deployment time from 45 minutes to 8, and the beginning of the authentication modernisation that would reduce their security audit scope. She had 10 minutes. She wrote three one-slide summaries: Problem solved, metric improvement, what it enables next. The VP said it was the clearest engineering update he'd seen in two years. Nothing had changed about the work. Everything had changed about how it was communicated."},
-        {"type": "dialogue", "av": "💬", "cls": "mentor", "speaker": "VP Product Nara", "sCls": "mentor", "text": "I have been in engineering reviews where the Lead spends 25 minutes explaining the architecture and 2 minutes on the recommendation. I learn the most about the architecture but I have no idea what I'm supposed to decide or why I was in the room. Lead with the recommendation. Lead with the problem you solved and what it means for the business. Then, if I have questions about how you got there, I will ask. Most executives do not need to understand the architecture — they need to trust the engineer who does."},
-        {"type": "dialogue", "av": "💬", "cls": "mentor", "speaker": "VP Product Nara", "sCls": "mentor", "text": "Evidence is more persuasive than assertion, especially for technical claims. 'Our authentication system is outdated' gets a nod. 'Our authentication system has two known vulnerabilities in the OWASP Top 10, was last updated in 2021, and adds an estimated 6 hours to our quarterly security audit because the auditors have to manually verify what a modern system would auto-report' — that gets budget. The same claim, but one is a feeling and the other is a case."},
-        {"type": "dialogue", "av": "💬", "cls": "mentor", "speaker": "VP Product Nara", "sCls": "mentor", "text": "The most important communication skill is knowing when to stop talking. Engineers who are uncertain tend to over-explain. They hedge, they add qualifications, they pre-empt objections they imagine the audience might have. The audience reads this as lack of confidence. State the recommendation clearly. If there are important caveats, state them once. Then stop. The discomfort of silence is less damaging than the impression of uncertainty that over-explanation creates."}
+        {
+          "type": "narration",
+          "text": "The Lead prepared for the quarterly review. She had three months of work to present: a database migration that reduced query latency by 60%, a CI/CD pipeline overhaul that cut deployment time from 45 minutes to 8, and the beginning of the authentication modernisation that would reduce their security audit scope. She had 10 minutes. She wrote three one-slide summaries: Problem solved, metric improvement, what it enables next. The VP said it was the clearest engineering update he'd seen in two years. Nothing had changed about the work. Everything had changed about how it was communicated."
+        },
+        {
+          "type": "dialogue",
+          "av": "💬",
+          "cls": "mentor",
+          "speaker": "VP Product Nara",
+          "sCls": "mentor",
+          "text": "I have been in engineering reviews where the Lead spends 25 minutes explaining the architecture and 2 minutes on the recommendation. I learn the most about the architecture but I have no idea what I'm supposed to decide or why I was in the room. Lead with the recommendation. Lead with the problem you solved and what it means for the business. Then, if I have questions about how you got there, I will ask. Most executives do not need to understand the architecture — they need to trust the engineer who does."
+        },
+        {
+          "type": "dialogue",
+          "av": "💬",
+          "cls": "mentor",
+          "speaker": "VP Product Nara",
+          "sCls": "mentor",
+          "text": "Evidence is more persuasive than assertion, especially for technical claims. 'Our authentication system is outdated' gets a nod. 'Our authentication system has two known vulnerabilities in the OWASP Top 10, was last updated in 2021, and adds an estimated 6 hours to our quarterly security audit because the auditors have to manually verify what a modern system would auto-report' — that gets budget. The same claim, but one is a feeling and the other is a case."
+        },
+        {
+          "type": "dialogue",
+          "av": "💬",
+          "cls": "mentor",
+          "speaker": "VP Product Nara",
+          "sCls": "mentor",
+          "text": "The most important communication skill is knowing when to stop talking. Engineers who are uncertain tend to over-explain. They hedge, they add qualifications, they pre-empt objections they imagine the audience might have. The audience reads this as lack of confidence. State the recommendation clearly. If there are important caveats, state them once. Then stop. The discomfort of silence is less damaging than the impression of uncertainty that over-explanation creates."
+        }
       ],
       "learningObjectives": [
         "Adapt the same technical message for three different audiences: engineers, product managers, and leadership",
@@ -46,37 +72,44 @@
       "modelAnswer": "One-Page Proposal — Spell Search Performance Fix\n\nProblem:\nSpell search is taking an average of 2.8 seconds to return results, with some users waiting over 6 seconds — 4× slower than the industry standard for this type of feature.\n\nImpact:\nIn our user analytics, 23% of spell search sessions end without a result being selected when the response takes longer than 3 seconds — compared to 8% abandonment when results arrive within 1 second. Based on the number of searches per day, this represents approximately 650 searches per day where a user gives up before finding what they need. User satisfaction scores for the search feature are the lowest of any Academy feature in our last survey. Slow spell search is directly reducing learning engagement.\n\nProposed Solution:\nWe have identified a missing database optimisation that is causing search queries to scan the entire spell catalogue instead of using a pre-sorted index. The fix is already understood and tested — it requires adding a technical configuration change to the database that will bring response times to under 300ms.\n\nWhat We Need:\nApproval to dedicate one engineer for 2 working days to implement and safely deploy the fix. There is no additional infrastructure cost. No user-facing features will change — search results will be identical, just significantly faster.\n\nTimeline:\n- Day 1: Engineer implements and tests the fix in staging\n- Day 2 morning: Deploy to production with monitoring in place\n- Day 2 afternoon: Confirm results, close the change\nTotal user impact window: search will be at current (slow) speed for 2 days, then at target speed from Day 2 onwards.\n\n---\n3-Bullet Hallway Summary (CEO):\n- 'Our spell search is 4× slower than it should be — about a quarter of searchers give up before getting results.'\n- 'We've found the exact fix: 2 days of engineering time, no cost, no feature change.'\n- 'I want to prioritise this this week — it should directly improve learning engagement scores. Do you have any concerns?'",
       "questions": [
         {
+          "id": "java-lea-12a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What does 'lead with the conclusion' mean in technical writing?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>What does 'lead with the conclusion' mean in technical writing?</p>",
           "options": [
             "Always start with a confident statement, even if you're uncertain",
             "State your recommendation or finding first, then provide the supporting analysis and evidence — rather than building up to the conclusion at the end",
             "Put the executive summary at the end of a document so readers feel they've earned it",
             "Write the conclusion section before drafting the rest of the document"
           ],
-          "correctAnswer": "State your recommendation or finding first, then provide the supporting analysis and evidence — rather than building up to the conclusion at the end",
-          "explanationHtml": "<p>Engineers often write in discovery order: 'We started by looking at X, then discovered Y, then considered Z, and therefore concluded W.' This structure makes sense for how you arrived at the answer but not for how your audience consumes it. Most readers, especially senior stakeholders, want the conclusion first so they can immediately evaluate whether they agree — then read the supporting reasoning. 'We recommend Postgres for this use case' followed by the reasoning is more efficient for the reader than three paragraphs of analysis that eventually arrive at the recommendation.</p>"
+          "answer": "State your recommendation or finding first, then provide the supporting analysis and evidence — rather than building up to the conclusion at the end",
+          "explanation": "<p>Engineers often write in discovery order: 'We started by looking at X, then discovered Y, then considered Z, and therefore concluded W.' This structure makes sense for how you arrived at the answer but not for how your audience consumes it. Most readers, especially senior stakeholders, want the conclusion first so they can immediately evaluate whether they agree — then read the supporting reasoning. 'We recommend Postgres for this use case' followed by the reasoning is more efficient for the reader than three paragraphs of analysis that eventually arrive at the recommendation.</p>"
         },
         {
+          "id": "java-lea-12a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A Lead presents to a VP of Engineering: 'We need to refactor the service mesh configuration to reduce p99 latency on the authentication token validation path, which is currently causing head-of-line blocking in our gRPC channel pool.' The VP looks confused. What is the most likely communication failure?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>A Lead presents to a VP of Engineering: 'We need to refactor the service mesh configuration to reduce p99 latency on the authentication token validation path, which is currently causing head-of-line blocking in our gRPC channel pool.' The VP looks confused. What is the most likely communication failure?</p>",
           "options": [
             "The Lead should have used a diagram instead of spoken words",
             "The Lead used technical language appropriate for engineers but not for the audience — the VP needs to hear business impact, not implementation mechanism",
             "The Lead's technical analysis is probably wrong",
             "The VP is not technical enough to be in this role"
           ],
-          "correctAnswer": "The Lead used technical language appropriate for engineers but not for the audience — the VP needs to hear business impact, not implementation mechanism",
-          "explanationHtml": "<p>The message may be technically accurate, but it is not communicated for the audience. A VP of Engineering needs to know: what is the user/business impact, what does the fix cost, and what is the risk of not doing it. 'Our login flow is slowing down under high traffic — some users are waiting up to 8 seconds for authentication. This is causing login failures during peak usage periods. A configuration change we've already tested will fix it — one engineer, two days.' Same problem, communicated for the right audience. Technical detail can be offered when asked, not delivered as the opening.</p>"
+          "answer": "The Lead used technical language appropriate for engineers but not for the audience — the VP needs to hear business impact, not implementation mechanism",
+          "explanation": "<p>The message may be technically accurate, but it is not communicated for the audience. A VP of Engineering needs to know: what is the user/business impact, what does the fix cost, and what is the risk of not doing it. 'Our login flow is slowing down under high traffic — some users are waiting up to 8 seconds for authentication. This is causing login failures during peak usage periods. A configuration change we've already tested will fix it — one engineer, two days.' Same problem, communicated for the right audience. Technical detail can be offered when asked, not delivered as the opening.</p>"
         },
         {
+          "id": "java-lea-12a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>When a Lead is uncertain about an answer in a senior stakeholder presentation, the best approach is to add hedging qualifications to demonstrate nuance and intellectual honesty.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Over-hedging and extensive qualification tend to read as lack of confidence rather than intellectual honesty, especially in senior-stakeholder settings where credibility is partly signalled by clear, direct communication. The better approach when genuinely uncertain: state clearly 'I don't know the answer to that specific question — I'll follow up with [specific detail] by [specific time].' This demonstrates honesty without signalling general uncertainty about the recommendation. A single confident commitment to follow up is more credible than a series of hedges. Reserve qualifications for genuinely important caveats — state them once, clearly, and then make your recommendation.</p>"
+          "minPath": "LEAD",
+          "prompt": "<p>When a Lead is uncertain about an answer in a senior stakeholder presentation, the best approach is to add hedging qualifications to demonstrate nuance and intellectual honesty.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Over-hedging and extensive qualification tend to read as lack of confidence rather than intellectual honesty, especially in senior-stakeholder settings where credibility is partly signalled by clear, direct communication. The better approach when genuinely uncertain: state clearly 'I don't know the answer to that specific question — I'll follow up with [specific detail] by [specific time].' This demonstrates honesty without signalling general uncertainty about the recommendation. A single confident commitment to follow up is more credible than a series of hedges. Reserve qualifications for genuinely important caveats — state them once, clearly, and then make your recommendation.</p>"
         }
       ]
     }

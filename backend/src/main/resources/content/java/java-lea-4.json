@@ -5,7 +5,9 @@
   "sortOrder": 4,
   "tier": "LEAD",
   "topicId": "java",
-  "prerequisites": ["java-lea-3"],
+  "prerequisites": [
+    "java-lea-3"
+  ],
   "subChunks": [
     {
       "id": "java-lea-4a",
@@ -16,10 +18,34 @@
       "hookHtml": "<p>The SENIOR tier introduced trade-off reasoning as a technical skill. At LEAD level, trade-off analysis is a team and organisational skill — you are not just analysing your own decisions, you are building frameworks that help your team make better decisions independently, and you are navigating trade-offs that involve people, culture, and business constraints alongside technical ones.</p>",
       "explanationHtml": "<h3>Beyond Technical Trade-offs</h3><p>LEAD-level trade-offs involve dimensions that are invisible at the SENIOR level:</p><ul><li><strong>Team cognitive load</strong>: a technically superior solution that only three engineers understand creates a dependency and bus factor risk</li><li><strong>Hiring market</strong>: choosing an obscure technology may be technically sound but narrow the hiring pool significantly</li><li><strong>Organisational alignment</strong>: a technically correct choice that other teams will fight may not be the best choice in the organisation</li><li><strong>Temporal risk</strong>: a correct choice today may be wrong in 18 months if the technology landscape shifts</li></ul><h3>The Trade-off Matrix</h3><p>For significant decisions, make trade-offs explicit with a matrix. Dimensions depend on context but commonly include: performance, operational complexity, developer experience, team familiarity, cost, security, vendor risk, and time-to-implement.</p><pre><code>                    | Kafka | RabbitMQ | SQS\nPerformance         |  ★★★  |   ★★     | ★★\nOp. complexity      |  Low  |   Med    | Low (managed)\nTeam familiarity    |  None |   Some   | None  \nHiring market       |  Large|   Large  | Large\nVendor risk         |  Low  |   Low    | Medium (AWS lock-in)\nTime-to-first-value |  High |   Med    | Low\n</code></pre><h3>The 'Regret Minimisation' Frame</h3><p>For decisions with high uncertainty, ask: 'Which choice will I regret least if the assumptions turn out to be wrong?' This is especially useful for platform choices with long lock-in horizons. A managed service that performs worse but is easy to replace if needed may be better than a high-performance solution that is extremely hard to exit.</p><h3>Communicating Trade-offs Up and Across</h3><p>Different audiences need different frames:</p><ul><li><strong>Engineering team</strong>: technical dimensions, concrete examples, migration path</li><li><strong>Product managers</strong>: feature implications, timeline impact, delivery risk</li><li><strong>Senior leadership</strong>: cost, risk, competitive implications, timeline — no jargon</li></ul><p>The same trade-off analysis needs three different articulations. The technical ADR is for engineers. The product decision brief is for product. The executive summary is for leadership. All three are correct; they emphasise different dimensions for different decision-making contexts.</p><h3>When Not to Make the Optimal Choice</h3><p>Sometimes the technically optimal choice is not the right choice:</p><ul><li>The team cannot support it in production (operational complexity exceeds team capability)</li><li>The organisation will not adopt it (too different from current patterns)</li><li>The timeline doesn't allow for the learning curve</li><li>The improvement is marginal but the risk is high</li></ul><p>Good judgement includes knowing when 'good enough' is the right answer.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Lead chose an event sourcing architecture. It was technically correct — optimal for the Academy's audit requirements. Three months later, two of the five engineers who had to maintain it had left for other projects. Hiring replacements with event sourcing experience took five months. The 'optimal' technical choice had optimised for the wrong variables."},
-        {"type": "dialogue", "av": "⚖️", "cls": "mentor", "speaker": "Director of Engineering Fae", "sCls": "mentor", "text": "At LEAD level, trade-offs include things that don't appear in any technical comparison: who can support this in production at 3am, what happens to the hiring funnel if we specialise in this technology, and whether the rest of the organisation will actually adopt this if we build it. These are not soft concerns. They are engineering risks with real costs."},
-        {"type": "dialogue", "av": "⚖️", "cls": "mentor", "speaker": "Director of Engineering Fae", "sCls": "mentor", "text": "The regret minimisation frame is useful precisely when you are most uncertain. 'Which decision will I regret least if my assumptions are wrong?' forces you to think about the reversibility and exit cost of each option. A choice that is 80% as good technically but 5× easier to exit is often the better choice when the future is genuinely uncertain."},
-        {"type": "dialogue", "av": "⚖️", "cls": "mentor", "speaker": "Director of Engineering Fae", "sCls": "mentor", "text": "You will need to explain the same trade-off three different ways to three different audiences. Engineers want to understand the technical dimensions. Product managers want to understand timeline and feature impact. Leadership wants to understand cost, risk, and competitive position. The same correct analysis, framed three different ways. Learning to do this is not dumbing it down — it is communication competence."}
+        {
+          "type": "narration",
+          "text": "The Lead chose an event sourcing architecture. It was technically correct — optimal for the Academy's audit requirements. Three months later, two of the five engineers who had to maintain it had left for other projects. Hiring replacements with event sourcing experience took five months. The 'optimal' technical choice had optimised for the wrong variables."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚖️",
+          "cls": "mentor",
+          "speaker": "Director of Engineering Fae",
+          "sCls": "mentor",
+          "text": "At LEAD level, trade-offs include things that don't appear in any technical comparison: who can support this in production at 3am, what happens to the hiring funnel if we specialise in this technology, and whether the rest of the organisation will actually adopt this if we build it. These are not soft concerns. They are engineering risks with real costs."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚖️",
+          "cls": "mentor",
+          "speaker": "Director of Engineering Fae",
+          "sCls": "mentor",
+          "text": "The regret minimisation frame is useful precisely when you are most uncertain. 'Which decision will I regret least if my assumptions are wrong?' forces you to think about the reversibility and exit cost of each option. A choice that is 80% as good technically but 5× easier to exit is often the better choice when the future is genuinely uncertain."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚖️",
+          "cls": "mentor",
+          "speaker": "Director of Engineering Fae",
+          "sCls": "mentor",
+          "text": "You will need to explain the same trade-off three different ways to three different audiences. Engineers want to understand the technical dimensions. Product managers want to understand timeline and feature impact. Leadership wants to understand cost, risk, and competitive position. The same correct analysis, framed three different ways. Learning to do this is not dumbing it down — it is communication competence."
+        }
       ],
       "learningObjectives": [
         "Identify non-technical trade-off dimensions (team cognitive load, hiring, organisational alignment) and explain why they matter at Lead level",
@@ -46,43 +72,49 @@
       "modelAnswer": "Matrix (6 dimensions):\nDimension              | Custom Service | SendGrid\nTime to ship           | 4 weeks        | 3 days\nCost (monthly)         | ~$0 + eng time | ~$200/mo\nControl/customisation  | Full           | Medium\nOperational burden     | Full (oncall)  | None\nVendor dependency      | None           | Medium (pricing, API)\nTeam expertise needed  | High           | Low\n\nRegret minimisation:\nIf custom is wrong: shipped 4 weeks late; team built and must maintain email infrastructure (oncall, spam reputation, bounce handling) — a non-differentiating burden. If SendGrid is wrong: paying $200+/mo and dependent on one vendor's pricing. Regret-minimising: SendGrid. The cost of being wrong with custom is much higher (ongoing operational burden, delayed launch).\n\nRecommendation for engineers:\n'We are using SendGrid for the notification system. The integration is 3 days vs 4 weeks. We avoid owning email infrastructure (spam reputation, bounce handling, DKIM/SPF) that is not our expertise. We will revisit if monthly cost exceeds $1K or if we need custom delivery logic SendGrid cannot support. An ADR is written documenting this decision and the sunset trigger.'\n\nFor product manager:\n'Notifications will be ready in 3 days using SendGrid rather than 4 weeks to build our own. This means we hit the Q3 tournament date. Cost is ~$200/month — less than 4 hours of engineering time per month at our engineer cost. We can switch later if the requirements change significantly.'\n\nFor CEO:\n'We chose a third-party email service ($200/month) instead of building our own (4 weeks of engineering). This gets notifications live for the Q3 tournament, conserves engineering time for the spell ranking features that differentiate us, and avoids the operational complexity of running email infrastructure. It's the faster and cheaper option over any reasonable time horizon.'",
       "questions": [
         {
+          "id": "java-lea-4a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which of these is a non-technical trade-off dimension that becomes especially important at Lead level?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>Which of these is a non-technical trade-off dimension that becomes especially important at Lead level?</p>",
           "options": [
             "Query execution time",
             "Memory allocation strategy",
             "Team familiarity and the depth of the hiring market for a technology",
             "GC pause latency"
           ],
-          "correctAnswer": "Team familiarity and the depth of the hiring market for a technology",
-          "explanationHtml": "<p>At Lead level, trade-offs extend beyond technical performance. A technology that performs better but requires expertise that is rare in the job market creates hiring risk. If your team turns over and you cannot hire replacements who know the technology, you have a long-term maintenance problem regardless of how good the technology is. Team familiarity, hiring market depth, and operational complexity are critical Lead-level dimensions.</p>"
+          "answer": "Team familiarity and the depth of the hiring market for a technology",
+          "explanation": "<p>At Lead level, trade-offs extend beyond technical performance. A technology that performs better but requires expertise that is rare in the job market creates hiring risk. If your team turns over and you cannot hire replacements who know the technology, you have a long-term maintenance problem regardless of how good the technology is. Team familiarity, hiring market depth, and operational complexity are critical Lead-level dimensions.</p>"
         },
         {
+          "id": "java-lea-4a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A Lead is presenting a database technology choice to the CEO. The Lead explains: 'We chose PostgreSQL over Cassandra because of the eventual consistency model, tuple storage format advantages, and MVCC concurrency control.' What is wrong with this communication?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>A Lead is presenting a database technology choice to the CEO. The Lead explains: 'We chose PostgreSQL over Cassandra because of the eventual consistency model, tuple storage format advantages, and MVCC concurrency control.' What is wrong with this communication?</p>",
           "options": [
             "The reasoning is technically wrong",
             "The language and dimensions are not appropriate for a CEO audience — should be framed in terms of cost, risk, timeline, and business impact",
             "The Lead should not be making database choices",
             "Too many technical options were considered"
           ],
-          "correctAnswer": "The language and dimensions are not appropriate for a CEO audience — should be framed in terms of cost, risk, timeline, and business impact",
-          "explanationHtml": "<p>A CEO needs to understand cost, risk, timeline, and how the choice enables or constrains the business — not MVCC or tuple storage. The analysis may be correct, but the communication is wrong for the audience. The same decision for a CEO: 'We chose PostgreSQL because the team already knows it (faster delivery, lower risk), it's available as a fully managed service (no operational burden), and our data is relational in structure (fits the model). We can serve current scale and 10× growth without any changes.'</p>"
+          "answer": "The language and dimensions are not appropriate for a CEO audience — should be framed in terms of cost, risk, timeline, and business impact",
+          "explanation": "<p>A CEO needs to understand cost, risk, timeline, and how the choice enables or constrains the business — not MVCC or tuple storage. The analysis may be correct, but the communication is wrong for the audience. The same decision for a CEO: 'We chose PostgreSQL because the team already knows it (faster delivery, lower risk), it's available as a fully managed service (no operational burden), and our data is relational in structure (fits the model). We can serve current scale and 10× growth without any changes.'</p>"
         },
         {
+          "id": "java-lea-4a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A Lead is choosing between two options: (A) technically optimal, requires niche expertise, hard to migrate away from; (B) 80% as good technically, familiar to the team, easily replaceable. The future requirements are genuinely uncertain. Which should the Lead choose and why?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>A Lead is choosing between two options: (A) technically optimal, requires niche expertise, hard to migrate away from; (B) 80% as good technically, familiar to the team, easily replaceable. The future requirements are genuinely uncertain. Which should the Lead choose and why?</p>",
           "options": [
             "Option A — always choose the technically optimal solution",
             "Option B — when requirements are uncertain, the regret-minimising choice prefers reversibility and team capability over theoretical optimality",
             "Neither — wait for more requirements clarity",
             "Option A in production, Option B in staging"
           ],
-          "correctAnswer": "Option B — when requirements are uncertain, the regret-minimising choice prefers reversibility and team capability over theoretical optimality",
-          "explanationHtml": "<p>Under genuine uncertainty, regret minimisation favours reversibility. If Option A's assumptions prove wrong (the niche expertise is hard to hire for, the requirements shift, the technology landscape changes), you are locked in with high exit cost. If Option B proves insufficient, migrating to a more capable solution is feasible. Option B's 20% technical gap may never matter if the requirements don't require it — but Option A's lock-in costs are real regardless.</p>"
+          "answer": "Option B — when requirements are uncertain, the regret-minimising choice prefers reversibility and team capability over theoretical optimality",
+          "explanation": "<p>Under genuine uncertainty, regret minimisation favours reversibility. If Option A's assumptions prove wrong (the niche expertise is hard to hire for, the requirements shift, the technology landscape changes), you are locked in with high exit cost. If Option B proves insufficient, migrating to a more capable solution is feasible. Option B's 20% technical gap may never matter if the requirements don't require it — but Option A's lock-in costs are real regardless.</p>"
         }
       ]
     }

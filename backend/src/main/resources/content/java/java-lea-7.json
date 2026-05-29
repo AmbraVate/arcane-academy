@@ -5,7 +5,9 @@
   "sortOrder": 7,
   "tier": "LEAD",
   "topicId": "java",
-  "prerequisites": ["java-lea-6"],
+  "prerequisites": [
+    "java-lea-6"
+  ],
   "subChunks": [
     {
       "id": "java-lea-7a",
@@ -16,10 +18,34 @@
       "hookHtml": "<p>Conway's Law states that organisations design systems that mirror their own communication structure. This is not a suggestion — it is a documented empirical phenomenon. Understanding it means you can design team structures to produce the architectures you want, rather than discovering that your architecture has been shaped by your org chart.</p>",
       "explanationHtml": "<h3>Conway's Law</h3><p>'Any organisation that designs a system will produce a design whose structure is a copy of the organisation's communication structure.' — Melvin Conway, 1967.</p><p>Practical implication: if you have three teams building a single product, you will get a system with three layers or three components that match those team boundaries — whether or not that is the right architecture. The inverse: if you want a particular architecture, design your teams to match it.</p><p>The <strong>Inverse Conway Manoeuvre</strong>: deliberately structure your teams to produce the architecture you want. If you want two independent services, form two teams with clear ownership boundaries before extracting the services.</p><h3>Team Topologies</h3><p>Team Topologies (Matthew Skelton and Manuel Pais) defines four team types:</p><ul><li><strong>Stream-aligned team</strong>: aligned to a flow of work delivering value (a product, a service, a user journey). The most common type. Self-sufficient for most of their work.</li><li><strong>Enabling team</strong>: helps stream-aligned teams adopt new practices or overcome capability gaps. Temporary engagement, not permanent dependency. Research and education, not work delivery.</li><li><strong>Complicated subsystem team</strong>: owns a complex component requiring deep specialist knowledge (payments, ML models, cryptography). Rare — most systems don't need this.</li><li><strong>Platform team</strong>: provides a compelling internal service to stream-aligned teams. Reduces cognitive load; not a gatekeeper.</li></ul><p>Three interaction modes: collaboration (working together closely — temporary), X-as-a-service (consuming a capability with minimal interaction), and facilitating (an enabling team helping).</p><h3>Cognitive Load</h3><p>Every team has a finite cognitive capacity — the total complexity they can hold in their heads and work with effectively. Systems that exceed a team's cognitive load produce slow delivery, bugs from misunderstood code, and engineer burnout.</p><p>Types of cognitive load: <strong>intrinsic</strong> (the inherent complexity of the domain), <strong>extraneous</strong> (accidental complexity from poor tooling, unclear processes, unnecessary dependencies), and <strong>germane</strong> (the useful work of building understanding).</p><p>Platform teams exist to reduce extraneous cognitive load. Team boundaries should be drawn to keep intrinsic cognitive load manageable — if a team owns too many services across too many domains, they cannot develop deep expertise in any of them.</p><h3>Team Size and the Dunbar Number</h3><p>Amazon's 'two-pizza team' rule (5–8 people) has a cognitive basis: communication overhead grows with n*(n-1)/2. A team of 5 has 10 communication paths; a team of 12 has 66. Team size also determines ownership granularity — a team of 5 can own approximately 2–3 services deeply. A team of 10 might own 4–5.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy reorganised its five-team structure around business capabilities: one team for spells, one for users, one for tournaments. Within 18 months, the architecture had naturally separated along those exact lines — three services with clear API boundaries, matching the team structure. No architect had mandated the split. Conway's Law had done it automatically."},
-        {"type": "dialogue", "av": "🏢", "cls": "mentor", "speaker": "Engineering VP Drea", "sCls": "mentor", "text": "Conway's Law is not a warning — it is a tool. If you decide you want a microservices architecture and then you think about teams, you're working backwards. Decide the team structure first, based on the domains you want to own independently. The architecture will emerge to match. Get the team structure right and you get the architecture as a side effect."},
-        {"type": "dialogue", "av": "🏢", "cls": "mentor", "speaker": "Engineering VP Drea", "sCls": "mentor", "text": "Cognitive load is the constraint that team topologies optimises against. A team that owns too many disparate systems develops surface-level knowledge of each and deep knowledge of none. They spend all their time context-switching. They are slow and their reliability suffers. The right team boundary is the one that keeps cognitive load within what a team of 5-8 engineers can hold deeply."},
-        {"type": "dialogue", "av": "🏢", "cls": "mentor", "speaker": "Engineering VP Drea", "sCls": "mentor", "text": "Enabling teams are one of the most underused patterns in engineering organisations. Instead of every stream team struggling independently to adopt a new observability tool, one enabling team embeds briefly with each stream team, teaches them the pattern, and moves on. A 4-person enabling team can uplift 10 stream teams in a quarter. That is a 40-person impact from 4 engineers."}
+        {
+          "type": "narration",
+          "text": "The Academy reorganised its five-team structure around business capabilities: one team for spells, one for users, one for tournaments. Within 18 months, the architecture had naturally separated along those exact lines — three services with clear API boundaries, matching the team structure. No architect had mandated the split. Conway's Law had done it automatically."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏢",
+          "cls": "mentor",
+          "speaker": "Engineering VP Drea",
+          "sCls": "mentor",
+          "text": "Conway's Law is not a warning — it is a tool. If you decide you want a microservices architecture and then you think about teams, you're working backwards. Decide the team structure first, based on the domains you want to own independently. The architecture will emerge to match. Get the team structure right and you get the architecture as a side effect."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏢",
+          "cls": "mentor",
+          "speaker": "Engineering VP Drea",
+          "sCls": "mentor",
+          "text": "Cognitive load is the constraint that team topologies optimises against. A team that owns too many disparate systems develops surface-level knowledge of each and deep knowledge of none. They spend all their time context-switching. They are slow and their reliability suffers. The right team boundary is the one that keeps cognitive load within what a team of 5-8 engineers can hold deeply."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏢",
+          "cls": "mentor",
+          "speaker": "Engineering VP Drea",
+          "sCls": "mentor",
+          "text": "Enabling teams are one of the most underused patterns in engineering organisations. Instead of every stream team struggling independently to adopt a new observability tool, one enabling team embeds briefly with each stream team, teaches them the pattern, and moves on. A 4-person enabling team can uplift 10 stream teams in a quarter. That is a 40-person impact from 4 engineers."
+        }
       ],
       "learningObjectives": [
         "Explain Conway's Law and apply the Inverse Conway Manoeuvre to design teams for a desired architecture",
@@ -46,43 +72,49 @@
       "modelAnswer": "Team structure for mobile learning platform:\n\n1. Teams:\n   Learning Experience Team — Stream-aligned, 6 engineers\n   Owns: learning content delivery, spell casting flow, progress tracking, mobile-first UX APIs\n   \n   Social & Collaboration Team — Stream-aligned, 5 engineers\n   Owns: real-time features (WebSocket), multiplayer sessions, social graph, notifications\n   \n   Commerce Team — Stream-aligned, 4 engineers\n   Owns: payment processing, subscriptions, invoicing, entitlement checks\n   \n   Platform Team — Platform, 3 engineers\n   Owns: CI/CD Golden Path, service scaffolding, shared auth library, monitoring templates\n   \n   Mobile Enabling Team — Enabling, 2 engineers (temporary, 6-month charter)\n   Helps stream teams adopt mobile-specific patterns (offline sync, push notifications, mobile CI)\n\n2. Interaction modes:\n   Learning Experience ↔ Social: collaboration mode initially (shared real-time session model); X-as-a-service once patterns stabilise\n   Learning Experience ↔ Commerce: X-as-a-service (learning team checks entitlements via Commerce API; no co-development)\n   All stream teams ↔ Platform: X-as-a-service (consume CI/CD, auth library, deployment tooling)\n   Mobile Enabling ↔ all stream teams: facilitating (2-week engagements, then teams self-sufficient)\n\n3. Inverse Conway Manoeuvre:\n   The desired architecture has four independent services: learning, social/realtime, commerce, and platform infrastructure. The team structure mirrors this exactly. Conway's Law will produce service boundaries at team boundaries automatically. No architect needs to mandate the splits — the communication structure will create them.\n\n4. Cognitive load:\n   Learning Experience (6): owns learning + progress + UX APIs — related domain, consistent user type (learner). Risk: feature volume. Mitigation: platform team handles CI/deployment (extraneous load removed).\n   Social (5): real-time is inherently complex (WebSocket, state synchronisation). Risk: intrinsic complexity of the domain. Mitigation: focused team, enabling team available for mobile push patterns.\n   Commerce (4): payment compliance is a narrow, deep domain. Risk: PCI compliance knowledge gap. Mitigation: dedicated team builds expertise; smaller team reduces communication overhead on a compliance-sensitive system.\n   Platform (3): owns internal tooling with 20-engineer customer base. Risk: being too small to serve all teams. Mitigation: invest in self-service tooling (Golden Paths) so teams don't require direct platform team involvement for routine work.",
       "questions": [
         {
+          "id": "java-lea-7a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is Conway's Law?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>What is Conway's Law?</p>",
           "options": [
             "Software systems always grow to exceed their original design constraints",
             "Organisations design systems whose structure mirrors their communication structure",
             "The number of bugs increases linearly with team size",
             "Two-way communication is faster than hierarchical communication"
           ],
-          "correctAnswer": "Organisations design systems whose structure mirrors their communication structure",
-          "explanationHtml": "<p>Conway's Law (1967) observes that any organisation designing a system produces a design that mirrors its communication structure. If three teams must communicate extensively to ship a feature, the system will have three corresponding components. This is an empirical observation, not a criticism — the Inverse Conway Manoeuvre uses it as a tool: deliberately structure teams to match the architecture you want to produce.</p>"
+          "answer": "Organisations design systems whose structure mirrors their communication structure",
+          "explanation": "<p>Conway's Law (1967) observes that any organisation designing a system produces a design that mirrors its communication structure. If three teams must communicate extensively to ship a feature, the system will have three corresponding components. This is an empirical observation, not a criticism — the Inverse Conway Manoeuvre uses it as a tool: deliberately structure teams to match the architecture you want to produce.</p>"
         },
         {
+          "id": "java-lea-7a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A team of 10 engineers owns 8 different services across 5 different business domains. They have frequent incidents and slow delivery. What is the most likely root cause in Team Topologies terms?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>A team of 10 engineers owns 8 different services across 5 different business domains. They have frequent incidents and slow delivery. What is the most likely root cause in Team Topologies terms?</p>",
           "options": [
             "The team needs better engineers",
             "The team's cognitive load exceeds what 10 engineers can manage effectively across 5 domains",
             "The team needs more CI/CD automation",
             "The services need to be consolidated into a monolith"
           ],
-          "correctAnswer": "The team's cognitive load exceeds what 10 engineers can manage effectively across 5 domains",
-          "explanationHtml": "<p>A team can only maintain deep knowledge of a limited set of domains. 8 services across 5 domains spread 10 engineers too thin — shallow knowledge of each domain, constant context-switching, and inability to develop expertise that prevents incidents. The solution is narrower ownership: fewer domains per team, better bounded by domain cohesion. The team should own 2–3 closely related services in 1–2 domains that they can know deeply.</p>"
+          "answer": "The team's cognitive load exceeds what 10 engineers can manage effectively across 5 domains",
+          "explanation": "<p>A team can only maintain deep knowledge of a limited set of domains. 8 services across 5 domains spread 10 engineers too thin — shallow knowledge of each domain, constant context-switching, and inability to develop expertise that prevents incidents. The solution is narrower ownership: fewer domains per team, better bounded by domain cohesion. The team should own 2–3 closely related services in 1–2 domains that they can know deeply.</p>"
         },
         {
+          "id": "java-lea-7a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A platform team requires all teams to get approval before using any third-party library. What Team Topologies problem does this create?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>A platform team requires all teams to get approval before using any third-party library. What Team Topologies problem does this create?</p>",
           "options": [
             "The platform team is acting as a gatekeeper rather than a service provider — creating a bottleneck that increases extraneous cognitive load for stream-aligned teams",
             "This is correct governance — all dependencies should be reviewed",
             "The platform team is operating as a stream-aligned team",
             "This reduces cognitive load by centralising decisions"
           ],
-          "correctAnswer": "The platform team is acting as a gatekeeper rather than a service provider — creating a bottleneck that increases extraneous cognitive load for stream-aligned teams",
-          "explanationHtml": "<p>Platform teams should reduce friction for stream-aligned teams by providing compelling services that are easier to use than the alternatives. Acting as a gatekeeper (requiring approval) adds extraneous cognitive load — teams must navigate approvals instead of building. The correct platform team behaviour: maintain an approved library catalogue (guardrail), auto-scan for known vulnerabilities (automated guardrail), and provide a fast escalation path for non-catalogue libraries. Reserve approval for genuinely high-risk dependencies.</p>"
+          "answer": "The platform team is acting as a gatekeeper rather than a service provider — creating a bottleneck that increases extraneous cognitive load for stream-aligned teams",
+          "explanation": "<p>Platform teams should reduce friction for stream-aligned teams by providing compelling services that are easier to use than the alternatives. Acting as a gatekeeper (requiring approval) adds extraneous cognitive load — teams must navigate approvals instead of building. The correct platform team behaviour: maintain an approved library catalogue (guardrail), auto-scan for known vulnerabilities (automated guardrail), and provide a fast escalation path for non-catalogue libraries. Reserve approval for genuinely high-risk dependencies.</p>"
         }
       ]
     }

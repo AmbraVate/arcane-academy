@@ -5,7 +5,9 @@
   "sortOrder": 13,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-12"],
+  "prerequisites": [
+    "java-jun-12"
+  ],
   "subChunks": [
     {
       "id": "java-jun-13a",
@@ -17,10 +19,31 @@
       "hookHtml": "<p>When your Java application talks to a REST API, data leaves as JSON and arrives as JSON. Jackson is the library that converts Java objects to JSON strings (serialisation) and JSON strings back to Java objects (deserialisation). Every Spring Boot application uses it by default.</p>",
       "explanationHtml": "<h3>What is Serialisation?</h3><ul><li><strong>Serialisation</strong>: Java object → JSON string (for sending over the network or writing to a file)</li><li><strong>Deserialisation</strong>: JSON string → Java object (for reading data that arrived from outside)</li></ul><h3>Jackson ObjectMapper</h3><pre><code>import com.fasterxml.jackson.databind.ObjectMapper;\n\nObjectMapper mapper = new ObjectMapper();\n\n// Serialise (object → JSON string)\nSpell spell = new Spell(\"Fireball\", 80);\nString json = mapper.writeValueAsString(spell);\n// → {\"name\":\"Fireball\",\"damage\":80}\n\n// Pretty print\nString pretty = mapper.writerWithDefaultPrettyPrinter()\n                      .writeValueAsString(spell);\n\n// Deserialise (JSON string → object)\nString input = \"{\\\"name\\\":\\\"Frostbolt\\\",\\\"damage\\\":120}\";\nSpell parsed = mapper.readValue(input, Spell.class);\nSystem.out.println(parsed.getName()); // Frostbolt</code></pre><h3>POJO Requirements for Jackson</h3><p>By default, Jackson maps fields via <strong>public getters/setters</strong>. Your class needs:</p><ol><li>A no-argument constructor (Jackson uses it to create the object before setting fields)</li><li>Public getters for each field you want serialised</li><li>Public setters for each field you want deserialised into</li></ol><h3>Key Annotations</h3><pre><code>@JsonProperty(\"spell_name\")  // map to a different JSON key\nprivate String name;\n\n@JsonIgnore                  // exclude this field from JSON\nprivate String internalSecret;\n\n@JsonAlias({\"dmg\", \"power\"}) // accept multiple JSON keys for one field\nprivate int damage;</code></pre><h3>Collections and Nested Objects</h3><pre><code>// List of objects\nList&lt;Spell&gt; spells = mapper.readValue(jsonArray,\n    new TypeReference&lt;List&lt;Spell&gt;&gt;() {});\n\n// Nested object — just works if Spell contains a Mage field\nclass Spell {\n    private String name;\n    private Mage caster;  // Jackson recurses into nested objects automatically\n}</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's inter-tower messaging system transmits spell data not as objects, but as plain text strings that any system can read. The translation layer is called Jackson."},
-        {"type": "dialogue", "av": "📋", "cls": "mentor", "speaker": "Data Scribe Mira", "sCls": "mentor", "text": "When your Java object needs to travel over the network, it must become a string. JSON is the universal format. Jackson handles the conversion in both directions — <em>serialise</em> means object to JSON; <em>deserialise</em> means JSON to object. The ObjectMapper is the engine for both."},
-        {"type": "example", "speaker": "Serialise and deserialise a Spell", "text": "ObjectMapper mapper = new ObjectMapper();\n\n// Object → JSON\nSpell spell = new Spell(\"Frostbolt\", 120);\nString json = mapper.writeValueAsString(spell);\nSystem.out.println(json);  // {\"name\":\"Frostbolt\",\"damage\":120}\n\n// JSON → Object\nSpell back = mapper.readValue(json, Spell.class);\nSystem.out.println(back.getName());  // Frostbolt"},
-        {"type": "dialogue", "av": "📋", "cls": "mentor", "speaker": "Data Scribe Mira", "sCls": "mentor", "text": "Jackson's defaults work automatically for public getters and setters. When the JSON key doesn't match your field name, use @JsonProperty to remap. When you need to hide a field from JSON output — a password, an internal ID — use @JsonIgnore. When an external API sends a field under multiple possible names, @JsonAlias accepts all of them."}
+        {
+          "type": "narration",
+          "text": "The Academy's inter-tower messaging system transmits spell data not as objects, but as plain text strings that any system can read. The translation layer is called Jackson."
+        },
+        {
+          "type": "dialogue",
+          "av": "📋",
+          "cls": "mentor",
+          "speaker": "Data Scribe Mira",
+          "sCls": "mentor",
+          "text": "When your Java object needs to travel over the network, it must become a string. JSON is the universal format. Jackson handles the conversion in both directions — <em>serialise</em> means object to JSON; <em>deserialise</em> means JSON to object. The ObjectMapper is the engine for both."
+        },
+        {
+          "type": "example",
+          "speaker": "Serialise and deserialise a Spell",
+          "text": "ObjectMapper mapper = new ObjectMapper();\n\n// Object → JSON\nSpell spell = new Spell(\"Frostbolt\", 120);\nString json = mapper.writeValueAsString(spell);\nSystem.out.println(json);  // {\"name\":\"Frostbolt\",\"damage\":120}\n\n// JSON → Object\nSpell back = mapper.readValue(json, Spell.class);\nSystem.out.println(back.getName());  // Frostbolt"
+        },
+        {
+          "type": "dialogue",
+          "av": "📋",
+          "cls": "mentor",
+          "speaker": "Data Scribe Mira",
+          "sCls": "mentor",
+          "text": "Jackson's defaults work automatically for public getters and setters. When the JSON key doesn't match your field name, use @JsonProperty to remap. When you need to hide a field from JSON output — a password, an internal ID — use @JsonIgnore. When an external API sends a field under multiple possible names, @JsonAlias accepts all of them."
+        }
       ],
       "learningObjectives": [
         "Use ObjectMapper.writeValueAsString() to serialise a Java object to a JSON string",
@@ -44,37 +67,70 @@
       "guidedPracticeHtml": "<p>Create a <code>Spell</code> POJO with fields <code>name</code> (String), <code>tier</code> (String), and <code>damage</code> (int). Use Jackson to:</p><ol><li>Serialise a Spell with name <code>\"Blizzard\"</code>, tier <code>\"SENIOR\"</code>, damage <code>250</code> to a JSON string and print it</li><li>Deserialise the JSON string <code>{\"name\":\"Frostbolt\",\"tier\":\"JUNIOR\",\"damage\":120}</code> back into a Spell and print its name and damage</li><li>Add <code>@JsonProperty(\"spell_damage\")</code> to the damage field and verify the output key changes</li></ol>",
       "guidedPracticeStarterCode": "import com.fasterxml.jackson.databind.ObjectMapper;\nimport com.fasterxml.jackson.annotation.JsonProperty;\n\npublic class JsonMapper {\n\n    static class Spell {\n        private String name;\n        private String tier;\n        private int damage;\n\n        public Spell() {}\n        public Spell(String name, String tier, int damage) {\n            this.name = name; this.tier = tier; this.damage = damage;\n        }\n        public String getName() { return name; }\n        public String getTier() { return tier; }\n        public int getDamage() { return damage; }\n        public void setName(String n) { this.name = n; }\n        public void setTier(String t) { this.tier = t; }\n        public void setDamage(int d) { this.damage = d; }\n    }\n\n    public static void main(String[] args) throws Exception {\n        ObjectMapper mapper = new ObjectMapper();\n\n        // 1. Serialise\n        Spell blizzard = new Spell(\"Blizzard\", \"SENIOR\", 250);\n\n\n        // 2. Deserialise\n        String json = \"{\\\"name\\\":\\\"Frostbolt\\\",\\\"tier\\\":\\\"JUNIOR\\\",\\\"damage\\\":120}\";\n\n\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "Serialised JSON contains Blizzard", "input": "null", "expected": "Blizzard"},
-        {"label": "Deserialised name = Frostbolt", "input": "null", "expected": "Frostbolt"},
-        {"label": "Deserialised damage = 120", "input": "null", "expected": "120"}
+        {
+          "label": "Serialised JSON contains Blizzard",
+          "input": "null",
+          "expected": "Blizzard"
+        },
+        {
+          "label": "Deserialised name = Frostbolt",
+          "input": "null",
+          "expected": "Frostbolt"
+        },
+        {
+          "label": "Deserialised damage = 120",
+          "input": "null",
+          "expected": "120"
+        }
       ],
       "soloPracticeHtml": "<p>From scratch. Create a <code>Mage</code> class with: <code>id</code> (int), <code>name</code> (String), <code>school</code> (String), and <code>secretCode</code> (String, annotated @JsonIgnore). Serialise a Mage and verify secretCode does NOT appear in the JSON. Then deserialise this JSON string: <code>[{\"id\":1,\"name\":\"Lyria\",\"school\":\"Fire\"},{\"id\":2,\"name\":\"Vey\",\"school\":\"Ice\"}]</code> into a <code>List&lt;Mage&gt;</code> using TypeReference and print the name of each mage.</p>",
       "soloPracticeTests": [
-        {"label": "secretCode absent from JSON", "input": "null", "expected": "name"},
-        {"label": "List deserialized, first mage = Lyria", "input": "null", "expected": "Lyria"},
-        {"label": "Second mage = Vey", "input": "null", "expected": "Vey"}
+        {
+          "label": "secretCode absent from JSON",
+          "input": "null",
+          "expected": "name"
+        },
+        {
+          "label": "List deserialized, first mage = Lyria",
+          "input": "null",
+          "expected": "Lyria"
+        },
+        {
+          "label": "Second mage = Vey",
+          "input": "null",
+          "expected": "Vey"
+        }
       ],
       "questions": [
         {
+          "id": "java-jun-13a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which Jackson annotation excludes a field from both serialisation and deserialisation?</p>",
-          "options": ["@JsonProperty", "@JsonIgnore", "@JsonAlias", "@Transient"],
-          "correctAnswer": "@JsonIgnore",
-          "explanationHtml": "<p><code>@JsonIgnore</code> tells Jackson to skip the annotated field entirely — it won't appear in the JSON output and won't be populated during deserialisation. Use it for sensitive fields like passwords or internal implementation details.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which Jackson annotation excludes a field from both serialisation and deserialisation?</p>",
+          "options": [
+            "@JsonProperty",
+            "@JsonIgnore",
+            "@JsonAlias",
+            "@Transient"
+          ],
+          "answer": "@JsonIgnore",
+          "explanation": "<p><code>@JsonIgnore</code> tells Jackson to skip the annotated field entirely — it won't appear in the JSON output and won't be populated during deserialisation. Use it for sensitive fields like passwords or internal implementation details.</p>"
         },
         {
+          "id": "java-jun-13a-q2",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A developer creates a Jackson POJO with all private fields but no getters. What happens when they try to serialise it?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>A developer creates a Jackson POJO with all private fields but no getters. What happens when they try to serialise it?</p>",
           "options": [
             "Jackson serialises all private fields by reflection automatically",
             "The JSON output is an empty object {}",
             "A compile error occurs",
             "Jackson throws a runtime InvalidDefinitionException"
           ],
-          "correctAnswer": "The JSON output is an empty object {}",
-          "explanationHtml": "<p>By default Jackson accesses fields through public getters. With no getters and no special configuration, it finds nothing to serialise and produces an empty object. Fix: add public getters, or configure <code>mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY)</code> to access fields directly.</p>"
+          "answer": "The JSON output is an empty object {}",
+          "explanation": "<p>By default Jackson accesses fields through public getters. With no getters and no special configuration, it finds nothing to serialise and produces an empty object. Fix: add public getters, or configure <code>mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY)</code> to access fields directly.</p>"
         }
       ]
     }

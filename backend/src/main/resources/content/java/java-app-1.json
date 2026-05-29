@@ -16,15 +16,64 @@
       "hookHtml": "<p>Every spell in the Arcane Academy begins the same way — not with incantations, but with <em>thought</em>. Before you write a single line of code, you must learn to think like a machine.</p>",
       "explanationHtml": "<h3>What is Computational Thinking?</h3><p>Computational thinking is a problem-solving method built on four pillars:</p><ol><li><strong>Decomposition</strong> — breaking a large problem into smaller, manageable pieces.</li><li><strong>Pattern Recognition</strong> — spotting similarities and repeated structures in problems.</li><li><strong>Abstraction</strong> — focusing only on the details that matter, ignoring the rest.</li><li><strong>Algorithmic Design</strong> — building a clear, step-by-step solution a computer can follow.</li></ol><h3>Decomposition</h3><p>Imagine building a dungeon-crawler game. The problem looks enormous. Decomposition says: split it. Player movement. Enemy AI. Combat. Inventory. Level generation. Each becomes a smaller problem you can solve independently, then reassemble.</p><h3>Pattern Recognition</h3><p>Once you have small pieces, you notice that many share a structure. Both player and enemy need health, position, and an attack action. Recognising this pattern means you can write one solution and reuse it — the foundation of classes and interfaces in Java.</p><h3>Abstraction</h3><p>When you press W to move forward, you don't care how the screen pixel coordinates change — you just want the player to move. Abstraction hides the complexity. You interact with <em>movePlayer(direction)</em>, not with raw pixel maths.</p><h3>Algorithms and Pseudocode</h3><p>An algorithm is a precise, finite sequence of steps that solves a problem. Before you write code, write pseudocode — a human-readable description of your algorithm:</p><pre><code>ALGORITHM: find the highest score in a list\n  SET maxScore = first item in list\n  FOR each score in list:\n    IF score > maxScore:\n      SET maxScore = score\n  RETURN maxScore</code></pre><p>Pseudocode has no syntax rules — it just needs to be unambiguous. Writing pseudocode first forces you to think through edge cases (empty list? negative scores?) before the compiler catches errors for you.</p><h3>Tracing Code</h3><p>Tracing means simulating execution in your head (or on paper). Take each line, update a table of variable values, and note what gets printed or returned. This skill is essential for debugging and for answering 'what does this output?' questions. Practice it constantly.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The intake hall of the Arcane Academy is not lined with spellbooks. It is lined with puzzles — locks without obvious keys, mechanisms without obvious levers. A silver-haired wizard in deep blue robes watches you from the far end."},
-        {"type": "dialogue", "av": "🔮", "cls": "mentor", "speaker": "Archmage Veylan", "sCls": "mentor", "text": "Before you learn to speak to the machine, you must learn to think like one. Machines are utterly literal. They do exactly what you tell them — no more, no less. Most errors are not syntax mistakes. They are <em>thinking</em> mistakes."},
-        {"type": "dialogue", "av": "🔮", "cls": "mentor", "speaker": "Archmage Veylan", "sCls": "mentor", "text": "Computational thinking has four moves. First: <strong>decompose</strong>. When a problem overwhelms you, chop it apart. A dragon is terrifying whole, but you can cut it into head, neck, body, tail. Each piece becomes solvable."},
-        {"type": "example", "speaker": "Decomposing a spell-crafting system", "text": "Spell system decomposed:\n  → Ingredient selection\n  → Ratio calculation\n  → Element combination rules\n  → Side-effect prediction\n  → Power output measurement"},
-        {"type": "dialogue", "av": "🔮", "cls": "mentor", "speaker": "Archmage Veylan", "sCls": "mentor", "text": "Second: <strong>pattern recognition</strong>. Once you have pieces, you will notice they share shapes. A fireball and a lightning bolt both have a source, a direction, a damage value. One template. Two spells. A thousand spells, eventually. That is what classes will give you."},
-        {"type": "dialogue", "av": "🔮", "cls": "mentor", "speaker": "Archmage Veylan", "sCls": "mentor", "text": "Third: <strong>abstraction</strong>. When a guild member requests a portal, they do not want to know about ley-line mathematics. They want to say <em>openPortal(destination)</em> and step through. Hide the complexity. Expose only what matters."},
-        {"type": "dialogue", "av": "🔮", "cls": "mentor", "speaker": "Archmage Veylan", "sCls": "mentor", "text": "Fourth: <strong>algorithmic design</strong>. Write your solution as a precise series of steps before you touch the compiler. We call this pseudocode. It has no syntax — only clarity. The discipline of writing pseudocode first will save you more hours than any debugging tool."},
-        {"type": "example", "speaker": "Pseudocode: find the strongest rune in a collection", "text": "ALGORITHM: findStrongestRune(runes)\n  IF runes is empty: RETURN null\n  SET strongest = runes[0]\n  FOR each rune in runes:\n    IF rune.power > strongest.power:\n      SET strongest = rune\n  RETURN strongest"},
-        {"type": "narration", "text": "Veylan steps aside, revealing a locked cabinet behind him. 'Every problem in this Academy,' he says, 'yields to these four moves. The machine does not guess. It follows instructions. Your job is to give it good ones.'"}
+        {
+          "type": "narration",
+          "text": "The intake hall of the Arcane Academy is not lined with spellbooks. It is lined with puzzles — locks without obvious keys, mechanisms without obvious levers. A silver-haired wizard in deep blue robes watches you from the far end."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔮",
+          "cls": "mentor",
+          "speaker": "Archmage Veylan",
+          "sCls": "mentor",
+          "text": "Before you learn to speak to the machine, you must learn to think like one. Machines are utterly literal. They do exactly what you tell them — no more, no less. Most errors are not syntax mistakes. They are <em>thinking</em> mistakes."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔮",
+          "cls": "mentor",
+          "speaker": "Archmage Veylan",
+          "sCls": "mentor",
+          "text": "Computational thinking has four moves. First: <strong>decompose</strong>. When a problem overwhelms you, chop it apart. A dragon is terrifying whole, but you can cut it into head, neck, body, tail. Each piece becomes solvable."
+        },
+        {
+          "type": "example",
+          "speaker": "Decomposing a spell-crafting system",
+          "text": "Spell system decomposed:\n  → Ingredient selection\n  → Ratio calculation\n  → Element combination rules\n  → Side-effect prediction\n  → Power output measurement"
+        },
+        {
+          "type": "dialogue",
+          "av": "🔮",
+          "cls": "mentor",
+          "speaker": "Archmage Veylan",
+          "sCls": "mentor",
+          "text": "Second: <strong>pattern recognition</strong>. Once you have pieces, you will notice they share shapes. A fireball and a lightning bolt both have a source, a direction, a damage value. One template. Two spells. A thousand spells, eventually. That is what classes will give you."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔮",
+          "cls": "mentor",
+          "speaker": "Archmage Veylan",
+          "sCls": "mentor",
+          "text": "Third: <strong>abstraction</strong>. When a guild member requests a portal, they do not want to know about ley-line mathematics. They want to say <em>openPortal(destination)</em> and step through. Hide the complexity. Expose only what matters."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔮",
+          "cls": "mentor",
+          "speaker": "Archmage Veylan",
+          "sCls": "mentor",
+          "text": "Fourth: <strong>algorithmic design</strong>. Write your solution as a precise series of steps before you touch the compiler. We call this pseudocode. It has no syntax — only clarity. The discipline of writing pseudocode first will save you more hours than any debugging tool."
+        },
+        {
+          "type": "example",
+          "speaker": "Pseudocode: find the strongest rune in a collection",
+          "text": "ALGORITHM: findStrongestRune(runes)\n  IF runes is empty: RETURN null\n  SET strongest = runes[0]\n  FOR each rune in runes:\n    IF rune.power > strongest.power:\n      SET strongest = rune\n  RETURN strongest"
+        },
+        {
+          "type": "narration",
+          "text": "Veylan steps aside, revealing a locked cabinet behind him. 'Every problem in this Academy,' he says, 'yields to these four moves. The machine does not guess. It follows instructions. Your job is to give it good ones.'"
+        }
       ],
       "learningObjectives": [
         "Describe the four pillars of computational thinking: decomposition, pattern recognition, abstraction, and algorithmic design",
@@ -46,9 +95,21 @@
       ],
       "feynmanPrompt": "Explain computational thinking to someone who has never written code. Use a non-programming example — like cooking a recipe or planning a journey — to illustrate decomposition, pattern recognition, abstraction, and algorithmic design.",
       "downloadables": [
-        {"title": "Primitive Types Cheat Sheet", "type": "pdf", "url": "/downloads/java-app-primitives.pdf"},
-        {"title": "Big-O Visual Guide", "type": "pdf", "url": "/downloads/java-app-big-o.pdf"},
-        {"title": "Debugging Checklist", "type": "pdf", "url": "/downloads/java-app-debugging.pdf"}
+        {
+          "title": "Primitive Types Cheat Sheet",
+          "type": "pdf",
+          "url": "/downloads/java-app-primitives.pdf"
+        },
+        {
+          "title": "Big-O Visual Guide",
+          "type": "pdf",
+          "url": "/downloads/java-app-big-o.pdf"
+        },
+        {
+          "title": "Debugging Checklist",
+          "type": "pdf",
+          "url": "/downloads/java-app-debugging.pdf"
+        }
       ],
       "guidedPracticeHtml": "<p>The Academy's enchantment forge needs a restocking algorithm. When supplies run low, a golem must visit the market and purchase ingredients.</p><p><strong>Your task:</strong> Write pseudocode for the following algorithm — <em>restock the forge if any ingredient is below its minimum quantity</em>. Your pseudocode must:</p><ul><li>Check each ingredient in the forge's inventory</li><li>Compare its current quantity against a minimum threshold</li><li>If below threshold: calculate how much to buy (target quantity minus current), visit the market stall for that ingredient, and purchase the required amount</li><li>Output a summary line for each ingredient purchased</li><li>Output \"Forge fully stocked\" if nothing needed restocking</li></ul><p>Write in plain English steps — no Java syntax required. Focus on precision and completeness.</p>",
       "guidedPracticeModelAnswer": "ALGORITHM: restockForge(inventory, minimums, targetQuantities)\n  SET purchased = false\n  FOR each ingredient in inventory:\n    IF inventory[ingredient] < minimums[ingredient]:\n      SET amountNeeded = targetQuantities[ingredient] - inventory[ingredient]\n      GO TO market stall for ingredient\n      PURCHASE amountNeeded units\n      SET inventory[ingredient] = targetQuantities[ingredient]\n      PRINT ingredient + \": purchased \" + amountNeeded + \" units\"\n      SET purchased = true\n  IF purchased is false:\n    PRINT \"Forge fully stocked\"",
@@ -56,82 +117,119 @@
       "modelAnswer": "ALGORITHM: assignSpells(apprentices, spells)\n  SORT spells by manaRequirement DESCENDING  // try most powerful first\n  FOR each apprentice in apprentices:\n    SET assigned = false\n    FOR each spell in spells:\n      IF spell.manaRequirement <= apprentice.manaCapacity:\n        ASSIGN spell to apprentice\n        PRINT apprentice.name + \" assigned: \" + spell.name\n        SET assigned = true\n        BREAK  // stop at first (most powerful) matching spell\n    IF assigned is false:\n      PRINT apprentice.name + \": no spell available (insufficient mana)\"",
       "questions": [
         {
+          "id": "java-app-1a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which pillar of computational thinking involves breaking a large problem into smaller parts?</p>",
-          "options": ["Abstraction", "Decomposition", "Pattern Recognition", "Algorithmic Design"],
-          "correctAnswer": "Decomposition",
-          "explanationHtml": "<p><strong>Decomposition</strong> is the practice of splitting a complex problem into smaller, more manageable sub-problems. This is often the first step in tackling any software challenge.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>Which pillar of computational thinking involves breaking a large problem into smaller parts?</p>",
+          "options": [
+            "Abstraction",
+            "Decomposition",
+            "Pattern Recognition",
+            "Algorithmic Design"
+          ],
+          "answer": "Decomposition",
+          "explanation": "<p><strong>Decomposition</strong> is the practice of splitting a complex problem into smaller, more manageable sub-problems. This is often the first step in tackling any software challenge.</p>"
         },
         {
+          "id": "java-app-1a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is the purpose of <strong>abstraction</strong> in computational thinking?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>What is the purpose of <strong>abstraction</strong> in computational thinking?</p>",
           "options": [
             "To make code run faster",
             "To find repeated structures across problems",
             "To hide unnecessary complexity and expose only what matters",
             "To write algorithms in plain English"
           ],
-          "correctAnswer": "To hide unnecessary complexity and expose only what matters",
-          "explanationHtml": "<p>Abstraction lets you work at a higher level by hiding implementation details. You call <code>movePlayer(direction)</code> without caring how pixel coordinates are updated — that complexity is hidden behind a clear interface.</p>"
+          "answer": "To hide unnecessary complexity and expose only what matters",
+          "explanation": "<p>Abstraction lets you work at a higher level by hiding implementation details. You call <code>movePlayer(direction)</code> without caring how pixel coordinates are updated — that complexity is hidden behind a clear interface.</p>"
         },
         {
+          "id": "java-app-1a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>Pseudocode must follow strict Java syntax rules to be valid.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Pseudocode is intentionally syntax-free. It only needs to be precise and unambiguous enough for a human (or future-you) to translate into real code. Its purpose is clarity of <em>logic</em>, not compilability.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>Pseudocode must follow strict Java syntax rules to be valid.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Pseudocode is intentionally syntax-free. It only needs to be precise and unambiguous enough for a human (or future-you) to translate into real code. Its purpose is clarity of <em>logic</em>, not compilability.</p>"
         },
         {
+          "id": "java-app-1a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>You are building a spell-crafting system. The system must handle ingredient selection, power calculation, side-effect prediction, and animation playback. Which computational thinking pillar does this planning step best illustrate?</p>",
-          "options": ["Pattern Recognition", "Abstraction", "Decomposition", "Tracing"],
-          "correctAnswer": "Decomposition",
-          "explanationHtml": "<p>Splitting the spell-crafting system into distinct responsibilities (ingredient selection, power calculation, etc.) is <strong>decomposition</strong> — taking one big problem and dividing it into independently solvable pieces.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>You are building a spell-crafting system. The system must handle ingredient selection, power calculation, side-effect prediction, and animation playback. Which computational thinking pillar does this planning step best illustrate?</p>",
+          "options": [
+            "Pattern Recognition",
+            "Abstraction",
+            "Decomposition",
+            "Tracing"
+          ],
+          "answer": "Decomposition",
+          "explanation": "<p>Splitting the spell-crafting system into distinct responsibilities (ingredient selection, power calculation, etc.) is <strong>decomposition</strong> — taking one big problem and dividing it into independently solvable pieces.</p>"
         },
         {
+          "id": "java-app-1a-q5",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>You notice that both <code>Player</code> and <code>Enemy</code> need health points, a position, and an attack method. Which pillar of computational thinking is helping you here?</p>",
-          "options": ["Decomposition", "Abstraction", "Pattern Recognition", "Algorithmic Design"],
-          "correctAnswer": "Pattern Recognition",
-          "explanationHtml": "<p><strong>Pattern recognition</strong> spots shared structure across different entities. Noticing that Player and Enemy share common attributes means you can build a shared base (an interface or superclass) and avoid repeating yourself.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>You notice that both <code>Player</code> and <code>Enemy</code> need health points, a position, and an attack method. Which pillar of computational thinking is helping you here?</p>",
+          "options": [
+            "Decomposition",
+            "Abstraction",
+            "Pattern Recognition",
+            "Algorithmic Design"
+          ],
+          "answer": "Pattern Recognition",
+          "explanation": "<p><strong>Pattern recognition</strong> spots shared structure across different entities. Noticing that Player and Enemy share common attributes means you can build a shared base (an interface or superclass) and avoid repeating yourself.</p>"
         },
         {
+          "id": "java-app-1a-q6",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Trace this pseudocode: <code>SET x = 3 / FOR i from 1 to 3: SET x = x * 2 / PRINT x</code>. What is printed?</p>",
-          "options": ["6", "12", "24", "3"],
-          "correctAnswer": "24",
-          "explanationHtml": "<p>Tracing step by step: x starts at 3. Loop i=1: x = 3*2 = 6. Loop i=2: x = 6*2 = 12. Loop i=3: x = 12*2 = 24. PRINT 24.</p>"
+          "minPath": "APPRENTICE",
+          "prompt": "<p>Trace this pseudocode: <code>SET x = 3 / FOR i from 1 to 3: SET x = x * 2 / PRINT x</code>. What is printed?</p>",
+          "options": [
+            "6",
+            "12",
+            "24",
+            "3"
+          ],
+          "answer": "24",
+          "explanation": "<p>Tracing step by step: x starts at 3. Loop i=1: x = 3*2 = 6. Loop i=2: x = 6*2 = 12. Loop i=3: x = 12*2 = 24. PRINT 24.</p>"
         },
         {
+          "id": "java-app-1a-q7",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A fellow apprentice writes the pseudocode step: <em>\"Handle the user input.\"</em> What is wrong with this step?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>A fellow apprentice writes the pseudocode step: <em>\"Handle the user input.\"</em> What is wrong with this step?</p>",
           "options": [
             "It uses natural language instead of Java syntax",
             "It is too vague — a computer (or developer) cannot follow it without guessing",
             "It should come at the end of the algorithm, not the middle",
             "Nothing is wrong — pseudocode should be high level"
           ],
-          "correctAnswer": "It is too vague — a computer (or developer) cannot follow it without guessing",
-          "explanationHtml": "<p>Good pseudocode must be unambiguous. <em>\"Handle the user input\"</em> does not say what to read, how to validate it, or what to do with the result. A better step would be: <em>\"READ username from input / IF username is empty: PRINT error and stop.\"</em></p>"
+          "answer": "It is too vague — a computer (or developer) cannot follow it without guessing",
+          "explanation": "<p>Good pseudocode must be unambiguous. <em>\"Handle the user input\"</em> does not say what to read, how to validate it, or what to do with the result. A better step would be: <em>\"READ username from input / IF username is empty: PRINT error and stop.\"</em></p>"
         },
         {
+          "id": "java-app-1a-q8",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>When should you write pseudocode <em>before</em> writing Java code?</p>",
+          "minPath": "APPRENTICE",
+          "prompt": "<p>When should you write pseudocode <em>before</em> writing Java code?</p>",
           "options": [
             "Only for algorithms longer than 100 lines",
             "Only when working in a team",
             "Whenever the logic is non-trivial — planning prevents structural rework later",
             "Never — writing pseudocode wastes time that should be spent coding"
           ],
-          "correctAnswer": "Whenever the logic is non-trivial — planning prevents structural rework later",
-          "explanationHtml": "<p>Writing pseudocode first is a discipline that pays off on any non-trivial problem. It forces you to think through edge cases, data flows, and control logic before syntax errors can distract you. The cost is minutes; the savings are hours.</p>"
+          "answer": "Whenever the logic is non-trivial — planning prevents structural rework later",
+          "explanation": "<p>Writing pseudocode first is a discipline that pays off on any non-trivial problem. It forces you to think through edge cases, data flows, and control logic before syntax errors can distract you. The cost is minutes; the savings are hours.</p>"
         }
       ]
     }

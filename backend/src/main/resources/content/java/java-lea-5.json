@@ -5,7 +5,9 @@
   "sortOrder": 5,
   "tier": "LEAD",
   "topicId": "java",
-  "prerequisites": ["java-lea-4"],
+  "prerequisites": [
+    "java-lea-4"
+  ],
   "subChunks": [
     {
       "id": "java-lea-5a",
@@ -16,10 +18,34 @@
       "hookHtml": "<p>All living systems accumulate technical debt. All successful systems grow past their original design. System evolution is the practice of managing this reality deliberately — keeping systems navigable and changeable over years and team rotations, without the false promise of the 'clean rewrite that solves everything.'</p>",
       "explanationHtml": "<h3>The Rewrite Temptation</h3><p>Every engineer has seen a codebase and thought 'if we started from scratch, we'd do this so much better.' This is almost always true. It is also almost always irrelevant. The mythical rewrite that fixes everything ignores: all the undocumented business logic embedded in the current system, the time it takes to rebuild to feature parity, the bugs introduced in the rewrite, and the cost of parallel maintenance during transition. Joel Spolsky's 'the single worst strategic mistake that any software company can make' still holds.</p><p>Exceptions: the system is so broken that it cannot be safely modified at all. This is rarer than engineers think, and usually means there is a smaller, safer refactoring that gets to the same destination incrementally.</p><h3>Managing Technical Debt</h3><p>Technical debt is not inherently bad — deliberate debt (ship now, clean later) is a valid trade-off if the 'clean later' actually happens. The problem is accidental debt (code written without awareness of the trade-off) and deferred debt (debt that was supposed to be paid but never was).</p><p>Debt management practice: <strong>Tech Debt Register</strong> — a living document listing known debt items, each with: description, estimated cost-to-fix, estimated cost-per-quarter-to-carry (the 'drag' it adds to development), and priority. Makes the debt visible and comparable. Reviewed quarterly in roadmap planning.</p><h3>Modular Monolith as a Step Toward Services</h3><p>The best migration path from a big ball of mud to a service-oriented architecture is not to split immediately into microservices. It is to first create a <strong>modular monolith</strong>: enforce strict module boundaries within the same deployment. Each module owns its data, its API, and its logic. No cross-module direct dependencies — only defined interfaces. This: proves the bounded contexts before the network overhead, identifies the actual coupling that services would need to decouple, and lets the team learn the domain before committing to an expensive service split.</p><h3>Incremental Migration Patterns</h3><p><strong>Branch by abstraction</strong>: introduce an abstraction layer before replacing the implementation. Old code calls the abstraction, new implementation is swapped in behind it, old code removed after migration.</p><p><strong>Parallel run</strong>: run old and new implementations simultaneously; compare results. Validate new before cutting over. Requires idempotent or read-only operations.</p><p><strong>Feature flags for infrastructure</strong>: use feature flags to route traffic between old and new implementations. Start at 1%, increase as confidence grows, rollback instantly if metrics degrade.</p><h3>The Boy Scout Rule at Scale</h3><p>'Always leave the code better than you found it.' At scale, this means: every team member improves one thing in every PR they touch — a variable name, a missing test, a comment that no longer applies. No special sprints needed. The aggregate effect over a year of 10 engineers each leaving something marginally better is significant.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's primary monolith had been running for eight years. Three rewrite proposals had been accepted and abandoned halfway through — each time, the original monolith continued to accrue features while the rewrite fell behind. The fourth Lead inherited both the monolith and the graveyard of abandoned rewrites. She chose a different path: modular monolith first, then selective service extraction only where the data showed clear wins."},
-        {"type": "dialogue", "av": "🌱", "cls": "mentor", "speaker": "Principal Systems Engineer Kael", "sCls": "mentor", "text": "The rewrite is the siren song of every engineering team that has inherited a difficult codebase. It sounds rational. It feels right. And then you are 18 months in, you have not shipped a single feature, the original system has continued to grow, and you are not even close to feature parity. The codebase you are rewriting was written by people who understood the domain deeply. You will make different but equally mysterious mistakes."},
-        {"type": "dialogue", "av": "🌱", "cls": "mentor", "speaker": "Principal Systems Engineer Kael", "sCls": "mentor", "text": "The Tech Debt Register changes the conversation. Instead of 'everything is awful and we need to stop and fix it all,' you have a list: fifteen items, ranked by drag-per-quarter. You show the product team: these five items cost us three weeks of velocity per quarter. Fix them once, pay three weeks of engineering time, recover three weeks every quarter after that. Now they can reason about it. Now it is a business decision, not engineering complaining."},
-        {"type": "dialogue", "av": "🌱", "cls": "mentor", "speaker": "Principal Systems Engineer Kael", "sCls": "mentor", "text": "A modular monolith is not a compromise. For most teams at most scales, it is the right architecture. You get the clear boundaries that would eventually let you extract services, without the operational complexity of actually running separate services. And if the boundaries are wrong, you find out cheaply before you have eight services with the wrong seams."}
+        {
+          "type": "narration",
+          "text": "The Academy's primary monolith had been running for eight years. Three rewrite proposals had been accepted and abandoned halfway through — each time, the original monolith continued to accrue features while the rewrite fell behind. The fourth Lead inherited both the monolith and the graveyard of abandoned rewrites. She chose a different path: modular monolith first, then selective service extraction only where the data showed clear wins."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌱",
+          "cls": "mentor",
+          "speaker": "Principal Systems Engineer Kael",
+          "sCls": "mentor",
+          "text": "The rewrite is the siren song of every engineering team that has inherited a difficult codebase. It sounds rational. It feels right. And then you are 18 months in, you have not shipped a single feature, the original system has continued to grow, and you are not even close to feature parity. The codebase you are rewriting was written by people who understood the domain deeply. You will make different but equally mysterious mistakes."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌱",
+          "cls": "mentor",
+          "speaker": "Principal Systems Engineer Kael",
+          "sCls": "mentor",
+          "text": "The Tech Debt Register changes the conversation. Instead of 'everything is awful and we need to stop and fix it all,' you have a list: fifteen items, ranked by drag-per-quarter. You show the product team: these five items cost us three weeks of velocity per quarter. Fix them once, pay three weeks of engineering time, recover three weeks every quarter after that. Now they can reason about it. Now it is a business decision, not engineering complaining."
+        },
+        {
+          "type": "dialogue",
+          "av": "🌱",
+          "cls": "mentor",
+          "speaker": "Principal Systems Engineer Kael",
+          "sCls": "mentor",
+          "text": "A modular monolith is not a compromise. For most teams at most scales, it is the right architecture. You get the clear boundaries that would eventually let you extract services, without the operational complexity of actually running separate services. And if the boundaries are wrong, you find out cheaply before you have eight services with the wrong seams."
+        }
       ],
       "learningObjectives": [
         "Explain why big-bang rewrites almost always fail and describe the safer incremental alternative",
@@ -46,37 +72,44 @@
       "modelAnswer": "Modular Monolith Design:\n\n1. Four modules:\n   - SpellModule: spell CRUD, search, validation, tier management\n   - AccountModule: user registration, authentication, profile, preferences\n   - TournamentModule: tournament scheduling, match management, leaderboard, results\n   - PaymentModule: transaction processing, invoices, refunds, billing records\n\n2. Module ownership:\n   SpellModule owns: spells table, spell_elements table. API: SpellService interface (create, update, search, getById)\n   AccountModule owns: users table, sessions table, preferences table. API: AccountService interface (register, authenticate, getProfile)\n   TournamentModule owns: tournaments table, matches table, results table. API: TournamentService interface (create, schedule, recordResult, getLeaderboard)\n   PaymentModule owns: transactions table, invoices table. API: PaymentService interface (charge, refund, getInvoice)\n\n3. Cross-module communication:\n   Modules communicate ONLY through published service interfaces (the API above). No direct table access across modules. No cross-module JPA joins. If TournamentModule needs a user's display name, it calls AccountService.getProfile(userId) — it does not query the users table directly.\n   Events for async coupling: TournamentModule emits TournamentCompleted(userId, score) — PaymentModule listens if it needs to trigger billing.\n\n4. Why modular monolith over immediate service extraction:\n   - One deployment: no network latency, no distributed transaction complexity, no service discovery\n   - Wrong seams are cheap to fix: if we discover TournamentModule and SpellModule are too coupled, refactoring within a monolith is a code change. Between services, it is an API migration.\n   - Team size: 6 engineers cannot operationally own 4 separate services (4× the CI, 4× the deployment pipelines, 4× the on-call complexity). Modular monolith gives the boundaries without the operational overhead.\n   - Domain learning: we are still discovering the correct bounded contexts. Modular monolith lets us validate them cheaply.\n\n5. First service extraction candidate:\n   PaymentModule — in 12 months. Reasons: payment processing has different compliance requirements (PCI DSS) that benefit from physical isolation; payment scaling requirements may diverge from the main application; payment vendors often provide SDKs designed for standalone integration. This module has the cleanest external-facing API (fewest inbound dependencies from other modules) and the strongest independent reason for isolation.",
       "questions": [
         {
+          "id": "java-lea-5a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is the primary advantage of a modular monolith over immediate microservice extraction?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>What is the primary advantage of a modular monolith over immediate microservice extraction?</p>",
           "options": [
             "It is always faster to build",
             "It allows domain boundaries to be validated cheaply before committing to the operational complexity of separate services",
             "It avoids the need to define interfaces between modules",
             "It requires fewer tests than microservices"
           ],
-          "correctAnswer": "It allows domain boundaries to be validated cheaply before committing to the operational complexity of separate services",
-          "explanationHtml": "<p>Extracting services with the wrong module boundaries is expensive to fix — you have network calls, distributed transactions, and separate deployments to change. In a modular monolith, correcting a wrong boundary is a refactoring. The modular monolith also proves that the team can enforce boundaries before adding the operational complexity of services. It is not a compromise — it is often the right final architecture for teams under ~50 engineers.</p>"
+          "answer": "It allows domain boundaries to be validated cheaply before committing to the operational complexity of separate services",
+          "explanation": "<p>Extracting services with the wrong module boundaries is expensive to fix — you have network calls, distributed transactions, and separate deployments to change. In a modular monolith, correcting a wrong boundary is a refactoring. The modular monolith also proves that the team can enforce boundaries before adding the operational complexity of services. It is not a compromise — it is often the right final architecture for teams under ~50 engineers.</p>"
         },
         {
+          "id": "java-lea-5a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>You have three technical debt items. Which should you prioritise first: (A) a duplicated email validation function that occasionally produces inconsistencies; (B) a missing index causing all user lookups to take 2 seconds; (C) a logging format that uses println instead of a structured logger?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>You have three technical debt items. Which should you prioritise first: (A) a duplicated email validation function that occasionally produces inconsistencies; (B) a missing index causing all user lookups to take 2 seconds; (C) a logging format that uses println instead of a structured logger?</p>",
           "options": [
             "A — duplication is the most dangerous technical debt",
             "B — missing index causes the highest visible user impact and has a 2-day fix cost",
             "C — logging affects incident response most critically",
             "All three should be done in a single 'debt sprint' simultaneously"
           ],
-          "correctAnswer": "B — missing index causes the highest visible user impact and has a 2-day fix cost",
-          "explanationHtml": "<p>Tech debt prioritisation should balance carry cost (impact of leaving it) against fix cost (effort to address it). A 2-second user lookup is directly user-visible and measurable as a conversion/retention impact. With a 2-day fix, the ROI is extremely high. The duplication and logging issues have real cost but lower urgency. Fix the highest-impact, lowest-cost item first — this is the principle the Tech Debt Register makes explicit.</p>"
+          "answer": "B — missing index causes the highest visible user impact and has a 2-day fix cost",
+          "explanation": "<p>Tech debt prioritisation should balance carry cost (impact of leaving it) against fix cost (effort to address it). A 2-second user lookup is directly user-visible and measurable as a conversion/retention impact. With a 2-day fix, the ROI is extremely high. The duplication and logging issues have real cost but lower urgency. Fix the highest-impact, lowest-cost item first — this is the principle the Tech Debt Register makes explicit.</p>"
         },
         {
+          "id": "java-lea-5a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>A big-bang rewrite is usually the fastest and safest way to escape a difficult legacy codebase.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Big-bang rewrites almost always take longer than estimated, require parallel maintenance of old and new systems during the long transition, lose undocumented business logic embedded in the original system, and introduce a new set of bugs while solving the old ones. The safer path is incremental: modular monolith to enforce boundaries, branch-by-abstraction to replace components, strangler fig to migrate functionality. These allow shipping features throughout the transition and rolling back if problems appear.</p>"
+          "minPath": "LEAD",
+          "prompt": "<p>A big-bang rewrite is usually the fastest and safest way to escape a difficult legacy codebase.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Big-bang rewrites almost always take longer than estimated, require parallel maintenance of old and new systems during the long transition, lose undocumented business logic embedded in the original system, and introduce a new set of bugs while solving the old ones. The safer path is incremental: modular monolith to enforce boundaries, branch-by-abstraction to replace components, strangler fig to migrate functionality. These allow shipping features throughout the transition and rolling back if problems appear.</p>"
         }
       ]
     }

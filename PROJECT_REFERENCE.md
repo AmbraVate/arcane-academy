@@ -556,8 +556,8 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 
 | Item | Priority | Notes |
 |---|---|---|
-| Migrate older Java question format to new format (`id`, `minPath`, `prompt`) | Medium | Affects all pre-2026 Java content files |
-| Extend tier auto-advance to non-Java topics (`UserTopicProfile`) | Medium | Currently only Java advances `currentPath` |
+| Migrate older Java question format to new format (`id`, `minPath`, `prompt`) | ~~Medium~~ Done | All 71 Java content files migrated 2026-05-29 — 384 questions converted |
+| Extend tier auto-advance to non-Java topics (`UserTopicProfile`) | ~~Medium~~ Done | `UserTopicProfile.currentTier` added; `EncodingService.advanceLearnerPathIfTierComplete` now handles all topics; `TIER_PROGRESSION` corrected to APPRENTICE→LEAD; V22 migration |
 | Add Tailwind / React capstone IDs to `CAPSTONE_CHUNK_IDS` | Low | When those capstones are confirmed |
 | SQL content expansion (currently 8 files, target 71) | Low | Not yet started |
 | Hard-coded Feynman persona references mentor by name | Low | Generic enough for non-Java topics |
@@ -569,11 +569,11 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 
 | Item | Priority | Notes |
 |---|---|---|
-| Observability & stats metrics in Admin Panel | High | Usage dashboards, learner activity, XP distribution, engagement metrics |
-| Sync topic order in Admin Panel to lesson sort order | Medium | Admin chunk list should reflect the same ordering learners see on the topic map |
+| Observability & stats metrics in Admin Panel | ~~High~~ Done | AdminDashboardPage: XP distribution, topic engagement, signup trend, subscription breakdown, content health |
+| Sync topic order in Admin Panel to lesson sort order | ~~Medium~~ Done | AdminChunkController uses `findAllByOrderBySortOrderAsc` |
 | SEO | Medium | Meta tags, Open Graph, sitemap, structured data; important for organic growth |
 | Additional topic content (polymathic expansion) | Medium | Extend beyond current 6 topics to broaden the polymathic offering |
 | Production security review | ~~High~~ Done | Completed 2026-05-29 — see Decision Log §[2026-05-29] |
-| AI optimisation (prompt caching, token efficiency) | Medium | Enable Anthropic prompt caching headers; reduce per-request token cost; review model selection per use case |
+| AI optimisation (prompt caching, token efficiency) | ~~Medium~~ Done | AiMentorService uses `CacheControlEphemeral.Ttl.TTL_1H` on the system prompt; usage logged per call |
 | User location for leaderboard gamification | Low | Optional location field on profile; regional / global leaderboard segments |
 | Icons, images, and infographics | Medium | Replace placeholder or text-only UI elements with branded iconography and explanatory visuals to improve comprehension and polish |

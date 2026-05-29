@@ -99,51 +99,59 @@
       ],
       "questions": [
         {
+          "id": "java-jun-3a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which collection ensures no duplicate elements?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which collection ensures no duplicate elements?</p>",
           "options": [
             "ArrayList",
             "LinkedList",
             "HashSet",
             "HashMap"
           ],
-          "correctAnswer": "HashSet",
-          "explanationHtml": "<p>A <code>Set</code> guarantees uniqueness — adding a duplicate element has no effect. <code>HashMap</code> ensures unique <em>keys</em>, but that is different from Set semantics.</p>"
+          "answer": "HashSet",
+          "explanation": "<p>A <code>Set</code> guarantees uniqueness — adding a duplicate element has no effect. <code>HashMap</code> ensures unique <em>keys</em>, but that is different from Set semantics.</p>"
         },
         {
+          "id": "java-jun-3a-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this print?</p>",
-          "codeSnippet": "Map<String, Integer> m = new HashMap<>();\nm.put(\"a\", 1);\nm.put(\"b\", 2);\nm.put(\"a\", 99);\nSystem.out.println(m.get(\"a\"));\nSystem.out.println(m.size());",
-          "correctAnswer": "99\n2",
-          "explanationHtml": "<p>Putting a value with an existing key overwrites the previous value. So \"a\" maps to 99. The map still has 2 entries (\"a\" and \"b\").</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this print?</p>",
+          "options": [],
+          "answer": "99\n2",
+          "explanation": "<p>Putting a value with an existing key overwrites the previous value. So \"a\" maps to 99. The map still has 2 entries (\"a\" and \"b\").</p>"
         },
         {
+          "id": "java-jun-3a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does <code>map.getOrDefault(\"key\", 0)</code> return if \"key\" is not in the map?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does <code>map.getOrDefault(\"key\", 0)</code> return if \"key\" is not in the map?</p>",
           "options": [
             "null",
             "0",
             "-1",
             "Throws NoSuchKeyException"
           ],
-          "correctAnswer": "0",
-          "explanationHtml": "<p><code>getOrDefault(key, defaultValue)</code> returns the mapped value if present, or the default value otherwise. It never throws an exception and never returns null (unless your default is null).</p>"
+          "answer": "0",
+          "explanation": "<p><code>getOrDefault(key, defaultValue)</code> returns the mapped value if present, or the default value otherwise. It never throws an exception and never returns null (unless your default is null).</p>"
         },
         {
+          "id": "java-jun-3a-q4",
           "type": "DISCRIMINATION",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You need to count the occurrences of each word in a document and retrieve the count for any word in O(1) time. Which data structure is most appropriate?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You need to count the occurrences of each word in a document and retrieve the count for any word in O(1) time. Which data structure is most appropriate?</p>",
           "options": [
             "List<String>",
             "Set<String>",
             "Map<String, Integer>",
             "Map<Integer, String>"
           ],
-          "correctAnswer": "Map<String, Integer>",
-          "explanationHtml": "<p>A <code>Map&lt;String, Integer&gt;</code> maps each word (key) to its count (value). Lookup by key is O(1) in a <code>HashMap</code>. A List would require O(n) scanning to find a word. A Set only tracks presence, not count.</p>"
+          "answer": "Map<String, Integer>",
+          "explanation": "<p>A <code>Map&lt;String, Integer&gt;</code> maps each word (key) to its count (value). Lookup by key is O(1) in a <code>HashMap</code>. A List would require O(n) scanning to find a word. A Set only tracks presence, not count.</p>"
         }
       ]
     },
@@ -261,46 +269,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-3b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which Map implementation guarantees that keys are iterated in <strong>sorted order</strong>?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which Map implementation guarantees that keys are iterated in <strong>sorted order</strong>?</p>",
           "options": [
             "HashMap",
             "LinkedHashMap",
             "TreeMap",
             "HashSet"
           ],
-          "correctAnswer": "TreeMap",
-          "explanationHtml": "<p><code>TreeMap</code> is backed by a red-black tree and keeps all keys sorted according to their natural ordering (or a Comparator provided at construction time). This gives O(log n) performance for operations but guarantees alphabetical/numeric key ordering during iteration. <code>HashMap</code> makes no ordering guarantees. <code>LinkedHashMap</code> preserves insertion order, not sorted order. <code>HashSet</code> is not a Map at all.</p>"
+          "answer": "TreeMap",
+          "explanation": "<p><code>TreeMap</code> is backed by a red-black tree and keeps all keys sorted according to their natural ordering (or a Comparator provided at construction time). This gives O(log n) performance for operations but guarantees alphabetical/numeric key ordering during iteration. <code>HashMap</code> makes no ordering guarantees. <code>LinkedHashMap</code> preserves insertion order, not sorted order. <code>HashSet</code> is not a Map at all.</p>"
         },
         {
+          "id": "java-jun-3b-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Integer> m = new TreeMap<>();\n        m.put(\"Zap\", 10);\n        m.put(\"Arc\", 5);\n        m.put(\"Fireball\", 80);\n        m.forEach((k, v) -> System.out.println(k));\n    }\n}",
-          "correctAnswer": "Arc\nFireball\nZap",
-          "explanationHtml": "<p><code>TreeMap</code> sorts keys by natural ordering, which for Strings is alphabetical (lexicographic). Alphabetically: Arc &lt; Fireball &lt; Zap, so the forEach iterates in that order. If this were a HashMap, the order would be unpredictable.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "Arc\nFireball\nZap",
+          "explanation": "<p><code>TreeMap</code> sorts keys by natural ordering, which for Strings is alphabetical (lexicographic). Alphabetically: Arc &lt; Fireball &lt; Zap, so the forEach iterates in that order. If this were a HashMap, the order would be unpredictable.</p>"
         },
         {
+          "id": "java-jun-3b-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>This code throws a <code>NullPointerException</code>. What is wrong and how would you fix it?</p>",
-          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Map<String, Integer> damage = new HashMap<>();\n        damage.put(\"Fireball\", 80);\n        int val = damage.get(\"Earthquake\"); // key not present\n        System.out.println(val);\n    }\n}",
-          "correctAnswer": "damage.get(\"Earthquake\") returns null because the key is absent. Auto-unboxing null to int throws NullPointerException. Fix: use damage.getOrDefault(\"Earthquake\", 0) or check containsKey() first.",
-          "explanationHtml": "<p><code>get()</code> returns <code>null</code> for absent keys. Assigning <code>null</code> to a primitive <code>int</code> variable triggers auto-unboxing, which calls <code>null.intValue()</code> and throws <code>NullPointerException</code>. The safe alternatives are: (1) use <code>getOrDefault(\"Earthquake\", 0)</code> to provide a fallback; (2) store in <code>Integer val</code> (boxed) and null-check; or (3) check <code>containsKey()</code> before calling <code>get()</code>.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>This code throws a <code>NullPointerException</code>. What is wrong and how would you fix it?</p>",
+          "options": [],
+          "answer": "damage.get(\"Earthquake\") returns null because the key is absent. Auto-unboxing null to int throws NullPointerException. Fix: use damage.getOrDefault(\"Earthquake\", 0) or check containsKey() first.",
+          "explanation": "<p><code>get()</code> returns <code>null</code> for absent keys. Assigning <code>null</code> to a primitive <code>int</code> variable triggers auto-unboxing, which calls <code>null.intValue()</code> and throws <code>NullPointerException</code>. The safe alternatives are: (1) use <code>getOrDefault(\"Earthquake\", 0)</code> to provide a fallback; (2) store in <code>Integer val</code> (boxed) and null-check; or (3) check <code>containsKey()</code> before calling <code>get()</code>.</p>"
         },
         {
+          "id": "java-jun-3b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You are building a spell audit log that must display entries in the exact order they were added. Which Map is most appropriate?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You are building a spell audit log that must display entries in the exact order they were added. Which Map is most appropriate?</p>",
           "options": [
             "HashMap",
             "TreeMap",
             "LinkedHashMap",
             "EnumMap"
           ],
-          "correctAnswer": "LinkedHashMap",
-          "explanationHtml": "<p><code>LinkedHashMap</code> extends <code>HashMap</code> and additionally maintains a doubly-linked list that records insertion order. When you iterate (via <code>forEach</code>, <code>entrySet()</code>, etc.), entries appear in the order they were put into the map. <code>HashMap</code> has unpredictable iteration order. <code>TreeMap</code> sorts by key, not by insertion time. <code>EnumMap</code> is specialised for enum keys and iterates in enum declaration order.</p>"
+          "answer": "LinkedHashMap",
+          "explanation": "<p><code>LinkedHashMap</code> extends <code>HashMap</code> and additionally maintains a doubly-linked list that records insertion order. When you iterate (via <code>forEach</code>, <code>entrySet()</code>, etc.), entries appear in the order they were put into the map. <code>HashMap</code> has unpredictable iteration order. <code>TreeMap</code> sorts by key, not by insertion time. <code>EnumMap</code> is specialised for enum keys and iterates in enum declaration order.</p>"
         }
       ]
     },
@@ -418,46 +434,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-3c-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>When using <code>ArrayDeque</code> as a stack, which method removes and returns the most recently added element?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>When using <code>ArrayDeque</code> as a stack, which method removes and returns the most recently added element?</p>",
           "options": [
             "poll()",
             "offer()",
             "pop()",
             "peek()"
           ],
-          "correctAnswer": "pop()",
-          "explanationHtml": "<p><code>pop()</code> removes and returns the element at the <em>front</em> of the deque (the most recently pushed element in stack usage), giving LIFO behaviour. It throws <code>NoSuchElementException</code> if the deque is empty. <code>peek()</code> returns the front element without removing it. <code>poll()</code> and <code>offer()</code> are queue-style methods: <code>offer()</code> adds to the rear and <code>poll()</code> removes from the front — giving FIFO behaviour, not LIFO.</p>"
+          "answer": "pop()",
+          "explanation": "<p><code>pop()</code> removes and returns the element at the <em>front</em> of the deque (the most recently pushed element in stack usage), giving LIFO behaviour. It throws <code>NoSuchElementException</code> if the deque is empty. <code>peek()</code> returns the front element without removing it. <code>poll()</code> and <code>offer()</code> are queue-style methods: <code>offer()</code> adds to the rear and <code>poll()</code> removes from the front — giving FIFO behaviour, not LIFO.</p>"
         },
         {
+          "id": "java-jun-3c-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());\n        pq.offer(3);\n        pq.offer(1);\n        pq.offer(4);\n        pq.offer(1);\n        System.out.println(pq.poll());\n        System.out.println(pq.poll());\n    }\n}",
-          "correctAnswer": "4\n3",
-          "explanationHtml": "<p><code>Comparator.reverseOrder()</code> makes this a <strong>max-heap</strong>: <code>poll()</code> returns the largest element first. The elements are 3, 1, 4, 1. The largest is 4 — so first poll returns 4. The next largest is 3 — so second poll returns 3. Note that duplicate values (two 1s) are allowed in PriorityQueue.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "4\n3",
+          "explanation": "<p><code>Comparator.reverseOrder()</code> makes this a <strong>max-heap</strong>: <code>poll()</code> returns the largest element first. The elements are 3, 1, 4, 1. The largest is 4 — so first poll returns 4. The next largest is 3 — so second poll returns 3. Note that duplicate values (two 1s) are allowed in PriorityQueue.</p>"
         },
         {
+          "id": "java-jun-3c-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>This code is meant to process elements in FIFO order but prints them in LIFO order. What is the bug?</p>",
-          "codeSnippet": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Deque<String> tasks = new ArrayDeque<>();\n        tasks.push(\"Task A\");\n        tasks.push(\"Task B\");\n        tasks.push(\"Task C\");\n        while (!tasks.isEmpty()) {\n            System.out.println(tasks.pop());\n        }\n    }\n}",
-          "correctAnswer": "push() and pop() implement stack (LIFO) behaviour. For FIFO, use offer() to add and poll() to remove. Replace push() with offer() and pop() with poll().",
-          "explanationHtml": "<p><code>push()</code> adds elements to the front of the deque, and <code>pop()</code> also removes from the front — giving LIFO (stack) order: Task C, Task B, Task A. For FIFO queue behaviour, use <code>offer()</code> (adds to rear) and <code>poll()</code> (removes from front), so elements are processed in the order they were added: Task A, Task B, Task C.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>This code is meant to process elements in FIFO order but prints them in LIFO order. What is the bug?</p>",
+          "options": [],
+          "answer": "push() and pop() implement stack (LIFO) behaviour. For FIFO, use offer() to add and poll() to remove. Replace push() with offer() and pop() with poll().",
+          "explanation": "<p><code>push()</code> adds elements to the front of the deque, and <code>pop()</code> also removes from the front — giving LIFO (stack) order: Task C, Task B, Task A. For FIFO queue behaviour, use <code>offer()</code> (adds to rear) and <code>poll()</code> (removes from front), so elements are processed in the order they were added: Task A, Task B, Task C.</p>"
         },
         {
+          "id": "java-jun-3c-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You are implementing a spell suggestion feature: the most recently used spell should be suggested first (like browser history). Which data structure fits best?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You are implementing a spell suggestion feature: the most recently used spell should be suggested first (like browser history). Which data structure fits best?</p>",
           "options": [
             "PriorityQueue with natural ordering",
             "ArrayDeque used as a stack",
             "TreeMap with spell names as keys",
             "LinkedList used as a queue"
           ],
-          "correctAnswer": "ArrayDeque used as a stack",
-          "explanationHtml": "<p>Browser history and 'most recently used' suggestions are classic stack (LIFO) use cases: the last item pushed is the first item returned. <code>ArrayDeque</code> as a stack (using <code>push()</code>/<code>peek()</code>/<code>pop()</code>) gives O(1) operations at both ends and is the most efficient choice. <code>PriorityQueue</code> orders by magnitude, not recency. <code>TreeMap</code> orders alphabetically. <code>LinkedList</code> as a queue gives FIFO — the opposite of what's needed.</p>"
+          "answer": "ArrayDeque used as a stack",
+          "explanation": "<p>Browser history and 'most recently used' suggestions are classic stack (LIFO) use cases: the last item pushed is the first item returned. <code>ArrayDeque</code> as a stack (using <code>push()</code>/<code>peek()</code>/<code>pop()</code>) gives O(1) operations at both ends and is the most efficient choice. <code>PriorityQueue</code> orders by magnitude, not recency. <code>TreeMap</code> orders alphabetically. <code>LinkedList</code> as a queue gives FIFO — the opposite of what's needed.</p>"
         }
       ]
     }

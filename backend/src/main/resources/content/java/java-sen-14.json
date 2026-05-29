@@ -5,7 +5,9 @@
   "sortOrder": 14,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-13"],
+  "prerequisites": [
+    "java-sen-13"
+  ],
   "subChunks": [
     {
       "id": "java-sen-14a",
@@ -16,11 +18,38 @@
       "hookHtml": "<p>Cloud computing has transformed how systems are built and operated. Senior engineers need to understand the service model trade-offs (IaaS vs PaaS vs SaaS), the key GCP services this project uses, and how to make principled decisions about which managed services to use rather than building from scratch.</p>",
       "explanationHtml": "<h3>Service Models</h3><p><strong>IaaS (Infrastructure as a Service)</strong>: you rent virtual machines. You manage the OS, runtime, and application. Full control; full responsibility. Example: GCP Compute Engine, AWS EC2.</p><p><strong>PaaS (Platform as a Service)</strong>: the platform manages the OS, runtime, and scaling infrastructure. You provide the application code or container. Example: GCP Cloud Run, AWS App Runner, Google App Engine.</p><p><strong>SaaS (Software as a Service)</strong>: fully managed application. You configure it; the provider operates everything. Example: Neon Postgres (managed DB), SendGrid (email), Auth0 (authentication).</p><p>The progression trades control for operational burden: IaaS gives maximum control but requires you to patch OS, manage capacity, configure networking. SaaS requires you to do almost nothing operationally. Most modern applications use a mix — PaaS for application runtime, SaaS for databases and managed services.</p><h3>This Project's Cloud Stack</h3><p>Arcane Academy uses: <strong>Cloud Run</strong> (PaaS) for the Spring Boot backend, <strong>Neon Postgres</strong> (SaaS) for the database, <strong>Netlify</strong> (SaaS) for the React frontend. This is a deliberate choice: minimal operational overhead, pay-per-use, automatic scaling.</p><h3>Cloud Run — Key Concepts</h3><ul><li>Deploy a container image; Cloud Run manages instances, scaling, TLS, load balancing</li><li>Scales to zero (no cost when idle) and to N instances under load (concurrency-based scaling)</li><li>Each instance handles multiple concurrent requests (controlled by --concurrency flag)</li><li>Stateless — no local persistent storage; use Cloud Storage or a managed DB</li><li>Environment variables and Cloud Secrets Manager for configuration injection</li><li>Health check endpoint (<code>/actuator/health</code> for Spring Boot) required for Cloud Run to verify instance health</li></ul><h3>Managed Services Decision Framework</h3><p>Build vs buy decisions for common needs:</p><ul><li><strong>Database</strong>: almost always use managed (Neon, Cloud SQL, RDS) — replication, backups, patches are included</li><li><strong>Cache</strong>: Redis — Upstash (serverless Redis), Cloud Memorystore, ElastiCache</li><li><strong>Object storage</strong>: GCS, S3 — don't run your own file server</li><li><strong>Message queue</strong>: Pub/Sub (GCP), SQS/SNS (AWS), Upstash Kafka — don't operate Kafka yourself unless at large scale</li><li><strong>Authentication</strong>: Auth0, Clerk, Firebase Auth — identity is a specialised security domain</li></ul><p>The rule: build when the requirement is a genuine competitive differentiator; buy when it is commodity infrastructure. A spell-ranking algorithm is a differentiator. A user authentication system is not.</p><h3>Cloud Cost Management</h3><p>Cloud costs are pay-per-use but can grow unboundedly without controls. Key practices: set billing alerts, understand the pricing model of every service (per-request, per-GB, per-hour), use cloud-native scaling with limits (Cloud Run --max-instances), and review the cost of data egress (data leaving a cloud region is often the biggest surprise cost).</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy tried running its own Postgres cluster once. Three months of patches, failover testing, backup verification, capacity planning, and monitoring setup — for a database that took one click to provision on Neon. The engineering team spent 20% of their capacity on infrastructure that was not their core business. They never made that mistake twice."},
-        {"type": "dialogue", "av": "☁️", "cls": "mentor", "speaker": "Cloud Practitioner Olli", "sCls": "mentor", "text": "IaaS, PaaS, SaaS is really a spectrum from 'maximum control, maximum responsibility' to 'minimum control, minimum responsibility.' Most teams should be further toward SaaS than they are. The question is not 'can we run this ourselves?' — you can run almost anything yourself. The question is 'should we, given our team size and what problems we're actually trying to solve?'"},
-        {"type": "dialogue", "av": "☁️", "cls": "mentor", "speaker": "Cloud Practitioner Olli", "sCls": "mentor", "text": "Cloud Run is the sweet spot for most Java microservices: you give it a container, it handles everything else — scaling, TLS, load balancing, health checks. It scales to zero so you pay nothing when idle. It scales to many instances under load automatically. You lose some control compared to Kubernetes, but for most services, that control isn't needed."},
-        {"type": "dialogue", "av": "☁️", "cls": "mentor", "speaker": "Cloud Practitioner Olli", "sCls": "mentor", "text": "The managed service default should be your starting point. Every service you decide to manage yourself is a service your on-call rotation must be responsible for at 3am. Managed databases, managed queues, managed caches — these services have entire teams at Google and AWS who are better at operating them than most application engineering teams. Use their expertise."},
-        {"type": "narration", "text": "Olli points to the architecture diagram on the wall — Cloud Run, Neon Postgres, Netlify. 'Three services, three teams' worth of operational expertise. One developer can maintain this entire stack. That is the business case for cloud-native managed services.'"}
+        {
+          "type": "narration",
+          "text": "The Academy tried running its own Postgres cluster once. Three months of patches, failover testing, backup verification, capacity planning, and monitoring setup — for a database that took one click to provision on Neon. The engineering team spent 20% of their capacity on infrastructure that was not their core business. They never made that mistake twice."
+        },
+        {
+          "type": "dialogue",
+          "av": "☁️",
+          "cls": "mentor",
+          "speaker": "Cloud Practitioner Olli",
+          "sCls": "mentor",
+          "text": "IaaS, PaaS, SaaS is really a spectrum from 'maximum control, maximum responsibility' to 'minimum control, minimum responsibility.' Most teams should be further toward SaaS than they are. The question is not 'can we run this ourselves?' — you can run almost anything yourself. The question is 'should we, given our team size and what problems we're actually trying to solve?'"
+        },
+        {
+          "type": "dialogue",
+          "av": "☁️",
+          "cls": "mentor",
+          "speaker": "Cloud Practitioner Olli",
+          "sCls": "mentor",
+          "text": "Cloud Run is the sweet spot for most Java microservices: you give it a container, it handles everything else — scaling, TLS, load balancing, health checks. It scales to zero so you pay nothing when idle. It scales to many instances under load automatically. You lose some control compared to Kubernetes, but for most services, that control isn't needed."
+        },
+        {
+          "type": "dialogue",
+          "av": "☁️",
+          "cls": "mentor",
+          "speaker": "Cloud Practitioner Olli",
+          "sCls": "mentor",
+          "text": "The managed service default should be your starting point. Every service you decide to manage yourself is a service your on-call rotation must be responsible for at 3am. Managed databases, managed queues, managed caches — these services have entire teams at Google and AWS who are better at operating them than most application engineering teams. Use their expertise."
+        },
+        {
+          "type": "narration",
+          "text": "Olli points to the architecture diagram on the wall — Cloud Run, Neon Postgres, Netlify. 'Three services, three teams' worth of operational expertise. One developer can maintain this entire stack. That is the business case for cloud-native managed services.'"
+        }
       ],
       "learningObjectives": [
         "Distinguish IaaS, PaaS, and SaaS with examples and explain the operational responsibility trade-off of each",
@@ -47,38 +76,49 @@
       "modelAnswer": "1. Cloud services:\n   - API (spell-service): Cloud Run — scales automatically, handles 50K users with horizontal instances, zero-downtime deploy via revision routing\n   - Leaderboard: Upstash Redis (serverless Redis sorted set) — handles real-time leaderboard updates with sub-5s staleness; no instance to manage\n   - Database: Neon Postgres — branching for DB migrations, managed failover, no ops burden\n   - Webhook receiver: Cloud Run (separate service) or Cloud Functions — receives external webhook, publishes to Pub/Sub; keeps webhook processing decoupled from scoring logic\n   - Score processing: Cloud Run worker subscribing to Pub/Sub topic — pulls score events, updates Redis leaderboard\n   - Frontend: Netlify CDN — serves the static React app globally with low latency\n\n2. Reliable webhook handling:\n   - Receive webhook → immediately return 200 (avoid timeout from partner) → publish event to GCP Pub/Sub\n   - Pub/Sub provides at-least-once delivery with retry on failure\n   - Score processing worker pulls from Pub/Sub, processes idempotently (check if score already recorded by event ID)\n   - If processing fails, Pub/Sub retries with backoff; after max retries, event goes to dead-letter topic for investigation\n\n3. Scaling:\n   - Cloud Run scales from 0 → N instances automatically based on request concurrency (no pre-warming needed for most cases)\n   - Set --min-instances=2 during tournament for faster response (avoids cold starts)\n   - Set --max-instances=100 to cap cost and prevent runaway scaling from a DDoS\n   - After tournament: traffic drops, Cloud Run scales back to 0 automatically (scale-to-zero) → near-zero cost\n   - Upstash Redis is serverless (per-command billing) — cost drops immediately post-tournament\n\n4. Biggest cost driver:\n   - Cloud Run compute (CPU × time × instances) during peak — 100 instances × 4 hours\n   - Data egress: leaderboard API responses to 50K users — JSON payloads leaving GCP region\n   - Mitigation: add CDN (Cloud CDN) in front of the leaderboard endpoint with 5-second TTL — 50K users hit CDN, not Cloud Run directly. Reduces both compute cost and egress cost dramatically.",
       "questions": [
         {
+          "id": "java-sen-14a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which cloud service model requires the customer to manage the operating system and apply security patches?</p>",
-          "options": ["SaaS", "PaaS", "IaaS", "All of the above"],
-          "correctAnswer": "IaaS",
-          "explanationHtml": "<p>With IaaS (Infrastructure as a Service), the cloud provider manages the physical hardware and hypervisor, but you are responsible for the virtual machine's operating system, security patches, runtime environment, and application. PaaS removes OS responsibility (the platform manages it). SaaS removes everything — you only configure the application.</p>"
+          "minPath": "SENIOR",
+          "prompt": "<p>Which cloud service model requires the customer to manage the operating system and apply security patches?</p>",
+          "options": [
+            "SaaS",
+            "PaaS",
+            "IaaS",
+            "All of the above"
+          ],
+          "answer": "IaaS",
+          "explanation": "<p>With IaaS (Infrastructure as a Service), the cloud provider manages the physical hardware and hypervisor, but you are responsible for the virtual machine's operating system, security patches, runtime environment, and application. PaaS removes OS responsibility (the platform manages it). SaaS removes everything — you only configure the application.</p>"
         },
         {
+          "id": "java-sen-14a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A Cloud Run service stores user session data in a local HashMap. A user logs in and is routed to instance A, which stores their session. Their next request is routed to instance B. What happens?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>A Cloud Run service stores user session data in a local HashMap. A user logs in and is routed to instance A, which stores their session. Their next request is routed to instance B. What happens?</p>",
           "options": [
             "The session is automatically replicated to all instances by Cloud Run",
             "Instance B finds the session because Cloud Run shares memory between instances",
             "Instance B has no record of the session — the user appears logged out or receives an error",
             "The request is re-routed back to instance A by the load balancer"
           ],
-          "correctAnswer": "Instance B has no record of the session — the user appears logged out or receives an error",
-          "explanationHtml": "<p>Cloud Run instances are independent processes with no shared memory. A HashMap on instance A is invisible to instance B. This is why Cloud Run services (and all horizontally-scaled services) must be stateless — session state must be externalised to a shared store such as Redis. All instances then read from the same session data.</p>"
+          "answer": "Instance B has no record of the session — the user appears logged out or receives an error",
+          "explanation": "<p>Cloud Run instances are independent processes with no shared memory. A HashMap on instance A is invisible to instance B. This is why Cloud Run services (and all horizontally-scaled services) must be stateless — session state must be externalised to a shared store such as Redis. All instances then read from the same session data.</p>"
         },
         {
+          "id": "java-sen-14a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>Your team is choosing between building a custom authentication system and using a managed identity service like Auth0. Applying the build-vs-buy framework, which factors most strongly favour using the managed service?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>Your team is choosing between building a custom authentication system and using a managed identity service like Auth0. Applying the build-vs-buy framework, which factors most strongly favour using the managed service?</p>",
           "options": [
             "Cost — managed services are always cheaper to operate",
             "Authentication is commodity infrastructure, a specialised security domain, and carries regulatory/compliance requirements — not a competitive differentiator",
             "The managed service will always perform better than a custom solution",
             "Auth0 is easier to code against than Spring Security"
           ],
-          "correctAnswer": "Authentication is commodity infrastructure, a specialised security domain, and carries regulatory/compliance requirements — not a competitive differentiator",
-          "explanationHtml": "<p>The build-vs-buy rule: build when it is a genuine competitive differentiator; buy when it is commodity infrastructure. Authentication is commodity — every application needs it. It is also a security-critical, specialised domain (OAuth2, JWT, MFA, session management, credential storage) where mistakes are dangerous. Managed identity providers have dedicated security teams and handle compliance (SOC2, GDPR). Building in-house for no competitive advantage consumes engineering time that should go to the spell-ranking algorithm that actually differentiates your platform.</p>"
+          "answer": "Authentication is commodity infrastructure, a specialised security domain, and carries regulatory/compliance requirements — not a competitive differentiator",
+          "explanation": "<p>The build-vs-buy rule: build when it is a genuine competitive differentiator; buy when it is commodity infrastructure. Authentication is commodity — every application needs it. It is also a security-critical, specialised domain (OAuth2, JWT, MFA, session management, credential storage) where mistakes are dangerous. Managed identity providers have dedicated security teams and handle compliance (SOC2, GDPR). Building in-house for no competitive advantage consumes engineering time that should go to the spell-ranking algorithm that actually differentiates your platform.</p>"
         }
       ]
     }

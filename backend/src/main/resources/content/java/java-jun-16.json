@@ -5,7 +5,9 @@
   "sortOrder": 16,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-15"],
+  "prerequisites": [
+    "java-jun-15"
+  ],
   "subChunks": [
     {
       "id": "java-jun-16a",
@@ -132,46 +134,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-16a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is the purpose of making a Singleton's constructor <code>private</code>?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is the purpose of making a Singleton's constructor <code>private</code>?</p>",
           "options": [
             "To improve performance",
             "To prevent external code from creating additional instances",
             "To allow subclassing",
             "To enable serialisation"
           ],
-          "correctAnswer": "To prevent external code from creating additional instances",
-          "explanationHtml": "<p>A private constructor means no external code (and no subclass) can call <code>new ClassName()</code>. All access to the instance must go through the controlled <code>getInstance()</code> method, enforcing the single-instance guarantee.</p>"
+          "answer": "To prevent external code from creating additional instances",
+          "explanation": "<p>A private constructor means no external code (and no subclass) can call <code>new ClassName()</code>. All access to the instance must go through the controlled <code>getInstance()</code> method, enforcing the single-instance guarantee.</p>"
         },
         {
+          "id": "java-jun-16a-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "class Counter {\n    private static Counter instance;\n    private int count = 0;\n    private Counter() {}\n    public static Counter getInstance() {\n        if (instance == null) instance = new Counter();\n        return instance;\n    }\n    public void increment() { count++; }\n    public int get() { return count; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Counter.getInstance().increment();\n        Counter.getInstance().increment();\n        System.out.println(Counter.getInstance().get());\n    }\n}",
-          "correctAnswer": "2",
-          "explanationHtml": "<p>All three <code>getInstance()</code> calls return the same Counter object. Two increments on the same object give count = 2.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "2",
+          "explanation": "<p>All three <code>getInstance()</code> calls return the same Counter object. Two increments on the same object give count = 2.</p>"
         },
         {
+          "id": "java-jun-16a-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is wrong with this Singleton?</p>",
-          "codeSnippet": "class Registry {\n    public static Registry instance = new Registry();\n    public Registry() {}\n    public static Registry getInstance() { return instance; }\n}",
-          "correctAnswer": "The constructor is public, so external code can still call new Registry() and create additional instances, breaking the Singleton guarantee. The constructor must be private.",
-          "explanationHtml": "<p>Having a public constructor defeats the Singleton pattern entirely — any caller can create a new Registry with <code>new Registry()</code>. The constructor must be <code>private</code> so that only <code>getInstance()</code> can provide the single instance.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is wrong with this Singleton?</p>",
+          "options": [],
+          "answer": "The constructor is public, so external code can still call new Registry() and create additional instances, breaking the Singleton guarantee. The constructor must be private.",
+          "explanation": "<p>Having a public constructor defeats the Singleton pattern entirely — any caller can create a new Registry with <code>new Registry()</code>. The constructor must be <code>private</code> so that only <code>getInstance()</code> can provide the single instance.</p>"
         },
         {
+          "id": "java-jun-16a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A team has a Singleton <code>DatabaseConnection</code>. In unit tests they want to swap in a fake connection. Which approach best solves this?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>A team has a Singleton <code>DatabaseConnection</code>. In unit tests they want to swap in a fake connection. Which approach best solves this?</p>",
           "options": [
             "Make the instance field public so tests can overwrite it",
             "Add a reset() method that sets the instance to null",
             "Inject the connection through a constructor or method parameter instead of using Singleton",
             "Create a separate TestDatabaseConnection Singleton subclass"
           ],
-          "correctAnswer": "Inject the connection through a constructor or method parameter instead of using Singleton",
-          "explanationHtml": "<p>Dependency Injection (passing the dependency in) makes the code testable — tests supply a fake implementation without touching global state. This is the core motivation behind DI frameworks like Spring. Singletons create hidden dependencies that are difficult to replace in isolation.</p>"
+          "answer": "Inject the connection through a constructor or method parameter instead of using Singleton",
+          "explanation": "<p>Dependency Injection (passing the dependency in) makes the code testable — tests supply a fake implementation without touching global state. This is the core motivation behind DI frameworks like Spring. Singletons create hidden dependencies that are difficult to replace in isolation.</p>"
         }
       ]
     },
@@ -295,46 +305,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-16b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Why does each setter in a Builder return <code>this</code>?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Why does each setter in a Builder return <code>this</code>?</p>",
           "options": [
             "To allow the setter to access private fields",
             "To enable method chaining (fluent API)",
             "To create a new Builder copy per call",
             "To satisfy the Java specification for builders"
           ],
-          "correctAnswer": "To enable method chaining (fluent API)",
-          "explanationHtml": "<p>Returning <code>this</code> from each setter means the caller gets the same Builder back, allowing the next method call to be chained immediately: <code>.power(80).element(\"Fire\").build()</code>. This creates a readable, self-documenting construction sequence.</p>"
+          "answer": "To enable method chaining (fluent API)",
+          "explanation": "<p>Returning <code>this</code> from each setter means the caller gets the same Builder back, allowing the next method call to be chained immediately: <code>.power(80).element(\"Fire\").build()</code>. This creates a readable, self-documenting construction sequence.</p>"
         },
         {
+          "id": "java-jun-16b-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "class Item {\n    final String name;\n    final int qty;\n    private Item(Builder b) { name = b.name; qty = b.qty; }\n    static class Builder {\n        String name; int qty = 1;\n        Builder(String name) { this.name = name; }\n        Builder qty(int q) { qty = q; return this; }\n        Item build() { return new Item(this); }\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Item i = new Item.Builder(\"Rune\").qty(5).build();\n        System.out.println(i.name + \" x\" + i.qty);\n    }\n}",
-          "correctAnswer": "Rune x5",
-          "explanationHtml": "<p>The Builder is constructed with name \"Rune\", then qty is set to 5, then build() creates the Item. The Item fields are name=\"Rune\" and qty=5, so the output is \"Rune x5\".</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "Rune x5",
+          "explanation": "<p>The Builder is constructed with name \"Rune\", then qty is set to 5, then build() creates the Item. The Item fields are name=\"Rune\" and qty=5, so the output is \"Rune x5\".</p>"
         },
         {
+          "id": "java-jun-16b-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is wrong with this Builder?</p>",
-          "codeSnippet": "static class Builder {\n    String name;\n    int power;\n    public Builder name(String name) { this.name = name; }\n    public Builder power(int power) { this.power = power; }\n    public Spell build() { return new Spell(this); }\n}",
-          "correctAnswer": "The name() and power() setter methods do not return 'this', so they return nothing (void is implied but the return type is declared as Builder). They must explicitly return 'this' to enable chaining.",
-          "explanationHtml": "<p>Both setters declare a return type of <code>Builder</code> but have no return statement, causing a compile error. Each setter must end with <code>return this;</code> to pass the builder back to the caller for chaining.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is wrong with this Builder?</p>",
+          "options": [],
+          "answer": "The name() and power() setter methods do not return 'this', so they return nothing (void is implied but the return type is declared as Builder). They must explicitly return 'this' to enable chaining.",
+          "explanation": "<p>Both setters declare a return type of <code>Builder</code> but have no return statement, causing a compile error. Each setter must end with <code>return this;</code> to pass the builder back to the caller for chaining.</p>"
         },
         {
+          "id": "java-jun-16b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You have a class <code>Wizard</code> with two required fields and no optional fields. The fields are always provided together. Which construction approach is most appropriate?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You have a class <code>Wizard</code> with two required fields and no optional fields. The fields are always provided together. Which construction approach is most appropriate?</p>",
           "options": [
             "Builder pattern",
             "A two-parameter constructor or record",
             "Static factory method with six parameters",
             "A no-args constructor with public setters"
           ],
-          "correctAnswer": "A two-parameter constructor or record",
-          "explanationHtml": "<p>Builder shines when there are many optional fields or complex combinations. For a simple class with two required fields, a plain constructor or record is simpler, clearer, and more idiomatic. The Builder adds boilerplate without benefit here.</p>"
+          "answer": "A two-parameter constructor or record",
+          "explanation": "<p>Builder shines when there are many optional fields or complex combinations. For a simple class with two required fields, a plain constructor or record is simpler, clearer, and more idiomatic. The Builder adds boilerplate without benefit here.</p>"
         }
       ]
     }

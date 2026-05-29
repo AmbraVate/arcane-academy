@@ -5,7 +5,9 @@
   "tier": "JUNIOR",
   "topicId": "java",
   "sortOrder": 2,
-  "prerequisites": ["java-jun-1"],
+  "prerequisites": [
+    "java-jun-1"
+  ],
   "subChunks": [
     {
       "id": "java-jun-2a",
@@ -103,50 +105,59 @@
       "feynmanPrompt": "Explain to a non-programmer why Java generics exist. Use an analogy — perhaps a filing cabinet that only accepts specific types of documents. Why is a generic filing cabinet better than one that accepts 'anything' but loses track of what's inside?",
       "questions": [
         {
+          "id": "java-jun-2a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "What does the <code>T</code> in <code>class Box&lt;T&gt;</code> represent?",
+          "minPath": "JUNIOR",
+          "prompt": "What does the <code>T</code> in <code>class Box&lt;T&gt;</code> represent?",
           "options": [
             "A type parameter — a placeholder for any reference type specified when creating a Box",
             "The letter T specifically — Box can only hold types whose name starts with T",
             "A template keyword similar to C++",
             "An interface that all stored values must implement"
           ],
-          "correctAnswer": "A type parameter — a placeholder for any reference type specified when creating a Box",
-          "explanationHtml": "T is a type parameter — a placeholder resolved when the caller writes Box<String> or Box<Integer>. It can be any reference type."
+          "answer": "A type parameter — a placeholder for any reference type specified when creating a Box",
+          "explanation": "T is a type parameter — a placeholder resolved when the caller writes Box<String> or Box<Integer>. It can be any reference type."
         },
         {
+          "id": "java-jun-2a-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<code>Box&lt;int&gt; b = new Box&lt;&gt;();</code> is valid Java.",
-          "correctAnswer": "False",
-          "explanationHtml": "Type parameters must be reference types, not primitives. Use the wrapper class Integer instead: Box<Integer>."
+          "minPath": "JUNIOR",
+          "prompt": "<code>Box&lt;int&gt; b = new Box&lt;&gt;();</code> is valid Java.",
+          "options": [],
+          "answer": "False",
+          "explanation": "Type parameters must be reference types, not primitives. Use the wrapper class Integer instead: Box<Integer>."
         },
         {
+          "id": "java-jun-2a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "Given <code>class Pair&lt;K, V&gt;</code>, which instantiation correctly creates a pair mapping a <code>String</code> key to an <code>Integer</code> value?",
+          "minPath": "JUNIOR",
+          "prompt": "Given <code>class Pair&lt;K, V&gt;</code>, which instantiation correctly creates a pair mapping a <code>String</code> key to an <code>Integer</code> value?",
           "options": [
             "<code>Pair&lt;String, Integer&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
             "<code>Pair p = new Pair(\"key\", 42);</code>",
             "<code>Pair&lt;K, V&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
             "<code>Pair&lt;String&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>"
           ],
-          "correctAnswer": "<code>Pair&lt;String, Integer&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
-          "explanationHtml": "Both type arguments must be supplied: Pair<String, Integer>. The diamond operator on the right infers from the left. Raw types (no angle brackets) lose type safety."
+          "answer": "<code>Pair&lt;String, Integer&gt; p = new Pair&lt;&gt;(\"key\", 42);</code>",
+          "explanation": "Both type arguments must be supplied: Pair<String, Integer>. The diamond operator on the right infers from the left. Raw types (no angle brackets) lose type safety."
         },
         {
+          "id": "java-jun-2a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "What is the key difference between <code>Box&lt;Object&gt;</code> and <code>Box&lt;T&gt;</code> (a generic class)?",
+          "minPath": "JUNIOR",
+          "prompt": "What is the key difference between <code>Box&lt;Object&gt;</code> and <code>Box&lt;T&gt;</code> (a generic class)?",
           "options": [
             "Box<Object> accepts any type but loses type information at extraction — a cast is required and can fail at runtime. Box<T> preserves the exact type so the compiler enforces correct usage.",
             "Box<Object> and Box<T> are identical — generics are just syntactic sugar for Object.",
             "Box<T> is slower because generics require reflection at runtime.",
             "Box<Object> is only usable with String and Integer; Box<T> works with all types."
           ],
-          "correctAnswer": "Box<Object> accepts any type but loses type information at extraction — a cast is required and can fail at runtime. Box<T> preserves the exact type so the compiler enforces correct usage.",
-          "explanationHtml": "Box<Object>.get() returns Object — you must cast it, and a wrong cast silently compiles but crashes at runtime. With Box<T>, get() returns exactly T; wrong types are rejected at compile time."
+          "answer": "Box<Object> accepts any type but loses type information at extraction — a cast is required and can fail at runtime. Box<T> preserves the exact type so the compiler enforces correct usage.",
+          "explanation": "Box<Object>.get() returns Object — you must cast it, and a wrong cast silently compiles but crashes at runtime. With Box<T>, get() returns exactly T; wrong types are rejected at compile time."
         }
       ]
     },
@@ -232,50 +243,59 @@
       "feynmanPrompt": "Explain type erasure to someone who knows what generics are but is confused about why you cannot write 'new T()' or check 'instanceof List<String>'. Use an analogy of a shipping label that gets removed once the package is en route — the warehouse can read it, but the delivery truck cannot.",
       "questions": [
         {
+          "id": "java-jun-2b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "What does <code>&lt;T extends Comparable&lt;T&gt;&gt;</code> mean on a method?",
+          "minPath": "JUNIOR",
+          "prompt": "What does <code>&lt;T extends Comparable&lt;T&gt;&gt;</code> mean on a method?",
           "options": [
             "T must be a type that implements the Comparable interface, allowing compareTo to be called inside the method",
             "T must extend the Comparable class directly using class inheritance",
             "T can be any type; the bound is just documentation and not enforced",
             "T is limited to numeric types (Integer, Double, Long)"
           ],
-          "correctAnswer": "T must be a type that implements the Comparable interface, allowing compareTo to be called inside the method",
-          "explanationHtml": "The extends keyword in a type bound can mean 'implements' for interfaces. T extends Comparable<T> means T must implement Comparable, guaranteeing compareTo is available."
+          "answer": "T must be a type that implements the Comparable interface, allowing compareTo to be called inside the method",
+          "explanation": "The extends keyword in a type bound can mean 'implements' for interfaces. T extends Comparable<T> means T must implement Comparable, guaranteeing compareTo is available."
         },
         {
+          "id": "java-jun-2b-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "After compilation, <code>Box&lt;String&gt;</code> and <code>Box&lt;Integer&gt;</code> are different classes at runtime.",
-          "correctAnswer": "False",
-          "explanationHtml": "Type erasure removes generic type information at compile time. At runtime, both are simply Box — the JVM has no notion of Box<String> vs Box<Integer>."
+          "minPath": "JUNIOR",
+          "prompt": "After compilation, <code>Box&lt;String&gt;</code> and <code>Box&lt;Integer&gt;</code> are different classes at runtime.",
+          "options": [],
+          "answer": "False",
+          "explanation": "Type erasure removes generic type information at compile time. At runtime, both are simply Box — the JVM has no notion of Box<String> vs Box<Integer>."
         },
         {
+          "id": "java-jun-2b-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "Complete the generic method signature so it accepts an array of any Comparable type and returns the smallest element:\n<pre><code>public static ______ T findMin(T[] items) {\n    T result = items[0];\n    for (T item : items) {\n        if (item.compareTo(result) &lt; 0) result = item;\n    }\n    return result;\n}</code></pre>",
+          "minPath": "JUNIOR",
+          "prompt": "Complete the generic method signature so it accepts an array of any Comparable type and returns the smallest element:\n<pre><code>public static ______ T findMin(T[] items) {\n    T result = items[0];\n    for (T item : items) {\n        if (item.compareTo(result) &lt; 0) result = item;\n    }\n    return result;\n}</code></pre>",
           "options": [
             "<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>",
             "<code>&lt;T&gt;</code>",
             "<code>&lt;T implements Comparable&lt;T&gt;&gt;</code>",
             "<code>Comparable</code>"
           ],
-          "correctAnswer": "<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>",
-          "explanationHtml": "<T extends Comparable<T>> is required so the compiler knows compareTo is available on T. Plain <T> would prevent the compareTo call. 'implements' is not valid syntax for type bounds."
+          "answer": "<code>&lt;T extends Comparable&lt;T&gt;&gt;</code>",
+          "explanation": "<T extends Comparable<T>> is required so the compiler knows compareTo is available on T. Plain <T> would prevent the compareTo call. 'implements' is not valid syntax for type bounds."
         },
         {
+          "id": "java-jun-2b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "Which of the following is NOT allowed due to type erasure?",
+          "minPath": "JUNIOR",
+          "prompt": "Which of the following is NOT allowed due to type erasure?",
           "options": [
             "<code>if (list instanceof List&lt;String&gt;) { ... }</code>",
             "<code>List&lt;String&gt; words = new ArrayList&lt;&gt;();</code>",
             "<code>if (list instanceof List) { ... }</code>",
             "<code>T value = box.getValue();</code>"
           ],
-          "correctAnswer": "<code>if (list instanceof List&lt;String&gt;) { ... }</code>",
-          "explanationHtml": "Checking instanceof with a parameterised type like List<String> is illegal because the JVM has erased the String parameter — it can only see List. Raw type instanceof (option 3) is fine. The other options are standard generic usage."
+          "answer": "<code>if (list instanceof List&lt;String&gt;) { ... }</code>",
+          "explanation": "Checking instanceof with a parameterised type like List<String> is illegal because the JVM has erased the String parameter — it can only see List. Raw type instanceof (option 3) is fine. The other options are standard generic usage."
         }
       ]
     }

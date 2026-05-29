@@ -5,7 +5,9 @@
   "sortOrder": 12,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-11"],
+  "prerequisites": [
+    "java-sen-11"
+  ],
   "subChunks": [
     {
       "id": "java-sen-12a",
@@ -16,11 +18,39 @@
       "hookHtml": "<p>Continuous Integration and Continuous Deployment (CI/CD) is the practice that transforms code commits into reliable production deployments. A well-designed pipeline is a safety net — it catches bugs before users see them, enforces quality gates automatically, and enables deployment frequency that would be impossible with manual processes.</p>",
       "explanationHtml": "<h3>Continuous Integration (CI)</h3><p>Every code change triggers an automated pipeline that verifies the change integrates correctly with the codebase. The key discipline: <strong>commit to main frequently</strong> (at least daily) so integration problems are caught small. Long-lived feature branches accumulate divergence — the longer they live, the more painful the merge.</p><p>A typical CI pipeline:</p><ol><li><strong>Checkout</strong>: pull the source code</li><li><strong>Build</strong>: compile — fails fast on syntax errors</li><li><strong>Unit tests</strong>: fast, isolated — milliseconds each</li><li><strong>Integration tests</strong>: slower — may spin up a test DB or use Testcontainers</li><li><strong>Code analysis</strong>: linting, style checks, SAST (static security analysis)</li><li><strong>Package</strong>: build the artifact (JAR, Docker image)</li><li><strong>Publish</strong>: push artifact to registry</li></ol><h3>Continuous Deployment (CD)</h3><p>Automatically deploy every build that passes CI to production (or to staging/prod via promotion gates). Requires: feature flags (to decouple deploy from release), comprehensive automated tests, observability, and fast rollback capability.</p><h3>Deployment Strategies</h3><p><strong>Rolling deployment</strong>: gradually replace instances with the new version — e.g. update 25% of instances, wait for health checks, continue. Zero-downtime. Old and new versions run simultaneously briefly — requires backward-compatible API and DB changes.</p><p><strong>Blue/Green deployment</strong>: maintain two identical environments. Traffic goes to Blue (v1). Deploy v2 to Green. Flip load balancer from Blue to Green. Instant switchover with instant rollback (flip back to Blue). Expensive: requires double infrastructure.</p><p><strong>Canary deployment</strong>: route a small percentage of traffic (e.g. 1%) to the new version. Monitor metrics. Gradually increase if healthy. Abort if error rate rises. Best risk management — real users, real data, tiny blast radius.</p><h3>Quality Gates</h3><p>Hard stops in the pipeline that block deployment if criteria are not met:</p><ul><li>Test coverage must be ≥ X% (measured by JaCoCo)</li><li>No new critical/high security vulnerabilities (SAST scan)</li><li>Performance test p99 within threshold</li><li>All tests must pass (zero failures)</li></ul><h3>Feature Flags</h3><p>Decouple deploy from release. Deploy the code but keep the feature inactive (flag off). Enable for internal users first, then % of users, then all. Enables safe incremental rollout and instant kill-switch without re-deployment.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "Before CI/CD the Academy deployed on Friday afternoons. Engineers manually built artifacts, copied files to servers, ran smoke tests by hand. Deployments took four hours. They happened monthly. Bugs found on Monday had been lurking for a month of commits. After CI/CD, deployments happened ten times a day, automatically, in twelve minutes. Bugs were caught in the pipeline before anyone noticed."},
-        {"type": "dialogue", "av": "🚀", "cls": "mentor", "speaker": "Release Lead Coren", "sCls": "mentor", "text": "Continuous integration is a practice, not a tool. The tool is GitHub Actions or Jenkins. The practice is: every developer commits to main (or short-lived branches) daily, and every commit triggers a pipeline that tells you within minutes whether the change is safe. If the pipeline is red, fixing it is the team's top priority."},
-        {"type": "dialogue", "av": "🚀", "cls": "mentor", "speaker": "Release Lead Coren", "sCls": "mentor", "text": "Canary deployment is the most sophisticated and the safest. You deploy to 1% of traffic first. If your new spell-casting algorithm has a bug, only 1% of users encounter it — and your monitoring catches the error rate spike before you roll to 100%. The blast radius is controlled. You can abort and roll back in seconds."},
-        {"type": "example", "speaker": "Pipeline as code — GitHub Actions", "text": "# .github/workflows/ci.yml\njobs:\n  build-and-test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-java@v4\n        with: { java-version: '21' }\n      - run: mvn verify        # build + all tests\n      - run: mvn jacoco:report  # coverage\n      - name: Quality gate\n        run: |\n          coverage=$(cat target/site/jacoco/index.html | ...)\n          if [ $coverage -lt 80 ]; then exit 1; fi"},
-        {"type": "dialogue", "av": "🚀", "cls": "mentor", "speaker": "Release Lead Coren", "sCls": "mentor", "text": "Feature flags are not optional in a canary strategy — they are the mechanism. You deploy the code for a new feature but the flag is off. You test in production with real infrastructure and real data, with flag on for your team only. When confidence is high, you ramp the flag to 10%, 50%, 100%. No re-deployment required. And the kill-switch is instant."}
+        {
+          "type": "narration",
+          "text": "Before CI/CD the Academy deployed on Friday afternoons. Engineers manually built artifacts, copied files to servers, ran smoke tests by hand. Deployments took four hours. They happened monthly. Bugs found on Monday had been lurking for a month of commits. After CI/CD, deployments happened ten times a day, automatically, in twelve minutes. Bugs were caught in the pipeline before anyone noticed."
+        },
+        {
+          "type": "dialogue",
+          "av": "🚀",
+          "cls": "mentor",
+          "speaker": "Release Lead Coren",
+          "sCls": "mentor",
+          "text": "Continuous integration is a practice, not a tool. The tool is GitHub Actions or Jenkins. The practice is: every developer commits to main (or short-lived branches) daily, and every commit triggers a pipeline that tells you within minutes whether the change is safe. If the pipeline is red, fixing it is the team's top priority."
+        },
+        {
+          "type": "dialogue",
+          "av": "🚀",
+          "cls": "mentor",
+          "speaker": "Release Lead Coren",
+          "sCls": "mentor",
+          "text": "Canary deployment is the most sophisticated and the safest. You deploy to 1% of traffic first. If your new spell-casting algorithm has a bug, only 1% of users encounter it — and your monitoring catches the error rate spike before you roll to 100%. The blast radius is controlled. You can abort and roll back in seconds."
+        },
+        {
+          "type": "example",
+          "speaker": "Pipeline as code — GitHub Actions",
+          "text": "# .github/workflows/ci.yml\njobs:\n  build-and-test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-java@v4\n        with: { java-version: '21' }\n      - run: mvn verify        # build + all tests\n      - run: mvn jacoco:report  # coverage\n      - name: Quality gate\n        run: |\n          coverage=$(cat target/site/jacoco/index.html | ...)\n          if [ $coverage -lt 80 ]; then exit 1; fi"
+        },
+        {
+          "type": "dialogue",
+          "av": "🚀",
+          "cls": "mentor",
+          "speaker": "Release Lead Coren",
+          "sCls": "mentor",
+          "text": "Feature flags are not optional in a canary strategy — they are the mechanism. You deploy the code for a new feature but the flag is off. You test in production with real infrastructure and real data, with flag on for your team only. When confidence is high, you ramp the flag to 10%, 50%, 100%. No re-deployment required. And the kill-switch is instant."
+        }
       ],
       "learningObjectives": [
         "Describe the stages of a CI pipeline in order and explain what each stage verifies",
@@ -47,43 +77,49 @@
       "modelAnswer": "1. Pipeline stages:\n   Commit → Build (2min) → Unit Tests (30s) → [Quality Gate: 80% coverage, 0 failures]\n   → Integration Tests in parallel (15min with Testcontainers) → [Gate: 0 failures]\n   → SAST Security Scan (3min) → [Gate: no new CRITICAL vulns]\n   → Package Docker Image → Push to Registry\n   → Deploy to Staging (canary 100%) → Smoke Tests\n   → Deploy to Prod Region 1 (canary 5%) → Monitor 10min\n   → Ramp to 25% → Monitor 10min → 100% → Done\n\n2. Unit tests: stage 2 — fast, run on every commit. Isolation: no DB, pure Java.\n   Integration tests: stage 4 — need real DB (Testcontainers spins up Postgres). Slower, run on main/PR.\n\n3. Quality gates:\n   After unit tests: 80% line coverage (JaCoCo), zero test failures\n   After integration tests: zero failures, all endpoints return expected responses\n   After SAST: no new CRITICAL or HIGH vulnerabilities\n\n4. DB migration order:\n   Run Flyway migration before deploying new application code.\n   The migration must be backward-compatible with the currently running code version (add-only, no renames/deletes).\n   CI pipeline: migration step runs in staging and prod BEFORE the code deployment step.\n\n5. Canary monitoring:\n   Metrics: error rate, p99 latency, JVM heap usage, GC pause time\n   Abort threshold: error rate > 1% (baseline 0.1%), or p99 latency > 2× baseline for 5 minutes\n   Monitoring window: 10 minutes at each traffic percentage before ramping\n   Automatic rollback: if Prometheus alert fires during canary window, trigger rollback to previous version",
       "questions": [
         {
+          "id": "java-sen-12a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>In a CI pipeline, which stage runs first to provide the fastest feedback on a broken build?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>In a CI pipeline, which stage runs first to provide the fastest feedback on a broken build?</p>",
           "options": [
             "Integration tests",
             "Security scan",
             "Compile / build step",
             "Deployment to staging"
           ],
-          "correctAnswer": "Compile / build step",
-          "explanationHtml": "<p>Compilation fails in seconds for syntax errors and missing dependencies — the fastest possible feedback. Running tests on code that doesn't compile is wasteful. The pipeline stages are ordered fastest-to-slowest: compile → unit tests (seconds) → integration tests (minutes) → security scan → deployment. Fail early and fail fast.</p>"
+          "answer": "Compile / build step",
+          "explanation": "<p>Compilation fails in seconds for syntax errors and missing dependencies — the fastest possible feedback. Running tests on code that doesn't compile is wasteful. The pipeline stages are ordered fastest-to-slowest: compile → unit tests (seconds) → integration tests (minutes) → security scan → deployment. Fail early and fail fast.</p>"
         },
         {
+          "id": "java-sen-12a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A canary deployment routes 5% of traffic to v2. The v2 error rate is 8% while v1 is 0.2%. What should happen next?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>A canary deployment routes 5% of traffic to v2. The v2 error rate is 8% while v1 is 0.2%. What should happen next?</p>",
           "options": [
             "Continue the rollout — 5% is a small sample and may not be representative",
             "Increase to 50% traffic to get a better sample size",
             "Abort the rollout, roll back to 0% canary, investigate the errors",
             "Disable the circuit breaker to allow more requests through"
           ],
-          "correctAnswer": "Abort the rollout, roll back to 0% canary, investigate the errors",
-          "explanationHtml": "<p>An 8% error rate on v2 (vs 0.2% baseline on v1) is a clear signal of a regression. Continuing or expanding the canary would expose more users to failures. Immediately route all traffic back to v1, investigate the root cause from logs and traces, fix the bug, and restart the canary process from scratch after fixing.</p>"
+          "answer": "Abort the rollout, roll back to 0% canary, investigate the errors",
+          "explanation": "<p>An 8% error rate on v2 (vs 0.2% baseline on v1) is a clear signal of a regression. Continuing or expanding the canary would expose more users to failures. Immediately route all traffic back to v1, investigate the root cause from logs and traces, fix the bug, and restart the canary process from scratch after fixing.</p>"
         },
         {
+          "id": "java-sen-12a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You want to test a new spell recommendation algorithm on real production traffic for 2% of users without deploying new code when you change the percentage. What is the correct approach?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>You want to test a new spell recommendation algorithm on real production traffic for 2% of users without deploying new code when you change the percentage. What is the correct approach?</p>",
           "options": [
             "Hardcode an if-statement: if (userId.hashCode() % 50 == 0) useNewAlgorithm()",
             "Deploy two separate services and route 2% of traffic at the load balancer level",
             "Use a feature flag service where the rollout percentage is a configuration value changed at runtime",
             "Deploy in blue/green and route 2% to the green environment"
           ],
-          "correctAnswer": "Use a feature flag service where the rollout percentage is a configuration value changed at runtime",
-          "explanationHtml": "<p>Feature flags allow changing the percentage without redeployment — the whole point is decoupling deploy from release. Hardcoding requires a code change and redeploy to change the percentage. Two separate services and blue/green also require operational changes to adjust the split. A feature flag service (LaunchDarkly, Unleash, or a simple DB-backed config) lets you change from 2% to 50% to 0% with no code changes and instant effect.</p>"
+          "answer": "Use a feature flag service where the rollout percentage is a configuration value changed at runtime",
+          "explanation": "<p>Feature flags allow changing the percentage without redeployment — the whole point is decoupling deploy from release. Hardcoding requires a code change and redeploy to change the percentage. Two separate services and blue/green also require operational changes to adjust the split. A feature flag service (LaunchDarkly, Unleash, or a simple DB-backed config) lets you change from 2% to 50% to 0% with no code changes and instant effect.</p>"
         }
       ]
     }

@@ -5,7 +5,9 @@
   "sortOrder": 4,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-3"],
+  "prerequisites": [
+    "java-sen-3"
+  ],
   "subChunks": [
     {
       "id": "java-sen-4a",
@@ -17,11 +19,39 @@
       "hookHtml": "<p>Performance problems are almost always in the 3% of code you'd never guess. That's why Donald Knuth's warning — 'premature optimisation is the root of all evil' — still holds. The discipline of performance tuning starts with measurement, not intuition.</p>",
       "explanationHtml": "<h3>The Performance Tuning Process</h3><ol><li><strong>Establish a baseline</strong>: measure current performance under representative load</li><li><strong>Profile</strong>: find where time is actually spent (CPU, memory, I/O, blocking)</li><li><strong>Identify the bottleneck</strong>: only fix what the profiler shows is hot</li><li><strong>Change one thing</strong>: isolate cause and effect</li><li><strong>Re-measure</strong>: confirm the improvement and check for regressions</li></ol><h3>Microbenchmarking Pitfalls</h3><p>Naively timing code with <code>System.nanoTime()</code> produces unreliable results due to JIT warmup, dead-code elimination, and CPU frequency scaling. The JVM optimises hot paths after thousands of executions — your first measurement captures cold performance.</p><pre><code>// BAD — JIT hasn't warmed up; results meaningless\nlong start = System.nanoTime();\nfor (int i = 0; i &lt; 1000; i++) expensiveOperation();\nlong ns = System.nanoTime() - start;\nSystem.out.println(ns / 1000 + \" µs\");\n\n// BETTER — warm up first, then measure\nfor (int i = 0; i &lt; 10_000; i++) expensiveOperation(); // warmup\nlong start = System.nanoTime();\nfor (int i = 0; i &lt; 100_000; i++) expensiveOperation(); // measurement\nlong ns = System.nanoTime() - start;\nSystem.out.printf(\"%.2f µs per op%n\", (double) ns / 100_000 / 1000);\n</code></pre><h3>JMH — Java Microbenchmark Harness</h3><p>The correct tool for microbenchmarks. JMH handles warmup, multi-iteration averaging, dead-code elimination prevention, and OS scheduling noise. Add to <code>pom.xml</code>:</p><pre><code>&lt;dependency&gt;\n    &lt;groupId&gt;org.openjdk.jmh&lt;/groupId&gt;\n    &lt;artifactId&gt;jmh-core&lt;/artifactId&gt;\n    &lt;version&gt;1.37&lt;/version&gt;\n&lt;/dependency&gt;</code></pre><pre><code>@BenchmarkMode(Mode.AverageTime)\n@OutputTimeUnit(TimeUnit.MICROSECONDS)\n@Warmup(iterations = 5)\n@Measurement(iterations = 10)\npublic class StringBench {\n    @Benchmark\n    public String concatenation() {\n        String s = \"\";\n        for (int i = 0; i &lt; 100; i++) s += i;  // creates 100 new objects\n        return s;\n    }\n\n    @Benchmark\n    public String builder() {\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i &lt; 100; i++) sb.append(i);\n        return sb.toString();\n    }\n}</code></pre><h3>Common Performance Patterns</h3><p><strong>String concatenation in loops</strong>: each <code>+=</code> creates a new String. Use <code>StringBuilder</code>.</p><p><strong>Boxing/unboxing</strong>: using <code>Integer</code> instead of <code>int</code> in hot code adds allocation and GC pressure. Use primitives in tight loops.</p><p><strong>Collection initial capacity</strong>: <code>new ArrayList&lt;&gt;(expectedSize)</code> prevents repeated resizing and copying.</p><p><strong>Lazy initialisation</strong>: compute expensive values only when first needed; cache the result.</p><p><strong>Cache-friendly access</strong>: arrays have better CPU cache locality than linked structures — prefer arrays or ArrayList over LinkedList.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's spell execution pipeline could cast 800 spells per second in testing. Under real tournament load it slumped to 120. Two weeks of guessing produced nothing. One afternoon with a profiler pinpointed a single method: the spell name formatter, called 2 million times per second, rebuilding a regular expression Pattern on every call."},
-        {"type": "dialogue", "av": "⚡", "cls": "mentor", "speaker": "Performance Sage Torben", "sCls": "mentor", "text": "Performance problems hide. The obvious places are rarely the bottleneck. I have seen developers spend a week rewriting a sorting algorithm that ran for 12 milliseconds in a service that spent 4 seconds waiting for a database query. The profiler would have told them in five minutes."},
-        {"type": "dialogue", "av": "⚡", "cls": "mentor", "speaker": "Performance Sage Torben", "sCls": "mentor", "text": "JMH is non-negotiable for benchmarks. System.nanoTime in a loop tells you what the JVM does before it optimises your code, not after. In production, the JIT has run for hours and the code is maximally hot. A cold benchmark is measuring a completely different thing."},
-        {"type": "example", "speaker": "Pattern compilation — the hidden allocator", "text": "// BAD — compiles Pattern on every call\npublic boolean isValidSpell(String name) {\n    return name.matches(\"[A-Z][a-z]+\"); // Pattern.compile() inside!\n}\n\n// GOOD — compile once, reuse\nprivate static final Pattern SPELL_NAME = Pattern.compile(\"[A-Z][a-z]+\");\npublic boolean isValidSpell(String name) {\n    return SPELL_NAME.matcher(name).matches();\n}"},
-        {"type": "dialogue", "av": "⚡", "cls": "mentor", "speaker": "Performance Sage Torben", "sCls": "mentor", "text": "Three things account for 80% of Java performance problems I have seen: N+1 database queries, Pattern.compile() inside a hot method, and String concatenation in a loop. All trivially fixable once measured. Profile first. Always."}
+        {
+          "type": "narration",
+          "text": "The Academy's spell execution pipeline could cast 800 spells per second in testing. Under real tournament load it slumped to 120. Two weeks of guessing produced nothing. One afternoon with a profiler pinpointed a single method: the spell name formatter, called 2 million times per second, rebuilding a regular expression Pattern on every call."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚡",
+          "cls": "mentor",
+          "speaker": "Performance Sage Torben",
+          "sCls": "mentor",
+          "text": "Performance problems hide. The obvious places are rarely the bottleneck. I have seen developers spend a week rewriting a sorting algorithm that ran for 12 milliseconds in a service that spent 4 seconds waiting for a database query. The profiler would have told them in five minutes."
+        },
+        {
+          "type": "dialogue",
+          "av": "⚡",
+          "cls": "mentor",
+          "speaker": "Performance Sage Torben",
+          "sCls": "mentor",
+          "text": "JMH is non-negotiable for benchmarks. System.nanoTime in a loop tells you what the JVM does before it optimises your code, not after. In production, the JIT has run for hours and the code is maximally hot. A cold benchmark is measuring a completely different thing."
+        },
+        {
+          "type": "example",
+          "speaker": "Pattern compilation — the hidden allocator",
+          "text": "// BAD — compiles Pattern on every call\npublic boolean isValidSpell(String name) {\n    return name.matches(\"[A-Z][a-z]+\"); // Pattern.compile() inside!\n}\n\n// GOOD — compile once, reuse\nprivate static final Pattern SPELL_NAME = Pattern.compile(\"[A-Z][a-z]+\");\npublic boolean isValidSpell(String name) {\n    return SPELL_NAME.matcher(name).matches();\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "⚡",
+          "cls": "mentor",
+          "speaker": "Performance Sage Torben",
+          "sCls": "mentor",
+          "text": "Three things account for 80% of Java performance problems I have seen: N+1 database queries, Pattern.compile() inside a hot method, and String concatenation in a loop. All trivially fixable once measured. Profile first. Always."
+        }
       ],
       "learningObjectives": [
         "Explain why naïve System.nanoTime benchmarks are unreliable and what JMH solves",
@@ -45,50 +75,77 @@
       "guidedPracticeHtml": "<p>Write a <code>PerfDemo</code> class that demonstrates two performance comparisons with simple timed measurements (warm up 10,000 iterations, then measure 100,000 iterations):</p><ol><li>Compare String <code>+=</code> concatenation vs <code>StringBuilder.append()</code> — build a string of 50 numbers in each case. Print both times in nanoseconds.</li><li>Demonstrate static Pattern compilation — write two methods: <code>matchBad(String s)</code> using <code>s.matches(...)</code> and <code>matchGood(String s)</code> using a static compiled <code>Pattern</code>. Confirm both return the same boolean result for an input of your choice.</li></ol>",
       "guidedPracticeStarterCode": "import java.util.regex.Pattern;\n\npublic class PerfDemo {\n\n    // Static compiled pattern for matchGood\n    private static final Pattern NAME_PATTERN = Pattern.compile(\"[A-Z][a-z]+\");\n\n    static String concatBad() {\n        // TODO: use += in a loop over 0..49\n        return null;\n    }\n\n    static String concatGood() {\n        // TODO: use StringBuilder in a loop over 0..49\n        return null;\n    }\n\n    static boolean matchBad(String s) {\n        // TODO: use s.matches()\n        return false;\n    }\n\n    static boolean matchGood(String s) {\n        // TODO: use NAME_PATTERN.matcher(s).matches()\n        return false;\n    }\n\n    public static void main(String[] args) {\n        // Warmup\n        for (int i = 0; i < 10_000; i++) { concatBad(); concatGood(); }\n\n        // Measure concat\n        long s1 = System.nanoTime();\n        for (int i = 0; i < 100_000; i++) concatBad();\n        long s2 = System.nanoTime();\n        for (int i = 0; i < 100_000; i++) concatGood();\n        long s3 = System.nanoTime();\n        System.out.println(\"ConcatBad ns:  \" + (s2 - s1));\n        System.out.println(\"ConcatGood ns: \" + (s3 - s2));\n\n        // Verify pattern match correctness\n        System.out.println(\"matchBad:  \" + matchBad(\"Fireball\"));\n        System.out.println(\"matchGood: \" + matchGood(\"Fireball\"));\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "ConcatBad time printed", "input": "null", "expected": "ConcatBad ns:"},
-        {"label": "matchGood returns true for Fireball", "input": "null", "expected": "matchGood: true"},
-        {"label": "matchBad returns true for Fireball", "input": "null", "expected": "matchBad: true"}
+        {
+          "label": "ConcatBad time printed",
+          "input": "null",
+          "expected": "ConcatBad ns:"
+        },
+        {
+          "label": "matchGood returns true for Fireball",
+          "input": "null",
+          "expected": "matchGood: true"
+        },
+        {
+          "label": "matchBad returns true for Fireball",
+          "input": "null",
+          "expected": "matchBad: true"
+        }
       ],
       "guidedPracticeModelAnswer": "import java.util.regex.Pattern;\n\npublic class PerfDemo {\n    private static final Pattern NAME_PATTERN = Pattern.compile(\"[A-Z][a-z]+\");\n\n    static String concatBad() {\n        String s = \"\";\n        for (int i = 0; i < 50; i++) s += i;\n        return s;\n    }\n\n    static String concatGood() {\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < 50; i++) sb.append(i);\n        return sb.toString();\n    }\n\n    static boolean matchBad(String s)  { return s.matches(\"[A-Z][a-z]+\"); }\n    static boolean matchGood(String s) { return NAME_PATTERN.matcher(s).matches(); }\n\n    public static void main(String[] args) {\n        for (int i = 0; i < 10_000; i++) { concatBad(); concatGood(); }\n        long s1 = System.nanoTime();\n        for (int i = 0; i < 100_000; i++) concatBad();\n        long s2 = System.nanoTime();\n        for (int i = 0; i < 100_000; i++) concatGood();\n        long s3 = System.nanoTime();\n        System.out.println(\"ConcatBad ns:  \" + (s2 - s1));\n        System.out.println(\"ConcatGood ns: \" + (s3 - s2));\n        System.out.println(\"matchBad:  \" + matchBad(\"Fireball\"));\n        System.out.println(\"matchGood: \" + matchGood(\"Fireball\"));\n    }\n}",
       "soloPracticeHtml": "<p>Write a class <code>BoxingPerf</code> that demonstrates the cost of boxing in a hot loop. Write two methods: <code>long sumBoxed(int n)</code> that sums 0..n-1 using an <code>Integer</code> accumulator (not <code>int</code>), and <code>long sumPrimitive(int n)</code> that uses a plain <code>int</code>. Warm up 10,000 times each, then time 1,000,000 iterations of each with n=1000. Print both times and confirm results are identical. Also print the GC observation: 'boxed allocates per addition; primitive does not'.</p>",
       "soloPracticeTests": [
-        {"label": "Both sums equal 499500", "input": "null", "expected": "499500"},
-        {"label": "GC observation printed", "input": "null", "expected": "primitive does not"}
+        {
+          "label": "Both sums equal 499500",
+          "input": "null",
+          "expected": "499500"
+        },
+        {
+          "label": "GC observation printed",
+          "input": "null",
+          "expected": "primitive does not"
+        }
       ],
       "modelAnswer": "public class BoxingPerf {\n    static long sumBoxed(int n) {\n        Integer acc = 0;\n        for (int i = 0; i < n; i++) acc += i; // auto-unbox + box each iteration\n        return acc;\n    }\n    static long sumPrimitive(int n) {\n        long acc = 0;\n        for (int i = 0; i < n; i++) acc += i;\n        return acc;\n    }\n    public static void main(String[] args) {\n        for (int i = 0; i < 10_000; i++) { sumBoxed(1000); sumPrimitive(1000); }\n        long s1 = System.nanoTime();\n        long rb = 0; for (int i = 0; i < 1_000_000; i++) rb = sumBoxed(1000);\n        long s2 = System.nanoTime();\n        long rp = 0; for (int i = 0; i < 1_000_000; i++) rp = sumPrimitive(1000);\n        long s3 = System.nanoTime();\n        System.out.println(\"Boxed result:     \" + rb + \" in \" + (s2-s1)/1_000_000 + \"ms\");\n        System.out.println(\"Primitive result: \" + rp + \" in \" + (s3-s2)/1_000_000 + \"ms\");\n        System.out.println(\"499500\");\n        System.out.println(\"boxed allocates per addition; primitive does not\");\n    }\n}",
       "questions": [
         {
+          "id": "java-sen-4a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Why does calling <code>String.matches(regex)</code> inside a hot loop cause a performance problem?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>Why does calling <code>String.matches(regex)</code> inside a hot loop cause a performance problem?</p>",
           "options": [
             "String.matches() is deprecated",
             "It compiles a new Pattern object on every call",
             "Regex matching is always O(n²)",
             "The method is synchronized and causes thread contention"
           ],
-          "correctAnswer": "It compiles a new Pattern object on every call",
-          "explanationHtml": "<p><code>String.matches(regex)</code> internally calls <code>Pattern.compile(regex).matcher(this).matches()</code> — creating and discarding a new Pattern on every invocation. Pattern compilation is expensive. The fix: compile once to a <code>static final Pattern</code> and reuse the matcher.</p>"
+          "answer": "It compiles a new Pattern object on every call",
+          "explanation": "<p><code>String.matches(regex)</code> internally calls <code>Pattern.compile(regex).matcher(this).matches()</code> — creating and discarding a new Pattern on every invocation. Pattern compilation is expensive. The fix: compile once to a <code>static final Pattern</code> and reuse the matcher.</p>"
         },
         {
+          "id": "java-sen-4a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A benchmark shows <code>LinkedList.get(index)</code> is 100× slower than <code>ArrayList.get(index)</code>. Why?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>A benchmark shows <code>LinkedList.get(index)</code> is 100× slower than <code>ArrayList.get(index)</code>. Why?</p>",
           "options": [
             "ArrayList uses binary search internally",
             "LinkedList.get() traverses from the head node — O(n) vs ArrayList's O(1) index",
             "LinkedList is not thread-safe",
             "ArrayList is backed by a hash table"
           ],
-          "correctAnswer": "LinkedList.get() traverses from the head node — O(n) vs ArrayList's O(1) index",
-          "explanationHtml": "<p>ArrayList stores elements in a contiguous array — index access is O(1) and CPU-cache-friendly. LinkedList is a doubly-linked list — <code>get(n)</code> traverses up to n/2 nodes. For most workloads (including insert-at-middle), ArrayList wins due to cache locality. LinkedList's advantage (O(1) insert at an iterator position) rarely matters in practice.</p>"
+          "answer": "LinkedList.get() traverses from the head node — O(n) vs ArrayList's O(1) index",
+          "explanation": "<p>ArrayList stores elements in a contiguous array — index access is O(1) and CPU-cache-friendly. LinkedList is a doubly-linked list — <code>get(n)</code> traverses up to n/2 nodes. For most workloads (including insert-at-middle), ArrayList wins due to cache locality. LinkedList's advantage (O(1) insert at an iterator position) rarely matters in practice.</p>"
         },
         {
+          "id": "java-sen-4a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>A System.nanoTime benchmark without a warmup phase accurately reflects the performance of JIT-optimised production code.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Without warmup, you measure code before JIT compilation has converted hot bytecode to native machine code. Production code that has been running for hours is maximally optimised. Cold measurements can be 10–100× slower than steady-state JIT performance, producing completely misleading benchmark results.</p>"
+          "minPath": "SENIOR",
+          "prompt": "<p>A System.nanoTime benchmark without a warmup phase accurately reflects the performance of JIT-optimised production code.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Without warmup, you measure code before JIT compilation has converted hot bytecode to native machine code. Production code that has been running for hours is maximally optimised. Cold measurements can be 10–100× slower than steady-state JIT performance, producing completely misleading benchmark results.</p>"
         }
       ]
     }

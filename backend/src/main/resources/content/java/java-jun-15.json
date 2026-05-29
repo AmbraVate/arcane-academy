@@ -5,7 +5,9 @@
   "sortOrder": 15,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-14"],
+  "prerequisites": [
+    "java-jun-14"
+  ],
   "subChunks": [
     {
       "id": "java-jun-15a",
@@ -17,11 +19,39 @@
       "hookHtml": "<p>When your service fails at 3am, the only thing between you and a four-hour debugging session is your logs. Logging is the mechanism by which running software describes what it is doing. Getting it right is not an afterthought.</p>",
       "explanationHtml": "<h3>SLF4J: The Logging Facade</h3><p>SLF4J (Simple Logging Facade for Java) is an abstraction layer — you write against the SLF4J API, and the actual implementation (Logback, Log4j2) is swapped in at runtime via the classpath. Spring Boot ships with Logback by default.</p><pre><code>import org.slf4j.Logger;\nimport org.slf4j.LoggerFactory;\n\npublic class SpellService {\n    private static final Logger log = LoggerFactory.getLogger(SpellService.class);\n\n    public Spell getSpell(String id) {\n        log.debug(\"Looking up spell: {}\", id);\n        // ...\n        log.info(\"Spell retrieved: {} in {}ms\", id, elapsed);\n        return spell;\n    }\n}</code></pre><p>The <code>{}</code> placeholder avoids string concatenation when the log level is disabled — the argument is only converted to a string if the level is active.</p><h3>Log Levels (in ascending severity)</h3><ul><li><strong>TRACE</strong>: Finest detail — method entry/exit, loop iterations. Disabled in production.</li><li><strong>DEBUG</strong>: Developer diagnostics — intermediate values, query parameters. Off in production by default.</li><li><strong>INFO</strong>: Normal operation milestones — service started, user logged in, job completed. Always on.</li><li><strong>WARN</strong>: Unexpected but recoverable — missing optional config, retrying a failed call. Always on.</li><li><strong>ERROR</strong>: A failure that needs attention — exception caught, payment failed, database unreachable. Always on.</li></ul><h3>What to Log and What Not to Log</h3><p><strong>Do log</strong>: application events (request received, job started), notable state changes, errors with context, slow operations.</p><p><strong>Never log</strong>: passwords, credit card numbers, authentication tokens, PII (personal data such as full names and email addresses combined with sensitive context). Logging sensitive data creates a compliance and security breach.</p><h3>Structured Logging</h3><p>Add context using MDC (Mapped Diagnostic Context) — key-value pairs automatically included in every log line in the current thread:</p><pre><code>import org.slf4j.MDC;\n\nMDC.put(\"requestId\", UUID.randomUUID().toString());\nMDC.put(\"userId\", user.getId());\ntry {\n    log.info(\"Processing payment\");\n    // All logs in this thread include requestId and userId\n} finally {\n    MDC.clear();  // always clear to avoid leaking into subsequent requests\n}</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's spell execution chamber runs thousands of castings a day. When one fails silently, the post-mortem team has only one tool: the logs. The lead investigator examines a log file and immediately finds the exact failure point, the user affected, and the time. Another team, whose service logged nothing useful, is still in the dark three hours later."},
-        {"type": "dialogue", "av": "📝", "cls": "mentor", "speaker": "Lead Investigator Cass", "sCls": "mentor", "text": "Every Java professional uses SLF4J. You write to the Logger interface — never to System.out.println. The implementation (Logback in Spring Boot) decides the format, the destination, and which levels to show. In production you will typically see INFO and above."},
-        {"type": "example", "speaker": "Proper log level usage", "text": "log.trace(\"Entering validate(), id={}\", id);           // never in prod\nlog.debug(\"Query parameters: tier={}, minDamage={}\", t, d); // dev only\nlog.info (\"Spell {} retrieved in {}ms\", name, elapsed);  // normal event\nlog.warn (\"Spell service slow ({}ms > 500ms threshold)\", t); // concerning\nlog.error(\"Failed to persist spell {}\", id, exception);  // action needed"},
-        {"type": "dialogue", "av": "📝", "cls": "mentor", "speaker": "Lead Investigator Cass", "sCls": "mentor", "text": "The {} placeholder is not cosmetic. It delays string conversion until the level is actually enabled. If DEBUG is disabled in production and you write log.debug(\"Data: \" + expensiveToString()), the toString() call happens even though the message is thrown away. Placeholders prevent this."},
-        {"type": "dialogue", "av": "📝", "cls": "mentor", "speaker": "Lead Investigator Cass", "sCls": "mentor", "text": "MDC adds context that travels with the thread. Put a request ID in MDC at the start of every request. Every log line in that request's thread will carry it automatically. When you search logs for a specific request ID, you see its complete story from start to finish — even across multiple classes."}
+        {
+          "type": "narration",
+          "text": "The Academy's spell execution chamber runs thousands of castings a day. When one fails silently, the post-mortem team has only one tool: the logs. The lead investigator examines a log file and immediately finds the exact failure point, the user affected, and the time. Another team, whose service logged nothing useful, is still in the dark three hours later."
+        },
+        {
+          "type": "dialogue",
+          "av": "📝",
+          "cls": "mentor",
+          "speaker": "Lead Investigator Cass",
+          "sCls": "mentor",
+          "text": "Every Java professional uses SLF4J. You write to the Logger interface — never to System.out.println. The implementation (Logback in Spring Boot) decides the format, the destination, and which levels to show. In production you will typically see INFO and above."
+        },
+        {
+          "type": "example",
+          "speaker": "Proper log level usage",
+          "text": "log.trace(\"Entering validate(), id={}\", id);           // never in prod\nlog.debug(\"Query parameters: tier={}, minDamage={}\", t, d); // dev only\nlog.info (\"Spell {} retrieved in {}ms\", name, elapsed);  // normal event\nlog.warn (\"Spell service slow ({}ms > 500ms threshold)\", t); // concerning\nlog.error(\"Failed to persist spell {}\", id, exception);  // action needed"
+        },
+        {
+          "type": "dialogue",
+          "av": "📝",
+          "cls": "mentor",
+          "speaker": "Lead Investigator Cass",
+          "sCls": "mentor",
+          "text": "The {} placeholder is not cosmetic. It delays string conversion until the level is actually enabled. If DEBUG is disabled in production and you write log.debug(\"Data: \" + expensiveToString()), the toString() call happens even though the message is thrown away. Placeholders prevent this."
+        },
+        {
+          "type": "dialogue",
+          "av": "📝",
+          "cls": "mentor",
+          "speaker": "Lead Investigator Cass",
+          "sCls": "mentor",
+          "text": "MDC adds context that travels with the thread. Put a request ID in MDC at the start of every request. Every log line in that request's thread will carry it automatically. When you search logs for a specific request ID, you see its complete story from start to finish — even across multiple classes."
+        }
       ],
       "learningObjectives": [
         "Create an SLF4J Logger using LoggerFactory.getLogger() and write to all five levels",
@@ -45,43 +75,75 @@
       "guidedPracticeHtml": "<p>Write a <code>SpellLogger</code> class that demonstrates correct logging practice:</p><ol><li>Declare a static SLF4J Logger for the class</li><li>Write a method <code>void processSpell(String spellId, int damage)</code> that logs: a DEBUG message with the spellId and damage, an INFO message saying the spell was processed, and if damage > 500, a WARN saying damage is exceptionally high</li><li>Write a method <code>void failedCast(String spellId, Exception e)</code> that logs an ERROR with the spellId and exception</li><li>In main, call both methods to demonstrate output</li></ol>",
       "guidedPracticeStarterCode": "import org.slf4j.Logger;\nimport org.slf4j.LoggerFactory;\n\npublic class SpellLogger {\n\n    // Declare logger\n\n\n    public static void processSpell(String spellId, int damage) {\n        // DEBUG: log spellId and damage\n\n\n        // INFO: spell processed\n\n\n        // WARN if damage > 500\n\n    }\n\n    public static void failedCast(String spellId, Exception e) {\n        // ERROR: log failure with exception\n\n    }\n\n    public static void main(String[] args) {\n        processSpell(\"frostbolt-7\", 120);\n        processSpell(\"megastorm-1\", 750);\n        failedCast(\"arcane-4\", new RuntimeException(\"Cast failed: invalid target\"));\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "Logger declared correctly (compiles)", "input": "null", "expected": "frostbolt"},
-        {"label": "Warn fires for high damage", "input": "null", "expected": "750"},
-        {"label": "Error logs exception", "input": "null", "expected": "arcane-4"}
+        {
+          "label": "Logger declared correctly (compiles)",
+          "input": "null",
+          "expected": "frostbolt"
+        },
+        {
+          "label": "Warn fires for high damage",
+          "input": "null",
+          "expected": "750"
+        },
+        {
+          "label": "Error logs exception",
+          "input": "null",
+          "expected": "arcane-4"
+        }
       ],
       "soloPracticeHtml": "<p>From scratch. Write a class <code>RequestLogger</code> that simulates request handling with MDC. The method <code>void handleRequest(String requestId, String userId, String action)</code> should: put requestId and userId into MDC, log INFO with the action, simulate a step that might fail (if action is \"delete\", log WARN), then clear MDC in a finally block. In main call it for two different requests and observe that each log line would carry the request context.</p>",
       "soloPracticeTests": [
-        {"label": "MDC requestId used", "input": "null", "expected": "req-001"},
-        {"label": "Delete action triggers WARN", "input": "null", "expected": "delete"}
+        {
+          "label": "MDC requestId used",
+          "input": "null",
+          "expected": "req-001"
+        },
+        {
+          "label": "Delete action triggers WARN",
+          "input": "null",
+          "expected": "delete"
+        }
       ],
       "questions": [
         {
+          "id": "java-jun-15a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which log level should be used when a payment processing request fails with an unexpected exception?</p>",
-          "options": ["TRACE", "DEBUG", "WARN", "ERROR"],
-          "correctAnswer": "ERROR",
-          "explanationHtml": "<p>ERROR is for failures that require attention — payment failures, database unreachable, unhandled exceptions. It indicates something went wrong that cannot be recovered from automatically and may need manual intervention.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which log level should be used when a payment processing request fails with an unexpected exception?</p>",
+          "options": [
+            "TRACE",
+            "DEBUG",
+            "WARN",
+            "ERROR"
+          ],
+          "answer": "ERROR",
+          "explanation": "<p>ERROR is for failures that require attention — payment failures, database unreachable, unhandled exceptions. It indicates something went wrong that cannot be recovered from automatically and may need manual intervention.</p>"
         },
         {
+          "id": "java-jun-15a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>Why is <code>log.debug(\"Processing: {}\", expensiveObject)</code> better than <code>log.debug(\"Processing: \" + expensiveObject.toString())</code>?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>Why is <code>log.debug(\"Processing: {}\", expensiveObject)</code> better than <code>log.debug(\"Processing: \" + expensiveObject.toString())</code>?</p>",
           "options": [
             "The placeholder version is faster to type",
             "The toString() call in the concatenation version happens regardless of whether DEBUG is enabled",
             "Placeholder syntax supports more data types",
             "String concatenation causes a compile error inside log calls"
           ],
-          "correctAnswer": "The toString() call in the concatenation version happens regardless of whether DEBUG is enabled",
-          "explanationHtml": "<p>With string concatenation, <code>expensiveObject.toString()</code> and the concatenation both execute before the log method is even called — even if DEBUG is disabled and the message will be thrown away. Placeholders pass the object reference; SLF4J only calls toString() if the level is actually active.</p>"
+          "answer": "The toString() call in the concatenation version happens regardless of whether DEBUG is enabled",
+          "explanation": "<p>With string concatenation, <code>expensiveObject.toString()</code> and the concatenation both execute before the log method is even called — even if DEBUG is disabled and the message will be thrown away. Placeholders pass the object reference; SLF4J only calls toString() if the level is actually active.</p>"
         },
         {
+          "id": "java-jun-15a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>It is safe to log user passwords at DEBUG level because DEBUG is disabled in production.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Never log passwords, tokens, or sensitive PII at any level. Production debug logging is frequently enabled temporarily during incident response — and may remain enabled accidentally. Additionally, log files are often stored for months and may be accessible to multiple people. The rule is absolute: sensitive data never goes into logs.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>It is safe to log user passwords at DEBUG level because DEBUG is disabled in production.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Never log passwords, tokens, or sensitive PII at any level. Production debug logging is frequently enabled temporarily during incident response — and may remain enabled accidentally. Additionally, log files are often stored for months and may be accessible to multiple people. The rule is absolute: sensitive data never goes into logs.</p>"
         }
       ]
     }

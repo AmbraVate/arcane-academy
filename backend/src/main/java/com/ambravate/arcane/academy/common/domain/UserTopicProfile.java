@@ -3,6 +3,7 @@ package com.ambravate.arcane.academy.common.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.Instant;
+import com.ambravate.arcane.academy.common.domain.LearnerPath;
 
 /**
  * Tracks a user's diagnostic completion and progress metadata for a non-Java topic
@@ -40,4 +41,8 @@ public class UserTopicProfile {
     private String diagnosticResultsJson;
 
     private Instant startedAt;
+
+    /** The highest tier the user has fully unlocked for this topic. Null = APPRENTICE (not yet advanced). */
+    @Enumerated(EnumType.STRING)
+    private LearnerPath currentTier;
 }

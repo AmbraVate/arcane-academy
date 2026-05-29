@@ -22,6 +22,8 @@ import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserTopicProfileRepository;
+import com.ambravate.arcane.academy.common.domain.UserTopicProfile;
 import com.ambravate.arcane.academy.ai.service.AiMentorService;
 import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
@@ -58,6 +60,7 @@ public class EncodingService {
     private final ReviewSessionRepository reviewSessionRepository;
     private final UserRepository userRepository;
     private final UserLearnerProfileRepository learnerProfileRepository;
+    private final UserTopicProfileRepository topicProfileRepository;
     private final JavaCodeRunner codeRunner;
     private final AiMentorService aiMentorService;
     private final RetrievalService retrievalService;
@@ -67,9 +70,9 @@ public class EncodingService {
     private final TelemetryService telemetry;
     private final ObjectMapper objectMapper;
 
-    /** Ordered tier progression: completing a tier advances the user's currentPath to the next. */
+    /** Ordered tier progression — new canonical four-tier scheme. */
     private static final List<LearnerPath> TIER_PROGRESSION = List.of(
-            LearnerPath.FOUNDATION, LearnerPath.PRACTITIONER, LearnerPath.EXPERT);
+            LearnerPath.APPRENTICE, LearnerPath.JUNIOR, LearnerPath.SENIOR, LearnerPath.LEAD);
 
     /**
      * Start or resume a sub-chunk. Creates UserChunkProgress if not exists.
@@ -253,11 +256,14 @@ public class EncodingService {
             LearnerPath completedTier = parentChunk.getTier();
             String topicId = parentChunk.getTopicId();
 
-            // Collect all sub-chunk IDs in this tier for this topic
-            List<Chunk> tierChunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId).stream()
+            int completedIdx = TIER_PROGRESSION.indexOf(completedTier);
+            if (completedIdx < 0) return; // Legacy or unknown tier — skip
+
+            // Check every sub-chunk in this tier is done
+            List<String> tierChunkIds = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId).stream()
                     .filter(c -> completedTier.equals(c.getTier()))
+                    .map(Chunk::getId)
                     .toList();
-            List<String> tierChunkIds = tierChunks.stream().map(Chunk::getId).toList();
             List<SubChunk> tierSubChunks = subChunkRepository.findByChunkIdIn(tierChunkIds);
             if (tierSubChunks.isEmpty()) return;
 
@@ -266,33 +272,53 @@ public class EncodingService {
                     .map(UserChunkProgress::getSubChunkId)
                     .collect(Collectors.toSet());
 
-            boolean tierComplete = tierSubChunks.stream()
-                    .allMatch(sc -> doneSubChunkIds.contains(sc.getId()));
+            boolean tierComplete = tierSubChunks.stream().allMatch(sc -> doneSubChunkIds.contains(sc.getId()));
             if (!tierComplete) return;
 
-            // Only advance for the java topic (which uses UserLearnerProfile)
-            if (!"java".equals(topicId)) return;
+            int nextIdx = completedIdx + 1;
+            if (nextIdx >= TIER_PROGRESSION.size()) return; // Already at LEAD — no higher tier
 
-            UserLearnerProfile profile = learnerProfileRepository.findByUserId(userId)
-                    .orElse(null);
-            if (profile == null) return;
+            LearnerPath nextTier = TIER_PROGRESSION.get(nextIdx);
 
-            int currentIdx = TIER_PROGRESSION.indexOf(profile.getCurrentPath());
-            int completedIdx = TIER_PROGRESSION.indexOf(completedTier);
-            // Advance only if the completed tier matches or exceeds the user's current placement
-            if (completedIdx >= currentIdx) {
-                int nextIdx = completedIdx + 1;
-                if (nextIdx < TIER_PROGRESSION.size()) {
-                    LearnerPath nextTier = TIER_PROGRESSION.get(nextIdx);
+            if ("java".equals(topicId)) {
+                UserLearnerProfile profile = learnerProfileRepository.findByUserId(userId).orElse(null);
+                if (profile == null) return;
+                // Normalise any legacy tier value before comparing position
+                int currentIdx = TIER_PROGRESSION.indexOf(normaliseTier(profile.getCurrentPath()));
+                if (currentIdx < 0 || completedIdx >= currentIdx) {
                     profile.setCurrentPath(nextTier);
                     learnerProfileRepository.save(profile);
-                    log.info("[Encoding] Tier complete — advanced currentPath | user={} tier={} next={}",
+                    log.info("[Encoding] Java tier complete — advanced | user={} tier={} next={}",
                             userId, completedTier, nextTier);
+                }
+            } else {
+                UserTopicProfile topicProfile = topicProfileRepository
+                        .findByUserIdAndTopicId(userId, topicId).orElse(null);
+                if (topicProfile == null) return;
+                LearnerPath current = topicProfile.getCurrentTier() != null
+                        ? topicProfile.getCurrentTier() : LearnerPath.APPRENTICE;
+                int currentIdx = TIER_PROGRESSION.indexOf(current);
+                if (currentIdx < 0 || completedIdx >= currentIdx) {
+                    topicProfile.setCurrentTier(nextTier);
+                    topicProfileRepository.save(topicProfile);
+                    log.info("[Encoding] Topic tier complete — advanced | user={} topic={} tier={} next={}",
+                            userId, topicId, completedTier, nextTier);
                 }
             }
         } catch (Exception e) {
             log.warn("[Encoding] Failed to advance learner path after tier completion: {}", e.getMessage());
         }
+    }
+
+    /** Maps deprecated LearnerPath values to their current equivalents. */
+    private static LearnerPath normaliseTier(LearnerPath tier) {
+        if (tier == null) return LearnerPath.APPRENTICE;
+        return switch (tier) {
+            case FOUNDATION   -> LearnerPath.APPRENTICE;
+            case PRACTITIONER -> LearnerPath.JUNIOR;
+            case EXPERT       -> LearnerPath.SENIOR;
+            default           -> tier;
+        };
     }
 
     /**

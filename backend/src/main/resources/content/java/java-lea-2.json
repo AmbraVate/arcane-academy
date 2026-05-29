@@ -5,7 +5,9 @@
   "sortOrder": 2,
   "tier": "LEAD",
   "topicId": "java",
-  "prerequisites": ["java-lea-1"],
+  "prerequisites": [
+    "java-lea-1"
+  ],
   "subChunks": [
     {
       "id": "java-lea-2a",
@@ -16,10 +18,34 @@
       "hookHtml": "<p>Engineering strategy is the practice of connecting technical decisions to business outcomes over a multi-quarter horizon. Without it, engineering operates as a feature factory — building whatever is requested, accumulating debt, and losing the ability to move fast just when the business needs speed most. With it, engineering shapes its own destiny.</p>",
       "explanationHtml": "<h3>What Engineering Strategy Is (and Isn't)</h3><p>Engineering strategy is not a technology wishlist. It is an honest assessment of: where the system is today, where the business is going, what technical investments will enable or accelerate business outcomes, and what technical debt is silently slowing the team down. It is written in terms that non-technical stakeholders can reason about, not in terms of frameworks and languages.</p><p>A strategy answers three questions: What are we building? Why does it matter to the business? What are we not building, and why is that the right trade-off?</p><h3>Connecting Technical Work to Business Outcomes</h3><p>Every technical investment should be justified by a business outcome it enables, protects, or accelerates. The conversation is not 'we need to refactor the authentication service' — it is 'our authentication service causes 40% of production incidents and is responsible for 15% of customer churn in the last quarter. Investing 6 weeks here reduces incident rate by an estimated 60% and improves onboarding completion.'</p><p>The habit: for every significant technical initiative, write a one-paragraph 'so what?' — what business metric does this move, and by how much, with what confidence?</p><h3>The Technical Roadmap</h3><p>A technical roadmap is a time-horizon plan (typically 6–18 months) that shows: what major investments are planned, in what order, with rough sizing, and what they unlock. It is not a Gantt chart. It is a communication tool for alignment — with product, with leadership, with the team.</p><p>Key elements: current state diagnosis (honest, data-supported), strategic bets (investments with expected outcomes), dependencies and sequencing, what is explicitly not being done and why, and review cadence.</p><h3>Saying No</h3><p>The Lead's ability to say 'no' or 'not yet' to technical requests is one of their most important functions. Without it, every team request becomes an obligation, technical debt compounds indefinitely, and the roadmap becomes meaningless.</p><p>Saying no well requires: a clear reason (not 'we're busy' but 'this conflicts with the authentication work that blocks Q3 launch'), an alternative (can we do 20% of this that solves 80% of the problem?), and documentation (a declined request in writing prevents the same conversation every quarter).</p><h3>Balancing New Features vs Technical Health</h3><p>A sustainable model: allocate a fixed percentage of capacity to technical health work (refactoring, test debt, infrastructure). 20% is common. Never less than 10%. The exact number is less important than the principle: technical health work is not optional — it is a regular, budgeted allocation. 'We'll do it when we have time' means 'we'll never do it.'</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's engineering team had no roadmap. Each quarter they built what product asked. After two years, the spell service had 47 undocumented dependencies, a 400ms average response time, and a test suite that took 90 minutes to run. New features took four times as long as they should. The business blamed engineering. Engineering blamed product. Nobody had made a strategy to prevent it."},
-        {"type": "dialogue", "av": "🎯", "cls": "mentor", "speaker": "VP Engineering Gael", "sCls": "mentor", "text": "Engineering strategy is the difference between an engineering team that builds what they are told and an engineering team that shapes what gets built. When you can explain — in business terms — why the authentication refactor must happen before the new user dashboard, you are doing engineering strategy. When you cannot make that case and it doesn't happen, that is the absence of strategy."},
-        {"type": "dialogue", "av": "🎯", "cls": "mentor", "speaker": "VP Engineering Gael", "sCls": "mentor", "text": "The 20% technical health budget is not a suggestion. It is an insurance premium. Teams that skip it build up technical debt that becomes a tax on all future work. The compound interest of skipped test coverage, unrefactored code, and deferred upgrades eventually consumes more than 20% of capacity — it just does so invisibly, as slowdown rather than as a line item anyone can point to."},
-        {"type": "dialogue", "av": "🎯", "cls": "mentor", "speaker": "VP Engineering Gael", "sCls": "mentor", "text": "Saying no is an act of leadership, not obstruction. When you say no to a request without a reason and without an alternative, you are being obstructive. When you say 'not this quarter because it conflicts with X, but here is a smaller version that solves your core problem and we can do the rest in Q4' — you are being a strategic partner. The business wants yes-and, not just yes."}
+        {
+          "type": "narration",
+          "text": "The Academy's engineering team had no roadmap. Each quarter they built what product asked. After two years, the spell service had 47 undocumented dependencies, a 400ms average response time, and a test suite that took 90 minutes to run. New features took four times as long as they should. The business blamed engineering. Engineering blamed product. Nobody had made a strategy to prevent it."
+        },
+        {
+          "type": "dialogue",
+          "av": "🎯",
+          "cls": "mentor",
+          "speaker": "VP Engineering Gael",
+          "sCls": "mentor",
+          "text": "Engineering strategy is the difference between an engineering team that builds what they are told and an engineering team that shapes what gets built. When you can explain — in business terms — why the authentication refactor must happen before the new user dashboard, you are doing engineering strategy. When you cannot make that case and it doesn't happen, that is the absence of strategy."
+        },
+        {
+          "type": "dialogue",
+          "av": "🎯",
+          "cls": "mentor",
+          "speaker": "VP Engineering Gael",
+          "sCls": "mentor",
+          "text": "The 20% technical health budget is not a suggestion. It is an insurance premium. Teams that skip it build up technical debt that becomes a tax on all future work. The compound interest of skipped test coverage, unrefactored code, and deferred upgrades eventually consumes more than 20% of capacity — it just does so invisibly, as slowdown rather than as a line item anyone can point to."
+        },
+        {
+          "type": "dialogue",
+          "av": "🎯",
+          "cls": "mentor",
+          "speaker": "VP Engineering Gael",
+          "sCls": "mentor",
+          "text": "Saying no is an act of leadership, not obstruction. When you say no to a request without a reason and without an alternative, you are being obstructive. When you say 'not this quarter because it conflicts with X, but here is a smaller version that solves your core problem and we can do the rest in Q4' — you are being a strategic partner. The business wants yes-and, not just yes."
+        }
       ],
       "learningObjectives": [
         "Define engineering strategy and distinguish it from a technology wishlist or Gantt chart",
@@ -46,37 +72,44 @@
       "modelAnswer": "# Academy Engineering Roadmap — Q3/Q4 2026\n\n## Current State Diagnosis\nThree systemic issues are slowing delivery and affecting users:\n- Authentication incidents (12/quarter) cause measurable user churn and consume 48 engineering hours\n- Spell search at 1.2s average response time is below the 500ms threshold for acceptable conversion\n- No notification system means users miss tournament starts, reducing engagement\n\n## Q3 Investments (6 engineers × 10 weeks)\n1. Authentication stabilisation (2 engineers, 6 weeks): JWT migration reduces incident rate ~80%, unblocks compliance audit\n2. Spell search indexing (2 engineers, 4 weeks): reduces search response time to <200ms\n3. Technical health budget (1 engineer, ongoing): test coverage improvements, dependency updates, refactoring backlog\n4. Tournament platform foundation (1 engineer, 10 weeks): data model, basic match scheduling — foundation for Q4\n\n## Q4 Investments\n1. Notification system (2 engineers, 6 weeks): tournament alerts, progress notifications — enables Q4 engagement campaign\n2. Tournament platform launch (3 engineers, 8 weeks): builds on Q3 foundation, full match + leaderboard feature\n3. Technical health (1 engineer, ongoing): continues\n\n## What We Are Not Building\n- Mobile app: requires dedicated mobile engineers not currently in team; added to hiring plan\n- Real-time chat: not a current user request; deferring to avoid scope risk to tournament timeline\n- Analytics platform: product team using third-party analytics for now — no ROI case for custom build this year\n\n## Technical Health Allocation\n20% of capacity (1 engineer equivalent) budgeted for technical health every quarter. This is non-negotiable — it prevents the debt accumulation that causes future quarters to slow down. It is not subject to reallocation for feature requests without explicit VP Engineering approval.",
       "questions": [
         {
+          "id": "java-lea-2a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What is the primary purpose of a technical roadmap?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>What is the primary purpose of a technical roadmap?</p>",
           "options": [
             "To commit to exact delivery dates for technical projects",
             "To communicate planned technical investments and their business rationale to product, leadership, and the team",
             "To list all technical debt in priority order",
             "To replace the sprint planning process"
           ],
-          "correctAnswer": "To communicate planned technical investments and their business rationale to product, leadership, and the team",
-          "explanationHtml": "<p>A technical roadmap is a communication and alignment tool — not a contract or Gantt chart. Its purpose is to make the team's technical direction legible to non-technical stakeholders, enable informed trade-off discussions, and build trust that engineering is investing strategically. Dates are rough estimates; the roadmap should be reviewed and revised quarterly as context changes.</p>"
+          "answer": "To communicate planned technical investments and their business rationale to product, leadership, and the team",
+          "explanation": "<p>A technical roadmap is a communication and alignment tool — not a contract or Gantt chart. Its purpose is to make the team's technical direction legible to non-technical stakeholders, enable informed trade-off discussions, and build trust that engineering is investing strategically. Dates are rough estimates; the roadmap should be reviewed and revised quarterly as context changes.</p>"
         },
         {
+          "id": "java-lea-2a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A product manager requests a new feature that would take 3 weeks. Your team is mid-way through a critical infrastructure project. How should a Lead with a clear strategy respond?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>A product manager requests a new feature that would take 3 weeks. Your team is mid-way through a critical infrastructure project. How should a Lead with a clear strategy respond?</p>",
           "options": [
             "Accept the request immediately — product priorities always take precedence",
             "Reject the request without explanation",
             "Explain the conflict with the current infrastructure project, quantify the cost of pausing it, and offer alternatives (e.g. smaller scope, post-launch timing)",
             "Ask the team to work overtime to fit both in"
           ],
-          "correctAnswer": "Explain the conflict with the current infrastructure project, quantify the cost of pausing it, and offer alternatives (e.g. smaller scope, post-launch timing)",
-          "explanationHtml": "<p>Good engineering strategy enables informed trade-offs. The Lead's job is to make the cost of the trade-off visible — not just say no or silently absorb the request. 'If we pause the infrastructure work, we delay the reliability improvement by 3 weeks, which means we absorb another incident cycle. Here's what we could do: start scoping the feature now so we start immediately after the infrastructure work completes next week.' This is strategic partnership, not obstruction.</p>"
+          "answer": "Explain the conflict with the current infrastructure project, quantify the cost of pausing it, and offer alternatives (e.g. smaller scope, post-launch timing)",
+          "explanation": "<p>Good engineering strategy enables informed trade-offs. The Lead's job is to make the cost of the trade-off visible — not just say no or silently absorb the request. 'If we pause the infrastructure work, we delay the reliability improvement by 3 weeks, which means we absorb another incident cycle. Here's what we could do: start scoping the feature now so we start immediately after the infrastructure work completes next week.' This is strategic partnership, not obstruction.</p>"
         },
         {
+          "id": "java-lea-2a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>Technical health work (refactoring, test debt, dependency updates) should only be scheduled when the team has spare capacity after feature delivery.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>'Only when we have spare capacity' effectively means 'never' — there is always another feature request. Technical health work must be a fixed, budgeted allocation (typically 15–20% of capacity) scheduled every sprint, not deferred to a mythical slow period. Teams that defer all technical health work see delivery velocity decline over time as accumulated debt taxes every subsequent feature.</p>"
+          "minPath": "LEAD",
+          "prompt": "<p>Technical health work (refactoring, test debt, dependency updates) should only be scheduled when the team has spare capacity after feature delivery.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>'Only when we have spare capacity' effectively means 'never' — there is always another feature request. Technical health work must be a fixed, budgeted allocation (typically 15–20% of capacity) scheduled every sprint, not deferred to a mythical slow period. Teams that defer all technical health work see delivery velocity decline over time as accumulated debt taxes every subsequent feature.</p>"
         }
       ]
     }

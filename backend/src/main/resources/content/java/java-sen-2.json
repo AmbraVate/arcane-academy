@@ -5,7 +5,9 @@
   "sortOrder": 2,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-1"],
+  "prerequisites": [
+    "java-sen-1"
+  ],
   "subChunks": [
     {
       "id": "java-sen-2a",
@@ -17,11 +19,39 @@
       "hookHtml": "<p>Most Java developers trust the garbage collector blindly. Senior engineers know what it is actually doing — which generation an object lives in, why allocation rate matters more than heap size, and why <code>OutOfMemoryError</code> often has nothing to do with leaks.</p>",
       "explanationHtml": "<h3>JVM Memory Regions (Recap)</h3><p>The JVM divides memory into several regions. <strong>Heap</strong>: where objects live; divided into Young Generation (Eden + two Survivor spaces) and Old Generation (Tenured). <strong>Stack</strong>: one per thread; holds stack frames containing local variables and operand stacks. <strong>Metaspace</strong> (Java 8+): class metadata, replacing PermGen.</p><h3>Generational Hypothesis</h3><p>Most objects die young — born in Eden, used briefly, then become garbage before surviving a collection. The GC exploits this: Minor GC sweeps Eden/Survivor cheaply. Only long-lived objects are promoted to Old Gen, where Major GC (or Full GC) is slower and stop-the-world.</p><pre><code>// Object lifecycle — Eden → Survivor → Old Gen\nList&lt;byte[]&gt; longLived = new ArrayList&lt;&gt;();\nfor (int i = 0; i &lt; 1000; i++) {\n    byte[] shortLived = new byte[1024]; // Eden, dies immediately\n    if (i % 100 == 0) {\n        longLived.add(new byte[1024]);  // survives → promoted to Old Gen\n    }\n}</code></pre><h3>GC Algorithms</h3><ul><li><strong>G1GC</strong> (default Java 9+): Divides heap into equal regions; targets a configurable pause time goal (<code>-XX:MaxGCPauseMillis</code>). Good for large heaps (&gt;4GB).</li><li><strong>ZGC</strong>: Ultra-low pause (&lt;1ms regardless of heap size). Available Java 15+. Use when latency is critical.</li><li><strong>ParallelGC</strong>: High throughput, not latency-optimised. Good for batch processing.</li></ul><h3>Common Memory Problems</h3><p><strong>Memory Leaks</strong>: objects held by references that are never released. Classic examples: static collections that grow, unclosed resources, listener registrations never removed, inner class holding outer class reference.</p><p><strong>High Allocation Rate</strong>: generating millions of short-lived objects per second overwhelms Eden and causes frequent Minor GC — fix by reusing objects (object pooling, builders, arrays instead of boxed types).</p><p><strong>Heap Sizing</strong>: <code>-Xms</code> (initial), <code>-Xmx</code> (max). Rule: set Xms = Xmx in production to prevent resizing pauses.</p><h3>Diagnosing Issues</h3><pre><code>// Trigger GC and log used/max heap at runtime\nRuntime rt = Runtime.getRuntime();\nlong usedMB = (rt.totalMemory() - rt.freeMemory()) / 1_048_576;\nlong maxMB  = rt.maxMemory() / 1_048_576;\nSystem.out.printf(\"Heap used: %d MB / max: %d MB%n\", usedMB, maxMB);\n\n// Weak/soft references — let GC reclaim when under pressure\nWeakReference&lt;byte[]&gt; cache = new WeakReference&lt;&gt;(new byte[1024 * 1024]);\nif (cache.get() == null) System.out.println(\"GC reclaimed the cache\");</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's Memory Vault stores millions of artefacts. A junior custodian once filled every shelf with temporary scrolls and never cleared them. The Vault stalled for three seconds every time it ran out of space. The senior custodian came in and read the allocation trace in under a minute."},
-        {"type": "dialogue", "av": "🧠", "cls": "mentor", "speaker": "Memory Architect Ysel", "sCls": "mentor", "text": "Everyone says 'increase the heap' when they see an OutOfMemoryError. That is the wrong instinct. First read the GC log. Is it thrashing Eden? Is Old Gen growing indefinitely? Those have completely different fixes. The heap size is rarely the real problem."},
-        {"type": "example", "speaker": "GC log reading — what to look for", "text": "# JVM flags for GC logging (Java 9+)\n-Xlog:gc*:file=gc.log:time,uptime:filecount=5,filesize=10m\n\n# In gc.log:\n[0.142s] GC(0) Pause Young (Normal) ... 12M->4M(64M) 2.341ms\n# ^ Minor GC: 12MB used → 4MB used, heap cap 64MB, 2ms pause — healthy\n\n[4.201s] GC(12) Pause Full ... 58M->57M(64M) 612.108ms\n# ^ Full GC barely freed anything and took 612ms — OLD GEN LEAK suspect"},
-        {"type": "dialogue", "av": "🧠", "cls": "mentor", "speaker": "Memory Architect Ysel", "sCls": "mentor", "text": "The two most common real leaks I see: static Maps that accumulate entries and are never evicted, and event listeners registered to a singleton that hold references to per-request objects. If Old Gen grows monotonically across hours under steady traffic, that is almost always a reference-retention bug."},
-        {"type": "dialogue", "av": "🧠", "cls": "mentor", "speaker": "Memory Architect Ysel", "sCls": "mentor", "text": "WeakReferences and SoftReferences are not just theory. A SoftReference cache is a legitimate pattern for read-heavy data — the JVM will reclaim it before throwing OOM. A WeakReference listener avoids the most common leak pattern. Know these."}
+        {
+          "type": "narration",
+          "text": "The Academy's Memory Vault stores millions of artefacts. A junior custodian once filled every shelf with temporary scrolls and never cleared them. The Vault stalled for three seconds every time it ran out of space. The senior custodian came in and read the allocation trace in under a minute."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧠",
+          "cls": "mentor",
+          "speaker": "Memory Architect Ysel",
+          "sCls": "mentor",
+          "text": "Everyone says 'increase the heap' when they see an OutOfMemoryError. That is the wrong instinct. First read the GC log. Is it thrashing Eden? Is Old Gen growing indefinitely? Those have completely different fixes. The heap size is rarely the real problem."
+        },
+        {
+          "type": "example",
+          "speaker": "GC log reading — what to look for",
+          "text": "# JVM flags for GC logging (Java 9+)\n-Xlog:gc*:file=gc.log:time,uptime:filecount=5,filesize=10m\n\n# In gc.log:\n[0.142s] GC(0) Pause Young (Normal) ... 12M->4M(64M) 2.341ms\n# ^ Minor GC: 12MB used → 4MB used, heap cap 64MB, 2ms pause — healthy\n\n[4.201s] GC(12) Pause Full ... 58M->57M(64M) 612.108ms\n# ^ Full GC barely freed anything and took 612ms — OLD GEN LEAK suspect"
+        },
+        {
+          "type": "dialogue",
+          "av": "🧠",
+          "cls": "mentor",
+          "speaker": "Memory Architect Ysel",
+          "sCls": "mentor",
+          "text": "The two most common real leaks I see: static Maps that accumulate entries and are never evicted, and event listeners registered to a singleton that hold references to per-request objects. If Old Gen grows monotonically across hours under steady traffic, that is almost always a reference-retention bug."
+        },
+        {
+          "type": "dialogue",
+          "av": "🧠",
+          "cls": "mentor",
+          "speaker": "Memory Architect Ysel",
+          "sCls": "mentor",
+          "text": "WeakReferences and SoftReferences are not just theory. A SoftReference cache is a legitimate pattern for read-heavy data — the JVM will reclaim it before throwing OOM. A WeakReference listener avoids the most common leak pattern. Know these."
+        }
       ],
       "learningObjectives": [
         "Describe the JVM heap layout (Eden, Survivor, Old Gen) and the generational hypothesis",
@@ -45,45 +75,77 @@
       "guidedPracticeHtml": "<p>Write a <code>MemoryDemo</code> class that:</p><ol><li>Prints current heap usage (used MB / max MB) using <code>Runtime.getRuntime()</code></li><li>Creates a <code>WeakReference</code> wrapping a <code>byte[1024 * 1024]</code> (1MB array)</li><li>Calls <code>System.gc()</code> as a hint and checks if the reference was cleared (prints 'reclaimed' or 'still live')</li><li>Demonstrates a simple allocation rate: create a loop that allocates 10,000 small byte arrays of 100 bytes each in a tight loop, then prints 'allocation complete'</li></ol>",
       "guidedPracticeStarterCode": "public class MemoryDemo {\n\n    public static void main(String[] args) {\n        // 1. Print heap usage\n        Runtime rt = Runtime.getRuntime();\n        // TODO: calculate usedMB and maxMB\n\n\n        // 2. Create a WeakReference around a 1MB byte array\n\n\n        // 3. Hint GC and check if reclaimed\n        System.gc();\n\n\n        // 4. Allocation loop — 10,000 x 100-byte arrays\n\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "Heap usage printed (contains 'MB')", "input": "null", "expected": "MB"},
-        {"label": "Allocation complete printed", "input": "null", "expected": "allocation complete"}
+        {
+          "label": "Heap usage printed (contains 'MB')",
+          "input": "null",
+          "expected": "MB"
+        },
+        {
+          "label": "Allocation complete printed",
+          "input": "null",
+          "expected": "allocation complete"
+        }
       ],
       "guidedPracticeModelAnswer": "public class MemoryDemo {\n\n    public static void main(String[] args) {\n        // 1. Print heap usage\n        Runtime rt = Runtime.getRuntime();\n        long usedMB = (rt.totalMemory() - rt.freeMemory()) / 1_048_576;\n        long maxMB  = rt.maxMemory() / 1_048_576;\n        System.out.printf(\"Heap used: %d MB / max: %d MB%n\", usedMB, maxMB);\n\n        // 2. WeakReference\n        java.lang.ref.WeakReference<byte[]> ref = new java.lang.ref.WeakReference<>(new byte[1024 * 1024]);\n\n        // 3. Hint GC and check\n        System.gc();\n        if (ref.get() == null) System.out.println(\"reclaimed\");\n        else System.out.println(\"still live\");\n\n        // 4. Allocation loop\n        for (int i = 0; i < 10_000; i++) {\n            byte[] data = new byte[100];\n        }\n        System.out.println(\"allocation complete\");\n    }\n}",
       "soloPracticeHtml": "<p>Write a class <code>LeakDemo</code> that simulates a static Map cache leak. Use a <code>static Map&lt;Integer, byte[]&gt;</code> and a method <code>void cacheEntry(int key)</code> that adds a new 10KB <code>byte[10_240]</code> to the map. In <code>main</code>: call <code>cacheEntry</code> 100 times with keys 0–99, then print the map size and heap used. Then demonstrate the fix: use a <code>java.util.LinkedHashMap</code> with a max size of 10 entries (override <code>removeEldestEntry</code> to return <code>size() > 10</code>), repeat the 100 inserts, and print the capped size.</p>",
       "soloPracticeTests": [
-        {"label": "Static map grows to 100", "input": "null", "expected": "100"},
-        {"label": "LRU cache capped at 10", "input": "null", "expected": "10"}
+        {
+          "label": "Static map grows to 100",
+          "input": "null",
+          "expected": "100"
+        },
+        {
+          "label": "LRU cache capped at 10",
+          "input": "null",
+          "expected": "10"
+        }
       ],
       "modelAnswer": "import java.util.*;\n\npublic class LeakDemo {\n    static Map<Integer, byte[]> leakyCache = new HashMap<>();\n\n    static void cacheEntry(int key) {\n        leakyCache.put(key, new byte[10_240]);\n    }\n\n    public static void main(String[] args) {\n        for (int i = 0; i < 100; i++) cacheEntry(i);\n        System.out.println(\"Leaky cache size: \" + leakyCache.size()); // 100\n\n        Runtime rt = Runtime.getRuntime();\n        long usedMB = (rt.totalMemory() - rt.freeMemory()) / 1_048_576;\n        System.out.println(\"Heap used: \" + usedMB + \" MB\");\n\n        // Fixed: bounded LRU cache\n        Map<Integer, byte[]> lruCache = new LinkedHashMap<>(16, 0.75f, true) {\n            @Override\n            protected boolean removeEldestEntry(Map.Entry<Integer, byte[]> eldest) {\n                return size() > 10;\n            }\n        };\n        for (int i = 0; i < 100; i++) lruCache.put(i, new byte[10_240]);\n        System.out.println(\"LRU cache size: \" + lruCache.size()); // 10\n    }\n}",
       "questions": [
         {
+          "id": "java-sen-2a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Where do newly created objects first reside in the JVM heap?</p>",
-          "options": ["Old Generation", "Metaspace", "Eden Space", "Survivor Space"],
-          "correctAnswer": "Eden Space",
-          "explanationHtml": "<p>New objects are allocated in Eden (part of the Young Generation). After a Minor GC, surviving objects move to a Survivor space. After enough GC cycles, long-lived objects are promoted to the Old Generation (Tenured).</p>"
+          "minPath": "SENIOR",
+          "prompt": "<p>Where do newly created objects first reside in the JVM heap?</p>",
+          "options": [
+            "Old Generation",
+            "Metaspace",
+            "Eden Space",
+            "Survivor Space"
+          ],
+          "answer": "Eden Space",
+          "explanation": "<p>New objects are allocated in Eden (part of the Young Generation). After a Minor GC, surviving objects move to a Survivor space. After enough GC cycles, long-lived objects are promoted to the Old Generation (Tenured).</p>"
         },
         {
+          "id": "java-sen-2a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>An application's GC log shows Old Gen growing from 200MB to 800MB over 2 hours of steady traffic, with Full GC barely recovering any space. What is the most likely cause?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>An application's GC log shows Old Gen growing from 200MB to 800MB over 2 hours of steady traffic, with Full GC barely recovering any space. What is the most likely cause?</p>",
           "options": [
             "The heap is too small — increase -Xmx",
             "Minor GC is running too frequently",
             "A memory leak — objects are being held by references that are never released",
             "ZGC would fix this automatically"
           ],
-          "correctAnswer": "A memory leak — objects are being held by references that are never released",
-          "explanationHtml": "<p>Monotonically growing Old Gen that doesn't recover on Full GC is the classic signature of a reference retention bug (memory leak). Simply increasing the heap delays the OOM but doesn't fix it. Investigate with a heap dump — find what is holding references to the accumulating objects.</p>"
+          "answer": "A memory leak — objects are being held by references that are never released",
+          "explanation": "<p>Monotonically growing Old Gen that doesn't recover on Full GC is the classic signature of a reference retention bug (memory leak). Simply increasing the heap delays the OOM but doesn't fix it. Investigate with a heap dump — find what is holding references to the accumulating objects.</p>"
         },
         {
+          "id": "java-sen-2a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>Which reference type allows the GC to reclaim an object when memory is low, making it suitable for memory-sensitive caches?</p>",
-          "options": ["StrongReference", "WeakReference", "SoftReference", "PhantomReference"],
-          "correctAnswer": "SoftReference",
-          "explanationHtml": "<p>SoftReferences are reclaimed by the GC only when the JVM is under memory pressure (before throwing OOM). This makes them ideal for caches — entries stay in memory when there is room but are sacrificed when needed. WeakReferences are reclaimed at the next GC regardless of memory pressure.</p>"
+          "minPath": "SENIOR",
+          "prompt": "<p>Which reference type allows the GC to reclaim an object when memory is low, making it suitable for memory-sensitive caches?</p>",
+          "options": [
+            "StrongReference",
+            "WeakReference",
+            "SoftReference",
+            "PhantomReference"
+          ],
+          "answer": "SoftReference",
+          "explanation": "<p>SoftReferences are reclaimed by the GC only when the JVM is under memory pressure (before throwing OOM). This makes them ideal for caches — entries stay in memory when there is room but are sacrificed when needed. WeakReferences are reclaimed at the next GC regardless of memory pressure.</p>"
         }
       ]
     }

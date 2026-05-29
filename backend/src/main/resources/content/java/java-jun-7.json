@@ -5,7 +5,9 @@
   "sortOrder": 7,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-6"],
+  "prerequisites": [
+    "java-jun-6"
+  ],
   "subChunks": [
     {
       "id": "java-jun-7a",
@@ -132,36 +134,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-7a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>Which Optional factory method should you use when the argument might be null?</p>",
-          "options": ["Optional.of(value)", "Optional.empty()", "Optional.ofNullable(value)", "Optional.wrap(value)"],
-          "correctAnswer": "Optional.ofNullable(value)",
-          "explanationHtml": "<p><code>Optional.ofNullable(value)</code> returns an empty Optional if the value is null, or a non-empty Optional if it is not. <code>Optional.of(value)</code> throws NullPointerException immediately if the argument is null.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>Which Optional factory method should you use when the argument might be null?</p>",
+          "options": [
+            "Optional.of(value)",
+            "Optional.empty()",
+            "Optional.ofNullable(value)",
+            "Optional.wrap(value)"
+          ],
+          "answer": "Optional.ofNullable(value)",
+          "explanation": "<p><code>Optional.ofNullable(value)</code> returns an empty Optional if the value is null, or a non-empty Optional if it is not. <code>Optional.of(value)</code> throws NullPointerException immediately if the argument is null.</p>"
         },
         {
+          "id": "java-jun-7a-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this code print?</p>",
-          "codeSnippet": "import java.util.Optional;\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> o = Optional.of(\"Java\");\n        System.out.println(o.map(String::length).orElse(0));\n        Optional<String> empty = Optional.empty();\n        System.out.println(empty.orElse(\"default\"));\n    }\n}",
-          "correctAnswer": "4\ndefault",
-          "explanationHtml": "<p><code>\"Java\".length()</code> is 4, so the mapped Optional holds 4 and orElse(0) returns 4. The empty Optional has no value, so orElse(\"default\") returns \"default\".</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this code print?</p>",
+          "options": [],
+          "answer": "4\ndefault",
+          "explanation": "<p><code>\"Java\".length()</code> is 4, so the mapped Optional holds 4 and orElse(0) returns 4. The empty Optional has no value, so orElse(\"default\") returns \"default\".</p>"
         },
         {
+          "id": "java-jun-7a-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is the bug in this code?</p>",
-          "codeSnippet": "import java.util.Optional;\npublic class Main {\n    public static void main(String[] args) {\n        Optional<String> opt = Optional.empty();\n        System.out.println(opt.get()); // prints the value\n    }\n}",
-          "correctAnswer": "Calling get() on an empty Optional throws NoSuchElementException. Use orElse(), orElseGet(), or check isPresent() before calling get().",
-          "explanationHtml": "<p><code>Optional.get()</code> throws <code>java.util.NoSuchElementException</code> when the Optional is empty. The safe alternatives are <code>orElse(\"fallback\")</code>, <code>orElseGet(supplier)</code>, or <code>orElseThrow(exceptionSupplier)</code>.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is the bug in this code?</p>",
+          "options": [],
+          "answer": "Calling get() on an empty Optional throws NoSuchElementException. Use orElse(), orElseGet(), or check isPresent() before calling get().",
+          "explanation": "<p><code>Optional.get()</code> throws <code>java.util.NoSuchElementException</code> when the Optional is empty. The safe alternatives are <code>orElse(\"fallback\")</code>, <code>orElseGet(supplier)</code>, or <code>orElseThrow(exceptionSupplier)</code>.</p>"
         },
         {
+          "id": "java-jun-7a-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You want to run a side effect (log a message) only when an Optional has a value, without extracting it. Which method is best?</p>",
-          "options": ["isPresent() + get()", "orElse(null) != null", "ifPresent(consumer)", "map() then orElse()"],
-          "correctAnswer": "ifPresent(consumer)",
-          "explanationHtml": "<p><code>ifPresent(consumer)</code> is designed exactly for this: it invokes the lambda only when the Optional is non-empty, with no boilerplate and no risk of accidentally extracting the value. <code>isPresent() + get()</code> works but is more verbose and error-prone.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>You want to run a side effect (log a message) only when an Optional has a value, without extracting it. Which method is best?</p>",
+          "options": [
+            "isPresent() + get()",
+            "orElse(null) != null",
+            "ifPresent(consumer)",
+            "map() then orElse()"
+          ],
+          "answer": "ifPresent(consumer)",
+          "explanation": "<p><code>ifPresent(consumer)</code> is designed exactly for this: it invokes the lambda only when the Optional is non-empty, with no boilerplate and no risk of accidentally extracting the value. <code>isPresent() + get()</code> works but is more verbose and error-prone.</p>"
         }
       ]
     },
@@ -290,41 +310,54 @@
       ],
       "questions": [
         {
+          "id": "java-jun-7b-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What does <code>Objects.requireNonNullElse(value, \"default\")</code> return when <code>value</code> is null?</p>",
-          "options": ["null", "throws NullPointerException", "\"default\"", "Optional.empty()"],
-          "correctAnswer": "\"default\"",
-          "explanationHtml": "<p><code>requireNonNullElse</code> returns the first argument if non-null, or the second argument (the default) if the first is null. It will throw NullPointerException if the default argument itself is null.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does <code>Objects.requireNonNullElse(value, \"default\")</code> return when <code>value</code> is null?</p>",
+          "options": [
+            "null",
+            "throws NullPointerException",
+            "\"default\"",
+            "Optional.empty()"
+          ],
+          "answer": "\"default\"",
+          "explanation": "<p><code>requireNonNullElse</code> returns the first argument if non-null, or the second argument (the default) if the first is null. It will throw NullPointerException if the default argument itself is null.</p>"
         },
         {
+          "id": "java-jun-7b-q2",
           "type": "WHATS_THE_OUTPUT",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What does this print?</p>",
-          "codeSnippet": "import java.util.Objects;\npublic class Main {\n    public static void main(String[] args) {\n        String a = \"hello\";\n        String b = null;\n        System.out.println(Objects.nonNull(a));\n        System.out.println(Objects.isNull(b));\n        System.out.println(Objects.requireNonNullElse(b, \"world\"));\n    }\n}",
-          "correctAnswer": "true\ntrue\nworld",
-          "explanationHtml": "<p><code>Objects.nonNull(\"hello\")</code> is true. <code>Objects.isNull(null)</code> is true. <code>requireNonNullElse(null, \"world\")</code> returns \"world\" because the first argument is null.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What does this print?</p>",
+          "options": [],
+          "answer": "true\ntrue\nworld",
+          "explanation": "<p><code>Objects.nonNull(\"hello\")</code> is true. <code>Objects.isNull(null)</code> is true. <code>requireNonNullElse(null, \"world\")</code> returns \"world\" because the first argument is null.</p>"
         },
         {
+          "id": "java-jun-7b-q3",
           "type": "DEBUGGING",
           "tier": "APPLICATION",
-          "questionHtml": "<p>What is wrong with this defensive method?</p>",
-          "codeSnippet": "import java.util.Objects;\npublic class Main {\n    static String describe(String spell) {\n        return \"Casting: \" + Objects.requireNonNull(spell);\n    }\n    public static void main(String[] args) {\n        System.out.println(describe(null));\n    }\n}",
-          "correctAnswer": "requireNonNull throws NullPointerException when passed null, so calling describe(null) crashes. Use requireNonNullElse(spell, \"Unknown\") to provide a safe default instead.",
-          "explanationHtml": "<p><code>Objects.requireNonNull(spell)</code> throws NullPointerException if spell is null — that's its purpose. If null should be accepted with a fallback, use <code>Objects.requireNonNullElse(spell, \"Unknown\")</code> instead.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>What is wrong with this defensive method?</p>",
+          "options": [],
+          "answer": "requireNonNull throws NullPointerException when passed null, so calling describe(null) crashes. Use requireNonNullElse(spell, \"Unknown\") to provide a safe default instead.",
+          "explanation": "<p><code>Objects.requireNonNull(spell)</code> throws NullPointerException if spell is null — that's its purpose. If null should be accepted with a fallback, use <code>Objects.requireNonNullElse(spell, \"Unknown\")</code> instead.</p>"
         },
         {
+          "id": "java-jun-7b-q4",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>You are writing a public API method. The parameter must never be null — passing null is a programming error that should be caught immediately. Which is the best approach?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>You are writing a public API method. The parameter must never be null — passing null is a programming error that should be caught immediately. Which is the best approach?</p>",
           "options": [
             "Return Optional.empty() silently if the parameter is null",
             "Check if null and return without doing anything",
             "Use Objects.requireNonNull at the top of the method",
             "Use an if-null check and log a warning"
           ],
-          "correctAnswer": "Use Objects.requireNonNull at the top of the method",
-          "explanationHtml": "<p>When null is a programming error (not a valid input), fail fast with <code>Objects.requireNonNull</code>. This surfaces the mistake at the call site immediately. Silently returning or logging hides bugs — callers need to know they have done something wrong.</p>"
+          "answer": "Use Objects.requireNonNull at the top of the method",
+          "explanation": "<p>When null is a programming error (not a valid input), fail fast with <code>Objects.requireNonNull</code>. This surfaces the mistake at the call site immediately. Silently returning or logging hides bugs — callers need to know they have done something wrong.</p>"
         }
       ]
     }

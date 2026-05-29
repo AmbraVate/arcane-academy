@@ -5,7 +5,9 @@
   "sortOrder": 15,
   "tier": "LEAD",
   "topicId": "java",
-  "prerequisites": ["java-lea-14"],
+  "prerequisites": [
+    "java-lea-14"
+  ],
   "subChunks": [
     {
       "id": "java-lea-15a",
@@ -16,10 +18,34 @@
       "hookHtml": "<p>What gets measured gets managed — and what gets managed wrong gets gamed. Engineering metrics are one of the most powerful and most misused tools available to a Lead. The right metrics illuminate where improvement is possible and whether changes are actually working. The wrong metrics create perverse incentives, destroy trust, and measure the wrong things entirely.</p>",
       "explanationHtml": "<h3>DORA Metrics: The Evidence-Based Standard</h3><p>The DORA (DevOps Research and Assessment) research programme identified four metrics that consistently distinguish high-performing engineering organisations from low-performing ones:</p><ul><li><strong>Deployment Frequency</strong>: how often does your team successfully release to production? High performers deploy on-demand, multiple times per day. Low performers deploy monthly or less.</li><li><strong>Lead Time for Changes</strong>: how long from code committed to code running in production? High performers: less than 1 hour. Low performers: 1 month to 6 months.</li><li><strong>Change Failure Rate</strong>: what percentage of production deployments cause a degraded service or require hotfix? High performers: 0–15%. Low performers: 46–60%.</li><li><strong>Time to Restore Service</strong>: when an incident occurs, how quickly is it resolved? High performers: under 1 hour. Low performers: 1 week to 1 month.</li></ul><p>These four metrics together tell you: can you ship quickly (deployment frequency, lead time), safely (change failure rate), and recover when things go wrong (TTRS)? They are output metrics — they measure the outcomes of your practices, not the practices themselves.</p><h3>What DORA Metrics Are Not</h3><p>DORA metrics are team-level metrics, not individual metrics. Using deployment frequency to compare individual engineers is harmful and invalid — it measures how the pipeline is set up, not how clever an engineer is. Lead Time for Changes is not a target to be met by cutting corners — it should fall as a natural consequence of improved practices (smaller PRs, automated testing, better CI/CD). Optimising for the metric without improving the underlying system is Goodhart's Law: 'When a measure becomes a target, it ceases to be a good measure.'</p><h3>Space Framework: Broader Team Health</h3><p>DORA measures delivery performance. SPACE (Satisfaction, Performance, Activity, Communication, Efficiency) is a framework for measuring developer experience and team health more broadly. Key dimensions:</p><ul><li><strong>Satisfaction</strong>: are engineers happy with their work, tools, and team? (Developer NPS, survey)</li><li><strong>Performance</strong>: are outcomes meeting expectations? (Quality metrics, reliability)</li><li><strong>Activity</strong>: volume of work being done (PRs, deployments — useful for trend analysis but not for comparison)</li><li><strong>Communication</strong>: knowledge sharing, documentation quality, onboarding time</li><li><strong>Efficiency</strong>: time spent on value-adding work vs toil, meeting load</li></ul><h3>Metrics That Harm</h3><p>Some commonly used metrics are actively harmful:</p><ul><li><strong>Lines of code</strong>: incentivises verbose, unmaintainable code</li><li><strong>Number of commits</strong>: incentivises tiny, meaningless commits</li><li><strong>Ticket velocity (story points)</strong>: incentivises inflating estimates and splitting tickets</li><li><strong>Individual deployment frequency</strong>: incentivises engineers to work on independently-deployable work and avoid complex, important features</li></ul><p>If a metric can be improved by behaviour that doesn't improve outcomes, it is the wrong metric.</p><h3>Using Metrics to Drive Improvement</h3><p>Metrics are useful when they: diagnose where the bottleneck is, track whether an intervention worked, and create a shared language for improvement conversations. A team with a high Change Failure Rate should ask: what is causing failures? (Missing tests? Insufficient review? Flaky infrastructure?) The metric surfaces the problem; the investigation finds the cause; the intervention targets the cause; the metric confirms the fix worked. This loop — measure, diagnose, intervene, confirm — is the correct use of engineering metrics.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "The new VP of Engineering had heard about DORA metrics. He set a target: every team must deploy daily by Q2. Teams started deploying small, low-risk changes just to hit the metric. Large architectural improvements that required careful rollout were deferred because they would temporarily reduce deployment frequency. The metric improved. Deployment frequency was now four deployments per week, up from two. Lead Time for Changes and Change Failure Rate got worse. The VP had optimised for a proxy and lost the thing the proxy was measuring."},
-        {"type": "dialogue", "av": "📊", "cls": "mentor", "speaker": "Engineering Manager Sael", "sCls": "mentor", "text": "DORA metrics are a diagnostic tool, not a target. When deployment frequency is low, you investigate: is the CI pipeline slow? Is the PR review process a bottleneck? Are the tests too slow to run? Fix those things. Deployment frequency rises as a consequence of the fixes, not as a target you optimise for directly. The moment you make the metric the objective, engineers will find the fastest way to improve the number without improving the underlying system. And they will succeed."},
-        {"type": "dialogue", "av": "📊", "cls": "mentor", "speaker": "Engineering Manager Sael", "sCls": "mentor", "text": "Developer satisfaction is a leading indicator of future output. Teams with a high Developer NPS have lower attrition, better knowledge sharing, and more willingness to push back on bad decisions. Teams with a low Developer NPS are about to start losing engineers. The SPACE dimension most commonly missed by technical Leads is Satisfaction — we track what we ship, but not whether the engineers building it want to keep building it."},
-        {"type": "dialogue", "av": "📊", "cls": "mentor", "speaker": "Engineering Manager Sael", "sCls": "mentor", "text": "The right cadence for metrics review matters. DORA metrics should be reviewed monthly — they move too slowly to be useful week-to-week. Developer satisfaction should be surveyed quarterly. Incident metrics (TTRS, change failure rate) should be reviewed after every incident plus monthly in aggregate. Using the wrong cadence — checking DORA weekly, surveying satisfaction annually — either creates noise or loses signal."}
+        {
+          "type": "narration",
+          "text": "The new VP of Engineering had heard about DORA metrics. He set a target: every team must deploy daily by Q2. Teams started deploying small, low-risk changes just to hit the metric. Large architectural improvements that required careful rollout were deferred because they would temporarily reduce deployment frequency. The metric improved. Deployment frequency was now four deployments per week, up from two. Lead Time for Changes and Change Failure Rate got worse. The VP had optimised for a proxy and lost the thing the proxy was measuring."
+        },
+        {
+          "type": "dialogue",
+          "av": "📊",
+          "cls": "mentor",
+          "speaker": "Engineering Manager Sael",
+          "sCls": "mentor",
+          "text": "DORA metrics are a diagnostic tool, not a target. When deployment frequency is low, you investigate: is the CI pipeline slow? Is the PR review process a bottleneck? Are the tests too slow to run? Fix those things. Deployment frequency rises as a consequence of the fixes, not as a target you optimise for directly. The moment you make the metric the objective, engineers will find the fastest way to improve the number without improving the underlying system. And they will succeed."
+        },
+        {
+          "type": "dialogue",
+          "av": "📊",
+          "cls": "mentor",
+          "speaker": "Engineering Manager Sael",
+          "sCls": "mentor",
+          "text": "Developer satisfaction is a leading indicator of future output. Teams with a high Developer NPS have lower attrition, better knowledge sharing, and more willingness to push back on bad decisions. Teams with a low Developer NPS are about to start losing engineers. The SPACE dimension most commonly missed by technical Leads is Satisfaction — we track what we ship, but not whether the engineers building it want to keep building it."
+        },
+        {
+          "type": "dialogue",
+          "av": "📊",
+          "cls": "mentor",
+          "speaker": "Engineering Manager Sael",
+          "sCls": "mentor",
+          "text": "The right cadence for metrics review matters. DORA metrics should be reviewed monthly — they move too slowly to be useful week-to-week. Developer satisfaction should be surveyed quarterly. Incident metrics (TTRS, change failure rate) should be reviewed after every incident plus monthly in aggregate. Using the wrong cadence — checking DORA weekly, surveying satisfaction annually — either creates noise or loses signal."
+        }
       ],
       "learningObjectives": [
         "Define the four DORA metrics and explain what each measures and what each indicates about engineering performance",
@@ -46,37 +72,44 @@
       "modelAnswer": "1. Six metrics and rationale:\n\n   (a) Deployment Frequency (DORA) — team-level, monthly:\n   Why: leading indicator of CI/CD health and batch size discipline. Low frequency indicates pipeline friction or large PRs. Not used to compare individuals.\n\n   (b) Lead Time for Changes (DORA) — team-level, monthly:\n   Why: measures the full cycle from code commit to production. High values indicate bottlenecks in review, testing, or deployment. Broken down by stage (PR review wait, CI run time, deployment time) for diagnosis.\n\n   (c) Change Failure Rate (DORA) — team-level, monthly:\n   Why: measures deployment quality. Spike indicates testing gaps, insufficient review, or poorly understood changes. Target: below 15%.\n\n   (d) Time to Restore Service (DORA) — incident-based + monthly aggregate:\n   Why: measures incident response effectiveness. Reviewed after every incident and in monthly aggregate for trend.\n\n   (e) Developer NPS — team, quarterly survey:\n   Why: leading indicator of attrition, team health, and morale. Specific questions: 'How much of your time is spent on valuable work vs toil?', 'Do you feel you are growing?', 'Would you recommend this team to a friend?'\n\n   (f) Unplanned work rate — team, monthly (from sprint retrospective):\n   Why: what percentage of sprint capacity went to unplanned incidents, urgent fixes, or interruptions? High rate indicates reliability or prioritisation problems that need attention.\n\n2. Cadence:\n   - Deployment frequency, lead time, change failure rate: monthly review in team engineering sync\n   - TTRS: reviewed after every incident + monthly aggregate\n   - Developer NPS: quarterly anonymous survey\n   - Unplanned work rate: noted in each sprint retrospective, reviewed in monthly trend\n\n3. Presenting metrics without surveillance feeling:\n   - Present metrics as team signals, not individual performance ('our lead time has increased — what do we think is causing this?' not 'who is causing slow lead time?')\n   - Use metrics to open investigation, not to assign blame: 'our change failure rate ticked up this month — let's look at which changes failed and what they had in common'\n   - Share context alongside numbers: a spike in change failure rate during a major refactor is expected and acceptable — context prevents misinterpretation\n   - Invite the team to suggest what to measure: 'what would tell you that we're improving?'\n   - Discuss Developer NPS results openly: 'the team rated toil reduction as the biggest need — here is what I'm planning to do about that'\n\n4. When the metric looks good but the system has a problem:\n   Disclose it explicitly. 'Our deployment frequency hit 8/week this month — but I noticed most of those were config tweaks and documentation updates. We didn't ship a significant feature. The metric improved for the wrong reasons. Let's talk about why feature lead time is so high.' Refusing to Goodhart your own metrics is a cultural model — if the Lead is honest about it, the team will be too.\n\n5. VP of Engineering vs team-internal:\n   Share with VP: DORA four metrics (team-level trend, not individual breakdown), high-level Developer NPS trend (not verbatim comments), major incident postmortem summaries.\n   Team-internal only: Developer NPS verbatim comments (psychological safety requires this), unplanned work rate (this is a team improvement tool, not a management report), individual lead time breakdowns (diagnostic, not performance measurement), detailed incident attribution (blameless culture requires this).",
       "questions": [
         {
+          "id": "java-lea-15a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>What are the four DORA metrics?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>What are the four DORA metrics?</p>",
           "options": [
             "Deployment Frequency, Lead Time for Changes, Change Failure Rate, Time to Restore Service",
             "Code Coverage, Test Pass Rate, Deployment Count, Bug Rate",
             "Story Points, Sprint Velocity, Cycle Time, Throughput",
             "Uptime, Error Rate, Latency, Deployment Size"
           ],
-          "correctAnswer": "Deployment Frequency, Lead Time for Changes, Change Failure Rate, Time to Restore Service",
-          "explanationHtml": "<p>The four DORA metrics are: (1) Deployment Frequency — how often code reaches production; (2) Lead Time for Changes — how long from commit to production; (3) Change Failure Rate — what percentage of deployments cause incidents or require rollback; (4) Time to Restore Service — how quickly the team recovers from incidents. Together, these measure delivery throughput (frequency, lead time) and delivery quality (change failure rate, recovery speed). DORA research found these four metrics strongly correlated with overall organisational performance.</p>"
+          "answer": "Deployment Frequency, Lead Time for Changes, Change Failure Rate, Time to Restore Service",
+          "explanation": "<p>The four DORA metrics are: (1) Deployment Frequency — how often code reaches production; (2) Lead Time for Changes — how long from commit to production; (3) Change Failure Rate — what percentage of deployments cause incidents or require rollback; (4) Time to Restore Service — how quickly the team recovers from incidents. Together, these measure delivery throughput (frequency, lead time) and delivery quality (change failure rate, recovery speed). DORA research found these four metrics strongly correlated with overall organisational performance.</p>"
         },
         {
+          "id": "java-lea-15a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>An engineering team's deployment frequency increased from 5/week to 15/week after a manager set it as a target. However, the team is now deploying small documentation changes and config updates to hit the number. Change Failure Rate is unchanged. What is this an example of?</p>",
+          "minPath": "LEAD",
+          "prompt": "<p>An engineering team's deployment frequency increased from 5/week to 15/week after a manager set it as a target. However, the team is now deploying small documentation changes and config updates to hit the number. Change Failure Rate is unchanged. What is this an example of?</p>",
           "options": [
             "Successful performance improvement — the team is deploying more often as intended",
             "Goodhart's Law — the metric has become a target and no longer measures what it was designed to measure",
             "A deployment pipeline that is working correctly",
             "The team needs to be set a higher target to incentivise real improvement"
           ],
-          "correctAnswer": "Goodhart's Law — the metric has become a target and no longer measures what it was designed to measure",
-          "explanationHtml": "<p>Goodhart's Law: 'When a measure becomes a target, it ceases to be a good measure.' Deployment frequency was supposed to proxy for the ability to ship value to production safely and often. By gaming it with trivial deployments, the team improved the number without improving the underlying capability. The real indicators (Lead Time for Changes, Change Failure Rate) are unchanged. This is the canonical failure mode of treating DORA metrics as targets rather than diagnostic signals.</p>"
+          "answer": "Goodhart's Law — the metric has become a target and no longer measures what it was designed to measure",
+          "explanation": "<p>Goodhart's Law: 'When a measure becomes a target, it ceases to be a good measure.' Deployment frequency was supposed to proxy for the ability to ship value to production safely and often. By gaming it with trivial deployments, the team improved the number without improving the underlying capability. The real indicators (Lead Time for Changes, Change Failure Rate) are unchanged. This is the canonical failure mode of treating DORA metrics as targets rather than diagnostic signals.</p>"
         },
         {
+          "id": "java-lea-15a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>Story point velocity is a reliable measure of engineering team productivity.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>Story point velocity measures the team's own estimate of work completed — which is subject to estimation bias, scope changes, team composition changes, and deliberate manipulation. Teams that inflate estimates, split tickets artificially, or change estimation scales appear to have high velocity while potentially delivering less value. Story points are useful within a stable team for capacity planning, but they are not comparable across teams, not stable over time, and not a valid measure of value delivered. Better productivity indicators: deployment frequency, lead time for features, customer-reported quality, and qualitative team assessments of value delivered.</p>"
+          "minPath": "LEAD",
+          "prompt": "<p>Story point velocity is a reliable measure of engineering team productivity.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>Story point velocity measures the team's own estimate of work completed — which is subject to estimation bias, scope changes, team composition changes, and deliberate manipulation. Teams that inflate estimates, split tickets artificially, or change estimation scales appear to have high velocity while potentially delivering less value. Story points are useful within a stable team for capacity planning, but they are not comparable across teams, not stable over time, and not a valid measure of value delivered. Better productivity indicators: deployment frequency, lead time for features, customer-reported quality, and qualitative team assessments of value delivered.</p>"
         }
       ]
     }

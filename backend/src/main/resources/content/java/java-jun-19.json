@@ -5,7 +5,9 @@
   "sortOrder": 19,
   "tier": "JUNIOR",
   "topicId": "java",
-  "prerequisites": ["java-jun-18"],
+  "prerequisites": [
+    "java-jun-18"
+  ],
   "subChunks": [
     {
       "id": "java-jun-19a",
@@ -16,11 +18,39 @@
       "hookHtml": "<p>Individual methods and classes are the bricks. Architecture is how you arrange them into a building. Without intentional architecture, every system eventually becomes a ball of mud — where every class knows about every other class, and changing anything risks breaking everything.</p>",
       "explanationHtml": "<h3>Layered Architecture</h3><p>The most common architecture pattern in Java applications: organise code into horizontal layers, each with a single responsibility.</p><pre><code>┌─────────────────────────────────────┐\n│     Controller (Presentation)       │  ← HTTP concerns\n│  Handles HTTP requests, responses   │\n├─────────────────────────────────────┤\n│     Service (Business Logic)        │  ← Application rules\n│  Orchestrates business operations   │\n├─────────────────────────────────────┤\n│     Repository (Data Access)        │  ← Persistence concerns\n│  Reads and writes to the database   │\n├─────────────────────────────────────┤\n│     Domain (Model)                  │  ← Core entities\n│  Spell, Mage, Enrolment, etc.       │\n└─────────────────────────────────────┘</code></pre><p><strong>Dependency rule</strong>: each layer only calls the layer below it. Controllers call Services. Services call Repositories. Nothing calls upward. Domain classes have no dependencies on any other layer.</p><h3>Separation of Concerns</h3><p>Each class has one reason to change. A <code>SpellService</code> contains business logic — spell validation, XP calculation, eligibility rules. It does not parse HTTP, format JSON, or write SQL. When the database changes, only the Repository changes. When the API changes, only the Controller changes.</p><h3>Coupling</h3><p><strong>Coupling</strong> measures how much a class knows about or depends on another. High coupling = changing one class requires changing many others. Low coupling = classes are independent and can be changed, replaced, or tested in isolation.</p><p>Common coupling reducers: interfaces (depend on an abstraction, not a concrete implementation), dependency injection (receive your dependencies; don't create them), event-driven communication.</p><h3>Cohesion</h3><p><strong>Cohesion</strong> measures how related a class's responsibilities are. High cohesion = the class does one thing well. Low cohesion = the class contains unrelated responsibilities.</p><p>A class that handles HTTP parsing AND business logic AND database queries is low-cohesion. Split it: one class per responsibility.</p><h3>The Dependency Inversion Principle</h3><p>High-level modules should not depend on low-level modules. Both should depend on abstractions (interfaces). This is the 'D' in SOLID:</p><pre><code>// BAD — Service depends directly on concrete class\nclass SpellService {\n    private MySQLSpellRepository repo = new MySQLSpellRepository();\n}\n\n// GOOD — Service depends on an interface\nclass SpellService {\n    private final SpellRepository repo;  // interface\n    SpellService(SpellRepository repo) { this.repo = repo; } // DI\n}</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's oldest tower was built without a plan. Walls were added as needed; staircases were retrofitted through existing rooms; the heating system runs through the library. Forty years later, nobody dares touch the fourth floor because nobody knows what will collapse. The new tower has blueprints."},
-        {"type": "dialogue", "av": "🏛️", "cls": "mentor", "speaker": "Chief Architect Sorel", "sCls": "mentor", "text": "Software architecture is how you prevent your system from becoming the old tower. Layered architecture is the simplest pattern that works for most Java applications: Controllers for HTTP, Services for business logic, Repositories for data. Each layer knows only about the layer directly below it."},
-        {"type": "example", "speaker": "Layered architecture in a Spring Boot app", "text": "@RestController                    // Layer 1: HTTP\nclass SpellController {\n    SpellController(SpellService svc) {...}\n    // Handles POST /api/spells, returns ResponseEntity\n}\n\n@Service                            // Layer 2: Business logic\nclass SpellService {\n    SpellService(SpellRepository repo) {...}\n    // Validates, calculates XP, checks prerequisites\n}\n\n@Repository                         // Layer 3: Persistence\ninterface SpellRepository extends JpaRepository<Spell, String> {\n    // findByTier(), findByDamageGreaterThan(), etc.\n}"},
-        {"type": "dialogue", "av": "🏛️", "cls": "mentor", "speaker": "Chief Architect Sorel", "sCls": "mentor", "text": "Coupling and cohesion are the two metrics of structural quality. High coupling means your classes are entangled — difficult to change or test in isolation. High cohesion means each class does exactly one thing — easy to understand, test, and replace. Aim for low coupling and high cohesion."},
-        {"type": "dialogue", "av": "🏛️", "cls": "mentor", "speaker": "Chief Architect Sorel", "sCls": "mentor", "text": "The Dependency Inversion Principle says: depend on interfaces, not concrete classes. Your SpellService should not know whether the data comes from MySQL, Postgres, or a test mock — it should only know that it can call save() and findById(). Spring's dependency injection wires the concrete implementation in for you."}
+        {
+          "type": "narration",
+          "text": "The Academy's oldest tower was built without a plan. Walls were added as needed; staircases were retrofitted through existing rooms; the heating system runs through the library. Forty years later, nobody dares touch the fourth floor because nobody knows what will collapse. The new tower has blueprints."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏛️",
+          "cls": "mentor",
+          "speaker": "Chief Architect Sorel",
+          "sCls": "mentor",
+          "text": "Software architecture is how you prevent your system from becoming the old tower. Layered architecture is the simplest pattern that works for most Java applications: Controllers for HTTP, Services for business logic, Repositories for data. Each layer knows only about the layer directly below it."
+        },
+        {
+          "type": "example",
+          "speaker": "Layered architecture in a Spring Boot app",
+          "text": "@RestController                    // Layer 1: HTTP\nclass SpellController {\n    SpellController(SpellService svc) {...}\n    // Handles POST /api/spells, returns ResponseEntity\n}\n\n@Service                            // Layer 2: Business logic\nclass SpellService {\n    SpellService(SpellRepository repo) {...}\n    // Validates, calculates XP, checks prerequisites\n}\n\n@Repository                         // Layer 3: Persistence\ninterface SpellRepository extends JpaRepository<Spell, String> {\n    // findByTier(), findByDamageGreaterThan(), etc.\n}"
+        },
+        {
+          "type": "dialogue",
+          "av": "🏛️",
+          "cls": "mentor",
+          "speaker": "Chief Architect Sorel",
+          "sCls": "mentor",
+          "text": "Coupling and cohesion are the two metrics of structural quality. High coupling means your classes are entangled — difficult to change or test in isolation. High cohesion means each class does exactly one thing — easy to understand, test, and replace. Aim for low coupling and high cohesion."
+        },
+        {
+          "type": "dialogue",
+          "av": "🏛️",
+          "cls": "mentor",
+          "speaker": "Chief Architect Sorel",
+          "sCls": "mentor",
+          "text": "The Dependency Inversion Principle says: depend on interfaces, not concrete classes. Your SpellService should not know whether the data comes from MySQL, Postgres, or a test mock — it should only know that it can call save() and findById(). Spring's dependency injection wires the concrete implementation in for you."
+        }
       ],
       "learningObjectives": [
         "Describe the three layers of a typical layered architecture and the responsibility of each",
@@ -47,32 +77,44 @@
       "modelAnswer": "(a)+(b) Classes and layers:\n  OrderController (Presentation) — handles HTTP POST /orders, parses request body, returns 201 response\n  OrderService (Business Logic) — validates order, calculates total with discount rules, calls OrderRepository and EmailService\n  OrderRepository (Data Access) — implements OrderRepository interface; saves order to DB\n  EmailService (interface) + EmailServiceImpl (Infrastructure) — sends confirmation email\n\n(c) Single responsibilities:\n  OrderController: HTTP translation only — maps request to domain objects, maps result to HTTP response\n  OrderService: all business logic — discount calculation, validation, coordination\n  OrderRepository: persistence only — SQL or JPA, no business logic\n  EmailService: send an email with order details\n\n(d) Email service:\n  Email is infrastructure — belongs in its own layer (infrastructure/external), injected into OrderService:\n  class OrderService {\n      OrderService(OrderRepository repo, EmailService emailer) {...}\n      // emailer is an interface — in tests, inject a mock; in production, inject SMTP impl\n  }\n  This keeps OrderService testable without a real SMTP server — pass a mock EmailService in unit tests.",
       "questions": [
         {
+          "id": "java-jun-19a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>In a layered architecture, which layer is responsible for business rules and application logic?</p>",
-          "options": ["Controller", "Repository", "Service", "Domain"],
-          "correctAnswer": "Service",
-          "explanationHtml": "<p>The Service layer contains business logic — validation, calculations, orchestration of multiple repositories, and application-specific rules. The Controller handles HTTP. The Repository handles persistence. The Domain contains pure data structures (entities/value objects).</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>In a layered architecture, which layer is responsible for business rules and application logic?</p>",
+          "options": [
+            "Controller",
+            "Repository",
+            "Service",
+            "Domain"
+          ],
+          "answer": "Service",
+          "explanation": "<p>The Service layer contains business logic — validation, calculations, orchestration of multiple repositories, and application-specific rules. The Controller handles HTTP. The Repository handles persistence. The Domain contains pure data structures (entities/value objects).</p>"
         },
         {
+          "id": "java-jun-19a-q2",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>In a properly layered application, it is acceptable for a Repository to call a Service to apply business rules before saving data.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>The dependency rule states that dependencies flow downward: Controller → Service → Repository. A Repository calling a Service would be a circular dependency that violates this rule. Business rules should be applied in the Service layer before the Repository is called.</p>"
+          "minPath": "JUNIOR",
+          "prompt": "<p>In a properly layered application, it is acceptable for a Repository to call a Service to apply business rules before saving data.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>The dependency rule states that dependencies flow downward: Controller → Service → Repository. A Repository calling a Service would be a circular dependency that violates this rule. Business rules should be applied in the Service layer before the Repository is called.</p>"
         },
         {
+          "id": "java-jun-19a-q3",
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
-          "questionHtml": "<p>A <code>UserService</code> directly instantiates <code>new MySQLUserRepository()</code> inside its constructor. What problem does this cause?</p>",
+          "minPath": "JUNIOR",
+          "prompt": "<p>A <code>UserService</code> directly instantiates <code>new MySQLUserRepository()</code> inside its constructor. What problem does this cause?</p>",
           "options": [
             "It causes a NullPointerException at startup",
             "It makes UserService impossible to unit test in isolation — you cannot inject a mock repository",
             "Java does not allow instantiation inside a constructor",
             "It increases cohesion at the expense of coupling"
           ],
-          "correctAnswer": "It makes UserService impossible to unit test in isolation — you cannot inject a mock repository",
-          "explanationHtml": "<p>When a class creates its own dependencies, you cannot substitute a test double. Unit tests of UserService would require a real database. Inject the interface: <code>UserService(UserRepository repo)</code> — then tests can pass <code>new MockUserRepository()</code>, production code passes the real one via Spring DI.</p>"
+          "answer": "It makes UserService impossible to unit test in isolation — you cannot inject a mock repository",
+          "explanation": "<p>When a class creates its own dependencies, you cannot substitute a test double. Unit tests of UserService would require a real database. Inject the interface: <code>UserService(UserRepository repo)</code> — then tests can pass <code>new MockUserRepository()</code>, production code passes the real one via Spring DI.</p>"
         }
       ]
     }

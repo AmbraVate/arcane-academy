@@ -5,7 +5,9 @@
   "sortOrder": 5,
   "tier": "SENIOR",
   "topicId": "java",
-  "prerequisites": ["java-sen-4"],
+  "prerequisites": [
+    "java-sen-4"
+  ],
   "subChunks": [
     {
       "id": "java-sen-5a",
@@ -17,11 +19,39 @@
       "hookHtml": "<p>A profiler is the difference between an engineer who spends a week guessing and an engineer who finds the problem in an afternoon. Profiling is not a specialist skill — it is a core engineering tool that every senior developer must be able to reach for immediately when performance or stability issues arise.</p>",
       "explanationHtml": "<h3>Types of Profiling</h3><ul><li><strong>CPU profiling</strong>: where is time spent? Produces a call tree or flame graph. Tools: async-profiler, JFR (Java Flight Recorder), VisualVM.</li><li><strong>Memory profiling</strong>: where are allocations coming from? What is retained? Produces an allocation profile and heap dump. Tools: JFR, Eclipse Memory Analyser (MAT), VisualVM.</li><li><strong>Thread profiling</strong>: are threads blocked? What are they waiting for? Produces a thread dump. Tools: <code>jstack</code>, VisualVM, JFR.</li></ul><h3>Flame Graphs</h3><p>A flame graph is a visualisation of a CPU profile. Each horizontal bar is a stack frame; width represents the percentage of time the frame was on the CPU stack. The bottom is the entry point (<code>main</code>); the top shows what was running. Wide frames near the top of the flame are your hotspots.</p><pre><code># Capture a flame graph with async-profiler (attach to PID)\n./profiler.sh -e cpu -d 30 -f flamegraph.html &lt;pid&gt;\n\n# Or via Java agent at startup\n-agentpath:/path/to/libasyncProfiler.so=start,event=cpu,file=flamegraph.html</code></pre><h3>Heap Dumps</h3><p>A heap dump is a snapshot of all objects in heap memory at a point in time. Used to find: what objects are consuming the most memory, which objects are unexpectedly retained (leaks), the shortest path from GC root to a retained object.</p><pre><code># Capture heap dump with jcmd (attaches to running JVM)\njcmd &lt;pid&gt; GC.heap_dump /tmp/heap.hprof\n\n# Or on OutOfMemoryError (add to JVM flags)\n-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/\n\n# Analyse with Eclipse MAT: Leak Suspects Report highlights\n# the biggest retained object trees automatically</code></pre><h3>Thread Dumps</h3><p>A thread dump lists all JVM threads with their current state and stack trace. Use it to diagnose: deadlocks (threads waiting on each other's locks), thread pool exhaustion (all threads BLOCKED or WAITING), and stuck operations.</p><pre><code># Capture thread dump\njstack &lt;pid&gt; &gt; threaddump.txt\n# Or: kill -3 &lt;pid&gt;  (sends SIGQUIT, JVM prints to stdout)\n\n# Key states in output:\n# RUNNABLE   — actively running or runnable (may be in OS I/O wait)\n# BLOCKED    — waiting to acquire a monitor lock\n# WAITING    — waiting indefinitely (Object.wait(), LockSupport.park())\n# TIMED_WAITING — sleeping or waiting with timeout\n# DEADLOCK   — jstack explicitly labels deadlocked threads at the bottom</code></pre><h3>Java Flight Recorder (JFR)</h3><p>Built into the JVM (Java 11+, free since Java 11). Low-overhead continuous recording — safe to run in production. Records CPU, allocations, GC events, I/O, exceptions, lock contention in a single <code>.jfr</code> file. Open with JDK Mission Control (JMC) for visual analysis.</p><pre><code># Start recording with jcmd\njcmd &lt;pid&gt; JFR.start name=profile duration=60s filename=recording.jfr\njcmd &lt;pid&gt; JFR.dump name=profile</code></pre>",
       "storyBeats": [
-        {"type": "narration", "text": "The Academy's tournament platform ground to a halt every night at midnight. Six engineers blamed it on the batch job, the network, the database, the cache. The seventh opened a flame graph. In ten minutes she showed everyone: one method, called 40 million times a night, was calling System.currentTimeMillis() to format log lines that nobody ever read."},
-        {"type": "dialogue", "av": "🔬", "cls": "mentor", "speaker": "Systems Investigator Dael", "sCls": "mentor", "text": "A flame graph shows you time as space. Wide bars are expensive. When you see a wide bar you didn't expect, that is your bottleneck. Everything else is noise. I have seen teams spend weeks on architectural 'fixes' that would never have helped because they never looked at the flame graph."},
-        {"type": "dialogue", "av": "🔬", "cls": "mentor", "speaker": "Systems Investigator Dael", "sCls": "mentor", "text": "Thread dumps diagnose a completely different category of problem: not slowness but stuckness. When your service stops responding — not slow, stopped — you need a thread dump. If all your threads are BLOCKED waiting for a lock, or WAITING on an empty queue, the thread dump tells you exactly which lock and what is holding it."},
-        {"type": "example", "speaker": "Thread dump deadlock signature", "text": "# Thread dump shows:\n\"Thread-1\" BLOCKED on lock 0x000abc (held by Thread-2)\n\"Thread-2\" BLOCKED on lock 0x000def (held by Thread-1)\n\n# JVM explicitly labels it:\nFound one Java-level deadlock:\n  Thread-1 waiting for Thread-2\n  Thread-2 waiting for Thread-1\n\n# Fix: always acquire locks in a consistent order across all threads"},
-        {"type": "dialogue", "av": "🔬", "cls": "mentor", "speaker": "Systems Investigator Dael", "sCls": "mentor", "text": "Java Flight Recorder should be on in production — always. It costs under 1% overhead. When something goes wrong, you already have the data. An OOM in production at 3am with no JFR recording means a very long night of guessing. With JFR you look at the allocation profile from the minutes before the OOM and the answer is usually obvious."}
+        {
+          "type": "narration",
+          "text": "The Academy's tournament platform ground to a halt every night at midnight. Six engineers blamed it on the batch job, the network, the database, the cache. The seventh opened a flame graph. In ten minutes she showed everyone: one method, called 40 million times a night, was calling System.currentTimeMillis() to format log lines that nobody ever read."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Systems Investigator Dael",
+          "sCls": "mentor",
+          "text": "A flame graph shows you time as space. Wide bars are expensive. When you see a wide bar you didn't expect, that is your bottleneck. Everything else is noise. I have seen teams spend weeks on architectural 'fixes' that would never have helped because they never looked at the flame graph."
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Systems Investigator Dael",
+          "sCls": "mentor",
+          "text": "Thread dumps diagnose a completely different category of problem: not slowness but stuckness. When your service stops responding — not slow, stopped — you need a thread dump. If all your threads are BLOCKED waiting for a lock, or WAITING on an empty queue, the thread dump tells you exactly which lock and what is holding it."
+        },
+        {
+          "type": "example",
+          "speaker": "Thread dump deadlock signature",
+          "text": "# Thread dump shows:\n\"Thread-1\" BLOCKED on lock 0x000abc (held by Thread-2)\n\"Thread-2\" BLOCKED on lock 0x000def (held by Thread-1)\n\n# JVM explicitly labels it:\nFound one Java-level deadlock:\n  Thread-1 waiting for Thread-2\n  Thread-2 waiting for Thread-1\n\n# Fix: always acquire locks in a consistent order across all threads"
+        },
+        {
+          "type": "dialogue",
+          "av": "🔬",
+          "cls": "mentor",
+          "speaker": "Systems Investigator Dael",
+          "sCls": "mentor",
+          "text": "Java Flight Recorder should be on in production — always. It costs under 1% overhead. When something goes wrong, you already have the data. An OOM in production at 3am with no JFR recording means a very long night of guessing. With JFR you look at the allocation profile from the minutes before the OOM and the answer is usually obvious."
+        }
       ],
       "learningObjectives": [
         "Describe the three types of profiling (CPU, memory, thread) and the question each answers",
@@ -45,49 +75,72 @@
       "guidedPracticeHtml": "<p>Write a class <code>ProfileTarget</code> that simulates a CPU hotspot to demonstrate profiling targets:</p><ol><li>Write a method <code>int countWords(String text)</code> that splits on spaces and returns the count. Use <code>String.split(\" +\")</code>.</li><li>Write a method <code>String buildReport(int n)</code> that loops n times, calling <code>countWords</code> with a fixed string, and builds a result string with <code>+=</code>.</li><li>In <code>main</code>: call <code>buildReport(10_000)</code> three times (warmup), then time a fourth call and print the elapsed milliseconds.</li><li>Add a comment above <code>buildReport</code> explaining which two performance anti-patterns it contains.</li></ol>",
       "guidedPracticeStarterCode": "public class ProfileTarget {\n\n    static int countWords(String text) {\n        // TODO: split on \" +\" and return length\n        return 0;\n    }\n\n    // TODO: Add comment — two performance anti-patterns in this method\n    static String buildReport(int n) {\n        // TODO: loop n times, concat countWords result with +=\n        return null;\n    }\n\n    public static void main(String[] args) {\n        // Warmup\n        buildReport(10_000);\n        buildReport(10_000);\n        buildReport(10_000);\n\n        long start = System.nanoTime();\n        buildReport(10_000);\n        long ms = (System.nanoTime() - start) / 1_000_000;\n        System.out.println(\"buildReport(10000) took \" + ms + \"ms\");\n    }\n}\n",
       "guidedPracticeTests": [
-        {"label": "countWords returns 3 for 'a b c'", "input": "null", "expected": "buildReport(10000) took"},
-        {"label": "Timer output printed", "input": "null", "expected": "ms"}
+        {
+          "label": "countWords returns 3 for 'a b c'",
+          "input": "null",
+          "expected": "buildReport(10000) took"
+        },
+        {
+          "label": "Timer output printed",
+          "input": "null",
+          "expected": "ms"
+        }
       ],
       "guidedPracticeModelAnswer": "public class ProfileTarget {\n\n    static int countWords(String text) {\n        return text.split(\" +\").length;\n    }\n\n    // Anti-patterns: (1) String += in loop creates O(n) objects\n    //               (2) Pattern compiled on every countWords call via split()\n    static String buildReport(int n) {\n        String result = \"\";\n        String sample = \"hello world java\";\n        for (int i = 0; i < n; i++) {\n            result += countWords(sample);\n        }\n        return result;\n    }\n\n    public static void main(String[] args) {\n        buildReport(10_000);\n        buildReport(10_000);\n        buildReport(10_000);\n        long start = System.nanoTime();\n        buildReport(10_000);\n        long ms = (System.nanoTime() - start) / 1_000_000;\n        System.out.println(\"buildReport(10000) took \" + ms + \"ms\");\n    }\n}",
       "soloPracticeHtml": "<p>Refactor the <code>ProfileTarget</code> above to fix both anti-patterns: (1) replace the <code>+=</code> string building with a <code>StringBuilder</code>, and (2) compile the regex pattern once as a static field. Name the refactored class <code>ProfileTargetFixed</code>. Re-time the same <code>buildReport(10_000)</code> call. Print both the time and a message confirming which pattern was fixed. Confirm word count is still correct by printing <code>countWords(\"hello world java\")</code> = <code>3</code>.</p>",
       "soloPracticeTests": [
-        {"label": "Word count still correct", "input": "null", "expected": "3"},
-        {"label": "Time printed for fixed version", "input": "null", "expected": "ms"}
+        {
+          "label": "Word count still correct",
+          "input": "null",
+          "expected": "3"
+        },
+        {
+          "label": "Time printed for fixed version",
+          "input": "null",
+          "expected": "ms"
+        }
       ],
       "modelAnswer": "import java.util.regex.Pattern;\n\npublic class ProfileTargetFixed {\n    private static final Pattern SPACE = Pattern.compile(\" +\");\n\n    static int countWords(String text) {\n        return SPACE.split(text).length;\n    }\n\n    static String buildReport(int n) {\n        StringBuilder sb = new StringBuilder();\n        String sample = \"hello world java\";\n        for (int i = 0; i < n; i++) sb.append(countWords(sample));\n        return sb.toString();\n    }\n\n    public static void main(String[] args) {\n        buildReport(10_000); buildReport(10_000); buildReport(10_000);\n        long start = System.nanoTime();\n        buildReport(10_000);\n        long ms = (System.nanoTime() - start) / 1_000_000;\n        System.out.println(\"Fixed buildReport(10000) took \" + ms + \"ms\");\n        System.out.println(\"Fixed: StringBuilder replaces +=; static Pattern replaces split re-compile\");\n        System.out.println(\"countWords(hello world java) = \" + countWords(\"hello world java\"));\n    }\n}",
       "questions": [
         {
+          "id": "java-sen-5a-q1",
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
-          "questionHtml": "<p>In a flame graph, what does a wide horizontal bar near the top of the flame indicate?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>In a flame graph, what does a wide horizontal bar near the top of the flame indicate?</p>",
           "options": [
             "A method that is rarely called",
             "A method that consumes a large proportion of CPU time — a hotspot",
             "A method that causes memory allocation",
             "A blocked thread"
           ],
-          "correctAnswer": "A method that consumes a large proportion of CPU time — a hotspot",
-          "explanationHtml": "<p>Width in a flame graph represents the fraction of time that stack frame was present in the CPU sample. Wide = expensive. The top of the flame is where the CPU is actively running — wide bars near the top are the methods consuming the most time and are the primary targets for optimisation.</p>"
+          "answer": "A method that consumes a large proportion of CPU time — a hotspot",
+          "explanation": "<p>Width in a flame graph represents the fraction of time that stack frame was present in the CPU sample. Wide = expensive. The top of the flame is where the CPU is actively running — wide bars near the top are the methods consuming the most time and are the primary targets for optimisation.</p>"
         },
         {
+          "id": "java-sen-5a-q2",
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
-          "questionHtml": "<p>A thread dump shows all application threads in <code>BLOCKED</code> state waiting for the same lock. What has likely happened?</p>",
+          "minPath": "SENIOR",
+          "prompt": "<p>A thread dump shows all application threads in <code>BLOCKED</code> state waiting for the same lock. What has likely happened?</p>",
           "options": [
             "The application is performing a long GC pause",
             "A thread holding the lock is running slowly or is itself stuck — thread pool exhaustion or a lock bottleneck",
             "The JVM is running out of heap space",
             "The application is idle and waiting for requests"
           ],
-          "correctAnswer": "A thread holding the lock is running slowly or is itself stuck — thread pool exhaustion or a lock bottleneck",
-          "explanationHtml": "<p>When many threads are BLOCKED on one lock, the thread holding that lock is a bottleneck. Check what the holder is doing — it may be in a slow I/O operation, a long computation, or itself BLOCKED or WAITING, creating a chain of waits. This is a classic lock contention signature — consider reducing lock scope or using concurrent data structures.</p>"
+          "answer": "A thread holding the lock is running slowly or is itself stuck — thread pool exhaustion or a lock bottleneck",
+          "explanation": "<p>When many threads are BLOCKED on one lock, the thread holding that lock is a bottleneck. Check what the holder is doing — it may be in a slow I/O operation, a long computation, or itself BLOCKED or WAITING, creating a chain of waits. This is a classic lock contention signature — consider reducing lock scope or using concurrent data structures.</p>"
         },
         {
+          "id": "java-sen-5a-q3",
           "type": "TRUE_FALSE",
           "tier": "RECALL",
-          "questionHtml": "<p>Java Flight Recorder (JFR) has significant overhead and should only be used during development, not in production.</p>",
-          "correctAnswer": "False",
-          "explanationHtml": "<p>JFR is designed for production use with under 1% overhead. It uses a ring buffer and asynchronous sampling to minimise impact. Keeping it running continuously means you already have profiling data when an incident occurs — rather than having to reproduce the problem. This is why it was made free and built into the JDK (Java 11+).</p>"
+          "minPath": "SENIOR",
+          "prompt": "<p>Java Flight Recorder (JFR) has significant overhead and should only be used during development, not in production.</p>",
+          "options": [],
+          "answer": "False",
+          "explanation": "<p>JFR is designed for production use with under 1% overhead. It uses a ring buffer and asynchronous sampling to minimise impact. Keeping it running continuously means you already have profiling data when an incident occurs — rather than having to reproduce the problem. This is why it was made free and built into the JDK (Java 11+).</p>"
         }
       ]
     }
