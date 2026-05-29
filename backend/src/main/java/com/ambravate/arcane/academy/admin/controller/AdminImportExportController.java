@@ -79,7 +79,7 @@ public class AdminImportExportController {
         dto.glyph = chunk.getGlyph();
         dto.sortOrder = chunk.getSortOrder();
         dto.tier = chunk.getTier().name();
-        dto.domainId = chunk.getDomainId();
+        dto.domainId = chunk.getTrackId();
         dto.prerequisites = chunk.getPrerequisites().stream().map(LearningModule::getId).toList();
 
         List<Lesson> subChunks = lessonRepository.findByModuleIdOrderBySortOrderAsc(chunk.getId());

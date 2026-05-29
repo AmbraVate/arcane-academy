@@ -90,8 +90,8 @@ class PublicProfileServiceTest {
         when(userRepository.findByUsername("alice")).thenReturn(Optional.of(alice));
 
         when(moduleRepository.findAll()).thenReturn(List.of(
-            LearningModule.builder().id("c-java").title("Java A").domainId("java").sortOrder(1).build(),
-            LearningModule.builder().id("c-tw").title("TW A").domainId("tailwind").sortOrder(1).build()
+            LearningModule.builder().id("c-java").title("Java A").trackId("java").sortOrder(1).build(),
+            LearningModule.builder().id("c-tw").title("TW A").trackId("tailwind").sortOrder(1).build()
         ));
         when(lessonRepository.findAll()).thenReturn(List.of(
             Lesson.builder().id("s-java-1").moduleId("c-java").title("J1").sortOrder(1).xpReward(50).build(),

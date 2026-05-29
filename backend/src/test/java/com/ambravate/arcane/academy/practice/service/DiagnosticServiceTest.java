@@ -12,7 +12,7 @@ import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
-import com.ambravate.arcane.academy.auth.repository.UserTopicProfileRepository;
+import com.ambravate.arcane.academy.auth.repository.UserTrackProfileRepository;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.practice.domain.DiagnosticResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,7 +58,7 @@ class DiagnosticServiceTest {
     @Mock private QuestionRepository questionRepository;
     @Mock private UserChunkProgressRepository progressRepository;
     @Mock private UserLearnerProfileRepository profileRepository;
-    @Mock private UserTopicProfileRepository topicProfileRepository;
+    @Mock private UserTrackProfileRepository topicProfileRepository;
     @Mock private RetrievalService retrievalService;
     @Mock private TelemetryService telemetry;
     @Mock private ObjectMapper objectMapper;
@@ -69,7 +69,7 @@ class DiagnosticServiceTest {
     private LearningModule chunk(String id) {
         return LearningModule.builder()
                 .id(id)
-                .domainId(TOPIC_ID)
+                .trackId(TOPIC_ID)
                 .sortOrder(1)
                 .build();
     }
@@ -121,7 +121,7 @@ class DiagnosticServiceTest {
         for (int i = 0; i < chunkCount; i++) {
             chunks.add(chunk("chunk-" + i));
         }
-        when(moduleRepository.findByDomainIdOrderBySortOrderAsc(anyString())).thenReturn(chunks);
+        when(moduleRepository.findByTrackIdOrderBySortOrderAsc(anyString())).thenReturn(chunks);
 
         List<Lesson> allLessons = new java.util.ArrayList<>();
         List<String> allLessonIds = new java.util.ArrayList<>();

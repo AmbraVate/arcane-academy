@@ -124,7 +124,7 @@ public class ModuleController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(ModuleDetailDto.builder()
-                .id(mws.module().getId()).domainId(mws.module().getDomainId())
+                .id(mws.module().getId()).domainId(mws.module().getTrackId())
                 .title(mws.module().getTitle())
                 .glyph(mws.module().getGlyph()).status(mws.status())
                 .lessons(lessonDtos).build());

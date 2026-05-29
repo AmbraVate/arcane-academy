@@ -15,7 +15,7 @@ public class ModuleAssembler {
     return AdminModuleDto.builder()
         .id(m.getId()).title(m.getTitle()).glyph(m.getGlyph())
         .sortOrder(m.getSortOrder()).tier(m.getTier().name())
-        .domainId(m.getDomainId()).prerequisiteIds(prereqs)
+        .domainId(m.getTrackId()).prerequisiteIds(prereqs)
         .lessonCount(lessonCount)
         .build();
   }

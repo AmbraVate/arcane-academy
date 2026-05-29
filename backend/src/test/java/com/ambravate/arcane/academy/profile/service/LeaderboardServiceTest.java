@@ -64,7 +64,7 @@ class LeaderboardServiceTest {
     }
 
     private LearningModule chunk(String id, String domainId) {
-        return LearningModule.builder().id(id).title("c").domainId(domainId).sortOrder(1).build();
+        return LearningModule.builder().id(id).title("c").trackId(domainId).sortOrder(1).build();
     }
 
     private Lesson sub(String id, String moduleId, int xpReward) {
@@ -92,7 +92,7 @@ class LeaderboardServiceTest {
         @DisplayName("Returns empty list when nobody is opted in")
         void emptyWhenNoneOptedIn() {
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of());
-            when(moduleRepository.findByDomainIdOrderBySortOrderAsc("java")).thenReturn(List.of(chunk("c1", "java")));
+            when(moduleRepository.findByTrackIdOrderBySortOrderAsc("java")).thenReturn(List.of(chunk("c1", "java")));
             when(lessonRepository.findByModuleIdIn(any())).thenReturn(List.of(sub("s1", "c1", 50)));
 
             assertThat(leaderboardService.topicWeekly("java", 20)).isEmpty();
@@ -152,7 +152,7 @@ class LeaderboardServiceTest {
             User alice = user("u-a", "alice", 0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice));
 
-            when(moduleRepository.findByDomainIdOrderBySortOrderAsc("java"))
+            when(moduleRepository.findByTrackIdOrderBySortOrderAsc("java"))
                 .thenReturn(List.of(chunk("c-java", "java")));
             when(lessonRepository.findByModuleIdIn(any())).thenReturn(List.of(sub("s-java", "c-java", 100)));
             when(lessonRepository.findAll()).thenReturn(List.of(
@@ -323,7 +323,7 @@ class LeaderboardServiceTest {
 
     /** Java domain with one module c1 holding one lesson s1 worth {@code xp}. */
     private void stubDomainJava(int xp) {
-        when(moduleRepository.findByDomainIdOrderBySortOrderAsc("java"))
+        when(moduleRepository.findByTrackIdOrderBySortOrderAsc("java"))
             .thenReturn(List.of(chunk("c1", "java")));
         when(lessonRepository.findByModuleIdIn(any()))
             .thenReturn(List.of(sub("s1", "c1", xp)));

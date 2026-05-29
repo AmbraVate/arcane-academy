@@ -26,7 +26,7 @@ public class ModuleFactory {
         .id(req.getId()).title(req.getTitle()).glyph(req.getGlyph())
         .sortOrder(req.getSortOrder())
         .tier(req.getTier() != null ? LearnerPath.valueOf(req.getTier()) : LearnerPath.APPRENTICE)
-        .domainId(req.getDomainId() != null ? req.getDomainId() : "java")
+        .trackId(req.getDomainId() != null ? req.getDomainId() : "java")
         .prerequisites(prereqs)
         .build();
   }

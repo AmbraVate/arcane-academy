@@ -30,7 +30,7 @@ public class AdminModuleController {
     public ResponseEntity<List<AdminModuleDto>> list(
             @RequestParam(required = false) String domainId) {
         List<LearningModule> modules = (domainId != null)
-                ? moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId)
+                ? moduleRepository.findByTrackIdOrderBySortOrderAsc(domainId)
                 : moduleRepository.findAllByOrderBySortOrderAsc();
         return ResponseEntity.ok(modules.stream()
             .map(m -> moduleAssembler.toDto(m, lessonRepository.findByModuleIdOrderBySortOrderAsc(m.getId()).size()))
@@ -61,7 +61,7 @@ public class AdminModuleController {
         module.setGlyph(req.getGlyph());
         module.setSortOrder(req.getSortOrder());
         module.setTier(LearnerPath.valueOf(req.getTier()));
-        module.setDomainId(req.getDomainId());
+        module.setTrackId(req.getDomainId());
         List<LearningModule> prereqModules = req.getPrerequisiteIds() == null ? List.of() :
                 req.getPrerequisiteIds().stream()
                         .map(pId -> moduleRepository.findById(pId)

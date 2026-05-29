@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface LearningModuleRepository extends JpaRepository<LearningModule, String> {
     List<LearningModule> findAllByOrderBySortOrderAsc();
-    List<LearningModule> findByDomainIdOrderBySortOrderAsc(String domainId);
+    List<LearningModule> findByTrackIdOrderBySortOrderAsc(String trackId);
 }

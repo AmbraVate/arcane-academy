@@ -50,7 +50,7 @@ public class AdminDomainController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
-        long moduleCount = moduleRepository.findByDomainIdOrderBySortOrderAsc(id).size();
+        long moduleCount = moduleRepository.findByTrackIdOrderBySortOrderAsc(id).size();
         if (moduleCount > 0) {
             return ResponseEntity.status(409).build();
         }

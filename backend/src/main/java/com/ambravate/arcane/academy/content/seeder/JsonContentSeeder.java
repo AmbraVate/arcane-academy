@@ -122,7 +122,7 @@ public class JsonContentSeeder {
             try { tierEnum = LearnerPath.valueOf(tier); }
             catch (IllegalArgumentException e) { continue; }
 
-            List<LearningModule> stale = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId).stream()
+            List<LearningModule> stale = moduleRepository.findByTrackIdOrderBySortOrderAsc(domainId).stream()
                     .filter(m -> m.getTier() == tierEnum && !validIds.contains(m.getId()))
                     .toList();
 
@@ -199,7 +199,7 @@ public class JsonContentSeeder {
                 .glyph(dto.glyph)
                 .sortOrder(dto.sortOrder)
                 .tier(LearnerPath.valueOf(dto.tier))
-                .domainId(dto.domainId)
+                .trackId(dto.domainId)
                 .build();
         moduleRepository.save(module);
 

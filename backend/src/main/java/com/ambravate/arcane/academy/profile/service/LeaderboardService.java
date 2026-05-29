@@ -133,7 +133,7 @@ public class LeaderboardService {
 
     private Map<String, String> topicBySubChunk() {
         Map<String, String> chunkTopic = moduleRepository.findAll().stream()
-            .collect(Collectors.toMap(LearningModule::getId, LearningModule::getDomainId, (a, b) -> a));
+            .collect(Collectors.toMap(LearningModule::getId, LearningModule::getTrackId, (a, b) -> a));
         Map<String, String> out = new HashMap<>();
         for (Lesson sc : lessonRepository.findAll()) {
             String topic = chunkTopic.get(sc.getModuleId());
@@ -143,7 +143,7 @@ public class LeaderboardService {
     }
 
     private Set<String> topicSubChunkIds(String domainId) {
-        List<String> chunkIds = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId)
+        List<String> chunkIds = moduleRepository.findByTrackIdOrderBySortOrderAsc(domainId)
             .stream().map(LearningModule::getId).toList();
         if (chunkIds.isEmpty()) return Set.of();
         return lessonRepository.findByModuleIdIn(chunkIds).stream()

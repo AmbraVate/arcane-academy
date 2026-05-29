@@ -60,7 +60,7 @@ public class EncodingService {
     private final ReviewSessionRepository reviewSessionRepository;
     private final UserRepository userRepository;
     private final UserLearnerProfileRepository learnerProfileRepository;
-    private final UserTopicProfileRepository topicProfileRepository;
+    private final UserTrackProfileRepository topicProfileRepository;
     private final JavaCodeRunner codeRunner;
     private final AiMentorService aiMentorService;
     private final RetrievalService retrievalService;

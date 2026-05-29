@@ -177,7 +177,7 @@ public class EncodingController {
         UserChunkProgress p = session.progress();
 
         String domainId = moduleRepository.findById(l.getModuleId())
-                .map(LearningModule::getDomainId)
+                .map(LearningModule::getTrackId)
                 .orElse("java");
 
         LessonEncodingDto dto = LessonEncodingDto.builder()

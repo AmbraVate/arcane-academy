@@ -29,6 +29,6 @@ public class CuriosityQueueService {
 
     @Transactional
     public void removeFromQueue(String userId, String lessonId) {
-        repository.deleteByUserIdAndSubChunkId(userId, lessonId);
+        repository.deleteByUserIdAndLessonId(userId, lessonId);
     }
 }

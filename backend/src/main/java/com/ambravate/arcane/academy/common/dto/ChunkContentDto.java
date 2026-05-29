@@ -1,11 +1,13 @@
 package com.ambravate.arcane.academy.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * DTOs for deserialising chunk content from JSON resource files
@@ -40,10 +42,16 @@ public class ChunkContentDto {
     public List<SubChunkDto> subChunks;
     public List<RabbitHoleDto> rabbitHoles;
 
-    // â"€â"€ Sub-chunk â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SubChunkDto {
+        @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+        public SubChunkDto(String feynmanPrompt) {
+            this.feynmanPrompt = feynmanPrompt;
+        }
+
+        public SubChunkDto() {}
+
         /** Required. E.g. "tw-a1" */
         public String id;
         public String title;

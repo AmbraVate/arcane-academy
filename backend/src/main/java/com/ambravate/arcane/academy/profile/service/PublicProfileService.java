@@ -60,7 +60,7 @@ public class PublicProfileService {
     private PublicProfile assemble(User user) {
         Map<String, String> chunkTopic = moduleRepository.findAll()
             .stream()
-            .collect(Collectors.toMap(LearningModule::getId, LearningModule::getDomainId, (a, b) -> a));
+            .collect(Collectors.toMap(LearningModule::getId, LearningModule::getTrackId, (a, b) -> a));
 
         Map<String, Lesson> subChunkById = lessonRepository.findAll()
             .stream()

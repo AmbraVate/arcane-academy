@@ -16,10 +16,11 @@ CREATE TABLE tracks (
 );
 
 -- Add broad blueprint domains for Engineering & Systems
-INSERT INTO domains (id, school_id, name, description, sort_order) VALUES
-('software-engineering', 'engineering-systems', 'Software Engineering', 'Architecture, logic, and backend systems.', 1),
-('frontend-engineering', 'engineering-systems', 'Frontend Engineering', 'User interfaces and client-side logic.', 2),
-('data-databases', 'engineering-systems', 'Data & Databases', 'Data modeling, pipelines, and queries.', 3);
+INSERT INTO domains (id, school_id, name, sort_order) VALUES
+('software-engineering', 'engineering-systems', 'Software Engineering', 1),
+('frontend-engineering', 'engineering-systems', 'Frontend Engineering', 2),
+('data-databases', 'engineering-systems', 'Data & Databases', 3);
+
 
 -- Convert existing tool domains into tracks
 INSERT INTO tracks (id, domain_id, name, description, sort_order) VALUES

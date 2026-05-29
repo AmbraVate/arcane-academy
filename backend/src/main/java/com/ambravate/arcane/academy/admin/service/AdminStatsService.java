@@ -86,7 +86,7 @@ public class AdminStatsService {
                         .lessonId(sc.getId())
                         .title(sc.getTitle())
                         .chunkTitle(parent != null ? parent.getTitle() : sc.getModuleId())
-                        .domainId(parent != null ? parent.getDomainId() : null)
+                        .domainId(parent != null ? parent.getTrackId() : null)
                         .tier(parent != null && parent.getTier() != null ? parent.getTier().name() : null)
                         .issues(issues)
                         .build());

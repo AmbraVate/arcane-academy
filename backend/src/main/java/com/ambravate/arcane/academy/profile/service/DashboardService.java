@@ -74,7 +74,7 @@ public class DashboardService {
     boolean streakAtRisk = gamification.isStreakAtRisk(userId);
 
     // Overall progress scoped to this topic's sub-chunks
-    List<LearningModule> topicChunks = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId);
+    List<LearningModule> topicChunks = moduleRepository.findByTrackIdOrderBySortOrderAsc(domainId);
     List<String> topicChunkIds = topicChunks.stream().map(LearningModule::getId).toList();
     List<Lesson> topicSubChunks = topicChunkIds.isEmpty()
         ? List.of()
@@ -108,7 +108,7 @@ public class DashboardService {
    * Memory health per chunk for the given topic. GREEN > 0.7, YELLOW 0.4-0.7, RED < 0.4.
    */
   public List<ModuleHealth> getMemoryHealth(String userId, String domainId) {
-    List<LearningModule> chunks = moduleRepository.findByDomainIdOrderBySortOrderAsc(domainId);
+    List<LearningModule> chunks = moduleRepository.findByTrackIdOrderBySortOrderAsc(domainId);
     List<UserChunkProgress> allProgress = progressRepository.findByUserId(userId);
     Map<String, UserChunkProgress> progressMap = allProgress.stream()
         .collect(Collectors.toMap(UserChunkProgress::getLessonId, p -> p, (a, b) -> a));
