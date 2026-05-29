@@ -8,6 +8,8 @@ export interface User {
   bypassPaywall?: boolean
   /** Current billing status. FREE = one topic allowed; MONTHLY/ANNUAL/LIFETIME = full access. */
   subscriptionStatus?: SubscriptionStatus
+  /** False until the user completes or skips the onboarding walkthrough. */
+  onboardingCompleted?: boolean
 }
 
 /** Returns true when the user has full, active access to all topics. */

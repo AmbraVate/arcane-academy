@@ -20,4 +20,5 @@ public class AuthResponse {
     private String role;
     private boolean bypassPaywall;
     private String subscriptionStatus;
+    private boolean onboardingCompleted;
 }

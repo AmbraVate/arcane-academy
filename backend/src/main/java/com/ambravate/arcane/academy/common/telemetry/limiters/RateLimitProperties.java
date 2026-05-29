@@ -14,6 +14,7 @@ public class RateLimitProperties {
   private BucketConfig auth = new BucketConfig(10, 10, 60);
   private BucketConfig aiMentor = new BucketConfig(10, 10, 60);
   private BucketConfig codeRunner = new BucketConfig(30, 30, 60);
+  private BucketConfig admin = new BucketConfig(30, 30, 60);
 
   public boolean isEnabled() {
     return enabled;
@@ -45,6 +46,14 @@ public class RateLimitProperties {
 
   public void setCodeRunner(BucketConfig codeRunner) {
     this.codeRunner = codeRunner;
+  }
+
+  public BucketConfig getAdmin() {
+    return admin;
+  }
+
+  public void setAdmin(BucketConfig admin) {
+    this.admin = admin;
   }
 
 }

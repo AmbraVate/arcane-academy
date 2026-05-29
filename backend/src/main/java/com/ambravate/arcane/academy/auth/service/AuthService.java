@@ -192,6 +192,7 @@ public class AuthService {
                 .withRole(user.getRole().name())
                 .withBypassPaywall(user.isBypassPaywall())
                 .withSubscriptionStatus(subStatus)
+                .withOnboardingCompleted(user.isOnboardingCompleted())
                 .build();
     }
 }

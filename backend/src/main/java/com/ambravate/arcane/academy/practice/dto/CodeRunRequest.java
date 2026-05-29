@@ -9,5 +9,6 @@ public class CodeRunRequest {
     @NotBlank
     @Size(max = 5000)
     private String code;
+    @Size(max = 10000)
     private String testInput;
 }

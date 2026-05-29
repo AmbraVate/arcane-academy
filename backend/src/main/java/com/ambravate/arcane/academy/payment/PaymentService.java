@@ -164,8 +164,13 @@ public class PaymentService {
         }
 
         Session session = (Session) des.getObject().get();
-        String userId   = session.getMetadata().get("userId");
-        String planType = session.getMetadata().get("planType");
+        java.util.Map<String, String> meta = session.getMetadata();
+        if (meta == null) {
+            log.warn("[Webhook] checkout.session.completed — null metadata | sessionId={}", session.getId());
+            return;
+        }
+        String userId   = meta.get("userId");
+        String planType = meta.get("planType");
 
         if (userId == null || planType == null) {
             log.warn("[Webhook] checkout.session.completed — missing metadata | sessionId={}", session.getId());

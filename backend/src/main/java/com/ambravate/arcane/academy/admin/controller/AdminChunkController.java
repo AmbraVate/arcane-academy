@@ -9,6 +9,7 @@ import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/admin/chunks")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminChunkController {
 
     private final ChunkRepository chunkRepository;

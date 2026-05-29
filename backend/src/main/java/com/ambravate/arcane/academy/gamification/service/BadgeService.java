@@ -155,6 +155,7 @@ public class BadgeService implements GamificationFacade {
       boolean hasPerfectReview, long feynmanCompleted,
       long feynmanHighScore, UserLearnerProfile profile, long noteCount) {
     return switch (def) {
+      case ARCANE_INITIATE -> user.isOnboardingCompleted();
       case FIRST_CONCEPT -> completedSubChunks >= 1;
 
       case JAVA_FND_1_COMPLETE -> completedChunks.contains("java-fnd-1");

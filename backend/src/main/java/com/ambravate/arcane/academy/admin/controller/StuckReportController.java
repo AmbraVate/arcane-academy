@@ -10,6 +10,7 @@ import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +62,7 @@ public class StuckReportController {
     }
 
     /** Admin: list all stuck reports, paginated, newest first. */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/stuck-reports")
     public ResponseEntity<Page<StuckReportDto>> list(
             @RequestParam(defaultValue = "0") int page,
@@ -69,6 +71,7 @@ public class StuckReportController {
     }
 
     /** Admin: update status and/or add notes to a report. */
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/api/admin/stuck-reports/{id}")
     public ResponseEntity<StuckReportDto> updateStatus(
             @PathVariable String id,

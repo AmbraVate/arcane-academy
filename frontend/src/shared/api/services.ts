@@ -30,6 +30,12 @@ export const authApi = {
     storeRefreshToken(data)
     return data
   },
+  /** Mark onboarding complete and collect the ARCANE_INITIATE badge if not yet earned. */
+  completeOnboarding: async (): Promise<{ badge: Badge | null }> => {
+    const { data } = await api.post('/api/onboarding/complete')
+    const badge = data.badge && data.badge.id ? data.badge as Badge : null
+    return { badge }
+  },
 }
 
 // ── Chunks ───────────────────────────────────────────────────────────────────

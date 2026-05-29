@@ -74,6 +74,13 @@ public class User {
     @Builder.Default
     private boolean bypassPaywall = false;
 
+    /**
+     * Set to true when the user completes (or skips) the onboarding walkthrough.
+     * Controls whether the onboarding modal is shown on the home page.
+     */
+    @Builder.Default
+    private boolean onboardingCompleted = false;
+
     private String refreshToken;
 
     @Enumerated(EnumType.STRING)

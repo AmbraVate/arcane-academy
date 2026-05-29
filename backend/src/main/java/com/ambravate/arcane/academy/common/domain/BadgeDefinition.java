@@ -5,6 +5,9 @@ import lombok.Getter;
 @Getter
 public enum BadgeDefinition {
 
+    // Onboarding
+    ARCANE_INITIATE("Arcane Initiate", "Complete the academy orientation", "\ud83c\udf1f", Category.LEARNING),
+
     // Learning milestones
     FIRST_CONCEPT("First Spell Cast", "Complete your first sub-chunk", "\u2728", Category.LEARNING),
 

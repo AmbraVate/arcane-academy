@@ -11,6 +11,7 @@ interface AuthContextValue {
   logout: () => void
   updateXp: (xpEarned: number, newRank?: string) => void
   updateStreak: (streakDays: number) => void
+  markOnboardingDone: () => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -72,6 +73,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
   }, [])
 
+  const markOnboardingDone = useCallback(() => {
+    setUser(prev => {
+      if (!prev) return prev
+      const updated = { ...prev, onboardingCompleted: true }
+      localStorage.setItem('arcane_user', JSON.stringify(updated))
+      return updated
+    })
+  }, [])
+
   // On every page load, silently re-fetch user data from the server so that
   // admin changes (bypassPaywall, role, subscriptionStatus) take effect
   // immediately without requiring the user to log out and back in.
@@ -84,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <AuthContext.Provider value={{ user, login, register, loginWithToken, logout, updateXp, updateStreak }}>
+    <AuthContext.Provider value={{ user, login, register, loginWithToken, logout, updateXp, updateStreak, markOnboardingDone }}>
       {children}
     </AuthContext.Provider>
   )

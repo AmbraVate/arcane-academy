@@ -1,13 +1,13 @@
 package com.ambravate.arcane.academy.practice.runner;
 
 import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.tools.*;
 import java.io.*;
 import java.lang.reflect.Method;
-import java.net.URLClassLoader;
 import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -19,6 +19,47 @@ public class JavaCodeRunner {
     private static final int TIMEOUT_SECONDS = 5;
     private static final int MAX_OUTPUT_CHARS = 2000;
 
+    // ── Thread-safe output capture ────────────────────────────────────────────
+    //
+    // System.setOut/setErr are JVM-global. Calling them per-request means
+    // concurrent submissions corrupt each other's output.  Instead we install
+    // a ThreadLocalPrintStream once at startup and each run just calls
+    // capture()/release() on the current thread.
+
+    private static ThreadLocalPrintStream threadOut;
+    private static ThreadLocalPrintStream threadErr;
+
+    @PostConstruct
+    void installThreadLocalStreams() {
+        // Guard against double-installation if Spring ever creates a second bean.
+        if (threadOut == null) {
+            threadOut = new ThreadLocalPrintStream(System.out);
+            threadErr = new ThreadLocalPrintStream(System.err);
+            System.setOut(threadOut);
+            System.setErr(threadErr);
+            log.debug("[CodeRunner] ThreadLocal output streams installed");
+        }
+    }
+
+    // ── Forbidden source patterns (pre-compile scan) ──────────────────────────
+    //
+    // System.exit() would kill the server process; SecurityManager is gone in
+    // Java 21 so we cannot intercept it at runtime.  A source scan is the
+    // pragmatic backstop for a learning platform.
+
+    private record ForbiddenPattern(String token, String reason) {}
+
+    private static final List<ForbiddenPattern> FORBIDDEN_PATTERNS = List.of(
+            new ForbiddenPattern("System.exit",      "System.exit() is not permitted in the sandbox."),
+            new ForbiddenPattern("Runtime.getRuntime","Runtime.getRuntime() is not permitted."),
+            new ForbiddenPattern("new ProcessBuilder","ProcessBuilder is not permitted."),
+            new ForbiddenPattern("System.setOut",    "Replacing System.out is not permitted."),
+            new ForbiddenPattern("System.setErr",    "Replacing System.err is not permitted."),
+            new ForbiddenPattern("System.setIn",     "Replacing System.in is not permitted.")
+    );
+
+    // ─────────────────────────────────────────────────────────────────────────
+
     /**
      * Wraps student code in a class, compiles it, and executes it in a
      * sandboxed thread with a strict timeout.
@@ -26,6 +67,17 @@ public class JavaCodeRunner {
     public CodeRunResponse run(String studentCode, String testInput) {
         log.debug("[CodeRunner] Starting run | codeLength={} hasTestInput={}",
                 studentCode != null ? studentCode.length() : 0, testInput != null && !testInput.isBlank());
+
+        // Pre-compile source scan — catches System.exit() before JVM has a chance to run it.
+        if (studentCode != null) {
+            for (ForbiddenPattern fp : FORBIDDEN_PATTERNS) {
+                if (studentCode.contains(fp.token())) {
+                    log.info("[CodeRunner] Forbidden pattern detected: {}", fp.token());
+                    return CodeRunResponse.compilationError("Sandbox violation: " + fp.reason());
+                }
+            }
+        }
+
         Path tempDir = null;
         try {
             tempDir = Files.createTempDirectory("arcane_run_");
@@ -69,7 +121,6 @@ public class JavaCodeRunner {
                 log.debug("[CodeRunner] Compilation succeeded");
             }
 
-            // Execute in a sandboxed thread with timeout
             log.debug("[CodeRunner] Executing compiled class with {}s timeout", TIMEOUT_SECONDS);
             return executeWithTimeout(tempDir);
 
@@ -99,17 +150,17 @@ public class JavaCodeRunner {
     private CodeRunResponse executeClass(Path classDir) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream capturedOut = new PrintStream(baos);
-        PrintStream originalOut = System.out;
-        PrintStream originalErr = System.err;
 
-        try (URLClassLoader loader = new URLClassLoader(
-                new java.net.URL[]{classDir.toUri().toURL()},
-                this.getClass().getClassLoader())) {
+        // Route this thread's System.out/err to our capture buffer.
+        // InheritableThreadLocal ensures any threads student code spawns
+        // also write here rather than to the server log.
+        threadOut.capture(capturedOut);
+        threadErr.capture(capturedOut);
 
-            System.setOut(capturedOut);
-            System.setErr(capturedOut);
+        try (SandboxedClassLoader loader = new SandboxedClassLoader(
+                new java.net.URL[]{classDir.toUri().toURL()})) {
 
-            // Try StudentSolution first, then scan for any class with a main method
+            // Try StudentSolution first, then scan for any class with a main method.
             Class<?> clazz = null;
             try {
                 clazz = loader.loadClass("StudentSolution");
@@ -141,6 +192,10 @@ public class JavaCodeRunner {
                     output.trim().length(), truncated);
             return CodeRunResponse.success(output.trim());
 
+        } catch (SecurityException e) {
+            log.info("[CodeRunner] SANDBOX VIOLATION | {}", e.getMessage());
+            return CodeRunResponse.error("Sandbox violation: " + e.getMessage()
+                    + "\nHint: File, network, and reflection APIs are not available in the sandbox.");
         } catch (java.lang.reflect.InvocationTargetException e) {
             Throwable cause = e.getCause();
             String errMsg = cause != null ? cause.toString() : e.toString();
@@ -150,8 +205,9 @@ public class JavaCodeRunner {
             log.error("[CodeRunner] Unexpected execution error", e);
             return CodeRunResponse.error("Execution error: " + e.getMessage());
         } finally {
-            System.setOut(originalOut);
-            System.setErr(originalErr);
+            // Always restore — leaves fallback (server log) active for this thread.
+            threadOut.release();
+            threadErr.release();
         }
     }
 

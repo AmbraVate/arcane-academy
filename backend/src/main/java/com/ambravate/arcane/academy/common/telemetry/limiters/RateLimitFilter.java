@@ -51,6 +51,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
     private final Map<String, Bucket> authBuckets       = new ConcurrentHashMap<>();
     private final Map<String, Bucket> aiMentorBuckets   = new ConcurrentHashMap<>();
     private final Map<String, Bucket> codeRunnerBuckets = new ConcurrentHashMap<>();
+    private final Map<String, Bucket> adminBuckets      = new ConcurrentHashMap<>();
 
     public RateLimitFilter(RateLimitProperties props) {
         this.props = props;
@@ -116,6 +117,13 @@ public class RateLimitFilter extends OncePerRequestFilter {
                     props.getCodeRunner().refillPeriodSeconds(),
                     RateLimitFilter::userIdOrIp);
         }
+        if (path.startsWith("/api/admin")) {
+            return new BucketSpec("admin", adminBuckets,
+                    props.getAdmin().capacity(),
+                    props.getAdmin().refillTokens(),
+                    props.getAdmin().refillPeriodSeconds(),
+                    RateLimitFilter::userIdOrIp);
+        }
         return null;
     }
 
@@ -134,7 +142,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
         return !(path.startsWith("/api/auth/login")
                 || path.startsWith("/api/auth/register")
                 || path.startsWith("/api/ai-mentor")
-                || path.startsWith("/api/code/run"));
+                || path.startsWith("/api/code/run")
+                || path.startsWith("/api/admin"));
     }
 
     /** Direct peer IP. Behind a proxy this is the proxy — see class javadoc. */

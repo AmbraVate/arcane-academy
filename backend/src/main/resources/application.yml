@@ -44,7 +44,8 @@ server:
   port: 8080
 
 jwt:
-  secret: ${JWT_SECRET:dev_secret_change_in_production_min32}
+  # No default — must be explicitly set via JWT_SECRET env var (min 64 chars recommended).
+  secret: ${JWT_SECRET}
   expiration-ms: 86400000  # 24 hours
 
 app:
@@ -57,8 +58,10 @@ app:
 # Create products + prices in your Stripe dashboard and paste the Price IDs below.
 # Use test keys (sk_test_...) during development; switch to live keys (sk_live_...) in prod.
 stripe:
-  secret-key: ${STRIPE_SECRET_KEY:sk_test_51Tbhu48LtlZA9QG9SFyIAr7IuLcWJgbhfKrhEeIa5C1pdhWFvy9GGQqnV9OvdutBdVhHsTUzYtngOEtdUNvfhhpo00OVekIgB0}
-  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_cKt0hijH2wohtilbBOFhTJly1o3Rkqw0}
+  # No defaults — all Stripe keys must be set via environment variables.
+  # Use sk_test_... / whsec_... locally via .env; live keys only in cloud-run.env.yaml.
+  secret-key: ${STRIPE_SECRET_KEY}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET}
   price-id-monthly: ${STRIPE_PRICE_ID_MONTHLY:price_1TbiUQ8LtlZA9QG9YIzWvFWi}
   price-id-annual:  ${STRIPE_PRICE_ID_ANNUAL:price_1TbiXw8LtlZA9QG97qNpidXT}
   price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME:price_1Tbj8l8LtlZA9QG9AR6lU2zP}
@@ -134,6 +137,10 @@ ratelimit:
     capacity: ${RATELIMIT_CODE_CAPACITY:30}
     refill-tokens: ${RATELIMIT_CODE_REFILL:30}
     refill-period-seconds: ${RATELIMIT_CODE_PERIOD:60}
+  admin:
+    capacity: ${RATELIMIT_ADMIN_CAPACITY:30}
+    refill-tokens: ${RATELIMIT_ADMIN_REFILL:30}
+    refill-period-seconds: ${RATELIMIT_ADMIN_PERIOD:60}
 
 logging:
   level:

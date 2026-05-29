@@ -28,6 +28,7 @@ import com.ambravate.arcane.academy.content.repository.ChunkRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -85,7 +86,7 @@ public class EncodingController {
     @PostMapping("/{subChunkId}/guided-practice/submit")
     public ResponseEntity<SubmitResponse> submitGuidedPractice(
             @PathVariable String subChunkId,
-            @RequestBody CodeSubmitRequest request,
+            @Valid @RequestBody CodeSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         PracticeResult result = encodingService.submitGuidedPractice(
                 user.getId(), subChunkId, request.getCode());
@@ -108,7 +109,7 @@ public class EncodingController {
     @PostMapping("/{subChunkId}/solo-practice/submit")
     public ResponseEntity<SubmitResponse> submitSoloPractice(
             @PathVariable String subChunkId,
-            @RequestBody CodeSubmitRequest request,
+            @Valid @RequestBody CodeSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         PracticeResult result = encodingService.submitSoloPractice(
                 user.getId(), subChunkId, request.getCode());
@@ -131,7 +132,7 @@ public class EncodingController {
     @PostMapping("/{subChunkId}/retrieval-check/submit")
     public ResponseEntity<RetrievalResultDto> submitRetrievalCheck(
             @PathVariable String subChunkId,
-            @RequestBody AnswerRequest request,
+            @Valid @RequestBody AnswerRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         List<AnswerPair> answers = request.getAnswers().stream()
                 .map(a -> new AnswerPair(a.getQuestionId(), a.getAnswer()))
@@ -155,7 +156,7 @@ public class EncodingController {
     @PostMapping("/{subChunkId}/feynman/submit")
     public ResponseEntity<FeynmanResultDto> submitFeynman(
             @PathVariable String subChunkId,
-            @RequestBody FeynmanRequest request,
+            @Valid @RequestBody FeynmanRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         FeynmanResult result = feynmanService.evaluateExplanation(
                 user.getId(), subChunkId, request.getExplanation());

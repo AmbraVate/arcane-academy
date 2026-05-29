@@ -2,7 +2,7 @@
 
 > **Purpose:** Living reference for all engineers working on this codebase. Update this document at every significant decision point. Supersedes `README.md` for developer guidance.
 >
-> **Last updated:** 2026-05-28
+> **Last updated:** 2026-05-29
 
 ---
 
@@ -475,9 +475,12 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 
 - Runs in-process using `javax.tools.JavaCompiler` with a 5-second timeout
 - Student code is wrapped in a `StudentSolution` class before compilation
-- Output is captured from `System.out`
+- Output is captured via a `ThreadLocalPrintStream` installed at startup — concurrent runs are fully isolated (no `System.setOut` race)
+- `SandboxedClassLoader` (null parent = bootstrap only) blocks: file I/O, `java.net.*`, `java.nio.file.*`, `java.lang.reflect.*`, `ProcessBuilder`, `Runtime`, and the entire Spring classpath
+- Pre-compile source scan rejects `System.exit`, `Runtime.getRuntime`, `ProcessBuilder`, and `System.set{Out,Err,In}`
 - **Not** a container-per-run sandbox — suitable for learning content; insufficient for competitive submissions
-- Known risk: malicious code could block the thread for up to 5 seconds
+- Remaining risk: tight infinite loops (`while(true){}`) are not interruptible; 5s timeout is the backstop
+- Remaining risk: `System.exit()` from obfuscated reflection is blocked at classloader level (reflect.* blocked), but direct call is caught by pre-compile scan only
 
 ### Neon Postgres (serverless)
 
@@ -507,6 +510,31 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 - Hard-coded set: `java-app-15`, `java-jun-20`, `java-sen-19`, `java-lea-17`
 - When new capstone chunks are added (for Tailwind, React, etc.), this set must be updated manually
 - Location: `EncodingPage.tsx` line ~7
+
+---
+
+### [2026-05-29] Production security review completed
+
+**Context:** Full pre-scale security audit of auth, input validation, CORS, secrets, admin authorization, rate limiting, and Stripe webhook handling.
+
+**Findings fixed (HIGH):**
+- `@Valid` added to all 4 `EncodingController` `@RequestBody` parameters — validation was declared but never enforced
+- `AnswerRequest` and `FeynmanRequest` DTOs now have `@NotNull`/`@NotBlank`/`@Size` constraints (including cascading `@Valid` on nested `AnswerItem` list)
+- Removed hardcoded `JWT_SECRET` and Stripe key defaults from `application.yml` — startup now fails fast if env vars are unset (`.env` already has them for local dev)
+
+**Findings fixed (MEDIUM):**
+- CORS `allowedHeaders` changed from `List.of("*")` to explicit `["Content-Type", "Authorization", "X-Requested-With"]`
+- CORS origins now trimmed after split (prevents whitespace-misconfiguration bug)
+- `@EnableMethodSecurity` added to `SecurityConfig`; `@PreAuthorize("hasRole('ADMIN')")` added to all 8 admin controllers (defense-in-depth on top of URL-pattern guard)
+- Rate limiting extended to `/api/admin/**` (30 req/min per userId, configurable via `RATELIMIT_ADMIN_*` env vars)
+
+**Findings fixed (LOW):**
+- `@Size(max=10000)` added to `testInput` in `CodeRunRequest`
+- `session.getMetadata()` null-guarded in `PaymentService.handleCheckoutCompleted` before map lookups
+
+**Known remaining risks (documented, not fixed in this pass):**
+- `JavaCodeRunner` sandbox hardened 2026-05-29 (ThreadLocalPrintStream, SandboxedClassLoader, pre-compile scan). Remaining: tight infinite loops not interruptible; full process isolation deferred.
+- `refreshToken` is returned in `AuthResponse` and stored in localStorage — a full cookie-based token flow is a larger refactor deferred to a future sprint
 
 ---
 
@@ -542,12 +570,10 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 | Item | Priority | Notes |
 |---|---|---|
 | Observability & stats metrics in Admin Panel | High | Usage dashboards, learner activity, XP distribution, engagement metrics |
-| Onboarding tutorial for first-time users | High | Guided walkthrough: sign in → select topic → complete a practice lesson; skippable; awards its own badge on completion |
 | Sync topic order in Admin Panel to lesson sort order | Medium | Admin chunk list should reflect the same ordering learners see on the topic map |
 | SEO | Medium | Meta tags, Open Graph, sitemap, structured data; important for organic growth |
 | Additional topic content (polymathic expansion) | Medium | Extend beyond current 6 topics to broaden the polymathic offering |
-| Production security review | High | Full audit before scaling: auth hardening, input validation, rate limiting, Java sandbox review |
+| Production security review | ~~High~~ Done | Completed 2026-05-29 — see Decision Log §[2026-05-29] |
 | AI optimisation (prompt caching, token efficiency) | Medium | Enable Anthropic prompt caching headers; reduce per-request token cost; review model selection per use case |
 | User location for leaderboard gamification | Low | Optional location field on profile; regional / global leaderboard segments |
-| Landing page refresh — content & auth-aware state | High | Update copy and visuals; show different CTA if user is already logged in vs. anonymous |
 | Icons, images, and infographics | Medium | Replace placeholder or text-only UI elements with branded iconography and explanatory visuals to improve comprehension and polish |
