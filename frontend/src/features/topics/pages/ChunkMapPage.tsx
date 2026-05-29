@@ -4,7 +4,7 @@ import { chunkApi, rabbitHoleApi } from '@/shared/api/services'
 import type { ChunkDetail, RabbitHoleModule } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Lock, Check, Rabbit, ArrowRight, Loader2 } from 'lucide-react'
+import { Lock, Check, Rabbit, ArrowRight, Loader2, BookOpen, Code2, Zap, Wrench } from 'lucide-react'
 
 const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-green', YELLOW: 'bg-orange', RED: 'bg-red',
@@ -126,17 +126,24 @@ export default function ChunkMapPage() {
                 <div className="flex items-center gap-2 mt-2.5 pl-[46px] flex-wrap max-[600px]:pl-[38px]">
                   {sc.learningObjectiveCount > 0 && (
                     <span className="text-[10px] text-muted flex items-center gap-1">
-                      📚 {sc.learningObjectiveCount} objective{sc.learningObjectiveCount !== 1 ? 's' : ''}
+                      <BookOpen size={10} strokeWidth={1.75} />
+                      {sc.learningObjectiveCount} objective{sc.learningObjectiveCount !== 1 ? 's' : ''}
                     </span>
                   )}
                   {sc.practiceType !== 'NONE' && (
-                    <span className="text-[10px] text-muted flex items-center gap-1">🧪 Sandbox</span>
+                    <span className="text-[10px] text-muted flex items-center gap-1">
+                      <Code2 size={10} strokeWidth={1.75} /> Sandbox
+                    </span>
                   )}
                   {sc.hasChallenge && (
-                    <span className="text-[10px] text-muted flex items-center gap-1">⚡ Challenge</span>
+                    <span className="text-[10px] text-muted flex items-center gap-1">
+                      <Zap size={10} strokeWidth={1.75} /> Challenge
+                    </span>
                   )}
                   {sc.hasMiniProject && (
-                    <span className="text-[10px] text-muted flex items-center gap-1">🏗 Mini project</span>
+                    <span className="text-[10px] text-muted flex items-center gap-1">
+                      <Wrench size={10} strokeWidth={1.75} /> Mini project
+                    </span>
                   )}
                 </div>
               )}

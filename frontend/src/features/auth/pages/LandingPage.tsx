@@ -1,5 +1,8 @@
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
+import { RotateCcw, Bot, Rabbit, Trophy, BarChart2, GraduationCap } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { TopicIcon } from '@/components/icons/TopicIcon'
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
@@ -25,13 +28,13 @@ const PHASES = [
   { label: 'Complete',  color: '#4ade80', desc: 'XP, badge, spaced review scheduled' },
 ]
 
-const FEATURES = [
-  { icon: '🔁', title: 'Spaced Repetition', desc: 'The SM-2 algorithm schedules every review at the exact moment your brain is about to forget — building memories that last decades, not days.' },
-  { icon: '🤖', title: 'AI Mentor', desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
-  { icon: '🐇', title: 'Rabbit Holes', desc: 'Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you\'re ready.' },
-  { icon: '🏆', title: 'XP & Ranks', desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
-  { icon: '📊', title: 'Memory Health', desc: 'Visual memory-strength bars show exactly how well each concept is retained. Green means locked in — yellow means it\'s time to review.' },
-  { icon: '🎓', title: 'Feynman Technique', desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
+const FEATURES: { icon: LucideIcon; color: string; title: string; desc: string }[] = [
+  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition', desc: 'The SM-2 algorithm schedules every review at the exact moment your brain is about to forget — building memories that last decades, not days.' },
+  { icon: Bot,           color: '#c4b5fd', title: 'AI Mentor',         desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
+  { icon: Rabbit,        color: '#c9a227', title: 'Rabbit Holes',      desc: 'Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you\'re ready.' },
+  { icon: Trophy,        color: '#c9a227', title: 'XP & Ranks',        desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
+  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',     desc: 'Visual memory-strength bars show exactly how well each concept is retained. Green means locked in — yellow means it\'s time to review.' },
+  { icon: GraduationCap, color: '#60a5fa', title: 'Feynman Technique', desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
 ]
 
 const PRICING = [
@@ -284,9 +287,11 @@ export default function LandingPage() {
             {COMING_SOON.map(name => (
               <div key={name} style={{
                 background: 'var(--surface)', border: '1px solid var(--border)',
-                borderRadius: 20, padding: '5px 14px',
+                borderRadius: 20, padding: '5px 12px',
                 fontFamily: 'Cinzel, serif', fontSize: 12, color: 'var(--muted)', opacity: 0.6,
+                display: 'flex', alignItems: 'center', gap: 6,
               }}>
+                <TopicIcon topicId={name.toLowerCase().replace(/ /g, '')} size={13} />
                 {name}
               </div>
             ))}
@@ -307,18 +312,19 @@ export default function LandingPage() {
               <div key={f.title} style={{
                 display: 'flex', gap: 16, alignItems: 'flex-start',
                 padding: '20px', borderRadius: 12,
-                background: 'rgba(139,92,246,0.04)', border: '1px solid rgba(139,92,246,0.1)',
+                background: `color-mix(in srgb, ${f.color} 4%, transparent)`,
+                border: `1px solid color-mix(in srgb, ${f.color} 14%, transparent)`,
               }}>
                 <div style={{
                   flexShrink: 0, width: 42, height: 42, borderRadius: 10,
-                  background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.2)',
+                  background: `color-mix(in srgb, ${f.color} 14%, transparent)`,
+                  border: `1px solid color-mix(in srgb, ${f.color} 25%, transparent)`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 20,
                 }}>
-                  {f.icon}
+                  <f.icon size={20} color={f.color} strokeWidth={1.75} />
                 </div>
                 <div>
-                  <div style={{ fontFamily: 'Cinzel, serif', fontSize: 13, color: 'var(--purple-light)', marginBottom: 7, letterSpacing: '0.04em' }}>{f.title}</div>
+                  <div style={{ fontFamily: 'Cinzel, serif', fontSize: 13, color: f.color, marginBottom: 7, letterSpacing: '0.04em' }}>{f.title}</div>
                   <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.7 }}>{f.desc}</div>
                 </div>
               </div>

@@ -9,10 +9,58 @@ import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
-import { Trash2, ExternalLink, Download, CreditCard, Zap, Crown, Infinity, CheckCircle } from 'lucide-react'
+import { Trash2, ExternalLink, Download, CreditCard, Zap, Crown, Infinity, CheckCircle, BookOpen, Award, Rabbit, FileText, Hammer, Star, Flame, Wand2, Sparkles, Gem } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { TopicIcon } from '@/components/icons/TopicIcon'
 import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
 type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'subscription' | 'preferences'
+
+/* ── Rank progression ────────────────────────────────────────────────────── */
+
+const RANK_THRESHOLDS: { rank: string; min: number; max: number | null; icon: LucideIcon; color: string }[] = [
+  { rank: 'Novice',     min: 0,     max: 800,   icon: Star,         color: 'var(--muted)'       },
+  { rank: 'Apprentice', min: 800,   max: 2000,  icon: Flame,        color: 'var(--teal)'        },
+  { rank: 'Adept',      min: 2000,  max: 4000,  icon: Wand2,        color: '#60a5fa'            },
+  { rank: 'Mage',       min: 4000,  max: 6500,  icon: Sparkles,     color: 'var(--purple-light)'},
+  { rank: 'Archmage',   min: 6500,  max: 8000,  icon: Crown,        color: 'var(--purple-light)'},
+  { rank: 'Magus',      min: 8000,  max: 11000, icon: Gem,          color: 'var(--gold)'        },
+  { rank: 'Lord Magus', min: 11000, max: null,  icon: Crown,        color: 'var(--gold)'        },
+]
+
+function RankProgressBar({ rank, totalXp }: { rank: string; totalXp: number }) {
+  const current = RANK_THRESHOLDS.find(r => r.rank === rank) ?? RANK_THRESHOLDS[0]
+  const next    = RANK_THRESHOLDS.find(r => r.min === current.max)
+  const pct     = current.max
+    ? Math.min(100, Math.round(((totalXp - current.min) / (current.max - current.min)) * 100))
+    : 100
+  return (
+    <div className="mt-3 w-full max-w-[280px]">
+      <div className="flex items-center justify-between mb-1">
+        <span className="font-cinzel text-[10px]" style={{ color: current.color }}>
+          {rank}
+        </span>
+        {next && (
+          <span className="font-cinzel text-[10px] text-muted">
+            {next.rank} at {current.max?.toLocaleString()} XP
+          </span>
+        )}
+      </div>
+      <div className="h-[4px] bg-border rounded-full overflow-hidden">
+        <div
+          className="h-full rounded-full transition-[width] duration-700"
+          style={{
+            width: `${pct}%`,
+            background: `linear-gradient(90deg, ${current.color}, color-mix(in srgb, ${current.color} 60%, var(--purple-light)))`,
+          }}
+        />
+      </div>
+      <div className="mt-1 text-[10px] text-muted text-right font-cinzel">
+        {pct}%{current.max ? ` · ${(current.max - totalXp).toLocaleString()} XP to go` : ' · Max rank'}
+      </div>
+    </div>
+  )
+}
 
 const PALETTES = [
   { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
@@ -201,10 +249,24 @@ export default function ProfilePage() {
 
         {/* Profile header — always visible */}
         <div className="flex items-center gap-6 p-7 bg-card border border-border rounded-[14px] mb-5 max-[600px]:flex-col max-[600px]:text-center">
-          <div className="text-[56px] w-20 h-20 flex items-center justify-center bg-purple-dim border-2 border-purple rounded-full flex-shrink-0 max-[480px]:text-[44px] max-[480px]:w-16 max-[480px]:h-16">
-            {user.rank === 'Archmage' ? '🧙' : '✨'}
-          </div>
-          <div className="flex-1">
+          {/* Rank avatar */}
+          {(() => {
+            const rankMeta = RANK_THRESHOLDS.find(r => r.rank === user.rank) ?? RANK_THRESHOLDS[0]
+            const RankIcon = rankMeta.icon
+            return (
+              <div
+                className="w-20 h-20 flex items-center justify-center rounded-full flex-shrink-0
+                  border-2 max-[480px]:w-16 max-[480px]:h-16"
+                style={{
+                  background: `color-mix(in srgb, ${rankMeta.color} 14%, var(--surface))`,
+                  borderColor: `color-mix(in srgb, ${rankMeta.color} 40%, transparent)`,
+                }}
+              >
+                <RankIcon size={34} strokeWidth={1.5} color={rankMeta.color} />
+              </div>
+            )
+          })()}
+          <div className="flex-1 max-[600px]:flex max-[600px]:flex-col max-[600px]:items-center">
             <h1 className="font-cinzel text-[24px] text-gold mb-3 max-[480px]:text-[20px]">{user.username}</h1>
             <div className="flex gap-6 flex-wrap max-[600px]:justify-center max-[480px]:gap-4">
               {[
@@ -219,6 +281,8 @@ export default function ProfilePage() {
                 </span>
               ))}
             </div>
+            {/* XP rank progress bar */}
+            <RankProgressBar rank={user.rank} totalXp={user.totalXp} />
           </div>
         </div>
 
@@ -271,20 +335,27 @@ export default function ProfilePage() {
 
             {/* Quick nav cards */}
             <div className="grid grid-cols-3 gap-3 max-[480px]:grid-cols-2 max-[360px]:grid-cols-1">
-              {[
-                { label: 'Topics & Progress', glyph: '📚', tab: 'topics' as Tab },
-                { label: 'Badges', glyph: '🏅', tab: 'badges' as Tab },
-                { label: 'Rabbit Holes', glyph: '🐇', tab: 'rabbit-holes' as Tab },
-                { label: 'Notes', glyph: '📝', tab: 'notes' as Tab },
-                { label: 'Projects', glyph: '🏗️', tab: 'projects' as Tab },
-              ].map(({ label, glyph, tab: t }) => (
+              {([
+                { label: 'Topics & Progress', icon: BookOpen, color: 'var(--teal)',         tab: 'topics'       as Tab },
+                { label: 'Badges',             icon: Award,    color: 'var(--gold)',         tab: 'badges'       as Tab },
+                { label: 'Rabbit Holes',       icon: Rabbit,   color: 'var(--gold)',         tab: 'rabbit-holes' as Tab },
+                { label: 'Notes',              icon: FileText, color: 'var(--purple-light)', tab: 'notes'        as Tab },
+                { label: 'Projects',           icon: Hammer,   color: '#60a5fa',             tab: 'projects'     as Tab },
+              ] as { label: string; icon: LucideIcon; color: string; tab: Tab }[]).map(({ label, icon: Icon, color, tab: t }) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
-                  className="bg-card border border-border rounded-[12px] p-4 text-center hover:border-purple-dim transition-[border-color] duration-150"
+                  className="bg-card border border-border rounded-[12px] p-4 text-center
+                    hover:border-purple-dim transition-[border-color] duration-150 group"
                 >
-                  <div className="text-[28px] mb-2">{glyph}</div>
-                  <div className="text-[12px] text-muted font-cinzel">{label}</div>
+                  <div
+                    className="w-10 h-10 rounded-[10px] flex items-center justify-center mx-auto mb-2.5
+                      transition-[background] duration-150 group-hover:bg-purple-dim"
+                    style={{ background: `color-mix(in srgb, ${color} 12%, var(--surface))` }}
+                  >
+                    <Icon size={18} strokeWidth={1.75} color={color} />
+                  </div>
+                  <div className="text-[12px] text-muted font-cinzel leading-snug">{label}</div>
                 </button>
               ))}
             </div>
@@ -302,7 +373,6 @@ export default function ProfilePage() {
                 <TopicCard
                   key={topic.id}
                   topicId={topic.id}
-                  glyph={topic.glyph}
                   name={topic.name}
                   tier={dash.currentPath}
                   diagnosticCompleted={dash.diagnosticCompleted}
@@ -669,11 +739,11 @@ export default function ProfilePage() {
 }
 
 function TopicCard({
-  topicId, glyph, name, tier, diagnosticCompleted,
+  topicId, name, tier, diagnosticCompleted,
   completedSubChunks, totalSubChunks, totalXp,
   onContinue, onRetakeDiagnostic,
 }: {
-  topicId: string; glyph: string; name: string; tier: string
+  topicId: string; name: string; tier: string
   diagnosticCompleted: boolean
   completedSubChunks: number; totalSubChunks: number; totalXp: number
   onContinue: () => void; onRetakeDiagnostic: () => void
@@ -688,7 +758,9 @@ function TopicCard({
   return (
     <div className="bg-card border border-border rounded-[12px] p-5">
       <div className="flex items-center gap-3 mb-4">
-        <span className="text-[32px]">{glyph}</span>
+        <div className="flex-shrink-0">
+          <TopicIcon topicId={topicId} size={36} />
+        </div>
         <div className="flex-1">
           <div className="text-[16px] font-bold text-text">{name}</div>
           <div className="flex items-center gap-2 mt-0.5">

@@ -571,9 +571,9 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 |---|---|---|
 | Observability & stats metrics in Admin Panel | ~~High~~ Done | AdminDashboardPage: XP distribution, topic engagement, signup trend, subscription breakdown, content health |
 | Sync topic order in Admin Panel to lesson sort order | ~~Medium~~ Done | AdminChunkController uses `findAllByOrderBySortOrderAsc` |
-| SEO | Medium | Meta tags, Open Graph, sitemap, structured data; important for organic growth |
+| SEO | ~~Medium~~ Done | `index.html` — meta, OG, Twitter cards, JSON-LD (Organization + WebApplication + pricing). `sitemap.xml` + `robots.txt` added. Completed 2026-05-29 |
 | Additional topic content (polymathic expansion) | Medium | Extend beyond current 6 topics to broaden the polymathic offering |
 | Production security review | ~~High~~ Done | Completed 2026-05-29 — see Decision Log §[2026-05-29] |
 | AI optimisation (prompt caching, token efficiency) | ~~Medium~~ Done | AiMentorService uses `CacheControlEphemeral.Ttl.TTL_1H` on the system prompt; usage logged per call |
 | User location for leaderboard gamification | Low | Optional location field on profile; regional / global leaderboard segments |
-| Icons, images, and infographics | Medium | Replace placeholder or text-only UI elements with branded iconography and explanatory visuals to improve comprehension and polish |
+| Icons, images, and infographics | ~~Medium~~ Done | Completed 2026-05-29: lucide icons replace emojis in LandingPage features grid + ChunkMapPage chips + Profile quick-nav; TopicIcon used in Profile TopicCard + LandingPage coming-soon pills; rank-based avatar + XP-to-next-rank progress bar added to Profile header |
