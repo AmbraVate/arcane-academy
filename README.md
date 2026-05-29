@@ -1,70 +1,71 @@
 # Arcane Academy
 
-A gamified Java learning platform with a wizardry RPG theme. Built with React + Spring Boot + PostgreSQL, fully containerised with Docker.
+A gamified, polymathic learning platform with a wizardry RPG aesthetic. Learners progress through structured content tiers, earn XP and badges, and are guided by an AI mentor. Topics include Java, React, Tailwind CSS, Psychology, Natural Sciences, and Genealogy — with more planned.
+
+> **For engineers:** see [`PROJECT_REFERENCE.md`](PROJECT_REFERENCE.md) for architecture, decision log, content system, and deployment details.
+
+---
 
 ## Stack
 
-| Layer     | Technology                              |
-|-----------|-----------------------------------------|
-| Frontend  | React 18, TypeScript, Vite, React Router |
-| Backend   | Spring Boot 3.3, Java 21               |
-| Database  | PostgreSQL 16                           |
-| Auth      | JWT (jjwt 0.12)                        |
-| AI Mentor | Anthropic Claude API (proxied via backend) |
-| Container | Docker Compose                          |
+| Layer       | Technology                                                    |
+|-------------|---------------------------------------------------------------|
+| Frontend    | React 18, TypeScript, Vite, React Router, Tailwind CSS, Shadcn/ui |
+| Backend     | Spring Boot 3.3, Java 21, Spring Modulith (package-by-feature) |
+| Database    | PostgreSQL (Neon serverless)                                  |
+| Auth        | JWT + Google OAuth2                                           |
+| AI Mentor   | Anthropic Claude API (proxied via backend)                    |
+| Payments    | Stripe                                                        |
+| Deployment  | Google Cloud Run (backend) + Netlify (frontend)               |
 
-## Project Structure
+---
 
-```
-polymath-academy/
-├── docker-compose.yml
-├── .env.example
-├── frontend/
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   ├── src/
-│   │   ├── api/          # Axios client + service functions
-│   │   ├── components/   # Nav, CodeEditor, StoryPanel, etc.
-│   │   ├── hooks/        # useAuth (context + hook)
-│   │   ├── pages/        # Login, Register, Home, Quest
-│   │   └── types/        # TypeScript interfaces
-└── backend/
-    ├── Dockerfile
-    └── src/main/java/com/arcane/academy/
-        ├── controller/   # Auth, Quest, Code, AiMentor
-        ├── service/      # AuthService, QuestService, AiMentorService
-        ├── runner/       # JavaCodeRunner (sandboxed JVM execution)
-        ├── repository/   # JPA repos for User, Quest, Progress
-        ├── model/        # JPA entities
-        ├── dto/          # Request/response DTOs
-        ├── security/     # JwtService, JwtAuthFilter, UserPrincipal
-        └── config/       # SecurityConfig, DataSeeder
-```
+## Quick Start (Docker — local staging)
 
-## Quick Start (Docker)
+Docker Compose runs the full stack locally with Flyway migrations and prod-like schema behaviour. Use this to verify changes before pushing to master.
 
-### 1. Clone and configure
+### 1. Configure environment
 
 ```bash
 cp .env.example .env
-# Edit .env and set:
-#   ANTHROPIC_API_KEY=your_key_here
-#   JWT_SECRET=a_random_32+_char_string
+# Fill in: JWT_SECRET, ANTHROPIC_API_KEY, STRIPE_SECRET_KEY (test key),
+#          GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and other values.
+# See PROJECT_REFERENCE.md §2 for the full variable list.
 ```
 
-### 2. Run everything
+### 2. Run
 
 ```bash
 docker compose up --build
 ```
 
-| Service  | URL                    |
-|----------|------------------------|
-| Frontend | http://localhost:80     |
-| Backend  | http://localhost:8080   |
-| Database | localhost:5432          |
+| Service  | URL                   |
+|----------|-----------------------|
+| Frontend | http://localhost      |
+| Backend  | http://localhost:8080 |
+| Database | localhost:5432        |
 
-The database is seeded automatically with 4 quests on first startup.
+Content is seeded automatically from `backend/src/main/resources/content/` on first startup.
+
+### 3. Clean-slate run (wipe DB + re-run all migrations)
+
+Run this before any PR that adds a new Flyway migration:
+
+```bash
+docker compose down -v && docker compose up --build
+```
+
+### Stripe webhooks (local)
+
+Stripe cannot reach `localhost` directly. Use the Stripe CLI to forward events:
+
+```bash
+stripe listen --forward-to http://localhost:8080/api/payments/webhook
+```
+
+Copy the printed `whsec_...` signing secret into `.env` as `STRIPE_WEBHOOK_SECRET`.
+
+---
 
 ## Local Development (without Docker)
 
@@ -74,16 +75,10 @@ Requirements: Java 21, Maven 3.9+, PostgreSQL running locally
 
 ```bash
 cd backend
-
-# Set environment variables (or create application-local.yml)
-export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/polymath_academy
-export SPRING_DATASOURCE_USERNAME=polymath
-export SPRING_DATASOURCE_PASSWORD=polymath_secret
-export JWT_SECRET=dev_secret_at_least_32_characters!!
-export ANTHROPIC_API_KEY=your_key_here
-
 mvn spring-boot:run
 ```
+
+The base `application.yml` defaults to `localhost:5432/arcane_academy` with `ddl-auto: update` — no extra config needed for a basic dev run.
 
 ### Frontend
 
@@ -92,65 +87,17 @@ Requirements: Node 20+
 ```bash
 cd frontend
 npm install
-echo "VITE_API_URL=http://localhost:8080" > .env.local
-npm run dev
-# → http://localhost:5173
+npm run dev   # → http://localhost:5173
 ```
 
-## API Endpoints
+The Vite dev server proxies `/api/*` to `http://localhost:8080` by default.
 
-### Auth (public)
-| Method | Path               | Description     |
-|--------|--------------------|-----------------|
-| POST   | /api/auth/register | Register user   |
-| POST   | /api/auth/login    | Login, get JWT  |
+---
 
-### Quests (requires JWT)
-| Method | Path                       | Description              |
-|--------|----------------------------|--------------------------|
-| GET    | /api/quests                | All quests with progress |
-| GET    | /api/quests/{id}           | Quest detail + story     |
-| POST   | /api/quests/{id}/complete  | Mark quest complete      |
+## Git Workflow
 
-### Code (requires JWT)
-| Method | Path                      | Description                     |
-|--------|---------------------------|---------------------------------|
-| POST   | /api/code/run             | Run code, return output         |
-| POST   | /api/code/submit/{questId}| Run all test cases + AI feedback|
+```
+feature/* → docker compose up --build (verify) → merge to master → CI → manual prod deploy
+```
 
-### AI Mentor (requires JWT)
-| Method | Path                 | Description               |
-|--------|----------------------|---------------------------|
-| POST   | /api/mentor/feedback | Get Socratic hint from AI |
-
-## Architecture Notes
-
-### Code Execution (JavaCodeRunner)
-Student code is wrapped in a `StudentSolution` class, compiled in a temp directory using `javax.tools.JavaCompiler`, then executed in an isolated thread with a 5-second timeout. Output is captured from `System.out`. The temp directory is deleted after each run.
-
-> **Production hardening**: For a public deployment, replace the in-process runner with a container-per-run approach (e.g. spawn a Docker container per submission) to fully isolate execution.
-
-### AI Mentor
-The backend proxies requests to the Anthropic API, keeping your API key server-side. The prompt instructs Claude to play Master Velan — a Socratic wizard mentor who guides without giving direct answers.
-
-### Database
-JPA with `ddl-auto: update` creates tables automatically. The `DataSeeder` bean inserts quests on first startup if the table is empty. Quest test cases are stored as JSONB; expected outputs are never exposed to the frontend.
-
-## Deploying to Cloud
-
-The app is cloud-ready. Example for AWS:
-
-1. Push images to ECR
-2. Run with ECS Fargate (or EC2)
-3. Use RDS PostgreSQL instead of the db container
-4. Set environment variables via ECS task definition / Secrets Manager
-5. Put an ALB in front; frontend container serves via nginx
-
-For GCP: Cloud Run (frontend + backend) + Cloud SQL.
-For Azure: Container Apps + Azure Database for PostgreSQL.
-
-## Add production
-
-The following needs to be added to the Dockerfile:
-
-`"-Dspring.profiles.active=prod"`
+CI runs on every push and PR (`mvn verify`, lint, type-check, Vitest, Vite build). Production is deployed manually via `gcloud run deploy` — never automatically on push to master.

@@ -63,11 +63,10 @@ stripe:
   price-id-annual:  ${STRIPE_PRICE_ID_ANNUAL:price_1TbiXw8LtlZA9QG97qNpidXT}
   price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME:price_1Tbj8l8LtlZA9QG9AR6lU2zP}
 
-# Anthropic config kept for reference but AiMentorService no longer makes API calls
+# Anthropic — AiMentorService uses Claude Haiku 4.5 with prompt caching.
+# Set ANTHROPIC_API_KEY to enable live AI responses; leave blank or "disabled" to use static responses only.
 anthropic:
   api-key: ${ANTHROPIC_API_KEY:disabled}
-  api-url: https://api.anthropic.com/v1/messages
-  model: claude-sonnet-4-20250514
 
 cors:
   allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
@@ -160,6 +159,3 @@ logging:
       max-history: 7
       file-name-pattern: logs/arcane-academy.%d{yyyy-MM-dd}.%i.log
 
-groq:
-  api:
-    key: ${GROQ_API_KEY:}

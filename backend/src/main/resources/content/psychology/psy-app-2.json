@@ -1,11 +1,13 @@
-﻿{
+{
   "id": "psy-app-2",
   "title": "Biopsychology",
   "glyph": "🧬",
   "sortOrder": 2,
   "tier": "APPRENTICE",
   "topicId": "psychology",
-  "prerequisites": ["psy-fnd-1"],
+  "prerequisites": [
+    "psy-app-1"
+  ],
   "subChunks": [
     {
       "id": "psy-app-2a",
@@ -16,13 +18,47 @@
       "hookHtml": "<p>In 1848, a railway worker named Phineas Gage survived a three-foot iron rod passing clean through his frontal lobe. He walked away, talked coherently, and lived another twelve years — but everyone who knew him agreed he was no longer himself. His personality had been destroyed while his body lived on. This case became one of the most important in the history of psychology: it proved that the brain is the seat of personality, emotion, and self. Every major debate in psychology traces back to this simple, disturbing fact.</p>",
       "explanationHtml": "<h3>The Nervous System</h3><p>The nervous system is the body's electrochemical communication network. It divides into two major branches.</p><h4>Central Nervous System (CNS)</h4><p>The CNS comprises the <strong>brain</strong> and <strong>spinal cord</strong>. It receives, integrates, and responds to sensory information from the environment. The spinal cord transmits signals between the brain and the peripheral nervous system and coordinates reflexes independently of the brain.</p><h4>Peripheral Nervous System (PNS)</h4><p>The PNS connects the CNS to the rest of the body. It divides into:</p><ul><li><strong>Somatic nervous system</strong> — controls voluntary skeletal muscles and carries sensory information from skin, muscles, and sense organs to the CNS.</li><li><strong>Autonomic nervous system (ANS)</strong> — regulates involuntary functions (heart rate, digestion, glandular activity). Further divided into:<ul><li><em>Sympathetic division</em>: activates 'fight-or-flight' — increases heart rate, dilates pupils, suppresses digestion. Mediated by adrenaline (epinephrine) and noradrenaline (norepinephrine).</li><li><em>Parasympathetic division</em>: promotes 'rest-and-digest' — conserves energy, slows heart rate, stimulates digestion.</li></ul></li></ul><p>Cannon (1932) coined the term 'fight-or-flight' following studies on cats exposed to threatening stimuli, demonstrating systematic sympathetic activation as a survival response.</p><h3>The Brain: Key Structures & Functions</h3><h4>Cerebral Cortex</h4><p>The outer layer of the brain, divided into four lobes:</p><ul><li><strong>Frontal lobe</strong>: executive functions (planning, decision-making, impulse control), voluntary movement (primary motor cortex), Broca's area (speech production). Phineas Gage's frontal lobe damage caused personality change without motor or sensory impairment.</li><li><strong>Parietal lobe</strong>: sensory processing (primary somatosensory cortex), spatial awareness, integration of sensory information.</li><li><strong>Temporal lobe</strong>: auditory processing, language comprehension (Wernicke's area), memory (via hippocampus beneath it).</li><li><strong>Occipital lobe</strong>: visual processing. Damage causes cortical blindness even when the eyes are intact.</li></ul><h4>Limbic System</h4><p>A set of interconnected structures critical for emotion and memory:</p><ul><li><strong>Hippocampus</strong>: essential for consolidating new declarative memories into long-term storage. Patient H.M. (Molaison), who had both hippocampi removed to treat epilepsy, lost the ability to form new long-term memories — demonstrating hippocampal necessity for memory consolidation (Scoville & Milner, 1957).</li><li><strong>Amygdala</strong>: processes fear and emotional memory. LeDoux's (1996) research identified two pathways: a fast 'low road' (thalamus → amygdala) for rapid threat detection and a slower 'high road' (thalamus → cortex → amygdala) for contextual evaluation.</li><li><strong>Hypothalamus</strong>: regulates homeostasis (temperature, hunger, thirst, sleep). Controls the pituitary gland — the master gland of the endocrine system.</li></ul><h4>Other Key Structures</h4><ul><li><strong>Cerebellum</strong>: coordinates fine motor movement, balance, and motor learning.</li><li><strong>Brainstem</strong> (midbrain, pons, medulla): regulates vital functions — breathing, heart rate, arousal. The reticular activating system (RAS) in the brainstem controls sleep–wake cycles and alertness.</li><li><strong>Basal ganglia</strong>: involved in habit learning, procedural memory, and movement initiation. Degeneration causes Parkinson's disease.</li></ul><h3>Lateralisation & Hemispheric Specialisation</h3><p>The brain's two hemispheres are connected by the <strong>corpus callosum</strong>. Sperry's split-brain studies (1968) — conducted on patients whose corpus callosa had been severed to treat epilepsy — provided landmark evidence for lateralisation. When stimuli were presented only to the right visual field (left hemisphere) patients could name them; when presented to the left visual field (right hemisphere) they could not speak them but could select matching objects with the left hand. This demonstrated:</p><ul><li><strong>Left hemisphere</strong>: language, logical reasoning, analytic processing (in most right-handers).</li><li><strong>Right hemisphere</strong>: spatial processing, holistic pattern recognition, emotional expression.</li></ul><p><em>Evaluation</em>: Lateralisation is probabilistic, not absolute — neuroimaging studies show most cognitive tasks activate both hemispheres. Sperry's sample was atypical (split-brain patients), limiting generalisation.</p><h3>Neuroimaging Methods</h3><p>Modern neuroimaging allows non-invasive study of brain structure and function:</p><ul><li><strong>fMRI (functional Magnetic Resonance Imaging)</strong>: measures blood-oxygen-level-dependent (BOLD) signal as a proxy for neural activity. High spatial resolution; poor temporal resolution. Excellent for localising function — but note that correlation between brain activation and behaviour does not imply causation.</li><li><strong>PET (Positron Emission Tomography)</strong>: uses radioactive tracers to measure metabolic activity. Lower resolution than fMRI; requires radioactive injection.</li><li><strong>EEG (Electroencephalography)</strong>: measures electrical activity via scalp electrodes. Excellent temporal resolution (millisecond precision); poor spatial resolution. Used in sleep research and for detecting epileptic activity.</li><li><strong>Lesion studies / case studies</strong>: natural or surgical brain damage provides causal evidence. Limited by the uniqueness of each case and inability to control for individual differences.</li></ul>",
       "storyBeats": [
-        {"type": "narration", "text": "The seminar room is quiet. On the screen is an 1868 daguerreotype of a man with a disfiguring scar across his skull, holding an iron rod the length of his leg."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Phineas Gage. This man's misfortune gave us one of our clearest early proofs that personality — who we are — is housed in the frontal lobe. The rod destroyed most of his prefrontal cortex. His body healed. His self did not."},
-        {"type": "narration", "text": "She pulls up a diagram of the brain divided into lobes, limbic system, and brainstem, each region colour-coded."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "The brain is not one thing — it is a hierarchy of systems, each with a distinct evolutionary history. The brainstem keeps you alive. The limbic system governs your emotions and memories. The cortex — especially the frontal lobe — makes you distinctly human."},
-        {"type": "example", "speaker": "Patient H.M.", "text": "Henry Molaison (H.M.) had both hippocampi removed in 1953 to treat severe epilepsy. He awoke unable to form any new long-term memories. He could recognise his doctors' faces but could not remember meeting them the day before. He could learn new motor skills (like drawing star shapes in a mirror) but had no conscious memory of practising. H.M. taught us that memory is not unitary — procedural and declarative memory are doubly dissociable."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Roger Sperry won the Nobel Prize for demonstrating that severing the corpus callosum — the bridge between hemispheres — revealed two almost independent minds. The left hemisphere could speak. The right could draw, recognise faces, but could not name what it knew. Language lives largely on the left. Spatial intuition on the right."},
-        {"type": "narration", "text": "A student raises her hand: 'So is left-brained versus right-brained real?' Dr. Chen smiles. 'Not quite. Most tasks use both hemispheres. The pop-psychology version is a myth. Lateralisation is real; the strong version is not.'"}
+        {
+          "type": "narration",
+          "text": "The seminar room is quiet. On the screen is an 1868 daguerreotype of a man with a disfiguring scar across his skull, holding an iron rod the length of his leg."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Phineas Gage. This man's misfortune gave us one of our clearest early proofs that personality — who we are — is housed in the frontal lobe. The rod destroyed most of his prefrontal cortex. His body healed. His self did not."
+        },
+        {
+          "type": "narration",
+          "text": "She pulls up a diagram of the brain divided into lobes, limbic system, and brainstem, each region colour-coded."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "The brain is not one thing — it is a hierarchy of systems, each with a distinct evolutionary history. The brainstem keeps you alive. The limbic system governs your emotions and memories. The cortex — especially the frontal lobe — makes you distinctly human."
+        },
+        {
+          "type": "example",
+          "speaker": "Patient H.M.",
+          "text": "Henry Molaison (H.M.) had both hippocampi removed in 1953 to treat severe epilepsy. He awoke unable to form any new long-term memories. He could recognise his doctors' faces but could not remember meeting them the day before. He could learn new motor skills (like drawing star shapes in a mirror) but had no conscious memory of practising. H.M. taught us that memory is not unitary — procedural and declarative memory are doubly dissociable."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Roger Sperry won the Nobel Prize for demonstrating that severing the corpus callosum — the bridge between hemispheres — revealed two almost independent minds. The left hemisphere could speak. The right could draw, recognise faces, but could not name what it knew. Language lives largely on the left. Spatial intuition on the right."
+        },
+        {
+          "type": "narration",
+          "text": "A student raises her hand: 'So is left-brained versus right-brained real?' Dr. Chen smiles. 'Not quite. Most tasks use both hemispheres. The pop-psychology version is a myth. Lateralisation is real; the strong version is not.'"
+        }
       ],
       "guidedPracticeHtml": "<p><strong>Scenario:</strong> A 45-year-old man, Kieran, was involved in a road accident. He survived but sustained damage to his left temporal lobe. His family report that he can hold a conversation and understands everything said to him, but he now struggles to produce speech — his words come out jumbled and effortful, and he often substitutes incorrect words.</p><p>Using your knowledge of brain localisation, explain Kieran's symptoms. In your response, address: (1) which specific brain region is likely responsible and why; (2) what this case tells us about the relationship between brain structure and psychological function; (3) one methodological limitation of using single case studies to draw conclusions about brain localisation. Aim for 130–180 words.</p>",
       "guidedPracticeModelAnswer": "Kieran's symptoms — effortful, non-fluent speech with preserved comprehension — are characteristic of Broca's aphasia. Broca's area is located in the left frontal lobe and is responsible for speech production. While the accident report notes left temporal lobe damage, Kieran's specific symptoms strongly suggest the damage extends into the left frontal lobe or disrupts the pathways connecting them. If his left temporal lobe (Wernicke's area) were primarily affected, we would expect impaired comprehension and fluent but meaningless speech.\n\nThis case illustrates the principle of functional localisation: specific psychological functions (like speech production) are housed in specific neuroanatomical regions. It also demonstrates lateralisation, as language is typically governed by the left hemisphere.\n\nHowever, drawing firm conclusions from single case studies is methodologically limited. Natural lesions from accidents are rarely clean or focal; secondary effects like swelling (oedema) or disrupted blood flow may impair regions far from the primary impact site, making it difficult to definitively link a symptom to a single specific damaged area.",
@@ -30,19 +66,42 @@
       "feynmanPrompt": "Explain to a 16-year-old why the brain cannot be understood by studying one region at a time. Use at least two real cases (Phineas Gage, H.M., or Sperry's split-brain patients) to make your argument.",
       "modelAnswer": "The patient's symptoms are consistent with damage to right parietal cortex, which is responsible for spatial processing, body schema, and integrating sensory information from both sides of space. The right hemisphere typically dominates for visuospatial tasks and spatial attention, so damage here — rather than to the left hemisphere — explains why language is entirely preserved while navigation and body awareness are impaired.\n\nHemispatial neglect, where the patient fails to attend to or dress the left side of the body, is a well-documented consequence of right parietal lesions. It reflects disrupted spatial attention rather than blindness or paralysis; the sensory pathways themselves are intact, but the cortex fails to integrate left-sided information into conscious awareness.\n\nHer ability to speak, read, and recall events demonstrates intact left-hemisphere function (language, semantic memory) and intact medial temporal structures (hippocampus). This double dissociation — spatial impairment with preserved language — supports the principle of functional lateralisation: different capacities are differentially housed in each hemisphere.\n\nA limitation of this case-study interpretation is that strokes rarely produce focal, clean lesions. Secondary effects (oedema, diaschisis) may complicate attributing specific symptoms to specific regions, and individual variation in lateralisation means not all patients present identically.",
       "rabbitHoleTerms": [
-        {"term": "lateralisation", "description": "The tendency for certain cognitive functions to be processed predominantly by one cerebral hemisphere. Language is typically left-lateralised in right-handed individuals; spatial processing tends to be right-lateralised."},
-        {"term": "split-brain", "description": "A condition resulting from surgical severing of the corpus callosum (typically to treat epilepsy). Sperry's (1968) studies of split-brain patients provided landmark evidence for hemispheric specialisation."},
-        {"term": "fMRI", "description": "Functional Magnetic Resonance Imaging. Measures blood-oxygen-level-dependent (BOLD) signal as a proxy for neural activity, providing high spatial resolution but poor temporal resolution."},
-        {"term": "limbic system", "description": "A set of brain structures — including the hippocampus, amygdala, and hypothalamus — involved in emotion, memory, and motivational behaviour."},
-        {"term": "fight-or-flight", "description": "Cannon's (1932) term for the sympathetic nervous system's emergency response to threat: increased heart rate, pupil dilation, and suppressed digestion to prepare the body for action."},
-        {"term": "lesion study", "description": "Research method using naturally occurring or surgical brain damage to infer the function of specific brain regions. Provides causal evidence but is limited by the uniqueness of each case."}
+        {
+          "term": "lateralisation",
+          "description": "The tendency for certain cognitive functions to be processed predominantly by one cerebral hemisphere. Language is typically left-lateralised in right-handed individuals; spatial processing tends to be right-lateralised."
+        },
+        {
+          "term": "split-brain",
+          "description": "A condition resulting from surgical severing of the corpus callosum (typically to treat epilepsy). Sperry's (1968) studies of split-brain patients provided landmark evidence for hemispheric specialisation."
+        },
+        {
+          "term": "fMRI",
+          "description": "Functional Magnetic Resonance Imaging. Measures blood-oxygen-level-dependent (BOLD) signal as a proxy for neural activity, providing high spatial resolution but poor temporal resolution."
+        },
+        {
+          "term": "limbic system",
+          "description": "A set of brain structures — including the hippocampus, amygdala, and hypothalamus — involved in emotion, memory, and motivational behaviour."
+        },
+        {
+          "term": "fight-or-flight",
+          "description": "Cannon's (1932) term for the sympathetic nervous system's emergency response to threat: increased heart rate, pupil dilation, and suppressed digestion to prepare the body for action."
+        },
+        {
+          "term": "lesion study",
+          "description": "Research method using naturally occurring or surgical brain damage to infer the function of specific brain regions. Provides causal evidence but is limited by the uniqueness of each case."
+        }
       ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which brain structure is primarily responsible for consolidating new long-term declarative memories?</p>",
-          "options": ["Amygdala", "Hippocampus", "Cerebellum", "Hypothalamus"],
+          "options": [
+            "Amygdala",
+            "Hippocampus",
+            "Cerebellum",
+            "Hypothalamus"
+          ],
           "correctAnswer": "Hippocampus",
           "explanationHtml": "<p>The hippocampus (located in the medial temporal lobe) is essential for converting new experiences into long-term declarative memories. Patient H.M. demonstrated this definitively — after bilateral hippocampal removal he could no longer form new long-term memories, though older memories remained intact and procedural learning was preserved.</p>"
         },
@@ -57,7 +116,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A patient can understand speech perfectly but produces effortful, grammatically incorrect speech with word substitutions. Which region is most likely damaged?</p>",
-          "options": ["Wernicke's area (left temporal lobe)", "Broca's area (left frontal lobe)", "Right parietal cortex", "Primary motor cortex"],
+          "options": [
+            "Wernicke's area (left temporal lobe)",
+            "Broca's area (left frontal lobe)",
+            "Right parietal cortex",
+            "Primary motor cortex"
+          ],
           "correctAnswer": "Broca's area (left frontal lobe)",
           "explanationHtml": "<p>This describes Broca's aphasia — non-fluent, effortful speech production with intact comprehension. Broca's area (inferior frontal gyrus, typically left hemisphere) is responsible for speech production and grammatical processing. Wernicke's aphasia, by contrast, produces fluent but meaningless speech with impaired comprehension.</p>"
         },
@@ -65,7 +129,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A researcher uses fMRI to show that the amygdala activates when participants view fearful faces. A student concludes 'the amygdala causes fear responses.' What is the key flaw in this reasoning?</p>",
-          "options": ["fMRI measures electrical activity, not blood flow", "Correlation between brain activation and behaviour does not imply causation", "The amygdala is in the cerebellum, not the limbic system", "fMRI cannot detect activation in subcortical structures"],
+          "options": [
+            "fMRI measures electrical activity, not blood flow",
+            "Correlation between brain activation and behaviour does not imply causation",
+            "The amygdala is in the cerebellum, not the limbic system",
+            "fMRI cannot detect activation in subcortical structures"
+          ],
           "correctAnswer": "Correlation between brain activation and behaviour does not imply causation",
           "explanationHtml": "<p>fMRI measures BOLD signal (blood oxygenation) as a proxy for neural activity, and activation co-occurring with a behaviour is correlational. The activated region may be modulated by another region, or its activation may be epiphenomenal. Causal claims about brain function require converging evidence from lesion studies, TMS, or animal models with direct manipulation.</p>"
         }
@@ -80,12 +149,43 @@
       "hookHtml": "<p>Depression affects one in five people at some point in their lives. For decades, the dominant treatment — still the most prescribed today — has been a class of drugs called SSRIs, which work by blocking the reuptake of a single neurotransmitter: serotonin. Yet a landmark 2022 umbrella review by Moncrieff et al. found no consistent evidence that people with depression have lower serotonin levels. How can the most prescribed psychiatric medication in the world be based on a biochemical theory that may be wrong? The answer requires understanding how neurotransmitters actually work — and how much we still don't know.</p>",
       "explanationHtml": "<h3>Neuron Structure & the Action Potential</h3><p>The neuron is the basic unit of the nervous system. Approximately 86 billion neurons exist in the human brain, each capable of transmitting electrical signals. Key structural components:</p><ul><li><strong>Dendrites</strong>: branching fibres that receive signals from neighbouring neurons or sensory receptors.</li><li><strong>Cell body (soma)</strong>: integrates incoming signals; contains the nucleus.</li><li><strong>Axon</strong>: a long fibre that transmits the electrical signal away from the cell body. Covered in <strong>myelin sheath</strong> (formed by Schwann cells in the PNS, oligodendrocytes in the CNS), which insulates the axon and dramatically increases conduction speed via saltatory conduction at <strong>nodes of Ranvier</strong>.</li><li><strong>Terminal buttons</strong>: release neurotransmitters into the synapse.</li></ul><p>The <strong>action potential</strong> is an all-or-none electrical impulse. When the membrane potential reaches threshold (~–55mV), voltage-gated sodium channels open, causing rapid depolarisation. Potassium channels then open, repolarising the membrane. The neuron enters a brief refractory period during which it cannot fire.</p><h3>Synaptic Transmission</h3><p>Neurons communicate across the <strong>synapse</strong> — a gap of approximately 20 nanometres between the presynaptic terminal and postsynaptic receptor. The process:</p><ol><li>Action potential reaches the terminal button.</li><li>Vesicles containing neurotransmitters fuse with the presynaptic membrane and release molecules into the synaptic cleft (exocytosis).</li><li>Neurotransmitters bind to specific postsynaptic receptors — either excitatory (depolarising the postsynaptic membrane) or inhibitory (hyperpolarising it).</li><li>Neurotransmitters are either broken down enzymatically or <strong>reuptaken</strong> into the presynaptic terminal for recycling.</li></ol><h3>Key Neurotransmitters</h3><table><tr><th>Neurotransmitter</th><th>Primary functions</th><th>Relevance to psychology</th></tr><tr><td><strong>Dopamine</strong></td><td>Reward, motivation, movement</td><td>Dopamine hypothesis of schizophrenia (excess D2 activity); Parkinson's disease (loss of dopaminergic neurons in substantia nigra); drug addiction (mesolimbic pathway)</td></tr><tr><td><strong>Serotonin (5-HT)</strong></td><td>Mood regulation, sleep, appetite</td><td>Serotonin hypothesis of depression (Schildkraut, 1965); SSRIs increase synaptic serotonin by blocking reuptake — though Moncrieff et al. (2022) challenge the causal link</td></tr><tr><td><strong>GABA</strong></td><td>Major inhibitory neurotransmitter</td><td>Reduces neural excitability; benzodiazepines (e.g., diazepam) enhance GABA activity; reduced GABA linked to anxiety disorders</td></tr><tr><td><strong>Glutamate</strong></td><td>Major excitatory neurotransmitter</td><td>Essential for learning and memory (LTP); glutamate hypothesis of schizophrenia (NMDA receptor hypofunction)</td></tr><tr><td><strong>Acetylcholine (ACh)</strong></td><td>Muscle contraction, memory</td><td>Loss of cholinergic neurons in Alzheimer's disease; basis for acetylcholinesterase inhibitor treatment (donepezil)</td></tr></table><h3>Drug Action: Agonists & Antagonists</h3><p>Drugs alter synaptic transmission in predictable ways:</p><ul><li><strong>Agonists</strong>: mimic or enhance neurotransmitter action. Example: morphine is an opioid agonist (binds to endorphin receptors). Nicotine is an ACh receptor agonist.</li><li><strong>Antagonists</strong>: block receptor binding. Example: haloperidol (antipsychotic) is a D2 dopamine antagonist — reducing positive symptoms of schizophrenia but causing motor side effects by reducing dopamine in the nigrostriatal pathway.</li><li><strong>Reuptake inhibitors</strong>: block reuptake of neurotransmitter into presynaptic neuron, prolonging its action. SSRIs block serotonin reuptake; cocaine blocks dopamine, serotonin, and noradrenaline reuptake simultaneously.</li></ul><h3>Hormones & Behaviour</h3><p>Hormones are chemical messengers released by endocrine glands into the bloodstream. They act more slowly than neurotransmitters but over longer timescales and broader targets.</p><h4>The HPA Axis & Stress</h4><p>The <strong>hypothalamic-pituitary-adrenal (HPA) axis</strong> regulates the stress response:</p><ol><li>Hypothalamus releases corticotrophin-releasing hormone (CRH).</li><li>Pituitary gland releases adrenocorticotrophic hormone (ACTH).</li><li>Adrenal cortex releases <strong>cortisol</strong> — mobilising energy, suppressing inflammation, but impairing immune function with chronic exposure.</li></ol><p>Chronic HPA activation is associated with hippocampal volume reduction (McEwen, 1999), anxiety, depression, and immune dysfunction — explaining part of the physiological cost of sustained stress.</p><h4>Sex Hormones</h4><p>Baron-Cohen et al. (2004) proposed the extreme male brain theory of autism, partly based on prenatal testosterone exposure. Evidence includes the finding that girls with congenital adrenal hyperplasia (CAH) — exposed to elevated androgens prenatally — show more male-typical play behaviour than matched controls (Berenbaum & Hines, 1992). Evaluation: this research is correlational and conflates biological sex with gender.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "Dr. Chen projects an image of a synapse: the terminal button swollen with vesicles, the tiny cleft, the receptor-studded postsynaptic membrane. 'Everything psychological,' she says, 'begins here.'"},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "A neuron fires when input crosses a threshold. That fire is all-or-none — like a gun trigger. What varies is not the strength of a single impulse but the rate of firing and which neurons are recruited. The message is in the pattern, not the size."},
-        {"type": "example", "speaker": "Drug action at the synapse", "text": "Cocaine blocks the reuptake transporters for dopamine, serotonin, and noradrenaline simultaneously. Dopamine floods the nucleus accumbens — the brain's reward hub — producing euphoria. But the brain compensates by downregulating its own dopamine receptors. When the drug wears off, the depleted reward circuit produces the characteristic crash — and craving for the drug to restore baseline function."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "We have prescribed SSRIs for depression since the 1980s, telling patients their serotonin is 'low'. Moncrieff's 2022 umbrella review found no consistent evidence of a serotonin deficit in depressed individuals. The drugs may work — but perhaps not through the mechanism we claimed. This is humbling. And it illustrates why we must separate the effectiveness of a treatment from the validity of the theory behind it."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Hormones are slower messengers — the endocrine system working over minutes, hours, days. The HPA axis is your body's long-haul stress response. Cortisol is adaptive for an acute threat, but if you live under chronic stress, cortisol eventually begins to shrink your hippocampus. The system meant to protect you begins to damage memory."},
-        {"type": "narration", "text": "A student asks about testosterone and aggression. Dr. Chen pauses. 'Correlation, yes. Causation? The picture is far murkier. Context, learning, and social norms shape aggression far more powerfully than testosterone levels in most studies.'"}
+        {
+          "type": "narration",
+          "text": "Dr. Chen projects an image of a synapse: the terminal button swollen with vesicles, the tiny cleft, the receptor-studded postsynaptic membrane. 'Everything psychological,' she says, 'begins here.'"
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "A neuron fires when input crosses a threshold. That fire is all-or-none — like a gun trigger. What varies is not the strength of a single impulse but the rate of firing and which neurons are recruited. The message is in the pattern, not the size."
+        },
+        {
+          "type": "example",
+          "speaker": "Drug action at the synapse",
+          "text": "Cocaine blocks the reuptake transporters for dopamine, serotonin, and noradrenaline simultaneously. Dopamine floods the nucleus accumbens — the brain's reward hub — producing euphoria. But the brain compensates by downregulating its own dopamine receptors. When the drug wears off, the depleted reward circuit produces the characteristic crash — and craving for the drug to restore baseline function."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "We have prescribed SSRIs for depression since the 1980s, telling patients their serotonin is 'low'. Moncrieff's 2022 umbrella review found no consistent evidence of a serotonin deficit in depressed individuals. The drugs may work — but perhaps not through the mechanism we claimed. This is humbling. And it illustrates why we must separate the effectiveness of a treatment from the validity of the theory behind it."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Hormones are slower messengers — the endocrine system working over minutes, hours, days. The HPA axis is your body's long-haul stress response. Cortisol is adaptive for an acute threat, but if you live under chronic stress, cortisol eventually begins to shrink your hippocampus. The system meant to protect you begins to damage memory."
+        },
+        {
+          "type": "narration",
+          "text": "A student asks about testosterone and aggression. Dr. Chen pauses. 'Correlation, yes. Causation? The picture is far murkier. Context, learning, and social norms shape aggression far more powerfully than testosterone levels in most studies.'"
+        }
       ],
       "guidedPracticeHtml": "<p><strong>Scenario:</strong> James has been prescribed a benzodiazepine (e.g., diazepam) by his GP for severe anxiety. He is told it works by enhancing the activity of GABA, the brain's main inhibitory neurotransmitter. After six weeks his anxiety is much reduced, but his GP warns him not to stop taking it abruptly.</p><p>Using your knowledge of synaptic transmission and drug action, explain: (1) how diazepam reduces anxiety at the neurochemical level; (2) why abrupt discontinuation could be dangerous (think about what happens to GABA receptors over time); (3) one limitation of treating psychological conditions purely with pharmacological interventions. Aim for 130–180 words.</p>",
       "guidedPracticeModelAnswer": "Diazepam acts as an agonist for GABA, the central nervous system's primary inhibitory neurotransmitter. By binding to GABA receptors on the postsynaptic membrane, it enhances the influx of negative chloride ions. This hyperpolarises the postsynaptic neuron, moving its membrane potential further away from the firing threshold and reducing overall neural excitability, which subjectively reduces anxiety.\n\nAbrupt discontinuation is dangerous due to neuroadaptation. Over six weeks of artificially enhanced GABA activity, the brain attempts to restore homeostasis by downregulating its own GABA receptors (reducing their number or sensitivity). If the drug is suddenly withdrawn, the remaining receptors are insufficient to handle normal inhibitory demands, leading to a rebound of severe anxiety, over-excitation, and potentially dangerous withdrawal seizures.\n\nA key limitation of purely pharmacological treatment is that it addresses the proximate biological mechanism (neural overactivity) but not the distal psychological causes (e.g., maladaptive thought patterns, environmental stressors, or trauma). Without psychological therapies like CBT to build coping strategies, relapse is highly likely once the medication is stopped.",
@@ -93,19 +193,42 @@
       "feynmanPrompt": "Explain to a sceptical friend why knowing which neurotransmitter is involved in a mental health condition does not automatically mean we understand the condition or that drugs targeting that transmitter will work well.",
       "modelAnswer": "Parkinson's disease results from the degeneration of dopaminergic neurons in the substantia nigra, a midbrain region that projects to the basal ganglia — structures critical for initiating and controlling voluntary movement. Dopamine in this pathway facilitates smooth, coordinated movement; without it, the inhibitory and excitatory circuits of the basal ganglia fall out of balance, producing the characteristic tremor, rigidity, and bradykinesia (slowness of movement).\n\nL-DOPA (levodopa) is used rather than dopamine itself because dopamine cannot cross the blood-brain barrier — a selective membrane that protects the CNS from large charged molecules in the bloodstream. L-DOPA is a smaller, neutral amino acid that crosses via active transport, whereupon it is converted to dopamine by the enzyme aromatic amino acid decarboxylase (AADC) within surviving dopaminergic neurons.\n\nThis is an example of a precursor-loading strategy — supplying the biosynthetic precursor rather than the neurotransmitter directly. A key limitation is that as dopaminergic neurons continue to degenerate, fewer neurons remain to convert L-DOPA, reducing efficacy over time. Additionally, L-DOPA can cause dyskinesias (involuntary movements) with long-term use, reflecting the challenge of precisely regulating dopamine levels pharmacologically.",
       "rabbitHoleTerms": [
-        {"term": "action potential", "description": "An all-or-none electrical impulse propagated along a neuron's axon when the membrane potential crosses threshold (~–55mV). The signal amplitude is fixed; variation occurs in firing rate and pattern."},
-        {"term": "reuptake", "description": "The process by which a presynaptic neuron recaptures released neurotransmitter molecules from the synaptic cleft, terminating their action. SSRIs function by blocking serotonin reuptake transporters."},
-        {"term": "agonist", "description": "A substance that binds to a receptor and activates it, mimicking or enhancing the effect of the natural neurotransmitter. Example: morphine as an opioid receptor agonist."},
-        {"term": "HPA axis", "description": "The hypothalamic-pituitary-adrenal axis: a cascade of hormonal signals (CRH → ACTH → cortisol) that constitutes the body's major stress response system. Chronic activation can impair immune function and reduce hippocampal volume."},
-        {"term": "blood-brain barrier", "description": "A highly selective semipermeable membrane formed by tight junctions between endothelial cells lining brain capillaries. Protects the CNS by excluding most large or charged molecules, including dopamine itself."},
-        {"term": "myelin sheath", "description": "A fatty insulating layer around axons, formed by Schwann cells (PNS) or oligodendrocytes (CNS). Enables rapid saltatory conduction between nodes of Ranvier, dramatically increasing signal speed."}
+        {
+          "term": "action potential",
+          "description": "An all-or-none electrical impulse propagated along a neuron's axon when the membrane potential crosses threshold (~–55mV). The signal amplitude is fixed; variation occurs in firing rate and pattern."
+        },
+        {
+          "term": "reuptake",
+          "description": "The process by which a presynaptic neuron recaptures released neurotransmitter molecules from the synaptic cleft, terminating their action. SSRIs function by blocking serotonin reuptake transporters."
+        },
+        {
+          "term": "agonist",
+          "description": "A substance that binds to a receptor and activates it, mimicking or enhancing the effect of the natural neurotransmitter. Example: morphine as an opioid receptor agonist."
+        },
+        {
+          "term": "HPA axis",
+          "description": "The hypothalamic-pituitary-adrenal axis: a cascade of hormonal signals (CRH → ACTH → cortisol) that constitutes the body's major stress response system. Chronic activation can impair immune function and reduce hippocampal volume."
+        },
+        {
+          "term": "blood-brain barrier",
+          "description": "A highly selective semipermeable membrane formed by tight junctions between endothelial cells lining brain capillaries. Protects the CNS by excluding most large or charged molecules, including dopamine itself."
+        },
+        {
+          "term": "myelin sheath",
+          "description": "A fatty insulating layer around axons, formed by Schwann cells (PNS) or oligodendrocytes (CNS). Enables rapid saltatory conduction between nodes of Ranvier, dramatically increasing signal speed."
+        }
       ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which neurotransmitter is the brain's primary inhibitory messenger, and is the target of benzodiazepine drugs?</p>",
-          "options": ["Dopamine", "Serotonin", "GABA", "Glutamate"],
+          "options": [
+            "Dopamine",
+            "Serotonin",
+            "GABA",
+            "Glutamate"
+          ],
           "correctAnswer": "GABA",
           "explanationHtml": "<p>GABA (gamma-aminobutyric acid) is the main inhibitory neurotransmitter in the CNS. Benzodiazepines (e.g., diazepam) bind to GABA-A receptors and enhance chloride ion influx, hyperpolarising the postsynaptic membrane and reducing neural excitability. This produces anxiolytic and sedative effects.</p>"
         },
@@ -120,7 +243,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A new drug is found to block dopamine reuptake and cause euphoria. Based on your knowledge of synaptic transmission, which mechanism explains the euphoria?</p>",
-          "options": ["It destroys dopamine receptors, preventing normal signalling", "It increases dopamine in the synapse by preventing its clearance, prolonging receptor activation", "It acts as a dopamine antagonist, blocking the reward pathway", "It enhances GABA activity in the nucleus accumbens"],
+          "options": [
+            "It destroys dopamine receptors, preventing normal signalling",
+            "It increases dopamine in the synapse by preventing its clearance, prolonging receptor activation",
+            "It acts as a dopamine antagonist, blocking the reward pathway",
+            "It enhances GABA activity in the nucleus accumbens"
+          ],
           "correctAnswer": "It increases dopamine in the synapse by preventing its clearance, prolonging receptor activation",
           "explanationHtml": "<p>Blocking reuptake prevents dopamine from being cleared from the synaptic cleft, so it continues to bind its postsynaptic receptors (particularly D1 and D2 in the nucleus accumbens). Sustained dopamine signalling in the mesolimbic reward pathway produces the subjective experience of euphoria. This is the mechanism underlying cocaine's effects.</p>"
         },
@@ -128,7 +256,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Moncrieff et al.'s (2022) umbrella review found no consistent evidence of a serotonin deficit in depression. What is the most appropriate conclusion from this finding for clinical practice?</p>",
-          "options": ["SSRIs are ineffective and should be immediately withdrawn", "The serotonin hypothesis is confirmed but needs further research", "SSRIs may work via mechanisms other than correcting serotonin deficiency, and patients should receive accurate information", "All biological treatments for depression should be abandoned"],
+          "options": [
+            "SSRIs are ineffective and should be immediately withdrawn",
+            "The serotonin hypothesis is confirmed but needs further research",
+            "SSRIs may work via mechanisms other than correcting serotonin deficiency, and patients should receive accurate information",
+            "All biological treatments for depression should be abandoned"
+          ],
           "correctAnswer": "SSRIs may work via mechanisms other than correcting serotonin deficiency, and patients should receive accurate information",
           "explanationHtml": "<p>The review challenges the monoamine deficiency narrative, not necessarily SSRI efficacy (though effect sizes are modest for mild-moderate depression). SSRIs may work through downstream neuroplasticity effects, placebo mechanisms, or other pathways. The clinical implication is not to withdraw treatment but to ensure informed consent is based on accurate models rather than oversimplified 'chemical imbalance' messaging.</p>"
         }
@@ -143,13 +276,51 @@
       "hookHtml": "<p>In 2018, the behavioural geneticist Robert Plomin published a book — <em>Blueprint</em> — claiming that DNA is the single most important systematic factor in making people who they are psychologically. The same year, his lab demonstrated that polygenic scores derived from millions of common genetic variants could predict roughly 10–15% of the variance in educational attainment from a saliva sample taken at birth. For some psychologists this was a milestone; for others, an alarming overreach. How much of who you are is written in your genome? How much is sculpted by an ancestral environment your great-great-grandparents could not have imagined? The biology of behaviour reaches far beyond the brain itself — into the genome, the epigenome, and the long evolutionary history that shaped both.</p>",
       "explanationHtml": "<h3>Mendelian Inheritance & the Logic of Genes</h3><p>Gregor Mendel's nineteenth-century work on pea plants established the basic principles of inheritance: characteristics are passed from parents to offspring via discrete units (now called <strong>genes</strong>), with dominant and recessive alleles segregating during gamete formation. Humans inherit one allele from each parent at each genetic locus on their 22 autosomes plus the sex chromosomes (XX or XY).</p><p>Single-gene (monogenic) disorders — Huntington's disease, phenylketonuria, Tay–Sachs — follow predictable Mendelian patterns. But almost every psychological trait of interest (intelligence, personality, susceptibility to depression or schizophrenia) is <strong>polygenic</strong>: shaped by the small additive contributions of thousands of genetic variants, each accounting for a tiny percentage of variance. This insight transforms how we think about the genetics of behaviour: there is no 'gene for' intelligence or extraversion in any meaningful sense.</p><h3>Twin & Adoption Studies: The Workhorse of Behaviour Genetics</h3><p>Behaviour genetics estimates the relative contribution of genetic and environmental influences to individual differences in a population. Two principal designs are used:</p><ul><li><strong>Twin studies</strong> compare monozygotic (MZ) twins, who share 100% of their segregating DNA, with dizygotic (DZ) twins, who share around 50% (like ordinary siblings). If a trait is highly heritable, MZ correlations should be substantially higher than DZ correlations.</li><li><strong>Adoption studies</strong> compare adopted children's resemblance to their biological versus adoptive parents — separating shared genes from shared family environment.</li></ul><p>Robert Plomin and colleagues have led the field for over four decades, including the long-running <em>Twins Early Development Study</em> (TEDS) of over 16,000 UK twin pairs. Key findings: cognitive ability is around 50% heritable in childhood, rising to around 70% in adulthood as gene–environment correlations strengthen; personality traits are typically 40–50% heritable; major psychiatric disorders such as schizophrenia and bipolar disorder show heritabilities of 60–80%. Plomin & von Stumm (2018) summarise this in their <em>Nature Reviews Genetics</em> overview, emphasising that heritability rises across development — the so-called 'Wilson effect'.</p><h4>Heritability — What It Is and Is Not</h4><p>Heritability (h²) is the proportion of <em>population variance</em> in a trait attributable to genetic variance. Three misconceptions are common at undergraduate level and must be avoided in 1:1-level work:</p><ol><li>Heritability does <em>not</em> tell you what proportion of an individual's trait is genetic. It is a population-level statistic, undefined for individuals.</li><li>Heritability is context-dependent. In a population where every child receives identical schooling, the heritability of educational attainment will appear <em>higher</em>, because environmental variance is reduced. Heritability estimates can therefore change with social policy.</li><li>High heritability does not mean a trait is fixed or untreatable. Phenylketonuria is 100% heritable, yet dietary intervention prevents its cognitive consequences entirely.</li></ol><h3>Molecular Genetics, GWAS & Polygenic Risk Scores</h3><p>Twin studies estimate <em>how much</em> variation is heritable but say nothing about <em>which</em> genes are involved. Modern molecular genetics addresses this through <strong>genome-wide association studies (GWAS)</strong>, which test millions of common single-nucleotide polymorphisms (SNPs) for statistical association with a trait across very large samples (typically hundreds of thousands of participants).</p><p>Lee et al. (2018) <em>Nature Genetics</em> reported a GWAS of educational attainment in over 1.1 million individuals, identifying 1,271 independent SNPs and constructing a polygenic score that explained around 11–13% of variance in years of schooling in independent samples. Howard et al. (2019) <em>Nature Neuroscience</em> performed a GWAS meta-analysis of depression across more than 800,000 individuals, identifying 102 independent variants. Most recently, Trubetskoy et al. (2022) <em>Nature</em> reported a GWAS of schizophrenia in over 320,000 participants identifying 287 distinct genomic loci, demonstrating the highly polygenic architecture of the disorder.</p><p>A <strong>polygenic risk score (PRS)</strong> sums the effects of all relevant variants weighted by effect size. Plomin (2018) argues that PRS for traits like educational attainment now match traditional predictors such as parental socio-economic status. Critics note: (i) effect sizes are modest at the individual level; (ii) most GWAS samples are of European ancestry, limiting cross-ancestry validity; (iii) the deterministic framing risks resurrecting a discredited biological reductionism.</p><h3>Epigenetics & DNA Methylation</h3><p>The genome is not a static blueprint. <strong>Epigenetics</strong> refers to heritable changes in gene <em>expression</em> that do not alter the DNA sequence itself. The best-studied mechanism is <strong>DNA methylation</strong>: the addition of methyl groups (–CH₃) to cytosine bases, typically silencing nearby gene expression.</p><p>Weaver et al. (2004) <em>Nature Neuroscience</em> showed that rat pups raised by low-licking-and-grooming mothers showed elevated methylation of the glucocorticoid receptor gene (Nr3c1) in the hippocampus, producing lifelong heightened stress reactivity. McGowan et al. (2009) <em>Nature Neuroscience</em> replicated the finding in humans: post-mortem analysis of brains of suicide victims with histories of childhood abuse showed comparable Nr3c1 hypermethylation. More recently, Czamara et al. (2021) <em>Nature Communications</em> demonstrated stable DNA methylation differences associated with prenatal maternal stress across multiple cohorts, supporting transgenerational epigenetic effects in humans.</p><p>Epigenetics dissolves a long-standing dichotomy: genes are no longer fixed instructions but a dynamic system shaped by — and shaping — environment.</p><h3>Evolutionary Psychology</h3><p>Evolutionary psychology applies Darwinian logic to the mind. Cosmides & Tooby (1992) articulated the foundational claim in <em>The Adapted Mind</em>: the human brain comprises numerous domain-specific cognitive adaptations shaped by natural selection to solve recurrent problems in the <strong>Environment of Evolutionary Adaptedness (EEA)</strong> — the African Pleistocene savannah where most of our evolution occurred. Evolved mechanisms include mate preferences, cheater detection, kinship recognition, and fear of evolutionarily significant threats (snakes, heights).</p><h4>Mate Selection</h4><p>Buss (1989) conducted a landmark cross-cultural survey of 10,047 participants across 37 cultures on six continents. Findings: women across all cultures rated 'good financial prospect' and resource acquisition potential more highly than men; men across all cultures placed greater value on physical attractiveness and youth. Buss interpreted these as evolved sex-differentiated mate preferences reflecting differential reproductive investment (Trivers, 1972): the higher-investing sex (females, given gestation and lactation) should be choosier about partner quality.</p><h4>Altruism & Kin Selection</h4><p>Hamilton (1964) solved the puzzle of altruism with his theory of <strong>inclusive fitness</strong>. An altruistic act is favoured by selection when rB > C, where r is the coefficient of relatedness, B the benefit to the recipient, and C the cost to the altruist. This explains why parents sacrifice for offspring (r = 0.5) and why eusocial insects show extreme cooperation (r = 0.75 among full sisters in haplodiploid species). Trivers (1971) extended the analysis to non-kin via <strong>reciprocal altruism</strong>: cooperation can evolve between unrelated individuals if there is repeated interaction and an ability to detect defectors.</p><h3>Critical Evaluation of Evolutionary Psychology</h3><p>Evolutionary explanations of behaviour are powerful but contested. Key critiques include:</p><ul><li><strong>Just-so storytelling</strong>: critics such as Gould & Lewontin (1979) argued that evolutionary explanations risk constructing untestable post-hoc narratives. Any behaviour can be retro-fitted with an adaptive story.</li><li><strong>EEA assumption</strong>: the Pleistocene environment was not uniform, and selective pressures varied substantially. Treating it as a single 'environment' oversimplifies.</li><li><strong>Cultural variation</strong>: cross-cultural similarities in mate preferences may reflect shared patriarchal social structures rather than evolved mechanisms (Eagly & Wood's 1999 social structural theory).</li><li><strong>Genetic determinism</strong>: evolutionary psychology can lapse into framing complex behaviours as 'hard-wired', underplaying developmental plasticity and gene–environment interaction.</li><li><strong>Replicability</strong>: many classic findings (e.g., specific effects of women's menstrual cycle on mate preference) have failed to replicate in larger pre-registered studies (Wood et al., 2014).</li></ul><p>At its best, evolutionary psychology offers parsimonious, testable hypotheses that integrate behaviour with biology. At its worst, it risks the very 'biology as destiny' framing that careful behaviour genetics has tried to avoid.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "Dr. Chen opens the seminar with a slide of a double helix overlaying an evolutionary timeline stretching from single-celled ancestors to the present."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Almost everything psychological — intelligence, temperament, mental illness — is moderately to highly heritable. Plomin's twin studies have shown this repeatedly. But heritability is the most misunderstood number in psychology. It tells us about variance in a population, never about an individual. Remember that distinction; it separates 1:1 essays from 2:2 essays."},
-        {"type": "example", "speaker": "TEDS — Twins Early Development Study", "text": "Plomin's TEDS cohort followed over 16,000 UK twin pairs born 1994–1996. By comparing MZ and DZ correlations across age, the team showed cognitive ability becomes more heritable with development — from about 0.4 in early childhood to over 0.6 in late adolescence. Why? Because as children gain autonomy, their genotypes increasingly shape the environments they choose. Genes and environments correlate."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Modern GWAS — like Trubetskoy et al.'s 2022 schizophrenia study of 320,000 people — have identified hundreds of common variants, each with tiny effects. Polygenic scores can now predict roughly 10–13 percent of variance in educational attainment from a single saliva sample. That is both extraordinary and modest. It will not tell any one child their future."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Then epigenetics complicates everything. Weaver and Meaney's rat-pup study showed that maternal licking literally rewrites methylation marks on the glucocorticoid receptor gene. McGowan replicated this in human brains of suicide victims with childhood abuse histories. Experience is etched onto the genome itself."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Evolutionary psychology takes the long view. Buss's 37-culture study showed remarkably consistent sex differences in mate preferences. Hamilton explained altruism with one elegant inequality — rB greater than C. But beware just-so storytelling. The strongest evolutionary explanations make falsifiable predictions and survive cross-cultural and replication tests. The weakest are unfalsifiable narratives we tell ourselves about why we are as we are."},
-        {"type": "narration", "text": "A student asks whether genes determine destiny. Dr. Chen shakes her head firmly. 'Phenylketonuria is one hundred percent heritable — and entirely treatable with a low-phenylalanine diet. Heritable does not mean fixed. Never let anyone forget that.'"}
+        {
+          "type": "narration",
+          "text": "Dr. Chen opens the seminar with a slide of a double helix overlaying an evolutionary timeline stretching from single-celled ancestors to the present."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Almost everything psychological — intelligence, temperament, mental illness — is moderately to highly heritable. Plomin's twin studies have shown this repeatedly. But heritability is the most misunderstood number in psychology. It tells us about variance in a population, never about an individual. Remember that distinction; it separates 1:1 essays from 2:2 essays."
+        },
+        {
+          "type": "example",
+          "speaker": "TEDS — Twins Early Development Study",
+          "text": "Plomin's TEDS cohort followed over 16,000 UK twin pairs born 1994–1996. By comparing MZ and DZ correlations across age, the team showed cognitive ability becomes more heritable with development — from about 0.4 in early childhood to over 0.6 in late adolescence. Why? Because as children gain autonomy, their genotypes increasingly shape the environments they choose. Genes and environments correlate."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Modern GWAS — like Trubetskoy et al.'s 2022 schizophrenia study of 320,000 people — have identified hundreds of common variants, each with tiny effects. Polygenic scores can now predict roughly 10–13 percent of variance in educational attainment from a single saliva sample. That is both extraordinary and modest. It will not tell any one child their future."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Then epigenetics complicates everything. Weaver and Meaney's rat-pup study showed that maternal licking literally rewrites methylation marks on the glucocorticoid receptor gene. McGowan replicated this in human brains of suicide victims with childhood abuse histories. Experience is etched onto the genome itself."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Evolutionary psychology takes the long view. Buss's 37-culture study showed remarkably consistent sex differences in mate preferences. Hamilton explained altruism with one elegant inequality — rB greater than C. But beware just-so storytelling. The strongest evolutionary explanations make falsifiable predictions and survive cross-cultural and replication tests. The weakest are unfalsifiable narratives we tell ourselves about why we are as we are."
+        },
+        {
+          "type": "narration",
+          "text": "A student asks whether genes determine destiny. Dr. Chen shakes her head firmly. 'Phenylketonuria is one hundred percent heritable — and entirely treatable with a low-phenylalanine diet. Heritable does not mean fixed. Never let anyone forget that.'"
+        }
       ],
       "guidedPracticeHtml": "<p><strong>Scenario:</strong> A journalist writes: 'New research shows intelligence is 70% genetic, so spending money on schools is a waste — your IQ is fixed at birth by your DNA.' A government minister cites the article to justify cuts to early-years education.</p><p>Using your knowledge of behaviour genetics, write a brief critique of the journalist's reasoning. In your response, address: (1) what 'heritability' actually means and why it does not describe individuals; (2) why a high heritability estimate does not imply that environmental intervention is futile (use phenylketonuria or a similar example); (3) how gene–environment correlations and interactions complicate the simple genes-versus-environment dichotomy. Aim for 100–130 words.</p><p><em>Guidance: Open with a one-sentence statement of the core error. Then structure your answer around the three points above, naming at least one researcher (Plomin or similar) and one concrete example. End with a sentence on why this matters for policy.</em></p>",
       "guidedPracticeModelAnswer": "The journalist commits a category error by confusing heritability — a population-level statistic — with individual genetic determinism. A heritability of 70% means that 70% of the variance in intelligence within a specific population is attributable to genetic variance; it does not mean any individual's IQ is 70% 'caused' by their genes. \n\nFurthermore, high heritability never implies that environmental intervention is futile. Phenylketonuria is 100% heritable but its cognitive effects are entirely prevented by a dietary intervention. Plomin's research (e.g., TEDS) shows that heritability rises with age precisely because of gene–environment correlation: genetic predispositions drive individuals to seek out enriching environments (like education) that compound their abilities. Therefore, rather than justifying cuts, behavioural genetics suggests that providing high-quality, universally accessible education is essential to allow genetic potential to express itself fully.",
@@ -157,19 +328,42 @@
       "feynmanPrompt": "Explain to a sixth-form student why saying 'intelligence is 50% genetic' does not mean 'half of your intelligence comes from your DNA'. Use an analogy to make the point clearly.",
       "modelAnswer": "The headline conflates several distinct claims that careful behavioural genetics carefully separates. First, no single 'gene for schizophrenia' has been or could be discovered. Trubetskoy et al.'s (2022) landmark GWAS in over 320,000 individuals identified 287 distinct genomic loci, each contributing a small fractional increment of risk. Schizophrenia is paradigmatically polygenic: hundreds of common variants act additively, alongside rarer copy-number variations of larger individual effect. Treating the architecture as monogenic misrepresents the underlying biology.\n\nSecond, polygenic risk scores derived from such GWAS currently explain a modest proportion of variance — useful at the population level for stratification and aetiological research, but limited at the individual level. Most discovery samples remain predominantly of European ancestry, restricting cross-ancestry generalisability (Martin et al., 2019). A high PRS confers elevated probability, not destiny.\n\nThird, epigenetic and developmental research undermines any framing in which childhood adversity becomes 'no longer relevant'. McGowan et al.'s (2009) Nature Neuroscience study demonstrated that childhood abuse in suicide-victim brains was associated with altered methylation of the glucocorticoid receptor gene Nr3c1 — a clear instance of experience inscribing itself epigenetically onto stress-regulatory machinery. Czamara et al. (2021) extended these findings to prenatal stress in larger human cohorts. Gene–environment interactions, illustrated classically by Caspi et al.'s (2003) work on 5-HTT and depression, mean that genetic risk is typically conditional on environmental exposure rather than absolute. The responsible interpretation of modern psychiatric genetics therefore strengthens, rather than dissolves, the case for protecting children from early adversity.",
       "rabbitHoleTerms": [
-        {"term": "heritability (h²)", "description": "The proportion of population-level variance in a trait attributable to genetic variance. It is context-dependent, undefined for individuals, and does not imply that environmental intervention is ineffective."},
-        {"term": "polygenic risk score (PRS)", "description": "A weighted sum of the effects of many genetic variants on a trait, derived from genome-wide association studies. Useful at population level; modest predictive power for individuals."},
-        {"term": "epigenetics", "description": "Heritable changes in gene expression that do not alter the underlying DNA sequence. The best-studied mechanism is DNA methylation, which typically silences nearby genes."},
-        {"term": "environment of evolutionary adaptedness (EEA)", "description": "Cosmides & Tooby's (1992) concept of the ancestral environment — largely Pleistocene African savannah — in which the human mind's evolved cognitive adaptations were selected."},
-        {"term": "inclusive fitness", "description": "Hamilton's (1964) extension of Darwinian fitness to include the reproductive success of genetic relatives, formalised in Hamilton's rule (rB > C). Explains altruism towards kin."},
-        {"term": "reciprocal altruism", "description": "Trivers' (1971) theory that cooperative behaviour can evolve between unrelated individuals if there is repeated interaction and reliable detection of defectors."}
+        {
+          "term": "heritability (h²)",
+          "description": "The proportion of population-level variance in a trait attributable to genetic variance. It is context-dependent, undefined for individuals, and does not imply that environmental intervention is ineffective."
+        },
+        {
+          "term": "polygenic risk score (PRS)",
+          "description": "A weighted sum of the effects of many genetic variants on a trait, derived from genome-wide association studies. Useful at population level; modest predictive power for individuals."
+        },
+        {
+          "term": "epigenetics",
+          "description": "Heritable changes in gene expression that do not alter the underlying DNA sequence. The best-studied mechanism is DNA methylation, which typically silences nearby genes."
+        },
+        {
+          "term": "environment of evolutionary adaptedness (EEA)",
+          "description": "Cosmides & Tooby's (1992) concept of the ancestral environment — largely Pleistocene African savannah — in which the human mind's evolved cognitive adaptations were selected."
+        },
+        {
+          "term": "inclusive fitness",
+          "description": "Hamilton's (1964) extension of Darwinian fitness to include the reproductive success of genetic relatives, formalised in Hamilton's rule (rB > C). Explains altruism towards kin."
+        },
+        {
+          "term": "reciprocal altruism",
+          "description": "Trivers' (1971) theory that cooperative behaviour can evolve between unrelated individuals if there is repeated interaction and reliable detection of defectors."
+        }
       ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>In a behaviour-genetic study, monozygotic twin pairs show a correlation of 0.85 on a cognitive measure and dizygotic twin pairs show a correlation of 0.45. Using Falconer's formula, what is the approximate heritability (h²)?</p>",
-          "options": ["0.40", "0.65", "0.80", "1.30"],
+          "options": [
+            "0.40",
+            "0.65",
+            "0.80",
+            "1.30"
+          ],
           "correctAnswer": "0.80",
           "explanationHtml": "<p>Falconer's formula estimates heritability as h² = 2(r_MZ − r_DZ). Here: 2 × (0.85 − 0.45) = 0.80. This suggests around 80% of the variance in the trait in this population is attributable to genetic variance — a typical estimate for adult cognitive ability in twin studies (Plomin & von Stumm, 2018).</p>"
         },
@@ -184,7 +378,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A grandfather rushes into a burning house to save his three grandchildren, perishing in the attempt. From the perspective of Hamilton's inclusive fitness theory (1964), what is the most accurate interpretation?</p>",
-          "options": ["The behaviour is evolutionarily inexplicable because it reduces personal fitness to zero", "The behaviour is favoured if the genetic benefit to relatives (rB) exceeds the cost to the altruist (C)", "The behaviour is purely cultural and has no evolutionary basis", "Hamilton's rule only applies to invertebrates and cannot explain human behaviour"],
+          "options": [
+            "The behaviour is evolutionarily inexplicable because it reduces personal fitness to zero",
+            "The behaviour is favoured if the genetic benefit to relatives (rB) exceeds the cost to the altruist (C)",
+            "The behaviour is purely cultural and has no evolutionary basis",
+            "Hamilton's rule only applies to invertebrates and cannot explain human behaviour"
+          ],
           "correctAnswer": "The behaviour is favoured if the genetic benefit to relatives (rB) exceeds the cost to the altruist (C)",
           "explanationHtml": "<p>Hamilton's rule (rB > C) accounts for altruism toward kin. With three grandchildren, the inclusive-fitness benefit is approximately 3 × 0.25 = 0.75 gene copies preserved, exceeding the cost of one grandparent (1.0 — but heavily discounted by post-reproductive age and reduced residual reproductive value). Inclusive fitness extends Darwinian logic to encompass cooperation among genetic relatives.</p>"
         },
@@ -192,7 +391,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>A polygenic risk score for schizophrenia derived from Trubetskoy et al.'s (2022) GWAS explains roughly 10% of population variance. A clinician proposes screening all newborns and providing 'preventive antipsychotics' to those in the highest PRS decile. Which response best reflects current scientific and ethical thinking?</p>",
-          "options": ["This is appropriate because PRS now predicts schizophrenia with near-perfect accuracy", "This is appropriate only for individuals of European ancestry, who match the GWAS sample", "PRS at this effect size yields high false-positive rates and cannot ethically justify preventive medication; PRS is best used for aetiological research, not individual prediction", "PRS findings should be ignored entirely because schizophrenia is purely environmental"],
+          "options": [
+            "This is appropriate because PRS now predicts schizophrenia with near-perfect accuracy",
+            "This is appropriate only for individuals of European ancestry, who match the GWAS sample",
+            "PRS at this effect size yields high false-positive rates and cannot ethically justify preventive medication; PRS is best used for aetiological research, not individual prediction",
+            "PRS findings should be ignored entirely because schizophrenia is purely environmental"
+          ],
           "correctAnswer": "PRS at this effect size yields high false-positive rates and cannot ethically justify preventive medication; PRS is best used for aetiological research, not individual prediction",
           "explanationHtml": "<p>A PRS explaining around 10% of variance has substantial population-level utility for research and stratification but poor individual predictive value. The vast majority of high-PRS individuals will never develop schizophrenia; medicating them with antipsychotics (which have significant side effects) would produce overwhelming net harm. Plus, GWAS samples remain predominantly European, restricting validity in other ancestries (Martin et al., 2019). Sound clinical translation requires both higher individual predictive accuracy and a benign intervention.</p>"
         }
@@ -207,12 +411,47 @@
       "hookHtml": "<p>In 1964, a seventeen-year-old San Diego high-school student named Randy Gardner stayed awake for 264 hours — eleven days — as a science-fair project, supervised by the sleep researcher William Dement. By day four he was hallucinating; by day six his speech was slurred and his memory failing; by day eleven he could not perform simple arithmetic. He then slept for fifteen hours and reported feeling fine. The episode prompted a generation of research that revealed sleep not as passive inactivity but as a precisely orchestrated biological process — one we still do not fully understand. Decades later, the 2017 Nobel Prize in Physiology or Medicine was awarded to Hall, Rosbash and Young for uncovering the molecular machinery of the circadian clock. Sleep, hunger, thirst and arousal are governed by some of the most ancient and elegant biology in the human brain.</p>",
       "explanationHtml": "<h3>The Architecture of Sleep</h3><p>Sleep is not a single state. EEG, EOG (eye movements) and EMG (muscle tone) recordings during overnight polysomnography reveal a structured cycle that repeats approximately every 90 minutes across the night.</p><h4>NREM (Non-Rapid Eye Movement) Sleep</h4><ul><li><strong>Stage 1 (N1)</strong>: light sleep at sleep onset; theta waves (4–7 Hz); easily aroused; lasts a few minutes.</li><li><strong>Stage 2 (N2)</strong>: deeper sleep; characterised by sleep spindles (12–14 Hz bursts) and K-complexes; constitutes around 45% of total sleep in adults.</li><li><strong>Stages 3 and 4 (N3 / slow-wave sleep, SWS)</strong>: deepest sleep; high-amplitude delta waves (0.5–4 Hz). SWS is dominant in the first half of the night; concentrated growth hormone release; very difficult to wake; sleep inertia on arousal.</li></ul><h4>REM (Rapid Eye Movement) Sleep</h4><p>REM sleep is paradoxical: the cortex is highly active (low-amplitude, mixed-frequency EEG resembling waking) but skeletal muscles are atonic via brainstem inhibition. Vivid dreaming predominantly occurs in REM. REM episodes lengthen across the night, with the longest REM bouts occurring shortly before waking. Total REM constitutes about 20–25% of adult sleep, rising to ~50% in newborns.</p><h4>Functions of Sleep</h4><p>Two classic theoretical traditions endure.</p><ul><li><strong>Restorative theory</strong>: Oswald (1980) proposed that NREM restores bodily systems (immune function, somatic repair, growth-hormone release) and REM restores neural and cognitive function (memory consolidation, protein synthesis in the brain). Empirical support includes elevated growth-hormone release during SWS and the rebound of REM following selective REM deprivation.</li><li><strong>Evolutionary (ecological) theory</strong>: Meddis (1975) argued that sleep evolved to keep animals immobile and safe during periods of low ecological utility (e.g., night-time for diurnal species). Sleep durations vary across species roughly with ecological niche — predators (lions, ~14 hours) sleep longer than vulnerable prey (giraffes, ~2 hours).</li></ul><p>Contemporary research increasingly emphasises sleep's role in memory consolidation and metabolic clearance. Xie et al. (2013) <em>Science</em> showed that during sleep the glymphatic system clears metabolic waste — including β-amyloid, implicated in Alzheimer's disease — far more efficiently than during waking. Walker (2017) synthesised converging evidence that sleep deprivation is associated with cognitive impairment, mood disturbance, and elevated risk of cardiovascular and neurodegenerative disease.</p><h3>Sleep Deprivation: The Randy Gardner Case</h3><p>Gardner (1964) remained awake for 264 hours under the supervision of William Dement. He showed progressive cognitive deterioration: blurred vision and impaired tactile discrimination by day two; mood lability and memory lapses by day four; paranoid ideation and hallucinations by day six; speech and arithmetic failure by day eleven. After eleven days he slept for approximately 15 hours and reportedly recovered with no lasting effects. <em>Caveats</em>: (i) this is a single case (n = 1) with no control; (ii) Gardner's self-report of full recovery has been contradicted by his own later interviews describing decades of insomnia; (iii) controlled studies (e.g., Killgore, 2010) consistently show that even modest sleep restriction (4–5 hours per night for a week) produces cumulative deficits in vigilance, working memory, and emotional regulation. More recent research (Krause et al., 2017) demonstrates that a single night of sleep deprivation amplifies amygdala reactivity to negative stimuli by ~60%, with reduced prefrontal regulatory connectivity — providing a neural mechanism for the well-known link between sleep loss and mood disorders.</p><h3>Circadian Rhythms & the Suprachiasmatic Nucleus</h3><p>Circadian rhythms are biological cycles of approximately 24 hours, governing sleep–wake timing, core body temperature, hormone release, and cognitive performance. The master pacemaker is the <strong>suprachiasmatic nucleus (SCN)</strong>, a paired cluster of around 20,000 neurons in the anterior hypothalamus.</p><p>Ralph et al. (1990) <em>Science</em> performed the definitive demonstration of SCN function. They transplanted SCN tissue from mutant hamsters with abnormally short (~20-hour) circadian periods into hamsters whose SCNs had been ablated. The recipients adopted the donor's circadian period rather than the original wild-type rhythm — definitively showing the SCN is both necessary and sufficient for setting circadian timing.</p><p>The SCN receives direct input from the retina via the <strong>retinohypothalamic tract</strong>, with intrinsically photosensitive retinal ganglion cells (ipRGCs) containing the photopigment melanopsin acting as the light sensor. The SCN regulates the pineal gland's release of <strong>melatonin</strong> — secreted in darkness, suppressed by light — which conveys the night-time signal to the rest of the body. Free-running studies (participants in temporal-isolation chambers, as in Aschoff's classic 1965 work) reveal that the endogenous human period is slightly longer than 24 hours (~24.2 hours), requiring daily entrainment to the external light–dark cycle (a <strong>zeitgeber</strong>).</p><h4>Infradian & Ultradian Rhythms</h4><ul><li><strong>Infradian rhythms</strong>: periods longer than 24 hours, e.g., the menstrual cycle (~28 days), seasonal affective disorder.</li><li><strong>Ultradian rhythms</strong>: periods shorter than 24 hours, e.g., the 90-minute NREM–REM sleep cycle, basic rest–activity cycle during waking.</li></ul><h3>Hunger, Thirst & the Hypothalamus</h3><p>The hypothalamus integrates internal homeostatic signals to regulate feeding behaviour. Classical lesion studies by Hetherington & Ranson (1940) and Anand & Brobeck (1951) localised two key nuclei:</p><ul><li><strong>Lateral hypothalamus (LH)</strong>: the 'hunger centre'. Lesions cause aphagia (cessation of eating); stimulation induces feeding. Produces orexin/hypocretin, which promotes arousal and feeding.</li><li><strong>Ventromedial hypothalamus (VMH)</strong>: the 'satiety centre'. Lesions cause hyperphagia and obesity; stimulation suppresses feeding.</li></ul><p>This dual-centre model has been refined by molecular work on adipose-derived signalling. Friedman and colleagues' (1994) landmark <em>Nature</em> paper identified <strong>leptin</strong>, a hormone secreted by adipocytes (fat cells) that signals long-term energy stores to the hypothalamus. Leptin-deficient (ob/ob) mice are profoundly obese; leptin administration normalises body weight. In humans, congenital leptin deficiency produces severe early-onset obesity, treatable by recombinant leptin (Farooqi et al., 2002). However, most obese humans have <em>elevated</em> leptin levels — suggesting <strong>leptin resistance</strong> rather than deficiency.</p><p><strong>Ghrelin</strong>, identified by Kojima et al. (1999), is secreted by the stomach in the fasting state and stimulates appetite. Its levels rise pre-prandially and fall after eating. Bariatric surgery (Roux-en-Y gastric bypass) reduces ghrelin secretion, partly explaining its dramatic effects on appetite.</p><p><strong>Thirst</strong> is regulated by osmoreceptors in the organum vasculosum of the lamina terminalis (OVLT) and by baroreceptors monitoring blood volume; the hypothalamus releases antidiuretic hormone (ADH/vasopressin) from the posterior pituitary to conserve water.</p><h3>Sexual Behaviour</h3><p>Sexual behaviour is regulated by an interaction of hypothalamic nuclei (particularly the preoptic area), gonadal hormones (testosterone, oestrogen, progesterone), and cortical-limbic contributions. LeVay (1991) reported a size difference in the third interstitial nucleus of the anterior hypothalamus (INAH-3) between heterosexual and homosexual men — a finding that generated considerable controversy and is correlational, post-mortem, and methodologically contested.</p><h3>Theories of Motivation</h3><p>Biological motivation theories attempt to explain why organisms initiate, direct and sustain behaviour.</p><ul><li><strong>Drive-reduction theory (Hull, 1943)</strong>: physiological needs create drives (e.g., hunger), and behaviour aims to reduce drives by restoring homeostasis. Successful for primary biological needs but struggles to account for behaviours that <em>increase</em> arousal (curiosity, sensation-seeking, recreational eating in the absence of hunger).</li><li><strong>Optimal arousal theory / Yerkes–Dodson law (Yerkes & Dodson, 1908)</strong>: performance is an inverted-U function of arousal — too little or too much arousal impairs performance, with an intermediate optimum that varies by task difficulty (harder tasks have lower optima).</li><li><strong>Incentive theory</strong>: behaviour is pulled by external rewards (incentives) as well as pushed by internal drives. Bridges biological and learning-theoretic perspectives.</li></ul><p>Contemporary motivation research integrates these with dopaminergic reward circuitry (Berridge & Kringelbach, 2015, distinguishing 'wanting' from 'liking') and with self-determination theory (Deci & Ryan), placing biological drives within a broader cognitive-motivational framework.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "Dr. Chen turns the lights low and projects a hypnogram — the graph of sleep stages across one night. Five cycles, each beginning in slow-wave sleep and culminating in REM."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Sleep is not absence. It is one of the most carefully orchestrated processes in your biology. Each ninety-minute cycle takes you through stages that look almost like different brains — slow waves of synchronised cortical activity in deep NREM, then sudden bursts of cortical chaos in REM while your muscles are paralysed and your eyes flick wildly beneath their lids."},
-        {"type": "example", "speaker": "Ralph et al. (1990) — the SCN transplant", "text": "Ralph and colleagues took SCN tissue from mutant hamsters whose internal clocks ran on a 20-hour cycle and transplanted it into hamsters whose SCNs had been destroyed. The recipients did not regain a normal 24-hour rhythm — they adopted the donor's 20-hour rhythm. The biological clock travelled with the cells. This was the cleanest possible proof that the suprachiasmatic nucleus is the master pacemaker."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Randy Gardner stayed awake for eleven days as a high-school project in 1964. He hallucinated, lost short-term memory, and could not do arithmetic by the end. He slept fifteen hours and reportedly recovered. But — and this matters — n equals one. Controlled studies show even modest restriction accumulates substantial deficits, and Krause's 2017 work shows that a single sleepless night amplifies amygdala reactivity to negative images by sixty percent."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Hunger seemed simple in the 1940s — a 'hunger centre' in the lateral hypothalamus and a 'satiety centre' in the ventromedial hypothalamus. Then Friedman discovered leptin in 1994. Suddenly we understood that adipose tissue itself is an endocrine organ, telling the brain how much fuel is stored. Ghrelin from the stomach signals immediate hunger. Eating is conducted by an orchestra, not a switch."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Motivation theories have evolved similarly. Hull's drive-reduction worked beautifully for hunger and thirst but failed for the rat that runs a maze for the sheer novelty of it. Yerkes and Dodson gave us the inverted U — performance peaks at intermediate arousal. We motivate ourselves not only to reduce discomfort but to optimise stimulation. The biology is rich, ancient, and only partly conscious."}
+        {
+          "type": "narration",
+          "text": "Dr. Chen turns the lights low and projects a hypnogram — the graph of sleep stages across one night. Five cycles, each beginning in slow-wave sleep and culminating in REM."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Sleep is not absence. It is one of the most carefully orchestrated processes in your biology. Each ninety-minute cycle takes you through stages that look almost like different brains — slow waves of synchronised cortical activity in deep NREM, then sudden bursts of cortical chaos in REM while your muscles are paralysed and your eyes flick wildly beneath their lids."
+        },
+        {
+          "type": "example",
+          "speaker": "Ralph et al. (1990) — the SCN transplant",
+          "text": "Ralph and colleagues took SCN tissue from mutant hamsters whose internal clocks ran on a 20-hour cycle and transplanted it into hamsters whose SCNs had been destroyed. The recipients did not regain a normal 24-hour rhythm — they adopted the donor's 20-hour rhythm. The biological clock travelled with the cells. This was the cleanest possible proof that the suprachiasmatic nucleus is the master pacemaker."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Randy Gardner stayed awake for eleven days as a high-school project in 1964. He hallucinated, lost short-term memory, and could not do arithmetic by the end. He slept fifteen hours and reportedly recovered. But — and this matters — n equals one. Controlled studies show even modest restriction accumulates substantial deficits, and Krause's 2017 work shows that a single sleepless night amplifies amygdala reactivity to negative images by sixty percent."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Hunger seemed simple in the 1940s — a 'hunger centre' in the lateral hypothalamus and a 'satiety centre' in the ventromedial hypothalamus. Then Friedman discovered leptin in 1994. Suddenly we understood that adipose tissue itself is an endocrine organ, telling the brain how much fuel is stored. Ghrelin from the stomach signals immediate hunger. Eating is conducted by an orchestra, not a switch."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Motivation theories have evolved similarly. Hull's drive-reduction worked beautifully for hunger and thirst but failed for the rat that runs a maze for the sheer novelty of it. Yerkes and Dodson gave us the inverted U — performance peaks at intermediate arousal. We motivate ourselves not only to reduce discomfort but to optimise stimulation. The biology is rich, ancient, and only partly conscious."
+        }
       ],
       "guidedPracticeHtml": "<p><strong>Scenario:</strong> Asha works rotating shifts at a hospital — two weeks of night shifts followed by two weeks of day shifts. She reports persistent insomnia, fatigue, irritability, and weight gain. Her GP attributes the symptoms to 'circadian disruption'.</p><p>Using your knowledge of biological rhythms and the suprachiasmatic nucleus, explain Asha's symptoms. In your response, address: (1) what the SCN does and how it is normally entrained to the external light–dark cycle; (2) why shift work disrupts entrainment and how this affects melatonin and cortisol rhythms; (3) one piece of empirical evidence (e.g., Ralph et al., 1990) that supports the SCN's role as a master pacemaker. Aim for 100–130 words.</p><p><em>Guidance: Begin by naming the SCN and its location. Move to entrainment via the retinohypothalamic tract and the role of light. Explain why night-shift light exposure and daytime sleeping create chronic desynchrony. Close with the Ralph transplant evidence in one sentence.</em></p>",
       "guidedPracticeModelAnswer": "Asha's symptoms stem from the chronic desynchronisation of her suprachiasmatic nucleus (SCN), the master circadian pacemaker located in the anterior hypothalamus. Normally, the SCN is entrained to the 24-hour solar day by light signals transmitted from the eyes via the retinohypothalamic tract.\n\nDuring her night shifts, Asha is exposed to bright artificial light at night and sleeps during the day. This conflicting zeitgeber (light) exposure confuses the SCN, suppressing nighttime melatonin release (which normally promotes sleep) and disrupting the normal diurnal rhythm of cortisol, leading to insomnia, fatigue, and metabolic changes like weight gain. Because her shifts rotate every two weeks, her circadian system never fully adapts. The necessity of the SCN for governing these rhythms was definitively demonstrated by Ralph et al. (1990), whose SCN transplant study in hamsters proved that circadian timing travels with SCN tissue.",
@@ -220,19 +459,42 @@
       "feynmanPrompt": "Imagine explaining to a friend doing rotating night shifts why they feel so awful, in language anyone can follow. Use the idea of an internal clock that does not believe their watch.",
       "modelAnswer": "Congenital leptin deficiency provides a rare natural experiment confirming the hormone's central role in long-term energy regulation. Leptin, identified by Friedman and colleagues (1994) in their seminal <em>Nature</em> paper on the obese (ob) gene in mice, is secreted by adipocytes in proportion to fat stores and signals these stores to the hypothalamus — particularly the arcuate nucleus, where it suppresses orexigenic neuropeptide Y/AgRP neurons and activates anorexigenic POMC neurons. In congenital leptin deficiency, no leptin signal is produced; the brain interprets the body as starving regardless of actual fat mass, driving hyperphagia and severe early-onset obesity. Farooqi et al. (2002) demonstrated that exogenous recombinant leptin in such patients dramatically normalises eating behaviour and body composition — among the most striking examples of single-hormone replacement therapy in psychiatry-adjacent endocrinology.\n\nThe critical contrast is with common (polygenic) obesity. Most obese individuals have <em>elevated</em>, not deficient, circulating leptin — they exhibit <strong>leptin resistance</strong>, in which the hypothalamic signalling cascade fails to respond appropriately. Mechanisms implicated include impaired leptin transport across the blood–brain barrier, SOCS3-mediated negative feedback within hypothalamic neurons, and inflammation. Administering further leptin to a leptin-resistant patient does not improve sensitivity; circulating ghrelin (Kojima et al., 1999) and complex polygenic influences on appetite (Locke et al., 2015) remain active. The case therefore illustrates a general principle: a hormone replacement that 'cures' a monogenic deficiency rarely translates into an effective treatment for the polygenic, multi-factorial form of the same phenotype.",
       "rabbitHoleTerms": [
-        {"term": "suprachiasmatic nucleus (SCN)", "description": "A paired cluster of ~20,000 neurons in the anterior hypothalamus acting as the master circadian pacemaker. Entrained by light via the retinohypothalamic tract; demonstrated to be necessary and sufficient by Ralph et al.'s (1990) transplant study."},
-        {"term": "REM sleep", "description": "Rapid Eye Movement sleep: a paradoxical state combining cortical activation with skeletal muscle atonia, characterised by vivid dreaming and concentrated in the latter half of the night."},
-        {"term": "melatonin", "description": "Hormone secreted by the pineal gland in darkness, suppressed by light. Conveys the night-time signal to peripheral tissues and supports circadian entrainment."},
-        {"term": "leptin", "description": "Adipocyte-derived hormone, identified by Friedman et al. (1994), that signals long-term energy stores to hypothalamic feeding centres. Deficiency causes severe obesity in mice and humans; most obese humans are leptin-resistant rather than leptin-deficient."},
-        {"term": "ghrelin", "description": "Stomach-derived peptide identified by Kojima et al. (1999) that stimulates appetite. Levels rise pre-meal and fall post-meal; reduced after Roux-en-Y gastric bypass surgery."},
-        {"term": "Yerkes–Dodson law", "description": "The inverted-U relationship between arousal and performance: performance peaks at an intermediate level of arousal, with the optimum being lower for more difficult tasks."}
+        {
+          "term": "suprachiasmatic nucleus (SCN)",
+          "description": "A paired cluster of ~20,000 neurons in the anterior hypothalamus acting as the master circadian pacemaker. Entrained by light via the retinohypothalamic tract; demonstrated to be necessary and sufficient by Ralph et al.'s (1990) transplant study."
+        },
+        {
+          "term": "REM sleep",
+          "description": "Rapid Eye Movement sleep: a paradoxical state combining cortical activation with skeletal muscle atonia, characterised by vivid dreaming and concentrated in the latter half of the night."
+        },
+        {
+          "term": "melatonin",
+          "description": "Hormone secreted by the pineal gland in darkness, suppressed by light. Conveys the night-time signal to peripheral tissues and supports circadian entrainment."
+        },
+        {
+          "term": "leptin",
+          "description": "Adipocyte-derived hormone, identified by Friedman et al. (1994), that signals long-term energy stores to hypothalamic feeding centres. Deficiency causes severe obesity in mice and humans; most obese humans are leptin-resistant rather than leptin-deficient."
+        },
+        {
+          "term": "ghrelin",
+          "description": "Stomach-derived peptide identified by Kojima et al. (1999) that stimulates appetite. Levels rise pre-meal and fall post-meal; reduced after Roux-en-Y gastric bypass surgery."
+        },
+        {
+          "term": "Yerkes–Dodson law",
+          "description": "The inverted-U relationship between arousal and performance: performance peaks at an intermediate level of arousal, with the optimum being lower for more difficult tasks."
+        }
       ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>During which sleep stage is the EEG dominated by high-amplitude delta waves and is growth hormone release maximal?</p>",
-          "options": ["Stage 1 NREM", "Stage 2 NREM", "Stages 3 and 4 NREM (slow-wave sleep)", "REM sleep"],
+          "options": [
+            "Stage 1 NREM",
+            "Stage 2 NREM",
+            "Stages 3 and 4 NREM (slow-wave sleep)",
+            "REM sleep"
+          ],
           "correctAnswer": "Stages 3 and 4 NREM (slow-wave sleep)",
           "explanationHtml": "<p>Slow-wave sleep (SWS / N3) is defined by high-amplitude delta waves (0.5–4 Hz). It is concentrated in the first half of the night, is associated with maximal growth hormone release, and is the stage most clearly linked to physical restoration (Oswald, 1980) and glymphatic clearance of metabolic waste (Xie et al., 2013).</p>"
         },
@@ -247,7 +509,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A neurosurgeon accidentally lesions a patient's lateral hypothalamus during surgery. Based on Anand & Brobeck's (1951) classical findings, which symptom would you most expect post-operatively?</p>",
-          "options": ["Hyperphagia and rapid weight gain", "Aphagia (refusal to eat) and weight loss", "Sudden onset of insomnia without weight change", "Loss of thirst sensation only, with no change in feeding"],
+          "options": [
+            "Hyperphagia and rapid weight gain",
+            "Aphagia (refusal to eat) and weight loss",
+            "Sudden onset of insomnia without weight change",
+            "Loss of thirst sensation only, with no change in feeding"
+          ],
           "correctAnswer": "Aphagia (refusal to eat) and weight loss",
           "explanationHtml": "<p>The lateral hypothalamus was classically identified as the 'hunger centre' — lesions cause aphagia (Anand & Brobeck, 1951), while electrical stimulation induces feeding. The opposite pattern occurs with ventromedial hypothalamic lesions, which produce hyperphagia and obesity (Hetherington & Ranson, 1940). The LH also produces orexin/hypocretin, contributing to arousal regulation alongside feeding.</p>"
         },
@@ -255,7 +522,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>A student argues: 'Randy Gardner stayed awake 11 days with full recovery; therefore moderate sleep deprivation has no real consequences for the average person.' Which response best identifies the flaw in this reasoning?</p>",
-          "options": ["The argument is sound; controlled studies confirm Gardner's experience generalises", "The argument relies on a single uncontrolled case with self-reported recovery later contradicted by Gardner himself, and ignores controlled studies (e.g., Killgore, 2010; Krause et al., 2017) showing cumulative deficits from modest sleep restriction", "The argument is flawed because Gardner was unusually young, but otherwise the reasoning generalises to adults", "The argument is flawed only because Gardner's gender was not representative"],
+          "options": [
+            "The argument is sound; controlled studies confirm Gardner's experience generalises",
+            "The argument relies on a single uncontrolled case with self-reported recovery later contradicted by Gardner himself, and ignores controlled studies (e.g., Killgore, 2010; Krause et al., 2017) showing cumulative deficits from modest sleep restriction",
+            "The argument is flawed because Gardner was unusually young, but otherwise the reasoning generalises to adults",
+            "The argument is flawed only because Gardner's gender was not representative"
+          ],
           "correctAnswer": "The argument relies on a single uncontrolled case with self-reported recovery later contradicted by Gardner himself, and ignores controlled studies (e.g., Killgore, 2010; Krause et al., 2017) showing cumulative deficits from modest sleep restriction",
           "explanationHtml": "<p>Single-case studies (n = 1) cannot establish population norms. Gardner's self-report of full recovery has been contradicted by his later accounts of long-term insomnia. Controlled chronic sleep-restriction studies show cumulative cognitive, metabolic and affective deficits. Krause et al. (2017) demonstrated that even one night of total sleep deprivation amplifies amygdala reactivity to negative stimuli by ~60% with reduced prefrontal regulatory connectivity — a plausible neural substrate for the well-documented sleep–mood link.</p>"
         }
@@ -270,13 +542,51 @@
       "hookHtml": "<p>In the year 2000, Eleanor Maguire scanned the brains of sixteen London taxi drivers and showed that their posterior hippocampi were measurably larger than those of matched controls — and grew larger still the longer they had been driving. The brain, it turned out, was not the fixed organ Cajal had described a century earlier ('In the adult centres the nerve paths are something fixed, ended, immutable. Everything may die, nothing may be regenerated'). It was a dynamic, plastic system, reshaping itself in response to experience throughout life. At roughly the same time, Bruce McEwen was demonstrating the dark mirror image of this plasticity: chronic stress, sustained over years, was eating away at the very same hippocampus. The story of stress physiology and neuroplasticity is the story of how experience writes itself into the architecture of the brain — for better and for worse.</p>",
       "explanationHtml": "<h3>Selye and the General Adaptation Syndrome</h3><p>Hans Selye (1956) <em>The Stress of Life</em> formalised the concept of <strong>stress</strong> as a non-specific physiological response to demand. His <strong>General Adaptation Syndrome (GAS)</strong> proposed three stages:</p><ol><li><strong>Alarm reaction</strong>: immediate sympathomedullary activation — adrenaline and noradrenaline are released from the adrenal medulla, producing the classical fight-or-flight response (increased heart rate, raised blood pressure, pupil dilation, glucose mobilisation).</li><li><strong>Resistance</strong>: if the stressor persists, the body attempts to adapt. The HPA axis sustains elevated cortisol, parasympathetic recovery is partial, and outwardly the individual may appear to cope. Internally, immune function and reproductive systems are suppressed.</li><li><strong>Exhaustion</strong>: prolonged demand depletes physiological reserves. Susceptibility to illness rises sharply; Selye called the diseases of this phase 'diseases of adaptation' — including hypertension, ulcers, and immunosuppression.</li></ol><p><em>Evaluation</em>: Selye's model was foundational but criticised on several grounds. (i) The 'non-specificity' claim was always overstated — stressors produce partly differentiated physiological signatures (Mason, 1971). (ii) The model is largely physiological and underplays cognitive appraisal — Lazarus & Folkman's (1984) transactional model offered a more psychologically rich account in which stress is the product of primary (threat) and secondary (coping) appraisals. (iii) Most empirical work was conducted on rats; human stress involves social, symbolic and anticipatory dimensions absent in laboratory rodents.</p><h3>The HPA Axis in Depth</h3><p>The <strong>hypothalamic–pituitary–adrenal (HPA) axis</strong> is the slow arm of the stress response.</p><ol><li>The paraventricular nucleus of the hypothalamus releases <strong>corticotrophin-releasing hormone (CRH)</strong> into the hypophyseal portal system.</li><li>CRH stimulates the anterior pituitary to release <strong>adrenocorticotrophic hormone (ACTH)</strong> into the systemic circulation.</li><li>ACTH stimulates the adrenal cortex (zona fasciculata) to synthesise and release <strong>cortisol</strong>.</li><li>Cortisol exerts diverse effects: mobilises glucose, suppresses inflammation acutely, suppresses immune and reproductive function chronically, and crosses the blood–brain barrier to bind glucocorticoid receptors throughout the cortex and limbic system.</li><li>Cortisol exerts <strong>negative feedback</strong> on the hypothalamus and pituitary, normally shutting down its own release once homeostasis is restored.</li></ol><p>Chronic stress disrupts this feedback. Hippocampal neurons are unusually dense in glucocorticoid receptors; under chronic cortisol exposure, they undergo dendritic atrophy and, in extreme cases, cell death (Sapolsky, 1996). Because the hippocampus normally helps inhibit HPA activity, its atrophy disinhibits the axis — a self-amplifying cycle.</p><h3>Sympathomedullary Pathway</h3><p>The faster arm of the stress response is the <strong>sympathetic–adrenal medullary (SAM) pathway</strong>. Hypothalamic signals descend via sympathetic chain ganglia to the adrenal medulla, which secretes adrenaline (epinephrine, ~80%) and noradrenaline (~20%) directly into the bloodstream. These catecholamines mediate the acute fight-or-flight response — onset within seconds, peak within minutes, dissipation within tens of minutes. The SAM pathway is calibrated for short, intense bursts of demand; the HPA axis is calibrated for sustained challenge.</p><h3>Allostatic Load: McEwen's Reframing</h3><p>Bruce McEwen (1998) <em>New England Journal of Medicine</em>, and in subsequent reviews (McEwen, 2002), introduced the concept of <strong>allostasis</strong> — the active process of maintaining stability through change — and <strong>allostatic load</strong>, the cumulative physiological cost of chronic adaptive demand. Allostatic load can arise from: (i) frequent stressors; (ii) failure to habituate to repeated stressors; (iii) inability to terminate the stress response promptly; or (iv) inadequate response (necessitating compensatory elevations elsewhere).</p><p>Indices of allostatic load include elevated resting cortisol and catecholamines, hypertension, central adiposity, dyslipidaemia, glycated haemoglobin, and reduced heart-rate variability. McEwen's framework links the molecular biology of glucocorticoids to the epidemiology of socio-economic health disparities: chronic adversity produces chronic allostatic load, which produces excess morbidity and mortality.</p><h3>Stress, Immunity & the Common Cold</h3><p>Sheldon Cohen and colleagues (1991) <em>New England Journal of Medicine</em> conducted the classic empirical demonstration of stress–immune coupling in humans. 394 healthy adults completed psychological stress measures and were then nasally inoculated with one of five respiratory viruses (with informed consent and medical oversight). The rate of clinical colds rose monotonically with stress index — from approximately 27% in low-stress participants to nearly 47% in high-stress participants. The relationship survived adjustment for age, sex, weight, antibody status, and health behaviours. More recent work (Cohen et al., 2012) demonstrates that chronic stress downregulates glucocorticoid receptor sensitivity in immune cells, releasing pro-inflammatory cytokines from normal cortisol-mediated restraint — a mechanism linking stress to chronic inflammatory and cardiovascular disease.</p><h3>Neuroplasticity: The Brain Rewrites Itself</h3><p>For most of the twentieth century, the adult brain was believed to be structurally fixed. Modern neuroscience has comprehensively overturned this view.</p><h4>Maguire et al. (2000): London Taxi Drivers</h4><p>Eleanor Maguire and colleagues (2000) <em>PNAS</em> used voxel-based morphometry to compare 16 male London taxi drivers — required to pass 'The Knowledge', an exhaustive examination of London's 25,000 streets — with matched controls. Posterior hippocampal volume was significantly greater in taxi drivers, and volume correlated positively with years of driving experience. Anterior hippocampal volume showed the opposite pattern — suggesting reallocation, not simply growth. A subsequent longitudinal study (Woollett & Maguire, 2011) tracked trainees over four years, showing that posterior hippocampal increases emerged specifically in those who qualified, not in those who failed — strengthening the causal interpretation.</p><h4>Draganski et al. (2004): Juggling</h4><p>Draganski et al. (2004) <em>Nature</em> randomly assigned non-jugglers to a juggling-training group or a control group. After three months of training, jugglers showed grey-matter expansion in mid-temporal area and posterior intraparietal sulcus — regions involved in visual motion processing. Three months after ceasing training, the gains had partly receded. This was the first prospective randomised demonstration in humans that grey-matter structure changes with skill acquisition over weeks.</p><h4>Critical and Sensitive Periods</h4><p>A <strong>critical period</strong> is a developmental window during which a particular experience is required for normal development; if missed, the relevant function cannot be acquired (Hubel & Wiesel's monocular-deprivation work in kittens established the principle for ocular dominance columns). A <strong>sensitive period</strong> is a softer concept: a window during which experience has heightened effect but learning remains possible afterwards. Language acquisition shows sensitive-period properties — the dramatic case of Genie (Curtiss, 1977), who was deprived of linguistic input until age 13, illustrates the cost of late exposure but also the partial — if limited — capacity for later acquisition.</p><h3>Recovery from Brain Damage</h3><p>Damaged brains can recover function through several mechanisms:</p><ul><li><strong>Functional reorganisation</strong>: intact regions take over functions of damaged ones. Phineas Gage's gradual partial recovery and patient H.M.'s preserved procedural learning illustrate the brain's capacity to redistribute function within constraints.</li><li><strong>Axonal sprouting and synaptic reorganisation</strong>: surviving neurons grow new connections to replace lost inputs.</li><li><strong>Neurogenesis</strong>: long denied in the adult mammalian brain, neurogenesis in the dentate gyrus of the hippocampus was demonstrated definitively in humans by Eriksson et al. (1998) <em>Nature Medicine</em> using BrdU labelling in cancer patients. More recent work (Boldrini et al., 2018) has confirmed adult hippocampal neurogenesis across the lifespan, though the field remains contested following Sorrells et al. (2018) reporting reduced neurogenesis in adults.</li><li><strong>Constraint-induced movement therapy (CIMT)</strong>: developed by Taub (Taub et al., 1993) for stroke rehabilitation, CIMT restrains the unaffected limb, forcing intensive use of the affected limb. Randomised trials (Wolf et al., 2006 EXCITE trial) demonstrate sustained improvements in motor function, with corresponding cortical reorganisation visible on neuroimaging.</li></ul><h3>Recent Developments</h3><p>Snyder et al. (2022) <em>Nature</em> demonstrated that chronic psychosocial stress in mice produces persistent epigenetic remodelling of hippocampal neurons, with corresponding behavioural anhedonia — strengthening the molecular bridge from stress to depression. In humans, Park et al. (2021) showed that chronic stress measured by hair cortisol predicts later hippocampal volume loss prospectively, supporting causal direction. Neuroplasticity research is now integrating with epigenetics, immunology, and the gut microbiome — fields once unimaginable to Selye but consistent with the principle he intuited: the body is one integrated adaptive system.</p>",
       "storyBeats": [
-        {"type": "narration", "text": "Dr. Chen opens with an MRI of an elderly taxi driver and a matched control — the taxi driver's posterior hippocampi visibly larger."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "For most of the twentieth century we believed the adult brain was fixed. Cajal himself wrote that nothing in the central nervous system could be regenerated. Maguire's taxi-driver study in 2000 was one of several findings that overturned that orthodoxy. Learning twenty-five thousand London streets visibly enlarged the posterior hippocampus. Experience reshapes neuroanatomy."},
-        {"type": "example", "speaker": "Selye's GAS in Selye's own life", "text": "Hans Selye coined the modern psychological use of the word 'stress' in the 1930s after watching laboratory rats develop ulcers, immune suppression and adrenal enlargement regardless of which stressor he used — cold, surgery, or restraint. His General Adaptation Syndrome — alarm, resistance, exhaustion — became the foundation of modern stress physiology, even as later researchers refined and challenged his claim that the response was wholly non-specific."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Selye gave us the architecture: two pathways. The fast sympathomedullary pathway floods the body with adrenaline within seconds. The slower HPA axis releases cortisol over minutes, hours, and days. Acutely, both are adaptive. Chronically, they become corrosive. Bruce McEwen called this 'allostatic load' — the accumulating cost of being adaptive for too long."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "Sheldon Cohen showed how concrete the cost can be. He measured psychological stress in nearly four hundred volunteers, then exposed them to common-cold viruses under controlled conditions. The most stressed group caught colds at almost twice the rate of the least stressed. Subjective stress, measured weeks earlier, predicted immune failure in a laboratory infection."},
-        {"type": "dialogue", "av": "👩‍🔬", "cls": "mentor", "speaker": "Dr. Miriam Chen", "sCls": "mentor", "text": "And then there is the brighter side. Draganski's juggling study in Nature randomly assigned non-jugglers to learn. Three months later, grey matter in visual-motion areas had measurably expanded. Stop juggling and it partly receded. Eriksson's 1998 Nature Medicine paper proved that adult humans grow new neurons in the dentate gyrus. The plasticity that experience exploits is the same plasticity that stress endangers — and the same plasticity that recovery, with the right scaffolding, can mobilise."},
-        {"type": "narration", "text": "A student asks how this changes clinical practice. Dr. Chen answers without hesitation: 'It means we should stop telling patients their brains are fixed. Constraint-induced movement therapy, cognitive rehabilitation, intensive practice — these work because plasticity is a permanent feature of the central nervous system, not a privilege of childhood.'"}
+        {
+          "type": "narration",
+          "text": "Dr. Chen opens with an MRI of an elderly taxi driver and a matched control — the taxi driver's posterior hippocampi visibly larger."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "For most of the twentieth century we believed the adult brain was fixed. Cajal himself wrote that nothing in the central nervous system could be regenerated. Maguire's taxi-driver study in 2000 was one of several findings that overturned that orthodoxy. Learning twenty-five thousand London streets visibly enlarged the posterior hippocampus. Experience reshapes neuroanatomy."
+        },
+        {
+          "type": "example",
+          "speaker": "Selye's GAS in Selye's own life",
+          "text": "Hans Selye coined the modern psychological use of the word 'stress' in the 1930s after watching laboratory rats develop ulcers, immune suppression and adrenal enlargement regardless of which stressor he used — cold, surgery, or restraint. His General Adaptation Syndrome — alarm, resistance, exhaustion — became the foundation of modern stress physiology, even as later researchers refined and challenged his claim that the response was wholly non-specific."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Selye gave us the architecture: two pathways. The fast sympathomedullary pathway floods the body with adrenaline within seconds. The slower HPA axis releases cortisol over minutes, hours, and days. Acutely, both are adaptive. Chronically, they become corrosive. Bruce McEwen called this 'allostatic load' — the accumulating cost of being adaptive for too long."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "Sheldon Cohen showed how concrete the cost can be. He measured psychological stress in nearly four hundred volunteers, then exposed them to common-cold viruses under controlled conditions. The most stressed group caught colds at almost twice the rate of the least stressed. Subjective stress, measured weeks earlier, predicted immune failure in a laboratory infection."
+        },
+        {
+          "type": "dialogue",
+          "av": "👩‍🔬",
+          "cls": "mentor",
+          "speaker": "Dr. Miriam Chen",
+          "sCls": "mentor",
+          "text": "And then there is the brighter side. Draganski's juggling study in Nature randomly assigned non-jugglers to learn. Three months later, grey matter in visual-motion areas had measurably expanded. Stop juggling and it partly receded. Eriksson's 1998 Nature Medicine paper proved that adult humans grow new neurons in the dentate gyrus. The plasticity that experience exploits is the same plasticity that stress endangers — and the same plasticity that recovery, with the right scaffolding, can mobilise."
+        },
+        {
+          "type": "narration",
+          "text": "A student asks how this changes clinical practice. Dr. Chen answers without hesitation: 'It means we should stop telling patients their brains are fixed. Constraint-induced movement therapy, cognitive rehabilitation, intensive practice — these work because plasticity is a permanent feature of the central nervous system, not a privilege of childhood.'"
+        }
       ],
       "guidedPracticeHtml": "<p><strong>Scenario:</strong> Dr. Lin, a junior doctor, has worked twelve-hour night shifts in A&E for the past eighteen months. She presents to her own GP reporting persistent fatigue, increasing frequency of upper respiratory infections, weight gain around the waist, mild hypertension, and a recent depressive episode.</p><p>Using your knowledge of stress physiology, explain Dr. Lin's symptom cluster. In your response, address: (1) how chronic activation of the HPA axis produces sustained cortisol elevation and what its downstream effects are; (2) why elevated cortisol predisposes to infection (citing Cohen et al., 1991); (3) how McEwen's concept of allostatic load helps integrate the cluster into a single framework. Aim for 100–130 words.</p><p><em>Guidance: Begin with one sentence linking chronic HPA activation to cortisol. Then walk through three downstream consequences (immune suppression, central adiposity, hippocampal effects on mood). Cite Cohen and McEwen by name. Close with a sentence on why this is a systems-level problem requiring more than symptomatic treatment.</em></p>",
       "guidedPracticeModelAnswer": "Dr. Lin's symptoms reflect chronic activation of the hypothalamic-pituitary-adrenal (HPA) axis, resulting in sustained elevation of cortisol. While adaptive in acute crises, chronic cortisol exposure produces severe downstream consequences: it suppresses immune function, promotes central adiposity (waist weight gain), and can cause hippocampal dendritic atrophy, increasing vulnerability to depression.\n\nThe link to her frequent respiratory infections is well-established; Cohen et al. (1991) demonstrated that chronic psychological stress directly predicts susceptibility to clinical colds following viral exposure, as cortisol-mediated restraint on inflammation fails. McEwen's concept of 'allostatic load' integrates her fatigue, hypertension, weight gain, and depression into a single framework — they represent the cumulative physiological wear-and-tear of adapting to relentless demand. Treating these symptoms individually would fail to address the underlying systems-level exhaustion driving her presentation.",
@@ -284,19 +594,42 @@
       "feynmanPrompt": "Explain to a stressed-out friend why 'just being stressed for a few months' can show up as a real, physical change in the brain and body, not just in their mood.",
       "modelAnswer": "The neurologist's framing reflects a twentieth-century orthodoxy that contemporary neuroscience has substantially revised. While there are real limits to recovery — particularly in older patients with extensive lesions involving white-matter tracts — the assertion that 'the brain cannot recover' is empirically untenable.\n\nFirst, structural neuroplasticity persists into adulthood. Maguire et al.'s (2000) <em>PNAS</em> study demonstrated experience-dependent posterior hippocampal expansion in adult London taxi drivers, with volume correlating with years of experience; Woollett & Maguire's (2011) longitudinal follow-up showed the expansion emerged specifically in those who qualified for licensure, supporting a causal interpretation. Draganski et al.'s (2004) <em>Nature</em> study randomised adult non-jugglers to training, showing grey-matter expansion in visual-motion areas after three months. Plasticity is therefore not confined to development.\n\nSecond, adult neurogenesis has been demonstrated in humans. Eriksson et al.'s (1998) <em>Nature Medicine</em> paper used BrdU labelling in cancer patients to show new neurons in the adult dentate gyrus; Boldrini et al. (2018) confirmed lifelong hippocampal neurogenesis, although Sorrells et al. (2018) report reduced rates — the field remains active. Neurogenesis is one of several mechanisms (alongside axonal sprouting and functional reorganisation) by which damaged brains repair partially.\n\nThird, targeted rehabilitation can mobilise plasticity for clinical benefit. Constraint-induced movement therapy (Taub et al., 1993; Wolf et al.'s 2006 EXCITE randomised trial) restrains the unaffected limb to force intensive use of the affected one, producing sustained motor improvements and visible cortical reorganisation even years post-stroke.\n\nAn evidence-based prognosis would communicate that recovery is partial, time-consuming and effortful — but not impossible — and that intensive, structured rehabilitation can meaningfully improve outcome. Therapeutic nihilism is not warranted by current evidence and may itself worsen prognosis by reducing engagement.",
       "rabbitHoleTerms": [
-        {"term": "General Adaptation Syndrome (GAS)", "description": "Selye's (1956) three-stage model of the stress response: alarm (acute sympathetic activation), resistance (sustained HPA-mediated adaptation), and exhaustion (depletion and disease). Foundational but criticised for understating cognitive appraisal and stressor specificity."},
-        {"term": "HPA axis", "description": "The hypothalamic–pituitary–adrenal axis: CRH from the hypothalamus stimulates pituitary ACTH, which stimulates adrenal cortisol release. Chronic activation disrupts negative feedback and is implicated in hippocampal atrophy, depression and immune dysregulation."},
-        {"term": "allostatic load", "description": "McEwen's (1998, 2002) concept of the cumulative physiological cost of chronic adaptive demand, indexed by elevated baseline cortisol, blood pressure, central adiposity, dyslipidaemia, and inflammatory markers."},
-        {"term": "neurogenesis", "description": "The generation of new neurons. Demonstrated in the adult human dentate gyrus by Eriksson et al. (1998) via BrdU labelling; subsequent work (Boldrini et al., 2018; Sorrells et al., 2018) has both extended and challenged the finding."},
-        {"term": "critical period", "description": "A developmental window during which a particular experience is necessary for normal development of a function. Established by Hubel & Wiesel's monocular deprivation studies in kittens; contrasted with the softer 'sensitive period'."},
-        {"term": "constraint-induced movement therapy (CIMT)", "description": "A rehabilitation technique (Taub et al., 1993) restraining the unaffected limb to force use of the affected limb after stroke or brain injury, producing sustained motor recovery and visible cortical reorganisation (Wolf et al., 2006)."}
+        {
+          "term": "General Adaptation Syndrome (GAS)",
+          "description": "Selye's (1956) three-stage model of the stress response: alarm (acute sympathetic activation), resistance (sustained HPA-mediated adaptation), and exhaustion (depletion and disease). Foundational but criticised for understating cognitive appraisal and stressor specificity."
+        },
+        {
+          "term": "HPA axis",
+          "description": "The hypothalamic–pituitary–adrenal axis: CRH from the hypothalamus stimulates pituitary ACTH, which stimulates adrenal cortisol release. Chronic activation disrupts negative feedback and is implicated in hippocampal atrophy, depression and immune dysregulation."
+        },
+        {
+          "term": "allostatic load",
+          "description": "McEwen's (1998, 2002) concept of the cumulative physiological cost of chronic adaptive demand, indexed by elevated baseline cortisol, blood pressure, central adiposity, dyslipidaemia, and inflammatory markers."
+        },
+        {
+          "term": "neurogenesis",
+          "description": "The generation of new neurons. Demonstrated in the adult human dentate gyrus by Eriksson et al. (1998) via BrdU labelling; subsequent work (Boldrini et al., 2018; Sorrells et al., 2018) has both extended and challenged the finding."
+        },
+        {
+          "term": "critical period",
+          "description": "A developmental window during which a particular experience is necessary for normal development of a function. Established by Hubel & Wiesel's monocular deprivation studies in kittens; contrasted with the softer 'sensitive period'."
+        },
+        {
+          "term": "constraint-induced movement therapy (CIMT)",
+          "description": "A rehabilitation technique (Taub et al., 1993) restraining the unaffected limb to force use of the affected limb after stroke or brain injury, producing sustained motor recovery and visible cortical reorganisation (Wolf et al., 2006)."
+        }
       ],
       "questions": [
         {
           "type": "MULTIPLE_CHOICE",
           "tier": "RECALL",
           "questionHtml": "<p>Which sequence correctly describes the cascade of the HPA axis from initial signal to systemic effect?</p>",
-          "options": ["ACTH (hypothalamus) → CRH (pituitary) → adrenaline (adrenal medulla)", "CRH (hypothalamus) → ACTH (pituitary) → cortisol (adrenal cortex)", "Cortisol (hypothalamus) → CRH (pituitary) → ACTH (adrenal medulla)", "Adrenaline (hypothalamus) → cortisol (pituitary) → ACTH (adrenal cortex)"],
+          "options": [
+            "ACTH (hypothalamus) → CRH (pituitary) → adrenaline (adrenal medulla)",
+            "CRH (hypothalamus) → ACTH (pituitary) → cortisol (adrenal cortex)",
+            "Cortisol (hypothalamus) → CRH (pituitary) → ACTH (adrenal medulla)",
+            "Adrenaline (hypothalamus) → cortisol (pituitary) → ACTH (adrenal cortex)"
+          ],
           "correctAnswer": "CRH (hypothalamus) → ACTH (pituitary) → cortisol (adrenal cortex)",
           "explanationHtml": "<p>The HPA cascade begins with corticotrophin-releasing hormone (CRH) from the hypothalamic paraventricular nucleus, which stimulates the anterior pituitary to release adrenocorticotrophic hormone (ACTH), which in turn stimulates the adrenal cortex to release cortisol. Cortisol then exerts negative feedback on hypothalamus and pituitary — a feedback loop disrupted under chronic stress.</p>"
         },
@@ -311,7 +644,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "APPLICATION",
           "questionHtml": "<p>A 55-year-old stroke patient is left with reduced use of her right arm. Her physiotherapist proposes constraint-induced movement therapy. Which rationale best explains the expected mechanism of benefit?</p>",
-          "options": ["The unaffected limb is restrained to prevent overuse injury", "Restraining the unaffected limb forces intensive use of the affected limb, driving cortical reorganisation and functional recovery", "CIMT works only via pharmacological augmentation; the restraint is incidental", "CIMT prevents neurogenesis to stabilise existing connections"],
+          "options": [
+            "The unaffected limb is restrained to prevent overuse injury",
+            "Restraining the unaffected limb forces intensive use of the affected limb, driving cortical reorganisation and functional recovery",
+            "CIMT works only via pharmacological augmentation; the restraint is incidental",
+            "CIMT prevents neurogenesis to stabilise existing connections"
+          ],
           "correctAnswer": "Restraining the unaffected limb forces intensive use of the affected limb, driving cortical reorganisation and functional recovery",
           "explanationHtml": "<p>CIMT (Taub et al., 1993) was developed on the principle of overcoming 'learned non-use' — patients spontaneously favour the unaffected limb, and the affected limb's cortical representation shrinks further. Forced intensive use drives experience-dependent cortical reorganisation; the Wolf et al. (2006) EXCITE randomised trial demonstrated sustained motor improvement with corresponding neuroimaging changes.</p>"
         },
@@ -319,7 +657,12 @@
           "type": "MULTIPLE_CHOICE",
           "tier": "DISCRIMINATION",
           "questionHtml": "<p>Cohen et al. (1991) found that psychological stress predicted clinical cold rates after viral inoculation. A student concludes: 'Therefore, stress causes colds directly, independent of any other factor.' Which evaluation is most accurate?</p>",
-          "options": ["Cohen's design was prospective with viral inoculation and statistical control for confounders, supporting a causal role for stress operating partly via glucocorticoid-mediated immune dysregulation (Cohen et al., 2012) — though stress is one contributory factor among many, not the sole cause", "The study was purely correlational with no statistical control and supports no causal inference", "Cohen's design proves stress is the single sufficient cause of all common colds", "The study's findings have been entirely overturned by recent research"],
+          "options": [
+            "Cohen's design was prospective with viral inoculation and statistical control for confounders, supporting a causal role for stress operating partly via glucocorticoid-mediated immune dysregulation (Cohen et al., 2012) — though stress is one contributory factor among many, not the sole cause",
+            "The study was purely correlational with no statistical control and supports no causal inference",
+            "Cohen's design proves stress is the single sufficient cause of all common colds",
+            "The study's findings have been entirely overturned by recent research"
+          ],
           "correctAnswer": "Cohen's design was prospective with viral inoculation and statistical control for confounders, supporting a causal role for stress operating partly via glucocorticoid-mediated immune dysregulation (Cohen et al., 2012) — though stress is one contributory factor among many, not the sole cause",
           "explanationHtml": "<p>Cohen's (1991) design was unusually strong: psychological measures were taken before controlled viral exposure, with statistical adjustment for age, sex, weight, antibody status, and health behaviours. The dose–response relationship across stress quintiles supports a causal interpretation. Later mechanistic work (Cohen et al., 2012) implicates downregulated glucocorticoid-receptor sensitivity in immune cells, releasing pro-inflammatory cytokines from cortisol-mediated restraint. Stress is contributory, not sufficient; the student's framing overstates the inference.</p>"
         }

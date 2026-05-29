@@ -1,4 +1,4 @@
-﻿{
+{
   "id": "psy-sen-6",
   "title": "Critical Perspectives in Psychology",
   "glyph": "🔍",
@@ -6,7 +6,7 @@
   "tier": "SENIOR",
   "topicId": "psychology",
   "prerequisites": [
-    "psy-exp-1"
+    "psy-sen-1"
   ],
   "subChunks": [
     {

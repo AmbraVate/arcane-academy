@@ -510,6 +510,20 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 
 ---
 
+### [2026-05-29] Psychology content prerequisite IDs used stale tier abbreviations
+
+**Context:** 12 Psychology JSON content files used old tier abbreviations (`fnd`, `prt`, `adv`) in their `prerequisiteIds` fields, referencing chunk IDs that do not exist. This caused `JsonContentSeeder.wirePrerequisites` to throw `IllegalStateException: Prereq chunk not found` on every startup, preventing the backend from booting.
+
+**Root cause:** Content was authored with an earlier tier naming scheme (foundation/practitioner/advanced) before the current scheme (app/jun/sen/lea) was standardised.
+
+**Fix:** Replaced all stale prerequisite IDs using the mapping: `fnd`→`app`, `prt`→`jun`, `adv`→`sen`. Also corrected `psy-jun-3.json` whose `tier` field was incorrectly set to `APPRENTICE` (should be `JUNIOR`).
+
+**Files changed:** `psy-app-3`, `psy-jun-2` through `psy-jun-10`, `psy-sen-2` through `psy-sen-4` (12 files).
+
+**Watch-out:** When authoring new content, always use the current tier abbreviations (`app`, `jun`, `sen`, `lea`). Run the prerequisite validation script before pushing.
+
+---
+
 ## 14. Pending Work
 
 | Item | Priority | Notes |
@@ -527,7 +541,6 @@ Decisions are recorded here with date, context, and rationale. Reference this be
 
 | Item | Priority | Notes |
 |---|---|---|
-| Favicon | High | No favicon currently set; add branded icon |
 | Observability & stats metrics in Admin Panel | High | Usage dashboards, learner activity, XP distribution, engagement metrics |
 | Onboarding tutorial for first-time users | High | Guided walkthrough: sign in → select topic → complete a practice lesson; skippable; awards its own badge on completion |
 | Sync topic order in Admin Panel to lesson sort order | Medium | Admin chunk list should reflect the same ordering learners see on the topic map |

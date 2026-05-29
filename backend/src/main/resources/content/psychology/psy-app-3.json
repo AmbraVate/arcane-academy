@@ -5,7 +5,7 @@
   "glyph": "🧠",
   "tier": "APPRENTICE",
   "sortOrder": 3,
-  "prerequisiteIds": ["psy-fnd-2"],
+  "prerequisiteIds": ["psy-app-2"],
   "subChunks": [
     {
       "id": "psy-app-3a",

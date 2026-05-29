@@ -1,11 +1,13 @@
-﻿{
+{
   "id": "psy-sen-1",
   "title": "Cognitive Psychology",
   "glyph": "🧩",
   "sortOrder": 5,
   "tier": "SENIOR",
   "topicId": "psychology",
-  "prerequisites": ["psy-prt-3"],
+  "prerequisites": [
+    "psy-jun-20"
+  ],
   "subChunks": [
     {
       "id": "psy-sen-1a",

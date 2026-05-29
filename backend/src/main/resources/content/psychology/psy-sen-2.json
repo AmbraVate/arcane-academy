@@ -5,7 +5,7 @@
   "glyph": "👥",
   "tier": "SENIOR",
   "sortOrder": 6,
-  "prerequisiteIds": ["psy-adv-1"],
+  "prerequisiteIds": ["psy-sen-1"],
   "subChunks": [
     {
       "id": "psy-sen-2a",

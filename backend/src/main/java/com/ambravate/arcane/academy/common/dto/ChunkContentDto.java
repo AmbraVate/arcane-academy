@@ -194,7 +194,7 @@ public class ChunkContentDto {
         @JsonAlias("difficulty")
         public String tier;
         /** Question body. HTML string — also accepted as "prompt". */
-        @JsonAlias("prompt")
+        @JsonAlias({"prompt", "question"})
         public String questionHtml;
         /** Optional code block shown alongside the question. */
         public String codeSnippet;

@@ -6,9 +6,17 @@ export interface AdminStats {
   totalUsers: number; activeUsers7d: number; totalTopics: number
   totalChunks: number; totalSubChunks: number; totalQuestions: number
   totalNotes: number; totalCapstones: number
+  openStuckReports: number; pendingCapstones: number
   recentSignups: AdminUser[]; contentHealth: ContentHealthItem[]
+  subscriptionBreakdown: Record<string, number>
+  topicEngagement: TopicEngagementItem[]
+  signupTrend: DailyCount[]
+  xpDistribution: XpBucket[]
 }
 export interface ContentHealthItem { subChunkId: string; title: string; chunkTitle: string; topicId?: string; tier?: string; issues: string[] }
+export interface TopicEngagementItem { topicId: string; topicName: string; glyph: string; totalSubChunks: number; totalCompletions: number; uniqueLearners: number }
+export interface DailyCount { date: string; count: number }
+export interface XpBucket { rank: string; count: number }
 
 export interface AdminTopic {
   id: string; name: string; glyph: string; tagline: string

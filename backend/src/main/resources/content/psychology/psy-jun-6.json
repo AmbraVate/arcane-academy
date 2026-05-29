@@ -1,4 +1,4 @@
-﻿{
+{
   "id": "psy-jun-6",
   "title": "Health Psychology",
   "glyph": "❤️‍🩹",
@@ -6,7 +6,7 @@
   "tier": "JUNIOR",
   "topicId": "psychology",
   "prerequisites": [
-    "psy-prt-2"
+    "psy-jun-2"
   ],
   "subChunks": [
     {

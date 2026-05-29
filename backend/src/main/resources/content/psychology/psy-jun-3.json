@@ -3,10 +3,10 @@
   "topicId": "psychology",
   "title": "Research Methods in Psychology",
   "glyph": "📐",
-  "tier": "APPRENTICE",
-  "sortOrder": 4,
+  "tier": "JUNIOR",
+  "sortOrder": 10,
   "prerequisiteIds": [
-    "psy-fnd-3"
+    "psy-app-3"
   ],
   "subChunks": [
     {

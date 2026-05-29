@@ -5,7 +5,7 @@
   "glyph": "🧩",
   "tier": "JUNIOR",
   "sortOrder": 9,
-  "prerequisiteIds": ["psy-prt-1"],
+  "prerequisiteIds": ["psy-jun-1"],
   "subChunks": [
     {
       "id": "psy-jun-2a",

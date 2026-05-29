@@ -1,4 +1,4 @@
-﻿{
+{
   "id": "psy-sen-5",
   "title": "Applied Psychology",
   "glyph": "⚕️",
@@ -6,7 +6,7 @@
   "tier": "SENIOR",
   "topicId": "psychology",
   "prerequisites": [
-    "psy-prt-3"
+    "psy-jun-20"
   ],
   "subChunks": [
     {
