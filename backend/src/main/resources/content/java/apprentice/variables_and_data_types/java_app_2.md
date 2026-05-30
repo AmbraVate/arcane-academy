@@ -1,13 +1,13 @@
 ---
-moduleId: java-app-2
-moduleTitle: "Module 2: Variables & Data Types"
+moduleId: se-app-m2
+moduleTitle: "Module 2: Programming Foundations"
 moduleGlyph: "📝"
 moduleSortOrder: 2
 domainId: java
 tier: APPRENTICE
-topicSlug: variables_and_data_types
-topicTitle: "Variables & Data Types"
-topicSortOrder: 2
+topicSlug: variables_and_state
+topicTitle: "Variables & State"
+topicSortOrder: 1
 id: java-app-2a
 title: "Primitives, Wrapper Classes & Type Safety"
 sortOrder: 1

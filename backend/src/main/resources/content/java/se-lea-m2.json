@@ -1,0 +1,73 @@
+{
+  "id": "se-lea-m2",
+  "title": "Advanced Architecture",
+  "glyph": "🏛️",
+  "sortOrder": 2,
+  "tier": "LEAD",
+  "domainId": "java",
+  "prerequisites": [
+    "se-lea-m1"
+  ],
+  "subChunks": [
+    {
+      "id": "se-lea-m2-01",
+      "title": "Domain-Driven Design",
+      "sortOrder": 1,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "ddd",
+      "topicTitle": "Domain-Driven Design",
+      "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-lea-m2-02",
+      "title": "Event Sourcing",
+      "sortOrder": 2,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "event_sourcing",
+      "topicTitle": "Event Sourcing",
+      "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-lea-m2-03",
+      "title": "CQRS",
+      "sortOrder": 3,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "cqrs",
+      "topicTitle": "CQRS",
+      "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-lea-m2-04",
+      "title": "Hexagonal Architecture",
+      "sortOrder": 4,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "hexagonal_architecture",
+      "topicTitle": "Hexagonal Architecture",
+      "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-lea-m2-05",
+      "title": "Clean Architecture",
+      "sortOrder": 5,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "clean_architecture",
+      "topicTitle": "Clean Architecture",
+      "topicSortOrder": 5,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    }
+  ]
+}

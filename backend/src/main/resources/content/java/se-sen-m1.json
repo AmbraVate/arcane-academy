@@ -1,0 +1,10 @@
+{
+  "id": "se-sen-m1", "title": "System Design", "glyph": "🏗️", "sortOrder": 1, "tier": "SENIOR", "domainId": "java", "prerequisites": ["se-jun-m8"],
+  "subChunks": [
+    { "id": "se-sen-m1-01", "title": "Requirements Analysis", "sortOrder": 1, "xpReward": 80, "practiceType": "NONE", "questType": "INVESTIGATION", "topicSlug": "requirements_analysis", "topicTitle": "Requirements Analysis", "topicSortOrder": 1, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-sen-m1-02", "title": "Monoliths", "sortOrder": 2, "xpReward": 80, "practiceType": "NONE", "questType": "KNOWLEDGE", "topicSlug": "monoliths", "topicTitle": "Monoliths", "topicSortOrder": 2, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-sen-m1-03", "title": "Modular Architectures", "sortOrder": 3, "xpReward": 90, "practiceType": "NONE", "questType": "INVESTIGATION", "topicSlug": "modular_architectures", "topicTitle": "Modular Architectures", "topicSortOrder": 3, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-sen-m1-04", "title": "Microservices", "sortOrder": 4, "xpReward": 100, "practiceType": "NONE", "questType": "INVESTIGATION", "topicSlug": "microservices", "topicTitle": "Microservices", "topicSortOrder": 4, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-sen-m1-05", "title": "Architectural Tradeoffs", "sortOrder": 5, "xpReward": 100, "practiceType": "NONE", "questType": "SYNTHESIS", "topicSlug": "architectural_tradeoffs", "topicTitle": "Architectural Tradeoffs", "topicSortOrder": 5, "hookHtml": "<p><em>Stub.</em></p>" }
+  ]
+}

@@ -1,13 +1,13 @@
 ---
-moduleId: java-app-5
-moduleTitle: "Module 5: Methods & Functions"
+moduleId: se-app-m3
+moduleTitle: "Module 3: Functions & Reusability"
 moduleGlyph: "⚗️"
-moduleSortOrder: 5
+moduleSortOrder: 3
 domainId: java
 tier: APPRENTICE
-topicSlug: methods_and_functions
-topicTitle: "Methods & Functions"
-topicSortOrder: 5
+topicSlug: methods
+topicTitle: "Methods"
+topicSortOrder: 1
 id: java-app-5a
 title: "Parameters, Return Types & Scope"
 sortOrder: 1

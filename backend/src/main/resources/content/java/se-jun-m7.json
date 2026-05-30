@@ -1,0 +1,19 @@
+{
+  "id": "se-jun-m7",
+  "title": "Design Patterns",
+  "glyph": "🎨",
+  "sortOrder": 7,
+  "tier": "JUNIOR",
+  "domainId": "java",
+  "prerequisites": ["se-jun-m1"],
+  "subChunks": [
+    { "id": "se-jun-m7-01", "title": "What are Design Patterns?", "sortOrder": 1, "xpReward": 60, "practiceType": "NONE", "questType": "KNOWLEDGE", "topicSlug": "patterns_intro", "topicTitle": "Introduction to Patterns", "topicSortOrder": 1, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-02", "title": "Strategy Pattern", "sortOrder": 2, "xpReward": 80, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "strategy_pattern", "topicTitle": "Strategy Pattern", "topicSortOrder": 2, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-03", "title": "Factory Pattern", "sortOrder": 3, "xpReward": 80, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "factory_pattern", "topicTitle": "Factory Pattern", "topicSortOrder": 3, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-04", "title": "Builder Pattern", "sortOrder": 4, "xpReward": 80, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "builder_pattern", "topicTitle": "Builder Pattern", "topicSortOrder": 4, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-05", "title": "Singleton Pattern", "sortOrder": 5, "xpReward": 70, "practiceType": "JAVA", "questType": "INVESTIGATION", "topicSlug": "singleton_pattern", "topicTitle": "Singleton Pattern", "topicSortOrder": 5, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-06", "title": "Observer Pattern", "sortOrder": 6, "xpReward": 80, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "observer_pattern", "topicTitle": "Observer Pattern", "topicSortOrder": 6, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-07", "title": "Adapter Pattern", "sortOrder": 7, "xpReward": 80, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "adapter_pattern", "topicTitle": "Adapter Pattern", "topicSortOrder": 7, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m7-08", "title": "Dependency Injection", "sortOrder": 8, "xpReward": 90, "practiceType": "JAVA", "questType": "INVESTIGATION", "topicSlug": "dependency_injection", "topicTitle": "Dependency Injection", "topicSortOrder": 8, "hookHtml": "<p><em>Stub.</em></p>" }
+  ]
+}

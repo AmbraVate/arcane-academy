@@ -1,13 +1,13 @@
 ---
-moduleId: java-app-4
-moduleTitle: "Module 4: Control Flow"
-moduleGlyph: "🔀"
-moduleSortOrder: 4
+moduleId: se-app-m2
+moduleTitle: "Module 2: Programming Foundations"
+moduleGlyph: "📝"
+moduleSortOrder: 2
 domainId: java
 tier: APPRENTICE
 topicSlug: control_flow
 topicTitle: "Control Flow"
-topicSortOrder: 4
+topicSortOrder: 3
 id: java-app-4a
 title: "Conditionals: if/else and switch-expressions"
 sortOrder: 1

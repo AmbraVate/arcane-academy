@@ -1,0 +1,161 @@
+{
+  "id": "se-app-m2",
+  "title": "Programming Foundations",
+  "glyph": "📝",
+  "sortOrder": 2,
+  "tier": "APPRENTICE",
+  "domainId": "java",
+  "prerequisites": ["se-app-m1"],
+  "subChunks": [
+    {
+      "id": "se-app-m2-01", "title": "Why Computers Need Memory",
+      "sortOrder": 1, "xpReward": 30, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-02", "title": "Variables",
+      "sortOrder": 2, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-03", "title": "Naming Variables",
+      "sortOrder": 3, "xpReward": 30, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-04", "title": "Data Types",
+      "sortOrder": 4, "xpReward": 50, "practiceType": "JAVA", "questType": "KNOWLEDGE",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-05", "title": "Assignment",
+      "sortOrder": 5, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-06", "title": "Updating Values",
+      "sortOrder": 6, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-07", "title": "Scope Basics",
+      "sortOrder": 7, "xpReward": 40, "practiceType": "JAVA", "questType": "KNOWLEDGE",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-08", "title": "Constants",
+      "sortOrder": 8, "xpReward": 40, "practiceType": "JAVA", "questType": "KNOWLEDGE",
+      "topicSlug": "variables_and_state", "topicTitle": "Variables & State", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-09", "title": "Arithmetic Operators",
+      "sortOrder": 9, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "operators", "topicTitle": "Operators", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-10", "title": "Comparison Operators",
+      "sortOrder": 10, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "operators", "topicTitle": "Operators", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-11", "title": "Logical Operators in Code",
+      "sortOrder": 11, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "operators", "topicTitle": "Operators", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-12", "title": "Assignment Operators",
+      "sortOrder": 12, "xpReward": 40, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "operators", "topicTitle": "Operators", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-13", "title": "Operator Precedence",
+      "sortOrder": 13, "xpReward": 50, "practiceType": "JAVA", "questType": "KNOWLEDGE",
+      "topicSlug": "operators", "topicTitle": "Operators", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-14", "title": "Why Programs Need Decisions",
+      "sortOrder": 14, "xpReward": 30, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "control_flow", "topicTitle": "Control Flow", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-15", "title": "If Statements",
+      "sortOrder": 15, "xpReward": 50, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "control_flow", "topicTitle": "Control Flow", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-16", "title": "Else & Else If",
+      "sortOrder": 16, "xpReward": 50, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "control_flow", "topicTitle": "Control Flow", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-17", "title": "Switch Statements",
+      "sortOrder": 17, "xpReward": 50, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "control_flow", "topicTitle": "Control Flow", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-18", "title": "Nested Logic",
+      "sortOrder": 18, "xpReward": 50, "practiceType": "JAVA", "questType": "PRACTICE",
+      "topicSlug": "control_flow", "topicTitle": "Control Flow", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-19", "title": "Common Conditional Mistakes",
+      "sortOrder": 19, "xpReward": 40, "practiceType": "JAVA", "questType": "KNOWLEDGE",
+      "topicSlug": "control_flow", "topicTitle": "Control Flow", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-20", "title": "Repetition in Computation",
+      "sortOrder": 20, "xpReward": 30, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "loops", "topicTitle": "Loops", "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-21", "title": "While Loops",
+      "sortOrder": 21, "xpReward": 50, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "loops", "topicTitle": "Loops", "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-22", "title": "For Loops",
+      "sortOrder": 22, "xpReward": 50, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "loops", "topicTitle": "Loops", "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-23", "title": "Nested Loops",
+      "sortOrder": 23, "xpReward": 50, "practiceType": "JAVA", "questType": "PRACTICE",
+      "topicSlug": "loops", "topicTitle": "Loops", "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-24", "title": "Infinite Loops",
+      "sortOrder": 24, "xpReward": 40, "practiceType": "JAVA", "questType": "KNOWLEDGE",
+      "topicSlug": "loops", "topicTitle": "Loops", "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m2-25", "title": "Break & Continue",
+      "sortOrder": 25, "xpReward": 50, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "loops", "topicTitle": "Loops", "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    }
+  ]
+}

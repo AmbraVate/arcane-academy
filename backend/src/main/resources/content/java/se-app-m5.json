@@ -1,0 +1,77 @@
+{
+  "id": "se-app-m5",
+  "title": "Object Thinking Foundations",
+  "glyph": "🔷",
+  "sortOrder": 5,
+  "tier": "APPRENTICE",
+  "domainId": "java",
+  "prerequisites": ["se-app-m4"],
+  "subChunks": [
+    {
+      "id": "se-app-m5-01", "title": "Thinking in Objects",
+      "sortOrder": 1, "xpReward": 30, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "objects_in_the_real_world", "topicTitle": "Objects in the Real World", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-02", "title": "State & Behaviour",
+      "sortOrder": 2, "xpReward": 40, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "objects_in_the_real_world", "topicTitle": "Objects in the Real World", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-03", "title": "Real World Modelling",
+      "sortOrder": 3, "xpReward": 40, "practiceType": "NONE", "questType": "GUIDED",
+      "topicSlug": "objects_in_the_real_world", "topicTitle": "Objects in the Real World", "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-04", "title": "What is a Class?",
+      "sortOrder": 4, "xpReward": 40, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "classes", "topicTitle": "Classes", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-05", "title": "Creating Classes",
+      "sortOrder": 5, "xpReward": 60, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "classes", "topicTitle": "Classes", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-06", "title": "Constructors",
+      "sortOrder": 6, "xpReward": 60, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "classes", "topicTitle": "Classes", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-07", "title": "Fields",
+      "sortOrder": 7, "xpReward": 60, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "classes", "topicTitle": "Classes", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-08", "title": "Methods in Classes",
+      "sortOrder": 8, "xpReward": 60, "practiceType": "JAVA", "questType": "PRACTICE",
+      "topicSlug": "classes", "topicTitle": "Classes", "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-09", "title": "Why Hide Data?",
+      "sortOrder": 9, "xpReward": 40, "practiceType": "NONE", "questType": "KNOWLEDGE",
+      "topicSlug": "encapsulation", "topicTitle": "Encapsulation", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-10", "title": "Access Modifiers",
+      "sortOrder": 10, "xpReward": 60, "practiceType": "JAVA", "questType": "GUIDED",
+      "topicSlug": "encapsulation", "topicTitle": "Encapsulation", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    },
+    {
+      "id": "se-app-m5-11", "title": "Getters & Setters",
+      "sortOrder": 11, "xpReward": 60, "practiceType": "JAVA", "questType": "PRACTICE",
+      "topicSlug": "encapsulation", "topicTitle": "Encapsulation", "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub — lesson being authored.</em></p>"
+    }
+  ]
+}

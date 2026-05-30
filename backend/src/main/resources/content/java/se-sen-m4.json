@@ -1,0 +1,85 @@
+{
+  "id": "se-sen-m4",
+  "title": "Distributed Systems",
+  "glyph": "🌍",
+  "sortOrder": 4,
+  "tier": "SENIOR",
+  "domainId": "java",
+  "prerequisites": [
+    "se-sen-m3"
+  ],
+  "subChunks": [
+    {
+      "id": "se-sen-m4-01",
+      "title": "CAP Theorem",
+      "sortOrder": 1,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "cap_theorem",
+      "topicTitle": "CAP Theorem",
+      "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m4-02",
+      "title": "Consistency Models",
+      "sortOrder": 2,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "consistency_models",
+      "topicTitle": "Consistency Models",
+      "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m4-03",
+      "title": "Replication",
+      "sortOrder": 3,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "replication",
+      "topicTitle": "Replication",
+      "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m4-04",
+      "title": "Partition Tolerance",
+      "sortOrder": 4,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "partition_tolerance",
+      "topicTitle": "Partition Tolerance",
+      "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m4-05",
+      "title": "Service Communication",
+      "sortOrder": 5,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "service_communication",
+      "topicTitle": "Service Communication",
+      "topicSortOrder": 5,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m4-06",
+      "title": "Distributed Failures",
+      "sortOrder": 6,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "distributed_failures",
+      "topicTitle": "Distributed Failures",
+      "topicSortOrder": 6,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    }
+  ]
+}

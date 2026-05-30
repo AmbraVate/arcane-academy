@@ -1,0 +1,109 @@
+{
+  "id": "se-sen-m2",
+  "title": "Concurrency & Parallelism",
+  "glyph": "⚡",
+  "sortOrder": 2,
+  "tier": "SENIOR",
+  "domainId": "java",
+  "prerequisites": [
+    "se-sen-m1"
+  ],
+  "subChunks": [
+    {
+      "id": "se-sen-m2-01",
+      "title": "Processes vs Threads",
+      "sortOrder": 1,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "processes_vs_threads",
+      "topicTitle": "Processes vs Threads",
+      "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-02",
+      "title": "Concurrency vs Parallelism",
+      "sortOrder": 2,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "concurrency_vs_parallelism",
+      "topicTitle": "Concurrency vs Parallelism",
+      "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-03",
+      "title": "Thread Lifecycle",
+      "sortOrder": 3,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "thread_lifecycle",
+      "topicTitle": "Thread Lifecycle",
+      "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-04",
+      "title": "Race Conditions",
+      "sortOrder": 4,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "race_conditions",
+      "topicTitle": "Race Conditions",
+      "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-05",
+      "title": "Deadlocks",
+      "sortOrder": 5,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "deadlocks",
+      "topicTitle": "Deadlocks",
+      "topicSortOrder": 5,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-06",
+      "title": "Synchronisation",
+      "sortOrder": 6,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "synchronisation",
+      "topicTitle": "Synchronisation",
+      "topicSortOrder": 6,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-07",
+      "title": "Thread-Safe Design",
+      "sortOrder": 7,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "thread_safe_design",
+      "topicTitle": "Thread-Safe Design",
+      "topicSortOrder": 7,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m2-08",
+      "title": "Concurrent Collections",
+      "sortOrder": 8,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "concurrent_collections",
+      "topicTitle": "Concurrent Collections",
+      "topicSortOrder": 8,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    }
+  ]
+}

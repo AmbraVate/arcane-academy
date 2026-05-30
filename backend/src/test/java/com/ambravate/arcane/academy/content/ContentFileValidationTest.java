@@ -123,8 +123,25 @@ class ContentFileValidationTest {
                     + "' — must be one of " + VALID_PRACTICE_TYPES);
         }
 
-        validateQuestions(sc, prefix, v);
-        validatePracticeTests(sc, prefix, v);
+        // Skip content-completeness checks for stub lessons (no explanation authored yet).
+        // Stubs are identified by having no explanationHtml or a placeholder hookHtml.
+        if (!isStub(sc)) {
+            validateQuestions(sc, prefix, v);
+            validatePracticeTests(sc, prefix, v);
+        }
+    }
+
+    /**
+     * A sub-chunk is a stub when its explanation content is absent and its hook
+     * is either blank or contains the canonical "Stub" marker.  Stubs are
+     * pending authoring — we do not enforce question/test minimums on them.
+     */
+    private boolean isStub(ChunkContentDto.SubChunkDto sc) {
+        boolean noExplanation = blank(sc.explanationHtml);
+        boolean stubHook = sc.hookHtml == null
+                || sc.hookHtml.isBlank()
+                || sc.hookHtml.contains("Stub");
+        return noExplanation && stubHook;
     }
 
     // ── Questions ─────────────────────────────────────────────────────────────

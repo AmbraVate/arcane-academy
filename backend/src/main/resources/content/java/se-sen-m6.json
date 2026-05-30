@@ -1,0 +1,85 @@
+{
+  "id": "se-sen-m6",
+  "title": "Performance Engineering",
+  "glyph": "📈",
+  "sortOrder": 6,
+  "tier": "SENIOR",
+  "domainId": "java",
+  "prerequisites": [
+    "se-sen-m1"
+  ],
+  "subChunks": [
+    {
+      "id": "se-sen-m6-01",
+      "title": "Profiling",
+      "sortOrder": 1,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "profiling",
+      "topicTitle": "Profiling",
+      "topicSortOrder": 1,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m6-02",
+      "title": "Memory Management",
+      "sortOrder": 2,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "memory_management",
+      "topicTitle": "Memory Management",
+      "topicSortOrder": 2,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m6-03",
+      "title": "CPU Bottlenecks",
+      "sortOrder": 3,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "cpu_bottlenecks",
+      "topicTitle": "CPU Bottlenecks",
+      "topicSortOrder": 3,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m6-04",
+      "title": "Database Optimisation",
+      "sortOrder": 4,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "database_optimisation",
+      "topicTitle": "Database Optimisation",
+      "topicSortOrder": 4,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m6-05",
+      "title": "Caching Strategies",
+      "sortOrder": 5,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "caching_strategies",
+      "topicTitle": "Caching Strategies",
+      "topicSortOrder": 5,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    },
+    {
+      "id": "se-sen-m6-06",
+      "title": "Load Testing",
+      "sortOrder": 6,
+      "xpReward": 120,
+      "practiceType": "NONE",
+      "questType": "SYNTHESIS",
+      "topicSlug": "load_testing",
+      "topicTitle": "Load Testing",
+      "topicSortOrder": 6,
+      "hookHtml": "<p><em>Stub.</em></p>"
+    }
+  ]
+}

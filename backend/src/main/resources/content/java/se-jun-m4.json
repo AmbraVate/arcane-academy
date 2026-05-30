@@ -1,0 +1,16 @@
+{
+  "id": "se-jun-m4",
+  "title": "APIs & Networking",
+  "glyph": "🌐",
+  "sortOrder": 4,
+  "tier": "JUNIOR",
+  "domainId": "java",
+  "prerequisites": ["se-jun-m3"],
+  "subChunks": [
+    { "id": "se-jun-m4-01", "title": "HTTP", "sortOrder": 1, "xpReward": 60, "practiceType": "NONE", "questType": "KNOWLEDGE", "topicSlug": "http", "topicTitle": "HTTP", "topicSortOrder": 1, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m4-02", "title": "REST", "sortOrder": 2, "xpReward": 70, "practiceType": "NONE", "questType": "KNOWLEDGE", "topicSlug": "rest", "topicTitle": "REST", "topicSortOrder": 2, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m4-03", "title": "JSON", "sortOrder": 3, "xpReward": 60, "practiceType": "JAVA", "questType": "GUIDED", "topicSlug": "json", "topicTitle": "JSON", "topicSortOrder": 3, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m4-04", "title": "CRUD APIs", "sortOrder": 4, "xpReward": 80, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "crud_apis", "topicTitle": "CRUD APIs", "topicSortOrder": 4, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m4-05", "title": "Status Codes", "sortOrder": 5, "xpReward": 50, "practiceType": "NONE", "questType": "KNOWLEDGE", "topicSlug": "status_codes", "topicTitle": "Status Codes", "topicSortOrder": 5, "hookHtml": "<p><em>Stub.</em></p>" }
+  ]
+}

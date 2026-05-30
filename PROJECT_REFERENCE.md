@@ -2,7 +2,7 @@
 
 > **Purpose:** Living reference for all engineers working on this codebase. Update this document at every significant decision point.
 >
-> **Last updated:** 2026-05-30 (Phase 7 — Knowledge maps · all 8 phases complete)
+> **Last updated:** 2026-05-30 (Curriculum Canon alignment — School of Engineering restructure)
 
 ---
 
@@ -23,6 +23,7 @@
 13. [Decision Log](#13-decision-log)
 14. [Known Constraints & Watch-outs](#14-known-constraints--watch-outs)
 15. [Completed Restructure Summary](#15-completed-restructure-summary)
+16. [Curriculum Canon — School of Engineering](#16-curriculum-canon--school-of-engineering)
 
 ---
 
@@ -60,16 +61,22 @@ School
 
 "Topic" is now the **Module → Topic → Lesson** cluster. The old "Topic = Domain" naming from before May 2026 was fully removed in Phase 0. The `@JsonAlias("topicId")` on legacy content DTOs refers to **Domain ID**. New code uses `domainId` for the Domain and `topicId` for the Topic cluster.
 
+### ⚠ Domain naming: "Java" vs "Software Engineering"
+
+The Curriculum Canon (Part 1A) defines the domain as **Software Engineering** — a discipline taught *through Java* as the implementation language. The platform currently uses `java` as the domain ID for practical reasons (shorter, already seeded). The domain `name` field in the DB is "Java" but should be read as "Software Engineering via Java."
+
+When the content pipeline is complete, the domain display name will be updated to "Software Engineering" and the `java` ID will be kept for backward compatibility.
+
 ### Active domains
 
-| Domain | ID | Practice Type | School | Guild |
-|---|---|---|---|---|
-| Java | `java` | JAVA (code runner) | Engineering & Systems | Guild of Systems Architects |
-| Tailwind CSS | `tailwind` | TAILWIND (HTML editor) | Engineering & Systems | Guild of Artisan Interfaces |
-| React | `react` | REACT (JSX sandbox) | Engineering & Systems | Guild of Systems Architects |
-| Psychology | `psychology` | NONE (written) | Human Systems | Order of Minds |
-| Natural Sciences | `sciences` | NONE (written) | Mathematical & Scientific | Observatory of Nature |
-| Genealogy | `genealogy` | NONE (written) | Heritage | Keepers of Lineage |
+| Domain | Display Name | ID | Practice Type | School | Guild |
+|---|---|---|---|---|---|
+| Software Engineering | Java | `java` | JAVA (code runner) | School of Engineering | Guild of Systems Architects |
+| Web Interfaces | Tailwind CSS | `tailwind` | TAILWIND (HTML editor) | School of Engineering | Guild of Artisan Interfaces |
+| Web Engineering | React | `react` | REACT (JSX sandbox) | School of Engineering | Guild of Systems Architects |
+| Psychology | Psychology | `psychology` | NONE (written) | School of Human Systems | Order of Minds |
+| Natural Sciences | Natural Sciences | `sciences` | NONE (written) | School of Science & Mathematics | Observatory of Nature |
+| Genealogy | Genealogy | `genealogy` | NONE (written) | School of Heritage | Keepers of Lineage |
 
 ---
 
@@ -626,6 +633,20 @@ Admins and users with `bypassPaywall = true` get full access regardless.
 
 ---
 
+### [2026-05-30] Curriculum Canon alignment — School of Engineering
+
+**Context:** The *Arcane Academy Curriculum Canon (Part 1A)* defines Software Engineering as a domain with 4 tiers (Apprentice 55–75 lessons, Junior 70–100, Senior 60–90, Lead 40–70) organised into a canonical Module → Topic → Lesson hierarchy. The existing `java-app-*` content had 15 flat modules and 25 lessons — misaligned with the Canon in both structure and scope.
+
+**Key decisions:**
+1. **Domain identity:** "Java" domain (`id = java`) is the Software Engineering domain taught through Java. The domain `name` will eventually be updated to "Software Engineering"; `java` remains as the ID.
+2. **Tier correction:** Exception Handling, Testing Foundations, and Basic Algorithms were incorrectly placed at Apprentice tier. Canon places them at Junior. Moved to `legacy/` and will be re-authored at Junior.
+3. **Module IDs:** New canonical modules use `se-app-m1`–`se-app-m6` (Apprentice), `se-jun-m1`–`se-jun-m8` (Junior), `se-sen-m1`–`se-sen-m8` (Senior), `se-lea-m1`–`se-lea-m5` (Lead). The `se-` prefix reflects "Software Engineering."
+4. **Content stubs:** 82 Apprentice lesson stubs created with title + metadata. Content to be authored using `LessonAuthoringHarness` once the lesson blueprint (Phase 2) is established.
+5. **Legacy preservation:** Old `java-app-*.json` files moved to `content/java/legacy/apprentice/` for reference during migration; not re-seeded.
+6. **Existing Markdown lessons:** The 4 authored Markdown lessons updated to canonical module IDs while keeping lesson IDs stable.
+
+---
+
 ### [2026-05-30] Phase 7 — Knowledge maps (React Flow + Mermaid)
 
 **Decision:** `GET /api/graph` endpoint returns DOMAIN / MODULE / LESSON nodes and three edge types (HIERARCHY, PREREQUISITE, INTEGRATION). Integration edges derived from `integrationDomainsJson` on each Lesson — edges to own domain and non-existent domains are silently filtered.
@@ -729,12 +750,15 @@ Frontend: `CurriculumGraph.tsx` uses `@xyflow/react` with a simple three-row DAG
 - **Never rename a content file's ID after it's been deployed.**
 - Markdown file renaming is safe — ID comes from frontmatter, not filename.
 
-### Content migration (in progress)
+### Content restructure (in progress)
 
-- 4 of ~15 Java Apprentice lessons migrated to Markdown (java-app-2, 4, 5, 6)
-- java-app-1, 3, 7–15 remain as JSON; all other domains are still JSON
-- Use `LessonAuthoringHarness` to draft new `.md` files; always human-review before commit
-- JSON seeder will be retired once all domains are fully migrated
+The Java / Software Engineering content has been restructured to match the **Curriculum Canon** (§16). The old 15-module flat structure has been replaced by 6 canonical Apprentice modules + the full Junior/Senior/Lead canonical modules. See §16 for the authoritative lesson list.
+
+- **Old files archived** to `content/java/legacy/` — do not reseed or reference
+- **4 Markdown lessons updated** to use canonical module IDs (se-app-m2, se-app-m3, se-app-m4)
+- **82 Apprentice lesson stubs** created across 6 modules — content to be authored per Phase 2 lesson blueprint
+- Full Junior (40+), Senior (50+), Lead (25+) lesson stubs created as skeleton structure
+- Use `LessonAuthoringHarness` to draft `.md` content for each stub; always human-review before commit
 
 ### Knowledge graph scaling
 
@@ -761,9 +785,309 @@ All 8 phases of the 2026 restructure are complete as of 2026-05-30.
 | **Phase 6** | `MarkdownLessonValidationTest` CI lint; `LessonAuthoringHarness`; 4 Java Apprentice `.md` lessons | `beea763` |
 | **Phase 7** | `GraphController` + DTOs; `CurriculumGraph.tsx` React Flow map; `MermaidBlock` + hydration hook; `/knowledge-map` route; Nav "Map" link | `fd27267` |
 
-### Remaining content work (not blocking)
+### Remaining content work (ongoing)
 
-- Migrate remaining ~11 Java Apprentice JSON lessons to Markdown (java-app-1, 3, 7–15) using `LessonAuthoringHarness`
-- Migrate all other domains (Tailwind, React, Psychology, Sciences, Genealogy) to Markdown
-- Author toward 150–300 lessons per domain per tier (current: ~71/domain)
-- Retire `JsonContentSeeder` once all domains are fully migrated
+- Author lesson content for all 82 Apprentice stubs (use `LessonAuthoringHarness`; Phase 2 lesson blueprint attached)
+- Author Junior/Senior/Lead lesson content (~115 stubs)
+- Migrate all other domains (Tailwind, React, Psychology, Sciences, Genealogy) to the same canonical structure
+- Retire `JsonContentSeeder` once all domains are fully migrated to Markdown
+
+---
+
+## 16. Curriculum Canon — School of Engineering
+
+> **Source:** *Arcane Academy Curriculum Canon, Part 1A — School of Engineering, Domain: Software Engineering*
+> This Canon is the **authoritative blueprint** for all content in the Software Engineering domain. Every module, topic, and lesson must be grounded in these tiers and their purposes. The same canonical format (tier → module → topic → lesson) applies to all other Schools and Domains.
+
+---
+
+### Domain Philosophy
+
+**Software Engineering** is taught as:
+> *The science and craft of building reliable systems to solve problems.*
+
+This is **not** a "learn Java" pathway. Java is the primary implementation language, but learners are ultimately developing: computational thinking · systems design · problem solving · software architecture · engineering judgement · production readiness.
+
+**Guild:** The Guild of Systems Architects
+**Fantasy framing:** Learners are apprentices learning to shape abstract logic into reliable systems. Fantasy is used lightly through hooks, quest framing, and milestone progression.
+
+---
+
+### Tier Overview
+
+| Tier | Goal | Focus | Approx Lessons |
+|---|---|---|---|
+| **Apprentice** | "I understand software concepts and can build simple programs." | computational thinking, logic, variables, control flow, functions, data structures, debugging, introductory OOP | 55–75 |
+| **Junior** | "I can build real applications." | deeper OOP, software design, APIs, databases, testing, design patterns, practical SE | 70–100 |
+| **Senior** | "I can reason about systems." | architecture, scalability, tradeoffs, reliability, concurrency, distributed thinking | 60–90 |
+| **Lead** | "I can architect, teach and synthesise." | technical leadership, mentoring, systems architecture, organisational engineering | 40–70 |
+
+**Capstone Quest (Lead):** Design a production-ready system solving a real-world problem. Must include: architecture · implementation · testing · deployment · concurrency considerations · scalability strategy · security review · tradeoff analysis · written rationale.
+Equivalent level: **Strong BSc / early MSc**.
+
+---
+
+### APPRENTICE TIER — 6 Modules
+
+#### Module 1 — Foundations of Computation
+*Purpose: Develop computational thinking.*
+*Learning Outcomes: explain computation · think procedurally · reason about instructions · break problems down*
+
+**Topic 1 — Computational Thinking** *(introduce problem decomposition)*
+| # | Lesson | Outcome | Quest | Integration |
+|---|---|---|---|---|
+| 1 | What is Computation? | Understand computation conceptually | Follow instruction sequences | Mathematics (logic) |
+| 2 | Algorithms in Daily Life | Recognise procedural thinking | Write sandwich algorithm | Psychology (problem solving) |
+| 3 | Decomposition | Break problems into parts | Split quest task into steps | — |
+| 4 | Abstraction | Hide unnecessary detail | Identify abstractions | Philosophy (models) |
+| 5 | Pattern Recognition | Spot repeated logic | Detect patterns in examples | — |
+
+**Topic 2 — Logic Foundations**
+| # | Lesson | Outcome |
+|---|---|---|
+| 1 | What is Logic? | Understand logical reasoning |
+| 2 | Boolean Thinking | True/false reasoning |
+| 3 | Comparisons | Equality & relational operators |
+| 4 | Decision Making | Understand branching |
+| 5 | Logical Operators | AND, OR, NOT |
+
+**Topic 3 — Inputs & Outputs**
+| # | Lesson |
+|---|---|
+| 1 | Receiving Information |
+| 2 | Producing Output |
+| 3 | User Interaction |
+| 4 | Input Validation |
+
+---
+
+#### Module 2 — Programming Foundations
+*Purpose: Teach basic programming mechanics.*
+
+**Topic 1 — Variables & State**
+| # | Lesson |
+|---|---|
+| 1 | Why Computers Need Memory |
+| 2 | Variables |
+| 3 | Naming Variables |
+| 4 | Data Types |
+| 5 | Assignment |
+| 6 | Updating Values |
+| 7 | Scope Basics |
+| 8 | Constants |
+
+**Topic 2 — Operators**
+| # | Lesson |
+|---|---|
+| 1 | Arithmetic Operators |
+| 2 | Comparison Operators |
+| 3 | Logical Operators |
+| 4 | Assignment Operators |
+| 5 | Operator Precedence |
+
+**Topic 3 — Control Flow**
+| # | Lesson |
+|---|---|
+| 1 | Why Programs Need Decisions |
+| 2 | If Statements |
+| 3 | Else & Else If |
+| 4 | Switch Statements |
+| 5 | Nested Logic |
+| 6 | Common Conditional Mistakes |
+
+**Topic 4 — Loops**
+| # | Lesson |
+|---|---|
+| 1 | Repetition in Computation |
+| 2 | While Loops |
+| 3 | For Loops |
+| 4 | Nested Loops |
+| 5 | Infinite Loops |
+| 6 | Break & Continue |
+
+---
+
+#### Module 3 — Functions & Reusability
+*Purpose: Teach decomposition and reuse.*
+
+**Topic 1 — Methods**
+| # | Lesson |
+|---|---|
+| 1 | Why Functions Exist |
+| 2 | Creating Methods |
+| 3 | Parameters |
+| 4 | Return Values |
+| 5 | Method Scope |
+| 6 | Refactoring Repetition |
+
+**Topic 2 — Problem Solving**
+| # | Lesson |
+|---|---|
+| 1 | Thinking Step-by-Step |
+| 2 | Pseudocode |
+| 3 | Flowcharts |
+| 4 | Debugging Thinking |
+
+---
+
+#### Module 4 — Data Structures Foundations
+*Purpose: Represent collections of information.*
+
+**Topic 1 — Arrays**
+| # | Lesson |
+|---|---|
+| 1 | Collections |
+| 2 | Creating Arrays |
+| 3 | Accessing Elements |
+| 4 | Iteration |
+| 5 | Common Mistakes |
+
+**Topic 2 — Lists**
+| # | Lesson |
+|---|---|
+| 1 | Dynamic Collections |
+| 2 | Adding Items |
+| 3 | Removing Items |
+| 4 | Searching |
+
+**Topic 3 — Maps**
+| # | Lesson |
+|---|---|
+| 1 | Key Value Thinking |
+| 2 | Lookup Systems |
+
+---
+
+#### Module 5 — Object Thinking Foundations
+*Purpose: Introduce OOP mentally before syntax.*
+
+**Topic 1 — Objects in the Real World**
+| # | Lesson |
+|---|---|
+| 1 | Thinking in Objects |
+| 2 | State & Behaviour |
+| 3 | Real World Modelling |
+
+**Topic 2 — Classes**
+| # | Lesson |
+|---|---|
+| 1 | What is a Class? |
+| 2 | Creating Classes |
+| 3 | Constructors |
+| 4 | Fields |
+| 5 | Methods in Classes |
+
+**Topic 3 — Encapsulation**
+| # | Lesson |
+|---|---|
+| 1 | Why Hide Data? |
+| 2 | Access Modifiers |
+| 3 | Getters & Setters |
+
+---
+
+#### Module 6 — Debugging & Engineering Habits
+*Purpose: Teach resilience.*
+
+**Topic 1 — Errors**
+| # | Lesson |
+|---|---|
+| 1 | Syntax Errors |
+| 2 | Runtime Errors |
+| 3 | Logical Errors |
+
+**Topic 2 — Debugging**
+| # | Lesson |
+|---|---|
+| 1 | Reading Error Messages |
+| 2 | Print Debugging |
+| 3 | IDE Debuggers |
+| 4 | Systematic Troubleshooting |
+
+**Topic 3 — Beginner Engineering Habits**
+| # | Lesson |
+|---|---|
+| 1 | Naming Things |
+| 2 | Clean Formatting |
+| 3 | Small Functions |
+| 4 | Commenting Wisely |
+
+---
+
+### JUNIOR TIER — 8 Modules
+
+| # | Module | Key Topics |
+|---|---|---|
+| 1 | Object-Oriented Design | Inheritance · Polymorphism · Composition · Interfaces · SOLID |
+| 2 | Collections & Algorithms | Lists · Sets · Maps · Sorting · Searching · Big O basics |
+| 3 | Exception Handling | Exceptions · Try/catch · Custom exceptions · Error strategies |
+| 4 | APIs & Networking | HTTP · REST · JSON · CRUD APIs · Status codes |
+| 5 | Databases | SQL basics · Joins · Relationships · ORMs · Transactions |
+| 6 | Testing | Why testing matters · Unit tests · Integration tests · Mocking · TDD |
+| 7 | Design Patterns | Strategy · Factory · Builder · Singleton · Observer · Adapter · Dependency Injection |
+| 8 | Engineering Practices | Git · Branching strategies · Code reviews · Refactoring · Documentation · CI/CD |
+
+**Example lessons for Module 7 (Design Patterns):** Why inheritance fails · Composition over inheritance · Interface-driven design · Dependency inversion · Replacing conditionals with Strategy · Building complex objects with Builder · Event-driven systems with Observer
+
+---
+
+### SENIOR TIER — 8 Modules
+
+| # | Module | Key Topics |
+|---|---|---|
+| 1 | System Design | Requirements analysis · Monoliths · Modular architectures · Microservices · Architectural tradeoffs |
+| 2 | Concurrency & Parallelism | Processes vs threads · Race conditions · Deadlocks · Synchronisation · Thread-safe design · Concurrent collections |
+| 3 | Asynchronous Systems | Sync vs async · Blocking/non-blocking · Futures/promises · Event loops · Reactive programming |
+| 4 | Distributed Systems | CAP theorem · Consistency models · Replication · Partition tolerance · Service communication |
+| 5 | Security Engineering | Authentication · Authorisation · Encryption basics · Secure coding · OWASP · Threat modelling |
+| 6 | Performance Engineering | Profiling · Memory management · CPU bottlenecks · Database optimisation · Caching · Load testing |
+| 7 | Event-Driven Systems | Events · Message queues · Publish-subscribe · Kafka fundamentals · Choreography · Orchestration |
+| 8 | Observability & Reliability | Logging · Metrics · Tracing · Monitoring · Alerting · Reliability engineering · Incident response |
+
+---
+
+### LEAD TIER — 5 Modules
+
+| # | Module | Key Topics |
+|---|---|---|
+| 1 | Technical Leadership | Mentoring engineers · Architecture governance · Technical decision making · Engineering culture · Stakeholder communication |
+| 2 | Advanced Architecture | Domain-driven design · Event sourcing · CQRS · Hexagonal architecture · Clean architecture |
+| 3 | Organisational Systems | SDLC strategy · Platform engineering · DevOps maturity · Engineering effectiveness · Socio-technical systems |
+| 4 | Knowledge Transfer | Teaching programming · Writing technical explanations · Designing learning systems · Technical documentation · Mentoring frameworks |
+| 5 | Cross-Domain Synthesis | SE + Psychology → Behavioural product design · SE + Economics → Scaling incentives · SE + Philosophy → Ethics of automation · SE + Mathematics → Computational modelling · SE + Systems Thinking → Complex adaptive systems |
+
+---
+
+### Content IDs — Canonical Naming Convention
+
+| Entity | Pattern | Example |
+|---|---|---|
+| Module | `se-{tier_abbr}-m{N}` | `se-app-m1` = Apprentice Module 1 |
+| Lesson | `se-{tier_abbr}-m{M}-{sortOrder:02d}` | `se-app-m1-01` = Apprentice M1 Lesson 1 |
+| Topic slug | snake_case topic name | `computational_thinking`, `variables_and_state` |
+
+Tier abbreviations: `app` = Apprentice, `jun` = Junior, `sen` = Senior, `lea` = Lead
+
+### Canon–Legacy Mapping (Apprentice)
+
+The old 15-module `java-app-*` structure did not match the Canon. The table below shows how the legacy modules map into the 6 canonical modules.
+
+| Legacy Module | Old Title | Canon Module | Notes |
+|---|---|---|---|
+| `java-app-1` | Computational Thinking | M1 | Content partially reusable; expand to 14 lessons |
+| `java-app-2` | Variables & Data Types | M2 T1 | Lesson `java-app-2a` → updated to `se-app-m2` |
+| `java-app-3` | Operators & Expressions | M2 T2 | Content partially reusable |
+| `java-app-4` | Control Flow | M2 T3+T4 | Lesson `java-app-4a` → updated to `se-app-m2` |
+| `java-app-5` | Methods & Functions | M3 T1 | Lesson `java-app-5a` → updated to `se-app-m3` |
+| `java-app-6` | Arrays | M4 T1 | Lesson `java-app-6a` → updated to `se-app-m4` |
+| `java-app-7` | Strings | M2 T1 (supplementary) | Strings not a separate Canon topic; merge into Variables & State |
+| `java-app-8` | Object-Oriented Programming | M5 | Content partially reusable; split into 11 lessons |
+| `java-app-9` | Collections Introduction | M4 T2+T3 | Content partially reusable |
+| `java-app-10` | Exception Handling | **Junior M3** | Wrong tier — move to Junior |
+| `java-app-11` | Input & Output | M1 T3 | Content partially reusable |
+| `java-app-12` | Debugging | M6 T1+T2 | Content partially reusable |
+| `java-app-13` | Testing Foundations | **Junior M6** | Wrong tier — move to Junior |
+| `java-app-14` | Basic Algorithms | **Junior M2** | Wrong tier — move to Junior |
+| `java-app-15` | APPRENTICE Capstone | **Lead Capstone** | Capstone is a Lead-tier deliverable per Canon |
+
+⚠ **Key insight:** Exception Handling, Testing, and Basic Algorithms were placed at Apprentice tier in the old content but belong at Junior tier in the Canon. The old content is archived in `content/java/legacy/`.

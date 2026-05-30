@@ -1,13 +1,13 @@
 ---
-moduleId: java-app-6
-moduleTitle: "Module 6: Arrays"
+moduleId: se-app-m4
+moduleTitle: "Module 4: Data Structures Foundations"
 moduleGlyph: "📦"
-moduleSortOrder: 6
+moduleSortOrder: 4
 domainId: java
 tier: APPRENTICE
 topicSlug: arrays
 topicTitle: "Arrays"
-topicSortOrder: 6
+topicSortOrder: 1
 id: java-app-6a
 title: "1D Arrays: Declaration, Access & Iteration"
 sortOrder: 1

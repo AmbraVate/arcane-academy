@@ -1,0 +1,17 @@
+{
+  "id": "se-jun-m8",
+  "title": "Engineering Practices",
+  "glyph": "⚙️",
+  "sortOrder": 8,
+  "tier": "JUNIOR",
+  "domainId": "java",
+  "prerequisites": ["se-jun-m6"],
+  "subChunks": [
+    { "id": "se-jun-m8-01", "title": "Git", "sortOrder": 1, "xpReward": 70, "practiceType": "NONE", "questType": "GUIDED", "topicSlug": "git", "topicTitle": "Git", "topicSortOrder": 1, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m8-02", "title": "Branching Strategies", "sortOrder": 2, "xpReward": 70, "practiceType": "NONE", "questType": "INVESTIGATION", "topicSlug": "branching", "topicTitle": "Branching Strategies", "topicSortOrder": 2, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m8-03", "title": "Code Reviews", "sortOrder": 3, "xpReward": 70, "practiceType": "NONE", "questType": "INVESTIGATION", "topicSlug": "code_reviews", "topicTitle": "Code Reviews", "topicSortOrder": 3, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m8-04", "title": "Refactoring", "sortOrder": 4, "xpReward": 90, "practiceType": "JAVA", "questType": "PRACTICE", "topicSlug": "refactoring", "topicTitle": "Refactoring", "topicSortOrder": 4, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m8-05", "title": "Documentation", "sortOrder": 5, "xpReward": 60, "practiceType": "NONE", "questType": "KNOWLEDGE", "topicSlug": "documentation", "topicTitle": "Documentation", "topicSortOrder": 5, "hookHtml": "<p><em>Stub.</em></p>" },
+    { "id": "se-jun-m8-06", "title": "CI/CD Fundamentals", "sortOrder": 6, "xpReward": 80, "practiceType": "NONE", "questType": "INVESTIGATION", "topicSlug": "cicd", "topicTitle": "CI/CD Fundamentals", "topicSortOrder": 6, "hookHtml": "<p><em>Stub.</em></p>" }
+  ]
+}
