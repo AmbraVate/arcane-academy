@@ -263,3 +263,40 @@ export interface RabbitHoleTerm {
   id: string; term: string; description: string | null
   lessonId: string | null; domainId: string | null; savedAt: string
 }
+
+// ── Phase 7 — Knowledge Graph ─────────────────────────────────────────────────
+
+/** A single node in the curriculum knowledge graph. */
+export interface GraphNode {
+  /** Unique identifier matching the entity id (domain slug, module id, lesson id). */
+  id: string
+  /** {@code DOMAIN | MODULE | LESSON} */
+  type: 'DOMAIN' | 'MODULE' | 'LESSON'
+  /** Display label. */
+  label: string
+  /** Emoji glyph — may be undefined for lessons. */
+  glyph?: string
+  /** Domain this node belongs to. */
+  domainId?: string
+  /** {@code APPRENTICE | JUNIOR | SENIOR | LEAD} — undefined for DOMAIN nodes. */
+  tier?: string
+  /** Progress status — undefined for DOMAIN nodes. */
+  status?: string
+  /** FSRS decayed memory strength in [0, 1]. */
+  memoryStrength: number
+}
+
+/** A directed edge in the curriculum knowledge graph. */
+export interface GraphEdge {
+  id: string
+  source: string
+  target: string
+  /** {@code HIERARCHY | PREREQUISITE | INTEGRATION} */
+  edgeType: 'HIERARCHY' | 'PREREQUISITE' | 'INTEGRATION'
+}
+
+/** Full graph payload returned by {@code GET /api/graph}. */
+export interface GraphResponse {
+  nodes: GraphNode[]
+  edges: GraphEdge[]
+}

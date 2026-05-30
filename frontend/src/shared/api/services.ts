@@ -6,7 +6,7 @@ import type {
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
   RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
   SubscriptionStatus, GuidedStepDto, GuidedStepCheckResponse,
-  SoloAssessmentResult,
+  SoloAssessmentResult, GraphResponse,
 } from '@/shared/types'
 
 // â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -507,6 +507,15 @@ export const paymentsApi = {
   /** Returns the current user's subscription status. */
   getStatus: async (): Promise<SubscriptionStatusResponse> => {
     const { data } = await api.get('/api/payments/status')
+    return data
+  },
+}
+
+// ── Knowledge Graph (Phase 7) ─────────────────────────────────────────────────
+export const graphApi = {
+  /** Fetch the full curriculum knowledge graph (nodes + edges) for the current user. */
+  get: async (): Promise<GraphResponse> => {
+    const { data } = await api.get('/api/graph')
     return data
   },
 }

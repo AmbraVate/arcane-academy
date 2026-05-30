@@ -1,10 +1,11 @@
 ﻿import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query'
-import { dashboardApi, moduleApi } from '@/shared/api/services'
+import { dashboardApi, moduleApi, graphApi } from '@/shared/api/services'
 
 export const QUERY_KEYS = {
   dashboard: (domainId: string) => ['dashboard', domainId] as const,
   reviewsDue: () => ['dashboard', 'reviews-due'] as const,
   chunkDetail: (moduleId: string) => ['chunk', moduleId] as const,
+  graph: () => ['graph'] as const,
 }
 
 export function useDashboard(domainId: string) {
@@ -42,6 +43,15 @@ export function useDomainsDashboard(domainIds: string[]) {
     })),
   })
   return Object.fromEntries(domainIds.map((id, i) => [id, results[i].data]))
+}
+
+/** Fetch the curriculum knowledge graph. Stale for 5 minutes (graph rarely changes). */
+export function useGraph() {
+  return useQuery({
+    queryKey: QUERY_KEYS.graph(),
+    queryFn: () => graphApi.get(),
+    staleTime: 5 * 60_000,
+  })
 }
 
 /** Call after any action that should refresh dashboard counts (XP, badges, reviews). */

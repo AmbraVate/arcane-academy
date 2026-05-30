@@ -7,7 +7,7 @@ import { useReviewsDue } from './hooks/queries'
 import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
 import { BlizzardBackground } from './components/layout/BlizzardScene'
-import { Library, RotateCcw, Trophy, User } from 'lucide-react'
+import { Library, RotateCcw, Trophy, User, Network } from 'lucide-react'
 
 const DomainsPage           = lazy(() => import('./features/domains/pages/DomainsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
@@ -41,6 +41,7 @@ const AdminImportExportPage = lazy(() => import('./features/admin/pages/AdminImp
 const AdminDomainsPage       = lazy(() => import('./features/admin/pages/AdminDomainsPage'))
 const AdminStuckReportsPage = lazy(() => import('./features/admin/pages/AdminStuckReportsPage'))
 const AdminCapstonesPage    = lazy(() => import('./features/admin/pages/AdminCapstonesPage'))
+const KnowledgeMapPage      = lazy(() => import('./features/knowledge-map/pages/KnowledgeMapPage'))
 const NotFoundPage          = lazy(() => import('./features/errors/pages/NotFoundPage'))
 const ErrorPage             = lazy(() => import('./features/errors/pages/ErrorPage'))
 
@@ -86,10 +87,11 @@ function BlizzardNav() {
   const streakHot = streak >= 3
 
   const NAV_ITEMS = [
-    { label: 'Domains', Icon: Library, path: '/domains' },
+    { label: 'Domains', Icon: Library,   path: '/domains' },
+    { label: 'Map',     Icon: Network,   path: '/knowledge-map', badge: null },
     { label: 'Review',  Icon: RotateCcw, path: '/review', badge: reviewsDue > 0 ? reviewsDue : null },
-    { label: 'Ranks',   Icon: Trophy, path: '/leaderboard' },
-    { label: 'Profile', Icon: User, path: '/profile' },
+    { label: 'Ranks',   Icon: Trophy,    path: '/leaderboard' },
+    { label: 'Profile', Icon: User,      path: '/profile' },
   ];
 
   return (
@@ -174,6 +176,7 @@ function AppRoutes() {
         {/* Legacy /topics + /topic/* URLs → redirect to the new /domains scheme (bookmarks, old links). */}
         <Route path="/topics" element={<Navigate to="/domains" replace />} />
         <Route path="/topic/*" element={<LegacyTopicRedirect />} />
+        <Route path="/knowledge-map" element={<PrivateRoute><KnowledgeMapPage /></PrivateRoute>} />
         <Route path="/leaderboard"   element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
         <Route path="/u/:username"   element={<PrivateRoute><PublicProfilePage /></PrivateRoute>} />
 

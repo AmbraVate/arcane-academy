@@ -5,7 +5,7 @@ import { useReviewsDue } from '@/hooks/queries'
 import { cn } from '@/lib/utils'
 import {
   Flame, Library, RotateCcw, Trophy, User, LogOut,
-  Settings, FlaskConical,
+  Settings, FlaskConical, Network,
 } from 'lucide-react'
 
 export default function Nav() {
@@ -30,6 +30,7 @@ export default function Nav() {
 
   const NAV_ITEMS = [
     { label: 'Domains',   Icon: Library,     path: '/domains' },
+    { label: 'Map',       Icon: Network,     path: '/knowledge-map' },
     { label: 'Review',    Icon: RotateCcw,   path: '/review' },
     { label: 'Ranks',     Icon: Trophy,      path: '/leaderboard' },
     { label: 'Profile',   Icon: User,        path: '/profile' },
