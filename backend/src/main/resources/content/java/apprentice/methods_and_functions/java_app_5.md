@@ -3,17 +3,27 @@ moduleId: se-app-m3
 moduleTitle: "Module 3: Functions & Reusability"
 moduleGlyph: "⚗️"
 moduleSortOrder: 3
+school: engineering
 domainId: java
 tier: APPRENTICE
 topicSlug: methods
 topicTitle: "Methods"
 topicSortOrder: 1
+lesson: parameters_return_scope
 id: java-app-5a
 title: "Parameters, Return Types & Scope"
 sortOrder: 1
+difficulty: 2
+estimatedMinutes: 25
 xpReward: 70
 practiceType: JAVA
 questType: KNOWLEDGE
+retrievalWeight: high
+questTypes:
+  - guided
+  - solo
+  - retrieval
+prerequisites: []
 feynmanPrompt: "Explain what a method is and why we use them, as if describing a recipe card to someone who has never cooked before."
 learningObjectives:
   - Define a method with a return type, name, and parameters
@@ -23,6 +33,31 @@ learningObjectives:
 integrationDomains:
   - mathematics
   - psychology
+microCheckpoint:
+  - type: MULTIPLE_CHOICE
+    question: "A method declared as `public static void greet(String name)` — what does it return?"
+    options:
+      - "A String"
+      - "Nothing"
+      - "The name parameter"
+      - "A boolean"
+    correctIndex: 1
+    feedback: "`void` means the method performs an action but returns nothing. To return a value, replace `void` with the return type, e.g. `public static String greet(String name)`."
+  - type: MULTIPLE_CHOICE
+    question: "A variable declared inside a method — where can it be accessed?"
+    options:
+      - "Anywhere in the class"
+      - "Only within that method"
+      - "In all methods defined below it"
+      - "Only in `main()`"
+    correctIndex: 1
+    feedback: "Variables declared inside a method are **local** to that method. Once the method returns, the variable is gone. This is called *scope*."
+retrieval:
+  recall: "Name the four parts of a method signature and explain what each one means."
+  explain: "Explain what a method is and why we use them, using an everyday analogy that has nothing to do with programming."
+  mistakeId:
+    code: "public static void add(int a, int b) { return a + b; }"
+    answer: "The return type is `void` but the method has a `return` statement. Change `void` to `int`: `public static int add(int a, int b)`."
 soloAssessment:
   type: RUBRIC_REFLECTION
   rubricItems:

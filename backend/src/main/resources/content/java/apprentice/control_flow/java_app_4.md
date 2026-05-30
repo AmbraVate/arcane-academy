@@ -3,17 +3,27 @@ moduleId: se-app-m2
 moduleTitle: "Module 2: Programming Foundations"
 moduleGlyph: "📝"
 moduleSortOrder: 2
+school: engineering
 domainId: java
 tier: APPRENTICE
 topicSlug: control_flow
 topicTitle: "Control Flow"
 topicSortOrder: 3
+lesson: conditionals
 id: java-app-4a
 title: "Conditionals: if/else and switch-expressions"
 sortOrder: 1
+difficulty: 2
+estimatedMinutes: 25
 xpReward: 60
 practiceType: JAVA
 questType: KNOWLEDGE
+retrievalWeight: high
+questTypes:
+  - guided
+  - solo
+  - retrieval
+prerequisites: []
 feynmanPrompt: "Explain what 'control flow' means and how an if/else statement works, using only everyday non-coding language — pretend you're explaining it to a ten-year-old."
 learningObjectives:
   - Write correct if / else-if / else chains in Java
@@ -23,6 +33,31 @@ learningObjectives:
 integrationDomains:
   - mathematics
   - psychology
+microCheckpoint:
+  - type: MULTIPLE_CHOICE
+    question: "In an `if / else-if / else` chain, how many branches run when a condition is true?"
+    options:
+      - "All branches that match"
+      - "Only the first true branch"
+      - "Only the last branch"
+      - "It depends on the values"
+    correctIndex: 1
+    feedback: "Java evaluates top-to-bottom and runs **only** the first branch whose condition is `true`. All remaining branches are skipped, even if their conditions would also be true."
+  - type: MULTIPLE_CHOICE
+    question: "What is the value of `x` after this runs? `int x = 5; if (x > 5) { x = 10; }`"
+    options:
+      - "10"
+      - "5"
+      - "0"
+      - "Compile error"
+    correctIndex: 1
+    feedback: "`5 > 5` is `false` — `>` is *strictly* greater than, not equal. The if-block does not run. `x` stays `5`. Use `>=` if you mean 'five or more'."
+retrieval:
+  recall: "What is the difference between `>` and `>=` in a condition, and why does it matter at boundaries?"
+  explain: "Explain what 'control flow' means and why programs need it, as if explaining to someone who has never coded."
+  mistakeId:
+    code: "if (score = 100) { System.out.println(\"Perfect!\"); }"
+    answer: "`=` is assignment, not comparison. This tries to assign 100 to `score` inside the condition. Use `==` for equality: `if (score == 100)`."
 soloAssessment:
   type: RUBRIC_REFLECTION
   rubricItems:

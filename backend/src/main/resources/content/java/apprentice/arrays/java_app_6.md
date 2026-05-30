@@ -3,17 +3,27 @@ moduleId: se-app-m4
 moduleTitle: "Module 4: Data Structures Foundations"
 moduleGlyph: "📦"
 moduleSortOrder: 4
+school: engineering
 domainId: java
 tier: APPRENTICE
 topicSlug: arrays
 topicTitle: "Arrays"
 topicSortOrder: 1
+lesson: arrays_1d
 id: java-app-6a
 title: "1D Arrays: Declaration, Access & Iteration"
 sortOrder: 1
+difficulty: 2
+estimatedMinutes: 30
 xpReward: 70
 practiceType: JAVA
 questType: KNOWLEDGE
+retrievalWeight: high
+questTypes:
+  - guided
+  - solo
+  - retrieval
+prerequisites: []
 feynmanPrompt: "Explain what an array is and why you'd use one instead of five separate variables, using only non-technical everyday language."
 learningObjectives:
   - Declare and initialise a 1D array using both syntactic forms
@@ -23,6 +33,31 @@ learningObjectives:
 integrationDomains:
   - mathematics
   - psychology
+microCheckpoint:
+  - type: MULTIPLE_CHOICE
+    question: "An array has 5 elements. What is the index of the LAST element?"
+    options:
+      - "5"
+      - "4"
+      - "1"
+      - "0"
+    correctIndex: 1
+    feedback: "Arrays are zero-indexed. With 5 elements, the indices run from 0 to 4. The last valid index is always `array.length - 1`."
+  - type: MULTIPLE_CHOICE
+    question: "Which loop gives you both the **index** and the **value** at each position?"
+    options:
+      - "for-each loop (`for (int x : arr)`)"
+      - "Standard for loop (`for (int i = 0; i < arr.length; i++)`)"
+      - "Both loops give you the index"
+      - "Neither — you need `Arrays.indexOf()`"
+    correctIndex: 1
+    feedback: "A standard `for` loop with a counter variable `i` gives you the index. The for-each loop only gives you the value. Use for-each when you don't need the index."
+retrieval:
+  recall: "What does `array.length` return, and is it a method call or a field access?"
+  explain: "Explain what an array is and why you would use one instead of declaring separate variables, using an everyday analogy."
+  mistakeId:
+    code: "int[] scores = {10, 20, 30}; System.out.println(scores[3]);"
+    answer: "Index 3 is out of bounds. The array has 3 elements at indices 0, 1, and 2. The last valid index is `scores.length - 1` = 2. This throws `ArrayIndexOutOfBoundsException`."
 soloAssessment:
   type: RUBRIC_REFLECTION
   rubricItems:

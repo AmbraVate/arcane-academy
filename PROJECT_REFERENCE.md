@@ -2,7 +2,7 @@
 
 > **Purpose:** Living reference for all engineers working on this codebase. Update this document at every significant decision point.
 >
-> **Last updated:** 2026-05-30 (Curriculum Canon alignment — School of Engineering restructure)
+> **Last updated:** 2026-05-30 (Lesson Blueprint ingested — canonical 9-section template, microCheckpoint + retrieval added)
 
 ---
 
@@ -24,6 +24,7 @@
 14. [Known Constraints & Watch-outs](#14-known-constraints--watch-outs)
 15. [Completed Restructure Summary](#15-completed-restructure-summary)
 16. [Curriculum Canon — School of Engineering](#16-curriculum-canon--school-of-engineering)
+17. [Canonical Lesson Blueprint](#17-canonical-lesson-blueprint)
 
 ---
 
@@ -42,12 +43,13 @@ School
          └─ Module       e.g. Module 1: Foundations of Computation
              └─ Topic    e.g. Topic 1: Computational Thinking
                  └─ Lesson   e.g. Lesson 1: What is a Program?
-                     └─ Lesson Content (sections inside one lesson):
-                        Hook · Lore Introduction · Core Learning
+                     └─ Lesson Content (9 sections inside one lesson):
+                        1 Hook · 2 Lore Introduction · 3 Core Learning
                         (Concept Introduction · Why It Matters · Worked Examples ·
                          Common Mistakes · Mental Model · Mini Summary) ·
-                        Guided Practice Quest · Solo Practice Quest ·
-                        Retrieval · Integration · Lore Conclusion
+                        4 Micro Checkpoint · 5 Guided Practice Quest ·
+                        6 Solo Practice Quest · 7 Retrieval Practice ·
+                        8 Integration · 9 Lore Conclusion
 ```
 
 ### Notes
@@ -348,93 +350,145 @@ Both seeders run on startup; they are idempotent (upsert by ID). The JSON seeder
 
 ### Markdown lesson format
 
+All lesson content lives in a single `.md` file. Structured data (steps, assessment rules, checkpoint questions, retrieval) is in YAML frontmatter; prose sections are in the Markdown body.
+
 ```yaml
 ---
-moduleId:       java-app-2
-moduleTitle:    "Module 2: Variables & Data Types"
+# ── Identity ─────────────────────────────────────────────────────────────────
+id:             java-app-2a          # stable lesson ID — NEVER rename after deploy
+school:         engineering          # school slug
+domainId:       java                 # domain ID (matches DB domain record)
+tier:           APPRENTICE           # APPRENTICE | JUNIOR | SENIOR | LEAD
+moduleId:       se-app-m2            # canonical module ID
+moduleTitle:    "Module 2: Programming Foundations"
 moduleGlyph:    "📝"
 moduleSortOrder: 2
-domainId:       java
-tier:           APPRENTICE
-topicSlug:      variables_and_data_types
-topicTitle:     "Variables & Data Types"
-topicSortOrder: 2
-id:             java-app-2a
+topicSlug:      variables_and_state  # Topic cluster within the module
+topicTitle:     "Variables & State"
+topicSortOrder: 1
+lesson:         variables            # lesson slug within the topic
 title:          "Primitives, Wrapper Classes & Type Safety"
 sortOrder:      1
-xpReward:       60
-practiceType:   JAVA           # JAVA | TAILWIND | REACT | SQL | R | NONE
-questType:      KNOWLEDGE
-feynmanPrompt:  "..."
-learningObjectives:
-  - "..."
+
+# ── Learning config ───────────────────────────────────────────────────────────
+difficulty:        1                 # 1–5 scale
+estimatedMinutes:  20                # reading + practice time
+xpReward:          60
+practiceType:      JAVA              # JAVA | TAILWIND | REACT | SQL | R | NONE
+questType:         KNOWLEDGE         # KNOWLEDGE | GUIDED | PRACTICE | INVESTIGATION | SYNTHESIS | MASTERY
+retrievalWeight:   high              # high | medium | low — influences FSRS scheduling weight
+questTypes:
+  - guided
+  - solo
+  - retrieval
+prerequisites:     []                # lesson slugs within the same topic
 integrationDomains:
   - mathematics
   - psychology
+
+# ── Solo assessment ───────────────────────────────────────────────────────────
 soloAssessment:
-  type: RUBRIC_REFLECTION       # RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW
+  type: RUBRIC_REFLECTION            # RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW | DETERMINISTIC
   rubricItems:
-    - "Declares at least one int variable"
-  keywords:
+    - "Declares at least one int variable with a meaningful name"
+  keywords:                          # used by PATTERN_MATCH
     - int
     - double
   modelAnswer: |
     ```java
     int level = 5;
     ```
+
+# ── Guided steps ──────────────────────────────────────────────────────────────
 guidedSteps:
-  - id: prim-step-1
+  - id:        prim-step-1
     sortOrder: 1
-    inputType: MULTIPLE_CHOICE  # FILL_BLANK | MULTIPLE_CHOICE | SHORT_TEXT | CODE | DRAG_DROP | SEQUENCE
+    inputType: MULTIPLE_CHOICE       # FILL_BLANK | MULTIPLE_CHOICE | SHORT_TEXT | CODE | DRAG_DROP | SEQUENCE
     instruction: "..."
     inputConfig:
       options: ["int", "String", "double", "boolean"]
     markingRule:
-      matchMode: NORMALIZED     # EXACT | NORMALIZED | REGEX | CONTAINS | OUTPUT_MATCH
+      matchMode: NORMALIZED          # EXACT | NORMALIZED | REGEX | CONTAINS | OUTPUT_MATCH
       accepted: ["String"]
       rejectedFeedback: "..."
     hint: "..."
     reflectionPrompt: "..."
+
+# ── Micro Checkpoint (Section 4) ─────────────────────────────────────────────
+# 2 deterministic questions placed AFTER learning content, BEFORE guided quest.
+# Goal: prevent passive reading. NOT graded toward completion.
+# Types: MULTIPLE_CHOICE (pick 1 of A–D) | TAP_TOKEN (tap correct token in code)
+microCheckpoint:
+  - type:         MULTIPLE_CHOICE
+    question:     "Which of these is NOT one of Java's eight primitive types?"
+    options:
+      - "int"
+      - "double"
+      - "String"
+      - "boolean"
+    correctIndex: 2
+    feedback:     "`String` is a class, not a primitive. All eight primitives are lower-case."
+  - type:         MULTIPLE_CHOICE
+    question:     "What does `int result = 7 / 2;` produce?"
+    options:
+      - "3.5"
+      - "3"
+      - "4"
+      - "Compile error"
+    correctIndex: 1
+    feedback:     "Integer division truncates — `7 / 2` gives `3`. Cast to double first for a decimal result."
+
+# ── Retrieval Practice (Section 7) ───────────────────────────────────────────
+# Placed AFTER solo quest. Goal: long-term memory consolidation.
+# recall + explain are ungraded engagement prompts.
+# mistakeId has a deterministic correct answer.
+# Confidence rating (1–5) feeds FSRS scheduling weight.
+retrieval:
+  recall:    "Name three of Java's eight primitive types and what each stores."
+  explain:   "Explain the difference between a primitive type and a Wrapper class to someone who has never programmed."
+  mistakeId:
+    code:    "float price = 9.99;"
+    answer:  "Missing `f` suffix. `9.99` is a `double` literal by default. Fix: `float price = 9.99f;` or use `double price = 9.99;`."
 ---
 
 # Hook
-...
+1–2 minute curiosity trigger. Ends with an optional ungraded reflection prompt.
 
 # Lore Introduction
-...
+30-second fantasy flavour. Optional — omit for non-narrative lessons.
 
 # Core Learning
 
 ## Concept Introduction
-...
+Define the concept clearly. Use code examples.
 
 ## Why It Matters
-...
+Real-world consequence. Why does this matter?
 
 ## Worked Examples
-...
+2–3 concrete examples with annotated code.
 
 ## Common Mistakes
-- First mistake
-- Second mistake
+Bullet list of the most frequent errors + why they happen.
 
 ## Mental Model
-...
+One strong analogy. Make the abstract tangible.
 
 ## Mini Summary
-...
+4–6 bullet checkmarks. Scannable. Memorable.
 
 # Guided Practice Quest
-...
+Quest narrative prose only. The steps are defined in `guidedSteps[]` frontmatter.
 
 # Solo Practice Quest
-...
+Independent task description. Assessment rules are in `soloAssessment` frontmatter.
 
 # Integration
-...
+One short cross-domain question + free reflection (not graded).
+100–300 words. Lightweight — point the connection; don't lecture.
 
 # Lore Conclusion
-...
+2–4 sentences. Fantasy wrap-up. Forward-tease the next lesson.
 ```
 
 ### Markdown content tree (current state)
@@ -460,13 +514,15 @@ Parameterised JUnit test scans every `.md` in `classpath:content/**/*.md`. Check
 | Check | Rule |
 |---|---|
 | Frontmatter | YAML block present |
-| Required fields | `id`, `domainId`, `tier`, `moduleId`, `title` |
+| Required fields | `id`, `domainId`, `tier`, `moduleId`, `topicSlug`, `title`, `lesson` |
 | Valid tier | `APPRENTICE \| JUNIOR \| SENIOR \| LEAD` |
-| Required H1 sections | Hook · Lore Introduction · Core Learning · Integration · Lore Conclusion |
-| Required H2 in Core | Concept Introduction · Why It Matters · Mental Model · Mini Summary |
+| Required body H1 sections | `# Hook` · `# Core Learning` · `# Integration` · `# Lore Conclusion` |
+| Required H2 in Core | `## Concept Introduction` · `## Why It Matters` · `## Mental Model` · `## Mini Summary` |
 | Word count bands | APPRENTICE 400–1800 / JUNIOR 600–2500 / SENIOR 800–3500 / LEAD 1000+ |
-| Solo assessment | Type in valid set; RUBRIC_REFLECTION → rubricItems + modelAnswer present |
-| Guided steps | Every step has `id` + `markingRule` |
+| Solo assessment | Type in valid set; `RUBRIC_REFLECTION` → `rubricItems` + `modelAnswer` present |
+| Guided steps | Every step has `id` + `markingRule.matchMode` + `markingRule.accepted` |
+| Micro checkpoint | Exactly 2 items; each has `type`, `question`, `correctIndex`, `feedback` |
+| Retrieval | `recall`, `explain`, and `mistakeId` (with `code` + `answer`) all present |
 
 ### `LessonAuthoringHarness`
 
@@ -513,18 +569,28 @@ java -cp ... LessonAuthoringHarness \
 ## 8. Learning Flow & Phases
 
 ```
-HOOK → EXPLANATION → GUIDED_PRACTICE → SOLO_PRACTICE → RETRIEVAL_CHECK → INTEGRATION → COMPLETE
+HOOK → LORE_INTRODUCTION → EXPLANATION → MICRO_CHECKPOINT → GUIDED_PRACTICE → SOLO_PRACTICE → RETRIEVAL_CHECK → INTEGRATION → COMPLETE
 ```
 
-| Phase | Purpose | Skip condition |
-|---|---|---|
-| HOOK | Narrative hook | Auto-skipped if `hookHtml` blank |
-| EXPLANATION | Full lesson content (Concept · Why It Matters · Worked Examples · Mental Model · Mini Summary) | Always shown |
-| GUIDED_PRACTICE | Step workbook (GuidedStepper) when `hasGuidedSteps=true`; legacy HTML fallback | Gated: all steps must pass before advancing |
-| SOLO_PRACTICE | Independent rebuild — RUBRIC_REFLECTION / PATTERN_MATCH / DETERMINISTIC / AI_REVIEW | Skipped if `soloPracticeHtml` blank |
-| RETRIEVAL_CHECK | Quiz from `questions` array | Auto-passed if no questions; 60% threshold |
-| INTEGRATION | Cross-domain connection prompt | Skipped if `integrationPrompt` blank |
-| COMPLETE | Summary + optional Feynman teach-back | Terminal state |
+| Phase | Purpose | Completion requirement | Skip condition |
+|---|---|---|---|
+| HOOK | Curiosity trigger — narrative opening | Read (+ optional ungraded reflection) | Auto-skipped if `hookHtml` blank |
+| LORE_INTRODUCTION | Fantasy flavour paragraph | Auto-advance | Auto-skipped if `loreIntroHtml` blank |
+| EXPLANATION | Full learning content (Concept · Why It Matters · Worked Examples · Mental Model · Mini Summary) | Read | Always shown |
+| MICRO_CHECKPOINT | 2 deterministic inline questions — prevent passive reading | Answer both (wrong answer shows feedback; no gate) | Skipped if `microCheckpoint` empty |
+| GUIDED_PRACTICE | Scaffolded step workbook (`GuidedStepper`) | Pass **70%** of steps | Skipped if no `guidedSteps` |
+| SOLO_PRACTICE | Independent application — RUBRIC_REFLECTION / PATTERN_MATCH / DETERMINISTIC / AI_REVIEW | Submit once | Skipped if `soloPracticeHtml` blank and no `soloAssessment` |
+| RETRIEVAL_CHECK | Long-term memory: Recall + Explain + Mistake ID + Confidence rating (1–5 → FSRS) | Submit attempt | Required (no auto-skip) |
+| INTEGRATION | Cross-domain connection prompt — free reflection, not graded | Submit reflection | Skipped if `integrationPrompt` blank |
+| COMPLETE | Summary + optional Feynman teach-back | Terminal state | — |
+
+### Lesson completion requirements (from Blueprint)
+
+A lesson is **complete** when all four of the following are satisfied:
+1. Content read (EXPLANATION phase reached)
+2. Guided quest passed at 70% or above
+3. Solo quest submitted
+4. Retrieval attempt made (any confidence rating)
 
 ### Quest types (optional field on Lesson)
 
@@ -630,6 +696,21 @@ Admins and users with `bypassPaywall = true` get full access regardless.
 ---
 
 ## 13. Decision Log
+
+---
+
+### [2026-05-30] Lesson Blueprint ingested — canonical 9-section template
+
+**Context:** The *Arcane Academy Lesson Blueprint* (Phase 2 PDF) defines the authoritative template for all authored lessons. It establishes a 9-section lesson structure, two new structured-data frontmatter blocks, and explicit completion requirements.
+
+**Key decisions:**
+1. **9-section lesson model** — Hook → Lore Introduction → Learning Content → **Micro Checkpoint** → Guided Practice Quest → Solo Practice Quest → **Retrieval Practice** → Integration → Lore Conclusion. Sections 4 and 7 are new additions to the platform.
+2. **Micro Checkpoint** — 2 deterministic questions embedded after learning content, before the guided quest. Purpose: prevent passive reading. Not gated — wrong answers show immediate feedback and the learner moves on. Defined as `microCheckpoint[]` in YAML frontmatter (not in the Markdown body).
+3. **Retrieval Practice** — structured end-of-lesson retrieval: Recall question + Explain in own words (ungraded) + Mistake Identification (deterministic) + Confidence Rating (1–5, feeds FSRS scheduling weight). Defined as `retrieval` in YAML frontmatter.
+4. **New frontmatter fields** — `school`, `lesson` (slug), `difficulty` (1–5), `estimatedMinutes`, `retrievalWeight` (high/medium/low), `questTypes`, `prerequisites` added to all lessons.
+5. **Solo assessment scoring model** — rule-based 5-point rubric (has N items + valid syntax + correct types + good naming + compiles); No AI in the standard path; AI only for Lead-tier quota.
+6. **Completion gate** — Lesson complete = content read + guided 70% + solo submitted + retrieval attempted.
+7. **Markdown-first confirmed** — All lesson content remains in `.md` with YAML frontmatter. No separate JSON files for lesson content. The Blueprint's metadata block maps entirely to frontmatter fields.
 
 ---
 
@@ -1091,3 +1172,199 @@ The old 15-module `java-app-*` structure did not match the Canon. The table belo
 | `java-app-15` | APPRENTICE Capstone | **Lead Capstone** | Capstone is a Lead-tier deliverable per Canon |
 
 ⚠ **Key insight:** Exception Handling, Testing, and Basic Algorithms were placed at Apprentice tier in the old content but belong at Junior tier in the Canon. The old content is archived in `content/java/legacy/`.
+
+---
+
+## 17. Canonical Lesson Blueprint
+
+> **Source:** *Arcane Academy Lesson Blueprint — Software Engineering → Apprentice Tier*
+> This Blueprint is the **authoritative template** for every authored lesson across all Schools and Domains. All new lessons **must** conform to this structure. `LessonAuthoringHarness` uses this as its system prompt template.
+
+---
+
+### The 9-Section Model
+
+| § | Section | Goal | Duration | Graded? |
+|---|---|---|---|---|
+| 1 | **Hook** | Create curiosity | 1–2 min | No (optional reflection) |
+| 2 | **Lore Introduction** | Fantasy flavour | 30 sec | No |
+| 3 | **Learning Content** | Teach the concept | 5–8 min | No |
+| 4 | **Micro Checkpoint** | Prevent passive reading | 1 min | No (feedback only) |
+| 5 | **Guided Practice Quest** | Scaffolded success | 5 min | Yes (70% pass) |
+| 6 | **Solo Practice Quest** | Independent application | 5–10 min | Yes (rule-based) |
+| 7 | **Retrieval Practice** | Long-term memory | 2 min | Confidence only (→ FSRS) |
+| 8 | **Integration Prompt** | Polymath thinking | 1–2 min | No (free reflection) |
+| 9 | **Lore Conclusion** | Narrative close | 30 sec | No |
+
+**Lesson Completion Requirements:** Read content + Pass guided (70%) + Complete solo + Retrieval attempt
+**Estimated total time:** 15–25 minutes
+
+---
+
+### Section Authoring Rules
+
+#### § 1 — Hook
+- Open with a **problem or scenario**, not a definition.
+- Use the gold-adventure vocabulary (spells, dungeons, guild, etc.) or a relatable real-world analogy.
+- End with a single **ungraded reflection prompt** (free text, engagement purpose only).
+- Word limit: 100–250 words.
+
+#### § 2 — Lore Introduction *(optional)*
+- 1–3 sentences of fantasy flavour.
+- Name the guild, the archmage, the artefact. Tie to the concept.
+- Omit entirely for Senior/Lead tier where prose should be more direct.
+
+#### § 3 — Learning Content
+Sub-sections (all required except Worked Examples for very short lessons):
+- **What is X?** / Concept Introduction — one crisp definition + the core syntax example.
+- **Why It Matters** — real-world consequence, use cases.
+- **Worked Examples** — 2–3 annotated code samples. Show correct + incorrect where useful.
+- **Common Mistake** — the single most important mistake + brief explanation.
+- **Mental Model** — one strong analogy (the labelled-box metaphor, the railway junction, the vending machine).
+- **Mini Summary** — 4–6 ✔ bullet points. Scannable.
+
+#### § 4 — Micro Checkpoint
+- **Exactly 2 questions.** Defined in frontmatter `microCheckpoint[]`, not in body prose.
+- Types: `MULTIPLE_CHOICE` (A/B/C/D) or `TAP_TOKEN` (tap the correct token in a code snippet).
+- Must target the **core concept** just taught (not edge cases).
+- Immediate inline feedback on any answer — wrong answers show `feedback`, then learner continues.
+- Not gated — cannot block lesson progress.
+
+```yaml
+microCheckpoint:
+  - type: MULTIPLE_CHOICE
+    question: "What is a variable?"
+    options:
+      - "A permanent file"
+      - "A named container for data"
+      - "A programming language"
+      - "A type of loop"
+    correctIndex: 1
+    feedback: "Correct. Variables store information using names."
+  - type: TAP_TOKEN
+    question: "Which part of `int gold = 100;` is the variable name?"
+    code: "int gold = 100;"
+    tokens: ["int", "gold", "100"]
+    correct: "gold"
+    feedback: "`gold` is the name. `int` is the type. `100` is the value."
+```
+
+#### § 5 — Guided Practice Quest
+- Named quest with a fantasy title (e.g. "The Treasury Ledger").
+- 2–5 steps. Each step in `guidedSteps[]` frontmatter.
+- Step types: `FILL_BLANK` → `MULTIPLE_CHOICE` → `SHORT_TEXT` → `CODE` (in order of scaffolding).
+- Marking modes: `EXACT` | `NORMALIZED` | `REGEX` | `CONTAINS` | `OUTPUT_MATCH`.
+- Each step must have: `instruction`, `markingRule`, `hint`, `reflectionPrompt`.
+- Pass threshold: **70%** of steps.
+
+#### § 6 — Solo Practice Quest
+- Independent task — learner must apply the concept without scaffolding.
+- Defined by `soloAssessment` frontmatter block.
+- **Apprentice/Junior:** `RUBRIC_REFLECTION` — 5 rule-based checks, no AI.
+- **Senior:** `PATTERN_MATCH` — keyword-band scoring (WEAK / GOOD / EXCELLENT).
+- **Lead:** `AI_REVIEW` — full AI feedback; 3/month quota per domain; falls back to rubric outside quota.
+- Rule-based rubric template (Apprentice):
+  ```
+  Has N required items?   +1
+  Valid syntax?           +1
+  Correct data types?     +1
+  Good naming?            +1
+  Compiles/runs?          +1
+  Score: 5/5
+  ```
+- Model answer revealed after first submission (collapsible).
+
+#### § 7 — Retrieval Practice
+- Defined in `retrieval` frontmatter block. Not prose in the body.
+- Four sub-sections:
+  1. **Recall** — "What is X?" (free text, not graded)
+  2. **Explain in your own words** — teach-a-friend prompt (not graded)
+  3. **Mistake Identification** — show a broken code snippet; learner identifies the error (deterministic answer)
+  4. **Confidence Rating** — 1–5 scale; value stored and fed to FSRS as scheduling weight modifier
+
+```yaml
+retrieval:
+  recall:   "What is a variable?"
+  explain:  "Explain variables as if teaching a friend who has never programmed."
+  mistakeId:
+    code:   "int user age = 22;"
+    answer: "Variable names cannot contain spaces. Use camelCase: `userAge`."
+```
+
+#### § 8 — Integration Prompt
+- One cross-domain bridge question.
+- 100–300 words. **Lightweight** — point the connection; do not write a full essay.
+- Free reflection, not graded.
+- Tier scaling:
+  - **Apprentice:** Simple analogy ("How is X like Y in everyday life?")
+  - **Junior:** Apply the concept in another domain ("How would a psychologist think about this?")
+  - **Senior:** Systems-level ("What does economics tell us about this tradeoff?")
+  - **Lead:** Research-level ("Synthesise SE + X to design a solution for…")
+
+#### § 9 — Lore Conclusion
+- 2–4 sentences.
+- Acknowledge the learner's mastery.
+- Forward-tease the next concept without spoiling it.
+- Archmage Veylan or the guild voice.
+
+---
+
+### Frontmatter Quick Reference
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `id` | string | ✓ | Stable — never rename after deploy |
+| `school` | string | ✓ | e.g. `engineering` |
+| `domainId` | string | ✓ | e.g. `java` |
+| `tier` | enum | ✓ | `APPRENTICE \| JUNIOR \| SENIOR \| LEAD` |
+| `moduleId` | string | ✓ | e.g. `se-app-m2` |
+| `topicSlug` | string | ✓ | snake_case topic name |
+| `lesson` | string | ✓ | Lesson slug within the topic |
+| `title` | string | ✓ | Human-readable lesson title |
+| `sortOrder` | int | ✓ | Within the topic |
+| `difficulty` | int (1–5) | ✓ | Lesson difficulty |
+| `estimatedMinutes` | int | ✓ | Total estimated time |
+| `xpReward` | int | ✓ | XP awarded on guided pass |
+| `practiceType` | enum | ✓ | `JAVA \| TAILWIND \| REACT \| SQL \| R \| NONE` |
+| `questType` | enum | ✓ | `KNOWLEDGE \| GUIDED \| PRACTICE \| INVESTIGATION \| SYNTHESIS \| MASTERY` |
+| `retrievalWeight` | enum | ✓ | `high \| medium \| low` |
+| `questTypes` | string[] | ✓ | `[guided, solo, retrieval]` |
+| `prerequisites` | string[] | ✓ | Lesson slugs; `[]` if none |
+| `integrationDomains` | string[] | ✓ | e.g. `[mathematics, psychology]` |
+| `soloAssessment` | object | ✓ | Type + rubricItems/keywords/modelAnswer |
+| `guidedSteps` | array | ✓ | 2–5 steps; each with id + markingRule |
+| `microCheckpoint` | array | ✓ | Exactly 2 items |
+| `retrieval` | object | ✓ | recall + explain + mistakeId |
+
+---
+
+### Blueprint ID Convention
+
+The Blueprint defines a canonical lessonId format: `{SCHOOL_ABBR}-{TIER_ABBR}-M{module}-T{topic}-L{lesson}`
+
+**Example:** `SE-A-M2-T1-L2` = Software Engineering, Apprentice, Module 2, Topic 1, Lesson 2
+
+This canonical ID is stored as the `id` field in the frontmatter. The internal DB `id` remains stable across renames.
+
+---
+
+### Authoring with `LessonAuthoringHarness`
+
+```bash
+java -cp ... LessonAuthoringHarness \
+    --id       se-app-m2-02 \
+    --title    "Variables" \
+    --school   engineering \
+    --domain   java \
+    --tier     APPRENTICE \
+    --module-id se-app-m2 \
+    --topic    variables_and_state \
+    --lesson   variables \
+    --sort     2 \
+    [--out     path/to/output.md] \
+    [--dry-run]
+# Requires: ANTHROPIC_API_KEY env var
+# Always human-review before commit
+```
+
+The harness uses this Blueprint (§17) as its system prompt, producing a complete `.md` file with all 9 sections and every required frontmatter field.

@@ -3,17 +3,27 @@ moduleId: se-app-m2
 moduleTitle: "Module 2: Programming Foundations"
 moduleGlyph: "📝"
 moduleSortOrder: 2
+school: engineering
 domainId: java
 tier: APPRENTICE
 topicSlug: variables_and_state
 topicTitle: "Variables & State"
 topicSortOrder: 1
+lesson: primitives_and_types
 id: java-app-2a
 title: "Primitives, Wrapper Classes & Type Safety"
 sortOrder: 1
+difficulty: 1
+estimatedMinutes: 25
 xpReward: 60
 practiceType: JAVA
 questType: KNOWLEDGE
+retrievalWeight: high
+questTypes:
+  - guided
+  - solo
+  - retrieval
+prerequisites: []
 feynmanPrompt: "Explain the difference between a primitive type and a wrapper class to someone who only knows basic arithmetic — no jargon allowed."
 learningObjectives:
   - Name all eight Java primitive types and describe what each stores
@@ -23,6 +33,31 @@ learningObjectives:
 integrationDomains:
   - mathematics
   - psychology
+microCheckpoint:
+  - type: MULTIPLE_CHOICE
+    question: "Which of the following is NOT one of Java's eight primitive types?"
+    options:
+      - "int"
+      - "double"
+      - "String"
+      - "boolean"
+    correctIndex: 2
+    feedback: "`String` is a class (capital S), not a primitive. All eight primitives are lower-case: byte, short, int, long, float, double, char, boolean."
+  - type: MULTIPLE_CHOICE
+    question: "What does `int result = 7 / 2;` store in `result`?"
+    options:
+      - "3.5"
+      - "3"
+      - "4"
+      - "Compile error"
+    correctIndex: 1
+    feedback: "Integer division truncates toward zero — `7 / 2` gives `3`, not `3.5`. Cast to double first if you need the decimal: `(double) 7 / 2`."
+retrieval:
+  recall: "Name three of Java's eight primitive types and describe what kind of value each one stores."
+  explain: "Explain the difference between a primitive type and a Wrapper class to someone who has never programmed before."
+  mistakeId:
+    code: "float price = 9.99;"
+    answer: "Missing `f` suffix on the literal. `9.99` is a `double` by default. Fix: `float price = 9.99f;` — or, better, use `double price = 9.99;`."
 soloAssessment:
   type: RUBRIC_REFLECTION
   rubricItems:
