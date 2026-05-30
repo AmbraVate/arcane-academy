@@ -98,4 +98,39 @@ public class Lesson {
      */
     @Column(name = "topic_id")
     private String topicId;
+
+    // ── Phase 2 — Markdown section fields ────────────────────────────────────
+    // Null for JSON-seeded lessons; populated for Markdown-authored lessons.
+
+    /** Lore Introduction — narrative hook that follows the lesson title card. */
+    @Column(name = "lore_intro_html", columnDefinition = "TEXT")
+    private String loreIntroHtml;
+
+    /** Why It Matters — practical relevance of the concept. */
+    @Column(name = "why_it_matters_html", columnDefinition = "TEXT")
+    private String whyItMattersHtml;
+
+    /** Worked Examples — annotated code / worked problems. */
+    @Column(name = "worked_examples_html", columnDefinition = "TEXT")
+    private String workedExamplesHtml;
+
+    /** Mental Model — a memorable analogy or visualisation. */
+    @Column(name = "mental_model_html", columnDefinition = "TEXT")
+    private String mentalModelHtml;
+
+    /** Mini Summary — compact recap of Core Learning. */
+    @Column(name = "mini_summary_html", columnDefinition = "TEXT")
+    private String miniSummaryHtml;
+
+    /** Lore Conclusion — narrative payoff shown on the COMPLETE screen. */
+    @Column(name = "lore_conclusion_html", columnDefinition = "TEXT")
+    private String loreConclusionHtml;
+
+    /**
+     * JSON array of domain names this lesson integrates with — used by the
+     * Knowledge Graph (Phase 7) to draw cross-domain edges.
+     * Example: {@code ["psychology","mathematics"]}
+     */
+    @Column(name = "integration_domains_json", columnDefinition = "TEXT")
+    private String integrationDomainsJson;
 }

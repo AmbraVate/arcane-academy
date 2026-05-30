@@ -1,0 +1,73 @@
+package com.ambravate.arcane.academy.content.seeder;
+
+import lombok.Builder;
+import lombok.Getter;
+
+/**
+ * Parsed result of a single Markdown lesson file.
+ *
+ * <p>Contains both module/topic metadata (from YAML frontmatter) and all lesson
+ * section HTML fields (from the Markdown body). The {@link MarkdownContentSeeder}
+ * uses this to upsert the full entity graph (Module → Topic → Lesson).
+ */
+@Getter
+@Builder
+public class MarkdownLessonDto {
+
+    // ── Module-level (from frontmatter) ───────────────────────────────────────
+
+    /** Stable module identifier, e.g. {@code foundations_of_computation}. */
+    private String moduleId;
+    private String moduleTitle;
+    /** Single glyph / emoji shown on the module card, e.g. {@code ⚡}. */
+    private String moduleGlyph;
+    private int    moduleSortOrder;
+    /** Domain identifier, e.g. {@code software_engineering}. */
+    private String domainId;
+    /** Learner path tier string, e.g. {@code APPRENTICE}. Parsed to enum by seeder. */
+    private String tier;
+
+    // ── Topic-level (from frontmatter) ────────────────────────────────────────
+
+    /**
+     * Short slug for the topic within its module — the seeder prefixes this with
+     * {@code moduleId + "-"} to form the full {@code topicId}.
+     * Null means use the default topic ({@code moduleId + "-default-topic"}).
+     */
+    private String topicSlug;
+    private String topicTitle;
+    private int    topicSortOrder;
+
+    // ── Lesson-level (from frontmatter) ───────────────────────────────────────
+
+    private String id;
+    private String title;
+    private int    sortOrder;
+    private int    xpReward;
+    /** {@code NONE | JAVA | TAILWIND | REACT | SQL | R} */
+    private String practiceType;
+    /** {@code KNOWLEDGE | GUIDED | PRACTICE | INVESTIGATION | SYNTHESIS | MASTERY} */
+    private String questType;
+    private String feynmanPrompt;
+    /** JSON array of strings, e.g. {@code ["Declare variables","Explain types"]}. */
+    private String learningObjectivesJson;
+    /** JSON array of domain names, e.g. {@code ["psychology","mathematics"]}. */
+    private String integrationDomainsJson;
+
+    // ── Lesson sections (from Markdown body) ──────────────────────────────────
+
+    private String hookHtml;
+    private String loreIntroHtml;
+    /** Concept Introduction subsection of Core Learning. */
+    private String explanationHtml;
+    private String whyItMattersHtml;
+    private String workedExamplesHtml;
+    /** JSON array of mistake strings, extracted from list items in the section. */
+    private String commonMistakesJson;
+    private String mentalModelHtml;
+    private String miniSummaryHtml;
+    private String guidedPracticeHtml;
+    private String soloPracticeHtml;
+    private String integrationPrompt;
+    private String loreConclusionHtml;
+}

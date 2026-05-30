@@ -103,6 +103,13 @@ export interface LessonEncoding {
   downloadables: Downloadable[] | null
   integrationPrompt: string | null
   questType: QuestType | null
+  // Phase 2 — Markdown section fields (null for JSON-seeded lessons)
+  loreIntroHtml: string | null
+  whyItMattersHtml: string | null
+  workedExamplesHtml: string | null
+  mentalModelHtml: string | null
+  miniSummaryHtml: string | null
+  loreConclusionHtml: string | null
 }
 
 export interface Downloadable {

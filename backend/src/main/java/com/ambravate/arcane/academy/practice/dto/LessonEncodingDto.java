@@ -39,4 +39,12 @@ public class LessonEncodingDto {
 
     private String integrationPrompt;
     private String questType;
+
+    // Phase 2 — Markdown section fields (null for JSON-seeded lessons)
+    private String loreIntroHtml;
+    private String whyItMattersHtml;
+    private String workedExamplesHtml;
+    private String mentalModelHtml;
+    private String miniSummaryHtml;
+    private String loreConclusionHtml;
 }

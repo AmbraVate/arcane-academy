@@ -198,8 +198,14 @@ public class EncodingController {
         switch (p.getCurrentPhase()) {
             case HOOK -> dto.setHookHtml(l.getHookHtml());
             case EXPLANATION -> {
+                // Phase 2 section fields — null-safe; omitted for JSON-seeded lessons
+                dto.setLoreIntroHtml(l.getLoreIntroHtml());
                 dto.setExplanationHtml(l.getExplanationHtml());
                 dto.setStoryBeats(parseJson(l.getStoryJson()));
+                dto.setWhyItMattersHtml(l.getWhyItMattersHtml());
+                dto.setWorkedExamplesHtml(l.getWorkedExamplesHtml());
+                dto.setMentalModelHtml(l.getMentalModelHtml());
+                dto.setMiniSummaryHtml(l.getMiniSummaryHtml());
             }
             case GUIDED_PRACTICE -> {
                 dto.setStoryBeats(parseJson(l.getStoryJson()));
@@ -217,7 +223,10 @@ public class EncodingController {
             }
             case RETRIEVAL_CHECK -> dto.setFeynmanPrompt(l.getFeynmanPrompt());
             case INTEGRATION -> dto.setIntegrationPrompt(l.getIntegrationPrompt());
-            case COMPLETE -> dto.setStoryBeats(parseJson(l.getStoryJson()));
+            case COMPLETE -> {
+                dto.setStoryBeats(parseJson(l.getStoryJson()));
+                dto.setLoreConclusionHtml(l.getLoreConclusionHtml());
+            }
         }
 
         return dto;
