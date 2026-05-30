@@ -2,8 +2,6 @@
 
 A gamified, polymathic learning platform with a wizardry RPG aesthetic. Learners progress through structured content tiers, earn XP and badges, and are guided by an AI mentor. Topics include Java, React, Tailwind CSS, Psychology, Natural Sciences, and Genealogy — with more planned.
 
-> **For engineers:** see [`PROJECT_REFERENCE.md`](PROJECT_REFERENCE.md) for architecture, decision log, content system, and deployment details.
-
 ---
 
 ## Stack

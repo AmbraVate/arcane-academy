@@ -1,9 +1,3 @@
-
-# Must do every time
-1. Read `PROJECT_REFERENCE.md` before starting any task — it is the authoritative source of truth for architecture, decisions, content system, deployment, and pending work. It supersedes `README.md` for all developer guidance.
-2. Update `PROJECT_REFERENCE.md` with any new decisions, architectural changes, or significant findings as they arise — include the date, context, and rationale.
-
-
 ## Guides
 The following needs to be applied:
 

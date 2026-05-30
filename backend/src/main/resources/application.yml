@@ -45,7 +45,7 @@ server:
 
 jwt:
   # No default — must be explicitly set via JWT_SECRET env var (min 64 chars recommended).
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:default-secret}
   expiration-ms: 86400000  # 24 hours
 
 app:
