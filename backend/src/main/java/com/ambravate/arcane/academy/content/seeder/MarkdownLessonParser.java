@@ -155,6 +155,8 @@ public class MarkdownLessonParser {
                 .loreConclusionHtml(renderSection(h1, "lore conclusion"))
                 // Phase 3 — guided steps from frontmatter
                 .guidedSteps(parseGuidedSteps(fm))
+                // Phase 4 — solo assessment from frontmatter
+                .soloAssessment(parseSoloAssessment(fm))
                 .build();
     }
 
@@ -318,6 +320,54 @@ public class MarkdownLessonParser {
                     inputConfigJson, markingRuleJson, hintHtml, reflectionHtml));
         }
         return result;
+    }
+
+    // ── Phase 4 — solo assessment parsing ────────────────────────────────────
+
+    /**
+     * Parses the {@code soloAssessment} block from frontmatter.
+     *
+     * <pre>
+     * soloAssessment:
+     *   type: RUBRIC_REFLECTION   # RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW
+     *   rubricItems:
+     *     - Declares a String variable
+     *     - Prints output correctly
+     *   keywords:
+     *     - variable
+     *     - type
+     *   modelAnswer: |
+     *     **Model answer prose or code…**
+     * </pre>
+     */
+    @SuppressWarnings("unchecked")
+    private MarkdownLessonDto.SoloAssessmentConfig parseSoloAssessment(Map<String, Object> fm) {
+        Object raw = fm.get("soloAssessment");
+        if (!(raw instanceof Map<?, ?> rawMap)) return null;
+        Map<String, Object> sa = (Map<String, Object>) rawMap;
+
+        String type          = getString(sa, "type", null);
+        if (type == null) return null;
+
+        String rubricItemsJson = null;
+        Object rubricRaw = sa.get("rubricItems");
+        if (rubricRaw instanceof List<?> list && !list.isEmpty()) {
+            try { rubricItemsJson = objectMapper.writeValueAsString(list); }
+            catch (Exception e) { log.warn("[MarkdownLessonParser] Failed to serialise rubricItems", e); }
+        }
+
+        String keywordsJson = null;
+        Object kwRaw = sa.get("keywords");
+        if (kwRaw instanceof List<?> list && !list.isEmpty()) {
+            try { keywordsJson = objectMapper.writeValueAsString(list); }
+            catch (Exception e) { log.warn("[MarkdownLessonParser] Failed to serialise keywords", e); }
+        }
+
+        String modelAnswerHtml = renderMarkdown(getString(sa, "modelAnswer", null));
+
+        return new MarkdownLessonDto.SoloAssessmentConfig(
+                type.toUpperCase(java.util.Locale.ROOT),
+                rubricItemsJson, keywordsJson, modelAnswerHtml);
     }
 
     private String renderMarkdown(String md) {

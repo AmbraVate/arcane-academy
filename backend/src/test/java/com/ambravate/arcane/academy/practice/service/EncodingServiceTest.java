@@ -17,9 +17,12 @@ import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
+import com.ambravate.arcane.academy.auth.repository.UserTrackProfileRepository;
 import com.ambravate.arcane.academy.practice.domain.LessonSession;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
+import com.ambravate.arcane.academy.practice.domain.SoloAssessmentResult;
 import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.practice.dto.SoloSubmitRequest;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
@@ -68,6 +71,7 @@ class EncodingServiceTest {
     @Mock private ReviewSessionRepository reviewSessionRepository;
     @Mock private UserRepository userRepository;
     @Mock private UserLearnerProfileRepository learnerProfileRepository;
+    @Mock private UserTrackProfileRepository topicProfileRepository;
     @Mock private JavaCodeRunner codeRunner;
     @Mock private AiMentorService aiMentorService;
     @Mock private RetrievalService retrievalService;
@@ -75,6 +79,8 @@ class EncodingServiceTest {
     @Mock private GamificationFacade gamification;
     @Mock private ApplicationEventPublisher eventPublisher;
     @Mock private TelemetryService telemetry;
+    @Mock private GuidedStepService guidedStepService;
+    @Mock private KeywordScoringService keywordScoringService;
     @Spy  private ObjectMapper objectMapper = new ObjectMapper();
 
     @InjectMocks private EncodingService service;
@@ -377,10 +383,11 @@ class EncodingServiceTest {
             when(progressRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
             when(codeRunner.run(anyString(), any())).thenReturn(CodeRunResponse.success("Hello"));
 
-            PracticeResult result = service.submitSoloPractice(USER_ID, LESSON_ID, "code");
+            SoloAssessmentResult result = service.submitSoloPractice(
+                    USER_ID, LESSON_ID, SoloSubmitRequest.builder().code("code").build());
 
-            assertThat(result.allPassed()).isTrue();
-            assertThat(result.xpEarned()).isEqualTo(0); // no XP for solo
+            assertThat(result.passed()).isTrue();
+            assertThat(result.xpEarned()).isEqualTo(0); // no XP for solo DETERMINISTIC path
             assertThat(progress.isSoloPracticePassed()).isTrue();
         }
 
@@ -396,9 +403,10 @@ class EncodingServiceTest {
             when(aiMentorService.getFeedback(anyString(), anyString(), anyString(), anyString(), anyString()))
                     .thenReturn("Check output");
 
-            PracticeResult result = service.submitSoloPractice(USER_ID, LESSON_ID, "code");
+            SoloAssessmentResult result = service.submitSoloPractice(
+                    USER_ID, LESSON_ID, SoloSubmitRequest.builder().code("code").build());
 
-            assertThat(result.allPassed()).isFalse();
+            assertThat(result.passed()).isFalse();
             assertThat(result.errorType()).isEqualTo("TEST_FAILURE");
             assertThat(progress.isSoloPracticePassed()).isFalse();
         }

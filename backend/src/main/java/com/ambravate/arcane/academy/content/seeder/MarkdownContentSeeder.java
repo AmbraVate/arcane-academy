@@ -132,6 +132,14 @@ public class MarkdownContentSeeder {
         String topicId = resolveTopicId(dto);
 
         // 3. Upsert lesson
+        // Phase 4 — solo assessment config
+        MarkdownLessonDto.SoloAssessmentConfig sa = dto.getSoloAssessment();
+        com.ambravate.arcane.academy.common.domain.SoloAssessmentType soloType = null;
+        if (sa != null) {
+            try { soloType = com.ambravate.arcane.academy.common.domain.SoloAssessmentType.valueOf(sa.type()); }
+            catch (IllegalArgumentException ignored) { log.warn("[MarkdownContentSeeder] Unknown soloAssessmentType '{}' for lesson '{}'", sa.type(), dto.getId()); }
+        }
+
         lessonRepository.save(Lesson.builder()
                 .id(dto.getId())
                 .moduleId(dto.getModuleId())
@@ -157,6 +165,11 @@ public class MarkdownContentSeeder {
                 .soloPracticeHtml(dto.getSoloPracticeHtml())
                 .integrationPrompt(dto.getIntegrationPrompt())
                 .loreConclusionHtml(dto.getLoreConclusionHtml())
+                // Phase 4 — solo assessment
+                .soloAssessmentType(soloType)
+                .rubricItemsJson(sa != null ? sa.rubricItemsJson() : null)
+                .keywordsJson(sa != null ? sa.keywordsJson() : null)
+                .soloModelAnswerHtml(sa != null ? sa.modelAnswerHtml() : null)
                 .build());
 
         // 4. Phase 3 — upsert guided steps (replace all for this lesson)

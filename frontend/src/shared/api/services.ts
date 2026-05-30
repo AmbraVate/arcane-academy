@@ -6,6 +6,7 @@ import type {
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
   RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
   SubscriptionStatus, GuidedStepDto, GuidedStepCheckResponse,
+  SoloAssessmentResult,
 } from '@/shared/types'
 
 // â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -64,8 +65,20 @@ export const encodingApi = {
     const { data } = await api.post(`/api/encoding/${lessonId}/guided-practice/submit`, { code })
     return data
   },
-  submitSoloPractice: async (lessonId: string, code: string): Promise<PracticeResult> => {
+  submitSoloPractice: async (lessonId: string, code: string): Promise<SoloAssessmentResult> => {
     const { data } = await api.post(`/api/encoding/${lessonId}/solo-practice/submit`, { code })
+    return data
+  },
+  /** Submit a non-code solo assessment (RUBRIC_REFLECTION, PATTERN_MATCH, AI_REVIEW). */
+  submitSoloAssessment: async (
+    lessonId: string,
+    payload: {
+      answer?: string
+      checkedRubricItems?: string[]
+      confidence?: string
+    }
+  ): Promise<SoloAssessmentResult> => {
+    const { data } = await api.post(`/api/encoding/${lessonId}/solo-practice/submit`, payload)
     return data
   },
   submitRetrieval: async (lessonId: string, answers: AnswerEntry[]): Promise<RetrievalResultDto> => {

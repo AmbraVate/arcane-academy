@@ -79,4 +79,11 @@ public class UserChunkProgress {
      */
     @Column(name = "guided_steps_completed_json", columnDefinition = "TEXT")
     private String guidedStepsCompletedJson;
+
+    /**
+     * Phase 4 — Self-reported confidence after RUBRIC_REFLECTION solo practice.
+     * Values: NOT_CONFIDENT | SOMEWHAT | CONFIDENT | VERY_CONFIDENT
+     */
+    @Column(name = "solo_confidence")
+    private String soloConfidence;
 }

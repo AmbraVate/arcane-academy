@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi, notesApi, capstoneApi } from '@/shared/api/services'
 import type { UserNote } from '@/shared/api/services'
 import GuidedStepper from '@/features/learning/components/GuidedStepper'
+import SoloAssessmentPanel from '@/features/learning/components/SoloAssessmentPanel'
 
 /** Chunk IDs that are capstone lessons â€" show the project save form on COMPLETE. */
 const CAPSTONE_CHUNK_IDS = new Set([
@@ -15,7 +16,7 @@ const CAPSTONE_CHUNK_IDS = new Set([
   'rx-app-15',   'rx-jun-20',   'rx-sen-19',   'rx-lea-17',
 ])
 import { useAuth } from '@/shared/hooks/useAuth'
-import type { LessonEncoding, PracticeResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
+import type { LessonEncoding, PracticeResult, SoloAssessmentResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
 import StuckButton from '@/components/StuckButton'
 import StoryPanel from '@/features/learning/components/StoryPanel'
 import RabbitHoleHtml from '@/features/learning/components/RabbitHoleHtml'
@@ -439,26 +440,27 @@ export default function EncodingPage() {
     const written = encoding?.practiceType === 'NONE'
     dispatch({ type: 'SUBMIT_START', message: written ? '// Checking your independent response...' : '// Running all test cases...' })
     try {
-      const result: PracticeResult = await encodingApi.submitSoloPractice(lessonId, code)
+      const result: SoloAssessmentResult = await encodingApi.submitSoloPractice(lessonId, code)
       if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
-        dispatch({ type: 'COMPILE_ERROR', output: [{ text: `âœ— ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }], errorType: result.errorType })
-        if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 300) }
+        dispatch({ type: 'COMPILE_ERROR', output: [{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }], errorType: result.errorType })
+        if (result.feedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.feedback! }), 300) }
         return
       }
       const newResults = new Map<string, boolean>()
       const lines: OutputLine[] = []
-      result.testResults.forEach(t => {
+      result.testResults?.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
-      if (result.allPassed) {
-        lines.push({ text: 'âœ" All test cases passed! You built it from scratch!', type: 'success' })
+      if (result.passed) {
+        lines.push({ text: '✓ All test cases passed! You built it from scratch!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
+        handleXpEarned(result.xpEarned, result.newBadges)
       } else {
-        lines.push({ text: 'âœ— Some test cases failed â€" keep going!', type: 'error' })
+        lines.push({ text: '✗ Some test cases failed — keep going!', type: 'error' })
         dispatch({ type: 'RUN_END' })
-        if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 400) }
+        if (result.feedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.feedback! }), 400) }
       }
     } catch {
       dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting code.', type: 'error' }] })
@@ -666,7 +668,7 @@ export default function EncodingPage() {
               dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }}
             />
           </div>
-          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={handleAdvance}>Begin â†’</button>
+          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={handleAdvance}>Begin â†'</button>
         </div>
       )}
 
@@ -802,7 +804,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          <button className="btn btn-primary" onClick={handleAdvance}>I understand â€" continue â†’</button>
+          <button className="btn btn-primary" onClick={handleAdvance}>I understand â€" continue â†'</button>
         </div>
       )}
 
@@ -832,9 +834,9 @@ export default function EncodingPage() {
             <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>
           )}
           {encoding.practiceType === 'NONE' ? (
-            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Writing â†’</button>
+            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Writing â†'</button>
           ) : (
-            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding â†’</button>
+            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding â†'</button>
           )}
         </div>
       )}
@@ -864,7 +866,7 @@ export default function EncodingPage() {
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
                 <div className="text-[14px] font-bold text-teal mb-2.5">âœ¦ Practice Complete!</div>
-                <button className="btn btn-primary" onClick={handleAdvance}>Continue â†’</button>
+                <button className="btn btn-primary" onClick={handleAdvance}>Continue â†'</button>
               </div>
             )}
           </div>
@@ -926,7 +928,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Guided Response Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -938,7 +940,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -949,7 +951,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -966,7 +968,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -983,7 +985,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -994,7 +996,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -1004,12 +1006,39 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* SOLO_PRACTICE â€" brief */}
-      {phase === 'SOLO_PRACTICE' && practiceView === 'brief' && (
+      {/* SOLO_PRACTICE — non-DETERMINISTIC assessment panel (RUBRIC_REFLECTION / PATTERN_MATCH / AI_REVIEW) */}
+      {phase === 'SOLO_PRACTICE' && encoding.soloAssessmentType && encoding.soloAssessmentType !== 'DETERMINISTIC' && (
+        <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
+          <div className="text-[13px] font-bold mb-1 tracking-[0.06em] uppercase flex items-center gap-1.5" style={{ color: 'var(--teal)' }}>
+            <Target size={13} strokeWidth={1.75} /> Solo Challenge
+          </div>
+          <p className="text-muted text-[12px] mb-5 leading-[1.6]">
+            Work through this independently — without looking back at the guided practice.
+          </p>
+          <RabbitHoleHtml
+            html={encoding.soloPracticeHtml ?? ''}
+            terms={encoding.rabbitHoleTerms}
+            lessonId={encoding.lessonId}
+            domainId={encoding.domainId}
+            className={cn(proseHtml, 'mb-6')}
+          />
+          <SoloAssessmentPanel
+            encoding={encoding}
+            onSolved={(xp, badges) => {
+              handleXpEarned(xp, badges)
+              dispatch({ type: 'PRACTICE_SOLVED' })
+            }}
+            onAdvance={handleAdvance}
+          />
+        </div>
+      )}
+
+      {/* SOLO_PRACTICE — brief (DETERMINISTIC or null type) */}
+      {phase === 'SOLO_PRACTICE' && (!encoding.soloAssessmentType || encoding.soloAssessmentType === 'DETERMINISTIC') && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <div className="text-[13px] font-bold mb-1 tracking-[0.06em] uppercase flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</div>
           <p className="text-muted text-[12px] mb-4 leading-[1.6]">
-            Now rebuild this from a blank slate â€" no starter code. If you get stuck, peek at the guided practice for a hint.
+            Now rebuild this from a blank slate — no starter code. If you get stuck, peek at the guided practice for a hint.
           </p>
           <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
           {encoding.testCaseLabels && <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>}
@@ -1030,12 +1059,12 @@ export default function EncodingPage() {
             )}
           </div>
 
-          <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding â†’</button>
+          <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding →</button>
         </div>
       )}
 
-      {/* SOLO_PRACTICE â€" coding */}
-      {phase === 'SOLO_PRACTICE' && practiceView === 'code' && (
+      {/* SOLO_PRACTICE — coding (DETERMINISTIC only) */}
+      {phase === 'SOLO_PRACTICE' && (!encoding.soloAssessmentType || encoding.soloAssessmentType === 'DETERMINISTIC') && practiceView === 'code' && (
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Mobile task overlay */}
           {showTaskOverlay && (
@@ -1074,7 +1103,7 @@ export default function EncodingPage() {
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
                 <div className="text-[14px] font-bold text-teal mb-2.5">âœ¦ Solo Challenge Complete!</div>
-                <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check â†’</button>
+                <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check â†'</button>
               </div>
             )}
           </div>
@@ -1133,7 +1162,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Solo Response Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -1145,7 +1174,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -1156,7 +1185,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -1173,7 +1202,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -1190,7 +1219,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
               </>
@@ -1201,7 +1230,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>âœ¦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†’</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -1221,7 +1250,7 @@ export default function EncodingPage() {
             // Already submitted on a prior visit â€" let the user advance
             <div className="p-4 bg-card border border-border rounded-[10px]">
               <p className="text-muted text-[13px] mb-3">You have already completed this retrieval check.</p>
-              <button className="btn btn-primary" onClick={handleAdvance}>Continue â†’</button>
+              <button className="btn btn-primary" onClick={handleAdvance}>Continue â†'</button>
             </div>
           ) : !retrievalResult ? (
             <>
@@ -1246,7 +1275,7 @@ export default function EncodingPage() {
                   result={retrievalResult.results[i]} disabled />
               ))}
               <p className="text-muted text-[13px] italic mt-2.5">{retrievalResult.recommendation}</p>
-              <button className="btn btn-primary mt-3" onClick={handleAdvance}>Continue â†’</button>
+              <button className="btn btn-primary mt-3" onClick={handleAdvance}>Continue â†'</button>
             </div>
           )}
         </div>
@@ -1351,7 +1380,7 @@ export default function EncodingPage() {
               </div>
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.commonMistakes.map((m, i) => (
-                  <li key={i} className="text-[13px] text-text leading-[1.6]" style={{ listStyleType: '"â†’ "' }}>{m}</li>
+                  <li key={i} className="text-[13px] text-text leading-[1.6]" style={{ listStyleType: '"→ "' }}>{m}</li>
                 ))}
               </ul>
             </div>
@@ -1379,7 +1408,7 @@ export default function EncodingPage() {
                 <span className="text-[17px] font-bold text-gold">Save Your Project</span>
               </div>
               <p className="text-[12px] text-muted mb-4 leading-[1.6]">
-                Document what you built for your portfolio. Your project will appear on your Profile â†’ Projects tab.
+                Document what you built for your portfolio. Your project will appear on your Profile â†' Projects tab.
               </p>
               <div className="flex flex-col gap-3">
                 <input
@@ -1416,8 +1445,8 @@ export default function EncodingPage() {
                   disabled={capstoneSaving || !capstoneTitle.trim()}
                 >
                   {capstoneSaving
-                    ? <><Loader2 size={14} className="animate-spin" /> Savingâ€¦</>
-                    : 'ðŸ’¾ Save Project to Profile'}
+                    ? <><Loader2 size={14} className="animate-spin" /> Saving...</>
+                    : 'Save Project to Profile'}
                 </button>
               </div>
             </div>
@@ -1426,7 +1455,7 @@ export default function EncodingPage() {
             <div className="mb-5 p-4 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)] text-center">
               <div className="text-[24px] mb-2">âœ"</div>
               <div className="font-cinzel text-[14px] text-teal mb-1">Project Saved!</div>
-              <p className="text-[12px] text-muted">Find it in Profile â†’ Projects. An instructor may leave feedback there.</p>
+              <p className="text-[12px] text-muted">Find it in Profile â†' Projects. An instructor may leave feedback there.</p>
             </div>
           )}
 
@@ -1447,7 +1476,7 @@ export default function EncodingPage() {
 
           {/* â"€â"€ Navigation â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
           <div className="flex gap-2.5 justify-center mt-4 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
-            <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}>Return to Chunk â†’</button>
+            <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}>Return to Chunk â†'</button>
             <button className="btn btn-ghost" onClick={() => navigate(`/domain/${encoding.domainId ?? 'java'}`)}>
               Dashboard
             </button>

@@ -51,4 +51,21 @@ public class LessonEncodingDto {
     // Phase 3 — guided step engine
     /** True when this lesson has at least one guided step; the frontend switches to GuidedStepper. */
     private boolean hasGuidedSteps;
+
+    // Phase 4 — solo assessment types
+    /**
+     * Assessment type for solo practice.
+     * Values: {@code DETERMINISTIC | RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW}
+     * Null → DETERMINISTIC (legacy behaviour).
+     */
+    private String soloAssessmentType;
+
+    /** Rubric checklist items — present when soloAssessmentType == RUBRIC_REFLECTION. */
+    private List<String> rubricItems;
+
+    /**
+     * Remaining AI-review quota for the current month.
+     * Only meaningful when soloAssessmentType == AI_REVIEW; 0 otherwise.
+     */
+    private int aiReviewsRemaining;
 }

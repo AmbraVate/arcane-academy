@@ -76,6 +76,14 @@ public class MarkdownLessonDto {
     /** Ordered list of guided step configs; empty if no steps defined. */
     private java.util.List<GuidedStepConfig> guidedSteps;
 
+    // ── Phase 4 — solo assessment (from frontmatter) ──────────────────────────
+
+    /**
+     * Solo assessment configuration parsed from the {@code soloAssessment} frontmatter block.
+     * Null if the lesson uses the default DETERMINISTIC behaviour.
+     */
+    private SoloAssessmentConfig soloAssessment;
+
     /**
      * One guided step parsed from the YAML frontmatter {@code guidedSteps} list.
      *
@@ -97,4 +105,18 @@ public class MarkdownLessonDto {
             String markingRuleJson,
             String hintHtml,
             String reflectionPromptHtml) {}
+
+    /**
+     * Solo assessment configuration from the {@code soloAssessment} YAML block.
+     *
+     * @param type              RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW
+     * @param rubricItemsJson   JSON array of checklist strings (RUBRIC_REFLECTION)
+     * @param keywordsJson      JSON array of keywords (PATTERN_MATCH)
+     * @param modelAnswerHtml   rendered HTML exemplar shown after submission
+     */
+    public record SoloAssessmentConfig(
+            String type,
+            String rubricItemsJson,
+            String keywordsJson,
+            String modelAnswerHtml) {}
 }

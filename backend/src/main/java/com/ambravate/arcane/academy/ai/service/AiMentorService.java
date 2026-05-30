@@ -668,4 +668,58 @@ public class AiMentorService {
                 .findFirst()
                 .orElse("Break the problem down step by step. Read the worked example again carefully.");
     }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // SOLO PRACTICE AI REVIEW (Phase 4)
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /**
+     * Asks Master Velan to review a free-text solo-practice answer.
+     *
+     * <p>The AI is instructed to respond with "PASS" or "FAIL" on the first line,
+     * followed by 2–3 sentences of feedback. Falls back to pass + encouragement
+     * when the AI is unavailable.
+     */
+    public SoloAiReview reviewSoloPractice(
+            String lessonTitle, String practicePrompt, String answer) {
+
+        log.info("[Mentor] AI review requested for solo practice — lesson='{}'", lessonTitle);
+
+        String prompt = "Solo Practice Review\n"
+                + "Lesson: " + lessonTitle + "\n\n"
+                + "Task:\n" + (practicePrompt != null ? practicePrompt : "(no task description)") + "\n\n"
+                + "Student Answer:\n" + (answer != null ? answer : "(no answer)") + "\n\n"
+                + "Review this answer. On the very first line write only PASS or FAIL "
+                + "— PASS if the answer demonstrates genuine understanding, FAIL if it is "
+                + "missing key concepts or is too vague. "
+                + "Then on the following lines give 2-3 sentences of feedback as Master Velan. "
+                + "Do not repeat the PASS/FAIL word in the feedback sentences.";
+
+        String apiFeedback = callAnthropicApi(prompt);
+        if (apiFeedback != null) {
+            String[] lines = apiFeedback.split("\\r?\\n", 2);
+            boolean passed = lines[0].trim().toUpperCase(java.util.Locale.ROOT).startsWith("PASS");
+            String feedback = lines.length > 1 ? lines[1].strip() : "";
+            if (feedback.isBlank()) {
+                feedback = passed
+                        ? "Master Velan nods approvingly. \"Your understanding is clear, young wizard.\""
+                        : "Master Velan frowns gently. \"Your answer lacks key concepts. Study the lesson again.\"";
+            }
+            return new SoloAiReview(passed, feedback);
+        }
+
+        // Fallback when AI unavailable — always pass with encouraging message
+        return new SoloAiReview(true,
+                "Master Velan nods approvingly. \"Your response demonstrates understanding of the "
+                + "core concepts. Excellent work, young wizard — you may proceed to the next "
+                + "phase of your training.\"");
+    }
+
+    /**
+     * Result of an AI solo-practice review.
+     *
+     * @param passed   true when the AI deems the answer acceptable
+     * @param feedback feedback text in Master Velan's voice
+     */
+    public record SoloAiReview(boolean passed, String feedback) {}
 }

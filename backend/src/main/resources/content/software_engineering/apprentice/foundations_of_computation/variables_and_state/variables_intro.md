@@ -22,6 +22,40 @@ learningObjectives:
 integrationDomains:
   - psychology
   - mathematics
+soloAssessment:
+  type: RUBRIC_REFLECTION
+  rubricItems:
+    - Declares a String variable with a meaningful name and string value
+    - Declares an int variable with a meaningful name and integer value
+    - Declares a boolean variable with a meaningful name and boolean value
+    - Prints each variable on its own line using System.out.println
+    - All three declarations use the correct Java syntax (type name = value;)
+  keywords:
+    - variable
+    - declare
+    - String
+    - int
+    - boolean
+    - println
+    - type
+  modelAnswer: |
+    Here is one correct solution. Your variable names may differ — what matters is that each
+    declaration uses the right type and the values are printed correctly.
+
+    ```java
+    String spellName = "Fireball";
+    int manaCost = 30;
+    boolean isUnlocked = false;
+    System.out.println(spellName);
+    System.out.println(manaCost);
+    System.out.println(isUnlocked);
+    ```
+
+    **Key points to check:**
+    - Each declaration follows the pattern: `type name = value;`
+    - `String` literals are in double quotes; `int` is a plain number; `boolean` is `true` or `false`
+    - `System.out.println(variableName)` prints the *value* stored in the variable — not the name as a string
+
 guidedSteps:
   - id: var-step-1
     sortOrder: 1

@@ -4,6 +4,8 @@ import com.ambravate.arcane.academy.ai.domain.AnswerPair;
 import com.ambravate.arcane.academy.ai.domain.FeynmanResult;
 import com.ambravate.arcane.academy.common.dto.AnswerRequest;
 import com.ambravate.arcane.academy.practice.dto.CodeSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SoloSubmitRequest;
+import com.ambravate.arcane.academy.practice.dto.SoloAssessmentResponse;
 import com.ambravate.arcane.academy.ai.dto.FeynmanRequest;
 import com.ambravate.arcane.academy.ai.dto.FeynmanResultDto;
 import com.ambravate.arcane.academy.common.dto.QuestionDto;
@@ -14,10 +16,12 @@ import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
+import com.ambravate.arcane.academy.common.domain.SoloAssessmentType;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
 import com.ambravate.arcane.academy.practice.domain.LessonSession;
+import com.ambravate.arcane.academy.practice.domain.SoloAssessmentResult;
 import com.ambravate.arcane.academy.practice.service.EncodingService;
 import com.ambravate.arcane.academy.ai.service.FeynmanService;
 import com.ambravate.arcane.academy.practice.service.ReactPracticeService;
@@ -57,7 +61,7 @@ public class EncodingController {
             @PathVariable String lessonId,
             @AuthenticationPrincipal UserPrincipal user) {
         LessonSession session = encodingService.startLesson(user.getId(), lessonId);
-        LessonEncodingDto dto = toDto(session);
+        LessonEncodingDto dto = toDto(session, user.getId());
 
         if ("RETRIEVAL_CHECK".equals(dto.getPhase()) && !session.progress().isRetrievalCheckSubmitted()) {
             List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), lessonId);
@@ -72,7 +76,7 @@ public class EncodingController {
             @PathVariable String lessonId,
             @AuthenticationPrincipal UserPrincipal user) {
         LessonSession session = encodingService.advancePhase(user.getId(), lessonId);
-        LessonEncodingDto dto = toDto(session);
+        LessonEncodingDto dto = toDto(session, user.getId());
 
         if ("RETRIEVAL_CHECK".equals(dto.getPhase())) {
             List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), lessonId);
@@ -106,25 +110,33 @@ public class EncodingController {
     }
 
     @PostMapping("/{lessonId}/solo-practice/submit")
-    public ResponseEntity<SubmitResponse> submitSoloPractice(
+    public ResponseEntity<SoloAssessmentResponse> submitSoloPractice(
             @PathVariable String lessonId,
-            @Valid @RequestBody CodeSubmitRequest request,
+            @Valid @RequestBody SoloSubmitRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
-        PracticeResult result = encodingService.submitSoloPractice(
-                user.getId(), lessonId, request.getCode());
 
-        return ResponseEntity.ok(SubmitResponse.builder()
-                .allPassed(result.allPassed())
-                .testResults(result.testResults().stream().map(tr ->
-                        SubmitResponse.TestResult.builder()
-                                .label(tr.label()).passed(tr.passed())
-                                .actualOutput(tr.actualOutput()).expectedOutput(tr.expectedOutput())
-                                .build()
-                ).collect(Collectors.toList()))
-                .xpEarned(result.xpEarned())
-                .mentorFeedback(result.mentorFeedback())
+        SoloAssessmentResult result = encodingService.submitSoloPractice(
+                user.getId(), lessonId, request);
+
+        return ResponseEntity.ok(SoloAssessmentResponse.builder()
+                .passed(result.passed())
+                .band(result.band())
+                .feedback(result.feedback())
+                .modelAnswerHtml(result.modelAnswerHtml())
+                .matchedKeywords(result.matchedKeywords())
                 .errorType(result.errorType())
+                .xpEarned(result.xpEarned())
                 .newBadges(result.newBadges())
+                .aiReviewsRemaining(result.aiReviewsRemaining())
+                .usedAi(result.usedAi())
+                .testResults(result.testResults() == null ? List.of() :
+                        result.testResults().stream().map(tr ->
+                                SubmitResponse.TestResult.builder()
+                                        .label(tr.label()).passed(tr.passed())
+                                        .actualOutput(tr.actualOutput())
+                                        .expectedOutput(tr.expectedOutput())
+                                        .build())
+                        .collect(Collectors.toList()))
                 .build());
     }
 
@@ -174,13 +186,22 @@ public class EncodingController {
         return ResponseEntity.ok(java.util.Map.of("prompt", prompt));
     }
 
-    private LessonEncodingDto toDto(LessonSession session) {
+    private LessonEncodingDto toDto(LessonSession session, String userId) {
         Lesson l = session.lesson();
         UserChunkProgress p = session.progress();
 
         String domainId = moduleRepository.findById(l.getModuleId())
                 .map(LearningModule::getTrackId)
                 .orElse("java");
+
+        // Phase 4 — solo assessment metadata
+        String soloType = l.getSoloAssessmentType() != null
+                ? l.getSoloAssessmentType().name() : null;
+        List<String> rubricItems = parseStringList(l.getRubricItemsJson());
+        int aiRemaining = 0;
+        if (l.getSoloAssessmentType() == SoloAssessmentType.AI_REVIEW) {
+            aiRemaining = encodingService.getAiReviewsRemaining(userId, domainId);
+        }
 
         LessonEncodingDto dto = LessonEncodingDto.builder()
                 .lessonId(l.getId()).moduleId(l.getModuleId()).domainId(domainId).title(l.getTitle())
@@ -196,6 +217,9 @@ public class EncodingController {
                 .downloadables(parseJson(l.getDownloadablesJson()))
                 .questType(l.getQuestType() != null ? l.getQuestType().name() : null)
                 .hasGuidedSteps(guidedStepService.hasSteps(l.getId()))
+                .soloAssessmentType(soloType)
+                .rubricItems(rubricItems.isEmpty() ? null : rubricItems)
+                .aiReviewsRemaining(aiRemaining)
                 .build();
 
         switch (p.getCurrentPhase()) {

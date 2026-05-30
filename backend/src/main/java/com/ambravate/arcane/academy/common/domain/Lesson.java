@@ -133,4 +133,35 @@ public class Lesson {
      */
     @Column(name = "integration_domains_json", columnDefinition = "TEXT")
     private String integrationDomainsJson;
+
+    // ── Phase 4 — Solo assessment types ──────────────────────────────────────
+
+    /**
+     * Null → default DETERMINISTIC behaviour (existing code/written paths).
+     * Set explicitly on Markdown-authored lessons to unlock richer assessment.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "solo_assessment_type")
+    private SoloAssessmentType soloAssessmentType;
+
+    /**
+     * JSON array of rubric checklist strings — used by RUBRIC_REFLECTION.
+     * Example: {@code ["Declares three variables","Prints each variable"]}
+     */
+    @Column(name = "rubric_items_json", columnDefinition = "TEXT")
+    private String rubricItemsJson;
+
+    /**
+     * JSON array of keywords for PATTERN_MATCH scoring.
+     * Example: {@code ["variable","type","int","String"]}
+     */
+    @Column(name = "keywords_json", columnDefinition = "TEXT")
+    private String keywordsJson;
+
+    /**
+     * Model-answer exemplar shown to the learner after their first solo
+     * practice submission (all non-DETERMINISTIC types).
+     */
+    @Column(name = "solo_model_answer_html", columnDefinition = "TEXT")
+    private String soloModelAnswerHtml;
 }

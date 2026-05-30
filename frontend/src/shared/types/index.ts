@@ -113,6 +113,13 @@ export interface LessonEncoding {
   // Phase 3 — guided step engine
   /** True when this lesson has guided steps; frontend switches to GuidedStepper. */
   hasGuidedSteps: boolean
+  // Phase 4 — solo assessment types
+  /** DETERMINISTIC | RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW — null means DETERMINISTIC */
+  soloAssessmentType: string | null
+  /** Rubric checklist items shown for RUBRIC_REFLECTION solo practice */
+  rubricItems: string[] | null
+  /** Remaining AI review quota for the current month — only meaningful for AI_REVIEW */
+  aiReviewsRemaining: number
 }
 
 // ── Phase 3 — Guided steps ────────────────────────────────────────────────────
@@ -136,6 +143,34 @@ export interface GuidedStepCheckResponse {
   feedback: string
   reflectionPrompt: string | null
   nextStepId: string | null
+}
+
+// ── Phase 4 — Solo assessment ─────────────────────────────────────────────
+
+export type SoloAssessmentType =
+  | 'DETERMINISTIC' | 'RUBRIC_REFLECTION' | 'PATTERN_MATCH' | 'AI_REVIEW'
+
+export type KeywordBand = 'WEAK' | 'GOOD' | 'EXCELLENT'
+
+/** Response from POST /api/encoding/{lessonId}/solo-practice/submit (all types) */
+export interface SoloAssessmentResult {
+  passed: boolean
+  /** Keyword scoring band — only set for PATTERN_MATCH */
+  band: KeywordBand | null
+  /** Feedback / mentor text */
+  feedback: string | null
+  /** Model-answer HTML revealed after submission — null for DETERMINISTIC */
+  modelAnswerHtml: string | null
+  /** Keywords matched in the answer — only for PATTERN_MATCH */
+  matchedKeywords: string[] | null
+  errorType: string | null
+  xpEarned: number
+  newBadges: Badge[]
+  /** Remaining AI-review uses for the month — only meaningful for AI_REVIEW */
+  aiReviewsRemaining: number
+  usedAi: boolean
+  /** Test-case breakdown — only for DETERMINISTIC code paths */
+  testResults: TestResult[]
 }
 
 export interface Downloadable {

@@ -5,12 +5,14 @@ import com.ambravate.arcane.academy.ai.domain.GradeResult;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.practice.dto.SoloSubmitRequest;
 import com.ambravate.arcane.academy.common.domain.EncodingPhase;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;
 import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
 import com.ambravate.arcane.academy.common.domain.LessonStatus;
+import com.ambravate.arcane.academy.common.domain.SoloAssessmentType;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
@@ -33,6 +35,7 @@ import com.ambravate.arcane.academy.ai.service.SpacingService;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
 import com.ambravate.arcane.academy.practice.domain.LessonSession;
+import com.ambravate.arcane.academy.practice.domain.SoloAssessmentResult;
 import com.ambravate.arcane.academy.practice.domain.TestResult;
 import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -46,6 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,6 +75,8 @@ public class EncodingService {
     private final ObjectMapper objectMapper;
     // Phase 3 — guided step engine
     private final GuidedStepService guidedStepService;
+    // Phase 4 — solo assessment
+    private final KeywordScoringService keywordScoringService;
 
     private static final List<LearnerPath> TIER_PROGRESSION = List.of(
             LearnerPath.APPRENTICE, LearnerPath.JUNIOR, LearnerPath.SENIOR, LearnerPath.LEAD);
@@ -379,50 +385,101 @@ public class EncodingService {
                 allPassed ? null : "TEST_FAILURE", newBadges);
     }
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // SOLO PRACTICE — Phase 4 dispatch
+    // ─────────────────────────────────────────────────────────────────────────
+
     @Transactional
-    public PracticeResult submitSoloPractice(String userId, String lessonId, String code) {
+    public SoloAssessmentResult submitSoloPractice(
+            String userId, String lessonId, SoloSubmitRequest request) {
+
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new NoSuchElementException("Lesson not found: " + lessonId));
         UserChunkProgress progress = progressRepository.findByUserIdAndLessonId(userId, lessonId)
                 .orElseThrow(() -> new IllegalStateException("No progress record for " + lessonId));
 
+        SoloAssessmentType type = lesson.getSoloAssessmentType();
+        if (type == null) type = SoloAssessmentType.DETERMINISTIC;
+
+        return switch (type) {
+            case DETERMINISTIC  -> soloDeterministic(userId, lessonId, lesson, progress, request);
+            case RUBRIC_REFLECTION -> soloRubric(userId, lesson, progress,
+                    request.getAnswer(), request.getCheckedRubricItems(), request.getConfidence());
+            case PATTERN_MATCH  -> soloPatternMatch(userId, lesson, progress, request.getAnswer());
+            case AI_REVIEW      -> soloAiReview(userId, lessonId, lesson, progress, request.getAnswer());
+        };
+    }
+
+    /** Returns the number of AI reviews remaining for the current month. */
+    public int getAiReviewsRemaining(String userId, String domainId) {
+        String month = YearMonth.now().toString();
+        if ("java".equals(domainId)) {
+            return learnerProfileRepository.findByUserId(userId)
+                    .map(p -> !month.equals(p.getAiReviewQuotaMonth())
+                            ? KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                            : Math.max(0, KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                                            - p.getAiReviewUsesThisMonth()))
+                    .orElse(KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA);
+        }
+        return topicProfileRepository.findByUserIdAndTrackId(userId, domainId)
+                .map(p -> !month.equals(p.getAiReviewQuotaMonth())
+                        ? KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                        : Math.max(0, KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                                        - p.getAiReviewUsesThisMonth()))
+                .orElse(KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA);
+    }
+
+    // ── DETERMINISTIC ─────────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloDeterministic(
+            String userId, String lessonId,
+            Lesson lesson, UserChunkProgress progress,
+            SoloSubmitRequest request) {
+
+        // Written-response path (practiceType == NONE)
         if (lesson.getPracticeType() == LessonPracticeType.NONE) {
-            PracticeResult result = gradeWrittenPractice(userId, lesson, code, true);
-            if (result.allPassed()) {
+            String answer = request.getAnswer() != null ? request.getAnswer()
+                    : (request.getCode() != null ? request.getCode() : "");
+            PracticeResult pr = gradeWrittenPractice(userId, lesson, answer, true);
+            if (pr.allPassed()) {
                 progress.setSoloPracticePassed(true);
                 progressRepository.save(progress);
             }
-            return result;
+            return practiceToSolo(pr);
         }
 
+        // Code-test path
+        String code = request.getCode() != null ? request.getCode() : "";
         List<Map<String, Object>> testCases = parseTestCases(lesson.getGuidedPracticeTestsJson());
         if (testCases.isEmpty()) {
-            return new PracticeResult(true, List.of(), 0, null, null, List.of());
+            progress.setSoloPracticePassed(true);
+            progressRepository.save(progress);
+            return new SoloAssessmentResult(
+                    true, List.of(), 0, null, null, List.of(), null, null, List.of(), 0, false);
         }
 
         CodeRunResponse probe = codeRunner.run(code,
                 (String) testCases.getFirst().getOrDefault("input", null));
 
         if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
-            String feedback = aiMentorService.explainCompileError(
-                    lesson.getTitle(), "Java", code, probe.getError());
-            return new PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
+            String fb = aiMentorService.explainCompileError(lesson.getTitle(), "Java", code, probe.getError());
+            return new SoloAssessmentResult(
+                    false, List.of(), 0, fb, "COMPILE_ERROR", List.of(), null, null, List.of(), 0, false);
         }
         if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
                 || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
-            String feedback = aiMentorService.explainRuntimeError(
-                    lesson.getTitle(), "Java", code,
+            String fb = aiMentorService.explainRuntimeError(lesson.getTitle(), "Java", code,
                     probe.getError() != null ? probe.getError() : "Timeout — possible infinite loop");
-            return new PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
+            return new SoloAssessmentResult(
+                    false, List.of(), 0, fb, "RUNTIME_ERROR", List.of(), null, null, List.of(), 0, false);
         }
 
         List<TestResult> results = new ArrayList<>();
         boolean allPassed = true;
         List<String> failedLabels = new ArrayList<>();
-
         for (Map<String, Object> tc : testCases) {
-            String label = (String) tc.get("label");
-            String input = (String) tc.getOrDefault("input", null);
+            String label    = (String) tc.get("label");
+            String input    = (String) tc.getOrDefault("input", null);
             String expected = (String) tc.get("expected");
             CodeRunResponse run = codeRunner.run(code, input);
             String actual = run.getOutput() != null ? run.getOutput().trim() : "";
@@ -439,9 +496,177 @@ public class EncodingService {
             mentorFeedback = aiMentorService.getFeedback(lesson.getTitle(), "Java",
                     "", code, String.join(", ", failedLabels));
         }
+        return new SoloAssessmentResult(allPassed, results, 0, mentorFeedback,
+                allPassed ? null : "TEST_FAILURE", List.of(), null, null, List.of(), 0, false);
+    }
 
-        return new PracticeResult(allPassed, results, 0, mentorFeedback,
-                allPassed ? null : "TEST_FAILURE", List.of());
+    /** Converts legacy PracticeResult to SoloAssessmentResult for the NONE path. */
+    private SoloAssessmentResult practiceToSolo(PracticeResult pr) {
+        return new SoloAssessmentResult(
+                pr.allPassed(), pr.testResults(), pr.xpEarned(), pr.mentorFeedback(),
+                pr.errorType(), pr.newBadges(), null, null, List.of(), 0, false);
+    }
+
+    // ── RUBRIC_REFLECTION ─────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloRubric(
+            String userId,
+            Lesson lesson, UserChunkProgress progress,
+            String answer, List<String> checkedItems, String confidence) {
+
+        // Rubric-reflection always passes — it's a self-reflection tool
+        if (confidence != null && !confidence.isBlank()) {
+            progress.setSoloConfidence(confidence);
+        }
+        progress.setSoloPracticePassed(true);
+        progressRepository.save(progress);
+
+        int xp = awardXp(userId, lesson.getId() + "-solo-rubric", lesson.getXpReward());
+        List<BadgeDto> badges = gamification.evaluateAndAwardBadges(userId,
+                progressRepository.findByUserId(userId),
+                reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
+
+        String feedback = buildRubricFeedback(lesson, checkedItems);
+        return new SoloAssessmentResult(
+                true, List.of(), xp, feedback, null, badges,
+                null, lesson.getSoloModelAnswerHtml(), List.of(), 0, false);
+    }
+
+    private String buildRubricFeedback(Lesson lesson, List<String> checkedItems) {
+        if (checkedItems == null || checkedItems.isEmpty()) {
+            return "Master Velan reviews your self-assessment. " +
+                   "\"Honest reflection is the foundation of mastery. " +
+                   "Study the model answer carefully and note what you included or missed.\"";
+        }
+        return "Master Velan approves of your self-assessment. " +
+               "\"You have checked " + checkedItems.size() + " rubric item"
+               + (checkedItems.size() == 1 ? "" : "s") + ". " +
+               "Compare your work against the model answer to deepen your understanding.\"";
+    }
+
+    // ── PATTERN_MATCH ─────────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloPatternMatch(
+            String userId,
+            Lesson lesson, UserChunkProgress progress,
+            String answer) {
+
+        List<String> keywords = parseStringList(lesson.getKeywordsJson());
+        KeywordScoringService.KeywordScore score = keywordScoringService.score(answer, keywords);
+
+        boolean passed = score.isPassing();
+        if (passed) {
+            progress.setSoloPracticePassed(true);
+            progressRepository.save(progress);
+        }
+
+        int xp = 0;
+        List<BadgeDto> badges = List.of();
+        if (passed) {
+            xp = awardXp(userId, lesson.getId() + "-solo-pattern", lesson.getXpReward());
+            badges = gamification.evaluateAndAwardBadges(userId,
+                    progressRepository.findByUserId(userId),
+                    reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
+        }
+
+        String feedback = buildPatternFeedback(score);
+        return new SoloAssessmentResult(
+                passed, List.of(), xp, feedback, passed ? null : "TEXT_CHECK_FAILURE", badges,
+                score.band().name(), lesson.getSoloModelAnswerHtml(), score.matchedKeywords(), 0, false);
+    }
+
+    private String buildPatternFeedback(KeywordScoringService.KeywordScore score) {
+        return switch (score.band()) {
+            case EXCELLENT -> "Master Velan is impressed. \"Excellent work, young wizard — you have "
+                    + "woven " + score.matched() + " of the " + score.total() + " key concepts "
+                    + "into your answer. Your understanding is clear.\"";
+            case GOOD      -> "Master Velan nods thoughtfully. \"A good response — you have covered "
+                    + score.matched() + " of " + score.total() + " key concepts. "
+                    + "Review the model answer to see what else you could have included.\"";
+            case WEAK      -> "Master Velan shakes his head gently. \"Your answer touches only "
+                    + score.matched() + " of the " + score.total() + " key concepts I look for. "
+                    + "Read the lesson vocabulary again and try to weave more of those terms "
+                    + "naturally into your explanation.\"";
+        };
+    }
+
+    // ── AI_REVIEW ─────────────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloAiReview(
+            String userId, String lessonId,
+            Lesson lesson, UserChunkProgress progress,
+            String answer) {
+
+        String domainId = moduleRepository.findById(lesson.getModuleId())
+                .map(LearningModule::getTrackId).orElse("java");
+
+        int remaining = getAiReviewsRemaining(userId, domainId);
+
+        // Downgrade to rubric-reflection when quota exhausted
+        if (remaining <= 0) {
+            log.info("[Encoding] AI review quota exhausted — downgrading to rubric | user={} lesson={}", userId, lessonId);
+            return soloRubric(userId, lesson, progress, answer, List.of(), null);
+        }
+
+        // Consume one quota unit
+        incrementAiReview(userId, domainId);
+        remaining = Math.max(0, remaining - 1);
+
+        AiMentorService.SoloAiReview review = aiMentorService.reviewSoloPractice(
+                lesson.getTitle(), lesson.getSoloPracticeHtml(), answer);
+
+        if (review.passed()) {
+            progress.setSoloPracticePassed(true);
+            progressRepository.save(progress);
+        }
+
+        int xp = 0;
+        List<BadgeDto> badges = List.of();
+        if (review.passed()) {
+            xp = awardXp(userId, lessonId + "-solo-ai", lesson.getXpReward());
+            badges = gamification.evaluateAndAwardBadges(userId,
+                    progressRepository.findByUserId(userId),
+                    reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
+        }
+
+        return new SoloAssessmentResult(
+                review.passed(), List.of(), xp, review.feedback(),
+                review.passed() ? null : "TEXT_CHECK_FAILURE", badges,
+                null, lesson.getSoloModelAnswerHtml(), List.of(), remaining, true);
+    }
+
+    // ── AI quota helpers ──────────────────────────────────────────────────────
+
+    private void incrementAiReview(String userId, String domainId) {
+        String month = YearMonth.now().toString();
+        if ("java".equals(domainId)) {
+            learnerProfileRepository.findByUserId(userId).ifPresent(p -> {
+                if (!month.equals(p.getAiReviewQuotaMonth())) {
+                    p.setAiReviewQuotaMonth(month);
+                    p.setAiReviewUsesThisMonth(0);
+                }
+                p.setAiReviewUsesThisMonth(p.getAiReviewUsesThisMonth() + 1);
+                learnerProfileRepository.save(p);
+            });
+        } else {
+            topicProfileRepository.findByUserIdAndTrackId(userId, domainId).ifPresent(p -> {
+                if (!month.equals(p.getAiReviewQuotaMonth())) {
+                    p.setAiReviewQuotaMonth(month);
+                    p.setAiReviewUsesThisMonth(0);
+                }
+                p.setAiReviewUsesThisMonth(p.getAiReviewUsesThisMonth() + 1);
+                topicProfileRepository.save(p);
+            });
+        }
+    }
+
+    private List<String> parseStringList(String json) {
+        if (json == null || json.isBlank()) return List.of();
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<String>>() {});
+        } catch (Exception e) {
+            return List.of();
+        }
     }
 
     @Transactional
