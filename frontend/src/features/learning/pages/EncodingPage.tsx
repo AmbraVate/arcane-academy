@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useParams, useNavigate } from 'react-router-dom'
 import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi, notesApi, capstoneApi } from '@/shared/api/services'
 import type { UserNote } from '@/shared/api/services'
+import GuidedStepper from '@/features/learning/components/GuidedStepper'
 
 /** Chunk IDs that are capstone lessons â€" show the project save form on COMPLETE. */
 const CAPSTONE_CHUNK_IDS = new Set([
@@ -805,8 +806,18 @@ export default function EncodingPage() {
         </div>
       )}
 
+      {/* GUIDED_PRACTICE — step engine (Phase 3) */}
+      {phase === 'GUIDED_PRACTICE' && encoding.hasGuidedSteps && (
+        <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
+          <div className="text-[13px] font-bold text-gold mb-4 tracking-[0.06em] uppercase">
+            ✦ Guided Practice Quest
+          </div>
+          <GuidedStepper lessonId={encoding.lessonId} onAllComplete={handleAdvance} />
+        </div>
+      )}
+
       {/* GUIDED_PRACTICE â€" brief */}
-      {phase === 'GUIDED_PRACTICE' && practiceView === 'brief' && (
+      {phase === 'GUIDED_PRACTICE' && !encoding.hasGuidedSteps && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">
             {encoding.practiceType === 'NONE' ? 'Study Material' : 'âœ¦ Guided Practice'}
@@ -828,8 +839,8 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* GUIDED_PRACTICE â€" coding */}
-      {phase === 'GUIDED_PRACTICE' && practiceView === 'code' && (
+      {/* GUIDED_PRACTICE â€" coding (legacy path: no guided steps) */}
+      {phase === 'GUIDED_PRACTICE' && !encoding.hasGuidedSteps && practiceView === 'code' && (
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Mobile task overlay */}
           {showTaskOverlay && (

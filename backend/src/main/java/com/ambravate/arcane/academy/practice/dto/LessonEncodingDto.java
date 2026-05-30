@@ -47,4 +47,8 @@ public class LessonEncodingDto {
     private String mentalModelHtml;
     private String miniSummaryHtml;
     private String loreConclusionHtml;
+
+    // Phase 3 — guided step engine
+    /** True when this lesson has at least one guided step; the frontend switches to GuidedStepper. */
+    private boolean hasGuidedSteps;
 }

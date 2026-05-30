@@ -153,6 +153,8 @@ public class MarkdownLessonParser {
                 .soloPracticeHtml(renderSection(h1, "solo practice quest", "solo practice"))
                 .integrationPrompt(renderSection(h1, "integration"))
                 .loreConclusionHtml(renderSection(h1, "lore conclusion"))
+                // Phase 3 — guided steps from frontmatter
+                .guidedSteps(parseGuidedSteps(fm))
                 .build();
     }
 
@@ -264,4 +266,73 @@ public class MarkdownLessonParser {
         }
         return null;
     }
+
+    // ── Phase 3 — guided step parsing ────────────────────────────────────────
+
+    /**
+     * Parses the {@code guidedSteps} list from frontmatter.
+     *
+     * Each step map supports:
+     * <pre>
+     * - id: var_step_1
+     *   sortOrder: 1
+     *   inputType: FILL_BLANK       # default SHORT_TEXT
+     *   instruction: "Markdown instruction..."
+     *   inputConfig:                # optional map
+     *     placeholder: "variable name"
+     *   markingRule:
+     *     matchMode: NORMALIZED
+     *     accepted: [age]
+     *     rejectedFeedback: "Try again..."
+     *   hint: "Optional hint Markdown..."
+     *   reflectionPrompt: "Reflection Markdown..."
+     * </pre>
+     */
+    @SuppressWarnings("unchecked")
+    private List<MarkdownLessonDto.GuidedStepConfig> parseGuidedSteps(
+            Map<String, Object> fm) {
+        Object raw = fm.get("guidedSteps");
+        if (!(raw instanceof List<?> list) || list.isEmpty()) return List.of();
+
+        List<MarkdownLessonDto.GuidedStepConfig> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Object item = list.get(i);
+            if (!(item instanceof Map<?, ?> rawMap)) continue;
+            Map<String, Object> m = (Map<String, Object>) rawMap;
+
+            String id = getString(m, "id", null);
+            if (id == null || id.isBlank()) {
+                log.warn("[MarkdownLessonParser] Guided step at index {} missing 'id' — skipping", i);
+                continue;
+            }
+            int sortOrder  = getInt(m, "sortOrder", i + 1);
+            String inputType = getString(m, "inputType", "SHORT_TEXT").toUpperCase(java.util.Locale.ROOT);
+            String instructionHtml = renderMarkdown(getString(m, "instruction", null));
+            String hintHtml        = renderMarkdown(getString(m, "hint", null));
+            String reflectionHtml  = renderMarkdown(getString(m, "reflectionPrompt", null));
+            String inputConfigJson = toJsonOrNull(m.get("inputConfig"));
+            String markingRuleJson = toJsonOrNull(m.get("markingRule"));
+
+            result.add(new MarkdownLessonDto.GuidedStepConfig(
+                    id, sortOrder, instructionHtml, inputType,
+                    inputConfigJson, markingRuleJson, hintHtml, reflectionHtml));
+        }
+        return result;
+    }
+
+    private String renderMarkdown(String md) {
+        return (md == null || md.isBlank()) ? null : markdown.toHtml(md);
+    }
+
+    private String toJsonOrNull(Object val) {
+        if (val == null) return null;
+        try {
+            return objectMapper.writeValueAsString(val);
+        } catch (JsonProcessingException e) {
+            return null;
+        }
+    }
+
+    // package-private for use in parser unit tests
+    private org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarkdownLessonParser.class);
 }

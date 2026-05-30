@@ -71,4 +71,12 @@ public class UserChunkProgress {
 
     @Builder.Default
     private Instant createdAt = Instant.now();
+
+    /**
+     * Phase 3 — JSON array of guided step IDs the user has passed.
+     * Example: {@code ["var_step_1","var_step_2"]}.
+     * Null means no steps attempted yet.
+     */
+    @Column(name = "guided_steps_completed_json", columnDefinition = "TEXT")
+    private String guidedStepsCompletedJson;
 }

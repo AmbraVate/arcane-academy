@@ -70,4 +70,31 @@ public class MarkdownLessonDto {
     private String soloPracticeHtml;
     private String integrationPrompt;
     private String loreConclusionHtml;
+
+    // ── Phase 3 — guided steps (from frontmatter) ─────────────────────────────
+
+    /** Ordered list of guided step configs; empty if no steps defined. */
+    private java.util.List<GuidedStepConfig> guidedSteps;
+
+    /**
+     * One guided step parsed from the YAML frontmatter {@code guidedSteps} list.
+     *
+     * @param id                   stable string ID (e.g. {@code var_step_1})
+     * @param sortOrder            position in the workbook
+     * @param instructionHtml      rendered HTML instruction
+     * @param inputType            FILL_BLANK | MULTIPLE_CHOICE | SHORT_TEXT | CODE | DRAG_DROP | SEQUENCE
+     * @param inputConfigJson      serialised JSON config for the input widget
+     * @param markingRuleJson      serialised JSON marking rule
+     * @param hintHtml             optional hint rendered to HTML
+     * @param reflectionPromptHtml optional reflection shown on pass
+     */
+    public record GuidedStepConfig(
+            String id,
+            int    sortOrder,
+            String instructionHtml,
+            String inputType,
+            String inputConfigJson,
+            String markingRuleJson,
+            String hintHtml,
+            String reflectionPromptHtml) {}
 }

@@ -5,7 +5,7 @@ import type {
   RetrievalResultDto, ReviewSessionDto, ReviewResultDto,
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
   RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
-  SubscriptionStatus,
+  SubscriptionStatus, GuidedStepDto, GuidedStepCheckResponse,
 } from '@/shared/types'
 
 // â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -78,6 +78,25 @@ export const encodingApi = {
   },
   getFeynmanPrompt: async (lessonId: string): Promise<string> => {
     const { data } = await api.get(`/api/encoding/${lessonId}/feynman/prompt`)
+    return data
+  },
+}
+
+// ── Guided steps (Phase 3) ────────────────────────────────────────────────────
+export const guidedStepApi = {
+  getSteps: async (lessonId: string): Promise<GuidedStepDto[]> => {
+    const { data } = await api.get(`/api/encoding/${lessonId}/guided/steps`)
+    return data
+  },
+  checkStep: async (
+    lessonId: string,
+    stepId: string,
+    answer: string,
+  ): Promise<GuidedStepCheckResponse> => {
+    const { data } = await api.post(
+      `/api/encoding/${lessonId}/guided/steps/${stepId}/check`,
+      { answer },
+    )
     return data
   },
 }

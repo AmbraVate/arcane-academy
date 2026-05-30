@@ -26,6 +26,7 @@ import com.ambravate.arcane.academy.practice.service.SqlPracticeService;
 
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
+import com.ambravate.arcane.academy.practice.service.GuidedStepService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -44,9 +45,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @RequiredArgsConstructor
 public class EncodingController {
 
-    private final EncodingService encodingService;
-    private final RetrievalService retrievalService;
-    private final FeynmanService feynmanService;
+    private final EncodingService   encodingService;
+    private final RetrievalService  retrievalService;
+    private final FeynmanService    feynmanService;
+    private final GuidedStepService guidedStepService;
     private final LearningModuleRepository moduleRepository;
     private final ObjectMapper objectMapper;
 
@@ -193,6 +195,7 @@ public class EncodingController {
                 .assessmentCriteria(parseStringList(l.getAssessmentCriteriaJson()))
                 .downloadables(parseJson(l.getDownloadablesJson()))
                 .questType(l.getQuestType() != null ? l.getQuestType().name() : null)
+                .hasGuidedSteps(guidedStepService.hasSteps(l.getId()))
                 .build();
 
         switch (p.getCurrentPhase()) {

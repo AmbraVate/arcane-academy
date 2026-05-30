@@ -1,11 +1,14 @@
 package com.ambravate.arcane.academy.content.seeder;
 
+import com.ambravate.arcane.academy.common.domain.GuidedStep;
+import com.ambravate.arcane.academy.common.domain.GuidedStepInputType;
 import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
 import com.ambravate.arcane.academy.common.domain.QuestType;
 import com.ambravate.arcane.academy.common.domain.Topic;
+import com.ambravate.arcane.academy.content.repository.GuidedStepRepository;
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.content.repository.TopicRepository;
@@ -44,6 +47,7 @@ public class MarkdownContentSeeder {
     private final LearningModuleRepository moduleRepository;
     private final LessonRepository         lessonRepository;
     private final TopicRepository          topicRepository;
+    private final GuidedStepRepository     guidedStepRepository;
     private final MarkdownLessonParser     parser;
     private final PlatformTransactionManager transactionManager;
     private final ApplicationContext       applicationContext;
@@ -154,6 +158,30 @@ public class MarkdownContentSeeder {
                 .integrationPrompt(dto.getIntegrationPrompt())
                 .loreConclusionHtml(dto.getLoreConclusionHtml())
                 .build());
+
+        // 4. Phase 3 — upsert guided steps (replace all for this lesson)
+        if (dto.getGuidedSteps() != null && !dto.getGuidedSteps().isEmpty()) {
+            guidedStepRepository.deleteByLessonId(dto.getId());
+            for (MarkdownLessonDto.GuidedStepConfig sc : dto.getGuidedSteps()) {
+                GuidedStepInputType inputType = GuidedStepInputType.SHORT_TEXT;
+                try { inputType = GuidedStepInputType.valueOf(sc.inputType().toUpperCase()); }
+                catch (IllegalArgumentException ignored) {}
+
+                guidedStepRepository.save(GuidedStep.builder()
+                        .id(sc.id())
+                        .lessonId(dto.getId())
+                        .sortOrder(sc.sortOrder())
+                        .instructionHtml(sc.instructionHtml())
+                        .inputType(inputType)
+                        .inputConfigJson(sc.inputConfigJson())
+                        .markingRuleJson(sc.markingRuleJson())
+                        .hintHtml(sc.hintHtml())
+                        .reflectionPromptHtml(sc.reflectionPromptHtml())
+                        .build());
+            }
+            log.info("[MarkdownContentSeeder] Seeded {} guided step(s) for lesson '{}'",
+                    dto.getGuidedSteps().size(), dto.getId());
+        }
     }
 
     /**

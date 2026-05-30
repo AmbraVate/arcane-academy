@@ -110,6 +110,32 @@ export interface LessonEncoding {
   mentalModelHtml: string | null
   miniSummaryHtml: string | null
   loreConclusionHtml: string | null
+  // Phase 3 — guided step engine
+  /** True when this lesson has guided steps; frontend switches to GuidedStepper. */
+  hasGuidedSteps: boolean
+}
+
+// ── Phase 3 — Guided steps ────────────────────────────────────────────────────
+
+export type GuidedStepInputType =
+  | 'FILL_BLANK' | 'MULTIPLE_CHOICE' | 'SHORT_TEXT' | 'CODE' | 'DRAG_DROP' | 'SEQUENCE'
+
+export interface GuidedStepDto {
+  id: string
+  sortOrder: number
+  instructionHtml: string
+  inputType: GuidedStepInputType
+  /** Parsed input config — structure depends on inputType */
+  inputConfig: Record<string, unknown>
+  hintHtml: string | null
+  completed: boolean
+}
+
+export interface GuidedStepCheckResponse {
+  passed: boolean
+  feedback: string
+  reflectionPrompt: string | null
+  nextStepId: string | null
 }
 
 export interface Downloadable {

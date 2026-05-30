@@ -69,6 +69,8 @@ public class EncodingService {
     private final ApplicationEventPublisher eventPublisher;
     private final TelemetryService telemetry;
     private final ObjectMapper objectMapper;
+    // Phase 3 — guided step engine
+    private final GuidedStepService guidedStepService;
 
     private static final List<LearnerPath> TIER_PROGRESSION = List.of(
             LearnerPath.APPRENTICE, LearnerPath.JUNIOR, LearnerPath.SENIOR, LearnerPath.LEAD);
@@ -157,12 +159,18 @@ public class EncodingService {
 
         boolean hasPracticeContent = lesson.getGuidedPracticeHtml() != null
                 && !lesson.getGuidedPracticeHtml().isBlank();
-        if (progress.getCurrentPhase() == EncodingPhase.GUIDED_PRACTICE
-                && hasPracticeContent
-                && !progress.isGuidedPracticePassed()) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Submit guided practice and pass all tests before advancing.");
+        if (progress.getCurrentPhase() == EncodingPhase.GUIDED_PRACTICE) {
+            if (guidedStepService.hasSteps(lessonId)) {
+                // Phase 3 step engine: require all steps completed
+                if (!guidedStepService.allStepsCompleted(userId, lessonId)) {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                            "Complete all guided steps before advancing.");
+                }
+            } else if (hasPracticeContent && !progress.isGuidedPracticePassed()) {
+                // Legacy path: traditional guided practice submission
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        "Submit guided practice and pass all tests before advancing.");
+            }
         }
         boolean hasSoloContent = lesson.getSoloPracticeHtml() != null
                 && !lesson.getSoloPracticeHtml().isBlank();

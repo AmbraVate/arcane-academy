@@ -22,6 +22,69 @@ learningObjectives:
 integrationDomains:
   - psychology
   - mathematics
+guidedSteps:
+  - id: var-step-1
+    sortOrder: 1
+    inputType: FILL_BLANK
+    instruction: |
+      A variable has three parts. Complete the declaration below by filling in the **name**:
+
+      ```java
+      int ___ = 25;
+      ```
+
+      What would you call this variable to make its purpose clear?
+    inputConfig:
+      placeholder: "variable name"
+    markingRule:
+      matchMode: NORMALIZED
+      accepted:
+        - age
+        - personage
+        - userage
+        - myage
+      rejectedFeedback: "Choose a name that describes what 25 represents. What real-world quantity is 25 a good value for?"
+    hint: "The number 25 could represent many things — a score, a temperature, or a person's **age**. Pick the name that best describes the value."
+    reflectionPrompt: "Well chosen! `age` tells anyone reading the code exactly what's stored. A good variable name makes code self-documenting."
+
+  - id: var-step-2
+    sortOrder: 2
+    inputType: SHORT_TEXT
+    instruction: |
+      In your own words, describe the **three parts** of a variable declaration.
+
+      Use the example `int score = 0;` to guide your answer.
+    inputConfig:
+      minWords: 6
+    markingRule:
+      matchMode: CONTAINS
+      accepted:
+        - type
+        - name
+        - value
+      rejectedFeedback: "Every variable declaration has three parts. Think about: what *kind* of data it stores, what you *call* it, and what *data* it holds right now."
+    hint: "In `int score = 0;` — `int` is the **type**, `score` is the **name**, and `0` is the **value**."
+    reflectionPrompt: "Exactly! **Type → Name → Value** — that's the template for every variable declaration in Java. You'll recognise this pattern everywhere from here on."
+
+  - id: var-step-3
+    sortOrder: 3
+    inputType: MULTIPLE_CHOICE
+    instruction: |
+      A program stores a user's score and later updates it. Which of the following best describes why a **variable** is the right tool here?
+    inputConfig:
+      options:
+        - "Variables are faster than constants"
+        - "Variables can hold a value that changes over time"
+        - "Variables are required by the Java compiler"
+        - "Variables use less memory than hard-coded numbers"
+    markingRule:
+      matchMode: NORMALIZED
+      accepted:
+        - "Variables can hold a value that changes over time"
+        - "variables can hold a value that changes over time"
+      rejectedFeedback: "Think about the word *variable* itself — it comes from *vary*. What quality makes a variable different from a fixed number in your code?"
+    hint: "The clue is in the name: **vari**-able. The defining feature is that its value can *change*."
+    reflectionPrompt: "Correct! A variable's defining feature is mutability — the ability to hold a changing value. That's precisely why a store's running total, a player's score, or a countdown timer all need variables."
 ---
 
 # Hook
