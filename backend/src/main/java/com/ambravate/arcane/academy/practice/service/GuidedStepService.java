@@ -7,7 +7,7 @@ import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
 import com.ambravate.arcane.academy.practice.dto.GuidedStepCheckResponse;
 import com.ambravate.arcane.academy.practice.dto.GuidedStepDto;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class GuidedStepService {
 
     private final GuidedStepRepository         guidedStepRepository;
     private final UserChunkProgressRepository  progressRepository;
-    private final JavaCodeRunner               codeRunner;
+    private final CodeExecutionPort            codeRunner;
     private final ObjectMapper                 objectMapper;
 
     // ── Public API ────────────────────────────────────────────────────────────

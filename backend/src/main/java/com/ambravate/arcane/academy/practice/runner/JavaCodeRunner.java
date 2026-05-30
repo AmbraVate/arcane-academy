@@ -3,6 +3,7 @@ package com.ambravate.arcane.academy.practice.runner;
 import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.tools.*;
@@ -12,9 +13,17 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * In-process Java code runner — the default (£0) binding for {@link CodeExecutionPort}.
+ * <p>
+ * Active whenever {@code sandbox.mode} is not set to {@code docker}.
+ * Compilation uses the JVM's {@code javax.tools.JavaCompiler}; execution runs in a
+ * thread-isolated {@link SandboxedClassLoader} with a 5-second wall-clock timeout.
+ */
 @Service
+@ConditionalOnProperty(name = "sandbox.mode", havingValue = "inprocess", matchIfMissing = true)
 @Slf4j
-public class JavaCodeRunner {
+public class JavaCodeRunner implements CodeExecutionPort {
 
     private static final int TIMEOUT_SECONDS = 5;
     private static final int MAX_OUTPUT_CHARS = 2000;

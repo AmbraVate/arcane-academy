@@ -142,6 +142,14 @@ ratelimit:
     refill-tokens: ${RATELIMIT_ADMIN_REFILL:30}
     refill-period-seconds: ${RATELIMIT_ADMIN_PERIOD:60}
 
+# ── Code execution sandbox (Phase 5) ──────────────────────────────────────────
+# Default: "inprocess" — in-JVM SandboxedClassLoader (£0, no extra infra).
+# Set to "docker" to use DockerSandboxRunner (--network=none, --memory=256m, etc.).
+# Docker mode requires the Docker daemon to be available on the host machine.
+# See PROJECT_REFERENCE.md §Constraints for the £0 deployment strategy.
+sandbox:
+  mode: ${SANDBOX_MODE:inprocess}
+
 logging:
   level:
     root: INFO

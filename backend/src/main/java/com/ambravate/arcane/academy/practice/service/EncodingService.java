@@ -37,7 +37,7 @@ import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
 import com.ambravate.arcane.academy.practice.domain.LessonSession;
 import com.ambravate.arcane.academy.practice.domain.SoloAssessmentResult;
 import com.ambravate.arcane.academy.practice.domain.TestResult;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +65,7 @@ public class EncodingService {
     private final UserRepository userRepository;
     private final UserLearnerProfileRepository learnerProfileRepository;
     private final UserTrackProfileRepository topicProfileRepository;
-    private final JavaCodeRunner codeRunner;
+    private final CodeExecutionPort codeRunner;
     private final AiMentorService aiMentorService;
     private final RetrievalService retrievalService;
     private final SpacingService spacingService;

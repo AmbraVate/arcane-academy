@@ -6,7 +6,7 @@ import com.ambravate.arcane.academy.content.domain.RabbitHoleModule;
 import com.ambravate.arcane.academy.content.repository.RabbitHoleModuleRepository;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.TestResult;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.*;
 public class RabbitHoleService {
 
     private final RabbitHoleModuleRepository moduleRepository;
-    private final JavaCodeRunner codeRunner;
+    private final CodeExecutionPort codeRunner;
     private final AiMentorService aiMentorService;
     private final ObjectMapper objectMapper;
 

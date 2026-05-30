@@ -25,7 +25,7 @@ import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
 import com.ambravate.arcane.academy.practice.dto.SoloSubmitRequest;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -72,7 +72,7 @@ class EncodingServiceTest {
     @Mock private UserRepository userRepository;
     @Mock private UserLearnerProfileRepository learnerProfileRepository;
     @Mock private UserTrackProfileRepository topicProfileRepository;
-    @Mock private JavaCodeRunner codeRunner;
+    @Mock private CodeExecutionPort codeRunner;
     @Mock private AiMentorService aiMentorService;
     @Mock private RetrievalService retrievalService;
     @Mock private SpacingService spacingService;

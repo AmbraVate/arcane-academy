@@ -7,7 +7,7 @@ import com.ambravate.arcane.academy.content.repository.GuidedStepRepository;
 import com.ambravate.arcane.academy.practice.dto.GuidedStepCheckResponse;
 import com.ambravate.arcane.academy.practice.dto.GuidedStepDto;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,13 +32,13 @@ class GuidedStepServiceTest {
     private GuidedStepService service;
     private GuidedStepRepository stepRepo;
     private UserChunkProgressRepository progressRepo;
-    private JavaCodeRunner codeRunner;
+    private CodeExecutionPort codeRunner;
 
     @BeforeEach
     void setUp() {
         stepRepo    = mock(GuidedStepRepository.class);
         progressRepo = mock(UserChunkProgressRepository.class);
-        codeRunner  = mock(JavaCodeRunner.class);
+        codeRunner  = mock(CodeExecutionPort.class);
         service = new GuidedStepService(stepRepo, progressRepo, codeRunner, new ObjectMapper());
     }
 

@@ -1,5 +1,6 @@
 package com.ambravate.arcane.academy.ai.service;
 
+import com.ambravate.arcane.academy.ai.domain.FsrsState;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,26 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * Spaced-repetition scheduling service — Phase 5 upgrade to FSRS-4.5.
+ *
+ * <p>Public signatures ({@link #updateSpacing}, {@link #getDueReviews},
+ * {@link #computeDecayedStrength}) are unchanged from the SM-2 era so that all
+ * callers ({@code RetrievalService}, review controllers) require zero modification.
+ *
+ * <p><strong>FSRS crash-course:</strong>
+ * <ul>
+ *   <li><em>Stability (S)</em> — the scheduled interval is {@code round(S)} days.
+ *       Grows after each successful recall; collapses on a lapse.</li>
+ *   <li><em>Difficulty (D)</em> — converges toward the card's natural hardness over
+ *       multiple reviews.</li>
+ *   <li><em>Retrievability R(t,S)</em> — probability of recall at time {@code t}:
+ *       {@code R = (1 + 19t/(81S))^{-1/2}}</li>
+ * </ul>
+ *
+ * <p>Rows with {@code fsrsStability = 0} are treated as NEW cards; their first
+ * rating seeds initial stability and difficulty from the FSRS defaults.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -18,9 +39,13 @@ public class SpacingService {
 
     private final UserChunkProgressRepository progressRepository;
 
+    // ── updateSpacing ─────────────────────────────────────────────────────────
+
     /**
-     * Core SM-2 algorithm update.
-     * @param score 0.0 to 1.0 â€” the learner's score on retrieval/review
+     * Run FSRS scheduling after a retrieval review.
+     *
+     * @param score 0.0–1.0 performance score
+     *              (mapped to FSRS ratings: &lt;0.4 Again, 0.4 Hard, 0.6 Good, 0.85 Easy)
      */
     @Transactional
     public void updateSpacing(String userId, String lessonId, double score) {
@@ -28,60 +53,95 @@ public class SpacingService {
                 .findByUserIdAndLessonId(userId, lessonId)
                 .orElseThrow(() -> new IllegalStateException("No progress found for " + lessonId));
 
-        double q5 = score * 5.0; // Map 0-1 to SM-2's 0-5 scale
-
-        if (score < 0.6) {
-            // Failed review â€” reset interval
-            progress.setRepetitionCount(0);
-            progress.setIntervalDays(1);
-            log.info("[SM-2] Reset | user={} subChunk={} score={}", userId, lessonId, score);
-        } else {
-            int rep = progress.getRepetitionCount() + 1;
-            progress.setRepetitionCount(rep);
-
-            if (rep == 1) {
-                progress.setIntervalDays(1);
-            } else if (rep == 2) {
-                progress.setIntervalDays(3);
-            } else {
-                progress.setIntervalDays((int) Math.round(progress.getIntervalDays() * progress.getEaseFactor()));
-            }
-
-            // Update ease factor (SM-2 formula)
-            double ef = progress.getEaseFactor() + (0.1 - (5.0 - q5) * (0.08 + (5.0 - q5) * 0.02));
-            progress.setEaseFactor(Math.max(1.3, ef));
-
-            log.info("[SM-2] Updated | user={} subChunk={} score={} interval={}d ef={}",
-                    userId, lessonId, score, progress.getIntervalDays(), progress.getEaseFactor());
+        // ── Build current FSRS card from persisted state ──────────────────────
+        int elapsedDays = 0;
+        if (progress.getLastReviewedAt() != null) {
+            elapsedDays = (int) Duration.between(progress.getLastReviewedAt(), Instant.now()).toDays();
         }
 
-        // Update memory strength: blend of new score and previous strength
-        double newStrength = Math.min(1.0, score * 0.7 + progress.getMemoryStrength() * 0.3);
-        progress.setMemoryStrength(newStrength);
+        FsrsAlgorithm.FsrsCard currentCard = loadCard(progress);
+        int rating = FsrsAlgorithm.toRating(score);
+
+        // Retrieve current R (before this review) for memory-strength display
+        double retrievabilityBeforeReview = (currentCard.state() != FsrsState.NEW && currentCard.stability() > 0)
+                ? FsrsAlgorithm.retrievability(elapsedDays, currentCard.stability())
+                : score; // first review — use raw score as proxy
+
+        // ── Schedule via FSRS ─────────────────────────────────────────────────
+        FsrsAlgorithm.FsrsCard newCard = FsrsAlgorithm.review(currentCard, rating, elapsedDays);
+
+        log.info("[FSRS] Scheduled | user={} lesson={} rating={} stability={}->{}  difficulty={} interval={}d lapses={}",
+                userId, lessonId, rating,
+                String.format("%.2f", currentCard.stability()),
+                String.format("%.2f", newCard.stability()),
+                String.format("%.2f", newCard.difficulty()),
+                newCard.lastInterval(), newCard.lapses());
+
+        // ── Persist FSRS fields ───────────────────────────────────────────────
+        progress.setFsrsStability(newCard.stability());
+        progress.setFsrsDifficulty(newCard.difficulty());
+        progress.setFsrsLapses(newCard.lapses());
+        progress.setFsrsState(newCard.state().name());
+        progress.setFsrsLastInterval(newCard.lastInterval());
+
+        // Keep legacy SM-2 field in sync (used by frontend "review in N days" display)
+        progress.setIntervalDays(newCard.lastInterval());
+        progress.setRepetitionCount(progress.getRepetitionCount() + 1);
+
+        // Memory strength = retrievability immediately before this review
+        progress.setMemoryStrength(Math.min(1.0, Math.max(0.0, retrievabilityBeforeReview)));
         progress.setLastScore(score);
         progress.setLastReviewedAt(Instant.now());
-        progress.setNextReviewAt(Instant.now().plus(Duration.ofDays(progress.getIntervalDays())));
+        progress.setNextReviewAt(Instant.now().plus(Duration.ofDays(newCard.lastInterval())));
 
         progressRepository.save(progress);
     }
 
+    // ── getDueReviews ─────────────────────────────────────────────────────────
+
     /**
-     * Get sub-chunks due for review (nextReviewAt <= now).
+     * Cards where {@code nextReviewAt <= now}.
      */
     public List<UserChunkProgress> getDueReviews(String userId) {
         return progressRepository.findByUserIdAndNextReviewAtBefore(userId, Instant.now());
     }
 
+    // ── computeDecayedStrength ────────────────────────────────────────────────
+
     /**
-     * Compute the current memory strength with exponential decay applied.
-     * The stored memoryStrength is the post-review value; this applies time-based decay.
+     * Current retrievability — probability the learner still remembers the
+     * material right now, accounting for elapsed time since the last review.
+     *
+     * <p>Uses the FSRS power-forgetting curve rather than the old SM-2
+     * exponential proxy.  Returns 0.0 when the card has never been reviewed
+     * or lacks FSRS stability data.
      */
     public double computeDecayedStrength(UserChunkProgress progress) {
-        if (progress.getLastReviewedAt() == null) return 0.0;
+        if (progress.getLastReviewedAt() == null || progress.getFsrsStability() <= 0) {
+            return 0.0;
+        }
+        double daysSince = Duration.between(progress.getLastReviewedAt(), Instant.now()).toHours() / 24.0;
+        return FsrsAlgorithm.retrievability(daysSince, progress.getFsrsStability());
+    }
 
-        double hoursSince = Duration.between(progress.getLastReviewedAt(), Instant.now()).toHours();
-        double decayRate = 0.05 / progress.getEaseFactor();
-        double decayed = progress.getMemoryStrength() * Math.exp(-decayRate * hoursSince);
-        return Math.max(0.0, Math.min(1.0, decayed));
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    /** Reconstruct a {@link FsrsAlgorithm.FsrsCard} from persisted entity fields. */
+    private static FsrsAlgorithm.FsrsCard loadCard(UserChunkProgress p) {
+        if (p.getFsrsStability() <= 0.0) {
+            // NEW card — no FSRS state established yet
+            return new FsrsAlgorithm.FsrsCard(0.0, 0.0, 0, FsrsState.NEW, 0);
+        }
+        FsrsState state = FsrsState.REVIEW; // safe default
+        if (p.getFsrsState() != null) {
+            try { state = FsrsState.valueOf(p.getFsrsState()); } catch (IllegalArgumentException ignored) {}
+        }
+        return new FsrsAlgorithm.FsrsCard(
+                p.getFsrsStability(),
+                p.getFsrsDifficulty(),
+                p.getFsrsLapses(),
+                state,
+                p.getFsrsLastInterval()
+        );
     }
 }

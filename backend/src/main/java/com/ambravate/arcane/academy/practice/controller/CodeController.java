@@ -2,7 +2,7 @@ package com.ambravate.arcane.academy.practice.controller;
 
 import com.ambravate.arcane.academy.practice.dto.CodeRunRequest;
 import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CodeController {
 
-    private final JavaCodeRunner codeRunner;
+    private final CodeExecutionPort codeRunner;
 
     @PostMapping("/run")
     public ResponseEntity<CodeRunResponse> runCode(

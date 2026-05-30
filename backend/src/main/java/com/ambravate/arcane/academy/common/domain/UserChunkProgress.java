@@ -86,4 +86,36 @@ public class UserChunkProgress {
      */
     @Column(name = "solo_confidence")
     private String soloConfidence;
+
+    // ── Phase 5 — FSRS-4.5 spaced-repetition parameters ─────────────────────
+    //
+    // These replace the SM-2 fields (easeFactor / repetitionCount / intervalDays)
+    // as the source of truth for scheduling.  Legacy SM-2 fields are retained for
+    // backward compatibility; intervalDays is kept in sync with fsrsLastInterval.
+    //
+    // A row with fsrsStability = 0 is treated as a NEW card on the next review.
+
+    /** Days until retrievability drops to the 90 % target (= next interval). */
+    @Builder.Default
+    @Column(name = "fsrs_stability")
+    private double fsrsStability = 0.0;
+
+    /** Card hardness on [1.0, 10.0]. Higher = harder to retain. */
+    @Builder.Default
+    @Column(name = "fsrs_difficulty")
+    private double fsrsDifficulty = 0.0;
+
+    /** Lifecycle state: NEW | REVIEW | RELEARNING (stored as string). */
+    @Column(name = "fsrs_state")
+    private String fsrsState;
+
+    /** Total number of forgotten ("Again") reviews. */
+    @Builder.Default
+    @Column(name = "fsrs_lapses")
+    private int fsrsLapses = 0;
+
+    /** Most recently scheduled review interval in days. */
+    @Builder.Default
+    @Column(name = "fsrs_last_interval")
+    private int fsrsLastInterval = 0;
 }
