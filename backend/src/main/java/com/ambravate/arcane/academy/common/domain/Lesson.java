@@ -90,4 +90,12 @@ public class Lesson {
 
     @Enumerated(EnumType.STRING)
     private QuestType questType;
+
+    /**
+     * The Topic this lesson belongs to within its Module.
+     * Nullable for backward compatibility — all lessons receive a value via
+     * the V29 migration backfill; new lessons are assigned at seed time.
+     */
+    @Column(name = "topic_id")
+    private String topicId;
 }

@@ -110,6 +110,31 @@ export const adminDomainApi = {
   },
 }
 
+// â”€â”€ Topics (Module → Topic → Lesson cluster) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+export interface AdminTopic {
+  id: string; moduleId: string; title: string
+  purposeHtml: string | null; learningOutcomesJson: string | null; sortOrder: number
+}
+
+export const adminTopicApi = {
+  list: async (moduleId?: string): Promise<AdminTopic[]> => {
+    const { data } = await api.get('/api/admin/topics', { params: moduleId ? { moduleId } : {} })
+    return data
+  },
+  create: async (topic: Partial<AdminTopic>): Promise<AdminTopic> => {
+    const { data } = await api.post('/api/admin/topics', topic)
+    return data
+  },
+  update: async (id: string, topic: Partial<AdminTopic>): Promise<AdminTopic> => {
+    const { data } = await api.put(`/api/admin/topics/${id}`, topic)
+    return data
+  },
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/api/admin/topics/${id}`)
+  },
+}
+
 // â”€â”€ Chunks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminChunkApi = {

@@ -33,6 +33,14 @@ export interface TestResult { label: string; passed: boolean; actualOutput: stri
 export interface Badge { id: string; displayName: string; description: string; glyph: string; category: string; earned: boolean; earnedAt: string | null }
 export interface CodeRunResponse { output: string | null; error: string | null; status: 'SUCCESS'|'COMPILE_ERROR'|'RUNTIME_ERROR'|'TIMEOUT'|'ERROR' }
 
+// â”€â”€ Topic (Module → Topic → Lesson cluster level) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export interface Topic {
+  id: string
+  title: string
+  purposeHtml: string | null
+  sortOrder: number
+}
+
 // â”€â”€ Chunks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export interface ModuleSummary {
   id: string; title: string; glyph: string; status: string
@@ -49,10 +57,15 @@ export interface LessonSummary {
   learningObjectiveCount: number
   hasChallenge: boolean
   hasMiniProject: boolean
+  // Phase 1 â€” topic grouping
+  topicId: string | null
+  topicTitle: string | null
 }
 
 export interface ModuleDetail {
   id: string; domainId: string; title: string; glyph: string; status: string
+  /** Ordered topic clusters — used to group lessons in the module map. */
+  topics: Topic[]
   lessons: LessonSummary[]
 }
 

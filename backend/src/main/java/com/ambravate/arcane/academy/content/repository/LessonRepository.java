@@ -10,4 +10,5 @@ import java.util.List;
 public interface LessonRepository extends JpaRepository<Lesson, String> {
     List<Lesson> findByModuleIdOrderBySortOrderAsc(String moduleId);
     List<Lesson> findByModuleIdIn(List<String> moduleIds);
+    long countByTopicId(String topicId);
 }

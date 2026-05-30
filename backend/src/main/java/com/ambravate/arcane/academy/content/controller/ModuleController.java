@@ -2,6 +2,9 @@ package com.ambravate.arcane.academy.content.controller;
 
 import com.ambravate.arcane.academy.content.dto.ModuleDetailDto;
 import com.ambravate.arcane.academy.content.dto.ModuleSummaryDto;
+import com.ambravate.arcane.academy.content.dto.TopicDto;
+import com.ambravate.arcane.academy.common.domain.Topic;
+import com.ambravate.arcane.academy.content.repository.TopicRepository;
 import com.ambravate.arcane.academy.practice.dto.LessonSummaryDto;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.Lesson;
@@ -31,6 +34,7 @@ public class ModuleController {
     private final LessonRepository lessonRepository;
     private final UserChunkProgressRepository progressRepository;
     private final SpacingService spacingService;
+    private final TopicRepository topicRepository;
 
     @GetMapping
     public ResponseEntity<List<ModuleSummaryDto>> getAllModules(
@@ -80,6 +84,16 @@ public class ModuleController {
         Map<String, UserChunkProgress> progressMap = progressRepository.findByUserId(user.getId()).stream()
                 .collect(Collectors.toMap(UserChunkProgress::getLessonId, p -> p, (a, b) -> a));
 
+        // Build a topic lookup map for this module
+        Map<String, Topic> topicById = topicRepository.findByModuleIdOrderBySortOrderAsc(moduleId)
+                .stream().collect(Collectors.toMap(Topic::getId, t -> t, (a, b) -> a));
+        List<TopicDto> topicDtos = topicRepository.findByModuleIdOrderBySortOrderAsc(moduleId)
+                .stream().map(t -> TopicDto.builder()
+                        .id(t.getId()).title(t.getTitle())
+                        .purposeHtml(t.getPurposeHtml()).sortOrder(t.getSortOrder())
+                        .build())
+                .toList();
+
         Set<String> completedLessonIds = progressMap.values().stream()
                 .filter(p -> p.getStatus() == LessonStatus.COMPLETE
                           || p.getStatus() == LessonStatus.SKIPPED)
@@ -120,6 +134,9 @@ public class ModuleController {
                     .learningObjectiveCount(objCount)
                     .hasChallenge(l.getChallengeHtml() != null && !l.getChallengeHtml().isBlank())
                     .hasMiniProject(l.getMiniProjectHtml() != null && !l.getMiniProjectHtml().isBlank())
+                    .topicId(l.getTopicId())
+                    .topicTitle(l.getTopicId() != null && topicById.containsKey(l.getTopicId())
+                            ? topicById.get(l.getTopicId()).getTitle() : null)
                     .build();
         }).collect(Collectors.toList());
 
@@ -127,6 +144,7 @@ public class ModuleController {
                 .id(mws.module().getId()).domainId(mws.module().getTrackId())
                 .title(mws.module().getTitle())
                 .glyph(mws.module().getGlyph()).status(mws.status())
+                .topics(topicDtos)
                 .lessons(lessonDtos).build());
     }
 

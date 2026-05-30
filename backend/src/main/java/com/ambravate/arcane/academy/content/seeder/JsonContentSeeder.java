@@ -3,6 +3,8 @@ package com.ambravate.arcane.academy.content.seeder;
 import com.ambravate.arcane.academy.common.dto.ChunkContentDto;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
+import com.ambravate.arcane.academy.common.domain.Topic;
+import com.ambravate.arcane.academy.content.repository.TopicRepository;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.QuestionTier;
 import com.ambravate.arcane.academy.common.domain.QuestionType;
@@ -47,6 +49,7 @@ public class JsonContentSeeder {
     private final QuestionRepository questionRepository;
     private final RabbitHoleModuleRepository rabbitHoleRepository;
     private final UserChunkProgressRepository userChunkProgressRepository;
+    private final TopicRepository topicRepository;
     private final ObjectMapper objectMapper;
     private final ApplicationContext applicationContext;
     private final PlatformTransactionManager transactionManager;
@@ -203,6 +206,15 @@ public class JsonContentSeeder {
                 .build();
         moduleRepository.save(module);
 
+        // Ensure the default Topic for this module exists (upsert by stable ID convention)
+        String defaultTopicId = dto.id + "-default-topic";
+        topicRepository.save(Topic.builder()
+                .id(defaultTopicId)
+                .moduleId(dto.id)
+                .title(dto.title)
+                .sortOrder(0)
+                .build());
+
         if (dto.subChunks != null) {
             for (ChunkContentDto.SubChunkDto sc : dto.subChunks) {
                 seedLesson(dto.id, sc);
@@ -243,6 +255,7 @@ public class JsonContentSeeder {
         lessonRepository.save(Lesson.builder()
                 .id(sc.id)
                 .moduleId(moduleId)
+                .topicId(moduleId + "-default-topic")
                 .title(sc.title)
                 .sortOrder(sc.sortOrder)
                 .xpReward(sc.xpReward > 0 ? sc.xpReward : 50)

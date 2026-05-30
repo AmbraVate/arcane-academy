@@ -11,5 +11,8 @@ public class ModuleDetailDto {
     private String title;
     private String glyph;
     private String status;
+    /** Ordered topic clusters for this module — used by the UI to group lessons. */
+    private List<TopicDto> topics;
+    /** Flat lesson list with topicId/topicTitle set per lesson for grouping. */
     private List<LessonSummaryDto> lessons;
 }

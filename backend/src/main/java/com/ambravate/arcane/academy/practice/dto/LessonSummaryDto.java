@@ -17,4 +17,7 @@ public class LessonSummaryDto {
     private int learningObjectiveCount;
     private boolean hasChallenge;
     private boolean hasMiniProject;
+    /** The Topic cluster this lesson belongs to within its Module. */
+    private String topicId;
+    private String topicTitle;
 }
