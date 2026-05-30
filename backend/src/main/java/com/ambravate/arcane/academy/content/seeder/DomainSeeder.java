@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class TopicSeeder {
+public class DomainSeeder {
 
     private final DomainRepository domainRepository;
 
@@ -85,7 +85,7 @@ public class TopicSeeder {
         for (Domain t : defaults) {
             if (!domainRepository.existsById(t.getId())) {
                 domainRepository.save(t);
-                log.info("[TopicSeeder] Created topic: {}", t.getId());
+                log.info("[DomainSeeder] Created domain: {}", t.getId());
             }
         }
     }

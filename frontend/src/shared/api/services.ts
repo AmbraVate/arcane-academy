@@ -320,7 +320,7 @@ export const rabbitHoleTermApi = {
 }
 
 // â”€â”€ Public profile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-export interface PublicProfileTopic {
+export interface PublicProfileDomain {
   domainId: string
   name: string
   glyph: string
@@ -343,7 +343,7 @@ export interface PublicProfile {
   rank: string
   totalXp: number
   streakDays: number
-  topics: PublicProfileTopic[]
+  domains: PublicProfileDomain[]
   badges: PublicProfileBadge[]
 }
 

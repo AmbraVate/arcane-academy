@@ -1,17 +1,17 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi, paymentsApi } from '@/shared/api/services'
 import type { UserCapstone, UserNote, MyStuckReport, SubscriptionStatusResponse } from '@/shared/api/services'
-import { useTopicsDashboard } from '@/hooks/queries'
-import { ACTIVE_TOPICS } from '@/features/topics/data/topics'
+import { useDomainsDashboard } from '@/hooks/queries'
+import { ACTIVE_DOMAINS } from '@/features/domains/data/domains'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 import { Trash2, ExternalLink, Download, CreditCard, Zap, Crown, Infinity, CheckCircle, BookOpen, Award, Rabbit, FileText, Hammer, Star, Flame, Wand2, Sparkles, Gem } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { TopicIcon } from '@/components/icons/TopicIcon'
+import { DomainIcon } from '@/components/icons/DomainIcon'
 import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
 type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'subscription' | 'preferences'
@@ -92,8 +92,8 @@ export default function ProfilePage() {
   const [badgesLoading, setBadgesLoading] = useState(false)
   const [badgeCategoryFilter, setBadgeCategoryFilter] = useState<string>('ALL')
 
-  const allTopicDash = useTopicsDashboard(ACTIVE_TOPICS.map(t => t.id))
-  const dashLoading = ACTIVE_TOPICS.some(t => allTopicDash[t.id] === undefined)
+  const allTopicDash = useDomainsDashboard(ACTIVE_DOMAINS.map(t => t.id))
+  const dashLoading = ACTIVE_DOMAINS.some(t => allTopicDash[t.id] === undefined)
 
   const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleTerm[]>([])
   const [rhLoading, setRhLoading] = useState(false)
@@ -413,7 +413,7 @@ export default function ProfilePage() {
         {tab === 'topics' && (
           <div className="flex flex-col gap-4">
             {dashLoading && <p className="text-muted italic text-center py-8">Loading topic dataâ€¦</p>}
-            {!dashLoading && ACTIVE_TOPICS.map(topic => {
+            {!dashLoading && ACTIVE_DOMAINS.map(topic => {
               const dash = allTopicDash[topic.id]
               if (!dash) return null
               return (
@@ -426,15 +426,15 @@ export default function ProfilePage() {
                   completedLessons={dash.chunkHealth.reduce((s, c) => s + c.completedLessons, 0)}
                   totalLessons={dash.chunkHealth.reduce((s, c) => s + c.totalLessons, 0)}
                   totalXp={dash.totalXp}
-                  onContinue={() => navigate(`/topic/${topic.id}`)}
-                  onRetakeDiagnostic={() => navigate(`/topic/${topic.id}/diagnostic`)}
+                  onContinue={() => navigate(`/domain/${topic.id}`)}
+                  onRetakeDiagnostic={() => navigate(`/domain/${topic.id}/diagnostic`)}
                 />
               )
             })}
-            {!dashLoading && ACTIVE_TOPICS.every(t => !allTopicDash[t.id]) && (
+            {!dashLoading && ACTIVE_DOMAINS.every(t => !allTopicDash[t.id]) && (
               <div className="text-center py-10 text-muted italic">
-                <p>No topic data found. Start a topic to see your progress here.</p>
-                <button className="btn btn-primary mt-4" onClick={() => navigate('/topics')}>Browse Topics â†’</button>
+                <p>No domain data found. Start a domain to see your progress here.</p>
+                <button className="btn btn-primary mt-4" onClick={() => navigate('/domains')}>Browse Domains â†’</button>
               </div>
             )}
           </div>
@@ -806,7 +806,7 @@ function TopicCard({
     <div className="bg-card border border-border rounded-[12px] p-5">
       <div className="flex items-center gap-3 mb-4">
         <div className="flex-shrink-0">
-          <TopicIcon domainId={domainId} size={36} />
+          <DomainIcon domainId={domainId} size={36} />
         </div>
         <div className="flex-1">
           <div className="text-[16px] font-bold text-text">{name}</div>

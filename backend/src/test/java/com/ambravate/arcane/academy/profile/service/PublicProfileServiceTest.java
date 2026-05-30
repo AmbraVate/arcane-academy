@@ -125,14 +125,14 @@ class PublicProfileServiceTest {
         assertThat(profile.rank()).isEqualTo("Adept");
 
         // Topics sorted by xpEarned desc — java (50+75=125) before tailwind (40)
-        assertThat(profile.topics()).hasSize(2);
-        assertThat(profile.topics().get(0).domainId()).isEqualTo("java");
-        assertThat(profile.topics().get(0).xpEarned()).isEqualTo(125);
-        assertThat(profile.topics().get(0).subChunksCompleted()).isEqualTo(2);
-        assertThat(profile.topics().get(0).name()).isEqualTo("Java");
-        assertThat(profile.topics().get(1).domainId()).isEqualTo("tailwind");
-        assertThat(profile.topics().get(1).xpEarned()).isEqualTo(40);
-        assertThat(profile.topics().get(1).subChunksCompleted()).isEqualTo(1);
+        assertThat(profile.domains()).hasSize(2);
+        assertThat(profile.domains().get(0).domainId()).isEqualTo("java");
+        assertThat(profile.domains().get(0).xpEarned()).isEqualTo(125);
+        assertThat(profile.domains().get(0).subChunksCompleted()).isEqualTo(2);
+        assertThat(profile.domains().get(0).name()).isEqualTo("Java");
+        assertThat(profile.domains().get(1).domainId()).isEqualTo("tailwind");
+        assertThat(profile.domains().get(1).xpEarned()).isEqualTo(40);
+        assertThat(profile.domains().get(1).subChunksCompleted()).isEqualTo(1);
     }
 
     // ── Badge decoration ────────────────────────────────────────────────────────

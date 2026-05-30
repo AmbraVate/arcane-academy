@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { adminChunkApi, adminTopicApi, type AdminChunk, type AdminTopic } from '@/shared/api/adminServices'
+import { adminChunkApi, adminDomainApi, type AdminChunk, type AdminDomain } from '@/shared/api/adminServices'
 
 const TIERS = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
 
@@ -12,7 +12,7 @@ function ChunkForm({
   initial, topics, onSave, onCancel,
 }: {
   initial: Partial<AdminChunk>
-  topics: AdminTopic[]
+  topics: AdminDomain[]
   onSave: (c: Partial<AdminChunk>) => void
   onCancel: () => void
 }) {
@@ -62,7 +62,7 @@ function ChunkForm({
 
 export default function AdminChunksPage() {
   const navigate = useNavigate()
-  const [topics, setTopics] = useState<AdminTopic[]>([])
+  const [topics, setTopics] = useState<AdminDomain[]>([])
   const [chunks, setChunks] = useState<AdminChunk[]>([])
   const [topicFilter, setTopicFilter] = useState<string>('')
   const [loading, setLoading] = useState(true)
@@ -74,7 +74,7 @@ export default function AdminChunksPage() {
   const load = (tid?: string) => {
     setLoading(true)
     Promise.all([
-      adminTopicApi.list(),
+      adminDomainApi.list(),
       adminChunkApi.list(tid || undefined),
     ]).then(([ts, cs]) => {
       setTopics(ts)

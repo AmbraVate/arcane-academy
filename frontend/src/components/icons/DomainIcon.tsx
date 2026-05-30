@@ -43,7 +43,7 @@ const TOPIC_ICONS: Record<string, IconComponent> = {
   sciences:   Microscope   as IconComponent,
 }
 
-interface TopicIconProps {
+interface DomainIconProps {
   domainId: string
   size?: number
   /** Override the default brand colour */
@@ -51,7 +51,7 @@ interface TopicIconProps {
   className?: string
 }
 
-export function TopicIcon({ domainId, size = 28, color, className }: TopicIconProps) {
+export function DomainIcon({ domainId, size = 28, color, className }: DomainIconProps) {
   const Icon = TOPIC_ICONS[domainId]
   if (!Icon) return null
   return (

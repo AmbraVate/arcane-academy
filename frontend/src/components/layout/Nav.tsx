@@ -29,7 +29,7 @@ export default function Nav() {
   const streakHot = streak >= 3
 
   const NAV_ITEMS = [
-    { label: 'Topics',    Icon: Library,     path: '/topics' },
+    { label: 'Domains',   Icon: Library,     path: '/domains' },
     { label: 'Review',    Icon: RotateCcw,   path: '/review' },
     { label: 'Ranks',     Icon: Trophy,      path: '/leaderboard' },
     { label: 'Profile',   Icon: User,        path: '/profile' },

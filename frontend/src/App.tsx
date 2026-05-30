@@ -1,4 +1,4 @@
-﻿import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import ErrorBoundary from './features/errors/components/ErrorBoundary'
 import { useAuth } from './shared/hooks/useAuth'
@@ -7,6 +7,7 @@ import { useReviewsDue } from './hooks/queries'
 import Nav from './components/layout/Nav'
 import BlizzardFrame from './components/layout/BlizzardFrame'
 import { BlizzardBackground } from './components/layout/BlizzardScene'
+import { Library, RotateCcw, Trophy, User } from 'lucide-react'
 
 const DomainsPage           = lazy(() => import('./features/domains/pages/DomainsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
@@ -21,8 +22,8 @@ const RabbitHolePage       = lazy(() => import('./features/exploration/pages/Rab
 const CuriosityQueuePage   = lazy(() => import('./features/exploration/pages/CuriosityQueuePage'))
 const ProfilePage          = lazy(() => import('./features/profile/pages/ProfilePage'))
 const DomainPage            = lazy(() => import('./features/domains/pages/DomainPage'))
-const TopicOnboardingPage  = lazy(() => import('./features/onboarding/pages/TopicOnboardingPage'))
-const TopicDiagnosticPage  = lazy(() => import('./features/diagnostic/pages/TopicDiagnosticPage'))
+const DomainOnboardingPage = lazy(() => import('./features/onboarding/pages/DomainOnboardingPage'))
+const DomainDiagnosticPage = lazy(() => import('./features/diagnostic/pages/DomainDiagnosticPage'))
 const PrerequisiteCheckPage = lazy(() => import('./features/onboarding/pages/PrerequisiteCheckPage'))
 const CssPrimerPage        = lazy(() => import('./features/onboarding/pages/CssPrimerPage'))
 const LeaderboardPage      = lazy(() => import('./features/leaderboard/pages/LeaderboardPage'))
@@ -85,15 +86,15 @@ function BlizzardNav() {
   const streakHot = streak >= 3
 
   const NAV_ITEMS = [
-    { label: 'Topics',  icon: 'ðŸ“š', path: '/topics' },
-    { label: 'Review',  icon: 'ðŸ”„', path: '/review', badge: reviewsDue > 0 ? reviewsDue : null },
-    { label: 'Ranks',   icon: 'ðŸ†', path: '/leaderboard' },
-    { label: 'Profile', icon: 'ðŸ‘¤', path: '/profile' },
-  ]
+    { label: 'Domains', Icon: Library, path: '/domains' },
+    { label: 'Review',  Icon: RotateCcw, path: '/review', badge: reviewsDue > 0 ? reviewsDue : null },
+    { label: 'Ranks',   Icon: Trophy, path: '/leaderboard' },
+    { label: 'Profile', Icon: User, path: '/profile' },
+  ];
 
   return (
-    <nav className="topbar">
-      <div className="nav-brand" onClick={() => navigate('/')}>â„ Arcane Academy</div>
+    <nav className="blizzard-nav">
+      <div className="nav-brand" onClick={() => navigate('/')}>⌂ Arcane Academy</div>
       <div className="nav-spacer" />
       <div className="nav-right">
         {/* Streak */}
@@ -115,7 +116,7 @@ function BlizzardNav() {
         <div className="rank-pill">{user.rank}</div>
 
         {/* Nav buttons */}
-        {NAV_ITEMS.map(({ label, icon, path, badge }) => {
+        {NAV_ITEMS.map(({ label, Icon, path, badge }) => {
           const active = location.pathname === path || location.pathname.startsWith(path + '/')
           return (
             <button
@@ -124,7 +125,7 @@ function BlizzardNav() {
               onClick={() => navigate(path)}
               title={label}
             >
-              <span className="icon">{icon}</span>
+              <span className="icon"><Icon size={16} /></span>
               <span className="lbl">{label}</span>
               {badge != null && <span className="badge">{badge}</span>}
             </button>
@@ -139,6 +140,13 @@ function BlizzardNav() {
       </div>
     </nav>
   )
+}
+
+/** Redirects legacy /topic/:id(/...) URLs to the new /domain/:id(/...) scheme, preserving the path tail. */
+function LegacyTopicRedirect() {
+  const location = useLocation()
+  const to = location.pathname.replace(/^\/topic\b/, '/domain') + location.search
+  return <Navigate to={to} replace />
 }
 
 function AppRoutes() {
@@ -157,19 +165,23 @@ function AppRoutes() {
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
-        <Route path="/topics" element={<PrivateRoute><DomainsPage /></PrivateRoute>} />
-        <Route path="/topic/:domainId" element={<PrivateRoute><DomainPage /></PrivateRoute>} />
-        <Route path="/topic/:domainId/onboarding"   element={<PrivateRoute><TopicOnboardingPage /></PrivateRoute>} />
-        <Route path="/topic/:domainId/diagnostic"   element={<PrivateRoute><TopicDiagnosticPage /></PrivateRoute>} />
-        <Route path="/topic/:domainId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
-        <Route path="/topic/:domainId/css-primer"   element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
+        <Route path="/domains" element={<PrivateRoute><DomainsPage /></PrivateRoute>} />
+        <Route path="/domain/:domainId" element={<PrivateRoute><DomainPage /></PrivateRoute>} />
+        <Route path="/domain/:domainId/onboarding"   element={<PrivateRoute><DomainOnboardingPage /></PrivateRoute>} />
+        <Route path="/domain/:domainId/diagnostic"   element={<PrivateRoute><DomainDiagnosticPage /></PrivateRoute>} />
+        <Route path="/domain/:domainId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
+        <Route path="/domain/:domainId/css-primer"   element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
+        {/* Legacy /topics + /topic/* URLs → redirect to the new /domains scheme (bookmarks, old links). */}
+        <Route path="/topics" element={<Navigate to="/domains" replace />} />
+        <Route path="/topic/*" element={<LegacyTopicRedirect />} />
         <Route path="/leaderboard"   element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
         <Route path="/u/:username"   element={<PrivateRoute><PublicProfilePage /></PrivateRoute>} />
 
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
-            <Route path="topics" element={<AdminDomainsPage />} />
+            <Route path="domains" element={<AdminDomainsPage />} />
+            <Route path="topics" element={<Navigate to="/admin/domains" replace />} />
             <Route path="chunks" element={<AdminChunksPage />} />
             <Route path="chunks/:moduleId/subchunks" element={<AdminLessonsPage />} />
             <Route path="subchunks/:lessonId/edit" element={<AdminLessonEditorPage />} />

@@ -2,7 +2,7 @@
 import { useAuth } from '@/shared/hooks/useAuth'
 import { RotateCcw, Bot, Rabbit, Trophy, BarChart2, GraduationCap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { TopicIcon } from '@/components/icons/TopicIcon'
+import { DomainIcon } from '@/components/icons/DomainIcon'
 
 // â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -291,7 +291,7 @@ export default function LandingPage() {
                 fontFamily: 'Cinzel, serif', fontSize: 12, color: 'var(--muted)', opacity: 0.6,
                 display: 'flex', alignItems: 'center', gap: 6,
               }}>
-                <TopicIcon domainId={name.toLowerCase().replace(/ /g, '')} size={13} />
+                <DomainIcon domainId={name.toLowerCase().replace(/ /g, '')} size={13} />
                 {name}
               </div>
             ))}

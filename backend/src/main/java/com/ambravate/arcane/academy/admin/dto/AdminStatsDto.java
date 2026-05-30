@@ -8,7 +8,7 @@ import java.util.Map;
 public class AdminStatsDto {
     private long totalUsers;
     private long activeUsers7d;
-    private long totalTopics;
+    private long totalDomains;
     private long totalChunks;
     private long totalSubChunks;
     private long totalQuestions;
@@ -19,7 +19,7 @@ public class AdminStatsDto {
     private List<AdminUserDto> recentSignups;
     private List<ContentHealthDto> contentHealth;
     private Map<String, Long> subscriptionBreakdown;
-    private List<TopicEngagementItem> topicEngagement;
+    private List<DomainEngagementItem> domainEngagement;
     private List<DailyCount> signupTrend;
     private List<XpBucket> xpDistribution;
 }

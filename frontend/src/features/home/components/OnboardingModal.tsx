@@ -245,13 +245,13 @@ export default function OnboardingModal({ onClose }: Props) {
         // Stay on step 3 to show the badge earned screen
       } else {
         onClose()
-        navigate('/topics')
+        navigate('/domains')
       }
     } catch {
       // Don't block the user — just close and navigate
       markOnboardingDone()
       onClose()
-      navigate('/topics')
+      navigate('/domains')
     } finally {
       setCompleting(false)
     }
@@ -267,7 +267,7 @@ export default function OnboardingModal({ onClose }: Props) {
 
   function handleBadgeDismiss() {
     onClose()
-    navigate('/topics')
+    navigate('/domains')
   }
 
   const stepContent = [<Step1 />, <Step2 />, <Step3 />, <Step4 badge={badge} />]

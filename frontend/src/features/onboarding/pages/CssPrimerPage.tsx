@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import {
@@ -237,7 +237,7 @@ export default function CssPrimerPage() {
   }
 
   function handleProceed() {
-    navigate(`/topic/${domainId}`, { replace: true })
+    navigate(`/domain/${domainId}`, { replace: true })
   }
 
   return (

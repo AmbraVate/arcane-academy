@@ -87,13 +87,13 @@ export default function PublicProfilePage() {
         {/* Per-topic breakdown */}
         <section className="mb-6">
           <h2 className="font-cinzel text-[14px] text-purple-light tracking-[1px] mb-3 pb-1.5 border-b border-border">
-            Topics
+            Domains
           </h2>
-          {profile.topics.length === 0 ? (
-            <p className="text-muted italic">No topic XP yet â€” they're just getting started.</p>
+          {profile.domains.length === 0 ? (
+            <p className="text-muted italic">No domain XP yet â€” they're just getting started.</p>
           ) : (
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
-              {profile.topics.map(topic => (
+              {profile.domains.map(topic => (
                 <div
                   key={topic.domainId}
                   className="bg-card border border-border rounded-[10px] px-4 py-4"

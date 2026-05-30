@@ -15,7 +15,7 @@ const TOPIC_META: Record<string, { name: string; glyph: string }> = {
   sciences:   { name: 'Natural Sciences', glyph: 'ðŸ”¬' },
 }
 
-export default function TopicDiagnosticPage() {
+export default function DomainDiagnosticPage() {
   const { domainId } = useParams<{ domainId: string }>()
   const navigate = useNavigate()
   const [session, setSession] = useState<ReviewSessionDto | null>(null)
@@ -56,7 +56,7 @@ export default function TopicDiagnosticPage() {
         </button>
         <button
           className="btn btn-ghost mt-2.5 text-[12px]"
-          onClick={async () => { await diagnosticApi.skip(domainId!); invalidateDashboard(domainId); navigate(`/topic/${domainId}`) }}
+          onClick={async () => { await diagnosticApi.skip(domainId!); invalidateDashboard(domainId); navigate(`/domain/${domainId}`) }}
         >
           Skip â€” start from the beginning
         </button>
@@ -83,7 +83,7 @@ export default function TopicDiagnosticPage() {
               ? "Good foundation. We'll focus on the gaps."
               : "Starting from scratch â€” we'll build your knowledge step by step."}
           </p>
-          <button className="btn btn-primary" onClick={() => navigate(`/topic/${domainId}`)}>Start Learning â†’</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/domain/${domainId}`)}>Start Learning â†’</button>
         </div>
       </div>
     )

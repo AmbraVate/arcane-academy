@@ -8,11 +8,11 @@ export default function OnboardingPage() {
 
   async function handleNew() {
     setLoading(true)
-    try { await diagnosticApi.skip(); navigate('/topics', { replace: true }) }
+    try { await diagnosticApi.skip(); navigate('/domains', { replace: true }) }
     catch { setLoading(false) }
   }
 
-  function handleExperienced() { navigate('/topics', { replace: true }) }
+  function handleExperienced() { navigate('/domains', { replace: true }) }
 
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">

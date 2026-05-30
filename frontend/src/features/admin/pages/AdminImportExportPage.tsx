@@ -1,8 +1,8 @@
 ﻿import { useEffect, useRef, useState } from 'react'
-import { adminChunkApi, adminContentApi, adminTopicApi, type AdminChunk, type AdminTopic } from '@/shared/api/adminServices'
+import { adminChunkApi, adminContentApi, adminDomainApi, type AdminChunk, type AdminDomain } from '@/shared/api/adminServices'
 
 export default function AdminImportExportPage() {
-  const [topics, setTopics] = useState<AdminTopic[]>([])
+  const [topics, setTopics] = useState<AdminDomain[]>([])
   const [chunks, setChunks] = useState<AdminChunk[]>([])
   const [topicFilter, setTopicFilter] = useState('')
   const [loadingChunks, setLoadingChunks] = useState(false)
@@ -12,7 +12,7 @@ export default function AdminImportExportPage() {
   const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    adminTopicApi.list().then(setTopics).catch(() => {})
+    adminDomainApi.list().then(setTopics).catch(() => {})
   }, [])
 
   useEffect(() => {

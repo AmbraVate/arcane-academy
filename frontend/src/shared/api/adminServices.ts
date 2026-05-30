@@ -3,22 +3,22 @@
 // â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface AdminStats {
-  totalUsers: number; activeUsers7d: number; totalTopics: number
+  totalUsers: number; activeUsers7d: number; totalDomains: number
   totalChunks: number; totalLessons: number; totalQuestions: number
   totalNotes: number; totalCapstones: number
   openStuckReports: number; pendingCapstones: number
   recentSignups: AdminUser[]; contentHealth: ContentHealthItem[]
   subscriptionBreakdown: Record<string, number>
-  topicEngagement: TopicEngagementItem[]
+  domainEngagement: DomainEngagementItem[]
   signupTrend: DailyCount[]
   xpDistribution: XpBucket[]
 }
 export interface ContentHealthItem { lessonId: string; title: string; chunkTitle: string; domainId?: string; tier?: string; issues: string[] }
-export interface TopicEngagementItem { domainId: string; topicName: string; glyph: string; totalLessons: number; totalCompletions: number; uniqueLearners: number }
+export interface DomainEngagementItem { domainId: string; domainName: string; glyph: string; totalLessons: number; totalCompletions: number; uniqueLearners: number }
 export interface DailyCount { date: string; count: number }
 export interface XpBucket { rank: string; count: number }
 
-export interface AdminTopic {
+export interface AdminDomain {
   id: string; name: string; glyph: string; tagline: string
   accentColor: string; sortOrder: number; active: boolean
 }
@@ -90,19 +90,19 @@ export const adminStatsApi = {
   },
 }
 
-// â”€â”€ Topics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â”€â”€ Domains â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-export const adminTopicApi = {
-  list: async (): Promise<AdminTopic[]> => {
+export const adminDomainApi = {
+  list: async (): Promise<AdminDomain[]> => {
     const { data } = await api.get('/api/admin/domains')
     return data
   },
-  create: async (topic: Partial<AdminTopic>): Promise<AdminTopic> => {
-    const { data } = await api.post('/api/admin/domains', topic)
+  create: async (domain: Partial<AdminDomain>): Promise<AdminDomain> => {
+    const { data } = await api.post('/api/admin/domains', domain)
     return data
   },
-  update: async (id: string, topic: Partial<AdminTopic>): Promise<AdminTopic> => {
-    const { data } = await api.put(`/api/admin/domains/${id}`, topic)
+  update: async (id: string, domain: Partial<AdminDomain>): Promise<AdminDomain> => {
+    const { data } = await api.put(`/api/admin/domains/${id}`, domain)
     return data
   },
   delete: async (id: string): Promise<void> => {

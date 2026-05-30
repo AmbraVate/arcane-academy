@@ -1,13 +1,13 @@
-﻿import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/shared/hooks/useAuth'
 import OnboardingModal from '@/features/home/components/OnboardingModal'
-import { useTopicsDashboard } from '@/hooks/queries'
-import { TopicIcon } from '@/components/icons/TopicIcon'
+import { useDomainsDashboard } from '@/hooks/queries'
+import { DomainIcon } from '@/components/icons/DomainIcon'
 import { Badge } from '@/components/ui/badge'
 import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight, RotateCcw, LifeBuoy, ChevronDown, CheckCircle, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { ACTIVE_TOPICS, ACTIVE_TOPIC_IDS, COMING_SOON_TOPICS, type Topic } from '@/features/topics/data/topics'
+import { ACTIVE_DOMAINS, ACTIVE_DOMAIN_IDS, COMING_SOON_DOMAINS, type Domain } from '@/features/domains/data/domains'
 import { hasActiveSubscription } from '@/shared/types'
 import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
@@ -93,7 +93,7 @@ const HOW_IT_WORKS = [
 function EnrolledCard({
   topic, data, onClick,
 }: {
-  topic: Topic
+  topic: Domain
   data: TopicData
   onClick: () => void
 }) {
@@ -122,7 +122,7 @@ function EnrolledCard({
 
         {/* Icon */}
         <div className="flex-shrink-0">
-          <TopicIcon domainId={topic.id} size={44} />
+          <DomainIcon domainId={topic.id} size={44} />
         </div>
 
         {/* Info */}
@@ -184,7 +184,7 @@ function TopicCard({
   canEnrol,
   onClick,
 }: {
-  topic: Topic
+  topic: Domain
   isLocked: boolean
   canEnrol: boolean
   onClick: () => void
@@ -218,7 +218,7 @@ function TopicCard({
       }}
     >
       <div className="flex items-start justify-between">
-        <TopicIcon domainId={topic.id} size={28} />
+        <DomainIcon domainId={topic.id} size={28} />
         <Badge variant={!active ? 'soon' : isLocked ? 'locked' : 'active'}>
           {!active ? 'Coming Soon' : isLocked ? 'ðŸ”’ Premium' : 'Active'}
         </Badge>
@@ -252,7 +252,7 @@ export default function HomePage() {
   const { user }        = useAuth()
   const navigate        = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
-  const rawData         = useTopicsDashboard(ACTIVE_TOPIC_IDS)
+  const rawData         = useDomainsDashboard(ACTIVE_DOMAIN_IDS)
 
   const [showUpgrade, setShowUpgrade]     = useState(false)
   const [paymentBanner, setPaymentBanner] = useState<'success' | 'cancelled' | null>(null)
@@ -293,7 +293,7 @@ export default function HomePage() {
   )
 
   // Enrolled = has any progress or completed the diagnostic
-  const enrolledTopics = ACTIVE_TOPICS.filter(t => {
+  const enrolledTopics = ACTIVE_DOMAINS.filter(t => {
     const d = topicData[t.id]
     return d && (d.progress > 0 || d.diagnosticCompleted)
   })
@@ -301,12 +301,12 @@ export default function HomePage() {
   const canUnlock      = hasActiveSubscription(user)
 
   // Unenrolled active topics
-  const unenrolledActive = ACTIVE_TOPICS.filter(t => !enrolledTopics.find(e => e.id === t.id))
+  const unenrolledActive = ACTIVE_DOMAINS.filter(t => !enrolledTopics.find(e => e.id === t.id))
 
-  function handleTopicClick(topic: Topic) {
+  function handleTopicClick(topic: Domain) {
     const data = topicData[topic.id]
     const needsOnboarding = !data || !data.diagnosticCompleted || diagnosticExpired(data.diagnosticCompletedAt)
-    navigate(needsOnboarding ? `/topic/${topic.id}/onboarding` : `/topic/${topic.id}`)
+    navigate(needsOnboarding ? `/domain/${topic.id}/onboarding` : `/domain/${topic.id}`)
   }
 
   function handleLockedTopicClick() {
@@ -491,7 +491,7 @@ export default function HomePage() {
         <SectionHeading>On the Horizon</SectionHeading>
         <div className="grid gap-3"
           style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))' }}>
-          {COMING_SOON_TOPICS.slice(0, 6).map(topic => (
+          {COMING_SOON_DOMAINS.slice(0, 6).map(topic => (
             <TopicCard
               key={topic.id}
               topic={topic}
@@ -501,9 +501,9 @@ export default function HomePage() {
             />
           ))}
         </div>
-        {COMING_SOON_TOPICS.length > 6 && (
+        {COMING_SOON_DOMAINS.length > 6 && (
           <p className="mt-3 text-center font-cinzel text-[11px] text-muted tracking-[0.1em]">
-            +{COMING_SOON_TOPICS.length - 6} more disciplines in development
+            +{COMING_SOON_DOMAINS.length - 6} more disciplines in development
           </p>
         )}
       </section>

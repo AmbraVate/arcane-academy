@@ -1,8 +1,8 @@
 package com.ambravate.arcane.academy.admin.dto;
 
-public record TopicEngagementItem(
+public record DomainEngagementItem(
     String domainId,
-    String topicName,
+    String domainName,
     String glyph,
     long totalSubChunks,
     long totalCompletions,

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import {
@@ -31,7 +31,7 @@ export default function PrerequisiteCheckPage() {
 
   // If this topic doesn't need a prereq check, skip straight to the topic
   if (!CSS_PREREQ_TOPICS.has(domainId)) {
-    navigate(`/topic/${domainId}`, { replace: true })
+    navigate(`/domain/${domainId}`, { replace: true })
     return null
   }
 
@@ -42,11 +42,11 @@ export default function PrerequisiteCheckPage() {
   }
 
   function goToTopic() {
-    navigate(`/topic/${domainId}`, { replace: true })
+    navigate(`/domain/${domainId}`, { replace: true })
   }
 
   function goToPrimer() {
-    navigate(`/topic/${domainId}/css-primer`)
+    navigate(`/domain/${domainId}/css-primer`)
   }
 
   // â”€â”€ Choice stage â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -57,7 +57,7 @@ export default function PrerequisiteCheckPage() {
   }
 
   function handleNeedPrimer() {
-    navigate(`/topic/${domainId}/css-primer`)
+    navigate(`/domain/${domainId}/css-primer`)
   }
 
   function handleTakeQuiz() {

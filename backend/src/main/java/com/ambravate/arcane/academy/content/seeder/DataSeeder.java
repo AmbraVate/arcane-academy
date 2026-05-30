@@ -24,13 +24,13 @@ public class DataSeeder {
 
     private final JsonContentSeeder jsonContentSeeder;
     private final Optional<TestUserSeeder> testUserSeeder;   // absent in prod (@Profile("!prod"))
-    private final TopicSeeder topicSeeder;
+    private final DomainSeeder domainSeeder;
 
     @Bean
     public ApplicationRunner seedData() {
         return args -> {
             seedQuietly("JSON content", this::seedJsonContent);
-            seedQuietly("topics",       topicSeeder::seed);
+            seedQuietly("domains",      domainSeeder::seed);
             testUserSeeder.ifPresent(s -> seedQuietly("test users", s::seed));
         };
     }

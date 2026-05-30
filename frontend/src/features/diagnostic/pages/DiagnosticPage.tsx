@@ -39,7 +39,7 @@ export default function DiagnosticPage() {
         <button className="btn btn-primary" onClick={handleStart} disabled={loading}>
           {loading ? 'Preparing...' : 'Begin Diagnostic →'}
         </button>
-        <button className="btn btn-ghost mt-2.5 text-[12px]" onClick={() => navigate('/topic/java')}>
+        <button className="btn btn-ghost mt-2.5 text-[12px]" onClick={() => navigate('/domain/java')}>
           Skip — start from the beginning
         </button>
       </div>
@@ -72,7 +72,7 @@ export default function DiagnosticPage() {
               </div>
             ))}
           </div>
-          <button className="btn btn-primary" onClick={() => navigate('/topic/java')}>Go to Dashboard →</button>
+          <button className="btn btn-primary" onClick={() => navigate('/domain/java')}>Go to Dashboard →</button>
         </div>
       </div>
     )

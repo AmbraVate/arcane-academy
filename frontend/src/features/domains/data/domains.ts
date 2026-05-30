@@ -49,10 +49,3 @@ export const ACTIVE_DOMAINS = DOMAINS.filter(d => d.status === 'active')
 export const ACTIVE_DOMAIN_IDS = ACTIVE_DOMAINS.map(d => d.id)
 
 export const COMING_SOON_DOMAINS = DOMAINS.filter(d => d.status === 'coming_soon')
-
-// Legacy aliases for gradual migration
-export type Topic = Domain
-export const TOPICS = DOMAINS
-export const ACTIVE_TOPICS = ACTIVE_DOMAINS
-export const ACTIVE_TOPIC_IDS = ACTIVE_DOMAIN_IDS
-export const COMING_SOON_TOPICS = COMING_SOON_DOMAINS

@@ -1354,7 +1354,7 @@ export default function EncodingPage() {
           {/* â”€â”€ Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div className="flex gap-2.5 justify-center mt-4 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
             <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}>Return to Chunk â†’</button>
-            <button className="btn btn-ghost" onClick={() => navigate(`/topic/${encoding.domainId ?? 'java'}`)}>
+            <button className="btn btn-ghost" onClick={() => navigate(`/domain/${encoding.domainId ?? 'java'}`)}>
               Dashboard
             </button>
             {encoding.storyBeats?.length ? (

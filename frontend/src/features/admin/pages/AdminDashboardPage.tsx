@@ -1,7 +1,7 @@
 ﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AlertTriangle, CheckCircle2, CircleHelp, FileText, Flag, Flame, Map, Package, StickyNote, Trophy, Users } from 'lucide-react'
-import { adminStatsApi, type AdminStats, type DailyCount, type TopicEngagementItem, type XpBucket } from '@/shared/api/adminServices'
+import { adminStatsApi, type AdminStats, type DailyCount, type DomainEngagementItem, type XpBucket } from '@/shared/api/adminServices'
 import React from 'react'
 
 // â”€â”€ Palette helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -121,7 +121,7 @@ function XpDistribution({ data }: { data: XpBucket[] }) {
   )
 }
 
-function TopicEngagement({ data }: { data: TopicEngagementItem[] }) {
+function DomainEngagement({ data }: { data: DomainEngagementItem[] }) {
   return (
     <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, minWidth: 420 }}>
@@ -145,7 +145,7 @@ function TopicEngagement({ data }: { data: TopicEngagementItem[] }) {
             return (
               <tr key={row.domainId} style={{ borderBottom: '1px solid #1e1a35' }}>
                 <td style={{ padding: '8px 8px', color: '#e8e0f0' }}>
-                  <span style={{ marginRight: 6 }}>{row.glyph}</span>{row.topicName}
+                  <span style={{ marginRight: 6 }}>{row.glyph}</span>{row.domainName}
                 </td>
                 <td style={{ padding: '8px 8px', color: '#c4b5fd', textAlign: 'right' }}>{row.totalLessons}</td>
                 <td style={{ padding: '8px 8px', color: '#4ade80', textAlign: 'right' }}>{row.totalCompletions}</td>
@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(155px, 1fr))', gap: 12 }}>
         <StatCard label="Total Users"   value={stats.totalUsers}     Icon={Users}      color="#8b5cf6" />
         <StatCard label="Active (7d)"   value={stats.activeUsers7d}  Icon={Flame}      color="#fb923c" />
-        <StatCard label="Topics"        value={stats.totalTopics}    Icon={Map}        color="#2dd4bf" />
+        <StatCard label="Domains"       value={stats.totalDomains}   Icon={Map}        color="#2dd4bf" />
         <StatCard label="Modules"       value={stats.totalChunks}    Icon={Package}    color="#c9a227" />
         <StatCard label="Lessons"       value={stats.totalLessons} Icon={FileText}   color="#8b5cf6" />
         <StatCard label="Questions"     value={stats.totalQuestions} Icon={CircleHelp} color="#4ade80" />
@@ -289,8 +289,8 @@ export default function AdminDashboardPage() {
 
       {/* Topic engagement */}
       <Panel title="Topic Engagement">
-        {stats.topicEngagement?.length ? (
-          <TopicEngagement data={stats.topicEngagement} />
+        {stats.domainEngagement?.length ? (
+          <DomainEngagement data={stats.domainEngagement} />
         ) : (
           <p style={{ color: '#8b7fa0', fontSize: 13 }}>No topics found.</p>
         )}

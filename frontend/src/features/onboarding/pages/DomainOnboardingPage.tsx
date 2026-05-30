@@ -15,7 +15,7 @@ const TOPIC_META: Record<string, { name: string; glyph: string; question: string
   sciences:   { name: 'Natural Sciences', glyph: 'ðŸ”¬', question: 'Have you studied natural sciences before?' },
 }
 
-export default function TopicOnboardingPage() {
+export default function DomainOnboardingPage() {
   const { domainId } = useParams<{ domainId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -38,14 +38,14 @@ export default function TopicOnboardingPage() {
       invalidateDashboard(domainId)
       // For CSS-dependent topics, route through the prereq check on first visit
       if (CSS_PREREQ_TOPICS.has(domainId!) && !prereqAlreadyDone()) {
-        navigate(`/topic/${domainId}/prereq-check`)
+        navigate(`/domain/${domainId}/prereq-check`)
       } else {
-        navigate(`/topic/${domainId}`, { replace: true })
+        navigate(`/domain/${domainId}`, { replace: true })
       }
     } catch { setLoading(false) }
   }
 
-  function handleExperienced() { navigate(`/topic/${domainId}/diagnostic`) }
+  function handleExperienced() { navigate(`/domain/${domainId}/diagnostic`) }
 
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">

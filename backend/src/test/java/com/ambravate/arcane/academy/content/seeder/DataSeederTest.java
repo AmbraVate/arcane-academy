@@ -15,13 +15,13 @@ class DataSeederTest {
     @Test
     void applicationStartsEvenWhenASeedingStepFails() throws Exception {
         JsonContentSeeder jsonContentSeeder = mock(JsonContentSeeder.class);
-        TopicSeeder topicSeeder = mock(TopicSeeder.class);
+        DomainSeeder domainSeeder = mock(DomainSeeder.class);
         TestUserSeeder testUserSeeder = mock(TestUserSeeder.class);
 
         when(jsonContentSeeder.seed()).thenReturn(0);
-        doThrow(new RuntimeException("database unavailable")).when(topicSeeder).seed();
+        doThrow(new RuntimeException("database unavailable")).when(domainSeeder).seed();
 
-        DataSeeder dataSeeder = new DataSeeder(jsonContentSeeder, Optional.of(testUserSeeder), topicSeeder);
+        DataSeeder dataSeeder = new DataSeeder(jsonContentSeeder, Optional.of(testUserSeeder), domainSeeder);
 
         // A failing seeding step must never propagate out of the ApplicationRunner.
         assertThatCode(() -> dataSeeder.seedData().run(null))

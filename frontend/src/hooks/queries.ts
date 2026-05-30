@@ -32,8 +32,8 @@ export function useModuleDetail(moduleId: string | undefined) {
   })
 }
 
-/** Fetch dashboard data for multiple topics in parallel (used by DomainsPage). */
-export function useTopicsDashboard(domainIds: string[]) {
+/** Fetch dashboard data for multiple domains in parallel (used by DomainsPage). */
+export function useDomainsDashboard(domainIds: string[]) {
   const results = useQueries({
     queries: domainIds.map(id => ({
       queryKey: QUERY_KEYS.dashboard(id),

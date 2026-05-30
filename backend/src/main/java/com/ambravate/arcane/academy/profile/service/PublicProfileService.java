@@ -15,7 +15,7 @@ import com.ambravate.arcane.academy.practice.repository.UserChunkProgressReposit
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.profile.domain.EarnedBadge;
 import com.ambravate.arcane.academy.profile.domain.PublicProfile;
-import com.ambravate.arcane.academy.profile.domain.TopicEntry;
+import com.ambravate.arcane.academy.profile.domain.DomainEntry;
 
 
 import lombok.RequiredArgsConstructor;
@@ -78,13 +78,13 @@ public class PublicProfileService {
             arr[1] += 1;
         }
 
-        Map<String, Domain> topicsById = domainRepository.findAll().stream()
+        Map<String, Domain> domainsById = domainRepository.findAll().stream()
             .collect(Collectors.toMap(Domain::getId, t -> t, (a, b) -> a));
 
-        List<TopicEntry> topics = agg.entrySet().stream()
+        List<DomainEntry> domains = agg.entrySet().stream()
             .map(e -> {
-                Domain t = topicsById.get(e.getKey());
-                return new TopicEntry(
+                Domain t = domainsById.get(e.getKey());
+                return new DomainEntry(
                     e.getKey(),
                     t != null ? t.getName() : e.getKey(),
                     t != null ? t.getGlyph() : "âœ¦",
@@ -93,7 +93,7 @@ public class PublicProfileService {
                     e.getValue()[1]
                 );
             })
-            .sorted(Comparator.comparingInt(TopicEntry::xpEarned).reversed())
+            .sorted(Comparator.comparingInt(DomainEntry::xpEarned).reversed())
             .toList();
 
 
@@ -109,7 +109,7 @@ public class PublicProfileService {
             user.getRank(),
             user.getTotalXp(),
             user.getStreakDays(),
-            topics,
+            domains,
             badges
         );
     }

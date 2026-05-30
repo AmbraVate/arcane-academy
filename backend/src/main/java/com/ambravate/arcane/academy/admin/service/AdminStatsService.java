@@ -4,7 +4,7 @@ import com.ambravate.arcane.academy.admin.dto.AdminStatsDto;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
 import com.ambravate.arcane.academy.admin.dto.ContentHealthDto;
 import com.ambravate.arcane.academy.admin.dto.DailyCount;
-import com.ambravate.arcane.academy.admin.dto.TopicEngagementItem;
+import com.ambravate.arcane.academy.admin.dto.DomainEngagementItem;
 import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
 import com.ambravate.arcane.academy.admin.dto.XpBucket;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
@@ -121,9 +121,9 @@ public class AdminStatsService {
             });
 
         // Domain engagement
-        List<TopicEngagementItem> topicEngagement = new ArrayList<>();
+        List<DomainEngagementItem> domainEngagement = new ArrayList<>();
         jdbc.query("""
-            SELECT t.id AS topic_id, t.name AS topic_name, t.glyph,
+            SELECT t.id AS domain_id, t.name AS domain_name, t.glyph,
                 COUNT(DISTINCT sc.id)                                                    AS total_sub_chunks,
                 COUNT(DISTINCT CASE WHEN ucp.status = 'COMPLETE' THEN ucp.id END)       AS total_completions,
                 COUNT(DISTINCT CASE WHEN ucp.status = 'COMPLETE' THEN ucp.user_id END)  AS unique_learners
@@ -137,9 +137,9 @@ public class AdminStatsService {
             """,
             rs -> {
                 while (rs.next())
-                    topicEngagement.add(new TopicEngagementItem(
-                        rs.getString("topic_id"),
-                        rs.getString("topic_name"),
+                    domainEngagement.add(new DomainEngagementItem(
+                        rs.getString("domain_id"),
+                        rs.getString("domain_name"),
                         rs.getString("glyph"),
                         rs.getLong("total_sub_chunks"),
                         rs.getLong("total_completions"),
@@ -149,7 +149,7 @@ public class AdminStatsService {
         return AdminStatsDto.builder()
                 .totalUsers(userRepository.count())
                 .activeUsers7d(userRepository.countByLastLoginAtAfter(sevenDaysAgo))
-                .totalTopics(domainRepository.count())
+                .totalDomains(domainRepository.count())
                 .totalChunks(moduleRepository.count())
                 .totalSubChunks(lessonRepository.count())
                 .totalQuestions(questionRepository.count())
@@ -160,7 +160,7 @@ public class AdminStatsService {
                 .recentSignups(recentDtos)
                 .contentHealth(health)
                 .subscriptionBreakdown(subscriptionBreakdown)
-                .topicEngagement(topicEngagement)
+                .domainEngagement(domainEngagement)
                 .signupTrend(buildSignupTrend())
                 .xpDistribution(xpDistribution)
                 .build();

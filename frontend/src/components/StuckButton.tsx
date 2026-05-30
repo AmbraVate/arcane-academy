@@ -22,7 +22,7 @@ export default function StuckButton() {
   // Parse context clues from the current URL
   function parseContext() {
     const url = window.location.href
-    const match = location.pathname.match(/\/topic\/([^/]+)(?:\/.*\/([^/]+))?/)
+    const match = location.pathname.match(/\/domain\/([^/]+)(?:\/.*\/([^/]+))?/)
     return {
       domainId: match?.[1] ?? undefined,
       lessonId: undefined as string | undefined,
@@ -77,11 +77,11 @@ export default function StuckButton() {
         screenshotData,
       })
       setStage('done')
-      setTimeout(() => navigate('/topics', { replace: true }), 2000)
+      setTimeout(() => navigate('/domains', { replace: true }), 2000)
     } catch {
       // Even if the request fails, don't strand the user â€” send them home
       setStage('done')
-      setTimeout(() => navigate('/topics', { replace: true }), 2000)
+      setTimeout(() => navigate('/domains', { replace: true }), 2000)
     }
   }
 
