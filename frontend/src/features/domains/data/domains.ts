@@ -9,39 +9,79 @@ export interface Domain {
   modules: number
   accentStroke: string
   school: School
+  trackGroup?: string
   guildName?: string
 }
 
-export const SCHOOLS: Record<School, { name: string; description: string }> = {
-  'engineering-systems':     { name: 'Engineering & Systems',                 description: 'Software Engineering, Frontend Engineering, Data & Databases' },
-  'mathematical-scientific': { name: 'Mathematical & Scientific Foundations', description: 'Mathematics, Natural Sciences, Botany' },
-  'human-systems':           { name: 'Human Systems',                         description: 'Psychology, Philosophy, History, Economics' },
-  'creative-cultural':       { name: 'Creative & Cultural Systems',           description: 'Music, Communication & Writing' },
-  'heritage':                { name: 'Heritage Systems',                      description: 'Genealogy and family history' },
+export interface SchoolMeta {
+  name: string
+  glyph: string
+  color: string
+  description: string
 }
 
+export const SCHOOL_META: Record<School, SchoolMeta> = {
+  'engineering-systems':     { name: 'Engineering & Systems',                 glyph: '⚡',  color: '#a78bfa', description: 'Software Engineering, Frontend Engineering, Data & Databases' },
+  'mathematical-scientific': { name: 'Mathematical & Scientific Foundations', glyph: '🔬', color: '#4ade80', description: 'Mathematics, Natural Sciences, Botany' },
+  'human-systems':           { name: 'Human Systems',                         glyph: '🧠', color: '#c4b5fd', description: 'Psychology, Philosophy, History, Economics' },
+  'creative-cultural':       { name: 'Creative & Cultural Systems',           glyph: '🎵', color: '#f472b6', description: 'Music, Communication & Writing' },
+  'heritage':                { name: 'Heritage Systems',                      glyph: '🌳', color: '#c9a227', description: 'Genealogy and family history' },
+}
+
+export interface TrackGroup {
+  id: string
+  name: string
+  glyph: string
+  color: string
+  description: string
+  school: School
+}
+
+export const TRACK_GROUPS: TrackGroup[] = [
+  { id: 'software-engineering', name: 'Software Engineering',  glyph: '⚡',  color: '#a78bfa', description: 'Language-agnostic engineering fundamentals, Java, and Python', school: 'engineering-systems' },
+  { id: 'frontend-engineering', name: 'Frontend Engineering',  glyph: '🎨', color: '#38bdf8', description: 'React, Tailwind CSS, HTML, CSS, JavaScript, and TypeScript',      school: 'engineering-systems' },
+  { id: 'data-databases',       name: 'Data & Databases',      glyph: '🗃️', color: '#7dd3fc', description: 'SQL and relational database design',                              school: 'engineering-systems' },
+]
+
+/** Schools that have track-group sub-navigation (all others go straight to domains). */
+export function schoolHasTrackGroups(school: School): boolean {
+  return TRACK_GROUPS.some(tg => tg.school === school)
+}
+
+export function trackGroupsForSchool(school: School): TrackGroup[] {
+  return TRACK_GROUPS.filter(tg => tg.school === school)
+}
+
+// Legacy alias kept for any existing imports
+export const SCHOOLS: Record<School, { name: string; description: string }> = Object.fromEntries(
+  Object.entries(SCHOOL_META).map(([k, v]) => [k, { name: v.name, description: v.description }])
+) as Record<School, { name: string; description: string }>
+
 export const DOMAINS: Domain[] = [
-  { id: 'java',       name: 'Java',             glyph: '☕',  tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',                                       status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems',     guildName: 'Guild of Systems Architects' },
-  { id: 'psychology', name: 'Psychology',       glyph: '🧠',  tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.',              status: 'active',      modules: 71, accentStroke: 'var(--purple)', school: 'human-systems',           guildName: 'Order of Minds' },
-  { id: 'genealogy',  name: 'Genealogy',        glyph: '🌳',  tagline: 'From vital records to professional proof — become a skilled genealogical researcher.',                  status: 'active',      modules: 71, accentStroke: 'var(--gold)',   school: 'heritage',                guildName: 'Keepers of Lineage' },
-  { id: 'sciences',   name: 'Natural Sciences', glyph: '🔬',  tagline: 'From scientific method to frontier research — physics, chemistry, biology, and earth science.',         status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'mathematical-scientific', guildName: 'Observatory of Nature' },
-  { id: 'tailwind',   name: 'Tailwind CSS',     glyph: '🎨',  tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',                          status: 'active',      modules: 71, accentStroke: 'var(--purple)', school: 'engineering-systems',     guildName: 'Guild of Artisan Interfaces' },
-  { id: 'react',      name: 'React',            glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',              status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems',     guildName: 'Guild of Systems Architects' },
-  // Engineering & Systems — coming soon
-  { id: 'sql',        name: 'SQL',              glyph: '🗃️', tagline: 'The language of data. SELECT to window functions — the queries every backend dev writes daily.',        status: 'coming_soon', modules: 8,  accentStroke: 'var(--teal)',   school: 'engineering-systems',     guildName: 'Vault of Records' },
-  { id: 'html',       name: 'HTML',             glyph: '📄', tagline: 'The structure of the web. Learn to author the skeleton of every page.',                                 status: 'coming_soon', modules: 8,  accentStroke: 'var(--orange)', school: 'engineering-systems',     guildName: 'Guild of Artisan Interfaces' },
-  { id: 'css',        name: 'CSS',              glyph: '🖌️', tagline: 'Craft beautiful, responsive interfaces from the ground up.',                                            status: 'coming_soon', modules: 10, accentStroke: 'var(--purple)', school: 'engineering-systems',     guildName: 'Guild of Artisan Interfaces' },
-  { id: 'javascript', name: 'JavaScript',       glyph: '⚡', tagline: 'Bring the web to life. Logic, events, async, and the DOM.',                                             status: 'coming_soon', modules: 14, accentStroke: 'var(--gold)',   school: 'engineering-systems',     guildName: 'Guild of Systems Architects' },
-  { id: 'python',     name: 'Python',           glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.',                                         status: 'coming_soon', modules: 12, accentStroke: 'var(--teal)',   school: 'engineering-systems',     guildName: 'Guild of Systems Architects' },
-  { id: 'typescript', name: 'TypeScript',       glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',                               status: 'coming_soon', modules: 10, accentStroke: 'var(--gold)',   school: 'engineering-systems',     guildName: 'Guild of Systems Architects' },
-  // Mathematical & Scientific — coming soon (Blueprint Core 12)
+  // Engineering & Systems — Software Engineering
+  { id: 'java',       name: 'Java',             glyph: '☕',  tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',                                  status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'software-engineering', guildName: 'Guild of Systems Architects' },
+  { id: 'python',     name: 'Python',           glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.',                                         status: 'coming_soon', modules: 12, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'software-engineering', guildName: 'Guild of Systems Architects' },
+  // Engineering & Systems — Frontend Engineering
+  { id: 'react',      name: 'React',            glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',              status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Systems Architects' },
+  { id: 'tailwind',   name: 'Tailwind CSS',     glyph: '🎨',  tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',                         status: 'active',      modules: 71, accentStroke: 'var(--purple)', school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Artisan Interfaces' },
+  { id: 'javascript', name: 'JavaScript',       glyph: '⚡', tagline: 'Bring the web to life. Logic, events, async, and the DOM.',                                             status: 'coming_soon', modules: 14, accentStroke: 'var(--gold)',   school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Systems Architects' },
+  { id: 'typescript', name: 'TypeScript',       glyph: '🔷', tagline: 'JavaScript with discipline. Types, interfaces, and confidence at scale.',                               status: 'coming_soon', modules: 10, accentStroke: 'var(--gold)',   school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Systems Architects' },
+  { id: 'html',       name: 'HTML',             glyph: '📄', tagline: 'The structure of the web. Learn to author the skeleton of every page.',                                 status: 'coming_soon', modules: 8,  accentStroke: 'var(--orange)', school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Artisan Interfaces' },
+  { id: 'css',        name: 'CSS',              glyph: '🖌️', tagline: 'Craft beautiful, responsive interfaces from the ground up.',                                            status: 'coming_soon', modules: 10, accentStroke: 'var(--purple)', school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Artisan Interfaces' },
+  // Engineering & Systems — Data & Databases
+  { id: 'sql',        name: 'SQL',              glyph: '🗃️', tagline: 'The language of data. SELECT to window functions — the queries every backend dev writes daily.',        status: 'coming_soon', modules: 8,  accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'data-databases',       guildName: 'Vault of Records' },
+  // Mathematical & Scientific Foundations
+  { id: 'sciences',   name: 'Natural Sciences', glyph: '🔬',  tagline: 'From scientific method to frontier research — physics, chemistry, biology, and earth science.',        status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'mathematical-scientific', guildName: 'Observatory of Nature' },
   { id: 'mathematics', name: 'Mathematics',     glyph: '∑',  tagline: 'From algebra to probability — the universal language of pattern and structure.',                        status: 'coming_soon', modules: 71, accentStroke: 'var(--gold)',   school: 'mathematical-scientific', guildName: 'Lodge of Theorems' },
   { id: 'botany',      name: 'Botany',          glyph: '🌿', tagline: 'Plant biology, ecology, and the living architecture of ecosystems.',                                    status: 'coming_soon', modules: 71, accentStroke: 'var(--teal)',   school: 'mathematical-scientific', guildName: 'Verdant Archive' },
-  // Human Systems — coming soon (Blueprint Core 12)
+  // Human Systems
+  { id: 'psychology', name: 'Psychology',       glyph: '🧠',  tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.',             status: 'active',      modules: 71, accentStroke: 'var(--purple)', school: 'human-systems',           guildName: 'Order of Minds' },
   { id: 'philosophy',  name: 'Philosophy',      glyph: '⚖️', tagline: 'Logic, epistemology, ethics — the tools of rigorous thought across every domain.',                     status: 'coming_soon', modules: 71, accentStroke: 'var(--purple)', school: 'human-systems',           guildName: 'Sanctum of Dialectics' },
   { id: 'history',     name: 'History',         glyph: '📜', tagline: 'Civilisations, revolutions, and the forces that shaped the modern world.',                              status: 'coming_soon', modules: 71, accentStroke: 'var(--gold)',   school: 'human-systems',           guildName: 'Chronicle Vaults' },
   { id: 'economics',   name: 'Economics',       glyph: '📈', tagline: 'Incentives, markets, and game theory — understanding why the world organises itself the way it does.',  status: 'coming_soon', modules: 71, accentStroke: 'var(--teal)',   school: 'human-systems',           guildName: 'Exchange of Incentives' },
-  // Creative & Cultural — coming soon (Blueprint Core 12)
+  // Heritage Systems
+  { id: 'genealogy',  name: 'Genealogy',        glyph: '🌳',  tagline: 'From vital records to professional proof — become a skilled genealogical researcher.',                 status: 'active',      modules: 71, accentStroke: 'var(--gold)',   school: 'heritage',                guildName: 'Keepers of Lineage' },
+  // Creative & Cultural Systems
   { id: 'music',       name: 'Music',           glyph: '🎵', tagline: 'Rhythm, harmony, and composition — the mathematics of sound and emotion.',                              status: 'coming_soon', modules: 71, accentStroke: 'var(--purple)', school: 'creative-cultural',       guildName: 'Conservatory of Harmonics' },
 ]
 
