@@ -1,0 +1,360 @@
+---
+id: se-sen-m4-05
+school: engineering
+domainId: java
+tier: SENIOR
+moduleId: se-sen-m4
+moduleTitle: "Module 4: Distributed Systems"
+moduleGlyph: "🌐"
+moduleSortOrder: 4
+topicSlug: service_communication
+topicTitle: "Service Communication"
+topicSortOrder: 5
+lesson: service_communication
+title: "Service Communication"
+sortOrder: 5
+difficulty: 4
+estimatedMinutes: 30
+xpReward: 60
+practiceType: NONE
+questType: GUIDED
+retrievalWeight: high
+questTypes: [guided, solo, retrieval]
+prerequisites: [partition_tolerance]
+integrationDomains: [design, economics]
+soloAssessment:
+  type: PATTERN_MATCH
+  rubricItems:
+    - "Contrasts synchronous (REST/gRPC) and asynchronous (queue/event) communication"
+    - "Explains the circuit breaker pattern with open/closed/half-open states"
+    - "Describes retry with exponential backoff and jitter"
+    - "Defines idempotency and why it is required for retries"
+    - "Explains service discovery and names a tool"
+  keywords: [synchronous, asynchronous, circuit breaker, retry, exponential backoff, idempotency, service discovery, gRPC, queue, Resilience4j]
+  modelAnswer: |
+    Synchronous (REST, gRPC): caller waits for response. Simple reasoning, tight coupling,
+    cascading failures if downstream is slow.
+
+    Asynchronous (Kafka, RabbitMQ, SNS): caller publishes event and continues.
+    Loose coupling, resilient, but eventual consistency and harder debugging.
+
+    Circuit breaker (Resilience4j): CLOSED → trips to OPEN on failure threshold;
+    in OPEN state fails fast (no downstream calls); HALF-OPEN allows test requests;
+    returns to CLOSED if test succeeds.
+
+    Retry with exponential backoff: wait = base * 2^attempt + random_jitter.
+    Jitter prevents thundering herd (all retriers retrying simultaneously).
+
+    Idempotency: calling an operation multiple times produces the same result as once.
+    Required for retries — a retry must not double-charge, double-book, or double-insert.
+    Implementation: idempotency key (UUID per request); server deduplicates by key.
+
+    Service discovery: services register themselves; clients query registry for
+    endpoint locations. Tools: Eureka, Consul, Kubernetes DNS.
+guidedSteps:
+  - id: sc-step-1
+    sortOrder: 1
+    inputType: MULTIPLE_CHOICE
+    instruction: |
+      A circuit breaker has just tripped to OPEN after 5 consecutive failures calling the PaymentService. What happens to the next 20 incoming requests that need PaymentService?
+    inputConfig:
+      options:
+        - "They are queued and sent to PaymentService when it recovers"
+        - "They fail fast with a fallback response without calling PaymentService"
+        - "They retry PaymentService with exponential backoff"
+        - "The circuit breaker resets to CLOSED after processing them"
+    markingRule:
+      matchMode: NORMALIZED
+      accepted: ["They fail fast with a fallback response without calling PaymentService"]
+      rejectedFeedback: "In OPEN state, the circuit breaker does NOT call the downstream service at all — it immediately returns a failure or fallback response. This prevents cascading failures and gives the downstream service time to recover."
+    hint: "OPEN circuit = broken circuit = no electricity flows. What does that mean for calls?"
+    reflectionPrompt: "Fail fast in OPEN state is protective — it saves the downstream service from further load while it recovers, and prevents threads piling up waiting for timeouts."
+  - id: sc-step-2
+    sortOrder: 2
+    inputType: FILL_BLANK
+    instruction: |
+      Adding a random amount of time to each retry wait period to prevent all retrying clients from hitting a service simultaneously is called ___.
+    inputConfig:
+      placeholder: "one word"
+    markingRule:
+      matchMode: NORMALIZED
+      accepted: ["jitter", "Jitter"]
+      rejectedFeedback: "Jitter is random variation added to retry backoff periods. Without jitter, all clients that started failing at the same time will retry at the same time (thundering herd), potentially overwhelming the recovering service again."
+    hint: "It makes retry timing unpredictable — and that unpredictability is a feature, not a bug."
+    reflectionPrompt: "Jitter spreads load over time. AWS, Google, and Netflix all recommend it as a standard retry best practice."
+  - id: sc-step-3
+    sortOrder: 3
+    inputType: SHORT_TEXT
+    instruction: |
+      A payment service implements retries but the upstream client retries a charge request that actually succeeded — the client just didn't receive the success response. Explain what should have been implemented to prevent a double charge.
+    inputConfig:
+      minWords: 25
+    markingRule:
+      matchMode: CONTAINS
+      accepted: [idempotency, idempotency key, idempotent, deduplication, UUID, same result, duplicate]
+      rejectedFeedback: "The payment service should have required an idempotency key — a unique identifier (UUID) generated by the client per payment attempt. The server stores the result keyed by the idempotency key. If the same key arrives again, the server returns the stored result without re-processing. This makes the operation safe to retry."
+    hint: "How can the server know it has already processed this exact request?"
+    reflectionPrompt: "Idempotency is non-negotiable for any financial or state-mutating operation that will be retried."
+microCheckpoint:
+  - type: MULTIPLE_CHOICE
+    question: "gRPC offers which key advantage over REST/JSON for inter-service communication?"
+    options:
+      - "It is easier to read in browser developer tools"
+      - "It uses strongly-typed Protobuf contracts and HTTP/2 multiplexing, giving better performance and type safety"
+      - "It eliminates the need for service discovery"
+      - "It automatically implements circuit breaking"
+    correctIndex: 1
+    feedback: "gRPC uses Protocol Buffers (binary, strongly-typed, smaller than JSON) and HTTP/2 (multiplexed streams, header compression). This gives significantly better performance and strong schema contracts compared to REST/JSON."
+  - type: MULTIPLE_CHOICE
+    question: "Which communication pattern is MOST appropriate when Service A triggers a workflow in Service B but does not need an immediate response?"
+    options:
+      - "Synchronous HTTP REST call with a 30-second timeout"
+      - "gRPC streaming RPC"
+      - "Asynchronous message queue (e.g., Kafka, SQS)"
+      - "Polling Service B every second until the result is ready"
+    correctIndex: 2
+    feedback: "When the caller does not need an immediate response, asynchronous messaging (queues/events) is the right pattern. It decouples services, enables Service A to continue processing, and allows Service B to process at its own pace with natural backpressure."
+retrieval:
+  recall: "Name three states of a circuit breaker and describe what triggers each transition."
+  explain: "Explain to a junior developer why idempotency is required for safe retries, using a payment processing example."
+  mistakeId:
+    code: |
+      // Retry logic for calling OrderService
+      for (int attempt = 0; attempt < 5; attempt++) {
+          try {
+              return orderService.createOrder(request);
+          } catch (Exception e) {
+              Thread.sleep(1000); // wait 1 second between retries
+          }
+      }
+    answer: "Fixed 1-second wait (no exponential backoff, no jitter) means all retrying clients hit the recovering service simultaneously (thundering herd). Additionally, there is no idempotency check — if createOrder partially succeeded before the exception, retrying will create duplicate orders. Fix: use exponential backoff with jitter, and ensure createOrder is idempotent via an idempotency key."
+---
+
+# Hook
+
+The Academy's courier network spans a hundred towers. Sometimes a courier arrives only to find the destination tower's gate locked. Does the courier knock once and give up? Knock forever? Or wait a moment, try again, and eventually accept that the tower might be closed for the day? How services communicate with each other — and how they handle communication failures — is one of the most consequential design decisions in distributed systems.
+
+# Lore Introduction
+
+Senior mages at the Academy coordinate complex multi-tower rituals. They must decide: should the incantation be cast only after every tower confirms its readiness (synchronous), or should the signal be fired and each tower responds when it can (asynchronous)? And what happens when a tower goes dark mid-ritual — does the whole ceremony collapse, or does a resilience ward activate to protect the rest?
+
+Resilience patterns are the wards that make distributed magic survivable.
+
+# Core Learning
+
+## Concept Introduction
+
+Service communication patterns fall into two broad categories:
+- **Synchronous**: caller waits for response (REST, gRPC, RPC)
+- **Asynchronous**: caller publishes a message and continues (queues, events, Kafka)
+
+Each comes with different coupling, failure, and consistency trade-offs.
+
+| | Synchronous | Asynchronous |
+|---|---|---|
+| **Coupling** | Tight — caller requires callee to be available | Loose — callee can be down when message sent |
+| **Consistency** | Immediate | Eventual |
+| **Failure propagation** | Cascades upstream if downstream fails | Isolated — message waits in queue |
+| **Complexity** | Simpler to debug | Harder to trace; requires idempotency |
+
+## Why It Matters
+
+In distributed systems, services will fail. Timeouts will expire. Networks will drop packets. Systems that do not handle downstream failures gracefully cause cascading failures — one slow service brings down everything connected to it. Resilience patterns (circuit breaker, retry with backoff, idempotency) are the difference between a self-healing system and a domino collapse.
+
+## Worked Examples
+
+### REST vs gRPC
+
+```java
+// REST: human-readable, widely compatible, looser typing
+@FeignClient(name = "inventory-service")
+public interface InventoryClient {
+    @GetMapping("/api/products/{sku}")
+    ProductResponse getProduct(@PathVariable String sku);
+}
+
+// gRPC: Protobuf schema, HTTP/2, strongly typed, ~10x smaller payload
+// inventory.proto:
+// service InventoryService {
+//   rpc GetProduct (ProductRequest) returns (ProductResponse);
+// }
+
+ManagedChannel channel = ManagedChannelBuilder
+    .forAddress("inventory-service", 9090)
+    .usePlaintext()
+    .build();
+
+InventoryServiceGrpc.InventoryServiceBlockingStub stub =
+    InventoryServiceGrpc.newBlockingStub(channel);
+
+ProductResponse product = stub.getProduct(
+    ProductRequest.newBuilder().setSku(sku).build()
+);
+```
+
+### Asynchronous communication — Kafka producer
+
+```java
+// Producer: fire-and-forget to Kafka topic; does not wait for consumer
+@Service
+public class OrderEventPublisher {
+    private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
+
+    public void publish(OrderCreatedEvent event) {
+        kafkaTemplate.send("orders.created", event.orderId(), event)
+            .whenComplete((result, ex) -> {
+                if (ex != null) log.error("Failed to publish event", ex);
+                else log.info("Published: {}", result.getRecordMetadata().offset());
+            });
+        // Caller continues immediately — does not wait for consumer to process
+    }
+}
+```
+
+### Circuit breaker with Resilience4j
+
+```java
+@Configuration
+public class ResilienceConfig {
+    @Bean
+    public CircuitBreaker paymentCircuitBreaker(CircuitBreakerRegistry registry) {
+        CircuitBreakerConfig config = CircuitBreakerConfig.custom()
+            .failureRateThreshold(50)           // trip if 50% of calls fail
+            .waitDurationInOpenState(Duration.ofSeconds(30))
+            .permittedNumberOfCallsInHalfOpenState(5) // test calls in HALF_OPEN
+            .slidingWindowSize(10)               // evaluate last 10 calls
+            .build();
+        return registry.circuitBreaker("payment", config);
+    }
+}
+
+@Service
+public class PaymentService {
+    @CircuitBreaker(name = "payment", fallbackMethod = "paymentFallback")
+    public PaymentResult charge(ChargeRequest request) {
+        return paymentGateway.charge(request); // may fail
+    }
+
+    private PaymentResult paymentFallback(ChargeRequest request, Exception ex) {
+        log.warn("Circuit open — using fallback for payment {}", request.id());
+        return PaymentResult.pending(request.id()); // deferred payment
+    }
+}
+```
+
+**Circuit breaker states:**
+```
+CLOSED → (failure rate > threshold) → OPEN → (wait duration elapsed) → HALF_OPEN
+  ↑                                                                          |
+  ←←←←←←←←←←←←←← (test calls succeed) ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+  (or: test calls fail → back to OPEN)
+```
+
+### Retry with exponential backoff and jitter
+
+```java
+@Bean
+public Retry orderServiceRetry(RetryRegistry registry) {
+    RetryConfig config = RetryConfig.custom()
+        .maxAttempts(4)
+        .intervalFunction(IntervalFunction.ofExponentialRandomBackoff(
+            Duration.ofMillis(200),  // base interval
+            2.0,                     // multiplier
+            Duration.ofSeconds(10)   // max interval
+        ))
+        .retryExceptions(ServiceUnavailableException.class, TimeoutException.class)
+        .ignoreExceptions(InvalidRequestException.class) // don't retry client errors
+        .build();
+    return registry.retry("orderService", config);
+}
+// Wait sequence (approx): 200ms, 400ms+jitter, 800ms+jitter, 1600ms+jitter
+```
+
+### Idempotency key pattern
+
+```java
+@PostMapping("/payments")
+public ResponseEntity<PaymentResult> createPayment(
+        @RequestHeader("Idempotency-Key") String idempotencyKey,
+        @RequestBody ChargeRequest request) {
+    // Check if we've already processed this key
+    Optional<PaymentResult> existing = idempotencyStore.find(idempotencyKey);
+    if (existing.isPresent()) {
+        return ResponseEntity.ok(existing.get()); // replay stored result
+    }
+    // Process and store result
+    PaymentResult result = paymentProcessor.charge(request);
+    idempotencyStore.store(idempotencyKey, result, Duration.ofHours(24));
+    return ResponseEntity.ok(result);
+}
+```
+
+### Service discovery — Spring Cloud with Eureka
+
+```java
+@SpringBootApplication
+@EnableEurekaClient
+public class OrderServiceApplication { ... }
+
+// Client-side load balancing via discovery
+@LoadBalanced @Bean
+RestTemplate restTemplate() { return new RestTemplate(); }
+
+// Use service name instead of hardcoded host:port
+String response = restTemplate.getForObject(
+    "http://inventory-service/api/products/{sku}", String.class, sku
+);
+// Eureka resolves "inventory-service" to an actual IP:port at runtime
+```
+
+## Common Mistakes
+
+1. **No timeout on synchronous calls.** Without a timeout, a slow downstream service holds a thread forever, exhausting the thread pool and cascading failures.
+
+2. **Retrying non-idempotent operations.** Retrying POST /payments without an idempotency key can create duplicate charges. Only retry idempotent operations, or make them idempotent.
+
+3. **Fixed retry intervals without jitter.** Simultaneous retry storms overwhelm a recovering service. Always add random jitter.
+
+4. **Circuit breaker too sensitive or too loose.** A threshold of 1 failure trips on any blip; 99% threshold never trips. Calibrate based on SLAs and service error baselines.
+
+5. **Treating asynchronous communication as reliable without consumer acknowledgement.** Messages can be lost if a consumer crashes before acknowledging. Use acknowledgement-based consumption and idempotent consumers.
+
+## Mental Model
+
+Circuit breaker = a real electrical circuit breaker: protects downstream equipment from overload. When a downstream service fails, the circuit trips (OPEN), protecting it from further load. After a cooling period (HALF-OPEN), you test cautiously before fully restoring (CLOSED).
+
+## Mini Summary
+
+- Synchronous (REST, gRPC): immediate response, tight coupling, cascading failure risk
+- Asynchronous (Kafka, queues): loose coupling, eventual consistency, harder to trace
+- Circuit breaker: CLOSED → OPEN (fast fail) → HALF-OPEN (test) → CLOSED
+- Retry with exponential backoff + jitter prevents thundering herd on recovery
+- Idempotency keys enable safe retries for non-idempotent operations
+
+# Guided Practice Quest
+
+Work through the guided steps to practise circuit breaker state transitions and idempotency key implementation.
+
+# Solo Practice Quest
+
+Design the resilience strategy for a `CheckoutService` that calls three downstream services: `InventoryService`, `PaymentService`, and `NotificationService`. For each:
+1. Decide whether the call should be synchronous or asynchronous and justify your choice
+2. Specify a circuit breaker configuration (failure threshold, wait duration)
+3. Specify retry behaviour (if applicable)
+4. Specify the fallback strategy if the service is unavailable
+
+Present your design as annotated Spring Boot code.
+
+# Integration
+
+**Connecting to Design — Resilience Patterns and Economics — Cost of Failure**
+
+Service communication patterns are not just technical choices — they are economic ones. Every synchronous call that fails without a circuit breaker represents a potential cascading failure that can take down an entire service mesh. The economics of distributed system failures are non-linear: a 1% failure rate in a dependency does not translate to 1% application error rate. In a system where a critical path requires five services each with 99% availability, the combined availability is 0.99^5 = ~95%. This is the multiplicative cost of synchronous dependencies, and it motivates the principle of minimising synchronous coupling in the critical path.
+
+Circuit breakers and asynchronous communication are not just reliability patterns — they are economic risk management tools. By failing fast (circuit breaker) or decoupling (async), you reduce the blast radius of failures and lower the expected downtime cost. Service mesh technologies (Istio, Linkerd) externalise these patterns from application code into infrastructure, enabling economics-driven decisions (how much availability is worth what infrastructure cost) to be made at the platform level rather than service by service. Senior engineers who understand these economics can make better architectural arguments: not "circuit breakers are a best practice" but "without circuit breakers, a 2% payment gateway error rate translates to 2% checkout failure for our users, costing £X per hour in lost conversions."
+
+# Lore Conclusion
+
+The courier returns to the Academy's dispatch hall with a new set of enchanted seals. Each seal carries a unique mark — an idempotency rune. Each delivery attempts three times, with increasing patience. If a tower is sealed shut, the courier does not hammer the gate forever — they activate a resilience ward, note the tower as closed, and periodically test a knock until it opens again. The Academy's ritual network now survives tower failures without cascading silence. You have learned to build distributed systems that endure.
+
+---
