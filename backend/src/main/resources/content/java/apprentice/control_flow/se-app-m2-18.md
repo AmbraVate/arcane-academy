@@ -30,7 +30,7 @@ soloAssessment:
     - "Describes how to flatten nesting by combining conditions with && or ||"
     - "Describes how to flatten nesting by extracting logic into a helper method"
     - "Gives a concrete example showing both the nested and the flattened version"
-  keywords: [nested, nesting, depth, extract, flatten, combine, readable, &&, method]
+  keywords: [nested, nesting, depth, extract, flatten, combine, readable, "&&", method]
   modelAnswer: |
     Nested logic occurs when an `if` statement is placed inside the body of another `if` statement. This is valid and sometimes necessary, but deep nesting (more than 2-3 levels) makes code hard to read and reason about.
 

@@ -30,7 +30,7 @@ soloAssessment:
     - "Correctly uses .equals() for String comparison instead of =="
     - "Explains why == does not work reliably for String comparison"
     - "Code compiles and produces correct boolean output"
-  keywords: [comparison, boolean, equals, ==, !=, >, <, >=, <=, String, .equals]
+  keywords: [comparison, boolean, equals, "==", "!=", ">", "<", ">=", "<=", String, ".equals"]
   modelAnswer: |
     ```java
     public class ComparisonDemo {

@@ -30,7 +30,7 @@ soloAssessment:
     - "Explains the difference between `x++` and `++x` when used inside an expression"
     - "Applies compound operators to build a realistic numeric simulation"
     - "Code compiles and produces the expected output"
-  keywords: [compound, assignment, +=, -=, *=, /=, %=, increment, decrement, ++, --, pre, post]
+  keywords: [compound, assignment, "+=", "-=", "*=", "/=", "%=", increment, decrement, "++", "--", pre, post]
   modelAnswer: |
     ```java
     public class AssignmentOperatorsDeep {

@@ -30,7 +30,7 @@ soloAssessment:
     - "Describes the cache stampede problem and at least two mitigation strategies"
     - "Explains how @Cacheable works in Spring and what it abstracts"
     - "Articulates the stale data trade-off and how TTL decisions reflect business tolerance for staleness"
-  keywords: [cache-aside, write-through, write-behind, TTL, LRU, LFU, cache stampede, thundering herd, Redis, @Cacheable, stale data, eviction, hit rate]
+  keywords: [cache-aside, write-through, write-behind, TTL, LRU, LFU, cache stampede, thundering herd, Redis, "@Cacheable", stale data, eviction, hit rate]
   modelAnswer: |
     Caching strategies define how the application interacts with the cache relative to the primary data store. Cache-aside (lazy loading) is the most common pattern: the application first checks the cache; on a miss, reads from the database, populates the cache, and returns the result. The application is responsible for cache population and invalidation. It tolerates missing cache entries gracefully and avoids caching data that is never read. Write-through updates the cache synchronously on every write, ensuring the cache is always fresh. Write latency increases (cache and database write), but reads are always consistent with the database. Write-behind (write-back) writes to the cache immediately and asynchronously persists to the database, improving write latency at the cost of data durability risk. Read-through delegates cache population to the cache layer itself (the cache client calls the database on a miss), removing cache logic from the application.
 

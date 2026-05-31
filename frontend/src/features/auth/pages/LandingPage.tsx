@@ -1,24 +1,27 @@
-﻿import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { RotateCcw, Bot, Rabbit, Trophy, BarChart2, GraduationCap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { DomainIcon } from '@/components/icons/DomainIcon'
 
-// â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Data ─────────────────────────────────────────────────────────────────────
 
-const TRACKS = [
-  { img: '/Java.png',            name: 'Java',             color: '#f89820', desc: 'Object-oriented programming, data structures, algorithms, and design patterns.' },
-  { img: '/React.png',           name: 'React',            color: '#61dafb', desc: 'Component-driven UIs, hooks, context, and modern state management.' },
-  { img: '/TailwindCSS.png',     name: 'Tailwind CSS',     color: '#38bdf8', desc: 'Utility-first styling with a live in-browser preview sandbox.' },
-  { img: '/Psychology.png',      name: 'Psychology',       color: '#c4b5fd', desc: 'Cognitive, social, and clinical psychology explored at degree level.' },
-  { img: '/NaturalSciences.png', name: 'Natural Sciences', color: '#4ade80', desc: 'Biology, chemistry, and physics rebuilt from first principles.' },
-  { img: '/Genealogy.png',       name: 'Genealogy',        color: '#c9a227', desc: 'Family history research, archival records, and DNA analysis.' },
+type SchoolEntry = { glyph: string; name: string; color: string; desc: string; badge?: string }
+
+const SCHOOLS: SchoolEntry[] = [
+  { glyph: '⚡', name: 'Engineering & Systems',                color: '#a78bfa', badge: '205+ lessons', desc: 'Software Engineering, Java, React, Tailwind CSS, and SQL. From computation fundamentals through professional engineering practice.' },
+  { glyph: '🧠', name: 'Human Systems',                       color: '#c4b5fd', badge: 'Active',        desc: 'Psychology explored at degree depth — cognitive, social, developmental, and clinical foundations.' },
+  { glyph: '🌳', name: 'Heritage Systems',                    color: '#c9a227', badge: 'Active',        desc: 'Genealogy: family history research, archival records, DNA analysis, and the methods of tracing lineage.' },
+  { glyph: '🔬', name: 'Mathematical & Scientific Foundations', color: '#4ade80', badge: 'Active',        desc: 'Natural sciences rebuilt from first principles — biology, chemistry, and physics for the rigorous learner.' },
 ]
 
-const COMING_SOON = ['SQL', 'JavaScript', 'TypeScript', 'Python', 'HTML', 'CSS']
-
-const COMING_SOON_TAGLINE = 'We\'re building fast â€” dozens more disciplines are in active development across coding, sciences, humanities, and beyond.'
-
+const COMING_SOON_SCHOOLS: SchoolEntry[] = [
+  { glyph: '📜', name: 'History & Civilisation',        color: '#fb923c', desc: 'Ancient to modern history, world civilisations, and the forces that shaped humanity across millennia.' },
+  { glyph: '🤖', name: 'AI & Machine Intelligence',     color: '#60a5fa', desc: 'Machine learning, neural networks, large language models, and the engineering of intelligent systems.' },
+  { glyph: '⚖️', name: 'Philosophy & Critical Thinking', color: '#818cf8', desc: 'Logic, ethics, epistemology, and the art of building and dismantling rigorous arguments.' },
+  { glyph: '∑',  name: 'Mathematics & Logic',           color: '#34d399', desc: 'Pure mathematics, proof techniques, and the logical structures that underlie all formal reasoning.' },
+  { glyph: '🎵', name: 'Creative & Cultural Systems',   color: '#f472b6', desc: 'Music theory, composition, communication, and the craft of structured creative expression.' },
+  { glyph: '📊', name: 'Economics & Finance',           color: '#fbbf24', desc: 'Microeconomics, macroeconomics, financial literacy, and the mathematics of decision-making.' },
+]
 const PHASES = [
   { label: 'Hook',      color: '#c9a227', desc: 'An immersive story sets the scene' },
   { label: 'Explain',   color: '#8b5cf6', desc: 'Deep conceptual explanation' },
@@ -29,18 +32,18 @@ const PHASES = [
 ]
 
 const FEATURES: { icon: LucideIcon; color: string; title: string; desc: string }[] = [
-  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition', desc: 'The SM-2 algorithm schedules every review at the exact moment your brain is about to forget â€” building memories that last decades, not days.' },
+  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition', desc: 'The FSRS algorithm schedules every review at the exact moment your brain is about to forget — building memories that last decades, not days.' },
   { icon: Bot,           color: '#c4b5fd', title: 'AI Mentor',         desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
   { icon: Rabbit,        color: '#c9a227', title: 'Rabbit Holes',      desc: 'Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you\'re ready.' },
   { icon: Trophy,        color: '#c9a227', title: 'XP & Ranks',        desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
-  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',     desc: 'Visual memory-strength bars show exactly how well each concept is retained. Green means locked in â€” yellow means it\'s time to review.' },
+  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',     desc: 'Visual memory-strength bars show exactly how well each concept is retained. Green means locked in — yellow means it\'s time to review.' },
   { icon: GraduationCap, color: '#60a5fa', title: 'Feynman Technique', desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
 ]
 
 const PRICING = [
   {
     name: 'Free',
-    price: 'Â£0',
+    price: '£0',
     period: 'forever',
     color: '#6b7280',
     highlight: false,
@@ -50,7 +53,7 @@ const PRICING = [
   },
   {
     name: 'Monthly',
-    price: 'Â£6.99',
+    price: '£6.99',
     period: 'per month',
     color: '#3b82f6',
     highlight: false,
@@ -60,18 +63,18 @@ const PRICING = [
   },
   {
     name: 'Annual',
-    price: 'Â£49.99',
+    price: '£49.99',
     period: 'per year',
     badge: 'Best value',
     color: '#8b5cf6',
     highlight: true,
-    features: ['All topics, unlocked', 'Everything in Free', 'â‰ˆ Â£4.17 / month', 'Cancel anytime'],
-    cta: 'Start Free â†’ Upgrade',
+    features: ['All topics, unlocked', 'Everything in Free', '≈ £4.17 / month', 'Cancel anytime'],
+    cta: 'Start Free → Upgrade',
     href: '/register',
   },
   {
     name: 'Lifetime',
-    price: 'Â£99',
+    price: '£99',
     period: 'one-time',
     color: '#c9a227',
     highlight: false,
@@ -81,13 +84,13 @@ const PRICING = [
   },
 ]
 
-// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function GoldRule() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '0 auto 14px', maxWidth: 180 }}>
       <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, rgba(201,162,39,0.4))' }} />
-      <span style={{ color: '#c9a227', fontSize: 12 }}>âœ¦</span>
+      <span style={{ color: '#c9a227', fontSize: 12 }}>✦</span>
       <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, rgba(201,162,39,0.4))' }} />
     </div>
   )
@@ -101,7 +104,7 @@ function SectionLabel({ children }: { children: string }) {
   )
 }
 
-// â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
   const { user } = useAuth()
@@ -112,7 +115,7 @@ export default function LandingPage() {
   return (
     <div style={{ minHeight: '100vh', overflowY: 'auto', background: 'var(--bg)', color: 'var(--text)', fontFamily: 'Crimson Pro, serif' }}>
 
-      {/* â”€â”€ Sticky nav â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Sticky nav ───────────────────────────────────────────────────── */}
       <header style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: 'clamp(12px, 2vw, 16px) clamp(12px, 4vw, 32px)',
@@ -128,11 +131,11 @@ export default function LandingPage() {
         </div>
         <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
           <Link to="/login" className="btn btn-ghost" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(8px, 2.5vw, 16px)', whiteSpace: 'nowrap' }}>Sign In</Link>
-          <Link to="/register" className="btn btn-primary" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 18px)', whiteSpace: 'nowrap' }}>Start Free â†’</Link>
+          <Link to="/register" className="btn btn-primary" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 18px)', whiteSpace: 'nowrap' }}>Start Free →</Link>
         </div>
       </header>
 
-      {/* â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section style={{
         textAlign: 'center',
         padding: 'clamp(72px, 12vw, 120px) 24px 80px',
@@ -156,15 +159,15 @@ export default function LandingPage() {
           </h1>
           <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--muted)', maxWidth: 580, margin: '0 auto 20px', lineHeight: 1.75 }}>
             Arcane Academy uses spaced repetition, structured encoding phases, and an AI mentor
-            to make you genuinely fluent â€” across coding, sciences, and humanities.
+            to make you genuinely fluent — across coding, sciences, and humanities.
           </p>
 
           {/* Social proof */}
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 20, marginBottom: 40 }}>
             {[
-              { val: '6',   label: 'Active disciplines' },
-              { val: '426', label: 'Structured lessons' },
-              { val: 'SM-2',label: 'Memory algorithm' },
+              { val: '4',    label: 'Active schools' },
+              { val: '630+', label: 'Structured lessons' },
+              { val: 'FSRS', label: 'Memory algorithm' },
               { val: 'Free',label: 'To start' },
             ].map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
@@ -176,19 +179,19 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/register" className="btn btn-primary" style={{ padding: '14px 36px', fontSize: 15, fontFamily: 'Cinzel, serif' }}>
-              âœ¦ Begin Your Journey
+              ✦ Begin Your Journey
             </Link>
             <Link to="/login" className="btn btn-ghost" style={{ padding: '14px 28px', fontSize: 15 }}>
               Sign In
             </Link>
           </div>
           <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)', letterSpacing: '0.04em' }}>
-            No credit card required Â· Free forever for one topic
+            No credit card required · Free forever for one topic
           </p>
         </div>
       </section>
 
-      {/* â”€â”€ Encoding sequence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Encoding sequence ────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', background: 'var(--surface)' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <GoldRule />
@@ -197,7 +200,7 @@ export default function LandingPage() {
             The Encoding Sequence
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, maxWidth: 540, margin: '0 auto 44px', lineHeight: 1.7 }}>
-            Every lesson follows a six-phase sequence designed to encode knowledge deeply â€” not just recognise it for the moment.
+            Every lesson follows a six-phase sequence designed to encode knowledge deeply — not just recognise it for the moment.
           </p>
 
           {/* Phase cards */}
@@ -227,12 +230,12 @@ export default function LandingPage() {
           </div>
 
           <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--muted)', marginTop: 24, fontStyle: 'italic' }}>
-            After completion, the SM-2 spaced-repetition algorithm schedules your next review â€” right before you would forget.
+            After completion, the FSRS spaced-repetition algorithm schedules your next review — right before you would forget.
           </p>
         </div>
       </section>
 
-      {/* â”€â”€ Active tracks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Active tracks ────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', maxWidth: 1040, margin: '0 auto' }}>
         <GoldRule />
         <SectionLabel>What you can learn</SectionLabel>
@@ -240,11 +243,11 @@ export default function LandingPage() {
           Active Learning Tracks
         </h2>
         <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, marginBottom: 44 }}>
-          71 lessons per topic Â· Apprentice â†’ Junior â†’ Senior â†’ Lead
+          Up to 205 lessons per pathway
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 16 }}>
-          {TRACKS.map(t => (
+          {SCHOOLS.map(t => (
             <div
               key={t.name}
               style={{
@@ -266,9 +269,12 @@ export default function LandingPage() {
                 el.style.transform = 'none'
               }}
             >
-              <img src={t.img} alt={t.name} style={{ width: 48, height: 48, objectFit: 'contain', flexShrink: 0, borderRadius: 8 }} />
-              <div>
-                <div style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: t.color, marginBottom: 5, fontWeight: 600 }}>{t.name}</div>
+              <div style={{ width: 48, height: 48, flexShrink: 0, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, background: `${t.color}15`, border: `1px solid ${t.color}30` }}>{t.glyph}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+                  <span style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: t.color, fontWeight: 600 }}>{t.name}</span>
+                  {t.badge && <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', letterSpacing: '0.06em', background: `${t.color}15`, border: `1px solid ${t.color}30`, color: t.color, borderRadius: 20, padding: '2px 8px', flexShrink: 0 }}>{t.badge}</span>}
+                </div>
                 <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.65 }}>{t.desc}</div>
               </div>
             </div>
@@ -276,30 +282,37 @@ export default function LandingPage() {
         </div>
 
         {/* Coming soon */}
-        <div style={{ marginTop: 36, textAlign: 'center' }}>
-          <p style={{ fontFamily: 'Cinzel, serif', fontSize: 12, color: 'var(--muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
-            COMING SOON
-          </p>
-          <p style={{ fontSize: 13, color: 'var(--muted)', maxWidth: 480, margin: '0 auto 18px', lineHeight: 1.65, opacity: 0.8 }}>
-            {COMING_SOON_TAGLINE}
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 10 }}>
-            {COMING_SOON.map(name => (
-              <div key={name} style={{
-                background: 'var(--surface)', border: '1px solid var(--border)',
-                borderRadius: 20, padding: '5px 12px',
-                fontFamily: 'Cinzel, serif', fontSize: 12, color: 'var(--muted)', opacity: 0.6,
-                display: 'flex', alignItems: 'center', gap: 6,
+        <div style={{ marginTop: 48 }}>
+          <div style={{ textAlign: 'center', marginBottom: 28 }}>
+            <p style={{ fontFamily: 'Cinzel, serif', fontSize: 12, color: 'var(--muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+              COMING SOON
+            </p>
+            <p style={{ fontSize: 13, color: 'var(--muted)', maxWidth: 480, margin: '0 auto', lineHeight: 1.65, opacity: 0.7 }}>
+              Six more schools in active development — each with the same structured, multi-module blueprint.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 16, opacity: 0.5 }}>
+            {COMING_SOON_SCHOOLS.map(t => (
+              <div key={t.name} style={{
+                background: 'var(--card)', border: '1px solid var(--border)',
+                borderRadius: 14, padding: '22px 20px',
+                display: 'flex', alignItems: 'flex-start', gap: 18,
               }}>
-                <DomainIcon domainId={name.toLowerCase().replace(/ /g, '')} size={13} />
-                {name}
+                <div style={{ width: 48, height: 48, flexShrink: 0, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, background: `${t.color}10`, border: `1px solid ${t.color}25` }}>{t.glyph}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+                    <span style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: t.color, fontWeight: 600 }}>{t.name}</span>
+                    <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', letterSpacing: '0.06em', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--muted)', borderRadius: 20, padding: '2px 8px', flexShrink: 0 }}>Coming soon</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.65 }}>{t.desc}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* â”€â”€ Features â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Features ─────────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', background: 'var(--surface)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <GoldRule />
@@ -333,7 +346,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ Pricing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Pricing ──────────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <GoldRule />
@@ -342,7 +355,7 @@ export default function LandingPage() {
             Start Free. Scale When Ready.
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, marginBottom: 48 }}>
-            One topic is free â€” forever. Unlock everything when you're ready.
+            One topic is free — forever. Unlock everything when you're ready.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 16, alignItems: 'stretch' }}>
@@ -379,7 +392,7 @@ export default function LandingPage() {
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
                   {plan.features.map(feat => (
                     <li key={feat} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontSize: 13, color: 'var(--muted)' }}>
-                      <span style={{ color: plan.color, flexShrink: 0, fontSize: 11 }}>âœ¦</span>
+                      <span style={{ color: plan.color, flexShrink: 0, fontSize: 11 }}>✦</span>
                       {feat}
                     </li>
                   ))}
@@ -412,7 +425,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ Final CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Final CTA ────────────────────────────────────────────────────── */}
       <section style={{
         padding: 'clamp(72px, 10vw, 104px) 24px',
         textAlign: 'center',
@@ -426,17 +439,17 @@ export default function LandingPage() {
           Ready to become a polymath?
         </h2>
         <p style={{ color: 'var(--muted)', marginBottom: 38, fontSize: 17, lineHeight: 1.65, maxWidth: 480, margin: '0 auto 38px' }}>
-          Join thousands of learners mastering code, science, and the human mind â€” one structured lesson at a time.
+          Join thousands of learners mastering code, science, and the human mind — one structured lesson at a time.
         </p>
         <Link to="/register" className="btn btn-primary" style={{ padding: '15px 48px', fontSize: 16, fontFamily: 'Cinzel, serif', letterSpacing: '0.05em' }}>
-          âœ¦ Enroll Free Today
+          ✦ Enroll Free Today
         </Link>
         <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)' }}>
-          No credit card Â· One topic, forever free Â· Takes 30 seconds
+          No credit card · One topic, forever free · Takes 30 seconds
         </p>
       </section>
 
-      {/* â”€â”€ Contact Us â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Contact Us ───────────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(48px, 7vw, 72px) 24px', background: 'var(--surface)' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
           <GoldRule />
@@ -458,7 +471,7 @@ export default function LandingPage() {
               background: 'rgba(201,162,39,0.12)', border: '1px solid rgba(201,162,39,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
             }}>
-              ðŸ“ž
+              📞
             </div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: 'var(--muted)', letterSpacing: '0.12em', marginBottom: 4 }}>
@@ -472,13 +485,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer style={{
         borderTop: '1px solid var(--border)', padding: '24px 32px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
         color: 'var(--muted)', fontSize: 13,
       }}>
-        <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>âœ¦ Arcane Academy</span>
+        <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>✦ Arcane Academy</span>
         <span>Built for lifelong learners</span>
         <div style={{ display: 'flex', gap: 20 }}>
           <Link to="/login"    style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Sign In</Link>

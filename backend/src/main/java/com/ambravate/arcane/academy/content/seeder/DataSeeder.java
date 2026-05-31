@@ -30,9 +30,9 @@ public class DataSeeder {
     @Bean
     public ApplicationRunner seedData() {
         return args -> {
+            seedQuietly("domains",          domainSeeder::seed);
             seedQuietly("JSON content",     this::seedJsonContent);
             seedQuietly("Markdown content", markdownContentSeeder::seed);
-            seedQuietly("domains",          domainSeeder::seed);
             testUserSeeder.ifPresent(s -> seedQuietly("test users", s::seed));
         };
     }

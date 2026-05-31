@@ -30,7 +30,7 @@ soloAssessment:
     - "Uses ! (NOT) correctly — inverts a boolean"
     - "Demonstrates understanding of short-circuit evaluation"
     - "Combines logical operators in a realistic if-statement condition"
-  keywords: [logical, AND, OR, NOT, &&, ||, !, short-circuit, condition, boolean]
+  keywords: [logical, AND, OR, NOT, "&&", "||", "!", short-circuit, condition, boolean]
   modelAnswer: |
     ```java
     public class LogicalOperators {

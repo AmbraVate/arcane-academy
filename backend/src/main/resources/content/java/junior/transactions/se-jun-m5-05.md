@@ -30,7 +30,7 @@ soloAssessment:
     - "Describes what ROLLBACK does and when it occurs"
     - "Explains the difference between READ COMMITTED and REPEATABLE READ isolation levels"
     - "Reflects on a real-world scenario where a transaction boundary is critical"
-  keywords: [ACID, atomicity, consistency, isolation, durability, rollback, commit, @Transactional]
+  keywords: [ACID, atomicity, consistency, isolation, durability, rollback, commit, "@Transactional"]
   modelAnswer: |
     // Spring @Transactional ensures the entire method runs in one transaction
     @Service

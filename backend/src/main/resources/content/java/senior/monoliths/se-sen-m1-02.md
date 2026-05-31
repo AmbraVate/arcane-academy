@@ -61,8 +61,6 @@ guidedSteps:
 microCheckpoint:
   - type: MULTIPLE_CHOICE
     question: "What is the primary scaling limitation that genuinely warrants moving away from a monolith?"
-    options:
-      - "When the codebase exceeds 100,000 lines of code", "When different components have fundamentally different scaling requirements", "When the team grows beyond 10 engineers", "When deployment takes more than 5 minutes"]
     options: ["When the codebase exceeds 100,000 lines of code", "When different components have fundamentally different scaling requirements", "When the team grows beyond 10 engineers", "When deployment takes more than 5 minutes"]
     correctIndex: 1
     feedback: "Forcing components with different resource profiles (CPU-intensive vs I/O-bound) to scale together is the genuine architectural constraint. Lines of code, team size, and deployment time are symptoms, not root causes."

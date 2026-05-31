@@ -30,7 +30,7 @@ soloAssessment:
     - "Demonstrates understanding of pre-increment vs post-increment when used in expressions"
     - "Applies updating patterns to simulate a realistic scenario (score, health, etc.)"
     - "Code compiles and produces the expected output"
-  keywords: [compound, increment, decrement, update, +=, -=, *=, ++, --, shorthand]
+  keywords: [compound, increment, decrement, update, "+=", "-=", "*=", "++", "--", shorthand]
   modelAnswer: |
     ```java
     public class UpdatingValues {

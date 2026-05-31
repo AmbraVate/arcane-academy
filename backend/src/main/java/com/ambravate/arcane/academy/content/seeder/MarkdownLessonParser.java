@@ -296,6 +296,7 @@ public class MarkdownLessonParser {
         Object raw = fm.get("guidedSteps");
         if (!(raw instanceof List<?> list) || list.isEmpty()) return List.of();
 
+        String lessonId = getString(fm, "id", "lesson");
         List<MarkdownLessonDto.GuidedStepConfig> result = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Object item = list.get(i);
@@ -304,8 +305,7 @@ public class MarkdownLessonParser {
 
             String id = getString(m, "id", null);
             if (id == null || id.isBlank()) {
-                log.warn("[MarkdownLessonParser] Guided step at index {} missing 'id' — skipping", i);
-                continue;
+                id = lessonId + "-gs-" + (i + 1);
             }
             int sortOrder  = getInt(m, "sortOrder", i + 1);
             String inputType = getString(m, "inputType", "SHORT_TEXT").toUpperCase(java.util.Locale.ROOT);

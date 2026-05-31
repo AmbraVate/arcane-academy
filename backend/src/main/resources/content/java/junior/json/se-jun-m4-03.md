@@ -30,7 +30,7 @@ soloAssessment:
     - "Uses @JsonProperty to map a JSON key to a different Java field name"
     - "Serialises a Java object to JSON string using ObjectMapper"
     - "Deserialises a JSON string into a Java object using ObjectMapper.readValue()"
-  keywords: [JSON, ObjectMapper, serialisation, deserialisation, @JsonProperty, POJO, Jackson, readValue, writeValueAsString, field mapping, array, object, null]
+  keywords: [JSON, ObjectMapper, serialisation, deserialisation, "@JsonProperty", POJO, Jackson, readValue, writeValueAsString, field mapping, array, object, "null"]
   modelAnswer: |
     import com.fasterxml.jackson.annotation.JsonProperty;
     import com.fasterxml.jackson.databind.ObjectMapper;
