@@ -26,11 +26,13 @@ public class DataSeeder {
     private final MarkdownContentSeeder  markdownContentSeeder;
     private final Optional<TestUserSeeder> testUserSeeder;   // absent in prod (@Profile("!prod"))
     private final DomainSeeder           domainSeeder;
+    private final TrackSeeder            trackSeeder;
 
     @Bean
     public ApplicationRunner seedData() {
         return args -> {
             seedQuietly("domains",          domainSeeder::seed);
+            seedQuietly("tracks",           trackSeeder::seed);
             seedQuietly("JSON content",     this::seedJsonContent);
             seedQuietly("Markdown content", markdownContentSeeder::seed);
             testUserSeeder.ifPresent(s -> seedQuietly("test users", s::seed));
