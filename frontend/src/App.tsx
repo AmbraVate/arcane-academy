@@ -86,15 +86,17 @@ function AppRoutes() {
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/" element={<HomeRedirect />} />
-        <Route path="/chunk/:moduleId" element={<PrivateRoute><ModuleMapPage /></PrivateRoute>} />
-        <Route path="/chunk/:moduleId/topic/:topicId" element={<PrivateRoute><TopicLessonsPage /></PrivateRoute>} />
+        {/* Module + topic pages are publicly browsable (structure only; content requires login) */}
+        <Route path="/chunk/:moduleId" element={<ModuleMapPage />} />
+        <Route path="/chunk/:moduleId/topic/:topicId" element={<TopicLessonsPage />} />
         <Route path="/learn/:lessonId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
         {/* Schools / Domains — publicly browsable; enrol requires login */}
         <Route path="/domains"  element={<DomainsPage />} />
-        <Route path="/domain/:domainId" element={<PrivateRoute><DomainPage /></PrivateRoute>} />
+        {/* Domain page publicly browsable; module content requires login */}
+        <Route path="/domain/:domainId" element={<DomainPage />} />
         {/* Diagnostic/onboarding routes removed — redirect to domain */}
         <Route path="/domain/:domainId/onboarding"   element={<DomainRedirect />} />
         <Route path="/domain/:domainId/diagnostic"   element={<DomainRedirect />} />

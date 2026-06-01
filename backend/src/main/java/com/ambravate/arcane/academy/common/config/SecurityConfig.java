@@ -76,6 +76,10 @@ public class SecurityConfig {
                         .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                         // Stripe webhook — signature-verified, no JWT
                         .requestMatchers("/api/webhooks/**").permitAll()
+                        // Public browsing: module structure (titles, topics, lesson titles — no content)
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/modules/**").permitAll()
+                        // Public domain structure (module list, no progress)
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/dashboard/public").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

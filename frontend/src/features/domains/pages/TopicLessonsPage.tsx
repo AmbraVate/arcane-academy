@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useModuleDetail } from '@/hooks/queries'
+import { useAuth } from '@/shared/hooks/useAuth'
 import type { LessonSummary } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Lock, Check, Loader2, BookOpen, Code2, Zap, Wrench } from 'lucide-react'
+import PublicBanner from '@/components/layout/PublicBanner'
 
 // ── Phase ring (green) + memory ring (yellow) ─────────────────────────────────
 
@@ -62,7 +64,7 @@ function LessonRings({ sc }: { sc: LessonSummary }) {
 
 // ── Lesson row ────────────────────────────────────────────────────────────────
 
-function LessonRow({ sc, navigate }: { sc: LessonSummary; navigate: (p: string) => void }) {
+function LessonRow({ sc, navigate }: { sc: LessonSummary; navigate: (p?: string) => void }) {
   const isLocked = sc.status === 'LOCKED'
   const isDone   = sc.status === 'COMPLETE' || sc.status === 'SKIPPED'
 
@@ -131,6 +133,8 @@ function LessonRow({ sc, navigate }: { sc: LessonSummary; navigate: (p: string) 
 export default function TopicLessonsPage() {
   const { moduleId, topicId } = useParams<{ moduleId: string; topicId: string }>()
   const navigate = useNavigate()
+  const { user } = useAuth()
+  const isPublic = !user
   const { data: module, isLoading } = useModuleDetail(moduleId)
 
   if (isLoading) {
@@ -144,9 +148,18 @@ export default function TopicLessonsPage() {
 
   if (!module) return null
 
-  const topic    = module.topics.find(t => t.id === topicId)
-  const lessons  = module.lessons.filter(l => l.topicId === topicId)
+  const topic     = module.topics.find(t => t.id === topicId)
+  const lessons   = module.lessons.filter(l => l.topicId === topicId)
   const completed = lessons.filter(l => l.status === 'COMPLETE' || l.status === 'SKIPPED').length
+
+  function handleLessonClick(sc: LessonSummary) {
+    if (isPublic) {
+      sessionStorage.setItem('arcane-intended-path', `/learn/${sc.id}`)
+      navigate('/register')
+      return
+    }
+    if (sc.status !== 'LOCKED') navigate(`/learn/${sc.id}`)
+  }
 
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
@@ -154,6 +167,10 @@ export default function TopicLessonsPage() {
       <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/chunk/${moduleId}`)}>
         ← {module.title}
       </button>
+
+      {isPublic && (
+        <PublicBanner message="Sign up free to start this lesson and track your progress." />
+      )}
 
       {/* Topic header */}
       <div className="mb-7">
@@ -185,7 +202,13 @@ export default function TopicLessonsPage() {
       {/* Lesson rows */}
       <div className="flex flex-col gap-2">
         {lessons.length > 0
-          ? lessons.map(l => <LessonRow key={l.id} sc={l} navigate={navigate} />)
+          ? lessons.map(l => (
+              <LessonRow
+                key={l.id}
+                sc={isPublic ? { ...l, status: l.status === 'LOCKED' ? 'LOCKED' : 'NOT_STARTED' } : l}
+                navigate={() => handleLessonClick(l)}
+              />
+            ))
           : (
             <div className="text-center text-muted py-12 text-[14px]">
               No lessons available in this topic yet.

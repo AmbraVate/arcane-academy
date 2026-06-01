@@ -8,10 +8,13 @@ export const QUERY_KEYS = {
   graph: () => ['graph'] as const,
 }
 
-export function useDashboard(domainId: string) {
+/** Fetch dashboard for a domain.
+ *  Pass `isPublic = true` when no user is logged in — calls the public endpoint
+ *  which returns structure only (all modules LOCKED, no progress). */
+export function useDashboard(domainId: string, isPublic = false) {
   return useQuery({
-    queryKey: QUERY_KEYS.dashboard(domainId),
-    queryFn: () => dashboardApi.get(domainId),
+    queryKey: isPublic ? ['dashboard', 'public', domainId] : QUERY_KEYS.dashboard(domainId),
+    queryFn: () => isPublic ? dashboardApi.getPublic(domainId) : dashboardApi.get(domainId),
     enabled: !!domainId,
     staleTime: 30_000,
   })

@@ -149,10 +149,15 @@ export const diagnosticApi = {
   },
 }
 
-// â”€â”€ Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Dashboard ────────────────────────────────────────────────────────────────
 export const dashboardApi = {
   get: async (domainId = 'java'): Promise<DashboardDto> => {
     const { data } = await api.get(`/api/dashboard?domainId=${domainId}`)
+    return data
+  },
+  /** Public (unauthenticated) — returns module structure with all statuses LOCKED. */
+  getPublic: async (domainId = 'java'): Promise<DashboardDto> => {
+    const { data } = await api.get(`/api/dashboard/public?domainId=${domainId}`)
     return data
   },
   getReviewsDue: async (): Promise<number> => {

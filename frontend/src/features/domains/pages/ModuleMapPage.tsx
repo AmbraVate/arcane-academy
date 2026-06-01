@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { moduleApi } from '@/shared/api/services'
+import { useAuth } from '@/shared/hooks/useAuth'
 import type { ModuleDetail, LessonSummary, Topic } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Lock, Check, Loader2, Layers, ChevronRight } from 'lucide-react'
+import PublicBanner from '@/components/layout/PublicBanner'
 
 // ── Small completion ring (diagram-style circle) ─────────────────────────────
 
@@ -47,17 +49,19 @@ function TopicRow({
   topicLessons,
   moduleId,
   navigate,
+  forceUnlocked = false,
 }: {
   topic: Topic
   topicLessons: LessonSummary[]
   moduleId: string
   navigate: (path: string) => void
+  forceUnlocked?: boolean
 }) {
   const completed = topicLessons.filter(l => l.status === 'COMPLETE' || l.status === 'SKIPPED').length
   const total     = topicLessons.length
   const pct       = total > 0 ? Math.round((completed / total) * 100) : 0
   const isDone    = pct === 100 && total > 0
-  const isLocked  = total > 0 && topicLessons[0].status === 'LOCKED'
+  const isLocked  = !forceUnlocked && total > 0 && topicLessons[0].status === 'LOCKED'
   const inProg    = !isLocked && !isDone && completed > 0
 
   const color = isDone ? 'var(--teal)' : inProg ? 'var(--purple)' : 'var(--border)'
@@ -173,6 +177,8 @@ function LessonCard({ sc, navigate }: { sc: LessonSummary; navigate: (path: stri
 export default function ModuleMapPage() {
   const { moduleId } = useParams<{ moduleId: string }>()
   const navigate = useNavigate()
+  const { user } = useAuth()
+  const isPublic = !user
   const [chunk, setChunk] = useState<ModuleDetail | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -213,6 +219,10 @@ export default function ModuleMapPage() {
         ← Back to Domain
       </button>
 
+      {isPublic && (
+        <PublicBanner message="You're viewing the module structure. Sign up free to start learning." />
+      )}
+
       {/* Module header */}
       <div className="flex items-center gap-4 mb-7 max-[600px]:gap-3">
         <div className="text-[48px] max-[600px]:text-[36px]">{chunk.glyph}</div>
@@ -237,13 +247,16 @@ export default function ModuleMapPage() {
           {chunk.topics.map(topic => {
             const topicLessons = lessonsByTopic.get(topic.id) ?? []
             if (topicLessons.length === 0) return null
+            // Public users can browse topic structure — lock only comes at lesson-start
+            const isTopicLocked = !isPublic && topicLessons.length > 0 && topicLessons[0].status === 'LOCKED'
             return (
               <TopicRow
                 key={topic.id}
-                topic={topic}
+                topic={{ ...topic }}
                 topicLessons={topicLessons}
                 moduleId={chunk.id}
                 navigate={navigate}
+                forceUnlocked={isPublic && isTopicLocked}
               />
             )
           })}

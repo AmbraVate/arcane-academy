@@ -4,6 +4,7 @@ import com.ambravate.arcane.academy.content.dto.ModuleDetailDto;
 import com.ambravate.arcane.academy.content.dto.ModuleSummaryDto;
 import com.ambravate.arcane.academy.content.dto.TopicDto;
 import com.ambravate.arcane.academy.common.domain.Topic;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.TopicRepository;
 import com.ambravate.arcane.academy.practice.dto.LessonSummaryDto;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/modules")
@@ -32,6 +34,7 @@ public class ModuleController {
 
     private final ModuleGraphService moduleGraphService;
     private final LessonRepository lessonRepository;
+    private final LearningModuleRepository learningModuleRepository;
     private final UserChunkProgressRepository progressRepository;
     private final SpacingService spacingService;
     private final TopicRepository topicRepository;
@@ -75,24 +78,54 @@ public class ModuleController {
     public ResponseEntity<ModuleDetailDto> getModuleDetail(
             @PathVariable String moduleId,
             @AuthenticationPrincipal UserPrincipal user) {
-        List<ModuleWithStatus> allModules = moduleGraphService.getAllModulesWithStatus(user.getId());
-        ModuleWithStatus mws = allModules.stream()
-                .filter(m -> m.module().getId().equals(moduleId))
-                .findFirst().orElseThrow(() -> new NoSuchElementException("Module not found: " + moduleId));
 
         List<Lesson> lessons = lessonRepository.findByModuleIdOrderBySortOrderAsc(moduleId);
-        Map<String, UserChunkProgress> progressMap = progressRepository.findByUserId(user.getId()).stream()
-                .collect(Collectors.toMap(UserChunkProgress::getLessonId, p -> p, (a, b) -> a));
-
-        // Build a topic lookup map for this module
-        Map<String, Topic> topicById = topicRepository.findByModuleIdOrderBySortOrderAsc(moduleId)
-                .stream().collect(Collectors.toMap(Topic::getId, t -> t, (a, b) -> a));
         List<TopicDto> topicDtos = topicRepository.findByModuleIdOrderBySortOrderAsc(moduleId)
                 .stream().map(t -> TopicDto.builder()
                         .id(t.getId()).title(t.getTitle())
                         .purposeHtml(t.getPurposeHtml()).sortOrder(t.getSortOrder())
                         .build())
                 .toList();
+
+        // ── Public (unauthenticated) path ────────────────────────────────────────
+        if (user == null) {
+            LearningModule module = learningModuleRepository.findById(moduleId)
+                    .orElseThrow(() -> new NoSuchElementException("Module not found: " + moduleId));
+
+            // First lesson NOT_STARTED (teaser), rest LOCKED
+            List<LessonSummaryDto> publicLessons = new ArrayList<>();
+            for (int i = 0; i < lessons.size(); i++) {
+                Lesson l = lessons.get(i);
+                publicLessons.add(LessonSummaryDto.builder()
+                        .id(l.getId()).title(l.getTitle()).sortOrder(l.getSortOrder())
+                        .status(i == 0 ? "NOT_STARTED" : "LOCKED")
+                        .currentPhase("HOOK")
+                        .memoryStrength(0.0).healthColor("GREEN")
+                        .feynmanCompleted(false).xpReward(l.getXpReward())
+                        .practiceType(l.getPracticeType() != null ? l.getPracticeType().name() : "JAVA")
+                        .learningObjectiveCount(0)
+                        .hasChallenge(false).hasMiniProject(false)
+                        .topicId(l.getTopicId()).topicTitle(null)
+                        .build());
+            }
+            return ResponseEntity.ok(ModuleDetailDto.builder()
+                    .id(module.getId()).domainId(module.getTrackId())
+                    .title(module.getTitle())
+                    .glyph(module.getGlyph()).status("NOT_STARTED")
+                    .topics(topicDtos).lessons(publicLessons).build());
+        }
+
+        // ── Authenticated path ────────────────────────────────────────────────────
+        List<ModuleWithStatus> allModules = moduleGraphService.getAllModulesWithStatus(user.getId());
+        ModuleWithStatus mws = allModules.stream()
+                .filter(m -> m.module().getId().equals(moduleId))
+                .findFirst().orElseThrow(() -> new NoSuchElementException("Module not found: " + moduleId));
+
+        Map<String, UserChunkProgress> progressMap = progressRepository.findByUserId(user.getId()).stream()
+                .collect(Collectors.toMap(UserChunkProgress::getLessonId, p -> p, (a, b) -> a));
+
+        Map<String, Topic> topicById = topicRepository.findByModuleIdOrderBySortOrderAsc(moduleId)
+                .stream().collect(Collectors.toMap(Topic::getId, t -> t, (a, b) -> a));
 
         Set<String> completedLessonIds = progressMap.values().stream()
                 .filter(p -> p.getStatus() == LessonStatus.COMPLETE
@@ -144,8 +177,7 @@ public class ModuleController {
                 .id(mws.module().getId()).domainId(mws.module().getTrackId())
                 .title(mws.module().getTitle())
                 .glyph(mws.module().getGlyph()).status(mws.status())
-                .topics(topicDtos)
-                .lessons(lessonDtos).build());
+                .topics(topicDtos).lessons(lessonDtos).build());
     }
 
     private int countJsonArraySize(String json) {

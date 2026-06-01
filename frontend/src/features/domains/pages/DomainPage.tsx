@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
 import { TierIcon } from '@/components/icons/TierIcon'
 import { Check, MapPin, Lock, BookOpen } from 'lucide-react'
+import PublicBanner from '@/components/layout/PublicBanner'
 
 type TopicMeta = {
   name: string
@@ -182,7 +183,8 @@ export default function DomainPage() {
   const { domainId } = useParams<{ domainId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
-  const { data: dashboard, isLoading } = useDashboard(domainId ?? '')
+  const isPublic = !user
+  const { data: dashboard, isLoading } = useDashboard(domainId ?? '', isPublic)
 
   const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: '📖', tagline: '', accent: 'var(--teal)' }
 
@@ -195,12 +197,22 @@ export default function DomainPage() {
     )
   }
 
-  if (!dashboard || !user) return null
+  if (!dashboard) return null
 
-  const progressPct = Math.round(dashboard.overallProgress * 100)
+  const progressPct = isPublic ? 0 : Math.round(dashboard.overallProgress * 100)
+
+  function handleModuleClick(ch: ModuleHealthDto) {
+    if (isPublic) {
+      // Public: allow browsing module structure but not starting lessons
+      navigate(`/chunk/${ch.moduleId}`)
+      return
+    }
+    if (ch.status !== 'LOCKED') navigate(`/chunk/${ch.moduleId}`)
+  }
 
   return (
     <div className="max-w-[900px] mx-auto px-5 py-6 pb-[72px] max-[600px]:px-3 max-[600px]:py-4 max-[480px]:px-2.5">
+      {isPublic && <PublicBanner />}
       {/* Hero */}
       <div
         className="flex flex-col items-center text-center px-5 py-8 pb-7 rounded-[16px] mb-6 relative overflow-hidden"
@@ -246,8 +258,8 @@ export default function DomainPage() {
         </div>
       )}
 
-      {/* Reviews due */}
-      {dashboard.reviewsDue > 0 && (
+      {/* Reviews due — only shown when authenticated */}
+      {!isPublic && dashboard.reviewsDue > 0 && (
         <div className="flex gap-3 mb-7 flex-wrap max-[600px]:flex-col">
           <div
             className="flex-1 min-w-[200px] bg-card border border-border rounded-[12px] p-4 px-[18px] flex flex-col gap-1 cursor-pointer transition-[border-color,transform] duration-200 hover:border-teal hover:-translate-y-0.5 max-[600px]:min-w-0"
@@ -305,7 +317,7 @@ export default function DomainPage() {
                     key={ch.moduleId}
                     ch={ch}
                     accent={meta.accent}
-                    onClick={() => ch.status !== 'LOCKED' && navigate(`/chunk/${ch.moduleId}`)}
+                    onClick={() => handleModuleClick(ch)}
                   />
                 ))}
               </div>
