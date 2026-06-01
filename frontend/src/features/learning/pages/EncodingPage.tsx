@@ -7,7 +7,7 @@ import type { UserNote } from '@/shared/api/services'
 import GuidedStepper from '@/features/learning/components/GuidedStepper'
 import SoloAssessmentPanel from '@/features/learning/components/SoloAssessmentPanel'
 
-/** Chunk IDs that are capstone lessons â€" show the project save form on COMPLETE. */
+/** Chunk IDs that are capstone lessons — show the project save form on COMPLETE. */
 const CAPSTONE_CHUNK_IDS = new Set([
   // Java capstones (one per tier)
   'java-app-15', 'java-jun-20', 'java-sen-19', 'java-lea-17',
@@ -56,7 +56,7 @@ function extractRSetup(specs: unknown): string | null {
   return typeof first?.setup === 'string' ? first.setup : null
 }
 
-// â"€â"€ State machine â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── State machine ──────────────────────────────────────────────────────────────
 
 type EncodingState = {
   encoding: LessonEncoding | null
@@ -179,7 +179,7 @@ function encodingReducer(state: EncodingState, action: EncodingAction): Encoding
   }
 }
 
-// â"€â"€ Component â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Component ──────────────────────────────────────────────────────────────────
 
 export default function EncodingPage() {
   const { lessonId } = useParams<{ lessonId: string }>()
@@ -195,7 +195,7 @@ export default function EncodingPage() {
     submittingFeynman, showHint, storyOpen,
   } = state
 
-  // Notification UI stays as useState â€" independent of the phase state machine
+  // Notification UI stays as useState — independent of the phase state machine
   const [toast, setToast] = useState<string | null>(null)
   const [levelUpInfo, setLevelUpInfo] = useState<{ level: number; rank: string } | null>(null)
   const [newBadges, setNewBadges] = useState<Badge[]>([])
@@ -272,7 +272,7 @@ export default function EncodingPage() {
     // Auto-save any pending note when leaving a notes-eligible phase
     if (noteContent.trim() && notePhaseVisible) {
       clearTimeout(noteSaveTimer.current)
-      saveNoteNow() // fire-and-forget â€" don't block phase advance
+      saveNoteNow() // fire-and-forget — don't block phase advance
     }
     const enc = await encodingApi.advance(lessonId)
     dispatch({ type: 'PHASE_ADVANCED', encoding: enc })
@@ -302,7 +302,7 @@ export default function EncodingPage() {
     try {
       const result: PracticeResult = await encodingApi.submitPractice(lessonId, code)
       if (result.errorType === 'COMPILE_ERROR' || result.errorType === 'RUNTIME_ERROR') {
-        dispatch({ type: 'COMPILE_ERROR', output: [{ text: `âœ— ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }], errorType: result.errorType })
+        dispatch({ type: 'COMPILE_ERROR', output: [{ text: `✗ ${result.errorType === 'COMPILE_ERROR' ? 'Spell failed to compile' : 'Spell crashed at runtime'}.`, type: 'error' }], errorType: result.errorType })
         if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 300) }
         return
       }
@@ -310,16 +310,16 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        if (written) { lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}: ${t.actualOutput}`, type: t.passed ? 'success' : 'error' }); return }
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
+        if (written) { lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.actualOutput}`, type: t.passed ? 'success' : 'error' }); return }
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `got "${t.actualOutput}", expected "${t.expectedOutput}"`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
-        lines.push({ text: 'âœ" All test cases passed!', type: 'success' })
+        lines.push({ text: '✓ All test cases passed!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
         handleXpEarned(result.xpEarned, result.newBadges)
       } else {
-        lines.push({ text: 'âœ— Some test cases failed.', type: 'error' })
+        lines.push({ text: '✗ Some test cases failed.', type: 'error' })
         dispatch({ type: 'RUN_END' })
         if (result.mentorFeedback) { dispatch({ type: 'MENTOR_LOADING' }); setTimeout(() => dispatch({ type: 'MENTOR_READY', feedback: result.mentorFeedback! }), 400) }
       }
@@ -337,19 +337,19 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}: ${t.passed ? 'passed' : `missing class â€" ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
-        lines.push({ text: 'âœ" All checks passed!', type: 'success' })
+        lines.push({ text: '✓ All checks passed!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
         handleXpEarned(result.xpEarned, result.newBadges)
       } else {
-        lines.push({ text: 'âœ— Some checks failed â€" adjust your classes and try again.', type: 'error' })
+        lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' })
         dispatch({ type: 'RUN_END' })
       }
     } catch {
-      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting â€" check your connection.', type: 'error' }] })
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
@@ -365,19 +365,19 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}${t.passed ? '' : ` â€" ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
-        lines.push({ text: 'âœ" All tests passed!', type: 'success' })
+        lines.push({ text: '✓ All tests passed!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
         handleXpEarned(result.xpEarned, result.newBadges)
       } else {
-        lines.push({ text: 'âœ— Some tests failed â€" adjust your code and try again.', type: 'error' })
+        lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
         dispatch({ type: 'RUN_END' })
       }
     } catch {
-      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting â€" check your connection.', type: 'error' }] })
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
@@ -393,19 +393,19 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}${t.passed ? '' : ` â€" ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
-        lines.push({ text: 'âœ" All tests passed!', type: 'success' })
+        lines.push({ text: '✓ All tests passed!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
         handleXpEarned(result.xpEarned, result.newBadges)
       } else {
-        lines.push({ text: 'âœ— Some tests failed â€" adjust your code and try again.', type: 'error' })
+        lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
         dispatch({ type: 'RUN_END' })
       }
     } catch {
-      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting â€" check your connection.', type: 'error' }] })
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
@@ -421,19 +421,19 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}${t.passed ? '' : ` â€" ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}${t.passed ? '' : ` — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
-        lines.push({ text: 'âœ" All tests passed!', type: 'success' })
+        lines.push({ text: '✓ All tests passed!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
         handleXpEarned(result.xpEarned, result.newBadges)
       } else {
-        lines.push({ text: 'âœ— Some tests failed â€" adjust your code and try again.', type: 'error' })
+        lines.push({ text: '✗ Some tests failed — adjust your code and try again.', type: 'error' })
         dispatch({ type: 'RUN_END' })
       }
     } catch {
-      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting â€" check your connection.', type: 'error' }] })
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
@@ -478,18 +478,18 @@ export default function EncodingPage() {
       const lines: OutputLine[] = []
       result.testResults.forEach(t => {
         newResults.set(t.label, t.passed)
-        lines.push({ text: `${t.passed ? 'âœ"' : 'âœ—'} ${t.label}: ${t.passed ? 'passed' : `missing class â€" ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
+        lines.push({ text: `${t.passed ? '✓' : '✗'} ${t.label}: ${t.passed ? 'passed' : `missing class — ${t.actualOutput}`}`, type: t.passed ? 'success' : 'error' })
       })
       dispatch({ type: 'SUBMIT_RESULT', output: lines, testResults: newResults })
       if (result.allPassed) {
-        lines.push({ text: 'âœ" All checks passed! Well done!', type: 'success' })
+        lines.push({ text: '✓ All checks passed! Well done!', type: 'success' })
         dispatch({ type: 'PRACTICE_SOLVED' })
       } else {
-        lines.push({ text: 'âœ— Some checks failed â€" adjust your classes and try again.', type: 'error' })
+        lines.push({ text: '✗ Some checks failed — adjust your classes and try again.', type: 'error' })
         dispatch({ type: 'RUN_END' })
       }
     } catch {
-      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting â€" check your connection.', type: 'error' }] })
+      dispatch({ type: 'RUN_DONE', output: [{ text: 'Error submitting — check your connection.', type: 'error' }] })
     }
   }
 
@@ -504,7 +504,7 @@ export default function EncodingPage() {
         const prevRank = calculateRank(user?.totalXp ?? 0)
         const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
         updateXp(result.xpEarned, newRank)
-        showToast(`✦ +${result.xpEarned} XP â€" ${result.passed ? 'Passed!' : 'Keep practicing'}`)
+        showToast(`✦ +${result.xpEarned} XP — ${result.passed ? 'Passed!' : 'Keep practicing'}`)
         if (newRank !== prevRank) {
           const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
           setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
@@ -523,7 +523,7 @@ export default function EncodingPage() {
     try {
       const result = await encodingApi.submitFeynman(lessonId, feynmanText)
       dispatch({ type: 'FEYNMAN_DONE', result })
-      if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`✦ +${result.xpEarned} XP â€" Feynman complete`) }
+      if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`✦ +${result.xpEarned} XP — Feynman complete`) }
     } catch {
       showToast('Error submitting explanation')
       dispatch({ type: 'FEYNMAN_DONE', result: null })
@@ -531,7 +531,7 @@ export default function EncodingPage() {
   }
 
   const noteTitle = encoding
-    ? `${encoding.moduleId ?? 'Lesson'} â€" ${encoding.title}`
+    ? `${encoding.moduleId ?? 'Lesson'} — ${encoding.title}`
     : 'Note'
 
   const notePhaseVisible = encoding
@@ -652,7 +652,7 @@ export default function EncodingPage() {
             <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-muted mb-3 max-[480px]:text-[9px]">
               ✦ Arcane Academy
             </div>
-            {/* Lesson title â€" the hero element */}
+            {/* Lesson title — the hero element */}
             <h1
               className="font-cinzel text-[22px] font-bold leading-[1.35] mb-2 max-[480px]:text-[17px]"
               style={{ color: '#c9a227', textShadow: '0 0 28px rgba(201,162,39,.35)' }}
@@ -670,14 +670,14 @@ export default function EncodingPage() {
               dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }}
             />
           </div>
-          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={handleAdvance}>Begin â†'</button>
+          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={handleAdvance}>Begin →</button>
         </div>
       )}
 
       {/* EXPLANATION */}
       {phase === 'EXPLANATION' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          {/* Downloadable resources â€" shown at the very top of EXPLANATION if present */}
+          {/* Downloadable resources — shown at the very top of EXPLANATION if present */}
           {encoding.downloadables && encoding.downloadables.length > 0 && (
             <div className="mb-5 p-3 rounded-[10px] border border-[rgba(255,193,7,0.2)] bg-[rgba(255,193,7,0.04)]">
               <div className="text-[11px] font-bold text-gold uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5">
@@ -704,7 +704,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* Learning objectives â€" shown before story if present */}
+          {/* Learning objectives — shown before story if present */}
           {encoding.learningObjectives && encoding.learningObjectives.length > 0 && (
             <div className="mb-6 p-4 rounded-[10px] border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.05)]">
               <div className="text-[12px] font-bold text-teal uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5">
@@ -815,7 +815,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          <button className="btn btn-primary" onClick={handleAdvance}>I understand â€" continue â†'</button>
+          <button className="btn btn-primary" onClick={handleAdvance}>I understand — continue →</button>
         </div>
       )}
 
@@ -829,7 +829,7 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* GUIDED_PRACTICE â€" brief */}
+      {/* GUIDED_PRACTICE — brief */}
       {phase === 'GUIDED_PRACTICE' && !encoding.hasGuidedSteps && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">
@@ -845,14 +845,14 @@ export default function EncodingPage() {
             <div className="mt-5"><TestChips labels={encoding.testCaseLabels} results={testResults} /></div>
           )}
           {encoding.practiceType === 'NONE' ? (
-            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Writing â†'</button>
+            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Writing →</button>
           ) : (
-            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding â†'</button>
+            <button className="btn btn-primary mt-6" onClick={() => setPracticeView('code')}>Start Coding →</button>
           )}
         </div>
       )}
 
-      {/* GUIDED_PRACTICE â€" coding (legacy path: no guided steps) */}
+      {/* GUIDED_PRACTICE — coding (legacy path: no guided steps) */}
       {phase === 'GUIDED_PRACTICE' && !encoding.hasGuidedSteps && practiceView === 'code' && (
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Mobile task overlay */}
@@ -861,7 +861,7 @@ export default function EncodingPage() {
               <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-[max(32px,env(safe-area-inset-bottom,32px))] max-h-[75vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
                   <span className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</span>
-                  <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>âœ• Close</button>
+                  <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>✕ Close</button>
                 </div>
                 <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
                 {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
@@ -869,7 +869,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* Left panel â€" desktop */}
+          {/* Left panel — desktop */}
           <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
             <div className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</div>
             <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
@@ -877,12 +877,12 @@ export default function EncodingPage() {
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
                 <div className="text-[14px] font-bold text-teal mb-2.5">✦ Practice Complete!</div>
-                <button className="btn btn-primary" onClick={handleAdvance}>Continue â†'</button>
+                <button className="btn btn-primary" onClick={handleAdvance}>Continue →</button>
               </div>
             )}
           </div>
 
-          {/* Right panel â€" editor */}
+          {/* Right panel — editor */}
           <div
             className="flex-1 flex flex-col overflow-hidden min-w-0"
           >
@@ -939,7 +939,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Guided Response Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -951,7 +951,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -962,7 +962,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -979,7 +979,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -996,7 +996,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -1007,7 +1007,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Practice Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -1083,7 +1083,7 @@ export default function EncodingPage() {
               <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-[max(32px,env(safe-area-inset-bottom,32px))] max-h-[75vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
                   <span className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</span>
-                  <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>âœ• Close</button>
+                  <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>✕ Close</button>
                 </div>
                 <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
                 {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
@@ -1091,10 +1091,10 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* Left panel â€" desktop */}
+          {/* Left panel — desktop */}
           <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
             <div className="text-[13px] font-bold uppercase tracking-[0.06em] flex items-center gap-1.5" style={{ color: 'var(--teal)' }}><Target size={13} strokeWidth={1.75} /> Solo Challenge</div>
-            <p className="text-muted text-[11px] leading-[1.6] mt-[-4px]">No starter code â€" build it from memory.</p>
+            <p className="text-muted text-[11px] leading-[1.6] mt-[-4px]">No starter code — build it from memory.</p>
             <RabbitHoleHtml html={encoding.soloPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
 
@@ -1114,12 +1114,12 @@ export default function EncodingPage() {
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
                 <div className="text-[14px] font-bold text-teal mb-2.5">✦ Solo Challenge Complete!</div>
-                <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check â†'</button>
+                <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check →</button>
               </div>
             )}
           </div>
 
-          {/* Right panel â€" editor (paste blocked: Solo is write-from-memory) */}
+          {/* Right panel — editor (paste blocked: Solo is write-from-memory) */}
           <div className="flex-1 flex flex-col overflow-hidden min-w-0">
             <div className="flex justify-between items-center px-3 py-2 border-b border-border bg-card flex-shrink-0 gap-2 max-[480px]:px-2.5 max-[480px]:py-1.5">
               <div className="flex items-center gap-2.5 min-w-0">
@@ -1173,7 +1173,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Response Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -1185,7 +1185,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -1196,7 +1196,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -1213,7 +1213,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -1230,7 +1230,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
               </>
@@ -1241,7 +1241,7 @@ export default function EncodingPage() {
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
                     <span>✦ Solo Complete!</span>
-                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
+                    <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue →</button>
                   </div>
                 )}
                 <AiMentorPanel feedback={mentorFeedback} loading={mentorLoading} errorType={mentorErrorType} />
@@ -1258,10 +1258,10 @@ export default function EncodingPage() {
           <p className="text-muted text-[13px] mb-5">Answer these questions to test your understanding.</p>
 
           {!retrievalResult && !encoding.retrievalQuestions?.length ? (
-            // Already submitted on a prior visit â€" let the user advance
+            // Already submitted on a prior visit — let the user advance
             <div className="p-4 bg-card border border-border rounded-[10px]">
               <p className="text-muted text-[13px] mb-3">You have already completed this retrieval check.</p>
-              <button className="btn btn-primary" onClick={handleAdvance}>Continue â†'</button>
+              <button className="btn btn-primary" onClick={handleAdvance}>Continue →</button>
             </div>
           ) : !retrievalResult ? (
             <>
@@ -1278,7 +1278,7 @@ export default function EncodingPage() {
                 Score: {Math.round(retrievalResult.score * 100)}% ({retrievalResult.correct}/{retrievalResult.total})
               </div>
               <div className={cn('text-[16px] font-semibold mb-3.5', retrievalResult.passed ? 'text-green' : 'text-red')}>
-                {retrievalResult.passed ? 'âœ" Passed!' : 'âœ— Needs more practice'}
+                {retrievalResult.passed ? '✓ Passed!' : '✗ Needs more practice'}
               </div>
               {encoding.retrievalQuestions?.map((q, i) => (
                 <QuestionCard key={q.id} question={q} index={i}
@@ -1286,7 +1286,7 @@ export default function EncodingPage() {
                   result={retrievalResult.results[i]} disabled />
               ))}
               <p className="text-muted text-[13px] italic mt-2.5">{retrievalResult.recommendation}</p>
-              <button className="btn btn-primary mt-3" onClick={handleAdvance}>Continue â†'</button>
+              <button className="btn btn-primary mt-3" onClick={handleAdvance}>Continue →</button>
             </div>
           )}
         </div>
@@ -1320,7 +1320,7 @@ export default function EncodingPage() {
             <p className="text-muted text-[14px]">You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
           </div>
 
-          {/* â"€â"€ Feynman â€" prominent card â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
+          {/* ── Feynman — prominent card ──────────────────────────────────── */}
           {encoding.feynmanPrompt && !feynmanResult && (
             <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(139,92,246,0.45)] bg-[rgba(139,92,246,0.07)] shadow-[0_0_24px_rgba(139,92,246,0.12)]">
               <div className="flex items-center gap-2 mb-1">
@@ -1329,7 +1329,7 @@ export default function EncodingPage() {
                 <span className="ml-auto text-[11px] text-muted font-cinzel uppercase tracking-[0.06em]">Optional · Earns XP</span>
               </div>
               <p className="text-[12px] text-muted mb-3 leading-[1.6]">
-                The best way to confirm you understand â€" explain it as if teaching someone from scratch. No jargon, just clarity.
+                The best way to confirm you understand — explain it as if teaching someone from scratch. No jargon, just clarity.
               </p>
               <p className="text-[14px] text-text italic mb-3 leading-[1.65] p-3 bg-[rgba(0,0,0,0.2)] rounded-[8px] border border-[rgba(139,92,246,0.2)]">
                 "{encoding.feynmanPrompt}"
@@ -1383,7 +1383,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* â"€â"€ Common Mistakes â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
+          {/* ── Common Mistakes ───────────────────────────────────────────── */}
           {encoding.commonMistakes && encoding.commonMistakes.length > 0 && (
             <div className="mb-5 p-4 rounded-[10px] border border-[rgba(248,113,113,0.25)] bg-[rgba(248,113,113,0.05)]">
               <div className="text-[12px] font-bold uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5" style={{ color: '#f87171' }}>
@@ -1397,7 +1397,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* â"€â"€ Assessment Criteria â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
+          {/* ── Assessment Criteria ───────────────────────────────────────── */}
           {encoding.assessmentCriteria && encoding.assessmentCriteria.length > 0 && (
             <div className="mb-5 p-4 rounded-[10px] border border-[rgba(201,162,39,0.25)] bg-[rgba(201,162,39,0.05)]">
               <div className="text-[12px] font-bold text-gold uppercase tracking-[0.08em] mb-2.5">
@@ -1411,7 +1411,7 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* â"€â"€ Capstone save form â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
+          {/* ── Capstone save form ───────────────────────────────────────── */}
           {isCapstoneLesson && !capstoneSavedId && (
             <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(201,162,39,0.35)] bg-[rgba(201,162,39,0.05)]">
               <div className="flex items-center gap-2 mb-1">
@@ -1419,7 +1419,7 @@ export default function EncodingPage() {
                 <span className="text-[17px] font-bold text-gold">Save Your Project</span>
               </div>
               <p className="text-[12px] text-muted mb-4 leading-[1.6]">
-                Document what you built for your portfolio. Your project will appear on your Profile â†' Projects tab.
+                Document what you built for your portfolio. Your project will appear on your Profile → Projects tab.
               </p>
               <div className="flex flex-col gap-3">
                 <input
@@ -1464,9 +1464,9 @@ export default function EncodingPage() {
           )}
           {isCapstoneLesson && capstoneSavedId && (
             <div className="mb-5 p-4 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)] text-center">
-              <div className="text-[24px] mb-2">âœ"</div>
+              <div className="text-[24px] mb-2">✓</div>
               <div className="font-cinzel text-[14px] text-teal mb-1">Project Saved!</div>
-              <p className="text-[12px] text-muted">Find it in Profile â†' Projects. An instructor may leave feedback there.</p>
+              <p className="text-[12px] text-muted">Find it in Profile → Projects. An instructor may leave feedback there.</p>
             </div>
           )}
 
@@ -1497,9 +1497,9 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* â"€â"€ Navigation â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */}
+          {/* ── Navigation ───────────────────────────────────────────────── */}
           <div className="flex gap-2.5 justify-center mt-4 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
-            <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}>Return to Chunk â†'</button>
+            <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}>Return to Chunk →</button>
             <button className="btn btn-ghost" onClick={() => navigate(`/domain/${encoding.domainId ?? 'java'}`)}>
               Dashboard
             </button>
@@ -1513,7 +1513,7 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* Story re-read modal â€" rendered in document.body via portal so it covers the Nav on iOS */}
+      {/* Story re-read modal — rendered in document.body via portal so it covers the Nav on iOS */}
       {storyOpen && encoding.storyBeats?.length ? createPortal(
         <div
           className="fixed inset-0 z-[9000] flex items-start justify-center p-4"
@@ -1526,7 +1526,7 @@ export default function EncodingPage() {
           >
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-border flex-shrink-0">
               <span className="text-[13px] font-bold text-gold tracking-[0.06em] uppercase">ðŸ"– Story</span>
-              <button type="button" className="btn btn-ghost text-[13px] px-4 py-2 min-h-[44px]" onClick={() => setStoryOpen(false)}>âœ• Close</button>
+              <button type="button" className="btn btn-ghost text-[13px] px-4 py-2 min-h-[44px]" onClick={() => setStoryOpen(false)}>✕ Close</button>
             </div>
             <div className="overflow-y-auto flex-1 px-5 py-5">
               <StoryPanel beats={encoding.storyBeats} fullPage lessonId={encoding.lessonId} domainId={encoding.domainId} rabbitHoleTerms={encoding.rabbitHoleTerms} />
@@ -1536,12 +1536,12 @@ export default function EncodingPage() {
         document.body
       ) : null}
 
-      {/* StuckButton â€" only during active practice phases */}
+      {/* StuckButton — only during active practice phases */}
       {(phase === 'GUIDED_PRACTICE' || phase === 'SOLO_PRACTICE' || phase === 'RETRIEVAL_CHECK') && (
         <StuckButton />
       )}
 
-      {/* Notes floating button â€" bottom-LEFT so it never clashes with StuckButton (bottom-right) */}
+      {/* Notes floating button — bottom-LEFT so it never clashes with StuckButton (bottom-right) */}
       {notePhaseVisible && (
         <button
           type="button"
@@ -1562,7 +1562,7 @@ export default function EncodingPage() {
         </button>
       )}
 
-      {/* Notes panel â€" slides up from bottom-left */}
+      {/* Notes panel — slides up from bottom-left */}
       {notePhaseVisible && notePanelOpen && (
         <div
           className="fixed left-4 z-[140] w-[380px] max-w-[calc(100vw-32px)] bg-card border border-purple-dim rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden animate-[toast-in_0.2s_ease]"
@@ -1575,7 +1575,7 @@ export default function EncodingPage() {
             </div>
             <div className="flex items-center gap-2">
               {noteSaving && <Loader2 size={11} className="animate-spin text-muted" />}
-              {noteSaved && !noteSaving && <span className="text-[10px] text-teal font-cinzel">Saved âœ"</span>}
+              {noteSaved && !noteSaving && <span className="text-[10px] text-teal font-cinzel">Saved ✓</span>}
               <button
                 type="button"
                 onClick={saveNoteNow}

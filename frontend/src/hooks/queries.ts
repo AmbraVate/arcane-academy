@@ -33,13 +33,15 @@ export function useModuleDetail(moduleId: string | undefined) {
   })
 }
 
-/** Fetch dashboard data for multiple domains in parallel (used by DomainsPage). */
-export function useDomainsDashboard(domainIds: string[]) {
+/** Fetch dashboard data for multiple domains in parallel (used by DomainsPage).
+ *  Pass `enabled = false` when the user is not authenticated to skip all fetches. */
+export function useDomainsDashboard(domainIds: string[], enabled = true) {
   const results = useQueries({
     queries: domainIds.map(id => ({
       queryKey: QUERY_KEYS.dashboard(id),
       queryFn: () => dashboardApi.get(id),
       staleTime: 30_000,
+      enabled: enabled && !!id,
     })),
   })
   return Object.fromEntries(domainIds.map((id, i) => [id, results[i].data]))

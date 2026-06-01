@@ -5,7 +5,7 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
-import { Sparkles, RefreshCcw, Check, Lock, ChevronLeft } from 'lucide-react'
+import { Sparkles, RefreshCcw, Check, Lock, ChevronLeft, LogIn, AlertTriangle } from 'lucide-react'
 import {
   DOMAINS,
   ACTIVE_DOMAIN_IDS,
@@ -40,7 +40,7 @@ function diagnosticExpired(completedAt: string | null): boolean {
   return (Date.now() - new Date(completedAt).getTime()) / (1000 * 60 * 60 * 24) >= 30
 }
 
-// ── Sub-components ────────────────────────────────────────────────────────────
+// ── Progress Ring (public / no-data state shows an empty ring) ────────────────
 
 function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; stroke: string }) {
   const r = 22
@@ -63,6 +63,50 @@ function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; s
     </svg>
   )
 }
+
+// ── Paywall modal ─────────────────────────────────────────────────────────────
+
+function PaywallModal({ onClose, onUpgrade }: { onClose: () => void; onUpgrade: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}>
+      <div className="bg-card border border-border rounded-[16px] p-7 max-w-[420px] w-full shadow-2xl">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-[rgba(201,162,39,0.12)] border border-[rgba(201,162,39,0.3)]
+            flex items-center justify-center flex-shrink-0">
+            <AlertTriangle size={20} color="var(--gold)" strokeWidth={1.75} />
+          </div>
+          <h2 className="font-cinzel text-[18px] font-bold text-gold m-0">One Pathway at a Time</h2>
+        </div>
+        <p className="text-[14px] text-muted leading-[1.7] mb-2">
+          You already have an active pathway. The free plan lets you master one discipline deeply before expanding.
+        </p>
+        <p className="text-[14px] text-muted leading-[1.7] mb-6">
+          Unlock unlimited pathways with a subscription — or complete your current path first.
+        </p>
+        <div className="flex gap-3">
+          <button
+            onClick={onUpgrade}
+            className="flex-1 py-2.5 px-4 rounded-[10px] font-cinzel text-[13px] font-semibold text-bg
+              cursor-pointer transition-opacity duration-150 hover:opacity-90"
+            style={{ background: 'linear-gradient(135deg, var(--gold), #e8b84b)' }}
+          >
+            Unlock All Pathways
+          </button>
+          <button
+            onClick={onClose}
+            className="flex-1 py-2.5 px-4 rounded-[10px] font-cinzel text-[13px] font-semibold
+              bg-surface border border-border text-muted cursor-pointer hover:border-border hover:text-text transition-colors"
+          >
+            Stay on Current Path
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Breadcrumb ────────────────────────────────────────────────────────────────
 
 function Breadcrumb({ nav, onNavigate }: {
   nav: NavState
@@ -104,7 +148,7 @@ function Breadcrumb({ nav, onNavigate }: {
 
 // ── Schools view ──────────────────────────────────────────────────────────────
 
-function SchoolsView({ onSelect }: { onSelect: (school: School) => void }) {
+function SchoolsView({ onSelect, isPublic }: { onSelect: (school: School) => void; isPublic: boolean }) {
   const schools = Object.entries(SCHOOL_META) as [School, typeof SCHOOL_META[School]][]
   const activeDomainsBySchool = (school: School) =>
     DOMAINS.filter(d => d.school === school && d.status === 'active').length
@@ -113,11 +157,16 @@ function SchoolsView({ onSelect }: { onSelect: (school: School) => void }) {
     <>
       <div className="text-center mb-10">
         <h1 className="font-cinzel text-[30px] font-bold text-gold m-0 mb-3">
-          Choose Your School
+          Arcane Schools
         </h1>
         <p className="text-[15px] text-muted leading-[1.7] max-w-[520px] mx-auto">
-          Each school represents a discipline cluster. Select one to explore its tracks and enrol in a pathway.
+          Each school represents a discipline cluster. Select one to explore its pathways.
         </p>
+        {isPublic && (
+          <p className="text-[13px] text-purple-light mt-2 opacity-80">
+            Browse freely — sign in when you're ready to enrol.
+          </p>
+        )}
       </div>
 
       <div data-tutorial-id="schools-grid" className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
@@ -126,6 +175,7 @@ function SchoolsView({ onSelect }: { onSelect: (school: School) => void }) {
           return (
             <button
               key={id}
+              data-tutorial-id={id === 'engineering-systems' ? 'first-domain-card' : undefined}
               onClick={() => onSelect(id)}
               className="text-left bg-card border border-border rounded-[16px] p-6 flex items-start gap-5
                 transition-all duration-200 hover:-translate-y-[2px] cursor-pointer"
@@ -180,7 +230,7 @@ function SchoolsView({ onSelect }: { onSelect: (school: School) => void }) {
   )
 }
 
-// ── Track groups view ─────────────────────────────────────────────────────────
+// ── Track groups / Pathways view ──────────────────────────────────────────────
 
 function TrackGroupsView({ school, onSelect }: {
   school: School
@@ -204,10 +254,10 @@ function TrackGroupsView({ school, onSelect }: {
           <span>{meta.name}</span>
         </div>
         <h1 className="font-cinzel text-[28px] font-bold text-gold m-0 mb-3">
-          Select a Track
+          Pathways
         </h1>
         <p className="text-[15px] text-muted leading-[1.7] max-w-[480px] mx-auto">
-          Each track covers a focused area of the discipline. Choose the track that matches your goals.
+          Each pathway covers a focused discipline. Choose the one that matches your goals.
         </p>
       </div>
 
@@ -265,7 +315,7 @@ function TrackGroupsView({ school, onSelect }: {
   )
 }
 
-// ── Domains view ──────────────────────────────────────────────────────────────
+// ── Domains / Enrol view ──────────────────────────────────────────────────────
 
 function DomainsView({
   school,
@@ -273,6 +323,7 @@ function DomainsView({
   topicData,
   enrolledTopicIds,
   canBypassPaywall,
+  isPublic,
   onTopicClick,
   onDiagnosticClick,
   renderDiagnosticRow,
@@ -282,6 +333,7 @@ function DomainsView({
   topicData: Record<string, TopicData>
   enrolledTopicIds: Set<string>
   canBypassPaywall: boolean
+  isPublic: boolean
   onTopicClick: (topic: Domain) => void
   onDiagnosticClick: (e: React.MouseEvent, domainId: string) => void
   renderDiagnosticRow: (topic: Domain) => React.ReactNode
@@ -318,10 +370,12 @@ function DomainsView({
             <span>{meta.name}</span>
           </div>
           <h1 className="font-cinzel text-[28px] font-bold text-gold m-0 mb-3">
-            {hasActiveEnrollment && !canBypassPaywall ? 'Your Pathways' : 'Choose Your Path'}
+            {isPublic ? 'Choose Your Path' : hasActiveEnrollment && !canBypassPaywall ? 'Your Pathways' : 'Choose Your Path'}
           </h1>
           <p className="text-[15px] text-muted leading-[1.7] max-w-[520px] mx-auto">
-            {hasActiveEnrollment && !canBypassPaywall
+            {isPublic
+              ? 'Enrol in a discipline and begin your journey. Sign in to get started.'
+              : hasActiveEnrollment && !canBypassPaywall
               ? 'Continue mastering your chosen discipline — or unlock more paths when you\'re ready.'
               : 'Enrol in a discipline and begin your journey.'}
           </p>
@@ -335,7 +389,7 @@ function DomainsView({
         {visibleTopics.map((topic, idx) => {
           const active = topic.status === 'active'
           const isEnrolled = enrolledTopicIds.has(topic.id)
-          const isPaywalled = active && !isEnrolled && hasActiveEnrollment && !canBypassPaywall
+          const isPaywalled = active && !isEnrolled && hasActiveEnrollment && !canBypassPaywall && !isPublic
           const progress = topicData[topic.id]?.progress ?? 0
 
           return (
@@ -378,11 +432,16 @@ function DomainsView({
                       rounded-full border border-[rgba(201,162,39,0.2)] bg-[rgba(201,162,39,0.05)]">
                       <Lock size={20} className="text-gold opacity-60" strokeWidth={1.5} />
                     </div>
+                  ) : isPublic && active ? (
+                    <div className="w-[56px] h-[56px] flex items-center justify-center
+                      rounded-full border border-border bg-surface">
+                      <LogIn size={18} color="var(--muted)" strokeWidth={1.5} />
+                    </div>
                   ) : (
                     <ProgressRing pct={progress} active={active} stroke={topic.accentStroke} />
                   )}
                   <Badge variant={!active ? 'soon' : isPaywalled ? 'locked' : 'active'}>
-                    {!active ? 'Coming Soon' : isPaywalled ? '🔒 Premium' : 'Active'}
+                    {!active ? 'Coming Soon' : isPaywalled ? '🔒 Premium' : isPublic ? 'Enrol' : 'Active'}
                   </Badge>
                 </div>
               </div>
@@ -390,20 +449,22 @@ function DomainsView({
               <div className="font-cinzel text-[18px] font-bold text-text">{topic.name}</div>
               <div className="text-[13px] text-muted leading-[1.6] flex-1">{topic.tagline}</div>
 
-              {active && isEnrolled && renderDiagnosticRow(topic)}
+              {!isPublic && active && isEnrolled && renderDiagnosticRow(topic)}
 
               <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
                 <span className="text-[11px] text-muted font-cinzel leading-[1.4]">
-                  {active && topicData[topic.id]
+                  {active && !isPublic && topicData[topic.id]
                     ? <>{topicData[topic.id].totalChunks} modules · {topicData[topic.id].totalLessons} lessons</>
-                    : <>{topic.modules} modules</>}
+                    : <>{topic.modules > 0 ? `${topic.modules} modules` : 'Pathway'}</>}
                 </span>
                 {active && (
                   <span className={cn(
                     'text-[13px] font-semibold flex-shrink-0 flex items-center gap-1',
-                    isPaywalled ? 'text-gold opacity-70' : isEnrolled ? 'text-teal' : 'text-gold',
+                    isPaywalled ? 'text-gold opacity-70' : isPublic ? 'text-purple-light' : isEnrolled ? 'text-teal' : 'text-gold',
                   )}>
-                    {isPaywalled ? <><Lock size={12} strokeWidth={2} /> Unlock</> : isEnrolled ? 'Continue →' : 'Enrol →'}
+                    {isPaywalled ? <><Lock size={12} strokeWidth={2} /> Unlock</> :
+                     isPublic ? <><LogIn size={12} strokeWidth={2} /> Sign in</> :
+                     isEnrolled ? 'Continue →' : 'Enrol →'}
                   </span>
                 )}
               </div>
@@ -412,20 +473,22 @@ function DomainsView({
         })}
       </div>
 
-      <div className="flex items-start gap-4 bg-card border border-border border-l-[3px] border-l-gold rounded-[10px] px-6 py-5">
-        <span className="text-[20px] text-gold flex-shrink-0 mt-0.5">✦</span>
-        {hasActiveEnrollment && !canBypassPaywall ? (
-          <p className="text-[14px] text-muted leading-[1.7] m-0">
-            You have an active enrolment. Complete modules and build deep mastery in your chosen
-            discipline — unlock additional paths when you're ready to expand.
-          </p>
-        ) : (
-          <p className="text-[14px] text-muted leading-[1.7] m-0">
-            A polymath builds mastery one discipline at a time. Choose your first path wisely —
-            depth before breadth is the mark of a true scholar.
-          </p>
-        )}
-      </div>
+      {!isPublic && (
+        <div className="flex items-start gap-4 bg-card border border-border border-l-[3px] border-l-gold rounded-[10px] px-6 py-5">
+          <span className="text-[20px] text-gold flex-shrink-0 mt-0.5">✦</span>
+          {hasActiveEnrollment && !canBypassPaywall ? (
+            <p className="text-[14px] text-muted leading-[1.7] m-0">
+              You have an active enrolment. Complete modules and build deep mastery in your chosen
+              discipline — unlock additional paths when you're ready to expand.
+            </p>
+          ) : (
+            <p className="text-[14px] text-muted leading-[1.7] m-0">
+              A polymath builds mastery one discipline at a time. Choose your first path wisely —
+              depth before breadth is the mark of a true scholar.
+            </p>
+          )}
+        </div>
+      )}
     </>
   )
 }
@@ -435,31 +498,56 @@ function DomainsView({
 export default function DomainsPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
-  const [nav, setNav] = useState<NavState>({ level: 'schools' })
-  const rawTopicData = useDomainsDashboard(ACTIVE_DOMAIN_IDS)
+  const isPublic = !user
 
-  const topicData: Record<string, TopicData> = Object.fromEntries(
-    Object.entries(rawTopicData)
-      .filter(([, d]) => d != null)
-      .map(([id, d]) => [id, {
-        progress: Math.round(d!.overallProgress * 100),
-        diagnosticCompleted: d!.diagnosticCompleted,
-        diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
-        totalChunks: d!.chunkHealth.length,
-        totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalLessons, 0),
-      }])
-  )
+  const [nav, setNav] = useState<NavState>({ level: 'schools' })
+  const [showPaywall, setShowPaywall] = useState(false)
+
+  // Only fetch dashboard data when authenticated
+  const rawTopicData = useDomainsDashboard(ACTIVE_DOMAIN_IDS, !isPublic)
+
+  const topicData: Record<string, TopicData> = isPublic
+    ? {}
+    : Object.fromEntries(
+        Object.entries(rawTopicData)
+          .filter(([, d]) => d != null)
+          .map(([id, d]) => [id, {
+            progress: Math.round(d!.overallProgress * 100),
+            diagnosticCompleted: d!.diagnosticCompleted,
+            diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
+            totalChunks: d!.chunkHealth.length,
+            totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalLessons, 0),
+          }])
+      )
 
   const enrolledTopicIds = new Set(
-    ACTIVE_DOMAIN_IDS.filter(id => {
-      const d = topicData[id]
-      return d != null && (d.progress > 0 || d.diagnosticCompleted)
-    })
+    isPublic
+      ? []
+      : ACTIVE_DOMAIN_IDS.filter(id => {
+          const d = topicData[id]
+          return d != null && (d.progress > 0 || d.diagnosticCompleted)
+        })
   )
   const canBypassPaywall = user?.role === 'ADMIN' || user?.bypassPaywall === true
 
   function handleTopicClick(topic: Domain) {
     if (topic.status !== 'active') return
+
+    // Not logged in — save intent and redirect to login
+    if (isPublic) {
+      sessionStorage.setItem('arcane-intended-path', `/domain/${topic.id}/onboarding`)
+      navigate('/login')
+      return
+    }
+
+    // Already has an enrolment and this topic is new → paywall
+    const isEnrolled = enrolledTopicIds.has(topic.id)
+    const hasActiveEnrollment = enrolledTopicIds.size > 0
+    if (!isEnrolled && hasActiveEnrollment && !canBypassPaywall) {
+      setShowPaywall(true)
+      return
+    }
+
     const data = topicData[topic.id]
     const needsOnboarding = !data || !data.diagnosticCompleted || diagnosticExpired(data.diagnosticCompletedAt)
     navigate(needsOnboarding ? `/domain/${topic.id}/onboarding` : `/domain/${topic.id}`)
@@ -539,7 +627,6 @@ export default function DomainsPage() {
   function handleTrackGroupSelect(tg: TrackGroup) {
     const activeDomains = DOMAINS.filter(d => d.trackGroup === tg.id && d.status === 'active')
     if (activeDomains.length === 1) {
-      // Single active domain — go directly, no intermediate selection needed
       handleTopicClick(activeDomains[0])
     } else {
       setNav({ level: 'domains', school: tg.school, trackGroupId: tg.id })
@@ -547,29 +634,57 @@ export default function DomainsPage() {
   }
 
   return (
-    <div className="max-w-[960px] mx-auto px-5 py-8 pb-[72px] overflow-y-auto max-[600px]:px-3 max-[600px]:py-5">
-      <Breadcrumb nav={nav} onNavigate={setNav} />
-
-      {nav.level === 'schools' && (
-        <SchoolsView onSelect={handleSchoolSelect} />
-      )}
-
-      {nav.level === 'track-groups' && (
-        <TrackGroupsView school={nav.school} onSelect={handleTrackGroupSelect} />
-      )}
-
-      {nav.level === 'domains' && (
-        <DomainsView
-          school={nav.school}
-          trackGroupId={nav.trackGroupId}
-          topicData={topicData}
-          enrolledTopicIds={enrolledTopicIds}
-          canBypassPaywall={canBypassPaywall}
-          onTopicClick={handleTopicClick}
-          onDiagnosticClick={handleDiagnosticClick}
-          renderDiagnosticRow={renderDiagnosticRow}
+    <>
+      {showPaywall && (
+        <PaywallModal
+          onClose={() => setShowPaywall(false)}
+          onUpgrade={() => { setShowPaywall(false); navigate('/settings') }}
         />
       )}
-    </div>
+
+      {/* Public header bar when not logged in */}
+      {isPublic && (
+        <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-surface">
+          <span className="font-cinzel text-[15px] text-gold tracking-[2px]">✦ Arcane Academy</span>
+          <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/login')}
+              className="btn btn-ghost text-[13px] px-3 py-1.5 flex items-center gap-1.5">
+              <LogIn size={14} strokeWidth={1.75} /> Sign In
+            </button>
+            <button onClick={() => navigate('/register')}
+              className="btn px-3 py-1.5 text-[13px] font-cinzel font-semibold rounded-[8px]"
+              style={{ background: 'var(--purple)', color: '#fff', border: '1px solid var(--purple)' }}>
+              Join Free
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-[960px] mx-auto px-5 py-8 pb-[72px] overflow-y-auto max-[600px]:px-3 max-[600px]:py-5">
+        <Breadcrumb nav={nav} onNavigate={setNav} />
+
+        {nav.level === 'schools' && (
+          <SchoolsView onSelect={handleSchoolSelect} isPublic={isPublic} />
+        )}
+
+        {nav.level === 'track-groups' && (
+          <TrackGroupsView school={nav.school} onSelect={handleTrackGroupSelect} />
+        )}
+
+        {nav.level === 'domains' && (
+          <DomainsView
+            school={nav.school}
+            trackGroupId={nav.trackGroupId}
+            topicData={topicData}
+            enrolledTopicIds={enrolledTopicIds}
+            canBypassPaywall={canBypassPaywall}
+            isPublic={isPublic}
+            onTopicClick={handleTopicClick}
+            onDiagnosticClick={handleDiagnosticClick}
+            renderDiagnosticRow={renderDiagnosticRow}
+          />
+        )}
+      </div>
+    </>
   )
 }

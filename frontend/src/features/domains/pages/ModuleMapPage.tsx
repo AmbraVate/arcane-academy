@@ -1,168 +1,179 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate, NavigateFunction } from 'react-router-dom'
-import { moduleApi, rabbitHoleApi } from '@/shared/api/services'
-import type { ModuleDetail, RabbitHoleModule, LessonSummary, Topic } from '@/shared/types'
+import { useParams, useNavigate } from 'react-router-dom'
+import { moduleApi } from '@/shared/api/services'
+import type { ModuleDetail, LessonSummary, Topic } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Lock, Check, Rabbit, ArrowRight, Loader2, BookOpen, Code2, Zap, Wrench, Layers } from 'lucide-react'
+import { Lock, Check, Loader2, Layers, ChevronRight } from 'lucide-react'
+
+// ── Small completion ring (diagram-style circle) ─────────────────────────────
+
+function CompletionRing({ pct, color, size = 40 }: { pct: number; color: string; size?: number }) {
+  const r = size / 2 - 4
+  const circ = 2 * Math.PI * r
+  const dash = (pct / 100) * circ
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block flex-shrink-0">
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--border)" strokeWidth="2.5" />
+      {pct > 0 && (
+        <circle
+          cx={size/2} cy={size/2} r={r} fill="none"
+          stroke={color} strokeWidth="2.5" strokeLinecap="round"
+          strokeDasharray={`${dash} ${circ}`} strokeDashoffset="0"
+          transform={`rotate(-90 ${size/2} ${size/2})`}
+          style={{ transition: 'stroke-dasharray 0.5s ease' }}
+        />
+      )}
+      {pct === 100 ? (
+        <path
+          d={`M ${size/2 - 5} ${size/2} l 3.5 3.5 l 6 -6`}
+          fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+        />
+      ) : (
+        <text x={size/2} y={size/2} dominantBaseline="central" textAnchor="middle"
+          fontSize={size * 0.22} fill={pct > 0 ? color : 'var(--muted)'} fontWeight="700"
+          fontFamily="'Cinzel', serif">
+          {pct > 0 ? `${pct}%` : ''}
+        </text>
+      )}
+    </svg>
+  )
+}
+
+// ── Topic row ─────────────────────────────────────────────────────────────────
+
+function TopicRow({
+  topic,
+  topicLessons,
+  moduleId,
+  navigate,
+}: {
+  topic: Topic
+  topicLessons: LessonSummary[]
+  moduleId: string
+  navigate: (path: string) => void
+}) {
+  const completed = topicLessons.filter(l => l.status === 'COMPLETE' || l.status === 'SKIPPED').length
+  const total     = topicLessons.length
+  const pct       = total > 0 ? Math.round((completed / total) * 100) : 0
+  const isDone    = pct === 100 && total > 0
+  const isLocked  = total > 0 && topicLessons[0].status === 'LOCKED'
+  const inProg    = !isLocked && !isDone && completed > 0
+
+  const color = isDone ? 'var(--teal)' : inProg ? 'var(--purple)' : 'var(--border)'
+
+  return (
+    <div
+      className={cn(
+        'flex items-center gap-3.5 bg-card border rounded-[10px] px-4 py-3.5',
+        'transition-[border-color,transform] duration-200',
+        isLocked
+          ? 'opacity-40 cursor-not-allowed border-border saturate-[0.3]'
+          : 'cursor-pointer border-border hover:border-purple hover:-translate-y-px',
+      )}
+      onClick={() => !isLocked && navigate(`/chunk/${moduleId}/topic/${topic.id}`)}
+    >
+      {/* Lock / number */}
+      <div className={cn(
+        'w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold flex-shrink-0',
+        isDone    ? 'bg-teal text-bg'          :
+        isLocked  ? 'bg-surface text-border'   :
+        inProg    ? 'bg-purple-dim text-purple-light' : 'bg-surface text-muted',
+      )}>
+        {isLocked ? <Lock size={12} strokeWidth={2} />
+          : isDone ? <Check size={12} strokeWidth={2.5} />
+          : <Layers size={12} strokeWidth={1.75} />}
+      </div>
+
+      {/* Title + lesson count */}
+      <div className="flex-1 min-w-0">
+        <div className="text-[14px] font-semibold text-text truncate">{topic.title}</div>
+        <div className="text-[11px] text-muted mt-0.5">
+          {total} lesson{total !== 1 ? 's' : ''}
+          {inProg && <span className="ml-2 text-purple-light font-cinzel text-[10px] uppercase">In Progress</span>}
+        </div>
+      </div>
+
+      {/* Completion ring */}
+      <CompletionRing pct={isLocked ? 0 : pct} color={color} size={38} />
+
+      {/* Chevron */}
+      {!isLocked && (
+        <ChevronRight size={14} color="var(--muted)" strokeWidth={1.75} className="flex-shrink-0" />
+      )}
+    </div>
+  )
+}
+
+// ── Flat lesson card (fallback when no topics) ────────────────────────────────
 
 const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-green', YELLOW: 'bg-orange', RED: 'bg-red',
 }
 
-// ── Lesson card ─────────────────────────────────────────────────────────────
-
-function LessonCard({ sc, navigate }: { sc: LessonSummary; navigate: NavigateFunction }) {
+function LessonCard({ sc, navigate }: { sc: LessonSummary; navigate: (path: string) => void }) {
   const isLocked = sc.status === 'LOCKED'
   const isDone   = sc.status === 'COMPLETE' || sc.status === 'SKIPPED'
+  const memPct   = Math.round(sc.memoryStrength * 100)
+
   return (
     <div
       className={cn(
-        'bg-card border rounded-[10px] px-4 py-3.5 transition-[border-color] duration-200',
-        'max-[600px]:px-3 max-[600px]:py-3',
+        'flex items-center gap-3.5 bg-card border rounded-[10px] px-4 py-3.5',
+        'transition-[border-color] duration-200',
         isLocked ? 'opacity-50 cursor-not-allowed border-border' :
         isDone   ? 'cursor-pointer border-l-[3px] border-l-teal border-border hover:border-purple' :
                    'cursor-pointer border-border hover:border-purple',
       )}
       onClick={() => !isLocked && navigate(`/learn/${sc.id}`)}
     >
-      {/* ── Top row ── */}
-      <div className="flex items-start gap-3.5 max-[600px]:gap-2.5">
-        <div className={cn(
-          'w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-bold flex-shrink-0 mt-0.5',
-          isDone   ? 'bg-teal text-bg'        :
-          isLocked ? 'bg-surface text-border' : 'bg-surface text-muted',
-        )}>
-          {isLocked ? <Lock size={13} strokeWidth={2} />
-            : isDone ? <Check size={13} strokeWidth={2.5} />
-            : sc.sortOrder}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="text-[14px] font-semibold text-text max-[600px]:text-[13px]">{sc.title}</div>
-          <div className="flex items-center gap-2 mt-0.5">
-            <Badge variant={isDone ? 'active' : sc.status === 'IN_PROGRESS' ? 'application' : isLocked ? 'gray' : sc.status === 'COMPRESSED' ? 'gold' : 'green'}>
-              {sc.status === 'LOCKED'     ? 'Locked'       :
-               sc.status === 'COMPRESSED' ? 'Quick review' :
-               isDone ? sc.status.charAt(0) + sc.status.slice(1).toLowerCase() :
-               sc.status.replace('_', ' ')}
-            </Badge>
-            {sc.currentPhase && sc.status === 'IN_PROGRESS' && (
-              <span className="text-[10px] text-muted uppercase">{sc.currentPhase.replace('_', ' ')}</span>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-          {!isLocked && !isDone && <Badge variant="green">+{sc.xpReward} xp</Badge>}
-          {isDone && sc.memoryStrength !== undefined && (
-            <div className="w-[60px] h-1 bg-surface rounded-full overflow-hidden max-[600px]:w-12">
-              <div
-                className={cn('h-full rounded-full', MEM_COLORS[sc.healthColor ?? 'GREEN'] ?? 'bg-green')}
-                style={{ width: `${Math.round(sc.memoryStrength * 100)}%` }}
-              />
-            </div>
+      {/* Number / status dot */}
+      <div className={cn(
+        'w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold flex-shrink-0',
+        isDone   ? 'bg-teal text-bg'        :
+        isLocked ? 'bg-surface text-border' : 'bg-surface text-muted',
+      )}>
+        {isLocked ? <Lock size={12} strokeWidth={2} />
+          : isDone ? <Check size={12} strokeWidth={2.5} />
+          : sc.sortOrder}
+      </div>
+
+      {/* Title */}
+      <div className="flex-1 min-w-0">
+        <div className="text-[14px] font-semibold text-text truncate">{sc.title}</div>
+        <div className="flex items-center gap-2 mt-0.5">
+          <Badge variant={isDone ? 'active' : sc.status === 'IN_PROGRESS' ? 'application' : isLocked ? 'gray' : 'green'}>
+            {sc.status === 'LOCKED' ? 'Locked' : isDone ? 'Done' : sc.status.replace('_', ' ')}
+          </Badge>
+          {sc.currentPhase && sc.status === 'IN_PROGRESS' && (
+            <span className="text-[10px] text-muted uppercase">{sc.currentPhase.replace('_', ' ')}</span>
           )}
         </div>
       </div>
-      {/* ── Chip row ── */}
-      {!isLocked && (sc.learningObjectiveCount > 0 || sc.hasChallenge || sc.hasMiniProject || sc.practiceType !== 'NONE') && (
-        <div className="flex items-center gap-2 mt-2.5 pl-[46px] flex-wrap max-[600px]:pl-[38px]">
-          {sc.learningObjectiveCount > 0 && (
-            <span className="text-[10px] text-muted flex items-center gap-1">
-              <BookOpen size={10} strokeWidth={1.75} />
-              {sc.learningObjectiveCount} objective{sc.learningObjectiveCount !== 1 ? 's' : ''}
-            </span>
-          )}
-          {sc.practiceType !== 'NONE' && (
-            <span className="text-[10px] text-muted flex items-center gap-1">
-              <Code2 size={10} strokeWidth={1.75} /> Sandbox
-            </span>
-          )}
-          {sc.hasChallenge && (
-            <span className="text-[10px] text-muted flex items-center gap-1">
-              <Zap size={10} strokeWidth={1.75} /> Challenge
-            </span>
-          )}
-          {sc.hasMiniProject && (
-            <span className="text-[10px] text-muted flex items-center gap-1">
-              <Wrench size={10} strokeWidth={1.75} /> Mini project
-            </span>
-          )}
+
+      {/* Memory circles */}
+      {isDone && (
+        <div className="flex flex-col items-end gap-1 flex-shrink-0">
+          {/* Memory bar */}
+          <div className="w-[48px] h-[3px] bg-border rounded-full overflow-hidden">
+            <div
+              className={cn('h-full rounded-full', MEM_COLORS[sc.healthColor ?? 'GREEN'] ?? 'bg-green')}
+              style={{ width: `${memPct}%` }}
+            />
+          </div>
+          <span className="text-[9px] text-muted">{memPct}% mem</span>
         </div>
       )}
     </div>
   )
 }
 
-// ── Topic-grouped lesson list ────────────────────────────────────────────────
-// When topics are present, lessons are rendered under a labelled topic header.
-// Falls back to a flat list if every lesson's topicId is null.
-
-function TopicGroupedLessons({
-  lessons, topics, navigate
-}: {
-  lessons: LessonSummary[]
-  topics: Topic[]
-  navigate: NavigateFunction
-}) {
-  const hasTopicInfo = lessons.some(l => l.topicId != null) && topics.length > 0
-
-  if (!hasTopicInfo) {
-    // Flat fallback (pre-Phase 1 content or content without topic assignment)
-    return (
-      <div className="flex flex-col gap-2">
-        {lessons.map(sc => <LessonCard key={sc.id} sc={sc} navigate={navigate} />)}
-      </div>
-    )
-  }
-
-  // Group lessons by topicId; preserve topic sort order from server
-  const lessonsByTopic = new Map<string, LessonSummary[]>()
-  const ungrouped: LessonSummary[] = []
-  for (const lesson of lessons) {
-    if (lesson.topicId) {
-      const arr = lessonsByTopic.get(lesson.topicId) ?? []
-      arr.push(lesson)
-      lessonsByTopic.set(lesson.topicId, arr)
-    } else {
-      ungrouped.push(lesson)
-    }
-  }
-
-  return (
-    <div className="flex flex-col gap-6">
-      {topics.map(topic => {
-        const topicLessons = lessonsByTopic.get(topic.id) ?? []
-        if (topicLessons.length === 0) return null
-        return (
-          <div key={topic.id}>
-            {/* Topic header */}
-            <div className="flex items-center gap-2 mb-2.5 px-1">
-              <Layers size={13} strokeWidth={1.75} className="text-purple-light flex-shrink-0" />
-              <span className="font-cinzel text-[12px] text-purple-light tracking-[0.08em] uppercase">
-                {topic.title}
-              </span>
-              <div className="flex-1 h-px bg-border ml-1" />
-            </div>
-            <div className="flex flex-col gap-2">
-              {topicLessons.map(sc => <LessonCard key={sc.id} sc={sc} navigate={navigate} />)}
-            </div>
-          </div>
-        )
-      })}
-      {ungrouped.length > 0 && (
-        <div className="flex flex-col gap-2">
-          {ungrouped.map(sc => <LessonCard key={sc.id} sc={sc} navigate={navigate} />)}
-        </div>
-      )}
-    </div>
-  )
-}
+// ── Module map page ───────────────────────────────────────────────────────────
 
 export default function ModuleMapPage() {
   const { moduleId } = useParams<{ moduleId: string }>()
   const navigate = useNavigate()
   const [chunk, setChunk] = useState<ModuleDetail | null>(null)
-  const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleModule[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -171,7 +182,6 @@ export default function ModuleMapPage() {
       .then(setChunk)
       .catch(() => navigate('/domains'))
       .finally(() => setLoading(false))
-    rabbitHoleApi.getForChunk(moduleId).then(setRabbitHoles).catch(() => {})
   }, [moduleId, navigate])
 
   if (loading) {
@@ -184,6 +194,17 @@ export default function ModuleMapPage() {
   }
   if (!chunk) return null
 
+  // Group lessons by topicId
+  const lessonsByTopic = new Map<string, LessonSummary[]>()
+  for (const lesson of chunk.lessons) {
+    if (lesson.topicId) {
+      const arr = lessonsByTopic.get(lesson.topicId) ?? []
+      arr.push(lesson)
+      lessonsByTopic.set(lesson.topicId, arr)
+    }
+  }
+
+  const hasTopics = chunk.topics.length > 0 && chunk.lessons.some(l => l.topicId != null)
   const completed = chunk.lessons.filter(s => s.status === 'COMPLETE' || s.status === 'SKIPPED').length
 
   return (
@@ -192,7 +213,8 @@ export default function ModuleMapPage() {
         ← Back to Domain
       </button>
 
-      <div className="flex items-center gap-4 mb-6 max-[600px]:gap-3">
+      {/* Module header */}
+      <div className="flex items-center gap-4 mb-7 max-[600px]:gap-3">
         <div className="text-[48px] max-[600px]:text-[36px]">{chunk.glyph}</div>
         <div>
           <h1 className="text-[24px] font-bold text-gold m-0 max-[600px]:text-[20px]">{chunk.title}</h1>
@@ -200,32 +222,38 @@ export default function ModuleMapPage() {
             <Badge variant={chunk.status === 'COMPLETE' ? 'active' : chunk.status === 'LOCKED' ? 'gray' : 'application'}>
               {chunk.status}
             </Badge>
-            <span className="text-[12px] text-muted">{completed}/{chunk.lessons.length} concepts</span>
+            <span className="text-[12px] text-muted">
+              {hasTopics
+                ? `${chunk.topics.length} topics · ${chunk.lessons.length} lessons`
+                : `${completed}/${chunk.lessons.length} lessons`}
+            </span>
           </div>
         </div>
       </div>
 
-      <TopicGroupedLessons lessons={chunk.lessons} topics={chunk.topics ?? []} navigate={navigate} />
-
-      {rabbitHoles.length > 0 && (
-        <div className="mt-9">
-          <div className="text-[15px] font-bold text-gold mb-1 flex items-center gap-2">
-            <Rabbit size={16} color="var(--gold)" strokeWidth={1.75} />
-            Rabbit Holes
-          </div>
-          <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives — explore when curious.</p>
-          <div className="flex flex-col gap-2">
-            {rabbitHoles.map(rh => (
-              <div
-                key={rh.id}
-                className="flex items-center justify-between bg-card border border-border rounded-[10px] px-4 py-3 cursor-pointer transition-[border-color] duration-200 hover:border-gold"
-                onClick={() => navigate(`/rabbit-hole/${rh.id}`)}
-              >
-                <span className="text-[14px] font-semibold text-text">{rh.title}</span>
-                <ArrowRight size={15} color="var(--muted)" strokeWidth={1.75} />
-              </div>
-            ))}
-          </div>
+      {hasTopics ? (
+        /* ── Topic rows ── */
+        <div className="flex flex-col gap-2">
+          {chunk.topics.map(topic => {
+            const topicLessons = lessonsByTopic.get(topic.id) ?? []
+            if (topicLessons.length === 0) return null
+            return (
+              <TopicRow
+                key={topic.id}
+                topic={topic}
+                topicLessons={topicLessons}
+                moduleId={chunk.id}
+                navigate={navigate}
+              />
+            )
+          })}
+        </div>
+      ) : (
+        /* ── Flat lesson list fallback ── */
+        <div className="flex flex-col gap-2">
+          {chunk.lessons.map(sc => (
+            <LessonCard key={sc.id} sc={sc} navigate={navigate} />
+          ))}
         </div>
       )}
     </div>

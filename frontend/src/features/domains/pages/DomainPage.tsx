@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
 import { TierIcon } from '@/components/icons/TierIcon'
-import { RefreshCcw, Check, MapPin, Lock, BookOpen, Sparkles } from 'lucide-react'
+import { Check, MapPin, Lock, Sparkles, BookOpen } from 'lucide-react'
 
 type TopicMeta = {
   name: string
@@ -60,10 +60,6 @@ const TOPIC_META: Record<string, TopicMeta> = {
     accent: 'var(--teal)',
   },
 }
-const MEM_COLORS: Record<string, string> = {
-  GREEN: 'bg-teal', YELLOW: 'bg-orange', RED: 'bg-red',
-}
-
 const TIER_ORDER = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
 const TIER_LABELS: Record<string, string> = {
   APPRENTICE: 'Apprentice',
@@ -90,55 +86,94 @@ const TIER_DESC: Record<string, string> = {
   CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
 }
 
+// ── Completion ring (diagram-style circle indicator) ─────────────────────────
+
+function CompletionRing({ pct, color, size = 48 }: { pct: number; color: string; size?: number }) {
+  const r = size / 2 - 5
+  const circ = 2 * Math.PI * r
+  const dash = (pct / 100) * circ
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block flex-shrink-0">
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--border)" strokeWidth="3" />
+      {pct > 0 && (
+        <circle
+          cx={size/2} cy={size/2} r={r} fill="none"
+          stroke={color} strokeWidth="3" strokeLinecap="round"
+          strokeDasharray={`${dash} ${circ}`} strokeDashoffset="0"
+          transform={`rotate(-90 ${size/2} ${size/2})`}
+          style={{ transition: 'stroke-dasharray 0.5s ease' }}
+        />
+      )}
+      <text x={size/2} y={size/2} dominantBaseline="central" textAnchor="middle"
+        fontSize={size * 0.2} fill={pct > 0 ? color : 'var(--muted)'} fontWeight="700"
+        fontFamily="'Cinzel', serif">
+        {pct > 0 ? `${pct}%` : '—'}
+      </text>
+    </svg>
+  )
+}
+
 function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDto; onClick: () => void; accent?: string }) {
   const locked = ch.status === 'LOCKED'
   const done   = ch.status === 'COMPLETE'
-  const pct    = Math.round(ch.memoryStrength * 100)
+  const inProg = ch.status === 'IN_PROGRESS'
+  const completionPct = ch.totalLessons > 0
+    ? Math.round((ch.completedLessons / ch.totalLessons) * 100)
+    : 0
+  const memPct = Math.round(ch.memoryStrength * 100)
+
+  const ringColor = done
+    ? (ch.healthColor === 'GREEN' ? 'var(--teal)' : ch.healthColor === 'YELLOW' ? 'var(--orange)' : 'var(--red)')
+    : accent
 
   return (
     <div
       className={cn(
-        'chunk-card bg-card border rounded-[12px] p-[18px] px-4 flex flex-col gap-2 cursor-pointer transition-[border-color,transform] duration-200',
-        locked ? 'opacity-50 cursor-default saturate-[0.4] border-border' : 'border-border hover:-translate-y-0.5',
+        'chunk-card bg-card border rounded-[12px] p-4 flex items-center gap-3 cursor-pointer transition-[border-color,transform] duration-200',
+        locked ? 'opacity-40 cursor-default saturate-[0.4] border-border' : 'border-border hover:-translate-y-0.5',
       )}
-      style={!locked ? { ['--hover-border' as string]: accent } : undefined}
       onMouseEnter={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderColor = accent }}
       onMouseLeave={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderColor = done ? `color-mix(in srgb, ${accent} 25%, transparent)` : 'var(--border)' }}
       onClick={onClick}
     >
-      <div className="flex items-center justify-between">
-        <span className="flex items-center text-[26px] leading-none">
-          {locked ? <Lock size={22} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
-        </span>
-        <Badge variant={done ? 'active' : ch.status === 'IN_PROGRESS' ? 'application' : locked ? 'gray' : 'green' as 'active' | 'application' | 'gray'}>
-          {done ? 'Complete' : ch.status === 'IN_PROGRESS' ? 'In Progress' : locked ? 'Locked' : 'Start'}
-        </Badge>
+      {/* Glyph / lock */}
+      <div className="text-[26px] leading-none w-9 flex-shrink-0 flex items-center justify-center">
+        {locked ? <Lock size={20} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
       </div>
-      <div className="text-[15px] font-bold text-text leading-[1.35]">{ch.title}</div>
-      <div className="text-[11px] text-muted">{ch.totalLessons} concepts</div>
-      {!locked && (
-        <div className="flex items-center gap-2 mt-1">
-          <div className="flex-1 h-1 bg-border rounded-full overflow-hidden">
-            <div className="h-full bg-teal rounded-full" style={{ width: `${Math.round((ch.completedLessons / ch.totalLessons) * 100)}%` }} />
-          </div>
-          <span className="text-[10px] text-muted flex-shrink-0">{ch.completedLessons}/{ch.totalLessons}</span>
-        </div>
-      )}
-      {done && (
+
+      {/* Title + meta */}
+      <div className="flex-1 min-w-0">
+        <div className="text-[14px] font-bold text-text leading-[1.35] truncate">{ch.title}</div>
         <div className="flex items-center gap-2 mt-0.5">
-          <div className="flex-1 h-[3px] bg-border rounded-full overflow-hidden">
-            <div
-              className={cn(
-                'h-full rounded-full strength-bar-fill',
-                ch.healthColor === 'GREEN'  ? 'strength-green bg-teal'   :
-                ch.healthColor === 'YELLOW' ? 'strength-yellow bg-orange' : 'strength-red bg-red',
-              )}
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <span className="text-[10px] text-muted flex-shrink-0">{pct}% mem</span>
+          <span className="text-[11px] text-muted">{ch.totalLessons} topics</span>
+          {!locked && inProg && (
+            <span className="text-[10px] text-purple-light font-cinzel uppercase tracking-wide">In Progress</span>
+          )}
         </div>
-      )}
+        {/* Memory bar — only for completed modules */}
+        {done && (
+          <div className="flex items-center gap-1.5 mt-1.5">
+            <div className="w-[60px] h-[3px] bg-border rounded-full overflow-hidden">
+              <div
+                className={cn(
+                  'h-full rounded-full',
+                  ch.healthColor === 'GREEN'  ? 'bg-teal'   :
+                  ch.healthColor === 'YELLOW' ? 'bg-orange' : 'bg-red',
+                )}
+                style={{ width: `${memPct}%` }}
+              />
+            </div>
+            <span className="text-[10px] text-muted">{memPct}% mem</span>
+          </div>
+        )}
+      </div>
+
+      {/* Completion ring */}
+      <CompletionRing
+        pct={locked ? 0 : done ? 100 : completionPct}
+        color={locked ? 'var(--border)' : ringColor}
+        size={44}
+      />
     </div>
   )
 }

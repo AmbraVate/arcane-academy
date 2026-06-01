@@ -293,7 +293,7 @@ export default function PrerequisiteCheckPage() {
                   >
                     <div className="flex items-start gap-2.5">
                       <span className="text-[15px] flex-shrink-0 mt-0.5">
-                        {correct ? '✓' : 'âœ—'}
+                        {correct ? '✓' : '✗'}
                       </span>
                       <div className="flex-1">
                         <p className="text-[13px] font-semibold text-text m-0 mb-1 leading-[1.5]">

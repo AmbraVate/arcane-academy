@@ -71,7 +71,7 @@ function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b
             <div style={{ flex: 1 }} />
             <button style={iconBtn} onClick={() => moveBeat(i, -1)}>↑</button>
             <button style={iconBtn} onClick={() => moveBeat(i, 1)}>↓</button>
-            <button style={{ ...iconBtn, color: '#f87171' }} onClick={() => removeBeat(i)}>âœ•</button>
+            <button style={{ ...iconBtn, color: '#f87171' }} onClick={() => removeBeat(i)}>✕</button>
           </div>
 
           {beat.type === 'dialogue' && (
@@ -124,7 +124,7 @@ function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: 
             <label style={labelStyle}>Label <input style={inputStyle} value={t.label ?? ''} onChange={e => update(i, 'label', e.target.value)} /></label>
             <label style={labelStyle}>Input (vars) <input style={inputStyle} value={t.input ?? ''} onChange={e => update(i, 'input', e.target.value)} /></label>
             <label style={labelStyle}>Expected <input style={inputStyle} value={t.expected ?? ''} onChange={e => update(i, 'expected', e.target.value)} /></label>
-            <button style={{ ...iconBtn, color: '#f87171', marginBottom: 1 }} onClick={() => remove(i)}>âœ•</button>
+            <button style={{ ...iconBtn, color: '#f87171', marginBottom: 1 }} onClick={() => remove(i)}>✕</button>
           </div>
         </div>
       ))}

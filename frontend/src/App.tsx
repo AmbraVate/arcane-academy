@@ -42,6 +42,7 @@ const AdminStuckReportsPage = lazy(() => import('./features/admin/pages/AdminStu
 const AdminCapstonesPage   = lazy(() => import('./features/admin/pages/AdminCapstonesPage'))
 const TutorialLessonPage   = lazy(() => import('./features/tutorial/pages/TutorialLessonPage'))
 const SettingsPage         = lazy(() => import('./features/settings/pages/SettingsPage'))
+const TopicLessonsPage     = lazy(() => import('./features/domains/pages/TopicLessonsPage'))
 const NotFoundPage         = lazy(() => import('./features/errors/pages/NotFoundPage'))
 const ErrorPage            = lazy(() => import('./features/errors/pages/ErrorPage'))
 
@@ -85,11 +86,13 @@ function AppRoutes() {
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/" element={<HomeRedirect />} />
         <Route path="/chunk/:moduleId" element={<PrivateRoute><ModuleMapPage /></PrivateRoute>} />
+        <Route path="/chunk/:moduleId/topic/:topicId" element={<PrivateRoute><TopicLessonsPage /></PrivateRoute>} />
         <Route path="/learn/:lessonId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
-        <Route path="/domains"  element={<PrivateRoute><DomainsPage /></PrivateRoute>} />
+        {/* Schools / Domains — publicly browsable; enrol requires login */}
+        <Route path="/domains"  element={<DomainsPage />} />
         <Route path="/domain/:domainId" element={<PrivateRoute><DomainPage /></PrivateRoute>} />
         <Route path="/domain/:domainId/onboarding" element={<PrivateRoute><DomainOnboardingPage /></PrivateRoute>} />
         <Route path="/domain/:domainId/diagnostic" element={<PrivateRoute><DomainDiagnosticPage /></PrivateRoute>} />
@@ -139,6 +142,12 @@ function HomeRedirect() {
   const { user } = useAuth()
   if (!user) return <LandingPage />
   if (user.onboardingCompleted === false) return <Navigate to="/onboarding" replace />
+  // Redirect to the path the user intended before being sent to login
+  const intended = sessionStorage.getItem('arcane-intended-path')
+  if (intended) {
+    sessionStorage.removeItem('arcane-intended-path')
+    return <Navigate to={intended} replace />
+  }
   return <HomePage />
 }
 
