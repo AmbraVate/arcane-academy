@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
 import { TierIcon } from '@/components/icons/TierIcon'
 import { RefreshCcw, Check, MapPin, Lock, BookOpen, Sparkles } from 'lucide-react'
-import { useTheme } from '@/hooks/useTheme'
 
 type TopicMeta = {
   name: string
@@ -19,45 +18,45 @@ type TopicMeta = {
 
 const TOPIC_META: Record<string, TopicMeta> = {
   java: {
-    name: 'Java',
-    glyph: 'â˜•',
-    tagline: 'From zero to job-ready. The complete apprentice-to-archmage pathway.',
+    name: 'Software Engineering',
+    glyph: '⚙️',
+    tagline: 'Build reliable systems — computational thinking, design, and architecture, taught through Java.',
     accent: 'var(--teal)',
   },
   tailwind: {
     name: 'Tailwind CSS',
-    glyph: 'ðŸŽ¨',
-    tagline: 'Compose beautiful interfaces with utility classes â€” no more naming paralysis.',
+    glyph: '🎨',
+    tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',
     accent: 'var(--purple)',
   },
   react: {
     name: 'React',
-    glyph: 'âš›ï¸',
-    tagline: 'Component-driven UIs. Hooks, state, and the modern frontend â€” all the way to deployment.',
+    glyph: '⚛️',
+    tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',
     accent: 'var(--teal)',
   },
   sql: {
     name: 'SQL',
-    glyph: 'ðŸ—ƒï¸',
-    tagline: 'The language of data. Read, filter, summarise â€” every backend dev writes it daily.',
+    glyph: '🗃️',
+    tagline: 'The language of data. Read, filter, summarise — every backend dev writes it daily.',
     accent: 'var(--teal)',
   },
   psychology: {
     name: 'Psychology',
-    glyph: 'ðŸ§ ',
-    tagline: 'From foundations to frontier â€” the complete undergraduate-to-graduate psychology pathway.',
+    glyph: '🧠',
+    tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.',
     accent: 'var(--purple)',
   },
   genealogy: {
     name: 'Genealogy',
-    glyph: 'ðŸŒ³',
-    tagline: 'From vital records to professional proof â€” become a skilled genealogical researcher.',
+    glyph: '🌳',
+    tagline: 'From vital records to professional proof — become a skilled genealogical researcher.',
     accent: 'var(--gold)',
   },
   sciences: {
     name: 'Natural Sciences',
-    glyph: 'ðŸ”¬',
-    tagline: 'From scientific method to frontier research â€” physics, chemistry, biology, and earth science.',
+    glyph: '🔬',
+    tagline: 'From scientific method to frontier research — physics, chemistry, biology, and earth science.',
     accent: 'var(--teal)',
   },
 }
@@ -79,14 +78,14 @@ const TIER_LABELS: Record<string, string> = {
   CAPSTONE:     'Capstone',
 }
 const TIER_DESC: Record<string, string> = {
-  APPRENTICE: 'Foundations â€” core concepts, vocabulary, and the essential knowledge every learner needs.',
-  JUNIOR:     'Applied knowledge â€” practical skills and techniques used in real-world contexts.',
-  SENIOR:     'Advanced depth â€” specialist topics, critical evaluation, and complex synthesis.',
-  LEAD:       'Mastery â€” professional practice, critical perspectives, and leadership in the field.',
+  APPRENTICE: 'Foundations — core concepts, vocabulary, and the essential knowledge every learner needs.',
+  JUNIOR:     'Applied knowledge — practical skills and techniques used in real-world contexts.',
+  SENIOR:     'Advanced depth — specialist topics, critical evaluation, and complex synthesis.',
+  LEAD:       'Mastery — professional practice, critical perspectives, and leadership in the field.',
   // Legacy fallbacks
-  FOUNDATION:   'Core concepts and vocabulary â€” the solid base every practitioner needs.',
-  ADVANCED:     'Deeper theory and analysis â€” building fluency beyond the fundamentals.',
-  PRACTITIONER: 'Applied skills in real-world contexts â€” bringing knowledge into practice.',
+  FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
+  ADVANCED:     'Deeper theory and analysis — building fluency beyond the fundamentals.',
+  PRACTITIONER: 'Applied skills in real-world contexts — bringing knowledge into practice.',
   EXPERT:       'Specialist depth, critical evaluation, and advanced synthesis.',
   CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
 }
@@ -148,10 +147,9 @@ export default function DomainPage() {
   const { domainId } = useParams<{ domainId: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
-  const { theme } = useTheme()
   const { data: dashboard, isLoading } = useDashboard(domainId ?? '')
 
-  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: 'ðŸ“–', tagline: '', accent: 'var(--teal)' }
+  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: '📖', tagline: '', accent: 'var(--teal)' }
 
   if (isLoading) {
     return (
@@ -177,7 +175,7 @@ export default function DomainPage() {
         }}
       >
         <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/domains')}>
-          â† All Topics
+          ← All Topics
         </button>
         <div className="mb-2.5 flex justify-center">
           <DomainIcon domainId={domainId ?? ''} size={52} />
@@ -234,70 +232,12 @@ export default function DomainPage() {
           return acc
         }, {})
         const activeTiers = TIER_ORDER.filter(t => (byTier[t]?.length ?? 0) > 0)
-        const isBlizzard = theme === 'blizzard'
         return activeTiers.map(tier => {
           const chunks = byTier[tier]
           const tierComplete = chunks.every(ch => ch.status === 'COMPLETE')
           const tierStarted  = chunks.some(ch => ch.status !== 'LOCKED')
           const placedHere   = dashboard.currentPath === tier
           const donePct      = Math.round((chunks.filter(ch => ch.status === 'COMPLETE').length / chunks.length) * 100)
-
-          if (isBlizzard) {
-            return (
-              <div key={tier} className="page-wrap">
-                <div className="tier mb-8">
-                  <div className="tier-header">
-                    <div className="tier-glyph">
-                      <TierIcon tier={tier} size={22} />
-                    </div>
-                    <div className="tier-meta">
-                      <div className="tier-label">
-                        {TIER_LABELS[tier]}
-                        {placedHere && <span className="badge-placed"> Â· Placed here</span>}
-                        {tierComplete && <span className="badge-done"> Â· Complete</span>}
-                        {!tierStarted && !tierComplete && <span className="badge-locked"> Â· Locked</span>}
-                      </div>
-                      <div className="tier-desc">{TIER_DESC[tier]}</div>
-                    </div>
-                    <div className="tier-prog">{donePct}%</div>
-                  </div>
-                  <div className="chunk-grid">
-                    {chunks.map(ch => {
-                      const locked = ch.status === 'LOCKED'
-                      const done   = ch.status === 'COMPLETE'
-                      const warn   = done && ch.memoryStrength < 0.4
-                      const pct    = Math.round(ch.memoryStrength * 100)
-                      return (
-                        <div
-                          key={ch.moduleId}
-                          className={cn('chunk-card', locked && 'locked', done && !warn && 'done', warn && 'warn')}
-                          onClick={() => !locked && navigate(`/chunk/${ch.moduleId}`)}
-                        >
-                          <div className="chunk-glyph">{locked ? 'ðŸ”’' : ch.glyph}</div>
-                          <div className="chunk-title">{ch.title}</div>
-                          <div className="chunk-prog">{ch.completedLessons}/{ch.totalLessons} concepts</div>
-                          {!locked && (
-                            <>
-                              <div className="strength-bar">
-                                <div
-                                  className="strength-fill"
-                                  style={{
-                                    width: `${pct}%`,
-                                    background: pct > 70 ? 'var(--success)' : pct > 40 ? 'var(--warning)' : 'var(--danger)',
-                                  }}
-                                />
-                              </div>
-                              <div className="strength-lbl">Strength {pct}%</div>
-                            </>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-            )
-          }
 
           return (
             <div key={tier} className="mb-8">

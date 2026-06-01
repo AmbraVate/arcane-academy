@@ -56,7 +56,7 @@ export default function AdminImportExportPage() {
         Import / Export
       </h1>
       <p style={{ color: '#8b7fa0', fontSize: 13, marginBottom: 32 }}>
-        Transfer content chunks as JSON files â€” great for backups and moving content between environments.
+        Transfer content chunks as JSON files — great for backups and moving content between environments.
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
@@ -64,7 +64,7 @@ export default function AdminImportExportPage() {
         {/* Export */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
           <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#c4b5fd', marginBottom: 6 }}>
-            ðŸ“¤ Export Chunk
+            📤 Export Chunk
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
             Download a full module (including all lessons, questions, and story beats) as a JSON file.
@@ -90,7 +90,7 @@ export default function AdminImportExportPage() {
           </div>
 
           {loadingChunks ? (
-            <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading modulesâ€¦</div>
+            <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading modules…</div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 360, overflowY: 'auto' }}>
               {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
@@ -123,7 +123,7 @@ export default function AdminImportExportPage() {
         {/* Import */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
           <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#c4b5fd', marginBottom: 6 }}>
-            ðŸ“¥ Import Chunk
+            📥 Import Chunk
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
             Upload a previously exported JSON file to create or update a chunk. If a chunk with the same ID exists, it will be updated in place.
@@ -153,9 +153,9 @@ export default function AdminImportExportPage() {
               }
             }}
           >
-            <div style={{ fontSize: 32, marginBottom: 10 }}>ðŸ“‚</div>
+            <div style={{ fontSize: 32, marginBottom: 10 }}>📂</div>
             <div style={{ fontFamily: 'Cinzel, serif', fontSize: 13, color: '#c4b5fd', marginBottom: 6 }}>
-              {importing ? 'Importingâ€¦' : 'Click or drag JSON file here'}
+              {importing ? 'Importing…' : 'Click or drag JSON file here'}
             </div>
             <div style={{ fontSize: 11, color: '#8b7fa0' }}>Accepts .json chunk export files</div>
           </div>
@@ -177,10 +177,10 @@ export default function AdminImportExportPage() {
               padding: '12px 16px',
             }}>
               <div style={{ color: '#4ade80', fontFamily: 'Cinzel, serif', fontSize: 12, marginBottom: 4 }}>
-                âœ“ Import Successful
+                ✓ Import Successful
               </div>
               <div style={{ fontSize: 12, color: '#e8e0f0' }}>
-                Module <strong>{importResult.moduleId}</strong> â€” {importResult.lessons} lessons imported
+                Module <strong>{importResult.moduleId}</strong> — {importResult.lessons} lessons imported
               </div>
             </div>
           )}

@@ -135,7 +135,7 @@ function SectionView({
             className="w-full py-3 rounded-[10px] font-cinzel font-bold text-[14px] tracking-wide
               bg-purple text-white transition-opacity hover:opacity-90"
           >
-            Check My Understanding â†’
+            Check My Understanding →
           </button>
         </>
       )}
@@ -177,7 +177,7 @@ function SectionView({
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3 px-5 py-3.5 bg-card border border-border rounded-[10px]">
                 <span className="text-[22px]">
-                  {score === section.questions.length ? 'ðŸŒŸ' : score >= section.questions.length / 2 ? 'ðŸ‘' : 'ðŸ“–'}
+                  {score === section.questions.length ? '🌟' : score >= section.questions.length / 2 ? '👍' : '📖'}
                 </span>
                 <div>
                   <div className="text-[14px] font-semibold text-text">
@@ -185,7 +185,7 @@ function SectionView({
                   </div>
                   <div className="text-[12px] text-muted">
                     {score === section.questions.length
-                      ? 'Perfect â€” you know this section well.'
+                      ? 'Perfect — you know this section well.'
                       : 'Review the explanations above, then move on.'}
                   </div>
                 </div>
@@ -195,7 +195,7 @@ function SectionView({
                 className="w-full py-3 rounded-[10px] font-cinzel font-bold text-[14px] tracking-wide
                   bg-teal text-bg transition-opacity hover:opacity-90"
               >
-                {sectionIndex + 1 < totalSections ? `Next Section â†’` : `Complete Primer â†’`}
+                {sectionIndex + 1 < totalSections ? `Next Section →` : `Complete Primer →`}
               </button>
             </div>
           )}
@@ -205,11 +205,11 @@ function SectionView({
   )
 }
 
-// â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Main Page ─────────────────────────────────────────────────────────────────
 
 const TOPIC_META: Record<string, { name: string; glyph: string }> = {
-  tailwind: { name: 'Tailwind CSS', glyph: 'ðŸŽ¨' },
-  react:    { name: 'React',        glyph: 'âš›ï¸' },
+  tailwind: { name: 'Tailwind CSS', glyph: '🎨' },
+  react:    { name: 'React',        glyph: '⚛ï¸' },
 }
 
 export default function CssPrimerPage() {
@@ -217,7 +217,7 @@ export default function CssPrimerPage() {
   const navigate = useNavigate()
   const { user } = useAuth()
 
-  const meta = TOPIC_META[domainId] ?? { name: domainId, glyph: 'ðŸ“–' }
+  const meta = TOPIC_META[domainId] ?? { name: domainId, glyph: '📖' }
 
   const [currentSection, setCurrentSection] = useState(0)
   const [done, setDone] = useState(false)
@@ -244,18 +244,18 @@ export default function CssPrimerPage() {
     <div className="flex-1 flex items-start justify-center px-6 py-10 overflow-y-auto">
       <div className="max-w-[720px] w-full animate-[fade-up_0.4s_cubic-bezier(0.22,1,0.36,1)_both]">
 
-        {/* â”€â”€ Header â”€â”€ */}
+        {/* ── Header ── */}
         <div className="text-center mb-8">
-          <div className="text-[44px] mb-2">ðŸŒ</div>
+          <div className="text-[44px] mb-2">🌐</div>
           <h1 className="font-cinzel text-[26px] font-bold text-gold m-0 mb-1">
             CSS & HTML Primer
           </h1>
           <p className="text-[14px] text-muted m-0">
-            The essentials you need before starting {meta.name} Â· ~10 minutes
+            The essentials you need before starting {meta.name} · ~10 minutes
           </p>
         </div>
 
-        {/* â”€â”€ Progress bar â”€â”€ */}
+        {/* ── Progress bar ── */}
         {!done && (
           <div className="mb-8">
             <div className="flex justify-between text-[11px] text-muted font-cinzel mb-2">
@@ -279,10 +279,10 @@ export default function CssPrimerPage() {
           </div>
         )}
 
-        {/* â”€â”€ Done screen â”€â”€ */}
+        {/* ── Done screen ── */}
         {done ? (
           <div className="text-center animate-[fade-up_0.4s_cubic-bezier(0.22,1,0.36,1)_both]">
-            <div className="text-[64px] mb-4">ðŸŽ“</div>
+            <div className="text-[64px] mb-4">🎓</div>
             <h2 className="font-cinzel text-[24px] font-bold text-teal m-0 mb-3">
               Primer Complete
             </h2>
@@ -300,7 +300,7 @@ export default function CssPrimerPage() {
                 {[
                   ['HTML elements', '<div>, <p>, <button>'],
                   ['class attribute', '<div class="card">'],
-                  ['CSS class selector', '.card { â€¦ }'],
+                  ['CSS class selector', '.card { … }'],
                   ['padding vs margin', 'inside vs outside the border'],
                   ['display: flex', 'lays children in a row'],
                   ['justify-content', 'horizontal spacing in flex'],
@@ -319,11 +319,11 @@ export default function CssPrimerPage() {
                 bg-teal text-bg transition-[opacity,transform] duration-150
                 hover:opacity-90 hover:-translate-y-[2px]"
             >
-              Begin {meta.glyph} {meta.name} â†’
+              Begin {meta.glyph} {meta.name} →
             </button>
           </div>
         ) : (
-          /* â”€â”€ Active section â”€â”€ */
+          /* ── Active section ── */
           <SectionView
             key={currentSection}
             section={CSS_PRIMER_SECTIONS[currentSection]}

@@ -6,13 +6,13 @@ import QuestionCard from '@/features/learning/components/QuestionCard'
 import { useInvalidateDashboard } from '@/hooks/queries'
 
 const TOPIC_META: Record<string, { name: string; glyph: string }> = {
-  java:       { name: 'Java',             glyph: 'â˜•'  },
-  tailwind:   { name: 'Tailwind CSS',     glyph: 'ðŸŽ¨' },
-  react:      { name: 'React',            glyph: 'âš›ï¸' },
-  sql:        { name: 'SQL',              glyph: 'ðŸ—ƒï¸' },
-  psychology: { name: 'Psychology',       glyph: 'ðŸ§ ' },
-  genealogy:  { name: 'Genealogy',        glyph: 'ðŸŒ³' },
-  sciences:   { name: 'Natural Sciences', glyph: 'ðŸ”¬' },
+  java:       { name: 'Java',             glyph: '☕'  },
+  tailwind:   { name: 'Tailwind CSS',     glyph: '🎨' },
+  react:      { name: 'React',            glyph: '⚛️' },
+  sql:        { name: 'SQL',              glyph: '🗃️' },
+  psychology: { name: 'Psychology',       glyph: '🧠' },
+  genealogy:  { name: 'Genealogy',        glyph: '🌳' },
+  sciences:   { name: 'Natural Sciences', glyph: '🔬' },
 }
 
 export default function DomainDiagnosticPage() {
@@ -25,7 +25,7 @@ export default function DomainDiagnosticPage() {
   const [result, setResult] = useState<DiagnosticResultDto | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
-  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: 'ðŸ“–' }
+  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: '📖' }
   const invalidateDashboard = useInvalidateDashboard()
 
   async function handleStart() {
@@ -48,17 +48,17 @@ export default function DomainDiagnosticPage() {
     return (
       <div className="flex flex-col items-center justify-center h-[70vh] text-center max-w-[500px] mx-auto px-4 max-[600px]:h-auto max-[600px]:pt-10 max-[600px]:pb-10">
         <div className="text-[56px] mb-4">{meta.glyph}</div>
-        <h1 className="text-[28px] text-gold m-0 mb-3 max-[600px]:text-[24px]">{meta.name} â€” Entry Diagnostic</h1>
+        <h1 className="text-[28px] text-gold m-0 mb-3 max-[600px]:text-[24px]">{meta.name} — Entry Diagnostic</h1>
         <p className="text-muted text-[14px] m-0 mb-2 leading-[1.6]">Answer a few questions to find your starting point. We'll skip concepts you already know.</p>
-        <p className="text-[12px] text-purple-light mb-5">A few questions Â· ~5 minutes</p>
+        <p className="text-[12px] text-purple-light mb-5">A few questions · ~5 minutes</p>
         <button className="btn btn-primary" onClick={handleStart} disabled={loading}>
-          {loading ? 'Preparing...' : 'Begin Diagnostic â†’'}
+          {loading ? 'Preparing...' : 'Begin Diagnostic →'}
         </button>
         <button
           className="btn btn-ghost mt-2.5 text-[12px]"
           onClick={async () => { await diagnosticApi.skip(domainId!); invalidateDashboard(domainId); navigate(`/domain/${domainId}`) }}
         >
-          Skip â€” start from the beginning
+          Skip — start from the beginning
         </button>
       </div>
     )
@@ -71,7 +71,7 @@ export default function DomainDiagnosticPage() {
     return (
       <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3">
         <div className="text-center px-6 py-9 bg-card border border-border rounded-[14px] max-[600px]:px-4 max-[600px]:py-7">
-          <div className="text-[48px] text-gold mb-3">âœ¦</div>
+          <div className="text-[48px] text-gold mb-3">✦</div>
           <h2 className="text-[24px] text-gold m-0 mb-3 max-[600px]:text-[20px]">Diagnostic Complete</h2>
           <div className={`text-[20px] font-bold mb-2 ${scoreColor}`}>
             Score: {Math.round(result.overallScore * 100)}%
@@ -81,9 +81,9 @@ export default function DomainDiagnosticPage() {
               ? 'Excellent knowledge! Some chunks have been marked for quick review.'
               : result.overallScore >= 0.5
               ? "Good foundation. We'll focus on the gaps."
-              : "Starting from scratch â€” we'll build your knowledge step by step."}
+              : "Starting from scratch — we'll build your knowledge step by step."}
           </p>
-          <button className="btn btn-primary" onClick={() => navigate(`/domain/${domainId}`)}>Start Learning â†’</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/domain/${domainId}`)}>Start Learning →</button>
         </div>
       </div>
     )
@@ -97,7 +97,7 @@ export default function DomainDiagnosticPage() {
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3">
       <div className="flex items-center mb-2">
-        <div className="flex-1 text-[18px] font-bold text-gold">{meta.name} â€” Diagnostic</div>
+        <div className="flex-1 text-[18px] font-bold text-gold">{meta.name} — Diagnostic</div>
         <div className="text-[13px] text-muted">{currentQ + 1} / {totalQ}</div>
       </div>
       <div className="h-1 bg-surface rounded-full mb-5 overflow-hidden">
@@ -108,12 +108,12 @@ export default function DomainDiagnosticPage() {
         answer={answers[question.id] ?? ''}
         onChange={v => setAnswers(prev => ({ ...prev, [question.id]: v }))} />
       <div className="flex justify-between mt-1">
-        <button className="btn btn-ghost" disabled={currentQ === 0} onClick={() => setCurrentQ(c => c - 1)}>â† Previous</button>
+        <button className="btn btn-ghost" disabled={currentQ === 0} onClick={() => setCurrentQ(c => c - 1)}>← Previous</button>
         {currentQ < totalQ - 1 ? (
-          <button className="btn btn-primary" onClick={() => setCurrentQ(c => c + 1)}>Next â†’</button>
+          <button className="btn btn-primary" onClick={() => setCurrentQ(c => c + 1)}>Next →</button>
         ) : (
           <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered || submitting}>
-            {submitting ? 'Analyzing...' : 'âš¡ Submit Diagnostic'}
+            {submitting ? 'Analyzing...' : '⚡ Submit Diagnostic'}
           </button>
         )}
       </div>

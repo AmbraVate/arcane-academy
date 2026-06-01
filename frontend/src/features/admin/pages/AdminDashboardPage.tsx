@@ -199,7 +199,7 @@ export default function AdminDashboardPage() {
         <p style={{ color: '#8b7fa0', fontSize: 13 }}>Platform health at a glance</p>
       </div>
 
-      {/* Alert row â€” only shown when action is needed */}
+      {/* Alert row — only shown when action is needed */}
       {(stats.openStuckReports > 0 || stats.pendingCapstones > 0) && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
           {stats.openStuckReports > 0 && (
@@ -271,7 +271,7 @@ export default function AdminDashboardPage() {
 
       {/* Signup trend + XP distribution */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Panel title="Sign-ups â€” Last 14 Days">
+        <Panel title="Sign-ups — Last 14 Days">
           {stats.signupTrend?.length ? (
             <SignupTrend data={stats.signupTrend} />
           ) : (
@@ -344,7 +344,7 @@ export default function AdminDashboardPage() {
                     )}
                   </div>
                   {item.issues.map((issue, i) => (
-                    <div key={i} style={{ fontSize: 11, color: '#f87171' }}>â€¢ {issue}</div>
+                    <div key={i} style={{ fontSize: 11, color: '#f87171' }}>• {issue}</div>
                   ))}
                 </div>
               ))}

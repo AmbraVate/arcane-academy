@@ -1,6 +1,6 @@
 ﻿/**
  * Branded topic icons.
- * Tech languages use Simple Icons (via react-icons/si) â€” same source as techicons.dev.
+ * Tech languages use Simple Icons (via react-icons/si) — same source as techicons.dev.
  * Non-tech disciplines fall back to lucide-react.
  */
 import {

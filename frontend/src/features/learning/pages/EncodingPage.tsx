@@ -1,4 +1,5 @@
 ﻿import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
+import { usePreferences } from '@/hooks/usePreferences'
 import { createPortal } from 'react-dom'
 import { useParams, useNavigate } from 'react-router-dom'
 import { encodingApi, codeApi, tailwindApi, reactApi, sqlApi, rApi, notesApi, capstoneApi } from '@/shared/api/services'
@@ -185,6 +186,7 @@ export default function EncodingPage() {
   const navigate = useNavigate()
   const { user, updateXp } = useAuth()
 
+  const { loreEnabled } = usePreferences()
   const [state, dispatch] = useReducer(encodingReducer, initialState)
   const {
     encoding, loading, practiceView, showTaskOverlay, code, output, testResults,
@@ -257,7 +259,7 @@ export default function EncodingPage() {
     const prevRank = calculateRank(user?.totalXp ?? 0)
     const newRank = calculateRank((user?.totalXp ?? 0) + xpEarned)
     updateXp(xpEarned, newRank)
-    showToast(`âœ¦ +${xpEarned} XP`)
+    showToast(`✦ +${xpEarned} XP`)
     if (newRank !== prevRank) {
       const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
       setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
@@ -328,7 +330,7 @@ export default function EncodingPage() {
 
   async function handleSubmitTailwind() {
     if (!lessonId || running) return
-    dispatch({ type: 'SUBMIT_START', message: '// Checking your Tailwind classesâ€¦' })
+    dispatch({ type: 'SUBMIT_START', message: '// Checking your Tailwind classes…' })
     try {
       const result: PracticeResult = await tailwindApi.submit(lessonId, code)
       const newResults = new Map<string, boolean>()
@@ -353,7 +355,7 @@ export default function EncodingPage() {
 
   async function handleSubmitReact(solo: boolean) {
     if (!lessonId || !encoding || running) return
-    dispatch({ type: 'SUBMIT_START', message: '// Rendering and running tests in the sandboxâ€¦' })
+    dispatch({ type: 'SUBMIT_START', message: '// Rendering and running tests in the sandbox…' })
     try {
       const specs: ReactTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as ReactTestSpec[]) : []
       const clientResults = (await reactEditorRef.current?.runTests(specs)) ?? []
@@ -381,7 +383,7 @@ export default function EncodingPage() {
 
   async function handleSubmitSql(solo: boolean) {
     if (!lessonId || !encoding || running) return
-    dispatch({ type: 'SUBMIT_START', message: '// Running query and tests in the SQLite sandboxâ€¦' })
+    dispatch({ type: 'SUBMIT_START', message: '// Running query and tests in the SQLite sandbox…' })
     try {
       const specs: SqlTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as SqlTestSpec[]) : []
       const clientResults = (await sqlEditorRef.current?.runTests(specs)) ?? []
@@ -409,7 +411,7 @@ export default function EncodingPage() {
 
   async function handleSubmitR(solo: boolean) {
     if (!lessonId || !encoding || running) return
-    dispatch({ type: 'SUBMIT_START', message: '// Running R code and tests in the WebR sandboxâ€¦' })
+    dispatch({ type: 'SUBMIT_START', message: '// Running R code and tests in the WebR sandbox…' })
     try {
       const specs: RTestSpec[] = Array.isArray(encoding.testCaseLabels) ? (encoding.testCaseLabels as RTestSpec[]) : []
       const clientResults = (await rEditorRef.current?.runTests(specs)) ?? []
@@ -469,7 +471,7 @@ export default function EncodingPage() {
 
   async function handleSubmitTailwindSolo() {
     if (!lessonId || running) return
-    dispatch({ type: 'SUBMIT_START', message: '// Checking your Tailwind classesâ€¦' })
+    dispatch({ type: 'SUBMIT_START', message: '// Checking your Tailwind classes…' })
     try {
       const result: PracticeResult = await tailwindApi.submitSoloPractice(lessonId, code)
       const newResults = new Map<string, boolean>()
@@ -502,7 +504,7 @@ export default function EncodingPage() {
         const prevRank = calculateRank(user?.totalXp ?? 0)
         const newRank = calculateRank((user?.totalXp ?? 0) + result.xpEarned)
         updateXp(result.xpEarned, newRank)
-        showToast(`âœ¦ +${result.xpEarned} XP â€" ${result.passed ? 'Passed!' : 'Keep practicing'}`)
+        showToast(`✦ +${result.xpEarned} XP â€" ${result.passed ? 'Passed!' : 'Keep practicing'}`)
         if (newRank !== prevRank) {
           const rankNames = ['Novice', 'Apprentice', 'Adept', 'Mage', 'Archmage', 'Magus', 'Lord Magus']
           setTimeout(() => setLevelUpInfo({ level: rankNames.indexOf(newRank) + 1, rank: newRank }), 1200)
@@ -521,7 +523,7 @@ export default function EncodingPage() {
     try {
       const result = await encodingApi.submitFeynman(lessonId, feynmanText)
       dispatch({ type: 'FEYNMAN_DONE', result })
-      if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`âœ¦ +${result.xpEarned} XP â€" Feynman complete`) }
+      if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`✦ +${result.xpEarned} XP â€" Feynman complete`) }
     } catch {
       showToast('Error submitting explanation')
       dispatch({ type: 'FEYNMAN_DONE', result: null })
@@ -648,7 +650,7 @@ export default function EncodingPage() {
             <div className="absolute bottom-0 left-0 right-0 h-0.5" style={{ background: 'linear-gradient(90deg, transparent 0%, var(--teal) 25%, var(--purple) 75%, transparent 100%)' }} />
             {/* Chapter eyebrow */}
             <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-muted mb-3 max-[480px]:text-[9px]">
-              âœ¦ Arcane Academy
+              ✦ Arcane Academy
             </div>
             {/* Lesson title â€" the hero element */}
             <h1
@@ -715,13 +717,22 @@ export default function EncodingPage() {
               </ul>
             </div>
           )}
-          {/* Phase 2 — Lore Introduction: narrative preamble before core content */}
-          {encoding.loreIntroHtml && (
+          {/* Lore Introduction — only when lore is enabled */}
+          {loreEnabled && encoding.loreIntroHtml && (
             <div className="mb-6 px-5 py-4 rounded-[12px] border-l-[3px] border-[rgba(139,92,246,0.5)] border border-[rgba(139,92,246,0.2)] bg-[rgba(139,92,246,0.04)]">
               <div
                 className="text-[14px] leading-[1.85] text-text italic [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-purple-light [&_strong]:not-italic [&_strong]:font-semibold [&_em]:text-text [&_em]:italic"
                 dangerouslySetInnerHTML={{ __html: encoding.loreIntroHtml }}
               />
+            </div>
+          )}
+          {/* Plain analogy intro shown when lore is disabled */}
+          {!loreEnabled && encoding.loreIntroHtml && (
+            <div className="mb-6 px-4 py-3 rounded-[10px] border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.04)]">
+              <div className="text-[11px] font-bold text-teal uppercase tracking-[0.08em] mb-2">Overview</div>
+              <p className="text-[13px] text-muted leading-[1.7] m-0">
+                Before diving in, read through the learning objectives and explanation below.
+              </p>
             </div>
           )}
 
@@ -822,7 +833,7 @@ export default function EncodingPage() {
       {phase === 'GUIDED_PRACTICE' && !encoding.hasGuidedSteps && practiceView === 'brief' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">
-            {encoding.practiceType === 'NONE' ? 'Study Material' : 'âœ¦ Guided Practice'}
+            {encoding.practiceType === 'NONE' ? 'Study Material' : '✦ Guided Practice'}
           </div>
           <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
           {encoding.practiceType === 'NONE' && encoding.starterCode && (
@@ -849,7 +860,7 @@ export default function EncodingPage() {
             <div className="fixed inset-0 bg-black/60 z-[100] hidden max-[640px]:flex items-end" onClick={() => setShowTaskOverlay(false)}>
               <div className="bg-card border-t border-border rounded-[16px_16px_0_0] px-4 py-5 pb-[max(32px,env(safe-area-inset-bottom,32px))] max-h-[75vh] overflow-y-auto w-full" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-3.5">
-                  <span className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">âœ¦ Task</span>
+                  <span className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</span>
                   <button type="button" className="btn btn-ghost text-[12px] min-h-[44px] px-4" onClick={() => setShowTaskOverlay(false)}>âœ• Close</button>
                 </div>
                 <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
@@ -860,12 +871,12 @@ export default function EncodingPage() {
 
           {/* Left panel â€" desktop */}
           <div className="w-[38%] min-w-[260px] max-w-[380px] flex flex-col border-r border-border overflow-y-auto p-4 gap-3 flex-shrink-0 max-[640px]:hidden">
-            <div className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">âœ¦ Task</div>
+            <div className="text-[13px] font-bold text-gold uppercase tracking-[0.06em]">✦ Task</div>
             <RabbitHoleHtml html={encoding.guidedPracticeHtml ?? ''} terms={encoding.rabbitHoleTerms} lessonId={encoding.lessonId} domainId={encoding.domainId} className={proseHtml} />
             {encoding.testCaseLabels && <TestChips labels={encoding.testCaseLabels} results={testResults} />}
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
-                <div className="text-[14px] font-bold text-teal mb-2.5">âœ¦ Practice Complete!</div>
+                <div className="text-[14px] font-bold text-teal mb-2.5">✦ Practice Complete!</div>
                 <button className="btn btn-primary" onClick={handleAdvance}>Continue â†'</button>
               </div>
             )}
@@ -894,7 +905,7 @@ export default function EncodingPage() {
                 ) : null}
                 {encoding.practiceType === 'JAVA' && (
                   <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px] flex items-center gap-1', running && 'opacity-70')} onClick={handleRun} disabled={running}>
-                    {running ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Runningâ€¦</> : <><Play size={13} strokeWidth={1.75} /> Run</>}
+                    {running ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Running…</> : <><Play size={13} strokeWidth={1.75} /> Run</>}
                   </button>
                 )}
                 <button
@@ -927,7 +938,7 @@ export default function EncodingPage() {
                 )}
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Guided Response Complete!</span>
+                    <span>✦ Guided Response Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -939,7 +950,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Practice Complete!</span>
+                    <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -950,7 +961,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Practice Complete!</span>
+                    <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -967,7 +978,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Practice Complete!</span>
+                    <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -984,7 +995,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Practice Complete!</span>
+                    <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -995,7 +1006,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Practice Complete!</span>
+                    <span>✦ Practice Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1102,7 +1113,7 @@ export default function EncodingPage() {
 
             {practiceSolved && (
               <div className="p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
-                <div className="text-[14px] font-bold text-teal mb-2.5">âœ¦ Solo Challenge Complete!</div>
+                <div className="text-[14px] font-bold text-teal mb-2.5">✦ Solo Challenge Complete!</div>
                 <button className="btn btn-primary" onClick={handleAdvance}>Continue to Retrieval Check â†'</button>
               </div>
             )}
@@ -1128,7 +1139,7 @@ export default function EncodingPage() {
                 ) : null}
                 {encoding.practiceType === 'JAVA' && (
                   <button className={cn('btn btn-ghost text-[12px] px-3.5 py-[5px] flex items-center gap-1', running && 'opacity-70')} onClick={handleRun} disabled={running}>
-                    {running ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Runningâ€¦</> : <><Play size={13} strokeWidth={1.75} /> Run</>}
+                    {running ? <><Loader2 size={13} strokeWidth={1.75} className="animate-spin" /> Running…</> : <><Play size={13} strokeWidth={1.75} /> Run</>}
                   </button>
                 )}
                 <button
@@ -1161,7 +1172,7 @@ export default function EncodingPage() {
                 )}
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Solo Response Complete!</span>
+                    <span>✦ Solo Response Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1173,7 +1184,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Solo Complete!</span>
+                    <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1184,7 +1195,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Solo Complete!</span>
+                    <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1201,7 +1212,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Solo Complete!</span>
+                    <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1218,7 +1229,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Solo Complete!</span>
+                    <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1229,7 +1240,7 @@ export default function EncodingPage() {
                 <OutputPanel lines={output} />
                 {practiceSolved && (
                   <div className="hidden max-[640px]:flex items-center justify-between px-3.5 py-2.5 bg-[rgba(0,200,83,0.1)] border-t border-teal text-[13px] font-semibold text-teal flex-shrink-0">
-                    <span>âœ¦ Solo Complete!</span>
+                    <span>✦ Solo Complete!</span>
                     <button className="btn btn-primary text-[12px] px-4 py-[5px]" onClick={handleAdvance}>Continue â†'</button>
                   </div>
                 )}
@@ -1243,7 +1254,7 @@ export default function EncodingPage() {
       {/* RETRIEVAL_CHECK */}
       {phase === 'RETRIEVAL_CHECK' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-[20px] font-bold text-gold mb-1.5">âœ¦ Retrieval Check</div>
+          <div className="text-[20px] font-bold text-gold mb-1.5">✦ Retrieval Check</div>
           <p className="text-muted text-[13px] mb-5">Answer these questions to test your understanding.</p>
 
           {!retrievalResult && !encoding.retrievalQuestions?.length ? (
@@ -1304,7 +1315,7 @@ export default function EncodingPage() {
       {phase === 'COMPLETE' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <div className="text-center mb-6">
-            <div className="text-[48px] text-gold mb-3">âœ¦</div>
+            <div className="text-[48px] text-gold mb-3">✦</div>
             <h2 className="text-[24px] font-bold text-gold m-0 mb-2">Concept Mastered!</h2>
             <p className="text-muted text-[14px]">You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
           </div>
@@ -1313,9 +1324,9 @@ export default function EncodingPage() {
           {encoding.feynmanPrompt && !feynmanResult && (
             <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(139,92,246,0.45)] bg-[rgba(139,92,246,0.07)] shadow-[0_0_24px_rgba(139,92,246,0.12)]">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[20px]">âœ¨</span>
+                <span className="text-[20px]">✨</span>
                 <span className="text-[17px] font-bold text-purple-light">Teach It Back</span>
-                <span className="ml-auto text-[11px] text-muted font-cinzel uppercase tracking-[0.06em]">Optional Â· Earns XP</span>
+                <span className="ml-auto text-[11px] text-muted font-cinzel uppercase tracking-[0.06em]">Optional · Earns XP</span>
               </div>
               <p className="text-[12px] text-muted mb-3 leading-[1.6]">
                 The best way to confirm you understand â€" explain it as if teaching someone from scratch. No jargon, just clarity.
@@ -1334,7 +1345,7 @@ export default function EncodingPage() {
                 disabled={submittingFeynman || !feynmanText.trim()}
               >
                 {submittingFeynman
-                  ? <><Loader2 size={14} strokeWidth={1.75} className="animate-spin" /> Evaluating your explanationâ€¦</>
+                  ? <><Loader2 size={14} strokeWidth={1.75} className="animate-spin" /> Evaluating your explanation…</>
                   : <><PenLine size={14} strokeWidth={1.75} /> Submit Explanation &amp; Earn XP</>}
               </button>
             </div>
@@ -1343,7 +1354,7 @@ export default function EncodingPage() {
           {feynmanResult && (
             <div className="mb-5 p-5 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)]">
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-[20px]">âœ¨</span>
+                <span className="text-[20px]">✨</span>
                 <span className="text-[17px] font-bold text-teal">Feynman Result</span>
                 <span className="ml-auto text-[20px] font-bold text-teal">{Math.round(feynmanResult.overallScore * 100)}%</span>
               </div>
@@ -1367,7 +1378,7 @@ export default function EncodingPage() {
               </div>
               <p className="text-[13px] text-text leading-[1.6] italic">{feynmanResult.feedback}</p>
               {feynmanResult.xpEarned > 0 && (
-                <div className="mt-2.5 text-[12px] text-gold font-semibold">âœ¦ +{feynmanResult.xpEarned} XP earned</div>
+                <div className="mt-2.5 text-[12px] text-gold font-semibold">✦ +{feynmanResult.xpEarned} XP earned</div>
               )}
             </div>
           )}
@@ -1376,7 +1387,7 @@ export default function EncodingPage() {
           {encoding.commonMistakes && encoding.commonMistakes.length > 0 && (
             <div className="mb-5 p-4 rounded-[10px] border border-[rgba(248,113,113,0.25)] bg-[rgba(248,113,113,0.05)]">
               <div className="text-[12px] font-bold uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5" style={{ color: '#f87171' }}>
-                âš  Common Mistakes
+                ⚠ Common Mistakes
               </div>
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.commonMistakes.map((m, i) => (
@@ -1390,7 +1401,7 @@ export default function EncodingPage() {
           {encoding.assessmentCriteria && encoding.assessmentCriteria.length > 0 && (
             <div className="mb-5 p-4 rounded-[10px] border border-[rgba(201,162,39,0.25)] bg-[rgba(201,162,39,0.05)]">
               <div className="text-[12px] font-bold text-gold uppercase tracking-[0.08em] mb-2.5">
-                âœ¦ You know this when you canâ€¦
+                ✦ You know this when you can…
               </div>
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.assessmentCriteria.map((c, i) => (
@@ -1404,7 +1415,7 @@ export default function EncodingPage() {
           {isCapstoneLesson && !capstoneSavedId && (
             <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(201,162,39,0.35)] bg-[rgba(201,162,39,0.05)]">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[20px]">ðŸ—ï¸</span>
+                <span className="text-[20px]">🏗️</span>
                 <span className="text-[17px] font-bold text-gold">Save Your Project</span>
               </div>
               <p className="text-[12px] text-muted mb-4 leading-[1.6]">
@@ -1419,14 +1430,14 @@ export default function EncodingPage() {
                   className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-gold transition-[border-color]"
                 />
                 <textarea
-                  placeholder="Brief description of what you builtâ€¦"
+                  placeholder="Brief description of what you built…"
                   value={capstoneDesc}
                   onChange={e => setCapstoneDesc(e.target.value)}
                   rows={3}
                   className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-gold transition-[border-color] resize-y"
                 />
                 <textarea
-                  placeholder="Paste your code here (optional)â€¦"
+                  placeholder="Paste your code here (optional)…"
                   value={capstoneCode}
                   onChange={e => setCapstoneCode(e.target.value)}
                   rows={5}
@@ -1459,8 +1470,8 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* Phase 2 — Lore Conclusion: narrative payoff at the bottom of COMPLETE */}
-          {encoding.loreConclusionHtml && (
+          {/* Lore Conclusion — shown only when lore mode is enabled */}
+          {loreEnabled && encoding.loreConclusionHtml && (
             <div className="mb-5 px-5 py-5 rounded-[12px] border border-[rgba(201,162,39,0.25)] bg-[rgba(201,162,39,0.04)]"
               style={{ borderLeft: '3px solid rgba(201,162,39,0.5)' }}>
               <div className="flex items-center gap-2 mb-3">
@@ -1471,6 +1482,18 @@ export default function EncodingPage() {
                 className="text-[14px] leading-[1.85] text-text italic [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gold [&_strong]:not-italic [&_strong]:font-semibold [&_em]:text-text"
                 dangerouslySetInnerHTML={{ __html: encoding.loreConclusionHtml }}
               />
+            </div>
+          )}
+          {/* Plain conclusion when lore is disabled */}
+          {!loreEnabled && encoding.loreConclusionHtml && (
+            <div className="mb-5 p-4 rounded-[10px] border border-border bg-surface">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle2 size={13} strokeWidth={1.75} className="text-teal flex-shrink-0" />
+                <span className="font-cinzel text-[11px] text-teal uppercase tracking-[0.12em]">Lesson Complete</span>
+              </div>
+              <p className="text-[13px] text-muted leading-[1.7] m-0">
+                You've completed this lesson. Review the key concepts above before moving on.
+              </p>
             </div>
           )}
 
@@ -1571,7 +1594,7 @@ export default function EncodingPage() {
           </div>
           <textarea
             className="flex-1 bg-transparent px-4 py-3 text-[12px] text-text leading-[1.7] placeholder:text-muted outline-none resize-none min-h-[220px] max-h-[40vh]"
-            placeholder="Write your notes hereâ€¦ they auto-save after you stop typing."
+            placeholder="Write your notes here… they auto-save after you stop typing."
             value={noteContent}
             onChange={e => {
               setNoteContent(e.target.value)

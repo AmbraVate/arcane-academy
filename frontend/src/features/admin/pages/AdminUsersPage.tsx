@@ -130,7 +130,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
       </div>
       {statsLoading ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#8b7fa0', fontSize: 12, margin: '8px 0 16px' }}>
-          <Loader2 size={13} className="animate-spin" /> Loading statsâ€¦
+          <Loader2 size={13} className="animate-spin" /> Loading stats…
         </div>
       ) : stats ? (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
@@ -178,7 +178,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
         <button disabled={resetting} onClick={handleReset}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(248,113,113,.2)', color: '#f87171', transition: 'all .15s' }}>
           {resetting ? <Loader2 size={13} className="animate-spin" /> : <RotateCcw size={13} />}
-          {resetting ? 'Resettingâ€¦' : 'Reset Progress'}
+          {resetting ? 'Resetting…' : 'Reset Progress'}
         </button>
       </div>
     </div>
@@ -245,7 +245,7 @@ export default function AdminUsersPage() {
           <Search size={13} color="#8b7fa0" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
           <input
             style={{ ...inputStyle, paddingLeft: 32 }}
-            placeholder="Search by username or emailâ€¦"
+            placeholder="Search by username or email…"
             value={searchInput}
             onChange={e => setSearchInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSearch()}
@@ -286,7 +286,7 @@ export default function AdminUsersPage() {
         <div style={{ flex: 1, minWidth: 0 }}>
           {loading ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#8b7fa0', fontSize: 14 }}>
-              <Loader2 size={16} className="animate-spin" /> Loadingâ€¦
+              <Loader2 size={16} className="animate-spin" /> Loading…
             </div>
           ) : (
             <>

@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 /**
- * Leaderboard page â€” three boards (per-topic weekly, per-topic all-time, polymath).
+ * Leaderboard page — three boards (per-topic weekly, per-topic all-time, polymath).
  *
  * Privacy note: only users with publicProfileEnabled=true appear here. Users
  * who haven't opted in are not visible in any board, and the empty-state
@@ -15,10 +15,10 @@ import { cn } from '@/lib/utils'
 type Board = 'weekly' | 'all-time' | 'polymath'
 
 const ACTIVE_TOPICS = [
-  { id: 'java',     name: 'Java',         glyph: 'â˜•' },
-  { id: 'tailwind', name: 'Tailwind',     glyph: 'ðŸŽ¨' },
-  { id: 'react',    name: 'React',        glyph: 'âš›ï¸' },
-  { id: 'sql',      name: 'SQL',          glyph: 'ðŸ—ƒï¸' },
+  { id: 'java',     name: 'Java',         glyph: '☕' },
+  { id: 'tailwind', name: 'Tailwind',     glyph: '🎨' },
+  { id: 'react',    name: 'React',        glyph: '⚛ï¸' },
+  { id: 'sql',      name: 'SQL',          glyph: '🗃ï¸' },
 ] as const
 
 export default function LeaderboardPage() {
@@ -65,7 +65,7 @@ export default function LeaderboardPage() {
   }, [rows, locationFilter])
 
   const subtitle = useMemo(() => {
-    if (board === 'polymath') return 'Top polymaths by topic breadth â€” tie-break on total XP'
+    if (board === 'polymath') return 'Top polymaths by topic breadth — tie-break on total XP'
     if (board === 'weekly') {
       const monday = currentMondayLabel()
       return `XP earned in the current ISO-week (since ${monday} UTC)`
@@ -77,7 +77,7 @@ export default function LeaderboardPage() {
     <div className="flex-1 overflow-y-auto px-6 py-8 max-[600px]:px-3 max-[600px]:py-5">
       <div className="max-w-[860px] mx-auto">
         <header className="mb-6">
-          <h1 className="font-cinzel text-[26px] text-gold tracking-[1.5px] mb-1">ðŸ† Leaderboards</h1>
+          <h1 className="font-cinzel text-[26px] text-gold tracking-[1.5px] mb-1">🏆 Leaderboards</h1>
           <p className="text-muted text-[13px]">{subtitle}</p>
         </header>
 
@@ -100,7 +100,7 @@ export default function LeaderboardPage() {
           ))}
         </div>
 
-        {/* Topic selector â€” hidden on polymath board */}
+        {/* Topic selector — hidden on polymath board */}
         {board !== 'polymath' && (
           <div className="flex flex-wrap gap-2 mb-6">
             {ACTIVE_TOPICS.map(t => (
@@ -126,7 +126,7 @@ export default function LeaderboardPage() {
             <MapPin size={13} strokeWidth={1.75} className="text-muted flex-shrink-0" />
             <input
               type="text"
-              placeholder="Filter by locationâ€¦"
+              placeholder="Filter by location…"
               value={locationFilter}
               onChange={e => setLocationFilter(e.target.value)}
               className="w-full max-w-[220px] bg-card border border-border rounded-[8px] px-3 py-1.5
@@ -145,7 +145,7 @@ export default function LeaderboardPage() {
         )}
 
         {/* Body */}
-        {loading && <p className="text-muted italic text-center py-10">Loading rankingsâ€¦</p>}
+        {loading && <p className="text-muted italic text-center py-10">Loading rankings…</p>}
         {error && !loading && <p className="text-red text-center py-10">{error}</p>}
         {!loading && !error && rows.length === 0 && <EmptyState onProfile={() => navigate('/profile')} />}
         {!loading && !error && filteredRows.length === 0 && rows.length > 0 && (
@@ -172,11 +172,11 @@ export default function LeaderboardPage() {
                 >
                   <div className="font-cinzel text-[15px] text-text">{row.username}</div>
                   <div className="text-[11px] text-muted flex items-center gap-1 flex-wrap">
-                    <span>{row.rankTitle} Â· ðŸ”¥ {row.streakDays}d Â· ðŸ… {row.badgeCount}</span>
-                    {row.topicCount >= 0 && <span>Â· {row.topicCount} topics</span>}
+                    <span>{row.rankTitle} · 🔥 {row.streakDays}d · 🏅 {row.badgeCount}</span>
+                    {row.topicCount >= 0 && <span>· {row.topicCount} topics</span>}
                     {row.location && (
                       <span className="flex items-center gap-0.5">
-                        Â· <MapPin size={10} strokeWidth={1.75} className="inline-block" /> {row.location}
+                        · <MapPin size={10} strokeWidth={1.75} className="inline-block" /> {row.location}
                       </span>
                     )}
                   </div>
@@ -197,7 +197,7 @@ export default function LeaderboardPage() {
 }
 
 function RankBadge({ rank }: { rank: number }) {
-  const medal = rank === 1 ? 'ðŸ¥‡' : rank === 2 ? 'ðŸ¥ˆ' : rank === 3 ? 'ðŸ¥‰' : null
+  const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null
   return (
     <div
       className={cn(
@@ -213,7 +213,7 @@ function RankBadge({ rank }: { rank: number }) {
 function EmptyState({ onProfile }: { onProfile: () => void }) {
   return (
     <div className="bg-card border border-border rounded-[12px] px-6 py-10 text-center">
-      <div className="text-[32px] mb-2">ðŸ“œ</div>
+      <div className="text-[32px] mb-2">📜</div>
       <p className="text-text mb-1.5">No public learners on this board yet.</p>
       <p className="text-muted text-[13px] mb-4">
         Leaderboards only show learners who have opted in. Want to appear here?
@@ -227,7 +227,7 @@ function EmptyState({ onProfile }: { onProfile: () => void }) {
 
 function currentMondayLabel(): string {
   const now = new Date()
-  // getDay(): 0=Sun, 1=Mon, â€¦, 6=Sat. Distance back to Monday:
+  // getDay(): 0=Sun, 1=Mon, …, 6=Sat. Distance back to Monday:
   const dayOfWeek = now.getUTCDay()
   const daysSinceMonday = (dayOfWeek + 6) % 7
   const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - daysSinceMonday))

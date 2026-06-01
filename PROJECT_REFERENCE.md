@@ -841,6 +841,16 @@ The Java / Software Engineering content has been restructured to match the **Cur
 - Full Junior (40+), Senior (50+), Lead (25+) lesson stubs created as skeleton structure
 - Use `LessonAuthoringHarness` to draft `.md` content for each stub; always human-review before commit
 
+### Knowledge Map — Redesign Needed
+
+The current `/knowledge-map` (`CurriculumGraph.tsx`) uses a simple 3-row DAG layout (React Flow). It is functional but the UX is not satisfactory — nodes are too small, the layout is not intuitive for learners, and the interactive value is limited.
+
+**Status:** Marked for redesign. Do not invest in fixing edge cases or styling the existing implementation.
+
+**What we want:** A richer, more interactive map that gives learners a meaningful sense of progress and curriculum shape — possibly a radial layout, a tree layout per tier, or a bespoke SVG. To be designed before implementation.
+
+---
+
 ### Knowledge graph scaling
 
 - `GET /api/graph` loads all active modules and all lessons in two queries (`findAllByOrderBySortOrderAsc` + `findByModuleIdIn`). Works fine at current scale (71 lessons/domain × 6 domains ≈ 426 lessons). Add pagination or eager-load optimisation if content grows to thousands of lessons.

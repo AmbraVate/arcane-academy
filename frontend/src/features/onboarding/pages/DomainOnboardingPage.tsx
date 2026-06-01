@@ -6,13 +6,13 @@ import { CSS_PREREQ_TOPICS, prereqStorageKey } from '@/features/onboarding/data/
 import { useInvalidateDashboard } from '@/hooks/queries'
 
 const TOPIC_META: Record<string, { name: string; glyph: string; question: string }> = {
-  java:       { name: 'Java',             glyph: 'â˜•',  question: 'Have you written Java code before?' },
-  tailwind:   { name: 'Tailwind CSS',     glyph: 'ðŸŽ¨', question: 'Have you used Tailwind CSS before?' },
-  react:      { name: 'React',            glyph: 'âš›ï¸', question: 'Have you built UIs with React before?' },
-  sql:        { name: 'SQL',              glyph: 'ðŸ—ƒï¸', question: 'Have you written SQL queries before?' },
-  psychology: { name: 'Psychology',       glyph: 'ðŸ§ ', question: 'Have you studied psychology before?' },
-  genealogy:  { name: 'Genealogy',        glyph: 'ðŸŒ³', question: 'Have you researched your family history before?' },
-  sciences:   { name: 'Natural Sciences', glyph: 'ðŸ”¬', question: 'Have you studied natural sciences before?' },
+  java:       { name: 'Java',             glyph: '☕',  question: 'Have you written Java code before?' },
+  tailwind:   { name: 'Tailwind CSS',     glyph: '🎨', question: 'Have you used Tailwind CSS before?' },
+  react:      { name: 'React',            glyph: '⚛ï¸', question: 'Have you built UIs with React before?' },
+  sql:        { name: 'SQL',              glyph: '🗃ï¸', question: 'Have you written SQL queries before?' },
+  psychology: { name: 'Psychology',       glyph: '🧠', question: 'Have you studied psychology before?' },
+  genealogy:  { name: 'Genealogy',        glyph: '🌳', question: 'Have you researched your family history before?' },
+  sciences:   { name: 'Natural Sciences', glyph: '🔬', question: 'Have you studied natural sciences before?' },
 }
 
 export default function DomainOnboardingPage() {
@@ -22,7 +22,7 @@ export default function DomainOnboardingPage() {
   const [loading, setLoading] = useState(false)
   const invalidateDashboard = useInvalidateDashboard()
 
-  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: 'ðŸ“–', question: `Have you studied ${domainId} before?` }
+  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: '📖', question: `Have you studied ${domainId} before?` }
 
   /** Has this user already passed/completed the CSS prereq check for this topic? */
   function prereqAlreadyDone(): boolean {
@@ -67,7 +67,7 @@ export default function DomainOnboardingPage() {
             onClick={handleNew}
             disabled={loading}
           >
-            <span className="text-[36px]">ðŸŒ±</span>
+            <span className="text-[36px]">🌱</span>
             <span className="text-[16px] font-bold text-teal">No, I'm completely new</span>
             <span className="text-[13px] text-muted leading-[1.5]">
               Start from the very beginning. We'll guide you through every concept step by step.
@@ -83,10 +83,10 @@ export default function DomainOnboardingPage() {
             onClick={handleExperienced}
             disabled={loading}
           >
-            <span className="text-[36px]">âš¡</span>
+            <span className="text-[36px]">⚡</span>
             <span className="text-[16px] font-bold text-purple-light">Yes, I have some experience</span>
             <span className="text-[13px] text-muted leading-[1.5]">
-              Take a short diagnostic â€” we'll skip what you already know and focus on the gaps.
+              Take a short diagnostic — we'll skip what you already know and focus on the gaps.
             </span>
           </button>
         </div>

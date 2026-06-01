@@ -43,7 +43,7 @@ export interface AdminLesson {
   miniProject: string | null
   commonMistakes: string[] | null
   assessmentCriteria: string[] | null
-  // Sprint 7 â€” downloadable resources
+  // Sprint 7 — downloadable resources
   downloadables: { title: string; type: string; url: string }[] | null
 }
 

@@ -120,7 +120,7 @@ function SchoolsView({ onSelect }: { onSelect: (school: School) => void }) {
         </p>
       </div>
 
-      <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+      <div data-tutorial-id="schools-grid" className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
         {schools.map(([id, meta]) => {
           const activeCount = activeDomainsBySchool(id)
           return (
@@ -332,7 +332,7 @@ function DomainsView({
         className="grid gap-4 mb-10"
         style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}
       >
-        {visibleTopics.map(topic => {
+        {visibleTopics.map((topic, idx) => {
           const active = topic.status === 'active'
           const isEnrolled = enrolledTopicIds.has(topic.id)
           const isPaywalled = active && !isEnrolled && hasActiveEnrollment && !canBypassPaywall
@@ -341,6 +341,7 @@ function DomainsView({
           return (
             <div
               key={topic.id}
+              data-tutorial-id={idx === 0 ? 'first-domain-card' : undefined}
               className={cn(
                 'bg-card border border-border rounded-[14px] px-5 py-6 pb-5 flex flex-col gap-2.5',
                 'relative overflow-hidden transition-[border-color,transform,box-shadow,opacity] duration-200',
@@ -536,7 +537,13 @@ export default function DomainsPage() {
   }
 
   function handleTrackGroupSelect(tg: TrackGroup) {
-    setNav({ level: 'domains', school: tg.school, trackGroupId: tg.id })
+    const activeDomains = DOMAINS.filter(d => d.trackGroup === tg.id && d.status === 'active')
+    if (activeDomains.length === 1) {
+      // Single active domain — go directly, no intermediate selection needed
+      handleTopicClick(activeDomains[0])
+    } else {
+      setNav({ level: 'domains', school: tg.school, trackGroupId: tg.id })
+    }
   }
 
   return (

@@ -174,7 +174,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={2}
-              placeholder="Internal notes (not shown to user)â€¦"
+              placeholder="Internal notes (not shown to user)…"
               style={{
                 width: '100%', boxSizing: 'border-box', resize: 'vertical',
                 background: '#0e0c1e', border: '1px solid #2e2850',
@@ -219,7 +219,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
                 WebkitTapHighlightColor: 'transparent',
               }}
             >
-              {saving ? 'Savingâ€¦' : 'Save Notes'}
+              {saving ? 'Saving…' : 'Save Notes'}
             </button>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function AdminStuckReportsPage() {
     RESOLVED: reports.filter(r => r.status === 'RESOLVED').length,
   }
 
-  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading reportsâ€¦</div>
+  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading reports…</div>
   if (error)   return <div style={{ color: '#f87171', fontSize: 14 }}>{error}</div>
 
   return (

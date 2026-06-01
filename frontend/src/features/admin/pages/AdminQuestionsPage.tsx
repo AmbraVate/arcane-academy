@@ -153,9 +153,9 @@ export default function AdminQuestionsPage() {
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
-        <span>â€º</span>
+        <span>›</span>
         {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.moduleId}/subchunks`)}>Lessons</span>}
-        {sc && <span>â€º</span>}
+        {sc && <span>›</span>}
         <span style={{ color: '#e8e0f0' }}>{sc?.title ?? 'Questions'}</span>
       </div>
 
@@ -167,7 +167,7 @@ export default function AdminQuestionsPage() {
         <div style={{ display: 'flex', gap: 10 }}>
           {sc && (
             <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={() => navigate(`/admin/subchunks/${lessonId}/edit`)}>
-              âœï¸ Edit Content
+              ✏️ Edit Content
             </button>
           )}
           <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={() => { setEditQ(null); setShowForm(true) }}>
@@ -188,7 +188,7 @@ export default function AdminQuestionsPage() {
       )}
 
       {loading ? (
-        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loadingâ€¦</div>
+        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {questions.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No questions yet.</div>}
@@ -232,8 +232,8 @@ export default function AdminQuestionsPage() {
                   )}
                 </div>
                 <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }} onClick={() => { setEditQ(q); setShowForm(false) }}>âœï¸</button>
-                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171' }} onClick={() => handleDelete(q.id)}>ðŸ—‘ï¸</button>
+                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }} onClick={() => { setEditQ(q); setShowForm(false) }}>✏️</button>
+                  <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171' }} onClick={() => handleDelete(q.id)}>🗑️</button>
                 </div>
               </div>
             </div>

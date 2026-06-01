@@ -83,7 +83,7 @@ export default function StoryPanel({ beats, fullPage = false, lessonId, domainId
           style={{ left: Math.min(popover.x, window.innerWidth - 288), top: popover.y }}
           onClick={e => e.stopPropagation()}
         >
-          <div className="text-[13px] font-bold text-gold mb-1">ðŸ‡ {popover.term}</div>
+          <div className="text-[13px] font-bold text-gold mb-1">🐇 {popover.term}</div>
           {popover.description && (
             <p className="text-[12px] text-muted leading-[1.55] mb-2.5">{popover.description}</p>
           )}
@@ -92,14 +92,14 @@ export default function StoryPanel({ beats, fullPage = false, lessonId, domainId
               className="text-[11px] px-3 py-1.5 rounded-md bg-teal-dim text-teal border border-teal cursor-pointer"
               onClick={handleUnsave} disabled={saving}
             >
-              {saving ? 'â€¦' : 'âœ“ Saved â€” Remove'}
+              {saving ? '…' : '✓ Saved — Remove'}
             </button>
           ) : (
             <button
               className="text-[11px] px-3 py-1.5 rounded-md bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.4)] cursor-pointer hover:bg-[rgba(139,92,246,0.2)]"
               onClick={handleSave} disabled={saving}
             >
-              {saving ? 'â€¦' : 'ðŸ‡ Save to Rabbit Holes'}
+              {saving ? '…' : '🐇 Save to Rabbit Holes'}
             </button>
           )}
         </div>
@@ -137,7 +137,7 @@ function Example({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
             fullPage && 'text-[12px]',
           )}
         >
-          âœ¦ {beat.speaker}
+          ✦ {beat.speaker}
         </div>
       )}
       <pre

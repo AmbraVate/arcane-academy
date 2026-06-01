@@ -189,7 +189,7 @@ export default function ModuleMapPage() {
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
       <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/domain/${chunk.domainId}`)}>
-        â† Back to Domain
+        ← Back to Domain
       </button>
 
       <div className="flex items-center gap-4 mb-6 max-[600px]:gap-3">
@@ -213,7 +213,7 @@ export default function ModuleMapPage() {
             <Rabbit size={16} color="var(--gold)" strokeWidth={1.75} />
             Rabbit Holes
           </div>
-          <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives â€” explore when curious.</p>
+          <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives — explore when curious.</p>
           <div className="flex flex-col gap-2">
             {rabbitHoles.map(rh => (
               <div

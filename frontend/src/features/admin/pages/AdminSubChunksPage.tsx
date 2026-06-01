@@ -39,18 +39,18 @@ function LessonRow({
           <span>{sc.xpReward} XP</span>
           <span>{sc.practiceType}</span>
           <span>{sc.questionCount} questions</span>
-          {sc.soloPracticeHtml ? <span style={{ color: '#4ade80' }}>âœ“ Solo</span> : <span>â€” Solo</span>}
-          {sc.feynmanPrompt ? <span style={{ color: '#4ade80' }}>âœ“ Feynman</span> : <span>â€” Feynman</span>}
+          {sc.soloPracticeHtml ? <span style={{ color: '#4ade80' }}>✓ Solo</span> : <span>— Solo</span>}
+          {sc.feynmanPrompt ? <span style={{ color: '#4ade80' }}>✓ Feynman</span> : <span>— Feynman</span>}
         </div>
         <div style={{ fontSize: 10, marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           {sc.learningObjectives?.length ? (
             <span style={metaBadge('#2dd4bf')}>{sc.learningObjectives.length} objectives</span>
           ) : null}
           {sc.challenge ? (
-            <span style={metaBadge('#fb923c')}>âš¡ challenge</span>
+            <span style={metaBadge('#fb923c')}>⚡ challenge</span>
           ) : null}
           {sc.miniProject ? (
-            <span style={metaBadge('#8b5cf6')}>ðŸ— mini project</span>
+            <span style={metaBadge('#8b5cf6')}>🏗 mini project</span>
           ) : null}
           {sc.commonMistakes?.length ? (
             <span style={metaBadge('#f87171')}>{sc.commonMistakes.length} mistakes</span>
@@ -62,17 +62,17 @@ function LessonRow({
       </div>
       <div style={{ display: 'flex', gap: 6 }}>
         <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 12px' }} onClick={onQuestions}>
-          â“ Questions
+          ❓ Questions
         </button>
         <button className="btn btn-ghost" style={{ fontSize: 11, padding: '4px 10px' }} onClick={onEdit}>
-          âœï¸ Edit
+          ✏️ Edit
         </button>
         <button
           className="btn btn-ghost"
           style={{ fontSize: 11, padding: '4px 10px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171' }}
           onClick={onDelete}
         >
-          ðŸ—‘ï¸
+          🗑️
         </button>
       </div>
     </div>
@@ -120,7 +120,7 @@ function InlineForm({
         </label>
       </div>
       <p style={{ fontSize: 11, color: '#8b7fa0', marginBottom: 8 }}>
-        Use the full editor (âœï¸ Edit) to manage hook, explanation, story beats, and practice content.
+        Use the full editor (✏️ Edit) to manage hook, explanation, story beats, and practice content.
       </p>
       <div style={{ display: 'flex', gap: 10 }}>
         <button className="btn btn-primary" style={{ fontSize: 12, padding: '6px 16px' }} onClick={() => onSave(form)}>Save</button>
@@ -182,8 +182,8 @@ export default function AdminLessonsPage() {
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
-        <span>â€º</span>
-        <span style={{ color: '#e8e0f0' }}>{chunk?.title ?? 'Loadingâ€¦'}</span>
+        <span>›</span>
+        <span style={{ color: '#e8e0f0' }}>{chunk?.title ?? 'Loading…'}</span>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
@@ -210,7 +210,7 @@ export default function AdminLessonsPage() {
       )}
 
       {loading ? (
-        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loadingâ€¦</div>
+        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {lessons.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No lessons yet.</div>}

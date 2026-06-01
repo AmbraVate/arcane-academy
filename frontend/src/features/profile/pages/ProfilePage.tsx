@@ -6,8 +6,6 @@ import type { UserCapstone, UserNote, MyStuckReport, SubscriptionStatusResponse 
 import { useDomainsDashboard } from '@/hooks/queries'
 import { ACTIVE_DOMAINS } from '@/features/domains/data/domains'
 import type { Badge, RabbitHoleTerm } from '@/shared/types'
-import { useTheme } from '@/hooks/useTheme'
-import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 import { Trash2, ExternalLink, Download, CreditCard, Zap, Crown, Infinity, CheckCircle, BookOpen, Award, Rabbit, FileText, Hammer, Star, Flame, Wand2, Sparkles, Gem } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -16,7 +14,7 @@ import { UpgradeModal } from '@/features/payment/components/UpgradeModal'
 
 type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'subscription' | 'preferences'
 
-/* â”€â”€ Rank progression â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Rank progression ────────────────────────────────────────────────────── */
 
 const RANK_THRESHOLDS: { rank: string; min: number; max: number | null; icon: LucideIcon; color: string }[] = [
   { rank: 'Novice',     min: 0,     max: 800,   icon: Star,         color: 'var(--muted)'       },
@@ -56,21 +54,12 @@ function RankProgressBar({ rank, totalXp }: { rank: string; totalXp: number }) {
         />
       </div>
       <div className="mt-1 text-[10px] text-muted text-right font-cinzel">
-        {pct}%{current.max ? ` Â· ${(current.max - totalXp).toLocaleString()} XP to go` : ' Â· Max rank'}
+        {pct}%{current.max ? ` · ${(current.max - totalXp).toLocaleString()} XP to go` : ' · Max rank'}
       </div>
     </div>
   )
 }
 
-const PALETTES = [
-  { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
-  { id: 'fel',         name: 'Fel',         swatches: ['#92ff35', '#dfffa6', '#1c4710'] },
-  { id: 'bloodelf',    name: 'Blood Elf',   swatches: ['#ff4f6a', '#ffd866', '#5e0a1c'] },
-  { id: 'arcane',      name: 'Arcane',      swatches: ['#b87bff', '#e8d6ff', '#3a1f7a'] },
-  { id: 'bronze',      name: 'Bronze',      swatches: ['#ffb849', '#ffe2a6', '#5a3608'] },
-  { id: 'shadowlands', name: 'Shadowlands', swatches: ['#c4a3ff', '#5dc6ff', '#2a1660'] },
-  { id: 'naga',        name: 'Naga',        swatches: ['#2dd4bf', '#ff8a65', '#07473d'] },
-]
 
 const BADGE_CATEGORIES = ['LEARNING', 'MASTERY', 'FEYNMAN', 'PATH', 'EXPLORATION', 'XP', 'STREAK']
 const CATEGORY_LABELS: Record<string, string> = {
@@ -82,7 +71,6 @@ export default function ProfilePage() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
-  const { theme, blizzardPrefs, blizzardAvailable, toggleTheme, setBlizzardPref } = useTheme()
 
   // Support ?tab=subscription deep-link (e.g. from Stripe portal return URL)
   const tabParam = searchParams.get('tab') as Tab | null
@@ -262,7 +250,7 @@ export default function ProfilePage() {
     <div className="flex-1 overflow-y-auto px-6 py-8 max-[600px]:px-3 max-[600px]:py-5">
       <div className="max-w-[800px] mx-auto">
 
-        {/* Profile header â€” always visible */}
+        {/* Profile header — always visible */}
         <div className="flex items-center gap-6 p-7 bg-card border border-border rounded-[14px] mb-5 max-[600px]:flex-col max-[600px]:text-center">
           {/* Rank avatar */}
           {(() => {
@@ -301,7 +289,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Tab bar â€” horizontally scrollable on mobile */}
+        {/* Tab bar — horizontally scrollable on mobile */}
         <div className="flex mb-6 border-b border-border pb-0 overflow-x-auto scrollbar-none">
           {tabs.map(t => (
             <button
@@ -326,7 +314,7 @@ export default function ProfilePage() {
             <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex items-center justify-between gap-4 max-[480px]:flex-col max-[480px]:items-start">
               <div>
                 <div className="font-cinzel text-[13px] text-text mb-0.5">
-                  Public profile {publicEnabled ? <span className="text-green">Â· On</span> : <span className="text-muted">Â· Off</span>}
+                  Public profile {publicEnabled ? <span className="text-green">· On</span> : <span className="text-muted">· Off</span>}
                 </div>
                 <div className="text-[11px] text-muted leading-snug">
                   {publicEnabled
@@ -344,7 +332,7 @@ export default function ProfilePage() {
                     : 'bg-card border-border text-muted hover:border-purple-dim'
                 )}
               >
-                {savingVisibility ? 'Savingâ€¦' : publicEnabled ? 'Make private' : 'Make public'}
+                {savingVisibility ? 'Saving…' : publicEnabled ? 'Make private' : 'Make public'}
               </button>
             </div>
 
@@ -352,7 +340,7 @@ export default function ProfilePage() {
             <div className="bg-card border border-border rounded-[12px] px-5 py-4">
               <div className="font-cinzel text-[13px] text-text mb-1">Location</div>
               <div className="text-[11px] text-muted leading-snug mb-3">
-                Shown on public leaderboards. Optional â€” leave blank to stay anonymous.
+                Shown on public leaderboards. Optional — leave blank to stay anonymous.
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -375,7 +363,7 @@ export default function ProfilePage() {
                     'bg-card border-border text-muted hover:border-purple-dim',
                   )}
                 >
-                  {savingLocation ? 'Savingâ€¦' : 'Save'}
+                  {savingLocation ? 'Saving…' : 'Save'}
                 </button>
               </div>
             </div>
@@ -412,7 +400,7 @@ export default function ProfilePage() {
         {/* Tab: Topics */}
         {tab === 'topics' && (
           <div className="flex flex-col gap-4">
-            {dashLoading && <p className="text-muted italic text-center py-8">Loading topic dataâ€¦</p>}
+            {dashLoading && <p className="text-muted italic text-center py-8">Loading topic data…</p>}
             {!dashLoading && ACTIVE_DOMAINS.map(topic => {
               const dash = allTopicDash[topic.id]
               if (!dash) return null
@@ -434,7 +422,7 @@ export default function ProfilePage() {
             {!dashLoading && ACTIVE_DOMAINS.every(t => !allTopicDash[t.id]) && (
               <div className="text-center py-10 text-muted italic">
                 <p>No domain data found. Start a domain to see your progress here.</p>
-                <button className="btn btn-primary mt-4" onClick={() => navigate('/domains')}>Browse Domains â†’</button>
+                <button className="btn btn-primary mt-4" onClick={() => navigate('/domains')}>Browse Domains →</button>
               </div>
             )}
           </div>
@@ -443,7 +431,7 @@ export default function ProfilePage() {
         {/* Tab: Badges */}
         {tab === 'badges' && (
           <div>
-            {badgesLoading && <p className="text-muted italic text-center py-8">Loading badgesâ€¦</p>}
+            {badgesLoading && <p className="text-muted italic text-center py-8">Loading badges…</p>}
             {!badgesLoading && (
               <>
                 {/* Category filter chips */}
@@ -467,7 +455,7 @@ export default function ProfilePage() {
                 {earnedFiltered.length > 0 && (
                   <section className="mb-7">
                     <h2 className="font-cinzel text-[13px] text-gold tracking-[1px] mb-3 pb-1.5 border-b border-border">
-                      âœ¦ Earned ({earnedFiltered.length})
+                      ✦ Earned ({earnedFiltered.length})
                     </h2>
                     <BadgeGrid badges={earnedFiltered} />
                   </section>
@@ -476,7 +464,7 @@ export default function ProfilePage() {
                 {availableFiltered.length > 0 && (
                   <section>
                     <h2 className="font-cinzel text-[13px] text-muted tracking-[1px] mb-3 pb-1.5 border-b border-border">
-                      ðŸ”’ Available to Earn ({availableFiltered.length})
+                      🔒 Available to Earn ({availableFiltered.length})
                     </h2>
                     <BadgeGrid badges={availableFiltered} />
                   </section>
@@ -493,10 +481,10 @@ export default function ProfilePage() {
         {/* Tab: Rabbit Holes */}
         {tab === 'rabbit-holes' && (
           <div>
-            {rhLoading && <p className="text-muted italic text-center py-8">Loading rabbit holesâ€¦</p>}
+            {rhLoading && <p className="text-muted italic text-center py-8">Loading rabbit holes…</p>}
             {!rhLoading && rabbitHoles.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">ðŸ‡</div>
+                <div className="text-[48px] mb-4">🐇</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No saved rabbit holes yet. While reading story content, click on highlighted terms to save them here for later exploration.
                 </p>
@@ -520,14 +508,14 @@ export default function ProfilePage() {
         {/* Tab: Notes */}
         {tab === 'notes' && (
           <div>
-            {notesLoading && <p className="text-muted italic text-center py-8">Loading notesâ€¦</p>}
+            {notesLoading && <p className="text-muted italic text-center py-8">Loading notes…</p>}
             {!notesLoading && (
               <>
                 {notes.length > 0 && (
                   <div className="mb-4">
                     <input
                       type="text"
-                      placeholder="Search notesâ€¦"
+                      placeholder="Search notes…"
                       value={noteSearch}
                       onChange={e => setNoteSearch(e.target.value)}
                       className="w-full bg-card border border-border rounded-[10px] px-4 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-purple-dim transition-[border-color] duration-150"
@@ -536,7 +524,7 @@ export default function ProfilePage() {
                 )}
                 {filteredNotes.length === 0 && (
                   <div className="text-center py-12">
-                    <div className="text-[48px] mb-4">ðŸ“</div>
+                    <div className="text-[48px] mb-4">📝</div>
                     <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                       {noteSearch
                         ? 'No notes match your search.'
@@ -574,10 +562,10 @@ export default function ProfilePage() {
         {/* Tab: Projects (Capstones) */}
         {tab === 'projects' && (
           <div>
-            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projectsâ€¦</p>}
+            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projects…</p>}
             {!capstonesLoading && capstones.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">ðŸ—ï¸</div>
+                <div className="text-[48px] mb-4">🏗️</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No saved projects yet. Complete a capstone lesson to save your project here.
                 </p>
@@ -638,10 +626,10 @@ export default function ProfilePage() {
         {/* Tab: Reports (Stuck Reports history) */}
         {tab === 'reports' && (
           <div>
-            {reportsLoading && <p className="text-muted italic text-center py-8">Loading reportsâ€¦</p>}
+            {reportsLoading && <p className="text-muted italic text-center py-8">Loading reports…</p>}
             {!reportsLoading && reports.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">ðŸš©</div>
+                <div className="text-[48px] mb-4">🚩</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No reports yet. Use the "I'm stuck" button during a lesson to get help from the team.
                 </p>
@@ -665,7 +653,7 @@ export default function ProfilePage() {
             )}
 
             {subLoading ? (
-              <div className="text-center py-12 text-muted font-cinzel text-[13px]">Loadingâ€¦</div>
+              <div className="text-center py-12 text-muted font-cinzel text-[13px]">Loading…</div>
             ) : subscriptionStatus ? (
               <SubscriptionPanel
                 status={subscriptionStatus}
@@ -677,106 +665,21 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Tab: Preferences */}
+        {/* Tab: Preferences — redirects to /settings */}
         {tab === 'preferences' && (
           <div className="flex flex-col gap-4">
-            {/* Theme toggle */}
-            <div className="bg-card border border-border rounded-[12px] px-5 py-4">
-              <div className="font-cinzel text-[14px] text-gold mb-3 tracking-wide">Theme</div>
-              {blizzardAvailable ? (
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="font-cinzel text-[13px] text-text mb-0.5">
-                      {theme === 'blizzard' ? 'â„ Blizzard' : 'âœ¦ Default (Dark)'}
-                    </div>
-                    <div className="text-[11px] text-muted leading-snug">
-                      {theme === 'blizzard' ? 'Frostbound Academy â€” Lich-King dark fantasy.' : 'Arcane Academy â€” purples, golds, dark backgrounds.'}
-                    </div>
-                  </div>
-                  <button onClick={toggleTheme} className="btn btn-ghost flex-shrink-0 text-[12px] px-4 py-1.5">
-                    Switch to {theme === 'blizzard' ? 'Default' : 'Blizzard'}
-                  </button>
+            <div className="bg-card border border-border rounded-[12px] px-5 py-5 flex items-center justify-between gap-4">
+              <div>
+                <div className="font-cinzel text-[14px] text-gold mb-1 tracking-wide">Settings &amp; Preferences</div>
+                <div className="text-[12px] text-muted leading-[1.65]">
+                  Manage lore mode, tutorial, and other app preferences.
                 </div>
-              ) : (
-                <div className="flex items-center gap-3 text-muted text-[12px] leading-snug">
-                  <span className="text-[20px]">â„</span>
-                  <span>
-                    <strong className="text-text">Blizzard theme is not available on mobile.</strong>
-                    <br />Switch to a larger screen to unlock it.
-                  </span>
-                </div>
-              )}
+              </div>
+              <button className="btn btn-primary text-[12px] px-5 py-2 flex-shrink-0" onClick={() => navigate('/settings')}>
+                Open Settings →
+              </button>
             </div>
 
-            {/* Blizzard preferences â€” only show when blizzard theme active and available */}
-            {blizzardAvailable && theme === 'blizzard' && (
-              <>
-                {/* Palette picker */}
-                <div className="bg-card border border-border rounded-[12px] px-5 py-4">
-                  <div className="font-cinzel text-[14px] text-gold mb-1 tracking-wide">Magic Palette</div>
-                  <div className="text-[11px] text-muted mb-4">The colour of your spells, sconces &amp; UI accents.</div>
-                  <div className="palette-grid">
-                    {PALETTES.map(p => (
-                      <div
-                        key={p.id}
-                        className={`palette-tile ${blizzardPrefs.palette === p.id ? 'active' : ''}`}
-                        onClick={() => setBlizzardPref('palette', p.id as Palette)}
-                      >
-                        <div className="swatch-row">
-                          {p.swatches.map((c, i) => (
-                            <div key={i} className="swatch" style={{ background: c, color: c }} />
-                          ))}
-                        </div>
-                        <div className="name">{p.name}</div>
-                        {blizzardPrefs.palette === p.id && <div className="check">âœ“</div>}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Scene, Font, Snow row */}
-                <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex flex-col gap-4">
-                  <div className="font-cinzel text-[14px] text-gold tracking-wide">Atmosphere</div>
-
-                  {/* Scene */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-cinzel text-[12px] text-text tracking-wide">Scene</div>
-                      <div className="text-[11px] text-muted">What lies beyond the frame.</div>
-                    </div>
-                    <div className="seg">
-                      <button className={blizzardPrefs.scene === 'castle' ? 'on' : ''} onClick={() => setBlizzardPref('scene', 'castle')}>Citadel</button>
-                      <button className={blizzardPrefs.scene === 'void'   ? 'on' : ''} onClick={() => setBlizzardPref('scene', 'void')}>Void</button>
-                      <button className={blizzardPrefs.scene === 'aurora' ? 'on' : ''} onClick={() => setBlizzardPref('scene', 'aurora')}>Aurora</button>
-                    </div>
-                  </div>
-
-                  {/* Font */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-cinzel text-[12px] text-text tracking-wide">Heading Font</div>
-                      <div className="text-[11px] text-muted">Cinzel â€” engraved. Rune â€” gothic blackletter.</div>
-                    </div>
-                    <div className="seg">
-                      <button className={blizzardPrefs.font === 'cinzel' ? 'on' : ''} onClick={() => setBlizzardPref('font', 'cinzel')}>Cinzel</button>
-                      <button className={blizzardPrefs.font === 'rune'   ? 'on' : ''} onClick={() => setBlizzardPref('font', 'rune')}>Rune</button>
-                    </div>
-                  </div>
-
-                  {/* Snow toggle */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-cinzel text-[12px] text-text tracking-wide">Falling Snow</div>
-                      <div className="text-[11px] text-muted">Particles drifting across the screen.</div>
-                    </div>
-                    <div
-                      className={`switch ${blizzardPrefs.snow ? 'on' : ''}`}
-                      onClick={() => setBlizzardPref('snow', !blizzardPrefs.snow)}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
           </div>
         )}
 
@@ -829,7 +732,7 @@ function TopicCard({
       </div>
 
       <div className="flex gap-2">
-        <button className="btn btn-primary text-[12px] px-4 py-1.5" onClick={onContinue}>Continue â†’</button>
+        <button className="btn btn-primary text-[12px] px-4 py-1.5" onClick={onContinue}>Continue →</button>
         <button className="btn btn-ghost text-[11px] px-3 py-1.5" onClick={onRetakeDiagnostic}>Retake Diagnostic</button>
       </div>
     </div>
@@ -850,7 +753,7 @@ function BadgeGrid({ badges }: { badges: Badge[] }) {
           )}
         >
           <div className="text-[36px] mb-2.5 max-[480px]:text-[28px]">
-            {badge.earned ? badge.glyph : 'ðŸ”’'}
+            {badge.earned ? badge.glyph : '🔒'}
           </div>
           <div className="font-cinzel text-[12px] text-text mb-1">{badge.displayName}</div>
           <div className="text-[11px] text-muted leading-[1.4]">{badge.description}</div>
@@ -870,14 +773,14 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
 
   return (
     <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex items-start gap-4">
-      <div className="text-[24px] flex-shrink-0">ðŸ‡</div>
+      <div className="text-[24px] flex-shrink-0">🐇</div>
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-bold text-gold mb-0.5">{term.term}</div>
         {term.description && (
           <p className="text-[12px] text-muted leading-[1.55] mb-1.5">{term.description}</p>
         )}
         <div className="text-[10px] text-muted">
-          {term.lessonId && <span>From {term.lessonId} Â· </span>}
+          {term.lessonId && <span>From {term.lessonId} · </span>}
           {new Date(term.savedAt).toLocaleDateString()}
         </div>
       </div>
@@ -888,7 +791,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
               className="text-[11px] px-2.5 py-1 rounded-md bg-red/20 text-red border border-red cursor-pointer disabled:opacity-50"
               onClick={onRemove} disabled={removing}
             >
-              {removing ? 'â€¦' : 'Remove'}
+              {removing ? '…' : 'Remove'}
             </button>
             <button
               className="text-[11px] px-2.5 py-1 rounded-md bg-card border border-border text-muted cursor-pointer"
@@ -902,7 +805,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
             className="text-[11px] px-2.5 py-1 rounded-md bg-card border border-border text-muted cursor-pointer hover:border-red hover:text-red transition-[border-color,color] duration-150"
             onClick={() => setConfirmRemove(true)}
           >
-            ðŸ—‘
+            🗑
           </button>
         )}
       </div>
@@ -910,7 +813,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
   )
 }
 
-// â”€â”€ Subscription panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Subscription panel ────────────────────────────────────────────────────────
 
 const PLAN_META: Record<string, { icon: React.ElementType; color: string; label: string; description: string }> = {
   FREE:      { icon: Zap,      color: 'var(--muted)',       label: 'Free Plan',     description: 'One discipline included.' },
@@ -1004,7 +907,7 @@ function SubscriptionPanel({
                 transition-[border-color,color] duration-150 disabled:opacity-50 cursor-pointer"
             >
               <CreditCard size={14} strokeWidth={1.75} />
-              {portalLoading ? 'Openingâ€¦' : 'Manage Subscription'}
+              {portalLoading ? 'Opening…' : 'Manage Subscription'}
             </button>
           )}
 
@@ -1029,7 +932,7 @@ function SubscriptionPanel({
                   transition-[border-color,color] duration-150 disabled:opacity-50 cursor-pointer"
               >
                 <CreditCard size={14} strokeWidth={1.75} />
-                {portalLoading ? 'Openingâ€¦' : 'Billing History'}
+                {portalLoading ? 'Opening…' : 'Billing History'}
               </button>
             </>
           )}
@@ -1037,7 +940,7 @@ function SubscriptionPanel({
           {status.status === 'LIFETIME' && (
             <div className="px-4 py-2 rounded-[9px] border border-[rgba(196,181,253,0.3)]
               bg-[rgba(196,181,253,0.06)] font-cinzel text-[12px] text-purple-light">
-              âœ¦ Lifetime member â€” no further action needed
+              ✦ Lifetime member — no further action needed
             </div>
           )}
         </div>
@@ -1048,11 +951,11 @@ function SubscriptionPanel({
         <div className="font-cinzel text-[12px] tracking-[0.1em] text-muted uppercase mb-3">What's Included</div>
         <ul className="flex flex-col gap-2">
           {[
-            ['âœ¦', 'Your first discipline â€” always free, all tiers'],
-            ['ðŸ”“', status.active ? 'All disciplines unlocked' : 'Additional disciplines (subscription required)'],
-            ['ðŸ“š', 'Spaced-repetition review system'],
-            ['ðŸ†', 'Badges, XP, ranks & leaderboards'],
-            ['ðŸ§ ', 'AI mentor feedback on written practice'],
+            ['✦', 'Your first discipline — always free, all tiers'],
+            ['🔓', status.active ? 'All disciplines unlocked' : 'Additional disciplines (subscription required)'],
+            ['📚', 'Spaced-repetition review system'],
+            ['🏆', 'Badges, XP, ranks & leaderboards'],
+            ['🧠', 'AI mentor feedback on written practice'],
           ].map(([icon, text]) => (
             <li key={text} className="flex items-center gap-3 text-[13px]">
               <span className="text-[14px] flex-shrink-0">{icon}</span>

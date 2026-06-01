@@ -18,7 +18,7 @@ export function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): strin
   if (!terms.length) return html
   const parts = html.split(/(<[^>]+>)/)
   return parts.map((part, i) => {
-    if (i % 2 === 1) return part // it's a tag â€” skip
+    if (i % 2 === 1) return part // it's a tag — skip
     let text = part
     for (const { term, description } of terms) {
       const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -32,7 +32,7 @@ export function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): strin
 
 /**
  * Renders arbitrary HTML with rabbit-hole term annotation and a save-to-queue popover.
- * Pass a `className` for the wrapper div's styling â€” identical to the plain
+ * Pass a `className` for the wrapper div's styling — identical to the plain
  * `dangerouslySetInnerHTML` div it replaces.
  */
 export default function RabbitHoleHtml({ html, terms, className, lessonId, domainId }: Props) {
@@ -107,7 +107,7 @@ export default function RabbitHoleHtml({ html, terms, className, lessonId, domai
           style={{ left: Math.min(popover.x, window.innerWidth - 288), top: popover.y }}
           onClick={e => e.stopPropagation()}
         >
-          <div className="text-[13px] font-bold text-gold mb-1">ðŸ‡ {popover.term}</div>
+          <div className="text-[13px] font-bold text-gold mb-1">🐇 {popover.term}</div>
           {popover.description && (
             <p className="text-[12px] text-muted leading-[1.55] mb-2.5">{popover.description}</p>
           )}
@@ -116,14 +116,14 @@ export default function RabbitHoleHtml({ html, terms, className, lessonId, domai
               className="text-[11px] px-3 py-1.5 rounded-md bg-teal-dim text-teal border border-teal cursor-pointer"
               onClick={handleUnsave} disabled={saving}
             >
-              {saving ? 'â€¦' : 'âœ“ Saved â€” Remove'}
+              {saving ? '…' : '✓ Saved — Remove'}
             </button>
           ) : (
             <button
               className="text-[11px] px-3 py-1.5 rounded-md bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.4)] cursor-pointer hover:bg-[rgba(139,92,246,0.2)]"
               onClick={handleSave} disabled={saving}
             >
-              {saving ? 'â€¦' : 'ðŸ‡ Save to Rabbit Holes'}
+              {saving ? '…' : '🐇 Save to Rabbit Holes'}
             </button>
           )}
         </div>

@@ -18,7 +18,7 @@ const TABS: { id: Tab; label: string }[] = [
 const PRACTICE_TYPES = ['JAVA', 'TAILWIND', 'NONE']
 const BEAT_TYPES = ['narration', 'dialogue', 'example']
 
-// â”€â”€ Story beat editor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Story beat editor ─────────────────────────────────────────────────────────
 
 function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b: StoryBeat[]) => void }) {
   const updateBeat = (i: number, key: keyof StoryBeat, val: unknown) => {
@@ -69,8 +69,8 @@ function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b
               {beat.type.toUpperCase()}
             </span>
             <div style={{ flex: 1 }} />
-            <button style={iconBtn} onClick={() => moveBeat(i, -1)}>â†‘</button>
-            <button style={iconBtn} onClick={() => moveBeat(i, 1)}>â†“</button>
+            <button style={iconBtn} onClick={() => moveBeat(i, -1)}>↑</button>
+            <button style={iconBtn} onClick={() => moveBeat(i, 1)}>↓</button>
             <button style={{ ...iconBtn, color: '#f87171' }} onClick={() => removeBeat(i)}>âœ•</button>
           </div>
 
@@ -102,7 +102,7 @@ function StoryBeatEditor({ beats, onChange }: { beats: StoryBeat[]; onChange: (b
   )
 }
 
-// â”€â”€ Test case editor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Test case editor ───────────────────────────────────────────────────────────
 
 function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: TestCase[]) => void }) {
   const update = (i: number, key: string, val: string) => {
@@ -132,7 +132,7 @@ function TestCaseEditor({ tests, onChange }: { tests: TestCase[]; onChange: (t: 
   )
 }
 
-// â”€â”€ Main page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function AdminLessonEditorPage() {
   const { lessonId } = useParams<{ lessonId: string }>()
@@ -173,7 +173,7 @@ export default function AdminLessonEditorPage() {
     }
   }
 
-  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loadingâ€¦</div>
+  if (loading) return <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
   if (!sc) return <div style={{ color: '#f87171', fontSize: 14 }}>{error ?? 'Lesson not found'}</div>
 
   return (
@@ -181,9 +181,9 @@ export default function AdminLessonEditorPage() {
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
-        <span>â€º</span>
+        <span>›</span>
         <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.moduleId}/subchunks`)}>Lessons</span>
-        <span>â€º</span>
+        <span>›</span>
         <span style={{ color: '#e8e0f0' }}>{sc.title}</span>
       </div>
 
@@ -196,10 +196,10 @@ export default function AdminLessonEditorPage() {
           Edit: {sc.title}
         </h1>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
-          {saved && <span style={{ color: '#4ade80', fontSize: 12 }}>âœ“ Saved</span>}
+          {saved && <span style={{ color: '#4ade80', fontSize: 12 }}>✓ Saved</span>}
           {error && <span style={{ color: '#f87171', fontSize: 12 }}>{error}</span>}
           <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={handleSave} disabled={saving}>
-            {saving ? 'Savingâ€¦' : 'Save Changes'}
+            {saving ? 'Saving…' : 'Save Changes'}
           </button>
         </div>
       </div>
@@ -343,7 +343,7 @@ export default function AdminLessonEditorPage() {
                 </span>
                 <textarea
                   style={{ ...inputStyle, minHeight: 140, resize: 'vertical', fontFamily: 'monospace', fontSize: 12 }}
-                  placeholder="Reference solution shown only to adminsâ€¦"
+                  placeholder="Reference solution shown only to admins…"
                   value={form.guidedPracticeModelAnswer ?? ''}
                   onChange={e => set('guidedPracticeModelAnswer', e.target.value || null)}
                 />
@@ -355,7 +355,7 @@ export default function AdminLessonEditorPage() {
         {activeTab === 'solo' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <label style={labelStyle}>
-              Solo Practice HTML (challenge prompt â€” no starter code)
+              Solo Practice HTML (challenge prompt — no starter code)
               <textarea
                 style={{ ...inputStyle, minHeight: 200, resize: 'vertical' }}
                 value={form.soloPracticeHtml ?? ''}
@@ -374,7 +374,7 @@ export default function AdminLessonEditorPage() {
                 </span>
                 <textarea
                   style={{ ...inputStyle, minHeight: 160, resize: 'vertical' }}
-                  placeholder="Model answer or solution revealed only to adminsâ€¦"
+                  placeholder="Model answer or solution revealed only to admins…"
                   value={form.modelAnswer ?? ''}
                   onChange={e => set('modelAnswer', e.target.value || null)}
                 />

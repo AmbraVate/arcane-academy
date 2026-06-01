@@ -206,7 +206,7 @@ export const tailwindApi = {
 // â”€â”€ React Practice â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Tests run in the iframe sandbox client-side (see ReactEditor); the per-test
 // pass/fail is sent here for XP awarding. Backend does a structural sanity
-// check on the JSX source â€” see ReactPracticeService for rationale.
+// check on the JSX source — see ReactPracticeService for rationale.
 export interface ReactClientTestResult {
   label: string
   passed: boolean
@@ -236,7 +236,7 @@ export const reactApi = {
 // sql.js (SQLite-WASM) runs inside the iframe; the harness compares the user's
 // query result to expected rows or to a reference query and reports per-test
 // pass/fail. Backend does a structural sanity check on the SQL source before
-// awarding XP â€” see SqlPracticeService.
+// awarding XP — see SqlPracticeService.
 export interface SqlClientTestResult {
   label: string
   passed: boolean
@@ -479,7 +479,7 @@ export interface SubscriptionStatusResponse {
   status: SubscriptionStatus
   /** True when the user currently has full access. */
   active: boolean
-  /** ISO string â€” when the current billing period ends. Null for FREE / LIFETIME. */
+  /** ISO string — when the current billing period ends. Null for FREE / LIFETIME. */
   periodEnd: string | null
   /** Whether the user has a Stripe customer record (has ever paid). */
   hasStripeCustomer: boolean

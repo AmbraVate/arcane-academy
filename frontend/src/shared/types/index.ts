@@ -52,12 +52,12 @@ export interface LessonSummary {
   id: string; title: string; sortOrder: number; status: string
   currentPhase: string; memoryStrength: number; healthColor: string
   feynmanCompleted: boolean; xpReward: number
-  // Sprint 1 â€” chip metadata
+  // Sprint 1 — chip metadata
   practiceType: string
   learningObjectiveCount: number
   hasChallenge: boolean
   hasMiniProject: boolean
-  // Phase 1 â€” topic grouping
+  // Phase 1 — topic grouping
   topicId: string | null
   topicTitle: string | null
 }
@@ -93,13 +93,13 @@ export interface LessonEncoding {
   modelAnswer: string | null
   /** Exemplar answer revealed after guided practice is passed (written-response sub-chunks only). */
   guidedPracticeModelAnswer: string | null
-  // Sprint 1 â€” structured lesson metadata
+  // Sprint 1 — structured lesson metadata
   learningObjectives: string[] | null
   challenge: { html: string; starterCode: string | null; tests: Record<string, unknown>[] | null } | null
   miniProject: string | null
   commonMistakes: string[] | null
   assessmentCriteria: string[] | null
-  // Sprint 7 â€” downloadable resources
+  // Sprint 7 — downloadable resources
   downloadables: Downloadable[] | null
   integrationPrompt: string | null
   questType: QuestType | null

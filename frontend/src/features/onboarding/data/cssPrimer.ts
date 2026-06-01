@@ -1,4 +1,4 @@
-﻿// Static CSS/HTML primer content â€” imported directly by CssPrimerPage and PrerequisiteCheckPage.
+﻿// Static CSS/HTML primer content — imported directly by CssPrimerPage and PrerequisiteCheckPage.
 // No backend seeder needed; this is reference material, not spaced-repetition content.
 
 export interface PrimerQuestion {
@@ -17,22 +17,22 @@ export interface PrimerSection {
   questions: PrimerQuestion[]
 }
 
-// â”€â”€ Section 1: HTML Structure â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Section 1: HTML Structure ─────────────────────────────────────────────────
 
 const HTML_SECTION: PrimerSection = {
   id: 'html',
   title: 'HTML: The Skeleton of the Web',
-  emoji: 'ðŸ“„',
+  emoji: '📄',
   explanationHtml: `
 <h2>What HTML Does</h2>
-<p>HTML (HyperText Markup Language) describes the <strong>structure</strong> of a page â€” what content exists and what role each piece plays. A browser reads your HTML and builds a tree of elements from it.</p>
+<p>HTML (HyperText Markup Language) describes the <strong>structure</strong> of a page — what content exists and what role each piece plays. A browser reads your HTML and builds a tree of elements from it.</p>
 
 <h3>Elements and Tags</h3>
 <p>An element is an opening tag, optional content, and a closing tag:</p>
 <pre><code>&lt;p&gt;This is a paragraph.&lt;/p&gt;
 &lt;h1&gt;This is a top-level heading.&lt;/h1&gt;
 &lt;button&gt;Click me&lt;/button&gt;</code></pre>
-<p>Some elements are <em>self-closing</em> â€” they have no inner content:</p>
+<p>Some elements are <em>self-closing</em> — they have no inner content:</p>
 <pre><code>&lt;img src="logo.png" alt="Logo" /&gt;
 &lt;input type="text" placeholder="Enter name" /&gt;</code></pre>
 
@@ -45,15 +45,15 @@ const HTML_SECTION: PrimerSection = {
 <h3>class and id</h3>
 <p>Two attributes you'll use constantly in CSS and JavaScript:</p>
 <ul>
-  <li><code>class</code> â€” assigns one or more reusable style names to an element. Multiple elements can share the same class.</li>
-  <li><code>id</code> â€” a unique identifier for a single element on the page.</li>
+  <li><code>class</code> — assigns one or more reusable style names to an element. Multiple elements can share the same class.</li>
+  <li><code>id</code> — a unique identifier for a single element on the page.</li>
 </ul>
-<pre><code>&lt;div class="card"&gt;â€¦&lt;/div&gt;
-&lt;div class="card featured"&gt;â€¦&lt;/div&gt;   &lt;!-- two classes: card AND featured --&gt;
-&lt;nav id="main-nav"&gt;â€¦&lt;/nav&gt;          &lt;!-- unique; no other element has this id --&gt;</code></pre>
+<pre><code>&lt;div class="card"&gt;…&lt;/div&gt;
+&lt;div class="card featured"&gt;…&lt;/div&gt;   &lt;!-- two classes: card AND featured --&gt;
+&lt;nav id="main-nav"&gt;…&lt;/nav&gt;          &lt;!-- unique; no other element has this id --&gt;</code></pre>
 
 <h3>Nesting and the Tree</h3>
-<p>Elements nest inside each other to form a <em>parent â†’ child</em> tree. Indentation makes nesting readable:</p>
+<p>Elements nest inside each other to form a <em>parent → child</em> tree. Indentation makes nesting readable:</p>
 <pre><code>&lt;ul&gt;           &lt;!-- parent list --&gt;
   &lt;li&gt;Apples&lt;/li&gt;
   &lt;li&gt;Oranges&lt;/li&gt;
@@ -77,7 +77,7 @@ const HTML_SECTION: PrimerSection = {
     <tr><td style="padding:5px 10px"><code>div</code></td><td style="padding:5px 10px">Generic block container</td></tr>
     <tr><td style="padding:5px 10px"><code>span</code></td><td style="padding:5px 10px">Generic inline container</td></tr>
     <tr><td style="padding:5px 10px"><code>p</code></td><td style="padding:5px 10px">Paragraph</td></tr>
-    <tr><td style="padding:5px 10px"><code>h1â€“h6</code></td><td style="padding:5px 10px">Headings (h1 largest)</td></tr>
+    <tr><td style="padding:5px 10px"><code>h1–h6</code></td><td style="padding:5px 10px">Headings (h1 largest)</td></tr>
     <tr><td style="padding:5px 10px"><code>a</code></td><td style="padding:5px 10px">Link (needs <code>href</code>)</td></tr>
     <tr><td style="padding:5px 10px"><code>img</code></td><td style="padding:5px 10px">Image (needs <code>src</code>, <code>alt</code>)</td></tr>
     <tr><td style="padding:5px 10px"><code>ul / ol / li</code></td><td style="padding:5px 10px">Lists</td></tr>
@@ -129,20 +129,20 @@ const HTML_SECTION: PrimerSection = {
         '<card><button>Click</button></card>',
       ],
       correctIndex: 1,
-      explanation: 'The button is a child of the card div â€” div opens, button is inside, div closes. Self-closing div is not standard HTML. <card> is not a valid HTML element.',
+      explanation: 'The button is a child of the card div — div opens, button is inside, div closes. Self-closing div is not standard HTML. <card> is not a valid HTML element.',
     },
   ],
 }
 
-// â”€â”€ Section 2: CSS Selectors & Properties â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Section 2: CSS Selectors & Properties ────────────────────────────────────
 
 const CSS_BASICS_SECTION: PrimerSection = {
   id: 'css-basics',
   title: 'CSS: Selectors and Properties',
-  emoji: 'ðŸ–Œï¸',
+  emoji: '🖌️',
   explanationHtml: `
 <h2>What CSS Does</h2>
-<p>CSS (Cascading Style Sheets) controls the <strong>appearance</strong> of HTML elements â€” colour, size, spacing, typography, and more. A CSS rule has two parts: a <em>selector</em> (what to target) and one or more <em>declarations</em> (what to apply).</p>
+<p>CSS (Cascading Style Sheets) controls the <strong>appearance</strong> of HTML elements — colour, size, spacing, typography, and more. A CSS rule has two parts: a <em>selector</em> (what to target) and one or more <em>declarations</em> (what to apply).</p>
 
 <pre><code>selector {
   property: value;
@@ -150,18 +150,18 @@ const CSS_BASICS_SECTION: PrimerSection = {
 }</code></pre>
 
 <h3>The Three Core Selectors</h3>
-<pre><code>/* 1. Element selector â€” targets every &lt;p&gt; */
+<pre><code>/* 1. Element selector — targets every &lt;p&gt; */
 p {
   color: #333;
 }
 
-/* 2. Class selector â€” targets every element with class="card" */
+/* 2. Class selector — targets every element with class="card" */
 .card {
   background: white;
   border-radius: 8px;
 }
 
-/* 3. ID selector â€” targets the single element with id="hero" */
+/* 3. ID selector — targets the single element with id="hero" */
 #hero {
   font-size: 48px;
 }</code></pre>
@@ -201,17 +201,17 @@ button:hover {
     <tr><td style="padding:5px 10px"><code>border</code></td><td style="padding:5px 10px">Element outline</td><td style="padding:5px 10px"><code>border: 1px solid #ccc</code></td></tr>
     <tr><td style="padding:5px 10px"><code>border-radius</code></td><td style="padding:5px 10px">Rounded corners</td><td style="padding:5px 10px"><code>border-radius: 8px</code></td></tr>
     <tr><td style="padding:5px 10px"><code>width / height</code></td><td style="padding:5px 10px">Dimensions</td><td style="padding:5px 10px"><code>width: 100%</code></td></tr>
-    <tr><td style="padding:5px 10px"><code>opacity</code></td><td style="padding:5px 10px">Transparency (0â€“1)</td><td style="padding:5px 10px"><code>opacity: 0.6</code></td></tr>
+    <tr><td style="padding:5px 10px"><code>opacity</code></td><td style="padding:5px 10px">Transparency (0–1)</td><td style="padding:5px 10px"><code>opacity: 0.6</code></td></tr>
   </tbody>
 </table>
 
-<h3>The Cascade â€” Why It's Called That</h3>
+<h3>The Cascade — Why It's Called That</h3>
 <p>When multiple rules target the same element, CSS resolves conflicts with specificity:</p>
 <ol>
-  <li><strong>Inline styles</strong> (<code>style="â€¦"</code>) â€” highest specificity</li>
-  <li><strong>ID selectors</strong> (<code>#foo</code>) â€” very specific</li>
-  <li><strong>Class selectors</strong> (<code>.bar</code>) â€” moderately specific</li>
-  <li><strong>Element selectors</strong> (<code>p</code>) â€” least specific</li>
+  <li><strong>Inline styles</strong> (<code>style="…"</code>) — highest specificity</li>
+  <li><strong>ID selectors</strong> (<code>#foo</code>) — very specific</li>
+  <li><strong>Class selectors</strong> (<code>.bar</code>) — moderately specific</li>
+  <li><strong>Element selectors</strong> (<code>p</code>) — least specific</li>
 </ol>
 <p>When specificity ties, the <em>last rule in the file wins</em>.</p>
   `,
@@ -225,7 +225,7 @@ button:hover {
     },
     {
       id: 'css-q2',
-      text: 'Given <p class="intro"> â€” which rule applies a font size to it?',
+      text: 'Given <p class="intro"> — which rule applies a font size to it?',
       options: [
         '#intro { font-size: 18px; }',
         '.intro { font-size: 18px; }',
@@ -245,29 +245,29 @@ button:hover {
         'Any element with class "card" that is inside a <p>',
       ],
       correctIndex: 1,
-      explanation: 'A space between selectors means "descendant" â€” the second element anywhere inside the first. .card p means "any <p> inside .card at any nesting depth". The > symbol would limit it to direct children only.',
+      explanation: 'A space between selectors means "descendant" — the second element anywhere inside the first. .card p means "any <p> inside .card at any nesting depth". The > symbol would limit it to direct children only.',
     },
     {
       id: 'css-q4',
       text: 'Two rules both target the same <h2>: one with element selector h2 { color: red } and one with class selector .title { color: blue }. The h2 has class="title". What colour is the heading?',
       options: [
-        'Red â€” element selectors always win',
-        'Blue â€” class selectors have higher specificity than element selectors',
-        'Purple â€” the colours blend',
-        'Red â€” the first rule defined wins',
+        'Red — element selectors always win',
+        'Blue — class selectors have higher specificity than element selectors',
+        'Purple — the colours blend',
+        'Red — the first rule defined wins',
       ],
       correctIndex: 1,
-      explanation: 'Class selectors (.title) have higher specificity than element selectors (h2). When both match the same element, the more specific rule wins â€” regardless of order in the file.',
+      explanation: 'Class selectors (.title) have higher specificity than element selectors (h2). When both match the same element, the more specific rule wins — regardless of order in the file.',
     },
   ],
 }
 
-// â”€â”€ Section 3: Box Model & Flexbox â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Section 3: Box Model & Flexbox ───────────────────────────────────────────
 
 const CSS_LAYOUT_SECTION: PrimerSection = {
   id: 'css-layout',
   title: 'The Box Model and Flexbox',
-  emoji: 'ðŸ“¦',
+  emoji: '📦',
   explanationHtml: `
 <h2>The CSS Box Model</h2>
 <p>Every HTML element is rendered as a rectangular box. The box has four layers, from inside out:</p>
@@ -275,11 +275,11 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
 <div style="text-align:center;margin:20px 0;font-size:13px;">
   <div style="display:inline-block;background:#f1f5f9;border:2px dashed #94a3b8;padding:20px;border-radius:8px;">
     <div style="background:#e2e8f0;border:1px dashed #64748b;padding:12px;border-radius:4px;color:#475569;font-weight:600;">
-      margin (outside â€” pushes neighbours away)
+      margin (outside — pushes neighbours away)
       <div style="background:#cbd5e1;margin:8px 0;padding:10px;border-radius:4px;color:#334155;">
         border (the visible edge)
         <div style="background:#94a3b8;padding:8px;border-radius:4px;color:#1e293b;">
-          padding (inside â€” between border and content)
+          padding (inside — between border and content)
           <div style="background:#64748b;padding:6px;border-radius:4px;color:white;">
             content (text, images, children)
           </div>
@@ -297,10 +297,10 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
 
 <h3>display: block vs inline</h3>
 <ul>
-  <li><strong>block</strong> â€” takes up the full width of its container, starts on a new line (<code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code>)</li>
-  <li><strong>inline</strong> â€” only as wide as its content, flows in line with text (<code>span</code>, <code>a</code>, <code>strong</code>)</li>
-  <li><strong>inline-block</strong> â€” inline flow, but respects width/height/padding like a block</li>
-  <li><strong>none</strong> â€” element is hidden and takes up no space</li>
+  <li><strong>block</strong> — takes up the full width of its container, starts on a new line (<code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code>)</li>
+  <li><strong>inline</strong> — only as wide as its content, flows in line with text (<code>span</code>, <code>a</code>, <code>strong</code>)</li>
+  <li><strong>inline-block</strong> — inline flow, but respects width/height/padding like a block</li>
+  <li><strong>none</strong> — element is hidden and takes up no space</li>
 </ul>
 
 <h3>Flexbox: One-Dimensional Layouts</h3>
@@ -308,7 +308,7 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
 
 <pre><code>.nav {
   display: flex;
-  flex-direction: row;       /* default â€” left to right */
+  flex-direction: row;       /* default — left to right */
   justify-content: space-between; /* horizontal spacing */
   align-items: center;       /* vertical alignment */
   gap: 16px;                 /* space between items */
@@ -343,7 +343,7 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
   &lt;/div&gt;
 &lt;/nav&gt;</code></pre>
 
-<p>This is the exact pattern Tailwind CSS utilities like <code>flex justify-between items-center gap-4</code> map to â€” one utility class per CSS property.</p>
+<p>This is the exact pattern Tailwind CSS utilities like <code>flex justify-between items-center gap-4</code> map to — one utility class per CSS property.</p>
   `,
   questions: [
     {
@@ -351,7 +351,7 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
       text: 'An element has padding: 20px, border: 2px solid black, and margin: 10px. Which controls the space INSIDE the border, between the border and the content?',
       options: ['margin', 'border', 'padding', 'gap'],
       correctIndex: 2,
-      explanation: 'Padding is the space inside the border â€” it pushes content away from the border edge. Margin is outside the border, pushing other elements away. Gap is a flexbox/grid property for spacing between children.',
+      explanation: 'Padding is the space inside the border — it pushes content away from the border edge. Margin is outside the border, pushing other elements away. Gap is a flexbox/grid property for spacing between children.',
     },
     {
       id: 'layout-q2',
@@ -370,7 +370,7 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
       text: 'A flex container has justify-content: space-between and three children. What happens?',
       options: [
         'All three children are centered in a cluster',
-        'First child at start, last child at end, middle child centred â€” maximum space between them',
+        'First child at start, last child at end, middle child centred — maximum space between them',
         'All children are spaced equally from the start edge',
         'Children are stacked in a column with space between rows',
       ],
@@ -382,12 +382,12 @@ const CSS_LAYOUT_SECTION: PrimerSection = {
       text: 'What does display: none do to an element?',
       options: [
         'Makes it transparent but keeps its space in the layout',
-        'Removes it from the layout entirely â€” it takes up no space and is invisible',
+        'Removes it from the layout entirely — it takes up no space and is invisible',
         'Makes it an inline element',
         'Hides it until the user hovers over it',
       ],
       correctIndex: 1,
-      explanation: 'display: none removes the element from the render tree â€” no space is reserved and it is invisible. visibility: hidden is what makes something transparent while preserving its space. display: none is commonly used to conditionally show/hide UI elements.',
+      explanation: 'display: none removes the element from the render tree — no space is reserved and it is invisible. visibility: hidden is what makes something transparent while preserving its space. display: none is commonly used to conditionally show/hide UI elements.',
     },
   ],
 }
@@ -398,8 +398,8 @@ export const CSS_PRIMER_SECTIONS: PrimerSection[] = [
   CSS_LAYOUT_SECTION,
 ]
 
-// â”€â”€ Quick Quiz (used by PrerequisiteCheckPage) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// 5 questions drawn from the primer â€” one per major concept.
+// ── Quick Quiz (used by PrerequisiteCheckPage) ────────────────────────────────
+// 5 questions drawn from the primer — one per major concept.
 
 export const PREREQ_QUIZ_QUESTIONS: PrimerQuestion[] = [
   {
@@ -445,7 +445,7 @@ export const PREREQ_QUIZ_QUESTIONS: PrimerQuestion[] = [
       'Sets margin to the browser default',
     ],
     correctIndex: 1,
-    explanation: 'margin: 0 auto sets top/bottom margin to 0 and left/right to "auto" â€” the browser splits the remaining space equally on both sides, centering the element.',
+    explanation: 'margin: 0 auto sets top/bottom margin to 0 and left/right to "auto" — the browser splits the remaining space equally on both sides, centering the element.',
   },
 ]
 

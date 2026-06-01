@@ -5,7 +5,7 @@ import { adminChunkApi, adminDomainApi, type AdminChunk, type AdminDomain } from
 const TIERS = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
 
 const BLANK_CHUNK: Partial<AdminChunk> = {
-  title: '', glyph: 'ðŸ“¦', sortOrder: 0, tier: 'APPRENTICE', domainId: '', prerequisiteIds: [],
+  title: '', glyph: '📦', sortOrder: 0, tier: 'APPRENTICE', domainId: '', prerequisiteIds: [],
 }
 
 function ChunkForm({
@@ -33,7 +33,7 @@ function ChunkForm({
         <label style={labelStyle}>
           Topic
           <select style={inputStyle} value={form.domainId ?? ''} onChange={e => set('domainId', e.target.value)}>
-            <option value="">Select topicâ€¦</option>
+            <option value="">Select topic…</option>
             {topics.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
         </label>
@@ -165,7 +165,7 @@ export default function AdminChunksPage() {
       )}
 
       {loading ? (
-        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loadingâ€¦</div>
+        <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
@@ -183,7 +183,7 @@ export default function AdminChunksPage() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontWeight: 600, fontSize: 14, color: '#e8e0f0' }}>{chunk.title}</div>
                 <div style={{ fontSize: 11, color: '#8b7fa0', marginTop: 2 }}>
-                  {topicName(chunk.domainId)} Â· {chunk.subChunkCount} lessons Â· order {chunk.sortOrder}
+                  {topicName(chunk.domainId)} · {chunk.subChunkCount} lessons · order {chunk.sortOrder}
                 </div>
               </div>
               <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', padding: '2px 8px', borderRadius: 4, border: `1px solid ${tierColor[chunk.tier] ?? '#2e2850'}`, color: tierColor[chunk.tier] ?? '#8b7fa0' }}>
@@ -202,14 +202,14 @@ export default function AdminChunksPage() {
                   style={{ fontSize: 11, padding: '4px 10px' }}
                   onClick={() => { setEditChunk(chunk); setShowForm(false) }}
                 >
-                  âœï¸
+                  ✏️
                 </button>
                 <button
                   className="btn btn-ghost"
                   style={{ fontSize: 11, padding: '4px 10px', borderColor: 'rgba(248,113,113,.3)', color: '#f87171' }}
                   onClick={() => handleDelete(chunk.id)}
                 >
-                  ðŸ—‘ï¸
+                  🗑️
                 </button>
               </div>
             </div>
