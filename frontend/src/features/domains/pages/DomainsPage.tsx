@@ -5,7 +5,7 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
-import { Sparkles, RefreshCcw, Check, Lock, ChevronLeft, LogIn, AlertTriangle } from 'lucide-react'
+import { Lock, ChevronLeft, LogIn, AlertTriangle } from 'lucide-react'
 import {
   DOMAINS,
   ACTIVE_DOMAIN_IDS,
@@ -22,8 +22,6 @@ import {
 
 interface TopicData {
   progress: number
-  diagnosticCompleted: boolean
-  diagnosticCompletedAt: string | null
   totalChunks: number
   totalLessons: number
 }
@@ -32,13 +30,6 @@ type NavState =
   | { level: 'schools' }
   | { level: 'track-groups'; school: School }
   | { level: 'domains'; school: School; trackGroupId?: string }
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-function diagnosticExpired(completedAt: string | null): boolean {
-  if (!completedAt) return false
-  return (Date.now() - new Date(completedAt).getTime()) / (1000 * 60 * 60 * 24) >= 30
-}
 
 // ── Progress Ring (public / no-data state shows an empty ring) ────────────────
 
@@ -325,8 +316,6 @@ function DomainsView({
   canBypassPaywall,
   isPublic,
   onTopicClick,
-  onDiagnosticClick,
-  renderDiagnosticRow,
 }: {
   school: School
   trackGroupId?: string
@@ -335,8 +324,6 @@ function DomainsView({
   canBypassPaywall: boolean
   isPublic: boolean
   onTopicClick: (topic: Domain) => void
-  onDiagnosticClick: (e: React.MouseEvent, domainId: string) => void
-  renderDiagnosticRow: (topic: Domain) => React.ReactNode
 }) {
   const hasActiveEnrollment = enrolledTopicIds.size > 0
   const meta = trackGroupId
@@ -449,8 +436,6 @@ function DomainsView({
               <div className="font-cinzel text-[18px] font-bold text-text">{topic.name}</div>
               <div className="text-[13px] text-muted leading-[1.6] flex-1">{topic.tagline}</div>
 
-              {!isPublic && active && isEnrolled && renderDiagnosticRow(topic)}
-
               <div className="flex items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
                 <span className="text-[11px] text-muted font-cinzel leading-[1.4]">
                   {active && !isPublic && topicData[topic.id]
@@ -513,20 +498,16 @@ export default function DomainsPage() {
           .filter(([, d]) => d != null)
           .map(([id, d]) => [id, {
             progress: Math.round(d!.overallProgress * 100),
-            diagnosticCompleted: d!.diagnosticCompleted,
-            diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
             totalChunks: d!.chunkHealth.length,
             totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalLessons, 0),
           }])
       )
 
+  // A domain is "enrolled" once the learner has started any module
   const enrolledTopicIds = new Set(
     isPublic
       ? []
-      : ACTIVE_DOMAIN_IDS.filter(id => {
-          const d = topicData[id]
-          return d != null && (d.progress > 0 || d.diagnosticCompleted)
-        })
+      : ACTIVE_DOMAIN_IDS.filter(id => (topicData[id]?.progress ?? 0) > 0)
   )
   const canBypassPaywall = user?.role === 'ADMIN' || user?.bypassPaywall === true
 
@@ -535,7 +516,7 @@ export default function DomainsPage() {
 
     // Not logged in — save intent and redirect to login
     if (isPublic) {
-      sessionStorage.setItem('arcane-intended-path', `/domain/${topic.id}/onboarding`)
+      sessionStorage.setItem('arcane-intended-path', `/domain/${topic.id}`)
       navigate('/login')
       return
     }
@@ -548,72 +529,7 @@ export default function DomainsPage() {
       return
     }
 
-    const data = topicData[topic.id]
-    const needsOnboarding = !data || !data.diagnosticCompleted || diagnosticExpired(data.diagnosticCompletedAt)
-    navigate(needsOnboarding ? `/domain/${topic.id}/onboarding` : `/domain/${topic.id}`)
-  }
-
-  function handleDiagnosticClick(e: React.MouseEvent, domainId: string) {
-    e.stopPropagation()
-    navigate(`/domain/${domainId}/diagnostic`)
-  }
-
-  function renderDiagnosticRow(topic: Domain) {
-    const data = topicData[topic.id]
-    if (!data) return null
-
-    const { diagnosticCompleted, diagnosticCompletedAt } = data
-    const expired = diagnosticExpired(diagnosticCompletedAt)
-
-    if (!diagnosticCompleted) {
-      return (
-        <button
-          className="w-full mt-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-[7px]
-            bg-[rgba(139,92,246,0.08)] border border-[rgba(139,92,246,0.25)] text-purple-light
-            text-[11px] font-semibold font-cinzel tracking-wide
-            transition-[background,border-color] duration-150
-            hover:bg-[rgba(139,92,246,0.15)] hover:border-purple"
-          onClick={e => handleDiagnosticClick(e, topic.id)}
-        >
-          <Sparkles size={12} strokeWidth={1.75} />
-          Take Diagnostic
-        </button>
-      )
-    }
-
-    if (expired) {
-      return (
-        <button
-          className="w-full mt-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-[7px]
-            bg-[rgba(201,162,39,0.08)] border border-[rgba(201,162,39,0.25)] text-gold
-            text-[11px] font-semibold font-cinzel tracking-wide
-            transition-[background,border-color] duration-150
-            hover:bg-[rgba(201,162,39,0.15)] hover:border-gold"
-          onClick={e => handleDiagnosticClick(e, topic.id)}
-        >
-          <RefreshCcw size={12} strokeWidth={1.75} />
-          Retake Diagnostic
-        </button>
-      )
-    }
-
-    const completedDate = diagnosticCompletedAt
-      ? new Date(diagnosticCompletedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
-      : null
-    const daysLeft = diagnosticCompletedAt
-      ? Math.ceil(30 - (Date.now() - new Date(diagnosticCompletedAt).getTime()) / (1000 * 60 * 60 * 24))
-      : null
-
-    return (
-      <div className="mt-1 flex items-center gap-1.5 px-3 py-1.5 rounded-[7px]
-        bg-[rgba(0,200,83,0.06)] border border-[rgba(0,200,83,0.2)] text-teal text-[11px] font-cinzel">
-        <Check size={12} strokeWidth={2.5} />
-        <span>Diagnostic done{completedDate ? ` · ${completedDate}` : ''}</span>
-        {daysLeft !== null && (
-          <span className="ml-auto text-muted text-[10px]">retake in {daysLeft}d</span>
-        )}
-      </div>
-    )
+    navigate(`/domain/${topic.id}`)
   }
 
   function handleSchoolSelect(school: School) {
@@ -680,8 +596,6 @@ export default function DomainsPage() {
             canBypassPaywall={canBypassPaywall}
             isPublic={isPublic}
             onTopicClick={handleTopicClick}
-            onDiagnosticClick={handleDiagnosticClick}
-            renderDiagnosticRow={renderDiagnosticRow}
           />
         )}
       </div>

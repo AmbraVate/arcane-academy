@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
 import { TierIcon } from '@/components/icons/TierIcon'
-import { Check, MapPin, Lock, Sparkles, BookOpen } from 'lucide-react'
+import { Check, MapPin, Lock, BookOpen } from 'lucide-react'
 
 type TopicMeta = {
   name: string
@@ -129,7 +129,7 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDt
   return (
     <div
       className={cn(
-        'chunk-card bg-card border rounded-[12px] p-4 flex items-center gap-3 cursor-pointer transition-[border-color,transform] duration-200',
+        'chunk-card bg-card border rounded-[12px] p-4 flex items-start gap-3 cursor-pointer transition-[border-color,transform] duration-200',
         locked ? 'opacity-40 cursor-default saturate-[0.4] border-border' : 'border-border hover:-translate-y-0.5',
       )}
       onMouseEnter={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderColor = accent }}
@@ -137,15 +137,15 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDt
       onClick={onClick}
     >
       {/* Glyph / lock */}
-      <div className="text-[26px] leading-none w-9 flex-shrink-0 flex items-center justify-center">
-        {locked ? <Lock size={20} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
+      <div className="text-[24px] leading-none w-8 flex-shrink-0 flex items-center justify-center pt-0.5">
+        {locked ? <Lock size={18} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
       </div>
 
       {/* Title + meta */}
       <div className="flex-1 min-w-0">
-        <div className="text-[14px] font-bold text-text leading-[1.35] truncate">{ch.title}</div>
+        <div className="text-[13px] font-bold text-text leading-[1.4] line-clamp-2">{ch.title}</div>
         <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[11px] text-muted">{ch.totalLessons} topics</span>
+          <span className="text-[11px] text-muted">{ch.totalLessons} lessons</span>
           {!locked && inProg && (
             <span className="text-[10px] text-purple-light font-cinzel uppercase tracking-wide">In Progress</span>
           )}
@@ -210,7 +210,7 @@ export default function DomainPage() {
         }}
       >
         <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/domains')}>
-          ← All Topics
+          ← Schools
         </button>
         <div className="mb-2.5 flex justify-center">
           <DomainIcon domainId={domainId ?? ''} size={52} />
@@ -272,7 +272,6 @@ export default function DomainPage() {
           const tierComplete = chunks.every(ch => ch.status === 'COMPLETE')
           const tierStarted  = chunks.some(ch => ch.status !== 'LOCKED')
           const placedHere   = dashboard.currentPath === tier
-          const donePct      = Math.round((chunks.filter(ch => ch.status === 'COMPLETE').length / chunks.length) * 100)
 
           return (
             <div key={tier} className="mb-8">
@@ -299,16 +298,8 @@ export default function DomainPage() {
                   </div>
                   <span className="text-[12px] text-muted">{TIER_DESC[tier]}</span>
                 </div>
-                <button
-                  className="btn btn-ghost text-[11px] py-1 px-3 self-start flex-shrink-0 max-[480px]:hidden"
-                  onClick={() => navigate(`/domain/${domainId}/diagnostic`)}
-                  title="Retake diagnostic"
-                >
-                  <Sparkles size={12} strokeWidth={1.75} />
-                  Retake Diagnostic
-                </button>
               </div>
-              <div className="chunk-grid grid gap-3.5 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))' }}>
+              <div className="chunk-grid grid gap-2.5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))' }}>
                 {chunks.map(ch => (
                   <ChunkCard
                     key={ch.moduleId}

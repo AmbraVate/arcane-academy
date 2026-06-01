@@ -15,16 +15,11 @@ const OAuthCallbackPage    = lazy(() => import('./features/auth/pages/OAuthCallb
 const ModuleMapPage        = lazy(() => import('./features/domains/pages/ModuleMapPage'))
 const EncodingPage         = lazy(() => import('./features/learning/pages/EncodingPage'))
 const ReviewPage           = lazy(() => import('./features/review/pages/ReviewPage'))
-const DiagnosticPage       = lazy(() => import('./features/diagnostic/pages/DiagnosticPage'))
 const OnboardingPage       = lazy(() => import('./features/auth/pages/OnboardingPage'))
 const RabbitHolePage       = lazy(() => import('./features/exploration/pages/RabbitHolePage'))
 const CuriosityQueuePage   = lazy(() => import('./features/exploration/pages/CuriosityQueuePage'))
 const ProfilePage          = lazy(() => import('./features/profile/pages/ProfilePage'))
 const DomainPage           = lazy(() => import('./features/domains/pages/DomainPage'))
-const DomainOnboardingPage = lazy(() => import('./features/onboarding/pages/DomainOnboardingPage'))
-const DomainDiagnosticPage = lazy(() => import('./features/diagnostic/pages/DomainDiagnosticPage'))
-const PrerequisiteCheckPage = lazy(() => import('./features/onboarding/pages/PrerequisiteCheckPage'))
-const CssPrimerPage        = lazy(() => import('./features/onboarding/pages/CssPrimerPage'))
 const LeaderboardPage      = lazy(() => import('./features/leaderboard/pages/LeaderboardPage'))
 const PublicProfilePage    = lazy(() => import('./features/profile/pages/PublicProfilePage'))
 const LandingPage          = lazy(() => import('./features/auth/pages/LandingPage'))
@@ -66,6 +61,13 @@ function AdminRoute() {
   return <Outlet />
 }
 
+/** Redirects /domain/:id/onboarding|diagnostic|etc to /domain/:id (diagnostics removed). */
+function DomainRedirect() {
+  const location = useLocation()
+  const domainId = location.pathname.split('/')[2]
+  return <Navigate to={`/domain/${domainId}`} replace />
+}
+
 /** Redirects legacy /topic/:id URLs to /domain/:id. */
 function LegacyTopicRedirect() {
   const location = useLocation()
@@ -81,7 +83,6 @@ function AppRoutes() {
         <Route path="/register" element={<RegisterPageGuard />} />
         <Route path="/oauth2/callback" element={<OAuthCallbackPage />} />
         <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
-        <Route path="/diagnostic" element={<PrivateRoute><DiagnosticPage /></PrivateRoute>} />
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/" element={<HomeRedirect />} />
@@ -94,10 +95,11 @@ function AppRoutes() {
         {/* Schools / Domains — publicly browsable; enrol requires login */}
         <Route path="/domains"  element={<DomainsPage />} />
         <Route path="/domain/:domainId" element={<PrivateRoute><DomainPage /></PrivateRoute>} />
-        <Route path="/domain/:domainId/onboarding" element={<PrivateRoute><DomainOnboardingPage /></PrivateRoute>} />
-        <Route path="/domain/:domainId/diagnostic" element={<PrivateRoute><DomainDiagnosticPage /></PrivateRoute>} />
-        <Route path="/domain/:domainId/prereq-check" element={<PrivateRoute><PrerequisiteCheckPage /></PrivateRoute>} />
-        <Route path="/domain/:domainId/css-primer" element={<PrivateRoute><CssPrimerPage /></PrivateRoute>} />
+        {/* Diagnostic/onboarding routes removed — redirect to domain */}
+        <Route path="/domain/:domainId/onboarding"   element={<DomainRedirect />} />
+        <Route path="/domain/:domainId/diagnostic"   element={<DomainRedirect />} />
+        <Route path="/domain/:domainId/prereq-check" element={<DomainRedirect />} />
+        <Route path="/domain/:domainId/css-primer"   element={<DomainRedirect />} />
         <Route path="/tutorial/lesson" element={<PrivateRoute><TutorialLessonPage /></PrivateRoute>} />
         {/* Legacy redirects */}
         <Route path="/topics" element={<Navigate to="/domains" replace />} />
