@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(155px, 1fr))', gap: 12 }}>
         <StatCard label="Total Users"   value={stats.totalUsers}     Icon={Users}      color="#8b5cf6" />
         <StatCard label="Active (7d)"   value={stats.activeUsers7d}  Icon={Flame}      color="#fb923c" />
-        <StatCard label="Domains"       value={stats.totalDomains}   Icon={Map}        color="#2dd4bf" />
+        <StatCard label="Pathways"      value={stats.totalDomains}   Icon={Map}        color="#2dd4bf" />
         <StatCard label="Modules"       value={stats.totalChunks}    Icon={Package}    color="#c9a227" />
         <StatCard label="Lessons"       value={stats.totalLessons} Icon={FileText}   color="#8b5cf6" />
         <StatCard label="Questions"     value={stats.totalQuestions} Icon={CircleHelp} color="#4ade80" />

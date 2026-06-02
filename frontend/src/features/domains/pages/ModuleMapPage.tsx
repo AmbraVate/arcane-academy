@@ -183,7 +183,7 @@ export default function ModuleMapPage() {
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
       <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/pathway/${chunk.domainId}`)}>
-        ← Back to Domain
+        ← Back to Pathway
       </button>
 
       {isPublic && (

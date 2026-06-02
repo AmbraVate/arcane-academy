@@ -31,7 +31,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     id: 'how-organised',
     title: 'The Structure of Knowledge',
-    body: "The Academy is organised into layers:\n\n**School** — groups related disciplines\n**Domain** — e.g. Software Engineering\n**Tier** — Apprentice → Junior → Senior → Lead\n**Module** — a cluster of related lessons\n**Lesson** — a 15–25 min deep-learning session\n\nYou choose a School, pick a Domain, and work through it tier by tier.",
+    body: "The Academy is organised into layers:\n\n**School** — groups related disciplines\n**Pathway** — e.g. Software Engineering\n**Tier** — Apprentice → Junior → Senior → Lead\n**Module** — a cluster of related lessons\n**Lesson** — a 15–25 min deep-learning session\n\nYou choose a School, pick a Pathway, and work through it tier by tier.",
     position: 'center',
     ctaLabel: 'Next →',
   },

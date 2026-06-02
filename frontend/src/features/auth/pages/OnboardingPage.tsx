@@ -53,7 +53,7 @@ function Step1() {
 
 const HIERARCHY = [
   { label: 'School',  color: '#c9a227', desc: 'e.g. School of Engineering' },
-  { label: 'Domain',  color: '#a78bfa', desc: 'e.g. Software Engineering' },
+  { label: 'Pathway', color: '#a78bfa', desc: 'e.g. Software Engineering' },
   { label: 'Tier',    color: '#38bdf8', desc: 'Apprentice → Junior → Senior → Lead' },
   { label: 'Module',  color: '#4ade80', desc: 'e.g. Foundations of Computation' },
   { label: 'Topic',   color: '#fb923c', desc: 'e.g. Computational Thinking' },

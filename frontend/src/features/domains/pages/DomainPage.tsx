@@ -103,7 +103,7 @@ export default function DomainPage() {
 
   const domainMeta = DOMAINS.find(d => d.id === domainId)
   const meta = {
-    name:        domainMeta?.name     ?? domainId ?? 'Domain',
+    name:        domainMeta?.name     ?? domainId ?? 'Pathway',
     glyph:       domainMeta?.glyph    ?? '📖',
     tagline:     domainMeta?.tagline  ?? '',
     accentStroke: domainMeta?.accentStroke ?? 'var(--teal)',
