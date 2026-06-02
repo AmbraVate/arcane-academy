@@ -93,6 +93,7 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
       }
     : (() => {
         const GAP = 16
+        const CALLOUT_H = 220  // conservative estimate of callout height
         const s: React.CSSProperties = { position: 'fixed', maxWidth: 340, width: '90vw' }
         const spotX  = rect.x - PAD
         const spotY  = rect.y - PAD
@@ -101,13 +102,19 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
         const vw = window.innerWidth
         const vh = window.innerHeight
 
-        if (position === 'bottom') {
+        // Auto-flip bottom→top when the callout would overflow the viewport
+        const effectivePosition =
+          position === 'bottom' && spotY + spotH + GAP + CALLOUT_H > vh
+            ? 'top'
+            : position
+
+        if (effectivePosition === 'bottom') {
           s.top  = spotY + spotH + GAP
           s.left = Math.max(8, Math.min(vw - 348, spotX + spotW / 2 - 170))
-        } else if (position === 'top') {
+        } else if (effectivePosition === 'top') {
           s.bottom = vh - spotY + GAP
           s.left   = Math.max(8, Math.min(vw - 348, spotX + spotW / 2 - 170))
-        } else if (position === 'right') {
+        } else if (effectivePosition === 'right') {
           s.top  = Math.max(8, spotY + spotH / 2 - 80)
           s.left = spotX + spotW + GAP
         } else {
@@ -117,10 +124,16 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
         return s
       })()
 
-  const arrowDir = position === 'bottom' ? 'up'
-    : position === 'top'    ? 'down'
-    : position === 'right'  ? 'left'
-    : position === 'left'   ? 'right'
+  // Recalculate effective position for arrow (mirrors auto-flip logic above)
+  const effectivePosition = (
+    position === 'bottom' && rect &&
+    (rect.y - PAD) + (rect.h + PAD * 2) + 16 + 220 > window.innerHeight
+  ) ? 'top' : position
+
+  const arrowDir = effectivePosition === 'bottom' ? 'up'
+    : effectivePosition === 'top'    ? 'down'
+    : effectivePosition === 'right'  ? 'left'
+    : effectivePosition === 'left'   ? 'right'
     : null
 
   // Render markdown-lite: **bold** and newlines

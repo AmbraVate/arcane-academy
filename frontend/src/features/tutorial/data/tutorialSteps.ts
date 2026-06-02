@@ -42,7 +42,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     targetId: 'schools-grid',
     title: 'Choose Your School',
     body: 'Each **School** groups related disciplines. Browse the schools and pick one that calls to you — you can always explore others later.',
-    position: 'bottom',
+    position: 'top',
     navigateTo: '/schools',
     ctaLabel: 'Next →',
   },
