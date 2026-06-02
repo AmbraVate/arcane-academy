@@ -233,6 +233,9 @@ export const adminUserApi = {
     const { data } = await api.patch(`/api/admin/users/${id}/bypass-paywall`, { bypassPaywall })
     return data
   },
+  resetPassword: async (id: string, password: string): Promise<void> => {
+    await api.put(`/api/admin/users/${id}/reset-password`, { password })
+  },
 }
 
 // â”€â”€ Stuck Reports â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

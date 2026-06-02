@@ -11,12 +11,14 @@ import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -26,11 +28,13 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/admin/users")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
+@Slf4j
 public class AdminUserController {
 
-    private final UserRepository userRepository;
+    private final UserRepository              userRepository;
     private final UserChunkProgressRepository progressRepository;
-    private final AdminStatsService statsService;
+    private final AdminStatsService           statsService;
+    private final PasswordEncoder             passwordEncoder;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> list(
@@ -164,12 +168,35 @@ public class AdminUserController {
     }
 
     /**
-     * Detailed stats for a single user â€” for the admin user-detail panel.
+     * Detailed stats for a single user — for the admin user-detail panel.
      */
-    @GetMapping("/{userId}/stats")
+    @GetMapping(“/{userId}/stats”)
     public ResponseEntity<UserStatsDto> getUserStats(@PathVariable String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
+                .orElseThrow(() -> new NoSuchElementException(“User not found: “ + userId));
         return ResponseEntity.ok(statsService.toUserStatsDto(user));
+    }
+
+    /**
+     * Reset a user's password to a new value supplied by the admin.
+     * The new password must be at least 8 characters.
+     * OAuth-only accounts gain a password via this path.
+     */
+    @PutMapping(“/{userId}/reset-password”)
+    public ResponseEntity<Void> resetPassword(
+            @PathVariable String userId,
+            @RequestBody Map<String, String> body) {
+
+        String newPassword = body.get(“password”);
+        if (newPassword == null || newPassword.length() < 8) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException(“User not found: “ + userId));
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        log.info(“[Admin] Password reset for userId={}”, userId);
+        return ResponseEntity.noContent().build();
     }
 }

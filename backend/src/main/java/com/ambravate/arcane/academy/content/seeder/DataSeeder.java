@@ -22,15 +22,17 @@ import java.util.Optional;
 @Slf4j
 public class DataSeeder {
 
-    private final JsonContentSeeder      jsonContentSeeder;
-    private final MarkdownContentSeeder  markdownContentSeeder;
+    private final JsonContentSeeder        jsonContentSeeder;
+    private final MarkdownContentSeeder    markdownContentSeeder;
     private final Optional<TestUserSeeder> testUserSeeder;   // absent in prod (@Profile("!prod"))
-    private final DomainSeeder           domainSeeder;
-    private final TrackSeeder            trackSeeder;
+    private final DomainSeeder             domainSeeder;
+    private final TrackSeeder              trackSeeder;
+    private final AdminSeeder              adminSeeder;
 
     @Bean
     public ApplicationRunner seedData() {
         return args -> {
+            seedQuietly("admin account",    adminSeeder::seed);
             seedQuietly("domains",          domainSeeder::seed);
             seedQuietly("tracks",           trackSeeder::seed);
             seedQuietly("JSON content",     this::seedJsonContent);

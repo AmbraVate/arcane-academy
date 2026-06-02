@@ -53,6 +53,15 @@ app:
     redirect-uri: ${OAUTH2_FRONTEND_REDIRECT:http://localhost:5173/oauth2/callback}
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
 
+# ── Admin bootstrap account ────────────────────────────────────────────────────
+# Set all three via environment variables (or your cloud secrets manager).
+# The account is created / synced on every startup — leave blank to skip.
+# Rotating ADMIN_PASSWORD and redeploying automatically updates the hash.
+admin:
+  email:    ${ADMIN_EMAIL:}
+  username: ${ADMIN_USERNAME:admin}
+  password: ${ADMIN_PASSWORD:}
+
 # Stripe — payment processing.
 # Set all values via environment variables in production.
 # Create products + prices in your Stripe dashboard and paste the Price IDs below.
