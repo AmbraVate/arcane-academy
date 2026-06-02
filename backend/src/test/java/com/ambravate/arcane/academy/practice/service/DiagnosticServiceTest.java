@@ -37,12 +37,12 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for {@link DiagnosticService} tier-placement logic.
  * <p>
- * Boundary conditions for the four-tier system:
+ * Placement boundaries (based on fraction of modules skipped):
  * <ul>
- *   <li>&gt;90% skip → EXPERT</li>
- *   <li>&gt;70% skip → PRACTITIONER</li>
- *   <li>&gt;50% skip → ADVANCED (added in May 2026)</li>
- *   <li>≤50% skip → FOUNDATION</li>
+ *   <li>&gt;90% skip → LEAD</li>
+ *   <li>&gt;70% skip → SENIOR</li>
+ *   <li>&gt;50% skip → JUNIOR</li>
+ *   <li>≤50% skip  → APPRENTICE</li>
  * </ul>
  */
 @ExtendWith(MockitoExtension.class)
@@ -84,10 +84,8 @@ class DiagnosticServiceTest {
     /**
      * Build a GradeResult where the first {@code correctCount} lessons out
      * of the ordered list are answered correctly (2 correct per module → SKIP).
-     * Lessons alternate a/b per module, so correct pairs produce SKIP modules.
      */
-    private GradeResult gradeResult(
-            List<String> lessonIds, int correctCount) {
+    private GradeResult gradeResult(List<String> lessonIds, int correctCount) {
         List<QuestionResult> results = new java.util.ArrayList<>();
         for (int i = 0; i < lessonIds.size(); i++) {
             String scId = lessonIds.get(i);
@@ -115,6 +113,8 @@ class DiagnosticServiceTest {
     /**
      * Set up {@code chunkCount} modules each with 2 lessons.
      * Returns the flat list of lesson IDs in order.
+     * Mocks both {@code findByTrackIdOrderBySortOrderAsc} and the new
+     * {@code findByModuleIdIn} call used by the service to build the lesson→module map.
      */
     private List<String> setupChunks(int chunkCount) {
         List<LearningModule> chunks = new java.util.ArrayList<>();
@@ -137,119 +137,120 @@ class DiagnosticServiceTest {
             allLessonIds.add(sc2.getId());
         }
 
-        when(lessonRepository.findAll()).thenReturn(allLessons);
+        // Service now uses findByModuleIdIn for the lesson→module map
+        when(lessonRepository.findByModuleIdIn(anyList())).thenReturn(allLessons);
         return allLessonIds;
     }
 
-    // ── FOUNDATION boundary ─────────────────────────────────────────────────────
+    // ── APPRENTICE boundary ─────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("FOUNDATION tier")
-    class FoundationTier {
+    @DisplayName("APPRENTICE tier")
+    class ApprenticeTier {
 
         @Test
-        @DisplayName("places learner at FOUNDATION when 0% of modules are skipped")
-        void zeroSkipIsFoundation() {
+        @DisplayName("places learner at APPRENTICE when 0% of modules are skipped")
+        void zeroSkipIsApprentice() {
             List<String> scIds = setupChunks(4);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 0));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.FOUNDATION);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.APPRENTICE);
         }
 
         @Test
-        @DisplayName("places learner at FOUNDATION when exactly 50% of modules are skipped")
-        void exactlyFiftyPercentIsFoundation() {
+        @DisplayName("places learner at APPRENTICE when exactly 50% of modules are skipped (boundary is strictly > 50%)")
+        void exactlyFiftyPercentIsApprentice() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 10));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.FOUNDATION);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.APPRENTICE);
         }
     }
 
-    // ── ADVANCED tier ───────────────────────────────────────────────────────────
+    // ── JUNIOR boundary ─────────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("ADVANCED tier — added May 2026")
-    class AdvancedTier {
+    @DisplayName("JUNIOR tier")
+    class JuniorTier {
 
         @Test
-        @DisplayName("places learner at ADVANCED when just over 50% of modules are skipped")
-        void justOverFiftyPercentIsAdvanced() {
+        @DisplayName("places learner at JUNIOR when just over 50% of modules are skipped")
+        void justOverFiftyPercentIsJunior() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 12));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.ADVANCED);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.JUNIOR);
         }
 
         @Test
-        @DisplayName("places learner at ADVANCED when 65% of modules are skipped")
-        void sixtyFivePercentIsAdvanced() {
+        @DisplayName("places learner at JUNIOR when 65% of modules are skipped")
+        void sixtyFivePercentIsJunior() {
             List<String> scIds = setupChunks(20);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 26));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.ADVANCED);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.JUNIOR);
         }
 
         @Test
-        @DisplayName("places learner at ADVANCED when exactly 70% of modules are skipped (boundary is strictly > 70%)")
-        void exactlySeventyPercentIsAdvanced() {
+        @DisplayName("places learner at JUNIOR when exactly 70% of modules are skipped (boundary is strictly > 70%)")
+        void exactlySeventyPercentIsJunior() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 14));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.ADVANCED);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.JUNIOR);
         }
     }
 
-    // ── PRACTITIONER boundary ───────────────────────────────────────────────────
+    // ── SENIOR boundary ─────────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("PRACTITIONER tier")
-    class PractitionerTier {
+    @DisplayName("SENIOR tier")
+    class SeniorTier {
 
         @Test
-        @DisplayName("places learner at PRACTITIONER when 80% of modules are skipped")
-        void eightyPercentIsPractitioner() {
+        @DisplayName("places learner at SENIOR when 80% of modules are skipped")
+        void eightyPercentIsSenior() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 16));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.PRACTITIONER);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.SENIOR);
         }
     }
 
-    // ── EXPERT boundary ─────────────────────────────────────────────────────────
+    // ── LEAD boundary ───────────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("EXPERT tier")
-    class ExpertTier {
+    @DisplayName("LEAD tier")
+    class LeadTier {
 
         @Test
-        @DisplayName("places learner at EXPERT when more than 90% of modules are skipped")
-        void ninetyOnePercentIsExpert() {
+        @DisplayName("places learner at LEAD when more than 90% of modules are skipped")
+        void ninetyOnePercentIsLead() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 20));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.EXPERT);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.LEAD);
         }
     }
 }
