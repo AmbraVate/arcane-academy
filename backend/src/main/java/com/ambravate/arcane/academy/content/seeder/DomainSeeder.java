@@ -18,11 +18,11 @@ public class DomainSeeder {
     public void seed() {
         List<Domain> defaults = List.of(
             Domain.builder()
-                .id("java")
-                .name("Java")
-                .glyph("â˜•")
-                .tagline("From zero to job-ready â€” master the language that powers the enterprise.")
-                .accentColor("#f89820")
+                .id(“software-engineering”)
+                .name(“Software Engineering”)
+                .glyph(“⚙️”)
+                .tagline(“Build reliable systems — computational thinking, design, and architecture.”)
+                .accentColor(“#2dd4bf”)
                 .sortOrder(1)
                 .active(true)
                 .build(),

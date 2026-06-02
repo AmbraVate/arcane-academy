@@ -44,6 +44,20 @@ import java.util.Set;
 @Slf4j
 public class JsonContentSeeder {
 
+    /**
+     * Normalises legacy domain IDs that predate the V37 track rename.
+     * Content files in the {@code java/} resource folder still carry
+     * {@code "topicId": "java"}; this map redirects them to the canonical
+     * {@code software-engineering} track without touching the content files.
+     */
+    private static final Map<String, String> DOMAIN_ID_ALIASES = Map.of(
+        "java", "software-engineering"
+    );
+
+    private String resolveTrackId(String domainId) {
+        return DOMAIN_ID_ALIASES.getOrDefault(domainId, domainId);
+    }
+
     private final LearningModuleRepository moduleRepository;
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
@@ -82,7 +96,7 @@ public class JsonContentSeeder {
                     seedModule(dto);
                 });
                 jsonIdsByDomainTier
-                        .computeIfAbsent(dto.domainId + "|" + dto.tier, k -> new HashSet<>())
+                        .computeIfAbsent(resolveTrackId(dto.domainId) + "|" + dto.tier, k -> new HashSet<>())
                         .add(dto.id);
             }
             tx.executeWithoutResult(status -> pruneStaleModules(jsonIdsByDomainTier));
@@ -125,7 +139,7 @@ public class JsonContentSeeder {
             try { tierEnum = LearnerPath.valueOf(tier); }
             catch (IllegalArgumentException e) { continue; }
 
-            List<LearningModule> stale = moduleRepository.findByTrackIdOrderBySortOrderAsc(domainId).stream()
+            List<LearningModule> stale = moduleRepository.findByTrackIdOrderBySortOrderAsc(resolveTrackId(domainId)).stream()
                     .filter(m -> m.getTier() == tierEnum && !validIds.contains(m.getId()))
                     .toList();
 
@@ -202,7 +216,7 @@ public class JsonContentSeeder {
                 .glyph(dto.glyph)
                 .sortOrder(dto.sortOrder)
                 .tier(LearnerPath.valueOf(dto.tier))
-                .trackId(dto.domainId)
+                .trackId(resolveTrackId(dto.domainId))
                 .build();
         moduleRepository.save(module);
 
