@@ -15,7 +15,6 @@ const OAuthCallbackPage    = lazy(() => import('./features/auth/pages/OAuthCallb
 const ModuleMapPage        = lazy(() => import('./features/domains/pages/ModuleMapPage'))
 const EncodingPage         = lazy(() => import('./features/learning/pages/EncodingPage'))
 const ReviewPage           = lazy(() => import('./features/review/pages/ReviewPage'))
-const OnboardingPage       = lazy(() => import('./features/auth/pages/OnboardingPage'))
 const RabbitHolePage       = lazy(() => import('./features/exploration/pages/RabbitHolePage'))
 const CuriosityQueuePage   = lazy(() => import('./features/exploration/pages/CuriosityQueuePage'))
 const ProfilePage          = lazy(() => import('./features/profile/pages/ProfilePage'))
@@ -101,8 +100,7 @@ function AppRoutes() {
         <Route path="/login"  element={<LoginPageGuard />} />
         <Route path="/register" element={<RegisterPageGuard />} />
         <Route path="/oauth2/callback" element={<OAuthCallbackPage />} />
-        <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
-        <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+<Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/" element={<HomeRedirect />} />
         {/* Module + topic pages — publicly browsable (structure only; content requires login) */}
@@ -167,7 +165,6 @@ function RegisterPageGuard() {
 function HomeRedirect() {
   const { user } = useAuth()
   if (!user) return <LandingPage />
-  if (user.onboardingCompleted === false) return <Navigate to="/onboarding" replace />
   // Redirect to the path the user intended before being sent to login
   const intended = sessionStorage.getItem('arcane-intended-path')
   if (intended) {

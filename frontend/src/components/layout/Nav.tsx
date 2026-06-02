@@ -141,7 +141,7 @@ export default function Nav() {
           <button
             className="btn btn-ghost px-2.5 py-1 text-[12px] flex items-center gap-1.5
                        max-[480px]:border-none max-[480px]:bg-transparent max-[480px]:px-2 max-[480px]:py-[5px]"
-            onClick={logout}
+            onClick={() => { logout(); navigate('/') }}
             title="Logout"
           >
             <LogOut size={15} strokeWidth={1.75} />

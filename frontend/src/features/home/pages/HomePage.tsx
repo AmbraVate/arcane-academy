@@ -2,7 +2,6 @@ import {useNavigate, useSearchParams} from 'react-router-dom'
 import {useState, useEffect, useRef} from 'react'
 import {useAuth} from '@/shared/hooks/useAuth'
 import {useTutorial} from '@/features/tutorial/context/TutorialContext'
-import OnboardingModal from '@/features/home/components/OnboardingModal'
 import {useDomainsDashboard} from '@/hooks/queries'
 import {DomainIcon} from '@/components/icons/DomainIcon'
 import {Badge} from '@/components/ui/badge'
@@ -263,7 +262,6 @@ export default function HomePage() {
 
   const [showUpgrade, setShowUpgrade] = useState(false)
   const [paymentBanner, setPaymentBanner] = useState<'success' | 'cancelled' | null>(null)
-  const [showOnboarding, setShowOnboarding] = useState(false)
 
   // Auto-start tutorial for first-time users (after a short paint delay).
   useEffect(() => {
@@ -272,15 +270,6 @@ export default function HomePage() {
       return () => clearTimeout(t)
     }
   }, [user, maybeStart])
-
-  // Show onboarding once for users who haven't completed it yet.
-  // Delay slightly so the page paint completes first (avoids flash on load).
-  useEffect(() => {
-    if (user && user.onboardingCompleted === false) {
-      const t = setTimeout(() => setShowOnboarding(true), 400)
-      return () => clearTimeout(t)
-    }
-  }, [user?.userId, user?.onboardingCompleted]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle return from Stripe Checkout
   useEffect(() => {
@@ -332,9 +321,6 @@ export default function HomePage() {
   return (
       <div
           className="max-w-[860px] mx-auto px-5 py-8 pb-20 overflow-y-auto max-[600px]:px-4 max-[600px]:py-6">
-
-        {/* Onboarding modal — shown once for new users */}
-        {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)}/>}
 
         {/* Upgrade modal */}
         {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)}/>}

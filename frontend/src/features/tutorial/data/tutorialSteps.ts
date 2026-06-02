@@ -23,10 +23,24 @@ export interface TutorialStep {
 export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     id: 'welcome',
-    title: 'Welcome to Arcane Academy! 🧙',
-    body: "I'll give you a quick tour of how the app works. This takes about 2 minutes and can be replayed any time from Settings.\n\nPress **Next** to begin, or **Skip** to jump straight in.",
+    title: 'Welcome to Arcane Academy! 🏰',
+    body: "A degree-level, self-paced learning platform for the polymath. Master Software Engineering, Psychology, Natural Sciences and more — guided by memory science.\n\nThis short tour shows you how the Academy works and ends with a taste of a real lesson.",
     position: 'center',
     ctaLabel: 'Begin Tour →',
+  },
+  {
+    id: 'how-organised',
+    title: 'The Structure of Knowledge',
+    body: "The Academy is organised into layers:\n\n**School** — groups related disciplines\n**Domain** — e.g. Software Engineering\n**Tier** — Apprentice → Junior → Senior → Lead\n**Module** — a cluster of related lessons\n**Lesson** — a 15–25 min deep-learning session\n\nYou choose a School, pick a Domain, and work through it tier by tier.",
+    position: 'center',
+    ctaLabel: 'Next →',
+  },
+  {
+    id: 'lesson-structure',
+    title: 'How Every Lesson Works',
+    body: "Every lesson follows the same science-backed structure:\n\n**Hook** — a story to spark curiosity\n**Explanation** — deep learning with examples\n**Guided Practice** — apply it with scaffolding\n**Solo Practice** — recall from scratch\n**Retrieval Check** — test your understanding\n**Integration** — connect to other domains\n\nEarn XP and rank up from Novice to Lord Magus.",
+    position: 'center',
+    ctaLabel: 'Next →',
   },
   {
     id: 'nav-schools',

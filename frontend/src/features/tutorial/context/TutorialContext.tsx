@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TUTORIAL_STEPS, type TutorialStep } from '../data/tutorialSteps'
+import { useAuth } from '@/shared/hooks/useAuth'
+import { authApi } from '@/shared/api/services'
 
 const STORAGE_KEY = 'arcane-tutorial-completed'
 
@@ -28,6 +30,7 @@ const TutorialContext = createContext<TutorialContextValue>({
 
 export function TutorialProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
+  const { markOnboardingDone } = useAuth()
 
   const [isActive, setIsActive] = useState(false)
   const [stepIndex, setStepIndex] = useState(0)
@@ -68,12 +71,16 @@ export function TutorialProvider({ children }: { children: React.ReactNode }) {
   const skip = useCallback(() => {
     setIsActive(false)
     localStorage.setItem(STORAGE_KEY, 'skipped')
-  }, [])
+    markOnboardingDone()
+    authApi.completeOnboarding().catch(() => {})
+  }, [markOnboardingDone])
 
   const complete = useCallback(() => {
     setIsActive(false)
     localStorage.setItem(STORAGE_KEY, 'true')
-  }, [])
+    markOnboardingDone()
+    authApi.completeOnboarding().catch(() => {})
+  }, [markOnboardingDone])
 
   const restart = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY)
