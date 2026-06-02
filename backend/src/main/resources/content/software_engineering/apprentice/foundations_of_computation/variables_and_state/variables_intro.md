@@ -1,8 +1,8 @@
 ---
 moduleId: sw-eng-app-foundations
-moduleTitle: "Module 1: Foundations of Computation"
+moduleTitle: "Variables and State"
 moduleGlyph: "⚡"
-moduleSortOrder: 1
+moduleSortOrder: 50
 domainId: software_engineering
 tier: APPRENTICE
 topicSlug: variables_and_state

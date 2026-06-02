@@ -603,7 +603,13 @@ export default function EncodingPage() {
     [&_code]:bg-surface [&_code]:px-1 [&_code]:py-px [&_code]:rounded [&_code]:text-[12px] [&_code]:text-purple-light [&_code]:border [&_code]:border-border
     [&_pre]:bg-[#09070f] [&_pre]:border [&_pre]:border-[rgba(139,92,246,0.2)] [&_pre]:rounded-[8px] [&_pre]:overflow-x-auto [&_pre]:my-2.5 [&_pre]:mb-3.5
     [&_pre_code]:bg-transparent [&_pre_code]:border-none [&_pre_code]:p-0 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.7] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:block [&_pre_code]:px-4 [&_pre_code]:py-4 [&_pre_code]:font-mono
-    [&_strong]:text-gold [&_strong]:font-semibold [&_em]:text-purple-light [&_em]:italic`
+    [&_strong]:text-gold [&_strong]:font-semibold [&_em]:text-purple-light [&_em]:italic
+    [&_table]:w-full [&_table]:border-collapse [&_table]:my-4 [&_table]:text-[13px]
+    [&_thead]:border-b-2 [&_thead]:border-[rgba(139,92,246,0.35)]
+    [&_th]:text-left [&_th]:px-3 [&_th]:py-2 [&_th]:font-cinzel [&_th]:text-[11px] [&_th]:tracking-wide [&_th]:text-gold [&_th]:font-semibold
+    [&_td]:px-3 [&_td]:py-2 [&_td]:border-b [&_td]:border-border [&_td]:align-top [&_td]:text-text
+    [&_tr:last-child_td]:border-b-0
+    [&_tbody_tr:hover]:bg-[rgba(139,92,246,0.04)]`
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden min-h-0">
