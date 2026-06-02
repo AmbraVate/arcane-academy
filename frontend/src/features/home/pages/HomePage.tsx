@@ -264,9 +264,13 @@ export default function HomePage() {
   const [paymentBanner, setPaymentBanner] = useState<'success' | 'cancelled' | null>(null)
 
   // Auto-start tutorial for first-time users (after a short paint delay).
+  // force=true when onboardingCompleted is false so that a fresh
+  // registration always sees the tutorial even if localStorage was set
+  // by a previous account or testing session in the same browser.
   useEffect(() => {
     if (user) {
-      const t = setTimeout(() => maybeStart(), 600)
+      const force = user.onboardingCompleted === false
+      const t = setTimeout(() => maybeStart(force), 600)
       return () => clearTimeout(t)
     }
   }, [user, maybeStart])

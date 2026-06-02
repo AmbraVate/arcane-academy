@@ -17,8 +17,10 @@ interface TutorialContextValue {
   skip: () => void
   complete: () => void
   restart: () => void
-  /** Call once, from HomePage, to auto-start on first login */
-  maybeStart: () => void
+  /** Call once, from HomePage, to auto-start on first login.
+   *  Pass force=true (when onboardingCompleted is false) to start even if
+   *  the localStorage key was set by a previous account/session. */
+  maybeStart: (force?: boolean) => void
 }
 
 const TutorialContext = createContext<TutorialContextValue>({
@@ -89,9 +91,12 @@ export function TutorialProvider({ children }: { children: React.ReactNode }) {
     navigate('/')
   }, [navigate])
 
-  const maybeStart = useCallback(() => {
+  const maybeStart = useCallback((force = false) => {
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (!stored) {
+    if (!stored || force) {
+      // Clear any stale flag from a previous account/session so the
+      // tutorial can run to completion and re-set it correctly.
+      if (force) localStorage.removeItem(STORAGE_KEY)
       setStepIndex(0)
       setIsActive(true)
     }
