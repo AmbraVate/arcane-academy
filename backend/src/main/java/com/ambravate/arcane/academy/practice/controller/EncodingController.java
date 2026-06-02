@@ -65,7 +65,11 @@ public class EncodingController {
 
         if ("RETRIEVAL_CHECK".equals(dto.getPhase()) && !session.progress().isRetrievalCheckSubmitted()) {
             List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), lessonId);
-            dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
+            // Only set questions when the pool is non-empty. An empty pool (null) tells
+            // the frontend to show a "no questions" skip path rather than "already done".
+            if (!questions.isEmpty()) {
+                dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
+            }
         }
 
         return ResponseEntity.ok(dto);
@@ -80,7 +84,9 @@ public class EncodingController {
 
         if ("RETRIEVAL_CHECK".equals(dto.getPhase())) {
             List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), lessonId);
-            dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
+            if (!questions.isEmpty()) {
+                dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
+            }
         }
 
         return ResponseEntity.ok(dto);

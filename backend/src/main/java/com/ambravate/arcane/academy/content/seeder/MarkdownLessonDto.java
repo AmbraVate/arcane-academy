@@ -84,6 +84,14 @@ public class MarkdownLessonDto {
      */
     private SoloAssessmentConfig soloAssessment;
 
+    // ── Retrieval questions (from frontmatter microCheckpoint) ─────────────────
+
+    /**
+     * Multiple-choice retrieval questions parsed from the {@code microCheckpoint} list.
+     * Empty list if no questions are defined in frontmatter.
+     */
+    private java.util.List<MicroCheckpointConfig> microCheckpoints;
+
     /**
      * One guided step parsed from the YAML frontmatter {@code guidedSteps} list.
      *
@@ -119,4 +127,20 @@ public class MarkdownLessonDto {
             String rubricItemsJson,
             String keywordsJson,
             String modelAnswerHtml) {}
+
+    /**
+     * A single retrieval question from the {@code microCheckpoint} YAML list.
+     *
+     * @param questionHtml   question text rendered to HTML
+     * @param options        ordered answer choices
+     * @param correctIndex   0-based index of the correct option
+     * @param explanationHtml feedback rendered to HTML (shown after answering)
+     * @param tier           RECALL | APPLICATION | DISCRIMINATION (defaults APPLICATION)
+     */
+    public record MicroCheckpointConfig(
+            String questionHtml,
+            java.util.List<String> options,
+            int    correctIndex,
+            String explanationHtml,
+            String tier) {}
 }

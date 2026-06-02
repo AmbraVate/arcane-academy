@@ -1264,9 +1264,14 @@ export default function EncodingPage() {
           <p className="text-muted text-[13px] mb-5">Answer these questions to test your understanding.</p>
 
           {!retrievalResult && !encoding.retrievalQuestions?.length ? (
-            // Already submitted on a prior visit — let the user advance
+            // No questions available — either already submitted on a prior visit,
+            // or this lesson has no retrieval questions configured yet.
             <div className="p-4 bg-card border border-border rounded-[10px]">
-              <p className="text-muted text-[13px] mb-3">You have already completed this retrieval check.</p>
+              <p className="text-muted text-[13px] mb-3">
+                {encoding.retrievalQuestions === null
+                  ? 'You have already completed this retrieval check.'
+                  : 'No retrieval questions are configured for this lesson yet.'}
+              </p>
               <button className="btn btn-primary" onClick={handleAdvance}>Continue →</button>
             </div>
           ) : !retrievalResult ? (

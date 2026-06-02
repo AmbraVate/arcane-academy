@@ -6,12 +6,18 @@ import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
+import com.ambravate.arcane.academy.common.domain.Question;
+import com.ambravate.arcane.academy.common.domain.QuestionTier;
+import com.ambravate.arcane.academy.common.domain.QuestionType;
 import com.ambravate.arcane.academy.common.domain.QuestType;
 import com.ambravate.arcane.academy.common.domain.Topic;
 import com.ambravate.arcane.academy.content.repository.GuidedStepRepository;
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.LessonRepository;
+import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.TopicRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -49,7 +55,9 @@ public class MarkdownContentSeeder {
     private final LessonRepository         lessonRepository;
     private final TopicRepository          topicRepository;
     private final GuidedStepRepository     guidedStepRepository;
+    private final QuestionRepository       questionRepository;
     private final MarkdownLessonParser     parser;
+    private final ObjectMapper             objectMapper;
     private final PlatformTransactionManager transactionManager;
     private final ApplicationContext       applicationContext;
 
@@ -205,6 +213,37 @@ public class MarkdownContentSeeder {
             }
             log.info("[MarkdownContentSeeder] Seeded {} guided step(s) for lesson '{}'",
                     dto.getGuidedSteps().size(), dto.getId());
+        }
+
+        // 5. Upsert retrieval questions from microCheckpoint frontmatter
+        if (dto.getMicroCheckpoints() != null && !dto.getMicroCheckpoints().isEmpty()) {
+            if (questionRepository.findByLessonId(dto.getId()).isEmpty()) {
+                for (MarkdownLessonDto.MicroCheckpointConfig mc : dto.getMicroCheckpoints()) {
+                    String optionsJson = null;
+                    try { optionsJson = objectMapper.writeValueAsString(mc.options()); }
+                    catch (JsonProcessingException e) { log.warn("[MarkdownContentSeeder] Failed to serialise options for lesson '{}'", dto.getId()); }
+
+                    String correctAnswer = (mc.correctIndex() >= 0 && mc.correctIndex() < mc.options().size())
+                            ? mc.options().get(mc.correctIndex())
+                            : "";
+
+                    QuestionTier tier;
+                    try { tier = QuestionTier.valueOf(mc.tier()); }
+                    catch (IllegalArgumentException e) { tier = QuestionTier.APPLICATION; }
+
+                    questionRepository.save(Question.builder()
+                            .lessonId(dto.getId())
+                            .type(QuestionType.MULTIPLE_CHOICE)
+                            .tier(tier)
+                            .questionHtml(mc.questionHtml())
+                            .optionsJson(optionsJson)
+                            .correctAnswer(correctAnswer)
+                            .explanationHtml(mc.explanationHtml())
+                            .build());
+                }
+                log.info("[MarkdownContentSeeder] Seeded {} retrieval question(s) for lesson '{}'",
+                        dto.getMicroCheckpoints().size(), dto.getId());
+            }
         }
     }
 

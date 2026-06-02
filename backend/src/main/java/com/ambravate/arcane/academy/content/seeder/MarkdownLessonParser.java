@@ -157,6 +157,8 @@ public class MarkdownLessonParser {
                 .guidedSteps(parseGuidedSteps(fm))
                 // Phase 4 — solo assessment from frontmatter
                 .soloAssessment(parseSoloAssessment(fm))
+                // Retrieval questions from microCheckpoint frontmatter
+                .microCheckpoints(parseMicroCheckpoints(fm))
                 .build();
     }
 
@@ -368,6 +370,51 @@ public class MarkdownLessonParser {
         return new MarkdownLessonDto.SoloAssessmentConfig(
                 type.toUpperCase(java.util.Locale.ROOT),
                 rubricItemsJson, keywordsJson, modelAnswerHtml);
+    }
+
+    // ── Retrieval question (microCheckpoint) parsing ──────────────────────────
+
+    /**
+     * Parses the {@code microCheckpoint} list from frontmatter into retrieval questions.
+     *
+     * <pre>
+     * microCheckpoint:
+     *   - type: MULTIPLE_CHOICE
+     *     question: "Which of these…?"
+     *     options:
+     *       - "Option A"
+     *       - "Option B"
+     *     correctIndex: 1   # 0-based
+     *     feedback: "Explanation rendered to HTML."
+     *     tier: APPLICATION   # optional; defaults to APPLICATION
+     * </pre>
+     */
+    @SuppressWarnings("unchecked")
+    private List<MarkdownLessonDto.MicroCheckpointConfig> parseMicroCheckpoints(Map<String, Object> fm) {
+        Object raw = fm.get("microCheckpoint");
+        if (!(raw instanceof List<?> list) || list.isEmpty()) return List.of();
+
+        List<MarkdownLessonDto.MicroCheckpointConfig> result = new ArrayList<>();
+        for (Object item : list) {
+            if (!(item instanceof Map<?, ?> rawMap)) continue;
+            Map<String, Object> m = (Map<String, Object>) rawMap;
+
+            String questionHtml   = renderMarkdown(getString(m, "question", null));
+            if (questionHtml == null) continue;
+
+            Object optRaw = m.get("options");
+            List<String> options = (optRaw instanceof List<?> opts)
+                    ? opts.stream().map(Object::toString).toList()
+                    : List.of();
+
+            int    correctIndex   = getInt(m, "correctIndex", 0);
+            String explanationHtml = renderMarkdown(getString(m, "feedback", null));
+            String tier           = getString(m, "tier", "APPLICATION").toUpperCase(java.util.Locale.ROOT);
+
+            result.add(new MarkdownLessonDto.MicroCheckpointConfig(
+                    questionHtml, options, correctIndex, explanationHtml, tier));
+        }
+        return result;
     }
 
     private String renderMarkdown(String md) {
