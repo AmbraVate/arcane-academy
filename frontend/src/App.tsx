@@ -11,6 +11,7 @@ import { Library, RotateCcw, Trophy, User } from 'lucide-react'
 const DomainsPage          = lazy(() => import('./features/domains/pages/DomainsPage'))
 const LoginPage            = lazy(() => import('./features/auth/pages/LoginPage'))
 const RegisterPage         = lazy(() => import('./features/auth/pages/RegisterPage'))
+const ResetPasswordPage    = lazy(() => import('./features/auth/pages/ResetPasswordPage'))
 const OAuthCallbackPage    = lazy(() => import('./features/auth/pages/OAuthCallbackPage'))
 const ModuleMapPage        = lazy(() => import('./features/domains/pages/ModuleMapPage'))
 const EncodingPage         = lazy(() => import('./features/learning/pages/EncodingPage'))
@@ -97,8 +98,9 @@ function AppRoutes() {
   return (
     <Suspense fallback={<PageFallback />}>
       <Routes>
-        <Route path="/login"  element={<LoginPageGuard />} />
-        <Route path="/register" element={<RegisterPageGuard />} />
+        <Route path="/login"          element={<LoginPageGuard />} />
+        <Route path="/register"       element={<RegisterPageGuard />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/oauth2/callback" element={<OAuthCallbackPage />} />
 <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />

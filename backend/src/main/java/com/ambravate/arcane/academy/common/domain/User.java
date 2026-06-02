@@ -130,6 +130,18 @@ public class User {
     private String stripeSubscriptionId;
 
     /**
+     * One-time token sent via email for password reset.
+     * Null when no reset is pending. Cleared on successful reset or re-issue.
+     */
+    private String passwordResetToken;
+
+    /**
+     * Expiry timestamp for the password-reset token.
+     * Null when no reset is pending. Resets are valid for 24 hours.
+     */
+    private Instant passwordResetExpiresAt;
+
+    /**
      * Returns true when this user has an active paid subscription that grants
      * access to all topics. Takes cancellation grace periods into account.
      */

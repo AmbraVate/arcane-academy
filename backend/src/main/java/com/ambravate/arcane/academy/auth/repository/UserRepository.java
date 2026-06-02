@@ -39,6 +39,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     /** Used by Stripe webhook to correlate subscription lifecycle events to a user. */
     Optional<User> findByStripeSubscriptionId(String stripeSubscriptionId);
 
+    /** Used by the password-reset flow to look up a user by their one-time reset token. */
+    Optional<User> findByPasswordResetToken(String passwordResetToken);
+
     /** Used by Stripe webhook to correlate customer events to a user. */
     Optional<User> findByStripeCustomerId(String stripeCustomerId);
 

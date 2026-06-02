@@ -3,6 +3,7 @@ package com.ambravate.arcane.academy.admin.controller;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
 import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
 import com.ambravate.arcane.academy.admin.service.AdminStatsService;
+import com.ambravate.arcane.academy.auth.service.PasswordResetService;
 import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserRole;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -34,7 +34,7 @@ public class AdminUserController {
     private final UserRepository              userRepository;
     private final UserChunkProgressRepository progressRepository;
     private final AdminStatsService           statsService;
-    private final PasswordEncoder             passwordEncoder;
+    private final PasswordResetService        passwordResetService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> list(
@@ -178,25 +178,24 @@ public class AdminUserController {
     }
 
     /**
-     * Reset a user's password to a new value supplied by the admin.
-     * The new password must be at least 8 characters.
-     * OAuth-only accounts gain a password via this path.
+     * Triggers a password-reset email to the user's registered address.
+     * The user receives a link valid for 24 hours to set their own new password.
+     * Returns 503 if SMTP is not configured on this deployment.
      */
-    @PutMapping("/{userId}/reset-password")
-    public ResponseEntity<Void> resetPassword(
-            @PathVariable String userId,
-            @RequestBody Map<String, String> body) {
-
-        String newPassword = body.get("password");
-        if (newPassword == null || newPassword.length() < 8) {
-            return ResponseEntity.badRequest().build();
+    @PostMapping("/{userId}/send-password-reset")
+    public ResponseEntity<Map<String, String>> sendPasswordReset(@PathVariable String userId) {
+        try {
+            passwordResetService.sendReset(userId);
+            return ResponseEntity.ok(Map.of("message", "Password reset email sent."));
+        } catch (IllegalStateException e) {
+            // SMTP not configured
+            return ResponseEntity.status(503).body(Map.of("error", e.getMessage()));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("[Admin] Failed to send password reset for userId={}: {}", userId, e.getMessage());
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to send email. Check server logs."));
         }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
-        user.setPasswordHash(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-        log.info("[Admin] Password reset for userId={}", userId);
-        return ResponseEntity.noContent().build();
     }
 }

@@ -71,7 +71,7 @@ export interface AdminUser {
 export interface UserStats {
   userId: string; username: string; email: string
   totalXp: number; rank: string; streakDays: number
-  lessonsCompleted: number; chunksCompleted: number
+  subChunksCompleted: number; chunksCompleted: number
   badgesEarned: number; reviewSessionsCompleted: number
   joinedAt: string; lastLoginAt: string | null
   blocked: boolean; role: string
@@ -233,8 +233,8 @@ export const adminUserApi = {
     const { data } = await api.patch(`/api/admin/users/${id}/bypass-paywall`, { bypassPaywall })
     return data
   },
-  resetPassword: async (id: string, password: string): Promise<void> => {
-    await api.put(`/api/admin/users/${id}/reset-password`, { password })
+  sendPasswordReset: async (id: string): Promise<void> => {
+    await api.post(`/api/admin/users/${id}/send-password-reset`)
   },
 }
 

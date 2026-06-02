@@ -4,7 +4,7 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import {
   Search, X, ChevronLeft, ChevronRight, Shield, ShieldOff,
   UserCheck, UserX, RotateCcw, BarChart2, Loader2,
-  Star, Zap, Flame, BookOpen, Trophy, Calendar, Clock, Unlock, Lock, KeyRound,
+  Star, Zap, Flame, BookOpen, Trophy, Calendar, Clock, Unlock, Lock, Mail,
 } from 'lucide-react'
 import React from 'react'
 
@@ -47,9 +47,8 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
   const [roleSaving, setRoleSaving] = useState(false)
   const [resetting, setResetting] = useState(false)
   const [bypassSaving, setBypassSaving] = useState(false)
-  const [showPwReset, setShowPwReset] = useState(false)
-  const [newPassword, setNewPassword] = useState('')
-  const [pwResetting, setPwResetting] = useState(false)
+  const [pwResetSending, setPwResetSending] = useState(false)
+  const [pwResetSent, setPwResetSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const isSelf = caller?.userId === user.id
 
@@ -114,18 +113,17 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
     }
   }
 
-  const handlePasswordReset = async () => {
-    if (newPassword.length < 8) return
-    setPwResetting(true)
+  const handleSendPasswordReset = async () => {
+    setPwResetSending(true)
+    setPwResetSent(false)
     setError(null)
     try {
-      await adminUserApi.resetPassword(user.id, newPassword)
-      setNewPassword('')
-      setShowPwReset(false)
+      await adminUserApi.sendPasswordReset(user.id)
+      setPwResetSent(true)
     } catch {
-      setError('Failed to reset password')
+      setError('Failed to send reset email. Check that the mail service is configured.')
     } finally {
-      setPwResetting(false)
+      setPwResetSending(false)
     }
   }
 
@@ -156,7 +154,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
           <StatMini icon={Star}     label="Rank"     value={stats.rank}                     color="#8b5cf6" />
           <StatMini icon={Flame}    label="Streak"   value={`${stats.streakDays}d`}          color="#fb923c" />
           <StatMini icon={Trophy}   label="Badges"   value={stats.badgesEarned}             color="#4ade80" />
-          <StatMini icon={BookOpen} label="Concepts" value={stats.lessonsCompleted}       color="#2dd4bf" />
+          <StatMini icon={BookOpen} label="Concepts" value={stats.subChunksCompleted}    color="#2dd4bf" />
           <StatMini icon={BarChart2}label="Reviews"  value={stats.reviewSessionsCompleted}  color="#60a5fa" />
         </div>
       ) : null}
@@ -193,40 +191,20 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
           {bypassSaving ? <Loader2 size={13} className="animate-spin" /> : user.bypassPaywall ? <Unlock size={13} /> : <Lock size={13} />}
           {user.bypassPaywall ? 'Revoke Paywall Bypass' : 'Grant Paywall Bypass'}
         </button>
-        {/* Password reset */}
-        {showPwReset ? (
-          <div style={{ background: 'rgba(139,92,246,.06)', border: '1px solid rgba(139,92,246,.2)', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ ...s.label, marginBottom: 6 }}>New Password (min. 8 chars)</div>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={e => setNewPassword(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handlePasswordReset()}
-              placeholder="Enter new password"
-              style={{ ...inputStyle, marginBottom: 8 }}
-              autoFocus
-            />
-            <div style={{ display: 'flex', gap: 6 }}>
-              <button
-                disabled={pwResetting || newPassword.length < 8}
-                onClick={handlePasswordReset}
-                style={{ flex: 1, fontSize: 11, padding: '6px 0', borderRadius: 6, cursor: newPassword.length >= 8 ? 'pointer' : 'not-allowed', background: 'rgba(139,92,246,.2)', border: '1px solid rgba(139,92,246,.4)', color: '#c4b5fd', opacity: newPassword.length < 8 ? 0.5 : 1 }}
-              >
-                {pwResetting ? <Loader2 size={12} className="animate-spin" /> : 'Confirm Reset'}
-              </button>
-              <button
-                onClick={() => { setShowPwReset(false); setNewPassword('') }}
-                style={{ fontSize: 11, padding: '6px 10px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid #2e2850', color: '#8b7fa0' }}
-              >
-                Cancel
-              </button>
-            </div>
+        {/* Password reset — sends email to user */}
+        {pwResetSent ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, background: 'rgba(45,212,191,.08)', border: '1px solid rgba(45,212,191,.3)', color: '#2dd4bf' }}>
+            <Mail size={13} />
+            Reset email sent to {user.email}
           </div>
         ) : (
-          <button onClick={() => setShowPwReset(true)}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(139,92,246,.25)', color: '#c4b5fd', transition: 'all .15s' }}>
-            <KeyRound size={13} />
-            Reset Password
+          <button
+            disabled={pwResetSending}
+            onClick={handleSendPasswordReset}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(139,92,246,.25)', color: '#c4b5fd', transition: 'all .15s' }}
+          >
+            {pwResetSending ? <Loader2 size={13} className="animate-spin" /> : <Mail size={13} />}
+            {pwResetSending ? 'Sending...' : 'Send Password Reset Email'}
           </button>
         )}
 

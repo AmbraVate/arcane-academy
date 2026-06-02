@@ -50,7 +50,7 @@ const HOW_IT_WORKS = [
     border: 'rgba(201,162,39,0.2)',
     step: '01',
     title: 'Enrol',
-    desc: 'Choose a school, then a pathway. Every great scholar starts with a single discipline.',
+    desc: 'Choose one discipline that calls to you. Every great scholar starts with a single path.',
   },
   {
     icon: Flame,
@@ -77,7 +77,7 @@ const HOW_IT_WORKS = [
     border: 'rgba(96,165,250,0.2)',
     step: '04',
     title: 'Review',
-    desc: 'The Academy schedules spaced-repetition reviews at the exact moment before you forget.',
+    desc: 'The academy schedules spaced-repetition reviews at the exact moment before you forget. Revisit your Review queue daily to lock in long-term memory.',
   },
   {
     icon: Trophy,
@@ -95,7 +95,7 @@ const HOW_IT_WORKS = [
     border: 'rgba(248,113,113,0.2)',
     step: '✦',
     title: "I'm Stuck",
-    desc: 'Hit a wall? Tap "I\'m stuck" during any lesson. The Academy can offer a different angle, a hint, or a re-explanation.',
+    desc: 'Hit a wall? Tap "I\'m stuck" at any point during a lesson. The academy flags it and can offer a re-explanation, a different angle, or a hint — no scholar is left behind.',
   },
 ]
 
