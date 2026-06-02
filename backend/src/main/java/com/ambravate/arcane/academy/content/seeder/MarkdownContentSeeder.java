@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Seeds lessons authored in Markdown format.
@@ -51,6 +52,15 @@ public class MarkdownContentSeeder {
     private final MarkdownLessonParser     parser;
     private final PlatformTransactionManager transactionManager;
     private final ApplicationContext       applicationContext;
+
+    // ── Domain ID aliases (content files may still use legacy IDs) ───────────
+    private static final Map<String, String> DOMAIN_ID_ALIASES = Map.of(
+        "java", "software-engineering"
+    );
+
+    private String resolveTrackId(String domainId) {
+        return DOMAIN_ID_ALIASES.getOrDefault(domainId, domainId);
+    }
 
     // ── Public API ────────────────────────────────────────────────────────────
 
@@ -123,7 +133,7 @@ public class MarkdownContentSeeder {
                     .glyph(dto.getModuleGlyph())
                     .sortOrder(dto.getModuleSortOrder())
                     .tier(parseTier(dto.getTier(), dto.getModuleId()))
-                    .trackId(dto.getDomainId())
+                    .trackId(resolveTrackId(dto.getDomainId()))
                     .build();
             return moduleRepository.save(m);
         });
