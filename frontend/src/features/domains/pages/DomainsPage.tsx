@@ -493,19 +493,14 @@ export default function DomainsPage() {
   function handleTopicClick(topic: Domain) {
     if (topic.status !== 'active') return
 
-    // Not logged in — save intent and redirect to login
-    if (isPublic) {
-      sessionStorage.setItem('arcane-intended-path', `/domain/${topic.id}`)
-      navigate('/login')
-      return
-    }
-
-    // Already has an enrolment and this topic is new → paywall
-    const isEnrolled = enrolledTopicIds.has(topic.id)
-    const hasActiveEnrollment = enrolledTopicIds.size > 0
-    if (!isEnrolled && hasActiveEnrollment && !canBypassPaywall) {
-      setShowPaywall(true)
-      return
+    // Authenticated: enforce paywall for second+ enrolment
+    if (!isPublic) {
+      const isEnrolled = enrolledTopicIds.has(topic.id)
+      const hasActiveEnrollment = enrolledTopicIds.size > 0
+      if (!isEnrolled && hasActiveEnrollment && !canBypassPaywall) {
+        setShowPaywall(true)
+        return
+      }
     }
 
     navigate(`/domain/${topic.id}`)

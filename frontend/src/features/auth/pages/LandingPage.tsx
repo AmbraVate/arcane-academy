@@ -102,9 +102,7 @@ function PathwayBrowser() {
   function handlePathway(tg: TrackGroup) {
     const activeDomains = DOMAINS.filter(d => d.trackGroup === tg.id && d.status === 'active')
     if (activeDomains.length === 1) {
-      // Single active — prompt sign-in
-      sessionStorage.setItem('arcane-intended-path', `/domain/${activeDomains[0].id}/onboarding`)
-      navigate('/register')
+      navigate(`/domain/${activeDomains[0].id}`)
     } else {
       setState({ level: 'domains', school: tg.school, trackGroupId: tg.id })
     }
@@ -112,8 +110,7 @@ function PathwayBrowser() {
 
   function handleDomain(domain: Domain) {
     if (domain.status !== 'active') return
-    sessionStorage.setItem('arcane-intended-path', `/domain/${domain.id}/onboarding`)
-    navigate('/register')
+    navigate(`/domain/${domain.id}`)
   }
 
   const cardBase: React.CSSProperties = {
