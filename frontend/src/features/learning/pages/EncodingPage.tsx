@@ -609,7 +609,7 @@ export default function EncodingPage() {
     <div className="flex flex-col flex-1 overflow-hidden min-h-0">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border bg-card flex-shrink-0 max-[480px]:px-2.5 max-[480px]:py-2 max-[480px]:gap-2">
-        <button className="btn btn-ghost text-[12px] flex items-center gap-1" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}><ArrowLeft size={13} strokeWidth={1.75} /> Back</button>
+        <button className="btn btn-ghost text-[12px] flex items-center gap-1" onClick={() => navigate(`/module/${encoding.moduleId}`)}><ArrowLeft size={13} strokeWidth={1.75} /> Back</button>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <div className="text-[16px] font-bold text-text truncate max-[480px]:text-[13px]">{encoding.title}</div>
@@ -1499,8 +1499,8 @@ export default function EncodingPage() {
 
           {/* ── Navigation ───────────────────────────────────────────────── */}
           <div className="flex gap-2.5 justify-center mt-4 flex-wrap max-[480px]:flex-col max-[480px]:items-center">
-            <button className="btn btn-success" onClick={() => navigate(`/chunk/${encoding.moduleId}`)}>Return to Chunk →</button>
-            <button className="btn btn-ghost" onClick={() => navigate(`/domain/${encoding.domainId ?? 'java'}`)}>
+            <button className="btn btn-success" onClick={() => navigate(`/module/${encoding.moduleId}`)}>Return to Module →</button>
+            <button className="btn btn-ghost" onClick={() => navigate(`/pathway/${encoding.domainId ?? 'software-engineering'}`)}>
               Dashboard
             </button>
             {encoding.storyBeats?.length ? (

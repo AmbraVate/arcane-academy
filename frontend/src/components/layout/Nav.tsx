@@ -28,7 +28,7 @@ export default function Nav() {
   const streakHot = streak >= 3
 
   const NAV_ITEMS = [
-    { label: 'Schools',  Icon: Library,   path: '/domains',    tutorialId: 'nav-domains' },
+    { label: 'Schools',  Icon: Library,   path: '/schools',    tutorialId: 'nav-domains' },
     { label: 'Review',   Icon: RotateCcw, path: '/review',     tutorialId: 'nav-review',
       badge: reviewsDue > 0 ? reviewsDue : null },
     { label: 'Ranks',    Icon: Trophy,    path: '/leaderboard', tutorialId: undefined },

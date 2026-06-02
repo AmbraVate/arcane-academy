@@ -61,17 +61,36 @@ function AdminRoute() {
   return <Outlet />
 }
 
-/** Redirects /domain/:id/onboarding|diagnostic|etc to /domain/:id (diagnostics removed). */
-function DomainRedirect() {
-  const location = useLocation()
-  const domainId = location.pathname.split('/')[2]
-  return <Navigate to={`/domain/${domainId}`} replace />
+// ── Legacy redirect helpers ───────────────────────────────────────────────────
+
+/** /domain/:id/onboarding|diagnostic|etc → /pathway/:id */
+function LegacyDomainSubpathRedirect() {
+  const { domainId } = useParams<{ domainId: string }>()
+  return <Navigate to={`/pathway/${domainId}`} replace />
 }
 
-/** Redirects legacy /topic/:id URLs to /domain/:id. */
+/** /domain/:id → /pathway/:id */
+function LegacyDomainRedirect() {
+  const { domainId } = useParams<{ domainId: string }>()
+  return <Navigate to={`/pathway/${domainId}`} replace />
+}
+
+/** /chunk/:moduleId → /module/:moduleId */
+function LegacyChunkRedirect() {
+  const { moduleId } = useParams<{ moduleId: string }>()
+  return <Navigate to={`/module/${moduleId}`} replace />
+}
+
+/** /chunk/:moduleId/topic/:topicId → /module/:moduleId/topic/:topicId */
+function LegacyChunkTopicRedirect() {
+  const { moduleId, topicId } = useParams<{ moduleId: string; topicId: string }>()
+  return <Navigate to={`/module/${moduleId}/topic/${topicId}`} replace />
+}
+
+/** /topic/:id → /pathway/:id (original pre-V24 URLs) */
 function LegacyTopicRedirect() {
   const location = useLocation()
-  const to = location.pathname.replace(/^\/topic\b/, '/domain') + location.search
+  const to = location.pathname.replace(/^\/topic\b/, '/pathway') + location.search
   return <Navigate to={to} replace />
 }
 
@@ -86,26 +105,29 @@ function AppRoutes() {
         <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/" element={<HomeRedirect />} />
-        {/* Module + topic pages are publicly browsable (structure only; content requires login) */}
-        <Route path="/chunk/:moduleId" element={<ModuleMapPage />} />
-        <Route path="/chunk/:moduleId/topic/:topicId" element={<TopicLessonsPage />} />
+        {/* Module + topic pages — publicly browsable (structure only; content requires login) */}
+        <Route path="/module/:moduleId" element={<ModuleMapPage />} />
+        <Route path="/module/:moduleId/topic/:topicId" element={<TopicLessonsPage />} />
         <Route path="/learn/:lessonId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
-        {/* Schools / Domains — publicly browsable; enrol requires login */}
-        <Route path="/domains"  element={<DomainsPage />} />
-        {/* Domain page publicly browsable; module content requires login */}
-        <Route path="/domain/:domainId" element={<DomainPage />} />
-        {/* Diagnostic/onboarding routes removed — redirect to domain */}
-        <Route path="/domain/:domainId/onboarding"   element={<DomainRedirect />} />
-        <Route path="/domain/:domainId/diagnostic"   element={<DomainRedirect />} />
-        <Route path="/domain/:domainId/prereq-check" element={<DomainRedirect />} />
-        <Route path="/domain/:domainId/css-primer"   element={<DomainRedirect />} />
+        {/* Schools listing — publicly browsable */}
+        <Route path="/schools"  element={<DomainsPage />} />
+        {/* Pathway page publicly browsable; module content requires login */}
+        <Route path="/pathway/:domainId" element={<DomainPage />} />
+        {/* Legacy URL redirects (permanent backward compat) */}
+        <Route path="/domains"  element={<Navigate to="/schools" replace />} />
+        <Route path="/topics"   element={<Navigate to="/schools" replace />} />
+        <Route path="/topic/*"  element={<LegacyTopicRedirect />} />
+        <Route path="/domain/:domainId" element={<LegacyDomainRedirect />} />
+        <Route path="/domain/:domainId/onboarding"   element={<LegacyDomainSubpathRedirect />} />
+        <Route path="/domain/:domainId/diagnostic"   element={<LegacyDomainSubpathRedirect />} />
+        <Route path="/domain/:domainId/prereq-check" element={<LegacyDomainSubpathRedirect />} />
+        <Route path="/domain/:domainId/css-primer"   element={<LegacyDomainSubpathRedirect />} />
+        <Route path="/chunk/:moduleId" element={<LegacyChunkRedirect />} />
+        <Route path="/chunk/:moduleId/topic/:topicId" element={<LegacyChunkTopicRedirect />} />
         <Route path="/tutorial/lesson" element={<PrivateRoute><TutorialLessonPage /></PrivateRoute>} />
-        {/* Legacy redirects */}
-        <Route path="/topics" element={<Navigate to="/domains" replace />} />
-        <Route path="/topic/*" element={<LegacyTopicRedirect />} />
         <Route path="/leaderboard" element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
         <Route path="/u/:username" element={<PrivateRoute><PublicProfilePage /></PrivateRoute>} />
 
@@ -113,7 +135,7 @@ function AppRoutes() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
             <Route path="domains" element={<AdminDomainsPage />} />
-            <Route path="topics" element={<Navigate to="/admin/domains" replace />} />
+            <Route path="topics"  element={<Navigate to="/admin/domains" replace />} />
             <Route path="chunks" element={<AdminChunksPage />} />
             <Route path="chunks/:moduleId/subchunks" element={<AdminLessonsPage />} />
             <Route path="subchunks/:lessonId/edit" element={<AdminLessonEditorPage />} />

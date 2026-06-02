@@ -503,7 +503,7 @@ export default function DomainsPage() {
       }
     }
 
-    navigate(`/domain/${topic.id}`)
+    navigate(`/pathway/${topic.id}`)
   }
 
   function handleSchoolSelect(school: School) {

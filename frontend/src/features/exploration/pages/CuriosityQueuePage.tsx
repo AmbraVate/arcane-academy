@@ -26,7 +26,7 @@ export default function CuriosityQueuePage() {
 
   return (
     <div className="max-w-[600px] mx-auto px-4 py-6 pb-[60px] max-[480px]:px-3 max-[480px]:py-4">
-      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate('/domains')}>← Back to Dashboard</button>
+      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate('/schools')}>← Back to Schools</button>
       <h1 className="text-[22px] font-bold text-gold m-0 mb-1.5">📌 Curiosity Queue</h1>
       <p className="text-muted text-[13px] m-0 mb-5">Concepts you've saved for later exploration.</p>
 

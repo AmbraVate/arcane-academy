@@ -43,7 +43,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     title: 'Choose Your School',
     body: 'Each **School** groups related disciplines. Browse the schools and pick one that calls to you — you can always explore others later.',
     position: 'bottom',
-    navigateTo: '/domains',
+    navigateTo: '/schools',
     ctaLabel: 'Next →',
   },
   {
@@ -60,7 +60,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     title: 'Daily Reviews',
     body: 'As you learn, lessons are scheduled for **spaced-repetition review**. The badge shows how many are due today. Short daily reviews are how long-term memory is built.',
     position: 'bottom',
-    navigateTo: '/domains',
+    navigateTo: '/schools',
     ctaLabel: 'Next →',
   },
   {

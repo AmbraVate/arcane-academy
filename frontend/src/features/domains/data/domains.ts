@@ -56,7 +56,7 @@ export function trackGroupsForSchool(school: School): TrackGroup[] {
 
 export const DOMAINS: Domain[] = [
   // Engineering & Systems — Software Engineering
-  { id: 'java',       name: 'Software Engineering', glyph: '⚙️',  tagline: 'Build reliable systems — computational thinking, design, architecture, taught through Java.',        status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'software-engineering', guildName: 'Guild of Systems Architects' },
+  { id: 'software-engineering', name: 'Software Engineering', glyph: '⚙️',  tagline: 'Build reliable systems — computational thinking, design, architecture, taught through Java.',        status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'software-engineering', guildName: 'Guild of Systems Architects' },
   { id: 'python',     name: 'Python',           glyph: '🐍', tagline: 'Versatile, readable, powerful. Data, scripts, and automation.',                                         status: 'coming_soon', modules: 12, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'software-engineering', guildName: 'Guild of Systems Architects' },
   // Engineering & Systems — Frontend Engineering
   { id: 'react',      name: 'React',            glyph: '⚛️', tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',              status: 'active',      modules: 71, accentStroke: 'var(--teal)',   school: 'engineering-systems', trackGroup: 'frontend-engineering', guildName: 'Guild of Systems Architects' },

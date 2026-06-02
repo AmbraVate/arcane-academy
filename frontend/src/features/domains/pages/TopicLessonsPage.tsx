@@ -136,7 +136,7 @@ export default function TopicLessonsPage() {
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
       {/* Back */}
-      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/chunk/${moduleId}`)}>
+      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/module/${moduleId}`)}>
         ← {module.title}
       </button>
 

@@ -42,7 +42,7 @@ function TopicRow({
           ? 'opacity-40 cursor-not-allowed border-border saturate-[0.3]'
           : 'cursor-pointer border-border hover:border-purple hover:-translate-y-px',
       )}
-      onClick={() => !isLocked && navigate(`/chunk/${moduleId}/topic/${topic.id}`)}
+      onClick={() => !isLocked && navigate(`/module/${moduleId}/topic/${topic.id}`)}
     >
       {/* Lock / number */}
       <div className={cn(
@@ -153,7 +153,7 @@ export default function ModuleMapPage() {
     if (!moduleId) return
     moduleApi.getDetail(moduleId)
       .then(setChunk)
-      .catch(() => navigate('/domains'))
+      .catch(() => navigate('/schools'))
       .finally(() => setLoading(false))
   }, [moduleId, navigate])
 
@@ -182,7 +182,7 @@ export default function ModuleMapPage() {
 
   return (
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
-      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/domain/${chunk.domainId}`)}>
+      <button className="btn btn-ghost text-[12px] mb-4" onClick={() => navigate(`/pathway/${chunk.domainId}`)}>
         ← Back to Domain
       </button>
 

@@ -104,7 +104,7 @@ export default function RabbitHolePage() {
           {solved && (
             <div className="mt-4 p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px] text-teal text-[14px]">
               ✦ Module complete! Return to explore more.
-              <button className="btn btn-ghost mt-2 block text-[12px]" onClick={() => navigate('/domains')}>← Domains</button>
+              <button className="btn btn-ghost mt-2 block text-[12px]" onClick={() => navigate('/schools')}>← Schools</button>
             </div>
           )}
         </div>

@@ -102,7 +102,7 @@ function PathwayBrowser() {
   function handlePathway(tg: TrackGroup) {
     const activeDomains = DOMAINS.filter(d => d.trackGroup === tg.id && d.status === 'active')
     if (activeDomains.length === 1) {
-      navigate(`/domain/${activeDomains[0].id}`)
+      navigate(`/pathway/${activeDomains[0].id}`)
     } else {
       setState({ level: 'domains', school: tg.school, trackGroupId: tg.id })
     }
@@ -110,7 +110,7 @@ function PathwayBrowser() {
 
   function handleDomain(domain: Domain) {
     if (domain.status !== 'active') return
-    navigate(`/domain/${domain.id}`)
+    navigate(`/pathway/${domain.id}`)
   }
 
   const cardBase: React.CSSProperties = {
@@ -400,7 +400,7 @@ export default function LandingPage() {
             <Link to="/register" className="btn btn-primary" style={{ padding: '14px 36px', fontSize: 15, fontFamily: 'Cinzel, serif' }}>
               ✦ Begin Your Journey
             </Link>
-            <Link to="/domains" className="btn btn-ghost" style={{ padding: '14px 28px', fontSize: 15 }}>
+            <Link to="/schools" className="btn btn-ghost" style={{ padding: '14px 28px', fontSize: 15 }}>
               Browse Schools →
             </Link>
           </div>
@@ -620,7 +620,7 @@ export default function LandingPage() {
         <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>✦ Arcane Academy</span>
         <span>Built for lifelong learners</span>
         <div style={{ display: 'flex', gap: 20 }}>
-          <Link to="/domains"  style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Browse Schools</Link>
+          <Link to="/schools"  style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Browse Schools</Link>
           <Link to="/login"    style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Sign In</Link>
           <Link to="/register" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Register</Link>
         </div>

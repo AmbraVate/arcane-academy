@@ -69,7 +69,7 @@ export default function TutorialLessonPage() {
 
   function finishTutorial() {
     complete()
-    navigate('/domains')
+    navigate('/schools')
   }
 
   const phaseOrder = (p: Phase) => PHASES.indexOf(p)
@@ -79,7 +79,7 @@ export default function TutorialLessonPage() {
     <div className="flex flex-col flex-1 overflow-hidden min-h-0">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-2.5 border-b border-border bg-card flex-shrink-0">
-        <button className="btn btn-ghost text-[12px] flex items-center gap-1" onClick={() => navigate('/domains')}>
+        <button className="btn btn-ghost text-[12px] flex items-center gap-1" onClick={() => navigate('/schools')}>
           <ArrowLeft size={13} strokeWidth={1.75} /> Exit Demo
         </button>
         <div className="flex-1 min-w-0">

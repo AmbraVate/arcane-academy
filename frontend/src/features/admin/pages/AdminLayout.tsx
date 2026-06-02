@@ -34,7 +34,7 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
       {/* Logo */}
       <div
         style={{ padding: '18px 20px 14px', borderBottom: '1px solid #1e1a35', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-        onClick={() => handleNav('/domains')}
+        onClick={() => handleNav('/schools')}
         title="Back to Academy"
       >
         <div>
@@ -59,7 +59,7 @@ function Sidebar({ onClose }: { onClose?: () => void }) {
 
       {/* Back to academy link */}
       <button
-        onClick={() => handleNav('/domains')}
+        onClick={() => handleNav('/schools')}
         style={{
           display: 'flex', alignItems: 'center', gap: 7,
           margin: '10px 10px 4px',

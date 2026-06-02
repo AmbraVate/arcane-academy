@@ -124,10 +124,10 @@ export default function DomainPage() {
 
   function handleModuleClick(ch: ModuleHealthDto) {
     if (isPublic) {
-      navigate(`/chunk/${ch.moduleId}`)
+      navigate(`/module/${ch.moduleId}`)
       return
     }
-    if (ch.status !== 'LOCKED') navigate(`/chunk/${ch.moduleId}`)
+    if (ch.status !== 'LOCKED') navigate(`/module/${ch.moduleId}`)
   }
 
   return (
@@ -141,7 +141,7 @@ export default function DomainPage() {
           background: `radial-gradient(ellipse at 50% 0%, color-mix(in srgb, ${meta.accentStroke} 12%, transparent) 0%, transparent 60%), var(--card)`,
         }}
       >
-        <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/domains')}>
+        <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/schools')}>
           ← Schools
         </button>
         <div className="mb-2.5 flex justify-center">

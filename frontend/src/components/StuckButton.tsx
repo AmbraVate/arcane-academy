@@ -77,11 +77,11 @@ export default function StuckButton() {
         screenshotData,
       })
       setStage('done')
-      setTimeout(() => navigate('/domains', { replace: true }), 2000)
+      setTimeout(() => navigate('/schools', { replace: true }), 2000)
     } catch {
       // Even if the request fails, don't strand the user — send them home
       setStage('done')
-      setTimeout(() => navigate('/domains', { replace: true }), 2000)
+      setTimeout(() => navigate('/schools', { replace: true }), 2000)
     }
   }
 

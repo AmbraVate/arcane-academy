@@ -317,7 +317,7 @@ export default function HomePage() {
   const unenrolledActive = ACTIVE_DOMAINS.filter(t => !enrolledTopics.find(e => e.id === t.id))
 
   function handleTopicClick(topic: Domain) {
-    navigate(`/domain/${topic.id}`)
+    navigate(`/pathway/${topic.id}`)
   }
 
   function handleLockedTopicClick() {

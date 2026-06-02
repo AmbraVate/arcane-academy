@@ -414,15 +414,15 @@ export default function ProfilePage() {
                   completedLessons={dash.moduleHealth.reduce((s, c) => s + c.completedLessons, 0)}
                   totalLessons={dash.moduleHealth.reduce((s, c) => s + c.totalLessons, 0)}
                   totalXp={dash.totalXp}
-                  onContinue={() => navigate(`/domain/${topic.id}`)}
-                  onRetakeDiagnostic={() => navigate(`/domain/${topic.id}/diagnostic`)}
+                  onContinue={() => navigate(`/pathway/${topic.id}`)}
+                  onRetakeDiagnostic={() => navigate(`/pathway/${topic.id}`)}
                 />
               )
             })}
             {!dashLoading && ACTIVE_DOMAINS.every(t => !allTopicDash[t.id]) && (
               <div className="text-center py-10 text-muted italic">
-                <p>No domain data found. Start a domain to see your progress here.</p>
-                <button className="btn btn-primary mt-4" onClick={() => navigate('/domains')}>Browse Domains →</button>
+                <p>No pathway data found. Start a pathway to see your progress here.</p>
+                <button className="btn btn-primary mt-4" onClick={() => navigate('/schools')}>Browse Schools →</button>
               </div>
             )}
           </div>
