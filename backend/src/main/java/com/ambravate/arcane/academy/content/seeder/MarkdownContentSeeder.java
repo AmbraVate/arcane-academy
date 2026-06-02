@@ -55,7 +55,8 @@ public class MarkdownContentSeeder {
 
     // ── Domain ID aliases (content files may still use legacy IDs) ───────────
     private static final Map<String, String> DOMAIN_ID_ALIASES = Map.of(
-        "java", "software-engineering"
+        "java",                 "software-engineering",
+        "software_engineering", "software-engineering"
     );
 
     private String resolveTrackId(String domainId) {

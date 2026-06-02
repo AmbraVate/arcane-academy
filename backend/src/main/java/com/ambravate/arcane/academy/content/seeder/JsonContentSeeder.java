@@ -51,7 +51,8 @@ public class JsonContentSeeder {
      * {@code software-engineering} track without touching the content files.
      */
     private static final Map<String, String> DOMAIN_ID_ALIASES = Map.of(
-        "java", "software-engineering"
+        "java",                 "software-engineering",
+        "software_engineering", "software-engineering"
     );
 
     private String resolveTrackId(String domainId) {
