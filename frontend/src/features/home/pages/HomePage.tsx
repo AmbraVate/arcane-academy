@@ -202,7 +202,6 @@ function EnrolledCard({
 }
 
 function SchoolCard({
-  schoolId,
   meta,
   paths,
   hasActive,
@@ -214,8 +213,8 @@ function SchoolCard({
   hasActive: boolean
   onClick: () => void
 }) {
-  const activePaths  = paths.filter(d => d.status === 'active')
-  const soonPaths    = paths.filter(d => d.status !== 'active')
+  const activePaths = paths.filter(d => d.status === 'active')
+  const soonCount   = paths.filter(d => d.status !== 'active').length
 
   return (
     <div
@@ -224,8 +223,8 @@ function SchoolCard({
         'rounded-[14px] border border-border bg-card flex flex-col',
         'transition-[border-color,transform,box-shadow] duration-200',
         hasActive
-          ? 'cursor-pointer hover:-translate-y-[2px] hover:shadow-[0_8px_32px_rgba(0,0,0,0.35)]'
-          : 'opacity-60 cursor-default',
+          ? 'cursor-pointer hover:-translate-y-[2px] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+          : 'opacity-55 cursor-default',
       )}
       style={hasActive ? {
         borderTopColor: `color-mix(in srgb, ${meta.color} 65%, transparent)`,
@@ -243,28 +242,25 @@ function SchoolCard({
       }}
     >
       {/* Header */}
-      <div className="px-5 pt-5 pb-4 flex items-start gap-4">
+      <div className="px-4 pt-4 pb-3 flex items-start gap-3">
         <div
-          className="flex-shrink-0 w-12 h-12 rounded-[12px] flex items-center justify-center text-[24px]"
+          className="flex-shrink-0 w-10 h-10 rounded-[10px] flex items-center justify-center text-[20px]"
           style={{background: `color-mix(in srgb, ${meta.color} 14%, transparent)`}}
         >
           {meta.glyph}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-cinzel text-[15px] font-bold text-text leading-snug">
+          <div className="flex items-center gap-2 flex-wrap mb-0.5">
+            <span className="font-cinzel text-[13px] font-bold text-text leading-snug">
               {meta.name}
             </span>
-            {hasActive
-              ? <Badge variant="active">Active</Badge>
-              : <Badge variant="soon">Coming Soon</Badge>}
           </div>
-          <p className="text-[12px] text-muted leading-[1.55] mt-1 line-clamp-2">{meta.description}</p>
+          <p className="text-[11px] text-muted leading-[1.5] line-clamp-2">{meta.description}</p>
         </div>
       </div>
 
       {/* Pathway chips */}
-      <div className="px-5 pb-3 flex flex-wrap gap-1.5">
+      <div className="px-4 pb-3 flex flex-wrap gap-1.5 min-h-[28px]">
         {activePaths.map(d => (
           <span
             key={d.id}
@@ -278,18 +274,15 @@ function SchoolCard({
             {d.glyph} {d.name}
           </span>
         ))}
-        {soonPaths.map(d => (
-          <span
-            key={d.id}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-cinzel tracking-wide border border-border text-muted opacity-60"
-          >
-            {d.glyph} {d.name}
+        {soonCount > 0 && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-cinzel tracking-wide border border-border text-muted opacity-60">
+            +{soonCount} coming soon
           </span>
-        ))}
+        )}
       </div>
 
       {/* Footer */}
-      <div className="mt-auto px-5 py-3.5 border-t border-border flex items-center justify-between">
+      <div className="mt-auto px-4 py-3 border-t border-border flex items-center justify-between">
         <span className="font-cinzel text-[10px] text-muted tracking-wide">
           {paths.length} {paths.length === 1 ? 'pathway' : 'pathways'}
         </span>
@@ -528,8 +521,8 @@ export default function HomePage() {
         )}
 
         <div
-          className="grid gap-4"
-          style={{gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))'}}>
+          className="grid gap-3"
+          style={{gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))'}}>
           {SCHOOL_CARDS.map(({schoolId, meta, paths, hasActive}) => (
             <SchoolCard
               key={schoolId}

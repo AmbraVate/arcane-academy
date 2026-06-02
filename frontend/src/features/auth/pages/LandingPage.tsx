@@ -77,7 +77,7 @@ function SectionLabel({ children }: { children: string }) {
   )
 }
 
-// ── Inline browser (Schools → Pathways → Domains) ────────────────────────────
+// ── Inline browser (Schools → Pathways) ──────────────────────────────────────
 
 type BrowseState =
   | { level: 'schools' }
@@ -178,7 +178,7 @@ function PathwayBrowser() {
     )
   }
 
-  // ── Pathways grid ──────────────────────────────────────
+  // ── Track groups (unused — kept for structural compatibility) ─────────
   if (state.level === 'pathways') {
     const schoolMeta = SCHOOL_META[state.school]
     const groups = trackGroupsForSchool(state.school)
@@ -238,7 +238,7 @@ function PathwayBrowser() {
     )
   }
 
-  // ── Domains grid ───────────────────────────────────────
+  // ── Pathways grid ─────────────────────────────────────
   const schoolMeta  = SCHOOL_META[state.school]
   const trackGroup  = TRACK_GROUPS.find(tg => tg.id === state.trackGroupId)
   const visibleDomains = DOMAINS
@@ -384,8 +384,8 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 20, marginBottom: 40 }}>
             {[
-              { val: '5',    label: 'Active schools' },
-              { val: '630+', label: 'Structured lessons' },
+              { val: '15',   label: 'Schools' },
+              { val: '150+', label: 'Pathways' },
               { val: 'FSRS', label: 'Memory algorithm' },
               { val: 'Free', label: 'To start' },
             ].map(s => (
