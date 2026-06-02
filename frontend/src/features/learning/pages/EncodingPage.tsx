@@ -718,7 +718,8 @@ export default function EncodingPage() {
               </div>
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.learningObjectives.map((obj, i) => (
-                  <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-teal">{obj}</li>
+                  <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-teal"
+                    dangerouslySetInnerHTML={{ __html: inlineMd(obj) }} />
                 ))}
               </ul>
             </div>
@@ -1402,7 +1403,8 @@ export default function EncodingPage() {
               </div>
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.commonMistakes.map((m, i) => (
-                  <li key={i} className="text-[13px] text-text leading-[1.6]" style={{ listStyleType: '"→ "' }}>{m}</li>
+                  <li key={i} className="text-[13px] text-text leading-[1.6]" style={{ listStyleType: '"→ "' }}
+                    dangerouslySetInnerHTML={{ __html: inlineMd(m) }} />
                 ))}
               </ul>
             </div>
@@ -1416,7 +1418,8 @@ export default function EncodingPage() {
               </div>
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.assessmentCriteria.map((c, i) => (
-                  <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-gold">{c}</li>
+                  <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-gold"
+                    dangerouslySetInnerHTML={{ __html: inlineMd(c) }} />
                 ))}
               </ul>
             </div>
@@ -1624,6 +1627,16 @@ export default function EncodingPage() {
       {newBadges.length > 0 && <BadgeToast badges={newBadges} onDone={() => setNewBadges([])} />}
     </div>
   )
+}
+
+/** Render inline Markdown (bold, italic, code) to an HTML string for dangerouslySetInnerHTML. */
+function inlineMd(text: string): string {
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/_([^_]+)_/g, '<em>$1</em>')
 }
 
 function questTypeLabel(q: string): string {
