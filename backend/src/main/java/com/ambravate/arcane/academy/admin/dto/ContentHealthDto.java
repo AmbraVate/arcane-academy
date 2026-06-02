@@ -20,7 +20,7 @@ public class ContentHealthDto {
   private String chunkTitle;
   /** Top-level subject area (e.g. "java", "sql", "tailwind"). */
   private String domainId;
-  /** Tier within the topic (e.g. "FOUNDATION", "PRACTITIONER"). */
+  /** Tier within the topic (e.g. "APPRENTICE", "JUNIOR", "SENIOR", "LEAD"). */
   private String tier;
   private List<String> issues;
 }

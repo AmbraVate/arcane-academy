@@ -33,19 +33,19 @@ public class DashboardController {
   ) {
     DashboardData data = dashboardService.getDashboard(user.getId(), domainId);
 
-    List<ModuleHealthDto> healthDtos = data.chunkHealth()
+    List<ModuleHealthDto> healthDtos = data.moduleHealth()
         .stream()
-        .map(chunkHealth ->
+        .map(moduleHealth ->
             ModuleHealthDto.builder()
-                .moduleId(chunkHealth.moduleId())
-                .title(chunkHealth.title())
-                .glyph(chunkHealth.glyph())
-                .status(chunkHealth.status())
-                .memoryStrength(chunkHealth.memoryStrength())
-                .healthColor(chunkHealth.healthColor())
-                .totalLessons(chunkHealth.totalLessons())
-                .completedLessons(chunkHealth.completedLessons())
-                .tier(chunkHealth.tier())
+                .moduleId(moduleHealth.moduleId())
+                .title(moduleHealth.title())
+                .glyph(moduleHealth.glyph())
+                .status(moduleHealth.status())
+                .memoryStrength(moduleHealth.memoryStrength())
+                .healthColor(moduleHealth.healthColor())
+                .totalLessons(moduleHealth.totalLessons())
+                .completedLessons(moduleHealth.completedLessons())
+                .tier(moduleHealth.tier())
                 .build()
         ).collect(Collectors.toList());
 
@@ -61,7 +61,7 @@ public class DashboardController {
             .withReviewsDue(data.reviewsDue())
             .withDailyGoalMinutes(data.dailyGoalMinutes())
             .withOverallProgress(data.overallProgress())
-            .withChunkHealth(healthDtos)
+            .withModuleHealth(healthDtos)
             .build()
     );
   }
@@ -122,7 +122,7 @@ public class DashboardController {
             .withReviewsDue(0)
             .withDailyGoalMinutes(0)
             .withOverallProgress(0.0)
-            .withChunkHealth(healthDtos)
+            .withModuleHealth(healthDtos)
             .build()
     );
   }

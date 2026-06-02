@@ -69,7 +69,7 @@ public class DashboardService {
       dailyGoalMinutes = 40;
     }
 
-    List<ModuleHealth> chunkHealth = getMemoryHealth(userId, domainId);
+    List<ModuleHealth> moduleHealth = getMemoryHealth(userId, domainId);
     int reviewsDue = spacingService.getDueReviews(userId).size();
     boolean streakAtRisk = gamification.isStreakAtRisk(userId);
 
@@ -100,7 +100,7 @@ public class DashboardService {
         reviewsDue,
         dailyGoalMinutes,
         overallProgress,
-        chunkHealth
+        moduleHealth
     );
   }
 

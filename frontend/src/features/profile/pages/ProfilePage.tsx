@@ -411,8 +411,8 @@ export default function ProfilePage() {
                   name={topic.name}
                   tier={dash.currentPath}
                   diagnosticCompleted={dash.diagnosticCompleted}
-                  completedLessons={dash.chunkHealth.reduce((s, c) => s + c.completedLessons, 0)}
-                  totalLessons={dash.chunkHealth.reduce((s, c) => s + c.totalLessons, 0)}
+                  completedLessons={dash.moduleHealth.reduce((s, c) => s + c.completedLessons, 0)}
+                  totalLessons={dash.moduleHealth.reduce((s, c) => s + c.totalLessons, 0)}
                   totalXp={dash.totalXp}
                   onContinue={() => navigate(`/domain/${topic.id}`)}
                   onRetakeDiagnostic={() => navigate(`/domain/${topic.id}/diagnostic`)}

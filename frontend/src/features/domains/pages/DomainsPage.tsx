@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
 import { Lock, ChevronLeft, LogIn, AlertTriangle } from 'lucide-react'
+import CompletionRing from '@/components/ui/CompletionRing'
 import {
   DOMAINS,
   ACTIVE_DOMAIN_IDS,
@@ -31,29 +32,7 @@ type NavState =
   | { level: 'track-groups'; school: School }
   | { level: 'domains'; school: School; trackGroupId?: string }
 
-// ── Progress Ring (public / no-data state shows an empty ring) ────────────────
 
-function ProgressRing({ pct, active, stroke }: { pct: number; active: boolean; stroke: string }) {
-  const r = 22
-  const circ = 2 * Math.PI * r
-  const dash = (pct / 100) * circ
-  return (
-    <svg width="56" height="56" viewBox="0 0 56 56" className="block overflow-visible">
-      <circle cx="28" cy="28" r={r} fill="none" stroke="var(--border)" strokeWidth="3.5" />
-      <circle
-        cx="28" cy="28" r={r} fill="none"
-        stroke={stroke} strokeWidth="3.5" strokeLinecap="round"
-        strokeDasharray={`${dash} ${circ}`} strokeDashoffset="0"
-        transform="rotate(-90 28 28)"
-        style={{ opacity: active ? 1 : 0.3, transition: 'stroke-dasharray 0.6s ease' }}
-      />
-      <text x="28" y="28" dominantBaseline="central" textAnchor="middle"
-        fontSize="9" fontFamily="'Cinzel', serif" fill="var(--muted)" fontWeight="600" letterSpacing="0.02em">
-        {Math.round(pct)}%
-      </text>
-    </svg>
-  )
-}
 
 // ── Paywall modal ─────────────────────────────────────────────────────────────
 
@@ -425,7 +404,7 @@ function DomainsView({
                       <LogIn size={18} color="var(--muted)" strokeWidth={1.5} />
                     </div>
                   ) : (
-                    <ProgressRing pct={progress} active={active} stroke={topic.accentStroke} />
+                    <CompletionRing pct={progress} color={topic.accentStroke} size={56} strokeWidth={3.5} fillOpacity={active ? 1 : 0.3} />
                   )}
                   <Badge variant={!active ? 'soon' : isPaywalled ? 'locked' : 'active'}>
                     {!active ? 'Coming Soon' : isPaywalled ? '🔒 Premium' : isPublic ? 'Enrol' : 'Active'}
@@ -498,8 +477,8 @@ export default function DomainsPage() {
           .filter(([, d]) => d != null)
           .map(([id, d]) => [id, {
             progress: Math.round(d!.overallProgress * 100),
-            totalChunks: d!.chunkHealth.length,
-            totalLessons: d!.chunkHealth.reduce((sum, ch) => sum + ch.totalLessons, 0),
+            totalChunks: d!.moduleHealth.length,
+            totalLessons: d!.moduleHealth.reduce((sum, ch) => sum + ch.totalLessons, 0),
           }])
       )
 

@@ -23,5 +23,5 @@ public class DashboardDto {
     private int reviewsDue;
     private int dailyGoalMinutes;
     private double overallProgress;
-    private List<ModuleHealthDto> chunkHealth;
+    private List<ModuleHealthDto> moduleHealth;
 }

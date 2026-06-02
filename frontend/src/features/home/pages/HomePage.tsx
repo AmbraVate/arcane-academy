@@ -31,17 +31,9 @@ import {UpgradeModal} from '@/features/payment/components/UpgradeModal'
 
 interface TopicData {
   progress: number
-  diagnosticCompleted: boolean
-  diagnosticCompletedAt: string | null
   totalChunks: number
   completedChunks: number
   totalLessons: number
-}
-
-
-function diagnosticExpired(completedAt: string | null): boolean {
-  if (!completedAt) return false
-  return (Date.now() - new Date(completedAt).getTime()) / 86_400_000 >= 30
 }
 
 
@@ -307,18 +299,16 @@ export default function HomePage() {
       .filter(([, d]) => d != null)
       .map(([id, d]) => [id, {
         progress: Math.round(d!.overallProgress * 100),
-        diagnosticCompleted: d!.diagnosticCompleted,
-        diagnosticCompletedAt: d!.diagnosticCompletedAt ?? null,
-        totalChunks: d!.chunkHealth.length,
-        completedChunks: d!.chunkHealth.filter(ch => ch.status === 'COMPLETE').length,
-        totalLessons: d!.chunkHealth.reduce((s, ch) => s + ch.totalLessons, 0),
+        totalChunks: d!.moduleHealth.length,
+        completedChunks: d!.moduleHealth.filter(ch => ch.status === 'COMPLETE').length,
+        totalLessons: d!.moduleHealth.reduce((s, ch) => s + ch.totalLessons, 0),
       }])
   )
 
-  // Enrolled = has any progress or completed the diagnostic
+  // Enrolled = has any progress
   const enrolledTopics = ACTIVE_DOMAINS.filter(t => {
     const d = topicData[t.id]
-    return d && (d.progress > 0 || d.diagnosticCompleted)
+    return d && d.progress > 0
   })
   const hasEnrollments = enrolledTopics.length > 0
   const canUnlock = hasActiveSubscription(user)
@@ -327,9 +317,7 @@ export default function HomePage() {
   const unenrolledActive = ACTIVE_DOMAINS.filter(t => !enrolledTopics.find(e => e.id === t.id))
 
   function handleTopicClick(topic: Domain) {
-    const data = topicData[topic.id]
-    const needsOnboarding = !data || !data.diagnosticCompleted || diagnosticExpired(data.diagnosticCompletedAt)
-    navigate(needsOnboarding ? `/domain/${topic.id}/onboarding` : `/domain/${topic.id}`)
+    navigate(`/domain/${topic.id}`)
   }
 
   function handleLockedTopicClick() {

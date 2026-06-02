@@ -7,61 +7,12 @@ import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
 import { TierIcon } from '@/components/icons/TierIcon'
 import { Check, MapPin, Lock, BookOpen } from 'lucide-react'
+import CompletionRing from '@/components/ui/CompletionRing'
 import PublicBanner from '@/components/layout/PublicBanner'
+import { DOMAINS } from '@/features/domains/data/domains'
 
-type TopicMeta = {
-  name: string
-  glyph: string
-  tagline: string
-  accent: string
-  studyOrder?: { label: string; detail: string; tiers: string[] }[]
-}
-
-const TOPIC_META: Record<string, TopicMeta> = {
-  java: {
-    name: 'Software Engineering',
-    glyph: '⚙️',
-    tagline: 'Build reliable systems — computational thinking, design, and architecture, taught through Java.',
-    accent: 'var(--teal)',
-  },
-  tailwind: {
-    name: 'Tailwind CSS',
-    glyph: '🎨',
-    tagline: 'Compose beautiful interfaces with utility classes — no more naming paralysis.',
-    accent: 'var(--purple)',
-  },
-  react: {
-    name: 'React',
-    glyph: '⚛️',
-    tagline: 'Component-driven UIs. Hooks, state, and the modern frontend — all the way to deployment.',
-    accent: 'var(--teal)',
-  },
-  sql: {
-    name: 'SQL',
-    glyph: '🗃️',
-    tagline: 'The language of data. Read, filter, summarise — every backend dev writes it daily.',
-    accent: 'var(--teal)',
-  },
-  psychology: {
-    name: 'Psychology',
-    glyph: '🧠',
-    tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.',
-    accent: 'var(--purple)',
-  },
-  genealogy: {
-    name: 'Genealogy',
-    glyph: '🌳',
-    tagline: 'From vital records to professional proof — become a skilled genealogical researcher.',
-    accent: 'var(--gold)',
-  },
-  sciences: {
-    name: 'Natural Sciences',
-    glyph: '🔬',
-    tagline: 'From scientific method to frontier research — physics, chemistry, biology, and earth science.',
-    accent: 'var(--teal)',
-  },
-}
 const TIER_ORDER = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
+
 const TIER_LABELS: Record<string, string> = {
   APPRENTICE: 'Apprentice',
   JUNIOR:     'Junior',
@@ -74,6 +25,7 @@ const TIER_LABELS: Record<string, string> = {
   EXPERT:       'Expert',
   CAPSTONE:     'Capstone',
 }
+
 const TIER_DESC: Record<string, string> = {
   APPRENTICE: 'Foundations — core concepts, vocabulary, and the essential knowledge every learner needs.',
   JUNIOR:     'Applied knowledge — practical skills and techniques used in real-world contexts.',
@@ -85,33 +37,6 @@ const TIER_DESC: Record<string, string> = {
   PRACTITIONER: 'Applied skills in real-world contexts — bringing knowledge into practice.',
   EXPERT:       'Specialist depth, critical evaluation, and advanced synthesis.',
   CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
-}
-
-// ── Completion ring (diagram-style circle indicator) ─────────────────────────
-
-function CompletionRing({ pct, color, size = 48 }: { pct: number; color: string; size?: number }) {
-  const r = size / 2 - 5
-  const circ = 2 * Math.PI * r
-  const dash = (pct / 100) * circ
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block flex-shrink-0">
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--border)" strokeWidth="3" />
-      {pct > 0 && (
-        <circle
-          cx={size/2} cy={size/2} r={r} fill="none"
-          stroke={color} strokeWidth="3" strokeLinecap="round"
-          strokeDasharray={`${dash} ${circ}`} strokeDashoffset="0"
-          transform={`rotate(-90 ${size/2} ${size/2})`}
-          style={{ transition: 'stroke-dasharray 0.5s ease' }}
-        />
-      )}
-      <text x={size/2} y={size/2} dominantBaseline="central" textAnchor="middle"
-        fontSize={size * 0.2} fill={pct > 0 ? color : 'var(--muted)'} fontWeight="700"
-        fontFamily="'Cinzel', serif">
-        {pct > 0 ? `${pct}%` : '—'}
-      </text>
-    </svg>
-  )
 }
 
 function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDto; onClick: () => void; accent?: string }) {
@@ -174,6 +99,8 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDt
         pct={locked ? 0 : done ? 100 : completionPct}
         color={locked ? 'var(--border)' : ringColor}
         size={44}
+        strokeWidth={3}
+        emptyLabel="—"
       />
     </div>
   )
@@ -186,7 +113,13 @@ export default function DomainPage() {
   const isPublic = !user
   const { data: dashboard, isLoading } = useDashboard(domainId ?? '', isPublic)
 
-  const meta = TOPIC_META[domainId ?? ''] ?? { name: domainId, glyph: '📖', tagline: '', accent: 'var(--teal)' }
+  const domainMeta = DOMAINS.find(d => d.id === domainId)
+  const meta = {
+    name:        domainMeta?.name     ?? domainId ?? 'Domain',
+    glyph:       domainMeta?.glyph    ?? '📖',
+    tagline:     domainMeta?.tagline  ?? '',
+    accentStroke: domainMeta?.accentStroke ?? 'var(--teal)',
+  }
 
   if (isLoading) {
     return (
@@ -203,7 +136,6 @@ export default function DomainPage() {
 
   function handleModuleClick(ch: ModuleHealthDto) {
     if (isPublic) {
-      // Public: allow browsing module structure but not starting lessons
       navigate(`/chunk/${ch.moduleId}`)
       return
     }
@@ -217,8 +149,8 @@ export default function DomainPage() {
       <div
         className="flex flex-col items-center text-center px-5 py-8 pb-7 rounded-[16px] mb-6 relative overflow-hidden"
         style={{
-          border: `1px solid color-mix(in srgb, ${meta.accent} 25%, transparent)`,
-          background: `radial-gradient(ellipse at 50% 0%, color-mix(in srgb, ${meta.accent} 12%, transparent) 0%, transparent 60%), var(--card)`,
+          border: `1px solid color-mix(in srgb, ${meta.accentStroke} 25%, transparent)`,
+          background: `radial-gradient(ellipse at 50% 0%, color-mix(in srgb, ${meta.accentStroke} 12%, transparent) 0%, transparent 60%), var(--card)`,
         }}
       >
         <button className="btn btn-ghost text-[12px] self-start mb-4" onClick={() => navigate('/domains')}>
@@ -227,36 +159,17 @@ export default function DomainPage() {
         <div className="mb-2.5 flex justify-center">
           <DomainIcon domainId={domainId ?? ''} size={52} />
         </div>
-        <h1 className="font-cinzel text-[28px] font-bold m-0 mb-2 max-[600px]:text-[22px]" style={{ color: meta.accent }}>{meta.name}</h1>
+        <h1 className="font-cinzel text-[28px] font-bold m-0 mb-2 max-[600px]:text-[22px]" style={{ color: meta.accentStroke }}>{meta.name}</h1>
         <p className="text-[14px] text-muted leading-[1.7] max-w-[480px] m-0 mb-5">{meta.tagline}</p>
         <div className="w-full max-w-[400px]">
           <div className="flex justify-between text-[12px] text-muted mb-1.5">
             <span>Overall mastery</span><span>{progressPct}%</span>
           </div>
           <div className="h-[6px] bg-border rounded-full overflow-hidden">
-            <div className="h-full rounded-full transition-[width] duration-400" style={{ width: `${progressPct}%`, background: meta.accent }} />
+            <div className="h-full rounded-full transition-[width] duration-400" style={{ width: `${progressPct}%`, background: meta.accentStroke }} />
           </div>
         </div>
       </div>
-
-      {meta.studyOrder && (
-        <div className="mb-7">
-          <div className="font-cinzel text-[14px] font-bold text-gold tracking-[0.08em] uppercase mb-3.5">Suggested Study Order</div>
-          <div className="grid gap-3 max-[600px]:grid-cols-1" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))' }}>
-            {meta.studyOrder.map((phase, index) => (
-              <div
-                key={`${phase.label}-${index}`}
-                className="bg-card border border-border rounded-[12px] p-4"
-                style={{ borderTopColor: `color-mix(in srgb, ${meta.accent} 55%, transparent)`, borderTopWidth: 2 }}
-              >
-                <div className="text-[11px] text-muted font-cinzel uppercase tracking-[0.08em] mb-1">Phase {index + 1}</div>
-                <div className="text-[14px] font-bold text-text mb-1.5">{phase.label}</div>
-                <p className="text-[12px] text-muted leading-[1.55] m-0">{phase.detail}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Reviews due — only shown when authenticated */}
       {!isPublic && dashboard.reviewsDue > 0 && (
@@ -274,8 +187,8 @@ export default function DomainPage() {
 
       {/* Tier-grouped chunk grid */}
       {(() => {
-        const byTier = TIER_ORDER.reduce<Record<string, typeof dashboard.chunkHealth>>((acc, t) => {
-          acc[t] = dashboard.chunkHealth.filter(ch => ch.tier === t)
+        const byTier = TIER_ORDER.reduce<Record<string, typeof dashboard.moduleHealth>>((acc, t) => {
+          acc[t] = dashboard.moduleHealth.filter(ch => ch.tier === t)
           return acc
         }, {})
         const activeTiers = TIER_ORDER.filter(t => (byTier[t]?.length ?? 0) > 0)
@@ -316,7 +229,7 @@ export default function DomainPage() {
                   <ChunkCard
                     key={ch.moduleId}
                     ch={ch}
-                    accent={meta.accent}
+                    accent={meta.accentStroke}
                     onClick={() => handleModuleClick(ch)}
                   />
                 ))}

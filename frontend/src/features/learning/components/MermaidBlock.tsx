@@ -145,7 +145,7 @@ export function useMermaidHydration(
         wrapperEl.replaceWith(div)
       } catch (err) {
         // Leave the original <pre><code> block intact on failure.
-        console.warn('[MermaidHydration] Render error for block', i, err)
+        if (import.meta.env.DEV) console.warn('[MermaidHydration] Render error for block', i, err)
       }
     })
 

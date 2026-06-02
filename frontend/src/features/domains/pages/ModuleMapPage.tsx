@@ -7,40 +7,7 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Lock, Check, Loader2, Layers, ChevronRight } from 'lucide-react'
 import PublicBanner from '@/components/layout/PublicBanner'
-
-// ── Small completion ring (diagram-style circle) ─────────────────────────────
-
-function CompletionRing({ pct, color, size = 40 }: { pct: number; color: string; size?: number }) {
-  const r = size / 2 - 4
-  const circ = 2 * Math.PI * r
-  const dash = (pct / 100) * circ
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block flex-shrink-0">
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--border)" strokeWidth="2.5" />
-      {pct > 0 && (
-        <circle
-          cx={size/2} cy={size/2} r={r} fill="none"
-          stroke={color} strokeWidth="2.5" strokeLinecap="round"
-          strokeDasharray={`${dash} ${circ}`} strokeDashoffset="0"
-          transform={`rotate(-90 ${size/2} ${size/2})`}
-          style={{ transition: 'stroke-dasharray 0.5s ease' }}
-        />
-      )}
-      {pct === 100 ? (
-        <path
-          d={`M ${size/2 - 5} ${size/2} l 3.5 3.5 l 6 -6`}
-          fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-        />
-      ) : (
-        <text x={size/2} y={size/2} dominantBaseline="central" textAnchor="middle"
-          fontSize={size * 0.22} fill={pct > 0 ? color : 'var(--muted)'} fontWeight="700"
-          fontFamily="'Cinzel', serif">
-          {pct > 0 ? `${pct}%` : ''}
-        </text>
-      )}
-    </svg>
-  )
-}
+import CompletionRing from '@/components/ui/CompletionRing'
 
 // ── Topic row ─────────────────────────────────────────────────────────────────
 
@@ -99,7 +66,7 @@ function TopicRow({
       </div>
 
       {/* Completion ring */}
-      <CompletionRing pct={isLocked ? 0 : pct} color={color} size={38} />
+      <CompletionRing pct={isLocked ? 0 : pct} color={color} size={38} showCheck />
 
       {/* Chevron */}
       {!isLocked && (

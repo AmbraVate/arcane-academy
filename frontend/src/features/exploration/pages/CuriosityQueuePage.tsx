@@ -7,9 +7,13 @@ export default function CuriosityQueuePage() {
   const navigate = useNavigate()
   const [items, setItems] = useState<CuriosityQueueItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    curiosityApi.getAll().then(setItems).catch(console.error).finally(() => setLoading(false))
+    curiosityApi.getAll()
+      .then(setItems)
+      .catch(err => setError(err?.message ?? 'Failed to load curiosity queue'))
+      .finally(() => setLoading(false))
   }, [])
 
   async function handleRemove(lessonId: string) {
@@ -18,6 +22,7 @@ export default function CuriosityQueuePage() {
   }
 
   if (loading) return <div className="flex items-center justify-center h-[60vh] text-muted"><p>Loading queue...</p></div>
+  if (error) return <div className="flex items-center justify-center h-[60vh] text-red-400 text-[14px]"><p>{error}</p></div>
 
   return (
     <div className="max-w-[600px] mx-auto px-4 py-6 pb-[60px] max-[480px]:px-3 max-[480px]:py-4">

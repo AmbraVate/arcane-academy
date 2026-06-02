@@ -6,58 +6,30 @@ import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Lock, Check, Loader2, BookOpen, Code2, Zap, Wrench } from 'lucide-react'
 import PublicBanner from '@/components/layout/PublicBanner'
+import CompletionRing from '@/components/ui/CompletionRing'
 
 // ── Phase ring (green) + memory ring (yellow) ─────────────────────────────────
+
+const PHASE_PCT: Record<string, number> = {
+  HOOK: 20, EXPLANATION: 40, GUIDED_PRACTICE: 60,
+  SOLO_PRACTICE: 80, RETRIEVAL_CHECK: 90, INTEGRATION: 95, COMPLETE: 100,
+}
 
 function LessonRings({ sc }: { sc: LessonSummary }) {
   const isDone  = sc.status === 'COMPLETE' || sc.status === 'SKIPPED'
   const inProg  = sc.status === 'IN_PROGRESS'
   const memPct  = Math.round(sc.memoryStrength * 100)
-
-  // Phase progress: HOOK=20, EXPLANATION=40, GUIDED_PRACTICE=60, SOLO_PRACTICE=80, RETRIEVAL_CHECK=90, COMPLETE=100
-  const PHASE_PCT: Record<string, number> = {
-    HOOK: 20, EXPLANATION: 40, GUIDED_PRACTICE: 60,
-    SOLO_PRACTICE: 80, RETRIEVAL_CHECK: 90, INTEGRATION: 95, COMPLETE: 100,
-  }
   const phasePct = isDone ? 100 : inProg && sc.currentPhase ? (PHASE_PCT[sc.currentPhase] ?? 20) : 0
 
-  const greenColor = isDone ? 'var(--teal)' : inProg ? 'var(--purple)' : 'var(--border)'
-  const yellowColor = memPct > 60 ? 'var(--teal)' : memPct > 30 ? 'var(--orange)' : 'var(--red)'
-
-  const size = 32
-  const r = size / 2 - 3.5
-  const circ = 2 * Math.PI * r
-
-  function Ring({ pct, color }: { pct: number; color: string }) {
-    const dash = (pct / 100) * circ
-    return (
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="block flex-shrink-0">
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--border)" strokeWidth="2.5" />
-        {pct > 0 && (
-          <circle
-            cx={size/2} cy={size/2} r={r} fill="none"
-            stroke={color} strokeWidth="2.5" strokeLinecap="round"
-            strokeDasharray={`${dash} ${circ}`} strokeDashoffset="0"
-            transform={`rotate(-90 ${size/2} ${size/2})`}
-            style={{ transition: 'stroke-dasharray 0.4s ease' }}
-          />
-        )}
-        {pct === 100 && (
-          <path
-            d={`M ${size/2 - 4} ${size/2} l 2.5 2.5 l 5 -5`}
-            fill="none" stroke={color} strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
-          />
-        )}
-      </svg>
-    )
-  }
+  const phaseColor  = isDone ? 'var(--teal)' : inProg ? 'var(--purple)' : 'var(--border)'
+  const memoryColor = memPct > 60 ? 'var(--teal)' : memPct > 30 ? 'var(--orange)' : 'var(--red)'
 
   return (
     <div className="flex items-center gap-1.5 flex-shrink-0">
-      {/* Yellow — memory retention */}
-      {isDone && <Ring pct={memPct} color={yellowColor} />}
-      {/* Green — phase / completion */}
-      <Ring pct={phasePct} color={greenColor} />
+      {/* Yellow ring — memory retention (only once a lesson is done) */}
+      {isDone && <CompletionRing pct={memPct} color={memoryColor} size={32} showCheck />}
+      {/* Green ring — phase / completion progress */}
+      <CompletionRing pct={phasePct} color={phaseColor} size={32} showCheck />
     </div>
   )
 }

@@ -1,12 +1,12 @@
 ﻿import api, { REFRESH_TOKEN_KEY } from './client'
 import type {
   User, Badge, CodeRunResponse,
-  ModuleSummary, ModuleDetail, LessonEncoding, PracticeResult,
+  ModuleDetail, LessonEncoding, PracticeResult,
   RetrievalResultDto, ReviewSessionDto, ReviewResultDto,
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
   RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
   SubscriptionStatus, GuidedStepDto, GuidedStepCheckResponse,
-  SoloAssessmentResult, GraphResponse,
+  SoloAssessmentResult,
 } from '@/shared/types'
 
 // â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -39,12 +39,8 @@ export const authApi = {
   },
 }
 
-// â”€â”€ Chunks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Modules ──────────────────────────────────────────────────────────────────
 export const moduleApi = {
-  getAll: async (): Promise<ModuleSummary[]> => {
-    const { data } = await api.get('/api/modules')
-    return data
-  },
   getDetail: async (moduleId: string): Promise<ModuleDetail> => {
     const { data } = await api.get(`/api/modules/${moduleId}`)
     return data
@@ -130,7 +126,7 @@ export const reviewApi = {
   },
 }
 
-// â”€â”€ Diagnostic â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Diagnostic ────────────────────────────────────────────────────────────────
 export const diagnosticApi = {
   start: async (domainId = 'java'): Promise<ReviewSessionDto> => {
     const { data } = await api.post(`/api/diagnostic/start?domainId=${domainId}`)
@@ -142,10 +138,6 @@ export const diagnosticApi = {
   },
   skip: async (domainId = 'java'): Promise<void> => {
     await api.post(`/api/diagnostic/skip?domainId=${domainId}`)
-  },
-  getResults: async (): Promise<DiagnosticResultDto> => {
-    const { data } = await api.get('/api/diagnostic/results')
-    return data
   },
 }
 
@@ -208,21 +200,28 @@ export const tailwindApi = {
   },
 }
 
-// â”€â”€ React Practice â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Tests run in the iframe sandbox client-side (see ReactEditor); the per-test
-// pass/fail is sent here for XP awarding. Backend does a structural sanity
-// check on the JSX source — see ReactPracticeService for rationale.
-export interface ReactClientTestResult {
+/**
+ * Per-test result reported by the client-side sandbox (React iframe, sql.js,
+ * WebR). Sent to the backend alongside the source code for XP awarding;
+ * the backend does a structural sanity check before trusting the result.
+ */
+export interface ClientTestResult {
   label: string
   passed: boolean
   actual: string
 }
 
+// Backward-compatible type aliases (callers may still reference these)
+export type ReactClientTestResult = ClientTestResult
+export type SqlClientTestResult   = ClientTestResult
+export type RClientTestResult     = ClientTestResult
+
+// ── React Practice ────────────────────────────────────────────────────────────
 export const reactApi = {
   submit: async (
     lessonId: string,
     code: string,
-    clientTestResults: ReactClientTestResult[],
+    clientTestResults: ClientTestResult[],
   ): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/react/${lessonId}/submit`, { code, clientTestResults })
     return data
@@ -230,29 +229,19 @@ export const reactApi = {
   submitSoloPractice: async (
     lessonId: string,
     code: string,
-    clientTestResults: ReactClientTestResult[],
+    clientTestResults: ClientTestResult[],
   ): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/react/${lessonId}/solo-practice/submit`, { code, clientTestResults })
     return data
   },
 }
 
-// â”€â”€ SQL Practice â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// sql.js (SQLite-WASM) runs inside the iframe; the harness compares the user's
-// query result to expected rows or to a reference query and reports per-test
-// pass/fail. Backend does a structural sanity check on the SQL source before
-// awarding XP — see SqlPracticeService.
-export interface SqlClientTestResult {
-  label: string
-  passed: boolean
-  actual: string
-}
-
+// ── SQL Practice ──────────────────────────────────────────────────────────────
 export const sqlApi = {
   submit: async (
     lessonId: string,
     code: string,
-    clientTestResults: SqlClientTestResult[],
+    clientTestResults: ClientTestResult[],
   ): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/sql/${lessonId}/submit`, { code, clientTestResults })
     return data
@@ -260,25 +249,19 @@ export const sqlApi = {
   submitSoloPractice: async (
     lessonId: string,
     code: string,
-    clientTestResults: SqlClientTestResult[],
+    clientTestResults: ClientTestResult[],
   ): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/sql/${lessonId}/solo-practice/submit`, { code, clientTestResults })
     return data
   },
 }
 
-// â”€â”€ R (statistics) practice â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-export interface RClientTestResult {
-  label: string
-  passed: boolean
-  actual: string
-}
-
+// ── R (statistics) Practice ───────────────────────────────────────────────────
 export const rApi = {
   submit: async (
     lessonId: string,
     code: string,
-    clientTestResults: RClientTestResult[],
+    clientTestResults: ClientTestResult[],
   ): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/r/${lessonId}/submit`, { code, clientTestResults })
     return data
@@ -286,7 +269,7 @@ export const rApi = {
   submitSoloPractice: async (
     lessonId: string,
     code: string,
-    clientTestResults: RClientTestResult[],
+    clientTestResults: ClientTestResult[],
   ): Promise<PracticeResult> => {
     const { data } = await api.post(`/api/r/${lessonId}/solo-practice/submit`, { code, clientTestResults })
     return data
@@ -301,14 +284,10 @@ export const codeApi = {
   },
 }
 
-// â”€â”€ Badges (kept) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Badges ────────────────────────────────────────────────────────────────────
 export const badgeApi = {
   getAll: async (): Promise<Badge[]> => {
     const { data } = await api.get('/api/badges')
-    return data
-  },
-  getEarned: async (): Promise<Badge[]> => {
-    const { data } = await api.get('/api/badges/earned')
     return data
   },
 }
@@ -516,16 +495,7 @@ export const paymentsApi = {
   },
 }
 
-// ── Knowledge Graph (Phase 7) ─────────────────────────────────────────────────
-export const graphApi = {
-  /** Fetch the full curriculum knowledge graph (nodes + edges) for the current user. */
-  get: async (): Promise<GraphResponse> => {
-    const { data } = await api.get('/api/graph')
-    return data
-  },
-}
-
-// â”€â”€ Capstones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Capstones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface UserCapstone {
   id: string

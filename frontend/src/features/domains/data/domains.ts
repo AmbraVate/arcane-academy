@@ -53,10 +53,6 @@ export function trackGroupsForSchool(school: School): TrackGroup[] {
   return TRACK_GROUPS.filter(tg => tg.school === school)
 }
 
-// Legacy alias kept for any existing imports
-export const SCHOOLS: Record<School, { name: string; description: string }> = Object.fromEntries(
-  Object.entries(SCHOOL_META).map(([k, v]) => [k, { name: v.name, description: v.description }])
-) as Record<School, { name: string; description: string }>
 
 export const DOMAINS: Domain[] = [
   // Engineering & Systems — Software Engineering
