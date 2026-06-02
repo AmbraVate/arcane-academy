@@ -27,12 +27,12 @@ UPDATE user_learner_profiles SET current_path = 'LEAD'       WHERE current_path 
 
 ALTER TABLE user_learner_profiles ALTER COLUMN current_path SET DEFAULT 'APPRENTICE';
 
--- ── user_topic_profiles.current_tier (nullable — added in V22) ────────────────
-UPDATE user_topic_profiles SET current_tier = 'APPRENTICE' WHERE current_tier = 'FOUNDATION';
-UPDATE user_topic_profiles SET current_tier = 'JUNIOR'     WHERE current_tier = 'PRACTITIONER';
-UPDATE user_topic_profiles SET current_tier = 'SENIOR'     WHERE current_tier = 'EXPERT';
-UPDATE user_topic_profiles SET current_tier = 'JUNIOR'     WHERE current_tier = 'ADVANCED';
-UPDATE user_topic_profiles SET current_tier = 'LEAD'       WHERE current_tier = 'CAPSTONE';
+-- ── user_track_profiles.current_tier (renamed from user_topic_profiles in V27) ─
+UPDATE user_track_profiles SET current_tier = 'APPRENTICE' WHERE current_tier = 'FOUNDATION';
+UPDATE user_track_profiles SET current_tier = 'JUNIOR'     WHERE current_tier = 'PRACTITIONER';
+UPDATE user_track_profiles SET current_tier = 'SENIOR'     WHERE current_tier = 'EXPERT';
+UPDATE user_track_profiles SET current_tier = 'JUNIOR'     WHERE current_tier = 'ADVANCED';
+UPDATE user_track_profiles SET current_tier = 'LEAD'       WHERE current_tier = 'CAPSTONE';
 
 -- ── questions.min_path ────────────────────────────────────────────────────────
 UPDATE questions SET min_path = 'APPRENTICE' WHERE min_path = 'FOUNDATION';
