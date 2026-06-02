@@ -80,7 +80,29 @@ interface CalloutProps {
 }
 
 function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position, onNext, onSkip }: CalloutProps) {
-  const isCenter = position === 'center' || !rect
+  const GAP       = 16
+  const CALLOUT_H = 260  // generous estimate — accounts for multi-line body text
+
+  // Compute once; drives both the style calculation and the arrow direction.
+  const effectivePos: string = (() => {
+    if (position === 'center' || !rect) return 'center'
+    const spotY = rect.y - PAD
+    const spotH = rect.h + PAD * 2
+    const vh    = window.innerHeight
+
+    const fitsBelow = spotY + spotH + GAP + CALLOUT_H <= vh - 8
+    const fitsAbove = spotY - GAP - CALLOUT_H >= 8
+
+    if (position === 'bottom') {
+      if (!fitsBelow) return fitsAbove ? 'top' : 'center'
+    }
+    if (position === 'top') {
+      if (!fitsAbove) return fitsBelow ? 'bottom' : 'center'
+    }
+    return position
+  })()
+
+  const isCenter = effectivePos === 'center'
 
   const style: React.CSSProperties = isCenter
     ? {
@@ -92,48 +114,36 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
         width: '90vw',
       }
     : (() => {
-        const GAP = 16
-        const CALLOUT_H = 220  // conservative estimate of callout height
         const s: React.CSSProperties = { position: 'fixed', maxWidth: 340, width: '90vw' }
-        const spotX  = rect.x - PAD
-        const spotY  = rect.y - PAD
-        const spotW  = rect.w + PAD * 2
-        const spotH  = rect.h + PAD * 2
-        const vw = window.innerWidth
-        const vh = window.innerHeight
+        const spotX = rect!.x - PAD
+        const spotY = rect!.y - PAD
+        const spotW = rect!.w + PAD * 2
+        const spotH = rect!.h + PAD * 2
+        const vw    = window.innerWidth
 
-        // Auto-flip bottom→top when the callout would overflow the viewport
-        const effectivePosition =
-          position === 'bottom' && spotY + spotH + GAP + CALLOUT_H > vh
-            ? 'top'
-            : position
+        const centreLeft = Math.max(8, Math.min(vw - 348, spotX + spotW / 2 - 170))
 
-        if (effectivePosition === 'bottom') {
+        if (effectivePos === 'bottom') {
           s.top  = spotY + spotH + GAP
-          s.left = Math.max(8, Math.min(vw - 348, spotX + spotW / 2 - 170))
-        } else if (effectivePosition === 'top') {
-          s.bottom = vh - spotY + GAP
-          s.left   = Math.max(8, Math.min(vw - 348, spotX + spotW / 2 - 170))
-        } else if (effectivePosition === 'right') {
+          s.left = centreLeft
+        } else if (effectivePos === 'top') {
+          // Use top (not bottom) so Math.max clamp keeps it inside the viewport
+          s.top  = Math.max(8, spotY - GAP - CALLOUT_H)
+          s.left = centreLeft
+        } else if (effectivePos === 'right') {
           s.top  = Math.max(8, spotY + spotH / 2 - 80)
           s.left = spotX + spotW + GAP
         } else {
           s.top   = Math.max(8, spotY + spotH / 2 - 80)
-          s.right = vw - spotX + GAP
+          s.right = window.innerWidth - spotX + GAP
         }
         return s
       })()
 
-  // Recalculate effective position for arrow (mirrors auto-flip logic above)
-  const effectivePosition = (
-    position === 'bottom' && rect &&
-    (rect.y - PAD) + (rect.h + PAD * 2) + 16 + 220 > window.innerHeight
-  ) ? 'top' : position
-
-  const arrowDir = effectivePosition === 'bottom' ? 'up'
-    : effectivePosition === 'top'    ? 'down'
-    : effectivePosition === 'right'  ? 'left'
-    : effectivePosition === 'left'   ? 'right'
+  const arrowDir = effectivePos === 'bottom' ? 'up'
+    : effectivePos === 'top'   ? 'down'
+    : effectivePos === 'right' ? 'left'
+    : effectivePos === 'left'  ? 'right'
     : null
 
   // Render markdown-lite: **bold** and newlines
@@ -173,8 +183,8 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
         <X size={15} />
       </button>
 
-      {/* Arrow indicator */}
-      {arrowDir && !isCenter && (
+      {/* Arrow indicator — only shown when callout is anchored to a target */}
+      {arrowDir && effectivePos !== 'center' && (
         <div style={{ color: 'var(--purple-light)', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
           <Arrow dir={arrowDir} />
         </div>
