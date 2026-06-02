@@ -141,7 +141,7 @@ public class TelemetryService {
 
     /**
      * @param placedTier the tier the diagnostic placed the user into
-     *                   (FOUNDATION / PRACTITIONER / EXPERT / CAPSTONE / SKIPPED)
+     *                   (APPRENTICE / JUNIOR / SENIOR / LEAD / SKIPPED)
      */
     public void diagnosticCompleted(String userId, String domainId, String placedTier, double score) {
         meterRegistry.counter("arcane.diagnostic.completed",

@@ -116,8 +116,6 @@ export default function AdminChunksPage() {
 
   const tierColor: Record<string, string> = {
     APPRENTICE: '#4ade80', JUNIOR: '#38bdf8', SENIOR: '#c9a227', LEAD: '#8b5cf6',
-    // Legacy fallbacks
-    FOUNDATION: '#4ade80', PRACTITIONER: '#c9a227', EXPERT: '#8b5cf6',
   }
   const topicName = (id: string) => topics.find(t => t.id === id)?.name ?? id
 

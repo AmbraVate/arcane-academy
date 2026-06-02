@@ -93,16 +93,19 @@ public class DiagnosticService {
     }
 
     /**
-     * Grade answers and record results. For Java, assigns FOUNDATION/PRACTITIONER/EXPERT path.
+     * Grade answers and record results. For Java, assigns APPRENTICE/JUNIOR/SENIOR/LEAD path.
      * For other tracks, just stores the score and marks diagnostic complete.
      */
     @Transactional
     public DiagnosticResult submitDiagnostic(String userId, List<AnswerPair> answers, String trackId) {
         GradeResult graded = retrievalService.gradeAnswers(answers);
 
-        // Map sub-chunk → chunk
+        // Map lesson → module (scoped to this track to avoid full table scan)
+        List<LearningModule> trackModules = moduleRepository.findByTrackIdOrderBySortOrderAsc(trackId);
+        List<String> trackModuleIds = trackModules.stream().map(LearningModule::getId).toList();
         Map<String, String> subChunkToChunk = new HashMap<>();
-        lessonRepository.findAll().forEach(sc -> subChunkToChunk.put(sc.getId(), sc.getModuleId()));
+        lessonRepository.findByModuleIdIn(trackModuleIds)
+                .forEach(sc -> subChunkToChunk.put(sc.getId(), sc.getModuleId()));
 
         Map<String, List<QuestionResult>> byChunk = graded.results().stream()
                 .collect(Collectors.groupingBy(r -> subChunkToChunk.getOrDefault(r.lessonId(), "unknown")));
@@ -113,25 +116,24 @@ public class DiagnosticService {
             chunkRecommendations.put(entry.getKey(), correct >= 2 ? "SKIP" : correct == 1 ? "COMPRESS" : "FULL");
         }
 
-        List<LearningModule> topicChunks = moduleRepository.findByTrackIdOrderBySortOrderAsc(trackId);
-        topicChunks.forEach(c -> chunkRecommendations.putIfAbsent(c.getId(), "FULL"));
+        trackModules.forEach(c -> chunkRecommendations.putIfAbsent(c.getId(), "FULL"));
 
-        // Determine path: FOUNDATION → ADVANCED → PRACTITIONER → EXPERT
+        // Determine placement tier based on skip ratio
         long skipCount = chunkRecommendations.values().stream().filter("SKIP"::equals).count();
         long totalChunks = chunkRecommendations.size();
         LearnerPath recommended;
         if (totalChunks > 0 && (double) skipCount / totalChunks > 0.9) {
-            recommended = LearnerPath.EXPERT;
+            recommended = LearnerPath.LEAD;
         } else if (totalChunks > 0 && (double) skipCount / totalChunks > 0.7) {
-            recommended = LearnerPath.PRACTITIONER;
+            recommended = LearnerPath.SENIOR;
         } else if (totalChunks > 0 && (double) skipCount / totalChunks > 0.5) {
-            recommended = LearnerPath.ADVANCED;
+            recommended = LearnerPath.JUNIOR;
         } else {
-            recommended = LearnerPath.FOUNDATION;
+            recommended = LearnerPath.APPRENTICE;
         }
 
         // Pre-create progress entries for skipped chunks
-        for (LearningModule chunk : topicChunks) {
+        for (LearningModule chunk : trackModules) {
             String rec = chunkRecommendations.get(chunk.getId());
             for (Lesson sc : lessonRepository.findByModuleIdOrderBySortOrderAsc(chunk.getId())) {
                 if (!progressRepository.existsByUserIdAndLessonId(userId, sc.getId())) {
@@ -195,7 +197,7 @@ public class DiagnosticService {
                     .orElse(UserLearnerProfile.aUserLearnerProfile().withUserId(userId).build());
             profile.setDiagnosticCompleted(true);
             profile.setDiagnosticCompletedAt(now);
-            profile.setCurrentPath(LearnerPath.FOUNDATION);
+            profile.setCurrentPath(LearnerPath.APPRENTICE);
             profileRepository.save(profile);
         } else {
             UserTrackProfile profile = trackProfileRepository.findByUserIdAndTrackId(userId, trackId)

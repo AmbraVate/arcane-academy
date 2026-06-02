@@ -26,7 +26,7 @@ public class UserLearnerProfile {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private LearnerPath currentPath = LearnerPath.FOUNDATION;
+    private LearnerPath currentPath = LearnerPath.APPRENTICE;
 
     @Builder.Default
     private boolean diagnosticCompleted = false;

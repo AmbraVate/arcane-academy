@@ -27,7 +27,7 @@ public class ChunkContentDto {
     public String glyph;
     /** Sort position within the topic. */
     public int sortOrder;
-    /** FOUNDATION | PRACTITIONER | EXPERT â€" also accepted as "learnerPath" */
+    /** APPRENTICE | JUNIOR | SENIOR | LEAD — also accepted as "learnerPath" */
     @JsonAlias("learnerPath")
     public String tier;
     /** E.g. "java" or "psychology" — accepts both "topicId" (legacy) and "domainId" (new) */

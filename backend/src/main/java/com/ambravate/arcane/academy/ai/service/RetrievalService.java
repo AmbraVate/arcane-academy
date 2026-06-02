@@ -223,7 +223,7 @@ public class RetrievalService {
     private LearnerPath getPath(String userId) {
         return profileRepository.findByUserId(userId)
                 .map(UserLearnerProfile::getCurrentPath)
-                .orElse(LearnerPath.FOUNDATION);
+                .orElse(LearnerPath.APPRENTICE);
     }
 
 }

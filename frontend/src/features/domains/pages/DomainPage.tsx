@@ -18,12 +18,6 @@ const TIER_LABELS: Record<string, string> = {
   JUNIOR:     'Junior',
   SENIOR:     'Senior',
   LEAD:       'Lead',
-  // Legacy fallbacks during migration
-  FOUNDATION:   'Foundation',
-  ADVANCED:     'Advanced',
-  PRACTITIONER: 'Practitioner',
-  EXPERT:       'Expert',
-  CAPSTONE:     'Capstone',
 }
 
 const TIER_DESC: Record<string, string> = {
@@ -31,12 +25,6 @@ const TIER_DESC: Record<string, string> = {
   JUNIOR:     'Applied knowledge — practical skills and techniques used in real-world contexts.',
   SENIOR:     'Advanced depth — specialist topics, critical evaluation, and complex synthesis.',
   LEAD:       'Mastery — professional practice, critical perspectives, and leadership in the field.',
-  // Legacy fallbacks
-  FOUNDATION:   'Core concepts and vocabulary — the solid base every practitioner needs.',
-  ADVANCED:     'Deeper theory and analysis — building fluency beyond the fundamentals.',
-  PRACTITIONER: 'Applied skills in real-world contexts — bringing knowledge into practice.',
-  EXPERT:       'Specialist depth, critical evaluation, and advanced synthesis.',
-  CAPSTONE:     'Synthesis projects that integrate everything you have learned.',
 }
 
 function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDto; onClick: () => void; accent?: string }) {

@@ -36,7 +36,7 @@ public abstract class AbstractChunkSeeder {
     // â”€â”€ LearningModule helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     protected LearningModule chunk(String id, String title, String glyph, int order, String... prereqs) {
-        return chunk(id, title, glyph, order, LearnerPath.FOUNDATION, prereqs);
+        return chunk(id, title, glyph, order, LearnerPath.APPRENTICE, prereqs);
     }
 
     protected LearningModule chunk(String id, String title, String glyph, int order, LearnerPath tier, String... prereqs) {
@@ -83,7 +83,7 @@ public abstract class AbstractChunkSeeder {
                 .questionHtml(html)
                 .optionsJson("[" + String.join(",", java.util.Arrays.stream(options).map(o -> "\"" + esc(o) + "\"").toArray(String[]::new)) + "]")
                 .correctAnswer(correct).explanationHtml(explanation)
-                .minPath(LearnerPath.FOUNDATION).build());
+                .minPath(LearnerPath.APPRENTICE).build());
     }
 
     protected Question tfQuestion(String lessonId, QuestionTier tier, String html,
@@ -93,7 +93,7 @@ public abstract class AbstractChunkSeeder {
                 .questionHtml(html)
                 .optionsJson("[\"True\",\"False\"]")
                 .correctAnswer(correct).explanationHtml(explanation)
-                .minPath(LearnerPath.FOUNDATION).build());
+                .minPath(LearnerPath.APPRENTICE).build());
     }
 
     protected Question fillQuestion(String lessonId, QuestionTier tier, String html,
@@ -101,7 +101,7 @@ public abstract class AbstractChunkSeeder {
         return questionRepository.save(Question.builder()
                 .lessonId(lessonId).tier(tier).type(QuestionType.FILL_BLANK)
                 .questionHtml(html).correctAnswer(correct).explanationHtml(explanation)
-                .minPath(LearnerPath.FOUNDATION).build());
+                .minPath(LearnerPath.APPRENTICE).build());
     }
 
     protected Question codeQuestion(String lessonId, QuestionTier tier, QuestionType type,
@@ -110,7 +110,7 @@ public abstract class AbstractChunkSeeder {
                 .lessonId(lessonId).tier(tier).type(type)
                 .questionHtml(html).codeSnippet(code)
                 .correctAnswer(correct).explanationHtml(explanation)
-                .minPath(LearnerPath.FOUNDATION).build());
+                .minPath(LearnerPath.APPRENTICE).build());
     }
 
     protected Question scenarioQuestion(String lessonId, String html, String correct,
@@ -120,7 +120,7 @@ public abstract class AbstractChunkSeeder {
         return questionRepository.save(Question.builder()
                 .lessonId(lessonId).tier(QuestionTier.DISCRIMINATION).type(QuestionType.SCENARIO)
                 .questionHtml(html).correctAnswer(correct).explanationHtml(explanation)
-                .crossChunkIds(cross).minPath(LearnerPath.PRACTITIONER).build());
+                .crossChunkIds(cross).minPath(LearnerPath.JUNIOR).build());
     }
 
     // â”€â”€ Story beat helpers (same format as original) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

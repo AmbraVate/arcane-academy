@@ -701,9 +701,6 @@ function TopicCard({
   const pct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0
   const TIER_LABELS: Record<string, string> = {
     APPRENTICE: 'Apprentice', JUNIOR: 'Junior', SENIOR: 'Senior', LEAD: 'Lead',
-    // Legacy fallbacks during migration
-    FOUNDATION: 'Foundation', ADVANCED: 'Advanced',
-    PRACTITIONER: 'Practitioner', EXPERT: 'Expert', CAPSTONE: 'Capstone',
   }
   return (
     <div className="bg-card border border-border rounded-[12px] p-5">

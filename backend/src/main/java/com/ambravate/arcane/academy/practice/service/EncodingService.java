@@ -274,7 +274,7 @@ public class EncodingService {
             if ("java".equals(trackId)) {
                 UserLearnerProfile profile = learnerProfileRepository.findByUserId(userId).orElse(null);
                 if (profile == null) return;
-                int currentIdx = TIER_PROGRESSION.indexOf(normaliseTier(profile.getCurrentPath()));
+                int currentIdx = TIER_PROGRESSION.indexOf(profile.getCurrentPath());
                 if (currentIdx < 0 || completedIdx >= currentIdx) {
                     profile.setCurrentPath(nextTier);
                     learnerProfileRepository.save(profile);
@@ -298,16 +298,6 @@ public class EncodingService {
         } catch (Exception e) {
             log.warn("[Encoding] Failed to advance learner path after tier completion: {}", e.getMessage());
         }
-    }
-
-    private static LearnerPath normaliseTier(LearnerPath tier) {
-        if (tier == null) return LearnerPath.APPRENTICE;
-        return switch (tier) {
-            case FOUNDATION   -> LearnerPath.APPRENTICE;
-            case PRACTITIONER -> LearnerPath.JUNIOR;
-            case EXPERT       -> LearnerPath.SENIOR;
-            default           -> tier;
-        };
     }
 
     @Transactional

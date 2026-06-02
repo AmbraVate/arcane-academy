@@ -61,11 +61,11 @@ public class DashboardService {
       currentPath = profile.getCurrentPath();
       dailyGoalMinutes = profile.getDailyGoalMinutes();
     } else {
-      // Per-topic diagnostic state; path defaults to FOUNDATION (tier is chunk-level)
+      // Non-Java track — path defaults to APPRENTICE
       var trackProfile = trackProfileRepository.findByUserIdAndTrackId(userId, domainId);
       diagnosticCompleted = trackProfile.map(UserTrackProfile::isDiagnosticCompleted).orElse(false);
       diagnosticCompletedAt = trackProfile.map(UserTrackProfile::getDiagnosticCompletedAt).orElse(null);
-      currentPath = LearnerPath.FOUNDATION;
+      currentPath = LearnerPath.APPRENTICE;
       dailyGoalMinutes = 40;
     }
 

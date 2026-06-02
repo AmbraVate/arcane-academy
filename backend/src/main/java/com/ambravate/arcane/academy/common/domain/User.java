@@ -51,7 +51,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private LearnerPath learnerPath = LearnerPath.FOUNDATION;
+    private LearnerPath learnerPath = LearnerPath.APPRENTICE;
 
     /**
      * Privacy switch — when true the user appears on leaderboards and at /u/:username.

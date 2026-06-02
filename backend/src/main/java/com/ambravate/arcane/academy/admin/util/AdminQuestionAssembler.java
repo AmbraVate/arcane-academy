@@ -46,7 +46,7 @@ public class AdminQuestionAssembler {
     QuestionTier tier = dto.getTier() != null
         ? QuestionTier.valueOf(dto.getTier()) : QuestionTier.RECALL;
     LearnerPath minPath = tier == QuestionTier.DISCRIMINATION
-        ? LearnerPath.PRACTITIONER : LearnerPath.FOUNDATION;
+        ? LearnerPath.JUNIOR : LearnerPath.APPRENTICE;
 
     return Question.builder()
         .lessonId(dto.getLessonId())

@@ -268,13 +268,9 @@ public class BadgeService implements GamificationFacade {
       case FIRST_NOTE   -> noteCount >= 1;
       case AVID_SCHOLAR -> noteCount >= 50;
 
-      // â”€â”€ Legacy path badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case PATH_PRACTITIONER -> profile != null && (
-          profile.getCurrentPath() == LearnerPath.PRACTITIONER ||
-          profile.getCurrentPath() == LearnerPath.JUNIOR);
-      case PATH_EXPERT -> profile != null && (
-          profile.getCurrentPath() == LearnerPath.EXPERT ||
-          profile.getCurrentPath() == LearnerPath.SENIOR);
+      // ── Path milestone badges (awarded when user reaches the equivalent tier) ──
+      case PATH_PRACTITIONER -> profile != null && profile.getCurrentPath() == LearnerPath.JUNIOR;
+      case PATH_EXPERT       -> profile != null && profile.getCurrentPath() == LearnerPath.SENIOR;
 
       case RABBIT_HOLE_FIRST -> false;
 
