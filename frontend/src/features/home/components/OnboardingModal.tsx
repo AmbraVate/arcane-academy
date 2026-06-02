@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { X, ChevronRight, ChevronLeft } from 'lucide-react'
 import { authApi } from '@/shared/api/services'
 import type { Badge } from '@/shared/types'
@@ -219,7 +218,6 @@ interface Props {
 }
 
 export default function OnboardingModal({ onClose }: Props) {
-  const navigate = useNavigate()
   const { markOnboardingDone } = useAuth()
   const [step, setStep] = useState(0)
   const [badge, setBadge] = useState<Badge | null>(null)
@@ -245,13 +243,11 @@ export default function OnboardingModal({ onClose }: Props) {
         // Stay on step 3 to show the badge earned screen
       } else {
         onClose()
-        navigate('/schools')
       }
     } catch {
-      // Don't block the user — just close and navigate
+      // Don't block the user — just close
       markOnboardingDone()
       onClose()
-      navigate('/schools')
     } finally {
       setCompleting(false)
     }
@@ -267,7 +263,6 @@ export default function OnboardingModal({ onClose }: Props) {
 
   function handleBadgeDismiss() {
     onClose()
-    navigate('/schools')
   }
 
   const stepContent = [<Step1 />, <Step2 />, <Step3 />, <Step4 badge={badge} />]

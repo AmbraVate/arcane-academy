@@ -387,7 +387,7 @@ export default function OnboardingPage() {
       await authApi.completeOnboarding()
     } catch { /* non-blocking */ }
     markOnboardingDone()
-    navigate('/schools', { replace: true })
+    navigate('/', { replace: true })
   }
 
   return (
