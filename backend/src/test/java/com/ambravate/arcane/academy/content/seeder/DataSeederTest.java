@@ -19,13 +19,14 @@ class DataSeederTest {
         DomainSeeder          domainSeeder          = mock(DomainSeeder.class);
         TrackSeeder           trackSeeder           = mock(TrackSeeder.class);
         TestUserSeeder        testUserSeeder        = mock(TestUserSeeder.class);
+        AdminSeeder           adminSeeder           = mock(AdminSeeder.class);
 
         when(jsonContentSeeder.seed()).thenReturn(0);
         when(markdownContentSeeder.seed()).thenReturn(0);
         doThrow(new RuntimeException("database unavailable")).when(domainSeeder).seed();
 
         DataSeeder dataSeeder = new DataSeeder(
-                jsonContentSeeder, markdownContentSeeder, Optional.of(testUserSeeder), domainSeeder, trackSeeder);
+                jsonContentSeeder, markdownContentSeeder, Optional.of(testUserSeeder), domainSeeder, trackSeeder, adminSeeder);
 
         // A failing seeding step must never propagate out of the ApplicationRunner.
         assertThatCode(() -> dataSeeder.seedData().run(null))

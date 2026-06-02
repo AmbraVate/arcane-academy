@@ -77,7 +77,7 @@ public class AdminUserController {
     }
 
     /**
-     * Change a user's role (ADMIN â†” USER).
+     * Change a user's role (ADMIN / USER).
      * An admin cannot demote their own account.
      */
     @PutMapping("/{userId}/role")
@@ -168,12 +168,12 @@ public class AdminUserController {
     }
 
     /**
-     * Detailed stats for a single user — for the admin user-detail panel.
+     * Detailed stats for a single user - for the admin user-detail panel.
      */
-    @GetMapping(“/{userId}/stats”)
+    @GetMapping("/{userId}/stats")
     public ResponseEntity<UserStatsDto> getUserStats(@PathVariable String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException(“User not found: “ + userId));
+                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
         return ResponseEntity.ok(statsService.toUserStatsDto(user));
     }
 
@@ -182,21 +182,21 @@ public class AdminUserController {
      * The new password must be at least 8 characters.
      * OAuth-only accounts gain a password via this path.
      */
-    @PutMapping(“/{userId}/reset-password”)
+    @PutMapping("/{userId}/reset-password")
     public ResponseEntity<Void> resetPassword(
             @PathVariable String userId,
             @RequestBody Map<String, String> body) {
 
-        String newPassword = body.get(“password”);
+        String newPassword = body.get("password");
         if (newPassword == null || newPassword.length() < 8) {
             return ResponseEntity.badRequest().build();
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException(“User not found: “ + userId));
+                .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
         user.setPasswordHash(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        log.info(“[Admin] Password reset for userId={}”, userId);
+        log.info("[Admin] Password reset for userId={}", userId);
         return ResponseEntity.noContent().build();
     }
 }
