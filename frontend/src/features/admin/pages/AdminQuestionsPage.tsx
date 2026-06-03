@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 ﻿import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { adminQuestionApi, adminLessonApi, type AdminQuestion, type AdminLesson } from '@/shared/api/adminServices'
@@ -212,7 +213,7 @@ export default function AdminQuestionsPage() {
                   </div>
                   <div
                     style={{ fontSize: 13, color: '#e8e0f0', marginBottom: 4 }}
-                    dangerouslySetInnerHTML={{ __html: q.questionHtml }}
+                    dangerouslySetInnerHTML={safe(q.questionHtml)}
                   />
                   {q.options && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 6 }}>

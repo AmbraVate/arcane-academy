@@ -5,10 +5,12 @@ import { useAuth } from '@/shared/hooks/useAuth'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { DomainIcon } from '@/components/icons/DomainIcon'
-import { Lock, ChevronLeft, LogIn, AlertTriangle } from 'lucide-react'
+import { Lock, ChevronLeft, ChevronRight, LogIn, AlertTriangle } from 'lucide-react'
 import CompletionRing from '@/components/ui/CompletionRing'
 import {
   DOMAINS,
+  SCHOOL_HERO_IMAGES,
+  DOMAIN_HERO_IMAGES,
   ACTIVE_DOMAIN_IDS,
   SCHOOL_META,
   TRACK_GROUPS,
@@ -142,10 +144,79 @@ function SchoolsView({ onSelect, isPublic }: { onSelect: (school: School) => voi
       <div data-tutorial-id="schools-grid" className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
         {schools.map(([id, meta]) => {
           const activeCount = activeDomainsBySchool(id)
+
+          if (SCHOOL_HERO_IMAGES[id]) {
+            return (
+              <div
+                key={id}
+                data-tutorial-id="first-domain-card"
+                onClick={() => onSelect(id)}
+                className="group relative overflow-hidden rounded-[16px] border border-border bg-black
+                  min-h-[160px] cursor-pointer
+                  transition-[border-color,transform,box-shadow] duration-200
+                  hover:-translate-y-[2px] hover:shadow-[0_8px_40px_rgba(124,58,237,0.35)]"
+                style={{ borderTopWidth: 2, borderTopColor: `color-mix(in srgb, ${meta.color} 70%, transparent)` }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = `color-mix(in srgb, ${meta.color} 55%, transparent)`
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = 'var(--border)'
+                  el.style.borderTopColor = `color-mix(in srgb, ${meta.color} 70%, transparent)`
+                }}
+              >
+                <img src={SCHOOL_HERO_IMAGES[id]} alt="" aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none
+                    transition-[filter,transform] duration-500 group-hover:blur-sm group-hover:scale-105" />
+                <div className="absolute inset-0 z-0 pointer-events-none transition-colors duration-500
+                  bg-[rgba(8,6,18,0.40)] group-hover:bg-[rgba(8,6,18,0.80)]" />
+
+                {/* Default: title only */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-end px-6 pb-5 pt-4
+                  transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
+                  {activeCount > 0 && (
+                    <span className="inline-block self-start font-cinzel text-[9px] font-semibold px-2 py-0.5 rounded-full mb-2"
+                      style={{ color: '#fff', background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.35)' }}>
+                      {activeCount} active
+                    </span>
+                  )}
+                  <h3 className="font-cinzel text-[18px] font-bold text-white m-0 leading-tight
+                    drop-shadow-[0_2px_20px_rgba(0,0,0,1)]
+                    [text-shadow:0_0_30px_rgba(124,58,237,0.6),0_2px_8px_rgba(0,0,0,0.9)]">
+                    {meta.name}
+                  </h3>
+                </div>
+
+                {/* Hover: full content */}
+                <div className="absolute inset-0 z-10 flex flex-col gap-2.5 px-6 py-5 pb-4
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="font-cinzel text-[15px] font-semibold text-white leading-snug">{meta.name}</span>
+                    {activeCount > 0 && (
+                      <span className="flex-shrink-0 text-[9px] font-cinzel px-2 py-0.5 rounded-full"
+                        style={{ color: '#fff', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)' }}>
+                        {activeCount} active
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[12px] text-white/75 leading-[1.6] flex-1 m-0">{meta.description}</p>
+                  <div className="flex items-center justify-between pt-2.5 border-t border-white/15 mt-auto gap-2">
+                    <span className="text-[11px] text-white/55 font-cinzel">
+                      {DOMAINS.filter(d => d.school === id).length} pathways
+                    </span>
+                    <span className="font-cinzel text-[11px] font-semibold flex items-center gap-1" style={{ color: meta.color }}>
+                      Explore <ChevronRight size={12} strokeWidth={2.5} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+
           return (
             <button
               key={id}
-              data-tutorial-id={id === 'engineering-systems' ? 'first-domain-card' : undefined}
               onClick={() => onSelect(id)}
               className="text-left bg-card border border-border rounded-[16px] p-6 flex items-start gap-5
                 transition-all duration-200 hover:-translate-y-[2px] cursor-pointer"
@@ -358,6 +429,107 @@ function DomainsView({
           const isPaywalled = active && !isEnrolled && hasActiveEnrollment && !canBypassPaywall && !isPublic
           const progress = topicData[topic.id]?.progress ?? 0
 
+          if (DOMAIN_HERO_IMAGES[topic.id]) {
+            return (
+              <div
+                key={topic.id}
+                data-tutorial-id={idx === 0 ? 'first-domain-card' : undefined}
+                className={cn(
+                  'relative overflow-hidden rounded-[14px] border border-border bg-black min-h-[260px]',
+                  'transition-[border-color,transform,box-shadow] duration-200',
+                  active && !isPaywalled
+                    ? 'group cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_8px_40px_rgba(124,58,237,0.35)]'
+                    : isPaywalled
+                    ? 'group cursor-pointer opacity-60'
+                    : 'cursor-default',
+                )}
+                style={{ borderTopColor: `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)`, borderTopWidth: 2 }}
+                onMouseEnter={e => {
+                  if (active && !isPaywalled)
+                    (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${topic.accentStroke} 55%, transparent)`
+                }}
+                onMouseLeave={e => {
+                  if (active && !isPaywalled) {
+                    const el = e.currentTarget as HTMLDivElement
+                    el.style.borderColor = 'var(--border)'
+                    el.style.borderTopColor = `color-mix(in srgb, ${topic.accentStroke} 60%, transparent)`
+                  }
+                }}
+                onClick={() => { if (active && !isPaywalled) onTopicClick(topic) }}
+              >
+                {/* Background image — blurs on hover (active only) */}
+                <img
+                  src={DOMAIN_HERO_IMAGES[topic.id]}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none
+                    transition-[filter,transform] duration-500
+                    group-hover:blur-sm group-hover:scale-105"
+                  style={!active ? { filter: 'grayscale(0.5) brightness(0.7)' } : undefined}
+                />
+                {/* Overlay */}
+                {active
+                  ? <div className="absolute inset-0 z-0 pointer-events-none transition-colors duration-500 bg-[rgba(8,6,18,0.38)] group-hover:bg-[rgba(8,6,18,0.78)]" />
+                  : <div className="absolute inset-0 z-0 pointer-events-none bg-[rgba(8,6,18,0.58)]" />
+                }
+
+                {/* Default state: big title at bottom */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-end px-5 pb-6 pt-5
+                  transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
+                  <Badge variant={active ? 'active' : 'soon'} className="mb-3 self-start">
+                    {!active ? 'Coming Soon' : isPublic ? 'Enrol' : isEnrolled ? 'Active' : 'Enrol'}
+                  </Badge>
+                  <h3 className="font-cinzel text-[22px] font-bold text-white m-0 leading-tight
+                    drop-shadow-[0_2px_20px_rgba(0,0,0,1)]
+                    [text-shadow:0_0_30px_rgba(124,58,237,0.6),0_2px_8px_rgba(0,0,0,0.9)]">
+                    {topic.name}
+                  </h3>
+                </div>
+
+                {/* Hover state: full card content */}
+                <div className="absolute inset-0 z-10 flex flex-col gap-2.5 px-5 py-6 pb-5
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-start justify-end mb-1">
+                    <div className="flex flex-col items-end gap-1.5">
+                      {isPaywalled ? (
+                        <div className="w-[56px] h-[56px] flex items-center justify-center
+                          rounded-full border border-[rgba(201,162,39,0.2)] bg-[rgba(201,162,39,0.05)]">
+                          <Lock size={20} className="text-gold opacity-60" strokeWidth={1.5} />
+                        </div>
+                      ) : isPublic ? (
+                        <div className="w-[56px] h-[56px] flex items-center justify-center
+                          rounded-full border border-white/20 bg-white/5">
+                          <LogIn size={18} color="rgba(255,255,255,0.7)" strokeWidth={1.5} />
+                        </div>
+                      ) : (
+                        <CompletionRing pct={progress} color={topic.accentStroke} size={56} strokeWidth={3.5} fillOpacity={1} />
+                      )}
+                      <Badge variant={isPaywalled ? 'locked' : 'active'}>
+                        {isPaywalled ? '🔒 Premium' : isPublic ? 'Enrol' : isEnrolled ? 'Active' : 'Enrol'}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div className="font-cinzel text-[18px] font-bold text-white">{topic.name}</div>
+                  <div className="text-[13px] text-white/75 leading-[1.6] flex-1">{topic.tagline}</div>
+
+                  <div className="flex items-center justify-between pt-2.5 border-t border-white/15 mt-auto gap-2">
+                    <span className="text-[11px] text-white/55 font-cinzel leading-[1.4]">
+                      {active && !isPublic && topicData[topic.id]
+                        ? <>{topicData[topic.id].totalChunks} modules · {topicData[topic.id].totalLessons} lessons</>
+                        : <>{topic.modules > 0 ? `${topic.modules} modules` : 'Pathway'}</>}
+                    </span>
+                    <span className="text-[13px] font-semibold flex-shrink-0 flex items-center gap-1 text-purple-light">
+                      {isPaywalled ? <><Lock size={12} strokeWidth={2} /> Unlock</> :
+                       isPublic ? <><LogIn size={12} strokeWidth={2} /> Sign in</> :
+                       isEnrolled ? 'Continue →' : 'Enrol →'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+
           return (
             <div
               key={topic.id}
@@ -388,10 +560,7 @@ function DomainsView({
               }}
               onClick={() => { if (!isPaywalled) onTopicClick(topic) }}
             >
-              <div className="flex items-start justify-between mb-1">
-                <div className="opacity-90">
-                  <DomainIcon domainId={topic.id} size={active ? 34 : 30} />
-                </div>
+              <div className="flex items-start justify-end mb-1">
                 <div className="flex flex-col items-end gap-1.5">
                   {isPaywalled ? (
                     <div className="w-[56px] h-[56px] flex items-center justify-center

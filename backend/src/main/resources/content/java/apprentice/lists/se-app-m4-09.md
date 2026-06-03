@@ -4,7 +4,7 @@ school: engineering
 domainId: java
 tier: APPRENTICE
 moduleId: se-app-m4
-moduleTitle: "Module 4: Collections and Data"
+moduleTitle: "Module 4: Data Structures"
 moduleGlyph: "📦"
 moduleSortOrder: 4
 topicSlug: lists

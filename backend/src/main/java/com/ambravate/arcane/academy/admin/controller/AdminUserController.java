@@ -11,6 +11,8 @@ import com.ambravate.arcane.academy.practice.repository.UserChunkProgressReposit
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -28,6 +31,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/admin/users")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
+@Validated
 @Slf4j
 public class AdminUserController {
 
@@ -38,8 +42,8 @@ public class AdminUserController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> list(
-            @RequestParam(defaultValue = "0")  int page,
-            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "0")  @Min(0)        int page,
+            @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size,
             @RequestParam(required = false)    String search) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());

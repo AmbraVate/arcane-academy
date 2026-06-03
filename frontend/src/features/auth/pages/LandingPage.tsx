@@ -7,6 +7,8 @@ import {
   SCHOOL_META,
   TRACK_GROUPS,
   DOMAINS,
+  SCHOOL_HERO_IMAGES,
+  DOMAIN_HERO_IMAGES,
   schoolHasTrackGroups,
   trackGroupsForSchool,
   type School,
@@ -132,7 +134,70 @@ function PathwayBrowser() {
       <div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 14 }}>
           {schools.map(([id, meta]) => {
-            const active = DOMAINS.filter(d => d.school === id && d.status === 'active').length
+            const activeCount = DOMAINS.filter(d => d.school === id && d.status === 'active').length
+
+            if (SCHOOL_HERO_IMAGES[id]) {
+              return (
+                <div
+                  key={id}
+                  className="group"
+                  onClick={() => handleSchool(id)}
+                  style={{
+                    position: 'relative', overflow: 'hidden', borderRadius: 14, minHeight: 160,
+                    border: '1px solid var(--border)', borderTopWidth: 2,
+                    borderTopColor: `color-mix(in srgb, ${meta.color} 70%, transparent)`,
+                    background: 'black', cursor: 'pointer',
+                    transition: 'border-color 0.2s, transform 0.2s, box-shadow 0.2s',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLDivElement
+                    el.style.borderColor = `color-mix(in srgb, ${meta.color} 55%, transparent)`
+                    el.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLDivElement
+                    el.style.borderColor = 'var(--border)'
+                    el.style.boxShadow = 'none'
+                    el.style.transform = 'none'
+                    el.style.borderTopColor = `color-mix(in srgb, ${meta.color} 70%, transparent)`
+                  }}
+                >
+                  <img src={SCHOOL_HERO_IMAGES[id]} alt="" aria-hidden="true"
+                    className="group-hover:blur-sm group-hover:scale-105"
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0, pointerEvents: 'none', transition: 'filter 0.5s, transform 0.5s' }} />
+                  <div className="bg-[rgba(8,6,18,0.40)] group-hover:bg-[rgba(8,6,18,0.80)]"
+                    style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', transition: 'background 0.5s' }} />
+
+                  {/* Default: title only */}
+                  <div className="group-hover:opacity-0"
+                    style={{ position: 'absolute', inset: 0, zIndex: 20, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '16px 20px', transition: 'opacity 0.3s', pointerEvents: 'none' }}>
+                    {activeCount > 0 && (
+                      <span style={{ alignSelf: 'flex-start', fontFamily: 'Cinzel, serif', fontSize: 9, fontWeight: 600, color: '#fff', border: '1px solid rgba(255,255,255,0.35)', borderRadius: 20, padding: '2px 8px', marginBottom: 6, background: 'rgba(255,255,255,0.18)' }}>
+                        {activeCount} active
+                      </span>
+                    )}
+                    <div style={{ fontFamily: 'Cinzel, serif', fontSize: 16, fontWeight: 700, color: '#fff', lineHeight: 1.2, textShadow: '0 0 30px rgba(124,58,237,0.6), 0 2px 8px rgba(0,0,0,0.9)' }}>
+                      {meta.name}
+                    </div>
+                  </div>
+
+                  {/* Hover: full content */}
+                  <div className="opacity-0 group-hover:opacity-100"
+                    style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', flexDirection: 'column', gap: 8, padding: '18px 20px', transition: 'opacity 0.3s' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+                      <span style={{ fontFamily: 'Cinzel, serif', fontSize: 14, color: '#fff', fontWeight: 600 }}>{meta.name}</span>
+                      {activeCount > 0 && (
+                        <span style={{ fontSize: 9, fontFamily: 'Cinzel, serif', color: '#fff', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 20, padding: '1px 7px', flexShrink: 0 }}>
+                          {activeCount} active
+                        </span>
+                      )}
+                    </div>
+                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, margin: 0, flex: 1 }}>{meta.description}</p>
+                  </div>
+                </div>
+              )
+            }
+
             return (
               <button
                 key={id}
@@ -158,9 +223,9 @@ function PathwayBrowser() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 4 }}>
                     <span style={{ fontFamily: 'Cinzel, serif', fontSize: 14, color: meta.color, fontWeight: 600 }}>{meta.name}</span>
-                    {active > 0 && (
+                    {activeCount > 0 && (
                       <span style={{ fontSize: 9, fontFamily: 'Cinzel, serif', color: meta.color, background: `color-mix(in srgb, ${meta.color} 12%, transparent)`, border: `1px solid color-mix(in srgb, ${meta.color} 25%, transparent)`, borderRadius: 20, padding: '1px 7px', flexShrink: 0 }}>
-                        {active} active
+                        {activeCount} active
                       </span>
                     )}
                   </div>
@@ -265,6 +330,80 @@ function PathwayBrowser() {
         {visibleDomains.map(domain => {
           const active = domain.status === 'active'
           const accent = domain.accentStroke
+
+          if (DOMAIN_HERO_IMAGES[domain.id]) {
+            return (
+              <div
+                key={domain.id}
+                className={active ? 'group' : ''}
+                onClick={() => handleDomain(domain)}
+                style={{
+                  position: 'relative', overflow: 'hidden', borderRadius: 14, minHeight: 200,
+                  border: `1px solid var(--border)`, borderTopWidth: 2,
+                  borderTopColor: `color-mix(in srgb, ${accent} 60%, transparent)`,
+                  background: 'black', cursor: active ? 'pointer' : 'default',
+                  transition: 'border-color 0.2s, transform 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={e => {
+                  if (!active) return
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = `color-mix(in srgb, ${accent} 55%, transparent)`
+                  el.style.boxShadow = `0 8px 40px rgba(124,58,237,0.35)`
+                  el.style.transform = 'translateY(-2px)'
+                }}
+                onMouseLeave={e => {
+                  if (!active) return
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = 'var(--border)'
+                  el.style.boxShadow = 'none'
+                  el.style.transform = 'none'
+                  el.style.borderTopColor = `color-mix(in srgb, ${accent} 60%, transparent)`
+                }}
+              >
+                <img
+                  src={DOMAIN_HERO_IMAGES[domain.id]} alt="" aria-hidden="true"
+                  className="group-hover:blur-sm group-hover:scale-105"
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0, pointerEvents: 'none', transition: 'filter 0.5s, transform 0.5s',
+                    ...(!active ? { filter: 'grayscale(0.5) brightness(0.7)' } : {}) }}
+                />
+                <div
+                  className={active ? 'bg-[rgba(8,6,18,0.38)] group-hover:bg-[rgba(8,6,18,0.78)]' : 'bg-[rgba(8,6,18,0.55)]'}
+                  style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', transition: 'background 0.5s' }}
+                />
+                {/* Default: title only */}
+                <div
+                  className="group-hover:opacity-0"
+                  style={{ position: 'absolute', inset: 0, zIndex: 20, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '18px 20px', transition: 'opacity 0.3s', pointerEvents: 'none' }}
+                >
+                  <span style={{ display: 'inline-block', alignSelf: 'flex-start', fontFamily: 'Cinzel, serif', fontSize: 10, fontWeight: 600,
+                    color: active ? 'var(--teal)' : 'var(--muted)',
+                    border: active ? '1px solid rgba(45,212,191,0.4)' : '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: 20, padding: '2px 10px', marginBottom: 8 }}>
+                    {active ? 'Enrol' : 'Coming Soon'}
+                  </span>
+                  <div style={{ fontFamily: 'Cinzel, serif', fontSize: 20, fontWeight: 700, color: '#fff', lineHeight: 1.2, textShadow: '0 0 30px rgba(124,58,237,0.6), 0 2px 8px rgba(0,0,0,0.9)' }}>
+                    {domain.name}
+                  </div>
+                </div>
+                {/* Hover: full content */}
+                <div
+                  className="opacity-0 group-hover:opacity-100"
+                  style={{ position: 'absolute', inset: 0, zIndex: 10, display: 'flex', flexDirection: 'column', gap: 8, padding: '18px 20px', transition: 'opacity 0.3s' }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%' }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 600, color: '#fff' }}>{domain.name}</div>
+                      <div style={{ fontSize: 10, fontFamily: 'Cinzel, serif', marginTop: 3, color: 'rgba(45,212,191,0.9)' }}>
+                        {domain.modules > 0 ? `${domain.modules} modules` : 'Pathway'} · Enrol free →
+                      </div>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, margin: 0 }}>{domain.tagline}</p>
+                </div>
+              </div>
+            )
+          }
+
           return (
             <button
               key={domain.id}
@@ -295,8 +434,7 @@ function PathwayBrowser() {
                 el.style.borderTopColor = `color-mix(in srgb, ${accent} 60%, transparent)`
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%' }}>
-                <span style={{ fontSize: 26 }}>{domain.glyph}</span>
+              <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                 <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
                   <div style={{ fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 600, color: active ? accent : 'var(--muted)' }}>{domain.name}</div>
                   <div style={{ fontSize: 10, fontFamily: 'Cinzel, serif', marginTop: 3, color: active ? 'var(--teal)' : 'var(--muted)' }}>

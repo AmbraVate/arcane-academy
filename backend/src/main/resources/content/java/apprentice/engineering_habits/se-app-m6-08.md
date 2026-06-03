@@ -8,7 +8,7 @@ moduleTitle: "Module 6: Debugging and Engineering Habits"
 moduleGlyph: "🔧"
 moduleSortOrder: 6
 topicSlug: engineering_habits
-topicTitle: "Engineering Habits"
+topicTitle: "Beginner Engineering Habits"
 topicSortOrder: 2
 lesson: naming_things
 title: "Naming Things"

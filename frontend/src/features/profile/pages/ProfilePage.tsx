@@ -90,10 +90,6 @@ export default function ProfilePage() {
   const [publicEnabled, setPublicEnabled] = useState<boolean | null>(null)
   const [savingVisibility, setSavingVisibility] = useState(false)
 
-  const [location, setLocation] = useState<string>('')
-  const [locationDraft, setLocationDraft] = useState<string>('')
-  const [savingLocation, setSavingLocation] = useState(false)
-
   const [notes, setNotes] = useState<UserNote[]>([])
   const [notesLoading, setNotesLoading] = useState(false)
   const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null)
@@ -111,10 +107,9 @@ export default function ProfilePage() {
   const [portalLoading, setPortalLoading] = useState(false)
   const [showUpgradeFromProfile, setShowUpgradeFromProfile] = useState(false)
 
-  // Load visibility + location on mount
+  // Load visibility on mount
   useEffect(() => {
     profileApi.getVisibility().then(setPublicEnabled).catch(() => setPublicEnabled(false))
-    profileApi.getLocation().then(v => { setLocation(v); setLocationDraft(v) }).catch(() => {})
   }, [])
 
   // Lazy-load per tab
@@ -152,16 +147,6 @@ export default function ProfilePage() {
       const next = await profileApi.setVisibility(!publicEnabled)
       setPublicEnabled(next)
     } catch { /* keep prior state */ } finally { setSavingVisibility(false) }
-  }
-
-  async function saveLocation() {
-    if (savingLocation || locationDraft === location) return
-    setSavingLocation(true)
-    try {
-      const saved = await profileApi.setLocation(locationDraft)
-      setLocation(saved)
-      setLocationDraft(saved)
-    } catch { /* keep prior */ } finally { setSavingLocation(false) }
   }
 
   async function removeRabbitHoleTerm(term: string) {
@@ -334,38 +319,6 @@ export default function ProfilePage() {
               >
                 {savingVisibility ? 'Saving…' : publicEnabled ? 'Make private' : 'Make public'}
               </button>
-            </div>
-
-            {/* Location */}
-            <div className="bg-card border border-border rounded-[12px] px-5 py-4">
-              <div className="font-cinzel text-[13px] text-text mb-1">Location</div>
-              <div className="text-[11px] text-muted leading-snug mb-3">
-                Shown on public leaderboards. Optional — leave blank to stay anonymous.
-              </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="e.g. Manchester, UK"
-                  maxLength={100}
-                  value={locationDraft}
-                  onChange={e => setLocationDraft(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') saveLocation() }}
-                  className="flex-1 bg-surface border border-border rounded-[8px] px-3 py-1.5
-                    text-[13px] text-text placeholder:text-muted outline-none
-                    focus:border-purple-dim transition-[border-color] duration-150"
-                />
-                <button
-                  onClick={saveLocation}
-                  disabled={savingLocation || locationDraft === location}
-                  className={cn(
-                    'flex-shrink-0 px-3 py-1.5 rounded-[7px] text-[12px] font-cinzel tracking-wide border',
-                    'transition-[background,border-color,opacity] duration-150 disabled:opacity-40',
-                    'bg-card border-border text-muted hover:border-purple-dim',
-                  )}
-                >
-                  {savingLocation ? 'Saving…' : 'Save'}
-                </button>
-              </div>
             </div>
 
             {/* Quick nav cards */}

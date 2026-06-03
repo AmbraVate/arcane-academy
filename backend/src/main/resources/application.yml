@@ -44,9 +44,10 @@ server:
   port: 8080
 
 jwt:
-  # No default — must be explicitly set via JWT_SECRET env var (min 64 chars recommended).
-  secret: ${JWT_SECRET:default-secret}
-  expiration-ms: 86400000  # 24 hours
+  # Required — no default. Must be set via JWT_SECRET env var (minimum 64 characters).
+  # Generate with: openssl rand -base64 64
+  secret: ${JWT_SECRET}
+  expiration-ms: 900000  # 15 minutes — short-lived; frontend uses refresh token silently
 
 app:
   oauth2:
@@ -87,9 +88,11 @@ stripe:
   # Use sk_test_... / whsec_... locally via .env; live keys only in cloud-run.env.yaml.
   secret-key: ${STRIPE_SECRET_KEY}
   webhook-secret: ${STRIPE_WEBHOOK_SECRET}
-  price-id-monthly: ${STRIPE_PRICE_ID_MONTHLY:price_1TbiUQ8LtlZA9QG9YIzWvFWi}
-  price-id-annual:  ${STRIPE_PRICE_ID_ANNUAL:price_1TbiXw8LtlZA9QG97qNpidXT}
-  price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME:price_1Tbj8l8LtlZA9QG9AR6lU2zP}
+  # No defaults — must be set via environment variables to prevent accidentally
+  # using live price IDs in non-production environments.
+  price-id-monthly:  ${STRIPE_PRICE_ID_MONTHLY}
+  price-id-annual:   ${STRIPE_PRICE_ID_ANNUAL}
+  price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME}
 
 # Anthropic — AiMentorService uses Claude Haiku 4.5 with prompt caching.
 # Set ANTHROPIC_API_KEY to enable live AI responses; leave blank or "disabled" to use static responses only.

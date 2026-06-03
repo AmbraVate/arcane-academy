@@ -4,11 +4,11 @@ school: engineering
 domainId: java
 tier: APPRENTICE
 moduleId: se-app-m3
-moduleTitle: "Module 3: Functions & Reusability"
+moduleTitle: "Module 3: Functions and Reusability"
 moduleGlyph: "⚗️"
 moduleSortOrder: 3
 topicSlug: problem_solving
-topicTitle: "Problem Solving"
+topicTitle: "Problem-Solving"
 topicSortOrder: 2
 lesson: pseudocode
 title: "Pseudocode"

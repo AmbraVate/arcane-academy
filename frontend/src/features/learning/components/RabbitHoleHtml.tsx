@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 ﻿import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import type { StoryRabbitHoleTerm } from '@/shared/types'
@@ -98,7 +99,7 @@ export default function RabbitHoleHtml({ html, terms, className, lessonId, domai
           '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold [&_[data-rh]]:transition-opacity [&_[data-rh]]:duration-150 [&_[data-rh]:hover]:opacity-80',
           className,
         )}
-        dangerouslySetInnerHTML={{ __html: annotatedHtml }}
+        dangerouslySetInnerHTML={safe(annotatedHtml)}
       />
 
       {popover && (

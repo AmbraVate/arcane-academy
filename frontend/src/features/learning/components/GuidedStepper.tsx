@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 import { useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import { guidedStepApi } from '@/shared/api/services'
@@ -171,7 +172,7 @@ export default function GuidedStepper({ lessonId, onAllComplete }: Props) {
         {/* Instruction */}
         <div
           className={cn(PROSE, 'mb-1')}
-          dangerouslySetInnerHTML={{ __html: currentStep.instructionHtml ?? '' }}
+          dangerouslySetInnerHTML={safe(currentStep.instructionHtml ?? '')}
         />
 
         {/* Input */}
@@ -207,7 +208,7 @@ export default function GuidedStepper({ lessonId, onAllComplete }: Props) {
             </div>
             <div
               className={PROSE}
-              dangerouslySetInnerHTML={{ __html: result.reflectionPrompt }}
+              dangerouslySetInnerHTML={safe(result.reflectionPrompt)}
             />
           </div>
         )}
@@ -228,7 +229,7 @@ export default function GuidedStepper({ lessonId, onAllComplete }: Props) {
               <div className="mt-2 p-3.5 rounded-[8px] border border-dashed border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.05)]">
                 <div
                   className={PROSE}
-                  dangerouslySetInnerHTML={{ __html: currentStep.hintHtml }}
+                  dangerouslySetInnerHTML={safe(currentStep.hintHtml)}
                 />
               </div>
             )}

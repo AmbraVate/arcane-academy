@@ -50,10 +50,12 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDt
       onMouseLeave={e => { if (!locked) (e.currentTarget as HTMLDivElement).style.borderColor = done ? `color-mix(in srgb, ${accent} 25%, transparent)` : 'var(--border)' }}
       onClick={onClick}
     >
-      {/* Glyph / lock */}
-      <div className="text-[24px] leading-none w-8 flex-shrink-0 flex items-center justify-center pt-0.5">
-        {locked ? <Lock size={18} color="var(--muted)" strokeWidth={1.75} /> : ch.glyph}
-      </div>
+      {/* Lock — only shown when module is locked */}
+      {locked && (
+        <div className="w-8 flex-shrink-0 flex items-center justify-center pt-0.5">
+          <Lock size={18} color="var(--muted)" strokeWidth={1.75} />
+        </div>
+      )}
 
       {/* Title + meta */}
       <div className="flex-1 min-w-0">

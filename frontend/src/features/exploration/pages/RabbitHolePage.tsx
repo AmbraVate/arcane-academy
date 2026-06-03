@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { rabbitHoleApi, codeApi } from '@/shared/api/services'
@@ -99,7 +100,7 @@ export default function RabbitHolePage() {
           {storyBeats.length > 0 && <StoryPanel beats={storyBeats} />}
           <div
             className="text-[13px] leading-[1.7] text-text mt-3 [&_pre]:bg-surface [&_pre]:border [&_pre]:border-border [&_pre]:rounded-md [&_pre]:p-2.5 [&_pre]:overflow-x-auto"
-            dangerouslySetInnerHTML={{ __html: mod.contentHtml }}
+            dangerouslySetInnerHTML={safe(mod.contentHtml)}
           />
           {solved && (
             <div className="mt-4 p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px] text-teal text-[14px]">

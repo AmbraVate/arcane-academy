@@ -82,8 +82,7 @@ public class LeaderboardService {
                 totalXpByUser.getOrDefault(u.getId(), 0),
                 u.getTotalXp(), u.getStreakDays(), u.getRank(),
                 entry.getValue().size(),
-                gamificationFacade.getBadgeCount(u.getId()),
-                u.getLocation()));
+                gamificationFacade.getBadgeCount(u.getId())));
         }
         return out;
     }
@@ -115,8 +114,7 @@ public class LeaderboardService {
             out.add(new LeaderboardEntry(
                 rank++, u.getUsername(), e.getValue(),
                 u.getTotalXp(), u.getStreakDays(), u.getRank(),
-                -1, gamificationFacade.getBadgeCount(u.getId()),
-                u.getLocation()));
+                -1, gamificationFacade.getBadgeCount(u.getId())));
         }
         return out;
     }

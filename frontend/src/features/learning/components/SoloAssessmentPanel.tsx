@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 /**
  * SoloAssessmentPanel — Phase 4
  *
@@ -132,7 +133,7 @@ function RubricReflectionPanel({ encoding, onSolved, onAdvance }: Props) {
                   [&_pre]:bg-[#09070f] [&_pre]:border [&_pre]:border-[rgba(139,92,246,0.2)] [&_pre]:rounded-[8px] [&_pre]:overflow-x-auto [&_pre]:my-3
                   [&_pre_code]:block [&_pre_code]:px-4 [&_pre_code]:py-3 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.7] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:font-mono [&_pre_code]:bg-transparent [&_pre_code]:border-none
                   [&_ul]:pl-4 [&_ul]:mb-3 [&_li]:mb-1.5"
-                dangerouslySetInnerHTML={{ __html: result.modelAnswerHtml }}
+                dangerouslySetInnerHTML={safe(result.modelAnswerHtml)}
               />
             )}
           </div>
@@ -306,7 +307,7 @@ function PatternMatchPanel({ encoding, onSolved, onAdvance }: Props) {
                   [&_code]:bg-[rgba(139,92,246,0.12)] [&_code]:rounded [&_code]:px-1.5 [&_code]:py-px [&_code]:text-[12px] [&_code]:text-purple-light [&_code]:font-mono
                   [&_pre]:bg-[#09070f] [&_pre]:border [&_pre]:border-[rgba(139,92,246,0.2)] [&_pre]:rounded-[8px] [&_pre]:overflow-x-auto [&_pre]:my-3
                   [&_pre_code]:block [&_pre_code]:px-4 [&_pre_code]:py-3 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.7] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:font-mono [&_pre_code]:bg-transparent [&_pre_code]:border-none"
-                dangerouslySetInnerHTML={{ __html: result.modelAnswerHtml }}
+                dangerouslySetInnerHTML={safe(result.modelAnswerHtml)}
               />
             )}
           </div>
@@ -417,7 +418,7 @@ function AiReviewPanel({ encoding, onSolved, onAdvance }: Props) {
                   [&_code]:bg-[rgba(139,92,246,0.12)] [&_code]:rounded [&_code]:px-1.5 [&_code]:py-px [&_code]:text-[12px] [&_code]:text-purple-light [&_code]:font-mono
                   [&_pre]:bg-[#09070f] [&_pre]:border [&_pre]:border-[rgba(139,92,246,0.2)] [&_pre]:rounded-[8px] [&_pre]:overflow-x-auto [&_pre]:my-3
                   [&_pre_code]:block [&_pre_code]:px-4 [&_pre_code]:py-3 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.7] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:font-mono [&_pre_code]:bg-transparent [&_pre_code]:border-none"
-                dangerouslySetInnerHTML={{ __html: result.modelAnswerHtml }}
+                dangerouslySetInnerHTML={safe(result.modelAnswerHtml)}
               />
             )}
           </div>

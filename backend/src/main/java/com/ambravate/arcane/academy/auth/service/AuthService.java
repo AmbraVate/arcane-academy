@@ -30,9 +30,9 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         log.info("[Auth] Register attempt | username={} email={}",
-                request.getUsername(), request.getEmail());
+                request.getUsername(), maskEmail(request.getEmail()));
         if (userRepository.existsByEmail(request.getEmail())) {
-            log.warn("[Auth] Register failed — email already exists: {}", request.getEmail());
+            log.warn("[Auth] Register failed — email already exists: {}", maskEmail(request.getEmail()));
             throw new IllegalArgumentException("Email already registered.");
         }
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -54,10 +54,10 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        log.info("[Auth] Login attempt | email={}", request.getEmail());
+        log.info("[Auth] Login attempt | email={}", maskEmail(request.getEmail()));
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
-                    log.warn("[Auth] Login failed — email not found: {}", request.getEmail());
+                    log.warn("[Auth] Login failed — email not found: {}", maskEmail(request.getEmail()));
                     return new UserNotFoundException("No account found for that email address.");
                 });
 
@@ -82,7 +82,7 @@ public class AuthService {
 
         log.info("[Auth] Login success | userId={} username={} streak={} totalXp={}",
                 user.getId(), user.getUsername(), user.getStreakDays(), user.getTotalXp());
-        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), false);
+        String token = jwtService.generateToken(user.getId(), user.getUsername(), user.getRole().name(), user.isBlocked());
         return buildResponse(user, token);
     }
 
@@ -115,6 +115,14 @@ public class AuthService {
                 log.warn("[Auth] OAuth2 rejected — account blocked (email match) | userId={}", user.getId());
                 throw new IllegalStateException("Account is blocked. Please contact support.");
             }
+            // Do NOT silently link if the existing account was created with a local password.
+            // Require explicit user consent to merge identities — prevents account takeover
+            // via a compromised Google account that shares the same email.
+            if (user.getPasswordHash() != null) {
+                log.warn("[Auth] OAuth2 account conflict — email matches a local-password account | userId={}", user.getId());
+                throw new IllegalStateException(
+                    "An account with this email already exists. Please sign in with your password.");
+            }
             user.setAuthProvider(provider);
             user.setProviderId(providerId);
             user.setRefreshToken(UUID.randomUUID().toString());
@@ -133,6 +141,7 @@ public class AuthService {
                 .withProviderId(providerId)
                 .withRefreshToken(UUID.randomUUID().toString())
                 .build();
+
         userRepository.save(user);
         log.info("[Auth] OAuth2 new user created | userId={} username={} provider={}", user.getId(), username, provider);
         return user;
@@ -175,6 +184,14 @@ public class AuthService {
 
     public boolean isEmailAvailable(String email) {
         return !userRepository.existsByEmail(email);
+    }
+
+    /** Masks an email address for log output — prevents PII leaking into log aggregators. */
+    private static String maskEmail(String email) {
+        if (email == null) return "(null)";
+        int at = email.indexOf('@');
+        if (at <= 0) return "***";
+        return email.substring(0, Math.min(3, at)) + "***" + email.substring(at);
     }
 
     private AuthResponse buildResponse(User user, String token) {

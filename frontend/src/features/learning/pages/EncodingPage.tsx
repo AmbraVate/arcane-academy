@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 ﻿import { useEffect, useCallback, useReducer, useState, useRef } from 'react'
 import { usePreferences } from '@/hooks/usePreferences'
 import { createPortal } from 'react-dom'
@@ -673,7 +674,7 @@ export default function EncodingPage() {
                 [&_p]:m-0 [&_p]:mb-4 [&_p:last-child]:mb-0
                 [&_strong]:text-gold [&_strong]:font-bold
                 [&_em]:text-purple-light [&_em]:italic"
-              dangerouslySetInnerHTML={{ __html: encoding.hookHtml ?? '' }}
+              dangerouslySetInnerHTML={safe(encoding.hookHtml ?? '')}
             />
           </div>
           <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={handleAdvance}>Begin →</button>
@@ -719,7 +720,7 @@ export default function EncodingPage() {
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.learningObjectives.map((obj, i) => (
                   <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-teal"
-                    dangerouslySetInnerHTML={{ __html: inlineMd(obj) }} />
+                    dangerouslySetInnerHTML={safe(inlineMd(obj))} />
                 ))}
               </ul>
             </div>
@@ -729,7 +730,7 @@ export default function EncodingPage() {
             <div className="mb-6 px-5 py-4 rounded-[12px] border-l-[3px] border-[rgba(139,92,246,0.5)] border border-[rgba(139,92,246,0.2)] bg-[rgba(139,92,246,0.04)]">
               <div
                 className="text-[14px] leading-[1.85] text-text italic [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-purple-light [&_strong]:not-italic [&_strong]:font-semibold [&_em]:text-text [&_em]:italic"
-                dangerouslySetInnerHTML={{ __html: encoding.loreIntroHtml }}
+                dangerouslySetInnerHTML={safe(encoding.loreIntroHtml)}
               />
             </div>
           )}
@@ -773,7 +774,7 @@ export default function EncodingPage() {
               </div>
               <div
                 className="text-[14px] leading-[1.75] text-text [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-teal [&_strong]:font-semibold [&_em]:text-purple-light [&_em]:italic"
-                dangerouslySetInnerHTML={{ __html: encoding.whyItMattersHtml }}
+                dangerouslySetInnerHTML={safe(encoding.whyItMattersHtml)}
               />
             </div>
           )}
@@ -791,7 +792,7 @@ export default function EncodingPage() {
                   [&_code]:bg-[rgba(139,92,246,0.12)] [&_code]:border [&_code]:border-[rgba(139,92,246,0.2)] [&_code]:rounded [&_code]:px-1.5 [&_code]:py-px [&_code]:text-[12px] [&_code]:text-purple-light [&_code]:font-mono
                   [&_pre]:bg-[#09070f] [&_pre]:border [&_pre]:border-[rgba(139,92,246,0.2)] [&_pre]:rounded-[8px] [&_pre]:overflow-x-auto [&_pre]:my-3
                   [&_pre_code]:block [&_pre_code]:px-4 [&_pre_code]:py-3 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.7] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:font-mono [&_pre_code]:bg-transparent [&_pre_code]:border-none"
-                dangerouslySetInnerHTML={{ __html: encoding.workedExamplesHtml }}
+                dangerouslySetInnerHTML={safe(encoding.workedExamplesHtml)}
               />
             </div>
           )}
@@ -804,7 +805,7 @@ export default function EncodingPage() {
               </div>
               <div
                 className="text-[14px] leading-[1.75] text-text italic [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gold [&_strong]:not-italic [&_strong]:font-semibold [&_em]:text-text"
-                dangerouslySetInnerHTML={{ __html: encoding.mentalModelHtml }}
+                dangerouslySetInnerHTML={safe(encoding.mentalModelHtml)}
               />
             </div>
           )}
@@ -817,7 +818,7 @@ export default function EncodingPage() {
               </div>
               <div
                 className="text-[14px] leading-[1.75] text-text [&_p]:m-0 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:pl-4 [&_ul]:m-0 [&_li]:mb-1.5 [&_li]:leading-[1.6] [&_li::marker]:text-teal [&_strong]:text-text [&_strong]:font-semibold [&_em]:text-purple-light"
-                dangerouslySetInnerHTML={{ __html: encoding.miniSummaryHtml }}
+                dangerouslySetInnerHTML={safe(encoding.miniSummaryHtml)}
               />
             </div>
           )}
@@ -1312,7 +1313,7 @@ export default function EncodingPage() {
           {encoding.integrationPrompt && (
             <div
               className="prose prose-invert max-w-none text-[15px] leading-relaxed mb-8 text-text"
-              dangerouslySetInnerHTML={{ __html: encoding.integrationPrompt }}
+              dangerouslySetInnerHTML={safe(encoding.integrationPrompt)}
             />
           )}
           <div className="bg-surface border border-border rounded-xl p-5 mb-6">
@@ -1404,7 +1405,7 @@ export default function EncodingPage() {
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.commonMistakes.map((m, i) => (
                   <li key={i} className="text-[13px] text-text leading-[1.6]" style={{ listStyleType: '"→ "' }}
-                    dangerouslySetInnerHTML={{ __html: inlineMd(m) }} />
+                    dangerouslySetInnerHTML={safe(inlineMd(m))} />
                 ))}
               </ul>
             </div>
@@ -1419,7 +1420,7 @@ export default function EncodingPage() {
               <ul className="m-0 pl-4 space-y-1.5">
                 {encoding.assessmentCriteria.map((c, i) => (
                   <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-gold"
-                    dangerouslySetInnerHTML={{ __html: inlineMd(c) }} />
+                    dangerouslySetInnerHTML={safe(inlineMd(c))} />
                 ))}
               </ul>
             </div>
@@ -1494,7 +1495,7 @@ export default function EncodingPage() {
               </div>
               <div
                 className="text-[14px] leading-[1.85] text-text italic [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gold [&_strong]:not-italic [&_strong]:font-semibold [&_em]:text-text"
-                dangerouslySetInnerHTML={{ __html: encoding.loreConclusionHtml }}
+                dangerouslySetInnerHTML={safe(encoding.loreConclusionHtml)}
               />
             </div>
           )}

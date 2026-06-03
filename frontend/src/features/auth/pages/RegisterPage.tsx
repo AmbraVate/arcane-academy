@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { PasswordStrength } from '@/components/ui/PasswordStrength'
 import { Check, X, Loader2 } from 'lucide-react'
 import api from '@/shared/api/client'
 
@@ -137,7 +138,11 @@ export default function RegisterPage() {
           <div className="flex flex-col gap-1.5">
             <label className="font-cinzel text-[11px] tracking-[1px] text-muted">Password</label>
             <Input type="password" value={password} onChange={e => setPassword(e.target.value)}
-              placeholder="Min. 8 characters" required minLength={8} />
+              placeholder="e.g. purple wizard drinks coffee" required minLength={20} />
+            <PasswordStrength password={password} />
+            {password.length === 0 && (
+              <p className="text-[11px] text-muted">A passphrase of 3+ words is easy to remember and very hard to crack.</p>
+            )}
           </div>
 
           {/* Taken warnings inline — generic error fallback */}

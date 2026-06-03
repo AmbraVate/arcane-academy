@@ -83,13 +83,6 @@ public class User {
 
     private String refreshToken;
 
-    /**
-     * Optional free-text location (e.g. "Manchester, UK"). Used on the public leaderboard
-     * to give geographic context. Never required; null means the user has not set it.
-     */
-    @Column(length = 100)
-    private String location;
-
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @Getter(AccessLevel.NONE)   // suppress Lombok getter; we provide a null-safe one below

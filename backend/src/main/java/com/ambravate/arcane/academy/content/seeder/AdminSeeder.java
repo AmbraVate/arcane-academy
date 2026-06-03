@@ -47,8 +47,14 @@ public class AdminSeeder {
     private String adminPassword;
 
     public void seed() {
+        // Backfill any legacy rows with a null role — safe to run repeatedly.
+        int fixed = userRepository.backfillNullRoles();
+        if (fixed > 0) {
+            log.info("[AdminSeeder] Backfilled role=USER for {} legacy user(s).", fixed);
+        }
+
         if (adminEmail.isBlank() || adminPassword.isBlank()) {
-            log.info("[AdminSeeder] ADMIN_EMAIL or ADMIN_PASSWORD not configured — skipping.");
+            log.info("[AdminSeeder] ADMIN_EMAIL or ADMIN_PASSWORD not configured — skipping admin bootstrap.");
             return;
         }
 

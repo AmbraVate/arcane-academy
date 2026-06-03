@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import api from '@/shared/api/client'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { PasswordStrength } from '@/components/ui/PasswordStrength'
 import { KeyRound, CheckCircle, AlertTriangle } from 'lucide-react'
 
 type PageState = 'idle' | 'submitting' | 'success' | 'expired' | 'error'
@@ -18,7 +19,7 @@ export default function ResetPasswordPage() {
   const [errorMsg,        setErrorMsg]        = useState('')
 
   const passwordsMatch = newPassword === confirmPassword
-  const valid          = newPassword.length >= 8 && passwordsMatch
+  const valid          = newPassword.length >= 20 && passwordsMatch
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -115,12 +116,13 @@ export default function ResetPasswordPage() {
             type="password"
             value={newPassword}
             onChange={e => setNewPassword(e.target.value)}
-            placeholder="At least 8 characters"
+            placeholder="e.g. purple wizard drinks coffee"
             autoFocus
             autoComplete="new-password"
           />
-          {newPassword.length > 0 && newPassword.length < 8 && (
-            <p className="text-[11px] text-[#f87171] mt-1">Must be at least 8 characters</p>
+          <PasswordStrength password={newPassword} />
+          {newPassword.length === 0 && (
+            <p className="text-[11px] text-muted mt-0.5">A passphrase of 3+ words is easy to remember and very hard to crack.</p>
           )}
         </div>
 

@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useModuleDetail } from '@/hooks/queries'
 import { useAuth } from '@/shared/hooks/useAuth'
@@ -155,7 +156,7 @@ export default function TopicLessonsPage() {
         {topic?.purposeHtml && (
           <div
             className="text-[13px] text-muted leading-[1.7]"
-            dangerouslySetInnerHTML={{ __html: topic.purposeHtml }}
+            dangerouslySetInnerHTML={safe(topic.purposeHtml)}
           />
         )}
         <div className="flex items-center gap-3 mt-3">

@@ -4,7 +4,7 @@ school: engineering
 domainId: java
 tier: APPRENTICE
 moduleId: se-app-m6
-moduleTitle: "Module 6: Debugging & Engineering Habits"
+moduleTitle: "Module 6: Debugging and Engineering Habits"
 moduleGlyph: "🔬"
 moduleSortOrder: 6
 topicSlug: errors

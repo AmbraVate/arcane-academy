@@ -8,7 +8,7 @@ moduleTitle: "Module 1: Foundations of Computation"
 moduleGlyph: "🧠"
 moduleSortOrder: 1
 topicSlug: inputs_and_outputs
-topicTitle: "Inputs & Outputs"
+topicTitle: "Inputs and Outputs"
 topicSortOrder: 3
 lesson: receiving_information
 title: "Receiving Information"

@@ -28,6 +28,9 @@ const MONACO_OPTIONS = {
   renderLineHighlight: 'line' as const,
   overviewRulerLanes: 0,
   hideCursorInOverviewRuler: true,
+  // Suppress validation squiggles — learners enter code fragments, not full programs,
+  // so Monaco's syntax checker produces false positives that mislead beginners.
+  renderValidationDecorations: 'off' as const,
   scrollbar: {
     verticalScrollbarSize: 6,
     horizontalScrollbarSize: 6,

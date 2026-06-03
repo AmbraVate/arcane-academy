@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTutorial } from '../context/TutorialContext'
@@ -253,7 +254,7 @@ export default function TutorialLessonPage() {
 
             <div
               className="text-[16px] leading-[1.85] text-text text-left [&_p]:m-0 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:text-gold"
-              dangerouslySetInnerHTML={{ __html: HOOK_HTML }}
+              dangerouslySetInnerHTML={safe(HOOK_HTML)}
             />
           </div>
           <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={advance}>Begin →</button>
@@ -280,7 +281,7 @@ export default function TutorialLessonPage() {
           </div>
 
           {/* Main explanation prose */}
-          <div className={prose} dangerouslySetInnerHTML={{ __html: EXPLANATION_HTML }} />
+          <div className={prose} dangerouslySetInnerHTML={safe(EXPLANATION_HTML)} />
 
           {/* Why it matters */}
           <div className="mb-5 p-4 rounded-[10px] border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.04)]">
@@ -289,7 +290,7 @@ export default function TutorialLessonPage() {
             </div>
             <div
               className="text-[14px] leading-[1.75] text-text [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-teal [&_strong]:font-semibold"
-              dangerouslySetInnerHTML={{ __html: WHY_IT_MATTERS_HTML }}
+              dangerouslySetInnerHTML={safe(WHY_IT_MATTERS_HTML)}
             />
           </div>
 
@@ -300,7 +301,7 @@ export default function TutorialLessonPage() {
             </div>
             <div
               className="text-[14px] leading-[1.75] text-text italic [&_p]:m-0 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:text-gold [&_strong]:not-italic [&_strong]:font-semibold"
-              dangerouslySetInnerHTML={{ __html: MENTAL_MODEL_HTML }}
+              dangerouslySetInnerHTML={safe(MENTAL_MODEL_HTML)}
             />
           </div>
 
@@ -311,7 +312,7 @@ export default function TutorialLessonPage() {
             </div>
             <div
               className="text-[14px] leading-[1.75] text-text [&_p]:m-0 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:pl-4 [&_ul]:m-0 [&_li]:mb-1.5 [&_li]:leading-[1.6] [&_li::marker]:text-teal [&_strong]:text-text [&_strong]:font-semibold"
-              dangerouslySetInnerHTML={{ __html: MINI_SUMMARY_HTML }}
+              dangerouslySetInnerHTML={safe(MINI_SUMMARY_HTML)}
             />
           </div>
 
@@ -509,7 +510,7 @@ export default function TutorialLessonPage() {
               [&_p]:m-0 [&_p]:mb-4 [&_p:last-child]:mb-0
               [&_strong]:text-gold [&_strong]:font-semibold [&_em]:text-purple-light
               [&_ul]:pl-5 [&_ul]:mb-4 [&_li]:mb-2 [&_li]:leading-[1.65] [&_li::marker]:text-teal"
-            dangerouslySetInnerHTML={{ __html: INTEGRATION_HTML }}
+            dangerouslySetInnerHTML={safe(INTEGRATION_HTML)}
           />
 
           <div className="bg-surface border border-border rounded-xl p-5 mb-6">

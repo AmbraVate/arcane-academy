@@ -17,16 +17,20 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    /**
+     * Both "user not found" and "wrong password" return the same 401 with a generic message.
+     * Distinct codes/statuses would allow unauthenticated email enumeration.
+     */
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUserNotFound(UserNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("code", "USER_NOT_FOUND", "message", ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Invalid email or password."));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, String>> handleBadCredentials(BadCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("code", "WRONG_PASSWORD", "message", ex.getMessage()));
+                .body(Map.of("message", "Invalid email or password."));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

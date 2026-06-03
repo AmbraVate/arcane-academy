@@ -25,6 +25,7 @@ import {
   ACTIVE_DOMAIN_IDS,
   DOMAINS,
   SCHOOL_META,
+  SCHOOL_HERO_IMAGES,
   type Domain,
   type School,
 } from '@/features/domains/data/domains'
@@ -62,13 +63,13 @@ const HOW_IT_WORKS = [
     desc: 'Structured lessons with spaced repetition. Science-backed encoding that makes knowledge stick.',
   },
   {
-    icon: Swords,
+    icon: GraduationCap,
     color: 'var(--purple-light)',
     bg: 'rgba(196,181,253,0.08)',
     border: 'rgba(196,181,253,0.2)',
     step: '03',
-    title: 'Battle',
-    desc: 'Face boss challenges at each tier. One wrong answer sends you back — mastery is earned, not given.',
+    title: 'Prove It',
+    desc: 'Each lesson runs you through guided practice, solo recall, and a retrieval quiz — structured phases that turn reading into lasting knowledge.',
   },
   {
     icon: RotateCcw,
@@ -103,11 +104,11 @@ const HOW_IT_WORKS = [
 
 function buildSchoolCards() {
   const order: School[] = [
-    'engineering-systems',
-    'mathematical-scientific',
-    'human-systems',
-    'creative-cultural',
-    'heritage',
+    'computing-engineering',
+    'mathematics-logic',
+    'natural-sciences',
+    'mind-neuroscience',
+    'history-civilisation',
   ]
 
   return order.map(schoolId => {
@@ -202,6 +203,7 @@ function EnrolledCard({
 }
 
 function SchoolCard({
+  schoolId,
   meta,
   paths,
   hasActive,
@@ -215,6 +217,88 @@ function SchoolCard({
 }) {
   const activePaths = paths.filter(d => d.status === 'active')
   const soonCount   = paths.filter(d => d.status !== 'active').length
+
+  if (SCHOOL_HERO_IMAGES[schoolId]) {
+    return (
+      <div
+        onClick={hasActive ? onClick : undefined}
+        className={cn(
+          'group relative overflow-hidden rounded-[14px] border border-border bg-black min-h-[160px] flex flex-col',
+          'transition-[border-color,transform,box-shadow] duration-200',
+          hasActive
+            ? 'cursor-pointer hover:-translate-y-[2px] hover:shadow-[0_8px_40px_rgba(124,58,237,0.35)]'
+            : 'opacity-55 cursor-default',
+        )}
+        style={hasActive ? { borderTopColor: `color-mix(in srgb, ${meta.color} 65%, transparent)`, borderTopWidth: 2 } : undefined}
+        onMouseEnter={e => {
+          if (hasActive) (e.currentTarget as HTMLDivElement).style.borderColor = `color-mix(in srgb, ${meta.color} 55%, transparent)`
+        }}
+        onMouseLeave={e => {
+          if (hasActive) {
+            const el = e.currentTarget as HTMLDivElement
+            el.style.borderColor = 'var(--border)'
+            el.style.borderTopColor = `color-mix(in srgb, ${meta.color} 65%, transparent)`
+          }
+        }}
+      >
+        <img src={SCHOOL_HERO_IMAGES[schoolId]} alt="" aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none
+            transition-[filter,transform] duration-500 group-hover:blur-sm group-hover:scale-105" />
+        <div className="absolute inset-0 z-0 pointer-events-none transition-colors duration-500
+          bg-[rgba(8,6,18,0.40)] group-hover:bg-[rgba(8,6,18,0.80)]" />
+
+        {/* Default: title only */}
+        <div className="absolute inset-0 z-20 flex flex-col justify-end px-4 pb-4 pt-3
+          transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
+          {activePaths.length > 0 && (
+            <span className="inline-block self-start font-cinzel text-[9px] font-semibold px-2 py-0.5 rounded-full mb-2"
+              style={{ color: '#fff', background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.35)' }}>
+              {activePaths.length} active
+            </span>
+          )}
+          <h3 className="font-cinzel text-[16px] font-bold text-white m-0 leading-tight
+            [text-shadow:0_0_30px_rgba(124,58,237,0.6),0_2px_8px_rgba(0,0,0,0.9)]">
+            {meta.name}
+          </h3>
+        </div>
+
+        {/* Hover: full content */}
+        <div className="relative z-10 flex flex-col gap-2.5 px-4 py-4 pb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <span className="font-cinzel text-[13px] font-bold text-white leading-snug">{meta.name}</span>
+            {activePaths.length > 0 && (
+              <span className="flex-shrink-0 text-[9px] font-cinzel px-2 py-0.5 rounded-full"
+                style={{ color: '#fff', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)' }}>
+                {activePaths.length} active
+              </span>
+            )}
+          </div>
+          <p className="text-[11px] text-white/75 leading-[1.5] m-0 flex-1">{meta.description}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {activePaths.map(d => (
+              <span key={d.id} className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-cinzel font-semibold tracking-wide"
+                style={{ background: `color-mix(in srgb, ${meta.color} 20%, transparent)`, color: meta.color, border: `1px solid color-mix(in srgb, ${meta.color} 40%, transparent)` }}>
+                {d.name}
+              </span>
+            ))}
+            {soonCount > 0 && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-cinzel tracking-wide border border-white/20 text-white/50">
+                +{soonCount} coming soon
+              </span>
+            )}
+          </div>
+          <div className="mt-auto pt-2.5 border-t border-white/15 flex items-center justify-between">
+            <span className="font-cinzel text-[10px] text-white/50 tracking-wide">
+              {paths.length} {paths.length === 1 ? 'pathway' : 'pathways'}
+            </span>
+            <span className="font-cinzel text-[11px] font-semibold flex items-center gap-1" style={{color: meta.color}}>
+              Explore <ArrowRight size={11} strokeWidth={2.5}/>
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div

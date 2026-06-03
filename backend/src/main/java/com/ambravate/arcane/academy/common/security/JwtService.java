@@ -2,6 +2,7 @@ package com.ambravate.arcane.academy.common.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,15 @@ public class JwtService {
 
     @Value("${jwt.expiration-ms}")
     private long expirationMs;
+
+    @PostConstruct
+    void validateSecret() {
+        if (secret == null || secret.length() < 64) {
+            throw new IllegalStateException(
+                "JWT_SECRET must be at least 64 characters. " +
+                "Generate one with: openssl rand -base64 64");
+        }
+    }
 
     public String generateToken(String userId, String username, String role, boolean blocked) {
         SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));

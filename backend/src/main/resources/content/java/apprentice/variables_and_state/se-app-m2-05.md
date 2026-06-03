@@ -8,7 +8,7 @@ moduleTitle: "Module 2: Programming Foundations"
 moduleGlyph: "📝"
 moduleSortOrder: 2
 topicSlug: variables_and_state
-topicTitle: "Variables & State"
+topicTitle: "Variables and State"
 topicSortOrder: 1
 lesson: assignment
 title: "Assignment"

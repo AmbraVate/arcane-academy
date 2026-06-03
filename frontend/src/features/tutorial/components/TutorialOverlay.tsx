@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import { useTutorial } from '../context/TutorialContext'
-import { X } from 'lucide-react'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -174,15 +173,6 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
         animation: 'fade-up 0.25s ease both',
       }}
     >
-      {/* Close / skip */}
-      <button
-        onClick={onSkip}
-        style={{ position: 'absolute', top: 12, right: 12, color: 'var(--muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}
-        title="Skip tutorial"
-      >
-        <X size={15} />
-      </button>
-
       {/* Arrow indicator — only shown when callout is anchored to a target */}
       {arrowDir && effectivePos !== 'center' && (
         <div style={{ color: 'var(--purple-light)', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -191,7 +181,7 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
       )}
 
       {/* Title */}
-      <div className="font-cinzel" style={{ fontSize: 15, color: 'var(--gold)', marginBottom: 8, paddingRight: 20 }}>
+      <div className="font-cinzel" style={{ fontSize: 15, color: 'var(--gold)', marginBottom: 8 }}>
         {title}
       </div>
 
@@ -217,10 +207,15 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
           ))}
         </div>
 
-        {/* CTA button */}
-        <button className="btn btn-primary" style={{ fontSize: 13, padding: '6px 18px', flexShrink: 0 }} onClick={onNext}>
-          {ctaLabel}
-        </button>
+        {/* Skip + CTA buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+          <button className="btn btn-ghost" style={{ fontSize: 13, padding: '6px 14px' }} onClick={onSkip}>
+            Skip
+          </button>
+          <button className="btn btn-primary" style={{ fontSize: 13, padding: '6px 18px' }} onClick={onNext}>
+            {ctaLabel}
+          </button>
+        </div>
       </div>
     </div>
   )

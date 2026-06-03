@@ -1,7 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { leaderboardApi, type LeaderboardEntry } from '@/shared/api/services'
-import { MapPin } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 /**
@@ -33,8 +32,6 @@ export default function LeaderboardPage() {
   const [rows, setRows] = useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [locationFilter, setLocationFilter] = useState('')
-
   // Persist current selection in URL so refresh + share-link work.
   useEffect(() => {
     const next = new URLSearchParams()
@@ -57,12 +54,6 @@ export default function LeaderboardPage() {
       .catch(() => setError('Could not load the leaderboard. Try again in a moment.'))
       .finally(() => setLoading(false))
   }, [board, domainId])
-
-  const filteredRows = useMemo(() => {
-    if (!locationFilter.trim()) return rows
-    const lc = locationFilter.toLowerCase()
-    return rows.filter(r => r.location?.toLowerCase().includes(lc))
-  }, [rows, locationFilter])
 
   const subtitle = useMemo(() => {
     if (board === 'polymath') return 'Top polymaths by topic breadth — tie-break on total XP'
@@ -120,40 +111,13 @@ export default function LeaderboardPage() {
           </div>
         )}
 
-        {/* Location filter */}
-        {!loading && rows.length > 0 && (
-          <div className="flex items-center gap-2 mb-4">
-            <MapPin size={13} strokeWidth={1.75} className="text-muted flex-shrink-0" />
-            <input
-              type="text"
-              placeholder="Filter by location…"
-              value={locationFilter}
-              onChange={e => setLocationFilter(e.target.value)}
-              className="w-full max-w-[220px] bg-card border border-border rounded-[8px] px-3 py-1.5
-                text-[12px] text-text placeholder:text-muted outline-none
-                focus:border-purple-dim transition-[border-color] duration-150"
-            />
-            {locationFilter && (
-              <button
-                onClick={() => setLocationFilter('')}
-                className="text-[11px] text-muted hover:text-text transition-colors duration-150"
-              >
-                Clear
-              </button>
-            )}
-          </div>
-        )}
-
         {/* Body */}
         {loading && <p className="text-muted italic text-center py-10">Loading rankings…</p>}
         {error && !loading && <p className="text-red text-center py-10">{error}</p>}
         {!loading && !error && rows.length === 0 && <EmptyState onProfile={() => navigate('/profile')} />}
-        {!loading && !error && filteredRows.length === 0 && rows.length > 0 && (
-          <p className="text-muted italic text-center py-10">No results for "{locationFilter}"</p>
-        )}
-        {!loading && !error && filteredRows.length > 0 && (
+        {!loading && !error && rows.length > 0 && (
           <ol className="space-y-2">
-            {filteredRows.map(row => (
+            {rows.map(row => (
               <li
                 key={row.username}
                 className={cn(
@@ -174,11 +138,6 @@ export default function LeaderboardPage() {
                   <div className="text-[11px] text-muted flex items-center gap-1 flex-wrap">
                     <span>{row.rankTitle} · 🔥 {row.streakDays}d · 🏅 {row.badgeCount}</span>
                     {row.topicCount >= 0 && <span>· {row.topicCount} topics</span>}
-                    {row.location && (
-                      <span className="flex items-center gap-0.5">
-                        · <MapPin size={10} strokeWidth={1.75} className="inline-block" /> {row.location}
-                      </span>
-                    )}
                   </div>
                 </button>
                 <div className="text-right">

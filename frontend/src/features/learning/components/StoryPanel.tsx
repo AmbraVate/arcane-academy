@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 ﻿import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import type { StoryBeat, StoryRabbitHoleTerm } from '@/shared/types'
@@ -117,7 +118,7 @@ function Narration({ text, fullPage }: { text: string; fullPage: boolean }) {
         !fullPage && 'text-[13px]',
         '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold',
       )}
-      dangerouslySetInnerHTML={{ __html: text }}
+      dangerouslySetInnerHTML={safe(text)}
     />
   )
 }
@@ -146,7 +147,7 @@ function Example({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
           fullPage && 'text-[13px] leading-[1.8]',
         )}
       >
-        <code dangerouslySetInnerHTML={{ __html: beat.text }} />
+        <code dangerouslySetInnerHTML={safe(beat.text)} />
       </pre>
     </div>
   )
@@ -190,7 +191,7 @@ function Dialogue({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
             '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold',
             fullPage && 'text-[15px] leading-[1.8]',
           )}
-          dangerouslySetInnerHTML={{ __html: beat.text ?? '' }}
+          dangerouslySetInnerHTML={safe(beat.text ?? '')}
         />
       </div>
     </div>

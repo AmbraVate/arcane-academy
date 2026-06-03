@@ -59,7 +59,7 @@ export const SCHOOL_META: Record<School, SchoolMeta> = {
   'mind-neuroscience':       { name: 'School of Mind, Behaviour & Neuroscience', glyph: '🧠', color: '#a855f7', description: 'Psychology, cognitive science, neuroscience, decision theory, and mental health' },
   'history-civilisation':    { name: 'School of History & Civilisation',         glyph: '📜', color: '#d97706', description: 'Ancient to modern history, classical civilisations, genealogy, and cultural heritage' },
   'philosophy-ethics':       { name: 'School of Philosophy, Ethics & Religion',  glyph: '🏛️', color: '#6366f1', description: 'Philosophy, ethics, epistemology, logic, comparative religion, and mythology' },
-  'society-politics':        { name: 'School of Society, Politics & Law',        glyph: '🌐', color: '#0ea5e9', description: 'Sociology, anthropology, political science, economics, and legal studies' },
+  'society-politics':        { name: 'School of Society and Politics',        glyph: '🌐', color: '#0ea5e9', description: 'Sociology, anthropology, political science and economics' },
   'business-enterprise':     { name: 'School of Business & Enterprise',          glyph: '💼', color: '#c9a227', description: 'Entrepreneurship, management, marketing, finance, product, and strategy' },
   'language-communication':  { name: 'School of Language & Communication',       glyph: '🗣️', color: '#f97316', description: 'Linguistics, writing, public speaking, journalism, and world languages' },
   'arts-design':             { name: 'School of Arts, Design & Creativity',      glyph: '🎨', color: '#ec4899', description: 'Visual arts, graphic design, photography, film, music, and creative writing' },
@@ -68,6 +68,53 @@ export const SCHOOL_META: Record<School, SchoolMeta> = {
   'technology-futures':      { name: 'School of Technology Futures & Systems',   glyph: '🚀', color: '#8b5cf6', description: 'Space science, robotics, nanotechnology, biotechnology, and emerging technologies' },
   'law-governance':          { name: 'School of Law, Governance & Justice',      glyph: '⚖️', color: '#1d4ed8', description: 'Legal foundations, constitutional, criminal, civil and international law, and governance' },
   'survival-practical':      { name: 'School of Survival, Practical & Applied Skills', glyph: '🏕️', color: '#92400e', description: 'Wilderness survival, bushcraft, navigation, homesteading, and practical self-sufficiency' },
+}
+
+/* ── School hero background images ───────────────────────────────────────────── */
+
+export const SCHOOL_HERO_IMAGES: Partial<Record<School, string>> = {
+  'computing-engineering': 'schools/school_computing_engineering.jpeg',
+  'mathematics-logic':     'schools/school_mathematics_logic.jpeg',
+  'natural-sciences' : 'schools/school_natural_science.jpeg',
+  'mind-neuroscience' : 'schools/school_mind.jpeg',
+  'history-civilisation' : 'schools/school_history.jpeg',
+  'philosophy-ethics' : 'schools/school_philosophy.jpeg',
+  'society-politics' : 'schools/school_society.jpeg',
+  'business-enterprise' : 'schools/school_business.jpeg',
+  'language-communication' : 'schools/school_lang.jpeg',
+  'arts-design' : 'schools/school_art.jpeg',
+  'health-performance' : 'schools/school_health.jpeg',
+  'geography-environment' : 'schools/school_geo.jpeg',
+  'technology-futures' : 'schools/school_future.jpeg',
+  'law-governance' : 'schools/school_law.jpeg',
+  'survival-practical' : 'schools/school_survival.jpeg',
+}
+
+/* ── Pathway hero background images ──────────────────────────────────────────── */
+
+export const DOMAIN_HERO_IMAGES: Partial<Record<string, string>> = {
+  // ── Computing & Engineering ──────────────────────────────────────────────
+  'software-engineering':      '/software_engineer.jpeg',
+  'frontend-engineering':      '/Pathways/software/frontend_engineer.jpeg',
+  'backend-engineering':       '/Pathways/software/backend_engineer.jpeg',
+  'data-engineering':          '/Pathways/software/data_engineer.jpeg',
+  'devops-engineering':        '/Pathways/software/devOps_engineer.jpeg',
+  'cybersecurity-engineering': '/Pathways/software/cyber_engineer.jpeg',
+  'cloud-engineering':         '/Pathways/software/cloud_engineer.jpeg',
+  'mobile-engineering':        '/Pathways/software/mobile_engineer.jpeg',
+  'embedded-engineering':      '/Pathways/software/emebbed_engineer.jpeg',
+  'game-engineering':          '/Pathways/software/game_engineer.jpeg',
+  'ai-machine-learning':       '/Pathways/software/ai_engineer.jpeg',
+  // ── Mathematics & Logic ──────────────────────────────────────────────────
+  'mathematical-foundations':  '/Pathways/maths/math_foundations.jpeg',
+  'algebra':                   '/Pathways/maths/algebra.jpeg',
+  'calculus':                  '/Pathways/maths/calculus.jpeg',
+  'discrete-mathematics':      '/Pathways/maths/discrete.jpeg',
+  'probability-statistics':    '/Pathways/maths/statistics.jpeg',
+  'mathematical-modelling':    '/Pathways/maths/math_modelling.jpeg',
+  'applied-mathematics':       '/Pathways/maths/maths_applied.jpeg',
+  'cryptography':              '/Pathways/maths/crypto.jpeg',
+  'logic-formal-systems':      '/Pathways/maths/formal.jpeg',
 }
 
 /* ── Track groups (kept empty — navigation is now Schools → Pathways) ─────── */
