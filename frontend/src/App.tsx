@@ -87,6 +87,24 @@ function LegacyChunkTopicRedirect() {
   return <Navigate to={`/module/${moduleId}/topic/${topicId}`} replace />
 }
 
+/** /admin/chunks/:moduleId/subchunks → /admin/modules/:moduleId/lessons */
+function LegacyAdminModuleRedirect() {
+  const { moduleId } = useParams<{ moduleId: string }>()
+  return <Navigate to={`/admin/modules/${moduleId}/lessons`} replace />
+}
+
+/** /admin/subchunks/:lessonId/edit → /admin/lessons/:lessonId/edit */
+function LegacyAdminLessonEditRedirect() {
+  const { lessonId } = useParams<{ lessonId: string }>()
+  return <Navigate to={`/admin/lessons/${lessonId}/edit`} replace />
+}
+
+/** /admin/subchunks/:lessonId/questions → /admin/lessons/:lessonId/questions */
+function LegacyAdminLessonQuestionsRedirect() {
+  const { lessonId } = useParams<{ lessonId: string }>()
+  return <Navigate to={`/admin/lessons/${lessonId}/questions`} replace />
+}
+
 /** /topic/:id → /pathway/:id (original pre-V24 URLs) */
 function LegacyTopicRedirect() {
   const location = useLocation()
@@ -136,10 +154,15 @@ function AppRoutes() {
             <Route index element={<AdminDashboardPage />} />
             <Route path="domains" element={<AdminDomainsPage />} />
             <Route path="topics"  element={<Navigate to="/admin/domains" replace />} />
-            <Route path="chunks" element={<AdminChunksPage />} />
-            <Route path="chunks/:moduleId/subchunks" element={<AdminLessonsPage />} />
-            <Route path="subchunks/:lessonId/edit" element={<AdminLessonEditorPage />} />
-            <Route path="subchunks/:lessonId/questions" element={<AdminQuestionsPage />} />
+            <Route path="modules" element={<AdminChunksPage />} />
+            <Route path="modules/:moduleId/lessons" element={<AdminLessonsPage />} />
+            <Route path="lessons/:lessonId/edit" element={<AdminLessonEditorPage />} />
+            <Route path="lessons/:lessonId/questions" element={<AdminQuestionsPage />} />
+            {/* Legacy admin URL redirects */}
+            <Route path="chunks" element={<Navigate to="/admin/modules" replace />} />
+            <Route path="chunks/:moduleId/subchunks" element={<LegacyAdminModuleRedirect />} />
+            <Route path="subchunks/:lessonId/edit" element={<LegacyAdminLessonEditRedirect />} />
+            <Route path="subchunks/:lessonId/questions" element={<LegacyAdminLessonQuestionsRedirect />} />
             <Route path="users" element={<AdminUsersPage />} />
             <Route path="import-export" element={<AdminImportExportPage />} />
             <Route path="stuck-reports" element={<AdminStuckReportsPage />} />

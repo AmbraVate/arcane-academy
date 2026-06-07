@@ -102,14 +102,14 @@ export default function AdminDomainsPage() {
   }
 
   async function handleDelete(topic: AdminDomain) {
-    if (!confirm(`Delete topic "${topic.name}"? This will fail if it has chunks.`)) return
+    if (!confirm(`Delete topic "${topic.name}"? This will fail if it has modules.`)) return
     setError(null)
     try {
       await adminDomainApi.delete(topic.id)
       load()
     } catch (e: unknown) {
       const status = (e as { response?: { status?: number } })?.response?.status
-      setError(status === 409 ? 'Cannot delete — this topic still has chunks. Remove all chunks first.' : 'Delete failed')
+      setError(status === 409 ? 'Cannot delete — this topic still has modules. Remove all modules first.' : 'Delete failed')
     }
   }
 

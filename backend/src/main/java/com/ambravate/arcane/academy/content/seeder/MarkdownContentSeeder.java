@@ -63,7 +63,9 @@ public class MarkdownContentSeeder {
 
     // ── Domain ID aliases (content files use underscore; domain records use hyphen) ───
     private static final Map<String, String> DOMAIN_ID_ALIASES = Map.of(
-        "software_engineering", "software-engineering"
+        "software_engineering",   "software-engineering",
+        "data_engineering",       "data-engineering",
+        "frontend_engineering",   "frontend-engineering"
     );
 
     private String resolveTrackId(String domainId) {

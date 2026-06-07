@@ -180,9 +180,9 @@ export default function AdminLessonEditorPage() {
     <div>
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
-        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
+        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/modules')}>Modules</span>
         <span>›</span>
-        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.moduleId}/subchunks`)}>Lessons</span>
+        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/modules/${sc.moduleId}/lessons`)}>Lessons</span>
         <span>›</span>
         <span style={{ color: '#e8e0f0' }}>{sc.title}</span>
       </div>

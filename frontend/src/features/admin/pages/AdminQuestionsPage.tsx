@@ -153,9 +153,9 @@ export default function AdminQuestionsPage() {
     <div>
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
-        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
+        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/modules')}>Modules</span>
         <span>›</span>
-        {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/chunks/${sc.moduleId}/subchunks`)}>Lessons</span>}
+        {sc && <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate(`/admin/modules/${sc.moduleId}/lessons`)}>Lessons</span>}
         {sc && <span>›</span>}
         <span style={{ color: '#e8e0f0' }}>{sc?.title ?? 'Questions'}</span>
       </div>
@@ -167,7 +167,7 @@ export default function AdminQuestionsPage() {
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           {sc && (
-            <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={() => navigate(`/admin/subchunks/${lessonId}/edit`)}>
+            <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={() => navigate(`/admin/lessons/${lessonId}/edit`)}>
               ✏️ Edit Content
             </button>
           )}

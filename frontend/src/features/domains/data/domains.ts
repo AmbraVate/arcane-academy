@@ -140,8 +140,8 @@ export const DOMAINS: Domain[] = [
     tagline: 'Component-driven UIs with React and Tailwind — from first render to production.' },
   { id: 'backend-engineering',    name: 'Backend Engineering',          glyph: '🗄️',  status: 'coming_soon', modules: 0,  accentStroke: '#7c3aed', school: 'computing-engineering',
     tagline: 'APIs, databases, authentication, and scalable server-side architecture.' },
-  { id: 'data-engineering',       name: 'Data Engineering & Databases', glyph: '🗃️',  status: 'coming_soon', modules: 0,  accentStroke: '#7c3aed', school: 'computing-engineering',
-    tagline: 'SQL, data pipelines, warehousing, and the craft of reliable data systems.' },
+  { id: 'data-engineering',       name: 'Data Engineering',             glyph: '🗄️',  status: 'active',      modules: 32, accentStroke: '#6366f1', school: 'computing-engineering',
+    tagline: 'SQL, databases, pipelines, and data architecture — from a single table to enterprise scale.' },
   { id: 'devops-engineering',     name: 'DevOps & Platform Engineering', glyph: '🔧', status: 'coming_soon', modules: 0,  accentStroke: '#7c3aed', school: 'computing-engineering',
     tagline: 'CI/CD, containerisation, infrastructure as code, and platform reliability.' },
   { id: 'cybersecurity-engineering', name: 'Cyber Security Engineering', glyph: '🔐', status: 'coming_soon', modules: 0, accentStroke: '#7c3aed', school: 'computing-engineering',
@@ -200,7 +200,7 @@ export const DOMAINS: Domain[] = [
     tagline: 'Ocean physics, chemistry, biology, and the deep systems of our seas.' },
 
   // ── School of Mind, Behaviour & Neuroscience ───────────────────────────
-  { id: 'psychology',             name: 'Psychology',                    glyph: '🧠',  status: 'active',      modules: 71, accentStroke: '#a855f7', school: 'mind-neuroscience',
+  { id: 'psychology',             name: 'Psychology',                    glyph: '🧠',  status: 'coming_soon', modules: 0,  accentStroke: '#a855f7', school: 'mind-neuroscience',
     tagline: 'From foundations to frontier — the complete undergraduate-to-graduate psychology pathway.' },
   { id: 'cognitive-science',      name: 'Cognitive Science',             glyph: '💭',  status: 'coming_soon', modules: 0,  accentStroke: '#a855f7', school: 'mind-neuroscience',
     tagline: 'Mind, computation, and intelligence — where psychology meets AI and linguistics.' },

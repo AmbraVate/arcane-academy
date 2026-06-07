@@ -1,9 +1,36 @@
 -- V43: Add Frontend Engineering and Data Engineering pathways
 --
--- Domains and tracks are created at runtime by DomainSeeder + TrackSeeder.
--- This migration pre-seeds all modules and topics so the FK constraint
--- modules.track_id → tracks.id is satisfied before the content seeder runs.
+-- Ensures domains and tracks exist before inserting modules.
+-- DomainSeeder adds `data-engineering` at runtime, so on a fresh install it may
+-- not exist when this migration runs.  We insert it here (idempotently) so the
+-- FK constraint modules.track_id → tracks.id is satisfied.
 -- All INSERTs use ON CONFLICT (id) DO NOTHING so re-running is safe.
+
+-- Ensure engineering-systems school exists (created by V25; guard for fresh DBs)
+INSERT INTO schools (id, name, description, sort_order)
+VALUES ('engineering-systems', 'Engineering & Systems',
+        'Software Engineering, Frontend Engineering, Data & Databases', 1)
+ON CONFLICT (id) DO NOTHING;
+
+-- Ensure domains exist
+INSERT INTO domains (id, school_id, name, sort_order)
+VALUES ('frontend-engineering', 'engineering-systems', 'Frontend Engineering', 2)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO domains (id, school_id, name, sort_order)
+VALUES ('data-engineering', 'engineering-systems', 'Data Engineering', 4)
+ON CONFLICT (id) DO NOTHING;
+
+-- Ensure tracks exist (one track per pathway, track id = domain id)
+INSERT INTO tracks (id, domain_id, name, description, sort_order)
+VALUES ('frontend-engineering', 'frontend-engineering', 'Frontend Engineering',
+        'HTML, CSS, JavaScript, React — build polished, accessible, production-quality UIs.', 1)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO tracks (id, domain_id, name, description, sort_order)
+VALUES ('data-engineering', 'data-engineering', 'Data Engineering',
+        'SQL, databases, pipelines, and data architecture — from a single table to enterprise scale.', 1)
+ON CONFLICT (id) DO NOTHING;
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- FRONTEND ENGINEERING — Apprentice

@@ -98,7 +98,7 @@ export default function AdminChunksPage() {
       setShowForm(false)
       setEditChunk(null)
     } catch {
-      setError('Failed to save chunk')
+      setError('Failed to save module')
     } finally {
       setSaving(false)
     }
@@ -110,7 +110,7 @@ export default function AdminChunksPage() {
       await adminChunkApi.delete(id)
       setChunks(prev => prev.filter(c => c.id !== id))
     } catch {
-      setError('Failed to delete chunk')
+      setError('Failed to delete module')
     }
   }
 
@@ -127,7 +127,7 @@ export default function AdminChunksPage() {
           <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>Manage modules and lessons</p>
         </div>
         <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={() => { setEditChunk(null); setShowForm(true) }}>
-          + New Chunk
+          + New Module
         </button>
       </div>
 
@@ -166,7 +166,7 @@ export default function AdminChunksPage() {
         <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
+          {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No modules found.</div>}
           {chunks.map(chunk => (
             <div key={chunk.id} style={{
               background: '#16132b',
@@ -191,7 +191,7 @@ export default function AdminChunksPage() {
                 <button
                   className="btn btn-ghost"
                   style={{ fontSize: 11, padding: '4px 12px' }}
-                  onClick={() => navigate(`/admin/chunks/${chunk.id}/subchunks`)}
+                  onClick={() => navigate(`/admin/modules/${chunk.id}/lessons`)}
                 >
                   Lessons
                 </button>

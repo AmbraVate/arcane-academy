@@ -181,7 +181,7 @@ export default function AdminLessonsPage() {
     <div>
       {/* Breadcrumb */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20, fontSize: 12, color: '#8b7fa0' }}>
-        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/chunks')}>Content</span>
+        <span style={{ cursor: 'pointer', color: '#8b5cf6' }} onClick={() => navigate('/admin/modules')}>Modules</span>
         <span>›</span>
         <span style={{ color: '#e8e0f0' }}>{chunk?.title ?? 'Loading…'}</span>
       </div>
@@ -220,7 +220,7 @@ export default function AdminLessonsPage() {
               sc={sc}
               onEdit={() => { setEditSc(sc); setShowForm(false) }}
               onDelete={() => handleDelete(sc.id)}
-              onQuestions={() => navigate(`/admin/subchunks/${sc.id}/questions`)}
+              onQuestions={() => navigate(`/admin/lessons/${sc.id}/questions`)}
             />
           ))}
         </div>

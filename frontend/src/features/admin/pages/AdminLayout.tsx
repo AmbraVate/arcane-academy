@@ -7,7 +7,7 @@ import { useIsMobile } from '@/hooks/useIsMobile'
 const NAV_ITEMS = [
   { path: '/admin',                label: 'Dashboard',      Icon: LayoutDashboard, exact: true },
   { path: '/admin/domains',        label: 'Pathways',       Icon: BookMarked },
-  { path: '/admin/chunks',         label: 'Content',        Icon: Library },
+  { path: '/admin/modules',         label: 'Modules',        Icon: Library },
   { path: '/admin/users',          label: 'Users',          Icon: Users },
   { path: '/admin/stuck-reports',  label: 'Stuck Reports',  Icon: Flag },
   { path: '/admin/capstones',      label: 'Capstones',      Icon: Trophy },

@@ -56,7 +56,7 @@ export default function AdminImportExportPage() {
         Import / Export
       </h1>
       <p style={{ color: '#8b7fa0', fontSize: 13, marginBottom: 32 }}>
-        Transfer content chunks as JSON files — great for backups and moving content between environments.
+        Transfer content modules as JSON files — great for backups and moving content between environments.
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
@@ -64,7 +64,7 @@ export default function AdminImportExportPage() {
         {/* Export */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
           <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#c4b5fd', marginBottom: 6 }}>
-            📤 Export Chunk
+            📤 Export Module
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
             Download a full module (including all lessons, questions, and story beats) as a JSON file.
@@ -93,7 +93,7 @@ export default function AdminImportExportPage() {
             <div style={{ color: '#8b7fa0', fontSize: 13 }}>Loading modules…</div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 360, overflowY: 'auto' }}>
-              {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
+              {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No modules found.</div>}
               {chunks.map(chunk => (
                 <div key={chunk.id} style={{
                   display: 'flex', alignItems: 'center', gap: 12,
@@ -123,10 +123,10 @@ export default function AdminImportExportPage() {
         {/* Import */}
         <div style={{ background: '#16132b', border: '1px solid #2e2850', borderRadius: 10, padding: 24 }}>
           <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#c4b5fd', marginBottom: 6 }}>
-            📥 Import Chunk
+            📥 Import Module
           </h2>
           <p style={{ color: '#8b7fa0', fontSize: 12, marginBottom: 18 }}>
-            Upload a previously exported JSON file to create or update a chunk. If a chunk with the same ID exists, it will be updated in place.
+            Upload a previously exported JSON file to create or update a module. If a module with the same ID exists, it will be updated in place.
           </p>
 
           <div
