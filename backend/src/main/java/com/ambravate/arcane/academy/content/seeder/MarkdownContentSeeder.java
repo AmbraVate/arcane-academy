@@ -61,9 +61,8 @@ public class MarkdownContentSeeder {
     private final PlatformTransactionManager transactionManager;
     private final ApplicationContext       applicationContext;
 
-    // ── Domain ID aliases (content files may still use legacy IDs) ───────────
+    // ── Domain ID aliases (content files use underscore; domain records use hyphen) ───
     private static final Map<String, String> DOMAIN_ID_ALIASES = Map.of(
-        "java",                 "software-engineering",
         "software_engineering", "software-engineering"
     );
 
