@@ -29,7 +29,7 @@ soloAssessment:
     - "Reads parameters with useParams()"
     - "Uses query strings (useSearchParams) for optional filters"
     - "Understands the difference between URL params and query params"
-  keywords: [useParams, useSearchParams, :id, dynamic, query-string, URLSearchParams, filter, optional]
+  keywords: [useParams, useSearchParams, ":id", dynamic, query-string, URLSearchParams, filter, optional]
   modelAnswer: |
     URL parameters (:id in the route path) are required segments that identify a resource.
     Read them with useParams() — returns { id: 'value' }. Query strings (?sort=asc&page=2)

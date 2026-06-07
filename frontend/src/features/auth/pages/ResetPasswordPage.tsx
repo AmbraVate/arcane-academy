@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { useNavigate, useSearchParams, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '@/shared/api/client'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -9,9 +9,10 @@ import { KeyRound, CheckCircle, AlertTriangle } from 'lucide-react'
 type PageState = 'idle' | 'submitting' | 'success' | 'expired' | 'error'
 
 export default function ResetPasswordPage() {
-  const [searchParams]    = useSearchParams()
-  const navigate          = useNavigate()
-  const token             = searchParams.get('token') ?? ''
+  const navigate = useNavigate()
+  // Token is passed in the URL hash (#token=...) so it is never sent to servers
+  // in Referer headers or recorded in access logs
+  const token = new URLSearchParams(window.location.hash.slice(1)).get('token') ?? ''
 
   const [newPassword,     setNewPassword]     = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')

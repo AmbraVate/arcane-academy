@@ -81,7 +81,7 @@ guidedSteps:
       minWords: 20
     markingRule:
       matchMode: CONTAINS
-      accepted: [container, parent, component, viewport, @container, size, context]
+      accepted: [container, parent, component, viewport, "@container", size, context]
       rejectedFeedback: "Container queries (@container) allow components to respond to their parent container's width rather than the viewport width. A card component can change its layout based on whether it is in a narrow sidebar or a wide main area — without knowing anything about the viewport. This makes components truly reusable."
     hint: "What is the difference between responding to the viewport and responding to the parent element?"
     reflectionPrompt: "Container queries solve a fundamental problem: a card that looks great at viewport 1024px may be in a narrow column at that same viewport size. Media queries can't help because they don't know the card's context. Container queries respond to the component's context — making components truly portable."

@@ -55,7 +55,7 @@ public class PasswordResetService {
         user.setPasswordResetExpiresAt(Instant.now().plusSeconds(TOKEN_EXPIRY_HOURS * 3600));
         userRepository.save(user);
 
-        String link = frontendUrl + "/reset-password?token=" + token;
+        String link = frontendUrl + "/reset-password#token=" + token;
         emailService.sendPasswordReset(user.getEmail(), user.getUsername(), link);
         log.info("[PasswordReset] Reset email dispatched for userId={}", userId);
     }
@@ -76,6 +76,7 @@ public class PasswordResetService {
         user.setPasswordHash(passwordEncoder.encode(newPassword));
         user.setPasswordResetToken(null);
         user.setPasswordResetExpiresAt(null);
+        user.setRefreshToken(null); // invalidate all existing sessions after password reset
         userRepository.save(user);
         log.info("[PasswordReset] Password updated for userId={}", user.getId());
     }

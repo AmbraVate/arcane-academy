@@ -5,9 +5,11 @@ import com.ambravate.arcane.academy.admin.util.AdminLessonAssembler;
 import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.LessonRepository;
+import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class AdminLessonController {
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final AdminLessonAssembler lessonAssembler;
+    private final UserChunkProgressRepository progressRepository;
 
     @GetMapping
     public ResponseEntity<List<AdminLessonDto>> list(@RequestParam String moduleId) {
@@ -55,7 +58,11 @@ public class AdminLessonController {
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<Void> delete(@PathVariable String id) {
+        if (progressRepository.existsByLessonId(id)) {
+            return ResponseEntity.status(409).build();
+        }
         questionRepository.deleteAll(questionRepository.findByLessonId(id));
         lessonRepository.deleteById(id);
         return ResponseEntity.noContent().build();

@@ -112,26 +112,30 @@ public class MarkdownContentSeeder {
             return resources.length;
         }
 
-        if (allLessonsPresent(lessonIds)) {
+        // Seed only lessons not yet in the database; existing lessons are left as-is
+        // (avoids full re-seed on every restart while still picking up new content files)
+        java.util.Set<String> existing = lessonRepository.findAllById(lessonIds).stream()
+                .map(com.ambravate.arcane.academy.common.domain.Lesson::getId)
+                .collect(java.util.stream.Collectors.toSet());
+
+        List<MarkdownLessonDto> toSeed = parsed.stream()
+                .filter(dto -> !existing.contains(dto.getId()))
+                .toList();
+
+        if (toSeed.isEmpty()) {
             log.info("[MarkdownContentSeeder] All {} Markdown lesson(s) already present — skipping seed.",
-                    lessonIds.size());
+                    parsed.size());
             return parsed.size();
         }
 
         TransactionTemplate tx = new TransactionTemplate(transactionManager);
-        for (MarkdownLessonDto dto : parsed) {
+        for (MarkdownLessonDto dto : toSeed) {
             tx.executeWithoutResult(status -> upsertLesson(dto));
         }
 
-        log.info("[MarkdownContentSeeder] Seeded {} Markdown lesson(s).", parsed.size());
+        log.info("[MarkdownContentSeeder] Seeded {} new Markdown lesson(s) ({} already present).",
+                toSeed.size(), existing.size());
         return parsed.size();
-    }
-
-    // ── Internal ──────────────────────────────────────────────────────────────
-
-    private boolean allLessonsPresent(List<String> ids) {
-        if (ids.isEmpty()) return true;
-        return lessonRepository.findAllById(ids).size() == ids.size();
     }
 
     private void upsertLesson(MarkdownLessonDto dto) {

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -232,7 +234,7 @@ public class MarkdownLessonParser {
 
     @SuppressWarnings("unchecked")
     private Map<String, Object> parseFrontmatter(String yamlBlock) {
-        Yaml yaml = new Yaml();
+        Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
         Object loaded = yaml.load(yamlBlock);
         if (loaded instanceof Map<?, ?> m) return (Map<String, Object>) m;
         return Collections.emptyMap();

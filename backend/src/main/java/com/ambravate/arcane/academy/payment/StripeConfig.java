@@ -28,7 +28,6 @@ public class StripeConfig {
             return;
         }
         Stripe.apiKey = stripeProperties.getSecretKey();
-        log.info("[Stripe] SDK initialised | keyPrefix={}",
-                stripeProperties.getSecretKey().substring(0, Math.min(12, stripeProperties.getSecretKey().length())));
+        log.info("[Stripe] SDK initialised.");
     }
 }

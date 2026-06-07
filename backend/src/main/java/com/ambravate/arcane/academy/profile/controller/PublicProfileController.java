@@ -43,7 +43,8 @@ public class PublicProfileController {
 
     @GetMapping("/visibility")
     public ResponseEntity<Map<String, Boolean>> getVisibility(@AuthenticationPrincipal UserPrincipal principal) {
-        User user = userRepository.findById(principal.getId()).orElseThrow();
+        User user = userRepository.findById(principal.getId())
+                .orElseThrow(() -> new java.util.NoSuchElementException("User not found: " + principal.getId()));
         return ResponseEntity.ok(Map.of("enabled", user.isPublicProfileEnabled()));
     }
 
@@ -52,7 +53,8 @@ public class PublicProfileController {
         @AuthenticationPrincipal UserPrincipal principal,
         @RequestBody VisibilityRequest body
     ) {
-        User user = userRepository.findById(principal.getId()).orElseThrow();
+        User user = userRepository.findById(principal.getId())
+                .orElseThrow(() -> new java.util.NoSuchElementException("User not found: " + principal.getId()));
         user.setPublicProfileEnabled(body.enabled());
         userRepository.save(user);
         return ResponseEntity.ok(Map.of("enabled", user.isPublicProfileEnabled()));

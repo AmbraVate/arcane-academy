@@ -30,7 +30,7 @@ soloAssessment:
     - "Explains that later rules override earlier rules when specificity is equal"
     - "Describes what !important does and why it should be avoided"
     - "Gives a real example of a cascade conflict and how it resolves"
-  keywords: [cascade, specificity, origin, order, !important, override, inheritance, browser, author]
+  keywords: [cascade, specificity, origin, order, "!important", override, inheritance, browser, author]
   modelAnswer: |
     The cascade determines which CSS rule wins when multiple rules target the same
     element and property. It weighs three factors: origin (browser defaults < author

@@ -230,23 +230,32 @@ export default function EncodingPage() {
 
   useEffect(() => {
     if (!lessonId) return
+    let mounted = true
     const load = async () => {
       try {
         let enc = await encodingApi.start(lessonId)
         if (enc.phase === 'HOOK' && !enc.hookHtml?.trim()) {
           enc = await encodingApi.advance(lessonId)
         }
-        dispatch({
+        if (mounted) dispatch({
           type: 'LOADED',
           encoding: enc,
           code: enc.starterCode ?? '',
         })
       } catch {
-        navigate('/')
+        if (mounted) navigate('/')
       }
     }
     load()
+    return () => { mounted = false }
   }, [lessonId, navigate])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(toastTimer.current)
+      clearTimeout(noteSaveTimer.current)
+    }
+  }, [])
 
   const showToast = useCallback((msg: string) => {
     setToast(msg)

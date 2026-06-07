@@ -30,7 +30,7 @@ soloAssessment:
     - "Uses logical operators (and, or, not) in media queries"
     - "Distinguishes between screen width and print media types"
     - "Nests media queries inside CSS rules (modern syntax)"
-  keywords: [media-query, breakpoint, min-width, max-width, screen, print, and, or, @media, condition]
+  keywords: [media-query, breakpoint, min-width, max-width, screen, print, and, or, "@media", condition]
   modelAnswer: |
     Media queries apply CSS rules conditionally based on device or viewport characteristics.
     Syntax: @media (min-width: 768px) { rules }. Breakpoints should be set where content

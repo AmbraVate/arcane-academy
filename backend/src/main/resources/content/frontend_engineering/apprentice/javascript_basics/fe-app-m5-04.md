@@ -30,7 +30,7 @@ soloAssessment:
     - "Correctly uses at least one comparison operator in a boolean expression"
     - "Demonstrates the logical AND (&&) and OR (||) operators"
     - "Explains what the result of a comparison expression is (true or false)"
-  keywords: [operator, arithmetic, comparison, logical, ===, &&, ||, boolean, expression]
+  keywords: [operator, arithmetic, comparison, logical, "===", "&&", "||", boolean, expression]
   modelAnswer: |
     Arithmetic operators (+, -, *, /, %) perform maths. Comparison operators (===, !==,
     >, <, >=, <=) compare two values and return a boolean. === checks both value and

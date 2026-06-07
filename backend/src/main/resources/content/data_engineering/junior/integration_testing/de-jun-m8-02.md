@@ -30,7 +30,7 @@ soloAssessment:
     - Explains test isolation patterns (transactions, truncation, test-specific data)
     - Identifies what makes a good integration test (specific, deterministic, fast)
     - Describes testing transactional behaviour and rollback scenarios
-  keywords: [integration test, @DataJpaTest, Testcontainers, test isolation, rollback, transaction, TestEntityManager, H2, PostgreSQL, @BeforeEach, @Transactional, flyway, liquibase, migration, test database]
+  keywords: ["integration test", "@DataJpaTest", Testcontainers, "test isolation", rollback, transaction, TestEntityManager, H2, PostgreSQL, "@BeforeEach", "@Transactional", flyway, liquibase, migration, "test database"]
   modelAnswer: |
     Database integration tests verify that application code works correctly with a real database: SQL queries return expected results, constraints fire correctly, transactions commit and roll back appropriately. Unit tests with mocks cannot test these behaviours — a mock repository always returns what you configured, never testing whether the actual SQL is correct. @DataJpaTest: Spring slice test loading only JPA context, using H2 in-memory by default. Faster than full context but H2 doesn't support PostgreSQL-specific SQL. Testcontainers: starts a real PostgreSQL Docker container — slower startup but production-faithful dialect. Test isolation: each test should start with known state — use @BeforeEach to insert fixtures, @Transactional to roll back after each test (for @DataJpaTest), or TRUNCATE at @BeforeEach (for non-transactional tests). Good integration tests are specific (test one behaviour), deterministic (same result every run), and fast (use only the data needed).
 guidedSteps:

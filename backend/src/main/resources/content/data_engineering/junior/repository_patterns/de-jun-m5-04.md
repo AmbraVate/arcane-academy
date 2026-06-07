@@ -30,7 +30,7 @@ soloAssessment:
     - Explains the Unit of Work pattern in the context of Spring @Transactional
     - Identifies when to use a custom repository implementation vs derived queries
     - Describes how to test repositories without a live database
-  keywords: [Repository, DAO, Unit of Work, domain model, data access, interface, abstraction, Spring Data, custom implementation, testability, H2, @DataJpaTest, query method, specification]
+  keywords: [Repository, DAO, "Unit of Work", "domain model", "data access", interface, abstraction, "Spring Data", "custom implementation", testability, H2, "@DataJpaTest", "query method", specification]
   modelAnswer: |
     The Repository pattern provides a collection-like interface for accessing domain objects, hiding persistence details from business logic. Business logic calls repository.findOverdueLoans() — it doesn't know if that hits a database, cache, or file. DAO (Data Access Object) is similar but more procedure-oriented; Repository is domain-model-oriented and often returns domain objects. Unit of Work: coordinates writes across multiple repositories within a single transaction — in Spring, @Transactional on the service method is the Unit of Work boundary. Custom repository implementations: when JPQL/derived queries aren't expressive enough, implement the custom interface + Impl suffix class. Test with @DataJpaTest (loads only JPA context, uses H2 in-memory) or with Testcontainers for production-faithful tests.
 guidedSteps:

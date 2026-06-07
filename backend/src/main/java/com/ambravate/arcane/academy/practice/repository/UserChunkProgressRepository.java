@@ -18,5 +18,6 @@ public interface UserChunkProgressRepository extends JpaRepository<UserChunkProg
     List<UserChunkProgress> findByUserIdAndStatusIn(String userId, List<LessonStatus> statuses);
     List<UserChunkProgress> findByUserIdAndLessonIdIn(String userId, List<String> lessonIds);
     long countByUserIdAndStatus(String userId, LessonStatus status);
+    boolean existsByLessonId(String lessonId);
     void deleteByLessonIdIn(List<String> lessonIds);
 }

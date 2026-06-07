@@ -29,7 +29,7 @@ soloAssessment:
     - "Distinguishes statements from expressions"
     - "Uses ternary and && for conditional rendering"
     - "Maps arrays to JSX correctly"
-  keywords: [expression, curly brace, ternary, &&, map, conditional, statement, key]
+  keywords: [expression, "curly brace", ternary, "&&", map, conditional, statement, key]
   modelAnswer: |
     JSX expressions are JavaScript values embedded in JSX using curly braces {}. Only expressions (values) can go inside {}; statements (if/for) cannot. Conditional rendering uses the ternary operator or &&. Array rendering uses .map(), and each element needs a unique key prop.
 guidedSteps:

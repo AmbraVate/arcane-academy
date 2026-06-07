@@ -57,7 +57,7 @@ guidedSteps:
       minWords: 15
     markingRule:
       matchMode: CONTAINS
-      accepted: [bg-[#1da1f2], arbitrary, one-off, external, brand, twitter]
+      accepted: ["bg-[#1da1f2]", arbitrary, one-off, external, brand, twitter]
       rejectedFeedback: "Use `bg-[#1da1f2]`. This is appropriate because it's an externally mandated value (Twitter's exact brand colour), used once, that genuinely doesn't belong in your own design system."
     hint: "External brand constraints are a legitimate use case for arbitrary values."
     reflectionPrompt: "Would you add #1da1f2 to your theme.extend.colors? What would you name it?"

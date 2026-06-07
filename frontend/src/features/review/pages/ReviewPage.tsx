@@ -14,6 +14,7 @@ export default function ReviewPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [result, setResult] = useState<ReviewResultDto | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [newBadges, setNewBadges] = useState<Badge[]>([])
 
   useEffect(() => {
@@ -26,12 +27,15 @@ export default function ReviewPage() {
   async function handleSubmit() {
     if (!session) return
     setSubmitting(true)
+    setSubmitError(false)
     try {
       const answerList: AnswerEntry[] = Object.entries(answers).map(([questionId, answer]) => ({ questionId, answer }))
       const res = await reviewApi.submit(session.sessionId, answerList)
       setResult(res)
       if (res.newBadges?.length) setNewBadges(res.newBadges)
-    } catch { /* noop */ } finally {
+    } catch {
+      setSubmitError(true)
+    } finally {
       setSubmitting(false)
     }
   }
@@ -116,9 +120,14 @@ export default function ReviewPage() {
           {currentQ < totalQ - 1 ? (
             <button className="btn btn-primary" onClick={() => setCurrentQ(c => c + 1)}>Next →</button>
           ) : (
-            <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered || submitting}>
-              {submitting ? 'Submitting...' : 'Submit Review'}
-            </button>
+            <>
+              {submitError && (
+                <p className="text-[12px] text-[#f87171] mb-2">Submission failed — please try again.</p>
+              )}
+              <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered || submitting}>
+                {submitting ? 'Submitting...' : 'Submit Review'}
+              </button>
+            </>
           )}
         </div>
       </div>
