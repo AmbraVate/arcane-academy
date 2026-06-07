@@ -79,6 +79,24 @@ public class DomainSeeder {
                 .accentColor("#5dd5b5")
                 .sortOrder(7)
                 .active(true)
+                .build(),
+            Domain.builder()
+                .id("frontend-engineering")
+                .name("Frontend Engineering")
+                .glyph("🖥️")
+                .tagline("HTML, CSS, JavaScript, React - build polished, accessible, production-quality UIs.")
+                .accentColor("#f59e0b")
+                .sortOrder(8)
+                .active(true)
+                .build(),
+            Domain.builder()
+                .id("data-engineering")
+                .name("Data Engineering")
+                .glyph("🗄️")
+                .tagline("SQL, databases, pipelines, and data architecture - from a single table to enterprise scale.")
+                .accentColor("#6366f1")
+                .sortOrder(9)
+                .active(true)
                 .build()
         );
 
