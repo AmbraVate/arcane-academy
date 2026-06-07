@@ -1,14 +1,15 @@
 package com.ambravate.arcane.academy.admin.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.util.List;
 import java.util.Map;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class AdminLessonDto {
-    private String id;
-    private String moduleId;
-    private String title;
+    @NotBlank private String id;
+    @NotBlank private String moduleId;
+    @NotBlank private String title;
     private int sortOrder;
     private int xpReward;
     private String practiceType;

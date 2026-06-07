@@ -7,6 +7,7 @@ import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import lombok.RequiredArgsConstructor;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,13 +44,13 @@ public class AdminLessonController {
     }
 
     @PostMapping
-    public ResponseEntity<AdminLessonDto> create(@RequestBody AdminLessonDto req) {
+    public ResponseEntity<AdminLessonDto> create(@Valid @RequestBody AdminLessonDto req) {
         Lesson l = lessonAssembler.fromDto(req);
         return ResponseEntity.ok(lessonAssembler.toDto(lessonRepository.save(l), questionRepository.findByLessonId(l.getId()).size()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdminLessonDto> update(@PathVariable String id, @RequestBody AdminLessonDto req) {
+    public ResponseEntity<AdminLessonDto> update(@PathVariable String id, @Valid @RequestBody AdminLessonDto req) {
         lessonRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Lesson not found: " + id));
         Lesson l = lessonAssembler.fromDto(req);

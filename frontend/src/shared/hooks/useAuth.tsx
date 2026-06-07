@@ -93,6 +93,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch(() => { /* token expired — the 401 interceptor in client.ts handles logout */ })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Re-validate the token when the user switches back to this tab so that a
+  // logout in another tab is reflected here within one visibility change.
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== 'visible') return
+      const stored = localStorage.getItem('arcane_user')
+      if (!stored) return
+      authApi.me()
+        .then(fresh => persist(fresh))
+        .catch(() => { /* 401 interceptor in client.ts clears auth state */ })
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [persist])
+
   return (
     <AuthContext.Provider value={{ user, login, register, loginWithToken, logout, updateXp, updateStreak, markOnboardingDone }}>
       {children}

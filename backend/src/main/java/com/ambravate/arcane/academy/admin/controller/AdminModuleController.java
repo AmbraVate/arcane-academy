@@ -8,6 +8,7 @@ import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import lombok.RequiredArgsConstructor;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class AdminModuleController {
     }
 
     @PostMapping
-    public ResponseEntity<AdminModuleDto> create(@RequestBody AdminModuleDto req) {
+    public ResponseEntity<AdminModuleDto> create(@Valid @RequestBody AdminModuleDto req) {
         if (moduleRepository.existsById(req.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -54,7 +55,7 @@ public class AdminModuleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdminModuleDto> update(@PathVariable String id, @RequestBody AdminModuleDto req) {
+    public ResponseEntity<AdminModuleDto> update(@PathVariable String id, @Valid @RequestBody AdminModuleDto req) {
         LearningModule module = moduleRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Module not found: " + id));
         module.setTitle(req.getTitle());

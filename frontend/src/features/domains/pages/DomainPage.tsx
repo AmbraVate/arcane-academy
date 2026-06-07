@@ -120,7 +120,16 @@ export default function DomainPage() {
     )
   }
 
-  if (!dashboard) return null
+  if (!dashboard) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh] text-center px-5">
+        <div className="text-[48px] mb-3">{meta.glyph}</div>
+        <p className="text-text font-semibold mb-1">Could not load {meta.name}</p>
+        <p className="text-muted text-[13px] mb-5">Something went wrong fetching this pathway. Please try again.</p>
+        <button className="btn btn-ghost text-[13px]" onClick={() => navigate('/schools')}>← Back to Schools</button>
+      </div>
+    )
+  }
 
   const progressPct = isPublic ? 0 : Math.round(dashboard.overallProgress * 100)
 

@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 import java.time.Instant;
 import java.util.Optional;
 
@@ -31,6 +33,7 @@ public class PaymentService {
 
     private final UserRepository userRepository;
     private final StripeProperties stripeProperties;
+    private final ProcessedStripeEventRepository processedEventRepository;
 
     @Value("${app.frontend-url}")
     private String frontendUrl;
@@ -144,6 +147,15 @@ public class PaymentService {
     public void processWebhook(String payload, String sigHeader) throws SignatureVerificationException {
         Event event = Webhook.constructEvent(payload, sigHeader, stripeProperties.getWebhookSecret());
         log.info("[Webhook] Received event | type={} id={}", event.getType(), event.getId());
+
+        // Idempotency — Stripe may deliver the same event more than once; skip duplicates
+        try {
+            processedEventRepository.saveAndFlush(
+                    new ProcessedStripeEvent(event.getId(), Instant.now()));
+        } catch (DataIntegrityViolationException e) {
+            log.info("[Webhook] Duplicate event skipped | id={}", event.getId());
+            return;
+        }
 
         switch (event.getType()) {
             case "checkout.session.completed"      -> handleCheckoutCompleted(event);
