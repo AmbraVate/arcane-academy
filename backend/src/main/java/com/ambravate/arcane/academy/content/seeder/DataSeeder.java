@@ -22,7 +22,6 @@ import java.util.Optional;
 @Slf4j
 public class DataSeeder {
 
-    private final JsonContentSeeder        jsonContentSeeder;
     private final MarkdownContentSeeder    markdownContentSeeder;
     private final Optional<TestUserSeeder> testUserSeeder;   // absent in prod (@Profile("!prod"))
     private final DomainSeeder             domainSeeder;
@@ -35,34 +34,9 @@ public class DataSeeder {
             seedQuietly("admin account",    adminSeeder::seed);
             seedQuietly("domains",          domainSeeder::seed);
             seedQuietly("tracks",           trackSeeder::seed);
-            seedQuietly("JSON content",     this::seedJsonContent);
             seedQuietly("Markdown content", markdownContentSeeder::seed);
             testUserSeeder.ifPresent(s -> seedQuietly("test users", s::seed));
         };
-    }
-
-    /**
-     * Loads JSON content, retrying a few times to ride out a transient database
-     * blip (e.g. a recycled serverless connection). {@link JsonContentSeeder#seed()}
-     * is idempotent, so re-running is safe.
-     */
-    private void seedJsonContent() throws Exception {
-        int maxAttempts = 3;
-        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-            try {
-                int chunkFiles = jsonContentSeeder.seed();
-                log.info("[DataSeeder] JSON content seed complete ({} chunk file(s)).", chunkFiles);
-                return;
-            } catch (Exception e) {
-                if (attempt == maxAttempts) {
-                    throw e;
-                }
-                long delayMs = 2000L * attempt;
-                log.warn("[DataSeeder] JSON seed attempt {}/{} failed: {} — retrying in {} ms.",
-                        attempt, maxAttempts, e.getMessage(), delayMs);
-                Thread.sleep(delayMs);
-            }
-        }
     }
 
     /**

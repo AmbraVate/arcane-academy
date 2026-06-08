@@ -39,9 +39,8 @@ import java.util.Map;
  * are skipped — reserved for module-level index files), parses each with
  * {@link MarkdownLessonParser}, and upserts the Module → Topic → Lesson graph.
  *
- * <p>Runs <em>after</em> {@link JsonContentSeeder} in {@link DataSeeder} so
- * Markdown lessons can reference modules that already exist from JSON content.
- * It can also create new modules from frontmatter data, so it works standalone.
+ * <p>Creates modules from frontmatter data when they do not already exist,
+ * so it works fully standalone without any prior seeding step.
  *
  * <p>Idempotent: if every lesson ID found in the .md files is already present
  * in the database, the seeder skips the upsert pass (fast-path on app restart).
