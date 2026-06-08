@@ -20,6 +20,7 @@ const CAPSTONE_CHUNK_IDS = new Set([
 import { useAuth } from '@/shared/hooks/useAuth'
 import type { LessonEncoding, PracticeResult, SoloAssessmentResult, RetrievalResultDto, FeynmanResultDto, AnswerEntry, Badge, CodeRunResponse } from '@/shared/types'
 import StuckButton from '@/components/StuckButton'
+import InfographicPanel from '@/features/learning/components/InfographicPanel'
 import StoryPanel from '@/features/learning/components/StoryPanel'
 import RabbitHoleHtml from '@/features/learning/components/RabbitHoleHtml'
 import QuestionCard from '@/features/learning/components/QuestionCard'
@@ -831,6 +832,9 @@ export default function EncodingPage() {
               />
             </div>
           )}
+
+          {/* Infographic — shown when a visual summary exists for this lesson */}
+          <InfographicPanel lessonId={encoding.lessonId} title={encoding.title} />
 
           <button className="btn btn-primary" onClick={handleAdvance}>I understand — continue →</button>
         </div>
