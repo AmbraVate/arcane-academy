@@ -15,7 +15,6 @@ import com.ambravate.arcane.academy.practice.dto.SubmitResponse;
 import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.Lesson;
-import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
 import com.ambravate.arcane.academy.common.domain.SoloAssessmentType;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
@@ -24,9 +23,7 @@ import com.ambravate.arcane.academy.practice.domain.LessonSession;
 import com.ambravate.arcane.academy.practice.domain.SoloAssessmentResult;
 import com.ambravate.arcane.academy.practice.service.EncodingService;
 import com.ambravate.arcane.academy.ai.service.FeynmanService;
-import com.ambravate.arcane.academy.practice.service.ReactPracticeService;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
-import com.ambravate.arcane.academy.practice.service.SqlPracticeService;
 
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
@@ -198,7 +195,7 @@ public class EncodingController {
 
         String domainId = moduleRepository.findById(l.getModuleId())
                 .map(LearningModule::getTrackId)
-                .orElse("java");
+                .orElse("software-engineering");
 
         // Phase 4 — solo assessment metadata
         String soloType = l.getSoloAssessmentType() != null
@@ -311,16 +308,6 @@ public class EncodingController {
     }
 
     private Object testCasesFor(Lesson l) {
-        if (l.getPracticeType() == LessonPracticeType.REACT
-                || l.getPracticeType() == LessonPracticeType.SQL
-                || l.getPracticeType() == LessonPracticeType.R) {
-            String json = l.getGuidedPracticeTestsJson();
-            if (json == null) return List.of();
-            try {
-                return objectMapper.readValue(json,
-                        new TypeReference<List<java.util.Map<String, Object>>>() {});
-            } catch (Exception e) { return List.of(); }
-        }
         return extractTestLabels(l.getGuidedPracticeTestsJson());
     }
 }

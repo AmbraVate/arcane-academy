@@ -90,28 +90,28 @@ class PublicProfileServiceTest {
         when(userRepository.findByUsername("alice")).thenReturn(Optional.of(alice));
 
         when(moduleRepository.findAll()).thenReturn(List.of(
-            LearningModule.builder().id("c-java").title("Java A").trackId("java").sortOrder(1).build(),
-            LearningModule.builder().id("c-tw").title("TW A").trackId("tailwind").sortOrder(1).build()
+            LearningModule.builder().id("se-app-m1").title("SE Apprentice M1").trackId("software-engineering").sortOrder(1).build(),
+            LearningModule.builder().id("fe-app-m1").title("FE Apprentice M1").trackId("frontend-engineering").sortOrder(1).build()
         ));
         when(lessonRepository.findAll()).thenReturn(List.of(
-            Lesson.builder().id("s-java-1").moduleId("c-java").title("J1").sortOrder(1).xpReward(50).build(),
-            Lesson.builder().id("s-java-2").moduleId("c-java").title("J2").sortOrder(2).xpReward(75).build(),
-            Lesson.builder().id("s-tw-1").moduleId("c-tw").title("T1").sortOrder(1).xpReward(40).build()
+            Lesson.builder().id("se-app-m1-01").moduleId("se-app-m1").title("SE1").sortOrder(1).xpReward(50).build(),
+            Lesson.builder().id("se-app-m1-02").moduleId("se-app-m1").title("SE2").sortOrder(2).xpReward(75).build(),
+            Lesson.builder().id("fe-app-m1-01").moduleId("fe-app-m1").title("FE1").sortOrder(1).xpReward(40).build()
         ));
         when(progressRepository.findByUserId("u-alice")).thenReturn(List.of(
-            UserChunkProgress.builder().userId("u-alice").lessonId("s-java-1")
+            UserChunkProgress.builder().userId("u-alice").lessonId("se-app-m1-01")
                 .status(LessonStatus.COMPLETE).build(),
-            UserChunkProgress.builder().userId("u-alice").lessonId("s-java-2")
+            UserChunkProgress.builder().userId("u-alice").lessonId("se-app-m1-02")
                 .status(LessonStatus.COMPLETE).build(),
-            UserChunkProgress.builder().userId("u-alice").lessonId("s-tw-1")
+            UserChunkProgress.builder().userId("u-alice").lessonId("fe-app-m1-01")
                 .status(LessonStatus.COMPLETE).build(),
             // IN_PROGRESS row is ignored
-            UserChunkProgress.builder().userId("u-alice").lessonId("s-tw-1")
+            UserChunkProgress.builder().userId("u-alice").lessonId("fe-app-m1-01")
                 .status(LessonStatus.IN_PROGRESS).build()
         ));
         when(domainRepository.findAll()).thenReturn(List.of(
-            Domain.builder().id("java").name("Java").glyph("☕").accentColor("#f00").sortOrder(1).build(),
-            Domain.builder().id("tailwind").name("Tailwind").glyph("🎨").accentColor("#0f0").sortOrder(2).build()
+            Domain.builder().id("software-engineering").name("Software Engineering").glyph("⚙️").accentColor("#2dd4bf").sortOrder(1).build(),
+            Domain.builder().id("frontend-engineering").name("Frontend Engineering").glyph("🖥️").accentColor("#f59e0b").sortOrder(2).build()
         ));
         when(gamificationFacade.getEarnedBadges("u-alice")).thenReturn(List.of());
 
@@ -124,13 +124,13 @@ class PublicProfileServiceTest {
         assertThat(profile.streakDays()).isEqualTo(7);
         assertThat(profile.rank()).isEqualTo("Adept");
 
-        // Topics sorted by xpEarned desc — java (50+75=125) before tailwind (40)
+        // Topics sorted by xpEarned desc — software-engineering (50+75=125) before frontend-engineering (40)
         assertThat(profile.domains()).hasSize(2);
-        assertThat(profile.domains().get(0).domainId()).isEqualTo("java");
+        assertThat(profile.domains().get(0).domainId()).isEqualTo("software-engineering");
         assertThat(profile.domains().get(0).xpEarned()).isEqualTo(125);
         assertThat(profile.domains().get(0).subChunksCompleted()).isEqualTo(2);
-        assertThat(profile.domains().get(0).name()).isEqualTo("Java");
-        assertThat(profile.domains().get(1).domainId()).isEqualTo("tailwind");
+        assertThat(profile.domains().get(0).name()).isEqualTo("Software Engineering");
+        assertThat(profile.domains().get(1).domainId()).isEqualTo("frontend-engineering");
         assertThat(profile.domains().get(1).xpEarned()).isEqualTo(40);
         assertThat(profile.domains().get(1).subChunksCompleted()).isEqualTo(1);
     }

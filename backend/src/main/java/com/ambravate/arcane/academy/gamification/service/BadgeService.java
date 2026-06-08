@@ -4,7 +4,6 @@ import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.common.domain.BadgeDefinition;
-import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.LessonStatus;
@@ -38,6 +37,23 @@ public class BadgeService implements GamificationFacade {
   private final StreakService streakService;
   private final TelemetryService telemetry;
   private final JdbcTemplate jdbc;
+
+  // ── Module counts per domain tier ─────────────────────────────────────────
+  // Update these when new modules are added to the content.
+  private static final int SE_APP_MODULES  = 7;
+  private static final int SE_JUN_MODULES  = 9;
+  private static final int SE_SEN_MODULES  = 9;
+  private static final int SE_LEA_MODULES  = 7;
+
+  private static final int FE_APP_MODULES  = 8;
+  private static final int FE_JUN_MODULES  = 10;
+  private static final int FE_SEN_MODULES  = 5;
+  private static final int FE_LEA_MODULES  = 6;
+
+  private static final int DE_APP_MODULES  = 8;
+  private static final int DE_JUN_MODULES  = 9;
+  private static final int DE_SEN_MODULES  = 8;
+  private static final int DE_LEA_MODULES  = 6;
 
   public List<BadgeDto> getAllForUser(String userId) {
     Map<String, UserBadge> earned = badgeRepository.findByUserId(userId)
@@ -105,7 +121,7 @@ public class BadgeService implements GamificationFacade {
         .filter(p -> p.getStatus() == LessonStatus.COMPLETE)
         .count();
 
-    Set<String> completedChunks = getCompletedChunkIds(allProgress);
+    Set<String> completedModules = getCompletedModuleIds(allProgress);
 
     boolean hasPerfectReview = sessions.stream()
         .anyMatch(s -> s.getScore() >= 1.0 && s.getTotalQuestions() > 0);
@@ -127,7 +143,7 @@ public class BadgeService implements GamificationFacade {
 
     for (BadgeDefinition def : BadgeDefinition.values()) {
       if (alreadyEarned.contains(def.name())) continue;
-      if (!checkCondition(def, user, completedSubChunks, completedChunks, hasPerfectReview,
+      if (!checkCondition(def, user, completedSubChunks, completedModules, hasPerfectReview,
           feynmanCompleted, feynmanHighScore, profile, userNoteCount)) continue;
 
       badgeRepository.save(UserBadge.builder()
@@ -151,176 +167,131 @@ public class BadgeService implements GamificationFacade {
   }
 
   private boolean checkCondition(BadgeDefinition def, User user,
-      long completedSubChunks, Set<String> completedChunks,
+      long completedSubChunks, Set<String> completedModules,
       boolean hasPerfectReview, long feynmanCompleted,
       long feynmanHighScore, UserLearnerProfile profile, long noteCount) {
     return switch (def) {
+
+      // ── Onboarding & first steps ─────────────────────────────────────────
       case ARCANE_INITIATE -> user.isOnboardingCompleted();
-      case FIRST_CONCEPT -> completedSubChunks >= 1;
+      case FIRST_CONCEPT   -> completedSubChunks >= 1;
 
-      case JAVA_FND_1_COMPLETE -> completedChunks.contains("java-fnd-1");
-      case JAVA_FND_2_COMPLETE -> completedChunks.contains("java-fnd-2");
-      case JAVA_FND_3_COMPLETE -> completedChunks.contains("java-fnd-3");
-      case JAVA_FND_4_COMPLETE -> completedChunks.contains("java-fnd-4");
-      case JAVA_FND_5_COMPLETE -> completedChunks.contains("java-fnd-5");
-      case JAVA_FND_6_COMPLETE -> completedChunks.contains("java-fnd-6");
-      case JAVA_FND_7_COMPLETE -> completedChunks.contains("java-fnd-7");
-      case JAVA_FND_8_COMPLETE -> completedChunks.contains("java-fnd-8");
-      case JAVA_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of(
-          "java-fnd-1", "java-fnd-2", "java-fnd-3", "java-fnd-4",
-          "java-fnd-5", "java-fnd-6", "java-fnd-7", "java-fnd-8"));
+      // ── Software Engineering tier badges ─────────────────────────────────
+      case SE_APPRENTICE_COMPLETE -> isAllModulesComplete(completedModules, "se-app-m", SE_APP_MODULES);
+      case SE_JUNIOR_COMPLETE     -> isAllModulesComplete(completedModules, "se-jun-m", SE_JUN_MODULES);
+      case SE_SENIOR_COMPLETE     -> isAllModulesComplete(completedModules, "se-sen-m", SE_SEN_MODULES);
+      case SE_LEAD_COMPLETE       -> isAllModulesComplete(completedModules, "se-lea-m", SE_LEA_MODULES);
+      // Capstone badges — true once a capstone lesson ID is added to content
+      case SE_APPRENTICE_CAPSTONE, SE_JUNIOR_CAPSTONE,
+           SE_SENIOR_CAPSTONE, SE_LEAD_CAPSTONE -> false;
 
-      case JAVA_CAPSTONE_COMPLETE -> completedChunks.contains("java-cap");
-      case TAILWIND_CAPSTONE_COMPLETE -> completedChunks.contains("tw-d") || completedChunks.contains("tw-lea-17");
+      // ── Frontend Engineering tier badges ─────────────────────────────────
+      case FE_APPRENTICE_COMPLETE -> isAllModulesComplete(completedModules, "fe-app-m", FE_APP_MODULES);
+      case FE_JUNIOR_COMPLETE     -> isAllModulesComplete(completedModules, "fe-jun-m", FE_JUN_MODULES);
+      case FE_SENIOR_COMPLETE     -> isAllModulesComplete(completedModules, "fe-sen-m", FE_SEN_MODULES);
+      case FE_LEAD_COMPLETE       -> isAllModulesComplete(completedModules, "fe-lea-m", FE_LEA_MODULES);
+      case FE_APPRENTICE_CAPSTONE, FE_JUNIOR_CAPSTONE,
+           FE_SENIOR_CAPSTONE, FE_LEAD_CAPSTONE -> false;
 
-      case SQL_QUERY_INITIATE -> completedChunks.contains("sql-a");
-      case SQL_JOIN_WEAVER -> completedChunks.contains("sql-d");
-      case SQL_QUERY_OPTIMISER -> completedChunks.contains("sql-g");
-      case SQL_TRACK_MASTER -> completedChunks.containsAll(java.util.List.of(
-          "sql-a", "sql-b", "sql-c", "sql-d", "sql-e", "sql-f", "sql-g", "sql-h"));
+      // ── Data Engineering tier badges ─────────────────────────────────────
+      case DE_APPRENTICE_COMPLETE -> isAllModulesComplete(completedModules, "de-app-m", DE_APP_MODULES);
+      case DE_JUNIOR_COMPLETE     -> isAllModulesComplete(completedModules, "de-jun-m", DE_JUN_MODULES);
+      case DE_SENIOR_COMPLETE     -> isAllModulesComplete(completedModules, "de-sen-m", DE_SEN_MODULES);
+      case DE_LEAD_COMPLETE       -> isAllModulesComplete(completedModules, "de-lead-m", DE_LEA_MODULES);
+      case DE_APPRENTICE_CAPSTONE, DE_JUNIOR_CAPSTONE,
+           DE_SENIOR_CAPSTONE, DE_LEAD_CAPSTONE -> false;
 
-      // Legacy React badges â€” kept for backwards compat; honour old and new chunk IDs
-      case REACT_HOOK_INITIATE     -> completedChunks.contains("rx-a") || completedChunks.contains("rx-app-1");
-      case REACT_STATE_WEAVER      -> completedChunks.contains("rx-b") || completedChunks.contains("rx-jun-1");
-      case REACT_CAPSTONE_COMPLETE -> completedChunks.contains("rx-d") || completedChunks.contains("rx-lea-17");
+      // ── Cross-domain tier completion ──────────────────────────────────────
+      case APPRENTICE_COMPLETE ->
+          isAllModulesComplete(completedModules, "se-app-m",  SE_APP_MODULES) ||
+          isAllModulesComplete(completedModules, "fe-app-m",  FE_APP_MODULES) ||
+          isAllModulesComplete(completedModules, "de-app-m",  DE_APP_MODULES);
+      case JUNIOR_COMPLETE ->
+          isAllModulesComplete(completedModules, "se-jun-m",  SE_JUN_MODULES) ||
+          isAllModulesComplete(completedModules, "fe-jun-m",  FE_JUN_MODULES) ||
+          isAllModulesComplete(completedModules, "de-jun-m",  DE_JUN_MODULES);
+      case SENIOR_COMPLETE ->
+          isAllModulesComplete(completedModules, "se-sen-m",  SE_SEN_MODULES) ||
+          isAllModulesComplete(completedModules, "fe-sen-m",  FE_SEN_MODULES) ||
+          isAllModulesComplete(completedModules, "de-sen-m",  DE_SEN_MODULES);
+      case LEAD_COMPLETE ->
+          isAllModulesComplete(completedModules, "se-lea-m",  SE_LEA_MODULES) ||
+          isAllModulesComplete(completedModules, "fe-lea-m",  FE_LEA_MODULES) ||
+          isAllModulesComplete(completedModules, "de-lead-m", DE_LEA_MODULES);
 
-      // â”€â”€ React tier badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case REACT_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "rx-app-", 15);
-      case REACT_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "rx-jun-", 20);
-      case REACT_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "rx-sen-", 19);
-      case REACT_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "rx-lea-", 17);
-      case REACT_APPRENTICE_CAPSTONE -> completedChunks.contains("rx-app-15");
-      case REACT_JUNIOR_CAPSTONE     -> completedChunks.contains("rx-jun-20");
-      case REACT_SENIOR_CAPSTONE     -> completedChunks.contains("rx-sen-19");
-      case REACT_LEAD_CAPSTONE       -> completedChunks.contains("rx-lea-17");
-
-      // â”€â”€ Tailwind tier badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case TW_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "tw-app-", 15);
-      case TW_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "tw-jun-", 20);
-      case TW_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "tw-sen-", 19);
-      case TW_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "tw-lea-", 17);
-      case TW_APPRENTICE_CAPSTONE -> completedChunks.contains("tw-app-15");
-      case TW_JUNIOR_CAPSTONE     -> completedChunks.contains("tw-jun-20");
-      case TW_SENIOR_CAPSTONE     -> completedChunks.contains("tw-sen-19");
-      case TW_LEAD_CAPSTONE       -> completedChunks.contains("tw-lea-17");
-
-      // Legacy foundation badges â€” now check new psy-app-*/gen-app-*/sci-app-* IDs
-      case PSY_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("psy-app-1", "psy-app-2", "psy-app-3"));
-      case GEN_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("gen-app-1", "gen-app-2", "gen-app-3"));
-      case SCI_FOUNDATION_COMPLETE -> completedChunks.containsAll(java.util.List.of("sci-app-1", "sci-app-2", "sci-app-3"));
-
-      case PERFECT_REVIEW -> hasPerfectReview;
-      case MEMORY_MASTER -> false;
-      case DIAGNOSTIC_ACE -> profile != null && profile.isDiagnosticCompleted() && profile.getDiagnosticScore() >= 0.8;
-
-      case FEYNMAN_FIRST -> feynmanCompleted >= 1;
-      case FEYNMAN_MASTER -> feynmanHighScore >= 10;
-
-      // â”€â”€ Tier completion (new four-tier structure) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      // Conditions fire when all chunks in the respective tier are completed.
-      // java-app-1..15, java-jun-1..20, etc. â€” checked by tier prefix in chunk ID.
-      case APPRENTICE_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-app-")) &&
-          isAllTierChunksComplete(completedChunks, "java-app-", 15);
-      case JUNIOR_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-jun-")) &&
-          isAllTierChunksComplete(completedChunks, "java-jun-", 20);
-      case SENIOR_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-sen-")) &&
-          isAllTierChunksComplete(completedChunks, "java-sen-", 19);
-      case LEAD_COMPLETE -> completedChunks.stream().anyMatch(id -> id.startsWith("java-lea-")) &&
-          isAllTierChunksComplete(completedChunks, "java-lea-", 17);
-
-      // â”€â”€ Capstone submissions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case APPRENTICE_CAPSTONE -> completedChunks.contains("java-app-15");
-      case JUNIOR_CAPSTONE     -> completedChunks.contains("java-jun-20");
-      case SENIOR_CAPSTONE     -> completedChunks.contains("java-sen-19");
-      case LEAD_CAPSTONE       -> completedChunks.contains("java-lea-17");
-
-      // â”€â”€ Psychology tier badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case PSY_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "psy-app-", 15);
-      case PSY_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "psy-jun-", 20);
-      case PSY_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "psy-sen-", 19);
-      case PSY_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "psy-lea-", 17);
-      case PSY_APPRENTICE_CAPSTONE -> completedChunks.contains("psy-app-15");
-      case PSY_JUNIOR_CAPSTONE     -> completedChunks.contains("psy-jun-20");
-      case PSY_SENIOR_CAPSTONE     -> completedChunks.contains("psy-sen-19");
-      case PSY_LEAD_CAPSTONE       -> completedChunks.contains("psy-lea-17");
-
-      // â”€â”€ Genealogy tier badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case GEN_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "gen-app-", 15);
-      case GEN_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "gen-jun-", 20);
-      case GEN_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "gen-sen-", 19);
-      case GEN_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "gen-lea-", 17);
-      case GEN_APPRENTICE_CAPSTONE -> completedChunks.contains("gen-app-15");
-      case GEN_JUNIOR_CAPSTONE     -> completedChunks.contains("gen-jun-20");
-      case GEN_SENIOR_CAPSTONE     -> completedChunks.contains("gen-sen-19");
-      case GEN_LEAD_CAPSTONE       -> completedChunks.contains("gen-lea-17");
-
-      // â”€â”€ Natural Sciences tier badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      case SCI_APPRENTICE_COMPLETE -> isAllTierChunksComplete(completedChunks, "sci-app-", 15);
-      case SCI_JUNIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "sci-jun-", 20);
-      case SCI_SENIOR_COMPLETE     -> isAllTierChunksComplete(completedChunks, "sci-sen-", 19);
-      case SCI_LEAD_COMPLETE       -> isAllTierChunksComplete(completedChunks, "sci-lea-", 17);
-      case SCI_APPRENTICE_CAPSTONE -> completedChunks.contains("sci-app-15");
-      case SCI_JUNIOR_CAPSTONE     -> completedChunks.contains("sci-jun-20");
-      case SCI_SENIOR_CAPSTONE     -> completedChunks.contains("sci-sen-19");
-      case SCI_LEAD_CAPSTONE       -> completedChunks.contains("sci-lea-17");
-
-      // â”€â”€ Note-taking milestones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Note-taking ───────────────────────────────────────────────────────
       case FIRST_NOTE   -> noteCount >= 1;
       case AVID_SCHOLAR -> noteCount >= 50;
 
-      // ── Path milestone badges (awarded when user reaches the equivalent tier) ──
-      case PATH_PRACTITIONER -> profile != null && profile.getCurrentPath() == LearnerPath.JUNIOR;
-      case PATH_EXPERT       -> profile != null && profile.getCurrentPath() == LearnerPath.SENIOR;
+      // ── Mastery ───────────────────────────────────────────────────────────
+      case PERFECT_REVIEW  -> hasPerfectReview;
+      case MEMORY_MASTER   -> false;  // requires full memory-health check; not yet implemented
+      case DIAGNOSTIC_ACE  -> profile != null && profile.isDiagnosticCompleted()
+                                  && profile.getDiagnosticScore() >= 0.8;
 
-      case RABBIT_HOLE_FIRST -> false;
+      // ── Feynman ───────────────────────────────────────────────────────────
+      case FEYNMAN_FIRST  -> feynmanCompleted >= 1;
+      case FEYNMAN_MASTER -> feynmanHighScore >= 10;
 
-      case XP_100 -> user.getTotalXp() >= 100;
-      case XP_500 -> user.getTotalXp() >= 500;
+      // ── Exploration ───────────────────────────────────────────────────────
+      case RABBIT_HOLE_FIRST -> false;  // triggered directly by rabbit-hole completion event
+
+      // ── XP thresholds ─────────────────────────────────────────────────────
+      case XP_100  -> user.getTotalXp() >= 100;
+      case XP_500  -> user.getTotalXp() >= 500;
       case XP_1000 -> user.getTotalXp() >= 1000;
       case XP_2500 -> user.getTotalXp() >= 2500;
       case XP_5000 -> user.getTotalXp() >= 5000;
 
-      case STREAK_3 -> user.getStreakDays() >= 3;
-      case STREAK_7 -> user.getStreakDays() >= 7;
+      // ── Streak milestones ─────────────────────────────────────────────────
+      case STREAK_3  -> user.getStreakDays() >= 3;
+      case STREAK_7  -> user.getStreakDays() >= 7;
       case STREAK_30 -> user.getStreakDays() >= 30;
     };
   }
 
-  private boolean isAllTierChunksComplete(Set<String> completedChunks, String prefix, int expectedCount) {
-    long matchingCompleted = completedChunks.stream()
+  /**
+   * Returns true if the number of completed modules whose IDs start with {@code prefix}
+   * meets or exceeds {@code required}.
+   */
+  private boolean isAllModulesComplete(Set<String> completedModules, String prefix, int required) {
+    long count = completedModules.stream()
         .filter(id -> id.startsWith(prefix))
         .count();
-    return matchingCompleted >= expectedCount;
+    return count >= required;
   }
 
-  private Set<String> getCompletedChunkIds(List<UserChunkProgress> allProgress) {
+  /**
+   * Builds the set of module IDs for which every lesson has been completed or skipped.
+   */
+  private Set<String> getCompletedModuleIds(List<UserChunkProgress> allProgress) {
     if (allProgress.isEmpty()) return Collections.emptySet();
 
     List<String> lessonIds = allProgress.stream()
         .map(UserChunkProgress::getLessonId)
         .distinct()
         .collect(Collectors.toList());
-    Map<String, String> subChunkToChunk = lessonRepository.findAllById(lessonIds).stream()
+    Map<String, String> lessonToModule = lessonRepository.findAllById(lessonIds).stream()
         .collect(Collectors.toMap(Lesson::getId, Lesson::getModuleId));
 
-    Map<String, List<UserChunkProgress>> byChunk = allProgress.stream()
+    Map<String, List<UserChunkProgress>> byModule = allProgress.stream()
         .collect(Collectors.groupingBy(
-            p -> subChunkToChunk.getOrDefault(p.getLessonId(), "?")));
+            p -> lessonToModule.getOrDefault(p.getLessonId(), "?")));
 
-    List<String> chunkIds = new ArrayList<>(byChunk.keySet());
-    chunkIds.remove("?");
-    Map<String, Long> subChunkCountByChunk = lessonRepository.findByModuleIdIn(chunkIds).stream()
+    List<String> moduleIds = new ArrayList<>(byModule.keySet());
+    moduleIds.remove("?");
+    Map<String, Long> lessonCountByModule = lessonRepository.findByModuleIdIn(moduleIds).stream()
         .collect(Collectors.groupingBy(Lesson::getModuleId, Collectors.counting()));
 
     Set<String> completed = new HashSet<>();
-    for (var entry : byChunk.entrySet()) {
-      String chunkId = entry.getKey();
-      long totalSubs = subChunkCountByChunk.getOrDefault(chunkId, 0L);
-      if (totalSubs > 0 && entry.getValue().stream()
+    for (var entry : byModule.entrySet()) {
+      String moduleId = entry.getKey();
+      long totalLessons = lessonCountByModule.getOrDefault(moduleId, 0L);
+      if (totalLessons > 0 && entry.getValue().stream()
           .filter(p -> p.getStatus() == LessonStatus.COMPLETE
               || p.getStatus() == LessonStatus.SKIPPED)
-          .count() >= totalSubs) {
-        completed.add(chunkId);
+          .count() >= totalLessons) {
+        completed.add(moduleId);
       }
     }
     return completed;

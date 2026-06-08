@@ -18,7 +18,7 @@ public class ContentHealthDto {
   private String lessonId;
   private String title;
   private String chunkTitle;
-  /** Top-level subject area (e.g. "java", "sql", "tailwind"). */
+  /** Domain id (e.g. "software-engineering", "frontend-engineering", "data-engineering"). */
   private String domainId;
   /** Tier within the topic (e.g. "APPRENTICE", "JUNIOR", "SENIOR", "LEAD"). */
   private String tier;

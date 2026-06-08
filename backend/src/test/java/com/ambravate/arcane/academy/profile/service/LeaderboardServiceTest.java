@@ -30,7 +30,7 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests for {@link LeaderboardService} — verifies that:
+ * Tests for {@link LeaderboardService} â€” verifies that:
  * <ul>
  *   <li>Only opted-in users appear on any board</li>
  *   <li>Only COMPLETE progress counts toward XP</li>
@@ -52,7 +52,7 @@ class LeaderboardServiceTest {
 
     @InjectMocks private LeaderboardService leaderboardService;
 
-    // ── Fixture builders ────────────────────────────────────────────────────────
+    // â”€â”€ Fixture builders â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private User user(String id, String username, int totalXp, int streak, boolean publicProfile) {
         User u = User.aUser()
@@ -82,7 +82,7 @@ class LeaderboardServiceTest {
         lenient().when(gamificationFacade.getBadgeCount(anyString())).thenReturn(0);
     }
 
-    // ── Topic weekly ────────────────────────────────────────────────────────────
+    // â”€â”€ Topic weekly â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("topicWeekly")
@@ -157,11 +157,11 @@ class LeaderboardServiceTest {
             when(lessonRepository.findByModuleIdIn(any())).thenReturn(List.of(sub("s-java", "c-java", 100)));
             when(lessonRepository.findAll()).thenReturn(List.of(
                 sub("s-java", "c-java", 100),
-                sub("s-tailwind", "c-tailwind", 999)
+                sub("s-fe", "fe-app-m1", 999)
             ));
 
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s-tailwind", LessonStatus.COMPLETE, Instant.now())
+                progress("u-a", "s-fe", LessonStatus.COMPLETE, Instant.now())
             ));
 
             assertThat(leaderboardService.topicWeekly("java", 20)).isEmpty();
@@ -219,7 +219,7 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Topic all-time ──────────────────────────────────────────────────────────
+    // â”€â”€ Topic all-time â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("topicAllTime")
@@ -243,7 +243,7 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Polymath board ──────────────────────────────────────────────────────────
+    // â”€â”€ Polymath board â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("polymath")
@@ -260,23 +260,23 @@ class LeaderboardServiceTest {
 
             when(moduleRepository.findAll()).thenReturn(List.of(
                 chunk("c-java",     "java"),
-                chunk("c-tailwind", "tailwind"),
-                chunk("c-react",    "react")
+                chunk("fe-app-m1", "frontend-engineering"),
+                chunk("se-app-m1", "software-engineering")
             ));
             when(lessonRepository.findAll()).thenReturn(List.of(
                 sub("s-java",     "c-java",     50),
-                sub("s-tailwind", "c-tailwind", 50),
-                sub("s-react",    "c-react",    999)
+                sub("s-fe", "fe-app-m1", 50),
+                sub("s-se", "se-app-m1", 999)
             ));
 
             Instant now = Instant.now();
             when(progressRepository.findAll()).thenReturn(List.of(
                 progress("u-a", "s-java",     LessonStatus.COMPLETE, now),
-                progress("u-a", "s-tailwind", LessonStatus.COMPLETE, now),  // alice: 2 topics, 100xp
+                progress("u-a", "s-fe", LessonStatus.COMPLETE, now),  // alice: 2 topics, 100xp
                 progress("u-b", "s-java",     LessonStatus.COMPLETE, now),
-                progress("u-b", "s-tailwind", LessonStatus.COMPLETE, now),
-                progress("u-b", "s-tailwind", LessonStatus.COMPLETE, now),  // duplicate row → bob: 2 topics, 150xp
-                progress("u-c", "s-react",    LessonStatus.COMPLETE, now)   // cara: 1 topic, 999xp
+                progress("u-b", "s-fe", LessonStatus.COMPLETE, now),
+                progress("u-b", "s-fe", LessonStatus.COMPLETE, now),  // duplicate row â†’ bob: 2 topics, 150xp
+                progress("u-c", "s-se",    LessonStatus.COMPLETE, now)   // cara: 1 topic, 999xp
             ));
 
             var board = leaderboardService.polymath(20);
@@ -292,13 +292,13 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Helpers ─────────────────────────────────────────────────────────────────
+    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("week-start arithmetic")
     class WeekMath {
         @Test
-        @DisplayName("Monday → returns the same day at 00:00 UTC")
+        @DisplayName("Monday â†’ returns the same day at 00:00 UTC")
         void mondayUnchanged() {
             LocalDate monday = LocalDate.of(2025, 4, 28);
             assertThat(monday.getDayOfWeek().getValue()).isEqualTo(1);
@@ -308,7 +308,7 @@ class LeaderboardServiceTest {
         }
 
         @Test
-        @DisplayName("Sunday → returns the preceding Monday")
+        @DisplayName("Sunday â†’ returns the preceding Monday")
         void sundayBacktracks() {
             LocalDate sunday = LocalDate.of(2025, 5, 4);
             assertThat(sunday.getDayOfWeek().getValue()).isEqualTo(7);
@@ -319,7 +319,7 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Common stubs ────────────────────────────────────────────────────────────
+    // â”€â”€ Common stubs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     /** Java domain with one module c1 holding one lesson s1 worth {@code xp}. */
     private void stubDomainJava(int xp) {

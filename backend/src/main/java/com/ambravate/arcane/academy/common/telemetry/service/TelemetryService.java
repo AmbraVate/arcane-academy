@@ -14,13 +14,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HexFormat;
 
 /**
- * Engagement event telemetry â€” emits two channels per event:
+ * Engagement event telemetry — emits two channels per event:
  *
  * <ul>
- *   <li><b>Micrometer counters</b> (low-cardinality labels only â€” topic, tier,
- *       cadence) â†’ scraped by Prometheus via {@code /actuator/prometheus}.
- *       Drives Grafana dashboards: rates, totals, retention by topic.</li>
- *   <li><b>Structured logs</b> (named logger {@code TELEMETRY}) â€” every event
+ *   <li><b>Micrometer counters</b> (low-cardinality labels only — topic, tier,
+ *       cadence) → scraped by Prometheus via {@code /actuator/prometheus}.
+ *       Drives Grafana dashboards: rates, totals, retention by domain.</li>
+ *   <li><b>Structured logs</b> (named logger {@code TELEMETRY}) — every event
  *       includes a HMAC-SHA256-hashed user id. Suitable for log aggregation
  *       (Loki/Datadog/ELK) and per-user behavioural analysis without leaking
  *       the underlying UUID.</li>
@@ -28,21 +28,21 @@ import java.util.HexFormat;
  *
  * <h3>Why hash user IDs?</h3>
  * Putting raw user UUIDs into log streams is a compliance liability. HMAC-SHA256
- * with a per-instance salt produces a stable pseudonym â€” the same user always
+ * with a per-instance salt produces a stable pseudonym — the same user always
  * hashes to the same string, so cohort analysis works, but the hash cannot be
  * reversed without the salt.
  *
  * <h3>Why not put user_id as a Prometheus label?</h3>
  * Prometheus is a time-series database; each unique label combination is a
  * separate series. Adding {@code user_id} as a label would create one series
- * per user â†’ tens of thousands of series, killing query performance. User-level
+ * per user — tens of thousands of series, killing query performance. User-level
  * analysis belongs in the log channel.
  *
  * <h3>Event catalog</h3>
  * <table>
  *   <tr><th>Method</th><th>Counter name</th><th>Trigger</th></tr>
- *   <tr><td>questStarted</td><td>arcane.quest.started</td><td>Sub-chunk encoding session begins</td></tr>
- *   <tr><td>questCompleted</td><td>arcane.quest.completed</td><td>Sub-chunk reaches COMPLETE phase</td></tr>
+ *   <tr><td>questStarted</td><td>arcane.quest.started</td><td>Lesson encoding session begins</td></tr>
+ *   <tr><td>questCompleted</td><td>arcane.quest.completed</td><td>Lesson reaches COMPLETE phase</td></tr>
  *   <tr><td>reviewGradeGiven</td><td>arcane.review.grade_given</td><td>Single review answer submitted</td></tr>
  *   <tr><td>reviewSessionCompleted</td><td>arcane.review.session_completed</td><td>Review session submission</td></tr>
  *   <tr><td>streakExtended</td><td>arcane.streak.extended</td><td>Daily activity continues an existing streak</td></tr>
@@ -73,31 +73,32 @@ public class TelemetryService {
         }
     }
 
-    // â”€â”€ Quest lifecycle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Quest lifecycle ──────────────────────────────────────────────────────
 
     /**
-     * @param chunkId   The parent chunk id â€” used to derive the topic label
-     *                  ({@code chunk-*} â†’ java, {@code tw-*} â†’ tailwind, {@code rx-*} â†’ react).
+     * @param moduleId  The parent module id — used to derive the domain label
+     *                  ({@code se-*} → software-engineering, {@code fe-*} → frontend-engineering,
+     *                  {@code de-*} → data-engineering).
      */
-    public void questStarted(String userId, String lessonId, String chunkId) {
-        String topic = topicFromChunkId(chunkId);
+    public void questStarted(String userId, String lessonId, String moduleId) {
+        String topic = domainFromModuleId(moduleId);
         meterRegistry.counter("arcane.quest.started", "topic", topic).increment();
-        TELEMETRY.info("event=quest_started user={} sub_chunk={} chunk={} topic={}",
-                hash(userId), lessonId, chunkId, topic);
+        TELEMETRY.info("event=quest_started user={} lesson={} module={} domain={}",
+                hash(userId), lessonId, moduleId, topic);
     }
 
-    public void questCompleted(String userId, String lessonId, String chunkId, int xpEarned) {
-        String topic = topicFromChunkId(chunkId);
+    public void questCompleted(String userId, String lessonId, String moduleId, int xpEarned) {
+        String topic = domainFromModuleId(moduleId);
         meterRegistry.counter("arcane.quest.completed", "topic", topic).increment();
-        TELEMETRY.info("event=quest_completed user={} sub_chunk={} chunk={} topic={} xp_earned={}",
-                hash(userId), lessonId, chunkId, topic, xpEarned);
+        TELEMETRY.info("event=quest_completed user={} lesson={} module={} domain={} xp_earned={}",
+                hash(userId), lessonId, moduleId, topic, xpEarned);
     }
 
-    // â”€â”€ Reviews â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Reviews ──────────────────────────────────────────────────────────────
 
     /**
      * @param cadence "DAILY" | "WEEKLY" | "MONTHLY" | "RETRIEVAL"
-     * @param score   0.0 â€“ 1.0
+     * @param score   0.0 – 1.0
      */
     public void reviewGradeGiven(String userId, String cadence, double score) {
         meterRegistry.counter("arcane.review.grade_given",
@@ -115,7 +116,7 @@ public class TelemetryService {
                 hash(userId), cadence, correct, total, String.format("%.2f", pct));
     }
 
-    // â”€â”€ Streaks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Streaks ───────────────────────────────────────────────────────────────
 
     public void streakExtended(String userId, int newLength) {
         meterRegistry.counter("arcane.streak.extended").increment();
@@ -128,7 +129,7 @@ public class TelemetryService {
                 hash(userId), previousLength, daysSinceActive);
     }
 
-    // â”€â”€ Badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Badges ────────────────────────────────────────────────────────────────
 
     public void badgeEarned(String userId, String badgeCode, String category) {
         meterRegistry.counter("arcane.badge.earned",
@@ -137,7 +138,7 @@ public class TelemetryService {
                 hash(userId), badgeCode, category);
     }
 
-    // â”€â”€ Diagnostic â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Diagnostic ────────────────────────────────────────────────────────────
 
     /**
      * @param placedTier the tier the diagnostic placed the user into
@@ -145,17 +146,17 @@ public class TelemetryService {
      */
     public void diagnosticCompleted(String userId, String domainId, String placedTier, double score) {
         meterRegistry.counter("arcane.diagnostic.completed",
-                "topic", safeTopic(domainId),
+                "topic", safeDomain(domainId),
                 "tier", safeLabel(placedTier)).increment();
-        TELEMETRY.info("event=diagnostic_completed user={} topic={} tier={} score={}",
+        TELEMETRY.info("event=diagnostic_completed user={} domain={} tier={} score={}",
                 hash(userId), domainId, placedTier, String.format("%.2f", score));
     }
 
-    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Helpers ───────────────────────────────────────────────────────────────
 
     /**
      * HMAC-SHA256 of the user id with the configured salt, truncated to 16 hex
-     * chars (64 bits â€” collision probability is negligible at platform scale and
+     * chars (64 bits — collision probability is negligible at platform scale and
      * keeps log lines compact).
      */
     String hash(String userId) {
@@ -171,33 +172,31 @@ public class TelemetryService {
     }
 
     /**
-     * Bound a label to a known low-cardinality set. Anything unrecognised falls
-     * to "unknown" so a typo can't blow up Prometheus series count.
+     * Bound a domain id to the known low-cardinality set. Anything unrecognised
+     * falls to "unknown" so a typo cannot blow up Prometheus series count.
      */
-    private static String safeTopic(String domainId) {
+    private static String safeDomain(String domainId) {
         if (domainId == null) return "unknown";
         return switch (domainId) {
-            case "java", "tailwind", "react", "sql" -> domainId;
+            case "software-engineering", "frontend-engineering", "data-engineering" -> domainId;
             default -> "unknown";
         };
     }
 
     /**
-     * Map a chunk id to its parent topic via the seeder naming convention:
+     * Maps a module id prefix to its domain.
      * <ul>
-     *   <li>{@code chunk-*} or {@code chunk-cap} â†’ java</li>
-     *   <li>{@code tw-*} â†’ tailwind</li>
-     *   <li>{@code rx-*} â†’ react</li>
-     *   <li>{@code sql-*} â†’ sql</li>
+     *   <li>{@code se-*} → software-engineering</li>
+     *   <li>{@code fe-*} → frontend-engineering</li>
+     *   <li>{@code de-*} → data-engineering</li>
      * </ul>
      * Anything else returns {@code unknown}.
      */
-    static String topicFromChunkId(String chunkId) {
-        if (chunkId == null) return "unknown";
-        if (chunkId.startsWith("chunk-")) return "java";
-        if (chunkId.startsWith("tw-"))    return "tailwind";
-        if (chunkId.startsWith("rx-"))    return "react";
-        if (chunkId.startsWith("sql-"))   return "sql";
+    static String domainFromModuleId(String moduleId) {
+        if (moduleId == null) return "unknown";
+        if (moduleId.startsWith("se-")) return "software-engineering";
+        if (moduleId.startsWith("fe-")) return "frontend-engineering";
+        if (moduleId.startsWith("de-")) return "data-engineering";
         return "unknown";
     }
 
