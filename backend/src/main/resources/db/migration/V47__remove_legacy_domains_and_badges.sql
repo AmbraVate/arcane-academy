@@ -15,39 +15,39 @@
 DELETE FROM guided_steps
 WHERE lesson_id IN (
     SELECT l.id FROM lessons l
-    JOIN learning_modules m ON l.module_id = m.id
+    JOIN modules m ON l.module_id = m.id
     WHERE m.track_id NOT IN ('software-engineering', 'frontend-engineering', 'data-engineering')
 );
 
 DELETE FROM questions
 WHERE lesson_id IN (
     SELECT l.id FROM lessons l
-    JOIN learning_modules m ON l.module_id = m.id
+    JOIN modules m ON l.module_id = m.id
     WHERE m.track_id NOT IN ('software-engineering', 'frontend-engineering', 'data-engineering')
 );
 
 DELETE FROM user_chunk_progress
 WHERE lesson_id IN (
     SELECT l.id FROM lessons l
-    JOIN learning_modules m ON l.module_id = m.id
+    JOIN modules m ON l.module_id = m.id
     WHERE m.track_id NOT IN ('software-engineering', 'frontend-engineering', 'data-engineering')
 );
 
 DELETE FROM lessons
 WHERE module_id IN (
-    SELECT id FROM learning_modules
+    SELECT id FROM modules
     WHERE track_id NOT IN ('software-engineering', 'frontend-engineering', 'data-engineering')
 );
 
 -- 2. Remove topic rows for legacy modules
 DELETE FROM topics
 WHERE module_id IN (
-    SELECT id FROM learning_modules
+    SELECT id FROM modules
     WHERE track_id NOT IN ('software-engineering', 'frontend-engineering', 'data-engineering')
 );
 
 -- 3. Remove legacy modules
-DELETE FROM learning_modules
+DELETE FROM modules
 WHERE track_id NOT IN ('software-engineering', 'frontend-engineering', 'data-engineering');
 
 -- 4. Remove legacy tracks

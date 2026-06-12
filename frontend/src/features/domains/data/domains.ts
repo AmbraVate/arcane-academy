@@ -115,6 +115,8 @@ export const DOMAIN_HERO_IMAGES: Partial<Record<string, string>> = {
   'applied-mathematics':       '/Pathways/maths/maths_applied.jpeg',
   'cryptography':              '/Pathways/maths/crypto.jpeg',
   'logic-formal-systems':      '/Pathways/maths/formal.jpeg',
+  // ── Natural Sciences ─────────────────────────────────────────────────────
+  'physics':                   '/Pathways/natural_sciences/physics.jpeg',
 }
 
 /* ── Track groups (kept empty — navigation is now Schools → Pathways) ─────── */
@@ -178,7 +180,7 @@ export const DOMAINS: Domain[] = [
     tagline: 'Propositional and predicate logic, formal proofs, and the foundations of reasoning.' },
 
   // ── School of Natural Sciences ──────────────────────────────────────────
-  { id: 'physics',                name: 'Physics',                       glyph: '⚛️',  status: 'coming_soon', modules: 0,  accentStroke: '#10b981', school: 'natural-sciences',
+  { id: 'physics',                name: 'Physics',                       glyph: '⚛️',  status: 'active',      modules: 20, accentStroke: '#10b981', school: 'natural-sciences',
     tagline: 'From classical mechanics to quantum theory and relativity — the laws of the universe.' },
   { id: 'chemistry',              name: 'Chemistry',                     glyph: '⚗️',  status: 'coming_soon', modules: 0,  accentStroke: '#10b981', school: 'natural-sciences',
     tagline: 'Atomic structure, bonding, reactions, and the molecular world.' },

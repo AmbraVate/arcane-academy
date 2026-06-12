@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * All badge definitions for the Arcane Academy platform.
  *
- * <p>Domains supported: Software Engineering, Frontend Engineering, Data Engineering.
+ * <p>Domains supported: Software Engineering, Frontend Engineering, Data Engineering, Physics.
  *
  * <p>Badge categories:
  * <ul>
@@ -56,6 +56,16 @@ public enum BadgeDefinition {
     DE_JUNIOR_CAPSTONE("Query Champion", "Submit your Data Engineering Junior capstone", "🔍", Category.PATH),
     DE_SENIOR_CAPSTONE("Data Architect", "Submit your Data Engineering Senior capstone", "🏛️", Category.PATH),
     DE_LEAD_CAPSTONE("Data Archmage", "Submit your Data Engineering Lead capstone", "🏆", Category.PATH),
+
+    // ── Physics tier badges ───────────────────────────────────────────────────
+    PHY_APPRENTICE_COMPLETE("Natural Philosopher", "Complete all Physics Apprentice modules", "🔭", Category.LEARNING),
+    PHY_JUNIOR_COMPLETE("Force Wielder", "Complete all Physics Junior modules", "⚡", Category.LEARNING),
+    PHY_SENIOR_COMPLETE("Quantum Scholar", "Complete all Physics Senior modules", "⚛️", Category.LEARNING),
+    PHY_LEAD_COMPLETE("Physics Guild Master", "Complete all Physics Lead modules", "🌌", Category.PATH),
+    PHY_APPRENTICE_CAPSTONE("First Observation", "Submit your Physics Apprentice capstone", "📏", Category.PATH),
+    PHY_JUNIOR_CAPSTONE("Master Experimenter", "Submit your Physics Junior capstone", "🧪", Category.PATH),
+    PHY_SENIOR_CAPSTONE("Simulation Architect", "Submit your Physics Senior capstone", "💻", Category.PATH),
+    PHY_LEAD_CAPSTONE("Physics Archmage", "Submit your Physics Lead capstone", "🏆", Category.PATH),
 
     // ── Cross-domain tier completion ──────────────────────────────────────────
     // Awarded when any single domain's tier is fully completed.

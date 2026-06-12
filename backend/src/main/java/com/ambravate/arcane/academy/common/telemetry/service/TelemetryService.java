@@ -189,14 +189,16 @@ public class TelemetryService {
      *   <li>{@code se-*} → software-engineering</li>
      *   <li>{@code fe-*} → frontend-engineering</li>
      *   <li>{@code de-*} → data-engineering</li>
+     *   <li>{@code phy-*} → physics</li>
      * </ul>
      * Anything else returns {@code unknown}.
      */
     static String domainFromModuleId(String moduleId) {
         if (moduleId == null) return "unknown";
-        if (moduleId.startsWith("se-")) return "software-engineering";
-        if (moduleId.startsWith("fe-")) return "frontend-engineering";
-        if (moduleId.startsWith("de-")) return "data-engineering";
+        if (moduleId.startsWith("se-"))  return "software-engineering";
+        if (moduleId.startsWith("fe-"))  return "frontend-engineering";
+        if (moduleId.startsWith("de-"))  return "data-engineering";
+        if (moduleId.startsWith("phy-")) return "physics";
         return "unknown";
     }
 

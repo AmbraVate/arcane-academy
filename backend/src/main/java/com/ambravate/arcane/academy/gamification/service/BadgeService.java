@@ -55,6 +55,11 @@ public class BadgeService implements GamificationFacade {
   private static final int DE_SEN_MODULES  = 8;
   private static final int DE_LEA_MODULES  = 6;
 
+  private static final int PHY_APP_MODULES = 5;
+  private static final int PHY_JUN_MODULES = 5;
+  private static final int PHY_SEN_MODULES = 5;
+  private static final int PHY_LEA_MODULES = 5;
+
   public List<BadgeDto> getAllForUser(String userId) {
     Map<String, UserBadge> earned = badgeRepository.findByUserId(userId)
         .stream()
@@ -201,23 +206,35 @@ public class BadgeService implements GamificationFacade {
       case DE_APPRENTICE_CAPSTONE, DE_JUNIOR_CAPSTONE,
            DE_SENIOR_CAPSTONE, DE_LEAD_CAPSTONE -> false;
 
+      // ── Physics tier badges ───────────────────────────────────────────────
+      case PHY_APPRENTICE_COMPLETE -> isAllModulesComplete(completedModules, "phy-app-m", PHY_APP_MODULES);
+      case PHY_JUNIOR_COMPLETE     -> isAllModulesComplete(completedModules, "phy-jun-m", PHY_JUN_MODULES);
+      case PHY_SENIOR_COMPLETE     -> isAllModulesComplete(completedModules, "phy-sen-m", PHY_SEN_MODULES);
+      case PHY_LEAD_COMPLETE       -> isAllModulesComplete(completedModules, "phy-lea-m", PHY_LEA_MODULES);
+      case PHY_APPRENTICE_CAPSTONE, PHY_JUNIOR_CAPSTONE,
+           PHY_SENIOR_CAPSTONE, PHY_LEAD_CAPSTONE -> false;
+
       // ── Cross-domain tier completion ──────────────────────────────────────
       case APPRENTICE_COMPLETE ->
           isAllModulesComplete(completedModules, "se-app-m",  SE_APP_MODULES) ||
           isAllModulesComplete(completedModules, "fe-app-m",  FE_APP_MODULES) ||
-          isAllModulesComplete(completedModules, "de-app-m",  DE_APP_MODULES);
+          isAllModulesComplete(completedModules, "de-app-m",  DE_APP_MODULES) ||
+          isAllModulesComplete(completedModules, "phy-app-m", PHY_APP_MODULES);
       case JUNIOR_COMPLETE ->
           isAllModulesComplete(completedModules, "se-jun-m",  SE_JUN_MODULES) ||
           isAllModulesComplete(completedModules, "fe-jun-m",  FE_JUN_MODULES) ||
-          isAllModulesComplete(completedModules, "de-jun-m",  DE_JUN_MODULES);
+          isAllModulesComplete(completedModules, "de-jun-m",  DE_JUN_MODULES) ||
+          isAllModulesComplete(completedModules, "phy-jun-m", PHY_JUN_MODULES);
       case SENIOR_COMPLETE ->
           isAllModulesComplete(completedModules, "se-sen-m",  SE_SEN_MODULES) ||
           isAllModulesComplete(completedModules, "fe-sen-m",  FE_SEN_MODULES) ||
-          isAllModulesComplete(completedModules, "de-sen-m",  DE_SEN_MODULES);
+          isAllModulesComplete(completedModules, "de-sen-m",  DE_SEN_MODULES) ||
+          isAllModulesComplete(completedModules, "phy-sen-m", PHY_SEN_MODULES);
       case LEAD_COMPLETE ->
           isAllModulesComplete(completedModules, "se-lea-m",  SE_LEA_MODULES) ||
           isAllModulesComplete(completedModules, "fe-lea-m",  FE_LEA_MODULES) ||
-          isAllModulesComplete(completedModules, "de-lead-m", DE_LEA_MODULES);
+          isAllModulesComplete(completedModules, "de-lead-m", DE_LEA_MODULES) ||
+          isAllModulesComplete(completedModules, "phy-lea-m", PHY_LEA_MODULES);
 
       // ── Note-taking ───────────────────────────────────────────────────────
       case FIRST_NOTE   -> noteCount >= 1;

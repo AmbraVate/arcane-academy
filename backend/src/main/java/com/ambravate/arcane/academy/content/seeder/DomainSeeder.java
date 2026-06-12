@@ -43,6 +43,15 @@ public class DomainSeeder {
                 .accentColor("#6366f1")
                 .sortOrder(3)
                 .active(true)
+                .build(),
+            Domain.builder()
+                .id("physics")
+                .name("Physics")
+                .glyph("⚛️")
+                .tagline("From classical mechanics to quantum theory and relativity — the laws of the universe.")
+                .accentColor("#10b981")
+                .sortOrder(4)
+                .active(true)
                 .build()
         );
 

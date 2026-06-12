@@ -245,6 +245,10 @@ class TelemetryServiceTest {
             assertThat(TelemetryService.domainFromModuleId("de-sen-m2")).isEqualTo("data-engineering");
         }
         @Test
+        void physicsPrefix() {
+            assertThat(TelemetryService.domainFromModuleId("phy-app-m1")).isEqualTo("physics");
+        }
+        @Test
         void unknown() {
             assertThat(TelemetryService.domainFromModuleId("xyz-9")).isEqualTo("unknown");
         }
