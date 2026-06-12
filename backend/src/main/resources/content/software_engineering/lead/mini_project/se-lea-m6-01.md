@@ -111,18 +111,18 @@ Minimum: **3 bounded contexts** documented.
 Write **at least 2 ADRs** in the following format:
 
 ```
-# ADR-[number]: [Short Title]
+ # ADR-[number]: [Short Title]
 
-## Status
+ ## Status
 [Proposed | Accepted | Deprecated]
 
-## Context
+ ## Context
 [What situation or problem prompted this decision?]
 
-## Decision
+ ## Decision
 [What was decided?]
 
-## Consequences
+ ## Consequences
 [What are the positive and negative consequences of this decision?]
 ```
 

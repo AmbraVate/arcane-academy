@@ -234,7 +234,7 @@ FROM loans WHERE fine_amount < 0;  -- must be 0
 ### dbt Schema Tests
 
 ```yaml
-# dbt schema.yml — automated data quality testing
+ # dbt schema.yml — automated data quality testing
 models:
   - name: loans
     columns:
@@ -257,8 +257,8 @@ models:
         tests:
           - not_null
 
-# Custom dbt test — due_date after loan_date:
-# tests/assert_due_date_after_loan_date.sql
+ # Custom dbt test — due_date after loan_date:
+ # tests/assert_due_date_after_loan_date.sql
 SELECT *
 FROM {{ ref('loans') }}
 WHERE due_date <= loan_date
@@ -286,6 +286,16 @@ FROM loans;
 -- Alert if FAIL: ship data_quality_log to monitoring system
 -- Plot metric trends: a drop in completeness % indicates an ETL issue
 ```
+
+## Why It Matters
+
+Bad data is cheaper to reject than to clean — validation is the gate that keeps a database trustworthy:
+
+- Database constraints (NOT NULL, CHECK, foreign keys) are the last line of defence that no buggy application path can bypass
+- Application-level validation gives friendly errors; database-level validation guarantees integrity — production systems need both layers
+- A single unvalidated load can poison months of reports, and finding the bad rows afterwards costs far more than checking on entry
+
+The teams with clean data aren't lucky; they validate at the boundary. The teams doing data cleanup every quarter skipped this lesson.
 
 ## Common Mistakes
 

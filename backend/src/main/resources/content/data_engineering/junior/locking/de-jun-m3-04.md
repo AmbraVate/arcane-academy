@@ -267,6 +267,16 @@ SELECT pg_try_advisory_lock(42);
 -- Use case: ensure only one instance of a background job runs at a time
 ```
 
+## Why It Matters
+
+Locks are how databases physically enforce isolation — and lock contention is how healthy systems suddenly grind to a halt:
+
+- A long transaction holding row locks can queue up every other writer; one slow report can stall checkout
+- Deadlocks are not exotic: two transactions touching the same rows in different orders is all it takes, and your code must expect retry
+- Knowing the difference between shared and exclusive locks, and row vs table scope, lets you read lock-wait diagnostics under pressure
+
+Locking is invisible while it works. The day it doesn't, the engineer who understands lock ordering and granularity is the one who unblocks production.
+
 ## Common Mistakes
 
 - **Deadlock-prone code with no retry**: Applications that do not catch and retry on deadlock errors fail silently or crash on a normal, recoverable database condition.

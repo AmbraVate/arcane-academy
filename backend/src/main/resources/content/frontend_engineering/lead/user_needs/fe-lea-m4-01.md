@@ -186,11 +186,26 @@ Neither is complete alone:
 
 **Quantitative:** A/B tests, funnel analysis, cohort retention, usage frequency. Best for validating at scale and measuring impact.
 
+## Why It Matters
+
+User needs are the ground truth product decisions claim to rest on — and most teams are building on hearsay, because requests reached them stripped of the problems that motivated them:
+
+- The request/need gap is the core hazard: users ask for features ("add an export button") when they have problems ("I can't get this data into my Monday report") — building the request as literally specified is how products accrete options while the underlying jobs stay painful
+- Needs are discoverable, not guessable: interviews, support-ticket mining, and behavioural data each triangulate what users are actually trying to accomplish — and the team's confident intuition is reliably wrong precisely because the team is expert in the product and users are not
+- Prioritisation inherits everything: rank by loudest request and you serve whoever emails most; rank by validated need-frequency-times-severity and you serve the silent majority who churn instead of complaining
+- For leads the responsibility is structural — engineers who've watched a user struggle make better hundred-times-daily micro-decisions than engineers fed requirements through three layers of summary, so building that exposure *is* engineering management
+
+Products fail far more often from solving unimportant problems well than from solving important problems imperfectly. Knowing which problems are important is not the PM's private job; it's the input quality for every technical decision you make.
+
 ## Common Mistakes
 
 - **Building what was asked, not what is needed.** Feature requests are proposed solutions. Investigate the job beneath them.
 - **Trusting survey ratings of hypothetical features.** Without real trade-offs, everything sounds good. Force ranking or willingness-to-pay reveals actual priority.
 - **Interviewing users who are already happy.** Churned users, non-converts, and edge cases reveal needs the core audience doesn't surface.
+
+## Mental Model
+
+Treat user requests like symptoms reported to a doctor, never like prescriptions to fill. A patient says "I need antibiotics" — a vending-machine doctor dispenses them; a real doctor hears the request as *data about a problem*: what are the actual symptoms, when do they occur, what's the history? Often the diagnosis differs entirely from the self-prescription (the infection is viral; the requested export button is really a reporting-workflow problem that a scheduled email solves better). The discipline maps point for point: take the request seriously as evidence (patients know something is wrong; users always do), but interrogate it for the underlying condition — "what would you do with that export?" is the doctor's "where exactly does it hurt?". Beware the chronic complainers drowning out the silently sick (vocal requesters versus churning majority — epidemiology beats walk-ins, which is what analytics and ticket mining are). And like medicine, the cardinal sin is operating on the wrong diagnosis with excellent surgical technique: many beautifully engineered features are flawless treatments for diseases nobody had.
 
 ## Mini Summary
 

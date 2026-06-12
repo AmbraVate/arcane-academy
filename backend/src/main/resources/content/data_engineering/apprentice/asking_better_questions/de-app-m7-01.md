@@ -205,6 +205,16 @@ A proxy metric measures something related to the real goal but not the goal itse
 → Produces 4–5 specific queries, each answering part of the whole
 ```
 
+## Why It Matters
+
+Data work begins before any query is written — with a question precise enough to answer. Vague questions produce confident-looking but useless numbers:
+
+- "How are sales doing?" has no answer; "what was monthly revenue per region this year?" does
+- Metrics are contracts: once a team agrees what "active user" means, every report must use that definition or chaos follows
+- Most "wrong" dashboards aren't broken queries — they're correct answers to badly framed questions
+
+Learning to turn fuzzy business concerns into measurable questions is what separates someone who runs queries from someone who produces insight.
+
 ## Common Mistakes
 
 - **Skipping the question refinement step**: Jumping straight to "build a dashboard" without deciding what the dashboard should measure leads to metrics that nobody uses.

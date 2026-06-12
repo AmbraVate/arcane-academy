@@ -173,6 +173,10 @@ Consistent spacing creates visual rhythm. It signals relationships: close = rela
 - Same spacing between everything — no hierarchy
 - Too tight spacing — elements feel cramped and hard to scan
 
+## Mental Model
+
+A spacing system is the rhythm section of your interface. Music with random note lengths sounds drunk even if every note is right; a steady beat makes everything feel intentional. A spacing scale (4, 8, 16, 24, 32...) is that beat: every margin and padding lands *on* the beat, never between. Related items sit a quaver apart; separate sections a full bar. This is also why eyeballed values (13px here, 22px there) feel subtly wrong without anyone saying why — the rhythm stutters. Pick the scale once, then stop making spacing decisions; you're just placing notes on an established groove.
+
 ## Mini Summary
 
 - ✔ Define a spacing scale as CSS custom properties

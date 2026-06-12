@@ -121,9 +121,9 @@ Before any schema change:
 6. Monitor downstream consumers post-change
 
 ```bash
-# dbt lineage query
+ # dbt lineage query
 dbt ls --select stg_xp_events+  # all models downstream of stg_xp_events
-# Returns: fact_xp_events, mart_weekly_xp, mart_learner_xp, mart_domain_engagement
+ # Returns: fact_xp_events, mart_weekly_xp, mart_learner_xp, mart_domain_engagement
 ```
 
 Modern lineage tools (OpenLineage, Marquez, dbt docs) auto-build these graphs from transformation code.
@@ -133,7 +133,7 @@ Modern lineage tools (OpenLineage, Marquez, dbt docs) auto-build these graphs fr
 A steward monitors quality across six dimensions:
 
 ```python
-# dbt schema tests (run after every pipeline)
+ # dbt schema tests (run after every pipeline)
 models:
   - name: fact_lesson_completions
     columns:

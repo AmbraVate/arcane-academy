@@ -121,7 +121,7 @@ Each additional nine is roughly 10× harder and more expensive to achieve. Align
 Patroni manages the primary-standby lifecycle: leader election, failover, and topology changes.
 
 ```yaml
-# patroni.yml (simplified)
+ # patroni.yml (simplified)
 scope: consortium-pg
 namespace: /db/
 name: pg-node-1
@@ -203,7 +203,7 @@ With PgBouncer (transaction mode):
 ```
 
 ```ini
-# pgbouncer.ini
+ # pgbouncer.ini
 [databases]
 consortium_db = host=patroni-primary port=5432 dbname=consortium_db
 

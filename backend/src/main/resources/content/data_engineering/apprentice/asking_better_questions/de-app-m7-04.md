@@ -229,6 +229,16 @@ Bad response (A): "The data says X, therefore we do X" (ignores valid domain kno
 Bad response (B): "My gut says Y, therefore we do Y" (ignores valid data signals)
 ```
 
+## Why It Matters
+
+Organisations say they want data-driven decisions, but the default human mode is decision-driven data — picking numbers that support what was already decided.
+
+- Evidence-based practice forces the uncomfortable questions: what would change our mind? what data would prove us wrong?
+- Decisions anchored to agreed metrics survive personnel changes and politics; gut-feel decisions don't
+- The discipline of stating expected outcomes *before* looking at results is what keeps analysis honest
+
+This habit is what makes the difference between data as decoration and data as the actual steering wheel.
+
 ## Common Mistakes
 
 - **Treating every data finding as an action item**: Not every finding requires action. Some findings describe the status quo and need monitoring, not intervention.

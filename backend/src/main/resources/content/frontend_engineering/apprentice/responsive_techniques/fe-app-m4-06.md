@@ -174,6 +174,10 @@ h1 { font-size: clamp(1.5rem, 4vw, 3rem); }
 
 Fluid layouts produce code that works at every viewport width, not just the three or four breakpoints you tested. Container queries enable truly reusable components that adapt to their context — a card in a narrow sidebar behaves differently from the same card in a wide main area.
 
+## Mental Model
+
+A flexible layout is a net, not a shelf. A shelf (fixed pixels) holds objects at exact positions — perfect until the room shrinks and the shelf no longer fits through the door. A net stretches and relaxes: its knots (your elements) keep their *relationships* — evenly spaced, proportionally sized with `%`, `fr`, and `minmax()` — while the whole fabric adapts to whatever frame holds it. The discipline: define proportions and limits ("this column gets one share, at least 200px"), never absolute coordinates. If you catch yourself nailing a knot to the wall, you're building a shelf again.
+
 ## Mini Summary
 
 - ✔ `min()`, `max()`, `clamp()` — responsive values without breakpoints

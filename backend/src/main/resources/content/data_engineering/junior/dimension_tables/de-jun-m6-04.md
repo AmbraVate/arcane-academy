@@ -271,6 +271,16 @@ INSERT INTO dim_loan_type VALUES
 -- Fact table: sk_loan_type INT FK → dim_loan_type (1 column instead of 4)
 ```
 
+## Why It Matters
+
+Dimensions are how analytics speak human — they hold the *who, what, where, when* that turn fact rows into answers:
+
+- "Revenue by region by quarter" is only possible because region and date live in well-built dimension tables
+- Slowly changing dimensions answer the awkward question every warehouse eventually faces: when a customer moves city, do old sales stay with the old city or move to the new one?
+- Bad dimension keys (reusing natural keys, skipping surrogate keys) cause silent fan-out joins that quietly corrupt every report
+
+Facts are voluminous but dumb; dimensions are small but smart. Getting them right is most of warehouse design.
+
 ## Common Mistakes
 
 - **SCD Type 1 when Type 2 is needed**: overwriting tier or location retroactively changes historical reports. Decide SCD strategy per attribute before ETL runs — it cannot be easily fixed after the fact without re-sourcing original data.

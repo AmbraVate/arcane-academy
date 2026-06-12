@@ -199,6 +199,16 @@ CREATE TABLE user_subscriptions (
 );
 ```
 
+## Why It Matters
+
+One-to-one relationships look redundant — why not one table? — until you meet the real reasons systems split data:
+
+- Sensitive fields (salary, medical details) live in a separate table so access can be locked down independently
+- Wide, rarely used columns are split out so common queries on the main table stay fast
+- Optional sub-records (a user's seller profile) avoid forests of NULL columns for everyone else
+
+Recognising when a one-to-one split is justified — and when it's needless complexity — is a recurring design judgement in real schemas, and a favourite interview question.
+
 ## Common Mistakes
 
 - **Forgetting the UNIQUE constraint**: Without it, you get one-to-many — multiple child rows can reference the same parent.

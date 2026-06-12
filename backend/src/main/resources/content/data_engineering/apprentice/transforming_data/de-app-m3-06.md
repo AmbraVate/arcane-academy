@@ -203,6 +203,16 @@ SELECT CAST(7 AS DECIMAL) / 2;  -- returns 3.5
 
 Be aware of this when dividing column values that may be integers.
 
+## Why It Matters
+
+Calculated columns are where SQL stops just retrieving data and starts answering questions — turning what's stored into what's needed:
+
+- Stored data is deliberately raw: price and quantity exist, line total is *derived*; computing at query time means it's never stale
+- Unit conversions, age from a birthdate, margin from cost and price — every report is full of these
+- Doing arithmetic in the database rather than exporting to a spreadsheet keeps the logic close to the data, repeatable, and shareable
+
+This is also where NULL arithmetic first bites — anything plus NULL is NULL — a rule that explains many mysteriously empty report columns.
+
 ## Common Mistakes
 
 - **Not aliasing the calculated column**: `unit_price * quantity` appears as the column name. Add `AS line_total` for readability.

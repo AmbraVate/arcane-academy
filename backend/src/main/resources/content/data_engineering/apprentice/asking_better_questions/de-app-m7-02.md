@@ -243,6 +243,16 @@ Comparing December 2026 to November 2026 mixes trend and seasonality.
 Comparing December 2026 to December 2025 isolates the trend (same seasonal position).
 ```
 
+## Why It Matters
+
+Raw tables don't announce their stories — patterns do: trends, cycles, spikes, and gaps are how data signals that something changed in the real world.
+
+- A weekly cycle in orders is normal; the same cycle disappearing is an incident
+- Spotting a slow upward drift early (storage use, error rate, costs) prevents a crisis later
+- Gaps in data are patterns too — a missing day of records usually means a broken pipeline, not a quiet day
+
+Pattern literacy turns you from someone who reads numbers into someone who notices what the numbers are trying to say.
+
 ## Common Mistakes
 
 - **Calling any unusual value an "outlier" to remove**: Outliers are not errors by definition. They require investigation.

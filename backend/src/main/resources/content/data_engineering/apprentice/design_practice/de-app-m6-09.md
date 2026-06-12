@@ -269,6 +269,16 @@ order_lines:
   product_name → NOT in order_lines (looked up via product_id → products) ✓
 ```
 
+## Why It Matters
+
+The store schema — customers, products, orders, order lines — is the most common database shape in commercial software, and the one you are most likely to inherit or build:
+
+- The order/order-line split is the canonical solution to "an order contains many products", and getting it wrong cripples reporting forever
+- Prices change, so storing the price *at time of purchase* on the order line teaches a vital lesson: some data must be copied, not referenced
+- Stock, refunds, and customer history are all simple queries on a good design and nightmares on a bad one
+
+Master this shape once and you will recognise it everywhere for the rest of your career.
+
 ## Common Mistakes
 
 - **Reading price from products table for revenue reports**: Retroactively changes historical revenue when prices update. Always use order_lines.unit_price.

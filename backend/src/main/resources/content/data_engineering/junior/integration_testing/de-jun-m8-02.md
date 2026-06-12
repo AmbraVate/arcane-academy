@@ -292,6 +292,16 @@ class LoanServiceIntegrationTest {
 }
 ```
 
+## Why It Matters
+
+Unit tests with mocked repositories prove nothing about the SQL itself — integration tests against a real database are where data bugs actually get caught:
+
+- Constraint violations, type mismatches, and dialect quirks only surface when real SQL hits a real engine
+- Tools like Testcontainers make a throwaway Postgres per test run practical, killing the "works on H2, fails on prod" class of bug
+- The expensive failures — broken migrations, ORM mappings that lazy-load in a loop — are exactly the ones only integration tests see
+
+If your data layer has no integration tests, your first real test environment is production.
+
 ## Common Mistakes
 
 - **Mocking repositories for all tests**: integration tests fill the gap that unit tests cannot. Always have at least the repository layer tested against a real database (H2 for simple queries, Testcontainers for PostgreSQL-specific queries).

@@ -191,11 +191,26 @@ A **dark pattern** uses visual hierarchy, pre-selection, hidden options, or fals
 
 The test: **Would a reasonable user, if they understood the design decision, feel served or deceived?**
 
+## Why It Matters
+
+Decision-making is the actual job at lead level — code reviews scale through the team, but decisions are the thing only you can do, and their quality compounds:
+
+- Architecture choices, framework bets, and hiring calls are all decisions made under uncertainty with incomplete information; waiting for certainty is itself a decision, usually the worst one
+- The reversible/irreversible split changes everything: two-way doors (a component API, a library trial) deserve speed and experimentation, one-way doors (the framework, the data model, a public API) deserve the slow, documented, multi-stakeholder treatment — leads who treat all decisions alike are either reckless or paralysed
+- Undocumented decisions get re-litigated forever; a two-paragraph record of context, options, and reasoning saves every future team member from re-fighting settled questions
+- Teams copy their lead's decision habits: if you decide by loudest-voice or last-opinion-heard, so will they
+
+Most failed projects didn't fail in the code — they failed in unmade, slow-made, or silently-reversed decisions long before.
+
 ## Common Mistakes
 
 - **Treating defaults as technical decisions.** Every default is a product decision with psychological consequences.
 - **Confusing friction reduction with manipulation.** Removing unnecessary steps is good UX. Removing the user's ability to make a different decision is not.
 - **Applying loss aversion to obstruct rather than inform.** Showing users what they'll lose on cancellation is informative. Hiding the cancel button is obstructive.
+
+## Mental Model
+
+Run decisions like a court system with two tracks, not a single supreme court for everything. Small-claims court handles reversible matters fast: minimal process, a quick ruling, easy to appeal later if reality disagrees — that's your component naming, library trials, UI experiments. Constitutional cases are different: framework choices, data architecture, public API contracts — these set precedent that hundreds of future decisions inherit, so they get full process: discovery (research, spikes), hearings from affected parties (team, design, backend), and a *written opinion* (the decision record) so future courts understand the reasoning, not just the verdict. The two failure modes are mirror images: a lead who convenes the full court for every variable name grinds the team to a halt; one who fast-tracks the constitution wakes up owning a precedent nobody chose deliberately. Triage first — which court does this belong to? — then apply that court's process, no more, no less.
 
 ## Mini Summary
 

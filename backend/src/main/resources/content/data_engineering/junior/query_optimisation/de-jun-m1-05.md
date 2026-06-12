@@ -253,6 +253,16 @@ OR in WHERE (splits plans)       → UNION ALL or index on each condition
 NOT IN with NULLs                → Use NOT EXISTS or EXCEPT
 ```
 
+## Why It Matters
+
+Advanced SQL constructs are powerful — and each has a performance personality you need to know before production meets real data volumes:
+
+- A subquery re-executed per row (correlated) versus once (uncorrelated) is the difference between milliseconds and minutes
+- CTEs can act as optimisation fences in some engines, materialising results when you expected them inlined
+- Window functions are usually faster than self-join alternatives, but their sorts have costs that show up at scale
+
+Writing the query that's correct is week one; writing the one that's correct *and* scales is what this lesson trains.
+
 ## Common Mistakes
 
 - **Ignoring EXPLAIN output**: Running slow queries without reading the execution plan is debugging without evidence. Always EXPLAIN before optimising.

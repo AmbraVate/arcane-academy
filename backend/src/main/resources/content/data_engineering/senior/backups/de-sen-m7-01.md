@@ -120,11 +120,11 @@ Continuous WAL archiving + daily base backup:
 Complete snapshot of the entire database.
 
 ```bash
-# PostgreSQL: pg_dump (logical backup)
+ # PostgreSQL: pg_dump (logical backup)
 pg_dump -Fc -Z 9 -h localhost -U postgres consortium_db \
   > /backups/consortium_$(date +%Y%m%d_%H%M%S).dump
 
-# PostgreSQL: pg_basebackup (physical backup — binary copy of data files)
+ # PostgreSQL: pg_basebackup (physical backup — binary copy of data files)
 pg_basebackup -h localhost -U replication_user -D /backups/base \
   --checkpoint=fast --wal-method=stream -P
 ```
@@ -136,7 +136,7 @@ pg_basebackup -h localhost -U replication_user -D /backups/base \
 Continuously ship WAL files to object storage — enables point-in-time recovery.
 
 ```bash
-# postgresql.conf
+ # postgresql.conf
 wal_level = replica
 archive_mode = on
 archive_command = 'aws s3 cp %p s3://consortium-backups/wal/%f'
@@ -149,9 +149,9 @@ With WAL archiving, the recovery window is: base backup + continuous WAL = any s
 Copy only pages changed since the last backup (PostgreSQL 17+ natively; previously via pgBackRest, Barman).
 
 ```bash
-# pgBackRest (popular backup tool with incremental + compression)
+ # pgBackRest (popular backup tool with incremental + compression)
 pgbackrest --stanza=consortium --type=incr backup
-# Only modified 8kB pages since last backup are copied
+ # Only modified 8kB pages since last backup are copied
 ```
 
 ## The 3-2-1 Rule
@@ -181,7 +181,7 @@ Cloud databases (Neon, RDS, Cloud SQL) typically handle this automatically — v
 **An untested backup is not a backup.**
 
 ```yaml
-# Monthly restore test procedure
+ # Monthly restore test procedure
 restore_test:
   schedule: "0 2 1 * *"  # first day of each month
   steps:

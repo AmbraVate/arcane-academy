@@ -143,6 +143,17 @@ Designing for permanent disability automatically solves temporary and situationa
 - Meaningful headings for navigation and orientation
 - No timed interactions without warnings and extensions
 
+## Why It Matters
+
+Inclusive UX widens accessibility from "works with a screen reader" to "works for humans in all their variety" — and that wider lens is where product impact lives:
+
+- Disability is a spectrum and often situational: the parent holding a baby is one-handed, the commuter in sunlight is low-vision, the non-native speaker is cognitively loaded — design for the permanent case and you've fixed the situational one for everyone
+- Cognitive inclusion (plain language, predictable flows, forgiving forms) serves the largest and least-discussed group, and it's indistinguishable from plain good UX
+- Exclusion compounds at the edges where products matter most — health, banking, government — exactly where regulation and reputational risk are also highest
+- Inclusive choices are market choices: captions are watched by far more hearing users than deaf ones; one-handed reachability sells phones
+
+The senior shift is from compliance ("did we pass WCAG?") to outcomes ("who can't complete this journey, and why?"). Checklists catch defects; inclusive thinking prevents them from being designed in.
+
 ## Common Mistakes
 
 - **Treating cognitive accessibility as optional.** It's WCAG criterion 3.1 and affects the broadest population.

@@ -137,7 +137,7 @@ function App() {
 **Bundle analysis:**
 ```bash
 npm install --save-dev rollup-plugin-visualizer
-# Add to vite.config.ts plugins:
+ # Add to vite.config.ts plugins:
 visualizer({ open: true })
 ```
 
@@ -157,6 +157,10 @@ Performance budgets: initial JS bundle < 150KB gzipped for first load performanc
 - **Not providing a Suspense fallback.** Without a fallback, lazy components show nothing while loading — users see blank space.
 - **Importing from barrel files.** `import { Button, Icon, Chart } from '@ui/components'` may include the entire library even if you use 3 components. Import directly: `import { Button } from '@ui/components/Button'`.
 - **Ignoring the vendor chunk.** Third-party libraries often dominate the bundle. A bundle with 900KB of lodash and 100KB of your code needs lodash replaced, not code-split.
+
+## Mental Model
+
+Your bundle is a delivery truck that every user's browser must unload before the show starts — and unload twice: once over the network (download) and once in the engine (parse and execute, the part low-end phones feel most). Bundle optimisation is logistics management for that truck. Code splitting converts one overloaded lorry into scheduled vans: the first van carries only what tonight's performance needs (the current route), later vans arrive when their cargo is actually wanted (lazy-loaded routes, on-demand features). Tree shaking is refusing to load boxes nobody addressed (unused exports); dependency auditing is noticing you packed a grand piano to play one note (a 200KB library for a date format). The discipline that keeps the system honest is the manifest — the bundle analyser — read regularly, with budgets enforced in CI. Trucks don't get lighter on their own; every sprint quietly adds a box, and only the manifest tells you when the van became a lorry again.
 
 ## Mini Summary
 

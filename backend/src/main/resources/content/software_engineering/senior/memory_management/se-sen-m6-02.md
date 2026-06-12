@@ -200,17 +200,17 @@ In a thread pool, threads are reused across requests. `UserContext` objects accu
 **Example 3: Heap Dump Analysis with Eclipse MAT**
 
 ```bash
-# Capture heap dump
+ # Capture heap dump
 jcmd <pid> GC.heap_dump /tmp/heap.hprof
-# Or from command line
+ # Or from command line
 jmap -dump:format=b,file=/tmp/heap.hprof <pid>
 
-# Analyse with Eclipse MAT
-# 1. Open heap.hprof
-# 2. Run "Leak Suspects" report
-# 3. Open Dominator Tree — sort by retained heap descending
-# 4. Find top entries — expand to see object graph
-# 5. Follow references to find the GC root holding the leak
+ # Analyse with Eclipse MAT
+ # 1. Open heap.hprof
+ # 2. Run "Leak Suspects" report
+ # 3. Open Dominator Tree — sort by retained heap descending
+ # 4. Find top entries — expand to see object graph
+ # 5. Follow references to find the GC root holding the leak
 ```
 
 A typical MAT finding: `java.util.HashMap$Entry` array with 650MB retained heap, dominated by a `static final` field in `CacheService`. Expanding shows 2.3 million `ProductEntity` instances. Root cause: unbounded product cache built at startup and never evicted.

@@ -153,6 +153,10 @@ function ProfileCard({ user }) {
 - **Trying to pass props sideways.** Siblings can't share props directly — use the parent as the intermediary.
 - **Deeply nested props (prop drilling).** Passing props through many levels becomes painful — Context API solves this.
 
+## Mental Model
+
+A component hierarchy is an org chart, and data flows through it like reporting lines. The App component is the CEO at the top; it delegates regions of the screen to managers (Layout, Page components), who delegate to teams (Card, Form), who delegate to individuals (Button, Input). Two org-chart rules carry the whole model. First, communication is structured: parents brief their direct reports (props flow down), never shouting across the room to someone three teams away — if a distant component needs information, it travels down the chart level by level. Second, responsibility has altitude: high components coordinate and decide (own the data and layout); leaf components execute one job well (render a button, accept a keystroke). When a design lands on your desk, sketch its org chart before writing code — who's the manager of this region, who reports to whom — and most "where should this code live?" questions answer themselves.
+
 ## Mini Summary
 
 - React apps form a component tree with a root at the top

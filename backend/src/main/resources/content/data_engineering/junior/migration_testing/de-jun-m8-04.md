@@ -153,7 +153,7 @@ CREATE INDEX idx_loans_due_date ON loans (due_date) WHERE status = 'ACTIVE';  --
 ### Spring Boot Flyway Configuration
 
 ```yaml
-# application.yml
+ # application.yml
 spring:
   flyway:
     enabled: true
@@ -284,6 +284,16 @@ ORDER BY calls DESC;  -- should be 0 after app deployment
 -- V8c__add_not_null.sql (constraint, safe after backfill)
 -- V9__drop_member_name.sql (destructive — deploy separately after verification)
 ```
+
+## Why It Matters
+
+Schema migrations are the riskiest code most teams deploy — they mutate production state, often irreversibly, while the app is live:
+
+- An untested migration that locks a large table for minutes is a self-inflicted outage
+- Testing migrations against realistic data volumes catches problems staging-sized data never shows
+- The rollback plan matters as much as the migration: some changes (dropped columns, lossy type changes) cannot be undone without a tested backup path
+
+Application bugs can be rolled back; a botched migration can't always be. That asymmetry is why migration testing deserves its own discipline.
 
 ## Common Mistakes
 

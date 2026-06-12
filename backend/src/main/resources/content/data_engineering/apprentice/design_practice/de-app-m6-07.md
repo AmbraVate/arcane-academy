@@ -247,6 +247,16 @@ LIMIT 10;
 | `isbn` unique but nullable | ISBNs are globally unique identifiers, but older books may not have them |
 | `membership_expiry` in members | Simple date field — the application checks if it's in the future |
 
+## Why It Matters
+
+A library is the classic training ground for data modelling because it contains every fundamental challenge in miniature:
+
+- Members borrow many books over time — a many-to-many relationship with history attached
+- The difference between a *title* and a *physical copy* forces you to model real-world identity carefully
+- Late fees, due dates, and availability are all questions the schema must be able to answer with a query
+
+If you can design a clean library schema, you have rehearsed the same moves used to model customers and orders, students and courses, or any system where things are lent, booked, or assigned.
+
 ## Common Mistakes
 
 - **Storing authors as a comma-separated string in books**: Violates 1NF. Use a junction table.

@@ -125,6 +125,21 @@ retrieval:
 )}
 ```
 
+## Mental Model
+
+An error message is a GPS recalculation, and the comparison is a complete quality checklist. When you miss a turn, a good GPS does four things instantly and calmly: it tells you *at the moment of deviation* (not twenty minutes later at the destination — errors appear on blur or submit attempt, attached in time to the action), it tells you *where you are* (the message sits at the field that's wrong, not in a summary pile the user must map back to inputs), it tells you *exactly how to recover* ("at the next roundabout, turn right" — "password must include a number", never "route error"), and it *stops telling you the moment you're back on track* (the error clears the instant the field becomes valid — a GPS that kept announcing recalculation after you'd corrected would be unbearable, and so is a form error that lingers over a fixed field). Notice what the GPS never does: it never shouts, never blames ("you have FAILED to navigate"), and never speaks in internal codes ("ROUTING_CONSTRAINT_VIOLATION_4") — tone and clarity are part of the function, because the listener is already stressed. The accessibility layer is the GPS's *audio*: a driver who can't glance at the screen still gets every instruction spoken aloud — your visually styled red border is the on-screen route line, and `aria-describedby` plus a live announcement is the voice; ship the screen without the voice and a whole population of drivers is navigating blind. One more route source completes it: sometimes the *traffic service* reports the problem (server-side errors like "email already registered") — and the driver should hear it through the same calm voice at the same junction, not as a different system barking raw data. Immediate, located, actionable, self-clearing, spoken aloud, one voice for all sources: six properties of a recalculation, and the entire craft of form errors.
+
+## Why It Matters
+
+Error messages are the most-read prose your team ships — users see them at the exact moment of friction, and their quality directly moves completion rates:
+
+- The craft has measurable rules: say *what's wrong and how to fix it* ("Password needs at least 8 characters" beats "Invalid input" beats "Error"), place the message *at the field it concerns* (not a pile at the top of the form), and keep the tone factual rather than blaming — usability research consistently ties each of these to recovered-versus-abandoned form sessions
+- Presentation is accessibility engineering, not styling: errors conveyed by red borders alone exclude colour-blind users entirely; screen reader users need the message programmatically tied to the input (`aria-describedby`, `aria-invalid`) and announced when it appears (`role="alert"`/live regions) — an error a user cannot perceive is a form they cannot complete
+- Timing belongs to the message too: errors that appear before the user has touched a field (the un-`touched` state bug) make forms feel broken on arrival, and errors that linger after correction make them feel haunted — the state mechanics from this module (per-field errors, touched tracking, clearing on valid change) are what implement message *behaviour*
+- Server errors complete the picture: the backend's verdicts ("email already registered") must land in the same per-field display system as client checks, not in a raw toast of API response text — which requires designing the error state shape to accept both sources
+
+A form's error messages are a conversation with someone who is already mildly frustrated. Engineers who write that conversation well convert; those who don't generate support tickets that all say the same thing: "it wouldn't let me".
+
 ## Mini Summary
 - ✔ Specific, actionable messages — not "invalid"
 - ✔ Position adjacent to the invalid field

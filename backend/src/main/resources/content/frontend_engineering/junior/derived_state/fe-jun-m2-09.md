@@ -136,6 +136,10 @@ function SearchResults({ products, query, minPrice, maxPrice }) {
 - **Memoising simple computations.** More overhead than the computation itself.
 - **Using useMemo for side effects.** Use useEffect for side effects, useMemo only for computed values.
 
+## Mental Model
+
+`useMemo` is a chef's batch-prep, and like batch-prep it's only worth doing for the laborious dishes. By default a kitchen makes everything fresh per order (recomputing derived values every render) — and for most dishes that's *correct*: chopping one garnish fresh costs nothing and is always right. Batch-prep — making a vat of sauce and reusing it — pays only when the dish is genuinely expensive (filtering ten thousand rows, heavy sorting), and it introduces the question every cached sauce raises: *when is it stale?* The dependency array is the freshness label: `useMemo(() => filter(items, query), [items, query])` declares "this preparation depends on these ingredients — remake it only when one changes; otherwise serve from the batch". Get the label wrong by omitting an ingredient and you serve stale sauce: the computation reads a value that changed but wasn't listed, and the UI quietly shows yesterday's results. The two disciplines, in order of importance: don't batch-prep garnishes — `useMemo` on cheap computations adds complexity and its own bookkeeping cost for nothing, so default to computing fresh and memoise only what's *measured* slow; and when you do, the dependency array must list every ingredient the recipe touches, no exceptions. Fresh by default; batch the banquet dishes; label honestly.
+
 ## Mini Summary
 
 - useMemo caches a computed value until its dependencies change

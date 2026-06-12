@@ -155,6 +155,16 @@ Set `display: flex` on a **container** to make its direct children **flex items*
 | `order` | Change visual order without reordering HTML |
 | `align-self` | Override align-items for one item |
 
+## Why It Matters
+
+Flexbox is the default layout tool of the modern web — the answer to problems that tortured developers for fifteen years:
+
+- Vertical centring, equal-height columns, and "space these items out evenly" went from hacks to one-liners
+- Navigation bars, card rows, toolbars, form layouts — the everyday furniture of UIs — are all flex containers
+- Its content-driven flexibility (grow, shrink, wrap) is what makes components behave well at any size
+
+Surveys consistently show flexbox in nearly every production stylesheet. It is not optional knowledge; it's the grammar of contemporary layout.
+
 ## Worked Examples
 
 ```css
@@ -188,6 +198,10 @@ Set `display: flex` on a **container** to make its direct children **flex items*
 - Applying flex properties to the items instead of the container (`justify-content` goes on the container)
 - Forgetting `flex-wrap: wrap` — items overflow on small screens
 - Not understanding that `justify-content` direction changes with `flex-direction`
+
+## Mental Model
+
+A flex container is a curtain rod, and its children are curtain panels hanging from it. The rod has a direction (horizontal or vertical — the main axis). You, holding the rod, decide how panels share it: bunch them at one end (`justify-content: flex-start`), space them evenly (`space-between`), or let certain panels stretch to fill leftover rod (`flex-grow`). When the rod is too short, panels can compress (`flex-shrink`) or spill onto a second rod (`wrap`). Crucially, the *rod* manages the arrangement — individual panels just declare how willing they are to stretch or squeeze.
 
 ## Mini Summary
 

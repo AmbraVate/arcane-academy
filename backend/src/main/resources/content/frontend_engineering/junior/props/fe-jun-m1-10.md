@@ -146,6 +146,10 @@ Data (count) flows down. Behaviour (onClick) flows down as a callback. The badge
 - **Passing objects/arrays without curly braces.** `items="[1,2,3]"` passes a string. `items={[1,2,3]}` passes an array.
 - **Confusing boolean shorthand.** `isActive` (alone) is the same as `isActive={true}`. But `isActive="false"` is a non-empty string — truthy!
 
+## Mental Model
+
+Props are a delivery address label, written by the sender, read-only to the parcel. When a parent renders `<UserCard name="Aria" role="admin" />`, it's the sender filling out the label; the UserCard receives the parcel and can *read* everything on it — but a parcel doesn't get to edit its own label, and a component never modifies its props. This one-way arrangement is the spine of React's data flow: information travels parent → child, explicitly, visibly, at the call site — you can look at any component's usage and see exactly what was sent, like reading the label without opening the box. The read-only rule isn't bureaucracy; it's what keeps the system debuggable. If children could rewrite what parents sent, tracing "where did this wrong value come from?" would mean interrogating every component that ever touched it. Instead, data has one author (the owner of the state, up the tree) and many readers (everyone below it) — so when a value is wrong, you walk *up* the chain of labels to the single place it was written.
+
 ## Mini Summary
 
 - Props pass data from parent to child — one direction only

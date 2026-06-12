@@ -217,7 +217,7 @@ public ResponseEntity<OrderResponse> placeOrder(@RequestBody @Valid OrderRequest
 
 **Docs-as-code CI pipeline:**
 ```yaml
-# In .github/workflows/docs.yml
+ # In .github/workflows/docs.yml
 - name: Validate documentation
   run: |
     # Check all internal links are valid

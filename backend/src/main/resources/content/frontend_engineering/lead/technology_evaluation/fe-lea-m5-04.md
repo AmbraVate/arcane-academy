@@ -217,11 +217,26 @@ A technology that is 30% faster to build with but doubles hiring cost may not be
 
 High lock-in choices warrant proportionally more evaluation rigour before adoption.
 
+## Why It Matters
+
+Technology evaluation is the lead's defence against the frontend's most expensive failure mode: adopting tools by fashion and abandoning them by attrition.
+
+- Frontend churn is real but survivorship-biased — for every React there are a dozen frameworks whose adopters spent two years migrating off them; the conference-talk sparkle of year one says nothing about the maintenance reality of year four
+- Total cost lives outside the demo: hiring pool, documentation depth, upgrade cadence, ecosystem maturity, and exit cost (how trapped are we if this dies?) dwarf the "developer experience" that drove the enthusiasm
+- A written evaluation framework — criteria, spike results, risks, decision — does double duty: it disciplines the current choice and creates the record that stops next year's re-litigation when a new framework trends
+- The boring-technology principle is portfolio management: every team has a limited innovation budget, and spending it on the data layer *and* the framework *and* the build tool simultaneously is how projects acquire three experimental dependencies and zero stable ones
+
+Leads aren't paid to pick exciting technology; they're paid to pick technology the team will still be glad about when the person who chose it has left.
+
 ## Common Mistakes
 
 - **Prestige adoption.** "Facebook uses it" is not evidence it will work for your team of 6 with a different problem.
 - **Recency bias.** New is not better; established is not obsolete. Stability is a feature.
 - **PoC as exploration.** A PoC without a defined question and exit criteria produces "it feels good" — not a decision.
+
+## Mental Model
+
+Evaluate technology like a fleet buyer, not a car enthusiast. The enthusiast test-drives on a sunny day and falls for acceleration and cockpit design — the demo experience, the elegant API, the conference keynote. The fleet buyer is purchasing two hundred vehicles that must run for seven years, so the questions invert: What do parts cost and are mechanics available? (hiring pool, ecosystem). What's the manufacturer's track record for supporting last decade's models? (maintainer history, breaking-change culture). What's resale and replacement like if we must exit? (migration cost, lock-in). How does it perform loaded, in winter, at fleet scale — not solo on a test track? (production performance under real constraints). The fleet buyer also runs a structured trial — a few vehicles, defined routes, measured results (the time-boxed spike with criteria set *before* the trial) — because anecdote is how fleets go bankrupt. Enthusiasm is allowed; it's just not evidence.
 
 ## Mini Summary
 

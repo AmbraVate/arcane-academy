@@ -148,14 +148,16 @@ export default function ModuleMapPage() {
   const isPublic = !user
   const [chunk, setChunk] = useState<ModuleDetail | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (!moduleId) return
+    setError(false)
     moduleApi.getDetail(moduleId)
       .then(setChunk)
-      .catch(() => navigate('/schools'))
+      .catch(() => setError(true))
       .finally(() => setLoading(false))
-  }, [moduleId, navigate])
+  }, [moduleId])
 
   if (loading) {
     return (
@@ -165,7 +167,14 @@ export default function ModuleMapPage() {
       </div>
     )
   }
-  if (!chunk) return null
+  if (error || !chunk) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh] text-muted gap-4">
+        <p className="text-[14px]">Module not found or failed to load.</p>
+        <button className="btn btn-ghost text-[12px]" onClick={() => navigate(-1)}>← Go Back</button>
+      </div>
+    )
+  }
 
   // Group lessons by topicId
   const lessonsByTopic = new Map<string, LessonSummary[]>()

@@ -188,36 +188,36 @@ Events arriving (by processing time):
 Fixed, non-overlapping intervals. Each event belongs to exactly one window.
 
 ```python
-# Apache Flink (Java API pseudocode)
+ # Apache Flink (Java API pseudocode)
 stream
     .keyBy(event -> event.userId)
     .window(TumblingEventTimeWindows.of(Time.minutes(1)))
     .aggregate(new XpSumAggregator())
-# Emits: (userId, window_start, total_xp) once per minute per user
+ # Emits: (userId, window_start, total_xp) once per minute per user
 ```
 
 ### Sliding Windows
 Overlapping intervals. Each event belongs to multiple windows.
 
 ```python
-# Events in the past 5 minutes, updated every 1 minute
+ # Events in the past 5 minutes, updated every 1 minute
 stream
     .keyBy(event -> event.userId)
     .window(SlidingEventTimeWindows.of(Time.minutes(5), Time.minutes(1)))
     .aggregate(new XpSumAggregator())
-# Emits: (userId, xp_in_last_5min) every 1 minute per active user
+ # Emits: (userId, xp_in_last_5min) every 1 minute per active user
 ```
 
 ### Session Windows
 Group events separated by a gap smaller than a defined inactivity timeout.
 
 ```python
-# All events within 30-minute inactivity gaps form one session
+ # All events within 30-minute inactivity gaps form one session
 stream
     .keyBy(event -> event.userId)
     .window(EventTimeSessionWindows.withGap(Time.minutes(30)))
     .aggregate(new SessionAggregator())
-# Each session's length and event count = learning session metrics
+ # Each session's length and event count = learning session metrics
 ```
 
 ## Streaming Architecture Pattern

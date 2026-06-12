@@ -142,12 +142,26 @@ test('Form has no axe violations', async () => {
 - Navigate by form controls: Control + Option + J
 - Verify: headings describe content, links describe destination, errors are announced, modals announce title
 
+## Why It Matters
+
+Accessibility claims are worthless until tested — and testing is where most teams discover the gap between "we use semantic HTML" and "a screen reader user can actually check out":
+
+- Automated tools (axe, Lighthouse) catch only roughly a third of WCAG failures; the rest — focus order, announcement quality, cognitive flow — require a human at a keyboard and a screen reader
+- Catching an inaccessible pattern in code review costs minutes; catching it after launch means re-engineering shipped flows under complaint or legal pressure
+- Testing builds the team's instincts: engineers who have once navigated their own form by keyboard alone write better markup forever after
+
+A test plan that layers automation (every build), keyboard passes (every feature), and assistive-technology sessions (every major flow) is what turns accessibility from an aspiration into a verified property.
+
 ## Common Mistakes
 
 - **Treating Lighthouse score as compliance.** It's one input. Not sufficient alone.
 - **Not testing keyboard flow, only tab stop existence.** A page where every element is focusable but the order makes no sense is inaccessible.
 - **Using only one screen reader.** VoiceOver and NVDA behave differently. Test both.
 - **Not testing dynamic interactions.** Static page testing catches static issues. Live regions, modals, and route changes are dynamic — test them in the running app.
+
+## Mental Model
+
+Accessibility testing is a pre-flight inspection, not a crash investigation. Aviation doesn't rely on one big annual check; it layers fast, frequent, cheap checks (the walk-around before every flight — your automated axe scan in CI) with deeper periodic ones (scheduled maintenance — manual keyboard and screen reader passes) and full teardowns (the heavy audit — expert review with real assistive technology users). Each layer is calibrated to catch what the cheaper layer cannot, and no layer is skipped because the previous one passed. Treat a green axe report as the walk-around: necessary, fast, and nowhere near sufficient to declare the aircraft airworthy.
 
 ## Mini Summary
 

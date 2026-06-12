@@ -217,6 +217,16 @@ FROM products;
 -- Four scans vs one scan — less efficient
 ```
 
+## Why It Matters
+
+MIN and MAX answer the boundary questions every operation eventually asks: earliest signup, latest payment, cheapest product, biggest order.
+
+- Monitoring relies on them — "when did this table last receive data?" is a MAX over a timestamp
+- They work on dates and text too, which makes them the standard tool for "first" and "most recent" questions
+- Outliers found with MIN/MAX often reveal data-quality bugs: a price of 0, an order dated 1970
+
+They are also cheap for the database to compute, which makes them the first diagnostic you reach for when exploring an unfamiliar table.
+
 ## Common Mistakes
 
 - **Using MIN/MAX in WHERE**: `WHERE salary = MAX(salary)` is an error. Use a subquery: `WHERE salary = (SELECT MAX(salary) FROM employees)`.

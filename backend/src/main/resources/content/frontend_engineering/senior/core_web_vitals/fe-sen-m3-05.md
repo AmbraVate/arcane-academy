@@ -140,6 +140,10 @@ Since 2021, Core Web Vitals are a Google ranking signal. Poor metrics = lower se
 - **Forgetting CLS from fonts.** A font that loads after content causes text to reflow — significant CLS. Use `font-display: swap` or preload.
 - **Treating 75th percentile.** Google evaluates the 75th percentile of field data — 25% of your users must have a good experience even on slow connections.
 
+## Mental Model
+
+Core Web Vitals are the restaurant inspection scores of the web — three numbers standing in for the full dining experience. LCP is how long until the main course reaches the table: the moment the customer feels served, not when the kitchen started cooking. INP is how quickly waiters respond when customers ask for something — any tap or keystroke that gets a sluggish reaction is a waiter ignoring a raised hand. CLS is the table not lurching mid-meal: content that shifts under a user's finger is the plate sliding as they reach for it. The inspection analogy carries the deeper truths too — Google grades on *field data* (real diners' experiences, the 75th percentile, on their phones and networks), not your lab kitchen demo on a fast machine; and the score is posted on the door (search ranking), so it's a business number, not an engineering vanity metric.
+
 ## Mini Summary
 
 - ✔ LCP: time to render largest visible element — fix by preloading, reducing bundle, fast server

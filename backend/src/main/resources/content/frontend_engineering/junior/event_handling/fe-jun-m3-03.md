@@ -114,6 +114,21 @@ event.stopPropagation()
 event.type            // 'click', 'change', etc.
 ```
 
+## Mental Model
+
+React's event system is a hotel switchboard, not a phone in every room. The naive picture — your `onClick` wired directly to that button's DOM node — is rooms with private lines. The real architecture: every incoming call (native browser event) rings once at the *switchboard* (React's single listener at the root), where an operator identifies which room was dialled (which component's handler should fire) and connects you — passing the call through a standardising adapter so every room hears the same dial tone and caller-ID format regardless of which phone company (browser) originated it. That adapter is the `SyntheticEvent`: a consistent wrapper around the native call, with the original always available on request (`e.nativeEvent` — asking the operator to patch you through raw). The switchboard model explains the behaviours that otherwise mystify. Efficiency: a ten-thousand-row list doesn't need ten thousand phone lines — one switchboard serves all, which is why React handles huge interactive surfaces cheaply. Ordering and propagation: calls climb the hotel's internal hierarchy (your component tree) under the operator's rules, so React's `stopPropagation` halts the *internal* routing — but a separate phone you personally bolted to the building's exterior wall (`addEventListener` on document) lives partly outside the operator's jurisdiction, which is exactly why mixing the two systems produces the classic "my modal's outside-click handler fired anyway" bug. When events behave strangely at the boundary between React and the raw DOM, stop imagining wires on doorknobs and picture the switchboard: who took the call, in which system, and in what order the connections were made.
+
+## Why It Matters
+
+Synthetic events are React's quiet abstraction layer — invisible while you stay on the happy path, and exactly what you need to understand the day you step off it:
+
+- Every event object your handlers receive is a `SyntheticEvent`: React's wrapper that normalised browser inconsistencies (a real historical pain — event APIs genuinely differed across browsers) and guarantees the same shape and behaviour everywhere your app runs
+- The architecture beneath is event delegation: React doesn't attach your thousand `onClick`s to a thousand DOM nodes — it listens once at the root and routes events to your handlers itself, which is why React apps stay fast with enormous interactive lists and why your handlers fire in React's controlled order
+- The seams are where the knowledge pays: `e.nativeEvent` when you need the raw browser event, the rules for mixing React handlers with manual `addEventListener` (modals, global key shortcuts, third-party widgets), and why `stopPropagation` in one world doesn't always silence the other
+- Interview and debugging relevance is real: "why does my document-level listener fire before/after my React handler?" and "why did my event object behave oddly in async code?" (the now-removed pooling behaviour, still living in older codebases and blog posts) are questions answered entirely by this layer
+
+You can write React for months without thinking about synthetic events — then lose a day to a propagation bug at the React/DOM boundary. This lesson is the inoculation.
+
 ## Mini Summary
 - ✔ SyntheticEvent wraps native events for cross-browser consistency
 - ✔ event.target.value for text inputs; event.target.checked for checkboxes

@@ -125,6 +125,21 @@ function likePost(postId) {
 | Progress bar | Uploads, step-by-step processes |
 | Optimistic UI | Low-risk reversible actions (like, save) |
 
+## Mental Model
+
+Loading states are restaurant service during the wait for food, and every pattern has a service equivalent. The order acknowledged immediately — "lovely, that'll be about ten minutes" — is the instant state change to *loading*: the kitchen may be slow, but the *acknowledgement* never is, and a user's click, like a diner's order, must visibly land. Bread on the table is the skeleton screen: not the meal, but shaped like sustenance, occupying the place the meal will fill — it manages expectation (food is coming, roughly this much, roughly here) and prevents the jarring rearrangement of a table being re-laid mid-meal (layout shift when real content lands in pre-shaped slots). The water glass kept full while one course runs late is *scoped* loading: a delayed dessert doesn't mean waiters stop serving the rest of the table — one slow data region gets its local indicator while the rest of the page stays interactive, never a whole-restaurant blackout (the global spinner) for one kitchen station's delay. Service timing has its thresholds too: a waiter who announces "your food is coming!" four seconds after you order, for a dish that arrives two seconds later, has made fast service feel fussy — the flash-of-spinner problem, solved by not announcing waits too short to matter (delayed indicators) and not whisking the bread away the instant it's touched (minimum display times, avoiding flicker). And for the genuinely long wait, diners need what passengers need: progress and honesty — "the soufflé takes twenty minutes" (progress indication, time expectation) beats a silent kitchen door, because uncertainty, not duration, is what makes people leave. Acknowledge instantly, bread for shape, serve around the late course, don't announce micro-waits, be honest about long ones: loading UX as table service.
+
+## Why It Matters
+
+Loading states are where your interface meets the speed of reality — networks are slow, variable, and unreliable, and what you render during the wait determines whether users perceive your app as fast, broken, or trustworthy:
+
+- The perception numbers drive the patterns: sub-100ms needs no indicator (showing one adds flicker), beyond a second needs acknowledgement, beyond several needs progress or reassurance — and the classic mistake, a spinner that flashes for 80ms on a fast connection, makes a *fast* app feel janky, which is why minimum-display times and delayed-show thresholds exist
+- Skeleton screens beat spinners for content loads because they manage *expectation*: shaped placeholders promise what's coming and prevent layout shift when it arrives — the difference between a page assembling itself smoothly and content jumping under the user's poised finger (a real Core Web Vitals cost, not just polish)
+- Loading is per-region, not per-page: one slow widget shouldn't blank the whole screen behind a global spinner — scoping load states to the component that's actually waiting (this module's state patterns, applied locally) keeps the rest of the interface alive and useful
+- The waiting states are also the *interaction-safety* states: search results arriving out of order, buttons that should disable during their action, content shifting as it loads — the bug family of async UI lives here, and deliberate loading design is the prevention
+
+Every app is fast on the developer's machine. Loading states are engineering for everyone else's.
+
 ## Mini Summary
 - ✔ Always show loading state for operations > 100ms
 - ✔ Disable interactive elements during loading

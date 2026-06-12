@@ -253,6 +253,16 @@ WHERE e.course_id = 7
   AND e.grade IS NULL;
 ```
 
+## Why It Matters
+
+School data models appear in real systems constantly — student information systems, training platforms, certification trackers — and they all share the same hard parts:
+
+- Students take many subjects, subjects have many students: the canonical many-to-many with enrolment data on the relationship itself
+- Timetables force you to model time, rooms, and conflicts — constraints a schema must make impossible, not just unlikely
+- Grades attach to a student *in a class in a term*, teaching you that some facts only exist on relationships
+
+Designing this well rehearses the exact reasoning used in HR, booking, and scheduling systems across the industry.
+
 ## Common Mistakes
 
 - **Storing grade in students**: `grade` in students implies one grade per student (wrong). Students have many grades.

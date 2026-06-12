@@ -200,6 +200,16 @@ FROM orders
 WHERE status = 'completed';
 ```
 
+## Why It Matters
+
+Averages drive decisions everywhere — average order value, average response time, average rating — yet AVG is the most commonly *misread* aggregate:
+
+- AVG ignores NULLs, so "average rating" only reflects people who rated; that's often not what stakeholders assume
+- A few extreme values can drag an average far from the typical case, hiding problems or inventing them
+- Averaging averages (e.g. per-region averages) without weighting gives a wrong overall figure
+
+Understanding what AVG actually computes lets you spot misleading numbers before they reach a report — and explain why a median sometimes tells the truer story.
+
 ## Common Mistakes
 
 - **NULL treated as zero by AVG**: AVG excludes NULLs. If NULL represents zero, use COALESCE before averaging.

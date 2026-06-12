@@ -134,7 +134,7 @@ Autonomous data engineering (longer-term):
 ## Trend 3: Data Contracts
 
 ```yaml
-# data-contract.yaml (producer definition)
+ # data-contract.yaml (producer definition)
 dataContractSpecification: 0.9.2
 id: learner-engagement-events
 info:

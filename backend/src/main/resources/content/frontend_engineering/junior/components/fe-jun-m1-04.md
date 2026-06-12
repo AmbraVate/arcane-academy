@@ -148,6 +148,10 @@ The component defines the structure. Props fill it with data. The same component
 - **Forgetting to return.** A component with no return renders nothing.
 - **Returning multiple elements without a wrapper.** JSX must return a single root element — use `<>...</>` (Fragment) if needed.
 
+## Mental Model
+
+A component is a rubber stamp, not a drawing. When you draw a card on a page, you've made one card — want another, draw it all again, and good luck keeping seventeen hand-drawn cards identical. A stamp captures the *design* once; pressing it produces as many identical cards as you like, each one positioned independently. The component function is the stamp's engraving (the JSX it returns is the design), and every `<Card />` in your app is one press of it. The two properties that make stamps powerful carry over exactly: re-carving the engraving updates the look of *every* future press in the whole app at once, and stamps can include space for handwriting — the customisable parts (props, next lessons) that make each press unique while the structure stays uniform. When you spot the same UI pattern twice in a design, your reflex should be: that's one stamp, pressed twice.
+
 ## Mini Summary
 
 - A component is a JS function that accepts props and returns JSX

@@ -189,11 +189,26 @@ The most powerful and most underused tool in trade-off conversations. When asked
 - "Yes, with reduced scope" opens it
 - "Here are three options with different scope/time/quality trade-offs" enables the right decision
 
+## Why It Matters
+
+Product trade-offs are where leads earn their title — every meaningful decision sacrifices something real, and the job is choosing the sacrifice on purpose:
+
+- Speed versus polish, feature versus debt paydown, this quarter's revenue versus next year's platform: these aren't failures of planning, they're the permanent condition of shipping software with finite people
+- Unowned trade-offs get made anyway — by deadline pressure, by whoever shouts last, by the intern's PR that happened to merge — and the org discovers its actual priorities by archaeology instead of intention
+- The lead's distinctive contribution is making costs *visible before choosing*: "we can ship in three weeks if we skip offline support — here's who that affects and what retrofitting costs" turns a silent sacrifice into an informed bet
+- Saying no is most of the craft, and *how* matters: "no, because it costs X which we're spending on Y" preserves trust and teaches the requester your decision function; bare "no" spends political capital and teaches nothing
+
+Engineers who treat every trade-off as a quality failure burn out; leads who can't articulate trade-offs get them dictated. The skill is holding both truths: everything has a cost, and the cost is choosable.
+
 ## Common Mistakes
 
 - **Deferring conflict:** "We'll see what we can fit in" stores the trade-off as a future failure rather than resolving it as a present conversation.
 - **Treating time, scope, and quality as all fixed simultaneously.** One must flex. Identifying which one enables the negotiation.
 - **Not documenting trade-off decisions.** Future maintainers inheriting a codebase with unexplained shortcuts have no way to know which shortcuts were intentional (with a remediation plan) and which were accidents.
+
+## Mental Model
+
+Product trade-offs are a triage tent, not a wish list with a budget. A wish-list mindset asks "which features do we want?" — everything, obviously, ranked by enthusiasm. Triage asks a harder, truer question: given finite surgeons and beds (engineers and weeks), *who gets treated now, who waits, and who do we consciously not treat* — knowing that "untreated" is a real category with real consequences, not a deferred yes. The discipline transfers exactly. Every incoming request gets assessed for severity (user/business impact) and cost of treatment (effort, risk, maintenance burden), not for how loudly it arrived. Decisions are made visibly, on stated criteria, so the team trusts the system even when their patient waits. And the tent commander never pretends the untreated are fine — "we are not doing offline mode this year, here's what that costs us and why it still loses to checkout reliability" is the honest sentence that keeps triage from becoming denial. The teams that burn out aren't the ones with too many patients; they're the ones pretending everyone can be treated at once.
 
 ## Mini Summary
 

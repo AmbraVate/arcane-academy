@@ -163,7 +163,7 @@ Team autonomy (full autonomy within guardrails):
 Encode governance standards as automated tests — make violations visible at CI time, not review time.
 
 ```python
-# ArchUnit-style fitness function (Python example)
+ # ArchUnit-style fitness function (Python example)
 def test_no_cross_schema_raw_access():
     """No model in staging/ or marts/ should directly query raw schema tables."""
     for model_file in glob("models/staging/**/*.sql") + glob("models/marts/**/*.sql"):
@@ -171,7 +171,7 @@ def test_no_cross_schema_raw_access():
         assert "raw." not in content.lower(), \
             f"{model_file} directly accesses raw schema — use ref() or source()"
 
-# dbt governance check in CI
+ # dbt governance check in CI
 def test_all_models_have_owner():
     """All dbt models must declare an owner in their meta section."""
     for model in dbt_manifest["nodes"].values():
@@ -210,7 +210,7 @@ Debt classification:
 ```
 
 ```markdown
-# Technical Debt Register
+ # Technical Debt Register
 
 | Item | Interest Rate | Principal (cost to fix) | Annual Interest | Status |
 |------|--------------|------------------------|-----------------|--------|

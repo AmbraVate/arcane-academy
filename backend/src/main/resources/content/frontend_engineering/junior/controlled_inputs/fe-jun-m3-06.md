@@ -112,6 +112,21 @@ Textarea and select look different in HTML but work identically to input in Reac
 </select>
 ```
 
+## Mental Model
+
+React's treatment of textarea and select is a universal remote replacing a drawer of device-specific ones. Plain HTML grew its form controls at different times with different interfaces — the TV wants its channel written *between* its tags (textarea content as children), the soundbar marks its chosen input with a sticker on the option itself (the `selected` attribute) — historically sensible, collectively maddening: three devices, three button layouts. React's controlled pattern is the universal remote: every device, same two buttons — `value` (what the device should currently show) and `onChange` (the device reporting that the user pressed something). Textarea stops being content-between-tags and becomes `value={text}`; select stops being find-the-stickered-option and becomes `value={choice}` on the parent, with options as a plain menu. One layout to learn, and your muscle memory (and your generic handler) transfers across the whole equipment rack. The universal remote has compatibility notes worth respecting. The select only tunes to *exact* frequencies: its `value` must match an option's value character-for-character — state holding the number `2` won't match `value="2"` the string, and the dropdown sits blank while you blame the wrong layer. A "choose one…" placeholder is a menu entry that exists but can't be re-selected: an explicitly `disabled` option with empty value, not wishful thinking. And the multi-select is the one device with a genuinely different protocol — `value` becomes an array, and reading the user's selection means collecting all chosen options, not just `target.value`. Same remote everywhere, check the frequency matches, and read the manual once for multi-select: the entire form-control family, mastered.
+
+## Why It Matters
+
+Textarea and select are where HTML's historical mess meets React's cleanup — small elements, but they complete your command of every form control you'll ship:
+
+- React deliberately *normalised* these elements: plain HTML puts a textarea's content between its tags and marks a select's choice with a `selected` attribute buried on one of its options — two more APIs to remember; React routes both through the same `value`/`onChange` contract as text inputs, so one mental model now covers the entire form-control family
+- That consistency is practical power: your generic form handler (computed keys off `name`) works unchanged across inputs, textareas, and selects — a settings page with all three stays one handler, one state object, no special cases
+- The details that bite are worth knowing precisely: a select's `value` must *match an option's value exactly* (string comparison — the number-versus-string mismatch that leaves dropdowns mysteriously blank), placeholder behaviour needs an explicitly disabled option, and multi-selects flip `value` to an array with a less obvious change-reading dance
+- Dropdowns and free-text areas are disproportionately common in real products — address forms, support tickets, filters, admin panels — and they're also where browser default styling and UX edge cases (unchosen states, long content) concentrate, so fluency here removes friction from a remarkable share of everyday tickets
+
+Finishing this lesson means no form control in a design can slow you down: text, choice, or prose, it's all the same loop now.
+
 ## Mini Summary
 - ✔ Textarea: value prop (not content between tags)
 - ✔ Select: value on `<select>`, not selected on `<option>`

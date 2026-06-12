@@ -190,6 +190,17 @@ export function App() {
 }
 ```
 
+## Why It Matters
+
+Micro-frontends are an organisational tool wearing an architecture costume — and knowing when that trade is worth it is the actual senior skill:
+
+- The genuine win is team autonomy at scale: ten teams shipping one monolithic SPA serialise on releases, merge conflicts, and framework migrations; splitting the frontend lets each team deploy independently
+- The costs are structural, not incidental — duplicated dependencies bloat what users download, cross-boundary UX consistency needs constant governance, and shared concerns (auth, routing, design system) require platform investment that small orgs can't amortise
+- Incremental migration is the quieter use case: strangling a legacy frontend module by module beats a big-bang rewrite that history says will slip
+- Adopted at the wrong scale, the pattern is pure overhead: three developers do not need module federation, and many famous adopters later consolidated
+
+The interview-grade insight is Conway's Law in reverse: micro-frontends mirror your org chart onto your users' browsers. If the org chart isn't the problem, the architecture isn't the answer.
+
 ## Why It Matters (When It Does)
 
 **Independent deployment**: the checkout team ships a hotfix at 2 PM without any coordination with the profile team. The checkout `remoteEntry.js` is updated; the shell picks it up on next page load. Genuine deployment autonomy.

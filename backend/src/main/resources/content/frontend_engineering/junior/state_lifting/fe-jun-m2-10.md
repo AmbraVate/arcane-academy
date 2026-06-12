@@ -126,6 +126,10 @@ Lifting state is the primary coordination mechanism in React. Before reaching fo
 - **Not lifting far enough.** State lives in one sibling, the other can't access it.
 - **Direct sibling communication.** Siblings cannot talk directly — always through the parent.
 
+## Mental Model
+
+Lifting state up is moving the master schedule from someone's desk to the wall of the shared office. While only one person needs the schedule, it lives happily in their drawer (local state in one component). The moment a *second* person needs it — the SearchBar sets a filter the ResultsList must read — a drawer copy can't work: siblings can't see into each other's desks, and React components genuinely cannot reach across to a sibling's state. The fix is structural, not clever: the schedule moves *up* to the nearest space both share — their common parent — and becomes wall-mounted (state in the closest common ancestor). From there, each party gets exactly the access they need: readers get a view of the wall (the value passed down as a prop), and writers get a marker on a string (a setter function passed down as a prop, so the child can request changes without owning the board). The rule generalising it: state lives at the *lowest* component that still sits above everyone who uses it — no lower (siblings go blind) and no higher (the whole building re-renders for one team's schedule). When two components need the same changing fact, stop looking for a way to connect them sideways; find their common ceiling and mount it there.
+
 ## Mini Summary
 
 - Lift state to the lowest common ancestor of all components that need it

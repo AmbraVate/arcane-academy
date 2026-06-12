@@ -194,16 +194,16 @@ describe('formatPrice', () => {
 ## Running Tests
 
 ```bash
-# Run all tests once
+ # Run all tests once
 npx vitest run
 
-# Run in watch mode (re-runs on file save)
+ # Run in watch mode (re-runs on file save)
 npx vitest
 
-# Run a specific file
+ # Run a specific file
 npx vitest run src/utils/formatPrice.test.ts
 
-# Show coverage
+ # Show coverage
 npx vitest run --coverage
 ```
 

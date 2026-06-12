@@ -182,12 +182,26 @@ Semantic HTML is not just about structure and SEO. Every semantic element is als
 </table>
 ```
 
+## Why It Matters
+
+Semantic HTML is accessibility you get for free — the browser and assistive tech already know what `<button>`, `<nav>`, and `<h1>` mean:
+
+- A real `<button>` is keyboard-focusable, announces itself correctly, and responds to Enter and Space — a clickable `<div>` does none of that until you rebuild it all by hand
+- Landmarks (`<header>`, `<main>`, `<nav>`) let screen reader users jump around a page the way sighted users skim
+- Heading hierarchy is the document's table of contents; skipped levels are missing rungs on a ladder
+
+The least accessible sites aren't usually malicious — they're `<div>` soup written by people who never learned this lesson.
+
 ## Common Mistakes
 
 - `<a href="#">` for actions (use `<button>`)
 - `<button>` for navigation (use `<a href>`)
 - Skipping heading levels (`h1` → `h3`)
 - Tables without `<th>`, `scope`, or `<caption>`
+
+## Mental Model
+
+Semantic elements are uniforms. In a hospital you instantly know who's a surgeon, a nurse, a visitor — the uniform carries the meaning, no introduction needed. `<button>`, `<nav>`, `<h2>` are uniforms: browsers, screen readers, and search engines recognise the role on sight and grant matching powers (focusability, announcements, shortcuts). A `<div onclick=...>` is a person in plain clothes claiming to be a surgeon — every capability must be proven manually (tabindex, role, key handlers), and something always gets forgotten. Dress your elements in the right uniform and the institution treats them correctly without further effort.
 
 ## Mini Summary
 

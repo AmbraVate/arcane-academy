@@ -130,6 +130,10 @@ Global state examples:
 - **Keeping too much in global state.** UI state (modal open, tab selected) rarely needs to be global.
 - **Prop drilling instead of lifting state.** If you're drilling through 4 levels, consider Context.
 
+## Mental Model
+
+Local versus global state is desk drawer versus office filing room. Your desk drawer (local state) holds what only you use — your notes, your stapler, this form's draft: instantly reachable, nobody else's business, and when you leave (the component unmounts), the drawer clears with no ceremony. The filing room (global state) exists for documents *many* people genuinely need — the customer registry (logged-in user), the company-wide settings (theme) — and it charges rent: everything in it needs labelling, access conventions, and coordination, because every change ripples to everyone reading it. The failure pattern this analogy inoculates against is filing-room hoarding: moving your stapler to the filing room "in case someone needs it" — hoisting form inputs, toggles, and hover flags into global stores — which buys no sharing benefit and pays full coordination cost forever. The professional default runs the other way: everything starts in the desk drawer, and a document earns its filing-room slot only when a *second, distant* reader actually appears. State, like paperwork, should live as close to its user as possible and only as far away as genuinely shared.
+
 ## Mini Summary
 
 - Local state: lives in one component, `useState`

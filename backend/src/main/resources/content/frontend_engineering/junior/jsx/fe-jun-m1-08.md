@@ -152,6 +152,10 @@ function UserGreeting({ user, notifications }) {
 - **Using index as key.** Breaks when list order changes. Use stable IDs.
 - **Rendering `false`, `null`, `undefined`.** These render nothing — but `0` does render! Use `count > 0 && ...` not `count && ...`.
 
+## Mental Model
+
+Curly braces in JSX are portholes from markup back into JavaScript — and what fits through a porthole is precisely an *expression*: anything that evaluates to a value. Think of JSX as a form being filled by a clerk: each `{}` is a blank, and the clerk computes something to write in it — `{user.name}`, `{price * 1.2}`, `{isOpen ? 'Close' : 'Open'}` all produce a value to inscribe. What can't go in the blank is anything that *does* rather than *is*: an `if` statement, a `for` loop, a variable declaration — statements perform actions but evaluate to nothing, and you can't write "nothing" in a blank. That single distinction decodes all the idioms: ternaries instead of if (an if that *is* a value), `&&` for conditional display (an expression that evaluates to the element or nothing), `.map()` instead of loops (an expression producing an array of elements). When JSX rejects your code, ask one question: does this evaluate to a value? If not, compute the value above the return, then pass it through the porthole.
+
 ## Mini Summary
 
 - `{}` embeds any JS expression into JSX

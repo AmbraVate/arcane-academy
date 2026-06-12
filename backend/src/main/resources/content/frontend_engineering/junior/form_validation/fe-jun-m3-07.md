@@ -116,6 +116,21 @@ function Form() {
 }
 ```
 
+## Mental Model
+
+Form validation done well behaves like a good driving instructor, and the strategies map onto teaching styles. The instructor who grabs the wheel at every micro-error (validating on each keystroke) makes learning unbearable — you're told your email is invalid while you're still four characters into typing it; the instructor who stays silent for the whole lesson and fails you at the test centre (submit-only validation) wastes your entire journey before revealing what you'd been doing wrong since the first junction. The instructor people actually learn from watches quietly while you attempt the manoeuvre, comments when you've *finished* it (validate on blur, when the user leaves the field), and — once you've made a mistake — gives immediate feedback on your correction attempts ("now you've got it": switching that field to validate-on-change so the error clears the moment it's fixed). The dual-instructor structure completes the model: your in-car instructor is the client-side validation — fast, friendly, there to help you succeed — but the *examiner* is the server, and only the examiner's verdict counts: anyone can bribe or bypass the in-car instructor (devtools), so the test centre re-checks everything from scratch, and a candidate who somehow skipped lessons entirely still cannot skip the exam. And good instructors don't invent rules: they teach the actual highway code, not personal preferences — the form equivalent being constraints that encode *real* requirements rather than blocking legitimate names, addresses, and formats the developer didn't anticipate. Comment after the manoeuvre, coach corrections live, let the examiner be final, and teach only the real rules: validation strategy in one driving lesson.
+
+## Why It Matters
+
+Validation strategy — what to check, where, and *when* — shapes whether forms feel helpful or hostile, and it's a genuine design discipline rather than an error-checking afterthought:
+
+- Timing is the UX lever juniors underestimate: validate on every keystroke and users get scolded for emails they haven't finished typing; validate only on submit and they fill twelve fields before learning the first was wrong — the professional pattern ("reward early, punish late": validate on blur, re-validate on change once a field has erred) exists because both extremes measurably increase abandonment
+- Layering is non-negotiable architecture: client-side validation is *user experience* (instant feedback, no round trip) while server-side validation is *the actual security boundary* — every client check can be bypassed with devtools in seconds, so the rule is absolute: client validates for kindness, server validates for truth, and the client must also gracefully display the server's verdicts
+- Strategy includes what *not* to block: over-strict rules (rejecting valid international names, postcodes, or email formats; refusing to let users type "wrong" characters at all) cause more real-world failure than lax ones — constraints should encode genuine requirements, not the developer's assumptions about data
+- The state mechanics follow the strategy: per-field error state, a touched/dirty record so errors appear only after interaction, and validity derived from current values — all straight applications of this module's state patterns, which is why validation is where form state skills compound into something product-shaped
+
+Forms are where users give you money, identity, and trust. Validation strategy is the difference between a form that guides and a form that fights.
+
 ## Mini Summary
 - ✔ Separate errors state from form values state
 - ✔ validate() returns { fieldName: message } — empty = valid

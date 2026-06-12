@@ -139,6 +139,10 @@ One component. Three uses. Three different appearances based on props. If the ba
 - **Making components too small.** Wrapping every `<p>` tag in a component adds complexity with no benefit.
 - **Duplicating logic across components.** If two components have similar logic, extract it into a shared component or hook.
 
+## Mental Model
+
+Component-based thinking is seeing a page the way a builder sees a house: not as one object but as an assembly of parts — walls made of bricks, bricks made of clay. A dashboard isn't a dashboard; it's a Header, a Sidebar, and a CardGrid; the CardGrid is Cards; a Card is an Avatar, a Title, and a Badge. Two rules make the assembly work: each part has one job and a clear boundary (you can point at where the Card ends), and parts nest — big components are *compositions* of small ones, not bigger blobs. Once your eye decomposes designs automatically — "that's three components, one repeated" — you've made the shift, and every framework after React will feel familiar, because they all build with bricks.
+
 ## Mini Summary
 
 - Components are self-contained, reusable UI units

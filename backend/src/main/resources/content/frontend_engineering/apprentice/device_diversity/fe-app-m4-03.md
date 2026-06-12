@@ -187,6 +187,10 @@ The constraints of mobile make you a better designer.
 
 Over 60% of users are on mobile. Mobile-first ensures the majority experience works without media queries at all. Desktop enhancements are additive — they never break the mobile baseline.
 
+## Mental Model
+
+Mobile-first is packing a small suitcase first. If you start with a huge case (desktop design), everything goes in unsorted — and when you're forced to repack into a carry-on (mobile), you're cutting and cramming under pressure, which is exactly how desktop sites become broken mobile sites. Start with the carry-on instead: only the essentials fit, so you decide what truly matters. Given a bigger case later (wider screens), you *add* comfort items deliberately with `min-width` queries. Constraint first, enhancement second — the design grows up gracefully instead of shrinking down painfully.
+
 ## Mini Summary
 
 - ✔ Mobile-first: base styles = mobile; `min-width` queries add for larger screens

@@ -114,6 +114,21 @@ function ContactForm() {
 }
 ```
 
+## Mental Model
+
+Managing input state is running a hotel's room-status board, and the scaling lesson is what happens as the hotel grows. One room (a single input) is easy: a sticky note — "room 1: occupied" — one `useState`, one handler, done. The trouble is success: at twelve rooms (a real form), twelve sticky notes with twelve hand-written update routines means the front desk drowns in nearly identical paperwork — every new room demands another note, another routine, another chance to copy-paste the wrong one (the classic bug where the email field's handler updates the name field). The professional fix is the *unified board*: one structured panel holding every room's status (a single state object — `{name, email, phone}`), updated by one generic procedure that reads the room number off the incoming report and flips exactly that slot — the computed-key handler, `[e.target.name]: e.target.value`, where each input's `name` attribute is its room number. Two board disciplines keep it sound. Updates *replace the whole board photo, changed slot included* — `setForm({...form, [name]: value})` — because the board's history (React's state) tracks photographs, not pencil edits; forget the spread and your new photo shows one room's status on an otherwise blank board, the all-fields-vanish bug every junior meets once. And reports arrive as text: everything `e.target.value` delivers is a string — room 12 reporting "4" guests means the *characters* "4" — so numeric fields get converted deliberately at the board, not hopefully at checkout. One board, room-numbered slots, one procedure, photographs not pencil marks: input state at any scale.
+
+## Why It Matters
+
+Input state is where controlled forms become real engineering — one field is a demo; a form's worth of fields with the right state shape is the daily job:
+
+- The `value`/`onChange`/`e.target.value` loop is the most-typed pattern in React form code: making it reflexive (including the variations — `checked` for checkboxes, `valueAsNumber` pitfalls, why everything from the DOM arrives as a string) removes friction from every form you'll ever write
+- State shape is a scaling decision made early: separate `useState` per field is fine at two fields and unmanageable at twelve, while a single object with a generic handler (`setForm({...form, [name]: value})` keyed by input `name`) is the pattern that keeps a registration form to one handler instead of nine — knowing both, and the crossover point, is the lesson's core judgement
+- The update rules from module two apply with new teeth: spreading the old object is mandatory (forget it and every keystroke erases the other fields — a spectacular, memorable bug), and the single-source principle means formatting, trimming, and constraining input happens in exactly one place, the handler
+- This is also the foundation under every form library: Formik, React Hook Form, and friends are abstractions over precisely this state-per-field problem — understanding the manual version is what lets you use the libraries as tools instead of incantations
+
+Every product is forms somewhere — auth, checkout, settings, search. The engineer for whom multi-field input state is mechanical gets to spend their attention on the product instead.
+
 ## Mini Summary
 - ✔ One state object for all form fields
 - ✔ Spread + computed key for single-field updates

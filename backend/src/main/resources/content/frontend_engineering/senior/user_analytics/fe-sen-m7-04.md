@@ -170,6 +170,17 @@ Step 5: Onboarding complete → 14%
 Largest drop: Step 1→2 (58%). Investigate the CTA.
 ```
 
+## Why It Matters
+
+User analytics is how a team stops arguing about what users do and starts knowing — the frontend instruments the truth that opinions were standing in for:
+
+- Feature debates end differently when you can see that the redesigned filter is used by 2% of sessions, or that half of mobile users abandon checkout at the address form — funnels and event data convert hunches into decisions
+- Engineering owns the data's integrity: a fired-twice event, a dropped one, or an inconsistent naming scheme silently corrupts every downstream decision, and nobody notices until two dashboards disagree in an executive meeting
+- A deliberate tracking plan (named events, defined properties, ownership) is the difference between an analytics asset and a swamp of `click_button_final_v2` events nobody trusts
+- Privacy is a design constraint, not a checkbox: consent gating, data minimisation, and anonymisation are legal requirements under GDPR — and the engineering patterns for them must exist before the first event fires
+
+The product decisions made on top of this data dwarf the cost of instrumenting it well. Sloppy analytics is worse than none: it manufactures confident wrong answers.
+
 ## Common Mistakes
 
 - **Tracking everything.** Data volume without signal. Track meaningful events, not every click.
@@ -177,6 +188,10 @@ Largest drop: Step 1→2 (58%). Investigate the CTA.
 - **Not requiring consent.** Analytics cookies require explicit consent in GDPR jurisdictions.
 - **Vanity metrics in dashboards.** Remove them. They give false confidence and waste time in meetings.
 - **No clear questions.** Analytics should answer specific product questions, not collect data speculatively.
+
+## Mental Model
+
+User analytics is the census of your product's city, and engineers are the census bureau. Decisions of consequence — where to build roads (roadmap priorities), which neighbourhoods are thriving or emptying (feature adoption, funnels) — get made from census tables, so the bureau's real job is *data integrity*, not data volume. A census taker who counts some houses twice (duplicate events), skips a street (missing instrumentation), or lets each taker invent their own form (inconsistent event naming) doesn't produce a slightly worse census — they produce confident fiction that misallocates the city's budget for years. Hence the bureau's disciplines: one standard form (the tracking plan), field training (instrumentation review), and spot audits (data QA). And a census has ethics: residents are counted with consent, answers are anonymised, and you record what serves planning — not everything you could see through the window.
 
 ## Mini Summary
 

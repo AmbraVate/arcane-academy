@@ -148,6 +148,10 @@ function Modal({ isOpen, onClose, title, children }) {
 - **Deeply nested children for structural layouts.** Consider named slot props (`header`, `footer`) for complex layouts.
 - **Overusing children for simple text.** A `label` prop is clearer for a single string.
 
+## Mental Model
+
+The `children` prop turns a component from a finished product into a *picture frame*. A regular prop-driven component is like a printed poster — the parent chooses among the variants the designer anticipated (`title="..."`, `variant="dark"`). A frame makes no claim about its contents: it provides the border, the matting, the mounting hardware (the consistent styling, padding, behaviour), and whatever the owner places inside — a photo, a child's drawing, a mirror — it presents beautifully. Writing `<Card>` ... anything ... `</Card>` is placing content into the frame; inside the Card component, `{children}` marks the opening where the contents show through. The mental unlock is realising which problems are frame problems: Modal, Card, Layout, Sidebar — components whose job is *presentation around unknown content* — should almost never enumerate what they might contain via props. The frame-maker doesn't ask you what photo you'll insert; that's precisely what makes one frame design serve a thousand different walls. When you find yourself adding a fourth content prop (`title`, `subtitle`, `body`, `footer`...) to a container, stop: you're carving slots into a poster when you should be building a frame.
+
 ## Mini Summary
 
 - `children` is auto-populated from JSX nested inside a component

@@ -136,7 +136,7 @@ There is no single definition of algorithmic fairness — these are often mathem
 Calibrate for the criterion that matches the domain's harm model. In educational recommendations: equal opportunity (no group is systematically under-recommended) is typically the relevant criterion.
 
 ```python
-# Fairness audit (pseudocode — using Fairlearn or Aequitas)
+ # Fairness audit (pseudocode — using Fairlearn or Aequitas)
 from fairlearn.metrics import MetricFrame
 
 metric_frame = MetricFrame(
@@ -147,8 +147,8 @@ metric_frame = MetricFrame(
 )
 
 print(metric_frame.by_group)
-# output: disparities in recommendation rates by income quintile
-# threshold: maximum 5% disparity per organisation policy
+ # output: disparities in recommendation rates by income quintile
+ # threshold: maximum 5% disparity per organisation policy
 ```
 
 ## Data Ethics Review

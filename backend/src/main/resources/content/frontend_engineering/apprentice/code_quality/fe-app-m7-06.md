@@ -157,12 +157,26 @@ Every duplicated block of CSS is two things you need to update instead of one. E
 - Don't abstract until the duplication exists
 - Premature abstraction creates wrong abstractions
 
+## Why It Matters
+
+Reusable components are the core economic idea of modern frontend work — build once, use everywhere, fix once:
+
+- One Button component means one place to fix the focus style, not forty copy-pasted variants drifting apart
+- Reuse enforces visual consistency automatically; users experience one product, not a patchwork
+- Designing for reuse forces clearer thinking: what varies (props) and what doesn't (the component's core)
+
+Every design system — from small team libraries to industry giants like Material UI — is this lesson applied at scale. Learning to spot the repeating pattern is the skill itself.
+
 ## Common Mistakes
 
 - Abstracting at the first instance (before the pattern is clear)
 - Never abstracting (duplication accumulates into maintenance nightmare)
 - Over-configuring a component (too many props/classes create complexity)
 - Naming components for their appearance (`BigBlueButton`) not purpose (`PrimaryButton`)
+
+## Mental Model
+
+Think of reusable components as LEGO bricks versus hand-carved pieces. A hand-carved part fits one model perfectly — and nothing else, and if it cracks you re-carve it from memory. LEGO bricks are standardised: studs on top, tubes underneath, infinite combinations. A good component is a brick — a defined shape (its appearance and behaviour) with standard connection points (its props). You stop building pages from scratch and start assembling them, and improving one brick instantly upgrades every model that uses it.
 
 ## Mini Summary
 

@@ -133,6 +133,21 @@ class ErrorBoundary extends React.Component {
 }
 ```
 
+## Mental Model
+
+A good error state behaves like a well-trained flight attendant during turbulence, and the comparison supplies every design rule. First: calm, specific, immediate — "we're experiencing turbulence, please be seated; we expect it to pass in ten minutes" — never silence (the request failed and the UI shows nothing), never the cockpit's raw instrumentation shouted into the cabin (`ECONNREFUSED`, stack traces, error codes the passenger can't act on), and never a grinning "Oopsie!" while the oxygen masks deploy (cutesy copy at a consequence-bearing failure — mismatched tone reads as a company that doesn't grasp what just happened to you). Second: the announcement always contains *what to do now* — stay seated, belt on — because information without action is just sophisticated alarm; every error UI needs its equivalent verb: Retry for the transient, Fix-this-field for the correctable, Go back / Contact support for the dead end, each matched to what actually went wrong rather than one generic apology for all weather. Third: the crew protects what you'd lose in the chaos — your typed data, your place in the flow — because turbulence that costs passengers their belongings becomes the story they tell about the airline; an error that erases a half-completed form converts one failure into two. Fourth: announcements go over the *speakers*, not just the seatbelt sign — `role="alert"` and live regions are the audio channel, without which non-sighted passengers experience the turbulence with no announcement at all. And the deepest parallel: passengers don't rate airlines by whether turbulence ever happened — they rate them by how the crew behaved when it did. Calm specifics, a clear next action, belongings protected, everyone informed: error states as cabin crew training.
+
+## Why It Matters
+
+Error states are your product's behaviour at its worst moment — things have already gone wrong, the user is already frustrated, and what you render next either recovers them or loses them:
+
+- Errors are not one state but a family, and conflating them is the root design failure: a network drop (retryable, not the user's fault), a validation rejection (fixable, specific), a permission wall (not fixable here, needs a path elsewhere), and a genuine crash (apologise, offer escape) each demand different copy, different actions, and different tone — the single generic "Something went wrong" treats a flat tyre and an engine fire identically
+- Recovery is the design goal, not display: every error state needs an *action* — retry for transient failures, focus-the-field for fixable input, "go back" or "contact support" for dead ends — and must preserve the user's context and data, because an error screen that loses their work converts a hiccup into abandonment
+- Honesty has limits in both directions: raw technical detail (`AxiosError 500 at /api/v2/orders`) frightens and helps no one, while over-cheerful vagueness ("Oops! 🙈") at a serious failure (their payment may or may not have gone through) destroys trust — the craft is plain language about impact and next step, with technical detail logged for you, not shown to them
+- The mechanics complete this module's arc: error is a state alongside loading and success (the fetch trio), it must reach assistive technology (`role="alert"` — a visually obvious failure that screen readers never announce is a silent dead end), and component-level containment (error boundaries, scoped fallbacks) keeps one failed region from taking down the page
+
+Users forgive failures surprisingly well when the failure *handles them* well. Error states are where that handling is designed — which makes them, quietly, a retention feature.
+
 ## Mini Summary
 - ✔ Show a specific, user-friendly error message
 - ✔ Distinguish: network error vs server error vs not-found

@@ -176,7 +176,7 @@ Feedback loop design:
 ## Building the Decision Monitoring Stack
 
 ```python
-# Decision quality monitoring
+ # Decision quality monitoring
 class RecommendationMonitor:
     def daily_health_check(self):
         metrics = {

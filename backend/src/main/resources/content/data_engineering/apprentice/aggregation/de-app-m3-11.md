@@ -213,6 +213,16 @@ SELECT
 FROM orders;
 ```
 
+## Why It Matters
+
+SUM is how databases turn rows into revenue figures, invoice totals, and stock levels — numbers people act on directly:
+
+- Finance teams reconcile accounts against SUMs; a NULL-handling mistake shows up as money that "vanished"
+- Summing the wrong grain (order lines vs orders) double-counts and inflates reports
+- A SUM over an unfiltered table can quietly include cancelled or test orders
+
+Because SUM results feed decisions with money attached, knowing exactly which rows you are summing — and what happens when values are NULL — is a core professional skill, not a syntax detail.
+
 ## Common Mistakes
 
 - **Using SUM to count rows**: `SUM(1)` works (adds 1 per row = COUNT), but `COUNT(*)` is clearer. Use SUM for values, COUNT for row counts.

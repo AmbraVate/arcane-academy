@@ -189,12 +189,27 @@ function RouteChangeAnnouncer() {
 // Follows ARIA APG Menu pattern
 ```
 
+## Why It Matters
+
+Drag-and-drop, comboboxes, sortable tables, multi-step wizards — complex interactions are where accessibility usually dies, because no native element hands you the behaviour for free:
+
+- A custom widget that ignores keyboard users locks out not only screen reader users but everyone who can't use a mouse — motor impairments, power users, and anyone with a broken trackpad
+- ARIA is a contract, not decoration: `role="listbox"` *promises* arrow-key behaviour, and an unfulfilled promise is worse than no ARIA at all, because assistive technology relays the promise to the user
+- The WAI-ARIA Authoring Practices patterns exist because these problems are solved; teams that improvise their own keyboard models produce widgets that work differently from every other site the user knows
+- Live regions, focus management on open/close, and escape hatches decide whether a modal is a dialog or a trap
+
+Senior engineers are the ones reviewers trust to say "this combobox is not shippable yet" — and to know precisely what's missing. That judgement is what this lesson builds.
+
 ## Common Mistakes
 
 - **Not returning focus after modal close.** Keyboard users lose their position.
 - **Using aria-live='assertive' for non-urgent updates.** It interrupts — use only for errors and critical alerts.
 - **Forgetting role='dialog' and aria-modal.** Without these, screen readers don't know a dialog is open — they read the full page.
 - **Not testing with a real keyboard and screen reader.** Code that looks correct may still be broken in practice.
+
+## Mental Model
+
+Building a complex widget is staging a play with an understudy track. The mouse interaction is the lead performance everyone watches — but a professional production rehearses the understudy (keyboard path) with equal rigour: every scene reachable (Tab/arrow keys), every entrance and exit blocked out (focus moves into the dialog on open, returns to the trigger on close), every plot point spoken aloud for the audience that can't see the stage (ARIA roles, states, and live announcements). The classic failure is rehearsing only the lead: the show looks perfect until the night the lead is unavailable — the user without a mouse — and the production simply stops. Review your widgets the way a director reviews the understudy run: unplug the mouse, close your eyes, and ask whether the play still tells its whole story.
 
 ## Mini Summary
 

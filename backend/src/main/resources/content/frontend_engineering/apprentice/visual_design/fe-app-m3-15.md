@@ -180,6 +180,10 @@ Consistency reduces cognitive load — users learn patterns once and apply them 
 - Inconsistent component styles caused by different developers using different values
 - Confusing consistency with monotony — consistency in rules, variation in application
 
+## Mental Model
+
+Consistency is the grammar of an interface. You don't notice grammar while it's correct — you simply understand sentences effortlessly. Slip into broken grammar mid-paragraph and the reader stops *reading* and starts *decoding*. UIs work identically: when every primary button looks the same, users stop seeing buttons and just act; when the same action is a blue button here, a green link there, and an icon elsewhere, each screen becomes a fresh translation exercise. Style guides and component reuse aren't bureaucracy — they're the shared grammar that keeps users fluent in your product. Every inconsistency taxes them a little; the taxes compound.
+
 ## Mini Summary
 
 - ✔ Consistency reduces cognitive load — users apply learned patterns everywhere

@@ -163,12 +163,27 @@ Alert condition: SLI trending towards SLO breach (not only on breach)
 - Synthetic canary success rate
 - Active incidents
 
+## Why It Matters
+
+Monitoring is what turns "is the frontend okay?" from a feeling into a dashboard — and the frontend is where user experience actually happens, so it deserves the same observability as any backend service:
+
+- Real User Monitoring captures what synthetic tests can't: the 75th-percentile experience on mid-range Androids over cellular, which is routinely several times worse than your MacBook-on-fibre baseline
+- Trends beat snapshots — a Core Web Vitals dashboard that degrades 5% per sprint is an early warning system; a one-off Lighthouse run is a photo of a moving train
+- Alerting closes the loop: error-rate and vitals thresholds that page someone convert silent client-side degradation into incidents with owners and timelines
+- Performance regressions are business regressions — conversion, bounce, and search ranking all track the metrics you'd be monitoring, which is what justifies the engineering time in any prioritisation debate
+
+Teams without frontend monitoring learn about problems from app store reviews and support tickets — the most expensive, slowest, least actionable telemetry there is.
+
 ## Common Mistakes
 
 - **Using only Lighthouse / synthetic.** Misses real user diversity.
 - **Using only RUM.** Doesn't detect regressions before users are affected.
 - **Alerting on averages.** Average hides the tail. Monitor P75 and P95.
 - **No business metric correlation.** Connect LCP degradation to conversion rate — makes the business case for performance work.
+
+## Mental Model
+
+Frontend monitoring is the difference between a weather station network and stepping outside to check the sky. Looking out your window (testing on your own machine) tells you the weather in one privileged location — fast hardware, clean network, latest browser. Your users live across the whole map: phone-hardware climates, network microclimates, browser weather systems. RUM is the station network reporting conditions where people actually live; percentiles are reading the map honestly (the 75th percentile is "what's the weather like for the wetter quarter of the country", not the national average that hides the storms). Dashboards are the climate record — drift visible across months, regressions visible at deploy boundaries — and alerts are the severe-weather warnings that wake someone before the flood, not after. The cardinal sin in both fields is the same: forecasting the nation's weather from outside your own front door.
 
 ## Mini Summary
 

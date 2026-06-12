@@ -172,12 +172,27 @@ theme: {
 
 **Design-to-code connection:** Tools like Style Dictionary, Token Studio, and Figma Variables convert design tokens from a design tool into CSS custom properties, Tailwind config, or JavaScript objects.
 
+## Why It Matters
+
+Design tokens are the atoms of a design system — the layer that makes consistency *mechanical* instead of aspirational:
+
+- A token like `color-action-primary` is a decision recorded once and consumed everywhere; change it and every product repaints overnight — the alternative is a find-and-replace across forty repos and a month of visual QA
+- Semantic naming is the entire trick: `--blue-500` tells you what a value *is*, `--color-surface-raised` tells you what it's *for* — only the second survives a rebrand, supports dark mode, and lets a new engineer pick correctly without asking
+- Tokens are the bridge between design and engineering tooling: one source of truth (often JSON) compiles to CSS variables, TypeScript constants, and native platform styles, ending the "Figma says 8px, the app says 10px" class of drift
+- Theming, white-labelling, density modes, and dark mode all stop being projects and become token swaps — capabilities you get *because* values were abstracted from usage
+
+Hardcoded values are design decisions nobody can find again. Tokens are those same decisions made addressable, versionable, and changeable — which is what "system" in design system actually means.
+
 ## Common Mistakes
 
 - **Using primitive tokens in components.** Components should reference semantic tokens (purpose), not primitive tokens (specific value).
 - **Inconsistent naming.** Token names should be predictable: `[category]-[variant]-[state]`. Not: `blue1`, `myBlue`, `headerColor`.
 - **Too many tokens.** A token for every possible shade creates maintenance overhead. Define what you use; add new tokens deliberately.
 - **Not connecting to Figma.** If tokens exist only in code, designers use different values — the disconnect reappears.
+
+## Mental Model
+
+Design tokens are a currency system replacing barter. Without tokens, every component negotiates value directly — this button trades in `#3B82F6`, that link in `#3type B82F5` (a typo nobody caught), each transaction private and unrecorded. Tokens introduce minted currency: a central bank (the token file) issues named denominations (`color-action-primary`, `space-md`), and components transact only in those. The power is monetary policy: revalue the currency once at the bank — a rebrand, a dark theme, an accessibility contrast fix — and every transaction in the economy updates instantly and consistently. Counterfeits (hardcoded hex values smuggled into components) are what audits hunt, because each one is a transaction the bank can't see or update. And like real currencies, names must be stable promises: components budget in `space-md`, trusting the bank — quietly redefining what a denomination means is how you crash an economy.
 
 ## Mini Summary
 

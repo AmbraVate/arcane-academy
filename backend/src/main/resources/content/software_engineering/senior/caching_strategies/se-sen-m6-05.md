@@ -195,7 +195,7 @@ Caching is the most impactful single technique for read-heavy service performanc
 **Example 1: Spring @Cacheable with Redis**
 
 ```yaml
-# application.yml
+ # application.yml
 spring:
   cache:
     type: redis

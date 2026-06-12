@@ -183,6 +183,10 @@ img {
 
 Images typically make up 60–80% of a page's total weight. Optimised responsive images can reduce load time by 60% for mobile users. Google uses Core Web Vitals (which includes image performance) in search rankings.
 
+## Mental Model
+
+Responsive images work like a courier choosing a vehicle. The package is the picture; the delivery is the user's screen and connection. Shipping one giant original to everyone is sending a removal van for every parcel — a 4000px photo delivered to a phone on mobile data wastes time, battery, and bandwidth. `srcset` is the courier's garage: the same image in several sizes, and the *browser* (which alone knows the screen, pixel density, and network) picks the right vehicle per delivery. Your job isn't choosing the vehicle — it's stocking the garage and describing the route (`sizes`) honestly.
+
 ## Mini Summary
 
 - ✔ `max-width: 100%; height: auto` — every image is responsive by default

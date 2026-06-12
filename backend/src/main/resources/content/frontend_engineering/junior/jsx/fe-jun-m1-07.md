@@ -138,6 +138,10 @@ JSX expressions: class conditionals, formatted values, conditional rendering —
 - **Multiple root elements without a Fragment.** JSX must return a single root. Use `<>...</>`.
 - **Treating JSX as a string.** You can't do `"<div>" + variable + "</div>"` — use JSX expressions.
 
+## Mental Model
+
+JSX is HTML-shaped JavaScript, not HTML — think of it as writing stage directions that get compiled into puppetry instructions. The script *looks* like the performance ("a div appears, containing a heading"), which is why it's readable, but it never reaches the browser; a build step translates every tag into a `React.createElement(...)` function call — strings pulled by JavaScript. Once you hold that — every tag is secretly a function call — JSX's quirks stop being arbitrary: `class` becomes `className` because you're writing JavaScript where `class` is reserved; expressions slot in with `{}` because you're already *inside* code; tags must close because function calls need closing parens. JSX isn't a templating language bolted onto JS — it's JS wearing HTML's costume.
+
 ## Mini Summary
 
 - JSX is JavaScript syntax extension that looks like HTML

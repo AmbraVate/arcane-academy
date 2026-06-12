@@ -132,6 +132,10 @@ Better: move theme lower or use React.memo on components that don't use it
 - **Not memoising expensive pure components.** Use React.memo to prevent unnecessary re-renders.
 - **Objects as dependencies.** `{ count }` as a prop creates a new object each render, breaking reference equality.
 
+## Mental Model
+
+A state update triggering a re-render works like editing a document with track-changes and a fastidious printer. When you call a setter, React doesn't grab a brush and repaint your screen — it re-runs your component function to produce a fresh *manuscript* (the new JSX), lays it beside the previous one, and lets the printer reprint only the lines that differ (the diff against the virtual DOM). Holding this two-phase picture — *describe everything, change little* — explains the behaviours that otherwise look wasteful or weird. Your whole function re-running on every keystroke is fine: producing the manuscript is cheap; it's the printing (DOM changes) that costs, and React minimises exactly that. Re-renders cascade downward — when a parent reprints, its children's sections get re-described too — which is why state should live *low*: a keystroke in a search box shouldn't re-manuscript the whole page, and moving that state into the SearchBar confines the reprinting to one paragraph. And React batching several setter calls into one reprint stops surprising you: the printer reasonably waits for you to finish marking edits before running the presses. Re-renders aren't the enemy — *wide* re-renders from state perched too high are; place the scoreboard near its only viewer.
+
 ## Mini Summary
 
 - State change = component + all children re-render

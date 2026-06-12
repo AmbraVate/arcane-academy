@@ -161,6 +161,10 @@ TypeError: Cannot read properties of undefined (reading 'map')
 
 Reading errors carefully is 10× faster than guessing. The error message contains: what failed, where it failed, and often why it failed. Treating error messages as noise and refreshing the page hoping it resolves is the most common and most expensive debugging mistake.
 
+## Mental Model
+
+Treat a browser error like a return address on a letter, not an insult. The message has three useful parts: *what* went wrong (`TypeError: cannot read properties of undefined`), *where* (file and line number), and *how the code got there* (the stack trace, read top-down from the failure point). Beginners read errors as "it's broken"; debuggers read them as coordinates. The error is the program handing you a map marked with an X — your job is simply to go to the X and look around, not to wander the whole codebase guessing.
+
 ## Mini Summary
 
 - ✔ Read the error type, message, and stack trace

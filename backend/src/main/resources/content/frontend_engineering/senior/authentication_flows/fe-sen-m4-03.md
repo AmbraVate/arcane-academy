@@ -151,12 +151,27 @@ useEffect(() => {
 }, [tokenExpiresAt]);
 ```
 
+## Why It Matters
+
+Authentication is the front door of every application, and the frontend owns more of its security than most engineers realise:
+
+- Where tokens live (memory, cookie, localStorage) decides what an XSS payload can steal; flow design decides what a phishing page can replay
+- Broken auth UX has direct business cost — login friction and silent session expiry are leading causes of abandonment and support tickets
+- Modern flows (OAuth 2.0 with PKCE, OIDC) exist because earlier patterns leaked tokens through redirects, referrers, and browser history; using them correctly means understanding what each step defends against
+- Refresh-token rotation, logout-everywhere, and session timeout are *frontend-visible* behaviours users and auditors both judge
+
+Auth is also unforgiving: a payments page that's slow annoys people; a login flow that's wrong leaks accounts. Few areas of frontend work carry this blast radius, which is exactly why senior engineers are expected to reason about it precisely rather than copy a tutorial.
+
 ## Common Mistakes
 
 - **Storing tokens in localStorage.** Accessible to any JS on the page, including XSS injections.
 - **Long-lived access tokens.** Stolen access tokens can't be revoked (JWTs are stateless). Keep them short.
 - **Not implementing silent refresh.** Users get logged out at token expiry — frustrating.
 - **Trusting JWT claims on the frontend for security.** Always validate on the server.
+
+## Mental Model
+
+Think of authentication as a hotel, not a fortress with one gate. Logging in is check-in at reception: you prove identity once (credentials, MFA) and receive a key card (the token). The card — not your passport — opens doors thereafter; it is scoped (your floor, your room), it expires, and the hotel can void it instantly (revocation) without confiscating your passport. A refresh token is the reception desk's record that lets them quietly issue you tomorrow's card without re-checking your passport. Now every design question maps cleanly: where do you keep the card so a pickpocket in the lobby (XSS) can't lift it? What happens when a card expires mid-stay (silent refresh vs forced re-login)? And losing a card must never mean losing the passport — which is why tokens, not credentials, flow through the app.
 
 ## Mini Summary
 

@@ -164,7 +164,7 @@ MONITORING PLAN
 ## Embedding Ethics in Engineering Process
 
 ```yaml
-# Engineering RFC template addition
+ # Engineering RFC template addition
 ethics_review:
   required: true  # if project is Category A or B
   reviewer: data-ethics-committee@consortium.io

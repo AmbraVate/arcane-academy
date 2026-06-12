@@ -197,11 +197,25 @@ External Trigger → Action → Variable Reward → Investment → Internal Trig
 
 **Eyal's test:** Would you be comfortable if your users fully understood the psychological mechanisms you have designed? Would you be proud for your own children to use the product the way you have designed it?
 
+## Why It Matters
+
+Behavioural design is where interface decisions stop being aesthetic and start being ethical — every default, nudge, and friction point steers real human behaviour at scale:
+
+- Defaults are destiny: opt-out organ donation countries have donor rates several times higher than opt-in ones; your settings defaults carry the same gravity over what users share, spend, and consent to
+- The same toolkit builds both helpful nudges (savings prompts, safe defaults) and dark patterns (confirm-shaming, roach-motel subscriptions) — the technique is neutral, the application is not, and regulators increasingly treat manipulative patterns as enforcement targets
+- Leads set the line: a team will ship whatever converts unless someone with authority defines which persuasion techniques the product will not use
+
+Understanding behavioural mechanics is no longer optional at lead level — you either design behaviour deliberately and accountably, or you design it accidentally and find out from a journalist.
+
 ## Common Mistakes
 
 - **Optimising for engagement metrics instead of user outcomes.** High DAU and long session times can mask products that are compelling but unhelpful.
 - **Generic notifications at fixed times.** Prompts that don't align with individual user patterns and contexts are friction, not help.
 - **Treating variable rewards as always good.** Variable rewards create compulsion — which is appropriate for some products (games, social) and inappropriate for others (banking, health tools that should be reliable and predictable).
+
+## Mental Model
+
+Think of behavioural design as urban planning for decisions. A city planner never forces anyone anywhere, yet placement decides behaviour: the pedestrian bridge people actually use because it's on their desire line, the staircase nobody takes because the escalator is nearer the door. Interfaces are decision-cities — defaults are the paved path (most travelled by far), friction is distance and stairs, prompts are signage. The planner's ethics translate directly: good planning makes the *beneficial* route the easy one (the crosswalk where people cross anyway); hostile architecture makes the route the *operator* prefers easy and everything else exhausting (the cancellation buried four menus deep). Audit your product like a planner walking the city: where do the paved paths lead, and who benefits at each destination?
 
 ## Mini Summary
 

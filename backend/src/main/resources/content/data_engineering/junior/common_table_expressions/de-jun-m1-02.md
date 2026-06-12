@@ -252,6 +252,16 @@ ORDER BY ds.d;
 -- Produces a row for every day, including days with zero revenue
 ```
 
+## Why It Matters
+
+CTEs are the single biggest readability upgrade in SQL — they turn nested, inside-out queries into a top-to-bottom pipeline of named steps:
+
+- Complex business logic becomes reviewable: each WITH block has a name, a purpose, and can be tested by selecting from it alone
+- Recursive CTEs solve problems plain SQL otherwise cannot: org charts, category trees, bill-of-materials explosions
+- Teams adopt CTE style in code review for the same reason they demand well-named functions in application code
+
+The query you can read is the query you can trust. CTEs are how SQL earns that trust at production complexity.
+
 ## Common Mistakes
 
 - **Multiple WITH keywords**: Multiple CTEs use one WITH with comma-separated definitions. Two WITH keywords cause a syntax error.

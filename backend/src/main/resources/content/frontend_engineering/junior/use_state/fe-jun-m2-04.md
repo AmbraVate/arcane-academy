@@ -144,6 +144,10 @@ const [page, setPage] = useState(1);
 - **Calling useState conditionally.** Hooks must be called at the top level — never inside if/else.
 - **Mutating object/array state directly.** Always return a new object/array.
 
+## Mental Model
+
+`useState` is a coat-check, and the destructured pair is your ticket stub. A component function re-runs top to bottom on every render — its local variables are pockets that get *emptied* each time. Anything that must survive between runs has to be checked into the cloakroom (React's internal storage), and `useState` is the counter: you hand over an initial value once (`useState(0)` — the first deposit), and on every subsequent render you present your ticket and receive two things: the *current* contents (`count`) and a request form for swapping them (`setCount`). Two cloakroom rules explain the API's apparent strictness. You can't rummage the racks yourself — `count = 5` changes your local copy and the cloakroom never hears about it; only the official form (`setCount(5)`) updates the stored coat *and* notifies the front desk to re-run your component with the new contents. And tickets are issued by position — first `useState` call gets rack one, second gets rack two — which is exactly why hooks can't go inside `if` blocks or loops: shuffle the order of visits and everyone walks out wearing someone else's coat. Initial value as the deposit, value-plus-setter as the stub, setter as the only door to the racks: that's the entire mechanism.
+
 ## Mini Summary
 
 - `useState(initial)` returns `[currentValue, setter]`

@@ -169,11 +169,25 @@ box-sizing: border-box;
 - `inline` — flows with text, no width/height (span, a, strong)
 - `inline-block` — flows with text, respects width/height
 
+## Why It Matters
+
+The box model is the physics engine of CSS — every visual size and gap on every page obeys it:
+
+- "Why is this 320px wide when I set 300?" — the answer is always padding and border arithmetic, and `box-sizing` is the fix
+- Spacing bugs (unexpected gaps, overlapping elements) are box model misunderstandings in disguise
+- Every later layout tool — flexbox, grid, positioning — arranges *boxes*; you can't reason about arrangements of things you can't measure
+
+Most CSS frustration traces back to a fuzzy grasp of this one model. Make it solid and half your future layout bugs simply never happen.
+
 ## Common Mistakes
 
 - Forgetting that content-box width + padding > declared width
 - Using `width: 100%` without border-box on a padded element (overflow)
 - Not knowing about margin collapse (adjacent vertical margins merge)
+
+## Mental Model
+
+Every element is a framed picture being hung on a wall. The content is the photo itself; padding is the matting between photo and frame; the border is the frame; and margin is the personal space the frame demands from its neighbours — empty wall, owned but unpainted. The classic surprise: when you ask for "a 300px picture", CSS by default sizes only the *photo*, and the matting and frame make the whole thing larger on the wall. `box-sizing: border-box` flips the contract — "300px including frame" — which is why developers set it globally and think in framed sizes.
 
 ## Mini Summary
 

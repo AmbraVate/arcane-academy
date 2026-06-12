@@ -250,6 +250,16 @@ SELECT 'Average Order Value', AVG(total_amount) FROM orders;
 -- Produces a key-value summary table — common pattern for dashboards
 ```
 
+## Why It Matters
+
+Set operations answer comparison questions that joins answer only awkwardly — they think in whole result sets, not matched rows:
+
+- "Customers in system A but not system B" is one EXCEPT; reconciliation and migration checks live on this
+- UNION vs UNION ALL is a correctness *and* performance decision: one deduplicates (with a sort cost), one doesn't
+- INTERSECT expresses "in both" more clearly than the equivalent join, and clarity counts in audited queries
+
+Data engineers compare datasets constantly — environments, snapshots, sources. Set operations are the native vocabulary for that work.
+
 ## Common Mistakes
 
 - **Using UNION when UNION ALL is sufficient**: UNION adds a deduplication step. If the two datasets cannot possibly overlap (e.g. data from different date ranges), use UNION ALL — it's always faster.

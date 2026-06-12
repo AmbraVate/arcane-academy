@@ -111,10 +111,25 @@ function ResultsList({ query }) {
 
 **Decision rule:** Move state to the lowest common ancestor of all components that need it.
 
+## Why It Matters
+
+Shared state patterns are where React stops being a rendering library and becomes an architecture — and where undisciplined apps go to die:
+
+- Every interesting feature eventually needs two distant components to agree on one fact: the cart icon and the cart page, the filter bar and the results, the login form and the header avatar — sharing state correctly *is* the feature
+- The naive alternatives all fail characteristically: duplicating the state in both components drifts (two carts disagreeing); syncing copies with effects creates render loops and race conditions; reaching for a global store for everything turns every interaction into action-dispatching ceremony
+- Choosing the *pattern by the distance* is the actual skill — siblings share via a lifted parent; a subtree shares via context; truly app-wide facts earn a store — and each step up costs more indirection, so you take the cheapest one that works
+- Interviewers probe exactly this judgement, because it predicts how a candidate's codebases age: engineers who lift state correctly build apps that refactor cleanly; engineers who don't build apps where every fact has three owners
+
+State management libraries, context, reducers — the entire ecosystem above this lesson — are elaborations of one question: *who owns this fact, and how do its readers reach it?* Answer that well and the tools stay simple.
+
 ## Common Mistakes
 - State in the wrong component — causes one-way sync issues
 - Lifting too high — prop drilling results (covered in the next lesson)
 - Duplicating state instead of lifting
+
+## Mental Model
+
+Shared state is a question of jurisdiction, and the patterns are levels of government. A household fact (one component's input draft) is governed at the kitchen table — local state, no paperwork. A fact two neighbours share (sibling components) goes to the *parish council* — lifted to the common parent, which holds the record and grants each neighbour read access (props) and petition forms (setters). A fact a whole district relies on (theme, current user, for one subtree) goes *regional* — context, a noticeboard any resident of that region can consult without the message being hand-carried through every household between (prop drilling). And genuinely national facts — authentication, the cart in a commerce app — may justify *federal* infrastructure: a store, with its formal processes. The principle that keeps the system healthy is subsidiarity: every fact governed at the lowest level that contains all its stakeholders, escalated only when a genuinely broader constituency appears. The failure modes are both over-centralisation (federal bureaucracy for a household matter — Redux for a checkbox — all ceremony, no benefit) and under-centralisation (two parishes keeping separate, drifting copies of a shared boundary record — the duplicated-state bug). When state feels awkward, you've usually misjudged the jurisdiction: find the real set of stakeholders, and house the fact at exactly their level.
 
 ## Mini Summary
 - ✔ Shared state lives in the nearest common ancestor

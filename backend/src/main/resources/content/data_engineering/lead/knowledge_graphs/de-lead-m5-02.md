@@ -105,28 +105,28 @@ Knowledge Graph (RDF/OWL):
 ## RDF Triples and SPARQL
 
 ```turtle
-# Turtle RDF notation
+ # Turtle RDF notation
 @prefix arc: <https://consortium.io/ontology/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 
-# Ontology: concept hierarchy
+ # Ontology: concept hierarchy
 arc:SecurityControl rdfs:subClassOf arc:ComplianceRequirement .
 arc:DataEncryption  rdfs:subClassOf arc:SecurityControl .
 arc:KeyManagement   rdfs:subClassOf arc:SecurityControl .
 
-# Instance data: lesson coverage
+ # Instance data: lesson coverage
 arc:Lesson_001 arc:covers arc:DataEncryption .
 arc:Lesson_002 arc:covers arc:KeyManagement .
 
-# Regulation structure
+ # Regulation structure
 arc:ISO27001_A10_1 rdfs:label "ISO 27001 A.10.1 Cryptographic Controls" .
 arc:ISO27001_A10_1 arc:requires arc:DataEncryption .
 arc:ISO27001_A10_1 arc:requires arc:KeyManagement .
 ```
 
 ```sparql
-# SPARQL query: find all lessons relevant to ISO 27001 A.10.1
+ # SPARQL query: find all lessons relevant to ISO 27001 A.10.1
 PREFIX arc: <https://consortium.io/ontology/>
 SELECT DISTINCT ?lesson ?label WHERE {
     arc:ISO27001_A10_1 arc:requires ?concept .
@@ -134,7 +134,7 @@ SELECT DISTINCT ?lesson ?label WHERE {
     ?covered_concept rdfs:subClassOf* ?concept .  # transitive subClassOf
     ?lesson rdfs:label ?label .
 }
-# Returns: Lesson_001, Lesson_002 — inferred, not explicitly tagged
+ # Returns: Lesson_001, Lesson_002 — inferred, not explicitly tagged
 ```
 
 ## OWL Inference

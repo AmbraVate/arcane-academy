@@ -192,21 +192,21 @@ At 10× burn rate, monthly budget exhausts in 43.2/10 = 4.3 minutes
 
 **Blameless post-mortem structure:**
 ```markdown
-## Incident: Payment service unavailable, 14:32–17:45 (3h 13min)
+ ## Incident: Payment service unavailable, 14:32–17:45 (3h 13min)
 
-### Timeline
+ ### Timeline
 - 14:32 Alert fired: payment error rate > 5%
 - 14:35 On-call acknowledges
 - 14:52 Root cause identified: OOM kill due to memory leak in connection pool
 - 15:10 Mitigation: service restarted; monitoring confirmed recovery
 - 17:45 Incident resolved; permanent fix deployed
 
-### Contributing Factors
+ ### Contributing Factors
 1. Memory leak introduced in v2.4.1 (deployed 14:00)
 2. No memory-trend alert (would have caught gradual increase before OOM)
 3. Connection pool config had no maximum limit
 
-### Action Items
+ ### Action Items
 - [ ] Add memory trend alert (threshold: +10% over 30 min) — by 2026-06-07
 - [ ] Add connection pool maximum in production config — by 2026-06-03
 - [ ] Add memory profiling to staging deployment validation — by 2026-06-14
@@ -214,7 +214,7 @@ At 10× burn rate, monthly budget exhausts in 43.2/10 = 4.3 minutes
 
 **Chaos experiment (Spring Boot + Chaos Monkey):**
 ```yaml
-# chaos-monkey-spring-boot dependency
+ # chaos-monkey-spring-boot dependency
 chaos:
   monkey:
     enabled: true

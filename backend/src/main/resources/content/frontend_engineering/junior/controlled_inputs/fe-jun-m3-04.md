@@ -108,6 +108,21 @@ function UncontrolledForm() {
 | Validation | Real-time | On submit only |
 | Use when | Most forms | File inputs, simple submit-only |
 
+## Mental Model
+
+The controlled/uncontrolled split is the difference between a bank account and cash in a drawer. A controlled input is a bank account: the balance you see on screen is a *display of the ledger* (React state) — every deposit (keystroke) goes through the teller (`onChange` → `setState`), the ledger updates, and the displayed balance refreshes from the ledger. The display can never disagree with the books, because it has no independent existence: that's `value={state}` — the input shows state, only state, always state. This is also why the half-wired version freezes: a `value` without an `onChange` is a bank that displays the ledger but employs no tellers — deposits are shouted into the void, the ledger never changes, the display never moves. An uncontrolled input is cash in a drawer: the money (value) lives in the drawer itself (the DOM node), accumulating as the user adds to it, and you only count it when you need the total (reading via a ref at submit). Less infrastructure, perfectly sound for simple cases — but the bank doesn't know the balance between counts, so anything requiring *live* knowledge of the money (validation as they type, a running total, disabling a button until the amount is right) is impossible without converting to the ledger system. Choose by the question: does anything need to *react to the value while it's being entered*? Ledger (controlled). Only needed at the end? Drawer (uncontrolled) is honest and cheap. And never run both systems on one account — an input that starts as a drawer and becomes ledger-managed mid-session (undefined value becoming a string) is exactly the accounting confusion React's console warning exists to catch.
+
+## Why It Matters
+
+Controlled versus uncontrolled is the fork in the road for every form you will ever build in React — and choosing consciously is the difference between forms that grow features gracefully and forms that get rewritten:
+
+- The controlled pattern (value from state, onChange writing back) makes React's single-source-of-truth philosophy *physical*: the input displays what state says, period — which is what makes live validation, character counters, conditional fields, instant formatting, and programmatic clearing all one-line features instead of DOM surgery
+- Uncontrolled inputs (the DOM keeps the value, you read it when needed, usually via a ref) aren't wrong — they're the lighter tool: less re-rendering, less wiring, perfectly adequate for a simple form read once at submit, and the standard answer for file inputs, which can't be controlled at all
+- The bugs live at the unchosen middle: a `value` prop without `onChange` produces the famous frozen input (React faithfully re-rendering state that never changes); switching between `undefined` and a string mid-flight triggers the controlled-to-uncontrolled warning that confuses every junior the first time
+- This decision is also a team-reading skill: form libraries split along exactly this line (Formik and controlled-style state versus React Hook Form's ref-based registration), so understanding both models is what lets you read any codebase's forms
+
+Interviewers love this question because it tests whether you understand *where state lives* — which is the actual subject of the entire module.
+
 ## Mini Summary
 - ✔ Controlled: value={state} + onChange → React owns truth
 - ✔ Uncontrolled: ref + defaultValue → DOM owns truth

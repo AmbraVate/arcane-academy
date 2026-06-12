@@ -134,11 +134,26 @@ She holds up the WCAG charter. *"This document codifies what 'all' means, and ho
 - UK Equality Act: public sector mandated; case law extending to private sector
 - Section 508: US federal government and contractors
 
+## Why It Matters
+
+WCAG is the standard the world has agreed to measure web accessibility against — courts cite it, contracts require it, and procurement teams check it before signing:
+
+- The legal landscape is concrete: ADA suits in the US, the European Accessibility Act, and public-sector mandates worldwide all anchor to WCAG conformance, with AA as the near-universal target
+- The structure is what makes it usable daily — four principles (Perceivable, Operable, Understandable, Robust) decompose into testable success criteria, turning "be accessible" into a checklist an engineer can actually verify
+- Knowing the levels prevents both under- and over-engineering: A is the floor, AA is the standard you ship to, AAA is selectively applied — promising AAA across a product is a commitment almost nothing meets
+- Conformance claims have consequences: an accessibility statement citing AA is an auditable assertion, and the gap between claimed and actual conformance is exactly what complaints and lawsuits exploit
+
+Engineers who can read a success criterion and map it to their code stop treating accessibility reviews as mysterious external judgements and start passing them by construction.
+
 ## Common Mistakes
 
 - **Treating contrast as a one-time audit.** Contrast failures happen with every design change. Integrate contrast checking into design review.
 - **Relying only on automated tools.** They catch 30-40%. Manual testing is essential.
 - **Confusing "users with disabilities" with "screen reader users only".** Keyboard-only users, users with motor disabilities, cognitive differences, low vision — all affected by different criteria.
+
+## Mental Model
+
+WCAG is a building code for digital construction. Building codes aren't design advice — they're the *minimum testable standard* a structure must meet before people occupy it, organised so an inspector can check specifics rather than vibes: this stairwell needs a handrail (this image needs alt text), this door needs 80cm clearance (this contrast needs 4.5:1). The levels are inspection tiers: A is "the building won't collapse", AA is "habitable and lawful to occupy" — what certificates and contracts mean by compliant — and AAA is specialised provision you apply where it matters most, like a hospital's standards, not a blanket promise. Two implications follow directly. Passing inspection doesn't make architecture *good* — code-compliant buildings can still be unpleasant, which is why inclusive design exists beyond conformance. And codes apply during construction, not after: retrofitting a finished building to code is demolition work, while building to code from the foundation is barely more expensive than not.
 
 ## Mini Summary
 

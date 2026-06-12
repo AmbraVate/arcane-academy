@@ -255,6 +255,16 @@ DO INSTEAD (
 );
 ```
 
+## Why It Matters
+
+Triggers are automation with a dark side — they guarantee something always happens, and they hide that it's happening:
+
+- Audit trails are the classic legitimate use: no application path can forget to log a change, because the database itself writes the log
+- But invisible logic confuses debugging — an UPDATE that mysteriously changes other rows sends engineers hunting through application code for hours before anyone checks triggers
+- Trigger chains (a trigger firing a trigger) can amplify one statement into a cascade with real performance cost
+
+The professional judgement: use triggers where the guarantee must be absolute, document them loudly, and reach for application code everywhere else.
+
 ## Common Mistakes
 
 - **Cascading triggers**: A trigger fires, which modifies another table, which fires another trigger. Deep cascades are extremely hard to debug and can cause unexpected recursion or infinite loops.

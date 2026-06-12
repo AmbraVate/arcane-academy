@@ -230,6 +230,16 @@ WHERE
     AND customer_id IS NOT NULL;
 ```
 
+## Why It Matters
+
+WHERE is what turns a million-row table into the twelve rows you actually need — filtering is the most common operation in all of SQL:
+
+- Almost every real query has a WHERE clause; unfiltered queries on production tables can be slow enough to hurt other users
+- Precise conditions are the difference between "orders from March" and "orders from March *this year*" — close isn't correct
+- NULL behaves unlike any value in comparisons, and WHERE is where you first collide with that rule
+
+Filtering accurately is also a safety skill: the WHERE clause you write today is the same one that will someday scope an UPDATE or DELETE.
+
 ## Common Mistakes
 
 - **`= NULL` instead of `IS NULL`**: Returns zero rows. Always use `IS NULL`.

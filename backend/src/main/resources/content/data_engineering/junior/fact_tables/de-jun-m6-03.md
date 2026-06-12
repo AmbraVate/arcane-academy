@@ -259,6 +259,16 @@ WHERE l.loan_date >= :last_etl_run          -- incremental: only new loans
   );                                         -- idempotency: skip already loaded
 ```
 
+## Why It Matters
+
+Fact tables hold the events a business counts — orders, payments, clicks — and their design decides whether analytics are fast and true:
+
+- Grain is everything: "one row per order" vs "one row per order line" changes the meaning of every SUM downstream; mixed grain is the classic warehouse-killing mistake
+- Choosing additive measures carefully (you can sum revenue, you cannot sum a percentage) keeps aggregations honest
+- Fact tables grow to billions of rows, so their narrow-and-numeric shape is what keeps a warehouse queryable at scale
+
+Declare the grain first, write it down, and defend it — every other warehouse decision follows from it.
+
 ## Common Mistakes
 
 - **Storing non-additive measures**: never store rates, ratios, or percentages in a fact table. `SUM(return_rate)` is meaningless. Store the numerator and denominator as additive measures; compute ratios at query time.

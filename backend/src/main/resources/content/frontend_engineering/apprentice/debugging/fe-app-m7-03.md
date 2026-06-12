@@ -169,11 +169,25 @@ Problem: element X has wrong spacing
 | Flexbox not aligning | Property on item instead of container |
 | Grid not applying | Element already has display set another way |
 
+## Why It Matters
+
+Layout bugs are the most visible class of frontend defects — users may forgive a slow feature, but a button overlapping text looks broken instantly:
+
+- Layout problems rarely produce errors; the page renders, just wrongly — so they require *inspection* skills, not log-reading
+- DevTools' box model view turns "why is there a gap there?" from a guessing game into a measurement
+- One systematic method (inspect the element, check its size, margins, and parent) replaces an hour of randomly toggling CSS
+
+CSS debugging defeats more beginners than any JavaScript topic. A repeatable diagnosis routine is what carries you past that wall.
+
 ## Common Mistakes
 
 - Changing random CSS values hoping something fixes it (guessing, not debugging)
 - Forgetting default browser margins (body, h1-h6, p all have default margins)
 - Using `border` for debugging (affects layout); use `outline` instead
+
+## Mental Model
+
+Debugging layout is plumbing, not magic. Every element's position is *caused* — by its own box (content, padding, border, margin), by its parent's layout rules, or by a sibling pushing it. When water comes out in the wrong place, a plumber traces the pipes; when an element lands in the wrong place, you trace the chain: inspect the element, then its box, then its container, then what's beside it. Somewhere in that chain is a valve set wrong — a width, a margin, a flex rule. The leak is never random; find the pipe.
 
 ## Mini Summary
 

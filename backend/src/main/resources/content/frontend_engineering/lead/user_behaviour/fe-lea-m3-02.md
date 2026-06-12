@@ -160,12 +160,27 @@ She closes the survey report. *"We learned to observe. Apprentices who said 'lon
 
 **Self-report vs behaviour gap:** Users consistently misreport their own behaviour. "I read every section" is contradicted by eye tracking showing 15% of page viewed. Design based on observation, not self-report.
 
+## Why It Matters
+
+Users don't do what they say, and they don't do what you'd do — behavioural understanding is what stops teams designing for an imaginary rational user who reads, explores, and forgives:
+
+- The gaps are measurable and brutal: users scan in an F-pattern rather than read, abandon forms over a single confusing field, satisfice with the first plausible option rather than compare — interfaces designed for careful readers fail silently for actual humans
+- Behavioural data routinely contradicts user *statements*: people claim they want more options and convert better with fewer; they rate redesigns poorly while using them more effectively — which is why watching behaviour outranks collecting opinions
+- Habits are the moat and the cliff: learned patterns make your product feel effortless, and the same force makes every layout change feel like vandalism to your most loyal users — leads who understand habit formation sequence change instead of springing it
+- At lead level the duty is institutional: one engineer's empathy doesn't scale, but session recordings in sprint review, behavioural metrics on dashboards, and "what does the funnel say?" as a reflex question make the *team* behave as if users were in the room
+
+Every product argument eventually reduces to a claim about what users will do. The teams that win those arguments are the ones who checked.
+
 ## Common Mistakes
 
 - **Designing for the optimal user.** Real users satisfice, scan, and bring incorrect mental models. Designing for the optimal user produces products that work only for the optimal user.
 - **Trusting survey results for design decisions.** Surveys reveal values and preferences — not behaviour. Test with observational methods.
 - **Novel for novelty's sake.** Violating Jakob's Law has a real cost in user friction. The burden of proof is on the innovation, not the convention.
 - **Ignoring mental models.** A feature that's easy to find for engineers (who know the product's architecture) is often hard to find for users (who have a domain-level mental model).
+
+## Mental Model
+
+Model your users as commuters, not tourists. Tourists explore: they read plaques, study maps, notice architecture, forgive wrong turns as part of the experience — and almost no one is a tourist in your interface. Commuters are *going somewhere*: attention rationed to near-zero, route memorised into muscle, signage read only at decision points and only the first three words, any disruption — a moved entrance, a renamed stop — experienced not as novelty but as theft of time and certainty. This single reframe predicts most observed behaviour: why no one reads your carefully written paragraph (commuters don't read plaques), why the button moved two centimetres generates support tickets (you rerouted a memorised journey), why first impressions form in milliseconds (commuters assess "is this my train?" at a glance), and why your power users revolt hardest at redesigns (longest commutes, deepest muscle memory). Design every screen for someone moving fast on a known route — and treat each change to that route as the infrastructure disruption it genuinely is, with signage, sequencing, and apology.
 
 ## Mini Summary
 

@@ -149,6 +149,10 @@ Change `items`, React re-renders everything. No manual coordination needed.
 - **Using React for static pages.** If your page doesn't change after load, vanilla HTML is simpler.
 - **Forgetting that React adds overhead.** For tiny pages, the setup cost isn't worth it.
 
+## Mental Model
+
+Think of vanilla DOM manipulation as giving a decorator turn-by-turn instructions over the phone: "find the third div, change its text, now add a class to its parent..." — every change is a sequence of imperative steps, and if your mental picture of the room drifts from reality, the instructions corrupt it further. React replaces the phone call with a blueprint: you describe what the room should look like *given the current facts* (state), and React's contractor walks the room, compares it to the blueprint, and makes exactly the changes needed. You never say *how* to update — you only keep the blueprint truthful. That's the whole revolution: UI stops being a thing you mutate and becomes a thing you *derive*.
+
 ## Mini Summary
 
 - Manually keeping the DOM in sync with data becomes unmanageable at scale

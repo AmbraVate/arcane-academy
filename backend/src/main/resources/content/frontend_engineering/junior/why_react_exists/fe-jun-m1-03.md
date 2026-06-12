@@ -134,6 +134,10 @@ Engineering judgement means matching tool to problem.
 - **Avoiding React because of its learning curve.** For complex UIs, React's benefits outweigh the learning cost.
 - **Thinking this is binary.** Islands architecture, partial hydration, and micro-frontends let you use React where needed and vanilla everywhere else.
 
+## Mental Model
+
+Vanilla JS and React differ like manual bookkeeping versus a spreadsheet. In a ledger you update totals by hand: change one purchase and *you* must remember every dependent figure — subtotal, tax, balance — and recalculate each, in order, without missing one. That's `document.querySelector` and friends: every state change makes you personally responsible for finding and updating each affected piece of UI. A spreadsheet inverts it: cells declare formulas ("this cell = price × quantity"), and when an input changes, every dependent cell recalculates *itself*. React components are formula cells — they declare what they look like in terms of state, and re-derive automatically when it changes. Manual ledgers work fine for three entries; the spreadsheet wins the moment the books get real.
+
 ## Mini Summary
 
 - React solves a specific problem: complex, changing state in large UIs

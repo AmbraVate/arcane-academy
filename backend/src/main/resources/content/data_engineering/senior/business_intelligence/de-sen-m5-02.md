@@ -112,7 +112,7 @@ Business intelligence converts raw data into decisions through a layered archite
 The semantic layer defines business concepts — metrics, dimensions, joins — in a single authoritative location. Every BI tool queries the semantic layer rather than writing raw warehouse SQL.
 
 ```yaml
-# dbt MetricFlow definition
+ # dbt MetricFlow definition
 metrics:
   - name: weekly_active_learners
     label: Weekly Active Learners
@@ -214,7 +214,7 @@ Self-serve BI lets non-engineers build their own reports without waiting for a d
 A data catalogue documents what data exists, what it means, who owns it, and who can access it.
 
 ```yaml
-# Example data catalogue entry (Datahub / Alation / dbt docs)
+ # Example data catalogue entry (Datahub / Alation / dbt docs)
 dataset: marts.learner_engagement
 description: "Daily engagement metrics per learner. Source: xp_events + lesson_attempts."
 owner: data-engineering@consortium.io

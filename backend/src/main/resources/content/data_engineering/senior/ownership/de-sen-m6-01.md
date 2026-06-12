@@ -179,7 +179,7 @@ Consumers know what to expect. The domain team is accountable for meeting the SL
 The data catalogue is where ownership is declared and discoverable:
 
 ```yaml
-# Data catalogue entry
+ # Data catalogue entry
 dataset: fact_lesson_completions
 owner: product-learner-team@consortium.io
 steward: data-engineering@consortium.io

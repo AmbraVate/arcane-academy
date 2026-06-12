@@ -290,6 +290,16 @@ WHERE l.return_date IS NULL
 -- Generates all overdue fee records in one INSERT ... SELECT
 ```
 
+## Why It Matters
+
+Query optimisation is the highest-leverage performance work in most systems — the database is usually the bottleneck, and the fixes are often small:
+
+- Rewriting a correlated subquery as a join, or making a predicate sargable, can deliver speedups no amount of application caching matches
+- `SELECT *` and functions wrapped around indexed columns are tiny habits with large production costs
+- Optimisation follows a method — measure, read the plan, change one thing, re-measure — not folklore
+
+Hardware upgrades buy 2×; a corrected query plan routinely buys 100×. This skill pays for itself on its first production incident.
+
 ## Common Mistakes
 
 - **Batching without transaction control**: A batch INSERT of 10,000 rows in one transaction — if the database crashes mid-insert, all 10,000 may be lost or partially inserted. Wrap large batches in explicit transactions and consider committing in chunks (1,000 at a time) for large operations.

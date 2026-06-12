@@ -228,6 +228,16 @@ FROM orders
 GROUP BY customer_id;
 ```
 
+## Why It Matters
+
+Almost every meaningful business question has a time dimension — this month, last quarter, year over year — and date functions are how SQL answers it:
+
+- Grouping sales by month or signups by week requires extracting parts from timestamps
+- "Orders in the last 30 days" needs date arithmetic that handles month lengths and year boundaries correctly
+- Ages, durations, and deadlines are all differences between dates — easy to get subtly wrong by a day
+
+Dates are also a notorious source of bugs (time zones, month boundaries, leap years), so practising the core functions now prevents painful surprises later.
+
 ## Common Mistakes
 
 - **Comparing dates with string comparisons**: `WHERE order_date = '05/06/2026'` fails or gives wrong results unless the format matches exactly and the date type supports it.

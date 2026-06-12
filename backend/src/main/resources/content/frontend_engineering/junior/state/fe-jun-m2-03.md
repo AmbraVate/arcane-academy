@@ -138,6 +138,10 @@ function addThree() {
 - **Not using functional updates when state depends on previous state.**
 - **Mutating state directly** (`state.count++`). Never works — React doesn't know the state changed.
 
+## Mental Model
+
+The state-render relationship is a thermostat loop, and understanding it dissolves most React confusion. A thermostat doesn't *push* heat into the room; it holds a target (state), and whenever the target changes, the system re-runs the same procedure — compare, adjust — until reality matches. React: state changes → your component function *runs again from the top* → produces fresh JSX → React reconciles the screen to match. The crucial discipline the loop imposes: you never adjust the room directly (no reaching into the DOM, no mutating variables and hoping) — you only ever change the *setting*, via the setter, and let the loop do the work. This also explains the behaviours that ambush beginners: your function re-running means local variables reset every render (anything that must survive belongs in state), and the state value you read mid-render is a *snapshot* — the temperature at the moment the loop last ran, not a live wire. One loop, one direction: setting changes, system re-runs, display catches up. Fight the loop and React feels haunted; work with it and the whole framework is one predictable cycle.
+
 ## Mini Summary
 
 - State updates are asynchronous — re-render happens later

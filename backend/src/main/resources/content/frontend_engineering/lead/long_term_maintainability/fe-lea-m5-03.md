@@ -194,11 +194,26 @@ Architectural entropy is real. The question is whether you manage it or inherit 
 | Cognitive complexity score (automated) | Code understandability |
 | Incident rate by module age | Technical debt consequences |
 
+## Why It Matters
+
+Frontend codebases age in dog years — frameworks churn, browsers evolve, teams turn over — and maintainability is the discipline that decides whether year five is productive or archaeological:
+
+- The economics are brutal and invisible: code is read ten times for every write, and maintenance consumes the majority of total system cost — yet every incentive (deadlines, demos, promotions) rewards the write side
+- Dependency drift is the frontend's signature decay: skip eighteen months of updates and you're not behind on versions, you're trapped — transitively pinned, security-patchless, unable to hire for or upgrade from a stack nobody ships anymore
+- Knowledge rot outpaces code rot: the engineer who knew *why* the checkout has that weird workaround leaves, and the workaround becomes load-bearing mystery — docs, decision records, and tests are how understanding survives turnover
+- Leads control the levers that matter: boring-technology bias, continuous small upgrades over big-bang rewrites, deletion as a celebrated activity, and refusing features that the team can't afford to *own*, not just build
+
+Every codebase becomes legacy. The lead's choice is only whether it becomes the kind teams maintain calmly or the kind they petition to rewrite.
+
 ## Common Mistakes
 
 - **Treating maintainability as a vague aspiration.** It is measurable. Measure it.
 - **Documentation of what, not why.** The what is in the code. The why is what disappears.
 - **Deferred refactoring without a schedule.** "We'll clean this up later" without a date is permanent technical debt.
+
+## Mental Model
+
+A long-lived frontend is an orchard, not a construction project. Construction thinking says: finish the build, cut the ribbon, walk away — done. Orchards don't work that way: planting (the initial build) is the *smallest* part of their life, and everything afterwards is tending — pruning (refactoring and deleting dead code), pest control (dependency updates and security patches, small and continual, because a season skipped is an infestation established), soil care (tests, docs, and decision records that keep the ground fertile for whoever works it next), and grafting (incremental migration) instead of clear-cutting (the big-bang rewrite that loses five years of root system and bug fixes nobody remembers making). The lead's role is head gardener: budgeting tending time *as real work* in every season's plan — because an orchard that only ever gets harvested gives you three good years, then yields nothing but firewood.
 
 ## Mini Summary
 

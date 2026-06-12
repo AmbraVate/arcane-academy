@@ -95,29 +95,29 @@ This simplicity enables **sub-millisecond latency** — data lives in memory, ac
 Redis is not a pure key-value store — it supports rich value types:
 
 ```bash
-# String (most common — arbitrary bytes, JSON, serialised objects)
+ # String (most common — arbitrary bytes, JSON, serialised objects)
 SET cache:product:123 '{"id":123,"name":"Arcane Tome","price":39.99}'
 GET cache:product:123
 
-# Hash (field-value pairs — like a small document)
+ # Hash (field-value pairs — like a small document)
 HSET user:4891 name "Aria" tier "senior" loginCount 42
 HGET user:4891 tier           # → "senior"
 HINCRBY user:4891 loginCount 1
 
-# Sorted Set (leaderboard, priority queue)
+ # Sorted Set (leaderboard, priority queue)
 ZADD leaderboard 1500 "player:aria"
 ZADD leaderboard 2200 "player:marcus"
 ZRANGE leaderboard 0 9 WITHSCORES REV  # top 10
 
-# List (message queue, activity feed)
+ # List (message queue, activity feed)
 LPUSH feed:user:4891 "event:login"
 LRANGE feed:user:4891 0 19  # last 20 events
 
-# Set (unique membership, tags)
+ # Set (unique membership, tags)
 SADD course:python:enrolled "user:001" "user:002"
 SISMEMBER course:python:enrolled "user:001"  # → 1
 
-# Pub/Sub (event broadcasting)
+ # Pub/Sub (event broadcasting)
 PUBLISH notifications:user:4891 '{"type":"badge","name":"First Commit"}'
 SUBSCRIBE notifications:user:4891
 ```
@@ -127,16 +127,16 @@ SUBSCRIBE notifications:user:4891
 Every key can have a time-to-live in seconds. When TTL expires, the key is automatically deleted — no cleanup job required.
 
 ```bash
-# Set with TTL
+ # Set with TTL
 SET session:token:abc123 '{"userId":"4891","role":"senior"}' EX 3600  # 1 hour
 
-# Set TTL separately
+ # Set TTL separately
 EXPIRE cache:product:123 300  # 5 minutes
 
-# Check remaining TTL
+ # Check remaining TTL
 TTL session:token:abc123  # → 3543 (seconds remaining)
 
-# Remove TTL (make permanent)
+ # Remove TTL (make permanent)
 PERSIST cache:product:123
 ```
 
@@ -188,13 +188,13 @@ When Redis memory fills, eviction policy determines what to remove:
 Redis executes commands atomically (single-threaded). This enables patterns impossible in a multi-threaded system without locking:
 
 ```bash
-# Distributed rate limiter — atomic increment + conditional expire
+ # Distributed rate limiter — atomic increment + conditional expire
 MULTI                            # begin transaction
 INCR rate:user:4891
 EXPIRE rate:user:4891 60
 EXEC                             # execute atomically
 
-# Check-and-set with Lua script (fully atomic)
+ # Check-and-set with Lua script (fully atomic)
 local current = redis.call('GET', KEYS[1])
 if current == false then
   redis.call('SET', KEYS[1], ARGV[1], 'EX', ARGV[2])

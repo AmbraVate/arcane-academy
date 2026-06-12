@@ -134,10 +134,6 @@ export default function DomainPage() {
   const progressPct = isPublic ? 0 : Math.round(dashboard.overallProgress * 100)
 
   function handleModuleClick(ch: ModuleHealthDto) {
-    if (isPublic) {
-      navigate(`/module/${ch.moduleId}`)
-      return
-    }
     if (ch.status !== 'LOCKED') navigate(`/module/${ch.moduleId}`)
   }
 

@@ -202,6 +202,16 @@ SELECT
 FROM customers;
 ```
 
+## Why It Matters
+
+Counting rows sounds trivial until a wrong count costs real money. COUNT is the most-used aggregate in production systems, and the subtle differences between its variants cause real incidents:
+
+- Dashboards that report `COUNT(*)` when the business asked for *distinct customers* silently inflate metrics
+- `COUNT(column)` skips NULLs — a quiet rule that makes "customers with phone numbers" and "all customers" different numbers
+- Billing, capacity planning, and alerting all start with an accurate count; get it wrong and every downstream decision inherits the error
+
+Mastering COUNT's variants is the difference between answering "how many?" and answering the question that was actually asked.
+
 ## Common Mistakes
 
 - **`COUNT(*)` vs `COUNT(column)`**: They differ when NULLs are present. Know which one answers your business question.

@@ -182,6 +182,10 @@ Grid gives you layout control that was previously only achievable with complex f
 - Forgetting that `fr` units only work after fixed sizes are accounted for
 - Using Grid when Flexbox is sufficient (adds complexity for one-dimensional layouts)
 
+## Mental Model
+
+Grid is graph paper; flexbox is a clothesline. With a clothesline you peg items in a row and they negotiate space among themselves. With graph paper, you draw the structure *first* — these columns, those rows — and then place items into cells, even spanning several. That's the mental flip: grid is layout-first (the container defines a two-dimensional plan; children occupy it), flexbox is content-first (items flow and negotiate along one line). Page skeletons — header, sidebar, main, footer — are graph-paper problems. A row of buttons is a clothesline problem. Choosing the right tool starts with asking: am I drawing a plan, or hanging a line?
+
 ## Mini Summary
 
 - ✔ `display: grid` on the container; rows and columns defined on the container

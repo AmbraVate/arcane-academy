@@ -284,6 +284,16 @@ public class MembershipTier {
 // Poor cache candidates: frequently-updated transactional data (loans, balances)
 ```
 
+## Why It Matters
+
+JPA/Hibernate is the dominant persistence stack in enterprise Java — and the source of its most famous performance problems:
+
+- The N+1 query problem (one query becomes hundreds via lazy loading in a loop) is the single most common ORM-induced outage
+- Entity lifecycle states (transient, managed, detached) explain the LazyInitializationException every Java developer eventually meets
+- Knowing when Hibernate flushes, caches, and proxies turns "the ORM is being weird" into a diagnosable behaviour
+
+Teams don't choose whether to use Hibernate — most inherit it. The choice is whether to understand it before or after it pages you.
+
 ## Common Mistakes
 
 - **No `@Transactional` on the service method**: Spring Data repositories auto-commit per method. Accessing lazy associations after `findById` returns throws `LazyInitializationException`. Add `@Transactional` to the service method, or use JOIN FETCH to load everything needed.

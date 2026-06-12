@@ -129,14 +129,14 @@ export default defineConfig({
 **Environment variables (.env files):**
 
 ```bash
-# .env          — used in all environments
-# .env.local    — local overrides (not committed)
-# .env.development — dev only
-# .env.production  — production only
+ # .env          — used in all environments
+ # .env.local    — local overrides (not committed)
+ # .env.development — dev only
+ # .env.production  — production only
 ```
 
 ```bash
-# .env
+ # .env
 VITE_API_URL=http://localhost:8080  # Exposed to browser
 DB_PASSWORD=secret                  # NOT exposed (no VITE_ prefix)
 ```

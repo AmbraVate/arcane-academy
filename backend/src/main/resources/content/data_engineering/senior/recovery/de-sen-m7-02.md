@@ -111,31 +111,31 @@ Recovery Assessment Checklist:
 ### 1. Identify the Target Timestamp
 
 ```bash
-# Check PostgreSQL audit log for the destructive command
+ # Check PostgreSQL audit log for the destructive command
 grep "DROP TABLE" /var/log/postgresql/postgresql-2024-03-15.log
-# 2024-03-15 14:37:02 UTC [12345]: DROP TABLE users;
-# Target: '2024-03-15 14:37:01' — one second before
+ # 2024-03-15 14:37:02 UTC [12345]: DROP TABLE users;
+ # Target: '2024-03-15 14:37:01' — one second before
 ```
 
 ### 2. Restore Base Backup to Isolated Instance
 
 ```bash
-# Spin up a separate recovery instance (Docker or new VM)
-# NEVER restore to the production instance
+ # Spin up a separate recovery instance (Docker or new VM)
+ # NEVER restore to the production instance
 
-# Restore physical backup
+ # Restore physical backup
 pg_restore --clean --if-exists -d recovery_db /backups/base_2024-03-15_02-00.dump
-# Or for pgBackRest:
+ # Or for pgBackRest:
 pgbackrest --stanza=consortium --target-time="2024-03-15 02:00:00" restore
 ```
 
 ### 3. Configure WAL Replay to Target Timestamp
 
 ```bash
-# postgresql.conf on recovery instance
+ # postgresql.conf on recovery instance
 restore_command = 'aws s3 cp s3://consortium-backups/wal/%f %p'
 
-# recovery.conf (PostgreSQL 11 and earlier) or postgresql.conf (12+)
+ # recovery.conf (PostgreSQL 11 and earlier) or postgresql.conf (12+)
 recovery_target_time = '2024-03-15 14:37:01'
 recovery_target_action = 'promote'  # stop replay and promote to read-write
 ```
@@ -144,10 +144,10 @@ recovery_target_action = 'promote'  # stop replay and promote to read-write
 
 ```bash
 pg_ctl start -D /recovery/data
-# Monitor: tail -f /recovery/data/log/postgresql.log
-# Watch for: "recovery stopping before commit of transaction..."
-# Then: "database system is ready to accept read only connections"
-# Then promotion: "database system is ready to accept connections"
+ # Monitor: tail -f /recovery/data/log/postgresql.log
+ # Watch for: "recovery stopping before commit of transaction..."
+ # Then: "database system is ready to accept read only connections"
+ # Then promotion: "database system is ready to accept connections"
 ```
 
 ### 5. Verify Data Integrity
@@ -173,8 +173,8 @@ ON CONFLICT DO NOTHING;
 
 **Option B: Full promotion (table or database)**
 ```bash
-# If damage is widespread — promote recovery instance as new production
-# Or: dump the table from recovery and restore to production
+ # If damage is widespread — promote recovery instance as new production
+ # Or: dump the table from recovery and restore to production
 pg_dump -t users recovery_db | psql production_db
 ```
 

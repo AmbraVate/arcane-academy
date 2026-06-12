@@ -191,11 +191,26 @@ Solutions:
 - **Automated migration tooling:** Codemods that auto-update consumers
 - **Strangler Fig pattern:** Run old and new APIs in parallel; migrate incrementally
 
+## Why It Matters
+
+At enterprise scale, the frontend stops being a codebase and becomes a portfolio — dozens of apps, hundreds of engineers, years of history — and without strategy, that portfolio fragments into chaos:
+
+- Every team choosing its own stack feels like autonomy and compounds into liability: six frameworks means six security patch processes, no engineer mobility between teams, and no shared component ever working everywhere
+- The expensive problems are never in any single app — they're *between* apps: inconsistent UX across the suite, quadruplicated auth integrations, four teams independently solving file upload this quarter
+- Strategy is what turns recurring costs into one-time investments: a platform team, a design system, a sanctioned stack with an exceptions process — each exists to make the thousandth decision cheap
+- Migration is permanent at this scale: something is always being deprecated, adopted, or strangled, and the strategy *is* the plan for living in that perpetual transition without halting feature work
+
+Individual excellence doesn't sum to organisational excellence. Strategy is the difference between a hundred good engineers and a good engineering organisation — and writing it is lead work, not a side effect.
+
 ## Common Mistakes
 
 - **Monolith + growing teams.** A single deployment unit with 8+ teams is an organisational constraint, not just a technical one.
 - **Design system without a dedicated team.** Product teams deprioritise shared infrastructure; it decays.
 - **Technology diversity without discipline.** Multiple frameworks are possible with micro-frontends; they multiply infrastructure and hiring costs.
+
+## Mental Model
+
+An enterprise frontend is a city, not a building, and strategy is its planning department. A building (single app) can be excellently designed in isolation; a city cannot — it lives or dies on shared infrastructure (the design system and platform tooling are roads and power), zoning (which stacks are sanctioned where), and building codes (accessibility, security, performance standards every structure must meet regardless of builder). The planning department's hardest truth: the city is never finished and never uniform — there are always heritage districts (legacy apps you maintain but don't extend), construction zones (migrations), and new developments, all coexisting for years. So strategy is not choosing the perfect building design; it's deciding what's *worth standardising* (utilities — nobody benefits from artisanal electricity) versus what's *worth varying* (architecture within code), and sequencing change so the city functions throughout. Cities without planning don't stay villages — they sprawl. Yours is sprawling right now, with or without you.
 
 ## Mini Summary
 

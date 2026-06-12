@@ -110,6 +110,21 @@ function Button() {
 
 **Poor Context use cases:** frequently-updated values, server data (use a data-fetching library).
 
+## Mental Model
+
+Context is a building's radio system replacing hand-delivered memos. Props are memos: explicit, addressed, visible in every hand they pass through — ideal for direct communication between adjacent offices (parent to child). But some information is *ambient* — the fire-drill schedule, the building's language, today's dress code — relevant to everyone on certain floors and owned by building management, not by any office on the route. Distributing ambient facts by memo means every office between management and the basement spends its day forwarding envelopes it never opens (prop drilling). The radio fixes this structurally: management installs a transmitter covering specific floors (the Provider wrapping a subtree, its `value` the broadcast), and any office that cares simply switches on a receiver (`useContext`) — offices in between neither know nor care that the signal passes through their walls. Three properties of radio carry the design rules. Coverage is scoped by transmitter placement: broadcast to the floors that need it, not the whole city — several small stations (ThemeContext, AuthContext) beat one megastation airing everything to everyone. Every receiver hears every broadcast on its channel: when the transmitted value changes, *all* subscribed components re-render — so you don't broadcast rapidly changing chatter (keystrokes, cursor positions) on a channel half the building monitors. And radio is invisible infrastructure: unlike a memo trail, you can't see who's listening by reading the org chart — which is precisely why you reserve it for stable, ambient facts and keep point-to-point business on paper (props), where the audit trail lives.
+
+## Why It Matters
+
+Context is React's answer to the bucket-brigade problem — and knowing what it's *for* (and not for) separates clean architectures from tangled ones:
+
+- Some facts are genuinely ambient: the current theme, the logged-in user, the active language — needed by dozens of components scattered across the tree, owned by none of them; drilling these through every intermediate signature pollutes the whole codebase with plumbing no one asked for
+- Context inverts the delivery: instead of data travelling *through* every component on the route, a Provider publishes it over a region of the tree, and any descendant subscribes directly — middlemen stop being couriers
+- The discipline is in the scoping: context is not "global variables for React" — a well-built app has several small, focused contexts (ThemeContext, AuthContext) wrapped exactly as wide as their audience, not one MegaContext wrapping everything, which couples every consumer to every change
+- The costs are real and worth knowing on day one: every consumer re-renders when the context value changes (which is why rapidly changing data — form inputs, mouse positions — doesn't belong here), and components reading context become less self-contained: their inputs no longer all arrive visibly through props
+
+Props remain the default; context is the tool for the *ambient minority* of facts. Teams that hold that line keep both the traceability of explicit data flow and an escape from its worst ergonomics.
+
 ## Mini Summary
 - ✔ createContext → Provider → useContext — three-part pattern
 - ✔ Any descendant reads the value without props through intermediaries

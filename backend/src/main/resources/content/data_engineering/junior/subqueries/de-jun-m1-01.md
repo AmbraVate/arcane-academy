@@ -255,6 +255,16 @@ WHERE order_counts.order_count > 3;
 
 The second version pre-aggregates orders once, then joins — far more efficient on large tables.
 
+## Why It Matters
+
+Subqueries are SQL's way of asking layered questions — "above average", "the latest per group", "those who never" — in a single statement:
+
+- Filtering against a computed value (everyone earning above the mean) is impossible in one flat query
+- The correlated/uncorrelated distinction is also a performance lesson: one runs once, the other runs per row
+- EXISTS and IN subqueries express membership tests that reports and data-quality checks use daily
+
+Subqueries are also the gateway to reading other people's SQL — production queries nest, and you need to unpick them from the inside out.
+
 ## Common Mistakes
 
 - **Scalar subquery returning multiple rows**: A subquery used with `=` must return exactly one row. Use `MAX()`, `MIN()`, or `LIMIT 1` to guarantee this.

@@ -161,22 +161,22 @@ A **branch** in Git is a lightweight, moveable pointer to a commit. Creating a b
 **Feature branch workflow:**
 
 ```bash
-# Start from an up-to-date main
+ # Start from an up-to-date main
 git checkout main
 git pull origin main
 
-# Create and switch to a new branch
+ # Create and switch to a new branch
 git checkout -b feature/add-badge-service
 
-# ... develop, test, commit ...
+ # ... develop, test, commit ...
 git add src/main/java/academy/badge/BadgeService.java
 git commit -m "feat: implement badge award on quest completion"
 
-# Push branch to remote
+ # Push branch to remote
 git push origin feature/add-badge-service
 
-# Open a pull request (on GitHub/GitLab)
-# After review and approval — merge to main
+ # Open a pull request (on GitHub/GitLab)
+ # After review and approval — merge to main
 ```
 
 **Branch naming conventions:**
@@ -196,17 +196,17 @@ git push origin feature/add-badge-service
 **Merge vs Rebase:**
 
 ```bash
-# Merge: creates a merge commit, preserves full history
+ # Merge: creates a merge commit, preserves full history
 git checkout main
 git merge feature/badge-service
-# Result: a merge commit connects the two branches' histories
+ # Result: a merge commit connects the two branches' histories
 
-# Rebase: rewrites branch commits to sit on top of current main (linear history)
+ # Rebase: rewrites branch commits to sit on top of current main (linear history)
 git checkout feature/badge-service
 git rebase main
-# Result: feature commits appear as if they were written after the latest main commit
+ # Result: feature commits appear as if they were written after the latest main commit
 
-# Golden rule: NEVER rebase a branch that others have pulled
+ # Golden rule: NEVER rebase a branch that others have pulled
 ```
 
 ## Worked Examples
@@ -214,26 +214,26 @@ git rebase main
 **Complete feature branch lifecycle:**
 
 ```bash
-# 1. Start
+ # 1. Start
 git checkout main && git pull origin main
 git checkout -b feature/leaderboard-api
 
-# 2. Develop — commit small, focused units
+ # 2. Develop — commit small, focused units
 git add LeaderboardController.java LeaderboardService.java
 git commit -m "feat: add GET /leaderboard endpoint returning top 10 players"
 
 git add LeaderboardControllerTest.java LeaderboardServiceTest.java
 git commit -m "test: add leaderboard endpoint integration tests"
 
-# 3. Keep branch up to date with main
+ # 3. Keep branch up to date with main
 git fetch origin
 git rebase origin/main
 
-# 4. Push and open PR
+ # 4. Push and open PR
 git push origin feature/leaderboard-api
-# Open pull request → reviewer approves → squash merge to main
+ # Open pull request → reviewer approves → squash merge to main
 
-# 5. Clean up
+ # 5. Clean up
 git checkout main && git pull
 git branch -d feature/leaderboard-api
 ```

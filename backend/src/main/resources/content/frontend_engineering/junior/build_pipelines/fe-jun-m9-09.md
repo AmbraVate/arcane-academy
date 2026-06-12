@@ -103,17 +103,17 @@ She holds up three keys — identical in shape, different in which portal they o
 **.env files** configure environment-specific values:
 
 ```bash
-# .env (committed — safe defaults for all environments)
+ # .env (committed — safe defaults for all environments)
 VITE_APP_NAME=Arcane Academy
 VITE_API_URL=https://api.arcane.academy
 
-# .env.development (committed — dev overrides)
+ # .env.development (committed — dev overrides)
 VITE_API_URL=http://localhost:8080
 
-# .env.production (committed — production overrides)
+ # .env.production (committed — production overrides)
 VITE_API_URL=https://api.arcane.academy
 
-# .env.local (NOT committed — personal secrets and local overrides)
+ # .env.local (NOT committed — personal secrets and local overrides)
 VITE_API_URL=http://localhost:3001  # My personal dev setup
 ```
 

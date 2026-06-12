@@ -165,11 +165,26 @@ Working memory is the wizard's capacity. Cognitive load is the design of the Gri
 - **Error messages:** "Field required" (extraneous: system state). "Enter your email address" (reduced: user's next action).
 - **Component APIs:** Smart defaults + variant presets → correct usage. 40 configurable props → engineers make mistakes.
 
+## Why It Matters
+
+Cognitive load is the invisible budget every interface spends — and most products are overdrawn without knowing it:
+
+- Working memory holds only a handful of items; every extra choice, field, and competing visual element spends capacity the user needed for their actual task — which is why "just add one more option" degrades products non-linearly
+- Load you can't see in demos shows up in metrics you care about: form abandonment, support tickets phrased as "I couldn't find...", feature adoption stuck at zero despite the feature being right there
+- The stakes scale with context: a confused user on a marketing page bounces; a cognitively overloaded user in a banking, medical, or safety interface makes *errors with consequences*
+- Reduction techniques are concrete engineering work — progressive disclosure, sensible defaults, chunking, recognition over recall — not vague pleas for "simplicity"
+
+Leads own this because load is systemic: any single screen survives review, while the *accumulated* product becomes unusable one reasonable decision at a time. Someone must own the budget across screens, and that someone is you.
+
 ## Common Mistakes
 
 - **Confusing complexity with richness.** A rich product can have low extraneous load if well-designed. Removing features to reduce cognitive load is a content decision, not a design decision.
 - **Applying CLT only to users.** Developers using your component library, API, or codebase are also users with limited working memory. Code organisation, naming, and API design are cognitive load decisions.
 - **Optimising for minimum features.** The goal is minimum extraneous load, not minimum functionality. These are different.
+
+## Mental Model
+
+Cognitive load is RAM, not disk. Your users' knowledge — everything they've ever learned — is disk: vast, durable, cheap to keep. But the task in front of them runs in working memory: a tiny RAM bank of roughly four to seven slots, and *everything* on screen competes for those slots — your navigation, your three CTAs, the unfamiliar icon they're trying to decode, plus the actual job they came to do. An interface is well-designed when the user's RAM holds their *task* and poorly designed when it fills with *interface*: remembering which step they're on (no progress indicator), what that toggle meant (recall instead of recognition), where the save button went (inconsistency evicting cached knowledge). Progressive disclosure is paging — load only the current step into RAM. Defaults are pre-computed results — no cycles spent. And like real systems, overflow doesn't degrade gracefully: when RAM runs out, users don't slow down politely, they crash — abandon, err, or call support.
 
 ## Mini Summary
 

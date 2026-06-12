@@ -109,6 +109,21 @@ function UserProvider({ children }) {
 - Group by update frequency (auth vs theme vs search)
 - Each consumer subscribes only to what it needs
 
+## Mental Model
+
+Consuming context is owning a radio receiver, and the habits of a good radio operator map one-to-one onto good consumption patterns. `useContext(ThemeContext)` switches on a receiver tuned to one frequency: from then on, the component hears the *current* broadcast (the present value) and automatically reacts to every programme change (re-renders when the value updates) — no couriers, no forwarding, just reception. The operator's disciplines follow from how radio behaves. You can't half-listen to a channel: a receiver reacts to *everything* aired on its frequency, so if the station bundles news, weather, and sport into one stream (a fat context value), the component that only wanted weather still re-renders for every football score — the reason mature apps run separate stations for separately changing concerns. Know your coverage: switch on a receiver outside any transmitter's range and you hear the pre-recorded default tape — often silence that *sounds* like programming, the silent-fallback bug — so professional operators use receivers with a built-in signal check (custom hooks that throw when no Provider is found) and discover dead zones at install time, not from confused users. And label your equipment: a bare `useContext(SomeContext)` deep in a component is an unmarked receiver someone will trip over during refactoring, while `useAuth()` is a labelled unit — findable by search, typed, and documenting exactly which station this room depends on. Reception is one line; *accountable* reception is the pattern around the line.
+
+## Why It Matters
+
+Consuming context is where the architecture meets daily code — and the consumption patterns decide whether context stays a convenience or becomes a hidden tax:
+
+- `useContext` makes a component a subscriber: one line replaces a chain of forwarded props, which is the payoff — but the component now has an invisible dependency that its props no longer document, so disciplined teams consume through *named custom hooks* (`useTheme`, `useAuth`) that make the dependency searchable, typed, and guarded
+- The re-render contract is the part juniors discover in production: every consumer re-renders whenever the context value changes — consume a context holding `{user, theme, cart}` to read only the theme, and you re-render on every cart change anyway, which is the standard argument for splitting contexts by *rate and audience of change*
+- The wrong-place failure matters: read context outside any Provider and you silently get the default value — the bug where a component renders with the fallback theme and nobody knows why; the throwing-hook pattern converts that silence into an immediate stack trace
+- Testing changes shape: a component that consumes context can't be rendered bare — your tests wrap it in a Provider with controlled values, which is also the superpower: swap in mock auth states or themes per test without touching the component
+
+Context consumption is the moment a component trades self-containment for convenience. The patterns here — named hooks, focused contexts, loud failures — are how you take the convenience without losing the traceability.
+
 ## Mini Summary
 - ✔ useContext = subscription; consumer re-renders on every context change
 - ✔ Split large contexts by domain and update frequency

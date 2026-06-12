@@ -92,16 +92,13 @@ public class DashboardController {
             Collectors.counting()
         ));
 
-    // First module of the first tier is shown as AVAILABLE (teaser), rest LOCKED
-    final boolean[] first = {true};
+    // All modules are LOCKED for public browsing (curriculum view only)
     List<ModuleHealthDto> healthDtos = modules.stream().map(m -> {
-      String status = first[0] ? "NOT_STARTED" : "LOCKED";
-      first[0] = false;
       return ModuleHealthDto.builder()
           .moduleId(m.getId())
           .title(m.getTitle())
           .glyph(m.getGlyph())
-          .status(status)
+          .status("LOCKED")
           .memoryStrength(0.0)
           .healthColor("GREEN")
           .totalLessons(countByModule.getOrDefault(m.getId(), 0L).intValue())

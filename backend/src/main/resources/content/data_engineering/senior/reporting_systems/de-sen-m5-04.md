@@ -140,13 +140,13 @@ The freshness SLA defines the maximum acceptable data lag for a report.
 ## Report Parameterisation
 
 ```python
-# BAD: 50 separate reports
+ # BAD: 50 separate reports
 class JuniorDataEngineeringReport: ...
 class SeniorDataEngineeringReport: ...
 class JuniorSoftwareEngineeringReport: ...
-# ... 47 more
+ # ... 47 more
 
-# GOOD: one parameterised report
+ # GOOD: one parameterised report
 class DomainTierProgressReport:
     def __init__(self, domain: str, tier: str, recipients: list[str]):
         self.domain = domain
@@ -162,7 +162,7 @@ class DomainTierProgressReport:
 ```
 
 ```yaml
-# Scheduler config (one per combination, not one per codebase)
+ # Scheduler config (one per combination, not one per codebase)
 scheduled_reports:
   - report: DomainTierProgressReport
     params: {domain: data_engineering, tier: junior}

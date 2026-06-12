@@ -204,11 +204,26 @@ Payback period = Platform cost ÷ (Current cost per month)
 
 This converts "we should have better infrastructure" into a business decision with a calculable return.
 
+## Why It Matters
+
+Platform thinking is the move from solving problems to making whole classes of problems stop existing — and at scale it's the highest-leverage work a frontend lead can sponsor:
+
+- The arithmetic is straightforward: eight product teams each spending two weeks a year on build tooling, auth integration, and deployment plumbing is four engineer-months annually — a platform team solving each problem once turns that recurring tax into a one-time investment
+- Golden paths beat mandates: a paved road (create-app templates, CI presets, sanctioned component library) that makes the right way the *easy* way achieves what policy documents never do, because teams adopt what helps them ship Friday's demo
+- The treacherous part is product discipline: platforms serve internal customers, and a platform built without listening to them becomes a bottleneck wearing an empowerment costume — the team everyone must wait for instead of the team nobody must think about
+- Funding is the political skill: platform value is invisible (incidents that didn't happen, weeks not wasted), so leads must learn to narrate prevented costs or watch the investment die at the first budget review
+
+Product teams make the company money this quarter; platform teams decide how expensive every future quarter will be.
+
 ## Common Mistakes
 
 - **Building without product team input.** The platform team's technical judgment and product teams' actual pain points are often different.
 - **Mandating platform adoption.** Product teams that are forced to use the platform become resentful advocates who actively work around it. Earn adoption through quality.
 - **Measuring platform success by platform features.** Measure by product team outcomes.
+
+## Mental Model
+
+A platform team runs the utilities, not the buildings. Every business on the street needs power, water, and waste removal; before utilities exist, each shop generates its own electricity — a hundred basement generators, all slightly different, all maintained badly, all someone's side job (every product team's bespoke webpack config, auth glue, and deploy scripts). The utility model wins on economics and reliability: specialists run one excellent grid, shops plug into standard sockets (golden-path templates and APIs) and get back to selling what they actually sell. The model also dictates the failure modes. A utility that doesn't listen to customers builds capacity nobody needs (the platform feature no team asked for). One that's hard to connect to keeps the generators alive (teams bypass the platform when the socket is harder than the basement). And monopoly arrogance — "use it because you must" — breeds shadow infrastructure. The test of a good platform is a utility's test: customers stop thinking about it entirely, and notice it only on the day something else breaks.
 
 ## Mini Summary
 

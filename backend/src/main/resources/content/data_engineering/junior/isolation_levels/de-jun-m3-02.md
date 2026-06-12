@@ -222,7 +222,7 @@ Multi-Version Concurrency Control (MVCC):
 ### Handling Serialization Failures
 
 ```python
-# Application code must retry on SQLSTATE 40001 (serialization failure)
+ # Application code must retry on SQLSTATE 40001 (serialization failure)
 import psycopg2
 
 def transfer_funds(conn, from_id, to_id, amount, max_retries=3):
@@ -245,6 +245,16 @@ def transfer_funds(conn, from_id, to_id, amount, max_retries=3):
                 raise
     return False
 ```
+
+## Why It Matters
+
+Isolation levels are the dial between correctness and concurrency — and most engineers don't know where their database has it set:
+
+- READ COMMITTED (a common default) still allows non-repeatable reads — two reads in one transaction can disagree
+- Phantom reads and write skew cause real bugs in inventory and booking systems that "should have been impossible"
+- Choosing SERIALIZABLE everywhere is safe but can throttle throughput and introduce retry-on-conflict logic the app must handle
+
+Every isolation bug looks like a ghost: unreproducible, intermittent, data-dependent. Knowing the anomaly each level permits lets you choose deliberately instead of debugging mysteries.
 
 ## Common Mistakes
 

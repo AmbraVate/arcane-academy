@@ -216,7 +216,7 @@ public class OrderService {
 
 **Prometheus scrape config:**
 ```yaml
-# prometheus.yml
+ # prometheus.yml
 scrape_configs:
   - job_name: 'order-service'
     metrics_path: '/actuator/prometheus'

@@ -249,6 +249,16 @@ DELIMITER ;
 | Security | Grant EXECUTE only | Must grant table access |
 | Transaction control | Can COMMIT/ROLLBACK | Application manages |
 
+## Why It Matters
+
+Stored procedures put logic next to the data — sometimes the best decision available, sometimes a maintenance trap, and you need to judge which:
+
+- Batch operations over millions of rows run far faster in the database than round-tripping every row to an application
+- A procedure offers a controlled, auditable entry point — apps get EXECUTE rights, not raw table access
+- The costs are real too: procedural SQL is harder to version, test, and debug than application code, and it ties you to a vendor dialect
+
+Legacy systems run on procedures and modern systems still need them for data-heavy work. Knowing when they earn their keep is the actual skill.
+
 ## Common Mistakes
 
 - **Using dynamic SQL for filter values**: Building SQL strings by concatenating user input inside a procedure reintroduces SQL injection. Use parameterised queries inside procedures.

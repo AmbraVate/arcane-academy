@@ -183,6 +183,16 @@ Most SQL style guides and teams adopt a convention of never using RIGHT JOIN:
 - No mental overhead tracking the direction of each join
 - The anchor table (FROM) is always the one whose rows are guaranteed to appear
 
+## Why It Matters
+
+RIGHT JOIN completes the symmetry of outer joins, and understanding it sharpens your grasp of joins in general:
+
+- It keeps every row from the *right* table — exactly a LEFT JOIN with the tables swapped
+- You will rarely write one (convention favours LEFT JOIN), but you *will* read them in inherited code and need to know precisely what they do
+- Reasoning through "which side is preserved?" cements the mental model that makes all outer joins predictable
+
+Knowing RIGHT JOIN also means knowing *why* teams avoid it — a style judgement you'll be expected to articulate in code review.
+
 ## Common Mistakes
 
 - **Using RIGHT JOIN unnecessarily**: Any RIGHT JOIN can be a LEFT JOIN. Swap the tables and change the keyword — the result is identical.

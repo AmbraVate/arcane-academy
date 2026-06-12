@@ -208,6 +208,16 @@ When column names are the same in both tables (like `customer_id`), you must qua
 - `o.customer_id` — the customer_id column from the orders alias
 - `c.customer_id` — the customer_id column from the customers alias
 
+## Why It Matters
+
+Joins exist because good databases split data into focused tables — and the business questions always span more than one of them:
+
+- "Which customer placed this order?" requires recombining what normalisation deliberately separated
+- Without joins you'd either duplicate customer details on every order (and watch them drift out of sync) or run endless manual lookups
+- Joins are the payoff of relational design: store every fact once, then recombine facts freely at query time
+
+Every lesson in this module builds on this one idea. Understand *why* the data is split, and the mechanics of each join type become obvious instead of arbitrary.
+
 ## Common Mistakes
 
 - **Forgetting the ON clause**: A join without ON (or with a mistaken condition) produces a Cartesian product — every row from table A matched with every row from table B. 1,000 customers × 50,000 orders = 50,000,000 rows.

@@ -172,6 +172,10 @@ Good typography makes content readable and hierarchy clear without conscious eff
 - No maximum line length — 120+ character lines are exhausting to track
 - Too many typefaces (max 2 per page)
 
+## Mental Model
+
+Typography is the voice your interface speaks in. The same sentence whispered, shouted, or read by a newsreader carries different meaning — and size, weight, and spacing are exactly those controls. A page with one font size is a robot droning in monotone: nothing signals what matters. Hierarchy is intonation: large bold headings *stress* the important words, modest body text carries the steady middle voice, small captions are asides. Line height and line length are pacing — cramped lines gabble, over-long lines lose the listener. When a design feels "off", listen to it: where is the monotone, where is the shouting?
+
 ## Mini Summary
 
 - ✔ Sans-serif for UI, serif for long reading — match typeface to use case

@@ -164,6 +164,10 @@ It is the mechanism that makes responsive design possible. Master media queries 
 
 Media queries are the control flow of responsive design — the `if` statements that adapt layouts to context. Understanding their full capabilities (not just min/max-width) opens up dark mode, reduced motion, print styles, and touch-vs-hover detection.
 
+## Mental Model
+
+Media queries are thermostat rules for your layout. A thermostat doesn't ask *which* house it's in; it reads a measurement — "below 18°? heating on" — and acts. A media query reads the viewport: "narrower than 768px? stack the columns." You aren't writing designs for an iPhone or a desktop; you're writing *condition → response* rules that any current or future device evaluates for itself. The skill is choosing trigger points where your *content* visibly struggles (lines too long, cards too cramped) — set the thermostat where the room actually gets cold, not where a device catalogue says it might.
+
 ## Mini Summary
 
 - ✔ `@media (min-width: N)` — mobile-first: styles apply at N and above

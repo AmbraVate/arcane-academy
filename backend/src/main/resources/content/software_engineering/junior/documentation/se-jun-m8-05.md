@@ -163,19 +163,19 @@ Good documentation has layers:
 
 **README essentials:**
 ```markdown
-# Project Name
+ # Project Name
 Brief description of what this does.
 
-## Getting Started
+ ## Getting Started
 Prerequisites: Java 17, Docker
 1. Clone: `git clone ...`
 2. Run tests: `./gradlew test`
 3. Start app: `./gradlew bootRun`
 
-## Configuration
+ ## Configuration
 Environment variables: DB_URL, JWT_SECRET
 
-## Architecture
+ ## Architecture
 Brief overview + link to ADRs/diagrams
 ```
 
@@ -219,17 +219,17 @@ for (int attempt = 0; attempt < 3; attempt++) {
 
 **ADR example (in `docs/adr/0003-use-jwt-for-auth.md`):**
 ```markdown
-## Decision
+ ## Decision
 Use JWT tokens for authentication instead of session-based auth.
 
-## Context
+ ## Context
 We are building a stateless REST API deployed across multiple instances.
 
-## Rationale
+ ## Rationale
 JWTs are self-contained and don't require a shared session store.
 The trade-off is larger request headers and difficulty revoking tokens.
 
-## Status: Accepted
+ ## Status: Accepted
 ```
 
 ## Common Mistakes

@@ -241,6 +241,17 @@ ROLLBACK TO SAVEPOINT order_created;
 COMMIT;
 ```
 
+## Why It Matters
+
+ACID is the contract that lets you write money-handling code without lying awake at night:
+
+- Atomicity means a failed transfer never leaves an account debited but not credited — partial work vanishes
+- Consistency and constraints stop bad states from ever being committed
+- Isolation lets a thousand concurrent users behave as if each had the database alone
+- Durability means "committed" survives a power cut
+
+Every framework, ORM, and microservice ultimately leans on these guarantees. Engineers who understand exactly what ACID does — and does not — promise can reason about failures instead of being surprised by them.
+
 ## Common Mistakes
 
 - **AUTOCOMMIT with multi-step operations**: Each statement auto-commits in AUTOCOMMIT mode. A partial failure leaves data inconsistent. Always use explicit transactions for operations with multiple dependent statements.

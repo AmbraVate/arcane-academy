@@ -164,31 +164,31 @@ Git is the Archive Protocol for code.
 **Core commands:**
 
 ```bash
-# Stage a specific file
+ # Stage a specific file
 git add src/main/java/QuestService.java
 
-# Stage all changes
+ # Stage all changes
 git add .
 
-# Create a commit with a message
+ # Create a commit with a message
 git commit -m "feat: add quest completion XP calculation"
 
-# Upload local commits to remote
+ # Upload local commits to remote
 git push origin main
 
-# Download remote changes and merge
+ # Download remote changes and merge
 git pull origin main
 
-# See uncommitted changes
+ # See uncommitted changes
 git diff
 
-# See staged changes (ready to commit)
+ # See staged changes (ready to commit)
 git diff --staged
 
-# View commit history
+ # View commit history
 git log --oneline
 
-# View the repository's current state
+ # View the repository's current state
 git status
 ```
 
@@ -207,43 +207,43 @@ git status
 **A meaningful workflow:**
 
 ```bash
-# Check what has changed
+ # Check what has changed
 git status
 
-# Stage specific files (not git add . blindly)
+ # Stage specific files (not git add . blindly)
 git add src/main/java/academy/quest/QuestService.java
 git add src/test/java/academy/quest/QuestServiceTest.java
 
-# Review what will be committed
+ # Review what will be committed
 git diff --staged
 
-# Commit with a meaningful message
+ # Commit with a meaningful message
 git commit -m "feat: calculate and award XP on quest completion
 
 XP is now calculated based on quest difficulty and time taken.
 Added unit tests for all three difficulty tiers."
 
-# Push to remote
+ # Push to remote
 git push origin feature/quest-xp
 ```
 
 **A good .gitignore for a Java/Maven project:**
 
 ```gitignore
-# Compiled output
+ # Compiled output
 target/
 *.class
 
-# IDE metadata
+ # IDE metadata
 .idea/
 *.iml
 .vscode/
 
-# Secrets — never commit these
+ # Secrets — never commit these
 .env
 application-local.properties
 
-# OS files
+ # OS files
 .DS_Store
 Thumbs.db
 ```

@@ -161,6 +161,10 @@ function Button({
 - **Over-defaulting required props.** If a prop is truly required, mark it required — don't hide missing data behind a default.
 - **Unintuitive defaults.** A `disabled` default of `true` would break every usage. Defaults should represent the expected common case.
 
+## Mental Model
+
+Default props are factory settings. A new phone arrives working — ringtone chosen, brightness reasonable, language guessed from region — because the manufacturer decided every setting must have a sensible answer *before* the customer touches anything. Customers who care override (`<Button size="large" />`); the silent majority get good behaviour for free (`<Button />` just works). Designing a component's defaults is the same act of judgement the manufacturer makes: the default should be the choice *most* users want, safe rather than surprising — a Button defaults to `type="button"` (not the form-submitting `"submit"`), a Modal defaults to closed, a list to empty rather than undefined. The deeper payoff is what defaults do to your component's internals: once every optional prop is guaranteed a value, the code below stops bristling with `if (size === undefined)` guards — the factory settled those questions at the gate. A component without defaults pushes its decisions onto every caller; a component with good defaults makes the common case effortless and the custom case possible. That asymmetry — easy by default, flexible on demand — is what makes a component pleasant to use seventeen times a day.
+
 ## Mini Summary
 
 - Default props use ES6 parameter defaults in the function signature

@@ -325,6 +325,16 @@ class LoanRepositoryPostgresTest {
 }
 ```
 
+## Why It Matters
+
+The repository pattern is how applications keep persistence from leaking into business logic — a boundary you'll meet in nearly every well-structured codebase:
+
+- Swapping or upgrading the data layer (or mocking it in tests) is only possible when access goes through a defined interface
+- Spring Data's derived queries make simple repositories nearly free, while custom methods keep complex SQL in one auditable place
+- Without the boundary, queries scatter through services and controllers until no one can say what touches a table
+
+Repositories are SOLID principles applied to data access: one place, one responsibility, easily substituted. That's why interviewers and architects keep asking about them.
+
 ## Common Mistakes
 
 - **Service directly using `EntityManager`**: Bypasses the repository pattern; service is now coupled to JPA. Extract persistence calls to a repository interface — even if it's just a thin wrapper today, it gives you the seam for testing and future changes.

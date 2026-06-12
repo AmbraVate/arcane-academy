@@ -158,6 +158,10 @@ Clear contract. No guessing. IDE will autocomplete all of these.
 - **Making all props required.** Use optional props with sensible defaults for better DX.
 - **Using PropTypes.object or PropTypes.array.** Too broad. Use `PropTypes.shape({...})` and `PropTypes.arrayOf(...)`.
 
+## Mental Model
+
+Prop types are the sockets on the back of a component. A monitor doesn't accept "whatever cable you have" — it has an HDMI port, a power port, each shaped so the wrong plug physically can't seat. Declaring prop types (TypeScript interfaces or PropTypes) gives your component that same shaped back panel: `title` is a string-shaped socket, `onClose` is a function-shaped one, `count` takes only numbers. Two payoffs follow, the same ones hardware gets. Wrong connections fail at *plug-in time* — in the editor or at build, where mistakes cost seconds — rather than at *runtime* in front of users, the difference between a cable that won't seat and a monitor that catches fire mid-presentation. And the panel is *documentation that can't lie*: a new teammate reads the prop interface and knows exactly how to wire the component, no archaeology through its internals required — and unlike a README, the sockets can't drift out of date, because the compiler checks them on every connection. Untyped props are bare wires: they work, until the day someone guesses wrong.
+
 ## Mini Summary
 
 - PropTypes: runtime warnings in development (legacy approach)

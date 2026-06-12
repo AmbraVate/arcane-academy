@@ -118,6 +118,21 @@ toast.success('Link copied to clipboard');
 - [ ] Sets expectations ("reply in 24 hours")
 - [ ] Offers a next action ("View order" / "Return home")
 
+## Mental Model
+
+Success feedback is the receipt, and receipts are calibrated to the transaction. Buy a coffee and you get a two-second nod and your change — small action, lightweight acknowledgement (the inline tick beside an autosaved field, gone again in a moment). Buy a sofa and you get a printed order confirmation with a number to quote, the delivery window, and what to do if it doesn't arrive — significant action, durable receipt (the confirmation screen for a placed order: reference ID, next steps, an exit path). Transfer your savings and you'd be alarmed by a mere nod: the stakes demand ceremony proportional to consequence. Getting the calibration wrong fails in both directions — a marching band for marking a notification as read (toast fatigue: over-celebrated trivia trains users to dismiss all feedback unread), or a silent shrug after a mortgage application (the user refreshing, resubmitting, and phoning support, because *no receipt reads as no transaction*). Two more properties complete the receipt model. A receipt is *handed to you*, not merely filed: confirmation the user can't perceive doesn't exist, which is why visual toasts need announced equivalents (live regions) for users who can't see them — a cashier who silently slides the receipt to a blind customer hasn't confirmed anything. And receipts answer the next question before it's asked: when does it arrive, what do I quote if it doesn't, where do I go now — the difference between "Success!" (a stamp with no paper) and feedback that actually discharges the user's uncertainty. Nod for coffee, paperwork for sofas, always handed over, always answering "what now": success states as receipt design.
+
+## Why It Matters
+
+Success states are the most neglected quarter of interface feedback — teams obsess over errors and skip confirmation, leaving users to wonder whether their action worked at all:
+
+- Silence after action is a measurable problem, not an aesthetic one: a user who clicks "Save" and sees nothing will click again (duplicate writes), navigate away unsure (support tickets reading "did my application go through?"), or assume failure and abandon — explicit confirmation is what closes the interaction loop
+- Matching the signal to the stakes is the design judgement: an inline tick for autosave, a toast for a completed background action, a full confirmation screen with reference number for the irreversible or high-stakes (payments, applications) — over-celebrating trivia is as corrosive as under-confirming consequence
+- Success feedback carries operational duties: it's where you surface *what happens next* ("confirmation email sent — arrives within 10 minutes"), reference identifiers users will quote to support, and the natural exit path (view order, continue shopping) — a bare "Success!" wastes the one moment you have the user's grateful attention
+- The mechanics reuse this module's machinery: success is a state like any other (often auto-expiring, which means timers and cleanup), it must be announced to screen readers (live regions — a silent visual toast excludes non-sighted users from knowing their action worked), and it must reset correctly when the user acts again
+
+Errors tell users what went wrong; success states tell them their time mattered. Products that confirm well feel trustworthy in a way users can't articulate but absolutely act on.
+
 ## Mini Summary
 - ✔ Match confirmation weight to action weight
 - ✔ Replace form for high-stakes; inline/toast for low-stakes

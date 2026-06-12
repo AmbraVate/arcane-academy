@@ -154,7 +154,7 @@ const SentryErrorBoundary = Sentry.withErrorBoundary(App, {
 **Source map upload (Vite):**
 ```bash
 npm install --save-dev @sentry/vite-plugin
-# vite.config.ts: add sentryVitePlugin({ org, project, authToken })
+ # vite.config.ts: add sentryVitePlugin({ org, project, authToken })
 ```
 
 **Alert strategy:**
@@ -163,6 +163,17 @@ npm install --save-dev @sentry/vite-plugin
 - Error affecting > 1% of sessions: alert
 - Known noise/third-party errors: mute
 
+## Why It Matters
+
+Frontend errors happen on machines you don't own, in browsers you didn't test, on networks you can't imagine — and without tracking, every one of them is invisible until a user bothers to complain:
+
+- Studies and vendor data consistently show only a small fraction of users report errors they hit; the rest silently retry, rage-click, or leave — your error rate is real whether or not you can see it
+- A tracking pipeline (Sentry and its peers) turns "the app sometimes breaks" into actionable engineering: stack traces mapped through source maps, grouped by root cause, tagged with browser, release, and user impact
+- Release correlation is the killer feature — knowing an error spike started exactly at deploy 4.2.1 turns a day of bisection into a one-click rollback decision
+- Triage discipline matters as much as capture: an unfiltered firehose of noise (extension errors, ad-blocker artefacts) trains the team to ignore the dashboard, which is worse than not having one
+
+Backend engineers have had this observability for decades. Bringing it to the frontend is what makes client-side quality a measurable, improvable number instead of vibes and anecdotes.
+
 ## Common Mistakes
 
 - **No source maps.** Stack traces in minified code are unreadable.
@@ -170,6 +181,10 @@ npm install --save-dev @sentry/vite-plugin
 - **Alerting on every error.** Alert fatigue. Use thresholds and grouping.
 - **Not configuring sampling.** Sending every event to Sentry for high-traffic apps is expensive. Use `tracesSampleRate` and `sampleRate`.
 - **Dynamic values in error messages.** 'Failed for user 12345' = 10,000 separate issues. Use error type and type message pattern.
+
+## Mental Model
+
+Error tracking is the aircraft's black box plus the airline's incident room — not a smoke alarm. A smoke alarm (the user's bug report) tells you something burned, somewhere, probably, yesterday. A black box records the *context of the failure as it happened*: what release was flying, what browser-weather it flew through, what the user did in the seconds before (breadcrumbs), and the exact line where the engine failed (source-mapped stack trace). The incident room is the grouping and triage layer: a thousand recordings of the same engine fault are one investigation, not a thousand; a fault affecting every aircraft of one model since Tuesday's refit (release regression) is prioritised over a one-off bird strike. And the system only works like aviation if someone actually reviews the findings — a black box nobody reads after landing is just expensive ballast.
 
 ## Mini Summary
 

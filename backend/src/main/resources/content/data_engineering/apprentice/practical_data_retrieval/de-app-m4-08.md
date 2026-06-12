@@ -225,6 +225,16 @@ GROUP BY c.customer_id, c.name
 ORDER BY lifetime_value DESC NULLS LAST;
 ```
 
+## Why It Matters
+
+Reports are where joins meet consequences — the numbers leadership sees are assembled from multiple tables, and the join choices decide whether those numbers are true:
+
+- A sales report that INNER JOINs to regions drops every sale with no region assigned; totals stop matching and trust evaporates
+- Joining at the wrong grain double-counts: one order with three lines becomes three orders in a careless report
+- "Why don't these two reports agree?" is the most common data question in any company, and the answer is almost always a join difference
+
+Building reporting queries teaches you to reconcile totals as you go — the habit that makes your numbers the trusted ones.
+
 ## Common Mistakes
 
 - **GROUP BY order_date for monthly reports**: Groups by exact date, not month. Use `EXTRACT(MONTH FROM date)` or `DATE_TRUNC('month', date)`.

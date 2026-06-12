@@ -220,12 +220,12 @@ export default function EncodingPage() {
           code: enc.starterCode ?? '',
         })
       } catch {
-        if (mounted) navigate('/')
+        if (mounted) navigate(-1)
       }
     }
     load()
     return () => { mounted = false }
-  }, [lessonId, navigate])
+  }, [lessonId])
 
   useEffect(() => {
     return () => {
@@ -571,7 +571,7 @@ export default function EncodingPage() {
               <div className="text-[12px] font-bold text-teal uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5">
                 <Target size={12} strokeWidth={2} /> Learning Objectives
               </div>
-              <ul className="m-0 pl-4 space-y-1.5">
+              <ul className="m-0 pl-4 space-y-1.5 list-disc">
                 {encoding.learningObjectives.map((obj, i) => (
                   <li key={i} className="text-[13px] text-text leading-[1.6] marker:text-teal"
                     dangerouslySetInnerHTML={safe(inlineMd(obj))} />
@@ -616,6 +616,12 @@ export default function EncodingPage() {
                 '[&_pre]:relative [&_pre]:bg-[#09070f] [&_pre]:border [&_pre]:border-[rgba(139,92,246,0.2)] [&_pre]:rounded-[10px] [&_pre]:overflow-hidden [&_pre]:my-5 [&_pre]:mb-6 [&_pre]:shadow-[0_4px_20px_rgba(0,0,0,0.3)]',
                 '[&_pre]:before:content-["â—_â—_â—"] [&_pre]:before:block [&_pre]:before:px-4 [&_pre]:before:py-[9px] [&_pre]:before:text-[11px] [&_pre]:before:tracking-[4px] [&_pre]:before:text-[rgba(139,92,246,0.5)] [&_pre]:before:bg-[rgba(139,92,246,0.06)] [&_pre]:before:border-b [&_pre]:before:border-[rgba(139,92,246,0.12)]',
                 '[&_pre_code]:block [&_pre_code]:px-5 [&_pre_code]:py-4 [&_pre_code]:text-[13px] [&_pre_code]:leading-[1.75] [&_pre_code]:text-[#e2e8f0] [&_pre_code]:font-mono [&_pre_code]:overflow-x-auto [&_pre_code]:bg-transparent [&_pre_code]:border-none',
+                '[&_table]:w-full [&_table]:border-collapse [&_table]:my-5 [&_table]:text-[13px] [&_table]:block [&_table]:overflow-x-auto',
+                '[&_thead]:border-b-2 [&_thead]:border-[rgba(139,92,246,0.35)]',
+                '[&_th]:text-left [&_th]:px-4 [&_th]:py-3 [&_th]:font-cinzel [&_th]:text-[11px] [&_th]:tracking-[0.05em] [&_th]:text-gold [&_th]:font-semibold',
+                '[&_td]:px-4 [&_td]:py-3 [&_td]:border-b [&_td]:border-[rgba(255,255,255,0.05)] [&_td]:align-top [&_td]:text-text',
+                '[&_tr:last-child_td]:border-b-0',
+                '[&_tbody_tr:hover]:bg-[rgba(139,92,246,0.04)]',
                 'max-[480px]:text-[14px] max-[480px]:[&_pre_code]:text-[12px]',
               )}
             />
@@ -1184,13 +1190,15 @@ export default function EncodingPage() {
                   rows={3}
                   className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[13px] text-text placeholder:text-muted outline-none focus:border-gold transition-[border-color] resize-y"
                 />
-                <textarea
-                  placeholder="Paste your code here (optional)…"
-                  value={capstoneCode}
-                  onChange={e => setCapstoneCode(e.target.value)}
-                  rows={5}
-                  className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[12px] text-text font-mono placeholder:text-muted outline-none focus:border-gold transition-[border-color] resize-y"
-                />
+                {encoding.practiceType !== 'NONE' && (
+                  <textarea
+                    placeholder="Paste your code here (optional)…"
+                    value={capstoneCode}
+                    onChange={e => setCapstoneCode(e.target.value)}
+                    rows={5}
+                    className="bg-surface border border-border rounded-[8px] px-3 py-2 text-[12px] text-text font-mono placeholder:text-muted outline-none focus:border-gold transition-[border-color] resize-y"
+                  />
+                )}
                 <input
                   type="url"
                   placeholder="GitHub repository URL (optional)"

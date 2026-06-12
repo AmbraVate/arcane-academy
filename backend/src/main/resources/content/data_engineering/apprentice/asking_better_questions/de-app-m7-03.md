@@ -227,6 +227,16 @@ GROUP BY completed_onboarding;
 -- SQL alone cannot distinguish between these interpretations
 ```
 
+## Why It Matters
+
+Confusing correlation with causation is the most expensive reasoning error in data work, because it leads to confident actions that don't work:
+
+- Ice-cream sales and drownings rise together — banning ice cream saves no one; summer causes both
+- A marketing campaign "drives" signups that were actually seasonal growth, so budget gets poured into the wrong channel
+- Health, hiring, and product decisions based on correlations regularly reverse when a hidden third factor is found
+
+Every stakeholder you ever work with will be tempted by this shortcut. Being the person who asks "what else could explain this?" is a professional superpower.
+
 ## Common Mistakes
 
 - **"The data shows it"**: Data shows correlations. Causation requires additional reasoning and ideally an experiment.

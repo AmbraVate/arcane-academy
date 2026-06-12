@@ -290,6 +290,16 @@ int markOverdueLoans(@Param("today") LocalDate today);
 List<Object[]> getMonthlyLoanStats();
 ```
 
+## Why It Matters
+
+ORMs dominate how applications talk to databases, so understanding the mapping concepts — not just the annotations — is core professional knowledge:
+
+- The object-relational impedance mismatch is real: inheritance, identity, and associations all translate imperfectly, and each ORM's compromise has consequences
+- Lazy vs eager loading is a per-relationship performance decision; the default is rarely right for every case
+- Knowing what SQL your mapping generates is the difference between using an ORM and being used by it
+
+ORMs remove boilerplate, not the need to understand databases. The engineers who treat them as magic are the ones the magic eventually bites.
+
 ## Common Mistakes
 
 - **N+1 on every collection**: Any `@OneToMany` or `@ManyToOne` with LAZY loading and loop access causes N+1. Always check SQL logs when introducing new queries. Use JOIN FETCH or @EntityGraph for queries that traverse associations.

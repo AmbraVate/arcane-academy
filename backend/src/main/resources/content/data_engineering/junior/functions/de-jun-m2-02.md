@@ -258,6 +258,16 @@ ROUND(n, decimals), ABS(n), MOD(n, m)
 -- age_band(date_of_birth) -- '18-24', '25-34', etc.
 ```
 
+## Why It Matters
+
+Database functions let you name and reuse logic where the data lives — and knowing when to use them is as important as knowing how:
+
+- A calculation defined once (tax, age, risk score) returns the same answer for every caller — no app-by-app drift
+- Functions compose into queries, so derived values stay consistent across reports, views, and procedures
+- The performance trap is real: a function called per-row in a WHERE clause can disable index use and slow a query a hundredfold
+
+Functions are the database's version of DRY. Used well they centralise truth; used carelessly they hide cost — this lesson teaches you to tell the difference.
+
 ## Common Mistakes
 
 - **Missing RETURN statement**: The function body must explicitly return the value with RETURN — a SELECT alone does not return from the function.

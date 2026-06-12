@@ -247,17 +247,17 @@ Breaking point: ~400 VUs. With production peak at 200 VUs, the safety margin is 
 **Example 3: Soak Test Memory Leak Detection**
 
 ```bash
-# Run k6 soak test with JVM monitoring
+ # Run k6 soak test with JVM monitoring
 k6 run --duration=8h soak_test.js &
 
-# Monitor JVM heap in parallel
+ # Monitor JVM heap in parallel
 watch -n 30 "jcmd <pid> VM.native_memory summary"
 
-# Watch for: heap growing consistently without returning to baseline
-# Baseline: 512MB
-# After 2h: 680MB
-# After 4h: 850MB
-# After 8h: 1.1GB → OOM imminent → memory leak confirmed
+ # Watch for: heap growing consistently without returning to baseline
+ # Baseline: 512MB
+ # After 2h: 680MB
+ # After 4h: 850MB
+ # After 8h: 1.1GB → OOM imminent → memory leak confirmed
 ```
 
 ## Common Mistakes

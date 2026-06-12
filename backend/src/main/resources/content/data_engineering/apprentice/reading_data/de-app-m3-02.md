@@ -202,6 +202,16 @@ SELECT
 FROM products;
 ```
 
+## Why It Matters
+
+SELECT is the verb of the data world — the single statement behind every report, app screen, and dashboard you have ever used:
+
+- It is read-only and safe, which makes it the perfect tool for exploring unfamiliar databases without fear
+- Choosing explicit columns instead of `SELECT *` makes queries faster, clearer, and immune to surprise when tables change
+- Every advanced topic ahead — joins, aggregation, subqueries — is just SELECT with more clauses
+
+Fluency here compounds: the engineer who can answer their own data questions in seconds outpaces the one who files a ticket and waits.
+
 ## Common Mistakes
 
 - **`SELECT *` in production code**: Returns all columns, including unused ones. Wastes bandwidth, memory, and breaks on schema changes.

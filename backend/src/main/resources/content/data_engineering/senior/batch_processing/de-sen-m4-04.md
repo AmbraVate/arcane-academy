@@ -97,11 +97,11 @@ MapReduce decomposes a distributed computation into two phases:
 Apply a function to every record independently. Each record emits zero or more (key, value) pairs.
 
 ```python
-# Map: for each lesson completion, emit (lesson_id, 1)
+ # Map: for each lesson completion, emit (lesson_id, 1)
 def map_function(record):
     yield (record['lesson_id'], 1)
 
-# Applied in parallel across all partitions — no coordination needed
+ # Applied in parallel across all partitions — no coordination needed
 ```
 
 ### Shuffle Phase
@@ -121,10 +121,10 @@ After shuffle:
 Aggregate all values for each key.
 
 ```python
-# Reduce: sum all counts for each lesson
+ # Reduce: sum all counts for each lesson
 def reduce_function(key, values):
     yield (key, sum(values))
-# Result: (lesson_A, 3), (lesson_B, 2), (lesson_C, 1)
+ # Result: (lesson_A, 3), (lesson_B, 2), (lesson_C, 1)
 ```
 
 ## Apache Spark: Modern Batch Processing
@@ -137,16 +137,16 @@ from pyspark.sql.functions import col, date_trunc, sum as _sum
 
 spark = SparkSession.builder.appName("consortium-batch").getOrCreate()
 
-# Read Parquet from data lake
+ # Read Parquet from data lake
 events = spark.read.parquet("s3://consortium-datalake/events/")
 users  = spark.read.parquet("s3://consortium-datalake/users/")
 
-# Partition pruning: only read last 18 months
+ # Partition pruning: only read last 18 months
 events_filtered = events.filter(
     col("occurred_at") >= "2022-09-01"
 )
 
-# Broadcast join: users table is small (2M rows, ~200MB)
+ # Broadcast join: users table is small (2M rows, ~200MB)
 from pyspark.sql.functions import broadcast
 enriched = events_filtered.join(
     broadcast(users),
@@ -154,14 +154,14 @@ enriched = events_filtered.join(
     how="left"
 )
 
-# Aggregation (triggers shuffle)
+ # Aggregation (triggers shuffle)
 monthly_xp = (enriched
     .withColumn("month", date_trunc("month", col("occurred_at")))
     .groupBy("user_id", "tier", "month")
     .agg(_sum("xp_earned").alias("total_xp"))
 )
 
-# Write partitioned output (parallelises downstream reads)
+ # Write partitioned output (parallelises downstream reads)
 monthly_xp.write \
     .partitionBy("month") \
     .mode("overwrite") \
@@ -195,7 +195,7 @@ No sort; requires one side fits in memory
 ```
 
 ```python
-# Force broadcast join when Spark planner doesn't auto-detect
+ # Force broadcast join when Spark planner doesn't auto-detect
 from pyspark.sql.functions import broadcast
 result = large_table.join(broadcast(small_table), on="id")
 ```
@@ -204,10 +204,10 @@ result = large_table.join(broadcast(small_table), on="id")
 
 ### Reduce Before Shuffle
 ```python
-# BAD: shuffle all records, then filter
+ # BAD: shuffle all records, then filter
 events.groupBy("lesson_id").count().filter(col("count") > 100)
 
-# GOOD: filter first (reduces shuffle volume)
+ # GOOD: filter first (reduces shuffle volume)
 events.filter(col("lesson_id").isNotNull()) \
       .groupBy("lesson_id").count() \
       .filter(col("count") > 100)
@@ -215,18 +215,18 @@ events.filter(col("lesson_id").isNotNull()) \
 
 ### Use Columnar Storage with Partition Pruning
 ```python
-# With Parquet partitioned by date, Spark reads only matching partitions
+ # With Parquet partitioned by date, Spark reads only matching partitions
 events = spark.read.parquet("s3://data/events/")
 events.filter(col("date") == "2024-03-15")
-# EXPLAIN shows: PartitionFilters: [date=2024-03-15]
-# Only reads 1/365 of data instead of full scan
+ # EXPLAIN shows: PartitionFilters: [date=2024-03-15]
+ # Only reads 1/365 of data instead of full scan
 ```
 
 ### Tune Parallelism
 ```python
-# Default shuffle partitions (200) often wrong for large jobs
+ # Default shuffle partitions (200) often wrong for large jobs
 spark.conf.set("spark.sql.shuffle.partitions", "2000")
-# Rule of thumb: ~128MB per partition for stable performance
+ # Rule of thumb: ~128MB per partition for stable performance
 ```
 
 ## Common Mistakes

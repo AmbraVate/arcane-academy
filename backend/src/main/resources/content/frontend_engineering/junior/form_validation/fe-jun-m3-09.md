@@ -122,6 +122,21 @@ function ContactForm() {
 }
 ```
 
+## Mental Model
+
+Form submission is sending a package by courier, and the handler's job is everything a sensible sender does around the hand-off. `preventDefault` is declining the postal system's ancient default service (the full-page form POST that demolishes your SPA and everything in it) in favour of your own courier (the async request). Before dispatch, you check the package once more *as a whole* — final validation on the complete state, because individual fields were inspected as they were packed, but only now can you confirm nothing's missing and the contents agree with each other. Then the crucial discipline: the moment the courier takes the package, you *record that it's in transit* (the submitting state) — and that record drives real behaviour: you don't hand over a duplicate package because the doorbell rang twice (the disabled button preventing double-submission — with money, literally double-charging), and you show the tracking status honestly (spinner, "sending…") instead of a frozen interface that invites the second click. Delivery has three distinct outcomes, each with its own protocol. Confirmed receipt (success): tell the sender plainly, and only now is it safe to clear the packing table (reset the form) or send them onward. Refused at the door (server validation rejection): the recipient's specific objections get attached to the specific items they concern — per-field server errors flowing into the same display system as local ones — never read aloud as a raw courier docket (the unformatted API error toast). And lost in transit (network failure): you tell the sender it didn't arrive, you *keep their package intact on the table* — the typed data preserved, the cardinal rule — and you make trying again one button, not a re-packing job. Decline the default post, inspect whole, record in-transit, and script all three endings: that's a submit handler that can be trusted with a checkout.
+
+## Why It Matters
+
+Submission is the moment a form stops being local state and becomes a network transaction — and handling that transition properly is what separates demo forms from production ones:
+
+- `preventDefault` is just the entry fee: real submission handling is a *state machine* — idle, submitting, succeeded, failed — and every state needs UI: a disabled button and spinner while in flight, a clear success signal, and failure handling that returns the user to a recoverable form, data intact
+- Double-submission is a real money bug: a user double-clicking "Place order" on a slow connection fires two POSTs unless the submitting state disables the button — the canonical example of why the in-flight state isn't cosmetic
+- The failure paths are where craft shows: network errors versus validation rejections versus server faults deserve different treatment (retry guidance, per-field error mapping, and a generic apology respectively), and the cardinal rule — *never lose the user's typed data on failure* — is violated by every form that clears or reloads on error
+- Final validation gates the request: client checks run once more before sending (state can be invalid in ways individual field events missed), and the server's response feeds back into the same error display system, closing the loop this module built across three lessons
+
+Checkout flows, signups, support tickets — every conversion event in every product passes through a submit handler. This lesson is where your forms start being trusted with real consequences.
+
 ## Mini Summary
 - ✔ validate → isSubmitting → try/catch → success/error state
 - ✔ Disable submit button during submission (prevent double-click)

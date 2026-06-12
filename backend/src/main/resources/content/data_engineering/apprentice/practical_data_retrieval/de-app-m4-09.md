@@ -233,6 +233,16 @@ WHERE o.status = 'completed';  -- excludes customers with no orders (NULL status
 FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id AND o.status = 'completed';
 ```
 
+## Why It Matters
+
+Joins fail quietly — wrong results, not error messages — so debugging them is a distinct skill you will use constantly:
+
+- Too many rows? You've hit a one-to-many fan-out or a missing join condition (the accidental cross join)
+- Too few rows? An INNER JOIN is dropping unmatched records, or a WHERE clause on the outer table's NULLs is undoing your LEFT JOIN
+- Counting rows before and after each join is the systematic technique that finds these in minutes instead of hours
+
+Every data engineer spends real time diagnosing someone else's join. Learning the failure patterns now means you'll recognise them on sight later.
+
 ## Common Mistakes
 
 - **Assuming duplicate rows are a data error**: They are usually correct join behaviour. Diagnose before changing the query.

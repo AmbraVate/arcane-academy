@@ -181,7 +181,7 @@ Residency audit trail:
 ## Compliance as Code
 
 ```python
-# Compliance fitness functions (run in CI)
+ # Compliance fitness functions (run in CI)
 
 def test_all_eu_data_stays_in_eu():
     """EU-classified data must not flow to non-EU destinations."""

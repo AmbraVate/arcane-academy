@@ -186,7 +186,7 @@ The Academy's alarm network once sounded for every anomaly — every minor ward 
 
 **Symptom-based vs cause-based:**
 ```yaml
-# Symptom-based (GOOD — alerts on user experience)
+ # Symptom-based (GOOD — alerts on user experience)
 - alert: HighErrorRate
   expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.01
   for: 2m
@@ -196,7 +196,7 @@ The Academy's alarm network once sounded for every anomaly — every minor ward 
     summary: "Error rate above 1%"
     runbook: "https://wiki.company.com/runbooks/high-error-rate"
 
-# Cause-based (lower severity — warning only)
+ # Cause-based (lower severity — warning only)
 - alert: HighCPU
   expr: cpu_usage_percent > 85
   for: 10m
@@ -208,7 +208,7 @@ The Academy's alarm network once sounded for every anomaly — every minor ward 
 
 **Burn-rate alerting (SLO-based):**
 ```yaml
-# Alert when error budget will be exhausted in < 1 hour at current rate
+ # Alert when error budget will be exhausted in < 1 hour at current rate
 - alert: ErrorBudgetBurnRateHigh
   expr: |
     (

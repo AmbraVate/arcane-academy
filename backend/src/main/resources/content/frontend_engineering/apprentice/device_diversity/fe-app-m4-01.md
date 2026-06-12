@@ -167,6 +167,10 @@ Without it, mobile browsers render a 980px virtual viewport and shrink everythin
 
 60%+ of global web traffic comes from mobile. A site that breaks on mobile fails the majority of its users. Responsive design is not a bonus feature — it is the minimum requirement for a production-quality website.
 
+## Mental Model
+
+Don't think of screen sizes as a list of devices to support; think of your layout as water poured into containers of unknown shape. You will never know every container — phones, tablets, laptops, TVs, a half-snapped browser window next to a spreadsheet. Water doesn't care: it fills whatever it's given. A layout built with flexible units and sensible wrapping behaves the same way, adapting to containers that didn't exist when you wrote it. The moment you catch yourself designing for "an iPhone" rather than for *fluidity*, you're carving ice sculptures instead of pouring water.
+
 ## Mini Summary
 
 - ✔ The viewport meta tag is required for correct mobile rendering

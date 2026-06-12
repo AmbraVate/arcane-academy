@@ -172,6 +172,10 @@ Colour consistency across a UI creates cohesion and trust. Insufficient contrast
 - Too many colours — no visual hierarchy
 - Not testing in dark mode
 
+## Mental Model
+
+Treat colour like a seasoning system, not a paint box. A professional kitchen doesn't use forty spices in one dish; it builds on a base (your neutral greys and backgrounds — most of the plate), one signature flavour (the primary brand colour), and a sharp accent used sparingly (the call-to-action). The 60-30-10 ratio is a recipe expressing exactly this. Meanwhile contrast is *nutrition*, not taste: whatever the palette, text must clear readability thresholds against its background — a dish can be fashionable and still inedible. When a UI looks chaotic, count the spices; when it looks elegant, you'll find restraint and one deliberate accent.
+
 ## Mini Summary
 
 - ✔ Use HSL for design systems — easy to create systematic tints/shades

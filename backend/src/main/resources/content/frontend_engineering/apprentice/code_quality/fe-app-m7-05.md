@@ -170,6 +170,16 @@ src/
 - Match content: `user-profile.js` contains user profile logic
 - No spaces: spaces in filenames cause issues across OSes and URLs
 
+## Why It Matters
+
+File organisation decides how fast anyone — including you next month — can find, change, and trust the code:
+
+- A predictable structure means a bug in the nav bar has one obvious home, not five possible ones
+- Grouping related files (component + styles + tests) keeps changes local instead of scattered across distant folders
+- New teammates become productive in days instead of weeks when the layout teaches itself
+
+Projects don't fail because a folder was misnamed; they rot slowly as every "I'll just put it here for now" makes the next decision harder. Structure is compound interest.
+
 ## Common Mistakes
 
 - All files in root directory — not scalable

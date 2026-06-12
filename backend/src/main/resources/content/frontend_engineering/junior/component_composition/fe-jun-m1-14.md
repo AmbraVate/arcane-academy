@@ -150,6 +150,10 @@ function UserPage({ userId }) {
 - **Over-decomposing.** Splitting a `<p>` into a `<Paragraph>` component for no reason adds noise.
 - **Tight coupling between siblings.** Components at the same level shouldn't know about each other.
 
+## Mental Model
+
+Composing components is plumbing with standard fittings, not welding custom pipework. A welded system (one big component doing everything) is rigid: rerouting anything means cutting metal. Standard fittings — pipes, joints, valves, each with one job and compatible threads — let a plumber assemble any configuration from a small parts catalogue, and *re*-assemble it next month when requirements change. In React the threads are props and children: a `<Page>` accepts any header, a `<Card>` accepts any body, a `<List>` renders whatever item component it's handed. Composition means building screens by *connecting* these parts — `<Page header={<SearchBar />}>` `<CardGrid>...` — rather than building one MegaComponent with flags controlling internal behaviour (`showSearch`, `cardMode`, `withSidebar`...). The flag-driven component is the welded system: every new requirement adds another valve welded into the middle, and soon nobody can change anything without flooding a bathroom. The compositional version grows differently: new requirements mean new small parts, or new arrangements of existing ones, while every old configuration keeps working — because the fittings never changed, only the assembly. When a component's prop list starts reading like a settings menu, it's asking to be broken into fittings.
+
 ## Mini Summary
 
 - Composition = building complex UIs from focused, combined components

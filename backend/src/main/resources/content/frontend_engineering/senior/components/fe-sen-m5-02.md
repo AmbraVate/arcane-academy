@@ -175,12 +175,27 @@ function Button({ ...props }) {
 }
 ```
 
+## Why It Matters
+
+Design system components are infrastructure — dozens of teams build on them, which multiplies both their value and their failure modes:
+
+- A fixed bug or accessibility improvement in the system Button ships to every product overnight; equally, one regression breaks every checkout flow in the company at once
+- API design is forever: a prop named or shaped carelessly gets adopted by a hundred call sites, and renaming it later is an organisation-wide migration
+- Component quality bars are different here — full keyboard support, theming hooks, RTL, density variants — because the component cannot know its context and must be ready for all of them
+- The economics only work with adoption: a system component that's 90% right pushes teams to fork it, and forks silently re-fragment the design language the system existed to unify
+
+Building product UI teaches you to solve *a* problem; building system components teaches you to solve a *class* of problems behind a stable contract. That shift — thinking in API surface, versioning, and migration paths — is the heart of senior component work.
+
 ## Common Mistakes
 
 - **No escape hatch.** Rejecting className means consumers fork the component for edge cases.
 - **Too many variants.** Every new variant increases the design system's maintenance surface. Add variants when there's clear recurring need, not for one-off cases.
 - **Missing forwardRef.** Parent components need DOM access (focus, scroll) — forwardRef exposes the underlying element.
 - **Accessibility as afterthought.** ARIA roles and keyboard handling belong in the initial component, not added later.
+
+## Mental Model
+
+A design system component is a standardised electrical socket, not a hand-wired lamp. A lamp wired for one room can take shortcuts — this bulb, this cord length, this wall. A socket is a *contract*: any compliant plug (consumer) must work, today's and next year's, in any room (product context) — so its design obsesses over the interface (prop API), tolerances (variants, sizes, states), and safety regardless of what gets plugged in (accessibility, error states baked in). And like sockets, the value is the standard itself: one odd socket in one room forces adapters forever, which is why changing the socket shape (a breaking API change) is a managed, versioned migration with deprecation periods — never a quiet swap. When designing a system component, you are not decorating a room; you are amending a building code.
 
 ## Mini Summary
 

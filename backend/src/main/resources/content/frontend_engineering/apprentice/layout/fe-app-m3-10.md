@@ -203,6 +203,10 @@ These six patterns cover 80% of real-world layout needs. Recognising them when y
 - Reinventing patterns from scratch instead of recognising the standard solution
 - Using Grid for everything when Flexbox is simpler for one-dimensional cases
 
+## Mental Model
+
+Layout patterns are chess openings. Every game of chess is different, yet strong players don't reinvent the first ten moves — they recognise the position and play a named, battle-tested line. The holy grail layout, the card grid, the sidebar split, the centred hero: these are openings. A new design lands on your desk and instead of a blank-canvas panic you think "that's a card grid with a sticky header — I know this position." Study the patterns until recognition is instant; then your creative energy goes into what makes this page *unique*, not into re-deriving solved problems.
+
 ## Mini Summary
 
 - ✔ Container: `max-width` + `margin: 0 auto`

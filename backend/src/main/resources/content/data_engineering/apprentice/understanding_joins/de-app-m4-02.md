@@ -213,6 +213,16 @@ INNER JOIN customers AS c USING (customer_id);
 -- Equivalent to ON o.customer_id = c.customer_id
 ```
 
+## Why It Matters
+
+INNER JOIN is the workhorse — the default way to combine related tables, and the join you will write more than any other:
+
+- It answers the natural question "show me the rows that match" — orders *with* their customers, products *with* their categories
+- Its quiet exclusion of non-matching rows is both its power and its trap: rows simply vanish, with no error to warn you
+- Most multi-table queries chain several INNER JOINs, so understanding how each one filters the result is essential to trusting your numbers
+
+Know exactly what INNER JOIN keeps and what it drops, and you can predict a query's behaviour before running it — the core skill of SQL fluency.
+
 ## Common Mistakes
 
 - **Missing ON clause**: `JOIN customers` without ON produces a Cartesian product. Always include ON.

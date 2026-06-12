@@ -279,6 +279,16 @@ VALUES ('M-001', 'Alice Selvaris', 'alice@example.com', 'Premium',
 -- Query: "how many loans did Alice make as a Standard member?" → filter old sk
 ```
 
+## Why It Matters
+
+The star schema is the lingua franca of analytics — BI tools, warehouse optimisers, and analysts all assume it:
+
+- Facts in the middle, dimensions around: every "metric by attribute over time" question becomes the same simple join shape
+- Deliberate denormalisation trades storage for query speed and human comprehension — the opposite trade from OLTP design, made for good reasons
+- Tools like Power BI and Looker generate better queries (and warehouses optimise them harder) when the model is a clean star
+
+Model your warehouse as a star and analysts self-serve; model it as a normalised web and every question becomes a ticket to the data team.
+
 ## Common Mistakes
 
 - **Storing dimension attributes in the fact table**: putting `member_name` or `category` in the fact table instead of dimension tables creates an "all-in-one" table that loses the structural benefits of star schema — harder to maintain, harder to query by dimension attribute, no reuse across fact tables.

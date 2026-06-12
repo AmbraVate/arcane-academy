@@ -158,7 +158,7 @@ Knuth's observation — "premature optimisation is the root of all evil" — is 
 **Example 1: Identifying a CPU Hotspot with async-profiler**
 
 ```bash
-# Attach async-profiler to a running JVM (PID 12345) for 30 seconds
+ # Attach async-profiler to a running JVM (PID 12345) for 30 seconds
 ./profiler.sh -d 30 -f flamegraph.html 12345
 ```
 
@@ -167,9 +167,9 @@ Open `flamegraph.html` in a browser. Look for the widest frames. A common findin
 **Example 2: Memory Leak Detection**
 
 ```bash
-# Heap dump from running JVM
+ # Heap dump from running JVM
 jmap -dump:format=b,file=heap.hprof <pid>
-# Analyse in Eclipse MAT or VisualVM
+ # Analyse in Eclipse MAT or VisualVM
 ```
 
 In Eclipse MAT, the Leak Suspects report shows a `HashMap` in a singleton `EventBus` holding references to 2 million `EventListener` objects. Root cause: listeners registered but never deregistered. Fix: use `WeakReference` listeners or explicit deregistration. Memory leak eliminated.
@@ -177,11 +177,11 @@ In Eclipse MAT, the Leak Suspects report shows a `HashMap` in a singleton `Event
 **Example 3: JDK Flight Recorder — Always-On Low-Overhead Profiling**
 
 ```bash
-# Start JVM with Flight Recorder enabled
+ # Start JVM with Flight Recorder enabled
 java -XX:+FlightRecorder \
      -XX:StartFlightRecording=duration=60s,filename=recording.jfr \
      -jar myapp.jar
-# Analyse in JDK Mission Control
+ # Analyse in JDK Mission Control
 ```
 
 JFR records CPU, memory, GC, I/O, and thread events at <1% overhead. This makes it viable for continuous production recording — a recording triggered on an incident can provide retrospective profiling data.

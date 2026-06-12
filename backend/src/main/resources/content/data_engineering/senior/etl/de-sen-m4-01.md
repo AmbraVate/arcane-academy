@@ -138,7 +138,7 @@ For sources that can't add `updated_at`, use database log-based CDC (Debezium, A
 Apply business rules, clean data, reshape for the target schema.
 
 ```python
-# Example transformation pipeline (pseudocode)
+ # Example transformation pipeline (pseudocode)
 def transform_events(raw_events: DataFrame) -> DataFrame:
     return (raw_events
         # Clean
@@ -193,7 +193,7 @@ ON CONFLICT (event_id) DO UPDATE SET
 Production ETL pipelines run on a scheduler with dependency management.
 
 ```python
-# Apache Airflow DAG (simplified)
+ # Apache Airflow DAG (simplified)
 with DAG('consortium_etl', schedule_interval='0 2 * * *') as dag:
     extract = PythonOperator(task_id='extract', python_callable=extract_events)
     transform = PythonOperator(task_id='transform', python_callable=transform_events)

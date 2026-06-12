@@ -212,6 +212,16 @@ WHERE ol.line_id IS NULL
 ORDER BY c.name, p.name;
 ```
 
+## Why It Matters
+
+Product catalogues introduce the joins behind every shop page and inventory report:
+
+- Products belong to categories, link to suppliers, and appear in order lines — a hub with several spokes, each a different join
+- Missing data is normal here: a product with no category or no supplier disappears from INNER JOIN results, which is how items quietly vanish from listings
+- Catalogue queries teach you to join *through* a table (orders → order lines → products) — the skill that unlocks multi-table reporting
+
+The catalogue is also where you first feel the cost of joins on wide tables, planting the seed for later lessons on indexes.
+
 ## Common Mistakes
 
 - **Forgetting to GROUP BY all non-aggregate SELECT columns**: When joining products to categories (two column names) plus aggregating, GROUP BY must include all non-aggregate columns: `GROUP BY p.product_id, p.name, c.name`.

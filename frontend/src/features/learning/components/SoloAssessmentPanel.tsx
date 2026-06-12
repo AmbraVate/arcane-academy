@@ -152,8 +152,11 @@ function RubricReflectionPanel({ encoding, onSolved, onAdvance }: Props) {
       <div>
         <label className="block text-[12px] font-semibold text-muted mb-1.5">Your solution</label>
         <textarea
-          className="w-full h-[160px] p-3 rounded-[8px] bg-bg border border-border text-text text-[13px] leading-[1.7] resize-y focus:outline-none focus:border-purple/60 font-mono"
-          placeholder="Paste or type your code here…"
+          className={cn(
+            "w-full h-[160px] p-3 rounded-[8px] bg-bg border border-border text-text text-[13px] leading-[1.7] resize-y focus:outline-none focus:border-purple/60",
+            encoding.practiceType !== 'NONE' && "font-mono"
+          )}
+          placeholder={encoding.practiceType === 'NONE' ? "Type your response here…" : "Paste or type your code here…"}
           value={answer}
           onChange={e => setAnswer(e.target.value)}
         />

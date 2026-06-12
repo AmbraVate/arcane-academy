@@ -140,13 +140,13 @@ Without a build step:
 
 ```bash
 npm run build
-# Output:
-# vite v5.0.0 building for production...
-# ✓ 847 modules transformed.
-# dist/index.html                   0.46 kB
-# dist/assets/index-Abc12def.css   12.34 kB │ gzip:  3.11 kB
-# dist/assets/vendor-Xyz98abc.js  142.67 kB │ gzip: 45.23 kB
-# dist/assets/index-Mno34pqr.js   38.12 kB │ gzip: 11.45 kB
+ # Output:
+ # vite v5.0.0 building for production...
+ # ✓ 847 modules transformed.
+ # dist/index.html                   0.46 kB
+ # dist/assets/index-Abc12def.css   12.34 kB │ gzip:  3.11 kB
+ # dist/assets/vendor-Xyz98abc.js  142.67 kB │ gzip: 45.23 kB
+ # dist/assets/index-Mno34pqr.js   38.12 kB │ gzip: 11.45 kB
 ```
 
 847 source modules → 3 output files. 181 kB → ~60 kB gzipped.

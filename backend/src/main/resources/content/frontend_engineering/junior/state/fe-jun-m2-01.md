@@ -127,6 +127,10 @@ function Counter() {
 - **Mutating state directly.** `state.count = 5` doesn't trigger a re-render. Always use the setter.
 - **Overusing state.** Ask: can this be derived from existing state or props? If yes, don't store it in state.
 
+## Mental Model
+
+State is the scoreboard, not the game. During a match, everything that changes and *matters* lives on the scoreboard: the score, the period, the time remaining. Everything else — the stadium, the team colours, the rulebook — is fixed for the duration and doesn't belong there. A component's state is exactly its scoreboard: the minimal set of changing facts (is the menu open? what has the user typed? which tab is active?), and the rendered UI is just the scoreboard *displayed* — derived from it, never edited directly. The two scoreboard rules carry everything: nobody repaints the display by hand (you never poke the DOM; you update the state and the display follows), and you don't put the stadium on the scoreboard (constants, props, and anything computable from existing state stay off it). When deciding "is this state?", ask: does it change during play, and can nothing else tell me its value? Two yeses — it's on the board.
+
 ## Mini Summary
 
 - State is internal, mutable data that affects rendering

@@ -253,6 +253,16 @@ LEFT JOIN (
 SELECT * FROM member_dashboard WHERE overdue_count > 0;
 ```
 
+## Why It Matters
+
+Views are named queries that act like tables — and they're the database's main tool for abstraction and access control:
+
+- A reporting view can expose exactly the safe columns (no salary, no PII) and be granted independently of the base tables
+- Centralising a complex join in one view means twenty reports share one definition — fix it once, every report is fixed
+- Materialised views trade freshness for speed, pre-computing expensive aggregations for dashboards
+
+The trap is stacking views on views until nobody can predict performance. Used with discipline, views are how you publish a stable, safe interface to your data.
+
 ## Common Mistakes
 
 - **Treating a regular view as cached**: Regular views are always live — querying them re-executes the SQL. If performance is the concern, use a materialised view.

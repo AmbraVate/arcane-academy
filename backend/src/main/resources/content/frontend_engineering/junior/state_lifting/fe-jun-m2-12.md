@@ -103,9 +103,24 @@ App (owns user state)
 | Context API | Moderate depth, shared UI state |
 | Zustand / Redux | Complex state, many consumers |
 
+## Why It Matters
+
+Prop drilling is the growing pain that teaches you where React's simple model stops scaling — and diagnosing it correctly matters more than avoiding it:
+
+- The mechanics are honest but costly: when state lives four levels above its reader, every intermediate component must accept and forward props it never uses — signature noise, pointless re-render coupling, and a refactoring tax on every layer between owner and consumer
+- The real damage is to *change*: renaming one prop or adding one field means editing five files, and moving a component to a new location means re-plumbing its entire supply line — the codebase starts resisting exactly the restructuring healthy codebases need
+- But drilling through two or three levels is *normal and fine* — explicit data flow you can trace by reading is React's core virtue, and teams that context-ify every prop trade visible plumbing for invisible wiring, which debugs worse
+- The judgement this lesson installs: drilling is a signal, not a sin — passing data through many silent middlemen tells you either the state lives too high, the components are sliced wrong, or (for genuinely broad facts like theme and user) it's time for context
+
+Every React codebase contains this tension. Engineers who can articulate *when* drilling is honest plumbing versus when it's a design smell write components other people enjoy inheriting.
+
 ## Common Mistakes
 - Treating all prop drilling as bad (shallow drilling is fine)
 - Reaching for global state prematurely
+
+## Mental Model
+
+Prop drilling is a bucket brigade, and the question is always whether the brigade is the right infrastructure. Passing water hand to hand works perfectly for short distances: two or three people, everyone can see the whole chain, nothing is hidden — that's props flowing parent to child to grandchild, React's explicit and traceable default. The trouble is what happens as the line lengthens. Each person in the middle must stand there holding buckets they'll never drink from (intermediate components accepting props only to forward them); adding a new kind of bucket means renegotiating with every person in the line (a new prop edits every signature on the route); and pulling one person out to work elsewhere breaks the chain (moving a component means re-plumbing its supply). Notice what the strain is actually telling you — brigades fail for two different reasons with two different fixes. Sometimes the well is simply too far from the fire: the state lives higher than its real stakeholders, and *moving the well closer* (pushing state down to the lowest common ancestor) shortens the brigade naturally. And sometimes many distant rooms genuinely need the same water — theme, current user — which is when you stop passing buckets and *install plumbing* (context): water available at any tap in the building, no middlemen holding it. The mistake at junior level is panicking at any brigade and plumbing the whole house; the mature read is: short brigade, leave it — visible hand-offs are a feature; long brigade serving one distant room, move the well; long brigade serving many rooms, install pipes.
 
 ## Mini Summary
 - ✔ Prop drilling = props passing through components that don't use them

@@ -281,6 +281,16 @@ SELECT
 FROM employees;
 ```
 
+## Why It Matters
+
+Window functions are the biggest expressiveness jump in modern SQL — calculations across related rows without collapsing them:
+
+- Rankings ("top 3 per category"), running totals, and month-over-month deltas are one clean clause instead of tortured self-joins
+- Unlike GROUP BY, the detail rows survive — you see each order *and* its share of the customer's total
+- Analysts and interviewers both treat window fluency as the marker separating intermediate SQL from advanced
+
+Once you think in windows, a whole class of "export it to Python/Excel" problems becomes a single query. That's a permanent productivity upgrade.
+
 ## Common Mistakes
 
 - **Using window functions in WHERE**: Wrap in a CTE or subquery — WHERE runs before SELECT where window functions are computed.

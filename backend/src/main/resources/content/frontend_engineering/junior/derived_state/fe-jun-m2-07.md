@@ -133,6 +133,10 @@ function ShoppingCart({ cartItems }) {
 - **Deriving from props into state on mount.** If the prop changes, state doesn't update. Just use the prop directly.
 - **Complex derivations inside JSX.** Extract them above the return as named variables for readability.
 
+## Mental Model
+
+Derived values are spreadsheet formula cells, and the discipline is never to type a number where a formula belongs. In a well-built sheet, you enter raw facts in a few cells — quantities, prices — and everything else is formulas: subtotal `= qty × price`, tax `= subtotal × rate`. You'd never *also type* the subtotal by hand, because the moment quantity changes, your typed copy is a lie sitting beside the truth. Components work identically: state holds the raw facts (the items array, the search text), and everything computable — the filtered list, the count, the "is the form valid?" flag — should be a plain `const` calculated *during render*, a formula cell that recomputes automatically every time the inputs change. The anti-pattern this kills is storing derived values in their own `useState` and updating them alongside the source ("set the items AND set the count") — double bookkeeping that drifts the instant any code path updates one without the other, producing the classic stale-count bug. The test before every `useState`: can I compute this from existing state or props? Then it's a formula, not an entry. Type only the facts; derive all the rest.
+
 ## Mini Summary
 
 - If a value can be computed from state or props, compute it during render

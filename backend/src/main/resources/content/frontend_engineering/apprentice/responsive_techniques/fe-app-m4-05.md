@@ -160,6 +160,10 @@ body { font-size: clamp(1rem, 1.5vw, 1.125rem); }
 
 Typography is the majority of most web pages. Fluid type ensures headings remain impactful on large screens and readable on small ones — without jumping sizes at arbitrary breakpoints.
 
+## Mental Model
+
+Responsive typography is a projector that keeps focus at any screen size. Fixed `px` text is a printed page being photocopied bigger and smaller — at some sizes it's fine, at others illegible or absurd. Relative units change the machinery: `rem` sizes type against a base dial the user controls (their preferred font size), so respecting it means respecting *them*; `clamp()` adds a smooth zoom with hard stops — never smaller than readable, never larger than tasteful, scaling fluidly between. Stop choosing "the size" of text and start defining its *comfortable range*, then let each screen find focus within it.
+
 ## Mini Summary
 
 - ✔ `clamp(min, preferred, max)` — fluid font size without breakpoints

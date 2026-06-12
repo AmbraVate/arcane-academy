@@ -111,6 +111,21 @@ function handleListClick(e) {
 
 **Event delegation:** Attach one handler to a parent to handle events from all children. Efficient for large lists — one handler, not N handlers.
 
+## Mental Model
+
+An event handler is a recipe card filed under a trigger, and the craft is in what you write on the card versus what you hand the kitchen. The card has a title that says *when* ("on submit", "on change of the email field") and a body that says *what* — and keeping that body coherent is the whole game. Three card-writing rules carry the lesson. First, hand over the card, don't cook the dish at filing time: `onClick={handleSave}` files the recipe; `onClick={handleSave()}` cooks it immediately while the restaurant is still being set up (render), serving food nobody ordered. When the recipe needs ingredients chosen per table — this row's `id` — you wrap it in a fresh card per table: `onClick={() => handleDelete(id)}`, a sealed instruction that says "when called, cook *this* dish for *this* table". Second, the kitchen always sends the card back with a delivery docket attached — the event object — listing where the order came from (`event.target`), what was in it (`.value`, `.checked`), and a stamp you can apply to refuse the venue's default service (`preventDefault()`, essential when the venue's default — a full-page form submission — would demolish your single-page restaurant). Third, real recipes don't live scribbled in the margins of the menu: one-line instructions can sit inline in JSX, but anything with actual steps gets a named card (`handleSubmit`) filed above the return — readable, testable, reusable by both the button and the enter key. Trigger on the title, sealed cards for per-item arguments, read the docket, file real recipes by name: handler craft in four moves.
+
+## Why It Matters
+
+Writing event handlers well is the difference between interactivity that scales and a component that collapses under its own callbacks — this is the daily-bread skill of frontend work:
+
+- Handlers are where state meets the user: nearly every `setState` call in a real app lives inside one, so handler structure *is* application logic structure — a component's quality is often readable directly from how its handlers are organised
+- Passing arguments correctly is a daily requirement with a classic trap: list rows need `onClick={() => deleteItem(id)}` — the arrow creating a sealed instruction per row — and the wrong form (`onClick={deleteItem(id)}`) deletes every item during render, a bug every junior ships exactly once
+- The event object is a working tool, not trivia: `event.target.value` powers every input handler, `event.preventDefault()` is mandatory for form submits in an SPA, and knowing what's on the object turns "how do I get the checkbox state?" from a search into a reflex
+- Extraction discipline keeps components legible: trivial one-liners can stay inline, but logic-bearing handlers pulled into named functions (`handleSubmit`, `handleQuantityChange`) give you testability, reuse across enter-key-and-click paths, and JSX that reads like an outline instead of a script
+
+Forms, lists, modals, drag interactions — all of them are compositions of well-shaped handlers. Sloppy handler habits compound into unreadable components faster than almost any other vice in React.
+
 ## Mini Summary
 - ✔ Pass arguments via arrow: () => fn(arg)
 - ✔ event.target = clicked element; event.currentTarget = handler element

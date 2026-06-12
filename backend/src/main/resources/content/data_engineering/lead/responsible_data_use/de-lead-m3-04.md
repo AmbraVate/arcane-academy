@@ -99,9 +99,9 @@ RESPONSIBLE USE asks: Is this in the long-term interest of the people
 A charter documents the organisation's commitments — creating shared language and a binding standard.
 
 ```markdown
-# Consortium Data Ethics Charter
+ # Consortium Data Ethics Charter
 
-## Our Commitments
+ ## Our Commitments
 
 **1. We will use data only in ways learners would expect and that serve their learning**
 We collect learner data to improve their learning experience. We will not use it 

@@ -147,6 +147,10 @@ Same behaviour. Dramatically less code.
 - **Mixing arrow function and function declaration styles inconsistently.** Pick one and be consistent in a codebase.
 - **Forgetting that hooks can only be called at the top level.** No hooks inside conditionals or loops.
 
+## Mental Model
+
+A functional component is a vending-machine recipe: same input, same snack, every time. The function takes props in the slot, returns JSX from the tray — and that's its *entire* contract with React. It doesn't install the UI itself, doesn't remember previous customers, doesn't reach out and modify other machines; it just answers the question "given these inputs, what should the screen show?" React calls your function whenever it needs the answer — possibly many times, whenever state or props change — which is exactly why the function must stay *pure*: no side effects in the body, no mutating things outside itself, because you don't control when or how often it runs. Internalise the shape — props in, JSX out, nothing else — and most early React confusion ("why did this run twice?", "why can't I just change that variable?") resolves itself: you're not writing instructions that execute once, you're writing a recipe the machine consults whenever it's cooking.
+
 ## Mini Summary
 
 - Functional components are the modern React standard since hooks arrived in 2019

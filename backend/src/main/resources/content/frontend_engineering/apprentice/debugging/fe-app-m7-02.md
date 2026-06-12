@@ -169,11 +169,25 @@ console.timeEnd('fetch');
 4. Inspect variable values in Scope panel
 5. Step Over (F10) / Step Into (F11) / Resume (F8)
 
+## Why It Matters
+
+DevTools is the difference between guessing what your page is doing and watching it happen:
+
+- The Elements panel shows the *live* DOM and which CSS rules won — no more "but I set that style!" mysteries
+- The Console surfaces errors and lets you poke at your page's state interactively
+- The Network tab reveals what actually loaded, how slowly, and what failed — invisible any other way
+
+Every professional frontend engineer lives in DevTools daily. Fluency here multiplies the value of everything else you learn, because you can finally *see* what each technique really does.
+
 ## Common Mistakes
 
 - Never leaving the Console tab — missing the power of other panels
 - Not clicking the filename in error messages to jump to the failing line
 - Editing source files instead of prototyping in Elements first
+
+## Mental Model
+
+DevTools is an X-ray machine for web pages. The browser normally shows you the patient fully dressed — the rendered page. DevTools shows the skeleton (DOM structure), the circulatory system (network requests), the nervous system (scripts and events), and vital signs in real time (performance, console). A doctor doesn't guess where a fracture is; they order an X-ray and look. When a page misbehaves, opening DevTools should be the same reflex — observe the inside first, then treat the actual problem instead of the symptom.
 
 ## Mini Summary
 

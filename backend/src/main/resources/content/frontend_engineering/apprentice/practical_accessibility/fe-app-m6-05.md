@@ -163,12 +163,26 @@ But building for screen readers is not a special case — it is a consequence of
 }
 ```
 
+## Why It Matters
+
+Screen readers are how blind and low-vision users experience your pages — and whether your markup works with them is entirely your choice as its author:
+
+- Millions of people browse with screen readers daily; an inaccessible page isn't ugly to them, it's *silent* or *gibberish*
+- Legal exposure is real: accessibility lawsuits over screen-reader-broken sites are routine in several jurisdictions
+- The fixes are rarely exotic — real headings, labelled controls, alt text — but you only apply them if you know how a page *sounds*
+
+Hearing your own page through a screen reader once will change how you write HTML forever. That experience is this lesson's point.
+
 ## Common Mistakes
 
 - Icon buttons with no accessible label (`aria-label`)
 - `display: none` for content you want screen readers to read (use `sr-only` instead)
 - ARIA used when native HTML would work
 - Missing form labels (`aria-label` or `<label>`)
+
+## Mental Model
+
+A screen reader experiences your page like a phone call to a building's receptionist, not a glance at the building. A sighted user sees the whole lobby at once; a screen reader user hears it one announcement at a time — "heading level one: Orders. Link: New order. Button: unlabelled." Navigation happens by asking the receptionist for lists: all headings, all links, all landmarks. This is why structure is everything: with proper headings and labels the receptionist gives a guided tour; with div-soup the call is just "item, item, clickable, item" — a building described as a pile of bricks.
 
 ## Mini Summary
 

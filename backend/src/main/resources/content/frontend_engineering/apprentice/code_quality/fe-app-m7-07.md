@@ -182,11 +182,25 @@ a { color: var(--color-primary); }
 }
 ```
 
+## Why It Matters
+
+Styling is where codebases rot fastest — CSS accumulates, conflicts, and scares people out of deleting anything:
+
+- Clean practices (consistent naming, low specificity, utilities over one-offs) keep styles predictable instead of a specificity arms race
+- `!important` wars and 2,000-line stylesheets start with one "quick fix" — discipline now prevents archaeology later
+- Consistent spacing, colour, and type choices read as professionalism to users, even though they can't articulate why
+
+You can't refactor what you can't reason about. Tidy styling is what keeps a growing UI changeable by someone other than its original author.
+
 ## Common Mistakes
 
 - Specificity escalation: adding IDs to override classes, adding `!important` to override IDs
 - Commenting-out instead of deleting unused CSS (comment pile grows)
 - Inconsistent formatting: some rules on one line, some on many lines
+
+## Mental Model
+
+Think of your styles as a shared kitchen. Clean practice means labelled containers (clear class names), one shelf per category (organised files), and washing up as you go (removing dead rules). Messy practice means unlabeled jars, things shoved wherever there's space, and nobody daring to throw anything out because *something* might need it. In a shared kitchen, every shortcut you take becomes someone else's cleanup. Cooks in a clean kitchen move fast with confidence; cooks in a messy one move slowly and still break things.
 
 ## Mini Summary
 

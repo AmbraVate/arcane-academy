@@ -192,11 +192,11 @@ The assembly of `NotificationContext` happens at the application level, not insi
 
 ```bash
 npx madge --circular src/domains/
-# Outputs: No circular dependency found!
+ # Outputs: No circular dependency found!
 
-# Or if there are cycles:
-# Circular dependency found!
-# auth/services/authService.ts -> profile/services/profileService.ts -> auth/hooks/useCurrentUser.ts
+ # Or if there are cycles:
+ # Circular dependency found!
+ # auth/services/authService.ts -> profile/services/profileService.ts -> auth/hooks/useCurrentUser.ts
 ```
 
 Run this in CI to prevent circular dependencies from being merged.

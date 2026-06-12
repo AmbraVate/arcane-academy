@@ -145,6 +145,17 @@ export function getAccessToken() { return accessToken; }
 await refreshAccessToken(); // API call — server reads cookie, returns new token
 ```
 
+## Why It Matters
+
+Where you store data in the browser is a security decision disguised as a convenience choice — and the default choice is usually wrong:
+
+- `localStorage` is fully readable by any JavaScript on the page, which means any XSS payload, any compromised npm dependency, any injected third-party script can exfiltrate whatever you put there — which is why tokens in localStorage are the classic finding in frontend security audits
+- `HttpOnly` cookies are invisible to scripts entirely, taking token theft off the XSS menu at the cost of needing CSRF defences — a trade you must make consciously, not by tutorial inertia
+- Browser storage is also a privacy surface: cached personal data persists on shared machines, survives logout if you forget to clear it, and falls under GDPR like any other personal data store
+- "Encrypting" data with a key shipped in your bundle is theatre — anything the client can decrypt, an attacker reading your client can decrypt too
+
+The rule that survives every framework cycle: the browser is the user's territory, not yours. Store the minimum, prefer storage scripts can't read, and treat anything client-side as readable by your worst-case visitor.
+
 ## Common Mistakes
 
 - **localStorage for auth tokens.** Accessible to any JS, including injected scripts.

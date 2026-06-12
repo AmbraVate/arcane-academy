@@ -201,6 +201,16 @@ WHERE a.id IS NULL;
 -- avoiding duplicating the matched rows already in the LEFT JOIN
 ```
 
+## Why It Matters
+
+FULL OUTER JOIN keeps unmatched rows from *both* sides, which makes it the natural tool for comparison and reconciliation:
+
+- Comparing two systems' records — billing vs CRM, yesterday's snapshot vs today's — needs rows that exist in either one, matched where possible
+- The NULL patterns in the result tell you exactly where the two sides disagree: missing here, missing there, or matched
+- Data migration checks and audit jobs lean on this join to prove nothing was lost or invented
+
+It's the rarest join in daily queries but the star of integration work — and a reliable test of whether someone truly understands outer joins.
+
 ## Common Mistakes
 
 - **MySQL: FULL OUTER JOIN not supported**: Use the LEFT JOIN UNION ALL RIGHT JOIN workaround. Running `FULL OUTER JOIN` in MySQL is a syntax error.

@@ -150,13 +150,13 @@ export const LongLabel: Story = { args: { variant: 'primary', children: 'This is
 
 **Usage guidelines example:**
 ```markdown
-## When to Use
+ ## When to Use
 
 - **Primary**: One per screen. The main call-to-action.
 - **Secondary**: Alternative actions alongside a primary button.
 - **Danger**: Destructive actions only (delete, remove, revoke).
 
-## Do / Don't
+ ## Do / Don't
 
 ✅ DO: Use danger variant for permanent destructive actions
 ❌ DON'T: Use danger for actions that are reversible
@@ -164,12 +164,27 @@ export const LongLabel: Story = { args: { variant: 'primary', children: 'This is
 ❌ DON'T: Use generic labels ('OK', 'Yes', 'Confirm')
 ```
 
+## Why It Matters
+
+An undocumented design system is a private joke — the components exist, but only their authors can use them, and the system fails at its actual job of scaling design decisions:
+
+- Documentation is the system's user interface: engineers adopt what they can evaluate in two minutes (live examples, copy-paste code, prop tables) and fork or rebuild what they can't
+- The most expensive documentation gap is *when and why*: without usage guidance ("use a Banner for page-level, a Toast for transient"), teams pick components by appearance and the design language drifts even with perfect components
+- Docs are the contract that makes versioning survivable — migration guides and deprecation notes are what let a system evolve without freezing or breaking its consumers
+- Support load is the tell: every Slack question answered by a maintainer is a docs page that doesn't exist, paid for repeatedly
+
+Design systems live or die on adoption, and adoption is a developer-experience problem. Documentation *is* that developer experience — which is why mature systems staff it like a product, not an afterthought.
+
 ## Common Mistakes
 
 - **Documenting only the happy path.** Consuming teams encounter the unhappy paths in production — document loading, error, empty, and disabled states.
 - **No usage guidelines.** A props table documents capability, not intent. Teams need both.
 - **Not maintaining docs when components change.** Outdated documentation is worse than no documentation.
 - **Documentation without examples.** Prose descriptions are less useful than a rendered example.
+
+## Mental Model
+
+Component documentation is the difference between IKEA and a lumber yard. Both technically provide everything needed to furnish a room — but IKEA succeeds because each product ships with the full experience around the parts: a showroom where you see it assembled in context (live examples and demos), an instruction sheet with every screw named (prop tables and API reference), warnings about what it's *not* for ("not load-bearing" — usage do's and don'ts), and a catalogue that helps you choose between similar items (when to use Card vs Panel). A lumber yard hands you excellent wood and wishes you luck — which is precisely how teams treat an undocumented system: they wander in, can't tell what anything is for, and go build their own table. If you want people to furnish rooms your way, sell furniture, not timber.
 
 ## Mini Summary
 

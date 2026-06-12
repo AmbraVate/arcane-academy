@@ -213,6 +213,16 @@ SELECT LOWER(first_name) || '.' || LOWER(last_name) AS username FROM employees;
 | Concatenate | `\|\|` or `CONCAT` | `CONCAT` | `+` or `CONCAT` |
 | Trim | `TRIM` | `TRIM` | `TRIM` or `LTRIM`/`RTRIM` |
 
+## Why It Matters
+
+Real-world text data is messy — inconsistent case, stray spaces, names and codes mashed into one field — and string functions are the cleanup crew:
+
+- Matching "Smith", "smith ", and "SMITH" as the same customer requires TRIM and case functions before comparison
+- Extracting an area code, a product prefix, or a domain from an email is daily-driver substring work
+- Building display values (full name from first and last) with concatenation appears in nearly every report
+
+Data engineers famously spend more time cleaning data than analysing it; string functions are the first and most-used tools in that kit.
+
 ## Common Mistakes
 
 - **Using string functions in WHERE without indexes**: `WHERE LOWER(email) = 'alice@example.com'` cannot use a standard index on `email`. Better: store emails already lowercase, or use a functional index.

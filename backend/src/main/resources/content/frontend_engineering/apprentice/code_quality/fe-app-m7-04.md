@@ -176,12 +176,26 @@ function getUserById(userId) { }
 const createdAt = new Date();
 ```
 
+## Why It Matters
+
+Naming is the cheapest documentation you will ever write — and the most-read code in any project is the names:
+
+- A team scanning `userCardList` knows instantly what it holds; `data2` forces them to read every usage
+- Consistent conventions (camelCase variables, PascalCase components, kebab-case files) let you predict a name before searching for it
+- Renaming later is risky and noisy in version control; choosing well now is free
+
+Most code is read tens of times for every time it's written. Names are the interface other people — and future you — actually use.
+
 ## Common Mistakes
 
 - Abbreviations that only make sense to the original author
 - Inconsistent case (some classes camelCase, some kebab-case)
 - Names that describe implementation rather than intent (`div3` vs `hero-section`)
 - Too generic (`data`, `item`, `content`)
+
+## Mental Model
+
+Think of names as street signs in a city. Good signs let a stranger navigate without a map: "Station Road" probably leads to the station, and consistent sign design means you always know where to look. Bad signs — or streets named "Road 2" — force everyone to stop and ask directions at every corner. Your codebase is a city your teammates visit daily. Every variable, function, and file name is a sign; conventions are the city-wide signage standard that makes the whole place navigable.
 
 ## Mini Summary
 

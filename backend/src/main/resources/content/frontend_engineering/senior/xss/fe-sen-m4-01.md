@@ -145,6 +145,17 @@ import DOMPurify from 'dompurify';
 <a href={userUrl.startsWith('http') ? userUrl : '#'}>Click</a>
 ```
 
+## Why It Matters
+
+XSS is the frontend's signature vulnerability — the one your role specifically owns — and it remains in the OWASP Top 10 after two decades because every new app rediscovers it:
+
+- The blast radius is total: injected script runs with your page's full authority — reading session data, harvesting keystrokes on the login form, performing any action the user can, silently, on your domain with your padlock icon
+- One leak is enough: a single `dangerouslySetInnerHTML`, one `innerHTML` concatenation, one unsanitised URL in an `href` can undo a framework's worth of automatic escaping — which is why audits grep for exactly these
+- Frameworks protect the common path, not all paths: React escapes text content, but markdown renderers, rich-text editors, third-party embeds, and `javascript:` URLs all step outside that protection and back into your hands
+- Defence is layered by design: output encoding as the rule, sanitisation (DOMPurify) where HTML is genuinely needed, and Content Security Policy as the net that catches what everything else missed — each layer assumes the others will someday fail
+
+The uncomfortable truth that keeps this lesson relevant: XSS isn't exotic. It's a Tuesday-afternoon code review miss, found six months later by a researcher — or worse, not by a researcher.
+
 ## Common Mistakes
 
 - **Using dangerouslySetInnerHTML with unsanitised input.** The name is the warning.

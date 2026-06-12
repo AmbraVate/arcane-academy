@@ -144,33 +144,33 @@ Cost: Highest (full-size instances in both regions, complex routing)
 The runbook is the core artefact. Written before the disaster, tested before the disaster, executed precisely during it.
 
 ```markdown
-# Consortium Database DR Runbook — eu-west-1 Regional Failure
+ # Consortium Database DR Runbook — eu-west-1 Regional Failure
 
-## Pre-conditions
+ ## Pre-conditions
 - This runbook is for complete eu-west-1 unavailability (>15 minutes)
 - Decision to invoke DR requires approval from: [CTO or Head of Engineering]
 - Executor: Senior Data Engineer on-call
 - Communications lead: [named person]
 
-## Step 1: Confirm the Disaster (5 minutes)
+ ## Step 1: Confirm the Disaster (5 minutes)
 - [ ] Check AWS Service Health Dashboard
 - [ ] Confirm PagerDuty: eu-west-1 database unreachable for >10 minutes
 - [ ] Check Slack #status-aws for provider status
 - [ ] Obtain approval to invoke DR from [CTO or Head of Engineering]
 - [ ] Log decision: timestamp, approver, executor
 
-## Step 2: Assess DR Standby State (3 minutes)
+ ## Step 2: Assess DR Standby State (3 minutes)
 - [ ] SSH to us-east-1 standby: ssh dr-standby.us-east-1.internal
 - [ ] Check replication lag: patronictl -c /etc/patroni.yml list
 - [ ] Record last WAL LSN received: SELECT pg_last_wal_receive_lsn();
 - [ ] Record lag: this is the data loss (RPO impact). Log to incident.
 
-## Step 3: Promote DR Standby (5 minutes)
+ ## Step 3: Promote DR Standby (5 minutes)
 - [ ] patronictl -c /etc/patroni.yml promote pg-dr-node-1
 - [ ] Verify: patronictl list — confirm dr node shows as Leader
 - [ ] Verify: SELECT pg_is_in_recovery(); → must return 'f' (false)
 
-## Step 4: Update DNS and Load Balancer (5 minutes)
+ ## Step 4: Update DNS and Load Balancer (5 minutes)
 - [ ] Update Route 53: db.consortium.internal → us-east-1 IP
   Command: aws route53 change-resource-record-sets --hosted-zone-id ... --change-batch file://dr-dns.json
 - [ ] TTL is 60s — wait 60s for propagation
@@ -178,20 +178,20 @@ The runbook is the core artefact. Written before the disaster, tested before the
   host=dr-primary.us-east-1.internal
 - [ ] Reload PgBouncer: pg_ctlcluster reload pgbouncer
 
-## Step 5: Verify Service (5 minutes)
+ ## Step 5: Verify Service (5 minutes)
 - [ ] Run smoke test: psql -h db.consortium.internal -c "SELECT COUNT(*) FROM users;"
 - [ ] Check application health endpoint: curl https://api.consortium.io/health
 - [ ] Verify dashboards recovering
 - [ ] Confirm PagerDuty alerts resolving
 
-## Step 6: Communications
+ ## Step 6: Communications
 - [ ] Post to #incident: "DR failover to us-east-1 complete. [X minutes] data loss.
        Service restored. Monitoring for stability."
 - [ ] Update status page: Operational
 - [ ] Notify stakeholders: [distribution list]
 
-## Total expected RTO: 23 minutes (within 30-minute SLA)
-## Expected data loss: WAL lag at time of failure (typically 2–8 minutes)
+ ## Total expected RTO: 23 minutes (within 30-minute SLA)
+ ## Expected data loss: WAL lag at time of failure (typically 2–8 minutes)
 ```
 
 ## DR Testing: Game Days

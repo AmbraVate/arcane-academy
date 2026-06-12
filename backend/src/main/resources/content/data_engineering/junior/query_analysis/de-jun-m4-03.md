@@ -252,6 +252,16 @@ WHERE idx_scan = 0   -- indexes never used — candidates for removal
   AND schemaname = 'public';
 ```
 
+## Why It Matters
+
+Finding the slow query is half of every performance investigation — and production systems generate too much SQL to guess:
+
+- Slow-query logs and views like `pg_stat_statements` rank queries by total cost, pointing you at the 3 queries causing 90% of load
+- The worst offender is often not the slowest query but a fast one executed thousands of times per minute
+- Systematic analysis prevents the classic anti-pattern: optimising the query you suspect instead of the one that's actually burning the CPU
+
+Measurement before optimisation isn't bureaucracy — it's how you avoid spending a week speeding up a query that runs once a day.
+
 ## Common Mistakes
 
 - **Fixing only slow query log entries**: Queries under the slow query threshold collectively cause more load than the handful of truly slow queries. Analyse total_exec_time × calls.

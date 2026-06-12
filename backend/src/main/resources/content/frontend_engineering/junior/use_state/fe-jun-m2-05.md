@@ -127,6 +127,10 @@ React's change detection is reference-based. A new reference = change detected =
 - **`obj.prop = value`.** Direct property mutation — same reference.
 - **Nested object mutation.** Even nested: `setUser(prev => { prev.address.city = 'X'; return prev; })` — must spread at each level.
 
+## Mental Model
+
+Updating state is submitting an order to a kitchen, not cooking at the table. `setCount(5)` doesn't change `count` in your hands — it files an order, and the new value arrives only with the *next render*, when the kitchen sends out the fresh plate. This one fact explains the classic ambush: call `setCount(count + 1)` three times in a row and you get +1, not +3 — all three orders read the *same* stale menu (the snapshot of `count` from this render) and each says "make it 1". The fix is the functional form, `setCount(c => c + 1)`: instead of an order naming a dish, you hand the kitchen a *recipe step* — "whatever the latest value is, add one" — and React queues the steps in sequence, each receiving the previous step's result. The second kitchen rule covers objects and arrays: never season the plate that's already on the table (mutating `user.name = ...` or `items.push(...)` changes data React has no way to notice — same plate, same reference, no re-render). Send back a *new* plate instead: `setUser({...user, name})`, `setItems([...items, item])`. Orders not edits, recipes when you build on the latest, new plates not seasoned old ones — three rules, and state updates stop being mysterious.
+
 ## Mini Summary
 
 - Never mutate state — always create new objects/arrays

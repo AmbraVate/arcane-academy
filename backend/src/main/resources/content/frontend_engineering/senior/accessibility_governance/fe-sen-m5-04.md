@@ -156,12 +156,26 @@ test('Button has no accessibility violations', async () => {
 3. Accessibility bugs blocking WCAG AA = P1 (treated as critical bugs)
 4. Quarterly design system accessibility audit
 
+## Why It Matters
+
+Individual heroics don't keep a product accessible — governance does. One enthusiastic engineer fixes a page; the next sprint, three new features ship inaccessible, and the product regresses faster than any individual can repair it:
+
+- Accessibility debt behaves like any other debt: cheap to prevent at design time, expensive to remediate after launch, and ruinous under legal deadline
+- Regulations and procurement requirements (EN 301 549, Section 508, the European Accessibility Act) increasingly make demonstrable *process* — audits, statements, ownership — a condition of doing business at all
+- Without clear ownership, accessibility becomes everyone's value and no one's job; defects bounce between design, engineering, and QA until users absorb them
+
+Governance turns accessibility from a recurring rescue mission into a property of how the team ships — definitions of done, automated gates, scheduled audits, and a named owner. That is the difference between organisations that *did* an accessibility project once and organisations whose products are reliably usable by everyone.
+
 ## Common Mistakes
 
 - **Assuming automated testing = full accessibility compliance.** Automation covers ~30-40%. Manual testing is non-negotiable for complex components.
 - **Not testing keyboard navigation.** axe-core doesn't navigate the page — a human must verify the full keyboard flow.
 - **Using custom elements without ARIA.** A `<div onClick={...}>` needs `role='button'`, `tabIndex='0'`, and keyboard event handlers. Or better: use the native `<button>`.
 - **Treating accessibility violations as enhancement requests.** WCAG AA compliance is a legal requirement in many jurisdictions. Violations are bugs.
+
+## Mental Model
+
+Think of accessibility governance as food safety in a restaurant chain, not a one-off deep clean. A single brilliant kitchen scrub (the big remediation project) makes today's inspection pass — and means nothing about next month. Food safety works because it is *systemic*: hygiene training for every cook (developer education), checklists baked into prep (definition of done), thermometers and alarms (automated checks in CI), surprise inspections (scheduled audits), and a named manager who signs off (the accessibility owner). No single mechanism suffices; the system catches what each layer misses. When someone proposes "an accessibility sprint" to fix everything, hear "let's deep-clean the kitchen once" — useful, but the real question is what changes about every ordinary day afterwards.
 
 ## Mini Summary
 

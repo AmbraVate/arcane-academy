@@ -159,29 +159,29 @@ Onboarding overhead:
 An ADR captures why a technology decision was made — preserving institutional memory.
 
 ```markdown
-# ADR-023: Replace Airflow with Prefect for Pipeline Orchestration
+ # ADR-023: Replace Airflow with Prefect for Pipeline Orchestration
 
-## Status
+ ## Status
 Accepted (2024-03-15)
 
-## Context
+ ## Context
 Airflow requires a dedicated 2-engineer maintenance team for upgrades and 
 infrastructure. New Airflow 3.0 migration requires 4 weeks of engineering time.
 Team skills in Airflow are shallow (only 2 of 8 engineers can debug production issues).
 Self-hosted operational overhead: ~0.8 FTE/year.
 
-## Decision
+ ## Decision
 Migrate to Prefect Cloud (managed). Single-engineer configuration. 
 Prefect 2.0 Python-native API reduces onboarding time significantly.
 
-## Alternatives Considered
+ ## Alternatives Considered
 1. Airflow (maintain current): Rejected — operational overhead unsustainable
 2. Dagster: Strong candidate. Rejected because team already evaluating Prefect
    and Dagster's asset-centric model requires significant mental model shift
 3. Apache Airflow on managed (MWAA): Rejected — licensing cost (€45k/year) 
    exceeds Prefect Cloud (€18k/year) with no operational advantage
 
-## Consequences
+ ## Consequences
 + Reduces orchestration maintenance from 0.8 FTE/year to 0.1 FTE/year
 + Python-native: all 8 engineers can write and debug pipelines
 - Migration cost: 3 weeks of engineering time (one-time)

@@ -12,9 +12,9 @@ interface Props {
  * Returns null for domains that don't have an infographics folder yet.
  */
 function resolveInfographicUrl(lessonId: string): string | null {
-  if (lessonId.startsWith('se-')) return `/infographics/software engineering/${lessonId}.jpeg`
-  if (lessonId.startsWith('fe-')) return `/infographics/frontend engineering/${lessonId}.jpeg`
-  if (lessonId.startsWith('de-')) return `/infographics/data engineering/${lessonId}.jpeg`
+  if (lessonId.startsWith('se-')) return `/infographics/software%20engineering/${lessonId}.jpeg`
+  if (lessonId.startsWith('fe-')) return `/infographics/frontend%20engineering/${lessonId}.jpeg`
+  if (lessonId.startsWith('de-')) return `/infographics/data%20engineering/${lessonId}.jpeg`
   return null
 }
 

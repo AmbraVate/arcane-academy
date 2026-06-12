@@ -165,7 +165,7 @@ GROUP BY 1, 2
 The `ref()` function declares a dependency — dbt builds the DAG and runs `stg_xp_events` before `mart_learner_xp`.
 
 ```yaml
-# models/staging/schema.yml — tests
+ # models/staging/schema.yml — tests
 models:
   - name: stg_xp_events
     columns:

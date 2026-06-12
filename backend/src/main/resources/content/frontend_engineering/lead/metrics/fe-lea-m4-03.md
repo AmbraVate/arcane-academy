@@ -208,11 +208,26 @@ Metrics that engineers are measured on become targets — and targets get gamed.
 - **Counter-metrics:** pair primary metric with a metric that detects gaming (conversion AND satisfaction; velocity AND incident rate)
 - **Outcome metrics over output metrics:** measure user outcomes, not feature delivery
 
+## Why It Matters
+
+Metrics are how frontend work enters business conversations — without them you have anecdotes, and anecdotes lose to whoever brought a chart:
+
+- The translation layer is the skill: LCP and error rates mean nothing upstairs, but "bounce drops X% per second of load time saved, worth roughly £Y annually" is a sentence that reallocates budget
+- Goodhart's Law is the permanent hazard — when a measure becomes a target, it stops measuring: teams gaming a velocity metric, or optimising a vanity number (signups!) while the real one (activated users) stagnates
+- Leading metrics let you steer; lagging ones only let you grade — error rate trends predict next month's churn complaints, which is precisely why dashboards beat post-mortems
+- The lead's editorial duty is *choosing the few that matter*: a wall of forty charts is how teams hide from the three numbers that would actually change their behaviour
+
+Teams optimise what's measured whether or not it's what matters. Choosing the measures is therefore choosing the behaviour — which makes metric design a leadership act, not an analytics chore.
+
 ## Common Mistakes
 
 - **Starting with metrics instead of goals.** Define what success looks like, then identify metrics that measure it.
 - **Running A/B tests too short.** 3 days misses weekly cycles. 200 sessions misses statistical significance for small effects.
 - **Reporting vanity metrics to leadership.** This trains leadership to evaluate success on the wrong signals.
+
+## Mental Model
+
+Treat metrics like a cockpit instrument panel, not a trophy cabinet. An aircraft has hundreds of sensors but the panel shows a deliberate few — airspeed, altitude, fuel, heading — chosen because each one *changes what the pilot does next*. A trophy cabinet displays numbers that flatter (total downloads ever, cumulative users) and changes nothing. Instrument discipline carries the whole lesson: every gauge on your panel must answer "what decision does this inform?" — if nothing would change at any value, it's a trophy, remove it. Cross-check instruments against each other, because any single gauge can fail or be gamed — airspeed rising while altitude falls tells a different story than airspeed alone (conversion up while refunds spike likewise). And respect the difference between the altimeter (lagging — where you *are*) and the vertical-speed indicator (leading — where you're *going*): pilots who fly only by altitude discover mountains experimentally.
 
 ## Mini Summary
 

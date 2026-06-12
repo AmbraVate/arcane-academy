@@ -176,6 +176,17 @@ function send(log: LogEntry) {
 }
 ```
 
+## Why It Matters
+
+When a user says "it didn't work", frontend logging is the difference between asking them to describe their browser from memory and replaying what actually happened:
+
+- The client is the least observable tier of the stack — server logs end at the API boundary, but the bug lives in a specific browser, with a specific extension, on hotel Wi-Fi
+- Structured logs (event, context, severity — not `console.log("here 2")`) are what make client telemetry queryable at scale instead of a text swamp
+- Production logging is a discipline of restraint: log levels, sampling, and batching keep the signal affordable, because shipping every debug line from a million browsers is a bandwidth bill and a privacy incident
+- The privacy boundary is non-negotiable — tokens, passwords, and personal data must never enter the log pipeline, and redaction has to be designed in, not bolted on after the first leak
+
+Support escalations, intermittent bugs, and "works on my machine" all dissolve faster when the application has been quietly writing its own diary. Senior engineers design that diary deliberately.
+
 ## Common Mistakes
 
 - **Using console.log in production.** Ephemeral, browser-only, visible to users.
@@ -183,6 +194,10 @@ function send(log: LogEntry) {
 - **Logging on every event.** Log significant events (page load, feature use, errors) — not every click.
 - **No log context.** Logs without userId, sessionId, and page make debugging impossible.
 - **Sending logs synchronously.** Log sending should be non-blocking and batched.
+
+## Mental Model
+
+Frontend logging is a ship's logbook, not a teenager's diary. A diary records whatever felt interesting in the moment ("got here!", "x is undefined??") and is unreadable to anyone else a week later. A logbook is *institutional*: standardised entries (structured fields — event name, context, severity), written at defined moments (navigation, API failure, feature use), at a detail level set by conditions (log levels — routine entries in calm seas, everything during a storm), and kept knowing others will read it — the admiralty (your analytics pipeline), insurers (compliance), and future captains (engineers debugging long after you). Two logbook rules carry the whole discipline: never record passengers' private letters (PII and secrets stay out), and don't log so obsessively that writing the book becomes the voyage (sampling and batching keep overhead invisible).
 
 ## Mini Summary
 

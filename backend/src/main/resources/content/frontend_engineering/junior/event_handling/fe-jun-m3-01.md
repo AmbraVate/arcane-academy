@@ -106,6 +106,21 @@ onBlur    onKeyDown  onMouseEnter  onScroll
 
 **SyntheticEvent:** React's cross-browser event wrapper. Has the same API as native events (target, preventDefault, stopPropagation) but works consistently across all browsers.
 
+## Mental Model
+
+Think of React events as a hotel's front desk rather than wires soldered to every doorknob. In vanilla JavaScript you walk the building and wire each knob yourself (`addEventListener` per element) — and re-wire whenever a door is replaced. In React you instead leave *standing instructions at reception*: the JSX `onClick={handleOrder}` is a note in the hotel's ledger saying "when anyone presses the button in room 204, call this number". The hotel (React) handles the physical wiring centrally and keeps the ledger synchronised as rooms are renovated, added, or demolished (components re-render, mount, unmount) — your instructions survive every renovation because they're part of the room's *description*, not its wiring. The ledger model explains the two classic beginner bugs precisely. Writing `onClick={handleOrder()}` is not leaving instructions — it's *making the call yourself while filling in the ledger* (the function executes during render), which is why things fire before anyone touches anything; the desk needs the phone number (`handleOrder`) or a sealed note (`() => handleOrder(id)`), not the result of the call. And because instructions are re-submitted with every room description (each render), handlers are cheap to declare inline — but each note is written with *that day's information* (that render's state values), which plants the seed for understanding stale closures later. Describe the room, leave the note, let the desk do the wiring: that's React's entire event model.
+
+## Why It Matters
+
+Events are where an interface stops being a picture and becomes software — everything a user *does* arrives as an event, and React's event layer is the front door of all interactivity:
+
+- Every feature you will ever ship begins with a handler: clicks become navigation, keystrokes become search, submits become saved data — there is no interactive React without this layer, which is why it's the first module-three skill
+- React's declarative attachment (`onClick={handleClick}` in JSX) is a genuine upgrade over scattering `addEventListener` calls: the behaviour is visible exactly where the element is described, there's no separate registration step to forget, and React manages attaching and cleaning up listeners so you don't leak them when components unmount
+- The naming and wiring conventions are load-bearing: camelCase prop names, passing a function rather than calling one (`onClick={fn}` versus the classic `onClick={fn()}` bug that fires on render), and handler props on components (`onSave`, `onSelect`) are patterns you'll read and write daily
+- Misunderstood events produce a recognisable bug family — handlers firing on every render, stale values inside callbacks, clicks doing nothing because the function was invoked too early — and nearly all of them trace back to fuzzy mental models formed (or not) right here
+
+Mastering the event layer early means every later topic — forms, routing, data fetching triggered by interaction — builds on solid ground instead of on copy-pasted incantations.
+
 ## Mini Summary
 - ✔ JSX: camelCase prop names (onClick not onclick)
 - ✔ Pass function reference, not call: {fn} not {fn()}

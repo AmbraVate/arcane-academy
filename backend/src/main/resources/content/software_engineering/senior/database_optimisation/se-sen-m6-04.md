@@ -224,11 +224,11 @@ List<Order> findByUserId(Long userId);
 **Example 3: Slow Query Logging**
 
 ```yaml
-# PostgreSQL: log queries exceeding 500ms
+ # PostgreSQL: log queries exceeding 500ms
 log_min_duration_statement = 500
 log_statement = 'none'
 
-# HikariCP leak detection
+ # HikariCP leak detection
 spring.datasource.hikari.leak-detection-threshold=10000  # Log connections held >10s
 ```
 

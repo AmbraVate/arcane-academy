@@ -177,6 +177,16 @@ A form with missing labels, unclear errors, and colour-only required indicators 
 | `autocomplete="email"` | Helps browsers/password managers |
 | `required` | Browser validation + screen reader "required" announcement |
 
+## Why It Matters
+
+Forms are where access matters most — they're how users log in, buy, register, and get help — and they're the most common accessibility failure on the web:
+
+- An unlabelled input is a mystery box to a screen reader user: "edit text" — of *what*?
+- Error messages that only flash red are invisible to colour-blind users and silent to blind ones; errors must be announced and associated with their field
+- Accessible forms are better for everyone: labels enlarge click targets, clear errors reduce abandonment for all users
+
+A user who can't complete your form can't become your customer. Form accessibility is conversion work as much as ethics.
+
 ## Common Mistakes
 
 - No `<label>` (placeholder as substitute)
@@ -184,6 +194,10 @@ A form with missing labels, unclear errors, and colour-only required indicators 
 - Error messages not linked with `aria-describedby`
 - Required-only communicated by colour (red asterisk without text)
 - No focus management after form submission errors
+
+## Mental Model
+
+An accessible form is a well-run customs checkpoint; an inaccessible one is the same checkpoint with the lights off. Each field is a window, and the `<label>` is the sign above it — programmatically bolted on (`for`/`id`), not just taped nearby, so the officer's announcement ("Passport number") reaches you no matter how you arrive. Validation errors are the officer telling you *which* window to return to and *what* to fix — not a distant red light meaning "something, somewhere, is wrong." Build every form asking: could someone complete this checkpoint by announcements alone, never seeing the hall?
 
 ## Mini Summary
 

@@ -200,6 +200,16 @@ SELECT salary * 12 AS annual_salary FROM employees
 ORDER BY annual_salary DESC;
 ```
 
+## Why It Matters
+
+Aliases seem cosmetic until you write your first multi-table query — then they become load-bearing:
+
+- `SUM(price * quantity) AS line_total` is the difference between a report a human can read and a wall of expression text
+- Joins between tables with overlapping column names *require* table aliases to disambiguate
+- The order SQL evaluates clauses explains the classic surprise: WHERE can't see your alias, ORDER BY can
+
+Clear aliasing is also a courtesy to the next engineer — and the next engineer is usually you, three weeks later.
+
 ## Common Mistakes
 
 - **Trying to use a column alias in WHERE**: Fails because WHERE runs before SELECT. Repeat the expression instead.

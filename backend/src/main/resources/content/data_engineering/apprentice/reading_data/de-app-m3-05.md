@@ -211,6 +211,16 @@ This scans only the needed rows regardless of how deep into the result set you a
 | SQL Server | `SELECT TOP n ...` or `FETCH FIRST n ROWS ONLY` |
 | Oracle | `FETCH FIRST n ROWS ONLY` or `WHERE ROWNUM <= n` |
 
+## Why It Matters
+
+LIMIT is a small clause with outsized practical importance — it is how you query safely and how every app shows data a page at a time:
+
+- Exploring an unknown table? `LIMIT 10` gives instant answers without hauling a million rows across the network
+- Pagination — every "next page" button in every app — is LIMIT plus OFFSET (or a smarter variant) under the hood
+- "Top N" questions only have meaning when LIMIT is paired with ORDER BY; without the sort, you get N random rows
+
+The habit of limiting first and widening later marks engineers who treat production databases with respect.
+
 ## Common Mistakes
 
 - **LIMIT without ORDER BY**: Returns an arbitrary set of rows — not a meaningful "top N".

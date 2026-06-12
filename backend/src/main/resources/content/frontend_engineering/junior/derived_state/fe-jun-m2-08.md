@@ -139,6 +139,10 @@ function addItem(item) {
 - **Storing page count when you have items array and page size.** `const pageCount = Math.ceil(items.length / pageSize)`.
 - **Storing UI state derived from data state.** `const isEmpty = items.length === 0` not `const [isEmpty, setIsEmpty] = useState(true)`.
 
+## Mental Model
+
+Redundant state is keeping two clocks and promising yourself they'll always agree. One clock (the source state) is truth; the second (the copied or derived state) starts as a convenience — "I'll just store the selected item, not only its id" — and now every code path that touches one clock must remember to wind the other. Miss one path, ever, and your app shows two different times: the list says the item was renamed, the detail panel shows the old name, and the bug report says "sometimes it's wrong", the signature of synchronised copies drifting. The single-source-of-truth principle is the horologist's rule: own one clock per fact. Store the `selectedId`, derive the selected item by lookup at render time; store the items array, derive the count; store the raw text, derive its validity. Each fact lives in exactly one place, and every display of it is a *window onto that place*, never a copy. The audit trick when reviewing your own state: for each `useState`, ask "if my other state changed, could this become wrong?" Any yes is a second clock — melt it down and replace it with a lookup.
+
 ## Mini Summary
 
 - Redundant state is any variable computable from existing state/props

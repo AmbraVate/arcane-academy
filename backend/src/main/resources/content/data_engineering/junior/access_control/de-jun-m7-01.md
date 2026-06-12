@@ -239,6 +239,16 @@ ORDER BY r.rolname;
 -- host    all  all       127.0.0.1/32  reject         ← block all from localhost except above
 ```
 
+## Why It Matters
+
+Access control is the difference between a database and a liability. Every credential is an attack surface, and over-granted permissions are the root cause of many breaches:
+
+- The principle of least privilege limits blast radius: a compromised reporting account that can only SELECT cannot encrypt your tables for ransom
+- Auditors ask "who can read customer PII?" — and you must be able to answer from GRANTs, not folklore
+- Application accounts with DBA rights turn every SQL injection bug into a total compromise
+
+Designing roles deliberately — readers, writers, admins, service accounts — is cheap on day one and nearly impossible to retrofit under audit pressure.
+
 ## Common Mistakes
 
 - **Application connecting as superuser**: the most common and highest-severity mistake. Create a dedicated application role with minimal permissions. The superuser account is for DBAs and migrations only, with credentials stored in a secrets manager, not in application config.

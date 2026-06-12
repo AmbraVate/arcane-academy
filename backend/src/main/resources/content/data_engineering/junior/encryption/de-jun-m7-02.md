@@ -278,6 +278,16 @@ private String encryptionKey;
 // If DEK is compromised: rotate just that DEK without re-encrypting all records
 ```
 
+## Why It Matters
+
+Encryption is what stands between a stolen disk or intercepted connection and a headline-making breach:
+
+- Encryption at rest means a stolen backup tape or decommissioned drive is useless ciphertext, not a customer database
+- Encryption in transit (TLS) stops credentials and query results from being read off the network
+- Regulations increasingly mandate both — but the subtle art is key management: encrypted data with a poorly stored key is barely encrypted at all
+
+Knowing what each layer protects against — and what it doesn't (a compromised application reads decrypted data just fine) — lets you make honest security claims about your systems.
+
 ## Common Mistakes
 
 - **Storing encryption key alongside encrypted data**: if an attacker gets both the key and the ciphertext, encryption provides zero protection. Keys must live in a separate system (secrets manager, HSM).

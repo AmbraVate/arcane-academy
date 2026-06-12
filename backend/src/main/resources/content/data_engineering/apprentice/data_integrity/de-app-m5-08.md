@@ -153,7 +153,7 @@ FROM sales;
 
 **Example 2: Row count monitoring**
 ```python
-# After pipeline runs, compare row counts
+ # After pipeline runs, compare row counts
 expected_rows = get_previous_day_count()
 actual_rows = get_todays_row_count()
 if actual_rows < expected_rows * 0.9:

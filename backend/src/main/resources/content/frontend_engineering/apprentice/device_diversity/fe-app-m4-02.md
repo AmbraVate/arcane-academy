@@ -164,6 +164,10 @@ Systems are more robust than device-specific solutions.
 
 Device-specific designs become outdated every year as new devices emerge. Content-driven, fluid-first responsive design remains correct regardless of what devices exist — it responds to the available space, not a device list.
 
+## Mental Model
+
+Responsive thinking means designing the *rules*, not the *picture*. A print designer decides exactly where everything sits on a fixed page. A responsive designer is more like a choreographer for a troupe that performs on stages of every size: you don't fix positions, you set principles — "the nav collapses when space is tight", "cards wrap to fill the row", "text never exceeds a comfortable reading width". The performance then adapts itself to any stage. When you review a design, stop asking "does this look right?" and start asking "what are this layout's rules when space changes?".
+
 ## Mini Summary
 
 - ✔ Responsive thinking = designing for a range of viewports, not specific devices

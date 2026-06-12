@@ -231,6 +231,16 @@ GROUP BY category
 ORDER BY total_revenue DESC;
 ```
 
+## Why It Matters
+
+GROUP BY is the moment SQL stops describing rows and starts describing the *business*: sales per region, signups per month, errors per service.
+
+- Nearly every report, chart, and dashboard you have ever seen is a GROUP BY underneath
+- Choosing the grouping column is choosing the question — group the same data by product, by month, or by customer and you get three different stories
+- Misunderstanding the rule that every selected column must be grouped or aggregated is the single most common SQL error for newcomers
+
+Until GROUP BY clicks, aggregates can only summarise whole tables; after it clicks, you can summarise anything.
+
 ## Common Mistakes
 
 - **Selecting a non-aggregated column not in GROUP BY**: Standard SQL requires all SELECT columns to be either aggregated or in GROUP BY. MySQL historically allowed this (returning arbitrary values) — do not rely on this behaviour.

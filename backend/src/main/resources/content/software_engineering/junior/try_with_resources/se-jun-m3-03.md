@@ -309,11 +309,26 @@ try (DatabaseTransaction tx = new DatabaseTransaction(ds)) {
 }
 ```
 
+## Why It Matters
+
+Try-with-resources fixed one of Java's most reliable sources of production failure — the leaked resource — by making correct cleanup the path of least resistance:
+
+- Every unclosed connection, stream, or file handle stays claimed until something gives; under load that's the classic slow-death outage where the pool empties and the app hangs at 3 a.m., hours after the actual bug ran
+- The pre-Java-7 alternative — nested try/finally with null checks and a close() that can itself throw — was so error-prone that even careful engineers got it wrong; suppressed exceptions then *hid the original error*, sending you debugging the wrong failure
+- The compiler becomes your reviewer: any `AutoCloseable` declared in the try header is closed in exactly the right order, exception or not — and modern IDEs and static analysis flag resources that should use it
+- It's interview-and-review canon: reaching for manual close() in 2026 code marks the author as either unaware of fifteen years of language history or unconvinced that failure paths happen — both worth catching
+
+Resource leaks are invisible in development (one user, short runs) and inevitable in production (thousands of users, weeks of uptime). This syntax is the cheapest insurance the language offers.
+
 ## Common Mistakes
 
 - **Closing the resource again after the block.** It is already closed — and the variable is out of scope anyway.
 - **Declaring the resource before the try block.** Then it is not managed by try-with-resources and must be closed manually.
 - **Ignoring close() exceptions.** If `close()` itself throws, Java suppresses it (attaches to the primary exception via `getSuppressed()`). You can retrieve and log suppressed exceptions in your catch block.
+
+## Mental Model
+
+Try-with-resources is a hotel key card instead of a metal key on trust. With metal keys (manual close()), checkout depends on every guest remembering to return the key at the desk — and guests who leave through the fire exit (exceptions), get called away mid-stay (early returns), or simply forget (developer error) leave rooms locked and unusable until a manual audit finds them (the connection-pool exhaustion incident). Key cards change the contract: the *system* expires the card at checkout, automatically, no matter how the guest leaves — gracefully, abruptly, or mid-emergency. Declaring a resource in the try header is issuing the card: scope is the stay, and the expiry (close()) is guaranteed by the building, not the guest's memory. The fine print completes the analogy: multiple cards expire in reverse order of issue (last opened, first closed — dependencies respected), and if the door mechanism itself jams during checkout (close() throws) while the guest is already fleeing a fire (original exception in flight), the fire remains the headline and the jam is noted in the margin (suppressed exceptions) — the original emergency is never masked by cleanup trouble.
 
 ## Mini Summary
 

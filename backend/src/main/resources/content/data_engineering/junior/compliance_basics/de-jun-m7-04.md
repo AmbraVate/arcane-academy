@@ -272,6 +272,16 @@ Pipeline design — before building a new data pipeline:
   □ Is the pipeline included in the DPIA (Data Protection Impact Assessment)?
 ```
 
+## Why It Matters
+
+Compliance turns data handling from engineering preference into legal obligation — and engineers are the ones who implement it:
+
+- GDPR's "right to erasure" is a schema design problem: can you actually delete one person's data from every table, backup, and downstream copy?
+- Retention rules cut both ways — keeping data too long is a violation, just like losing it too early
+- Fines are real (up to 4% of global turnover under GDPR), and "the developer didn't know" is not a defence the company can use
+
+Understanding the basics lets you raise the right questions at design time, when compliance is cheap, instead of at audit time, when it isn't.
+
 ## Common Mistakes
 
 - **"We'll add compliance later"**: GDPR Article 25 requires privacy by design and by default. Adding compliance retroactively means schema migrations across millions of rows, rewriting pipelines, and retrospective risk assessments. Design it in from the start.

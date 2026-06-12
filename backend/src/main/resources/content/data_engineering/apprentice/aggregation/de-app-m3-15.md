@@ -214,6 +214,16 @@ ORDER BY total_spent DESC
 LIMIT 20;
 ```
 
+## Why It Matters
+
+HAVING completes the aggregation toolkit by letting you filter on the *results* of aggregation — questions like "which customers placed more than ten orders?" simply cannot be answered with WHERE alone.
+
+- Real analyses are usually about exceptional groups: busiest stores, slowest endpoints, top-spending customers — all HAVING territory
+- Confusing WHERE (filters rows before grouping) with HAVING (filters groups after) produces queries that run fine but answer the wrong question
+- Interviewers and code reviewers use this distinction as a litmus test for whether someone truly understands aggregation order
+
+Knowing exactly when each filter applies makes your queries both correct and efficient.
+
 ## Common Mistakes
 
 - **Using WHERE instead of HAVING for aggregate conditions**: `WHERE COUNT(*) > 5` is an error — COUNT does not exist at WHERE time. Use HAVING.

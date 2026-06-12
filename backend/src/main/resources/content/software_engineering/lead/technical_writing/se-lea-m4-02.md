@@ -188,20 +188,20 @@ Without good technical writing:
 
 **ADR template:**
 ```markdown
-# ADR-0004: Use Kafka for Event Streaming
+ # ADR-0004: Use Kafka for Event Streaming
 
-## Status
+ ## Status
 Accepted
 
-## Context
+ ## Context
 We need to propagate domain events between services. 
 Currently using synchronous HTTP calls which creates tight coupling.
 Teams need to subscribe independently without coordinating with event producers.
 
-## Decision
+ ## Decision
 Use Apache Kafka for all cross-service event streaming.
 
-## Consequences
+ ## Consequences
 + Services are decoupled from event producers
 + Events are durable and replayable
 + New services can backfill from historical events
@@ -212,19 +212,19 @@ Use Apache Kafka for all cross-service event streaming.
 
 **Progressive disclosure in README:**
 ```markdown
-## What This Service Does
+ ## What This Service Does
 Processes payment for completed orders. Receives events from OrderService,
 charges the customer, and emits PaymentResult events.
 
-## Quick Start (for local development)
+ ## Quick Start (for local development)
 1. `docker compose up -d` — starts dependencies
 2. `./gradlew bootRun` — starts the service  
 3. Navigate to http://localhost:8082/actuator/health
 
-## Architecture
+ ## Architecture
 (link to ADR and C4 model diagram)
 
-## Detailed Integration Guide
+ ## Detailed Integration Guide
 (link to separate document)
 ```
 

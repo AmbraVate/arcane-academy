@@ -242,6 +242,16 @@ Example ELT for Archive:
      JOIN dim_date d ON l.loan_date = d.calendar_date
 ```
 
+## Why It Matters
+
+OLTP vs OLAP is the most consequential split in data architecture — and running analytics on a transactional database is the classic way to learn it painfully:
+
+- A heavy report scanning millions of rows competes with checkout transactions for the same resources; analytics literally slows revenue
+- The workloads want opposite designs: OLTP wants normalised, indexed, row-oriented stores; OLAP wants wide, denormalised, column-oriented scans
+- Recognising the boundary tells you when a read replica, warehouse, or lakehouse is the right next architectural step
+
+Nearly every "database is on fire" incident in growing companies traces to these two workloads sharing one engine. Know the split and you'll see it coming.
+
 ## Common Mistakes
 
 - **Running reports on the operational database**: Analytical queries compete with transactional operations for I/O and CPU. Even read-only queries can degrade write performance and introduce lock contention. Run reports on a read replica at minimum, or a proper data warehouse.

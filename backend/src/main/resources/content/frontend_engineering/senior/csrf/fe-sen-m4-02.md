@@ -117,10 +117,10 @@ She places a second seal on the table — one only the Master can produce on dem
 
 **1. CSRF Tokens (most reliable for cookie-based auth):**
 ```python
-# Server: include CSRF token in every form/page
+ # Server: include CSRF token in every form/page
 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
-# Server: validate on every state-changing request
+ # Server: validate on every state-changing request
 if request.form['csrf_token'] != session['csrf_token']:
     abort(403)
 ```
@@ -144,11 +144,26 @@ Cross-origin requests cannot set custom headers (browser restricts this). A CSRF
 // Cross-origin requests can send the cookie but can't read it to duplicate it
 ```
 
+## Why It Matters
+
+CSRF is the attack that turns your users' own logged-in browsers against them — and it works without stealing a single credential:
+
+- A malicious page silently submits a request to your API; the browser helpfully attaches the session cookie, and your backend sees a perfectly authenticated call to transfer money, change an email, or delete an account
+- It exploits the web's deepest default — cookies ride along on cross-site requests — so *every* cookie-authenticated, state-changing endpoint is in scope until explicitly defended
+- The defences are precise and cheap when understood: SameSite cookie attributes, anti-CSRF tokens, and origin checks each close a specific door, and modern frameworks wire much of it for you — but only if you don't disable it for convenience
+- Real breaches have used CSRF for router takeovers, mass account changes, and one-click fund transfers; auditors and pen testers probe for it by default
+
+XSS gets the fame, but CSRF is the quieter sibling that thrives on teams who assume "we have auth, we're fine." Knowing exactly why a token in a header defeats it is non-negotiable senior knowledge.
+
 ## Common Mistakes
 
 - **Relying only on checking the Referer/Origin header.** These can be absent or spoofed in some contexts.
 - **Not protecting state-changing GET requests.** CSRF applies to any request that changes state, including GET requests that shouldn't change state but do.
 - **Forgetting SameSite on new cookies.** Modern browsers default to Lax, but explicitly set it for clarity.
+
+## Mental Model
+
+CSRF is a forged letter on your stationery. Your bank (the backend) honours written instructions from account holders, identified by the letterhead the browser automatically affixes — the session cookie. An attacker can't *read* your mail (that would be XSS), but they can trick you into *sending* theirs: visit their page, and it drops a pre-written instruction into your outbox, which goes out on your letterhead, indistinguishable to the bank from a genuine order. The defences all break the forgery in different ways: a CSRF token is a secret phrase the bank requires inside the letter — the forger can't know it because their page can't read your site's responses; SameSite cookies are the post office refusing to affix your letterhead to mail handed over by strangers; origin checks are the bank inspecting the postmark. Notice what doesn't help: encryption (HTTPS) — a forged letter in a sealed envelope is still forged.
 
 ## Mini Summary
 

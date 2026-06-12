@@ -160,11 +160,25 @@ CSS positioning gives you precise control over where elements live in space. It 
 }
 ```
 
+## Why It Matters
+
+Positioning is how elements escape the normal top-to-bottom flow — and it's behind every overlay, sticky header, and floating button you've ever used:
+
+- Modals, dropdowns, tooltips, and notification badges are all `absolute` or `fixed` positioning at work
+- The `relative` parent + `absolute` child pattern is one of the most-used idioms in production CSS
+- Misused positioning is also the source of legendary bugs: elements stuck under others, scrolling weirdness, z-index battles
+
+You'll reach for flexbox and grid for structure, but the moment something must sit *on top of* something else, positioning is the only tool — know its rules cold.
+
 ## Common Mistakes
 
 - **Forgetting `position: relative` on the parent** of an absolutely positioned child
 - **Using `position: absolute` for everything** — it removes elements from flow, breaking surrounding layout
 - **z-index without a positioned element** — z-index has no effect on `static` elements
+
+## Mental Model
+
+Normal document flow is a queue of people filing into rows of seats — each element takes the next spot, pushing others along. Positioning hands out special passes. `relative`: you keep your seat reserved but can lean over from it; everyone else stays put. `absolute`: you leave the queue entirely — your seat closes up — and stand wherever you like *within the nearest positioned ancestor's room*. `fixed`: you ignore the room and glue yourself to the window itself, unmoved by scrolling. `sticky`: you walk with the queue until you hit the doorframe, then hold there. Every positioning bug is someone misunderstanding which room a pass refers to.
 
 ## Mini Summary
 

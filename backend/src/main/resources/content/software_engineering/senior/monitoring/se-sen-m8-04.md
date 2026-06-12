@@ -179,7 +179,7 @@ Good monitoring enables:
 
 **Spring Boot Actuator health endpoint:**
 ```yaml
-# application.properties
+ # application.properties
 management.endpoints.web.exposure.include=health,info
 management.endpoint.health.show-details=when_authorized
 management.health.db.enabled=true
@@ -205,12 +205,12 @@ readinessProbe:
 
 **Grafana dashboard query (PromQL):**
 ```promql
-# Error rate for last 5 minutes
+ # Error rate for last 5 minutes
 rate(http_requests_total{status=~"5.."}[5m])
 /
 rate(http_requests_total[5m])
 
-# p99 latency
+ # p99 latency
 histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))
 ```
 

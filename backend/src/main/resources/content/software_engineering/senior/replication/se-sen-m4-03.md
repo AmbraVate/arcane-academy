@@ -251,7 +251,7 @@ High `lag_bytes` means replicas are behind — reads from replicas may be stale.
 ### Failover automation (Patroni / Spring)
 
 ```yaml
-# Patroni configuration (PostgreSQL HA)
+ # Patroni configuration (PostgreSQL HA)
 bootstrap:
   dcs:
     synchronous_mode: true          # require sync replication

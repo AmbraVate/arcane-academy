@@ -302,6 +302,16 @@ void tearDown() {
 }
 ```
 
+## Why It Matters
+
+Test data is where quality and compliance collide — bad test data hides bugs, and copied production data leaks personal information:
+
+- Tests pass on ten tidy rows and the feature dies on ten million messy ones; volume and mess are part of correctness
+- Using real customer data in dev/test environments is a GDPR violation waiting for an incident — anonymisation or synthesis isn't optional
+- Deterministic, repeatable seed data is what makes test failures mean something; "it depends which rows were there" means flaky
+
+Every data team eventually builds test-data tooling. The good ones build it before the breach or the heisenbug, not after.
+
 ## Common Mistakes
 
 - **Production data in test environments**: both a GDPR violation (PII without safeguards) and a test reliability issue (tests depend on real data that changes). Use synthetic data or masked copies.

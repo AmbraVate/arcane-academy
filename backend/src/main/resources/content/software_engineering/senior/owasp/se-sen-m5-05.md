@@ -193,10 +193,10 @@ public Document getDocument(@PathVariable Long docId,
 
 **A05 — Security Misconfiguration (Spring Boot):**
 ```yaml
-# application-prod.properties
-# Disable actuator endpoints in production
+ # application-prod.properties
+ # Disable actuator endpoints in production
 management.endpoints.web.exposure.include=health
-# Never expose: env, beans, mappings, heapdump in production
+ # Never expose: env, beans, mappings, heapdump in production
 
 spring.jpa.show-sql=false  # don't log SQL in production
 server.error.include-stacktrace=never  # never return stack traces

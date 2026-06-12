@@ -217,6 +217,16 @@ zip_codes: zip_code (PK) | city | state
 | Insertion | Can't add a new department without an employee | departments table can hold any department |
 | Deletion | Deleting the last employee deletes the department | departments table retains the record |
 
+## Why It Matters
+
+Third Normal Form is the standard the industry actually checks designs against — "is this 3NF?" is shorthand for "is this schema trustworthy?"
+
+- Transitive dependencies are sneaky: a city column that depends on a postcode column *through* the customer creates silent duplication
+- Every duplicated fact is a future inconsistency — update one copy, forget the other, and the database now contains two truths
+- 3NF gives you a mechanical test to find these problems instead of relying on intuition
+
+It is also the pragmatic stopping point: most production schemas aim for 3NF, so this is the level of rigour working engineers are expected to apply.
+
 ## Common Mistakes
 
 - **Confusing 2NF and 3NF violations**: Partial dependencies (2NF) require a composite key. Transitive dependencies (3NF) can occur with any key. If the key is simple (single column), only 3NF violations are possible — 2NF violations cannot occur.

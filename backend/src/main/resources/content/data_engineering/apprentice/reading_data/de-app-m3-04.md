@@ -202,6 +202,16 @@ ORDER BY inventory_value DESC;
 ORDER BY 2 DESC;
 ```
 
+## Why It Matters
+
+Unsorted query results have no guaranteed order — the database returns rows however it pleases, and code that assumes otherwise breaks at the worst times:
+
+- "Top 10 customers" without ORDER BY is ten *arbitrary* customers; with it, it's a meaningful ranking
+- Every leaderboard, recent-activity feed, and paginated list depends on a stable, explicit sort
+- Sorting by multiple columns (region, then revenue) is how real reports organise information for humans
+
+ORDER BY is also your first encounter with the cost of operations: sorting millions of rows takes work, which is why this clause matters to performance discussions later.
+
 ## Common Mistakes
 
 - **Relying on implicit order**: Never assume rows come back in any particular order without ORDER BY.

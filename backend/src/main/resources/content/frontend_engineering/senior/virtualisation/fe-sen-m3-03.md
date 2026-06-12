@@ -127,6 +127,17 @@ As the user scrolls, the virtual window moves:
 | **react-window** | Lightweight, fixed-height lists |
 | **react-virtuoso** | Auto-measuring variable heights, simpler API |
 
+## Why It Matters
+
+Virtualisation is the technique that keeps interfaces alive when lists get serious — because the DOM was never designed to hold fifty thousand rows:
+
+- Every rendered node costs memory, layout time, and paint time; a 10,000-row table can lock the main thread for seconds and stutter on every scroll, while the same data virtualised renders perhaps thirty rows and stays at 60fps
+- The user can only see a viewport's worth of content anyway — rendering what's invisible is pure waste, and virtualisation is simply refusing to pay for it
+- Real products meet this constantly: log viewers, data grids, chat histories, infinite feeds, autocomplete over large datasets — every serious frontend eventually virtualises something
+- The trade-offs are real and senior engineers name them upfront: in-page find stops working over unrendered content, accessibility needs explicit row counts (`aria-rowcount`), and dynamic row heights complicate the maths — which is why you reach for proven libraries before writing your own
+
+Pagination changes the product; virtualisation keeps the product and fixes the physics. Knowing which one a situation calls for is the judgement this lesson trains.
+
 ## Worked Example
 
 ```tsx
@@ -184,6 +195,10 @@ function VirtualList({ items }) {
 - **Forgetting the container needs a fixed height.** Without a fixed height, the virtualiser can't calculate which items are visible.
 - **Using position: absolute without accounting for total size.** The scrollbar height must equal totalSize or the scroll position calculation breaks.
 - **Assuming row height.** For variable-height rows, measure with ResizeObserver or use a library that handles dynamic measurement.
+
+## Mental Model
+
+Virtualisation is how a stage play handles a cast of thousands with twelve actors. The script (your data array) genuinely contains ten thousand characters, but the audience (the viewport) can only ever see one scene at a time — so only the characters in the current scene get an actor, a costume, and stage time (real DOM nodes). As the story scrolls forward, actors exiting a scene don't go home; they swap costumes and re-enter as the next characters (node recycling). Two pieces of stagecraft keep the illusion airtight: the set is built to the full story's scale (a spacer element preserving true scroll height, so the scrollbar tells the truth), and costume changes must outpace the scene changes (render fast enough during scroll) or the audience glimpses blank stage — the telltale white flash of an overwhelmed virtualised list.
 
 ## Mini Summary
 

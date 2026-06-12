@@ -169,11 +169,25 @@ Learning to use a small set of core properties confidently is more valuable than
 - `%` — relative to the parent element
 - `vh` / `vw` — relative to the viewport height/width
 
+## Why It Matters
+
+CSS properties are the vocabulary of visual design on the web — every colour, size, font, and space you'll ever set is one of them:
+
+- A modest core set (color, background, font-size, margin, padding, border, width) styles ninety percent of everyday interfaces
+- Properties cluster into families (text, box, background) — learning the families makes hundreds of properties guessable instead of memorised
+- Shorthands like `margin: 8px 16px` are how real stylesheets are written; reading them is required literacy
+
+Selectors choose *what* to style; properties are *what you can actually say*. A rich property vocabulary is what turns design intentions into pixels.
+
 ## Common Mistakes
 
 - `font-color` instead of `color`
 - `px` for all font sizes (inaccessible)
 - Not using shorthand when appropriate (`margin-top + margin-right + margin-bottom + margin-left` = `margin`)
+
+## Mental Model
+
+Properties and values work like an order form for each element. Every element arrives with a default form already filled in by the browser — text black, background transparent, font inherited. Your CSS doesn't paint anything directly; it *amends the form*: `color: navy` crosses out black and writes navy on that one line. Each property is a labelled field accepting only its kind of value (a colour where a colour belongs, a length where a length belongs — write nonsense and the browser ignores that line, keeping the previous entry). Styling is form-filling: find the right field, write a valid value, and know the browser had a default there before you.
 
 ## Mini Summary
 

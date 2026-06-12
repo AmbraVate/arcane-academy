@@ -227,6 +227,16 @@ GROUP BY c.customer_id, c.name;
 -- → 1 database query, all results in one go
 ```
 
+## Why It Matters
+
+Customers and orders form the most queried relationship in business databases, and joining them correctly underpins nearly every commercial question:
+
+- "Which customers haven't ordered this year?" requires a LEFT JOIN with a NULL check — an INNER JOIN silently hides exactly the customers you're looking for
+- Revenue-per-customer, repeat-purchase rates, and churn all start with this join done at the right grain
+- One customer with many orders means join results multiply rows; aggregating without realising that inflates every number
+
+This pairing is where join theory meets the queries you will actually write in week one of a data job.
+
 ## Common Mistakes
 
 - **GROUP BY only the name column**: Two customers named "Alice Smith" get merged. Always GROUP BY the primary key: `GROUP BY c.customer_id, c.name`.

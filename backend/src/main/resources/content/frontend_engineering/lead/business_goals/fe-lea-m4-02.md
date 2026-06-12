@@ -193,11 +193,25 @@ Short-term business pressure (ship by Q4, hit this quarter's OKR) creates archit
 2. Building the long-term cost into estimates for future features
 3. Delivering short-term wins that fund the engineering credibility needed for longer-term investments
 
+## Why It Matters
+
+Frontend leads who can't connect their work to business goals get treated as a cost centre — and funded like one:
+
+- "Improve LCP by 800ms" means nothing in a budget meeting; "checkout conversion rises measurably with each 100ms of speed, here's the revenue model" wins the headcount
+- Goal literacy changes what you build: knowing the company's bet this year is retention (not acquisition) reorders your roadmap — polish for existing power users beats another landing page
+- Engineering effort is the scarcest resource you steward; spending it on work the business doesn't value, however technically excellent, is a leadership failure even when the code is beautiful
+
+The lead's translation duty runs both ways: business goals into technical priorities for the team, technical investments into business outcomes for the executives. Teams with translators ship things that matter; teams without them ship things that are merely good.
+
 ## Common Mistakes
 
 - **Presenting technical work without business framing.** "We should be faster" loses to "this adds £400k/year." Both may be true; only one gets resources.
 - **Treating accessibility as charity.** It is a legal requirement in many jurisdictions and a market access question in all of them.
 - **Accepting "we'll fix it later" without a timeline.** Technical debt accepted with no scheduled remediation is permanent technical debt.
+
+## Mental Model
+
+A frontend lead operates like a ship's navigator, not its engine room chief. The engine room (the team's technical work) measures itself in RPM and fuel efficiency — code quality, performance, velocity. The navigator's job is different: knowing the *destination the company actually booked* (this quarter's business goals) and continuously translating between bridge and engine room. When the bridge says "we must arrive before the trade fair" (revenue deadline), the navigator translates: full speed on these boilers, defer that maintenance. When the engine room says "the port boiler will fail within months" (tech debt), the navigator translates upward: "at current course we lose two knots permanently — here's the cost in arrival times." A navigator who only polishes engines sails a magnificent ship in circles; one who can't speak engine-room can't deliver what the bridge promised. The value is the translation.
 
 ## Mini Summary
 

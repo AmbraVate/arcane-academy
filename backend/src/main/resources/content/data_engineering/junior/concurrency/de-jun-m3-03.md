@@ -247,6 +247,16 @@ Best practice:
   Never rely on application-layer checks alone for data integrity
 ```
 
+## Why It Matters
+
+Real databases serve many users at once, and concurrency control is what stops their work from corrupting each other:
+
+- The classic lost update — two users read a balance, both write back, one change vanishes — happens in any system without proper control
+- Race conditions are invisible in development (one user!) and devastating in production (thousands)
+- Choosing between optimistic and pessimistic strategies is a real design decision in every booking, inventory, and payment system you will build
+
+Concurrency bugs are among the hardest to reproduce and debug. Understanding the mechanisms now means designing them out instead of chasing them later.
+
 ## Common Mistakes
 
 - **Check-then-act across separate transactions**: Always the wrong approach for uniqueness or availability checks. Use database constraints and handle conflict errors.

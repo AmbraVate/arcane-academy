@@ -99,7 +99,7 @@ import numpy as np
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
-# Embed lessons
+ # Embed lessons
 lesson_texts = [
     "Transaction Isolation and MVCC — handling concurrent database writes",
     "PostgreSQL Indexing — B-tree and GiST index structures",
@@ -107,15 +107,15 @@ lesson_texts = [
 ]
 lesson_embeddings = model.encode(lesson_texts)  # shape: (3, 384)
 
-# Embed query
+ # Embed query
 query = "how do databases handle multiple users writing at the same time"
 query_embedding = model.encode(query)  # shape: (384,)
 
-# Cosine similarities
+ # Cosine similarities
 similarities = np.dot(lesson_embeddings, query_embedding) / (
     np.linalg.norm(lesson_embeddings, axis=1) * np.linalg.norm(query_embedding)
 )
-# → [0.87, 0.31, 0.15]  — Transaction Isolation is most relevant
+ # → [0.87, 0.31, 0.15]  — Transaction Isolation is most relevant
 ```
 
 ## Approximate Nearest Neighbour Search

@@ -298,6 +298,16 @@ ORDER BY changed_at DESC;
 -- Then: filebeat/fluentd agent ships CSV logs to SIEM for retention and alerting
 ```
 
+## Why It Matters
+
+When something goes wrong with data — fraud, a mystery deletion, a compliance inquiry — the first question is always "who did what, when?" Audit trails are the only honest answer:
+
+- Regulations (GDPR, SOX, HIPAA) explicitly require demonstrable records of access and change
+- Investigations without an audit log devolve into guesswork and blame; with one, they take minutes
+- Audit tables also catch bugs: an unexpected stream of UPDATEs from a service account often reveals a misbehaving job before users notice
+
+Auditing is insurance you can only buy before the incident. Afterwards, it's too late.
+
 ## Common Mistakes
 
 - **Audit log in the same database**: a malicious DBA can truncate or delete audit records that incriminate them. Ship audit logs to external, append-only storage (S3 with Object Lock, a SIEM, CloudWatch Logs).

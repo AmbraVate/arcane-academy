@@ -182,7 +182,7 @@ Tracing enables:
 
 **Spring Boot + OpenTelemetry (Java agent approach):**
 ```bash
-# Run with the OTel Java agent — auto-instruments Spring, JDBC, HTTP clients
+ # Run with the OTel Java agent — auto-instruments Spring, JDBC, HTTP clients
 java -javaagent:opentelemetry-javaagent.jar \
      -Dotel.service.name=order-service \
      -Dotel.exporter.otlp.endpoint=http://collector:4317 \

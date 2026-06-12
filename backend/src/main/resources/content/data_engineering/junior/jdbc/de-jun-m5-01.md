@@ -270,6 +270,16 @@ DataSource dataSource = new HikariDataSource(config);
 // spring.datasource.hikari.maximum-pool-size=10
 ```
 
+## Why It Matters
+
+JDBC is the foundation every Java data technology stands on — JPA, Hibernate, Spring Data all compile down to these calls:
+
+- When the abstraction leaks (connection exhaustion, transaction weirdness, batch performance), the debugging happens at the JDBC layer
+- PreparedStatement is the canonical defence against SQL injection — understanding *why* placeholders are safe is non-negotiable security knowledge
+- Resource leaks from unclosed connections are a classic production outage; try-with-resources exists for exactly this
+
+You may write little raw JDBC in your career, but you will read stack traces through it forever. Knowing the layer beneath your ORM is what makes you the debugger of last resort.
+
 ## Common Mistakes
 
 - **String concatenation in queries**: The single most common and dangerous JDBC mistake. Always use PreparedStatement with ? parameters for all user-controlled input.

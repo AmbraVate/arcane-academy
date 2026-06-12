@@ -92,13 +92,13 @@ public class ModuleController {
             LearningModule module = learningModuleRepository.findById(moduleId)
                     .orElseThrow(() -> new NoSuchElementException("Module not found: " + moduleId));
 
-            // First lesson NOT_STARTED (teaser), rest LOCKED
+            // All lessons LOCKED for public browsing (curriculum view only)
             List<LessonSummaryDto> publicLessons = new ArrayList<>();
             for (int i = 0; i < lessons.size(); i++) {
                 Lesson l = lessons.get(i);
                 publicLessons.add(LessonSummaryDto.builder()
                         .id(l.getId()).title(l.getTitle()).sortOrder(l.getSortOrder())
-                        .status(i == 0 ? "NOT_STARTED" : "LOCKED")
+                        .status("LOCKED")
                         .currentPhase("HOOK")
                         .memoryStrength(0.0).healthColor("GREEN")
                         .feynmanCompleted(false).xpReward(l.getXpReward())
@@ -139,7 +139,9 @@ public class ModuleController {
             String health = strength > 0.7 ? "GREEN" : strength >= 0.4 ? "YELLOW" : "RED";
 
             String effectiveStatus;
-            if (p != null && (p.getStatus() == LessonStatus.COMPLETE
+            if ("LOCKED".equals(mws.status())) {
+                effectiveStatus = "LOCKED";
+            } else if (p != null && (p.getStatus() == LessonStatus.COMPLETE
                     || p.getStatus() == LessonStatus.SKIPPED
                     || p.getStatus() == LessonStatus.IN_PROGRESS)) {
                 effectiveStatus = p.getStatus().name();

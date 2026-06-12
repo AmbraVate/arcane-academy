@@ -156,7 +156,7 @@ p { line-height: 1.6; }
 .card { border: 1px solid #e2e8f0; border-radius: 8px; }
 
 /* ID selector — unique element */
-#site-header { background: #0c0a1e; }
+ #site-header { background: #0c0a1e; }
 
 /* Descendant combinator */
 .nav-list a { text-decoration: none; color: white; }

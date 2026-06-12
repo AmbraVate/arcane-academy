@@ -135,6 +135,10 @@ function StatusBadge({ label, variant = 'default' }) {
 - **Prop explosion.** 15 props means your component is trying to do too many things.
 - **DRY dogmatism.** Sometimes duplication is fine. Not all repetition needs abstraction.
 
+## Mental Model
+
+Reusability patterns are the difference between a Swiss Army knife and a socket wrench set. The Swiss Army knife approach to reuse — one component, ever more blades — feels efficient ("it already does cards, just add a `horizontal` mode... and a `compact` flag... and `headerless`...") but each blade added makes every blade worse: the component grows conditional thickets, its props become a riddle, and changing any mode risks the others. The socket set approach decomposes by *axis of variation*: a handle that's always the same (the shared structure — Card's border, padding, shadow), and sockets that vary independently (the slots — header, body, footer as children or render props). Each pattern in this lesson is a way of building handles and sockets: children for "vary the contents", slot props for "vary several regions", render props for "vary how each item displays". The judgement call the analogy sharpens: when two UIs share *structure*, extract the handle; when they merely look vaguely similar, they're different tools — forcing them into one component is welding two wrenches together because both are metal. Reuse what genuinely repeats; let coincidences stay separate.
+
 ## Mini Summary
 
 - Extract on the third occurrence — not the first

@@ -220,6 +220,16 @@ ORDER BY idx_scan DESC;
 -- Indexes with 0 or near-0 idx_scan are candidates for removal
 ```
 
+## Why It Matters
+
+Indexes are the single most powerful performance tool in databases — the difference between scanning ten million rows and jumping to ten:
+
+- Most "the app is slow" tickets trace back to a missing index on a filtered or joined column
+- But indexes aren't free: every INSERT and UPDATE must maintain them, so over-indexing slows writes — the trade-off is the engineering judgement
+- Composite index column order decides whether queries can use the index at all; it's the detail interviews love and production punishes
+
+An engineer who understands indexes can often deliver a 100× speedup with one line of DDL. Few skills have a better effort-to-impact ratio.
+
 ## Common Mistakes
 
 - **Indexing every column**: More indexes = more write overhead. Index columns actually used in WHERE, JOIN, ORDER BY on large tables with high selectivity.

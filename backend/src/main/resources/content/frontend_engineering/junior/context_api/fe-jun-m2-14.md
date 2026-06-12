@@ -124,6 +124,21 @@ function Button() {
 }
 ```
 
+## Mental Model
+
+Creating a context is installing the building's radio station, and the installation choices are what separate professional infrastructure from a transmitter dumped on the roof. `createContext` registers the *frequency* — a named channel (ThemeContext) that exists app-wide but broadcasts nothing yet. The Provider is the transmitter you actually mount, and its two installation parameters do all the work: *placement* sets coverage (wrap the whole app for truly global facts, one section for sectional ones — transmit no wider than the audience), and the `value` prop is the programme being aired. The default value passed to `createContext` is the *off-air recording*: what receivers hear if they tune in somewhere no transmitter covers. The professional choice is often to make that recording an alarm rather than easy-listening — a custom `useAuth` hook that throws "no AuthProvider found" is the equivalent of a test tone that tells the engineer immediately that they're outside coverage, instead of letting them ship a room silently hearing the wrong programme. Two more installation disciplines: don't rebuild the programme from scratch every minute when nothing changed — an unmemoised `value={{...}}` is a station re-announcing identical content and forcing every receiver to react; and put the whole station in one broadcast booth — a custom `<AuthProvider>` component owning the state, the memoised value, and the paired hook, so consumers get a tuner (`useAuth()`) rather than a soldering kit.
+
+## Why It Matters
+
+Creating a context well is API design, not boilerplate — the choices you make in these few lines determine how every consumer experiences it:
+
+- `createContext` + Provider is the public infrastructure of your app: dozens of components will couple to this contract, so its shape (what's in the value, how it's named, where the Provider sits) is a decision with a blast radius, made once and inherited everywhere
+- The default value question is sharper than it looks: a sensible default makes components testable in isolation, while a deliberate sentinel (undefined + a custom hook that throws) turns "you forgot the Provider" from a silent wrong-theme bug into an immediate, named error at development time — professional codebases almost always choose the loud failure
+- Value identity is the hidden performance contract: passing a fresh object literal (`value={{user, login}}`) re-creates the value every render, re-rendering every consumer in the building whether anything changed or not — memoising the value object is the difference between a context that scales and one that becomes a render storm
+- Bundling the Provider into a custom component (`<AuthProvider>`) with a paired hook (`useAuth`) is the pattern that keeps the wiring in one file: state, value assembly, and error handling live together, and consumers import a clean, documented interface instead of raw plumbing
+
+Anyone can call `createContext`; the craft is shipping a context that fails loudly when misused, re-renders only when it must, and reads like a designed API rather than exposed internals.
+
 ## Mini Summary
 - ✔ Collocate: context + Provider + useState + custom hook in one file
 - ✔ Export the custom hook, not the raw context object

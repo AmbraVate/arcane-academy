@@ -204,6 +204,16 @@ LEFT JOIN orders AS o ON c.customer_id = o.customer_id
     AND o.status = 'completed';  ← unmatched customers still appear, order cols = NULL
 ```
 
+## Why It Matters
+
+LEFT JOIN exists for the questions INNER JOIN cannot ask — the ones about absence:
+
+- "Customers with *no* orders", "products *never* sold", "students *missing* a grade" — finding what's absent drives retention, stock, and quality work
+- Keeping every left-side row and showing NULL where nothing matches lets a single query show both the matched and the unmatched
+- The classic trap: a WHERE condition on a right-table column silently turns your LEFT JOIN back into an INNER JOIN
+
+Some of the most valuable business questions are about what *didn't* happen. LEFT JOIN is how SQL answers them.
+
 ## Common Mistakes
 
 - **WHERE on right table column accidentally removing unmatched rows**: See above. Move right-table filters into the ON clause if you want to keep unmatched left rows.

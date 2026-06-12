@@ -134,6 +134,10 @@ Fragment wraps two elements. `htmlFor` on label. Self-closed input. camelCase ev
 - **HTML comments in JSX.** `<!-- comment -->` is invalid. Use `{/* comment */}`.
 - **Inline event handlers with quotes.** `onClick="handler()"` is wrong; `onClick={handler}` is correct.
 
+## Mental Model
+
+JSX's rules feel like grammar pedantry until you remember what JSX *is* — function calls in disguise — at which point every rule becomes mechanical necessity. Use customs paperwork as the model: JSX is a declaration form processed by a strict but consistent officer (the compiler), and each rule exists because of how the form is filed. One root element per return: a function call returns *one* value, so multiple siblings need one container (or a Fragment — a box with no label that vanishes after inspection). Every tag closes, including `<img />`: the officer can't infer where your declaration ends the way browsers forgivingly do with HTML. `className` and `htmlFor`: the form is written in JavaScript, where `class` and `for` are already officials with other jobs. Keys on list items: cargo manifests need stable IDs per crate so the officer can track which crate moved rather than re-inspecting the whole shipment. None of these are style preferences — break one and the form simply doesn't parse. Learn the *reason* per rule and you'll never need to memorise the rule itself.
+
 ## Mini Summary
 
 - JSX must return one root element — use Fragment `<>` to avoid extra DOM nodes

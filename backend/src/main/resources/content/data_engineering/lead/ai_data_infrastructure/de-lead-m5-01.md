@@ -116,7 +116,7 @@ With feature store:
 ```
 
 ```python
-# Feature definition (Feast example)
+ # Feature definition (Feast example)
 from feast import FeatureView, Entity, Field
 from feast.types import Int64, Float32
 

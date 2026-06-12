@@ -177,7 +177,7 @@ The metric was gamed; the goal was not served.
 For metrics to be consistent across teams and tools (dashboards, analysts, data scientists), define them in a **semantic layer** — a single authoritative definition that all downstream tools query.
 
 ```yaml
-# dbt metrics (or MetricFlow)
+ # dbt metrics (or MetricFlow)
 metrics:
   - name: lesson_completion_rate
     label: Lesson Completion Rate

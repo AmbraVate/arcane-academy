@@ -229,6 +229,16 @@ SET enable_nestloop = off;
 -- → forces Merge Join for comparison
 ```
 
+## Why It Matters
+
+The execution plan is the database telling you exactly how it will run your query — reading one is the difference between guessing and knowing:
+
+- A query that's slow in production but fine in dev usually has different plans; only the plan reveals why
+- Spotting a sequential scan where you expected an index seek diagnoses the problem in seconds
+- Estimated vs actual row counts expose stale statistics — a silent killer of query performance
+
+Engineers who can read plans fix performance issues; engineers who can't add indexes at random and hope. EXPLAIN is the single highest-value debugging skill in this module.
+
 ## Common Mistakes
 
 - **Using EXPLAIN on a destructive query**: EXPLAIN ANALYZE actually executes the query. Running EXPLAIN ANALYZE on a DELETE or UPDATE will delete or update real data (in the same transaction — roll it back if needed, or use BEGIN/ROLLBACK around it).
