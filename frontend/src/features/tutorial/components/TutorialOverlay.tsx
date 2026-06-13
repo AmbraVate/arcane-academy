@@ -80,7 +80,7 @@ interface CalloutProps {
 
 function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position, onNext, onSkip }: CalloutProps) {
   const GAP       = 16
-  const CALLOUT_H = 260  // generous estimate — accounts for multi-line body text
+  const CALLOUT_H = 260  // generous estimate - accounts for multi-line body text
 
   // Compute once; drives both the style calculation and the arrow direction.
   const effectivePos: string = (() => {
@@ -173,7 +173,7 @@ function Callout({ title, body, ctaLabel, stepIndex, totalSteps, rect, position,
         animation: 'fade-up 0.25s ease both',
       }}
     >
-      {/* Arrow indicator — only shown when callout is anchored to a target */}
+      {/* Arrow indicator - only shown when callout is anchored to a target */}
       {arrowDir && effectivePos !== 'center' && (
         <div style={{ color: 'var(--purple-light)', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
           <Arrow dir={arrowDir} />
@@ -328,7 +328,7 @@ export default function TutorialOverlay() {
       <Callout
         title={currentStep.title}
         body={currentStep.body}
-        ctaLabel={currentStep.ctaLabel ?? 'Next →'}
+        ctaLabel={currentStep.ctaLabel ?? 'Next ->'}
         stepIndex={stepIndex}
         totalSteps={totalSteps}
         rect={isCenter ? null : rect}
