@@ -17,7 +17,6 @@ const EncodingPage         = lazy(() => import('./features/learning/pages/Encodi
 const ReviewPage           = lazy(() => import('./features/review/pages/ReviewPage'))
 const DiagnosticPage       = lazy(() => import('./features/diagnostic/pages/DiagnosticPage'))
 const OnboardingPage       = lazy(() => import('./features/auth/pages/OnboardingPage'))
-const RabbitHolePage       = lazy(() => import('./features/exploration/pages/RabbitHolePage'))
 const CuriosityQueuePage   = lazy(() => import('./features/exploration/pages/CuriosityQueuePage'))
 const ProfilePage          = lazy(() => import('./features/profile/pages/ProfilePage'))
 const TopicPage            = lazy(() => import('./features/topics/pages/TopicPage'))
@@ -155,7 +154,6 @@ function AppRoutes() {
         <Route path="/chunk/:chunkId" element={<PrivateRoute><ChunkMapPage /></PrivateRoute>} />
         <Route path="/learn/:subChunkId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
-        <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
         <Route path="/topics" element={<PrivateRoute><TopicsPage /></PrivateRoute>} />
         <Route path="/topic/:topicId" element={<PrivateRoute><TopicPage /></PrivateRoute>} />
