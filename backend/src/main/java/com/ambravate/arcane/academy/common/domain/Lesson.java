@@ -50,7 +50,7 @@ public class Lesson {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private LessonPracticeType practiceType = LessonPracticeType.JAVA;
+    private LessonPracticeType practiceType = LessonPracticeType.NONE;
 
     @Column(columnDefinition = "TEXT")
     private String rabbitHoleTermsJson;
