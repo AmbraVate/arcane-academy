@@ -47,7 +47,7 @@ export default function ReviewPage() {
   if (!session || session.questions.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-center">
-        <div className="text-[48px] text-gold mb-3">✦</div>
+        <div className="text-[48px] text-gold mb-3">*</div>
         <h2 className="text-text m-0 mb-2">No Reviews Due</h2>
         <p className="text-muted m-0 mb-5">All your memories are fresh! Check back later.</p>
         <button className="btn btn-primary" onClick={() => navigate('/schools')}>Back to Dashboard</button>
@@ -60,7 +60,7 @@ export default function ReviewPage() {
     return (
       <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
         <div className="text-center mb-7 p-7 bg-card border border-border rounded-[14px] max-[600px]:px-4 max-[600px]:py-5">
-          <div className="text-[40px] mb-2">📖</div>
+          <div className="text-[40px] mb-2">Book</div>
           <h2 className="text-[22px] font-bold text-gold m-0 mb-2.5">Review Complete</h2>
           <div className={cn('text-[48px] font-[800] mb-1 max-[600px]:text-[40px]', scoreColor)}>
             {Math.round(result.score * 100)}%
@@ -88,7 +88,7 @@ export default function ReviewPage() {
     <div className="max-w-[700px] mx-auto px-4 py-6 pb-[60px] max-[600px]:px-3 max-[600px]:py-4">
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-5 flex-wrap max-[480px]:flex-col max-[480px]:items-start max-[600px]:gap-2">
-        <button className="btn btn-ghost text-[12px]" onClick={() => navigate('/schools')}>← Back</button>
+        <button className="btn btn-ghost text-[12px]" onClick={() => navigate('/schools')}>&lt;- Back</button>
         <div className="text-[18px] font-bold text-gold max-[600px]:text-[16px]">Daily Review</div>
         <div className="flex gap-[5px] flex-1 flex-wrap max-[480px]:max-h-12 max-[480px]:overflow-hidden max-[600px]:gap-1">
           {session.questions.map((q, i) => (
@@ -116,13 +116,13 @@ export default function ReviewPage() {
           onChange={v => setAnswers(prev => ({ ...prev, [question.id]: v }))}
         />
         <div className="flex justify-between max-[600px]:gap-2">
-          <button className="btn btn-ghost" disabled={currentQ === 0} onClick={() => setCurrentQ(c => c - 1)}>← Previous</button>
+          <button className="btn btn-ghost" disabled={currentQ === 0} onClick={() => setCurrentQ(c => c - 1)}>&lt;- Previous</button>
           {currentQ < totalQ - 1 ? (
-            <button className="btn btn-primary" onClick={() => setCurrentQ(c => c + 1)}>Next →</button>
+            <button className="btn btn-primary" onClick={() => setCurrentQ(c => c + 1)}>Next {'->'}</button>
           ) : (
             <>
               {submitError && (
-                <p className="text-[12px] text-[#f87171] mb-2">Submission failed — please try again.</p>
+                <p className="text-[12px] text-[#f87171] mb-2">Submission failed - please try again.</p>
               )}
               <button className="btn btn-success" onClick={handleSubmit} disabled={!allAnswered || submitting}>
                 {submitting ? 'Submitting...' : 'Submit Review'}

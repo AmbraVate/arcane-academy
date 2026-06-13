@@ -54,7 +54,7 @@ function RankProgressBar({ rank, totalXp }: { rank: string; totalXp: number }) {
         />
       </div>
       <div className="mt-1 text-[10px] text-muted text-right font-cinzel">
-        {pct}%{current.max ? ` · ${(current.max - totalXp).toLocaleString()} XP to go` : ' · Max rank'}
+        {pct}%{current.max ? ` / ${(current.max - totalXp).toLocaleString()} XP to go` : ' / Max rank'}
       </div>
     </div>
   )
@@ -235,7 +235,7 @@ export default function ProfilePage() {
     <div className="flex-1 overflow-y-auto px-6 py-8 max-[600px]:px-3 max-[600px]:py-5">
       <div className="max-w-[800px] mx-auto">
 
-        {/* Profile header — always visible */}
+        {/* Profile header - always visible */}
         <div className="flex items-center gap-6 p-7 bg-card border border-border rounded-[14px] mb-5 max-[600px]:flex-col max-[600px]:text-center">
           {/* Rank avatar */}
           {(() => {
@@ -274,7 +274,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Tab bar — horizontally scrollable on mobile */}
+        {/* Tab bar - horizontally scrollable on mobile */}
         <div className="flex mb-6 border-b border-border pb-0 overflow-x-auto scrollbar-none">
           {tabs.map(t => (
             <button
@@ -299,7 +299,7 @@ export default function ProfilePage() {
             <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex items-center justify-between gap-4 max-[480px]:flex-col max-[480px]:items-start">
               <div>
                 <div className="font-cinzel text-[13px] text-text mb-0.5">
-                  Public profile {publicEnabled ? <span className="text-green">· On</span> : <span className="text-muted">· Off</span>}
+                  Public profile {publicEnabled ? <span className="text-green">/ On</span> : <span className="text-muted">/ Off</span>}
                 </div>
                 <div className="text-[11px] text-muted leading-snug">
                   {publicEnabled
@@ -375,7 +375,7 @@ export default function ProfilePage() {
             {!dashLoading && ACTIVE_DOMAINS.every(t => !allTopicDash[t.id]) && (
               <div className="text-center py-10 text-muted italic">
                 <p>No pathway data found. Start a pathway to see your progress here.</p>
-                <button className="btn btn-primary mt-4" onClick={() => navigate('/schools')}>Browse Schools →</button>
+                <button className="btn btn-primary mt-4" onClick={() => navigate('/schools')}>Browse Schools {'->'}</button>
               </div>
             )}
           </div>
@@ -408,7 +408,7 @@ export default function ProfilePage() {
                 {earnedFiltered.length > 0 && (
                   <section className="mb-7">
                     <h2 className="font-cinzel text-[13px] text-gold tracking-[1px] mb-3 pb-1.5 border-b border-border">
-                      ✦ Earned ({earnedFiltered.length})
+                      * Earned ({earnedFiltered.length})
                     </h2>
                     <BadgeGrid badges={earnedFiltered} />
                   </section>
@@ -518,7 +518,7 @@ export default function ProfilePage() {
             {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projects…</p>}
             {!capstonesLoading && capstones.length === 0 && (
               <div className="text-center py-12">
-                <div className="text-[48px] mb-4">🏗️</div>
+                <div className="text-[48px] mb-4">Project</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
                   No saved projects yet. Complete a capstone lesson to save your project here.
                 </p>
@@ -618,7 +618,7 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Tab: Preferences — redirects to /settings */}
+        {/* Tab: Preferences - redirects to /settings */}
         {tab === 'preferences' && (
           <div className="flex flex-col gap-4">
             <div className="bg-card border border-border rounded-[12px] px-5 py-5 flex items-center justify-between gap-4">
@@ -629,7 +629,7 @@ export default function ProfilePage() {
                 </div>
               </div>
               <button className="btn btn-primary text-[12px] px-5 py-2 flex-shrink-0" onClick={() => navigate('/settings')}>
-                Open Settings →
+                Open Settings {'->'}
               </button>
             </div>
 
@@ -682,7 +682,7 @@ function TopicCard({
       </div>
 
       <div className="flex gap-2">
-        <button className="btn btn-primary text-[12px] px-4 py-1.5" onClick={onContinue}>Continue →</button>
+        <button className="btn btn-primary text-[12px] px-4 py-1.5" onClick={onContinue}>Continue {'->'}</button>
         <button className="btn btn-ghost text-[11px] px-3 py-1.5" onClick={onRetakeDiagnostic}>Retake Diagnostic</button>
       </div>
     </div>
@@ -730,7 +730,7 @@ function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; re
           <p className="text-[12px] text-muted leading-[1.55] mb-1.5">{term.description}</p>
         )}
         <div className="text-[10px] text-muted">
-          {term.lessonId && <span>From {term.lessonId} · </span>}
+          {term.lessonId && <span>From {term.lessonId} / </span>}
           {new Date(term.savedAt).toLocaleDateString()}
         </div>
       </div>
@@ -890,7 +890,7 @@ function SubscriptionPanel({
           {status.status === 'LIFETIME' && (
             <div className="px-4 py-2 rounded-[9px] border border-[rgba(196,181,253,0.3)]
               bg-[rgba(196,181,253,0.06)] font-cinzel text-[12px] text-purple-light">
-              ✦ Lifetime member — no further action needed
+              * Lifetime member - no further action needed
             </div>
           )}
         </div>
@@ -901,11 +901,11 @@ function SubscriptionPanel({
         <div className="font-cinzel text-[12px] tracking-[0.1em] text-muted uppercase mb-3">What's Included</div>
         <ul className="flex flex-col gap-2">
           {[
-            ['✦', 'Your first discipline — always free, all tiers'],
+            ['*', 'Your first discipline - always free, all tiers'],
             ['🔓', status.active ? 'All disciplines unlocked' : 'Additional disciplines (subscription required)'],
             ['📚', 'Spaced-repetition review system'],
             ['🏆', 'Badges, XP, ranks & leaderboards'],
-            ['🧠', 'AI mentor feedback on written practice'],
+            ['Brain', 'AI mentor feedback on written practice'],
           ].map(([icon, text]) => (
             <li key={text} className="flex items-center gap-3 text-[13px]">
               <span className="text-[14px] flex-shrink-0">{icon}</span>

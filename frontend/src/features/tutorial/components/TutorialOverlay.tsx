@@ -48,7 +48,7 @@ function SkipDialog({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: 
         <h3 className="font-cinzel text-[16px] text-gold mb-2">Skip Tutorial?</h3>
         <p className="text-[13px] text-muted leading-[1.65] mb-5">
           You can re-enable the tutorial at any time from{' '}
-          <strong className="text-text">Profile → Preferences</strong>.
+          <strong className="text-text">Profile {'->'} Preferences</strong>.
           Changes take effect next time you log in.
         </p>
         <div className="flex gap-3 justify-center">

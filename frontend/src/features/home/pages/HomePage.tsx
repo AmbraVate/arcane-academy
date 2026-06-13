@@ -69,7 +69,7 @@ const HOW_IT_WORKS = [
     border: 'rgba(196,181,253,0.2)',
     step: '03',
     title: 'Prove It',
-    desc: 'Each lesson runs you through guided practice, solo recall, and a retrieval quiz — structured phases that turn reading into lasting knowledge.',
+    desc: 'Each lesson runs you through guided practice, solo recall, and a retrieval quiz - structured phases that turn reading into lasting knowledge.',
   },
   {
     icon: RotateCcw,
@@ -94,9 +94,9 @@ const HOW_IT_WORKS = [
     color: '#f87171',
     bg: 'rgba(248,113,113,0.08)',
     border: 'rgba(248,113,113,0.2)',
-    step: '✦',
+    step: '*',
     title: "I'm Stuck",
-    desc: 'Hit a wall? Tap "I\'m stuck" at any point during a lesson. The academy flags it and can offer a re-explanation, a different angle, or a hint — no scholar is left behind.',
+    desc: 'Hit a wall? Tap "I\'m stuck" at any point during a lesson. The academy flags it and can offer a re-explanation, a different angle, or a hint - no scholar is left behind.',
   },
 ]
 
@@ -180,7 +180,7 @@ function EnrolledCard({
 
           <div className="mt-1.5 font-cinzel text-[11px] text-muted">
             {modulesTotal > 0
-              ? <>{modulesDone} / {modulesTotal} modules · {lessonsTotal} lessons</>
+              ? <>{modulesDone} / {modulesTotal} modules / {lessonsTotal} lessons</>
               : <>{topic.modules} modules</>}
           </div>
         </div>
@@ -459,7 +459,7 @@ export default function HomePage() {
             ? <CheckCircle size={16} strokeWidth={2}/>
             : <XCircle size={16} strokeWidth={2}/>}
           {paymentBanner === 'success'
-            ? 'Payment successful — your subscription is now active. Welcome to the full Academy!'
+            ? 'Payment successful - your subscription is now active. Welcome to the full Academy!'
             : 'Checkout cancelled. Your subscription has not changed.'}
         </div>
       )}
@@ -511,7 +511,7 @@ export default function HomePage() {
               {user.streakDays ?? 0}-day streak
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-border font-cinzel text-[11px] text-muted">
-              ✦ {user.totalXp.toLocaleString()} XP
+              * {user.totalXp.toLocaleString()} XP
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-purple bg-purple-dim font-cinzel text-[11px] text-purple-light">
               {user.rank}
@@ -541,7 +541,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ── How it works — shown until user enrolls ────────────────────── */}
+      {/* ── How it works - shown until user enrolls ────────────────────── */}
       {!hasEnrollments && (
         <section className="mb-12">
           <SectionHeading>How the Academy Works</SectionHeading>
@@ -562,7 +562,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <div className="font-cinzel text-[10px] tracking-[0.15em] mb-0.5" style={{color: item.color}}>
-                    {item.step} · {item.title.toUpperCase()}
+                    {item.step} / {item.title.toUpperCase()}
                   </div>
                   <p className="text-[12px] text-muted leading-[1.6] m-0">{item.desc}</p>
                 </div>
@@ -583,7 +583,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Paywall banner — only after first enrolment without subscription */}
+        {/* Paywall banner - only after first enrolment without subscription */}
         {hasEnrollments && !canUnlock && (
           <div
             onClick={() => setShowUpgrade(true)}
@@ -597,10 +597,10 @@ export default function HomePage() {
                 Unlock all schools and pathways with a subscription
               </p>
               <p className="text-[12px] text-muted leading-[1.5] m-0">
-                Monthly from £6.99 · Annual from £49.99 · Lifetime £99
+                Monthly from GBP 6.99 / Annual from GBP 49.99 / Lifetime GBP 99
               </p>
             </div>
-            <span className="text-[12px] font-cinzel text-gold whitespace-nowrap">View plans →</span>
+            <span className="text-[12px] font-cinzel text-gold whitespace-nowrap">View plans {'->'}</span>
           </div>
         )}
 

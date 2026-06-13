@@ -40,7 +40,7 @@ function Step1() {
       </h2>
       <p style={{ fontSize: 14, color: '#a89cc0', lineHeight: 1.75, margin: 0 }}>
         A degree-level, self-paced learning platform for the polymath. Master Software Engineering,
-        Psychology, Natural Sciences and more — guided by an AI mentor and powered by memory science.
+        Psychology, Natural Sciences and more - guided by an AI mentor and powered by memory science.
       </p>
       <p style={{ fontSize: 13, color: '#7b6fa0', lineHeight: 1.7, marginTop: 12 }}>
         This short walkthrough will show you how the Academy works, ending with a taste of a real lesson.
@@ -54,7 +54,7 @@ function Step1() {
 const HIERARCHY = [
   { label: 'School',  color: '#c9a227', desc: 'e.g. School of Engineering' },
   { label: 'Pathway', color: '#a78bfa', desc: 'e.g. Software Engineering' },
-  { label: 'Tier',    color: '#38bdf8', desc: 'Apprentice → Junior → Senior → Lead' },
+  { label: 'Tier',    color: '#38bdf8', desc: 'Apprentice -> Junior -> Senior -> Lead' },
   { label: 'Module',  color: '#4ade80', desc: 'e.g. Foundations of Computation' },
   { label: 'Topic',   color: '#fb923c', desc: 'e.g. Computational Thinking' },
   { label: 'Lesson',  color: '#f472b6', desc: 'e.g. What is an Algorithm?' },
@@ -88,7 +88,7 @@ function Step2() {
         ))}
       </div>
       <p style={{ fontSize: 12, color: '#6b6080', lineHeight: 1.6, margin: 0, textAlign: 'center', fontStyle: 'italic' }}>
-        Start at any School and work down. Java teaches Software Engineering —
+        Start at any School and work down. Java teaches Software Engineering -
         the language is the tool, not the goal.
       </p>
     </div>
@@ -100,11 +100,11 @@ function Step2() {
 const PHASES = [
   { label: 'Hook',         color: '#c9a227', desc: 'A curiosity-sparking scenario pulls you in.' },
   { label: 'Learn',        color: '#8b5cf6', desc: 'Deep explanation with worked examples.' },
-  { label: 'Checkpoint',   color: '#3b82f6', desc: 'Two quick questions — no grades, just checks.' },
+  { label: 'Checkpoint',   color: '#3b82f6', desc: 'Two quick questions - no grades, just checks.' },
   { label: 'Guided Quest', color: '#2dd4bf', desc: 'Scaffolded steps to practice with support.' },
-  { label: 'Solo Quest',   color: '#fb923c', desc: 'Apply it independently — the real test.' },
+  { label: 'Solo Quest',   color: '#fb923c', desc: 'Apply it independently - the real test.' },
   { label: 'Retrieval',    color: '#f472b6', desc: 'Recall + explain to lock it into long-term memory.' },
-  { label: 'Integrate',    color: '#a78bfa', desc: 'Bridge to another domain — polymath thinking.' },
+  { label: 'Integrate',    color: '#a78bfa', desc: 'Bridge to another domain - polymath thinking.' },
 ]
 
 function Step3() {
@@ -130,13 +130,13 @@ function Step3() {
             </div>
             <div>
               <span style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: p.color }}>{p.label}</span>
-              <span style={{ fontSize: 12, color: '#6b6080' }}> — {p.desc}</span>
+              <span style={{ fontSize: 12, color: '#6b6080' }}> - {p.desc}</span>
             </div>
           </div>
         ))}
       </div>
       <p style={{ fontSize: 12, color: '#6b6080', textAlign: 'center', margin: 0 }}>
-        Each lesson takes 15–25 minutes. Earn XP, build memory strength, rise through the ranks.
+        Each lesson takes 15-25 minutes. Earn XP, build memory strength, rise through the ranks.
       </p>
     </div>
   )
@@ -161,7 +161,7 @@ function Step4Demo() {
   if (phase === 'done') {
     return (
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 52, marginBottom: 12 }}>✨</div>
+        <div style={{ fontSize: 52, marginBottom: 12 }}>*</div>
         <div style={{ fontFamily: 'Cinzel, serif', fontSize: 11, letterSpacing: '0.2em', color: '#c9a227', marginBottom: 8 }}>
           LESSON DEMO COMPLETE
         </div>
@@ -169,7 +169,7 @@ function Step4Demo() {
           You just experienced a real lesson!
         </h3>
         <p style={{ fontSize: 13, color: '#a89cc0', lineHeight: 1.65, margin: 0 }}>
-          Every lesson in the Academy follows this same structure — a hook to spark curiosity,
+          Every lesson in the Academy follows this same structure - a hook to spark curiosity,
           deep learning content, then practice that cements the knowledge in memory.
         </p>
         <p style={{ fontSize: 13, color: '#c4b5fd', lineHeight: 1.65, marginTop: 10 }}>
@@ -196,14 +196,14 @@ function Step4Demo() {
       {phase === 'hook' && (
         <div>
           <div style={{ fontFamily: 'Cinzel, serif', fontSize: 10, letterSpacing: '0.15em', color: '#c9a227', marginBottom: 8 }}>
-            ✦ HOOK
+            * HOOK
           </div>
           <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 17, color: '#e8e0f0', margin: '0 0 12px', lineHeight: 1.3 }}>
             A Recipe for a Sandwich
           </h3>
           <p style={{ fontSize: 13, color: '#a89cc0', lineHeight: 1.7, margin: '0 0 12px' }}>
             Imagine you're teaching a robot to make a peanut butter sandwich. You can't say
-            "just make it" — the robot has no common sense. You must give it <em>exact, ordered steps</em>:
+            "just make it" - the robot has no common sense. You must give it <em>exact, ordered steps</em>:
             take bread, open jar, spread butter, close sandwich.
           </p>
           <p style={{ fontSize: 13, color: '#c4b5fd', lineHeight: 1.7, margin: 0 }}>
@@ -219,7 +219,7 @@ function Step4Demo() {
               padding: '10px 0', cursor: 'pointer',
             }}
           >
-            Continue to Learning Content →
+            Continue to Learning Content {'->'}
           </button>
         </div>
       )}
@@ -227,14 +227,14 @@ function Step4Demo() {
       {phase === 'learn' && (
         <div>
           <div style={{ fontFamily: 'Cinzel, serif', fontSize: 10, letterSpacing: '0.15em', color: '#8b5cf6', marginBottom: 8 }}>
-            ✦ LEARN
+            * LEARN
           </div>
           <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 17, color: '#e8e0f0', margin: '0 0 12px', lineHeight: 1.3 }}>
             What is an Algorithm?
           </h3>
           <p style={{ fontSize: 13, color: '#a89cc0', lineHeight: 1.65, margin: '0 0 10px' }}>
             An <strong style={{ color: '#e8e0f0' }}>algorithm</strong> is a finite, ordered set of instructions
-            that solves a problem. Every program you've ever used — from a search engine to a video game —
+            that solves a problem. Every program you've ever used - from a search engine to a video game -
             is built from algorithms.
           </p>
           <div style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)', borderRadius: 8, padding: '10px 14px', marginBottom: 10 }}>
@@ -259,7 +259,7 @@ function Step4Demo() {
               padding: '10px 0', cursor: 'pointer',
             }}
           >
-            Try a Practice Question →
+            Try a Practice Question {'->'}
           </button>
         </div>
       )}
@@ -267,7 +267,7 @@ function Step4Demo() {
       {phase === 'question' && (
         <div>
           <div style={{ fontFamily: 'Cinzel, serif', fontSize: 10, letterSpacing: '0.15em', color: '#2dd4bf', marginBottom: 8 }}>
-            ✦ GUIDED PRACTICE
+            * GUIDED PRACTICE
           </div>
           <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 15, color: '#e8e0f0', margin: '0 0 14px', lineHeight: 1.4 }}>
             Which of these best describes an algorithm?
@@ -322,7 +322,7 @@ function Step4Demo() {
             <div>
               <p style={{ fontSize: 12, color: '#2dd4bf', margin: '0 0 12px', lineHeight: 1.5 }}>
                 {selected === CORRECT
-                  ? '✓ Correct! An algorithm is a finite, ordered set of instructions — independent of any programming language.'
+                  ? 'OK Correct! An algorithm is a finite, ordered set of instructions - independent of any programming language.'
                   : `The correct answer is B. An algorithm is the set of instructions; Java is just one way to express it.`}
               </p>
               <button
@@ -336,7 +336,7 @@ function Step4Demo() {
                   boxShadow: '0 4px 16px rgba(139,92,246,0.35)',
                 }}
               >
-                ✦ Finish Demo
+                * Finish Demo
               </button>
             </div>
           ) : (
@@ -445,7 +445,7 @@ export default function OnboardingPage() {
                 opacity: completing ? 0.7 : 1,
               }}
             >
-              ✦ Choose Your School
+              * Choose Your School
               <ChevronRight size={14} strokeWidth={2.5} />
             </button>
           ) : (

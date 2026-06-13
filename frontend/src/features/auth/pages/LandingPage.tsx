@@ -28,32 +28,32 @@ const PHASES = [
 ]
 
 const FEATURES: { icon: LucideIcon; color: string; title: string; desc: string }[] = [
-  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition',  desc: 'The FSRS algorithm schedules every review at the exact moment your brain is about to forget — building memories that last decades, not days.' },
+  { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition',  desc: 'The FSRS algorithm schedules every review at the exact moment your brain is about to forget - building memories that last decades, not days.' },
   { icon: Bot,           color: '#c4b5fd', title: 'AI Mentor',          desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
   { icon: Rabbit,        color: '#c9a227', title: 'Rabbit Holes',       desc: "Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you're ready." },
   { icon: Trophy,        color: '#c9a227', title: 'XP & Ranks',         desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
-  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',      desc: "Visual memory-strength indicators show exactly how well each concept is retained. Green means locked in — yellow means it's time to review." },
+  { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',      desc: "Visual memory-strength indicators show exactly how well each concept is retained. Green means locked in - yellow means it's time to review." },
   { icon: GraduationCap, color: '#60a5fa', title: 'Feynman Technique',  desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
 ]
 
 const PRICING = [
   {
-    name: 'Free', price: '£0', period: 'forever', color: '#6b7280', highlight: false,
+    name: 'Free', price: 'GBP 0', period: 'forever', color: '#6b7280', highlight: false,
     features: ['1 pathway of your choice', 'Full lesson depth', 'AI mentor included', 'XP, ranks & badges', 'Spaced review system'],
     cta: 'Start Free', href: '/register',
   },
   {
-    name: 'Monthly', price: '£6.99', period: 'per month', color: '#3b82f6', highlight: false,
+    name: 'Monthly', price: 'GBP 6.99', period: 'per month', color: '#3b82f6', highlight: false,
     features: ['All pathways, unlocked', 'Everything in Free', 'Cancel anytime'],
     cta: 'Start Monthly', href: '/register',
   },
   {
-    name: 'Annual', price: '£49.99', period: 'per year', badge: 'Best value', color: '#8b5cf6', highlight: true,
-    features: ['All pathways, unlocked', 'Everything in Free', '≈ £4.17 / month', 'Cancel anytime'],
-    cta: 'Start Free → Upgrade', href: '/register',
+    name: 'Annual', price: 'GBP 49.99', period: 'per year', badge: 'Best value', color: '#8b5cf6', highlight: true,
+    features: ['All pathways, unlocked', 'Everything in Free', '~ GBP 4.17 / month', 'Cancel anytime'],
+    cta: 'Start Free -> Upgrade', href: '/register',
   },
   {
-    name: 'Lifetime', price: '£99', period: 'one-time', color: '#c9a227', highlight: false,
+    name: 'Lifetime', price: 'GBP 99', period: 'one-time', color: '#c9a227', highlight: false,
     features: ['All pathways, forever', 'Everything in Annual', 'All future pathways included', 'No recurring charge'],
     cta: 'Get Lifetime Access', href: '/register',
   },
@@ -65,7 +65,7 @@ function GoldRule() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '0 auto 14px', maxWidth: 180 }}>
       <div style={{ flex: 1, height: 1, background: 'linear-gradient(to right, transparent, rgba(201,162,39,0.4))' }} />
-      <span style={{ color: '#c9a227', fontSize: 12 }}>✦</span>
+      <span style={{ color: '#c9a227', fontSize: 12 }}>*</span>
       <div style={{ flex: 1, height: 1, background: 'linear-gradient(to left, transparent, rgba(201,162,39,0.4))' }} />
     </div>
   )
@@ -79,7 +79,7 @@ function SectionLabel({ children }: { children: string }) {
   )
 }
 
-// ── Inline browser (Schools → Pathways) ──────────────────────────────────────
+// ── Inline browser (Schools -> Pathways) ──────────────────────────────────────
 
 type BrowseState =
   | { level: 'schools' }
@@ -96,7 +96,7 @@ function PathwayBrowser() {
     if (schoolHasTrackGroups(school)) {
       setState({ level: 'pathways', school })
     } else {
-      // No track groups — show domains directly (use school id as pseudo-track-group)
+      // No track groups - show domains directly (use school id as pseudo-track-group)
       setState({ level: 'domains', school, trackGroupId: '' })
     }
   }
@@ -243,7 +243,7 @@ function PathwayBrowser() {
     )
   }
 
-  // ── Track groups (unused — kept for structural compatibility) ─────────
+  // ── Track groups (unused - kept for structural compatibility) ─────────
   if (state.level === 'pathways') {
     const schoolMeta = SCHOOL_META[state.school]
     const groups = trackGroupsForSchool(state.school)
@@ -394,7 +394,7 @@ function PathwayBrowser() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 600, color: '#fff' }}>{domain.name}</div>
                       <div style={{ fontSize: 10, fontFamily: 'Cinzel, serif', marginTop: 3, color: 'rgba(45,212,191,0.9)' }}>
-                        {domain.modules > 0 ? `${domain.modules} modules` : 'Pathway'} · Enrol free →
+                        {domain.modules > 0 ? `${domain.modules} modules` : 'Pathway'} / Enrol free {'->'}
                       </div>
                     </div>
                   </div>
@@ -438,7 +438,7 @@ function PathwayBrowser() {
                 <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
                   <div style={{ fontFamily: 'Cinzel, serif', fontSize: 14, fontWeight: 600, color: active ? accent : 'var(--muted)' }}>{domain.name}</div>
                   <div style={{ fontSize: 10, fontFamily: 'Cinzel, serif', marginTop: 3, color: active ? 'var(--teal)' : 'var(--muted)' }}>
-                    {active ? `${domain.modules > 0 ? `${domain.modules} modules` : 'Pathway'} · Enrol free →` : 'Coming Soon'}
+                    {active ? `${domain.modules > 0 ? `${domain.modules} modules` : 'Pathway'} / Enrol free ->` : 'Coming Soon'}
                   </div>
                 </div>
               </div>
@@ -456,7 +456,7 @@ function PathwayBrowser() {
             background: 'linear-gradient(135deg, var(--purple), var(--teal))',
             color: '#fff',
           }}>
-            ✦ Start for Free
+            * Start for Free
           </Link>
         </div>
       )}
@@ -490,7 +490,7 @@ export default function LandingPage() {
         </div>
         <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
           <Link to="/login" className="btn btn-ghost" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(8px, 2.5vw, 16px)', whiteSpace: 'nowrap' }}>Sign In</Link>
-          <Link to="/register" className="btn btn-primary" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 18px)', whiteSpace: 'nowrap' }}>Start Free →</Link>
+          <Link to="/register" className="btn btn-primary" style={{ fontSize: 'clamp(11px, 2.5vw, 13px)', padding: 'clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 18px)', whiteSpace: 'nowrap' }}>Start Free {'->'}</Link>
         </div>
       </header>
 
@@ -517,7 +517,7 @@ export default function LandingPage() {
           </h1>
           <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--muted)', maxWidth: 580, margin: '0 auto 20px', lineHeight: 1.75 }}>
             Arcane Academy uses spaced repetition, structured encoding phases, and an AI mentor
-            to make you genuinely fluent — across coding, sciences, and humanities.
+            to make you genuinely fluent - across coding, sciences, and humanities.
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 20, marginBottom: 40 }}>
@@ -536,14 +536,14 @@ export default function LandingPage() {
 
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/register" className="btn btn-primary" style={{ padding: '14px 36px', fontSize: 15, fontFamily: 'Cinzel, serif' }}>
-              ✦ Begin Your Journey
+              * Begin Your Journey
             </Link>
             <Link to="/schools" className="btn btn-ghost" style={{ padding: '14px 28px', fontSize: 15 }}>
-              Browse Schools →
+              Browse Schools {'->'}
             </Link>
           </div>
           <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)', letterSpacing: '0.04em' }}>
-            No credit card required · Free forever for one pathway
+            No credit card required / Free forever for one pathway
           </p>
         </div>
       </section>
@@ -557,7 +557,7 @@ export default function LandingPage() {
             Browse Our Schools &amp; Pathways
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, maxWidth: 540, margin: '0 auto 40px', lineHeight: 1.7 }}>
-            Every school and pathway is open to browse — no account needed.
+            Every school and pathway is open to browse - no account needed.
             Click through from school to pathway to disciplines, then sign up to enrol and start learning.
           </p>
 
@@ -574,7 +574,7 @@ export default function LandingPage() {
             The Encoding Sequence
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, maxWidth: 540, margin: '0 auto 44px', lineHeight: 1.7 }}>
-            Every lesson follows a six-phase sequence designed to encode knowledge deeply — not just recognise it for the moment.
+            Every lesson follows a six-phase sequence designed to encode knowledge deeply - not just recognise it for the moment.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 12 }}>
             {PHASES.map((p, i) => (
@@ -591,7 +591,7 @@ export default function LandingPage() {
             ))}
           </div>
           <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--muted)', marginTop: 24, fontStyle: 'italic' }}>
-            After completion, the FSRS spaced-repetition algorithm schedules your next review — right before you would forget.
+            After completion, the FSRS spaced-repetition algorithm schedules your next review - right before you would forget.
           </p>
         </div>
       </section>
@@ -638,7 +638,7 @@ export default function LandingPage() {
             Start Free. Scale When Ready.
           </h2>
           <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, marginBottom: 48 }}>
-            One pathway is free — forever. Unlock everything when you're ready.
+            One pathway is free - forever. Unlock everything when you're ready.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 16, alignItems: 'stretch' }}>
             {PRICING.map(plan => (
@@ -672,7 +672,7 @@ export default function LandingPage() {
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
                   {plan.features.map(feat => (
                     <li key={feat} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontSize: 13, color: 'var(--muted)' }}>
-                      <span style={{ color: plan.color, flexShrink: 0, fontSize: 11 }}>✦</span>
+                      <span style={{ color: plan.color, flexShrink: 0, fontSize: 11 }}>*</span>
                       {feat}
                     </li>
                   ))}
@@ -714,13 +714,13 @@ export default function LandingPage() {
           Ready to become a polymath?
         </h2>
         <p style={{ color: 'var(--muted)', marginBottom: 38, fontSize: 17, lineHeight: 1.65, maxWidth: 480, margin: '0 auto 38px' }}>
-          Join thousands of learners mastering code, science, and the human mind — one structured lesson at a time.
+          Join thousands of learners mastering code, science, and the human mind - one structured lesson at a time.
         </p>
         <Link to="/register" className="btn btn-primary" style={{ padding: '15px 48px', fontSize: 16, fontFamily: 'Cinzel, serif', letterSpacing: '0.05em' }}>
-          ✦ Enrol Free Today
+          * Enrol Free Today
         </Link>
         <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)' }}>
-          No credit card · One pathway, forever free · Takes 30 seconds
+          No credit card / One pathway, forever free / Takes 30 seconds
         </p>
       </section>
 
@@ -737,7 +737,7 @@ export default function LandingPage() {
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 28px' }}>
             <div style={{ width: 44, height: 44, borderRadius: 10, flexShrink: 0, background: 'rgba(201,162,39,0.12)', border: '1px solid rgba(201,162,39,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>
-              📞
+              Tel
             </div>
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: 'var(--muted)', letterSpacing: '0.12em', marginBottom: 4 }}>CUSTOMER SUPPORT</div>
@@ -755,7 +755,7 @@ export default function LandingPage() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
         color: 'var(--muted)', fontSize: 13,
       }}>
-        <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>✦ Arcane Academy</span>
+        <span style={{ fontFamily: 'Cinzel, serif', color: 'var(--gold)', fontSize: 13 }}>* Arcane Academy</span>
         <span>Built for lifelong learners</span>
         <div style={{ display: 'flex', gap: 20 }}>
           <Link to="/schools"  style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 13 }}>Browse Schools</Link>

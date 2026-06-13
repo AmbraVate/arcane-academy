@@ -1,11 +1,11 @@
 import { safe } from '@/lib/sanitize'
 /**
- * SoloAssessmentPanel — Phase 4
+ * SoloAssessmentPanel - Phase 4
  *
  * Renders the appropriate solo-practice UI based on the lesson's soloAssessmentType:
- *   - RUBRIC_REFLECTION — text area + rubric checklist + confidence selector + exemplar reveal
- *   - PATTERN_MATCH     — text area + keyword-band feedback
- *   - AI_REVIEW         — text area + AI quota indicator + AI feedback
+ *   - RUBRIC_REFLECTION - text area + rubric checklist + confidence selector + exemplar reveal
+ *   - PATTERN_MATCH     - text area + keyword-band feedback
+ *   - AI_REVIEW         - text area + AI quota indicator + AI feedback
  *
  * DETERMINISTIC solo practice continues to use the existing code-editor path in EncodingPage.
  */
@@ -23,10 +23,10 @@ import {
 type Confidence = 'NOT_CONFIDENT' | 'SOMEWHAT' | 'CONFIDENT' | 'VERY_CONFIDENT'
 
 const CONFIDENCE_LABELS: Record<Confidence, string> = {
-  NOT_CONFIDENT:  "Not confident — I struggled",
-  SOMEWHAT:       "Somewhat — I got most of it",
-  CONFIDENT:      "Confident — I understand this",
-  VERY_CONFIDENT: "Very confident — I could teach it",
+  NOT_CONFIDENT:  "Not confident - I struggled",
+  SOMEWHAT:       "Somewhat - I got most of it",
+  CONFIDENT:      "Confident - I understand this",
+  VERY_CONFIDENT: "Very confident - I could teach it",
 }
 
 interface Props {
@@ -55,7 +55,7 @@ export default function SoloAssessmentPanel({ encoding, onSolved, onAdvance }: P
       <AiReviewPanel encoding={encoding} onSolved={onSolved} onAdvance={onAdvance} />
     )
   }
-  // DETERMINISTIC or null — caller handles via code editor path
+  // DETERMINISTIC or null - caller handles via code editor path
   return null
 }
 
@@ -140,7 +140,7 @@ function RubricReflectionPanel({ encoding, onSolved, onAdvance }: Props) {
         )}
 
         <button className="btn btn-primary" onClick={onAdvance}>
-          Continue to Retrieval Check →
+          Continue to Retrieval Check {'->'}
         </button>
       </div>
     )
@@ -166,7 +166,7 @@ function RubricReflectionPanel({ encoding, onSolved, onAdvance }: Props) {
       {rubric.length > 0 && (
         <div>
           <div className="text-[12px] font-bold text-muted uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5">
-            <CheckSquare size={12} strokeWidth={2} /> Self-check — mark what you completed
+            <CheckSquare size={12} strokeWidth={2} /> Self-check - mark what you completed
           </div>
           <div className="space-y-2">
             {rubric.map(item => (
@@ -262,7 +262,7 @@ function PatternMatchPanel({ encoding, onSolved, onAdvance }: Props) {
             {result.band === 'EXCELLENT' && <CheckCircle2 size={13} />}
             {result.band === 'GOOD'      && <CheckCircle2 size={13} />}
             {result.band === 'WEAK'      && <AlertCircle  size={13} />}
-            {result.band} — {result.passed ? 'Passed' : 'Try again'}
+            {result.band} - {result.passed ? 'Passed' : 'Try again'}
           </div>
         )}
 
@@ -317,7 +317,7 @@ function PatternMatchPanel({ encoding, onSolved, onAdvance }: Props) {
         )}
 
         {result.passed
-          ? <button className="btn btn-primary" onClick={onAdvance}>Continue to Retrieval Check →</button>
+          ? <button className="btn btn-primary" onClick={onAdvance}>Continue to Retrieval Check {'->'}</button>
           : <button className="btn btn-primary" onClick={() => { setResult(null); setAnswer('') }}>Try again</button>}
       </div>
     )
@@ -428,7 +428,7 @@ function AiReviewPanel({ encoding, onSolved, onAdvance }: Props) {
         )}
 
         {result.passed
-          ? <button className="btn btn-primary" onClick={onAdvance}>Continue to Retrieval Check →</button>
+          ? <button className="btn btn-primary" onClick={onAdvance}>Continue to Retrieval Check {'->'}</button>
           : <button className="btn btn-primary" onClick={() => { setResult(null); setAnswer('') }}>Revise and resubmit</button>}
       </div>
     )
@@ -442,7 +442,7 @@ function AiReviewPanel({ encoding, onSolved, onAdvance }: Props) {
         <span className="text-muted">
           Master Velan will review your answer.{' '}
           <strong className="text-text">{quotaRemaining} AI review{quotaRemaining !== 1 ? 's' : ''}</strong> remaining this month.
-          {quotaRemaining === 0 && ' — will use self-check rubric instead.'}
+          {quotaRemaining === 0 && ' - will use self-check rubric instead.'}
         </span>
       </div>
 

@@ -33,7 +33,7 @@ export default function PublicBanner({ message }: { message?: string }) {
           className="btn text-[12px] px-3 py-1.5 font-cinzel font-semibold rounded-[8px]"
           style={{ background: 'var(--purple)', color: '#fff', border: '1px solid var(--purple)' }}
         >
-          Join Free →
+          Join Free {'->'}
         </button>
       </div>
     </div>

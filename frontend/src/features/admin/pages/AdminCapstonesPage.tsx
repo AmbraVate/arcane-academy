@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { adminCapstoneApi, type AdminCapstone, type PagedResponse } from '@/shared/api/adminServices'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -43,7 +43,7 @@ function CapstoneRow({ capstone, onUpdate }: { capstone: AdminCapstone; onUpdate
             {capstone.title}
           </div>
           <div style={{ fontSize: 11, color: 'var(--color-muted)' }}>
-            {capstone.moduleId} · User {capstone.userId.slice(0, 8)}… · {timeAgo(capstone.createdAt)}
+            {capstone.moduleId} / User {capstone.userId.slice(0, 8)}… / {timeAgo(capstone.createdAt)}
           </div>
         </div>
         {capstone.reviewedAt
@@ -61,7 +61,7 @@ function CapstoneRow({ capstone, onUpdate }: { capstone: AdminCapstone; onUpdate
           )}
           {capstone.githubUrl && (
             <a href={capstone.githubUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: 'var(--color-purple-light)', display: 'inline-block', marginBottom: 8 }}>
-              GitHub →
+              GitHub {'->'}
             </a>
           )}
           {capstone.codeContent && (
@@ -139,7 +139,7 @@ export default function AdminCapstonesPage() {
             disabled={page === 0}
             style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-card)', color: 'var(--color-text)', cursor: page === 0 ? 'default' : 'pointer', opacity: page === 0 ? 0.4 : 1, fontSize: 12 }}
           >
-            ← Prev
+            &lt;- Prev
           </button>
           <span style={{ fontSize: 12, color: 'var(--color-muted)', padding: '4px 8px' }}>
             {page + 1} / {data.totalPages}
@@ -149,7 +149,7 @@ export default function AdminCapstonesPage() {
             disabled={page >= data.totalPages - 1}
             style={{ padding: '4px 12px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-card)', color: 'var(--color-text)', cursor: page >= data.totalPages - 1 ? 'default' : 'pointer', opacity: page >= data.totalPages - 1 ? 0.4 : 1, fontSize: 12 }}
           >
-            Next →
+            Next {'->'}
           </button>
         </div>
       )}

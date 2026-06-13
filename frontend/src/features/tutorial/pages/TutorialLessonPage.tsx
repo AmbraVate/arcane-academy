@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 // Topic is deliberately unaffiliated with any school. Covers all 7 phases so
 // learners see the complete lesson structure before starting a real pathway.
 
-const LESSON_TITLE = 'The Art of Origami — How Folding Creates Form'
+const LESSON_TITLE = 'The Art of Origami - How Folding Creates Form'
 
 const PHASES = [
   'HOOK', 'EXPLANATION', 'GUIDED_PRACTICE',
@@ -26,7 +26,7 @@ const PHASE_LABELS: Record<Phase, string> = {
 // ── Content ───────────────────────────────────────────────────────────────────
 
 const HOOK_HTML = `
-<p>A single sheet of paper — flat, featureless, unassuming.</p>
+<p>A single sheet of paper - flat, featureless, unassuming.</p>
 <p>In the hands of a master, it becomes a crane. A butterfly. A dragon that spans a metre across.</p>
 <p>No glue. No scissors. Only folding.</p>
 <p>The ancient Japanese art of origami is more than craft. It's a window into a deep truth: <strong>form emerges from constraint</strong>. The rules are few. The possibilities are boundless.</p>
@@ -41,28 +41,28 @@ const LEARNING_OBJECTIVES = [
 
 const EXPLANATION_HTML = `
 <h3>The Two Fundamental Folds</h3>
-<p>Every origami model — no matter how complex — is built from just two basic fold types:</p>
+<p>Every origami model - no matter how complex - is built from just two basic fold types:</p>
 <ul>
-  <li><strong>Valley fold</strong> — the paper folds <em>towards you</em>, creating a valley shape (∨).</li>
-  <li><strong>Mountain fold</strong> — the paper folds <em>away from you</em>, creating a ridge (∧).</li>
+  <li><strong>Valley fold</strong> - the paper folds <em>towards you</em>, creating a valley shape (∨).</li>
+  <li><strong>Mountain fold</strong> - the paper folds <em>away from you</em>, creating a ridge (∧).</li>
 </ul>
 <p>That's it. Two operations. Combined in different sequences, they produce everything from a simple boat to a thousand-piece tessellation.</p>
 <h3>Crease Patterns</h3>
-<p>When origami masters design a new model, they work backwards. They start with the finished form and map out every fold as a <strong>crease pattern</strong> — a flat diagram showing where every fold will go, using dashed lines for valley folds and dot-dash lines for mountain folds.</p>
-<p>A crease pattern looks nothing like the finished model. Yet it contains its <em>entire blueprint</em>. An experienced folder can reconstruct any design from its crease pattern alone — like reading a musical score and hearing the symphony.</p>
+<p>When origami masters design a new model, they work backwards. They start with the finished form and map out every fold as a <strong>crease pattern</strong> - a flat diagram showing where every fold will go, using dashed lines for valley folds and dot-dash lines for mountain folds.</p>
+<p>A crease pattern looks nothing like the finished model. Yet it contains its <em>entire blueprint</em>. An experienced folder can reconstruct any design from its crease pattern alone - like reading a musical score and hearing the symphony.</p>
 <h3>The Mathematics of Flat-Foldability</h3>
 <p>In 1994, mathematician Jun Maekawa discovered a rule now called <strong>Maekawa's theorem</strong>: at any interior vertex of a flat-foldable crease pattern, the number of mountain and valley folds must differ by exactly two.</p>
 <p>This means origami has provable rules. Paper-folding is secretly a branch of geometry.</p>
 `
 
 const WHY_IT_MATTERS_HTML = `
-<p>Origami principles are used in <strong>space engineering</strong> — NASA has used origami-inspired designs to fold solar panels and telescope mirrors for launch. In <strong>medicine</strong>, origami guides how stents are deployed inside arteries. In <strong>robotics</strong>, self-folding materials that assemble themselves are an active field of research.</p>
+<p>Origami principles are used in <strong>space engineering</strong> - NASA has used origami-inspired designs to fold solar panels and telescope mirrors for launch. In <strong>medicine</strong>, origami guides how stents are deployed inside arteries. In <strong>robotics</strong>, self-folding materials that assemble themselves are an active field of research.</p>
 <p>Understanding how constraint generates form gives you a design principle that shows up everywhere.</p>
 `
 
 const MENTAL_MODEL_HTML = `
 <p>Think of origami as a language. The alphabet has two letters: valley and mountain. Every word is a crease sequence. Every poem is a finished model.</p>
-<p>Mastery means fluency in that language — seeing a blank sheet and knowing exactly which sequence of two letters will produce a crane.</p>
+<p>Mastery means fluency in that language - seeing a blank sheet and knowing exactly which sequence of two letters will produce a crane.</p>
 `
 
 const MINI_SUMMARY_HTML = `
@@ -73,11 +73,11 @@ const MINI_SUMMARY_HTML = `
 </ul>
 `
 
-const GUIDED_TASK = 'Using only the concepts from this lesson: in 2–3 sentences, explain how someone could use a crease pattern to fold a model they have never seen before.'
+const GUIDED_TASK = 'Using only the concepts from this lesson: in 2-3 sentences, explain how someone could use a crease pattern to fold a model they have never seen before.'
 
-const GUIDED_MODEL_ANSWER = `A crease pattern is a flat diagram containing the complete blueprint of a finished origami model. Each line in the pattern indicates either a valley fold (fold towards you) or a mountain fold (fold away from you). By following the crease pattern fold-by-fold — applying the correct fold type at each line in sequence — a folder can reproduce any model, even one they have never seen, as long as they can read the two fold symbols.`
+const GUIDED_MODEL_ANSWER = `A crease pattern is a flat diagram containing the complete blueprint of a finished origami model. Each line in the pattern indicates either a valley fold (fold towards you) or a mountain fold (fold away from you). By following the crease pattern fold-by-fold - applying the correct fold type at each line in sequence - a folder can reproduce any model, even one they have never seen, as long as they can read the two fold symbols.`
 
-const SOLO_TASK = 'Without looking back — in your own words, explain: what are the two fundamental fold types in origami, and what does Maekawa\'s theorem say about how they appear at any interior vertex of a flat-foldable model?'
+const SOLO_TASK = 'Without looking back - in your own words, explain: what are the two fundamental fold types in origami, and what does Maekawa\'s theorem say about how they appear at any interior vertex of a flat-foldable model?'
 
 const RETRIEVAL_QUESTIONS = [
   {
@@ -113,12 +113,12 @@ const RETRIEVAL_QUESTIONS = [
 ]
 
 const INTEGRATION_HTML = `
-<p>Origami's core insight — that just <em>two rules</em> (valley and mountain) can generate unlimited complexity when combined — is a pattern that appears across many fields.</p>
+<p>Origami's core insight - that just <em>two rules</em> (valley and mountain) can generate unlimited complexity when combined - is a pattern that appears across many fields.</p>
 <p>Computer scientists call this the power of <strong>combinatorial systems</strong>: a small set of rules, iterated in different orders and combinations, produces vast possibility spaces.</p>
 <ul>
-  <li>The 26 letters of the English alphabet → millions of books</li>
-  <li>The two states of binary (0 and 1) → every digital image, song, and program</li>
-  <li>The four base pairs of DNA (A, T, C, G) → every living organism on Earth</li>
+  <li>The 26 letters of the English alphabet {'->'} millions of books</li>
+  <li>The two states of binary (0 and 1) {'->'} every digital image, song, and program</li>
+  <li>The four base pairs of DNA (A, T, C, G) {'->'} every living organism on Earth</li>
 </ul>
 <p>Where else have you noticed this pattern of <strong>"few rules, infinite outcomes"</strong> in the world around you?</p>
 `
@@ -134,7 +134,7 @@ function TutorialTip({ children, color = 'purple' }: { children: React.ReactNode
   const s = styles[color]
   return (
     <div className="mb-5 px-4 py-3 rounded-[10px]" style={{ background: s.bg, border: `1px solid ${s.border}` }}>
-      <div className={cn('text-[11px] font-bold uppercase tracking-[0.1em] mb-1.5', s.label)}>📖 TUTORIAL TIP</div>
+      <div className={cn('text-[11px] font-bold uppercase tracking-[0.1em] mb-1.5', s.label)}>Book TUTORIAL TIP</div>
       <div className="text-[13px] text-muted leading-[1.65]">{children}</div>
     </div>
   )
@@ -216,7 +216,7 @@ export default function TutorialLessonPage() {
           className="text-[10px] px-2.5 py-1 rounded-full border font-medium flex-shrink-0"
           style={{ borderColor: 'rgba(201,162,39,0.4)', color: 'var(--gold)', background: 'rgba(201,162,39,0.08)' }}
         >
-          ✦ DEMO LESSON
+          * DEMO LESSON
         </div>
       </div>
 
@@ -236,7 +236,7 @@ export default function TutorialLessonPage() {
             <div className="absolute bottom-0 left-0 right-0 h-0.5"
               style={{ background: 'linear-gradient(90deg, transparent 0%, var(--teal) 25%, var(--purple) 75%, transparent 100%)' }} />
 
-            <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-muted mb-3">✦ DEMO LESSON · HOOK</div>
+            <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-muted mb-3">* DEMO LESSON / HOOK</div>
             <h1 className="font-cinzel text-[22px] font-bold leading-[1.35] mb-2 max-[480px]:text-[17px]"
               style={{ color: '#c9a227', textShadow: '0 0 28px rgba(201,162,39,.3)' }}>
               {LESSON_TITLE}
@@ -246,9 +246,9 @@ export default function TutorialLessonPage() {
 
             <div className="text-left mb-6 px-4 py-3 rounded-[10px]"
               style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)' }}>
-              <div className="text-[11px] font-bold text-purple-light uppercase tracking-[0.1em] mb-1.5">📖 TUTORIAL TIP</div>
+              <div className="text-[11px] font-bold text-purple-light uppercase tracking-[0.1em] mb-1.5">Book TUTORIAL TIP</div>
               <div className="text-[13px] text-muted leading-[1.65]">
-                Every lesson opens with a <strong className="text-text">Hook</strong> — a story, analogy, or question designed to spark curiosity before the teaching begins.
+                Every lesson opens with a <strong className="text-text">Hook</strong> - a story, analogy, or question designed to spark curiosity before the teaching begins.
               </div>
             </div>
 
@@ -257,7 +257,7 @@ export default function TutorialLessonPage() {
               dangerouslySetInnerHTML={safe(HOOK_HTML)}
             />
           </div>
-          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={advance}>Begin →</button>
+          <button className="btn btn-primary mt-9 px-8 py-2.5 text-[14px]" onClick={advance}>Begin {'->'}</button>
         </div>
       )}
 
@@ -316,7 +316,7 @@ export default function TutorialLessonPage() {
             />
           </div>
 
-          <button className="btn btn-primary" onClick={advance}>I understand — continue →</button>
+          <button className="btn btn-primary" onClick={advance}>I understand - continue {'->'}</button>
         </div>
       )}
 
@@ -324,10 +324,10 @@ export default function TutorialLessonPage() {
       {phase === 'GUIDED_PRACTICE' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <TutorialTip color="teal">
-            <strong className="text-text">Guided Practice</strong> asks you to apply what you just learned — usually with scaffolding (a clear task, hints, or step-by-step prompts). Writing your answer strengthens the memory trace.
+            <strong className="text-text">Guided Practice</strong> asks you to apply what you just learned - usually with scaffolding (a clear task, hints, or step-by-step prompts). Writing your answer strengthens the memory trace.
           </TutorialTip>
 
-          <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">✦ Guided Practice</div>
+          <div className="text-[13px] font-bold text-gold mb-2.5 tracking-[0.06em] uppercase">* Guided Practice</div>
           <p className="text-[15px] text-text leading-[1.75] mb-5">{GUIDED_TASK}</p>
 
           <textarea
@@ -344,15 +344,15 @@ export default function TutorialLessonPage() {
               disabled={guidedAnswer.trim().length < 20}
               onClick={() => setGuidedSubmitted(true)}
             >
-              Submit →
+              Submit {'->'}
             </button>
           ) : (
             <div>
               <div className="mt-4 p-4 rounded-[10px]" style={{ background: 'rgba(0,200,83,0.08)', border: '1px solid var(--teal)' }}>
-                <div className="text-[13px] font-bold text-teal mb-2">✦ Model Answer</div>
+                <div className="text-[13px] font-bold text-teal mb-2">* Model Answer</div>
                 <p className="text-[13px] text-muted leading-[1.7] m-0">{GUIDED_MODEL_ANSWER}</p>
               </div>
-              <button className="btn btn-primary mt-5" onClick={advance}>Continue →</button>
+              <button className="btn btn-primary mt-5" onClick={advance}>Continue {'->'}</button>
             </div>
           )}
         </div>
@@ -362,14 +362,14 @@ export default function TutorialLessonPage() {
       {phase === 'SOLO_PRACTICE' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <TutorialTip color="teal">
-            <strong className="text-text">Solo Practice</strong> removes the scaffolding. You rebuild the answer from memory — no starter prompts. This is the phase that cements knowledge. If you're stuck, you can peek at the guided practice for a hint.
+            <strong className="text-text">Solo Practice</strong> removes the scaffolding. You rebuild the answer from memory - no starter prompts. This is the phase that cements knowledge. If you're stuck, you can peek at the guided practice for a hint.
           </TutorialTip>
 
           <div className="text-[13px] font-bold mb-1 tracking-[0.06em] uppercase flex items-center gap-1.5" style={{ color: 'var(--teal)' }}>
             <Target size={13} strokeWidth={1.75} /> Solo Challenge
           </div>
           <p className="text-muted text-[12px] mb-4 leading-[1.6]">
-            Rebuild this from memory — no looking back at the explanation.
+            Rebuild this from memory - no looking back at the explanation.
           </p>
 
           <p className="text-[15px] text-text leading-[1.75] mb-5">{SOLO_TASK}</p>
@@ -410,8 +410,8 @@ export default function TutorialLessonPage() {
             </button>
           ) : (
             <div className="mt-4 p-3.5 bg-[rgba(0,200,83,0.08)] border border-teal rounded-[8px]">
-              <div className="text-[14px] font-bold text-teal mb-2">✦ Solo Practice Complete!</div>
-              <button className="btn btn-primary" onClick={advance}>Continue to Retrieval Check →</button>
+              <div className="text-[14px] font-bold text-teal mb-2">* Solo Practice Complete!</div>
+              <button className="btn btn-primary" onClick={advance}>Continue to Retrieval Check {'->'}</button>
             </div>
           )}
         </div>
@@ -421,10 +421,10 @@ export default function TutorialLessonPage() {
       {phase === 'RETRIEVAL_CHECK' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <TutorialTip color="gold">
-            The <strong className="text-text">Retrieval Check</strong> is a short quiz that locks learning in. Answering questions — even incorrectly — strengthens memory far more than re-reading. In real lessons, your score determines your spaced-review schedule.
+            The <strong className="text-text">Retrieval Check</strong> is a short quiz that locks learning in. Answering questions - even incorrectly - strengthens memory far more than re-reading. In real lessons, your score determines your spaced-review schedule.
           </TutorialTip>
 
-          <div className="text-[20px] font-bold text-gold mb-1.5">✦ Retrieval Check</div>
+          <div className="text-[20px] font-bold text-gold mb-1.5">* Retrieval Check</div>
           <p className="text-muted text-[13px] mb-5">Answer these questions to test your understanding.</p>
 
           {!retrievalDone ? (
@@ -466,7 +466,7 @@ export default function TutorialLessonPage() {
                 Score: {Math.round((score / RETRIEVAL_QUESTIONS.length) * 100)}% ({score}/{RETRIEVAL_QUESTIONS.length})
               </div>
               <div className={cn('text-[16px] font-semibold mb-5', score >= 2 ? 'text-teal' : 'text-orange')}>
-                {score >= 2 ? '✓ Passed!' : '○ Keep reviewing — it will stick!'}
+                {score >= 2 ? 'OK Passed!' : '○ Keep reviewing - it will stick!'}
               </div>
 
               {RETRIEVAL_QUESTIONS.map((q, qi) => {
@@ -480,16 +480,16 @@ export default function TutorialLessonPage() {
                   )}>
                     <p className="text-[13px] font-semibold text-text mb-2 leading-[1.55]">{qi + 1}. {q.text}</p>
                     <p className={cn('text-[13px] mb-1', isRight ? 'text-teal' : 'text-red')}>
-                      {isRight ? '✓' : '✗'} Your answer: <em>{q.options[userAns]}</em>
+                      {isRight ? 'OK' : 'x'} Your answer: <em>{q.options[userAns]}</em>
                     </p>
                     {!isRight && (
-                      <p className="text-[12px] text-teal">✓ Correct: <em>{q.options[correct]}</em></p>
+                      <p className="text-[12px] text-teal">OK Correct: <em>{q.options[correct]}</em></p>
                     )}
                   </div>
                 )
               })}
 
-              <button className="btn btn-primary mt-3" onClick={advance}>Continue →</button>
+              <button className="btn btn-primary mt-3" onClick={advance}>Continue {'->'}</button>
             </div>
           )}
         </div>
@@ -499,7 +499,7 @@ export default function TutorialLessonPage() {
       {phase === 'INTEGRATION' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
           <TutorialTip color="purple">
-            The <strong className="text-text">Integration</strong> phase asks you to connect what you've learned to the broader world. There's no right answer — its purpose is to stretch the concept beyond its original context and build durable understanding.
+            The <strong className="text-text">Integration</strong> phase asks you to connect what you've learned to the broader world. There's no right answer - its purpose is to stretch the concept beyond its original context and build durable understanding.
           </TutorialTip>
 
           <div className="text-[20px] font-bold mb-1.5" style={{ color: 'var(--purple-light)' }}>⟁ Integration</div>
@@ -520,7 +520,7 @@ export default function TutorialLessonPage() {
             </p>
           </div>
 
-          <button className="btn btn-primary" onClick={advance}>Continue →</button>
+          <button className="btn btn-primary" onClick={advance}>Continue {'->'}</button>
         </div>
       )}
 
@@ -545,14 +545,14 @@ export default function TutorialLessonPage() {
             >
               <p>You've just completed every phase of a real Arcane Academy lesson:</p>
               <ul>
-                <li><strong>Hook</strong> — a story to spark curiosity</li>
-                <li><strong>Explanation</strong> — concept broken down with examples and mental models</li>
-                <li><strong>Guided Practice</strong> — apply it with scaffolding</li>
-                <li><strong>Solo Practice</strong> — rebuild it from memory</li>
-                <li><strong>Retrieval Check</strong> — questions that cement knowledge</li>
-                <li><strong>Integration</strong> — connect it to the wider world</li>
+                <li><strong>Hook</strong> - a story to spark curiosity</li>
+                <li><strong>Explanation</strong> - concept broken down with examples and mental models</li>
+                <li><strong>Guided Practice</strong> - apply it with scaffolding</li>
+                <li><strong>Solo Practice</strong> - rebuild it from memory</li>
+                <li><strong>Retrieval Check</strong> - questions that cement knowledge</li>
+                <li><strong>Integration</strong> - connect it to the wider world</li>
               </ul>
-              <p>After a real lesson, the FSRS algorithm schedules your next review at the exact moment your brain is about to forget — turning short-term recall into long-term mastery.</p>
+              <p>After a real lesson, the FSRS algorithm schedules your next review at the exact moment your brain is about to forget - turning short-term recall into long-term mastery.</p>
             </div>
 
             <div className="flex items-center justify-center gap-2 text-[12px] text-muted mb-6">
@@ -561,7 +561,7 @@ export default function TutorialLessonPage() {
             </div>
 
             <button className="btn btn-primary px-8 py-2.5 text-[14px]" onClick={finishTutorial}>
-              Start Learning →
+              Start Learning {'->'}
             </button>
           </div>
         </div>
