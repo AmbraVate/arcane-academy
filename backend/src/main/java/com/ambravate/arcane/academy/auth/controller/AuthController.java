@@ -42,6 +42,7 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<AuthResponse> me(@AuthenticationPrincipal UserPrincipal principal) {
+        if (principal == null) return ResponseEntity.status(401).build();
         return ResponseEntity.ok(authService.getMe(principal.getId()));
     }
 

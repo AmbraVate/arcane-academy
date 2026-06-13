@@ -378,7 +378,7 @@ export default function EncodingPage() {
     try {
       const result = await encodingApi.submitFeynman(lessonId, feynmanText)
       dispatch({ type: 'FEYNMAN_DONE', result })
-      if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`* +${result.xpEarned} XP - Feynman complete`) }
+      if (result.xpEarned > 0) { updateXp(result.xpEarned); showToast(`* +${result.xpEarned} XP - Teach Back complete`) }
     } catch {
       showToast('Error submitting explanation')
       dispatch({ type: 'FEYNMAN_DONE', result: null })
@@ -998,20 +998,20 @@ export default function EncodingPage() {
         </div>
       )}
 
-      {/* RETRIEVAL_CHECK */}
+      {/* KNOWLEDGE CHECK */}
       {phase === 'RETRIEVAL_CHECK' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-[20px] font-bold text-gold mb-1.5">* Retrieval Check</div>
-          <p className="text-muted text-[13px] mb-5">Answer these questions to test your understanding.</p>
+          <div className="text-[20px] font-bold text-gold mb-1.5">Knowledge Check</div>
+          <p className="text-muted text-[13px] mb-5">
+            Answer these questions — they help calibrate your personalised review schedule. No score is shown.
+          </p>
 
           {!retrievalResult && !encoding.retrievalQuestions?.length ? (
-            // No questions available - either already submitted on a prior visit,
-            // or this lesson has no retrieval questions configured yet.
             <div className="p-4 bg-card border border-border rounded-[10px]">
               <p className="text-muted text-[13px] mb-3">
                 {encoding.retrievalQuestions === null
-                  ? 'You have already completed this retrieval check.'
-                  : 'No retrieval questions are configured for this lesson yet.'}
+                  ? 'You have already completed the knowledge check for this lesson.'
+                  : 'No knowledge check questions are configured for this lesson yet.'}
               </p>
               <button className="btn btn-primary" onClick={handleAdvance}>Continue {'->'}</button>
             </div>
@@ -1025,63 +1025,31 @@ export default function EncodingPage() {
               </button>
             </>
           ) : (
-            <div className="mt-2">
-              <div className="text-[20px] font-bold text-text mb-1.5">
-                Score: {Math.round(retrievalResult.score * 100)}% ({retrievalResult.correct}/{retrievalResult.total})
-              </div>
-              <div className={cn('text-[16px] font-semibold mb-3.5', retrievalResult.passed ? 'text-green' : 'text-red')}>
-                {retrievalResult.passed ? 'OK Passed!' : 'x Needs more practice'}
-              </div>
-              {encoding.retrievalQuestions?.map((q, i) => (
-                <QuestionCard key={q.id} question={q} index={i}
-                  answer={retrievalResult.results[i]?.userAnswer ?? ''} onChange={() => {}}
-                  result={retrievalResult.results[i]} disabled />
-              ))}
-              <p className="text-muted text-[13px] italic mt-2.5">{retrievalResult.recommendation}</p>
-              <button className="btn btn-primary mt-3" onClick={handleAdvance}>Continue {'->'}</button>
+            <div className="mt-2 p-4 bg-card border border-border rounded-[10px]">
+              <p className="text-[14px] font-semibold text-text mb-1">Answers recorded.</p>
+              <p className="text-muted text-[13px] mb-4 leading-[1.6]">
+                Your responses have been noted and will shape your personalised review schedule.
+              </p>
+              <button className="btn btn-primary" onClick={handleAdvance}>Continue {'->'}</button>
             </div>
           )}
         </div>
       )}
 
-      {/* INTEGRATION */}
+      {/* TEACH BACK */}
       {phase === 'INTEGRATION' && (
         <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-[20px] font-bold text-purple mb-1.5">⟁ Integration</div>
-          <p className="text-muted text-[13px] mb-5">Connect what you've learned to the wider world of knowledge.</p>
-          {encoding.integrationPrompt && (
-            <div
-              className="prose prose-invert max-w-none text-[15px] leading-relaxed mb-8 text-text"
-              dangerouslySetInnerHTML={safe(encoding.integrationPrompt)}
-            />
-          )}
-          <div className="bg-surface border border-border rounded-xl p-5 mb-6">
-            <p className="text-[13px] text-muted mb-2 font-medium">Reflect before continuing:</p>
-            <p className="text-[14px] text-text">Take a moment to consider the connections above. How does this concept show up in other areas of your life or studies?</p>
-          </div>
-          <button className="btn btn-primary" onClick={handleAdvance}>Complete Lesson {'->'}</button>
-        </div>
-      )}
 
-      {/* COMPLETE */}
-      {phase === 'COMPLETE' && (
-        <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
-          <div className="text-center mb-6">
-            <div className="text-[48px] text-gold mb-3">*</div>
-            <h2 className="text-[24px] font-bold text-gold m-0 mb-2">Concept Mastered!</h2>
-            <p className="text-muted text-[14px]">You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
-          </div>
-
-          {/* ── Feynman - prominent card ──────────────────────────────────── */}
+          {/* ── Teach Back prompt ─────────────────────────────────────────── */}
           {encoding.feynmanPrompt && !feynmanResult && (
             <div className="mb-5 p-5 rounded-[12px] border-2 border-[rgba(139,92,246,0.45)] bg-[rgba(139,92,246,0.07)] shadow-[0_0_24px_rgba(139,92,246,0.12)]">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-[20px]">*</span>
                 <span className="text-[17px] font-bold text-purple-light">Teach It Back</span>
-                <span className="ml-auto text-[11px] text-muted font-cinzel uppercase tracking-[0.06em]">Optional / Earns XP</span>
               </div>
               <p className="text-[12px] text-muted mb-3 leading-[1.6]">
-                The best way to confirm you understand - explain it as if teaching someone from scratch. No jargon, just clarity.
+                Explain this concept as if teaching someone from scratch — no jargon, just clarity.
+                This is the most powerful step for long-term retention.
               </p>
               <p className="text-[14px] text-text italic mb-3 leading-[1.65] p-3 bg-[rgba(0,0,0,0.2)] rounded-[8px] border border-[rgba(139,92,246,0.2)]">
                 "{encoding.feynmanPrompt}"
@@ -1098,19 +1066,19 @@ export default function EncodingPage() {
               >
                 {submittingFeynman
                   ? <><Loader2 size={14} strokeWidth={1.75} className="animate-spin" /> Evaluating your explanation…</>
-                  : <><PenLine size={14} strokeWidth={1.75} /> Submit Explanation &amp; Earn XP</>}
+                  : <><PenLine size={14} strokeWidth={1.75} /> Submit Explanation</>}
               </button>
             </div>
           )}
 
+          {/* ── Teach Back result ─────────────────────────────────────────── */}
           {feynmanResult && (
             <div className="mb-5 p-5 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)]">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-[20px]">*</span>
-                <span className="text-[17px] font-bold text-teal">Feynman Result</span>
+                <span className="text-[17px] font-bold text-teal">Teach Back Result</span>
                 <span className="ml-auto text-[20px] font-bold text-teal">{Math.round(feynmanResult.overallScore * 100)}%</span>
               </div>
-              {/* Score breakdown bars */}
               <div className="grid grid-cols-2 gap-2 mb-3 max-[480px]:grid-cols-1">
                 {([
                   ['Accuracy',     feynmanResult.accuracy],
@@ -1135,8 +1103,15 @@ export default function EncodingPage() {
             </div>
           )}
 
-          {/* ── Common Mistakes ───────────────────────────────────────────── */}
-          {encoding.commonMistakes && encoding.commonMistakes.length > 0 && (
+          {/* No prompt for this lesson */}
+          {!encoding.feynmanPrompt && (
+            <div className="mb-5 p-4 bg-card border border-border rounded-[10px]">
+              <p className="text-muted text-[13px]">No teach-back prompt for this lesson.</p>
+            </div>
+          )}
+
+          {/* ── Common Mistakes — shown after teach back (or immediately if no prompt) ── */}
+          {(feynmanResult || !encoding.feynmanPrompt) && encoding.commonMistakes && encoding.commonMistakes.length > 0 && (
             <div className="mb-5 p-4 rounded-[10px] border border-[rgba(248,113,113,0.25)] bg-[rgba(248,113,113,0.05)]">
               <div className="text-[12px] font-bold uppercase tracking-[0.08em] mb-2.5 flex items-center gap-1.5" style={{ color: '#f87171' }}>
                 ! Common Mistakes
@@ -1149,6 +1124,30 @@ export default function EncodingPage() {
               </ul>
             </div>
           )}
+
+          {/* ── Integration links — shown after teach back ─────────────────── */}
+          {(feynmanResult || !encoding.feynmanPrompt) && encoding.integrationPrompt && (
+            <div
+              className="prose prose-invert max-w-none text-[15px] leading-relaxed mb-6 text-text"
+              dangerouslySetInnerHTML={safe(encoding.integrationPrompt)}
+            />
+          )}
+
+          {/* Complete button — gated until teach back submitted (or no prompt) */}
+          {(feynmanResult || !encoding.feynmanPrompt) && (
+            <button className="btn btn-primary" onClick={handleAdvance}>Complete Lesson {'->'}</button>
+          )}
+        </div>
+      )}
+
+      {/* COMPLETE */}
+      {phase === 'COMPLETE' && (
+        <div className="max-w-[700px] mx-auto px-5 py-7 pb-[60px] overflow-y-auto flex-1 w-full box-border max-[480px]:px-3 max-[480px]:py-4">
+          <div className="text-center mb-6">
+            <div className="text-[48px] text-gold mb-3">*</div>
+            <h2 className="text-[24px] font-bold text-gold m-0 mb-2">Concept Mastered!</h2>
+            <p className="text-muted text-[14px]">You've completed {encoding.title}. This concept will be reviewed via spaced repetition.</p>
+          </div>
 
           {/* ── Assessment Criteria ───────────────────────────────────────── */}
           {encoding.assessmentCriteria && encoding.assessmentCriteria.length > 0 && (
@@ -1293,7 +1292,7 @@ export default function EncodingPage() {
       ) : null}
 
       {/* StuckButton - only during active practice phases */}
-      {(phase === 'GUIDED_PRACTICE' || phase === 'SOLO_PRACTICE' || phase === 'RETRIEVAL_CHECK') && (
+      {(phase === 'GUIDED_PRACTICE' || phase === 'SOLO_PRACTICE') && (
         <StuckButton />
       )}
 
@@ -1388,7 +1387,7 @@ function phaseOrder(p: string): number {
   return ['HOOK', 'EXPLANATION', 'GUIDED_PRACTICE', 'SOLO_PRACTICE', 'RETRIEVAL_CHECK', 'INTEGRATION', 'COMPLETE'].indexOf(p)
 }
 function phaseLabel(p: string): string {
-  return ({ HOOK: 'Hook', EXPLANATION: 'Learn', GUIDED_PRACTICE: 'Practice', SOLO_PRACTICE: 'Solo', RETRIEVAL_CHECK: 'Check', INTEGRATION: 'Connect', COMPLETE: 'Done' })[p] ?? p
+  return ({ HOOK: 'Hook', EXPLANATION: 'Learn', GUIDED_PRACTICE: 'Practice', SOLO_PRACTICE: 'Solo', RETRIEVAL_CHECK: 'Check', INTEGRATION: 'Teach', COMPLETE: 'Done' })[p] ?? p
 }
 function WrittenResponseEditor({
   value,
