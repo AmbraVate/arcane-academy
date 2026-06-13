@@ -15,7 +15,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'feynman',     label: 'Feynman'      },
 ]
 
-const PRACTICE_TYPES = ['JAVA', 'TAILWIND', 'NONE']
+const PRACTICE_TYPES = ['JAVA', 'NONE'] // TAILWIND coming soon
 const BEAT_TYPES = ['narration', 'dialogue', 'example']
 
 // ── Story beat editor ─────────────────────────────────────────────────────────
