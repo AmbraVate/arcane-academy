@@ -34,6 +34,7 @@ public class AdminLessonAssembler {
         .soloPracticeHtml(l.getSoloPracticeHtml())
         .modelAnswer(l.getModelAnswer())
         .feynmanPrompt(l.getFeynmanPrompt())
+        .teachBackExpectedOutput(l.getTeachBackExpectedOutput())
         .rabbitHoleTerms(parseJsonList(l.getRabbitHoleTermsJson()))
         .questionCount(qCount)
         .learningObjectives(parseStringList(l.getLearningObjectivesJson()))
@@ -64,6 +65,7 @@ public class AdminLessonAssembler {
         .soloPracticeHtml(dto.getSoloPracticeHtml())
         .modelAnswer(dto.getModelAnswer())
         .feynmanPrompt(dto.getFeynmanPrompt())
+        .teachBackExpectedOutput(dto.getTeachBackExpectedOutput())
         .rabbitHoleTermsJson(toJson(dto.getRabbitHoleTerms()))
         .build();
   }

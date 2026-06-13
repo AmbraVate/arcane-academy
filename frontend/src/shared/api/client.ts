@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const REFRESH_TOKEN_KEY = 'arcane_refresh_token'
 
-// Always use relative URLs in production — nginx proxies /api/* to the backend.
+// Always use relative URLs in production - nginx proxies /api/* to the backend.
 // In local dev (npm run dev), vite.config.ts proxy handles the same routing.
 const api = axios.create({
   baseURL: '',
@@ -63,7 +63,7 @@ api.interceptors.response.use(
         const newRefresh: string = data.refreshToken
         localStorage.setItem('arcane_token', newToken)
         localStorage.setItem(REFRESH_TOKEN_KEY, newRefresh)
-        // Update stored user — sync token plus any server-side flags that may
+        // Update stored user - sync token plus any server-side flags that may
         // have changed since last login (bypassPaywall, subscriptionStatus).
         const stored = localStorage.getItem('arcane_user')
         if (stored) {
@@ -75,7 +75,7 @@ api.interceptors.response.use(
               bypassPaywall: data.bypassPaywall ?? u.bypassPaywall,
               subscriptionStatus: data.subscriptionStatus ?? u.subscriptionStatus,
             }))
-          } catch { /* malformed JSON — ignore */ }
+          } catch { /* malformed JSON - ignore */ }
         }
         api.defaults.headers.common.Authorization = `Bearer ${newToken}`
         flushQueue(newToken, null)

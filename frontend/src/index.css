@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Custom palette — generates bg-*, text-*, border-*, ring-*, etc. ──── */
+  /* ── Custom palette - generates bg-*, text-*, border-*, ring-*, etc. ──── */
   --color-bg:           #0e0c1a;
   --color-surface:      #16132b;
   --color-card:         #1e1a35;
@@ -19,11 +19,11 @@
   --color-green:        #4ade80;
   --color-orange:       #fb923c;
 
-  /* ── Custom font families — generate font-cinzel, font-crimson ────────── */
+  /* ── Custom font families - generate font-cinzel, font-crimson ────────── */
   --font-cinzel:  "Cinzel", serif;
   --font-crimson: "Crimson Pro", serif;
 
-  /* ── Custom animations — generate animate-toast-in, animate-fade-up etc. ─ */
+  /* ── Custom animations - generate animate-toast-in, animate-fade-up etc. ─ */
   --animate-toast-in:    toast-in 0.3s ease;
   --animate-shimmer:     shimmer 2s ease-in-out infinite;
   --animate-fade-up:     fade-up 0.7s ease both;
@@ -81,16 +81,6 @@
   }
 }
 
-/* ── Hide scrollbars (keep scroll behaviour) ─────────────────────────────── */
-
-* {
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE / Edge legacy */
-}
-*::-webkit-scrollbar {
-  display: none;                /* Chrome / Safari / Chromium Edge */
-}
-
 /* ── Reset + base ─────────────────────────────────────────────────────────── */
 
 html, body, #root {
@@ -102,18 +92,40 @@ html, body, #root {
   overflow: hidden;
 }
 
-* { -webkit-overflow-scrolling: touch; }
+* {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: rgba(139,92,246,0.45) transparent;
+  scrollbar-width: thin;
+}
 body { overflow-x: hidden; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2e2850; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #2e1a5e; }
+::-webkit-scrollbar-thumb {
+  background: rgba(139,92,246,0.38);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(196,181,253,0.5);
+  background-clip: content-box;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(45,212,191,0.85);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(139,92,246,0.35);
+  color: #fff;
+}
 
 /* ──────────────────────────────────────────────────────────────────────────────
- * Component classes — buttons, chips, decorative cards.
+ * Component classes - buttons, chips, decorative cards.
  * @layer components remains supported in Tailwind v4.
  * ────────────────────────────────────────────────────────────────────────────── */
 @layer components {
@@ -136,7 +148,8 @@ button { font-family: inherit; cursor: pointer; }
     cursor:          pointer;
     white-space:     nowrap;
     transition:      background 0.18s ease, border-color 0.18s ease,
-                     color 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+                     color 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease,
+                     transform 0.18s ease;
     text-decoration: none;
     user-select:     none;
   }
@@ -145,7 +158,7 @@ button { font-family: inherit; cursor: pointer; }
     cursor:  not-allowed;
   }
 
-  /* Primary — purple gradient, glows on hover */
+  /* Primary - purple gradient, glows on hover */
   .btn-primary {
     background:   linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
     border-color: #8b5cf6;
@@ -156,13 +169,14 @@ button { font-family: inherit; cursor: pointer; }
     background:   linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     border-color: #a78bfa;
     box-shadow:   0 0 14px rgba(139,92,246,.45);
+    transform:    translateY(-1px);
   }
   .btn-primary:active:not(:disabled) {
     background:   linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
     box-shadow:   0 0 6px rgba(139,92,246,.3);
   }
 
-  /* Ghost — subtle outline, lifts on hover */
+  /* Ghost - subtle outline, lifts on hover */
   .btn-ghost {
     background:   transparent;
     border-color: #2e2850;
@@ -172,12 +186,13 @@ button { font-family: inherit; cursor: pointer; }
     background:   #16132b;
     border-color: #8b5cf6;
     color:        #c4b5fd;
+    transform:    translateY(-1px);
   }
   .btn-ghost:active:not(:disabled) {
     background:   #1e1a35;
   }
 
-  /* Success — teal, for completion actions */
+  /* Success - teal, for completion actions */
   .btn-success {
     background:   #0d3a34;
     border-color: #2dd4bf;
@@ -188,6 +203,7 @@ button { font-family: inherit; cursor: pointer; }
     border-color: #5eead4;
     color:        #5eead4;
     box-shadow:   0 0 12px rgba(45,212,191,.3);
+    transform:    translateY(-1px);
   }
   .btn-success:active:not(:disabled) {
     background:   #0d3a34;
@@ -248,9 +264,67 @@ button { font-family: inherit; cursor: pointer; }
   .chip-orange { background: rgba(251,146,60,.12);  border-color: rgba(251,146,60,.3);   color: #fb923c; }
   .chip-gray   { background: rgba(139,127,160,.1);  border-color: rgba(139,127,160,.25); color: #8b7fa0; }
 
+  .readable-panel {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.025), transparent 42%),
+      rgba(30,26,53,0.74);
+    border: 1px solid rgba(139,92,246,0.16);
+    border-radius: 12px;
+    box-shadow: 0 14px 42px rgba(0,0,0,0.22);
+  }
+
+  .lesson-prose {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.82;
+  }
+
+  .lesson-prose p {
+    margin: 0 0 1rem;
+  }
+
+  .lesson-prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  .lesson-prose a {
+    color: var(--teal);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .lesson-prose code {
+    background: rgba(139,92,246,0.14);
+    border: 1px solid rgba(139,92,246,0.22);
+    border-radius: 5px;
+    color: var(--purple-light);
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.88em;
+    padding: 0.08rem 0.35rem;
+  }
+
+  .lesson-prose pre {
+    background: #09070f;
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), 0 8px 28px rgba(0,0,0,0.28);
+    margin: 1.2rem 0 1.5rem;
+    overflow-x: auto;
+  }
+
+  .lesson-prose pre code {
+    background: transparent;
+    border: 0;
+    color: #e2e8f0;
+    display: block;
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 1rem 1.1rem;
+  }
+
   /* ── Grimoire / landing utilities (from design system landing.css) ─────── */
 
-  /* Gold-foil text on a dark surface — used for hero accents and brand */
+  /* Gold-foil text on a dark surface - used for hero accents and brand */
   .foil-on-dark {
     background: linear-gradient(135deg, #8a6510 0%, #d4a437 30%, #f0c862 50%, #d4a437 70%, #8a6510 100%);
     background-clip: text;
@@ -259,7 +333,7 @@ button { font-family: inherit; cursor: pointer; }
     -webkit-text-fill-color: transparent;
   }
 
-  /* Section eyebrow — small Cinzel all-caps gold-foil label above headings */
+  /* Section eyebrow - small Cinzel all-caps gold-foil label above headings */
   .section-eyebrow {
     font-family: 'Cinzel', serif;
     font-size: 11px;
@@ -276,15 +350,15 @@ button { font-family: inherit; cursor: pointer; }
    *   3) Loop forever
    *
    * Architecture (composes two transforms via nested elements):
-   *   .hero-text-wrapper  — establishes the 3D context (perspective + preserve-3d)
-   *   .hero-heading       — at translateZ(0); the depth reference plane
-   *   .ember-shell        — slow X traversal + line-Y switch (12s linear)
-   *   .ember-orbit        — fast Y/Z circle in the YZ plane (0.75s linear → ~8 loops/line)
-   *   .ember-core         — static visible glow; per-instance opacity/scale via inline style
+   *   .hero-text-wrapper  - establishes the 3D context (perspective + preserve-3d)
+   *   .hero-heading       - at translateZ(0); the depth reference plane
+   *   .ember-shell        - slow X traversal + line-Y switch (12s linear)
+   *   .ember-orbit        - fast Y/Z circle in the YZ plane (0.75s linear -> ~8 loops/line)
+   *   .ember-core         - static visible glow; per-instance opacity/scale via inline style
    *
    * The GPU sorts all shells in 3D depth order, so when translateZ < 0 the orbs
    * pass behind the H1 and when > 0 they glow over it. mix-blend-mode is
-   * intentionally avoided — it would flatten the 3D context and break depth sorting.
+   * intentionally avoided - it would flatten the 3D context and break depth sorting.
    * ───────────────────────────────────────────────────────────────────────── */
 
   .hero-text-wrapper {
@@ -294,7 +368,7 @@ button { font-family: inherit; cursor: pointer; }
     transform-style: preserve-3d;
     --ember-x-amplitude:   280px;  /* horizontal half-range across each line */
     --ember-y-amplitude:    22px;  /* vertical half-range PER LOOP */
-    --ember-z-amplitude:   220px;  /* depth half-range — behind/in-front swing */
+    --ember-z-amplitude:   220px;  /* depth half-range - behind/in-front swing */
     --ember-line-offset:    28px;  /* ± from heading centerline to line 1 / line 2 */
   }
 
@@ -305,7 +379,7 @@ button { font-family: inherit; cursor: pointer; }
     z-index: 1;
   }
 
-  /* OUTER — slow X traversal + line-Y switch (12s) */
+  /* OUTER - slow X traversal + line-Y switch (12s) */
   .ember-shell {
     position: absolute;
     top: 50%;
@@ -318,7 +392,7 @@ button { font-family: inherit; cursor: pointer; }
     animation: ember-x-dual-line 12s linear infinite;
   }
 
-  /* INNER — fast Y/Z circle (0.75s → 8 loops per 6s line traversal) */
+  /* INNER - fast Y/Z circle (0.75s -> 8 loops per 6s line traversal) */
   .ember-orbit {
     position: absolute;
     inset: 0;
@@ -361,10 +435,10 @@ button { font-family: inherit; cursor: pointer; }
       0 0 24px  8px rgba(212, 164, 55, 0.10);
   }
 
-  /* OUTER keyframes — X linear -amp → +amp, Y switches between line 1 and line 2.
-   * Cycle: 0–50%  = line 1 traversal (Y = -line_offset)
+  /* OUTER keyframes - X linear -amp -> +amp, Y switches between line 1 and line 2.
+   * Cycle: 0-50%  = line 1 traversal (Y = -line_offset)
    *        50%   = teleport to left edge of line 2 (opacity 0 hides the cut)
-   *        50–100% = line 2 traversal (Y = +line_offset)
+   *        50-100% = line 2 traversal (Y = +line_offset)
    * Opacity ramps in/out at each line's edges so the orb fades on and off rather
    * than appearing mid-air. */
   @keyframes ember-x-dual-line {
@@ -403,13 +477,13 @@ button { font-family: inherit; cursor: pointer; }
     }
   }
 
-  /* INNER keyframes — closed circle in the YZ plane.
-   * 0%   front (Y=0,    Z=+amp)  ← in front of text
-   * 25%  top   (Y=-amp, Z=0)     ← at text plane, above
-   * 50%  back  (Y=0,    Z=-amp)  ← behind text
-   * 75%  bot   (Y=+amp, Z=0)     ← at text plane, below
+  /* INNER keyframes - closed circle in the YZ plane.
+   * 0%   front (Y=0,    Z=+amp)  &lt;- in front of text
+   * 25%  top   (Y=-amp, Z=0)     &lt;- at text plane, above
+   * 50%  back  (Y=0,    Z=-amp)  &lt;- behind text
+   * 75%  bot   (Y=+amp, Z=0)     &lt;- at text plane, below
    * 100% front (loops)
-   * One full revolution every 0.75s — combined with the outer 12s X traversal,
+   * One full revolution every 0.75s - combined with the outer 12s X traversal,
    * the orb completes ~8 loops over each line (6s ÷ 0.75s = 8). */
   @keyframes ember-loop {
     0%   { transform: translate3d(0, 0, var(--ember-z-amplitude)); }
@@ -419,7 +493,7 @@ button { font-family: inherit; cursor: pointer; }
     100% { transform: translate3d(0, 0, var(--ember-z-amplitude)); }
   }
 
-  /* Smaller path on narrow viewports — keep the orb path inside the screen */
+  /* Smaller path on narrow viewports - keep the orb path inside the screen */
   @media (max-width: 768px) {
     .hero-text-wrapper {
       --ember-x-amplitude: 180px;
@@ -452,7 +526,7 @@ button { font-family: inherit; cursor: pointer; }
     }
   }
 
-  /* Ornate divider — "✦ HOW A CHUNK WORKS ✦" with hairline tendrils */
+  /* Ornate divider - "* HOW A CHUNK WORKS *" with hairline tendrils */
   .ornate-divider {
     display: flex;
     align-items: center;
@@ -489,7 +563,7 @@ button { font-family: inherit; cursor: pointer; }
     font-style: italic;
   }
 
-  /* Gold-foil seal CTA — the signature "BEGIN YOUR JOURNEY" button */
+  /* Gold-foil seal CTA - the signature "BEGIN YOUR JOURNEY" button */
   .btn-seal {
     font-family: 'Cinzel', serif;
     font-size: 14px;
@@ -521,7 +595,7 @@ button { font-family: inherit; cursor: pointer; }
   }
   .btn-seal:active { transform: translateY(0) scale(.98); }
 
-  /* Brand mark — "✦ ARCANE ACADEMY" lockup */
+  /* Brand mark - "* ARCANE ACADEMY" lockup */
   .brand-mark {
     font-family: 'Cinzel', serif;
     font-size: 16px;
@@ -529,10 +603,10 @@ button { font-family: inherit; cursor: pointer; }
     color: var(--gold);
   }
 
-  /* Twinkling stars — used in hero starfield SVG */
+  /* Twinkling stars - used in hero starfield SVG */
   .star { animation: twinkle 4s ease-in-out infinite; }
 
-  /* Scroll-reveal — toggled by .in via IntersectionObserver */
+  /* Scroll-reveal - toggled by .in via IntersectionObserver */
   .grim-reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -545,14 +619,14 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
- * @keyframes — referenced by the @theme animation utilities above
+ * @keyframes - referenced by the @theme animation utilities above
  * (animate-toast-in, animate-fade-up, etc.) AND by inline arbitrary-value
  * animations like `animate-[fade-up_0.5s_...]`.
  *
- * Note: the v3 setup had a small inconsistency — `fade-up` was defined twice
+ * Note: the v3 setup had a small inconsistency - `fade-up` was defined twice
  * (translateY 24px in tailwind.config.js, 18px in index.css). Unifying on the
  * config version (24px) here for consistency. Inline arbitrary animations
- * using `fade-up` will pick up the new value — visually a slightly larger
+ * using `fade-up` will pick up the new value - visually a slightly larger
  * rise-in animation.
  * ────────────────────────────────────────────────────────────────────────────── */
 
@@ -589,7 +663,7 @@ button { font-family: inherit; cursor: pointer; }
   100% { opacity: 1; transform: scale(1); }
 }
 
-/* Grimoire — twinkle for the hero starfield */
+/* Grimoire - twinkle for the hero starfield */
 @keyframes twinkle {
   0%, 100% { opacity: 0.3; }
   50%      { opacity: 1; }

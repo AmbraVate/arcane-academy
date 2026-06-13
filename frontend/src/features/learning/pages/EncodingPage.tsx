@@ -1006,14 +1006,24 @@ export default function EncodingPage() {
             Answer these questions — they help calibrate your personalised review schedule. No score is shown.
           </p>
 
-          {!retrievalResult && !encoding.retrievalQuestions?.length ? (
+          {!retrievalResult && encoding.retrievalQuestions === null ? (
+            /* Already completed — backend returns null once check is done */
             <div className="p-4 bg-card border border-border rounded-[10px]">
               <p className="text-muted text-[13px] mb-3">
-                {encoding.retrievalQuestions === null
-                  ? 'You have already completed the knowledge check for this lesson.'
-                  : 'No knowledge check questions are configured for this lesson yet.'}
+                You have already completed the knowledge check for this lesson.
               </p>
               <button className="btn btn-primary" onClick={handleAdvance}>Continue {'->'}</button>
+            </div>
+          ) : !retrievalResult && !encoding.retrievalQuestions?.length ? (
+            /* Zero questions configured — lesson is tracked with a neutral baseline */
+            <div className="p-5 bg-card border border-[rgba(45,212,191,0.25)] rounded-[12px] text-center">
+              <div className="text-[28px] mb-3">*</div>
+              <p className="text-[15px] font-semibold text-text mb-2">Great work!</p>
+              <p className="text-muted text-[13px] leading-[1.65] mb-5">
+                This concept is now tracked in your spaced-repetition schedule.
+                Come back tomorrow to reinforce it.
+              </p>
+              <button className="btn btn-primary" onClick={handleAdvance}>Advance {'->'}</button>
             </div>
           ) : !retrievalResult ? (
             <>
@@ -1047,32 +1057,91 @@ export default function EncodingPage() {
                 <span className="text-[20px]">*</span>
                 <span className="text-[17px] font-bold text-purple-light">Teach It Back</span>
               </div>
-              <p className="text-[12px] text-muted mb-3 leading-[1.6]">
-                Explain this concept as if teaching someone from scratch — no jargon, just clarity.
-                This is the most powerful step for long-term retention.
-              </p>
+              {encoding.teachBackMode === 'CODE_EXECUTION' ? (
+                <p className="text-[12px] text-muted mb-3 leading-[1.6]">
+                  Write code that demonstrates the concept. Your output will be checked automatically.
+                </p>
+              ) : (
+                <p className="text-[12px] text-muted mb-3 leading-[1.6]">
+                  Explain this concept as if teaching someone from scratch — no jargon, just clarity.
+                  This is the most powerful step for long-term retention.
+                </p>
+              )}
               <p className="text-[14px] text-text italic mb-3 leading-[1.65] p-3 bg-[rgba(0,0,0,0.2)] rounded-[8px] border border-[rgba(139,92,246,0.2)]">
                 "{encoding.feynmanPrompt}"
               </p>
-              <textarea
-                className="w-full bg-surface border border-[rgba(139,92,246,0.3)] rounded-md px-3 py-3 text-[14px] text-text font-crimson resize-y mb-3 box-border focus:outline-none focus:border-purple"
-                placeholder="Write your explanation here. Imagine your reader has never heard of this concept before..."
-                value={feynmanText} onChange={e => setFeynmanText(e.target.value)} rows={7}
-              />
+              {encoding.teachBackMode === 'CODE_EXECUTION' ? (
+                <div className="mb-3">
+                  <CodeEditor
+                    value={feynmanText}
+                    onChange={setFeynmanText}
+                    disabled={submittingFeynman}
+                  />
+                </div>
+              ) : (
+                <textarea
+                  className="w-full bg-surface border border-[rgba(139,92,246,0.3)] rounded-md px-3 py-3 text-[14px] text-text font-crimson resize-y mb-3 box-border focus:outline-none focus:border-purple"
+                  placeholder="Write your explanation here. Imagine your reader has never heard of this concept before..."
+                  value={feynmanText} onChange={e => setFeynmanText(e.target.value)} rows={7}
+                />
+              )}
               <button
                 className="btn btn-primary w-full flex items-center justify-center gap-2 text-[14px] py-2.5"
                 onClick={handleSubmitFeynman}
                 disabled={submittingFeynman || !feynmanText.trim()}
               >
                 {submittingFeynman
-                  ? <><Loader2 size={14} strokeWidth={1.75} className="animate-spin" /> Evaluating your explanation…</>
-                  : <><PenLine size={14} strokeWidth={1.75} /> Submit Explanation</>}
+                  ? <><Loader2 size={14} strokeWidth={1.75} className="animate-spin" />
+                      {encoding.teachBackMode === 'CODE_EXECUTION' ? 'Running your code…' : 'Evaluating your explanation…'}
+                    </>
+                  : encoding.teachBackMode === 'CODE_EXECUTION'
+                    ? <><span className="text-[16px]">{'>'}</span> Run &amp; Submit</>
+                    : <><PenLine size={14} strokeWidth={1.75} /> Submit Explanation</>}
               </button>
             </div>
           )}
 
           {/* ── Teach Back result ─────────────────────────────────────────── */}
-          {feynmanResult && (
+          {feynmanResult && feynmanResult.teachBackMode === 'CODE_EXECUTION' ? (
+            /* Code execution result */
+            <div className={cn(
+              'mb-5 p-5 rounded-[12px] border',
+              feynmanResult.overallScore >= 0.9
+                ? 'border-teal bg-[rgba(45,212,191,0.06)]'
+                : feynmanResult.overallScore >= 0.5
+                ? 'border-[rgba(201,162,39,0.4)] bg-[rgba(201,162,39,0.05)]'
+                : 'border-[rgba(248,113,113,0.3)] bg-[rgba(248,113,113,0.05)]',
+            )}>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-[20px]">*</span>
+                <span className={cn(
+                  'text-[17px] font-bold',
+                  feynmanResult.overallScore >= 0.9 ? 'text-teal'
+                    : feynmanResult.overallScore >= 0.5 ? 'text-gold'
+                    : 'text-[#f87171]',
+                )}>
+                  {feynmanResult.overallScore >= 0.9 ? 'Output Matched!'
+                    : feynmanResult.overallScore >= 0.5 ? 'Almost There'
+                    : 'Try Again'}
+                </span>
+                <span className={cn(
+                  'ml-auto text-[20px] font-bold',
+                  feynmanResult.overallScore >= 0.9 ? 'text-teal'
+                    : feynmanResult.overallScore >= 0.5 ? 'text-gold'
+                    : 'text-[#f87171]',
+                )}>
+                  {Math.round(feynmanResult.overallScore * 100)}%
+                </span>
+              </div>
+              <p className="text-[13px] text-text leading-[1.6] font-mono bg-[rgba(0,0,0,0.25)] rounded-[8px] p-3 whitespace-pre-wrap">
+                {feynmanResult.feedback}
+              </p>
+              {feynmanResult.xpEarned > 0 && (
+                <div className="mt-2.5 text-[12px] text-gold font-semibold">* +{feynmanResult.xpEarned} XP earned</div>
+              )}
+            </div>
+          ) : feynmanResult ? (
+            /* Pattern-match result */
             <div className="mb-5 p-5 rounded-[12px] border border-teal bg-[rgba(45,212,191,0.06)]">
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-[20px]">*</span>
@@ -1101,7 +1170,7 @@ export default function EncodingPage() {
                 <div className="mt-2.5 text-[12px] text-gold font-semibold">* +{feynmanResult.xpEarned} XP earned</div>
               )}
             </div>
-          )}
+          ) : null}
 
           {/* No prompt for this lesson */}
           {!encoding.feynmanPrompt && (

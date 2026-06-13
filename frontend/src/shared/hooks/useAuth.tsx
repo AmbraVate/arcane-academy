@@ -87,10 +87,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // immediately without requiring the user to log out and back in.
   useEffect(() => {
     const stored = localStorage.getItem('arcane_user')
-    if (!stored) return // not logged in — nothing to hydrate
+    if (!stored) return // not logged in - nothing to hydrate
     authApi.me()
       .then(fresh => persist(fresh))
-      .catch(() => { /* token expired — the 401 interceptor in client.ts handles logout */ })
+      .catch(() => { /* token expired - the 401 interceptor in client.ts handles logout */ })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Re-validate the token when the user switches back to this tab so that a

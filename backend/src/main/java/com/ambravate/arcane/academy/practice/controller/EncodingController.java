@@ -17,6 +17,7 @@ import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.SoloAssessmentType;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
+import com.ambravate.arcane.academy.common.domain.EncodingPhase;
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
 import com.ambravate.arcane.academy.practice.domain.LessonSession;
@@ -28,6 +29,8 @@ import com.ambravate.arcane.academy.ai.service.RetrievalService;
 import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 import com.ambravate.arcane.academy.practice.service.GuidedStepService;
+import com.ambravate.arcane.academy.retention.service.RetentionService;
+import com.ambravate.arcane.academy.retention.service.TeachBackScoringService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -46,12 +49,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @RequiredArgsConstructor
 public class EncodingController {
 
-    private final EncodingService   encodingService;
-    private final RetrievalService  retrievalService;
-    private final FeynmanService    feynmanService;
-    private final GuidedStepService guidedStepService;
+    private final EncodingService         encodingService;
+    private final RetrievalService        retrievalService;
+    private final FeynmanService          feynmanService;
+    private final GuidedStepService       guidedStepService;
     private final LearningModuleRepository moduleRepository;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper            objectMapper;
+    private final RetentionService        retentionService;
+    private final TeachBackScoringService teachBackScoringService;
 
     @PostMapping("/{lessonId}/start")
     public ResponseEntity<LessonEncodingDto> startLesson(
@@ -62,12 +67,11 @@ public class EncodingController {
 
         if ("RETRIEVAL_CHECK".equals(dto.getPhase()) && !session.progress().isRetrievalCheckSubmitted()) {
             List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), lessonId);
-            // Only set questions when the pool is non-empty. An empty pool (null) tells
-            // the frontend to show a "no questions" skip path rather than "already done".
-            if (!questions.isEmpty()) {
-                dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
-            }
+            // Non-null: questions present → show the check; empty list → zero-question path
+            // (null is reserved for "already submitted", letting the frontend distinguish the two states)
+            dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
         }
+        // When isRetrievalCheckSubmitted() is true, retrievalQuestions stays null → "already done" path
 
         return ResponseEntity.ok(dto);
     }
@@ -81,9 +85,19 @@ public class EncodingController {
 
         if ("RETRIEVAL_CHECK".equals(dto.getPhase())) {
             List<Question> questions = retrievalService.generateRetrievalCheck(user.getId(), lessonId);
-            if (!questions.isEmpty()) {
-                dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
-            }
+            // Non-null list (possibly empty) → not yet submitted; null → already done
+            dto.setRetrievalQuestions(questions.stream().map(this::toQuestionDto).collect(Collectors.toList()));
+        }
+
+        // When the advance skips a zero-question RETRIEVAL_CHECK, register the lesson in retention
+        // with a neutral baseline so future teach-back and review sessions can still track it.
+        boolean advancedPastZeroQuestionCheck =
+                (session.progress().getCurrentPhase() == EncodingPhase.INTEGRATION
+                        || session.progress().getCurrentPhase() == EncodingPhase.COMPLETE)
+                        && !session.progress().isRetrievalCheckSubmitted();
+        if (advancedPastZeroQuestionCheck) {
+            try { retentionService.recordKnowledgeCheck(user.getId(), lessonId, List.of()); }
+            catch (Exception e) { /* retention tracking must not break the lesson flow */ }
         }
 
         return ResponseEntity.ok(dto);
@@ -155,6 +169,10 @@ public class EncodingController {
         RetrievalCheckResult result = encodingService.submitRetrievalCheck(
                 user.getId(), lessonId, answers);
 
+        // Phase 2: record for spaced-repetition (fire-and-forget, non-blocking)
+        try { retentionService.recordKnowledgeCheck(user.getId(), lessonId, result.results()); }
+        catch (Exception e) { /* retention tracking must not break the lesson flow */ }
+
         return ResponseEntity.ok(RetrievalResultDto.builder()
                 .score(result.score()).correct(result.correct()).total(result.total())
                 .results(result.results().stream().map(r -> RetrievalResultDto.QuestionResultDto.builder()
@@ -172,14 +190,18 @@ public class EncodingController {
             @PathVariable String lessonId,
             @Valid @RequestBody FeynmanRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
-        FeynmanResult result = feynmanService.evaluateExplanation(
+        FeynmanResult result = teachBackScoringService.evaluate(
                 user.getId(), lessonId, request.getExplanation());
+
+        // Phase 2: record teach back score for retention
+        try { retentionService.recordTeachBack(user.getId(), lessonId, result.overallScore()); }
+        catch (Exception e) { /* retention tracking must not break the lesson flow */ }
 
         return ResponseEntity.ok(FeynmanResultDto.builder()
                 .accuracy(result.accuracy()).completeness(result.completeness())
                 .simplicity(result.simplicity()).connection(result.connection())
                 .overallScore(result.overallScore()).feedback(result.feedback())
-                .xpEarned(result.xpEarned()).build());
+                .xpEarned(result.xpEarned()).teachBackMode(result.teachBackMode()).build());
     }
 
     @GetMapping("/{lessonId}/feynman/prompt")
@@ -252,7 +274,14 @@ public class EncodingController {
                 dto.setModelAnswer(l.getModelAnswer());
             }
             case RETRIEVAL_CHECK -> dto.setFeynmanPrompt(l.getFeynmanPrompt());
-            case INTEGRATION -> dto.setIntegrationPrompt(l.getIntegrationPrompt());
+            case INTEGRATION -> {
+                dto.setIntegrationPrompt(l.getIntegrationPrompt());
+                // Signal the frontend which Teach Back mode to render
+                boolean isCodeTeachBack = l.getPracticeType() == com.ambravate.arcane.academy.common.domain.LessonPracticeType.JAVA
+                        && l.getTeachBackExpectedOutput() != null
+                        && !l.getTeachBackExpectedOutput().isBlank();
+                dto.setTeachBackMode(isCodeTeachBack ? "CODE_EXECUTION" : "PATTERN_MATCH");
+            }
             case COMPLETE -> {
                 dto.setStoryBeats(parseJson(l.getStoryJson()));
                 dto.setLoreConclusionHtml(l.getLoreConclusionHtml());

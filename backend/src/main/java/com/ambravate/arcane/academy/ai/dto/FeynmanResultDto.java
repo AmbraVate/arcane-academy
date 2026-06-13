@@ -11,4 +11,6 @@ public class FeynmanResultDto {
     private double overallScore;
     private String feedback;
     private int xpEarned;
+    /** "PATTERN_MATCH" or "CODE_EXECUTION" — determines which result view the frontend renders. */
+    private String teachBackMode;
 }

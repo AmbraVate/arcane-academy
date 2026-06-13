@@ -8,7 +8,7 @@ export const QUERY_KEYS = {
 }
 
 /** Fetch dashboard for a domain.
- *  Pass `isPublic = true` when no user is logged in — calls the public endpoint
+ *  Pass `isPublic = true` when no user is logged in - calls the public endpoint
  *  which returns structure only (all modules LOCKED, no progress). */
 export function useDashboard(domainId: string, isPublic = false) {
   return useQuery({

@@ -33,4 +33,8 @@ public class Domain {
 
     /** FK to schools.id — the school this domain belongs to */
     private String schoolId;
+
+    /** JSON object mapping tier keys to display labels, e.g. {"APPRENTICE":"Intern","JUNIOR":"Associate",...} */
+    @Column(columnDefinition = "TEXT")
+    private String tierLabels;
 }

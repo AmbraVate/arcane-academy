@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { CheckCircle, XCircle, RotateCcw, ArrowRight, X, Brain } from 'lucide-react'
+import { CheckCircle, XCircle, RotateCcw, ArrowRight, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { retentionApi } from '@/shared/api/services'
 import type {
@@ -19,15 +19,7 @@ interface AnsweredQuestion {
   result: ReviewSubmitQuestionResult | null
 }
 
-type ModalPhase = 'INTRO' | 'ANSWERING' | 'SUBMITTING' | 'RESULTS'
-
-export function motivatingMessage(correct: number, total: number): string {
-  if (total === 0) return ''
-  const pct = correct / total
-  if (pct >= 0.8) return 'Excellent! Your memory is strengthening.'
-  if (pct >= 0.5) return 'Good effort — those tricky ones will come back sooner.'
-  return "Don't worry — struggle is how we grow. These will appear again tomorrow."
-}
+type ModalPhase = 'ANSWERING' | 'SUBMITTING' | 'RESULTS' | 'DONE'
 
 export function DailyReviewModal({ queue, onClose }: Props) {
   // Flatten all questions from the queue into a single list
@@ -35,17 +27,16 @@ export function DailyReviewModal({ queue, onClose }: Props) {
     item.questions.map(q => ({ lessonId: item.lessonId, lessonTitle: item.lessonTitle, q }))
   )
 
-  const totalQuestions = allItems.length
-  const estimatedMinutes = totalQuestions * 2
-
-  const [phase, setPhase] = useState<ModalPhase>('INTRO')
   const [currentIdx, setCurrentIdx] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [answers, setAnswers] = useState<Array<{ lessonId: string; questionId: string; answer: string }>>([])
+  const [phase, setPhase] = useState<ModalPhase>('ANSWERING')
+  const [results, setResults] = useState<ReviewSubmitQuestionResult[]>([])
   const [answeredItems, setAnsweredItems] = useState<AnsweredQuestion[]>([])
 
   const current = allItems[currentIdx]
-  const progress = totalQuestions > 0 ? (currentIdx / totalQuestions) * 100 : 0
+  const totalQuestions = allItems.length
+  const progress = totalQuestions > 0 ? ((currentIdx) / totalQuestions) * 100 : 0
 
   const handleSelectAnswer = (opt: string) => {
     if (phase !== 'ANSWERING') return
@@ -81,11 +72,17 @@ export function DailyReviewModal({ queue, onClose }: Props) {
           })),
         })
         const flat = response.results.flatMap(r => r.questions)
+        setResults(flat)
 
+        // Build answered items for results display
         const answered: AnsweredQuestion[] = newAnswers.map(a => {
           const item = allItems.find(i => i.q.questionId === a.questionId)
           const result = flat.find(r => r.questionId === a.questionId) ?? null
-          return { question: item!.q, userAnswer: a.answer, result }
+          return {
+            question: item!.q,
+            userAnswer: a.answer,
+            result,
+          }
         })
         setAnsweredItems(answered)
       } catch {
@@ -109,20 +106,6 @@ export function DailyReviewModal({ queue, onClose }: Props) {
 
   if (totalQuestions === 0) return null
 
-  const headerLabel =
-    phase === 'INTRO'
-      ? 'DAILY REVIEW'
-      : phase === 'RESULTS'
-      ? 'SESSION COMPLETE'
-      : 'RETRIEVAL PRACTICE'
-
-  const headerTitle =
-    phase === 'INTRO'
-      ? 'Ready to practise?'
-      : phase === 'RESULTS'
-      ? 'Well done!'
-      : 'Retrieval Practice'
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[rgba(8,6,18,0.85)]">
       <div
@@ -133,16 +116,15 @@ export function DailyReviewModal({ queue, onClose }: Props) {
         <div className="px-6 pt-5 pb-4 border-b border-border flex items-start justify-between gap-4">
           <div>
             <div className="font-cinzel text-[11px] tracking-[0.2em] text-gold mb-1">
-              {headerLabel}
+              DAILY REVIEW
             </div>
             <h2 className="font-cinzel text-[18px] font-bold text-text m-0">
-              {headerTitle}
+              {phase === 'RESULTS' ? 'Session Complete' : 'Retrieval Practice'}
             </h2>
           </div>
           <button
             onClick={onClose}
             className="p-1.5 rounded-[8px] text-muted hover:text-text hover:bg-border/40 transition-colors"
-            aria-label="Close review modal"
           >
             <X size={16} strokeWidth={2} />
           </button>
@@ -153,7 +135,7 @@ export function DailyReviewModal({ queue, onClose }: Props) {
           <div className="px-6 pt-4">
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-[11px] text-muted font-cinzel">
-                Question {currentIdx + 1} of {totalQuestions}
+                {currentIdx + 1} of {totalQuestions}
               </span>
               <span className="text-[11px] text-muted font-cinzel">
                 {current.lessonTitle}
@@ -173,38 +155,6 @@ export function DailyReviewModal({ queue, onClose }: Props) {
 
         {/* Body */}
         <div className="px-6 py-5">
-
-          {/* INTRO phase */}
-          {phase === 'INTRO' && (
-            <div className="flex flex-col items-center text-center gap-4 py-3">
-              <div
-                className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ background: 'rgba(139,92,246,0.15)', border: '1.5px solid rgba(139,92,246,0.35)' }}
-              >
-                <Brain size={28} strokeWidth={1.5} style={{ color: '#8b5cf6' }} />
-              </div>
-              <p className="font-cinzel text-[15px] font-semibold text-text m-0">
-                Time to reinforce your knowledge
-              </p>
-              <div
-                className="w-full rounded-[12px] px-5 py-4 text-left"
-                style={{ background: 'rgba(201,162,39,0.07)', border: '1px solid rgba(201,162,39,0.2)' }}
-              >
-                <p className="text-[13px] text-text m-0 mb-1.5">
-                  You have{' '}
-                  <span className="text-gold font-semibold">{totalQuestions}</span>{' '}
-                  {totalQuestions === 1 ? 'concept' : 'concepts'} to review today
-                  {' '}— about{' '}
-                  <span className="text-gold font-semibold">
-                    {estimatedMinutes} {estimatedMinutes === 1 ? 'minute' : 'minutes'}
-                  </span>.
-                </p>
-                <p className="text-[12px] text-muted m-0">
-                  Answering from memory now will triple your long-term retention.
-                </p>
-              </div>
-            </div>
-          )}
 
           {/* ANSWERING phase */}
           {phase === 'ANSWERING' && current && (
@@ -244,7 +194,7 @@ export function DailyReviewModal({ queue, onClose }: Props) {
           {phase === 'RESULTS' && (
             <div>
               {/* Score summary */}
-              <div className="flex items-center justify-center gap-6 mb-4 p-4 rounded-[12px] bg-surface border border-border">
+              <div className="flex items-center justify-center gap-6 mb-5 p-4 rounded-[12px] bg-surface border border-border">
                 <div className="text-center">
                   <div
                     className="font-cinzel text-[32px] font-bold"
@@ -258,13 +208,8 @@ export function DailyReviewModal({ queue, onClose }: Props) {
                 </div>
               </div>
 
-              {/* Motivating message */}
-              <p className="text-[13px] text-text text-center mb-4 m-0">
-                {motivatingMessage(correctCount, total)}
-              </p>
-
               {/* Per-question breakdown */}
-              <div className="flex flex-col gap-2.5 max-h-[200px] overflow-y-auto pr-1 mb-4">
+              <div className="flex flex-col gap-2.5 max-h-[280px] overflow-y-auto pr-1">
                 {answeredItems.map((item, idx) => {
                   const correct = item.result?.correct ?? null
                   return (
@@ -303,35 +248,12 @@ export function DailyReviewModal({ queue, onClose }: Props) {
                   )
                 })}
               </div>
-
-              {/* Come-back-tomorrow closer */}
-              <div
-                className="rounded-[10px] px-4 py-3 text-center"
-                style={{ background: 'rgba(45,212,191,0.07)', border: '1px solid rgba(45,212,191,0.2)' }}
-              >
-                <p className="text-[12px] text-muted m-0">
-                  Great work today. Your next reviews will be scheduled automatically
-                  {' '}— <span className="text-teal font-medium">come back tomorrow</span> to keep your knowledge sharp.
-                </p>
-              </div>
             </div>
           )}
         </div>
 
         {/* Footer actions */}
         <div className="px-6 pb-5 flex justify-end gap-3">
-          {phase === 'INTRO' && (
-            <button
-              onClick={() => setPhase('ANSWERING')}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-[9px] font-cinzel text-[13px] font-semibold
-                border border-[rgba(139,92,246,0.4)] bg-[rgba(139,92,246,0.1)]
-                hover:bg-[rgba(139,92,246,0.16)] transition-colors"
-              style={{ color: '#8b5cf6' }}
-            >
-              Start Review
-              <ArrowRight size={14} strokeWidth={2} />
-            </button>
-          )}
           {phase === 'ANSWERING' && (
             <button
               onClick={handleNext}
