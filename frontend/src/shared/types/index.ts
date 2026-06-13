@@ -1,4 +1,4 @@
-﻿// ── Auth ──────────────────────────────────────────────────────────────────────
+// ── Auth ──────────────────────────────────────────────────────────────────────
 export type SubscriptionStatus = 'FREE' | 'MONTHLY' | 'ANNUAL' | 'LIFETIME' | 'CANCELLED'
 
 export interface User {
@@ -33,7 +33,7 @@ export interface TestResult { label: string; passed: boolean; actualOutput: stri
 export interface Badge { id: string; displayName: string; description: string; glyph: string; category: string; earned: boolean; earnedAt: string | null }
 export interface CodeRunResponse { output: string | null; error: string | null; status: 'SUCCESS'|'COMPILE_ERROR'|'RUNTIME_ERROR'|'TIMEOUT'|'ERROR' }
 
-// ── Topic (Module → Topic → Lesson cluster level) ────────────────────────
+// ── Topic (Module -> Topic -> Lesson cluster level) ────────────────────────
 export interface Topic {
   id: string
   title: string
@@ -52,19 +52,19 @@ export interface LessonSummary {
   id: string; title: string; sortOrder: number; status: string
   currentPhase: string; memoryStrength: number; healthColor: string
   feynmanCompleted: boolean; xpReward: number
-  // Sprint 1 — chip metadata
+  // Sprint 1 - chip metadata
   practiceType: string
   learningObjectiveCount: number
   hasChallenge: boolean
   hasMiniProject: boolean
-  // Phase 1 — topic grouping
+  // Phase 1 - topic grouping
   topicId: string | null
   topicTitle: string | null
 }
 
 export interface ModuleDetail {
   id: string; domainId: string; title: string; glyph: string; status: string
-  /** Ordered topic clusters — used to group lessons in the module map. */
+  /** Ordered topic clusters - used to group lessons in the module map. */
   topics: Topic[]
   lessons: LessonSummary[]
 }
@@ -93,36 +93,39 @@ export interface LessonEncoding {
   modelAnswer: string | null
   /** Exemplar answer revealed after guided practice is passed (written-response sub-chunks only). */
   guidedPracticeModelAnswer: string | null
-  // Sprint 1 — structured lesson metadata
+  // Sprint 1 - structured lesson metadata
   learningObjectives: string[] | null
   challenge: { html: string; starterCode: string | null; tests: Record<string, unknown>[] | null } | null
   miniProject: string | null
   commonMistakes: string[] | null
   assessmentCriteria: string[] | null
-  // Sprint 7 — downloadable resources
+  // Sprint 7 - downloadable resources
   downloadables: Downloadable[] | null
   integrationPrompt: string | null
   questType: QuestType | null
-  // Phase 2 — Markdown section fields (null for JSON-seeded lessons)
+  // Phase 2 - Markdown section fields (null for JSON-seeded lessons)
   loreIntroHtml: string | null
   whyItMattersHtml: string | null
   workedExamplesHtml: string | null
   mentalModelHtml: string | null
   miniSummaryHtml: string | null
   loreConclusionHtml: string | null
-  // Phase 3 — guided step engine
+  // Phase 3 - guided step engine
   /** True when this lesson has guided steps; frontend switches to GuidedStepper. */
   hasGuidedSteps: boolean
-  // Phase 4 — solo assessment types
-  /** DETERMINISTIC | RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW — null means DETERMINISTIC */
+  // Phase 4 - solo assessment types
+  /** DETERMINISTIC | RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW - null means DETERMINISTIC */
   soloAssessmentType: string | null
   /** Rubric checklist items shown for RUBRIC_REFLECTION solo practice */
   rubricItems: string[] | null
-  /** Remaining AI review quota for the current month — only meaningful for AI_REVIEW */
+  /** Remaining AI review quota for the current month - only meaningful for AI_REVIEW */
   aiReviewsRemaining: number
+  // Phase 4 (Retro) - Teach Back mode
+  /** "CODE_EXECUTION" → show code editor in Teach Back; "PATTERN_MATCH" → show textarea; null → not yet in INTEGRATION phase */
+  teachBackMode: string | null
 }
 
-// ── Phase 3 — Guided steps ────────────────────────────────────────────────────
+// ── Phase 3 - Guided steps ────────────────────────────────────────────────────
 
 export type GuidedStepInputType =
   | 'FILL_BLANK' | 'MULTIPLE_CHOICE' | 'SHORT_TEXT' | 'CODE' | 'DRAG_DROP' | 'SEQUENCE'
@@ -132,7 +135,7 @@ export interface GuidedStepDto {
   sortOrder: number
   instructionHtml: string
   inputType: GuidedStepInputType
-  /** Parsed input config — structure depends on inputType */
+  /** Parsed input config - structure depends on inputType */
   inputConfig: Record<string, unknown>
   hintHtml: string | null
   completed: boolean
@@ -145,7 +148,7 @@ export interface GuidedStepCheckResponse {
   nextStepId: string | null
 }
 
-// ── Phase 4 — Solo assessment ─────────────────────────────────────────────
+// ── Phase 4 - Solo assessment ─────────────────────────────────────────────
 
 export type SoloAssessmentType =
   | 'DETERMINISTIC' | 'RUBRIC_REFLECTION' | 'PATTERN_MATCH' | 'AI_REVIEW'
@@ -155,21 +158,21 @@ export type KeywordBand = 'WEAK' | 'GOOD' | 'EXCELLENT'
 /** Response from POST /api/encoding/{lessonId}/solo-practice/submit (all types) */
 export interface SoloAssessmentResult {
   passed: boolean
-  /** Keyword scoring band — only set for PATTERN_MATCH */
+  /** Keyword scoring band - only set for PATTERN_MATCH */
   band: KeywordBand | null
   /** Feedback / mentor text */
   feedback: string | null
-  /** Model-answer HTML revealed after submission — null for DETERMINISTIC */
+  /** Model-answer HTML revealed after submission - null for DETERMINISTIC */
   modelAnswerHtml: string | null
-  /** Keywords matched in the answer — only for PATTERN_MATCH */
+  /** Keywords matched in the answer - only for PATTERN_MATCH */
   matchedKeywords: string[] | null
   errorType: string | null
   xpEarned: number
   newBadges: Badge[]
-  /** Remaining AI-review uses for the month — only meaningful for AI_REVIEW */
+  /** Remaining AI-review uses for the month - only meaningful for AI_REVIEW */
   aiReviewsRemaining: number
   usedAi: boolean
-  /** Test-case breakdown — only for DETERMINISTIC code paths */
+  /** Test-case breakdown - only for DETERMINISTIC code paths */
   testResults: TestResult[]
 }
 
@@ -229,6 +232,8 @@ export interface DiagnosticResultDto {
 export interface FeynmanResultDto {
   accuracy: number; completeness: number; simplicity: number; connection: number
   overallScore: number; feedback: string; xpEarned: number
+  /** "PATTERN_MATCH" | "CODE_EXECUTION" — determines which result view to render */
+  teachBackMode: string | null
 }
 
 // ── Dashboard ────────────────────────────────────────────────────────────────
@@ -244,6 +249,8 @@ export interface DashboardDto {
   currentPath: string; diagnosticCompleted: boolean; diagnosticCompletedAt: string | null
   reviewsDue: number; dailyGoalMinutes: number
   overallProgress: number; moduleHealth: ModuleHealthDto[]
+  /** Domain-specific tier display labels. Null means use application defaults. */
+  tierLabels: Record<string, string> | null
 }
 
 // ── Rabbit Holes ─────────────────────────────────────────────────────────────
@@ -254,6 +261,56 @@ export interface RabbitHoleModule {
 }
 
 // ── Curiosity Queue ──────────────────────────────────────────────────────────
+// ── Retention (spaced repetition) ────────────────────────────────────────────
+export type StabilityState = 'UNVERIFIED' | 'UNSTABLE' | 'STABLE' | 'RETAINED' | 'WEAKENED'
+
+export interface ReviewQuestion {
+  questionId: string
+  questionText: string
+  options: string[]
+  inputType: string
+}
+
+export interface ReviewQueueItem {
+  lessonId: string
+  lessonTitle: string
+  retentionScore: number
+  stabilityState: StabilityState
+  nextReviewDate: string
+  questions: ReviewQuestion[]
+}
+
+export interface ReviewSubmitAnswer {
+  questionId: string
+  answer: string
+}
+
+export interface ReviewSubmitLessonAnswers {
+  lessonId: string
+  answers: ReviewSubmitAnswer[]
+}
+
+export interface ReviewSubmitRequest {
+  lessons: ReviewSubmitLessonAnswers[]
+}
+
+export interface ReviewSubmitQuestionResult {
+  questionId: string
+  correct: boolean
+  correctAnswer: string
+  explanationHtml: string
+}
+
+export interface ReviewSubmitLessonResult {
+  lessonId: string
+  questions: ReviewSubmitQuestionResult[]
+  newStabilityState: string
+}
+
+export interface ReviewSubmitResponse {
+  results: ReviewSubmitLessonResult[]
+}
+
 export interface CuriosityQueueItem {
   id: string; userId: string; lessonId: string; savedAt: string
 }

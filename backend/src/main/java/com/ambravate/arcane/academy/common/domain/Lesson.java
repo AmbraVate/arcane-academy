@@ -164,4 +164,14 @@ public class Lesson {
      */
     @Column(name = "solo_model_answer_html", columnDefinition = "TEXT")
     private String soloModelAnswerHtml;
+
+    // ── Phase 4 (Retro) — Teach Back code execution ───────────────────────────
+
+    /**
+     * Expected stdout for the Teach Back code execution path.
+     * Only used when practiceType == JAVA.
+     * NULL → fall back to pattern-match Feynman scoring.
+     */
+    @Column(name = "teach_back_expected_output", columnDefinition = "TEXT")
+    private String teachBackExpectedOutput;
 }

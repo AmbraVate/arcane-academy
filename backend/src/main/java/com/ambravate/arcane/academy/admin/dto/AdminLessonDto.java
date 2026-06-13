@@ -25,6 +25,8 @@ public class AdminLessonDto {
     private String soloPracticeHtml;
     private String modelAnswer;
     private String feynmanPrompt;
+    /** Expected stdout for code-execution Teach Back (JAVA lessons only). Null = pattern-match mode. */
+    private String teachBackExpectedOutput;
     private List<Map<String, Object>> rabbitHoleTerms;
 
     private long questionCount;

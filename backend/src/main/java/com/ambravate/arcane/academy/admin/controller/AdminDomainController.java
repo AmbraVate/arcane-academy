@@ -45,6 +45,7 @@ public class AdminDomainController {
         existing.setActive(req.isActive());
         existing.setGuildName(req.getGuildName());
         existing.setSchoolId(req.getSchoolId());
+        existing.setTierLabels(req.getTierLabels());
         return ResponseEntity.ok(domainRepository.save(existing));
     }
 

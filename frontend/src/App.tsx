@@ -63,49 +63,49 @@ function AdminRoute() {
 
 // ── Legacy redirect helpers ───────────────────────────────────────────────────
 
-/** /domain/:id/onboarding|diagnostic|etc → /pathway/:id */
+/** /domain/:id/onboarding|diagnostic|etc -> /pathway/:id */
 function LegacyDomainSubpathRedirect() {
   const { domainId } = useParams<{ domainId: string }>()
   return <Navigate to={`/pathway/${domainId}`} replace />
 }
 
-/** /domain/:id → /pathway/:id */
+/** /domain/:id -> /pathway/:id */
 function LegacyDomainRedirect() {
   const { domainId } = useParams<{ domainId: string }>()
   return <Navigate to={`/pathway/${domainId}`} replace />
 }
 
-/** /chunk/:moduleId → /module/:moduleId */
+/** /chunk/:moduleId -> /module/:moduleId */
 function LegacyChunkRedirect() {
   const { moduleId } = useParams<{ moduleId: string }>()
   return <Navigate to={`/module/${moduleId}`} replace />
 }
 
-/** /chunk/:moduleId/topic/:topicId → /module/:moduleId/topic/:topicId */
+/** /chunk/:moduleId/topic/:topicId -> /module/:moduleId/topic/:topicId */
 function LegacyChunkTopicRedirect() {
   const { moduleId, topicId } = useParams<{ moduleId: string; topicId: string }>()
   return <Navigate to={`/module/${moduleId}/topic/${topicId}`} replace />
 }
 
-/** /admin/chunks/:moduleId/subchunks → /admin/modules/:moduleId/lessons */
+/** /admin/chunks/:moduleId/subchunks -> /admin/modules/:moduleId/lessons */
 function LegacyAdminModuleRedirect() {
   const { moduleId } = useParams<{ moduleId: string }>()
   return <Navigate to={`/admin/modules/${moduleId}/lessons`} replace />
 }
 
-/** /admin/subchunks/:lessonId/edit → /admin/lessons/:lessonId/edit */
+/** /admin/subchunks/:lessonId/edit -> /admin/lessons/:lessonId/edit */
 function LegacyAdminLessonEditRedirect() {
   const { lessonId } = useParams<{ lessonId: string }>()
   return <Navigate to={`/admin/lessons/${lessonId}/edit`} replace />
 }
 
-/** /admin/subchunks/:lessonId/questions → /admin/lessons/:lessonId/questions */
+/** /admin/subchunks/:lessonId/questions -> /admin/lessons/:lessonId/questions */
 function LegacyAdminLessonQuestionsRedirect() {
   const { lessonId } = useParams<{ lessonId: string }>()
   return <Navigate to={`/admin/lessons/${lessonId}/questions`} replace />
 }
 
-/** /topic/:id → /pathway/:id (original pre-V24 URLs) */
+/** /topic/:id -> /pathway/:id (original pre-V24 URLs) */
 function LegacyTopicRedirect() {
   const location = useLocation()
   const to = location.pathname.replace(/^\/topic\b/, '/pathway') + location.search
@@ -123,14 +123,14 @@ function AppRoutes() {
 <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
         <Route path="/" element={<HomeRedirect />} />
-        {/* Module + topic pages — publicly browsable (structure only; content requires login) */}
+        {/* Module + topic pages - publicly browsable (structure only; content requires login) */}
         <Route path="/module/:moduleId" element={<ModuleMapPage />} />
         <Route path="/module/:moduleId/topic/:topicId" element={<TopicLessonsPage />} />
         <Route path="/learn/:lessonId" element={<PrivateRoute><EncodingPage /></PrivateRoute>} />
         <Route path="/review"   element={<PrivateRoute><ReviewPage /></PrivateRoute>} />
         <Route path="/rabbit-hole/:id" element={<PrivateRoute><RabbitHolePage /></PrivateRoute>} />
         <Route path="/curiosity-queue" element={<PrivateRoute><CuriosityQueuePage /></PrivateRoute>} />
-        {/* Schools listing — publicly browsable */}
+        {/* Schools listing - publicly browsable */}
         <Route path="/schools"  element={<DomainsPage />} />
         {/* Pathway page publicly browsable; module content requires login */}
         <Route path="/pathway/:domainId" element={<DomainPage />} />

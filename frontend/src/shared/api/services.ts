@@ -1,4 +1,4 @@
-﻿import api, { REFRESH_TOKEN_KEY } from './client'
+import api, { REFRESH_TOKEN_KEY } from './client'
 import type {
   User, Badge, CodeRunResponse,
   ModuleDetail, LessonEncoding, PracticeResult,
@@ -7,6 +7,7 @@ import type {
   RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
   SubscriptionStatus, GuidedStepDto, GuidedStepCheckResponse,
   SoloAssessmentResult,
+  ReviewQueueItem, ReviewSubmitRequest, ReviewSubmitResponse,
 } from '@/shared/types'
 
 // â”€â”€ Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -147,7 +148,7 @@ export const dashboardApi = {
     const { data } = await api.get(`/api/dashboard?domainId=${domainId}`)
     return data
   },
-  /** Public (unauthenticated) — returns module structure with all statuses LOCKED. */
+  /** Public (unauthenticated) - returns module structure with all statuses LOCKED. */
   getPublic: async (domainId = 'java'): Promise<DashboardDto> => {
     const { data } = await api.get(`/api/dashboard/public?domainId=${domainId}`)
     return data
@@ -193,6 +194,18 @@ export const curiosityApi = {
 export const codeApi = {
   run: async (code: string, testInput?: string): Promise<CodeRunResponse> => {
     const { data } = await api.post('/api/code/run', { code, testInput })
+    return data
+  },
+}
+
+// ── Retention (spaced repetition) ────────────────────────────────────────────
+export const retentionApi = {
+  getQueue: async (): Promise<ReviewQueueItem[]> => {
+    const { data } = await api.get('/api/retention/queue')
+    return data
+  },
+  submitReview: async (payload: ReviewSubmitRequest): Promise<ReviewSubmitResponse> => {
+    const { data } = await api.post('/api/retention/review', payload)
     return data
   },
 }
@@ -367,7 +380,7 @@ export interface SubscriptionStatusResponse {
   status: SubscriptionStatus
   /** True when the user currently has full access. */
   active: boolean
-  /** ISO string — when the current billing period ends. Null for FREE / LIFETIME. */
+  /** ISO string - when the current billing period ends. Null for FREE / LIFETIME. */
   periodEnd: string | null
   /** Whether the user has a Stripe customer record (has ever paid). */
   hasStripeCustomer: boolean

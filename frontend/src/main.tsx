@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
   },
 })
 
-// Sentry — gated on VITE_SENTRY_DSN. When empty (the dev default), init() is
+// Sentry - gated on VITE_SENTRY_DSN. When empty (the dev default), init() is
 // skipped entirely so there is zero network noise and no runtime overhead.
 // PII contract: we deliberately do NOT call Sentry.setUser(), and the default
 // PII flags are off. The only thing leaking out is exception messages and

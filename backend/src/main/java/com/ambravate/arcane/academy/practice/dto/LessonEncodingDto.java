@@ -68,4 +68,13 @@ public class LessonEncodingDto {
      * Only meaningful when soloAssessmentType == AI_REVIEW; 0 otherwise.
      */
     private int aiReviewsRemaining;
+
+    // ── Phase 4 (Retro) — Teach Back code execution ───────────────────────────
+
+    /**
+     * When non-null, the Teach Back step for this JAVA lesson will run the learner's code
+     * and compare stdout to this value. The frontend shows a code editor instead of a textarea.
+     * Never exposed as the expected output itself — kept opaque ("__code_teach_back__").
+     */
+    private String teachBackMode;
 }
