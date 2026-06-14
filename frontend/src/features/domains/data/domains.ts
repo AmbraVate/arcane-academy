@@ -28,6 +28,8 @@ export interface Domain {
   modules: number
   accentStroke: string
   school: School
+  outcomes?: string[]
+  estimatedHours?: number
   /** @deprecated No longer used — kept for backward-compat with legacy code. */
   trackGroup?: string
   /** @deprecated No longer used — kept for backward-compat with legacy code. */
@@ -137,13 +139,34 @@ export const DOMAINS: Domain[] = [
 
   // ── School of Computing & Engineering ──────────────────────────────────
   { id: 'software-engineering',   name: 'Software Engineering',         glyph: '⚙️',  status: 'active',      modules: 71, accentStroke: '#7c3aed', school: 'computing-engineering',
-    tagline: 'Build reliable systems — computational thinking, design patterns, and architecture, taught through Java.' },
+    tagline: 'Build reliable systems — computational thinking, design patterns, and architecture, taught through Java.',
+    outcomes: [
+      'Design and implement production-grade systems from first principles',
+      'Lead architectural decisions and code reviews on real teams',
+      'Build and ship full-stack applications with professional tooling',
+      'Reason about trade-offs in distributed systems, databases, and APIs',
+    ],
+    estimatedHours: 55 },
   { id: 'frontend-engineering',   name: 'Frontend Engineering',         glyph: '🎨',  status: 'active',      modules: 40, accentStroke: '#7c3aed', school: 'computing-engineering',
-    tagline: 'Component-driven UIs with React and Tailwind — from first render to production.' },
+    tagline: 'Component-driven UIs with React and Tailwind — from first render to production.',
+    outcomes: [
+      'Build accessible, performant, responsive web UIs with React and Tailwind',
+      'Apply design systems and component architecture in real projects',
+      'Debug rendering, accessibility, and performance issues confidently',
+      'Deliver polished user interfaces that meet professional standards',
+    ],
+    estimatedHours: 62 },
   { id: 'backend-engineering',    name: 'Backend Engineering',          glyph: '🗄️',  status: 'coming_soon', modules: 0,  accentStroke: '#7c3aed', school: 'computing-engineering',
     tagline: 'APIs, databases, authentication, and scalable server-side architecture.' },
   { id: 'data-engineering',       name: 'Data Engineering',             glyph: '🗄️',  status: 'active',      modules: 32, accentStroke: '#6366f1', school: 'computing-engineering',
-    tagline: 'SQL, databases, pipelines, and data architecture — from a single table to enterprise scale.' },
+    tagline: 'SQL, databases, pipelines, and data architecture — from a single table to enterprise scale.',
+    outcomes: [
+      'Write complex SQL queries to extract business insights from real datasets',
+      'Design and optimise data pipelines and schemas',
+      'Build dashboards and reports that drive decisions',
+      'Reason about data quality, normalisation, and performance',
+    ],
+    estimatedHours: 38 },
   { id: 'devops-engineering',     name: 'DevOps & Platform Engineering', glyph: '🔧', status: 'coming_soon', modules: 0,  accentStroke: '#7c3aed', school: 'computing-engineering',
     tagline: 'CI/CD, containerisation, infrastructure as code, and platform reliability.' },
   { id: 'cybersecurity-engineering', name: 'Cyber Security Engineering', glyph: '🔐', status: 'coming_soon', modules: 0, accentStroke: '#7c3aed', school: 'computing-engineering',
@@ -181,7 +204,14 @@ export const DOMAINS: Domain[] = [
 
   // ── School of Natural Sciences ──────────────────────────────────────────
   { id: 'physics',                name: 'Physics',                       glyph: '⚛️',  status: 'active',      modules: 20, accentStroke: '#10b981', school: 'natural-sciences',
-    tagline: 'From classical mechanics to quantum theory and relativity — the laws of the universe.' },
+    tagline: 'From classical mechanics to quantum theory and relativity — the laws of the universe.',
+    outcomes: [
+      'Reason from first principles across classical and modern physics',
+      'Apply mathematical models to real-world physical problems',
+      'Understand the experimental foundations of physics',
+      'Think and communicate like a research scientist',
+    ],
+    estimatedHours: 33 },
   { id: 'chemistry',              name: 'Chemistry',                     glyph: '⚗️',  status: 'coming_soon', modules: 0,  accentStroke: '#10b981', school: 'natural-sciences',
     tagline: 'Atomic structure, bonding, reactions, and the molecular world.' },
   { id: 'biology',                name: 'Biology',                       glyph: '🧬',  status: 'coming_soon', modules: 0,  accentStroke: '#10b981', school: 'natural-sciences',

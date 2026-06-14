@@ -27,7 +27,7 @@ const TIER_DESC: Record<string, string> = {
   LEAD:       'Mastery — professional practice, critical perspectives, and leadership in the field.',
 }
 
-function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDto; onClick: () => void; accent?: string }) {
+function ChunkCard({ ch, onClick, accent = 'var(--teal)', isLeadCapstone = false }: { ch: ModuleHealthDto; onClick: () => void; accent?: string; isLeadCapstone?: boolean }) {
   const locked = ch.status === 'LOCKED'
   const done   = ch.status === 'COMPLETE'
   const inProg = ch.status === 'IN_PROGRESS'
@@ -66,6 +66,12 @@ function ChunkCard({ ch, onClick, accent = 'var(--teal)' }: { ch: ModuleHealthDt
             <span className="text-[10px] text-purple-light font-cinzel uppercase tracking-wide">In Progress</span>
           )}
         </div>
+        {/* LEAD capstone badge */}
+        {isLeadCapstone && (
+          <span className="inline-flex items-center mt-1.5 text-[10px] font-semibold px-2 py-[2px] rounded-full" style={{ background: 'color-mix(in srgb, #14b8a6 15%, transparent)', color: '#14b8a6', border: '1px solid color-mix(in srgb, #14b8a6 35%, transparent)' }}>
+            Ends with a project
+          </span>
+        )}
         {/* Memory bar — only for completed modules */}
         {done && (
           <div className="flex items-center gap-1.5 mt-1.5">
@@ -166,6 +172,28 @@ export default function DomainPage() {
         </div>
       </div>
 
+      {/* Outcomes + time estimate — only shown when data is available */}
+      {domainMeta?.outcomes && domainMeta.outcomes.length > 0 && (
+        <div className="bg-card border border-border rounded-[12px] px-5 py-4 mb-6">
+          <p className="text-[12px] font-bold uppercase tracking-[0.08em] mb-2" style={{ color: '#c9a227' }}>
+            What you'll be able to do
+          </p>
+          <ul className="m-0 p-0 list-none flex flex-col gap-1.5 mb-3">
+            {domainMeta.outcomes.map((outcome, i) => (
+              <li key={i} className="flex items-start gap-2 text-[13px] leading-[1.6]" style={{ color: '#8b7fa0' }}>
+                <span className="mt-[3px] flex-shrink-0" style={{ color: '#8b7fa0' }}>•</span>
+                {outcome}
+              </li>
+            ))}
+          </ul>
+          {domainMeta.estimatedHours !== undefined && (
+            <p className="text-[12px] m-0" style={{ color: '#6b6080' }}>
+              ~{domainMeta.estimatedHours} hours of structured learning
+            </p>
+          )}
+        </div>
+      )}
+
       {/* Reviews due — only shown when authenticated */}
       {!isPublic && dashboard.reviewsDue > 0 && (
         <div className="flex gap-3 mb-7 flex-wrap max-[600px]:flex-col">
@@ -220,12 +248,13 @@ export default function DomainPage() {
                 </div>
               </div>
               <div className="chunk-grid grid gap-2.5" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))' }}>
-                {chunks.map(ch => (
+                {chunks.map((ch, idx) => (
                   <ChunkCard
                     key={ch.moduleId}
                     ch={ch}
                     accent={meta.accentStroke}
                     onClick={() => handleModuleClick(ch)}
+                    isLeadCapstone={tier === 'LEAD' && idx === chunks.length - 1}
                   />
                 ))}
               </div>
