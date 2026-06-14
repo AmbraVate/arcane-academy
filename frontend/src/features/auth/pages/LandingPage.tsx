@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 const FEATURES = [
   { icon: '🧠', title: 'Spaced Repetition', desc: 'Science-backed review scheduling keeps knowledge locked in long-term memory.' },
   { icon: '⚔️', title: 'Boss Battles', desc: 'Prove mastery at each tier. One wrong answer sends you back to study.' },
-  { icon: '🐇', title: 'Rabbit Holes', desc: 'Spot a term that intrigues you? Save it and dive deep on your own schedule.' },
+  { icon: '🔖', title: 'Curiosity Queue', desc: 'Spot a term that intrigues you mid-lesson? Save it to your queue and explore it later.' },
   { icon: '🏆', title: 'Polymath Ranks', desc: 'Earn XP across Java, SQL, React, and more. Rise from Novice to Lord Magus.' },
 ]
 

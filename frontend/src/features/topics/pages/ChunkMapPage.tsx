@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { chunkApi, rabbitHoleApi } from '@/shared/api/services'
-import type { ChunkDetail, RabbitHoleModule } from '@/shared/types'
+import { chunkApi } from '@/shared/api/services'
+import type { ChunkDetail } from '@/shared/types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Lock, Check, Rabbit, ArrowRight, Loader2 } from 'lucide-react'
+import { Lock, Check, Loader2 } from 'lucide-react'
 
 const MEM_COLORS: Record<string, string> = {
   GREEN: 'bg-green', YELLOW: 'bg-orange', RED: 'bg-red',
@@ -14,7 +14,6 @@ export default function ChunkMapPage() {
   const { chunkId } = useParams<{ chunkId: string }>()
   const navigate = useNavigate()
   const [chunk, setChunk] = useState<ChunkDetail | null>(null)
-  const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleModule[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,7 +22,6 @@ export default function ChunkMapPage() {
       .then(setChunk)
       .catch(() => navigate('/topics'))
       .finally(() => setLoading(false))
-    rabbitHoleApi.getForChunk(chunkId).then(setRabbitHoles).catch(() => {})
   }, [chunkId, navigate])
 
   if (loading) {
@@ -145,27 +143,6 @@ export default function ChunkMapPage() {
         })}
       </div>
 
-      {rabbitHoles.length > 0 && (
-        <div className="mt-9">
-          <div className="text-[15px] font-bold text-gold mb-1 flex items-center gap-2">
-            <Rabbit size={16} color="var(--gold)" strokeWidth={1.75} />
-            Rabbit Holes
-          </div>
-          <p className="text-[12px] text-muted m-0 mb-3">Optional deep-dives — explore when curious.</p>
-          <div className="flex flex-col gap-2">
-            {rabbitHoles.map(rh => (
-              <div
-                key={rh.id}
-                className="flex items-center justify-between bg-card border border-border rounded-[10px] px-4 py-3 cursor-pointer transition-[border-color] duration-200 hover:border-gold"
-                onClick={() => navigate(`/rabbit-hole/${rh.id}`)}
-              >
-                <span className="text-[14px] font-semibold text-text">{rh.title}</span>
-                <ArrowRight size={15} color="var(--muted)" strokeWidth={1.75} />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
