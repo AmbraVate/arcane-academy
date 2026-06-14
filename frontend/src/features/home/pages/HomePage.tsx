@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { useTopicsDashboard } from '@/hooks/queries'
+import { useTopicsDashboard, useReviewsDue } from '@/hooks/queries'
 import { TopicIcon } from '@/components/icons/TopicIcon'
 import { Badge } from '@/components/ui/badge'
-import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight, RotateCcw, LifeBuoy, ChevronDown } from 'lucide-react'
+import { Lock, Flame, BookOpen, Swords, Trophy, ArrowRight, RotateCcw, LifeBuoy, ChevronDown, Zap } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ACTIVE_TOPICS, ACTIVE_TOPIC_IDS, COMING_SOON_TOPICS, type Topic } from '@/features/topics/data/topics'
 
@@ -243,12 +243,136 @@ function TopicCard({
   )
 }
 
+/* ── Daily habit nudge bar ───────────────────────────────────────────────── */
+
+function HabitNudgeBar({
+  reviewsDue,
+  streakDays,
+  streakAtRisk,
+  onReview,
+  onContinue,
+}: {
+  reviewsDue: number
+  streakDays: number
+  streakAtRisk: boolean
+  onReview: () => void
+  onContinue: () => void
+}) {
+  const hasReviews  = reviewsDue > 0
+  const streakAlive = streakDays >= 1
+
+  // Choose the primary nudge: reviews trump streak which trumps plain continue
+  if (hasReviews) {
+    return (
+      <div className="mb-8 flex items-center gap-3 px-4 py-3.5 rounded-[12px]
+        border border-[rgba(96,165,250,0.25)] bg-[rgba(96,165,250,0.05)]
+        flex-wrap"
+      >
+        <RotateCcw size={16} strokeWidth={1.75} className="flex-shrink-0 text-[#60a5fa]" />
+        <p className="flex-1 text-[13px] text-muted leading-[1.5] m-0 min-w-0">
+          <span className="font-semibold text-text">
+            {reviewsDue} {reviewsDue === 1 ? 'concept' : 'concepts'} due for review.
+          </span>{' '}
+          Revisit them now before the memory fades.
+        </p>
+        <button
+          onClick={onReview}
+          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-[8px]
+            border border-[rgba(96,165,250,0.4)] bg-[rgba(96,165,250,0.1)]
+            font-cinzel text-[12px] font-semibold text-[#60a5fa]
+            hover:bg-[rgba(96,165,250,0.18)] transition-colors duration-150"
+        >
+          Review now <ArrowRight size={12} strokeWidth={2} />
+        </button>
+      </div>
+    )
+  }
+
+  if (streakAtRisk && streakAlive) {
+    return (
+      <div className="mb-8 flex items-center gap-3 px-4 py-3.5 rounded-[12px]
+        border border-[rgba(251,146,60,0.3)] bg-[rgba(251,146,60,0.06)]
+        flex-wrap"
+      >
+        <Flame size={16} strokeWidth={1.75} className="flex-shrink-0 text-[#fb923c]" />
+        <p className="flex-1 text-[13px] text-muted leading-[1.5] m-0 min-w-0">
+          <span className="font-semibold text-text">
+            Your {streakDays}-day streak is at risk!
+          </span>{' '}
+          Complete a lesson today to keep it alive.
+        </p>
+        <button
+          onClick={onContinue}
+          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-[8px]
+            border border-[rgba(251,146,60,0.35)] bg-[rgba(251,146,60,0.08)]
+            font-cinzel text-[12px] font-semibold text-[#fb923c]
+            hover:bg-[rgba(251,146,60,0.16)] transition-colors duration-150"
+        >
+          Keep streak <Flame size={12} strokeWidth={2} />
+        </button>
+      </div>
+    )
+  }
+
+  if (streakAlive) {
+    return (
+      <div className="mb-8 flex items-center gap-3 px-4 py-3.5 rounded-[12px]
+        border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.04)]
+        flex-wrap"
+      >
+        <Zap size={16} strokeWidth={1.75} className="flex-shrink-0 text-teal" />
+        <p className="flex-1 text-[13px] text-muted leading-[1.5] m-0 min-w-0">
+          <span className="font-semibold text-text">
+            {streakDays}-day streak — keep the momentum going.
+          </span>{' '}
+          {streakDays >= 7
+            ? 'A week of daily study. Knowledge compounds.'
+            : 'One lesson a day builds mastery faster than you think.'}
+        </p>
+        <button
+          onClick={onContinue}
+          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-[8px]
+            border border-[rgba(45,212,191,0.3)] bg-[rgba(45,212,191,0.07)]
+            font-cinzel text-[12px] font-semibold text-teal
+            hover:bg-[rgba(45,212,191,0.13)] transition-colors duration-150"
+        >
+          Next lesson <ArrowRight size={12} strokeWidth={2} />
+        </button>
+      </div>
+    )
+  }
+
+  // No streak yet — simple next lesson CTA
+  return (
+    <div className="mb-8 flex items-center gap-3 px-4 py-3.5 rounded-[12px]
+      border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.04)]
+      flex-wrap"
+    >
+      <BookOpen size={16} strokeWidth={1.75} className="flex-shrink-0 text-teal" />
+      <p className="flex-1 text-[13px] text-muted leading-[1.5] m-0 min-w-0">
+        <span className="font-semibold text-text">Ready to continue?</span>{' '}
+        Pick up where you left off and build your daily habit.
+      </p>
+      <button
+        onClick={onContinue}
+        className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-[8px]
+          border border-[rgba(45,212,191,0.3)] bg-[rgba(45,212,191,0.07)]
+          font-cinzel text-[12px] font-semibold text-teal
+          hover:bg-[rgba(45,212,191,0.13)] transition-colors duration-150"
+      >
+        Continue learning <ArrowRight size={12} strokeWidth={2} />
+      </button>
+    </div>
+  )
+}
+
 /* ── Page ────────────────────────────────────────────────────────────────── */
 
 export default function HomePage() {
-  const { user }  = useAuth()
-  const navigate  = useNavigate()
-  const rawData   = useTopicsDashboard(ACTIVE_TOPIC_IDS)
+  const { user }     = useAuth()
+  const navigate     = useNavigate()
+  const rawData      = useTopicsDashboard(ACTIVE_TOPIC_IDS)
+  const { data: reviewsDue = 0 } = useReviewsDue()
 
   // Normalise dashboard data
   const topicData: Record<string, TopicData> = Object.fromEntries(
@@ -332,6 +456,20 @@ export default function HomePage() {
           </div>
         )}
       </div>
+
+      {/* ── Daily habit nudge — enrolled users only ─────────────────────────── */}
+      {hasEnrollments && (
+        <HabitNudgeBar
+          reviewsDue={reviewsDue}
+          streakDays={user?.streakDays ?? 0}
+          streakAtRisk={enrolledTopics.some(t => rawData[t.id]?.streakAtRisk)}
+          onReview={() => navigate('/reviews/daily')}
+          onContinue={() => {
+            const first = enrolledTopics[0]
+            if (first) handleTopicClick(first)
+          }}
+        />
+      )}
 
       {/* ── How it works — first-time only ─────────────────────────────────── */}
       {!hasEnrollments && (
