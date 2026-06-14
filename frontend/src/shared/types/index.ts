@@ -1,26 +1,9 @@
-﻿// ── Auth ──────────────────────────────────────────────────────────────────────
-export type SubscriptionStatus = 'FREE' | 'MONTHLY' | 'ANNUAL' | 'LIFETIME' | 'CANCELLED'
-
+// ── Auth ──────────────────────────────────────────────────────────────────────
 export interface User {
   userId: string; username: string; totalXp: number; rank: string; streakDays: number; token: string
   role?: 'USER' | 'ADMIN'
   /** Admin-granted flag allowing enrolment in multiple topics without a subscription. */
   bypassPaywall?: boolean
-  /** Current billing status. FREE = one topic allowed; MONTHLY/ANNUAL/LIFETIME = full access. */
-  subscriptionStatus?: SubscriptionStatus
-  /** False until the user completes or skips the onboarding walkthrough. */
-  onboardingCompleted?: boolean
-}
-
-/** Returns true when the user has full, active access to all topics. */
-export function hasActiveSubscription(user?: User | null): boolean {
-  if (!user) return false
-  if (user.role === 'ADMIN' || user.bypassPaywall) return true
-  return (
-    user.subscriptionStatus === 'MONTHLY' ||
-    user.subscriptionStatus === 'ANNUAL' ||
-    user.subscriptionStatus === 'LIFETIME'
-  )
 }
 
 // ── Shared (kept from old system) ────────────────────────────────────────────
@@ -33,22 +16,14 @@ export interface TestResult { label: string; passed: boolean; actualOutput: stri
 export interface Badge { id: string; displayName: string; description: string; glyph: string; category: string; earned: boolean; earnedAt: string | null }
 export interface CodeRunResponse { output: string | null; error: string | null; status: 'SUCCESS'|'COMPILE_ERROR'|'RUNTIME_ERROR'|'TIMEOUT'|'ERROR' }
 
-// ── Topic (Module → Topic → Lesson cluster level) ────────────────────────
-export interface Topic {
-  id: string
-  title: string
-  purposeHtml: string | null
-  sortOrder: number
-}
-
 // ── Chunks ───────────────────────────────────────────────────────────────────
-export interface ModuleSummary {
+export interface ChunkSummary {
   id: string; title: string; glyph: string; status: string
-  totalLessons: number; completedLessons: number
+  totalSubChunks: number; completedSubChunks: number
   memoryStrength: number; healthColor: string; prerequisiteIds: string[]
 }
 
-export interface LessonSummary {
+export interface SubChunkSummary {
   id: string; title: string; sortOrder: number; status: string
   currentPhase: string; memoryStrength: number; healthColor: string
   feynmanCompleted: boolean; xpReward: number
@@ -57,27 +32,20 @@ export interface LessonSummary {
   learningObjectiveCount: number
   hasChallenge: boolean
   hasMiniProject: boolean
-  // Phase 1 — topic grouping
-  topicId: string | null
-  topicTitle: string | null
 }
 
-export interface ModuleDetail {
-  id: string; domainId: string; title: string; glyph: string; status: string
-  /** Ordered topic clusters — used to group lessons in the module map. */
-  topics: Topic[]
-  lessons: LessonSummary[]
+export interface ChunkDetail {
+  id: string; topicId: string; title: string; glyph: string; status: string
+  subChunks: SubChunkSummary[]
 }
 
 // ── Encoding ─────────────────────────────────────────────────────────────────
-export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'SOLO_PRACTICE' | 'RETRIEVAL_CHECK' | 'INTEGRATION' | 'COMPLETE'
-
-export type QuestType = 'KNOWLEDGE' | 'GUIDED' | 'PRACTICE' | 'INVESTIGATION' | 'SYNTHESIS' | 'MASTERY'
+export type EncodingPhase = 'HOOK' | 'EXPLANATION' | 'GUIDED_PRACTICE' | 'SOLO_PRACTICE' | 'RETRIEVAL_CHECK' | 'COMPLETE'
 
 export interface StoryRabbitHoleTerm { term: string; description: string }
 
-export interface LessonEncoding {
-  lessonId: string; moduleId: string; domainId: string; title: string
+export interface SubChunkEncoding {
+  subChunkId: string; chunkId: string; topicId: string; title: string
   phase: EncodingPhase; status: string
   hookHtml: string | null; explanationHtml: string | null
   storyBeats: StoryBeat[] | null
@@ -101,76 +69,6 @@ export interface LessonEncoding {
   assessmentCriteria: string[] | null
   // Sprint 7 — downloadable resources
   downloadables: Downloadable[] | null
-  integrationPrompt: string | null
-  questType: QuestType | null
-  // Phase 2 — Markdown section fields (null for JSON-seeded lessons)
-  loreIntroHtml: string | null
-  whyItMattersHtml: string | null
-  workedExamplesHtml: string | null
-  mentalModelHtml: string | null
-  miniSummaryHtml: string | null
-  loreConclusionHtml: string | null
-  // Phase 3 — guided step engine
-  /** True when this lesson has guided steps; frontend switches to GuidedStepper. */
-  hasGuidedSteps: boolean
-  // Phase 4 — solo assessment types
-  /** DETERMINISTIC | RUBRIC_REFLECTION | PATTERN_MATCH | AI_REVIEW — null means DETERMINISTIC */
-  soloAssessmentType: string | null
-  /** Rubric checklist items shown for RUBRIC_REFLECTION solo practice */
-  rubricItems: string[] | null
-  /** Remaining AI review quota for the current month — only meaningful for AI_REVIEW */
-  aiReviewsRemaining: number
-}
-
-// ── Phase 3 — Guided steps ────────────────────────────────────────────────────
-
-export type GuidedStepInputType =
-  | 'FILL_BLANK' | 'MULTIPLE_CHOICE' | 'SHORT_TEXT' | 'CODE' | 'DRAG_DROP' | 'SEQUENCE'
-
-export interface GuidedStepDto {
-  id: string
-  sortOrder: number
-  instructionHtml: string
-  inputType: GuidedStepInputType
-  /** Parsed input config — structure depends on inputType */
-  inputConfig: Record<string, unknown>
-  hintHtml: string | null
-  completed: boolean
-}
-
-export interface GuidedStepCheckResponse {
-  passed: boolean
-  feedback: string
-  reflectionPrompt: string | null
-  nextStepId: string | null
-}
-
-// ── Phase 4 — Solo assessment ─────────────────────────────────────────────
-
-export type SoloAssessmentType =
-  | 'DETERMINISTIC' | 'RUBRIC_REFLECTION' | 'PATTERN_MATCH' | 'AI_REVIEW'
-
-export type KeywordBand = 'WEAK' | 'GOOD' | 'EXCELLENT'
-
-/** Response from POST /api/encoding/{lessonId}/solo-practice/submit (all types) */
-export interface SoloAssessmentResult {
-  passed: boolean
-  /** Keyword scoring band — only set for PATTERN_MATCH */
-  band: KeywordBand | null
-  /** Feedback / mentor text */
-  feedback: string | null
-  /** Model-answer HTML revealed after submission — null for DETERMINISTIC */
-  modelAnswerHtml: string | null
-  /** Keywords matched in the answer — only for PATTERN_MATCH */
-  matchedKeywords: string[] | null
-  errorType: string | null
-  xpEarned: number
-  newBadges: Badge[]
-  /** Remaining AI-review uses for the month — only meaningful for AI_REVIEW */
-  aiReviewsRemaining: number
-  usedAi: boolean
-  /** Test-case breakdown — only for DETERMINISTIC code paths */
-  testResults: TestResult[]
 }
 
 export interface Downloadable {
@@ -232,10 +130,10 @@ export interface FeynmanResultDto {
 }
 
 // ── Dashboard ────────────────────────────────────────────────────────────────
-export interface ModuleHealthDto {
-  moduleId: string; title: string; glyph: string
+export interface ChunkHealthDto {
+  chunkId: string; title: string; glyph: string
   status: string; memoryStrength: number; healthColor: string
-  totalLessons: number; completedLessons: number
+  totalSubChunks: number; completedSubChunks: number
   tier: string
 }
 
@@ -243,24 +141,16 @@ export interface DashboardDto {
   totalXp: number; rank: string; streakDays: number; streakAtRisk: boolean
   currentPath: string; diagnosticCompleted: boolean; diagnosticCompletedAt: string | null
   reviewsDue: number; dailyGoalMinutes: number
-  overallProgress: number; moduleHealth: ModuleHealthDto[]
-}
-
-// ── Rabbit Holes ─────────────────────────────────────────────────────────────
-export interface RabbitHoleModule {
-  id: string; moduleId: string; title: string
-  contentHtml: string; storyBeats: StoryBeat[]
-  starterCode: string; testCaseLabels: { label: string }[]; filename: string; sortOrder: number
+  overallProgress: number; chunkHealth: ChunkHealthDto[]
 }
 
 // ── Curiosity Queue ──────────────────────────────────────────────────────────
 export interface CuriosityQueueItem {
-  id: string; userId: string; lessonId: string; savedAt: string
+  id: string; userId: string; subChunkId: string; savedAt: string
 }
 
 // ── Rabbit Hole Terms ────────────────────────────────────────────────────────
 export interface RabbitHoleTerm {
   id: string; term: string; description: string | null
-  lessonId: string | null; domainId: string | null; savedAt: string
+  subChunkId: string | null; topicId: string | null; savedAt: string
 }
-

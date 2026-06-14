@@ -100,7 +100,7 @@ export default function StoryPanel({ beats, fullPage = false, lessonId, domainId
               className="text-[11px] px-3 py-1.5 rounded-md bg-purple-dim text-purple-light border border-[rgba(139,92,246,0.4)] cursor-pointer hover:bg-[rgba(139,92,246,0.2)]"
               onClick={handleSave} disabled={saving}
             >
-              {saving ? '…' : '🐇 Save to Rabbit Holes'}
+              {saving ? '…' : '🔖 Save to Curiosity Queue'}
             </button>
           )}
         </div>
