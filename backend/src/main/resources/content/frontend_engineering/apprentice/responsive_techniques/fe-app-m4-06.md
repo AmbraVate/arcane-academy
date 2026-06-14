@@ -170,6 +170,13 @@ h1 { font-size: clamp(1.5rem, 4vw, 3rem); }
 }
 ```
 
+## Common Mistakes
+
+- **Reaching for media queries before trying fluid CSS**: `repeat(auto-fill, minmax(280px, 1fr))` creates a responsive grid without a single breakpoint. Many layout problems are solved by fluid units before a media query is needed.
+- **Confusing `auto-fill` and `auto-fit`**: `auto-fill` keeps empty grid tracks, `auto-fit` collapses them. For card grids with varying item counts, `auto-fit` avoids ghost columns at the end.
+- **Forgetting `container-type: inline-size` on the parent**: Container queries require the parent element to explicitly declare `container-type` — without it, `@container` rules never apply, silently.
+- **Applying `flex: 1` without `min-width`**: Without a `min-width`, flex items shrink indefinitely and can collapse to near-zero width on small screens.
+
 ## Why It Matters
 
 Fluid layouts produce code that works at every viewport width, not just the three or four breakpoints you tested. Container queries enable truly reusable components that adapt to their context — a card in a narrow sidebar behaves differently from the same card in a wide main area.

@@ -110,6 +110,13 @@ function Button() {
 
 **Poor Context use cases:** frequently-updated values, server data (use a data-fetching library).
 
+## Common Mistakes
+
+- **Using Context for high-frequency state**: Storing form inputs or mouse coordinates in Context causes every consumer to re-render on each keystroke. Context is for stable, infrequently-changing ambient values.
+- **Putting everything in one MegaContext**: A single `AppContext` with user, theme, cart, and preferences means every consumer re-renders on any change. Split into focused contexts by domain and update frequency.
+- **Exporting the raw context object**: Consumers importing `ThemeContext` directly and calling `useContext(ThemeContext)` bypasses the custom hook's error handling. Export a `useTheme()` hook, not the context itself.
+- **Using Context instead of a data-fetching library for server state**: Server data (API responses) belongs in React Query, SWR, or RTK Query — not in Context, which has no caching, deduplication, or stale-while-revalidate logic.
+
 ## Mental Model
 
 Context is a building's radio system replacing hand-delivered memos. Props are memos: explicit, addressed, visible in every hand they pass through — ideal for direct communication between adjacent offices (parent to child). But some information is *ambient* — the fire-drill schedule, the building's language, today's dress code — relevant to everyone on certain floors and owned by building management, not by any office on the route. Distributing ambient facts by memo means every office between management and the basement spends its day forwarding envelopes it never opens (prop drilling). The radio fixes this structurally: management installs a transmitter covering specific floors (the Provider wrapping a subtree, its `value` the broadcast), and any office that cares simply switches on a receiver (`useContext`) — offices in between neither know nor care that the signal passes through their walls. Three properties of radio carry the design rules. Coverage is scoped by transmitter placement: broadcast to the floors that need it, not the whole city — several small stations (ThemeContext, AuthContext) beat one megastation airing everything to everyone. Every receiver hears every broadcast on its channel: when the transmitted value changes, *all* subscribed components re-render — so you don't broadcast rapidly changing chatter (keystrokes, cursor positions) on a channel half the building monitors. And radio is invisible infrastructure: unlike a memo trail, you can't see who's listening by reading the org chart — which is precisely why you reserve it for stable, ambient facts and keep point-to-point business on paper (props), where the audit trail lives.

@@ -156,6 +156,13 @@ body { font-size: clamp(1rem, 1.5vw, 1.125rem); }
 - `vw` — percentage of viewport width (1vw = 1% of viewport width)
 - Combine with `clamp()` to add safe bounds
 
+## Common Mistakes
+
+- **Using pure `vw` without `clamp()` bounds**: `font-size: 4vw` becomes 16px on a 400px phone — unreadably small. Always set a minimum with `clamp(1rem, 4vw, 2rem)`.
+- **Checking headings only on desktop**: A `3rem` hero heading looks fine at 1440px but wraps to one or two characters per line at 320px. Test all headings at 375px.
+- **Using fixed `px` for headings across all viewports**: A heading at `48px` on a small phone consumes the full viewport width. Fluid type via `clamp()` eliminates the need for per-breakpoint heading overrides.
+- **Ignoring line length**: Fluid font size without `max-width: 65ch` on body text can produce lines 200 characters wide on large screens, hurting readability even when the size is correct.
+
 ## Why It Matters
 
 Typography is the majority of most web pages. Fluid type ensures headings remain impactful on large screens and readable on small ones — without jumping sizes at arbitrary breakpoints.

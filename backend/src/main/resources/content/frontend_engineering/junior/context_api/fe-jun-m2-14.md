@@ -124,6 +124,13 @@ function Button() {
 }
 ```
 
+## Common Mistakes
+
+- **Forgetting to memoize the context value object**: Passing `value={{ user, setUser }}` inline creates a new object reference every render, causing every consumer to re-render even when nothing changed. Use `useMemo` on the value object.
+- **Using an unhelpful default value**: A default of `null` or `undefined` from `createContext(null)` causes silent failures when a component reads context outside a Provider. Use a sentinel value or a throwing hook to surface the error immediately.
+- **Wrapping too wide**: Placing a highly-specific Provider at the very top of the app couples the entire tree to that context's re-renders. Wrap only the subtree that genuinely needs it.
+- **Not co-locating state, Provider, and hook in one file**: Scattering `createContext`, the state hook, and the custom hook across separate files makes the context harder to understand and maintain.
+
 ## Mental Model
 
 Creating a context is installing the building's radio station, and the installation choices are what separate professional infrastructure from a transmitter dumped on the roof. `createContext` registers the *frequency* — a named channel (ThemeContext) that exists app-wide but broadcasts nothing yet. The Provider is the transmitter you actually mount, and its two installation parameters do all the work: *placement* sets coverage (wrap the whole app for truly global facts, one section for sectional ones — transmit no wider than the audience), and the `value` prop is the programme being aired. The default value passed to `createContext` is the *off-air recording*: what receivers hear if they tune in somewhere no transmitter covers. The professional choice is often to make that recording an alarm rather than easy-listening — a custom `useAuth` hook that throws "no AuthProvider found" is the equivalent of a test tone that tells the engineer immediately that they're outside coverage, instead of letting them ship a room silently hearing the wrong programme. Two more installation disciplines: don't rebuild the programme from scratch every minute when nothing changed — an unmemoised `value={{...}}` is a station re-announcing identical content and forcing every receiver to react; and put the whole station in one broadcast booth — a custom `<AuthProvider>` component owning the state, the memoised value, and the paired hook, so consumers get a tuner (`useAuth()`) rather than a soldering kit.

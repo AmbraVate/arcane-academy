@@ -106,6 +106,13 @@ onBlur    onKeyDown  onMouseEnter  onScroll
 
 **SyntheticEvent:** React's cross-browser event wrapper. Has the same API as native events (target, preventDefault, stopPropagation) but works consistently across all browsers.
 
+## Common Mistakes
+
+- **Calling the handler instead of passing it**: `onClick={handleClick()}` executes the function during render and passes the return value as the handler. Use `onClick={handleClick}` (no parentheses) to pass the function reference.
+- **Using lowercase event prop names**: React event props are camelCase — `onClick`, `onChange`, `onSubmit`. Lowercase `onclick` is a plain HTML attribute that React ignores.
+- **Forgetting `event.preventDefault()` on form submits**: Without it, the form causes a full page reload, destroying React state and the SPA experience.
+- **Attaching event handlers with `addEventListener` when JSX props are available**: Using `addEventListener` directly bypasses React's synthetic event system and requires manual cleanup to avoid memory leaks.
+
 ## Mental Model
 
 Think of React events as a hotel's front desk rather than wires soldered to every doorknob. In vanilla JavaScript you walk the building and wire each knob yourself (`addEventListener` per element) — and re-wire whenever a door is replaced. In React you instead leave *standing instructions at reception*: the JSX `onClick={handleOrder}` is a note in the hotel's ledger saying "when anyone presses the button in room 204, call this number". The hotel (React) handles the physical wiring centrally and keeps the ledger synchronised as rooms are renovated, added, or demolished (components re-render, mount, unmount) — your instructions survive every renovation because they're part of the room's *description*, not its wiring. The ledger model explains the two classic beginner bugs precisely. Writing `onClick={handleOrder()}` is not leaving instructions — it's *making the call yourself while filling in the ledger* (the function executes during render), which is why things fire before anyone touches anything; the desk needs the phone number (`handleOrder`) or a sealed note (`() => handleOrder(id)`), not the result of the call. And because instructions are re-submitted with every room description (each render), handlers are cheap to declare inline — but each note is written with *that day's information* (that render's state values), which plants the seed for understanding stale closures later. Describe the room, leave the note, let the desk do the wiring: that's React's entire event model.

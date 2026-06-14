@@ -108,6 +108,13 @@ function UncontrolledForm() {
 | Validation | Real-time | On submit only |
 | Use when | Most forms | File inputs, simple submit-only |
 
+## Common Mistakes
+
+- **Adding `value` without `onChange`**: An input with `value={state}` but no `onChange` handler is read-only — the user types but nothing changes. React logs a warning; always pair `value` with an `onChange` setter.
+- **Switching between controlled and uncontrolled mid-lifecycle**: Changing an input from `value={undefined}` to `value="something"` (or vice versa) triggers React's controlled-to-uncontrolled warning and unpredictable behaviour. Choose one pattern from the start.
+- **Using `defaultValue` on a controlled input**: `defaultValue` sets the initial value once and has no further effect. On a controlled input, use `useState('')` to initialise instead.
+- **Reaching for `useRef` when live validation is needed**: Refs cannot trigger re-renders. Any UI feature that responds to the input value while the user types requires controlled state.
+
 ## Mental Model
 
 The controlled/uncontrolled split is the difference between a bank account and cash in a drawer. A controlled input is a bank account: the balance you see on screen is a *display of the ledger* (React state) — every deposit (keystroke) goes through the teller (`onChange` → `setState`), the ledger updates, and the displayed balance refreshes from the ledger. The display can never disagree with the books, because it has no independent existence: that's `value={state}` — the input shows state, only state, always state. This is also why the half-wired version freezes: a `value` without an `onChange` is a bank that displays the ledger but employs no tellers — deposits are shouted into the void, the ledger never changes, the display never moves. An uncontrolled input is cash in a drawer: the money (value) lives in the drawer itself (the DOM node), accumulating as the user adds to it, and you only count it when you need the total (reading via a ref at submit). Less infrastructure, perfectly sound for simple cases — but the bank doesn't know the balance between counts, so anything requiring *live* knowledge of the money (validation as they type, a running total, disabling a button until the amount is right) is impossible without converting to the ledger system. Choose by the question: does anything need to *react to the value while it's being entered*? Ledger (controlled). Only needed at the end? Drawer (uncontrolled) is honest and cheap. And never run both systems on one account — an input that starts as a drawer and becomes ledger-managed mid-session (undefined value becoming a string) is exactly the accounting confusion React's console warning exists to catch.

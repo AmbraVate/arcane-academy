@@ -157,6 +157,14 @@ TypeError: Cannot read properties of undefined (reading 'map')
 | `SyntaxError` | Invalid JavaScript | Missing bracket, typo in code |
 | `404` (network) | Resource not found | Wrong URL, missing file |
 
+## Common Mistakes
+
+- **Refreshing instead of reading**: Hitting F5 hoping the error disappears is the most common debugging anti-pattern. The error message tells you exactly what broke and where.
+- **Ignoring the stack trace line number**: Most developers read only the error message and miss the clickable filename and line number that jumps straight to the failing code.
+- **Confusing ReferenceError with TypeError**: ReferenceError means the variable does not exist in scope (typo, not declared); TypeError means the variable exists but is used incorrectly (calling `.map()` on undefined).
+- **Dismissing yellow warnings**: Console warnings signal deprecated APIs, accessibility issues, or performance problems that often become real failures later.
+- **Searching the wrong layer**: A 404 in the network tab is a URL problem, not a JavaScript problem — checking JS code for a network error wastes time on the wrong layer.
+
 ## Why It Matters
 
 Reading errors carefully is 10× faster than guessing. The error message contains: what failed, where it failed, and often why it failed. Treating error messages as noise and refreshing the page hoping it resolves is the most common and most expensive debugging mistake.

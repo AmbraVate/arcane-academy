@@ -108,6 +108,13 @@ function UserProfile() {
 }
 ```
 
+## Common Mistakes
+
+- **Placing `path="*"` before other routes**: The wildcard route matches everything. If it appears before specific routes, it intercepts them — all routes render the 404 page. The wildcard must always be last inside `<Routes>`.
+- **Wrapping `<Routes>` in multiple `<BrowserRouter>` instances**: Having more than one `<BrowserRouter>` in the tree creates multiple routing contexts and causes unpredictable behaviour. Wrap the entire app in a single `<BrowserRouter>` at the top level.
+- **Forgetting the leading slash on route paths**: `path="about"` and `path="/about"` behave differently in nested route contexts. In top-level routes, always use absolute paths starting with `/`.
+- **Importing from `react-router` instead of `react-router-dom`**: `react-router-dom` is the browser-specific package that includes `BrowserRouter`. Importing core hooks from `react-router` directly can cause missing-context errors.
+
 ## Mini Summary
 - ✔ BrowserRouter → Routes → Route (path + element)
 - ✔ v6: exact match by default

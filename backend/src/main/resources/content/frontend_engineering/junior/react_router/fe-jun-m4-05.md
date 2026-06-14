@@ -110,6 +110,13 @@ function LoginForm() {
 }
 ```
 
+## Common Mistakes
+
+- **Using `<a href>` for internal navigation**: A plain anchor tag causes a full page reload, destroying React state and losing the SPA's speed advantage. Use `<Link to="...">` for all internal routes.
+- **Calling `useNavigate()` result during render**: `navigate('/home')` must be called inside an event handler or `useEffect` — calling it directly in the component body causes navigation on every render.
+- **Using NavLink without a function for `className`**: `className="active"` applies the class statically. Use `className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}` to apply the active class conditionally.
+- **Not using `{ replace: true }` after login redirects**: After a successful login, the back button should not return to the login page. Use `navigate('/dashboard', { replace: true })` to replace the login entry in the history stack.
+
 ## Mini Summary
 - ✔ Link: internal navigation without page reload
 - ✔ NavLink: Link + isActive prop for styling current route

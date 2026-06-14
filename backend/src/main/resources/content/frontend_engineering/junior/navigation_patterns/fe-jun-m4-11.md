@@ -112,6 +112,13 @@ navigate(1);   // go forward
 navigate(-2);  // go back 2 steps
 ```
 
+## Common Mistakes
+
+- **Using `<Navigate>` when `useNavigate()` is more appropriate**: `<Navigate>` renders in JSX and fires on every render of that branch. For redirects that should happen after a user action (button click, form submit), use `useNavigate()` inside the handler instead.
+- **Confusing `replace` and `push`**: The default `navigate('/path')` pushes to the history stack — back is available. Using `replace: true` replaces the current entry — back is not available. Use `replace` for login redirects and alias routes where the replaced URL should never appear in history.
+- **Navigating by index (negative number) without knowing the stack**: `navigate(-1)` goes back one step, but if the user arrived directly (new tab, bookmark), `-1` may leave the app entirely. Guard with checking history length before using negative navigation.
+- **Placing a `<Navigate>` component outside a route context**: `<Navigate>` must be rendered inside a `<BrowserRouter>` context — placing it in a component that can render outside the router (e.g., error boundaries at the root) will throw.
+
 ## Mini Summary
 - ✔ Navigate component: declarative redirect in JSX
 - ✔ useNavigate(): imperative redirect after events

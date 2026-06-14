@@ -114,6 +114,13 @@ function ContactForm() {
 }
 ```
 
+## Common Mistakes
+
+- **Forgetting the spread when updating a field in a state object**: `setForm({ [name]: value })` replaces the entire object with a single field. Always spread the previous state: `setForm(prev => ({ ...prev, [name]: value }))`.
+- **Initialising string fields with `undefined` instead of `''`**: Starting a field as `undefined` and later setting it to a string triggers React's controlled-to-uncontrolled warning. Always initialise every field as an empty string.
+- **Treating `e.target.value` as a number**: Every input value arrives as a string, including numeric inputs. Parse explicitly (`parseInt`, `parseFloat`) when a number is required — do not rely on JavaScript's implicit coercion.
+- **Mutating state directly**: `form.name = 'new'` bypasses React's state system and will not cause a re-render. Use `setForm` with a spread every time.
+
 ## Mental Model
 
 Managing input state is running a hotel's room-status board, and the scaling lesson is what happens as the hotel grows. One room (a single input) is easy: a sticky note — "room 1: occupied" — one `useState`, one handler, done. The trouble is success: at twelve rooms (a real form), twelve sticky notes with twelve hand-written update routines means the front desk drowns in nearly identical paperwork — every new room demands another note, another routine, another chance to copy-paste the wrong one (the classic bug where the email field's handler updates the name field). The professional fix is the *unified board*: one structured panel holding every room's status (a single state object — `{name, email, phone}`), updated by one generic procedure that reads the room number off the incoming report and flips exactly that slot — the computed-key handler, `[e.target.name]: e.target.value`, where each input's `name` attribute is its room number. Two board disciplines keep it sound. Updates *replace the whole board photo, changed slot included* — `setForm({...form, [name]: value})` — because the board's history (React's state) tracks photographs, not pencil edits; forget the spread and your new photo shows one room's status on an otherwise blank board, the all-fields-vanish bug every junior meets once. And reports arrive as text: everything `e.target.value` delivers is a string — room 12 reporting "4" guests means the *characters* "4" — so numeric fields get converted deliberately at the board, not hopefully at checkout. One board, room-numbered slots, one procedure, photographs not pencil marks: input state at any scale.

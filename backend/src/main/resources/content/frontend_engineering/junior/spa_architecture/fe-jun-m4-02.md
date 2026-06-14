@@ -110,6 +110,13 @@ location / {
 | URL quality | Clean | Ugly |
 | Use when | Full server control | Static hosting without config |
 
+## Common Mistakes
+
+- **Using BrowserRouter without configuring a server fallback**: When a user refreshes on `/dashboard`, the server tries to find a file at that path and returns 404. All non-root routes must be redirected to `index.html` server-side.
+- **Choosing HashRouter for a public-facing site**: Hash URLs (`/#/about`) are ugly, not indexable by all crawlers, and cannot be used with server-side rendering. Use BrowserRouter and configure the fallback properly.
+- **Mixing `history.pushState` calls with React Router navigation**: Calling the History API directly bypasses React Router's state and can desynchronise the URL from the rendered component. Always use `useNavigate()` or `<Link>` within a React Router app.
+- **Putting `<BrowserRouter>` inside a component that renders conditionally**: `BrowserRouter` should wrap the entire application at the top level — nesting it inside conditional components causes routing context to be lost.
+
 ## Mini Summary
 - ✔ History API: pushState changes URL without page reload
 - ✔ BrowserRouter: clean URLs, needs server fallback config

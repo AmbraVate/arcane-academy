@@ -160,6 +160,13 @@ It is the mechanism that makes responsive design possible. Master media queries 
 @media (min-width: 1280px) { /* xl  */ }
 ```
 
+## Common Mistakes
+
+- **Using `max-width` in a mobile-first codebase**: Mixing `min-width` and `max-width` queries creates conflicting specificity. Pick one direction — prefer `min-width` for mobile-first development.
+- **Targeting specific device widths instead of content break points**: `@media (max-width: 768px)` assumes tablets are exactly 768px wide. Device sizes vary; set breakpoints where your specific content breaks.
+- **Forgetting `prefers-reduced-motion`**: Animations that run for everyone ignore users who experience motion sickness. `@media (prefers-reduced-motion: reduce)` should always be checked when adding transitions or animations.
+- **Writing media queries far from the component they affect**: Keeping all breakpoints in a single file at the bottom makes it hard to understand what changes at each viewport. Co-locating media queries with the affected selector is more maintainable.
+
 ## Why It Matters
 
 Media queries are the control flow of responsive design — the `if` statements that adapt layouts to context. Understanding their full capabilities (not just min/max-width) opens up dark mode, reduced motion, print styles, and touch-vs-hover detection.

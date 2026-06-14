@@ -119,6 +119,13 @@ function NotFoundPage() {
 }
 ```
 
+## Common Mistakes
+
+- **Placing `path="*"` before specific routes**: The wildcard matches everything. If it appears before other routes in `<Routes>`, all navigation renders the 404 page. Always put the wildcard route last.
+- **Leaving the 404 page as a dead end**: A 404 page with only "Page Not Found" and no links traps the user. Always provide at least a home link, and ideally a search box or list of popular pages.
+- **Confusing an API 404 with a route 404**: When a data fetch returns 404 (resource not found), the route itself is valid. Render an empty-state component or "not found" message within the page — do not redirect to the 404 route.
+- **Not testing the 404 route in production**: Client-side routing with a server fallback means the server returns 200 for all routes. The 404 component only renders when React Router can't match a route — test it by visiting a truly non-existent path in the deployed app.
+
 ## Mini Summary
 - ✔ path="*" wildcard catches all unmatched routes — must be last
 - ✔ Good 404: explanation + home link + search + popular pages
