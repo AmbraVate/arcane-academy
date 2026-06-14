@@ -18,6 +18,24 @@ import {
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
+const SCHOOL_OUTCOMES: Partial<Record<School, string>> = {
+  'computing-engineering':  'Design and ship production-quality systems — from architecture to deployment.',
+  'mathematics-logic':      'Reason rigorously, model complex problems, and communicate with mathematical precision.',
+  'natural-sciences':       'Think from first principles and reason like a scientist across physics, chemistry, and biology.',
+  'mind-neuroscience':      'Understand the brain and behaviour well enough to apply it in research, therapy, or product design.',
+  'history-civilisation':   'Contextualise world events, trace cause and effect across centuries, and argue from evidence.',
+  'philosophy-ethics':      'Construct and evaluate arguments, navigate ethical dilemmas, and think with philosophical rigour.',
+  'society-politics':       'Analyse social systems, political structures, and economic forces at the level of a graduate analyst.',
+  'business-enterprise':    'Launch, grow, and lead ventures — from lean strategy to finance, marketing, and operations.',
+  'language-communication': 'Write, speak, and communicate with clarity, precision, and influence across contexts.',
+  'arts-design':            'Create intentional, technically proficient work grounded in creative theory and craft.',
+  'health-performance':     'Optimise human physiology and performance with evidence-based knowledge from anatomy to nutrition.',
+  'geography-environment':  'Analyse spatial, environmental, and climate systems with the tools of a professional geographer.',
+  'technology-futures':     'Evaluate and work with emerging technologies — from AI to biotech — at a systems level.',
+  'law-governance':         'Apply legal reasoning across criminal, civil, and constitutional domains with practitioner-level clarity.',
+  'survival-practical':     'Operate confidently and safely in austere environments using real-world, tested skills.',
+}
+
 const PHASES = [
   { label: 'Hook',      color: '#c9a227', desc: 'An immersive story sets the scene' },
   { label: 'Explain',   color: '#8b5cf6', desc: 'Deep conceptual explanation' },
@@ -30,10 +48,38 @@ const PHASES = [
 const FEATURES: { icon: LucideIcon; color: string; title: string; desc: string }[] = [
   { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition',  desc: 'The FSRS algorithm schedules every review at the exact moment your brain is about to forget - building memories that last decades, not days.' },
   { icon: Bot,           color: '#c4b5fd', title: 'AI Mentor',          desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
-  { icon: Rabbit,        color: '#c9a227', title: 'Rabbit Holes',       desc: "Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you're ready." },
+  { icon: Rabbit,        color: '#c9a227', title: 'Curiosity Queue',    desc: "Spot a term mid-lesson that sparks curiosity? Save it to your queue and dive deep whenever you're ready." },
   { icon: Trophy,        color: '#c9a227', title: 'XP & Ranks',         desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
   { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',      desc: "Visual memory-strength indicators show exactly how well each concept is retained. Green means locked in - yellow means it's time to review." },
   { icon: GraduationCap, color: '#60a5fa', title: 'Feynman Technique',  desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
+]
+
+const PRACTITIONER_CARDS: { color: string; glyph: string; title: string; body: string }[] = [
+  {
+    color: '#8b5cf6',
+    glyph: '🎓',
+    title: 'Degree-Level Depth',
+    body: 'Every lesson maps to university-grade learning objectives — worked examples, knowledge checks, and conceptual explanations written to the standard of a module textbook.',
+  },
+  {
+    color: '#2dd4bf',
+    glyph: '🏗️',
+    title: 'Real Projects at Every Tier',
+    body: 'Each tier ends with a capstone project — something you built, analysed, or created. Graduate with a portfolio of evidence, not just a completion badge.',
+  },
+  {
+    color: '#c9a227',
+    glyph: '⚙️',
+    title: 'Lead-Level Readiness',
+    body: 'Pathways are sequenced to take you from zero to practitioner — the depth at which you can contribute meaningfully on a real team in that discipline.',
+  },
+]
+
+const VEYLAN_FEATURES: { color: string; label: string; body: string }[] = [
+  { color: '#8b5cf6', label: 'Always Present',        body: 'Available at every phase of every lesson — not just as a chatbot, but as an active teaching presence.' },
+  { color: '#2dd4bf', label: 'Socratic Prompts',      body: 'Veylan asks the question that makes you think, rather than giving the answer that lets you skip thinking.' },
+  { color: '#c9a227', label: 'Code & Writing Review', body: 'Submit your code or written explanation and receive AI-graded feedback on accuracy, clarity, and completeness.' },
+  { color: '#60a5fa', label: 'Feynman Grading',       body: 'After each lesson, explain the concept back. Veylan scores your explanation and flags gaps in understanding.' },
 ]
 
 const PRICING = [
@@ -192,7 +238,12 @@ function PathwayBrowser() {
                         </span>
                       )}
                     </div>
-                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, margin: 0, flex: 1 }}>{meta.description}</p>
+                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, margin: 0 }}>{meta.description}</p>
+                    {SCHOOL_OUTCOMES[id] && (
+                      <p style={{ fontSize: 11, color: 'rgba(201,162,39,0.9)', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
+                        {SCHOOL_OUTCOMES[id]}
+                      </p>
+                    )}
                   </div>
                 </div>
               )
@@ -229,7 +280,12 @@ function PathwayBrowser() {
                       </span>
                     )}
                   </div>
-                  <p style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.55, margin: 0 }}>{meta.description}</p>
+                  <p style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.55, margin: '0 0 6px' }}>{meta.description}</p>
+                  {SCHOOL_OUTCOMES[id] && (
+                    <p style={{ fontSize: 11, color: '#c9a227', lineHeight: 1.5, margin: 0, fontStyle: 'italic', opacity: 0.85 }}>
+                      {SCHOOL_OUTCOMES[id]}
+                    </p>
+                  )}
                 </div>
                 <ChevronRight size={14} color="var(--muted)" style={{ flexShrink: 0, marginTop: 14 }} />
               </button>
@@ -519,6 +575,11 @@ export default function LandingPage() {
             Arcane Academy uses spaced repetition, structured encoding phases, and an AI mentor
             to make you genuinely fluent - across coding, sciences, and humanities.
           </p>
+          <p style={{ fontSize: 'clamp(13px, 1.5vw, 16px)', color: 'var(--muted)', maxWidth: 600, margin: '0 auto 36px', lineHeight: 1.7, opacity: 0.82 }}>
+            Content built to the depth of a university module — learning objectives, worked examples,
+            knowledge checks, and project assessments at every tier. Each pathway takes you from
+            foundation to lead-level practitioner, ready to contribute on real teams.
+          </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 20, marginBottom: 40 }}>
             {[
@@ -545,6 +606,38 @@ export default function LandingPage() {
           <p style={{ marginTop: 14, fontSize: 12, color: 'var(--muted)', letterSpacing: '0.04em' }}>
             No credit card required / Free forever for one pathway
           </p>
+        </div>
+      </section>
+
+      {/* ── Practitioner readiness + portfolio ─────────────────────────── */}
+      <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', background: 'var(--surface)' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <GoldRule />
+          <SectionLabel>What you will be able to do</SectionLabel>
+          <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(18px, 3vw, 26px)', textAlign: 'center', marginBottom: 10, color: 'var(--text)' }}>
+            From Foundation to Practitioner
+          </h2>
+          <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: 15, maxWidth: 560, margin: '0 auto 48px', lineHeight: 1.7 }}>
+            Every pathway is structured in tiers that mirror real career progression — and every tier ends with a real project you can add to your portfolio.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 24 }}>
+            {PRACTITIONER_CARDS.map(card => (
+              <div
+                key={card.title}
+                style={{
+                  background: `color-mix(in srgb, ${card.color} 5%, transparent)`,
+                  border: `1px solid color-mix(in srgb, ${card.color} 18%, transparent)`,
+                  borderTop: `2px solid ${card.color}`,
+                  borderRadius: 14,
+                  padding: '24px 22px',
+                }}
+              >
+                <div style={{ fontSize: 28, marginBottom: 14 }}>{card.glyph}</div>
+                <div style={{ fontFamily: 'Cinzel, serif', fontSize: 13, color: card.color, marginBottom: 10, letterSpacing: '0.04em' }}>{card.title}</div>
+                <p style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.75, margin: 0 }}>{card.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -629,8 +722,46 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Pricing ────────────────────────────────────────────────────── */}
+      {/* ── Archmage Veylan — AI mentor ────────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px', background: 'var(--surface)' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <GoldRule />
+          <SectionLabel>Your AI Mentor</SectionLabel>
+          <div style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32,
+          }}>
+            <div style={{ textAlign: 'center', maxWidth: 560 }}>
+              <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(20px, 3.5vw, 30px)', color: '#c4b5fd', marginBottom: 14, lineHeight: 1.2 }}>
+                Archmage Veylan
+              </h2>
+              <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.8, margin: 0 }}>
+                Your AI mentor is embedded in every lesson — present from the first Hook to the final retrieval challenge.
+                Ask anything, receive Socratic hints rather than instant answers, and get real-time feedback on your
+                explanations, code, and reasoning.
+              </p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, width: '100%' }}>
+              {VEYLAN_FEATURES.map(item => (
+                <div
+                  key={item.label}
+                  style={{
+                    background: `color-mix(in srgb, ${item.color} 6%, transparent)`,
+                    border: `1px solid color-mix(in srgb, ${item.color} 18%, transparent)`,
+                    borderRadius: 12,
+                    padding: '18px 16px',
+                  }}
+                >
+                  <div style={{ fontFamily: 'Cinzel, serif', fontSize: 12, color: item.color, marginBottom: 8, letterSpacing: '0.05em' }}>{item.label}</div>
+                  <p style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.7, margin: 0 }}>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Pricing ────────────────────────────────────────────────────── */}
+      <section style={{ padding: 'clamp(56px, 8vw, 88px) 24px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <GoldRule />
           <SectionLabel>Simple pricing</SectionLabel>
