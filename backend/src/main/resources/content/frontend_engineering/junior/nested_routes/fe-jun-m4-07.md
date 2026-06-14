@@ -112,6 +112,13 @@ function DashboardLayout() {
 
 **index route** = the default child when parent path is matched exactly.
 
+## Common Mistakes
+
+- **Using absolute paths for child routes**: Child route paths should be relative (e.g., `path="settings"` not `path="/dashboard/settings"`). Absolute paths in child routes break the nesting hierarchy.
+- **Forgetting `<Outlet />` in the parent component**: Without `<Outlet />`, nested routes are matched in the router config but nothing renders. The parent component must include `<Outlet />` at the position where the child should appear.
+- **Nesting a route that should be at the top level**: Not every related route needs to be nested. Only routes that share the parent's layout (sidebar, header) should be nested — routes with completely different layouts should be top-level.
+- **Visiting the parent path without an index route**: Without a `<Route index>`, visiting `/dashboard` renders the `DashboardLayout` with a blank `<Outlet />`. Always add an index route for layout routes.
+
 ## Mini Summary
 - ✔ Nest `<Route>` inside `<Route>` for hierarchical routing
 - ✔ `<Outlet />` in the parent renders the matching child

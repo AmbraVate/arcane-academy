@@ -118,6 +118,13 @@ function ProfilePage() {
 </Route>
 ```
 
+## Common Mistakes
+
+- **Placing `<Outlet />` in the wrong location in the parent layout**: `<Outlet />` renders exactly where it appears in the JSX. If it is placed before the sidebar, child content appears before the sidebar — position it deliberately.
+- **Using `useOutletContext` in a component that is not a direct nested route child**: `useOutletContext()` returns `undefined` in components that are not rendered by the `<Outlet />`. Pass data via props or context instead.
+- **Forgetting that layout routes with no `path` still wrap child routes**: A layout route with `element={<AppLayout />}` and no `path` wraps all child routes — its `<Outlet />` is required even though there is no path to match.
+- **Deeply nesting layouts unnecessarily**: Each level of layout nesting adds a component to the render tree. Avoid more than two or three levels — deep nesting is usually a sign the layout hierarchy needs to be reconsidered.
+
 ## Mini Summary
 - ✔ Outlet renders at its exact position in the parent
 - ✔ `<Outlet context={data} />` passes data to children

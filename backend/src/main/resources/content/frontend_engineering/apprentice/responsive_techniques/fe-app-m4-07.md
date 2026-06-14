@@ -179,6 +179,14 @@ img {
 <img src="..." alt="..." width="800" height="600" loading="lazy">
 ```
 
+## Common Mistakes
+
+- **Serving one large image at all screen sizes**: Sending a 3000px image to a 375px phone wastes 80–90% of the downloaded bytes. `srcset` lets the browser pick the appropriately sized file.
+- **Omitting `max-width: 100%` on images**: Without this, images render at their intrinsic pixel width and overflow their containers on small screens.
+- **Writing `sizes` incorrectly**: `sizes` tells the browser how wide the image renders, not its intrinsic size. A common mistake is setting `sizes="100vw"` for an image that only occupies 50% of the layout on desktop, causing the browser to fetch a needlessly large file.
+- **Applying `loading="lazy"` to above-the-fold images**: Hero images and content in the initial viewport should not be lazy-loaded — they need to start loading immediately to avoid slow LCP (Largest Contentful Paint) scores.
+- **Omitting `width` and `height` attributes**: Without explicit dimensions, the browser cannot reserve space before the image loads, causing Cumulative Layout Shift (CLS).
+
 ## Why It Matters
 
 Images typically make up 60–80% of a page's total weight. Optimised responsive images can reduce load time by 60% for mobile users. Google uses Core Web Vitals (which includes image performance) in search rankings.

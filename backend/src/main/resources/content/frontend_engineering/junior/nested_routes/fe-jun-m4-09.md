@@ -109,6 +109,13 @@ Index routes solve the blank layout problem. Without them, visiting a parent pat
 <Route path="/dashboard/overview" element={<Overview />} />
 ```
 
+## Common Mistakes
+
+- **Using `path=""` instead of the `index` prop**: An index route is declared with `<Route index element={<Overview />} />`, not `<Route path="" ...>`. Using an empty string path does not correctly create an index route.
+- **Adding a path segment to an index route**: `<Route index path="overview" ...>` is invalid — index routes match the parent URL exactly and cannot have a path segment.
+- **Expecting the index route to render when a child is active**: The index route renders only when the parent path is matched exactly. Visiting `/dashboard/users` renders `<Users />`, not the index route — they are mutually exclusive.
+- **Omitting the index route and leaving a blank Outlet**: If the parent layout is visited directly (e.g., `/dashboard`) and there is no index route, the `<Outlet />` renders nothing. Always add an index route for layout routes.
+
 ## Mini Summary
 - ✔ `<Route index>` = default child for the exact parent path
 - ✔ Does not add a URL segment — matches parent URL

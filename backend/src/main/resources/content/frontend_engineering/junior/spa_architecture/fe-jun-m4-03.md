@@ -117,6 +117,13 @@ function App() {
 | SSR | Server | At request | Dynamic content + SEO |
 | SSG | Build time | At deploy | Static content |
 
+## Common Mistakes
+
+- **Using `React.lazy()` without a `<Suspense>` boundary**: Lazy-loaded components require a parent `<Suspense fallback={...}>` — omitting it causes React to throw an error when the lazy component loads.
+- **Not code-splitting large SPA bundles**: Shipping all route components in one bundle means every user downloads every page's code on first load. Lazy-loading routes reduces initial bundle size and improves Time to Interactive.
+- **Choosing SSR when the content is static**: SSR re-renders the page on every request. If the content only changes at deploy time (a marketing page, a docs site), SSG is faster, cheaper, and simpler.
+- **Conflating SSR and SSG**: Both produce server-rendered HTML, but SSG builds pages once at deploy time while SSR renders on every request. Using "SSR" as a synonym for "server-rendered" leads to architecture mismatches.
+
 ## Mini Summary
 - ✔ SPA: authenticated apps, dashboards, editors
 - ✔ SSR: dynamic content + SEO (Next.js)

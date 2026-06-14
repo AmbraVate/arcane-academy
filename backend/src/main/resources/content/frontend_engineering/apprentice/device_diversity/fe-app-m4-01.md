@@ -163,6 +163,13 @@ Without it, mobile browsers render a 980px virtual viewport and shrink everythin
 @media (min-width: 1440px) { /* desktop */ }
 ```
 
+## Common Mistakes
+
+- **Omitting the viewport meta tag**: Without `<meta name="viewport" content="width=device-width, initial-scale=1">`, mobile browsers render a 980px virtual viewport and shrink the page to an unreadable size.
+- **Designing only at one breakpoint**: Testing on a 1920px desktop and assuming everything works is the most common responsive design failure — it ignores the majority of real users.
+- **Confusing CSS pixels with physical pixels**: Hardcoding pixel values assuming 1:1 correspondence produces blurry images and incorrect layouts on high-DPI (Retina) displays.
+- **Using fixed pixel widths for layout containers**: A `width: 1200px` container breaks on any screen narrower than that — use `max-width` with percentage or fluid units instead.
+
 ## Why It Matters
 
 60%+ of global web traffic comes from mobile. A site that breaks on mobile fails the majority of its users. Responsive design is not a bonus feature — it is the minimum requirement for a production-quality website.

@@ -183,6 +183,13 @@ The constraints of mobile make you a better designer.
 | Debugging | Easier | Harder |
 | Default experience | Works on all screens | May break on small screens |
 
+## Common Mistakes
+
+- **Writing desktop-first CSS with `max-width` queries**: This produces more code, more overrides, and a worse mobile baseline. Start with `min-width` queries and mobile as the default.
+- **Hiding mobile elements with `display: none` rather than simply not adding them**: In mobile-first, things that don't belong on mobile should not appear in base styles at all — adding them in `min-width` queries is cleaner.
+- **Overriding mobile styles multiple times in desktop queries**: Each override is technical debt. If the base styles for mobile require three overrides for desktop, the base styles are probably wrong.
+- **Conflating mobile-first CSS with mobile-only design**: Mobile-first means the mobile experience is the baseline, not that desktop is ignored. Every feature gets added back progressively.
+
 ## Why It Matters
 
 Over 60% of users are on mobile. Mobile-first ensures the majority experience works without media queries at all. Desktop enhancements are additive — they never break the mobile baseline.

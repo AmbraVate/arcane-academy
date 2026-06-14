@@ -106,6 +106,13 @@ history.pushState({}, '', '/about');
 navigate('/about');  // from useNavigate hook
 ```
 
+## Common Mistakes
+
+- **Building a content-heavy public site as a SPA**: Blogs, documentation, and marketing sites need SEO. A pure SPA returns a near-empty HTML shell to search crawlers — use SSG (Astro, Next.js static) or SSR instead.
+- **Thinking SPAs are always faster**: SPAs have a slower initial load because the entire JavaScript bundle must download and execute before the first page renders. They are faster for subsequent navigation, not for first load.
+- **Using `<a href>` for internal navigation in a React Router app**: Regular anchor tags cause a full page reload, losing React state and negating the SPA advantage. Use `<Link>` for all internal routes.
+- **Deploying a SPA without configuring a server fallback**: Without `try_files $uri /index.html` (nginx) or equivalent, refreshing any non-root URL returns a 404 from the server.
+
 ## Mini Summary
 - ✔ SPA: one HTML page, JS renders all "pages" as components
 - ✔ Faster navigation; larger initial bundle

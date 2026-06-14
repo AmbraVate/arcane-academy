@@ -160,6 +160,13 @@ Systems are more robust than device-specific solutions.
 }
 ```
 
+## Common Mistakes
+
+- **Setting breakpoints at "device sizes" rather than content break points**: Arbitrary breakpoints at 768px and 1024px become obsolete as device dimensions change — set them where content actually breaks.
+- **Using fixed pixel widths for page-level containers**: `width: 960px` overflows on any screen narrower than 960px. Use `max-width: 960px; width: 100%` instead.
+- **Forgetting extreme viewports**: Most layouts are tested at 375px and 1440px but break at 320px (small phones) or 2560px (wide monitors). Test the full range.
+- **Mixing fluid and fixed units inconsistently**: A grid column with `width: 50%` next to a fixed `gap: 40px` can overflow when the container is narrow.
+
 ## Why It Matters
 
 Device-specific designs become outdated every year as new devices emerge. Content-driven, fluid-first responsive design remains correct regardless of what devices exist — it responds to the available space, not a device list.

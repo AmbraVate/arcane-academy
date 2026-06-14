@@ -113,6 +113,13 @@ function PostList() {
 }
 ```
 
+## Common Mistakes
+
+- **Reading query parameters from `useParams()`**: `useParams()` only returns path parameters (`:id`). Query string values (`?sort=asc`) must be read with `useSearchParams()` — they are never in `useParams()`.
+- **Forgetting that all URL parameter values are strings**: `useParams()` returns `{ id: '42' }` — the string `"42"`, not the number `42`. Always parse numeric params before using them in comparisons or arithmetic.
+- **Using a URL parameter where a query parameter is semantically correct**: URL params identify a resource (`/users/42`). Optional filters and sort orders are query params (`?sort=name&page=2`). Putting filters in the URL path makes URLs impossible to bookmark correctly.
+- **Calling `setSearchParams` with only the new key**: `setSearchParams({ page: '2' })` replaces the entire query string, discarding other existing params like `?sort=name`. Merge existing params: `setSearchParams(prev => { prev.set('page', '2'); return prev; })`.
+
 ## Mini Summary
 - ✔ :param in route path → useParams() for required resource IDs
 - ✔ ?key=value → useSearchParams() for optional filters/pagination

@@ -120,6 +120,13 @@ function LoginPage() {
 }
 ```
 
+## Common Mistakes
+
+- **Redirecting to a hardcoded `/dashboard` after login**: If the user was trying to access `/settings` before being redirected to login, sending them to `/dashboard` on success loses their intended destination. Pass `state={{ from: location.pathname }}` and redirect back.
+- **Not using `replace` on the post-login navigate call**: `navigate(from)` (without `replace`) adds the login page to the history stack — the user can press back to reach the login page while authenticated. Use `navigate(from, { replace: true })`.
+- **Checking authentication inside the route component rather than in a wrapper**: Every protected route component would need to repeat the auth check. Centralise it in a `<ProtectedRoute>` wrapper that is reused across all protected routes.
+- **Using a JWT from state or local storage without validating it**: Storing `isAuthenticated: true` in React state persists only for the session. A page refresh clears state — always derive authentication status from a persistent source (localStorage, a cookie, or a re-validation fetch).
+
 ## Mini Summary
 - ✔ Check auth in a wrapper component; redirect if unauthenticated
 - ✔ Pass `state={{ from: location.pathname }}` to preserve destination

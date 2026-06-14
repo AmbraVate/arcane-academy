@@ -217,6 +217,14 @@ CREATE TABLE comments (
 | Missing FK constraint | Orphaned records appear over time | Add FOREIGN KEY constraint |
 | No index on FK column | Slow joins and lookups | Add index on FK |
 
+## Common Mistakes
+
+- **Placing the foreign key on the wrong side of a one-to-many**: The FK always lives in the child (many) table, pointing to the parent (one). Placing the FK in the parent creates a fixed limit on how many children can be associated.
+- **Storing many-to-many relationships as comma-separated values**: A column like `tag_ids = "1,3,7"` cannot be indexed, cannot enforce referential integrity, and requires string parsing for every query. Use a junction table.
+- **Omitting a junction table when domain logic is many-to-many**: Modelling a many-to-many as a one-to-many produces FK violations the first time a record has more than one association. Apply the two-question method before writing any SQL.
+- **Not adding an index on foreign key columns**: Joins on unindexed FK columns perform full table scans. Every FK column should have an index — many databases (PostgreSQL, SQL Server) do not create FK indexes automatically.
+- **Missing foreign key constraints entirely**: Without FK constraints, orphaned records accumulate silently over time — rows in a child table that reference deleted parent rows. Always declare `FOREIGN KEY` constraints to enforce referential integrity at the database level.
+
 ## Why It Matters
 
 Incorrect relationship design causes two categories of failure:

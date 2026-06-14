@@ -109,6 +109,13 @@ function UserProvider({ children }) {
 - Group by update frequency (auth vs theme vs search)
 - Each consumer subscribes only to what it needs
 
+## Common Mistakes
+
+- **Subscribing to a fat context to read one field**: A component consuming `{ user, theme, cart }` re-renders on every cart update, even if it only uses `theme`. Split contexts by rate of change so components only subscribe to what they read.
+- **Calling `useContext` directly instead of a named custom hook**: `useContext(AuthContext)` deep in a component is invisible to search and lacks error handling. A `useAuth()` hook makes the dependency explicit, typed, and guarded.
+- **Reading context outside a Provider and getting silent wrong data**: When no Provider wraps the component, `useContext` returns the `createContext` default — often `null` — leading to hard-to-debug rendering with fallback values. Use a throwing custom hook to catch this at development time.
+- **Omitting `useMemo` on frequently-updated context values**: Without memoization, each render of the Provider produces a new value object reference, re-rendering all consumers even when the underlying data is unchanged.
+
 ## Mental Model
 
 Consuming context is owning a radio receiver, and the habits of a good radio operator map one-to-one onto good consumption patterns. `useContext(ThemeContext)` switches on a receiver tuned to one frequency: from then on, the component hears the *current* broadcast (the present value) and automatically reacts to every programme change (re-renders when the value updates) — no couriers, no forwarding, just reception. The operator's disciplines follow from how radio behaves. You can't half-listen to a channel: a receiver reacts to *everything* aired on its frequency, so if the station bundles news, weather, and sport into one stream (a fat context value), the component that only wanted weather still re-renders for every football score — the reason mature apps run separate stations for separately changing concerns. Know your coverage: switch on a receiver outside any transmitter's range and you hear the pre-recorded default tape — often silence that *sounds* like programming, the silent-fallback bug — so professional operators use receivers with a built-in signal check (custom hooks that throw when no Provider is found) and discover dead zones at install time, not from confused users. And label your equipment: a bare `useContext(SomeContext)` deep in a component is an unmarked receiver someone will trip over during refactoring, while `useAuth()` is a labelled unit — findable by search, typed, and documenting exactly which station this room depends on. Reception is one line; *accountable* reception is the pattern around the line.
