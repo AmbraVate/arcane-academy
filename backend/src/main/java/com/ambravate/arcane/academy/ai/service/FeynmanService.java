@@ -118,7 +118,7 @@ public class FeynmanService {
         log.info("[Feynman] Evaluated | user={} subChunk={} overall={} accuracy={} completeness={} simplicity={} connection={}",
                 userId, lessonId, overall, accuracy, completeness, simplicity, connection);
 
-        return new FeynmanResult(accuracy, completeness, simplicity, connection, overall,
+        return FeynmanResult.patternMatch(accuracy, completeness, simplicity, connection, overall,
                 feedback.toString().trim(), xpEarned);
     }
 
