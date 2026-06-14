@@ -32,9 +32,9 @@ public class DiagnosticController {
 
     @PostMapping("/start")
     public ResponseEntity<ReviewSessionDto> startDiagnostic(
-            @RequestParam(defaultValue = "java") String topicId,
+            @RequestParam(defaultValue = "java") String domainId,
             @AuthenticationPrincipal UserPrincipal user) {
-        DiagnosticSession session = diagnosticService.startEntryDiagnostic(user.getId(), topicId);
+        DiagnosticSession session = diagnosticService.startEntryDiagnostic(user.getId(), domainId);
 
         List<QuestionDto> questionDtos = session.questions().stream().map(q -> {
             List<String> options = null;
@@ -57,14 +57,14 @@ public class DiagnosticController {
 
     @PostMapping("/submit")
     public ResponseEntity<DiagnosticResultDto> submitDiagnostic(
-            @RequestParam(defaultValue = "java") String topicId,
+            @RequestParam(defaultValue = "java") String domainId,
             @RequestBody AnswerRequest request,
             @AuthenticationPrincipal UserPrincipal user) {
         List<AnswerPair> answers = request.getAnswers().stream()
                 .map(a -> new AnswerPair(a.getQuestionId(), a.getAnswer()))
                 .collect(Collectors.toList());
 
-        DiagnosticResult result = diagnosticService.submitDiagnostic(user.getId(), answers, topicId);
+        DiagnosticResult result = diagnosticService.submitDiagnostic(user.getId(), answers, domainId);
 
         return ResponseEntity.ok(DiagnosticResultDto.builder()
                 .recommendedPath(result.recommendedPath().name())
@@ -75,9 +75,9 @@ public class DiagnosticController {
 
     @PostMapping("/skip")
     public ResponseEntity<Void> skipDiagnostic(
-            @RequestParam(defaultValue = "java") String topicId,
+            @RequestParam(defaultValue = "java") String domainId,
             @AuthenticationPrincipal UserPrincipal user) {
-        diagnosticService.skipDiagnostic(user.getId(), topicId);
+        diagnosticService.skipDiagnostic(user.getId(), domainId);
         return ResponseEntity.ok().build();
     }
 

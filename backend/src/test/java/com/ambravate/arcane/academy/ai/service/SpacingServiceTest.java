@@ -1,5 +1,7 @@
 package com.ambravate.arcane.academy.ai.service;
 
+import com.ambravate.arcane.academy.ai.domain.FsrsState;
+import com.ambravate.arcane.academy.ai.service.FsrsAlgorithm;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,18 +26,23 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {@link SpacingService} — the SM-2 derived spaced-repetition engine.
- * <p>
- * The scheduler is core to the platform's pedagogical thesis ("reviews are the
- * core loop"). These tests pin its mathematical behaviour so future refactors
- * cannot silently change the schedule learners depend on.
+ * Unit tests for {@link SpacingService} — the FSRS-4.5 spaced-repetition engine.
+ *
+ * <p>Phase 5 replaced the legacy SM-2 scheduler with FSRS. Tests verify:
+ * <ul>
+ *   <li>First-review seeding (NEW → REVIEW with correct initial stability)</li>
+ *   <li>Recall path: stability grows, state stays REVIEW</li>
+ *   <li>Lapse path: stability drops, lapses increment, state → RELEARNING</li>
+ *   <li>Memory-strength reflects pre-review retrievability</li>
+ *   <li>{@code computeDecayedStrength} uses FSRS power forgetting curve</li>
+ * </ul>
  */
 @ExtendWith(MockitoExtension.class)
-@DisplayName("SpacingService — SM-2 scheduler")
+@DisplayName("SpacingService — FSRS-4.5 scheduler")
 class SpacingServiceTest {
 
-    private static final String USER_ID = "user-test";
-    private static final String SUB_CHUNK_ID = "java-ch1-variables";
+    private static final String USER_ID   = "user-test";
+    private static final String LESSON_ID = "java-ch1-variables";
 
     @Mock
     private UserChunkProgressRepository repo;
@@ -49,243 +56,284 @@ class SpacingServiceTest {
     void setUp() {
         progress = UserChunkProgress.builder()
                 .userId(USER_ID)
-                .subChunkId(SUB_CHUNK_ID)
-                .easeFactor(2.5)
-                .repetitionCount(0)
-                .intervalDays(0)
-                .memoryStrength(0.0)
+                .lessonId(LESSON_ID)
                 .build();
     }
 
-    // ── updateSpacing — failure path ────────────────────────────────────────────
+    // ── NEW card (first review) ───────────────────────────────────────────────
 
     @Nested
-    @DisplayName("when score is below the 0.6 threshold")
-    class FailedReview {
+    @DisplayName("NEW card — first review")
+    class NewCard {
 
         @Test
-        @DisplayName("resets repetitionCount to 0 and interval to 1 day")
-        void resetsScheduleOnFailure() {
-            progress.setRepetitionCount(5);
-            progress.setIntervalDays(30);
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
+        @DisplayName("Good score seeds stability from w[2] ≈ 3.13 and schedules 3-day interval")
+        void goodScore_seedsInitialStability() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8); // Good
 
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.4);
-
-            assertThat(progress.getRepetitionCount()).isZero();
-            assertThat(progress.getIntervalDays()).isEqualTo(1);
+            assertThat(progress.getFsrsStability()).isCloseTo(FsrsAlgorithm.W[2], within(0.01));
+            assertThat(progress.getFsrsLastInterval()).isEqualTo(3);
+            assertThat(progress.getIntervalDays()).isEqualTo(3);   // legacy field kept in sync
         }
 
         @Test
-        @DisplayName("schedules next review for tomorrow")
-        void nextReviewIsTomorrow() {
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
+        @DisplayName("Easy score seeds stability from w[3] ≈ 15.47 and schedules 15-day interval")
+        void easyScore_seedsHigherStability() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 1.0); // Easy
 
+            assertThat(progress.getFsrsStability()).isCloseTo(FsrsAlgorithm.W[3], within(0.01));
+            assertThat(progress.getFsrsLastInterval()).isEqualTo(15);
+        }
+
+        @Test
+        @DisplayName("Again on a new card records state RELEARNING (not lapse — never had prior interval)")
+        void againOnNewCard_noLapse_stateRelearning() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.0); // Again
+
+            // First review — lapses stay 0 (FsrsAlgorithm.initCard treats NEW as first attempt)
+            assertThat(progress.getFsrsState()).isEqualTo(FsrsState.REVIEW.name());
+        }
+
+        @Test
+        @DisplayName("State is set to REVIEW after first successful review")
+        void firstReview_stateIsReview() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
+
+            assertThat(progress.getFsrsState()).isEqualTo(FsrsState.REVIEW.name());
+        }
+    }
+
+    // ── REVIEW card — successful recall ──────────────────────────────────────
+
+    @Nested
+    @DisplayName("REVIEW card — successful recall")
+    class SuccessfulRecall {
+
+        @BeforeEach
+        void setUpReviewCard() {
+            // simulate a card already reviewed 3 days ago
+            progress.setFsrsStability(3.1262);
+            progress.setFsrsDifficulty(5.31);
+            progress.setFsrsState(FsrsState.REVIEW.name());
+            progress.setFsrsLastInterval(3);
+            progress.setLastReviewedAt(Instant.now().minus(Duration.ofDays(3)));
+        }
+
+        @Test
+        @DisplayName("Good recall increases stability")
+        void goodRecall_increasesStability() {
+            stubProgress();
+            double stabilityBefore = progress.getFsrsStability();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
+            assertThat(progress.getFsrsStability()).isGreaterThan(stabilityBefore);
+        }
+
+        @Test
+        @DisplayName("Easy recall increases stability more than Good")
+        void easyMoreThanGood() {
+            // First run: Good rating on the 3-day elapsed card
+            stubProgress();
+            double sGood = captureSAfter(0.8);
+
+            // Reset to identical starting state (including lastReviewedAt)
+            // so the elapsed-days are the same for both ratings.
+            progress.setFsrsStability(3.1262);
+            progress.setFsrsDifficulty(5.31);
+            progress.setFsrsState(FsrsState.REVIEW.name());
+            progress.setFsrsLastInterval(3);
+            progress.setLastReviewedAt(Instant.now().minus(Duration.ofDays(3)));
+
+            double sEasy = captureSAfter(1.0);
+            assertThat(sEasy).isGreaterThan(sGood);
+        }
+
+        @Test
+        @DisplayName("nextReviewAt is set to approximately (now + interval) days")
+        void nextReviewAtIsScheduled() {
+            stubProgress();
             Instant before = Instant.now();
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.0);
-
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
+            int interval = progress.getFsrsLastInterval();
             assertThat(progress.getNextReviewAt())
-                    .isCloseTo(before.plus(Duration.ofDays(1)), within(5, java.time.temporal.ChronoUnit.SECONDS));
+                    .isAfter(before.plus(Duration.ofDays(interval - 1)));
+        }
+
+        @Test
+        @DisplayName("State remains REVIEW after a successful recall")
+        void stateRemainsReview() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
+            assertThat(progress.getFsrsState()).isEqualTo(FsrsState.REVIEW.name());
         }
     }
 
-    // ── updateSpacing — success path ────────────────────────────────────────────
+    // ── REVIEW card — lapse (Again) ───────────────────────────────────────────
 
     @Nested
-    @DisplayName("when score meets or exceeds the 0.6 threshold")
-    class SuccessfulReview {
+    @DisplayName("REVIEW card — lapse (Again)")
+    class Lapse {
 
-        @Test
-        @DisplayName("first successful repetition schedules at 1 day")
-        void firstRepetitionInterval() {
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
-
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
-
-            assertThat(progress.getRepetitionCount()).isEqualTo(1);
-            assertThat(progress.getIntervalDays()).isEqualTo(1);
+        @BeforeEach
+        void setUpReviewCard() {
+            progress.setFsrsStability(3.1262);
+            progress.setFsrsDifficulty(5.31);
+            progress.setFsrsLapses(0);
+            progress.setFsrsState(FsrsState.REVIEW.name());
+            progress.setFsrsLastInterval(3);
+            progress.setLastReviewedAt(Instant.now().minus(Duration.ofDays(3)));
         }
 
         @Test
-        @DisplayName("second successful repetition schedules at 3 days")
-        void secondRepetitionInterval() {
-            progress.setRepetitionCount(1);
-            progress.setIntervalDays(1);
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
-
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
-
-            assertThat(progress.getRepetitionCount()).isEqualTo(2);
-            assertThat(progress.getIntervalDays()).isEqualTo(3);
+        @DisplayName("Forgetting increments lapses by 1")
+        void forgetting_incrementsLapses() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.0);
+            assertThat(progress.getFsrsLapses()).isEqualTo(1);
         }
 
         @Test
-        @DisplayName("third+ repetition multiplies interval by ease factor")
-        void thirdRepetitionUsesEaseFactor() {
-            progress.setRepetitionCount(2);
-            progress.setIntervalDays(3);
-            progress.setEaseFactor(2.5);
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
-
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
-
-            // 3 * 2.5 = 7.5, rounded → 8 (ease factor will also be updated, but
-            // the interval calculation uses the pre-update ease factor)
-            assertThat(progress.getIntervalDays()).isBetween(7, 8);
+        @DisplayName("Forgetting reduces stability")
+        void forgetting_reducesStability() {
+            stubProgress();
+            double before = progress.getFsrsStability();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.0);
+            assertThat(progress.getFsrsStability()).isLessThan(before);
         }
 
         @Test
-        @DisplayName("ease factor is floored at 1.3 (SM-2 minimum)")
-        void easeFactorMinimum() {
-            progress.setEaseFactor(1.4); // already near the floor
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
-
-            // Score of 0.6 maps to q5=3 → EF delta = 0.1 - 2*(0.08+2*0.02) = 0.1 - 0.24 = -0.14
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.6);
-
-            assertThat(progress.getEaseFactor()).isGreaterThanOrEqualTo(1.3);
+        @DisplayName("Forgetting transitions state to RELEARNING")
+        void forgetting_transitionsToRelearning() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.0);
+            assertThat(progress.getFsrsState()).isEqualTo(FsrsState.RELEARNING.name());
         }
-
-        @Test
-        @DisplayName("ease factor increases on perfect score")
-        void easeFactorIncreasesOnPerfect() {
-            double initialEf = progress.getEaseFactor();
-            when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                    .thenReturn(Optional.of(progress));
-
-            spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 1.0);
-
-            // Score 1.0 → q5=5 → delta = 0.1 - 0*(...) = +0.1
-            assertThat(progress.getEaseFactor()).isGreaterThan(initialEf);
-        }
-    }
-
-    // ── memory strength update ──────────────────────────────────────────────────
-
-    @Test
-    @DisplayName("memory strength is a 70/30 blend of new score and prior strength")
-    void memoryStrengthBlend() {
-        progress.setMemoryStrength(0.5);
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                .thenReturn(Optional.of(progress));
-
-        spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 1.0);
-
-        // Expected: 1.0 * 0.7 + 0.5 * 0.3 = 0.85
-        assertThat(progress.getMemoryStrength()).isCloseTo(0.85, within(0.001));
-    }
-
-    @Test
-    @DisplayName("memory strength is clamped to [0, 1]")
-    void memoryStrengthClamped() {
-        progress.setMemoryStrength(0.99);
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                .thenReturn(Optional.of(progress));
-
-        spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 1.0);
-
-        assertThat(progress.getMemoryStrength()).isBetween(0.0, 1.0);
     }
 
     // ── persistence ─────────────────────────────────────────────────────────────
 
-    @Test
-    @DisplayName("save is called on the repository with the updated progress")
-    void persistsUpdate() {
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                .thenReturn(Optional.of(progress));
+    @Nested
+    @DisplayName("Persistence")
+    class Persistence {
 
-        spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8);
+        @Test
+        @DisplayName("save is called with updated lastScore and lastReviewedAt")
+        void persistsUpdate() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
 
-        ArgumentCaptor<UserChunkProgress> captor = ArgumentCaptor.forClass(UserChunkProgress.class);
-        verify(repo).save(captor.capture());
-        assertThat(captor.getValue().getLastScore()).isEqualTo(0.8);
-        assertThat(captor.getValue().getLastReviewedAt()).isNotNull();
+            ArgumentCaptor<UserChunkProgress> captor = ArgumentCaptor.forClass(UserChunkProgress.class);
+            verify(repo).save(captor.capture());
+            assertThat(captor.getValue().getLastScore()).isEqualTo(0.8);
+            assertThat(captor.getValue().getLastReviewedAt()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("intervalDays is kept in sync with fsrsLastInterval")
+        void intervalDaysInSync() {
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
+            assertThat(progress.getIntervalDays()).isEqualTo(progress.getFsrsLastInterval());
+        }
+
+        @Test
+        @DisplayName("repetitionCount increments on each call")
+        void repetitionCountIncrements() {
+            progress.setRepetitionCount(3);
+            stubProgress();
+            spacing.updateSpacing(USER_ID, LESSON_ID, 0.8);
+            assertThat(progress.getRepetitionCount()).isEqualTo(4);
+        }
+
+        @Test
+        @DisplayName("throws IllegalStateException when no progress row exists")
+        void throwsWhenMissing() {
+            when(repo.findByUserIdAndLessonId(USER_ID, LESSON_ID)).thenReturn(Optional.empty());
+            assertThatThrownBy(() -> spacing.updateSpacing(USER_ID, LESSON_ID, 0.8))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessageContaining(LESSON_ID);
+        }
     }
 
-    @Test
-    @DisplayName("throws IllegalStateException when no progress row exists")
-    void throwsWhenMissing() {
-        when(repo.findByUserIdAndSubChunkId(USER_ID, SUB_CHUNK_ID))
-                .thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> spacing.updateSpacing(USER_ID, SUB_CHUNK_ID, 0.8))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining(SUB_CHUNK_ID);
-    }
-
-    // ── computeDecayedStrength ──────────────────────────────────────────────────
+    // ── computeDecayedStrength ────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("computeDecayedStrength")
+    @DisplayName("computeDecayedStrength — FSRS power forgetting curve")
     class DecayedStrength {
 
         @Test
         @DisplayName("returns 0 when never reviewed (lastReviewedAt is null)")
         void zeroWhenNeverReviewed() {
+            progress.setFsrsStability(3.0);
             progress.setLastReviewedAt(null);
-            progress.setMemoryStrength(0.9);
-
             assertThat(spacing.computeDecayedStrength(progress)).isZero();
         }
 
         @Test
-        @DisplayName("returns near-original strength when reviewed seconds ago")
-        void nearOriginalWhenJustReviewed() {
+        @DisplayName("returns 0 when stability is 0 (NEW card, no FSRS data)")
+        void zeroWhenNoStability() {
+            progress.setFsrsStability(0.0);
             progress.setLastReviewedAt(Instant.now());
-            progress.setMemoryStrength(0.8);
-            progress.setEaseFactor(2.5);
-
-            assertThat(spacing.computeDecayedStrength(progress)).isCloseTo(0.8, within(0.01));
+            assertThat(spacing.computeDecayedStrength(progress)).isZero();
         }
 
         @Test
-        @DisplayName("decays exponentially over time")
+        @DisplayName("returns ~1.0 when reviewed just now")
+        void nearOneWhenJustReviewed() {
+            progress.setFsrsStability(5.0);
+            progress.setLastReviewedAt(Instant.now());
+            assertThat(spacing.computeDecayedStrength(progress)).isCloseTo(1.0, within(0.01));
+        }
+
+        @Test
+        @DisplayName("decays over time — 7 days < just reviewed")
         void decaysOverTime() {
-            // 7 days ago, EF 2.5 → decayRate=0.02/hour → over 168h: exp(-0.02*168) ≈ 0.0347
+            progress.setFsrsStability(5.0);
             progress.setLastReviewedAt(Instant.now().minus(Duration.ofDays(7)));
-            progress.setMemoryStrength(0.9);
-            progress.setEaseFactor(2.5);
-
             double decayed = spacing.computeDecayedStrength(progress);
-
-            assertThat(decayed).isLessThan(0.9);
             assertThat(decayed).isBetween(0.0, 1.0);
+            assertThat(decayed).isLessThan(1.0);
         }
 
         @Test
-        @DisplayName("higher ease factor produces slower decay")
-        void higherEfDecaysSlower() {
+        @DisplayName("higher stability decays slower — same elapsed time")
+        void higherStabilityDecaysSlower() {
             Instant weekAgo = Instant.now().minus(Duration.ofDays(7));
             progress.setLastReviewedAt(weekAgo);
-            progress.setMemoryStrength(0.9);
 
-            progress.setEaseFactor(1.3);
-            double weakDecay = spacing.computeDecayedStrength(progress);
+            progress.setFsrsStability(3.0);
+            double lowS = spacing.computeDecayedStrength(progress);
 
-            progress.setEaseFactor(3.0);
-            double strongDecay = spacing.computeDecayedStrength(progress);
+            progress.setFsrsStability(15.0);
+            double highS = spacing.computeDecayedStrength(progress);
 
-            assertThat(strongDecay).isGreaterThan(weakDecay);
+            assertThat(highS).isGreaterThan(lowS);
         }
     }
 
-    // ── due reviews query ───────────────────────────────────────────────────────
+    // ── getDueReviews ─────────────────────────────────────────────────────────
 
     @Test
     @DisplayName("getDueReviews delegates to repository with current time")
     void getDueReviewsDelegates() {
-        when(repo.findByUserIdAndNextReviewAtBefore(any(String.class), any(Instant.class)))
-                .thenReturn(java.util.List.of(progress));
-
+        when(repo.findByUserIdAndNextReviewAtBefore(any(), any())).thenReturn(java.util.List.of(progress));
         var result = spacing.getDueReviews(USER_ID);
-
         assertThat(result).hasSize(1).containsExactly(progress);
+    }
+
+    // ── helpers ───────────────────────────────────────────────────────────────
+
+    private void stubProgress() {
+        when(repo.findByUserIdAndLessonId(USER_ID, LESSON_ID)).thenReturn(Optional.of(progress));
+    }
+
+    /** Run updateSpacing and return the new fsrsStability. */
+    private double captureSAfter(double score) {
+        when(repo.findByUserIdAndLessonId(USER_ID, LESSON_ID)).thenReturn(Optional.of(progress));
+        spacing.updateSpacing(USER_ID, LESSON_ID, score);
+        return progress.getFsrsStability();
     }
 }

@@ -1,12 +1,12 @@
 package com.ambravate.arcane.academy.profile.service;
 
-import com.ambravate.arcane.academy.common.domain.Chunk;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests for {@link LeaderboardService} — verifies that:
+ * Tests for {@link LeaderboardService} â€” verifies that:
  * <ul>
  *   <li>Only opted-in users appear on any board</li>
  *   <li>Only COMPLETE progress counts toward XP</li>
@@ -46,13 +46,13 @@ class LeaderboardServiceTest {
 
     @Mock private UserRepository userRepository;
     @Mock private UserChunkProgressRepository progressRepository;
-    @Mock private SubChunkRepository subChunkRepository;
-    @Mock private ChunkRepository chunkRepository;
+    @Mock private LessonRepository lessonRepository;
+    @Mock private LearningModuleRepository moduleRepository;
     @Mock private GamificationFacade gamificationFacade;
 
     @InjectMocks private LeaderboardService leaderboardService;
 
-    // ── Fixture builders ────────────────────────────────────────────────────────
+    // â”€â”€ Fixture builders â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private User user(String id, String username, int totalXp, int streak, boolean publicProfile) {
         User u = User.aUser()
@@ -63,17 +63,17 @@ class LeaderboardServiceTest {
         return u;
     }
 
-    private Chunk chunk(String id, String topicId) {
-        return Chunk.builder().id(id).title("c").topicId(topicId).sortOrder(1).build();
+    private LearningModule chunk(String id, String domainId) {
+        return LearningModule.builder().id(id).title("c").trackId(domainId).sortOrder(1).build();
     }
 
-    private SubChunk sub(String id, String chunkId, int xpReward) {
-        return SubChunk.builder().id(id).chunkId(chunkId).title("s").sortOrder(1).xpReward(xpReward).build();
+    private Lesson sub(String id, String moduleId, int xpReward) {
+        return Lesson.builder().id(id).moduleId(moduleId).title("s").sortOrder(1).xpReward(xpReward).build();
     }
 
-    private UserChunkProgress progress(String userId, String subChunkId, SubChunkStatus status, Instant completedAt) {
+    private UserChunkProgress progress(String userId, String lessonId, LessonStatus status, Instant completedAt) {
         return UserChunkProgress.builder()
-            .userId(userId).subChunkId(subChunkId).status(status).completedAt(completedAt).build();
+            .userId(userId).lessonId(lessonId).status(status).completedAt(completedAt).build();
     }
 
     @BeforeEach
@@ -82,7 +82,7 @@ class LeaderboardServiceTest {
         lenient().when(gamificationFacade.getBadgeCount(anyString())).thenReturn(0);
     }
 
-    // ── Topic weekly ────────────────────────────────────────────────────────────
+    // â”€â”€ Topic weekly â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("topicWeekly")
@@ -92,8 +92,8 @@ class LeaderboardServiceTest {
         @DisplayName("Returns empty list when nobody is opted in")
         void emptyWhenNoneOptedIn() {
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of());
-            when(chunkRepository.findByTopicIdOrderBySortOrderAsc("java")).thenReturn(List.of(chunk("c1", "java")));
-            when(subChunkRepository.findByChunkIdIn(any())).thenReturn(List.of(sub("s1", "c1", 50)));
+            when(moduleRepository.findByTrackIdOrderBySortOrderAsc("java")).thenReturn(List.of(chunk("c1", "java")));
+            when(lessonRepository.findByModuleIdIn(any())).thenReturn(List.of(sub("s1", "c1", 50)));
 
             assertThat(leaderboardService.topicWeekly("java", 20)).isEmpty();
         }
@@ -105,10 +105,10 @@ class LeaderboardServiceTest {
             User bob   = user("u-b", "bob",   500, 0, false);  // not opted in
 
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice));
-            stubTopicJava(50);
+            stubDomainJava(50);
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s1", SubChunkStatus.COMPLETE, Instant.now()),
-                progress("u-b", "s1", SubChunkStatus.COMPLETE, Instant.now())
+                progress("u-a", "s1", LessonStatus.COMPLETE, Instant.now()),
+                progress("u-b", "s1", LessonStatus.COMPLETE, Instant.now())
             ));
 
             var board = leaderboardService.topicWeekly("java", 20);
@@ -121,10 +121,10 @@ class LeaderboardServiceTest {
         void onlyCompleteCounts() {
             User alice = user("u-a", "alice", 0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice));
-            stubTopicJava(50);
+            stubDomainJava(50);
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s1", SubChunkStatus.IN_PROGRESS, Instant.now()),
-                progress("u-a", "s1", SubChunkStatus.SKIPPED,     Instant.now())  // skip ≠ earn XP
+                progress("u-a", "s1", LessonStatus.IN_PROGRESS, Instant.now()),
+                progress("u-a", "s1", LessonStatus.SKIPPED,     Instant.now())
             ));
 
             assertThat(leaderboardService.topicWeekly("java", 20)).isEmpty();
@@ -135,34 +135,33 @@ class LeaderboardServiceTest {
         void ignoresOldCompletions() {
             User alice = user("u-a", "alice", 0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice));
-            stubTopicJava(50);
+            stubDomainJava(50);
 
             Instant weekStart = LeaderboardService.currentWeekStart();
             Instant lastWeek = weekStart.minus(Duration.ofDays(2));
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s1", SubChunkStatus.COMPLETE, lastWeek)
+                progress("u-a", "s1", LessonStatus.COMPLETE, lastWeek)
             ));
 
             assertThat(leaderboardService.topicWeekly("java", 20)).isEmpty();
         }
 
         @Test
-        @DisplayName("Excludes XP from other topics' sub-chunks")
+        @DisplayName("Excludes XP from other topics' lessons")
         void otherTopicsExcluded() {
             User alice = user("u-a", "alice", 0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice));
 
-            // Topic = java has only s-java; tailwind has s-tailwind
-            when(chunkRepository.findByTopicIdOrderBySortOrderAsc("java"))
+            when(moduleRepository.findByTrackIdOrderBySortOrderAsc("java"))
                 .thenReturn(List.of(chunk("c-java", "java")));
-            when(subChunkRepository.findByChunkIdIn(any())).thenReturn(List.of(sub("s-java", "c-java", 100)));
-            when(subChunkRepository.findAll()).thenReturn(List.of(
+            when(lessonRepository.findByModuleIdIn(any())).thenReturn(List.of(sub("s-java", "c-java", 100)));
+            when(lessonRepository.findAll()).thenReturn(List.of(
                 sub("s-java", "c-java", 100),
-                sub("s-tailwind", "c-tailwind", 999)
+                sub("s-fe", "fe-app-m1", 999)
             ));
 
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s-tailwind", SubChunkStatus.COMPLETE, Instant.now())
+                progress("u-a", "s-fe", LessonStatus.COMPLETE, Instant.now())
             ));
 
             assertThat(leaderboardService.topicWeekly("java", 20)).isEmpty();
@@ -174,21 +173,21 @@ class LeaderboardServiceTest {
             User alice = user("u-a", "alice", 0, 0, true);
             User bob   = user("u-b", "bob",   0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice, bob));
-            stubTopicJava(50);
-            when(subChunkRepository.findAll()).thenReturn(List.of(
+            stubDomainJava(50);
+            when(lessonRepository.findAll()).thenReturn(List.of(
                 sub("s1", "c1", 50),
                 sub("s2", "c1", 75)
             ));
-            when(subChunkRepository.findByChunkIdIn(any())).thenReturn(List.of(
+            when(lessonRepository.findByModuleIdIn(any())).thenReturn(List.of(
                 sub("s1", "c1", 50),
                 sub("s2", "c1", 75)
             ));
 
             Instant now = Instant.now();
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s1", SubChunkStatus.COMPLETE, now),
-                progress("u-a", "s2", SubChunkStatus.COMPLETE, now),  // alice = 125
-                progress("u-b", "s1", SubChunkStatus.COMPLETE, now)   // bob   =  50
+                progress("u-a", "s1", LessonStatus.COMPLETE, now),
+                progress("u-a", "s2", LessonStatus.COMPLETE, now),  // alice = 125
+                progress("u-b", "s1", LessonStatus.COMPLETE, now)   // bob   =  50
             ));
 
             var board = leaderboardService.topicWeekly("java", 20);
@@ -207,20 +206,20 @@ class LeaderboardServiceTest {
             User bob   = user("u-b", "bob",   0, 0, true);
             User cara  = user("u-c", "cara",  0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice, bob, cara));
-            stubTopicJava(50);
+            stubDomainJava(50);
 
             Instant now = Instant.now();
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s1", SubChunkStatus.COMPLETE, now),
-                progress("u-b", "s1", SubChunkStatus.COMPLETE, now),
-                progress("u-c", "s1", SubChunkStatus.COMPLETE, now)
+                progress("u-a", "s1", LessonStatus.COMPLETE, now),
+                progress("u-b", "s1", LessonStatus.COMPLETE, now),
+                progress("u-c", "s1", LessonStatus.COMPLETE, now)
             ));
 
             assertThat(leaderboardService.topicWeekly("java", 1)).hasSize(1);
         }
     }
 
-    // ── Topic all-time ──────────────────────────────────────────────────────────
+    // â”€â”€ Topic all-time â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("topicAllTime")
@@ -231,10 +230,10 @@ class LeaderboardServiceTest {
         void includesAncientCompletions() {
             User alice = user("u-a", "alice", 0, 0, true);
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice));
-            stubTopicJava(50);
+            stubDomainJava(50);
 
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s1", SubChunkStatus.COMPLETE,
+                progress("u-a", "s1", LessonStatus.COMPLETE,
                     Instant.now().minus(Duration.ofDays(120)))
             ));
 
@@ -244,7 +243,7 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Polymath board ──────────────────────────────────────────────────────────
+    // â”€â”€ Polymath board â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("polymath")
@@ -259,25 +258,25 @@ class LeaderboardServiceTest {
 
             when(userRepository.findByPublicProfileEnabledTrue()).thenReturn(List.of(alice, bob, cara));
 
-            when(chunkRepository.findAll()).thenReturn(List.of(
+            when(moduleRepository.findAll()).thenReturn(List.of(
                 chunk("c-java",     "java"),
-                chunk("c-tailwind", "tailwind"),
-                chunk("c-react",    "react")
+                chunk("fe-app-m1", "frontend-engineering"),
+                chunk("se-app-m1", "software-engineering")
             ));
-            when(subChunkRepository.findAll()).thenReturn(List.of(
+            when(lessonRepository.findAll()).thenReturn(List.of(
                 sub("s-java",     "c-java",     50),
-                sub("s-tailwind", "c-tailwind", 50),
-                sub("s-react",    "c-react",    999)
+                sub("s-fe", "fe-app-m1", 50),
+                sub("s-se", "se-app-m1", 999)
             ));
 
             Instant now = Instant.now();
             when(progressRepository.findAll()).thenReturn(List.of(
-                progress("u-a", "s-java",     SubChunkStatus.COMPLETE, now),
-                progress("u-a", "s-tailwind", SubChunkStatus.COMPLETE, now),  // alice: 2 topics, 100xp
-                progress("u-b", "s-java",     SubChunkStatus.COMPLETE, now),
-                progress("u-b", "s-tailwind", SubChunkStatus.COMPLETE, now),
-                progress("u-b", "s-tailwind", SubChunkStatus.COMPLETE, now),  // duplicate row → bob: 2 topics, 150xp
-                progress("u-c", "s-react",    SubChunkStatus.COMPLETE, now)   // cara: 1 topic, 999xp
+                progress("u-a", "s-java",     LessonStatus.COMPLETE, now),
+                progress("u-a", "s-fe", LessonStatus.COMPLETE, now),  // alice: 2 topics, 100xp
+                progress("u-b", "s-java",     LessonStatus.COMPLETE, now),
+                progress("u-b", "s-fe", LessonStatus.COMPLETE, now),
+                progress("u-b", "s-fe", LessonStatus.COMPLETE, now),  // duplicate row â†’ bob: 2 topics, 150xp
+                progress("u-c", "s-se",    LessonStatus.COMPLETE, now)   // cara: 1 topic, 999xp
             ));
 
             var board = leaderboardService.polymath(20);
@@ -293,15 +292,14 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Helpers ─────────────────────────────────────────────────────────────────
+    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Nested
     @DisplayName("week-start arithmetic")
     class WeekMath {
         @Test
-        @DisplayName("Monday → returns the same day at 00:00 UTC")
+        @DisplayName("Monday â†’ returns the same day at 00:00 UTC")
         void mondayUnchanged() {
-            // 2025-04-28 is a Monday (verifiable: dayOfWeek().getValue() == 1)
             LocalDate monday = LocalDate.of(2025, 4, 28);
             assertThat(monday.getDayOfWeek().getValue()).isEqualTo(1);
 
@@ -310,9 +308,8 @@ class LeaderboardServiceTest {
         }
 
         @Test
-        @DisplayName("Sunday → returns the preceding Monday")
+        @DisplayName("Sunday â†’ returns the preceding Monday")
         void sundayBacktracks() {
-            // 2025-05-04 is a Sunday
             LocalDate sunday = LocalDate.of(2025, 5, 4);
             assertThat(sunday.getDayOfWeek().getValue()).isEqualTo(7);
 
@@ -322,17 +319,17 @@ class LeaderboardServiceTest {
         }
     }
 
-    // ── Common stubs ────────────────────────────────────────────────────────────
+    // â”€â”€ Common stubs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    /** Java topic with one chunk c1 holding one sub-chunk s1 worth {@code xp}. */
-    private void stubTopicJava(int xp) {
-        when(chunkRepository.findByTopicIdOrderBySortOrderAsc("java"))
+    /** Java domain with one module c1 holding one lesson s1 worth {@code xp}. */
+    private void stubDomainJava(int xp) {
+        when(moduleRepository.findByTrackIdOrderBySortOrderAsc("java"))
             .thenReturn(List.of(chunk("c1", "java")));
-        when(subChunkRepository.findByChunkIdIn(any()))
+        when(lessonRepository.findByModuleIdIn(any()))
             .thenReturn(List.of(sub("s1", "c1", xp)));
-        lenient().when(subChunkRepository.findAll())
+        lenient().when(lessonRepository.findAll())
             .thenReturn(List.of(sub("s1", "c1", xp)));
-        lenient().when(chunkRepository.findAll())
+        lenient().when(moduleRepository.findAll())
             .thenReturn(List.of(chunk("c1", "java")));
     }
 }

@@ -8,6 +8,7 @@ import com.ambravate.arcane.academy.content.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +17,16 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/admin/questions")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminQuestionController {
 
     private final QuestionRepository questionRepository;
     private final AdminQuestionAssembler adminQuestionAssembler;
 
     @GetMapping
-    public ResponseEntity<List<AdminQuestionDto>> list(@RequestParam String subChunkId) {
+    public ResponseEntity<List<AdminQuestionDto>> list(@RequestParam String lessonId) {
         return ResponseEntity.ok(
-                questionRepository.findBySubChunkId(subChunkId)
+                questionRepository.findByLessonId(lessonId)
                         .stream()
                     .map(adminQuestionAssembler::toDto)
                     .toList());

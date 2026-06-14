@@ -6,7 +6,7 @@ import lombok.*;
 @Entity
 @Table(name = "questions",
     indexes = {
-        @Index(name = "idx_question_subchunk_tier", columnList = "sub_chunk_id, tier"),
+        @Index(name = "idx_question_lesson_tier", columnList = "lesson_id, tier"),
     })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Question {
@@ -15,8 +15,8 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "sub_chunk_id", nullable = false)
-    private String subChunkId;
+    @Column(name = "lesson_id", nullable = false)
+    private String lessonId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -49,5 +49,5 @@ public class Question {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private LearnerPath minPath = LearnerPath.FOUNDATION;
+    private LearnerPath minPath = LearnerPath.APPRENTICE;
 }

@@ -1,11 +1,11 @@
 package com.ambravate.arcane.academy.content.seeder;
 
 import com.ambravate.arcane.academy.common.domain.EncodingPhase;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 
@@ -26,7 +26,7 @@ public class TestUserSeeder {
 
   private final UserRepository userRepository;
   private final UserChunkProgressRepository progressRepository;
-  private final SubChunkRepository subChunkRepository;
+  private final LessonRepository lessonRepository;
   private final PasswordEncoder passwordEncoder;
 
   private static final String TEST_PASSWORD = "Test1234!";
@@ -48,7 +48,7 @@ public class TestUserSeeder {
       List<String> completedChunkIds, int xp
   ) {
     if (userRepository.existsByEmail(email)) {
-      log.debug("[TestUserSeeder] {} already exists — skipping", email);
+      log.debug("[TestUserSeeder] {} already exists â€” skipping", email);
       return;
     }
 
@@ -63,14 +63,14 @@ public class TestUserSeeder {
     );
 
     for (String chunkId : completedChunkIds) {
-      List<SubChunk> subChunks = subChunkRepository.findByChunkIdOrderBySortOrderAsc(chunkId);
-      for (SubChunk sc : subChunks) {
+      List<Lesson> subChunks = lessonRepository.findByModuleIdOrderBySortOrderAsc(chunkId);
+      for (Lesson sc : subChunks) {
         progressRepository.save(
             UserChunkProgress.builder()
                 .userId(user.getId())
-                .subChunkId(sc.getId())
+                .lessonId(sc.getId())
                 .currentPhase(EncodingPhase.COMPLETE)
-                .status(SubChunkStatus.COMPLETE)
+                .status(LessonStatus.COMPLETE)
                 .memoryStrength(0.9)
                 .easeFactor(2.5)
                 .repetitionCount(1)
@@ -85,7 +85,7 @@ public class TestUserSeeder {
     }
 
     log.info(
-        "[TestUserSeeder] Created {} ({}) — {} XP, rank {}",
+        "[TestUserSeeder] Created {} ({}) â€” {} XP, rank {}",
         username, email, xp, calculateRank(xp)
     );
   }

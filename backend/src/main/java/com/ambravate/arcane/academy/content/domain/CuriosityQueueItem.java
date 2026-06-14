@@ -6,7 +6,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "curiosity_queue",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "sub_chunk_id"}))
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "lesson_id"}))
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CuriosityQueueItem {
 
@@ -17,8 +17,8 @@ public class CuriosityQueueItem {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(name = "sub_chunk_id", nullable = false)
-    private String subChunkId;
+    @Column(name = "lesson_id", nullable = false)
+    private String lessonId;
 
     @Builder.Default
     private Instant savedAt = Instant.now();

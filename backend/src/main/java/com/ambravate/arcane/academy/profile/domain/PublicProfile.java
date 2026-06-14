@@ -10,7 +10,7 @@ public record PublicProfile(
     String rank,
     int totalXp,
     int streakDays,
-    List<TopicEntry> topics,
+    List<DomainEntry> domains,
     List<EarnedBadge> badges
 ) {
 

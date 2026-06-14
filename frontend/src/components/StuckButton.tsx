@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+﻿import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { stuckReportApi } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
@@ -22,10 +22,10 @@ export default function StuckButton() {
   // Parse context clues from the current URL
   function parseContext() {
     const url = window.location.href
-    const match = location.pathname.match(/\/topic\/([^/]+)(?:\/.*\/([^/]+))?/)
+    const match = location.pathname.match(/\/domain\/([^/]+)(?:\/.*\/([^/]+))?/)
     return {
-      topicId: match?.[1] ?? undefined,
-      subChunkId: undefined as string | undefined,
+      domainId: match?.[1] ?? undefined,
+      lessonId: undefined as string | undefined,
       currentPhase: undefined as string | undefined,
       currentUrl: url,
     }
@@ -77,11 +77,11 @@ export default function StuckButton() {
         screenshotData,
       })
       setStage('done')
-      setTimeout(() => navigate('/topics', { replace: true }), 2000)
+      setTimeout(() => navigate('/schools', { replace: true }), 2000)
     } catch {
       // Even if the request fails, don't strand the user — send them home
       setStage('done')
-      setTimeout(() => navigate('/topics', { replace: true }), 2000)
+      setTimeout(() => navigate('/schools', { replace: true }), 2000)
     }
   }
 

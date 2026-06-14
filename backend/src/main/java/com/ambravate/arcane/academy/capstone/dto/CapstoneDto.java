@@ -18,7 +18,7 @@ public record CapstoneDto(
 ) {
     public static CapstoneDto from(UserCapstone c) {
         return new CapstoneDto(
-                c.getId(), c.getChunkId(), c.getTitle(), c.getDescription(),
+                c.getId(), c.getModuleId(), c.getTitle(), c.getDescription(),
                 c.getCodeContent(), c.getGithubUrl(), c.getAdminFeedback(),
                 c.getReviewedAt(), c.getCreatedAt(), c.getUpdatedAt()
         );

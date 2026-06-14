@@ -10,11 +10,11 @@ import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.Question;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
@@ -40,7 +40,7 @@ public class InterleavingService {
     private final UserChunkProgressRepository progressRepository;
     private final ReviewSessionRepository reviewSessionRepository;
     private final UserLearnerProfileRepository profileRepository;
-    private final SubChunkRepository subChunkRepository;
+    private final LessonRepository lessonRepository;
     private final RetrievalService retrievalService;
     private final SpacingService spacingService;
     private final GamificationFacade gamification;
@@ -57,7 +57,7 @@ public class InterleavingService {
 
         // Get all completed sub-chunks for this user
         List<UserChunkProgress> completed = progressRepository.findByUserId(userId).stream()
-                .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE || p.getStatus() == SubChunkStatus.SKIPPED)
+                .filter(p -> p.getStatus() == LessonStatus.COMPLETE || p.getStatus() == LessonStatus.SKIPPED)
                 .toList();
 
         if (completed.isEmpty()) return new ReviewSessionQuestions(List.of());
@@ -75,15 +75,15 @@ public class InterleavingService {
                 if (hoursSince < 72) recencyBonus = 0.3;
             }
 
-            weights.put(p.getSubChunkId(), weaknessWeight + recencyBonus);
+            weights.put(p.getLessonId(), weaknessWeight + recencyBonus);
         }
 
         // Current sub-chunk always gets weight
         weights.put(currentSubChunkId, weights.getOrDefault(currentSubChunkId, 0.5) + 0.5);
 
         // Get questions from all relevant sub-chunks
-        List<String> subChunkIds = new ArrayList<>(weights.keySet());
-        List<Question> pool = questionRepository.findBySubChunkIdIn(subChunkIds).stream()
+        List<String> lessonIds = new ArrayList<>(weights.keySet());
+        List<Question> pool = questionRepository.findByLessonIdIn(lessonIds).stream()
                 .filter(q -> q.getMinPath().ordinal() <= path.ordinal())
                 .collect(Collectors.toList());
 
@@ -113,10 +113,10 @@ public class InterleavingService {
         }
 
         List<String> dueSubChunkIds = dueReviews.stream()
-                .map(UserChunkProgress::getSubChunkId)
+                .map(UserChunkProgress::getLessonId)
                 .toList();
 
-        List<Question> pool = questionRepository.findBySubChunkIdIn(dueSubChunkIds).stream()
+        List<Question> pool = questionRepository.findByLessonIdIn(dueSubChunkIds).stream()
                 .filter(q -> q.getMinPath().ordinal() <= path.ordinal())
                 .collect(Collectors.toList());
 
@@ -124,7 +124,7 @@ public class InterleavingService {
         Map<String, Double> weights = new HashMap<>();
         for (UserChunkProgress p : dueReviews) {
             double decayed = spacingService.computeDecayedStrength(p);
-            weights.put(p.getSubChunkId(), 1.0 - decayed);
+            weights.put(p.getLessonId(), 1.0 - decayed);
         }
 
         int targetCount = Math.min(20, Math.max(10, pool.size()));
@@ -149,7 +149,7 @@ public class InterleavingService {
 
         // Group results by sub-chunk and update SM-2 for each
         Map<String, List<QuestionResult>> bySubChunk = graded.results().stream()
-                .collect(Collectors.groupingBy(QuestionResult::subChunkId));
+                .collect(Collectors.groupingBy(QuestionResult::lessonId));
 
         for (var entry : bySubChunk.entrySet()) {
             long correct = entry.getValue().stream().filter(QuestionResult::correct).count();
@@ -177,14 +177,14 @@ public class InterleavingService {
 
         while (selected.size() < count && !remaining.isEmpty()) {
             double totalWeight = remaining.stream()
-                    .mapToDouble(q -> weights.getOrDefault(q.getSubChunkId(), 0.5))
+                    .mapToDouble(q -> weights.getOrDefault(q.getLessonId(), 0.5))
                     .sum();
 
             double r = rng.nextDouble() * totalWeight;
             double cumulative = 0;
 
             for (int i = 0; i < remaining.size(); i++) {
-                cumulative += weights.getOrDefault(remaining.get(i).getSubChunkId(), 0.5);
+                cumulative += weights.getOrDefault(remaining.get(i).getLessonId(), 0.5);
                 if (cumulative >= r) {
                     selected.add(remaining.remove(i));
                     break;
@@ -199,7 +199,7 @@ public class InterleavingService {
     private LearnerPath getPath(String userId) {
         return profileRepository.findByUserId(userId)
                 .map(UserLearnerProfile::getCurrentPath)
-                .orElse(LearnerPath.FOUNDATION);
+                .orElse(LearnerPath.APPRENTICE);
     }
 
 }

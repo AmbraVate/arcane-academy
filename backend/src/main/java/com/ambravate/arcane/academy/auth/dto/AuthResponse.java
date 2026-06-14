@@ -19,4 +19,6 @@ public class AuthResponse {
     private int streakDays;
     private String role;
     private boolean bypassPaywall;
+    private String subscriptionStatus;
+    private boolean onboardingCompleted;
 }

@@ -1,26 +1,13 @@
 package com.ambravate.arcane.academy.common.domain;
 
+/** The four universal learning tiers, pathway-agnostic across all domains. */
 public enum LearnerPath {
-    // ── New universal four-tier structure (pathway-agnostic) ───────────────────
-    /** First tier — learn programming fundamentals. */
+    /** First tier — foundational concepts and vocabulary. */
     APPRENTICE,
-    /** Second tier — become a production engineer. */
+    /** Second tier — applied skills in real-world contexts. */
     JUNIOR,
-    /** Third tier — own systems and technical delivery. */
+    /** Third tier — advanced depth and critical evaluation. */
     SENIOR,
-    /** Fourth tier — operate as a Lead/Staff engineer. */
-    LEAD,
-
-    // ── Legacy values retained until all content JSON files are migrated ───────
-    // These are removed once V16 Flyway migration has run and all JSON is reseeded.
-    /** @deprecated Use APPRENTICE */
-    FOUNDATION,
-    /** @deprecated Removed — content merged into JUNIOR */
-    ADVANCED,
-    /** @deprecated Use JUNIOR */
-    PRACTITIONER,
-    /** @deprecated Use SENIOR */
-    EXPERT,
-    /** @deprecated Replaced by per-tier capstone topics */
-    CAPSTONE
+    /** Fourth tier — mastery, leadership, and professional practice. */
+    LEAD
 }

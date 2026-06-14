@@ -3,16 +3,16 @@ package com.ambravate.arcane.academy.practice.service;
 import com.ambravate.arcane.academy.ai.domain.GradeResult;
 import com.ambravate.arcane.academy.ai.domain.QuestionResult;
 import com.ambravate.arcane.academy.ai.service.RetrievalService;
-import com.ambravate.arcane.academy.common.domain.Chunk;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
+import com.ambravate.arcane.academy.common.domain.Lesson;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.content.repository.QuestionRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
-import com.ambravate.arcane.academy.auth.repository.UserTopicProfileRepository;
+import com.ambravate.arcane.academy.auth.repository.UserTrackProfileRepository;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.practice.domain.DiagnosticResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,12 +37,12 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for {@link DiagnosticService} tier-placement logic.
  * <p>
- * Boundary conditions for the four-tier system:
+ * Placement boundaries (based on fraction of modules skipped):
  * <ul>
- *   <li>&gt;90% skip → EXPERT</li>
- *   <li>&gt;70% skip → PRACTITIONER</li>
- *   <li>&gt;50% skip → ADVANCED (added in May 2026)</li>
- *   <li>≤50% skip → FOUNDATION</li>
+ *   <li>&gt;90% skip → LEAD</li>
+ *   <li>&gt;70% skip → SENIOR</li>
+ *   <li>&gt;50% skip → JUNIOR</li>
+ *   <li>≤50% skip  → APPRENTICE</li>
  * </ul>
  */
 @ExtendWith(MockitoExtension.class)
@@ -53,12 +53,12 @@ class DiagnosticServiceTest {
     private static final String USER_ID = "diag-user";
     private static final String TOPIC_ID = "java";
 
-    @Mock private ChunkRepository chunkRepository;
-    @Mock private SubChunkRepository subChunkRepository;
+    @Mock private LearningModuleRepository moduleRepository;
+    @Mock private LessonRepository lessonRepository;
     @Mock private QuestionRepository questionRepository;
     @Mock private UserChunkProgressRepository progressRepository;
     @Mock private UserLearnerProfileRepository profileRepository;
-    @Mock private UserTopicProfileRepository topicProfileRepository;
+    @Mock private UserTrackProfileRepository topicProfileRepository;
     @Mock private RetrievalService retrievalService;
     @Mock private TelemetryService telemetry;
     @Mock private ObjectMapper objectMapper;
@@ -66,42 +66,40 @@ class DiagnosticServiceTest {
     @InjectMocks
     private DiagnosticService service;
 
-    private Chunk chunk(String id) {
-        Chunk c = new Chunk();
-        c.setId(id);
-        c.setTopicId(TOPIC_ID);
-        c.setSortOrder(1);
-        return c;
+    private LearningModule chunk(String id) {
+        return LearningModule.builder()
+                .id(id)
+                .trackId(TOPIC_ID)
+                .sortOrder(1)
+                .build();
     }
 
-    private SubChunk subChunk(String id, String chunkId) {
-        SubChunk sc = new SubChunk();
-        sc.setId(id);
-        sc.setChunkId(chunkId);
-        return sc;
+    private Lesson subChunk(String id, String moduleId) {
+        return Lesson.builder()
+                .id(id)
+                .moduleId(moduleId)
+                .build();
     }
 
     /**
-     * Build a GradeResult where the first {@code correctCount} sub-chunks out
-     * of the ordered list are answered correctly (2 correct per chunk → SKIP).
-     * Sub-chunks alternate a/b per chunk, so correct pairs produce SKIP chunks.
+     * Build a GradeResult where the first {@code correctCount} lessons out
+     * of the ordered list are answered correctly (2 correct per module → SKIP).
      */
-    private GradeResult gradeResult(
-            List<String> subChunkIds, int correctCount) {
+    private GradeResult gradeResult(List<String> lessonIds, int correctCount) {
         List<QuestionResult> results = new java.util.ArrayList<>();
-        for (int i = 0; i < subChunkIds.size(); i++) {
-            String scId = subChunkIds.get(i);
+        for (int i = 0; i < lessonIds.size(); i++) {
+            String scId = lessonIds.get(i);
             results.add(new QuestionResult(
                     "q-" + scId, scId, i < correctCount, "A", "A", "no feedback"));
         }
         return new GradeResult(
-                (double) correctCount / subChunkIds.size(),
-                correctCount, subChunkIds.size(), results);
+                (double) correctCount / lessonIds.size(),
+                correctCount, lessonIds.size(), results);
     }
 
     @BeforeEach
     void commonStubs() {
-        when(progressRepository.existsByUserIdAndSubChunkId(any(), any())).thenReturn(false);
+        when(progressRepository.existsByUserIdAndLessonId(any(), any())).thenReturn(false);
         when(progressRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         ReviewSession session = new ReviewSession();
         session.setId("session-1");
@@ -113,152 +111,146 @@ class DiagnosticServiceTest {
     }
 
     /**
-     * Set up {@code chunkCount} chunks each with 2 sub-chunks.
-     * Returns the flat list of sub-chunk IDs in order.
+     * Set up {@code chunkCount} modules each with 2 lessons.
+     * Returns the flat list of lesson IDs in order.
+     * Mocks both {@code findByTrackIdOrderBySortOrderAsc} and the new
+     * {@code findByModuleIdIn} call used by the service to build the lesson→module map.
      */
     private List<String> setupChunks(int chunkCount) {
-        List<Chunk> chunks = new java.util.ArrayList<>();
+        List<LearningModule> chunks = new java.util.ArrayList<>();
         for (int i = 0; i < chunkCount; i++) {
             chunks.add(chunk("chunk-" + i));
         }
-        when(chunkRepository.findAllByOrderBySortOrderAsc()).thenReturn(chunks);
+        when(moduleRepository.findByTrackIdOrderBySortOrderAsc(anyString())).thenReturn(chunks);
 
-        List<SubChunk> allSubChunks = new java.util.ArrayList<>();
-        List<String> allSubChunkIds = new java.util.ArrayList<>();
+        List<Lesson> allLessons = new java.util.ArrayList<>();
+        List<String> allLessonIds = new java.util.ArrayList<>();
 
-        for (Chunk c : chunks) {
-            SubChunk sc1 = subChunk(c.getId() + "-a", c.getId());
-            SubChunk sc2 = subChunk(c.getId() + "-b", c.getId());
-            when(subChunkRepository.findByChunkIdOrderBySortOrderAsc(c.getId()))
+        for (LearningModule c : chunks) {
+            Lesson sc1 = subChunk(c.getId() + "-a", c.getId());
+            Lesson sc2 = subChunk(c.getId() + "-b", c.getId());
+            when(lessonRepository.findByModuleIdOrderBySortOrderAsc(c.getId()))
                     .thenReturn(List.of(sc1, sc2));
-            allSubChunks.add(sc1);
-            allSubChunks.add(sc2);
-            allSubChunkIds.add(sc1.getId());
-            allSubChunkIds.add(sc2.getId());
+            allLessons.add(sc1);
+            allLessons.add(sc2);
+            allLessonIds.add(sc1.getId());
+            allLessonIds.add(sc2.getId());
         }
 
-        when(subChunkRepository.findAll()).thenReturn(allSubChunks);
-        return allSubChunkIds;
+        // Service now uses findByModuleIdIn for the lesson→module map
+        when(lessonRepository.findByModuleIdIn(anyList())).thenReturn(allLessons);
+        return allLessonIds;
     }
 
-    // ── FOUNDATION boundary ─────────────────────────────────────────────────────
+    // ── APPRENTICE boundary ─────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("FOUNDATION tier")
-    class FoundationTier {
+    @DisplayName("APPRENTICE tier")
+    class ApprenticeTier {
 
         @Test
-        @DisplayName("places learner at FOUNDATION when 0% of chunks are skipped")
-        void zeroSkipIsFoundation() {
+        @DisplayName("places learner at APPRENTICE when 0% of modules are skipped")
+        void zeroSkipIsApprentice() {
             List<String> scIds = setupChunks(4);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 0));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.FOUNDATION);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.APPRENTICE);
         }
 
         @Test
-        @DisplayName("places learner at FOUNDATION when exactly 50% of chunks are skipped")
-        void exactlyFiftyPercentIsFoundation() {
-            // 10 chunks. 2 sub-chunks each → 20 sub-chunk entries.
-            // 10 sub-chunks correct → 5 chunks SKIP (50% = ≤50% → FOUNDATION).
+        @DisplayName("places learner at APPRENTICE when exactly 50% of modules are skipped (boundary is strictly > 50%)")
+        void exactlyFiftyPercentIsApprentice() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 10));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.FOUNDATION);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.APPRENTICE);
         }
     }
 
-    // ── ADVANCED tier ───────────────────────────────────────────────────────────
+    // ── JUNIOR boundary ─────────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("ADVANCED tier — added May 2026")
-    class AdvancedTier {
+    @DisplayName("JUNIOR tier")
+    class JuniorTier {
 
         @Test
-        @DisplayName("places learner at ADVANCED when just over 50% of chunks are skipped")
-        void justOverFiftyPercentIsAdvanced() {
-            // 10 chunks, 2 sub-chunks each → 20 sub-chunk slots.
-            // 12 correct → 6 chunks SKIP (60% > 50% but < 70% → ADVANCED).
+        @DisplayName("places learner at JUNIOR when just over 50% of modules are skipped")
+        void justOverFiftyPercentIsJunior() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 12));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.ADVANCED);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.JUNIOR);
         }
 
         @Test
-        @DisplayName("places learner at ADVANCED when 65% of chunks are skipped")
-        void sixtyFivePercentIsAdvanced() {
-            // 20 chunks → 40 sub-chunks. 26 correct → 13 SKIP (65% > 50%, < 70%).
+        @DisplayName("places learner at JUNIOR when 65% of modules are skipped")
+        void sixtyFivePercentIsJunior() {
             List<String> scIds = setupChunks(20);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 26));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.ADVANCED);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.JUNIOR);
         }
 
         @Test
-        @DisplayName("places learner at ADVANCED when exactly 70% of chunks are skipped (boundary is strictly > 70%)")
-        void exactlySeventyPercentIsAdvanced() {
-            // 10 chunks → 20 sub-chunks. 14 correct → 7 SKIP = 70%.
-            // 70% is NOT > 70%, so it falls into ADVANCED, not PRACTITIONER.
+        @DisplayName("places learner at JUNIOR when exactly 70% of modules are skipped (boundary is strictly > 70%)")
+        void exactlySeventyPercentIsJunior() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 14));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.ADVANCED);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.JUNIOR);
         }
     }
 
-    // ── PRACTITIONER boundary ───────────────────────────────────────────────────
+    // ── SENIOR boundary ─────────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("PRACTITIONER tier")
-    class PractitionerTier {
+    @DisplayName("SENIOR tier")
+    class SeniorTier {
 
         @Test
-        @DisplayName("places learner at PRACTITIONER when 80% of chunks are skipped")
-        void eightyPercentIsPractitioner() {
-            // 10 chunks → 20 sub-chunks. 16 correct → 8 SKIP (80% > 70%, < 90%).
+        @DisplayName("places learner at SENIOR when 80% of modules are skipped")
+        void eightyPercentIsSenior() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 16));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.PRACTITIONER);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.SENIOR);
         }
     }
 
-    // ── EXPERT boundary ─────────────────────────────────────────────────────────
+    // ── LEAD boundary ───────────────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("EXPERT tier")
-    class ExpertTier {
+    @DisplayName("LEAD tier")
+    class LeadTier {
 
         @Test
-        @DisplayName("places learner at EXPERT when more than 90% of chunks are skipped")
-        void ninetyOnePercentIsExpert() {
-            // 10 chunks → 20 sub-chunks. 20 correct → 10 SKIP = 100% > 90% → EXPERT.
+        @DisplayName("places learner at LEAD when more than 90% of modules are skipped")
+        void ninetyOnePercentIsLead() {
             List<String> scIds = setupChunks(10);
             when(retrievalService.gradeAnswers(any()))
                     .thenReturn(gradeResult(scIds, 20));
 
             DiagnosticResult result = service.submitDiagnostic(USER_ID, List.of(), TOPIC_ID);
 
-            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.EXPERT);
+            assertThat(result.recommendedPath()).isEqualTo(LearnerPath.LEAD);
         }
     }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { profileApi, type PublicProfile } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
@@ -37,7 +37,7 @@ export default function PublicProfilePage() {
     return (
       <div className="flex-1 overflow-y-auto px-6 py-8">
         <div className="max-w-[600px] mx-auto bg-card border border-border rounded-[12px] px-6 py-10 text-center">
-          <div className="text-[32px] mb-3">🌫️</div>
+          <div className="text-[32px] mb-3">🌫ï¸</div>
           <h1 className="font-cinzel text-[20px] text-gold mb-2">Profile not visible</h1>
           <p className="text-muted text-[13px] mb-4">
             Either no learner with that name exists, or they haven't opted into public profiles.
@@ -87,15 +87,15 @@ export default function PublicProfilePage() {
         {/* Per-topic breakdown */}
         <section className="mb-6">
           <h2 className="font-cinzel text-[14px] text-purple-light tracking-[1px] mb-3 pb-1.5 border-b border-border">
-            Topics
+            Pathways
           </h2>
-          {profile.topics.length === 0 ? (
-            <p className="text-muted italic">No topic XP yet — they're just getting started.</p>
+          {profile.domains.length === 0 ? (
+            <p className="text-muted italic">No pathway XP yet — they're just getting started.</p>
           ) : (
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
-              {profile.topics.map(topic => (
+              {profile.domains.map(topic => (
                 <div
-                  key={topic.topicId}
+                  key={topic.domainId}
                   className="bg-card border border-border rounded-[10px] px-4 py-4"
                   style={{ borderLeft: `3px solid ${topic.accentColor ?? 'var(--purple)'}` }}
                 >
@@ -106,7 +106,7 @@ export default function PublicProfilePage() {
                   <div className="text-[18px] font-semibold text-gold">
                     {topic.xpEarned.toLocaleString()}<span className="text-[11px] text-muted ml-1">xp</span>
                   </div>
-                  <div className="text-[11px] text-muted">{topic.subChunksCompleted} lessons complete</div>
+                  <div className="text-[11px] text-muted">{topic.lessonsCompleted} lessons complete</div>
                 </div>
               ))}
             </div>

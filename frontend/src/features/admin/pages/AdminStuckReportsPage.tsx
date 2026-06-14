@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { adminStuckReportApi, type StuckReport } from '@/shared/api/adminServices'
 import { AlertTriangle, CheckCircle2, Clock, ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -62,7 +62,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
       borderLeft: `3px solid ${m.color}`,
       borderRadius: 10, overflow: 'hidden', marginBottom: 10,
     }}>
-      {/* ── Summary row ── */}
+      {/* â”€â”€ Summary row â”€â”€ */}
       <div
         style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', cursor: 'pointer' }}
         onClick={() => setExpanded(e => !e)}
@@ -75,13 +75,13 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
               {report.username}
             </span>
             <span style={{ fontSize: 11, color: '#8b7fa0' }}>{report.email}</span>
-            {report.topicId && (
+            {report.domainId && (
               <span style={{
                 fontSize: 10, padding: '1px 6px', borderRadius: 4,
                 background: 'rgba(139,92,246,.15)', color: '#c4b5fd',
                 border: '1px solid rgba(139,92,246,.3)',
               }}>
-                {report.topicId}
+                {report.domainId}
               </span>
             )}
             {report.currentPhase && (
@@ -108,7 +108,7 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
         </div>
       </div>
 
-      {/* ── Expanded detail ── */}
+      {/* â”€â”€ Expanded detail â”€â”€ */}
       {expanded && (
         <div style={{ padding: '0 16px 16px', borderTop: '1px solid #1e1a35' }}>
 
@@ -143,10 +143,10 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
           )}
 
           {/* Sub-chunk */}
-          {report.subChunkId && (
+          {report.lessonId && (
             <div style={{ marginTop: 10 }}>
               <div style={{ fontSize: 10, color: '#8b7fa0', fontFamily: 'Cinzel, serif', marginBottom: 3 }}>LESSON ID</div>
-              <div style={{ fontSize: 11, color: '#e8e0f0', fontFamily: 'monospace' }}>{report.subChunkId}</div>
+              <div style={{ fontSize: 11, color: '#e8e0f0', fontFamily: 'monospace' }}>{report.lessonId}</div>
             </div>
           )}
 
@@ -186,33 +186,37 @@ function ReportRow({ report, onUpdate }: { report: StuckReport; onUpdate: (r: St
           </div>
 
           {/* Action row */}
-          <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap', alignItems: 'center' }}>
             {(['NEW', 'REVIEWED', 'RESOLVED'] as Status[]).map(s => (
               <button
+                type="button"
                 key={s}
                 disabled={saving || report.status === s}
-                onClick={() => setStatus(s)}
+                onClick={e => { e.stopPropagation(); setStatus(s) }}
                 style={{
-                  padding: '5px 12px', borderRadius: 6, fontSize: 11,
+                  minHeight: 44, padding: '10px 16px', borderRadius: 8, fontSize: 12,
                   fontFamily: 'Cinzel, serif', cursor: report.status === s ? 'default' : 'pointer',
                   background: report.status === s ? STATUS_META[s].bg : 'transparent',
                   color: STATUS_META[s].color,
                   border: `1px solid ${STATUS_META[s].border}`,
                   opacity: saving ? 0.6 : 1,
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 {STATUS_META[s].label}
               </button>
             ))}
             <button
+              type="button"
               disabled={saving}
-              onClick={saveNotes}
+              onClick={e => { e.stopPropagation(); saveNotes() }}
               style={{
-                marginLeft: 'auto', padding: '5px 14px', borderRadius: 6, fontSize: 11,
+                minHeight: 44, padding: '10px 18px', borderRadius: 8, fontSize: 12,
                 fontFamily: 'Cinzel, serif', cursor: 'pointer',
                 background: 'rgba(139,92,246,.12)', color: '#c4b5fd',
                 border: '1px solid rgba(139,92,246,.3)',
                 opacity: saving ? 0.6 : 1,
+                WebkitTapHighlightColor: 'transparent',
               }}
             >
               {saving ? 'Saving…' : 'Save Notes'}

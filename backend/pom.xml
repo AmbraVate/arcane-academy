@@ -36,6 +36,12 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
+    <!-- Email (password-reset emails) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+
     <!-- OAuth2 Client (Google login) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -115,6 +121,23 @@
       <version>1.18.1</version>
     </dependency>
 
+    <!-- CommonMark — Markdown→HTML for lesson content authoring -->
+    <dependency>
+      <groupId>org.commonmark</groupId>
+      <artifactId>commonmark</artifactId>
+      <version>0.24.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.commonmark</groupId>
+      <artifactId>commonmark-ext-gfm-tables</artifactId>
+      <version>0.24.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.commonmark</groupId>
+      <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
+      <version>0.24.0</version>
+    </dependency>
+
     <!-- Sentry — error & performance monitoring. Auto-disables when sentry.dsn is empty. -->
     <dependency>
       <groupId>io.sentry</groupId>
@@ -132,6 +155,20 @@
       <groupId>com.bucket4j</groupId>
       <artifactId>bucket4j-core</artifactId>
       <version>${bucket4j.version}</version>
+    </dependency>
+
+    <!-- Stripe — payment processing -->
+    <dependency>
+      <groupId>com.stripe</groupId>
+      <artifactId>stripe-java</artifactId>
+      <version>26.4.0</version>
+    </dependency>
+
+    <!-- Anthropic Java SDK — Claude API with prompt caching -->
+    <dependency>
+      <groupId>com.anthropic</groupId>
+      <artifactId>anthropic-java</artifactId>
+      <version>2.27.0</version>
     </dependency>
 
     <!-- Flyway — versioned SQL migrations; replaces ddl-auto:update -->

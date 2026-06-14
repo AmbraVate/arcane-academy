@@ -1,3 +1,4 @@
+import { safe } from '@/lib/sanitize'
 import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -54,7 +55,7 @@ export default function QuestionCard({ question, index, answer, onChange, result
           [&_code]:bg-[rgba(139,92,246,0.15)] [&_code]:text-purple-light [&_code]:px-1.5 [&_code]:py-px
           [&_code]:rounded [&_code]:text-[14px] [&_code]:font-mono [&_code]:border [&_code]:border-[rgba(139,92,246,0.25)]
           max-[600px]:text-[15px]"
-        dangerouslySetInnerHTML={{ __html: question.questionHtml }}
+        dangerouslySetInnerHTML={safe(question.questionHtml)}
       />
 
       {/* Code snippet */}
@@ -147,6 +148,8 @@ export default function QuestionCard({ question, index, answer, onChange, result
             onChange={e => !disabled && onChange(e.target.value)}
             disabled={disabled}
             rows={3}
+            spellCheck={false}
+            autoComplete="off"
           />
         </div>
       )}
@@ -169,7 +172,7 @@ export default function QuestionCard({ question, index, answer, onChange, result
             <div
               className="mt-2.5 pt-2.5 border-t border-[rgba(248,113,113,0.2)] text-[13px] text-muted leading-[1.6]
                 [&_code]:bg-[rgba(139,92,246,0.15)] [&_code]:text-purple-light [&_code]:px-1 [&_code]:py-px [&_code]:rounded [&_code]:text-[12px]"
-              dangerouslySetInnerHTML={{ __html: result.explanationHtml }}
+              dangerouslySetInnerHTML={safe(result.explanationHtml)}
             />
           )}
         </div>

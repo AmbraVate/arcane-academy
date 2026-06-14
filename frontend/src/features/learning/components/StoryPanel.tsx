@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { safe } from '@/lib/sanitize'
+﻿import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import type { StoryBeat, StoryRabbitHoleTerm } from '@/shared/types'
 import { rabbitHoleTermApi } from '@/shared/api/services'
@@ -9,12 +10,12 @@ interface Popover { term: string; description: string; x: number; y: number }
 interface StoryPanelProps {
   beats: StoryBeat[]
   fullPage?: boolean
-  subChunkId?: string
-  topicId?: string
+  lessonId?: string
+  domainId?: string
   rabbitHoleTerms?: StoryRabbitHoleTerm[] | null
 }
 
-export default function StoryPanel({ beats, fullPage = false, subChunkId, topicId, rabbitHoleTerms }: StoryPanelProps) {
+export default function StoryPanel({ beats, fullPage = false, lessonId, domainId, rabbitHoleTerms }: StoryPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [popover, setPopover] = useState<Popover | null>(null)
   const [savedTerms, setSavedTerms] = useState<Set<string>>(new Set())
@@ -53,7 +54,7 @@ export default function StoryPanel({ beats, fullPage = false, subChunkId, topicI
     if (!popover || saving) return
     setSaving(true)
     try {
-      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId ?? '', topicId ?? '')
+      await rabbitHoleTermApi.save(popover.term, popover.description, lessonId ?? '', domainId ?? '')
       setSavedTerms(prev => new Set(prev).add(popover.term))
     } catch { /* ignore */ } finally { setSaving(false) }
   }
@@ -117,7 +118,7 @@ function Narration({ text, fullPage }: { text: string; fullPage: boolean }) {
         !fullPage && 'text-[13px]',
         '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold',
       )}
-      dangerouslySetInnerHTML={{ __html: text }}
+      dangerouslySetInnerHTML={safe(text)}
     />
   )
 }
@@ -146,7 +147,7 @@ function Example({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
           fullPage && 'text-[13px] leading-[1.8]',
         )}
       >
-        <code dangerouslySetInnerHTML={{ __html: beat.text }} />
+        <code dangerouslySetInnerHTML={safe(beat.text)} />
       </pre>
     </div>
   )
@@ -190,7 +191,7 @@ function Dialogue({ beat, fullPage }: { beat: StoryBeat; fullPage: boolean }) {
             '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold',
             fullPage && 'text-[15px] leading-[1.8]',
           )}
-          dangerouslySetInnerHTML={{ __html: beat.text ?? '' }}
+          dangerouslySetInnerHTML={safe(beat.text ?? '')}
         />
       </div>
     </div>

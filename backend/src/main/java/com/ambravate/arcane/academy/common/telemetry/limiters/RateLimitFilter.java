@@ -51,6 +51,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
     private final Map<String, Bucket> authBuckets       = new ConcurrentHashMap<>();
     private final Map<String, Bucket> aiMentorBuckets   = new ConcurrentHashMap<>();
     private final Map<String, Bucket> codeRunnerBuckets = new ConcurrentHashMap<>();
+    private final Map<String, Bucket> adminBuckets      = new ConcurrentHashMap<>();
 
     public RateLimitFilter(RateLimitProperties props) {
         this.props = props;
@@ -95,7 +96,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     /** Map a request to its bucket — first-match wins; null = no limiting. */
     private BucketSpec pickSpec(String path) {
-        if (path.startsWith("/api/auth/login") || path.startsWith("/api/auth/register")) {
+        // All auth sub-paths are rate-limited by client IP.
+        // Covers login, register, refresh, check-email, check-username, forgot-password, reset-password, exchange.
+        if (path.startsWith("/api/auth/")) {
             return new BucketSpec("auth", authBuckets,
                     props.getAuth().capacity(),
                     props.getAuth().refillTokens(),
@@ -116,6 +119,21 @@ public class RateLimitFilter extends OncePerRequestFilter {
                     props.getCodeRunner().refillPeriodSeconds(),
                     RateLimitFilter::userIdOrIp);
         }
+        if (path.startsWith("/api/admin")) {
+            return new BucketSpec("admin", adminBuckets,
+                    props.getAdmin().capacity(),
+                    props.getAdmin().refillTokens(),
+                    props.getAdmin().refillPeriodSeconds(),
+                    RateLimitFilter::userIdOrIp);
+        }
+        // Stuck-reports: use the AI-mentor bucket (same cap — protects storage/screenshot DoS)
+        if (path.equals("/api/stuck-reports")) {
+            return new BucketSpec("ai-mentor", aiMentorBuckets,
+                    props.getAiMentor().capacity(),
+                    props.getAiMentor().refillTokens(),
+                    props.getAiMentor().refillPeriodSeconds(),
+                    RateLimitFilter::userIdOrIp);
+        }
         return null;
     }
 
@@ -131,10 +149,11 @@ public class RateLimitFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest req) {
         String path = req.getRequestURI();
-        return !(path.startsWith("/api/auth/login")
-                || path.startsWith("/api/auth/register")
+        return !(path.startsWith("/api/auth/")
                 || path.startsWith("/api/ai-mentor")
-                || path.startsWith("/api/code/run"));
+                || path.startsWith("/api/code/run")
+                || path.startsWith("/api/admin")
+                || path.equals("/api/stuck-reports"));
     }
 
     /** Direct peer IP. Behind a proxy this is the proxy — see class javadoc. */

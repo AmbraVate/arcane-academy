@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <li>Each event increments the right Prometheus counter</li>
  *   <li>Tags use the bounded label set (no cardinality blow-ups)</li>
  *   <li>User IDs are hashed deterministically (same id → same hash)</li>
- *   <li>The chunk-id → topic mapping is correct</li>
+ *   <li>The module-id → domain mapping is correct</li>
  * </ul>
  */
 @DisplayName("TelemetryService — engagement event emission")
@@ -41,36 +41,36 @@ class TelemetryServiceTest {
     @DisplayName("Quest lifecycle")
     class Quest {
         @Test
-        @DisplayName("questStarted increments counter with derived topic label")
-        void questStartedTagsTopic() {
-            telemetry.questStarted("user-1", "rx-a1", "rx-a");
+        @DisplayName("questStarted increments counter with derived domain label")
+        void questStartedTagsDomain() {
+            telemetry.questStarted("user-1", "se-app-m1-01", "se-app-m1");
 
-            Counter c = registry.find("arcane.quest.started").tag("topic", "react").counter();
+            Counter c = registry.find("arcane.quest.started").tag("topic", "software-engineering").counter();
             assertThat(c).isNotNull();
             assertThat(c.count()).isEqualTo(1.0);
         }
 
         @Test
-        @DisplayName("questCompleted records xp and topic")
-        void questCompletedRecordsXp() {
-            telemetry.questCompleted("user-1", "chunk-a1", "chunk-a", 75);
+        @DisplayName("questCompleted records xp and domain")
+        void questCompletedRecordsDomain() {
+            telemetry.questCompleted("user-1", "fe-jun-m2-03", "fe-jun-m2", 75);
 
-            Counter c = registry.find("arcane.quest.completed").tag("topic", "java").counter();
+            Counter c = registry.find("arcane.quest.completed").tag("topic", "frontend-engineering").counter();
             assertThat(c).isNotNull();
             assertThat(c.count()).isEqualTo(1.0);
         }
 
         @Test
-        @DisplayName("Tailwind chunk id maps to tailwind topic")
-        void tailwindChunkMapsCorrectly() {
-            telemetry.questStarted("u", "tw-a1", "tw-a");
-            assertThat(registry.find("arcane.quest.started").tag("topic", "tailwind").counter().count())
+        @DisplayName("Data engineering module id maps to data-engineering domain")
+        void dataEngineeringModuleMapsCorrectly() {
+            telemetry.questStarted("u", "de-app-m3-01", "de-app-m3");
+            assertThat(registry.find("arcane.quest.started").tag("topic", "data-engineering").counter().count())
                     .isEqualTo(1.0);
         }
 
         @Test
-        @DisplayName("Unknown chunk id maps to 'unknown' (defends Prometheus cardinality)")
-        void unknownChunkFallsBackToUnknown() {
+        @DisplayName("Unknown module id maps to 'unknown' (defends Prometheus cardinality)")
+        void unknownModuleFallsBackToUnknown() {
             telemetry.questStarted("u", "weird-x1", "weird-x");
             assertThat(registry.find("arcane.quest.started").tag("topic", "unknown").counter().count())
                     .isEqualTo(1.0);
@@ -170,13 +170,13 @@ class TelemetryServiceTest {
     @DisplayName("Diagnostic")
     class Diagnostic {
         @Test
-        @DisplayName("diagnosticCompleted tags topic and tier")
+        @DisplayName("diagnosticCompleted tags domain and tier")
         void diagnosticTags() {
-            telemetry.diagnosticCompleted("u", "java", "PRACTITIONER", 0.78);
+            telemetry.diagnosticCompleted("u", "software-engineering", "APPRENTICE", 0.78);
 
             Counter c = registry.find("arcane.diagnostic.completed")
-                    .tag("topic", "java")
-                    .tag("tier", "PRACTITIONER")
+                    .tag("topic", "software-engineering")
+                    .tag("tier", "APPRENTICE")
                     .counter();
             assertThat(c).isNotNull();
             assertThat(c.count()).isEqualTo(1.0);
@@ -227,24 +227,34 @@ class TelemetryServiceTest {
         }
     }
 
-    // ── Topic derivation helper ─────────────────────────────────────────────────
+    // ── Domain derivation helper ─────────────────────────────────────────────────
 
     @Nested
-    @DisplayName("topicFromChunkId helper")
-    class TopicMapping {
+    @DisplayName("domainFromModuleId helper")
+    class DomainMapping {
         @Test
-        void javaPrefix() { assertThat(TelemetryService.topicFromChunkId("chunk-a")).isEqualTo("java"); }
+        void softwareEngineeringPrefix() {
+            assertThat(TelemetryService.domainFromModuleId("se-app-m1")).isEqualTo("software-engineering");
+        }
         @Test
-        void capstonePrefix() { assertThat(TelemetryService.topicFromChunkId("chunk-cap")).isEqualTo("java"); }
+        void frontendEngineeringPrefix() {
+            assertThat(TelemetryService.domainFromModuleId("fe-jun-m3")).isEqualTo("frontend-engineering");
+        }
         @Test
-        void tailwindPrefix() { assertThat(TelemetryService.topicFromChunkId("tw-c")).isEqualTo("tailwind"); }
+        void dataEngineeringPrefix() {
+            assertThat(TelemetryService.domainFromModuleId("de-sen-m2")).isEqualTo("data-engineering");
+        }
         @Test
-        void reactPrefix() { assertThat(TelemetryService.topicFromChunkId("rx-d")).isEqualTo("react"); }
+        void physicsPrefix() {
+            assertThat(TelemetryService.domainFromModuleId("phy-app-m1")).isEqualTo("physics");
+        }
         @Test
-        void sqlPrefix() { assertThat(TelemetryService.topicFromChunkId("sql-a")).isEqualTo("sql"); }
+        void unknown() {
+            assertThat(TelemetryService.domainFromModuleId("xyz-9")).isEqualTo("unknown");
+        }
         @Test
-        void unknown() { assertThat(TelemetryService.topicFromChunkId("xyz-9")).isEqualTo("unknown"); }
-        @Test
-        void nullInput() { assertThat(TelemetryService.topicFromChunkId(null)).isEqualTo("unknown"); }
+        void nullInput() {
+            assertThat(TelemetryService.domainFromModuleId(null)).isEqualTo("unknown");
+        }
     }
 }

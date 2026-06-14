@@ -19,10 +19,10 @@ public class UserNote {
     private String userId;
 
     @Column(name = "sub_chunk_id", nullable = false)
-    private String subChunkId;
+    private String lessonId;
 
     @Column(name = "chunk_id", nullable = false)
-    private String chunkId;
+    private String moduleId;
 
     @Column(nullable = false)
     private String title;

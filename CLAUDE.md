@@ -1,4 +1,3 @@
-
 ## Guides
 The following needs to be applied:
 

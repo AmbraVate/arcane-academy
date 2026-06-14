@@ -12,7 +12,7 @@ const RANK_LORE: Record<string, { title: string; lore: string; icon: string }> =
   Apprentice: { icon: '⚗️', title: 'Apprentice', lore: 'The binding runes hold. Master Velan admits you to the inner study halls.' },
   Adept:      { icon: '📜', title: 'Adept',       lore: 'Your spells compile cleanly and your logic is sound. The senior wizards take notice.' },
   Mage:       { icon: '🔮', title: 'Mage',        lore: 'You have mastered the fundamentals. The Academy grants you access to the restricted tomes.' },
-  Archmage:   { icon: '⚡', title: 'Archmage',    lore: 'The highest honour the Academy bestows. You are no longer a student — you are a wizard.' },
+  Archmage:   { icon: '⚡', title: 'Archmage',    lore: 'The highest honour the Academy bestows. You are no longer a student - you are a wizard.' },
 }
 
 export default function LevelUpModal({ newLevel, newRank, onClose }: Props) {
@@ -59,7 +59,7 @@ export default function LevelUpModal({ newLevel, newRank, onClose }: Props) {
             font-cinzel text-[13px] tracking-[1px] transition-[background] duration-200 hover:bg-[#6a4c0e]"
           onClick={handleClose}
         >
-          Continue your journey →
+          Continue your journey {'->'}
         </button>
       </div>
     </div>

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, String> {
-    List<Question> findBySubChunkId(String subChunkId);
-    List<Question> findBySubChunkIdAndTier(String subChunkId, QuestionTier tier);
-    List<Question> findBySubChunkIdIn(List<String> subChunkIds);
-    List<Question> findBySubChunkIdInAndMinPathLessThanEqual(List<String> subChunkIds, LearnerPath path);
-    void deleteBySubChunkIdIn(List<String> subChunkIds);
+    List<Question> findByLessonId(String lessonId);
+    List<Question> findByLessonIdAndTier(String lessonId, QuestionTier tier);
+    List<Question> findByLessonIdIn(List<String> lessonIds);
+    List<Question> findByLessonIdInAndMinPathLessThanEqual(List<String> lessonIds, LearnerPath path);
+    void deleteByLessonIdIn(List<String> lessonIds);
 }

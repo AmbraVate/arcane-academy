@@ -3,14 +3,14 @@ package com.ambravate.arcane.academy.gamification.service;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.domain.BadgeDefinition;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserBadge;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.gamification.repository.UserBadgeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +40,7 @@ class BadgeServiceTest {
 
     @Mock private UserBadgeRepository badgeRepository;
     @Mock private UserRepository userRepository;
-    @Mock private SubChunkRepository subChunkRepository;
+    @Mock private LessonRepository lessonRepository;
     @Mock private UserLearnerProfileRepository profileRepository;
     @Mock private StreakService streakService;
     @Mock private TelemetryService telemetry;
@@ -60,11 +60,11 @@ class BadgeServiceTest {
                 .build();
     }
 
-    private UserChunkProgress completed(String subChunkId) {
+    private UserChunkProgress completed(String lessonId) {
         return UserChunkProgress.builder()
                 .userId(USER_ID)
-                .subChunkId(subChunkId)
-                .status(SubChunkStatus.COMPLETE)
+                .lessonId(lessonId)
+                .status(LessonStatus.COMPLETE)
                 .build();
     }
 
@@ -166,7 +166,7 @@ class BadgeServiceTest {
             when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user(0, 0)));
             when(badgeRepository.findByUserId(USER_ID))
                     .thenReturn(List.of(earned("FIRST_CONCEPT")));
-            // One sub-chunk completed — FIRST_CONCEPT would normally trigger
+            // One lesson completed — FIRST_CONCEPT would normally trigger
             UserChunkProgress p = completed("sc-1");
 
             List<BadgeDto> result = service.evaluateAndAward(USER_ID, List.of(p), List.of());
@@ -184,7 +184,7 @@ class BadgeServiceTest {
     class Conditions {
 
         @Test
-        @DisplayName("Awards FIRST_CONCEPT when one sub-chunk is complete")
+        @DisplayName("Awards FIRST_CONCEPT when one lesson is complete")
         void firstConcept() {
             when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user(0, 0)));
             UserChunkProgress p = completed("sc-any");
@@ -248,8 +248,8 @@ class BadgeServiceTest {
 
             UserChunkProgress feynmanDone = UserChunkProgress.builder()
                     .userId(USER_ID)
-                    .subChunkId("sc-feynman")
-                    .status(SubChunkStatus.COMPLETE)
+                    .lessonId("sc-feynman")
+                    .status(LessonStatus.COMPLETE)
                     .feynmanCompleted(true)
                     .feynmanScore(0.9)
                     .build();
@@ -273,28 +273,25 @@ class BadgeServiceTest {
         }
     }
 
-    // ── getCompletedChunkIds / chunk-completion badge ────────────────────────────
+    // ── getCompletedChunkIds / module-completion badge ────────────────────────────
 
     @Nested
-    @DisplayName("Chunk-completion badges")
-    class ChunkCompletion {
+    @DisplayName("Module-completion badges")
+    class ModuleCompletion {
 
         @Test
-        @DisplayName("Awards JAVA_FND_1_COMPLETE when all sub-chunks of java-fnd-1 are complete")
+        @DisplayName("Awards JAVA_FND_1_COMPLETE when all lessons of java-fnd-1 are complete")
         void javaFnd1Complete() {
             when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user(0, 0)));
 
-            // Two sub-chunks in java-fnd-1
-            SubChunk sc1 = SubChunk.builder().id("sc-jf1-a").chunkId("java-fnd-1").sortOrder(1).build();
-            SubChunk sc2 = SubChunk.builder().id("sc-jf1-b").chunkId("java-fnd-1").sortOrder(2).build();
+            Lesson sc1 = Lesson.builder().id("sc-jf1-a").moduleId("java-fnd-1").sortOrder(1).build();
+            Lesson sc2 = Lesson.builder().id("sc-jf1-b").moduleId("java-fnd-1").sortOrder(2).build();
 
             UserChunkProgress p1 = completed("sc-jf1-a");
             UserChunkProgress p2 = completed("sc-jf1-b");
 
-            // findAllById resolves subChunkId → SubChunk (for chunkId mapping)
-            when(subChunkRepository.findAllById(anyList())).thenReturn(List.of(sc1, sc2));
-            // findByChunkIdIn checks if ALL sub-chunks in the chunk are done
-            when(subChunkRepository.findByChunkIdIn(anyList())).thenReturn(List.of(sc1, sc2));
+            when(lessonRepository.findAllById(anyList())).thenReturn(List.of(sc1, sc2));
+            when(lessonRepository.findByModuleIdIn(anyList())).thenReturn(List.of(sc1, sc2));
 
             List<BadgeDto> awarded = service.evaluateAndAward(USER_ID, List.of(p1, p2), List.of());
 
@@ -302,19 +299,19 @@ class BadgeServiceTest {
         }
 
         @Test
-        @DisplayName("Does NOT award chunk badge when only one of two sub-chunks is complete")
-        void partialChunkNotAwarded() {
+        @DisplayName("Does NOT award module badge when only one of two lessons is complete")
+        void partialModuleNotAwarded() {
             when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user(0, 0)));
 
-            SubChunk sc1 = SubChunk.builder().id("sc-jf1-a").chunkId("java-fnd-1").sortOrder(1).build();
-            SubChunk sc2 = SubChunk.builder().id("sc-jf1-b").chunkId("java-fnd-1").sortOrder(2).build();
+            Lesson sc1 = Lesson.builder().id("sc-jf1-a").moduleId("java-fnd-1").sortOrder(1).build();
+            Lesson sc2 = Lesson.builder().id("sc-jf1-b").moduleId("java-fnd-1").sortOrder(2).build();
 
             // Only sc1 is complete
             UserChunkProgress p1 = completed("sc-jf1-a");
 
-            when(subChunkRepository.findAllById(anyList())).thenReturn(List.of(sc1));
-            // The chunk has 2 sub-chunks total
-            when(subChunkRepository.findByChunkIdIn(anyList())).thenReturn(List.of(sc1, sc2));
+            when(lessonRepository.findAllById(anyList())).thenReturn(List.of(sc1));
+            // The module has 2 lessons total
+            when(lessonRepository.findByModuleIdIn(anyList())).thenReturn(List.of(sc1, sc2));
 
             List<BadgeDto> awarded = service.evaluateAndAward(USER_ID, List.of(p1), List.of());
 

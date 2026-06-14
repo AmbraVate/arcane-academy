@@ -3,19 +3,25 @@ package com.ambravate.arcane.academy.admin.controller;
 import com.ambravate.arcane.academy.admin.dto.AdminUserDto;
 import com.ambravate.arcane.academy.admin.dto.UserStatsDto;
 import com.ambravate.arcane.academy.admin.service.AdminStatsService;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.auth.service.PasswordResetService;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserRole;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
 import com.ambravate.arcane.academy.common.security.UserPrincipal;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -24,16 +30,20 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/admin/users")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
+@Validated
+@Slf4j
 public class AdminUserController {
 
-    private final UserRepository userRepository;
+    private final UserRepository              userRepository;
     private final UserChunkProgressRepository progressRepository;
-    private final AdminStatsService statsService;
+    private final AdminStatsService           statsService;
+    private final PasswordResetService        passwordResetService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> list(
-            @RequestParam(defaultValue = "0")  int page,
-            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "0")  @Min(0)        int page,
+            @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size,
             @RequestParam(required = false)    String search) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
@@ -43,7 +53,7 @@ public class AdminUserController {
 
         return ResponseEntity.ok(Map.of(
                 "content", users.getContent().stream().map(u -> {
-                    long completed = progressRepository.countByUserIdAndStatus(u.getId(), SubChunkStatus.COMPLETE);
+                    long completed = progressRepository.countByUserIdAndStatus(u.getId(), LessonStatus.COMPLETE);
                     return statsService.toUserDto(u, completed);
                 }).toList(),
                 "totalElements", users.getTotalElements(),
@@ -56,7 +66,7 @@ public class AdminUserController {
     public ResponseEntity<AdminUserDto> get(@PathVariable String id) {
         User u = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("User not found: " + id));
-        long completed = progressRepository.countByUserIdAndStatus(id, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(id, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(u, completed));
     }
 
@@ -71,7 +81,7 @@ public class AdminUserController {
     }
 
     /**
-     * Change a user's role (ADMIN ↔ USER).
+     * Change a user's role (ADMIN / USER).
      * An admin cannot demote their own account.
      */
     @PutMapping("/{userId}/role")
@@ -101,7 +111,7 @@ public class AdminUserController {
         user.setRole(newRole);
         userRepository.save(user);
 
-        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(userId, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(user, completed));
     }
 
@@ -129,7 +139,7 @@ public class AdminUserController {
         user.setBlocked(blocked);
         userRepository.save(user);
 
-        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(userId, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(user, completed));
     }
 
@@ -157,17 +167,39 @@ public class AdminUserController {
         user.setBypassPaywall(bypass);
         userRepository.save(user);
 
-        long completed = progressRepository.countByUserIdAndStatus(userId, SubChunkStatus.COMPLETE);
+        long completed = progressRepository.countByUserIdAndStatus(userId, LessonStatus.COMPLETE);
         return ResponseEntity.ok(statsService.toUserDto(user, completed));
     }
 
     /**
-     * Detailed stats for a single user — for the admin user-detail panel.
+     * Detailed stats for a single user - for the admin user-detail panel.
      */
     @GetMapping("/{userId}/stats")
     public ResponseEntity<UserStatsDto> getUserStats(@PathVariable String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NoSuchElementException("User not found: " + userId));
         return ResponseEntity.ok(statsService.toUserStatsDto(user));
+    }
+
+    /**
+     * Triggers a password-reset email to the user's registered address.
+     * The user receives a link valid for 24 hours to set their own new password.
+     * Returns 503 if SMTP is not configured on this deployment.
+     */
+    @PostMapping("/{userId}/send-password-reset")
+    public ResponseEntity<Map<String, String>> sendPasswordReset(@PathVariable String userId) {
+        try {
+            passwordResetService.sendReset(userId);
+            return ResponseEntity.ok(Map.of("message", "Password reset email sent."));
+        } catch (IllegalStateException e) {
+            // SMTP not configured
+            return ResponseEntity.status(503).body(Map.of("error", e.getMessage()));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("[Admin] Failed to send password reset for userId={}: {}", userId, e.getMessage());
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to send email. Check server logs."));
+        }
     }
 }

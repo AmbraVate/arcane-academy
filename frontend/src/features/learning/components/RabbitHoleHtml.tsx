@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import { safe } from '@/lib/sanitize'
+﻿import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import type { StoryRabbitHoleTerm } from '@/shared/types'
 import { rabbitHoleTermApi } from '@/shared/api/services'
@@ -9,8 +10,8 @@ interface Props {
   html: string
   terms?: StoryRabbitHoleTerm[] | null
   className?: string
-  subChunkId?: string
-  topicId?: string
+  lessonId?: string
+  domainId?: string
 }
 
 /** Inject data-rh / data-rh-desc spans into text nodes only (not tag attributes). */
@@ -35,7 +36,7 @@ export function annotateTerms(html: string, terms: StoryRabbitHoleTerm[]): strin
  * Pass a `className` for the wrapper div's styling — identical to the plain
  * `dangerouslySetInnerHTML` div it replaces.
  */
-export default function RabbitHoleHtml({ html, terms, className, subChunkId, topicId }: Props) {
+export default function RabbitHoleHtml({ html, terms, className, lessonId, domainId }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [popover, setPopover] = useState<Popover | null>(null)
   const [savedTerms, setSavedTerms] = useState<Set<string>>(new Set())
@@ -75,7 +76,7 @@ export default function RabbitHoleHtml({ html, terms, className, subChunkId, top
     if (!popover || saving) return
     setSaving(true)
     try {
-      await rabbitHoleTermApi.save(popover.term, popover.description, subChunkId ?? '', topicId ?? '')
+      await rabbitHoleTermApi.save(popover.term, popover.description, lessonId ?? '', domainId ?? '')
       setSavedTerms(prev => new Set(prev).add(popover.term))
     } catch { /* ignore */ } finally { setSaving(false) }
   }
@@ -98,7 +99,7 @@ export default function RabbitHoleHtml({ html, terms, className, subChunkId, top
           '[&_[data-rh]]:cursor-pointer [&_[data-rh]]:underline [&_[data-rh]]:decoration-dotted [&_[data-rh]]:text-gold [&_[data-rh]]:transition-opacity [&_[data-rh]]:duration-150 [&_[data-rh]:hover]:opacity-80',
           className,
         )}
-        dangerouslySetInnerHTML={{ __html: annotatedHtml }}
+        dangerouslySetInnerHTML={safe(annotatedHtml)}
       />
 
       {popover && (

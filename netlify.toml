@@ -11,7 +11,11 @@ for = "/*"
 [headers.values]
 X-Content-Type-Options = "nosniff"
 X-Frame-Options        = "DENY"
-Referrer-Policy        = "strict-origin-when-cross-origin"
+Referrer-Policy        = "no-referrer"
+# Monaco editor requires unsafe-eval; all other scripts must be same-origin.
+# Stripe JS is loaded via frame-src; connect-src allows the Stripe API.
+# Fonts are served from Google Fonts CDN.
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; worker-src blob:; object-src 'none'; base-uri 'self';"
 
 # API proxy — routes /api/*, /oauth2/authorization/*, /login/oauth2/* to the Cloud Run backend.
 # NOTE: /oauth2/callback is intentionally excluded — it is a frontend SPA route handled by

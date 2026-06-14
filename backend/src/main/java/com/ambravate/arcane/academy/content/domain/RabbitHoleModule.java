@@ -11,8 +11,8 @@ public class RabbitHoleModule {
     @Id
     private String id;
 
-    @Column(name = "chunk_id", nullable = false)
-    private String chunkId;
+    @Column(name = "module_id", nullable = false)
+    private String moduleId;
 
     @Column(nullable = false)
     private String title;

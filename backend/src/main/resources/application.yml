@@ -44,18 +44,60 @@ server:
   port: 8080
 
 jwt:
-  secret: ${JWT_SECRET:dev_secret_change_in_production_min32}
-  expiration-ms: 86400000  # 24 hours
+  # Required — no default. Must be set via JWT_SECRET env var (minimum 64 characters).
+  # Generate with: openssl rand -base64 64
+  secret: ${JWT_SECRET}
+  expiration-ms: 900000  # 15 minutes — short-lived; frontend uses refresh token silently
 
 app:
   oauth2:
     redirect-uri: ${OAUTH2_FRONTEND_REDIRECT:http://localhost:5173/oauth2/callback}
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
 
-# Anthropic config kept for reference but AiMentorService no longer makes API calls
+# ── Email (password reset) ─────────────────────────────────────────────────────
+# Set MAIL_HOST to enable email sending (e.g. smtp.sendgrid.net, smtp.mailgun.org).
+# Leave MAIL_HOST blank to disable — reset requests will return 503 with a clear message.
+spring.mail:
+  host:     ${MAIL_HOST:}
+  port:     ${MAIL_PORT:587}
+  username: ${MAIL_USERNAME:}
+  password: ${MAIL_PASSWORD:}
+  from:     ${MAIL_FROM:noreply@arcane-academy.com}
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
+# ── Admin bootstrap account ────────────────────────────────────────────────────
+# Set all three via environment variables (or your cloud secrets manager).
+# The account is created / synced on every startup — leave blank to skip.
+# Rotating ADMIN_PASSWORD and redeploying automatically updates the hash.
+admin:
+  email:    ${ADMIN_EMAIL:}
+  username: ${ADMIN_USERNAME:admin}
+  password: ${ADMIN_PASSWORD:}
+
+# Stripe — payment processing.
+# Set all values via environment variables in production.
+# Create products + prices in your Stripe dashboard and paste the Price IDs below.
+# Use test keys (sk_test_...) during development; switch to live keys (sk_live_...) in prod.
+stripe:
+  # No defaults — all Stripe keys must be set via environment variables.
+  # Use sk_test_... / whsec_... locally via .env; live keys only in cloud-run.env.yaml.
+  secret-key: ${STRIPE_SECRET_KEY}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+  # No defaults — must be set via environment variables to prevent accidentally
+  # using live price IDs in non-production environments.
+  price-id-monthly:  ${STRIPE_PRICE_ID_MONTHLY}
+  price-id-annual:   ${STRIPE_PRICE_ID_ANNUAL}
+  price-id-lifetime: ${STRIPE_PRICE_ID_LIFETIME}
+
+# Anthropic — AiMentorService uses Claude Haiku 4.5 with prompt caching.
+# Set ANTHROPIC_API_KEY to enable live AI responses; leave blank or "disabled" to use static responses only.
 anthropic:
   api-key: ${ANTHROPIC_API_KEY:disabled}
-  api-url: https://api.anthropic.com/v1/messages
-  model: claude-sonnet-4-20250514
 
 cors:
   allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
@@ -123,6 +165,18 @@ ratelimit:
     capacity: ${RATELIMIT_CODE_CAPACITY:30}
     refill-tokens: ${RATELIMIT_CODE_REFILL:30}
     refill-period-seconds: ${RATELIMIT_CODE_PERIOD:60}
+  admin:
+    capacity: ${RATELIMIT_ADMIN_CAPACITY:30}
+    refill-tokens: ${RATELIMIT_ADMIN_REFILL:30}
+    refill-period-seconds: ${RATELIMIT_ADMIN_PERIOD:60}
+
+# ── Code execution sandbox (Phase 5) ──────────────────────────────────────────
+# Default: "inprocess" — in-JVM SandboxedClassLoader (£0, no extra infra).
+# Set to "docker" to use DockerSandboxRunner (--network=none, --memory=256m, etc.).
+# Docker mode requires the Docker daemon to be available on the host machine.
+# See PROJECT_REFERENCE.md §Constraints for the £0 deployment strategy.
+sandbox:
+  mode: ${SANDBOX_MODE:inprocess}
 
 logging:
   level:
@@ -148,6 +202,3 @@ logging:
       max-history: 7
       file-name-pattern: logs/arcane-academy.%d{yyyy-MM-dd}.%i.log
 
-groq:
-  api:
-    key: ${GROQ_API_KEY:}

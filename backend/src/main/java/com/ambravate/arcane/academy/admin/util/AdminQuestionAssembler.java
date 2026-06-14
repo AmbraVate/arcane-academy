@@ -25,7 +25,7 @@ public class AdminQuestionAssembler {
       try { options = objectMapper.readValue(q.getOptionsJson(), List.class); } catch (Exception ignored) {}
     }
     return AdminQuestionDto.builder()
-        .id(q.getId()).subChunkId(q.getSubChunkId())
+        .id(q.getId()).lessonId(q.getLessonId())
         .type(q.getType().name()).tier(q.getTier().name())
         .questionHtml(q.getQuestionHtml()).codeSnippet(q.getCodeSnippet())
         .options(options).correctAnswer(q.getCorrectAnswer())
@@ -46,10 +46,10 @@ public class AdminQuestionAssembler {
     QuestionTier tier = dto.getTier() != null
         ? QuestionTier.valueOf(dto.getTier()) : QuestionTier.RECALL;
     LearnerPath minPath = tier == QuestionTier.DISCRIMINATION
-        ? LearnerPath.PRACTITIONER : LearnerPath.FOUNDATION;
+        ? LearnerPath.JUNIOR : LearnerPath.APPRENTICE;
 
     return Question.builder()
-        .subChunkId(dto.getSubChunkId())
+        .lessonId(dto.getLessonId())
         .type(QuestionType.valueOf(dto.getType()))
         .tier(tier).minPath(minPath)
         .questionHtml(dto.getQuestionHtml())

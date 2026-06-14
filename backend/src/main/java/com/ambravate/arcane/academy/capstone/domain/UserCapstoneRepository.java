@@ -14,5 +14,5 @@ public interface UserCapstoneRepository extends JpaRepository<UserCapstone, Stri
     Optional<UserCapstone> findByIdAndUserId(String id, String userId);
 
     /** For admin: all capstones with optional filter by chunkId. */
-    Page<UserCapstone> findByChunkIdContaining(String chunkId, Pageable pageable);
+    Page<UserCapstone> findByModuleIdContaining(String moduleId, Pageable pageable);
 }

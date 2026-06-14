@@ -43,7 +43,7 @@ test.describe('Golden path — login → topic → learn sub-chunk', () => {
   })
 
   test('protected route redirects to login when not authenticated', async ({ page }) => {
-    await page.goto('/topics')
+    await page.goto('/domains')
     await expect(page).toHaveURL(/\/login/, { timeout: 5_000 })
   })
 

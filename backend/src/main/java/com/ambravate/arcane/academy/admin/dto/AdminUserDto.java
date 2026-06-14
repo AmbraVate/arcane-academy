@@ -15,6 +15,7 @@ public class AdminUserDto {
     private String role;
     private boolean blocked;
     private boolean bypassPaywall;
+    private String subscriptionStatus;
     private Instant createdAt;
     private Instant lastLoginAt;
     private long completedSubChunks;

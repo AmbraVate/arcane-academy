@@ -22,12 +22,12 @@ public class UserRabbitHoleTermService {
 
     @Transactional
     public RabbitHoleTermDto save(String userId, String term, String description,
-                                   String subChunkId, String topicId) {
+                                   String lessonId, String domainId) {
         return repository.findByUserIdAndTerm(userId, term)
                 .map(existing -> {
                     existing.setDescription(description);
-                    existing.setSubChunkId(subChunkId);
-                    existing.setTopicId(topicId);
+                    existing.setLessonId(lessonId);
+                    existing.setDomainId(domainId);
                     return RabbitHoleTermDto.from(repository.save(existing));
                 })
                 .orElseGet(() -> {
@@ -36,8 +36,8 @@ public class UserRabbitHoleTermService {
                                     .userId(userId)
                                     .term(term)
                                     .description(description)
-                                    .subChunkId(subChunkId)
-                                    .topicId(topicId)
+                                    .lessonId(lessonId)
+                                    .domainId(domainId)
                                     .build());
                     return RabbitHoleTermDto.from(saved);
                 });

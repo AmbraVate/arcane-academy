@@ -1,10 +1,10 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { adminUserApi, type AdminUser, type UserStats } from '@/shared/api/adminServices'
 import { useAuth } from '@/shared/hooks/useAuth'
 import {
   Search, X, ChevronLeft, ChevronRight, Shield, ShieldOff,
   UserCheck, UserX, RotateCcw, BarChart2, Loader2,
-  Star, Zap, Flame, BookOpen, Trophy, Calendar, Clock, Unlock, Lock,
+  Star, Zap, Flame, BookOpen, Trophy, Calendar, Clock, Unlock, Lock, Mail,
 } from 'lucide-react'
 import React from 'react'
 
@@ -47,6 +47,8 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
   const [roleSaving, setRoleSaving] = useState(false)
   const [resetting, setResetting] = useState(false)
   const [bypassSaving, setBypassSaving] = useState(false)
+  const [pwResetSending, setPwResetSending] = useState(false)
+  const [pwResetSent, setPwResetSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const isSelf = caller?.userId === user.id
 
@@ -103,11 +105,25 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
     setResetting(true)
     try {
       await adminUserApi.resetProgress(user.id)
-      setStats(s => s ? { ...s, subChunksCompleted: 0, chunksCompleted: 0, reviewSessionsCompleted: 0 } : s)
+      setStats(s => s ? { ...s, lessonsCompleted: 0, chunksCompleted: 0, reviewSessionsCompleted: 0 } : s)
     } catch {
       setError('Failed to reset progress')
     } finally {
       setResetting(false)
+    }
+  }
+
+  const handleSendPasswordReset = async () => {
+    setPwResetSending(true)
+    setPwResetSent(false)
+    setError(null)
+    try {
+      await adminUserApi.sendPasswordReset(user.id)
+      setPwResetSent(true)
+    } catch {
+      setError('Failed to send reset email. Check that the mail service is configured.')
+    } finally {
+      setPwResetSending(false)
     }
   }
 
@@ -138,7 +154,7 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
           <StatMini icon={Star}     label="Rank"     value={stats.rank}                     color="#8b5cf6" />
           <StatMini icon={Flame}    label="Streak"   value={`${stats.streakDays}d`}          color="#fb923c" />
           <StatMini icon={Trophy}   label="Badges"   value={stats.badgesEarned}             color="#4ade80" />
-          <StatMini icon={BookOpen} label="Concepts" value={stats.subChunksCompleted}       color="#2dd4bf" />
+          <StatMini icon={BookOpen} label="Concepts" value={stats.subChunksCompleted}    color="#2dd4bf" />
           <StatMini icon={BarChart2}label="Reviews"  value={stats.reviewSessionsCompleted}  color="#60a5fa" />
         </div>
       ) : null}
@@ -175,6 +191,23 @@ function UserDetailPanel({ user, onClose, onUpdate }: {
           {bypassSaving ? <Loader2 size={13} className="animate-spin" /> : user.bypassPaywall ? <Unlock size={13} /> : <Lock size={13} />}
           {user.bypassPaywall ? 'Revoke Paywall Bypass' : 'Grant Paywall Bypass'}
         </button>
+        {/* Password reset — sends email to user */}
+        {pwResetSent ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, background: 'rgba(45,212,191,.08)', border: '1px solid rgba(45,212,191,.3)', color: '#2dd4bf' }}>
+            <Mail size={13} />
+            Reset email sent to {user.email}
+          </div>
+        ) : (
+          <button
+            disabled={pwResetSending}
+            onClick={handleSendPasswordReset}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(139,92,246,.25)', color: '#c4b5fd', transition: 'all .15s' }}
+          >
+            {pwResetSending ? <Loader2 size={13} className="animate-spin" /> : <Mail size={13} />}
+            {pwResetSending ? 'Sending...' : 'Send Password Reset Email'}
+          </button>
+        )}
+
         <button disabled={resetting} onClick={handleReset}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: 11, padding: '7px 12px', borderRadius: 6, cursor: 'pointer', background: 'transparent', border: '1px solid rgba(248,113,113,.2)', color: '#f87171', transition: 'all .15s' }}>
           {resetting ? <Loader2 size={13} className="animate-spin" /> : <RotateCcw size={13} />}

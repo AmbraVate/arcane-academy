@@ -44,9 +44,9 @@ public class RetrievalService {
      * has fewer questions than its quota, the remaining slots are filled from the other
      * tiers to always return exactly 4 questions (or as many as exist in the pool).</p>
      */
-    public List<Question> generateRetrievalCheck(String userId, String subChunkId) {
+    public List<Question> generateRetrievalCheck(String userId, String lessonId) {
         LearnerPath path = getPath(userId);
-        List<Question> pool = questionRepository.findBySubChunkId(subChunkId).stream()
+        List<Question> pool = questionRepository.findByLessonId(lessonId).stream()
                 .filter(q -> q.getMinPath().ordinal() <= path.ordinal())
                 .toList();
 
@@ -79,7 +79,7 @@ public class RetrievalService {
         // Present questions in a random order
         Collections.shuffle(selected);
         log.info("[Retrieval] Generated {} questions for subChunk={} user={} (pool: {} recall, {} application, {} discrimination)",
-                selected.size(), subChunkId, userId, recall.size(), application.size(), discrimination.size());
+                selected.size(), lessonId, userId, recall.size(), application.size(), discrimination.size());
         return selected;
     }
 
@@ -89,10 +89,10 @@ public class RetrievalService {
      *
      * <p>Grading strategy by question type:
      * <ul>
-     *   <li>MULTIPLE_CHOICE, TRUE_FALSE — exact case-insensitive match</li>
-     *   <li>WHATS_THE_OUTPUT, FILL_BLANK — normalised line-by-line match
+     *   <li>MULTIPLE_CHOICE, TRUE_FALSE â€” exact case-insensitive match</li>
+     *   <li>WHATS_THE_OUTPUT, FILL_BLANK â€” normalised line-by-line match
      *       (handles literal \n in stored answers vs real newlines typed by learners)</li>
-     *   <li>DEBUGGING, SCENARIO, COMPARE_CONTRAST, CODE_COMPLETION — keyword overlap:
+     *   <li>DEBUGGING, SCENARIO, COMPARE_CONTRAST, CODE_COMPLETION â€” keyword overlap:
      *       at least 50% of significant tokens from the correct answer must appear
      *       in the learner's response (semantic equivalence rather than word-for-word)</li>
      * </ul>
@@ -109,7 +109,7 @@ public class RetrievalService {
             if (isCorrect) correct++;
 
             results.add(new QuestionResult(
-                    question.getId(), question.getSubChunkId(), isCorrect,
+                    question.getId(), question.getLessonId(), isCorrect,
                     pair.answer().trim(), question.getCorrectAnswer(), question.getExplanationHtml()
             ));
         }
@@ -118,7 +118,7 @@ public class RetrievalService {
         return new GradeResult(score, correct, answers.size(), results);
     }
 
-    // ── Grading helpers ───────────────────────────────────────────────────────
+    // â”€â”€ Grading helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private boolean isAnswerCorrect(Question question, String userAnswer) {
         String answer = userAnswer == null ? "" : userAnswer.trim();
@@ -166,7 +166,7 @@ public class RetrievalService {
      */
     private double keywordOverlapScore(String correct, String answer) {
         Set<String> keyTokens = extractKeyTokens(correct);
-        if (keyTokens.isEmpty()) return 1.0; // no tokens to check → give benefit of doubt
+        if (keyTokens.isEmpty()) return 1.0; // no tokens to check â†’ give benefit of doubt
         String lowerAnswer = answer.toLowerCase();
         long matched = keyTokens.stream().filter(lowerAnswer::contains).count();
         double score = (double) matched / keyTokens.size();
@@ -186,7 +186,7 @@ public class RetrievalService {
 
     private Set<String> extractKeyTokens(String text) {
         // Split on anything that isn't alphanumeric, dot, underscore, equals, angle bracket,
-        // exclamation or parenthesis — keeping code-style tokens intact (e.g. s.equals, ==)
+        // exclamation or parenthesis â€” keeping code-style tokens intact (e.g. s.equals, ==)
         return Stream.of(text.toLowerCase().split("[^a-z0-9_.=<>!()]+"))
                 .map(String::trim)
                 .filter(t -> t.length() >= 2)
@@ -223,7 +223,7 @@ public class RetrievalService {
     private LearnerPath getPath(String userId) {
         return profileRepository.findByUserId(userId)
                 .map(UserLearnerProfile::getCurrentPath)
-                .orElse(LearnerPath.FOUNDATION);
+                .orElse(LearnerPath.APPRENTICE);
     }
 
 }

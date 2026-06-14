@@ -256,19 +256,36 @@ class AuthServiceTest {
         }
 
         @Test
-        @DisplayName("Links OAuth2 to existing local account matched by email")
+        @DisplayName("Refuses to link when email matches a local-password account (account-takeover guard)")
         void accountLinking() {
             User localAlice = localUser("u-alice", "alice", "alice@test", "hashed");
             when(userRepository.findByAuthProviderAndProviderId(AuthProvider.GOOGLE, "google-abc"))
                     .thenReturn(Optional.empty());
             when(userRepository.findByEmail("alice@test")).thenReturn(Optional.of(localAlice));
-            when(userRepository.save(any())).thenReturn(localAlice);
+
+            assertThatThrownBy(() -> service.processOAuth2Login("alice@test", "Alice", "google-abc", AuthProvider.GOOGLE))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessageContaining("already exists");
+
+            assertThat(localAlice.getAuthProvider()).isEqualTo(AuthProvider.LOCAL);
+            verify(userRepository, never()).save(any());
+            verify(eventPublisher, never()).publishEvent(any());
+        }
+
+        @Test
+        @DisplayName("Links OAuth2 to email-matched account that has no local password")
+        void accountLinkingWithoutPassword() {
+            User passwordless = localUser("u-alice", "alice", "alice@test", null);
+            when(userRepository.findByAuthProviderAndProviderId(AuthProvider.GOOGLE, "google-abc"))
+                    .thenReturn(Optional.empty());
+            when(userRepository.findByEmail("alice@test")).thenReturn(Optional.of(passwordless));
+            when(userRepository.save(any())).thenReturn(passwordless);
 
             User result = service.processOAuth2Login("alice@test", "Alice", "google-abc", AuthProvider.GOOGLE);
 
             assertThat(result.getId()).isEqualTo("u-alice");
-            assertThat(localAlice.getAuthProvider()).isEqualTo(AuthProvider.GOOGLE);
-            assertThat(localAlice.getProviderId()).isEqualTo("google-abc");
+            assertThat(passwordless.getAuthProvider()).isEqualTo(AuthProvider.GOOGLE);
+            assertThat(passwordless.getProviderId()).isEqualTo("google-abc");
             verify(eventPublisher).publishEvent(any(UserEngagedEvent.class));
         }
 

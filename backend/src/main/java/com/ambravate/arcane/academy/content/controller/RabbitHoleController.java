@@ -30,7 +30,7 @@ public class RabbitHoleController {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("id", m.getId());
             map.put("title", m.getTitle());
-            map.put("chunkId", m.getChunkId());
+            map.put("chunkId", m.getModuleId());
             map.put("sortOrder", m.getSortOrder());
             return map;
         }).collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class RabbitHoleController {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", m.getId());
         result.put("title", m.getTitle());
-        result.put("chunkId", m.getChunkId());
+        result.put("chunkId", m.getModuleId());
         result.put("sortOrder", m.getSortOrder());
         result.put("contentHtml", m.getContentHtml());
         result.put("storyBeats", parseJson(m.getStoryJson()));

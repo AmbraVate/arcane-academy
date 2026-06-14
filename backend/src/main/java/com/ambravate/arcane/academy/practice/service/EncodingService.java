@@ -5,23 +5,27 @@ import com.ambravate.arcane.academy.ai.domain.GradeResult;
 import com.ambravate.arcane.academy.common.telemetry.service.TelemetryService;
 import com.ambravate.arcane.academy.common.dto.BadgeDto;
 import com.ambravate.arcane.academy.practice.dto.CodeRunResponse;
+import com.ambravate.arcane.academy.practice.dto.SoloSubmitRequest;
 import com.ambravate.arcane.academy.common.domain.EncodingPhase;
 import com.ambravate.arcane.academy.common.domain.ReviewSession;
 import com.ambravate.arcane.academy.common.domain.SessionType;
-import com.ambravate.arcane.academy.common.domain.SubChunk;
-import com.ambravate.arcane.academy.common.domain.SubChunkPracticeType;
-import com.ambravate.arcane.academy.common.domain.SubChunkStatus;
+import com.ambravate.arcane.academy.common.domain.Lesson;
+import com.ambravate.arcane.academy.common.domain.LessonPracticeType;
+import com.ambravate.arcane.academy.common.domain.LessonStatus;
+import com.ambravate.arcane.academy.common.domain.SoloAssessmentType;
 import com.ambravate.arcane.academy.common.domain.User;
 import com.ambravate.arcane.academy.common.domain.UserChunkProgress;
-import com.ambravate.arcane.academy.common.domain.Chunk;
+import com.ambravate.arcane.academy.common.domain.LearningModule;
 import com.ambravate.arcane.academy.common.domain.LearnerPath;
 import com.ambravate.arcane.academy.common.domain.UserLearnerProfile;
-import com.ambravate.arcane.academy.content.repository.ChunkRepository;
-import com.ambravate.arcane.academy.content.repository.SubChunkRepository;
+import com.ambravate.arcane.academy.content.repository.LearningModuleRepository;
+import com.ambravate.arcane.academy.content.repository.LessonRepository;
 import com.ambravate.arcane.academy.practice.repository.ReviewSessionRepository;
 import com.ambravate.arcane.academy.practice.repository.UserChunkProgressRepository;
 import com.ambravate.arcane.academy.auth.repository.UserLearnerProfileRepository;
 import com.ambravate.arcane.academy.auth.repository.UserRepository;
+import com.ambravate.arcane.academy.auth.repository.UserTrackProfileRepository;
+import com.ambravate.arcane.academy.common.domain.UserTrackProfile;
 import com.ambravate.arcane.academy.ai.service.AiMentorService;
 import com.ambravate.arcane.academy.common.events.UserEngagedEvent;
 import com.ambravate.arcane.academy.gamification.api.GamificationFacade;
@@ -30,9 +34,10 @@ import com.ambravate.arcane.academy.ai.service.SpacingService;
 
 import com.ambravate.arcane.academy.practice.domain.PracticeResult;
 import com.ambravate.arcane.academy.practice.domain.RetrievalCheckResult;
-import com.ambravate.arcane.academy.practice.domain.SubChunkSession;
+import com.ambravate.arcane.academy.practice.domain.LessonSession;
+import com.ambravate.arcane.academy.practice.domain.SoloAssessmentResult;
 import com.ambravate.arcane.academy.practice.domain.TestResult;
-import com.ambravate.arcane.academy.practice.runner.JavaCodeRunner;
+import com.ambravate.arcane.academy.practice.runner.CodeExecutionPort;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,13 +58,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EncodingService {
 
-    private final SubChunkRepository subChunkRepository;
-    private final ChunkRepository chunkRepository;
+    private final LessonRepository lessonRepository;
+    private final LearningModuleRepository moduleRepository;
     private final UserChunkProgressRepository progressRepository;
     private final ReviewSessionRepository reviewSessionRepository;
     private final UserRepository userRepository;
     private final UserLearnerProfileRepository learnerProfileRepository;
-    private final JavaCodeRunner codeRunner;
+    private final UserTrackProfileRepository topicProfileRepository;
+    private final CodeExecutionPort codeRunner;
     private final AiMentorService aiMentorService;
     private final RetrievalService retrievalService;
     private final SpacingService spacingService;
@@ -66,62 +73,56 @@ public class EncodingService {
     private final ApplicationEventPublisher eventPublisher;
     private final TelemetryService telemetry;
     private final ObjectMapper objectMapper;
+    // Phase 3 — guided step engine
+    private final GuidedStepService guidedStepService;
+    // Phase 4 — solo assessment
+    private final KeywordScoringService keywordScoringService;
 
-    /** Ordered tier progression: completing a tier advances the user's currentPath to the next. */
     private static final List<LearnerPath> TIER_PROGRESSION = List.of(
-            LearnerPath.FOUNDATION, LearnerPath.PRACTITIONER, LearnerPath.EXPERT);
+            LearnerPath.APPRENTICE, LearnerPath.JUNIOR, LearnerPath.SENIOR, LearnerPath.LEAD);
 
-    /**
-     * Start or resume a sub-chunk. Creates UserChunkProgress if not exists.
-     */
     @Transactional
-    public SubChunkSession startSubChunk(String userId, String subChunkId) {
-        SubChunk subChunk = subChunkRepository.findById(subChunkId)
-                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
+    public LessonSession startLesson(String userId, String lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NoSuchElementException("Lesson not found: " + lessonId));
 
-        // Check 1 — Parent chunk prerequisites met (chunk must not be LOCKED)
-        Chunk parentChunk = chunkRepository.findById(subChunk.getChunkId())
-                .orElseThrow(() -> new IllegalStateException("Chunk not found: " + subChunk.getChunkId()));
-        List<String> prereqIds = parentChunk.getPrerequisites().stream().map(Chunk::getId).toList();
+        LearningModule parentModule = moduleRepository.findById(lesson.getModuleId())
+                .orElseThrow(() -> new IllegalStateException("Module not found: " + lesson.getModuleId()));
+        List<String> prereqIds = parentModule.getPrerequisites().stream().map(LearningModule::getId).toList();
 
-        // Fetch completed sub-chunk IDs once — reused by both the prereq check and the
-        // sequential-ordering check, avoiding a duplicate DB round-trip.
-        boolean needsProgressCheck = !prereqIds.isEmpty() || subChunk.getSortOrder() > 1;
-        Set<String> completedSubChunkIds = needsProgressCheck
+        boolean needsProgressCheck = !prereqIds.isEmpty() || lesson.getSortOrder() > 1;
+        Set<String> completedLessonIds = needsProgressCheck
                 ? progressRepository.findByUserId(userId).stream()
-                        .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE
-                                  || p.getStatus() == SubChunkStatus.SKIPPED)
-                        .map(UserChunkProgress::getSubChunkId)
+                        .filter(p -> p.getStatus() == LessonStatus.COMPLETE
+                                  || p.getStatus() == LessonStatus.SKIPPED)
+                        .map(UserChunkProgress::getLessonId)
                         .collect(Collectors.toSet())
                 : Collections.emptySet();
 
         if (!prereqIds.isEmpty()) {
-            // Batch-load all prerequisite sub-chunks in a single query (avoids N+1 per prereq).
-            Map<String, List<SubChunk>> prereqSubsByChunk = subChunkRepository.findByChunkIdIn(prereqIds)
+            Map<String, List<Lesson>> prereqLessonsByModule = lessonRepository.findByModuleIdIn(prereqIds)
                     .stream()
-                    .collect(Collectors.groupingBy(SubChunk::getChunkId));
-            // A prerequisite chunk is "fully completed" when every one of its sub-chunks is done.
-            boolean allPrereqsMet = prereqIds.stream().allMatch(prereqChunkId -> {
-                List<SubChunk> prereqSubs = prereqSubsByChunk.getOrDefault(prereqChunkId, List.of());
-                return !prereqSubs.isEmpty()
-                        && prereqSubs.stream().allMatch(sc -> completedSubChunkIds.contains(sc.getId()));
+                    .collect(Collectors.groupingBy(Lesson::getModuleId));
+            boolean allPrereqsMet = prereqIds.stream().allMatch(prereqModuleId -> {
+                List<Lesson> prereqLessons = prereqLessonsByModule.getOrDefault(prereqModuleId, List.of());
+                return !prereqLessons.isEmpty()
+                        && prereqLessons.stream().allMatch(l -> completedLessonIds.contains(l.getId()));
             });
             if (!allPrereqsMet) {
                 throw new ResponseStatusException(
                         HttpStatus.FORBIDDEN,
-                        "Complete prerequisite chunks before starting this one.");
+                        "Complete prerequisite modules before starting this one.");
             }
         }
 
-        // Check 2 — Sequential sub-chunk ordering (prior siblings in this chunk must be complete)
-        if (subChunk.getSortOrder() > 1) {
-            List<SubChunk> priorSubChunks = subChunkRepository
-                    .findByChunkIdOrderBySortOrderAsc(subChunk.getChunkId())
+        if (lesson.getSortOrder() > 1) {
+            List<Lesson> priorLessons = lessonRepository
+                    .findByModuleIdOrderBySortOrderAsc(lesson.getModuleId())
                     .stream()
-                    .filter(sc -> sc.getSortOrder() < subChunk.getSortOrder())
+                    .filter(l -> l.getSortOrder() < lesson.getSortOrder())
                     .toList();
-            boolean allPriorComplete = priorSubChunks.stream()
-                    .allMatch(sc -> completedSubChunkIds.contains(sc.getId()));
+            boolean allPriorComplete = priorLessons.stream()
+                    .allMatch(l -> completedLessonIds.contains(l.getId()));
             if (!allPriorComplete) {
                 throw new ResponseStatusException(
                         HttpStatus.FORBIDDEN,
@@ -129,58 +130,56 @@ public class EncodingService {
             }
         }
 
-        // Single fetch for both first-start detection and progress initialisation.
         Optional<UserChunkProgress> existingProgress =
-                progressRepository.findByUserIdAndSubChunkId(userId, subChunkId);
+                progressRepository.findByUserIdAndLessonId(userId, lessonId);
         boolean isFirstStart = existingProgress.isEmpty();
 
         UserChunkProgress progress = existingProgress.orElseGet(() -> {
                     UserChunkProgress p = UserChunkProgress.builder()
                             .userId(userId)
-                            .subChunkId(subChunkId)
-                            .status(SubChunkStatus.IN_PROGRESS)
+                            .lessonId(lessonId)
+                            .status(LessonStatus.IN_PROGRESS)
                             .currentPhase(EncodingPhase.HOOK)
                             .build();
                     return progressRepository.save(p);
                 });
 
-        if (progress.getStatus() == SubChunkStatus.NOT_STARTED) {
-            progress.setStatus(SubChunkStatus.IN_PROGRESS);
+        if (progress.getStatus() == LessonStatus.NOT_STARTED) {
+            progress.setStatus(LessonStatus.IN_PROGRESS);
             progress.setCurrentPhase(EncodingPhase.HOOK);
             progressRepository.save(progress);
         }
 
-        // Telemetry: emit quest_started only on the first start (resumes shouldn't double-count)
         if (isFirstStart) {
-            telemetry.questStarted(userId, subChunkId, subChunk.getChunkId());
+            telemetry.questStarted(userId, lessonId, lesson.getModuleId());
         }
 
-        return new SubChunkSession(subChunk, progress);
+        return new LessonSession(lesson, progress);
     }
 
-    /**
-     * Advance to the next encoding phase.
-     */
     @Transactional
-    public SubChunkSession advancePhase(String userId, String subChunkId) {
-        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId)
-                .orElseThrow(() -> new IllegalStateException("No progress for " + subChunkId));
-        SubChunk subChunk = subChunkRepository.findById(subChunkId).orElseThrow();
+    public LessonSession advancePhase(String userId, String lessonId) {
+        UserChunkProgress progress = progressRepository.findByUserIdAndLessonId(userId, lessonId)
+                .orElseThrow(() -> new IllegalStateException("No progress for " + lessonId));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
 
-        // Guard: prevent advancing past coding phases without a passing submission.
-        // Only enforced when the sub-chunk actually has practice content — old seeder-based
-        // chunks with null guidedPracticeHtml are not gated so they remain completable.
-        boolean hasPracticeContent = subChunk.getGuidedPracticeHtml() != null
-                && !subChunk.getGuidedPracticeHtml().isBlank();
-        if (progress.getCurrentPhase() == EncodingPhase.GUIDED_PRACTICE
-                && hasPracticeContent
-                && !progress.isGuidedPracticePassed()) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Submit guided practice and pass all tests before advancing.");
+        boolean hasPracticeContent = lesson.getGuidedPracticeHtml() != null
+                && !lesson.getGuidedPracticeHtml().isBlank();
+        if (progress.getCurrentPhase() == EncodingPhase.GUIDED_PRACTICE) {
+            if (guidedStepService.hasSteps(lessonId)) {
+                // Phase 3 step engine: require all steps completed
+                if (!guidedStepService.allStepsCompleted(userId, lessonId)) {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                            "Complete all guided steps before advancing.");
+                }
+            } else if (hasPracticeContent && !progress.isGuidedPracticePassed()) {
+                // Legacy path: traditional guided practice submission
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                        "Submit guided practice and pass all tests before advancing.");
+            }
         }
-        boolean hasSoloContent = subChunk.getSoloPracticeHtml() != null
-                && !subChunk.getSoloPracticeHtml().isBlank();
+        boolean hasSoloContent = lesson.getSoloPracticeHtml() != null
+                && !lesson.getSoloPracticeHtml().isBlank();
         if (progress.getCurrentPhase() == EncodingPhase.SOLO_PRACTICE
                 && hasSoloContent
                 && !progress.isSoloPracticePassed()) {
@@ -189,105 +188,111 @@ public class EncodingService {
                     "Submit solo practice and pass all tests before advancing.");
         }
 
-        // Guard: block advancing past RETRIEVAL_CHECK if the check hasn't been submitted yet
         if (progress.getCurrentPhase() == EncodingPhase.RETRIEVAL_CHECK
-                && progress.getStatus() != SubChunkStatus.COMPLETE
+                && progress.getStatus() != LessonStatus.COMPLETE
                 && !progress.isRetrievalCheckSubmitted()) {
-            boolean hasQuestions = !retrievalService.generateRetrievalCheck(userId, subChunkId).isEmpty();
+            boolean hasQuestions = !retrievalService.generateRetrievalCheck(userId, lessonId).isEmpty();
             if (hasQuestions) {
                 throw new ResponseStatusException(
                         HttpStatus.FORBIDDEN,
                         "Submit the retrieval check before advancing.");
             }
-            // No questions — seed spacing with a perfect score so reviews get scheduled
             if (progress.getNextReviewAt() == null) {
-                spacingService.updateSpacing(userId, subChunkId, 1.0);
+                spacingService.updateSpacing(userId, lessonId, 1.0);
             }
         }
+
+        boolean hasIntegration = lesson.getIntegrationPrompt() != null
+                && !lesson.getIntegrationPrompt().isBlank();
 
         EncodingPhase next = switch (progress.getCurrentPhase()) {
             case HOOK -> EncodingPhase.EXPLANATION;
             case EXPLANATION -> EncodingPhase.GUIDED_PRACTICE;
             case GUIDED_PRACTICE -> {
-                // Only enter SOLO_PRACTICE if content is defined for this sub-chunk
-                String solo = subChunk.getSoloPracticeHtml();
+                String solo = lesson.getSoloPracticeHtml();
                 yield (solo != null && !solo.isBlank())
                         ? EncodingPhase.SOLO_PRACTICE
                         : EncodingPhase.RETRIEVAL_CHECK;
             }
             case SOLO_PRACTICE -> EncodingPhase.RETRIEVAL_CHECK;
-            case RETRIEVAL_CHECK -> EncodingPhase.COMPLETE;
+            case RETRIEVAL_CHECK -> hasIntegration ? EncodingPhase.INTEGRATION : EncodingPhase.COMPLETE;
+            case INTEGRATION -> EncodingPhase.COMPLETE;
             case COMPLETE -> EncodingPhase.COMPLETE;
         };
 
         boolean transitionsToComplete = next == EncodingPhase.COMPLETE
-                && progress.getStatus() != SubChunkStatus.COMPLETE; // emit telemetry only on first completion
+                && progress.getStatus() != LessonStatus.COMPLETE;
 
         progress.setCurrentPhase(next);
         if (next == EncodingPhase.COMPLETE) {
-            progress.setStatus(SubChunkStatus.COMPLETE);
+            progress.setStatus(LessonStatus.COMPLETE);
             progress.setCompletedAt(Instant.now());
         }
         progressRepository.save(progress);
 
-        log.info("[Encoding] Phase advanced | user={} subChunk={} phase={}", userId, subChunkId, next);
+        log.info("[Encoding] Phase advanced | user={} lesson={} phase={}", userId, lessonId, next);
 
         if (transitionsToComplete) {
-            telemetry.questCompleted(userId, subChunkId, subChunk.getChunkId(), subChunk.getXpReward());
-            advanceLearnerPathIfTierComplete(userId, subChunk);
+            telemetry.questCompleted(userId, lessonId, lesson.getModuleId(), lesson.getXpReward());
+            advanceLearnerPathIfTierComplete(userId, lesson);
         }
 
-        return new SubChunkSession(subChunk, progress);
+        return new LessonSession(lesson, progress);
     }
 
-    /**
-     * After a sub-chunk completes, check whether the user has now finished every sub-chunk in
-     * the parent chunk's tier for this topic. If so, advance their currentPath to the next tier
-     * so the TopicPage correctly shows their progression (BUG-12 fix).
-     */
-    private void advanceLearnerPathIfTierComplete(String userId, SubChunk completedSubChunk) {
+    private void advanceLearnerPathIfTierComplete(String userId, Lesson completedLesson) {
         try {
-            Chunk parentChunk = chunkRepository.findById(completedSubChunk.getChunkId()).orElse(null);
-            if (parentChunk == null || parentChunk.getTier() == null) return;
+            LearningModule parentModule = moduleRepository.findById(completedLesson.getModuleId()).orElse(null);
+            if (parentModule == null || parentModule.getTier() == null) return;
 
-            LearnerPath completedTier = parentChunk.getTier();
-            String topicId = parentChunk.getTopicId();
+            LearnerPath completedTier = parentModule.getTier();
+            String trackId = parentModule.getTrackId();
 
-            // Collect all sub-chunk IDs in this tier for this topic
-            List<Chunk> tierChunks = chunkRepository.findByTopicIdOrderBySortOrderAsc(topicId).stream()
-                    .filter(c -> completedTier.equals(c.getTier()))
+            int completedIdx = TIER_PROGRESSION.indexOf(completedTier);
+            if (completedIdx < 0) return;
+
+            List<String> tierModuleIds = moduleRepository.findByTrackIdOrderBySortOrderAsc(trackId).stream()
+                    .filter(m -> completedTier.equals(m.getTier()))
+                    .map(LearningModule::getId)
                     .toList();
-            List<String> tierChunkIds = tierChunks.stream().map(Chunk::getId).toList();
-            List<SubChunk> tierSubChunks = subChunkRepository.findByChunkIdIn(tierChunkIds);
-            if (tierSubChunks.isEmpty()) return;
+            List<Lesson> tierLessons = lessonRepository.findByModuleIdIn(tierModuleIds);
+            if (tierLessons.isEmpty()) return;
 
-            Set<String> doneSubChunkIds = progressRepository.findByUserId(userId).stream()
-                    .filter(p -> p.getStatus() == SubChunkStatus.COMPLETE || p.getStatus() == SubChunkStatus.SKIPPED)
-                    .map(UserChunkProgress::getSubChunkId)
+            Set<String> doneLessonIds = progressRepository.findByUserId(userId).stream()
+                    .filter(p -> p.getStatus() == LessonStatus.COMPLETE || p.getStatus() == LessonStatus.SKIPPED)
+                    .map(UserChunkProgress::getLessonId)
                     .collect(Collectors.toSet());
 
-            boolean tierComplete = tierSubChunks.stream()
-                    .allMatch(sc -> doneSubChunkIds.contains(sc.getId()));
+            boolean tierComplete = tierLessons.stream().allMatch(l -> doneLessonIds.contains(l.getId()));
             if (!tierComplete) return;
 
-            // Only advance for the java topic (which uses UserLearnerProfile)
-            if (!"java".equals(topicId)) return;
+            int nextIdx = completedIdx + 1;
+            if (nextIdx >= TIER_PROGRESSION.size()) return;
 
-            UserLearnerProfile profile = learnerProfileRepository.findByUserId(userId)
-                    .orElse(null);
-            if (profile == null) return;
+            LearnerPath nextTier = TIER_PROGRESSION.get(nextIdx);
 
-            int currentIdx = TIER_PROGRESSION.indexOf(profile.getCurrentPath());
-            int completedIdx = TIER_PROGRESSION.indexOf(completedTier);
-            // Advance only if the completed tier matches or exceeds the user's current placement
-            if (completedIdx >= currentIdx) {
-                int nextIdx = completedIdx + 1;
-                if (nextIdx < TIER_PROGRESSION.size()) {
-                    LearnerPath nextTier = TIER_PROGRESSION.get(nextIdx);
+            if ("java".equals(trackId)) {
+                UserLearnerProfile profile = learnerProfileRepository.findByUserId(userId).orElse(null);
+                if (profile == null) return;
+                int currentIdx = TIER_PROGRESSION.indexOf(profile.getCurrentPath());
+                if (currentIdx < 0 || completedIdx >= currentIdx) {
                     profile.setCurrentPath(nextTier);
                     learnerProfileRepository.save(profile);
-                    log.info("[Encoding] Tier complete — advanced currentPath | user={} tier={} next={}",
+                    log.info("[Encoding] Java tier complete — advanced | user={} tier={} next={}",
                             userId, completedTier, nextTier);
+                }
+            } else {
+                UserTrackProfile trackProfile = topicProfileRepository
+                        .findByUserIdAndTrackId(userId, trackId).orElse(null);
+                if (trackProfile == null) return;
+                LearnerPath current = trackProfile.getCurrentTier() != null
+                        ? trackProfile.getCurrentTier() : LearnerPath.APPRENTICE;
+                int currentIdx = TIER_PROGRESSION.indexOf(current);
+                if (currentIdx < 0 || completedIdx >= currentIdx) {
+                    trackProfile.setCurrentTier(nextTier);
+                    topicProfileRepository.save(trackProfile);
+                    log.info("[Encoding] Track tier complete — advanced | user={} track={} tier={} next={}",
+                            userId, trackId, completedTier, nextTier);
                 }
             }
         } catch (Exception e) {
@@ -295,20 +300,15 @@ public class EncodingService {
         }
     }
 
-    /**
-     * Submit guided practice code — compile and run against tests.
-     * Same pattern as the old QuestService.evaluateSubmission.
-     */
     @Transactional
-    public PracticeResult submitGuidedPractice(String userId, String subChunkId, String code) {
-        SubChunk subChunk = subChunkRepository.findById(subChunkId)
-                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
-        // Load progress once; reused for all pass-marking calls below.
-        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId)
-                .orElseThrow(() -> new IllegalStateException("No progress record for " + subChunkId));
+    public PracticeResult submitGuidedPractice(String userId, String lessonId, String code) {
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NoSuchElementException("Lesson not found: " + lessonId));
+        UserChunkProgress progress = progressRepository.findByUserIdAndLessonId(userId, lessonId)
+                .orElseThrow(() -> new IllegalStateException("No progress record for " + lessonId));
 
-        if (subChunk.getPracticeType() == SubChunkPracticeType.NONE) {
-            PracticeResult result = gradeWrittenPractice(userId, subChunk, code, false);
+        if (lesson.getPracticeType() == LessonPracticeType.NONE) {
+            PracticeResult result = gradeWrittenPractice(userId, lesson, code, false);
             if (result.allPassed()) {
                 progress.setGuidedPracticePassed(true);
                 progressRepository.save(progress);
@@ -316,33 +316,30 @@ public class EncodingService {
             return result;
         }
 
-        List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
+        List<Map<String, Object>> testCases = parseTestCases(lesson.getGuidedPracticeTestsJson());
         if (testCases.isEmpty()) {
-            // No tests defined — auto-pass and mark as passed.
             progress.setGuidedPracticePassed(true);
             progressRepository.save(progress);
             return new PracticeResult(true, List.of(), 0, null, null, List.of());
         }
 
-        // Probe first test for compile/runtime errors
         CodeRunResponse probe = codeRunner.run(code,
                 (String) testCases.getFirst().getOrDefault("input", null));
 
         if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
             String feedback = aiMentorService.explainCompileError(
-                    subChunk.getTitle(), "Java", code, probe.getError());
+                    lesson.getTitle(), "Java", code, probe.getError());
             return new PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
         }
 
         if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
                 || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
             String feedback = aiMentorService.explainRuntimeError(
-                    subChunk.getTitle(), "Java", code,
+                    lesson.getTitle(), "Java", code,
                     probe.getError() != null ? probe.getError() : "Timeout — possible infinite loop");
             return new PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
         }
 
-        // Run all tests
         List<TestResult> results = new ArrayList<>();
         boolean allPassed = true;
         List<String> failedLabels = new ArrayList<>();
@@ -363,15 +360,14 @@ public class EncodingService {
         List<BadgeDto> newBadges = List.of();
 
         if (allPassed) {
-            // Mark as passed before badge evaluation so the fresh findByUserId reflects it.
             progress.setGuidedPracticePassed(true);
             progressRepository.save(progress);
-            xpEarned = awardXp(userId, subChunkId, subChunk.getXpReward());
+            xpEarned = awardXp(userId, lessonId, lesson.getXpReward());
             newBadges = gamification.evaluateAndAwardBadges(userId,
                     progressRepository.findByUserId(userId),
                     reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
         } else {
-            mentorFeedback = aiMentorService.getFeedback(subChunk.getTitle(), "Java",
+            mentorFeedback = aiMentorService.getFeedback(lesson.getTitle(), "Java",
                     "", code, String.join(", ", failedLabels));
         }
 
@@ -379,55 +375,101 @@ public class EncodingService {
                 allPassed ? null : "TEST_FAILURE", newBadges);
     }
 
-    /**
-     * Submit solo practice code — same tests as guided practice, but no XP award
-     * (XP was already earned during GUIDED_PRACTICE).
-     */
-    @Transactional
-    public PracticeResult submitSoloPractice(String userId, String subChunkId, String code) {
-        SubChunk subChunk = subChunkRepository.findById(subChunkId)
-                .orElseThrow(() -> new NoSuchElementException("SubChunk not found: " + subChunkId));
-        // Load progress once; reused for all pass-marking calls below.
-        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId)
-                .orElseThrow(() -> new IllegalStateException("No progress record for " + subChunkId));
+    // ─────────────────────────────────────────────────────────────────────────
+    // SOLO PRACTICE — Phase 4 dispatch
+    // ─────────────────────────────────────────────────────────────────────────
 
-        if (subChunk.getPracticeType() == SubChunkPracticeType.NONE) {
-            PracticeResult result = gradeWrittenPractice(userId, subChunk, code, true);
-            if (result.allPassed()) {
+    @Transactional
+    public SoloAssessmentResult submitSoloPractice(
+            String userId, String lessonId, SoloSubmitRequest request) {
+
+        Lesson lesson = lessonRepository.findById(lessonId)
+                .orElseThrow(() -> new NoSuchElementException("Lesson not found: " + lessonId));
+        UserChunkProgress progress = progressRepository.findByUserIdAndLessonId(userId, lessonId)
+                .orElseThrow(() -> new IllegalStateException("No progress record for " + lessonId));
+
+        SoloAssessmentType type = lesson.getSoloAssessmentType();
+        if (type == null) type = SoloAssessmentType.DETERMINISTIC;
+
+        return switch (type) {
+            case DETERMINISTIC  -> soloDeterministic(userId, lessonId, lesson, progress, request);
+            case RUBRIC_REFLECTION -> soloRubric(userId, lesson, progress,
+                    request.getAnswer(), request.getCheckedRubricItems(), request.getConfidence());
+            case PATTERN_MATCH  -> soloPatternMatch(userId, lesson, progress, request.getAnswer());
+            case AI_REVIEW      -> soloAiReview(userId, lessonId, lesson, progress, request.getAnswer());
+        };
+    }
+
+    /** Returns the number of AI reviews remaining for the current month. */
+    public int getAiReviewsRemaining(String userId, String domainId) {
+        String month = YearMonth.now().toString();
+        if ("java".equals(domainId)) {
+            return learnerProfileRepository.findByUserId(userId)
+                    .map(p -> !month.equals(p.getAiReviewQuotaMonth())
+                            ? KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                            : Math.max(0, KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                                            - p.getAiReviewUsesThisMonth()))
+                    .orElse(KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA);
+        }
+        return topicProfileRepository.findByUserIdAndTrackId(userId, domainId)
+                .map(p -> !month.equals(p.getAiReviewQuotaMonth())
+                        ? KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                        : Math.max(0, KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA
+                                        - p.getAiReviewUsesThisMonth()))
+                .orElse(KeywordScoringService.AI_REVIEW_MONTHLY_QUOTA);
+    }
+
+    // ── DETERMINISTIC ─────────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloDeterministic(
+            String userId, String lessonId,
+            Lesson lesson, UserChunkProgress progress,
+            SoloSubmitRequest request) {
+
+        // Written-response path (practiceType == NONE)
+        if (lesson.getPracticeType() == LessonPracticeType.NONE) {
+            String answer = request.getAnswer() != null ? request.getAnswer()
+                    : (request.getCode() != null ? request.getCode() : "");
+            PracticeResult pr = gradeWrittenPractice(userId, lesson, answer, true);
+            if (pr.allPassed()) {
                 progress.setSoloPracticePassed(true);
                 progressRepository.save(progress);
             }
-            return result;
+            return practiceToSolo(pr);
         }
 
-        List<Map<String, Object>> testCases = parseTestCases(subChunk.getGuidedPracticeTestsJson());
+        // Code-test path
+        String code = request.getCode() != null ? request.getCode() : "";
+        List<Map<String, Object>> testCases = parseTestCases(lesson.getGuidedPracticeTestsJson());
         if (testCases.isEmpty()) {
-            return new PracticeResult(true, List.of(), 0, null, null, List.of());
+            progress.setSoloPracticePassed(true);
+            progressRepository.save(progress);
+            return new SoloAssessmentResult(
+                    true, List.of(), 0, null, null, List.of(), null, null, List.of(), 0, false);
         }
 
         CodeRunResponse probe = codeRunner.run(code,
                 (String) testCases.getFirst().getOrDefault("input", null));
 
         if (probe.getStatus() == CodeRunResponse.RunStatus.COMPILE_ERROR) {
-            String feedback = aiMentorService.explainCompileError(
-                    subChunk.getTitle(), "Java", code, probe.getError());
-            return new PracticeResult(false, List.of(), 0, feedback, "COMPILE_ERROR", List.of());
+            String fb = aiMentorService.explainCompileError(lesson.getTitle(), "Java", code, probe.getError());
+            return new SoloAssessmentResult(
+                    false, List.of(), 0, fb, "COMPILE_ERROR", List.of(), null, null, List.of(), 0, false);
         }
         if (probe.getStatus() == CodeRunResponse.RunStatus.RUNTIME_ERROR
                 || probe.getStatus() == CodeRunResponse.RunStatus.TIMEOUT) {
-            String feedback = aiMentorService.explainRuntimeError(
-                    subChunk.getTitle(), "Java", code,
+            String fb = aiMentorService.explainRuntimeError(lesson.getTitle(), "Java", code,
                     probe.getError() != null ? probe.getError() : "Timeout — possible infinite loop");
-            return new PracticeResult(false, List.of(), 0, feedback, "RUNTIME_ERROR", List.of());
+            return new SoloAssessmentResult(
+                    false, List.of(), 0, fb, "RUNTIME_ERROR", List.of(), null, null, List.of(), 0, false);
         }
 
         List<TestResult> results = new ArrayList<>();
         boolean allPassed = true;
         List<String> failedLabels = new ArrayList<>();
-
         for (Map<String, Object> tc : testCases) {
-            String label = (String) tc.get("label");
-            String input = (String) tc.getOrDefault("input", null);
+            String label    = (String) tc.get("label");
+            String input    = (String) tc.getOrDefault("input", null);
             String expected = (String) tc.get("expected");
             CodeRunResponse run = codeRunner.run(code, input);
             String actual = run.getOutput() != null ? run.getOutput().trim() : "";
@@ -441,29 +483,191 @@ public class EncodingService {
             progress.setSoloPracticePassed(true);
             progressRepository.save(progress);
         } else {
-            mentorFeedback = aiMentorService.getFeedback(subChunk.getTitle(), "Java",
+            mentorFeedback = aiMentorService.getFeedback(lesson.getTitle(), "Java",
                     "", code, String.join(", ", failedLabels));
         }
-
-        // No XP — already earned during GUIDED_PRACTICE
-        return new PracticeResult(allPassed, results, 0, mentorFeedback,
-                allPassed ? null : "TEST_FAILURE", List.of());
+        return new SoloAssessmentResult(allPassed, results, 0, mentorFeedback,
+                allPassed ? null : "TEST_FAILURE", List.of(), null, null, List.of(), 0, false);
     }
 
-    /**
-     * Submit retrieval check answers, grade them, update SM-2 spacing.
-     */
+    /** Converts legacy PracticeResult to SoloAssessmentResult for the NONE path. */
+    private SoloAssessmentResult practiceToSolo(PracticeResult pr) {
+        return new SoloAssessmentResult(
+                pr.allPassed(), pr.testResults(), pr.xpEarned(), pr.mentorFeedback(),
+                pr.errorType(), pr.newBadges(), null, null, List.of(), 0, false);
+    }
+
+    // ── RUBRIC_REFLECTION ─────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloRubric(
+            String userId,
+            Lesson lesson, UserChunkProgress progress,
+            String answer, List<String> checkedItems, String confidence) {
+
+        // Rubric-reflection always passes — it's a self-reflection tool
+        if (confidence != null && !confidence.isBlank()) {
+            progress.setSoloConfidence(confidence);
+        }
+        progress.setSoloPracticePassed(true);
+        progressRepository.save(progress);
+
+        int xp = awardXp(userId, lesson.getId() + "-solo-rubric", lesson.getXpReward());
+        List<BadgeDto> badges = gamification.evaluateAndAwardBadges(userId,
+                progressRepository.findByUserId(userId),
+                reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
+
+        String feedback = buildRubricFeedback(lesson, checkedItems);
+        return new SoloAssessmentResult(
+                true, List.of(), xp, feedback, null, badges,
+                null, lesson.getSoloModelAnswerHtml(), List.of(), 0, false);
+    }
+
+    private String buildRubricFeedback(Lesson lesson, List<String> checkedItems) {
+        if (checkedItems == null || checkedItems.isEmpty()) {
+            return "Master Velan reviews your self-assessment. " +
+                   "\"Honest reflection is the foundation of mastery. " +
+                   "Study the model answer carefully and note what you included or missed.\"";
+        }
+        return "Master Velan approves of your self-assessment. " +
+               "\"You have checked " + checkedItems.size() + " rubric item"
+               + (checkedItems.size() == 1 ? "" : "s") + ". " +
+               "Compare your work against the model answer to deepen your understanding.\"";
+    }
+
+    // ── PATTERN_MATCH ─────────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloPatternMatch(
+            String userId,
+            Lesson lesson, UserChunkProgress progress,
+            String answer) {
+
+        List<String> keywords = parseStringList(lesson.getKeywordsJson());
+        KeywordScoringService.KeywordScore score = keywordScoringService.score(answer, keywords);
+
+        boolean passed = score.isPassing();
+        if (passed) {
+            progress.setSoloPracticePassed(true);
+            progressRepository.save(progress);
+        }
+
+        int xp = 0;
+        List<BadgeDto> badges = List.of();
+        if (passed) {
+            xp = awardXp(userId, lesson.getId() + "-solo-pattern", lesson.getXpReward());
+            badges = gamification.evaluateAndAwardBadges(userId,
+                    progressRepository.findByUserId(userId),
+                    reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
+        }
+
+        String feedback = buildPatternFeedback(score);
+        return new SoloAssessmentResult(
+                passed, List.of(), xp, feedback, passed ? null : "TEXT_CHECK_FAILURE", badges,
+                score.band().name(), lesson.getSoloModelAnswerHtml(), score.matchedKeywords(), 0, false);
+    }
+
+    private String buildPatternFeedback(KeywordScoringService.KeywordScore score) {
+        return switch (score.band()) {
+            case EXCELLENT -> "Master Velan is impressed. \"Excellent work, young wizard — you have "
+                    + "woven " + score.matched() + " of the " + score.total() + " key concepts "
+                    + "into your answer. Your understanding is clear.\"";
+            case GOOD      -> "Master Velan nods thoughtfully. \"A good response — you have covered "
+                    + score.matched() + " of " + score.total() + " key concepts. "
+                    + "Review the model answer to see what else you could have included.\"";
+            case WEAK      -> "Master Velan shakes his head gently. \"Your answer touches only "
+                    + score.matched() + " of the " + score.total() + " key concepts I look for. "
+                    + "Read the lesson vocabulary again and try to weave more of those terms "
+                    + "naturally into your explanation.\"";
+        };
+    }
+
+    // ── AI_REVIEW ─────────────────────────────────────────────────────────────
+
+    private SoloAssessmentResult soloAiReview(
+            String userId, String lessonId,
+            Lesson lesson, UserChunkProgress progress,
+            String answer) {
+
+        String domainId = moduleRepository.findById(lesson.getModuleId())
+                .map(LearningModule::getTrackId).orElse("java");
+
+        int remaining = getAiReviewsRemaining(userId, domainId);
+
+        // Downgrade to rubric-reflection when quota exhausted
+        if (remaining <= 0) {
+            log.info("[Encoding] AI review quota exhausted — downgrading to rubric | user={} lesson={}", userId, lessonId);
+            return soloRubric(userId, lesson, progress, answer, List.of(), null);
+        }
+
+        // Consume one quota unit
+        incrementAiReview(userId, domainId);
+        remaining = Math.max(0, remaining - 1);
+
+        AiMentorService.SoloAiReview review = aiMentorService.reviewSoloPractice(
+                lesson.getTitle(), lesson.getSoloPracticeHtml(), answer);
+
+        if (review.passed()) {
+            progress.setSoloPracticePassed(true);
+            progressRepository.save(progress);
+        }
+
+        int xp = 0;
+        List<BadgeDto> badges = List.of();
+        if (review.passed()) {
+            xp = awardXp(userId, lessonId + "-solo-ai", lesson.getXpReward());
+            badges = gamification.evaluateAndAwardBadges(userId,
+                    progressRepository.findByUserId(userId),
+                    reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
+        }
+
+        return new SoloAssessmentResult(
+                review.passed(), List.of(), xp, review.feedback(),
+                review.passed() ? null : "TEXT_CHECK_FAILURE", badges,
+                null, lesson.getSoloModelAnswerHtml(), List.of(), remaining, true);
+    }
+
+    // ── AI quota helpers ──────────────────────────────────────────────────────
+
+    private void incrementAiReview(String userId, String domainId) {
+        String month = YearMonth.now().toString();
+        if ("java".equals(domainId)) {
+            learnerProfileRepository.findByUserId(userId).ifPresent(p -> {
+                if (!month.equals(p.getAiReviewQuotaMonth())) {
+                    p.setAiReviewQuotaMonth(month);
+                    p.setAiReviewUsesThisMonth(0);
+                }
+                p.setAiReviewUsesThisMonth(p.getAiReviewUsesThisMonth() + 1);
+                learnerProfileRepository.save(p);
+            });
+        } else {
+            topicProfileRepository.findByUserIdAndTrackId(userId, domainId).ifPresent(p -> {
+                if (!month.equals(p.getAiReviewQuotaMonth())) {
+                    p.setAiReviewQuotaMonth(month);
+                    p.setAiReviewUsesThisMonth(0);
+                }
+                p.setAiReviewUsesThisMonth(p.getAiReviewUsesThisMonth() + 1);
+                topicProfileRepository.save(p);
+            });
+        }
+    }
+
+    private List<String> parseStringList(String json) {
+        if (json == null || json.isBlank()) return List.of();
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<String>>() {});
+        } catch (Exception e) {
+            return List.of();
+        }
+    }
+
     @Transactional
-    public RetrievalCheckResult submitRetrievalCheck(String userId, String subChunkId,
+    public RetrievalCheckResult submitRetrievalCheck(String userId, String lessonId,
                                                       List<AnswerPair> answers) {
         GradeResult graded = retrievalService.gradeAnswers(answers);
         ReviewSession session = retrievalService.saveSession(userId, SessionType.RETRIEVAL_CHECK, graded);
 
-        // Update SM-2 spacing
-        spacingService.updateSpacing(userId, subChunkId, graded.score());
+        spacingService.updateSpacing(userId, lessonId, graded.score());
 
-        // Mark retrieval as submitted regardless of score so advancePhase() allows progression
-        UserChunkProgress progress = progressRepository.findByUserIdAndSubChunkId(userId, subChunkId).orElseThrow();
+        UserChunkProgress progress = progressRepository.findByUserIdAndLessonId(userId, lessonId).orElseThrow();
         progress.setRetrievalCheckSubmitted(true);
 
         boolean passed = graded.score() >= 0.6;
@@ -471,23 +675,33 @@ public class EncodingService {
         List<BadgeDto> newBadges = List.of();
 
         if (passed) {
-            boolean firstCompletion = progress.getStatus() != SubChunkStatus.COMPLETE;
-            progress.setCurrentPhase(EncodingPhase.COMPLETE);
-            progress.setStatus(SubChunkStatus.COMPLETE);
-            progress.setCompletedAt(Instant.now());
-            progressRepository.save(progress);
+            Lesson lesson = lessonRepository.findById(lessonId).orElse(null);
+            boolean hasIntegration = lesson != null
+                    && lesson.getIntegrationPrompt() != null
+                    && !lesson.getIntegrationPrompt().isBlank();
 
-            xpEarned = awardXp(userId, subChunkId + "-retrieval", 25);
+            boolean firstCompletion = progress.getStatus() != LessonStatus.COMPLETE;
+
+            xpEarned = awardXp(userId, lessonId + "-retrieval", 25);
             newBadges = gamification.evaluateAndAwardBadges(userId,
                     progressRepository.findByUserId(userId),
                     reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
 
-            if (firstCompletion) {
-                SubChunk sc = subChunkRepository.findById(subChunkId).orElse(null);
-                telemetry.questCompleted(userId, subChunkId,
-                        sc != null ? sc.getChunkId() : null, xpEarned);
-                if (sc != null) {
-                    advanceLearnerPathIfTierComplete(userId, sc);
+            if (hasIntegration) {
+                progress.setCurrentPhase(EncodingPhase.INTEGRATION);
+                progressRepository.save(progress);
+            } else {
+                progress.setCurrentPhase(EncodingPhase.COMPLETE);
+                progress.setStatus(LessonStatus.COMPLETE);
+                progress.setCompletedAt(Instant.now());
+                progressRepository.save(progress);
+
+                if (firstCompletion) {
+                    telemetry.questCompleted(userId, lessonId,
+                            lesson != null ? lesson.getModuleId() : null, xpEarned);
+                    if (lesson != null) {
+                        advanceLearnerPathIfTierComplete(userId, lesson);
+                    }
                 }
             }
         } else {
@@ -496,7 +710,7 @@ public class EncodingService {
 
         return new RetrievalCheckResult(graded.score(), graded.correct(), graded.total(),
                 graded.results(), passed, xpEarned, newBadges,
-                passed ? null : "Score below 60%. Consider re-encoding this sub-chunk.");
+                passed ? null : "Score below 60%. Consider re-encoding this lesson.");
     }
 
     private int awardXp(String userId, String itemId, int xp) {
@@ -524,13 +738,31 @@ public class EncodingService {
         try { return objectMapper.readValue(json, new TypeReference<>() {}); } catch (Exception e) { return List.of(); }
     }
 
-    private PracticeResult gradeWrittenPractice(String userId, SubChunk subChunk, String response, boolean solo) {
+    private boolean looksLikePseudocode(String answer) {
+        String upper = answer.toUpperCase(Locale.ROOT);
+        String[] algorithmKeywords = {
+            "ALGORITHM", " FOR ", " IF ", " SET ", " RETURN ", " PRINT ",
+            " WHILE ", " FOREACH ", " ELSE ", " OUTPUT ", " INPUT ",
+            " ASSIGN ", " BREAK ", " GOTO ", " GO TO ", "FOR EACH",
+            " BEGIN ", " END ", " DO ", " THEN ", " STEP "
+        };
+        int matches = 0;
+        for (String kw : algorithmKeywords) {
+            if (upper.contains(kw)) {
+                matches++;
+                if (matches >= 3) return true;
+            }
+        }
+        return false;
+    }
+
+    private PracticeResult gradeWrittenPractice(String userId, Lesson lesson, String response, boolean solo) {
         String answer = response == null ? "" : response.trim();
         String lowerAnswer = answer.toLowerCase(Locale.ROOT);
         int wordCount = answer.isBlank() ? 0 : answer.split("\\s+").length;
         int sentenceCount = answer.isBlank() ? 0 : answer.split("[.!?]+").length;
 
-        Set<String> expectedTerms = expectedTerms(subChunk);
+        Set<String> expectedTerms = expectedTerms(lesson);
         long matchedTerms = expectedTerms.stream()
                 .filter(term -> lowerAnswer.contains(term.toLowerCase(Locale.ROOT)))
                 .count();
@@ -555,31 +787,52 @@ public class EncodingService {
                         : "Use more lesson vocabulary: " + matchedTerms + "/" + minTerms + " key terms found.",
                 minTerms + "+ key terms"
         ));
-        boolean hasExplanatoryConnector = lowerAnswer.contains("because")
-                || lowerAnswer.contains(" since ")
-                || lowerAnswer.contains("therefore")
-                || lowerAnswer.contains("however")
-                || lowerAnswer.contains("which means")
-                || lowerAnswer.contains("this means")
-                || lowerAnswer.contains("as a result")
-                || lowerAnswer.contains("this suggests")
-                || lowerAnswer.contains("this explains")
-                || lowerAnswer.contains("in contrast")
-                || lowerAnswer.contains("whereas")
-                || lowerAnswer.contains("while")
-                || lowerAnswer.contains("although")
-                || lowerAnswer.contains(" — ")   // em-dash used as an explanatory connector
-                || lowerAnswer.contains(" -- ");  // double-hyphen equivalent
-        results.add(new TestResult(
-                "Explains rather than lists",
-                sentenceCount >= 3 && hasExplanatoryConnector,
-                sentenceCount >= 3 && hasExplanatoryConnector
-                        ? "Includes explanation and reasoning."
-                        : "Add more explanation: use words like 'because', 'therefore', 'however', or 'this means' to link your ideas.",
-                "3+ sentences with reasoning"
-        ));
 
-        if (solo) {
+        if (looksLikePseudocode(answer)) {
+            boolean hasCondition = lowerAnswer.contains(" if ") || answer.startsWith("IF ")
+                    || lowerAnswer.contains(" when ") || lowerAnswer.contains(" while ")
+                    || lowerAnswer.contains(" for ") || lowerAnswer.contains(" foreach ")
+                    || lowerAnswer.contains("for each");
+            boolean hasAction = lowerAnswer.contains(" set ") || lowerAnswer.contains(" print ")
+                    || lowerAnswer.contains(" return ") || lowerAnswer.contains(" output ")
+                    || lowerAnswer.contains(" assign ") || lowerAnswer.contains(" purchase ")
+                    || lowerAnswer.contains(" go to ") || lowerAnswer.contains(" goto ");
+            boolean hasStructure = hasCondition && hasAction;
+            results.add(new TestResult(
+                    "Shows algorithmic structure",
+                    hasStructure,
+                    hasStructure
+                            ? "Pseudocode includes control flow and action steps."
+                            : "Include both a condition step (IF/FOR/WHILE) and an action step (SET/PRINT/RETURN) in your pseudocode.",
+                    "Control flow + action steps"
+            ));
+        } else {
+            boolean hasExplanatoryConnector = lowerAnswer.contains("because")
+                    || lowerAnswer.contains(" since ")
+                    || lowerAnswer.contains("therefore")
+                    || lowerAnswer.contains("however")
+                    || lowerAnswer.contains("which means")
+                    || lowerAnswer.contains("this means")
+                    || lowerAnswer.contains("as a result")
+                    || lowerAnswer.contains("this suggests")
+                    || lowerAnswer.contains("this explains")
+                    || lowerAnswer.contains("in contrast")
+                    || lowerAnswer.contains("whereas")
+                    || lowerAnswer.contains("while")
+                    || lowerAnswer.contains("although")
+                    || lowerAnswer.contains(" — ")
+                    || lowerAnswer.contains(" -- ");
+            results.add(new TestResult(
+                    "Explains rather than lists",
+                    sentenceCount >= 3 && hasExplanatoryConnector,
+                    sentenceCount >= 3 && hasExplanatoryConnector
+                            ? "Includes explanation and reasoning."
+                            : "Add more explanation: use words like 'because', 'therefore', 'however', or 'this means' to link your ideas.",
+                    "3+ sentences with reasoning"
+            ));
+        }
+
+        if (solo && !looksLikePseudocode(answer)) {
             boolean hasIndependentApplication = lowerAnswer.contains("example")
                     || lowerAnswer.contains("case")
                     || lowerAnswer.contains("evidence")
@@ -600,25 +853,32 @@ public class EncodingService {
         String mentorFeedback = null;
 
         if (allPassed && !solo) {
-            xpEarned = awardXp(userId, subChunk.getId(), subChunk.getXpReward());
+            xpEarned = awardXp(userId, lesson.getId(), lesson.getXpReward());
             newBadges = gamification.evaluateAndAwardBadges(userId,
                     progressRepository.findByUserId(userId),
                     reviewSessionRepository.findByUserIdOrderByStartedAtDesc(userId));
         } else if (!allPassed) {
-            mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
-                    + "and explain why the ideas matter. "
-                    + (solo ? "For solo practice, add your own case or example rather than following the guided wording." : "");
+            if (looksLikePseudocode(answer)) {
+                mentorFeedback = "Use the task checklist: include all required steps, use lesson vocabulary "
+                        + "(ingredient names, threshold values, actions), and make sure your algorithm covers "
+                        + "both the condition check (IF) and the action to take (SET/PRINT/RETURN). "
+                        + (solo ? "For the solo challenge, write a fresh algorithm without copying the guided example." : "");
+            } else {
+                mentorFeedback = "Use the prompt as a checklist: write in full sentences, include the lesson vocabulary, "
+                        + "and explain why the ideas matter. "
+                        + (solo ? "For solo practice, add your own case or example rather than following the guided wording." : "");
+            }
         }
 
         return new PracticeResult(allPassed, results, xpEarned, mentorFeedback,
                 allPassed ? null : "TEXT_CHECK_FAILURE", newBadges);
     }
 
-    private Set<String> expectedTerms(SubChunk subChunk) {
+    private Set<String> expectedTerms(Lesson lesson) {
         String source = String.join(" ",
-                Optional.ofNullable(subChunk.getTitle()).orElse(""),
-                Optional.ofNullable(subChunk.getExplanationHtml()).orElse(""),
-                Optional.ofNullable(subChunk.getGuidedPracticeHtml()).orElse(""));
+                Optional.ofNullable(lesson.getTitle()).orElse(""),
+                Optional.ofNullable(lesson.getExplanationHtml()).orElse(""),
+                Optional.ofNullable(lesson.getGuidedPracticeHtml()).orElse(""));
 
         String text = source
                 .replaceAll("<[^>]+>", " ")

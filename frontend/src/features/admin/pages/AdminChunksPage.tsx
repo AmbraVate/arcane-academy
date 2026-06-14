@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { adminChunkApi, adminTopicApi, type AdminChunk, type AdminTopic } from '@/shared/api/adminServices'
+import { adminChunkApi, adminDomainApi, type AdminChunk, type AdminDomain } from '@/shared/api/adminServices'
 
 const TIERS = ['APPRENTICE', 'JUNIOR', 'SENIOR', 'LEAD']
 
 const BLANK_CHUNK: Partial<AdminChunk> = {
-  title: '', glyph: '📦', sortOrder: 0, tier: 'APPRENTICE', topicId: '', prerequisiteIds: [],
+  title: '', glyph: '📦', sortOrder: 0, tier: 'APPRENTICE', domainId: '', prerequisiteIds: [],
 }
 
 function ChunkForm({
   initial, topics, onSave, onCancel,
 }: {
   initial: Partial<AdminChunk>
-  topics: AdminTopic[]
+  topics: AdminDomain[]
   onSave: (c: Partial<AdminChunk>) => void
   onCancel: () => void
 }) {
@@ -32,7 +32,7 @@ function ChunkForm({
         </label>
         <label style={labelStyle}>
           Topic
-          <select style={inputStyle} value={form.topicId ?? ''} onChange={e => set('topicId', e.target.value)}>
+          <select style={inputStyle} value={form.domainId ?? ''} onChange={e => set('domainId', e.target.value)}>
             <option value="">Select topic…</option>
             {topics.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
@@ -62,7 +62,7 @@ function ChunkForm({
 
 export default function AdminChunksPage() {
   const navigate = useNavigate()
-  const [topics, setTopics] = useState<AdminTopic[]>([])
+  const [topics, setTopics] = useState<AdminDomain[]>([])
   const [chunks, setChunks] = useState<AdminChunk[]>([])
   const [topicFilter, setTopicFilter] = useState<string>('')
   const [loading, setLoading] = useState(true)
@@ -74,7 +74,7 @@ export default function AdminChunksPage() {
   const load = (tid?: string) => {
     setLoading(true)
     Promise.all([
-      adminTopicApi.list(),
+      adminDomainApi.list(),
       adminChunkApi.list(tid || undefined),
     ]).then(([ts, cs]) => {
       setTopics(ts)
@@ -98,7 +98,7 @@ export default function AdminChunksPage() {
       setShowForm(false)
       setEditChunk(null)
     } catch {
-      setError('Failed to save chunk')
+      setError('Failed to save module')
     } finally {
       setSaving(false)
     }
@@ -110,14 +110,12 @@ export default function AdminChunksPage() {
       await adminChunkApi.delete(id)
       setChunks(prev => prev.filter(c => c.id !== id))
     } catch {
-      setError('Failed to delete chunk')
+      setError('Failed to delete module')
     }
   }
 
   const tierColor: Record<string, string> = {
     APPRENTICE: '#4ade80', JUNIOR: '#38bdf8', SENIOR: '#c9a227', LEAD: '#8b5cf6',
-    // Legacy fallbacks
-    FOUNDATION: '#4ade80', PRACTITIONER: '#c9a227', EXPERT: '#8b5cf6',
   }
   const topicName = (id: string) => topics.find(t => t.id === id)?.name ?? id
 
@@ -129,7 +127,7 @@ export default function AdminChunksPage() {
           <p style={{ color: '#8b7fa0', fontSize: 13, marginTop: 4 }}>Manage modules and lessons</p>
         </div>
         <button className="btn btn-primary" style={{ fontSize: 12 }} onClick={() => { setEditChunk(null); setShowForm(true) }}>
-          + New Chunk
+          + New Module
         </button>
       </div>
 
@@ -157,7 +155,7 @@ export default function AdminChunksPage() {
       {/* New / edit form */}
       {(showForm || editChunk) && (
         <ChunkForm
-          initial={editChunk ?? { ...BLANK_CHUNK, topicId: topicFilter || (topics[0]?.id ?? '') }}
+          initial={editChunk ?? { ...BLANK_CHUNK, domainId: topicFilter || (topics[0]?.id ?? '') }}
           topics={topics}
           onSave={handleSave}
           onCancel={() => { setShowForm(false); setEditChunk(null) }}
@@ -168,7 +166,7 @@ export default function AdminChunksPage() {
         <div style={{ color: '#8b7fa0', fontSize: 14 }}>Loading…</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No chunks found.</div>}
+          {chunks.length === 0 && <div style={{ color: '#8b7fa0', fontSize: 13 }}>No modules found.</div>}
           {chunks.map(chunk => (
             <div key={chunk.id} style={{
               background: '#16132b',
@@ -183,7 +181,7 @@ export default function AdminChunksPage() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontWeight: 600, fontSize: 14, color: '#e8e0f0' }}>{chunk.title}</div>
                 <div style={{ fontSize: 11, color: '#8b7fa0', marginTop: 2 }}>
-                  {topicName(chunk.topicId)} · {chunk.subChunkCount} lessons · order {chunk.sortOrder}
+                  {topicName(chunk.domainId)} · {chunk.subChunkCount} lessons · order {chunk.sortOrder}
                 </div>
               </div>
               <span style={{ fontSize: 10, fontFamily: 'Cinzel, serif', padding: '2px 8px', borderRadius: 4, border: `1px solid ${tierColor[chunk.tier] ?? '#2e2850'}`, color: tierColor[chunk.tier] ?? '#8b7fa0' }}>
@@ -193,7 +191,7 @@ export default function AdminChunksPage() {
                 <button
                   className="btn btn-ghost"
                   style={{ fontSize: 11, padding: '4px 12px' }}
-                  onClick={() => navigate(`/admin/chunks/${chunk.id}/subchunks`)}
+                  onClick={() => navigate(`/admin/modules/${chunk.id}/lessons`)}
                 >
                   Lessons
                 </button>

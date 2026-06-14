@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { leaderboardApi, type LeaderboardEntry } from '@/shared/api/services'
 import { cn } from '@/lib/utils'
@@ -16,8 +16,8 @@ type Board = 'weekly' | 'all-time' | 'polymath'
 const ACTIVE_TOPICS = [
   { id: 'java',     name: 'Java',         glyph: '☕' },
   { id: 'tailwind', name: 'Tailwind',     glyph: '🎨' },
-  { id: 'react',    name: 'React',        glyph: '⚛️' },
-  { id: 'sql',      name: 'SQL',          glyph: '🗃️' },
+  { id: 'react',    name: 'React',        glyph: '⚛ï¸' },
+  { id: 'sql',      name: 'SQL',          glyph: '🗃ï¸' },
 ] as const
 
 export default function LeaderboardPage() {
@@ -27,19 +27,18 @@ export default function LeaderboardPage() {
   const initialTopic = params.get('topic') ?? 'java'
   const initialBoard = (params.get('board') as Board) ?? 'weekly'
 
-  const [topicId, setTopicId] = useState<string>(initialTopic)
+  const [domainId, setTopicId] = useState<string>(initialTopic)
   const [board, setBoard] = useState<Board>(initialBoard)
   const [rows, setRows] = useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-
   // Persist current selection in URL so refresh + share-link work.
   useEffect(() => {
     const next = new URLSearchParams()
     next.set('board', board)
-    if (board !== 'polymath') next.set('topic', topicId)
+    if (board !== 'polymath') next.set('topic', domainId)
     setParams(next, { replace: true })
-  }, [board, topicId, setParams])
+  }, [board, domainId, setParams])
 
   useEffect(() => {
     setLoading(true)
@@ -47,14 +46,14 @@ export default function LeaderboardPage() {
     const fetcher = board === 'polymath'
       ? leaderboardApi.polymath()
       : board === 'weekly'
-        ? leaderboardApi.topicWeekly(topicId)
-        : leaderboardApi.topicAllTime(topicId)
+        ? leaderboardApi.topicWeekly(domainId)
+        : leaderboardApi.topicAllTime(domainId)
 
     fetcher
       .then(setRows)
       .catch(() => setError('Could not load the leaderboard. Try again in a moment.'))
       .finally(() => setLoading(false))
-  }, [board, topicId])
+  }, [board, domainId])
 
   const subtitle = useMemo(() => {
     if (board === 'polymath') return 'Top polymaths by topic breadth — tie-break on total XP'
@@ -87,7 +86,7 @@ export default function LeaderboardPage() {
                   : 'bg-card border-border text-muted hover:border-purple-dim'
               )}
             >
-              {b === 'weekly' ? 'This Week' : b === 'all-time' ? 'All-Time' : '⚖ Polymath'}
+              {b === 'weekly' ? 'This Week' : b === 'all-time' ? 'All-Time' : 'âš– Polymath'}
             </button>
           ))}
         </div>
@@ -101,7 +100,7 @@ export default function LeaderboardPage() {
                 onClick={() => setTopicId(t.id)}
                 className={cn(
                   'px-3 py-1 rounded-[6px] text-[12px] border transition-[background,border-color] duration-150',
-                  topicId === t.id
+                  domainId === t.id
                     ? 'bg-card border-gold-dim text-gold'
                     : 'bg-card border-border text-muted hover:border-gold-dim'
                 )}
@@ -136,9 +135,9 @@ export default function LeaderboardPage() {
                   title={`View ${row.username}'s public profile`}
                 >
                   <div className="font-cinzel text-[15px] text-text">{row.username}</div>
-                  <div className="text-[11px] text-muted">
-                    {row.rankTitle} · 🔥 {row.streakDays}d · 🏅 {row.badgeCount}
-                    {row.topicCount >= 0 && ` · ${row.topicCount} topics`}
+                  <div className="text-[11px] text-muted flex items-center gap-1 flex-wrap">
+                    <span>{row.rankTitle} · 🔥 {row.streakDays}d · 🏅 {row.badgeCount}</span>
+                    {row.topicCount >= 0 && <span>· {row.topicCount} topics</span>}
                   </div>
                 </button>
                 <div className="text-right">

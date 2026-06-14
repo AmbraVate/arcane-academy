@@ -10,8 +10,8 @@ public class RabbitHoleTermDto {
     private String id;
     private String term;
     private String description;
-    private String subChunkId;
-    private String topicId;
+    private String lessonId;
+    private String domainId;
     private Instant savedAt;
 
     public static RabbitHoleTermDto from(UserRabbitHoleTerm e) {
@@ -19,8 +19,8 @@ public class RabbitHoleTermDto {
         dto.id = e.getId();
         dto.term = e.getTerm();
         dto.description = e.getDescription();
-        dto.subChunkId = e.getSubChunkId();
-        dto.topicId = e.getTopicId();
+        dto.lessonId = e.getLessonId();
+        dto.domainId = e.getDomainId();
         dto.savedAt = e.getSavedAt();
         return dto;
     }

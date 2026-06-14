@@ -51,7 +51,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private LearnerPath learnerPath = LearnerPath.FOUNDATION;
+    private LearnerPath learnerPath = LearnerPath.APPRENTICE;
 
     /**
      * Privacy switch — when true the user appears on leaderboards and at /u/:username.
@@ -74,6 +74,13 @@ public class User {
     @Builder.Default
     private boolean bypassPaywall = false;
 
+    /**
+     * Set to true when the user completes (or skips) the onboarding walkthrough.
+     * Controls whether the onboarding modal is shown on the home page.
+     */
+    @Builder.Default
+    private boolean onboardingCompleted = false;
+
     private String refreshToken;
 
     @Enumerated(EnumType.STRING)
@@ -84,6 +91,62 @@ public class User {
     /** Never returns null — legacy rows with a NULL role column are treated as USER. */
     public UserRole getRole() {
         return role != null ? role : UserRole.USER;
+    }
+
+    // ── Stripe / Subscription ─────────────────────────────────────────────────
+
+    /**
+     * Current subscription tier. Defaults to FREE (one topic allowed).
+     * Updated by the Stripe webhook controller on payment events.
+     */
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private SubscriptionStatus subscriptionStatus = SubscriptionStatus.FREE;
+
+    /**
+     * When the current billing period ends (epoch).
+     * Null for FREE and LIFETIME subscribers.
+     * Used to maintain access after cancellation until the paid period expires.
+     */
+    private Instant subscriptionPeriodEnd;
+
+    /**
+     * Stripe's customer ID (cus_...). Created on the user's first checkout session.
+     * Required to open the Stripe Customer Portal.
+     */
+    private String stripeCustomerId;
+
+    /**
+     * Stripe's subscription ID (sub_...). Null for one-time LIFETIME purchases.
+     * Used to correlate subscription lifecycle webhook events back to this user.
+     */
+    private String stripeSubscriptionId;
+
+    /**
+     * One-time token sent via email for password reset.
+     * Null when no reset is pending. Cleared on successful reset or re-issue.
+     */
+    private String passwordResetToken;
+
+    /**
+     * Expiry timestamp for the password-reset token.
+     * Null when no reset is pending. Resets are valid for 24 hours.
+     */
+    private Instant passwordResetExpiresAt;
+
+    /**
+     * Returns true when this user has an active paid subscription that grants
+     * access to all topics. Takes cancellation grace periods into account.
+     */
+    public boolean hasActiveSubscription() {
+        if (subscriptionStatus == null) return false;
+        return switch (subscriptionStatus) {
+            case MONTHLY, ANNUAL -> subscriptionPeriodEnd != null && Instant.now().isBefore(subscriptionPeriodEnd);
+            // CANCELLED: keep access until the period end the user already paid for
+            case CANCELLED -> subscriptionPeriodEnd != null && Instant.now().isBefore(subscriptionPeriodEnd);
+            case LIFETIME -> true;
+            case FREE -> false;
+        };
     }
 
 }

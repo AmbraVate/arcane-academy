@@ -1,0 +1,14 @@
+# Stage profile — loaded when SPRING_PROFILES_ACTIVE=stage (Docker Compose local staging).
+# Overrides application.yml to mirror prod schema behaviour without cloud infrastructure.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate   # Flyway owns the schema, same as prod; do not let Hibernate auto-create
+  flyway:
+    enabled: true          # always on in stage — this is the whole point of the staging run
+
+sentry:
+  dsn: ""                  # silence Sentry locally; no noise in the dashboard
+
+https:
+  required: false          # no TLS certificate in Docker
