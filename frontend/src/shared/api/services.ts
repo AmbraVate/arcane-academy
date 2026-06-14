@@ -4,7 +4,7 @@ import type {
   ChunkSummary, ChunkDetail, SubChunkEncoding, PracticeResult,
   RetrievalResultDto, ReviewSessionDto, ReviewResultDto,
   DashboardDto, DiagnosticResultDto, FeynmanResultDto,
-  RabbitHoleModule, CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
+  CuriosityQueueItem, AnswerEntry, RabbitHoleTerm,
 } from '@/shared/types'
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
@@ -113,22 +113,6 @@ export const dashboardApi = {
   getReviewsDue: async (): Promise<number> => {
     const { data } = await api.get('/api/dashboard/reviews-due')
     return typeof data === 'number' ? data : (data?.count ?? 0)
-  },
-}
-
-// ── Rabbit Holes ─────────────────────────────────────────────────────────────
-export const rabbitHoleApi = {
-  getForChunk: async (chunkId: string): Promise<RabbitHoleModule[]> => {
-    const { data } = await api.get(`/api/rabbit-holes/${chunkId}`)
-    return data
-  },
-  getModule: async (moduleId: string): Promise<RabbitHoleModule> => {
-    const { data } = await api.get(`/api/rabbit-holes/module/${moduleId}`)
-    return data
-  },
-  submit: async (moduleId: string, code: string): Promise<PracticeResult> => {
-    const { data } = await api.post(`/api/rabbit-holes/module/${moduleId}/submit`, { code })
-    return data
   },
 }
 

@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { badgeApi, capstoneApi, notesApi, profileApi, rabbitHoleTermApi, stuckReportApi } from '@/shared/api/services'
+import { badgeApi, capstoneApi, notesApi, profileApi, stuckReportApi } from '@/shared/api/services'
 import type { UserCapstone, UserNote, MyStuckReport } from '@/shared/api/services'
 import { useTopicsDashboard } from '@/hooks/queries'
 import { ACTIVE_TOPICS } from '@/features/topics/data/topics'
-import type { Badge, RabbitHoleTerm } from '@/shared/types'
+import type { Badge } from '@/shared/types'
 import { useTheme } from '@/hooks/useTheme'
 import type { Palette } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
 import { Trash2, ExternalLink, Download } from 'lucide-react'
 
-type Tab = 'overview' | 'topics' | 'badges' | 'rabbit-holes' | 'notes' | 'projects' | 'reports' | 'preferences'
+type Tab = 'overview' | 'topics' | 'badges' | 'notes' | 'portfolio' | 'reports' | 'preferences'
 
 const PALETTES = [
   { id: 'frostmourne', name: 'Frostmourne', swatches: ['#5dc6ff', '#b8eaff', '#1a4f8f'] },
@@ -42,10 +42,6 @@ export default function ProfilePage() {
   const allTopicDash = useTopicsDashboard(ACTIVE_TOPICS.map(t => t.id))
   const dashLoading = ACTIVE_TOPICS.some(t => allTopicDash[t.id] === undefined)
 
-  const [rabbitHoles, setRabbitHoles] = useState<RabbitHoleTerm[]>([])
-  const [rhLoading, setRhLoading] = useState(false)
-  const [removingTerm, setRemovingTerm] = useState<string | null>(null)
-
   const [publicEnabled, setPublicEnabled] = useState<boolean | null>(null)
   const [savingVisibility, setSavingVisibility] = useState(false)
 
@@ -72,15 +68,11 @@ export default function ProfilePage() {
       setBadgesLoading(true)
       badgeApi.getAll().then(setBadges).finally(() => setBadgesLoading(false))
     }
-    if (tab === 'rabbit-holes' && rabbitHoles.length === 0 && !rhLoading) {
-      setRhLoading(true)
-      rabbitHoleTermApi.getAll().then(setRabbitHoles).finally(() => setRhLoading(false))
-    }
     if (tab === 'notes' && notes.length === 0 && !notesLoading) {
       setNotesLoading(true)
       notesApi.list().then(setNotes).finally(() => setNotesLoading(false))
     }
-    if (tab === 'projects' && capstones.length === 0 && !capstonesLoading) {
+    if (tab === 'portfolio' && capstones.length === 0 && !capstonesLoading) {
       setCapstonesLoading(true)
       capstoneApi.list().then(setCapstones).finally(() => setCapstonesLoading(false))
     }
@@ -97,14 +89,6 @@ export default function ProfilePage() {
       const next = await profileApi.setVisibility(!publicEnabled)
       setPublicEnabled(next)
     } catch { /* keep prior state */ } finally { setSavingVisibility(false) }
-  }
-
-  async function removeRabbitHoleTerm(term: string) {
-    setRemovingTerm(term)
-    try {
-      await rabbitHoleTermApi.remove(term)
-      setRabbitHoles(prev => prev.filter(r => r.term !== term))
-    } catch { /* ignore */ } finally { setRemovingTerm(null) }
   }
 
   async function deleteNote(noteId: string) {
@@ -163,9 +147,8 @@ export default function ProfilePage() {
     { id: 'overview', label: 'Overview' },
     { id: 'topics', label: 'Topics' },
     { id: 'badges', label: `Badges${earned.length ? ` (${earned.length})` : ''}` },
-    { id: 'rabbit-holes', label: `Rabbit Holes${rabbitHoles.length ? ` (${rabbitHoles.length})` : ''}` },
     { id: 'notes', label: `Notes${notes.length ? ` (${notes.length})` : ''}` },
-    { id: 'projects', label: `Projects${capstones.length ? ` (${capstones.length})` : ''}` },
+    { id: 'portfolio', label: `Portfolio${capstones.length ? ` (${capstones.length})` : ''}` },
     { id: 'reports', label: `Reports${reports.length ? ` (${reports.length})` : ''}` },
     { id: 'preferences', label: 'Preferences' },
   ]
@@ -249,9 +232,8 @@ export default function ProfilePage() {
               {[
                 { label: 'Topics & Progress', glyph: '📚', tab: 'topics' as Tab },
                 { label: 'Badges', glyph: '🏅', tab: 'badges' as Tab },
-                { label: 'Rabbit Holes', glyph: '🐇', tab: 'rabbit-holes' as Tab },
                 { label: 'Notes', glyph: '📝', tab: 'notes' as Tab },
-                { label: 'Projects', glyph: '🏗️', tab: 'projects' as Tab },
+                { label: 'Portfolio', glyph: '🏗️', tab: 'portfolio' as Tab },
               ].map(({ label, glyph, tab: t }) => (
                 <button
                   key={t}
@@ -348,33 +330,6 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Tab: Rabbit Holes */}
-        {tab === 'rabbit-holes' && (
-          <div>
-            {rhLoading && <p className="text-muted italic text-center py-8">Loading rabbit holes…</p>}
-            {!rhLoading && rabbitHoles.length === 0 && (
-              <div className="text-center py-12">
-                <div className="text-[48px] mb-4">🐇</div>
-                <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
-                  No saved rabbit holes yet. While reading story content, click on highlighted terms to save them here for later exploration.
-                </p>
-              </div>
-            )}
-            {!rhLoading && rabbitHoles.length > 0 && (
-              <div className="flex flex-col gap-3">
-                {rabbitHoles.map(rh => (
-                  <RabbitHoleCard
-                    key={rh.id}
-                    term={rh}
-                    removing={removingTerm === rh.term}
-                    onRemove={() => removeRabbitHoleTerm(rh.term)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
         {/* Tab: Notes */}
         {tab === 'notes' && (
           <div>
@@ -429,15 +384,22 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Tab: Projects (Capstones) */}
-        {tab === 'projects' && (
+        {/* Tab: Portfolio (Capstones) */}
+        {tab === 'portfolio' && (
           <div>
-            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading projects…</p>}
+            {capstonesLoading && <p className="text-muted italic text-center py-8">Loading portfolio…</p>}
+            {!capstonesLoading && (
+              <div className="bg-card border border-border rounded-[12px] px-5 py-4 mb-5">
+                <p className="text-[13px] text-muted leading-[1.7]">
+                  Each tier ends with a real project. These are yours — evidence of what you've learned and built. Add them to your CV, share the GitHub links, or use them in job applications.
+                </p>
+              </div>
+            )}
             {!capstonesLoading && capstones.length === 0 && (
               <div className="text-center py-12">
                 <div className="text-[48px] mb-4">🏗️</div>
                 <p className="text-muted text-[14px] leading-[1.7] max-w-[360px] mx-auto">
-                  No saved projects yet. Complete a capstone lesson to save your project here.
+                  No projects yet. Complete a capstone lesson to add your first project here.
                 </p>
               </div>
             )}
@@ -697,51 +659,6 @@ function BadgeGrid({ badges }: { badges: Badge[] }) {
           )}
         </div>
       ))}
-    </div>
-  )
-}
-
-function RabbitHoleCard({ term, removing, onRemove }: { term: RabbitHoleTerm; removing: boolean; onRemove: () => void }) {
-  const [confirmRemove, setConfirmRemove] = useState(false)
-
-  return (
-    <div className="bg-card border border-border rounded-[12px] px-5 py-4 flex items-start gap-4">
-      <div className="text-[24px] flex-shrink-0">🐇</div>
-      <div className="flex-1 min-w-0">
-        <div className="text-[14px] font-bold text-gold mb-0.5">{term.term}</div>
-        {term.description && (
-          <p className="text-[12px] text-muted leading-[1.55] mb-1.5">{term.description}</p>
-        )}
-        <div className="text-[10px] text-muted">
-          {term.subChunkId && <span>From {term.subChunkId} · </span>}
-          {new Date(term.savedAt).toLocaleDateString()}
-        </div>
-      </div>
-      <div className="flex-shrink-0">
-        {confirmRemove ? (
-          <div className="flex gap-1.5">
-            <button
-              className="text-[11px] px-2.5 py-1 rounded-md bg-red/20 text-red border border-red cursor-pointer disabled:opacity-50"
-              onClick={onRemove} disabled={removing}
-            >
-              {removing ? '…' : 'Remove'}
-            </button>
-            <button
-              className="text-[11px] px-2.5 py-1 rounded-md bg-card border border-border text-muted cursor-pointer"
-              onClick={() => setConfirmRemove(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <button
-            className="text-[11px] px-2.5 py-1 rounded-md bg-card border border-border text-muted cursor-pointer hover:border-red hover:text-red transition-[border-color,color] duration-150"
-            onClick={() => setConfirmRemove(true)}
-          >
-            🗑
-          </button>
-        )}
-      </div>
     </div>
   )
 }

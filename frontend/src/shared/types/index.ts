@@ -144,13 +144,6 @@ export interface DashboardDto {
   overallProgress: number; chunkHealth: ChunkHealthDto[]
 }
 
-// ── Rabbit Holes ─────────────────────────────────────────────────────────────
-export interface RabbitHoleModule {
-  id: string; chunkId: string; title: string
-  contentHtml: string; storyBeats: StoryBeat[]
-  starterCode: string; testCaseLabels: { label: string }[]; filename: string; sortOrder: number
-}
-
 // ── Curiosity Queue ──────────────────────────────────────────────────────────
 export interface CuriosityQueueItem {
   id: string; userId: string; subChunkId: string; savedAt: string

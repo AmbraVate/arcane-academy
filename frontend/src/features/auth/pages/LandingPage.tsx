@@ -48,7 +48,7 @@ const PHASES = [
 const FEATURES: { icon: LucideIcon; color: string; title: string; desc: string }[] = [
   { icon: RotateCcw,     color: '#8b5cf6', title: 'Spaced Repetition',  desc: 'The FSRS algorithm schedules every review at the exact moment your brain is about to forget - building memories that last decades, not days.' },
   { icon: Bot,           color: '#c4b5fd', title: 'AI Mentor',          desc: 'Archmage Veylan is embedded in every lesson. Ask questions, get Socratic hints, and receive instant AI-graded feedback on your written explanations.' },
-  { icon: Rabbit,        color: '#c9a227', title: 'Rabbit Holes',       desc: "Spot a term mid-lesson that sparks curiosity? Save it to your Curiosity Queue and dive deep whenever you're ready." },
+  { icon: Rabbit,        color: '#c9a227', title: 'Curiosity Queue',    desc: "Spot a term mid-lesson that sparks curiosity? Save it to your queue and dive deep whenever you're ready." },
   { icon: Trophy,        color: '#c9a227', title: 'XP & Ranks',         desc: 'Earn XP for every completed lesson. Rise from Novice through Apprentice, Adept, Mage, Archmage, Magus, and Lord Magus.' },
   { icon: BarChart2,     color: '#2dd4bf', title: 'Memory Health',      desc: "Visual memory-strength indicators show exactly how well each concept is retained. Green means locked in - yellow means it's time to review." },
   { icon: GraduationCap, color: '#60a5fa', title: 'Feynman Technique',  desc: 'After each lesson, explain it back in your own words. The AI grades your explanation on accuracy, completeness, and clarity.' },
